@@ -1,0 +1,95 @@
+import { Component, OnInit } from '@angular/core';
+import { BreadCrumb } from 'models/breadcrumb';
+import { AjaxService } from 'services/ajax.service';
+import { Router } from '@angular/router';
+
+declare var $: any;
+
+@Component({
+  selector: 'app-tsl010600',
+  templateUrl: './tsl010600.component.html',
+  styleUrls: ['./tsl010600.component.css']
+})
+export class Tsl010600Component implements OnInit {
+
+  breadcrumb: BreadCrumb[] = [
+    { label: 'ตรวจสอบภาษี', route: '#' },
+    { label: 'การคัดเลือกราย', route: '#' },
+    { label: 'ตารางผลการคัดเลือกรายประจำปี', route: '#' }
+  ];
+
+  datatable: any;
+  searchFlag: string = "TRUE";
+
+  constructor(
+    private router: Router
+  ) { }
+
+  ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.initDatatable();
+  }
+
+  initDatatable = () => {
+    const URL = AjaxService.CONTEXT_PATH + "taxAudit/display/search";
+    this.datatable = $("#dataTable").DataTableTh({
+      serverSide: true,
+      searching: false,
+      processing: true,
+      ordering: false,
+      scrollX: true,
+      ajax: {
+        type: "POST",
+        url: URL,
+        contentType: "application/json",
+        data: (d) => {
+          return JSON.stringify($.extend({}, d, {
+            "searchFlag": this.searchFlag
+          }));
+        }
+      },
+      columns: [
+        {
+          className: "ui center aligned",
+          render: function (data, row) {
+            return '<a href="#" class="select-record"><u>เลือก</u></a>';
+          }
+        }, {
+          data: "exciseId",
+          className: "ui right aligned"
+        }, {
+          data: "companyName",
+          className: "ui left aligned"
+        }, {
+          data: "companyAddress",
+          className: "ui left aligned"
+        }, {
+          data: "exciseArea",
+          className: "ui left aligned"
+        }, {
+          data: "exciseSubArea",
+          className: "ui left aligned"
+        }, {
+          data: "product",
+          className: "ui left aligned"
+        }, {
+          data: "riskTypeDesc",
+          className: "ui left aligned"
+        }, {
+          data: "flagDesc",
+          className: "ui left aligned"
+        },
+      ],
+    });
+
+    this.datatable.on("click", "td > .select-record", (event) => {
+      event.preventDefault();
+      var data = this.datatable.row($(event.currentTarget).closest("tr")).data();
+      $('#modalTsl').modal('show');
+    });
+
+  };
+
+}

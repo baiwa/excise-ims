@@ -1,0 +1,36 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+<br />
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+  <span>ตารางผลการคัดเลือกรายประจำปี (ปีปฏิทิน) พ.ศ.2561</span>
+</div>
+
+<input type="hidden" id="searchFlag" name="searchFlag">
+
+<!-- Datatable -->
+<div class="ui segment" style="width: 100%;">
+  <table id="dataTable" class="ui small celled table nowrap striped selectable" style="width: 100%;">
+    <thead>
+      <tr>
+        <th style="text-align: center !important;"></th>
+        <th style="text-align: center !important;">เลขทะเบียนสรรพสามิต</th>
+        <th style="text-align: center !important;">ชื่อผู้ประกอบการ/โรงอุตสาหกรรม</th>
+        <th style="text-align: center !important;">ที่อยู่สถานบริการ/โรงอุตสาหกรรม</th>
+        <th style="text-align: center !important;">สรรพสามิตภาค</th>
+        <th style="text-align: center !important;">สรรพสามิตพื้นที่</th>
+        <th style="text-align: center !important;">สินค้า</th>
+        <th style="text-align: center !important;">ด้านความเสี่ยง</th>
+        <th style="text-align: center !important;">สถานการตรวจสอบ</th>
+      </tr>
+    </thead>
+  </table>
+</div>
+
+<!-- Modal -->
+<div class="ui modal" id="modalTsl">
+  <div class="header">Header</div>
+  <div class="content">
+    <p></p>
+    <p></p>
+    <p></p>
+  </div>
+</div>

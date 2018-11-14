@@ -30,5 +30,21 @@ public class ExciseConstants {
 		    	public static final String SUCCESS = "2057";	    				    			   
 		    }
 	    }
+	    
+	    public static class TSL {
+	    	public static class STATUS {
+	    		public static final String RISK_1_CODE = "1";
+	    		public static final String RISK_1_DESC = "ความถี่ของเดือนที่ชำระภาษี";
+	    		public static final String RISK_2_CODE = "2";
+	    		public static final String RISK_2_DESC = "เปรียบเทียบจำนวนภาษีระหว่างเดือน";
+	    		public static final String RISK_3_CODE = "3";
+	    		public static final String RISK_3_DESC = "เปรียบเทียบความแต่งต่างการชำระภาษีระหว่างปี";
+	    		
+	    		public static final String FLAG_1_CODE = "1";
+	    		public static final String FLAG_1_DESC = "รอดำเนินการ";
+	    		public static final String FLAG_2_CODE = "2";
+	    		public static final String FLAG_2_DESC = "ตรวจสอบเสร็จสิ้น";
+	    	}
+	    }
 
 }

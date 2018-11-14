@@ -9,11 +9,13 @@ import { TaxAuditSelectLineComponent } from 'projects/tax-audit/tax-audit-select
 import { Tsl010100Component } from './tsl000000/tsl010000/tsl010100/tsl010100.component';
 import { DirectivesModule } from 'app/buckwaframework/common/directives/directives.module';
 import { Tsl010200Component } from './tsl000000/tsl010000/tsl010200/tsl010200.component';
+import { Tsl010600Component } from './tsl000000/tsl010000/tsl010600/tsl010600.component';
+
 const routes: Routes = [
     { path: '', component: TaxAuditSelectLineComponent, canActivate: [AuthGuard] },
     { path: 'tsl0101-00', component: Tsl010100Component, canActivate: [AuthGuard] },
     { path: 'tsl0102-00', component: Tsl010200Component, canActivate: [AuthGuard] },
-
+    { path: 'tsl0106-00', component: Tsl010600Component, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
@@ -28,7 +30,8 @@ const routes: Routes = [
     declarations: [
         TaxAuditSelectLineComponent,
         Tsl010100Component,
-        Tsl010200Component
+        Tsl010200Component,
+        Tsl010600Component
     ],
     exports: [RouterModule]
 })
