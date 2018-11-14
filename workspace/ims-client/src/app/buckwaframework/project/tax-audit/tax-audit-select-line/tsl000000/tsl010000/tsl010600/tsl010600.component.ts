@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BreadCrumb } from 'models/breadcrumb';
 import { AjaxService } from 'services/ajax.service';
 import { Router } from '@angular/router';
+import { TextDateTH, formatter } from 'helpers/datepicker';
 
 declare var $: any;
 
@@ -19,18 +20,29 @@ export class Tsl010600Component implements OnInit {
   ];
 
   datatable: any;
+  dateCalendar: String = "";
   searchFlag: string = "TRUE";
 
   constructor(
     private router: Router
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   ngAfterViewInit() {
     this.initDatatable();
   }
+
+  calendar = function () {
+    $("#date").calendar({
+      type: "month",
+      text: TextDateTH,
+      formatter: formatter("month-year"),
+      onChange: (date, text) => {
+        this.dateCalendar = text;
+      }
+    });
+  };
 
   initDatatable = () => {
     const URL = AjaxService.CONTEXT_PATH + "taxAudit/display/search";
@@ -88,8 +100,16 @@ export class Tsl010600Component implements OnInit {
       event.preventDefault();
       var data = this.datatable.row($(event.currentTarget).closest("tr")).data();
       $('#modalTsl').modal('show');
+      this.calendar();
     });
 
   };
+
+  onClickOK() {
+    $('#modalTsl').modal('hide');
+    this.router.navigate(["/tax-audit-select-line/tsl0107-00"], {
+      queryParams: {}
+    });
+  }
 
 }

@@ -16,6 +16,7 @@ public class Tsl010600Vo {
 	private String riskTypeDesc;
 	private String flag;
 	private String flagDesc;
+	private Integer analysisNumber;
 
 	public BigDecimal getTaYearPlanId() {
 		return taYearPlanId;
@@ -65,6 +66,10 @@ public class Tsl010600Vo {
 		return flagDesc;
 	}
 
+	public Integer getAnalysisNumber() {
+		return analysisNumber;
+	}
+
 	public void setTaYearPlanId(BigDecimal taYearPlanId) {
 		this.taYearPlanId = taYearPlanId;
 	}
@@ -111,6 +116,10 @@ public class Tsl010600Vo {
 
 	public void setFlagDesc(String flagDesc) {
 		this.flagDesc = flagDesc;
+	}
+
+	public void setAnalysisNumber(Integer analysisNumber) {
+		this.analysisNumber = analysisNumber;
 	}
 
 }

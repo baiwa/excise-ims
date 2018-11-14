@@ -22,16 +22,22 @@ public class Tsl010600Dao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	private final String SQL_SEARCH = " SELECT * FROM TA_YEAR_PLAN WHERE 1=1 ";
+	private final String SQL_SEARCH = " SELECT * FROM TA_YEAR_PLAN WHERE 1=1 AND USER_ID = ? ";
 
 	public List<Tsl010600Vo> search(Tsl010600FormVo tsl010600FormVo) {
 		StringBuilder sql = new StringBuilder(SQL_SEARCH);
 		List<Object> params = new ArrayList<>();
+		params.add(StringUtils.trim(tsl010600FormVo.getUser()));
 
 		if (StringUtils.isNotBlank(tsl010600FormVo.getExciseId())) {
 			sql.append(" AND EXCISE_ID = ? ");
 			params.add(StringUtils.trim(tsl010600FormVo.getExciseId()));
 		}
+		
+		sql.append(" AND ANALYSIS_NUMBER = ( ");
+		sql.append(" SELECT MAX(ANALYSIS_NUMBER) ");
+		sql.append(" FROM TA_YEAR_PLAN ");
+		sql.append(" ) ");
 
 		String sqlLimit = OracleUtils.limitForDataTable(sql, tsl010600FormVo.getStart(), tsl010600FormVo.getLength());
 		List<Tsl010600Vo> list = jdbcTemplate.query(sqlLimit, params.toArray(), Tsl010300RowMapper);
@@ -41,11 +47,17 @@ public class Tsl010600Dao {
 	public long count(Tsl010600FormVo tsl010600FormVo) {
 		StringBuilder sql = new StringBuilder(SQL_SEARCH);
 		List<Object> params = new ArrayList<>();
+		params.add(StringUtils.trim(tsl010600FormVo.getUser()));
 
 		if (StringUtils.isNotBlank(tsl010600FormVo.getExciseId())) {
 			sql.append(" AND EXCISE_ID = ? ");
 			params.add(StringUtils.trim(tsl010600FormVo.getExciseId()));
 		}
+		
+		sql.append(" AND ANALYSIS_NUMBER = ( ");
+		sql.append(" SELECT MAX(ANALYSIS_NUMBER) ");
+		sql.append(" FROM TA_YEAR_PLAN ");
+		sql.append(" ) ");
 		
 		String countSql = OracleUtils.countForDatatable(sql);
 		long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
@@ -66,6 +78,7 @@ public class Tsl010600Dao {
 			vo.setProduct(rs.getString("PRODUCT"));
 			vo.setRiskType(rs.getString("RISK_TYPE"));
 			vo.setFlag(rs.getString("FLAG"));
+			vo.setAnalysisNumber(rs.getInt("ANALYSIS_NUMBER"));
 
 			if (TSL.STATUS.RISK_1_CODE.equals(vo.getRiskType())) {
 				vo.setRiskTypeDesc(TSL.STATUS.RISK_1_DESC);
