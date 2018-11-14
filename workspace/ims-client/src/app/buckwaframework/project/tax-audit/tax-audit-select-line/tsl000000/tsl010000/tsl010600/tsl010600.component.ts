@@ -31,6 +31,7 @@ export class Tsl010600Component implements OnInit {
 
   ngAfterViewInit() {
     this.initDatatable();
+    this.calendar();
   }
 
   calendar = function () {
