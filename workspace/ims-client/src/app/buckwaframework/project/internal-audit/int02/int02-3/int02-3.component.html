@@ -68,7 +68,12 @@
 
       <!-- NEW QUESTIONAIRE -->
       <div class="ui top attached segment">
-        <h3 class="ui header"> แบบสอบทานใหม่ </h3>
+        <h3 class="ui header">
+          แบบสอบทานใหม่
+          <button type="button" (click)="modal()" class="ui right floated green mini button">
+            <i class="plus icon"></i> เพิ่มรายละเอียด
+          </button>
+        </h3>
       </div>
       <div class="ui attached segment">
         <table class="ui tablet stackable celled table" style="width: 100%">
@@ -142,6 +147,51 @@
   </div>
 </div>
 
+
+<ui-modal [id]="'add'" type="custom">
+  <div class="header">เพิ่มรายละเอียด</div>
+  <div class="content" [formGroup]="formAddDetail">
+    <div class="ui form" formArrayName="formDetails">
+      <ng-container [formGroupName]="i" *ngFor="let formDetail of formDetails.controls; let i = index">
+        <div class="inline fields" *ngIf="formDetail.get('mainDetail')">
+          <div class="one wide field">
+            <h4>1</h4>
+          </div>
+          <div class="fifteen wide field">
+            <div class="ui input">
+              <input type="text" name="mainDetail{{i}}" formControlName="mainDetail">
+            </div>
+          </div>
+        </div>
+        <div class="inline fields" *ngIf="formDetail.get('minorDetail')">
+          <div class="one wide field"></div>
+          <div class="one wide field">
+            <h4>1.{{i}}</h4>
+          </div>
+          <div class="fourteen wide field">
+            <div class="ui input">
+              <input type="text" name="minorDetail{{i}}" formControlName="minorDetail">
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui grid">
+      <div class="sixteen wide center aligned column">
+        <button class="ui positive mini button" type="button">
+          <i class="checkmark icon"></i>
+          ยืนยัน
+        </button>
+        <button class="ui mini button" type="button" (click)="dismiss()">
+          <i class="remove icon"></i>
+          ยกเลิก
+        </button>
+      </div>
+    </div>
+  </div>
+</ui-modal>
 
 
 

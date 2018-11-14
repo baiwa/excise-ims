@@ -6,6 +6,9 @@ import { Observable } from 'rxjs';
 import { BreadCrumb } from 'models/index';
 import { DialogService } from 'services/index';
 import { QuestionaireMinor, Int023Vo, QtnReportDetail, Int023Service } from './int02-3.service';
+import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
+
+declare var $: any;
 
 const RISK_TYPE: string = "QTN_MAIN";
 const PAGE: string = "int02-3";
@@ -26,6 +29,10 @@ export class Int023Component implements OnInit {
   origins: Int023Vo<QuestionaireMinor>[] = [];
   newers: Int023Vo<QtnReportDetail>[] = [];
 
+  // Forms
+  formAddDetail: FormGroup = new FormGroup({});
+  formDetails: FormArray = new FormArray([]);
+
   // State
   loading = {
     tableOrigins: true,
@@ -36,7 +43,8 @@ export class Int023Component implements OnInit {
     private route: ActivatedRoute,
     private dialog: DialogService,
     private _location: Location,
-    private service: Int023Service
+    private service: Int023Service,
+    private formBuilder: FormBuilder
   ) {
     // BreadCrumb Data
     this.breadcrumb = [
@@ -46,6 +54,18 @@ export class Int023Component implements OnInit {
       { label: "เพิ่ม/แก้ไข ด้านแบบสอบถาม", route: "#" },
       { label: "เพิ่ม/แก้ไข รายละเอียดแบบสอบถาม", route: "#" },
     ];
+
+    // Form Array
+    this.formAddDetail = this.formBuilder.group({
+      formDetails: this.formBuilder.array([])
+    })
+    this.formDetails = this.formAddDetail.get('formDetails') as FormArray;
+    this.formDetails.push(this.formBuilder.group({ mainDetail: [""] }));
+    this.formDetails.push(this.formBuilder.group({ minorDetail: [""] }));
+    this.formDetails.push(this.formBuilder.group({ minorDetail: [""] }));
+    for(let key in this.formDetails.controls) {
+      console.log(key, this.formDetails.get(key));
+    }
   }
 
   ngOnInit() {
@@ -79,10 +99,10 @@ export class Int023Component implements OnInit {
     return 0;
   }
 
-  back() {
-    this._location.back();
-  }
-
+  // Button Actions
+  back() { this._location.back(); } // Turn back
+  modal() { $('#add').modal('show'); } // Modal Open
+  dismiss() { $('#add').modal('hide'); } // Modal Hide
 }
 
 class Condition {

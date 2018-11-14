@@ -3,6 +3,8 @@ package th.co.baiwa.excise.ia.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.util.List;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
@@ -12,11 +14,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.constant.ExciseConstants;
 import th.co.baiwa.excise.ia.persistence.entity.HealthCareWelFareEntity;
+import th.co.baiwa.excise.ia.persistence.entity.MedicalReceipt;
 import th.co.baiwa.excise.ia.persistence.entity.WithdrawFileUpload;
 import th.co.baiwa.excise.ia.persistence.repository.HealthCareWelFareRepository;
+import th.co.baiwa.excise.ia.persistence.repository.IaMedicalReceiptRepository;
 import th.co.baiwa.excise.ia.persistence.repository.WithdrawFileUploadRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int061102FormVo;
 
@@ -34,17 +40,31 @@ public class Int061102Service {
 	@Autowired
 	private WithdrawFileUploadRepository withdrawFileUploadRepository;
 
+	@Autowired
+	private LovRepository lovRepository;
+
+	@Autowired
+	private IaMedicalReceiptRepository medicalReceiptRep;
+
 	public HealthCareWelFareEntity save(Int061102FormVo int061102FormVo) {
 		HealthCareWelFareEntity vo = new HealthCareWelFareEntity();
 		vo.setFullName(int061102FormVo.getFullName());
 		vo.setGender(int061102FormVo.getGender());
 		vo.setBirthDate(DateConstant.convertStrToDate(int061102FormVo.getBirthDate(), DateConstant.DD_MM_YYYY,
 				DateConstant.LOCAL_TH));
+		vo.setBirthDate2(DateConstant.convertStrToDate(int061102FormVo.getBirthDate2(), DateConstant.DD_MM_YYYY,
+				DateConstant.LOCAL_TH));
+		vo.setBirthDate3(DateConstant.convertStrToDate(int061102FormVo.getBirthDate3(), DateConstant.DD_MM_YYYY,
+				DateConstant.LOCAL_TH));
 		vo.setSiblingsOrder(NumberUtils.toInt(int061102FormVo.getSiblingsOrder()));
+		vo.setSiblingsOrder2(NumberUtils.toInt(int061102FormVo.getSiblingsOrder2()));
+		vo.setSiblingsOrder3(NumberUtils.toInt(int061102FormVo.getSiblingsOrder3()));
 		vo.setPosition(int061102FormVo.getPosition());
 		vo.setAffiliation(int061102FormVo.getAffiliation());
 		vo.setPhoneNumber(int061102FormVo.getPhoneNumber());
 		vo.setStatus(int061102FormVo.getStatus());
+		vo.setStatus2(int061102FormVo.getStatus2());
+		vo.setStatus3(int061102FormVo.getStatus3());
 		vo.setDisease(int061102FormVo.getDisease());
 		vo.setHospitalName(int061102FormVo.getHospitalName());
 		vo.setHospitalOwner(int061102FormVo.getHospitalOwner());
@@ -66,6 +86,10 @@ public class Int061102Service {
 		vo.setMotherCitizenId(int061102FormVo.getMotherCitizenId());
 		vo.setChildName(int061102FormVo.getChildName());
 		vo.setChildCitizenId(int061102FormVo.getChildCitizenId());
+		vo.setChildName2(int061102FormVo.getChildName());
+		vo.setChildCitizenId2(int061102FormVo.getChildCitizenId());
+		vo.setChildName3(int061102FormVo.getChildName());
+		vo.setChildCitizenId3(int061102FormVo.getChildCitizenId());
 		vo.setStatusCheck(ExciseConstants.IA.STATUS.PROCESS);
 
 		return healthCareWelFareRepository.save(vo);
@@ -110,6 +134,23 @@ public class Int061102Service {
 			}
 
 		}
+	}
+
+	public void saveReceipt(List<MedicalReceipt> req) {
+		medicalReceiptRep.save(req);
+	}
+
+	public List<MedicalReceipt> findReceiptAll() {
+		return medicalReceiptRep.findAll();
+	}
+
+	public MedicalReceipt findReceipt(BigDecimal id) {
+		return medicalReceiptRep.findOne(id.longValue());
+	}
+
+	public List<Lov> hospital() {
+		// TODO Auto-generated method stub
+		return lovRepository.findByType("MEDICAL");
 	}
 
 }

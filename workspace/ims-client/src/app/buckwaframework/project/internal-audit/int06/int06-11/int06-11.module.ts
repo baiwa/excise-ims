@@ -12,14 +12,11 @@ import { Int06114Component } from "./int06-11-4/int06-11-4.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Int0611301Component } from "./int06-11-3/int06-11-3-01/int06-11-3-01.component";
 import { BreadcrumbModule } from "components/breadcrumb/breadcrumb.module";
-import { Int06115Component } from "./int06-11-5/int06-11-5.component";
 import { Int06116Component } from "./int06-11-6/int06-11-6.component";
-import { Int061151Component } from "./int06-11-5/int06-11-5-1/int06-11-5-1.component";
-import { Int061152Component } from "./int06-11-5/int06-11-5-2/int06-11-5-2.component";
-import { Int061153Component } from "./int06-11-5/int06-11-5-3/int06-11-5-3.component";
 import { Int06117Component } from "./int06-11-7/int06-11-7.component";
 import { Int06118Component } from "./int06-11-8/int06-11-8.component";
 import { Int06119Component } from "./int06-11-9/int06-11-9.component";
+import { DirectivesModule } from "app/buckwaframework/common/directives/directives.module";
 
 const routes: Routes = [
   { path: "", component: Int0611Component, canActivate: [AuthGuard] },
@@ -42,7 +39,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    DirectivesModule
   ],
   declarations: [
     Int0611Component,
