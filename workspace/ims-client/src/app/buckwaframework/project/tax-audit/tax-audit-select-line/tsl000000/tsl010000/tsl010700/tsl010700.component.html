@@ -195,6 +195,55 @@
   <br />
   <div class="ui grid center aligned">
     <div class="sixteen wide column">
+      <h4>ข้อมูลใบสั่งซื้อ</h4>
+    </div>
+  </div>
+  <br />
+  <div id="" class="ui form">
+    <div class="inline fields">
+      <div class="four wide field"></div>
+      <div class="two wide field ">
+        <label>ใบสั่งซื้อทั้งหมด: </label>
+      </div>
+      <div class="two wide field ">
+        <input type="text">
+        <label> &nbsp; ฉบับ</label>
+      </div>
+    </div>
+    <div class="inline fields">
+      <div class="four wide field"></div>
+      <div class="two wide field ">
+        <label>ผลการตรวจสอบ :</label>
+      </div>
+    </div>
+    <div class="inline fields">
+      <div class="four wide field"></div>
+      <div class="eight wide field ">
+        <textarea rows="5"></textarea>
+      </div>
+    </div>
+    <div class="inline fields">
+      <div class="four wide field"></div>
+      <div class="two wide field ">
+        <div class="ui radio checkbox">
+          <input type="radio" name="buyInvoice" value="0" [checked]="true">
+          <label>ข้อมูลถูกต้อง</label>
+        </div>
+      </div>
+      <div class="two wide field ">
+        <div class="ui radio checkbox">
+          <input type="radio" name="buyInvoice" value="1">
+          <label>ข้อมูลไม่ถูกต้อง</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ui segment" style="width: 100%;">
+  <br />
+  <div class="ui grid center aligned">
+    <div class="sixteen wide column">
       <h4>ข้อมูลใบกำกับภาษี</h4>
     </div>
   </div>
