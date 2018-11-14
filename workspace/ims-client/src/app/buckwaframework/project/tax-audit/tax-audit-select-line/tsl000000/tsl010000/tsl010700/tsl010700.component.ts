@@ -32,7 +32,7 @@ export class Tsl010700Component implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    this.dataRecord = dataService.getData();
+    this.dataRecord = this.dataService.getData();
     this.dateCalendar = this.route.snapshot.queryParams['dateCalendar'];
     this.searchFlag = this.route.snapshot.queryParams['searchFlag'];
   }
@@ -76,13 +76,31 @@ export class Tsl010700Component implements OnInit {
           className: "ui left aligned"
         }, {
           data: "stock",
-          className: "ui right aligned"
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
         }, {
           data: "receive",
-          className: "ui right aligned"
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
         }, {
           data: "receiveTotal",
-          className: "ui right aligned"
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
         }
       ],
     });
