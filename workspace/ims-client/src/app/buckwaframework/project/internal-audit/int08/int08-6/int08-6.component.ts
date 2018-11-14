@@ -252,11 +252,11 @@ export class Int086Component implements OnInit, AfterViewInit {
       ],
       columnDefs: [
         {
-          targets: [0, 1, 2, 6, 7],
+          targets: [0, 1, 2, 3, 6, 7],
           className: "center"
         },
         {
-          targets: [3, 4],
+          targets: [4, 5],
           className: "right"
         }
       ],

@@ -71,7 +71,7 @@ public class TaxAuditSelectListController {
 	
 	@PostMapping("/saveCondition1")
 	@ResponseBody
-	public List<Tsl010200Vo> saveCondition1(Tsl010200FormVo formVo){
+	public List<Tsl010200Vo> saveCondition1(@RequestBody Tsl010200FormVo formVo){
 		System.out.println(formVo);
 		planFromWsHeaderService.saveCondition1(formVo);
 		return formVo.getDataList();
