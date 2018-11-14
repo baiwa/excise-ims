@@ -58,6 +58,8 @@ export class Tsl010700Component implements OnInit {
         contentType: "application/json",
         data: (d) => {
           return JSON.stringify($.extend({}, d, {
+            "exciseId": this.dataRecord.exciseId,
+            "dateCalendar": this.dateCalendar,
             "searchFlag": this.searchFlag
           }));
         }
@@ -120,6 +122,8 @@ export class Tsl010700Component implements OnInit {
         contentType: "application/json",
         data: (d) => {
           return JSON.stringify($.extend({}, d, {
+            "exciseId": this.dataRecord.exciseId,
+            "dateCalendar": this.dateCalendar,
             "searchFlag": this.searchFlag
           }));
         }

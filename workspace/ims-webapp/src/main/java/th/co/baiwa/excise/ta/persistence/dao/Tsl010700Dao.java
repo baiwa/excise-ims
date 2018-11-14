@@ -22,20 +22,26 @@ public class Tsl010700Dao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
+
 	private final String SQL_SEARCH = " SELECT * FROM TA_MONTH_BUDGET WHERE 1=1  ";
 
 	public List<Tsl010700Vo> search(Tsl010700FormVo tsl010700FormVo) {
 		StringBuilder sql = new StringBuilder(SQL_SEARCH);
 		List<Object> params = new ArrayList<>();
-		
+
+		if (StringUtils.isNotBlank(tsl010700FormVo.getExciseId())) {
+			sql.append(" AND EXCISE_ID = ? ");
+			params.add(tsl010700FormVo.getExciseId());
+		}
+
 		if (StringUtils.isNotBlank(tsl010700FormVo.getDateCalendar())) {
 			sql.append(" AND TO_CHAR(MONTH_BUDGET, 'YYYYMM') = ? ");
-			Date date = DateConstant.convertStrToDate(tsl010700FormVo.getDateCalendar(), DateConstant.MM_YYYY, DateConstant.LOCAL_TH);
-			String dateStr = DateConstant.convertDateToStr(date, "YYYYMM");
+			Date date = DateConstant.convertStrToDate(tsl010700FormVo.getDateCalendar(), DateConstant.MM_YYYY,
+					DateConstant.LOCAL_TH);
+			String dateStr = DateConstant.convertDateToStr(date, "YYYYMM", DateConstant.LOCAL_EN);
 			params.add(dateStr);
 		}
-		
+
 		String sqlLimit = OracleUtils.limitForDataTable(sql, tsl010700FormVo.getStart(), tsl010700FormVo.getLength());
 		List<Tsl010700Vo> list = jdbcTemplate.query(sqlLimit, params.toArray(), Tsl010700RowMapper);
 		return list;
@@ -44,19 +50,25 @@ public class Tsl010700Dao {
 	public long count(Tsl010700FormVo tsl010700FormVo) {
 		StringBuilder sql = new StringBuilder(SQL_SEARCH);
 		List<Object> params = new ArrayList<>();
-		
+
+		if (StringUtils.isNotBlank(tsl010700FormVo.getExciseId())) {
+			sql.append(" AND EXCISE_ID = ? ");
+			params.add(tsl010700FormVo.getExciseId());
+		}
+
 		if (StringUtils.isNotBlank(tsl010700FormVo.getDateCalendar())) {
 			sql.append(" AND TO_CHAR(MONTH_BUDGET, 'YYYYMM') = ? ");
-			Date date = DateConstant.convertStrToDate(tsl010700FormVo.getDateCalendar(), DateConstant.MM_YYYY, DateConstant.LOCAL_TH);
-			String dateStr = DateConstant.convertDateToStr(date, "YYYYMM");
+			Date date = DateConstant.convertStrToDate(tsl010700FormVo.getDateCalendar(), DateConstant.MM_YYYY,
+					DateConstant.LOCAL_TH);
+			String dateStr = DateConstant.convertDateToStr(date, "YYYYMM", DateConstant.LOCAL_EN);
 			params.add(dateStr);
 		}
-		
+
 		String countSql = OracleUtils.countForDatatable(sql);
 		long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
 		return count;
 	}
-	
+
 	private RowMapper<Tsl010700Vo> Tsl010700RowMapper = new RowMapper<Tsl010700Vo>() {
 		@Override
 		public Tsl010700Vo mapRow(ResultSet rs, int arg1) throws SQLException {
