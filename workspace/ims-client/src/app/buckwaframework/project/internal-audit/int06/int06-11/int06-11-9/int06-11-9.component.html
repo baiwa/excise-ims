@@ -1,5 +1,5 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
-<br>
+<h2>ตรวจสอบหลักฐานการขอเบิก และอนุมัติการขอเบิก</h2>
 <div class="sixteen wide column">
   <div class="ui top centered attached header segment" style="background: #1e83db;color: white;">
     <span>ระบุเงื่อนไขในการค้นหา</span>
@@ -14,7 +14,7 @@
             <label class="text-right full-width">ประเภทการขอเบิก</label>
           </div>
           <div class="four wide field">
-            <select class="ui dropdown ai search full-width" formControlName="withdrawRequest">
+            <select class="ui dropdown ai search full-width" formControlName="withdrawRequest" id="withdrawRequest">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let wdr of withdrawRequestList | async;" [value]="wdr.lovId">
                 {{ wdr.typeDescription }}

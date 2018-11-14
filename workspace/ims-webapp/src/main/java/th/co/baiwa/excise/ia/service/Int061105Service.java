@@ -39,7 +39,6 @@ public class Int061105Service {
 	@Autowired
 	private TuitionFeeRepository tuitionFeeRepository;
 	
-
 	@Autowired
 	private HealthCareWelFareRepository healthCareWelFareRepository;
 

@@ -8,5 +8,7 @@ import th.co.baiwa.excise.ia.persistence.entity.RentHouse;
 
 public interface RentHouseRepository extends CommonJpaCrudRepository<RentHouse, BigDecimal> {
 	List<RentHouse>findByStatusAndIaDisReqIdIsNull(String status);
+	
+	List<RentHouse> findByIaDisReqId(BigDecimal iaDisReqId);
 
 }

@@ -9,4 +9,5 @@ public interface HealthCareWelFareRepository extends CommonJpaCrudRepository<Hea
 
 	List<HealthCareWelFareEntity> findByStatusCheckAndIaDisReqIdIsNull(String string);
 
+	List<HealthCareWelFareEntity> findByIaDisReqId(BigDecimal iaDisReqId);
 }

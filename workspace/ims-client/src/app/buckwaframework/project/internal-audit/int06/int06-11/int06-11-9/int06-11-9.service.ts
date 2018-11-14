@@ -169,6 +169,7 @@ export class Int06119Service {
     const URL = "ia/int061109/approve";
     this.ajax.post(URL, { 
         id:data.id,
+        withdrawRequest:this.formData.withdrawRequest,
         status:status
     },res => {
       const commonMessage = res.json();

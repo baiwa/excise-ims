@@ -128,15 +128,15 @@ export class Int06118Service {
             if (data === "2064"){
 
               btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
-              btn += `<button type="button" class="ui mini button primary btn-approve"><i class="edit icon"></i>เปรียบเทียบใบ  ขอเบิก ขอจ่าย</button>`;
+              btn += `<button type="button" class="ui mini button primary btn-approve"><i class="edit icon"></i>เปรียบเทียบใบขอเบิก ขอจ่าย</button>`;
 
             } else if (data === "2065"){
               btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
-              btn += `<button type="button" class="ui mini button primary btn-approve"><i class="edit icon"></i>เปรียบเทียบใบ  ขอเบิก ขอจ่าย</button>`;
+              btn += `<button type="button" class="ui mini button primary btn-approve"><i class="edit icon"></i>เปรียบเทียบใบขอเบิก ขอจ่าย</button>`;
 
             } else if (data === "2066"){
               btn += `<button type="button" class="ui mini button primary btn-description"><i class="edit icon"></i>รายละเอียด</button>`;
-              btn += `<button type="button" class="ui mini button primary btn-approve"><i class="edit icon"></i>เปรียบเทียบใบ  ขอเบิก ขอจ่าย</button>`;
+              btn += `<button type="button" class="ui mini button primary btn-approve"><i class="edit icon"></i>เปรียบเทียบใบขอเบิก ขอจ่าย</button>`;
 
             }
 

@@ -10,4 +10,5 @@ public interface TuitionFeeRepository extends CommonJpaCrudRepository<TuitionFee
 
 	List<TuitionFee> findByStatusCheckAndIaDisReqIdIsNull(String string);
 
+	List<TuitionFee> findByIaDisReqId(BigDecimal iaDisReqId);
 }
