@@ -113,11 +113,7 @@ export class Tsl010600Component implements OnInit {
   };
 
   onClickOK() {
-    $('#modalTsl').modal({
-      onDeny: () => {
-        this.calendar();
-      }
-    }).modal('hide');
+    $('#modalTsl').modal('hide');
     this.router.navigate(["/tax-audit-select-line/tsl0107-00"],
       {
         queryParams: {

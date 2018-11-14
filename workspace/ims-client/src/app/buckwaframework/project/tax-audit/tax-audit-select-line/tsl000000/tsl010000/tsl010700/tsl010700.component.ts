@@ -114,22 +114,46 @@ export class Tsl010700Component implements OnInit {
           }
         }, {
           data: "list",
-          className: "ui center aligned"
+          className: "ui left aligned"
         }, {
           data: "unit",
-          className: "ui center aligned"
+          className: "ui left aligned"
         }, {
           data: "productInline",
-          className: "ui center aligned"
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
         }, {
           data: "productOutline",
-          className: "ui center aligned"
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
         }, {
           data: "corrupt",
-          className: "ui center aligned"
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
         }, {
           data: "other",
-          className: "ui center aligned"
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
         }
       ],
     });
