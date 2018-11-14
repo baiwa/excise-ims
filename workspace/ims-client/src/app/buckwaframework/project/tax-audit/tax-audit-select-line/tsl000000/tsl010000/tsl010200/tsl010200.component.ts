@@ -129,6 +129,7 @@ export class Tsl010200Component implements OnInit, AfterViewInit {
       if (res) {
         this.myService.save().then(res => {
           this.messege.successModal("ทำรายสำเร็จ");
+          this.router.navigate(['/tax-audit-select-line/tsl0102-00']);
         }, err => {
           this.messege.errorModal("ทำรายการไม่สำเร็จ");
         })
