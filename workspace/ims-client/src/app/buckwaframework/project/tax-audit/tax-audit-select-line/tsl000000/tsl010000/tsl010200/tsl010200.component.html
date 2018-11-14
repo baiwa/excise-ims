@@ -81,7 +81,7 @@
           <table id="datatable2" class="ui small celled table aligned hover striped selectable nowrap" style="width: 100%;">
               <thead id="tableOne">
                 <tr>
-                  <th rowspan="2" style="text-align: center !important"><input type="checkbox" name="select-all" id="select-all"></th>
+                 
                   <th class="text-center" rowspan="2">เลขทะเบียนสรรพสามิต</th>
                   <th class="text-center" rowspan="2">ชื่อผู้ประกอบการ/โรงอุตสาหกรรม</th>
                   <th class="text-center" rowspan="2">ที่อยู่สถานบริการ/โรงอุตสาหกรรม</th>
@@ -110,9 +110,9 @@
           <!-- button -->
           <div class="ui center aligned grid">
             <div class="six wide column">
-              <button class="ui mini primary button" (click)="select()">
+              <button class="ui mini primary button" (click)="save()">
                 <i class="file icon"></i>
-                เลือก
+                บันทึก
               </button>
               <button class="ui mini button" routerLink="/tax-audit-select-line/tsl0101-00">
                 <i class="refresh icon"></i>

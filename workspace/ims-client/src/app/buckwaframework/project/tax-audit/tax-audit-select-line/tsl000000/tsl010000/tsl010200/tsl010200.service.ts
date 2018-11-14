@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AjaxService } from 'services/ajax.service';
+import { reject } from 'q';
 declare var $: any;
 @Injectable()
 export class Tsl010200Service {
@@ -126,7 +127,7 @@ export class Tsl010200Service {
     console.log("month : ", month);
     return new Promise((resolve, reject) => {
       let head = '<tr>' +
-        '<th rowspan="2" class="text-center"></th>' +
+        
         '<th class="text-center" rowspan="2" >เลขทะเบียนสรรพสามิต</th>' +
         '<th class="text-center" rowspan="2" >ชื่อผู้ประกอบการ/โรงอุตสาหกรรม</th>' +
         '<th class="text-center" rowspan="2" >ที่อยู่สถานบริการ/โรงอุตสาหกรรม</th>' +
@@ -190,6 +191,15 @@ export class Tsl010200Service {
     });
   }
 
+  save():Promise<any>{
+    let  url = "taxAudit/selectList/saveCondition1";
+    return new Promise((resolve,reject)=>{
+      this.ajax.post(url,JSON.stringify({dataList : this.dataList}),res=>{
+        console.log("Data List  : ",this.dataList);
+        resolve(res.json());
+      });
+    });
+  }
   datatable = () => {
     this.table = $("#datatable1").DataTableTh({
       "serverSide": false,
@@ -345,13 +355,6 @@ export class Tsl010200Service {
       // },
       "columns": [
         {
-          render: function (data, type, full, meta) {
-            return '<div class="ui checkbox tableDt"><input name="checkDelId" value="' +
-              data +
-              '" type="checkbox"><label></label></div>';
-          },
-          className: "center"
-        }, {
           "data": "exciseId"
         },
         {
@@ -475,3 +478,5 @@ export class Tsl010200Service {
     console.log("data : ", this.dataSelect);
   }
 }
+
+
