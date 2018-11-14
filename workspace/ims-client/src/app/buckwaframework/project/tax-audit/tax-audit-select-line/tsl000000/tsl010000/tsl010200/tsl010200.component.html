@@ -13,16 +13,18 @@
       </div><br>
       <div class="ui grid" style="margin-top: 0">
         <div style="padding-right: 0;" [ngClass]="{'three wide column': !toggle, 'transition-left' : toggle}">
-          <div class="ui vertical menu" style="width: auto" name="coordinates" id="coordinates" (change)="changeCoordinates()">            
+          <div class="ui vertical menu" style="width: auto" name="coordinates" id="coordinates" (change)="changeCoordinates()">
             <div class="item">
               <div class="header">เงื่อนไข</div>
             </div>
             <div class="item">
               <div class="menu">
-                <a class="item hover">เงื่อนไขที่ 1 ความถี่ของเดือนที่ชำระภาษี ตั้งแต่ เดือน {{dispaly.dateFrom}} ถึง
-                    {{dispaly.dateTo}}<br> จำนวนเดือนที่ไม่ชำระภาษีติดต่อกัน {{form.monthNonPay}}</a>
-                <a class="item hover"> เงื่อนไขที่ 2 เปรียบเทียบจำนวนภาษีระหว่างเดือน</a>
-                <a class="item hover">เงื่อนไขที่ 3 เปรียบเทียบความแต่งต่างการชำระภาษีระหว่างปี เทียบกับ ปี</a>
+                <a class="item hover" (click)="activeTable(1)" id="table1">เงื่อนไขที่ 1 ความถี่ของเดือนที่ชำระภาษี ตั้งแต่ เดือน
+                  {{dispaly.dateFrom}} ถึง
+                  {{dispaly.dateTo}}<br> จำนวนเดือนที่ไม่ชำระภาษีติดต่อกัน {{form.monthNonPay}}</a>
+                <a class="item hover" (click)="activeTable(2)" id="table2"> เงื่อนไขที่ 2 เปรียบเทียบจำนวนภาษีระหว่างเดือน</a>
+                <a class="item hover" (click)="activeTable(3)" id="table3">เงื่อนไขที่ 3
+                  เปรียบเทียบความแต่งต่างการชำระภาษีระหว่างปี เทียบกับ ปี</a>
               </div>
             </div>
           </div>
@@ -30,49 +32,135 @@
 
         <div style="padding-top: 0" [ngClass]="{'thirteen': !toggle, 'sixteen': toggle,'wide': true, 'column': true, 'transition-left-2': toggle}">
 
-          <table id="datatable1" class="ui small celled table aligned hover striped selectable nowrap" style="width: 100%;">
-            <thead id="tableOne">
-              <tr>
-                <th rowspan="2" style="text-align: center !important"><input type="checkbox" class="ui checkbox " name="select-all" id="select-all"></th>
-                <th class="text-center" rowspan="2">เลขทะเบียนสรรพสามิต</th>
-                <th class="text-center" rowspan="2">ชื่อผู้ประกอบการ/โรงอุตสาหกรรม</th>
-                <th class="text-center" rowspan="2">ที่อยู่สถานบริการ/โรงอุตสาหกรรม</th>
-                <th class="text-center" rowspan="2">พิกัดสินค้า/บริการ</th>
-                <th class="text-center" rowspan="2">สรรพสามิตภาค</th>
-                <th class="text-center" rowspan="2">สรรพสามิตพื้นที่</th>
-                <th class="text-center" colspan="12">การชำระภาษี (บาท)</th>
-              </tr>
-              <tr>
-                <th class="text-center">ม.ค.</th>
-                <th class="text-center">ก.พ.</th>
-                <th class="text-center">มี.ค.</th>
-                <th class="text-center">เม.ย.</th>
-                <th class="text-center">พ.ค.</th>
-                <th class="text-center">มิ.ย.</th>
-                <th class="text-center">ก.ค.</th>
-                <th class="text-center">ส.ค.</th>
-                <th class="text-center">ก.ย.</th>
-                <th class="text-center">ต.ค.</th>
-                <th class="text-center">พ.ย.</th>
-                <th class="text-center">ธ.ค.</th>
-              </tr>
-              <!-- table details-->
-            </thead>
-          </table>
-          <br>
-          <table id="datatable2" class="ui small celled table aligned hover striped selectable nowrap" style="width: 100%;">
+          <!-- Table Tax Pay (datatable 1)-->
+          <div class="datatable1">
+            <table id="datatable1" class="ui small celled table aligned hover striped selectable nowrap " style="width: 100%;">
               <thead id="tableOne">
                 <tr>
-                 
-                  <th class="text-center">เลขทะเบียนสรรพสามิต</th>
-                  <th class="text-center">ชื่อผู้ประกอบการ/โรงอุตสาหกรรม</th>
-                  <th class="text-center">ที่อยู่สถานบริการ/โรงอุตสาหกรรม</th>
-                  <th class="text-center">พิกัดสินค้า/บริการ</th>
-                  <th class="text-center">สรรพสามิตภาค</th>
-                  <th class="text-center">สรรพสามิตพื้นที่</th>
-                  
+                  <!-- <th rowspan="2" style="text-align: center !important"><input type="checkbox" class="ui checkbox "
+                      name="select-all" id="select-all"></th> -->
+                  <th rowspan="2"></th>
+                  <th class="text-center" rowspan="2">เลขทะเบียนสรรพสามิต</th>
+                  <th class="text-center" rowspan="2">ชื่อผู้ประกอบการ/โรงอุตสาหกรรม</th>
+                  <th class="text-center" rowspan="2">ที่อยู่สถานบริการ/โรงอุตสาหกรรม</th>
+                  <th class="text-center" rowspan="2">พิกัดสินค้า/บริการ</th>
+                  <th class="text-center" rowspan="2">สรรพสามิตภาค</th>
+                  <th class="text-center" rowspan="2">สรรพสามิตพื้นที่</th>
+                  <th class="text-center" colspan="12">การชำระภาษี (บาท)</th>
                 </tr>
-                <!-- <tr>
+                <tr>
+                  <th style="text-align: center !important">ม.ค.</th>
+                  <th style="text-align: center !important">ก.พ.</th>
+                  <th style="text-align: center !important">มี.ค.</th>
+                  <th style="text-align: center !important">เม.ย.</th>
+                  <th style="text-align: center !important">พ.ค.</th>
+                  <th style="text-align: center !important">มิ.ย.</th>
+                  <th style="text-align: center !important">ก.ค.</th>
+                  <th style="text-align: center !important">ส.ค.</th>
+                  <th style="text-align: center !important">ก.ย.</th>
+                  <th style="text-align: center !important">ต.ค.</th>
+                  <th style="text-align: center !important">พ.ย.</th>
+                  <th style="text-align: center !important">ธ.ค.</th>
+                </tr>
+                <!-- table details-->
+              </thead>
+            </table>
+          </div>
+          <!-- Table Compare (datatable 2)-->
+          <div class="tableCompare">
+            <table id="tableCompare" class="ui small celled table aligned hover striped selectable nowrap " style="width: 100%;">
+              <thead>
+                <tr>
+                  <!-- <th rowspan="2" style="text-align: center !important"><input type="checkbox" class="ui checkbox "
+                      name="select-all" id="select-all"></th> -->
+                  <th rowspan="2"></th>
+                  <th class="text-center" rowspan="2">เลขทะเบียนสรรพสามิต</th>
+                  <th class="text-center" rowspan="2">ชื่อผู้ประกอบการ/โรงอุตสาหกรรม</th>
+                  <th class="text-center" rowspan="2">ที่อยู่สถานบริการ/โรงอุตสาหกรรม</th>
+                  <th class="text-center" rowspan="2">พิกัดสินค้า/บริการ</th>
+                  <th class="text-center" rowspan="2">สรรพสามิตภาค</th>
+                  <th class="text-center" rowspan="2">สรรพสามิตพื้นที่</th>
+                  <th class="text-center" colspan="12">การชำระภาษี (บาท)</th>
+                  <th class="text-center" colspan="11">ส่วนต่างการชำระภาษีระหว่างเดือน (เปอร์เซ็น)</th>
+                </tr>
+                <tr>
+                  <th style="text-align: center !important">ม.ค.</th>
+                  <th style="text-align: center !important">ก.พ.</th>
+                  <th style="text-align: center !important">มี.ค.</th>
+                  <th style="text-align: center !important">เม.ย.</th>
+                  <th style="text-align: center !important">พ.ค.</th>
+                  <th style="text-align: center !important">มิ.ย.</th>
+                  <th style="text-align: center !important">ก.ค.</th>
+                  <th style="text-align: center !important">ส.ค.</th>
+                  <th style="text-align: center !important">ก.ย.</th>
+                  <th style="text-align: center !important">ต.ค.</th>
+                  <th style="text-align: center !important">พ.ย.</th>
+                  <th style="text-align: center !important">ธ.ค.</th>
+
+                  <th style="text-align: center !important">เดือนที่ 1 และเดือนที่ 2</th>
+                  <th style="text-align: center !important">เดือนที่ 2 และเดือนที่ 3</th>
+                  <th style="text-align: center !important">เดือนที่ 3 และเดือนที่ 4</th>
+                  <th style="text-align: center !important">เดือนที่ 4 และเดือนที่ 5</th>
+                  <th style="text-align: center !important">เดือนที่ 5 และเดือนที่ 6</th>
+                  <th style="text-align: center !important">เดือนที่ 6 และเดือนที่ 7</th>
+                  <th style="text-align: center !important">เดือนที่ 7 และเดือนที่ 8</th>
+                  <th style="text-align: center !important">เดือนที่ 8 และเดือนที่ 9</th>
+                  <th style="text-align: center !important">เดือนที่ 9 และเดือนที่ 10</th>
+                  <th style="text-align: center !important">เดือนที่ 10 และเดือนที่ 11</th>
+                  <th style="text-align: center !important">เดือนที่ 11 และเดือนที่ 12</th>
+                </tr>
+                <!-- table details-->
+              </thead>
+            </table>
+          </div>
+          <!-- Table Compare 2 Year (datatable 3-->
+          <div class="tableCompare2Year">
+            <table id="tableCompare2Year" class="ui small celled table aligned hover striped selectable nowrap " style="width: 100%;">
+              <thead>
+                <tr>
+                  <!-- <th rowspan="2" style="text-align: center !important"><input type="checkbox" class="ui checkbox "
+                      name="select-all" id="select-all"></th> -->
+                  <th rowspan="2"></th>
+                  <th class="text-center" rowspan="2">ปี</th>
+                  <th class="text-center" rowspan="2">เลขทะเบียนสรรพสามิต</th>
+                  <th class="text-center" rowspan="2">ชื่อผู้ประกอบการ/โรงอุตสาหกรรม</th>
+                  <th class="text-center" rowspan="2">ที่อยู่สถานบริการ/โรงอุตสาหกรรม</th>
+                  <th class="text-center" rowspan="2">พิกัดสินค้า/บริการ</th>
+                  <th class="text-center" rowspan="2">สรรพสามิตภาค</th>
+                  <th class="text-center" rowspan="2">สรรพสามิตพื้นที่</th>
+                  <th class="text-center" colspan="12">การชำระภาษี (บาท)</th>
+                </tr>
+                <tr>
+                  <th style="text-align: center !important">ม.ค.</th>
+                  <th style="text-align: center !important">ก.พ.</th>
+                  <th style="text-align: center !important">มี.ค.</th>
+                  <th style="text-align: center !important">เม.ย.</th>
+                  <th style="text-align: center !important">พ.ค.</th>
+                  <th style="text-align: center !important">มิ.ย.</th>
+                  <th style="text-align: center !important">ก.ค.</th>
+                  <th style="text-align: center !important">ส.ค.</th>
+                  <th style="text-align: center !important">ก.ย.</th>
+                  <th style="text-align: center !important">ต.ค.</th>
+                  <th style="text-align: center !important">พ.ย.</th>
+                  <th style="text-align: center !important">ธ.ค.</th>
+                </tr>
+                <!-- table details-->
+              </thead>
+            </table>
+          </div>
+          <table id="datatable2" class="ui small celled table aligned hover striped selectable nowrap" style="width: 100%;">
+            <thead id="tableOne">
+              <tr>
+
+                <th class="text-center">เลขทะเบียนสรรพสามิต</th>
+                <th class="text-center">ชื่อผู้ประกอบการ/โรงอุตสาหกรรม</th>
+                <th class="text-center">ที่อยู่สถานบริการ/โรงอุตสาหกรรม</th>
+                <th class="text-center">พิกัดสินค้า/บริการ</th>
+                <th class="text-center">สรรพสามิตภาค</th>
+                <th class="text-center">สรรพสามิตพื้นที่</th>
+                <th class="text-center">ด้านความเสี่ยง</th>
+              </tr>
+              <!-- <tr>
                   <th class="text-center">ม.ค.</th>
                   <th class="text-center">ก.พ.</th>
                   <th class="text-center">มี.ค.</th>
@@ -86,9 +174,9 @@
                   <th class="text-center">พ.ย.</th>
                   <th class="text-center">ธ.ค.</th>
                 </tr> -->
-                <!-- table details-->
-              </thead>
-            </table>
+              <!-- table details-->
+            </thead>
+          </table>
           <!-- button -->
           <div class="ui center aligned grid">
             <div class="six wide column">
