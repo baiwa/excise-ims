@@ -317,8 +317,8 @@ public class ExciseRegisttionNumberDao {
 	public List<ExciseRegistartionNumber> searchAllRegistartionNumber(String sector){
 		List<Object> objList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(SQL_REGIS);
-		sql.append("where d.TA_EXCISE_SECTOR_AREA = ? ");
-		objList.add(sector);
+//		sql.append("where d.TA_EXCISE_SECTOR_AREA = ? ");
+//		objList.add(sector);
 		return  jdbcTemplate.query(sql.toString(),objList.toArray()  ,exciseRegisttionRowmapper);
 	}
 

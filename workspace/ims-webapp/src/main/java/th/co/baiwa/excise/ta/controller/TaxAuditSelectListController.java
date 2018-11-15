@@ -3,6 +3,7 @@ package th.co.baiwa.excise.ta.controller;
 import java.beans.PropertyEditorSupport;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -22,6 +23,7 @@ import th.co.baiwa.excise.ta.persistence.vo.PlanFromWsVo;
 import th.co.baiwa.excise.ta.persistence.vo.Tsl010200FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Tsl010200Vo;
 import th.co.baiwa.excise.ta.service.PlanFromWsHeaderService;
+import th.co.baiwa.excise.utils.BeanUtils;
 
 @Controller
 @RequestMapping("api/taxAudit/selectList")
@@ -59,14 +61,26 @@ public class TaxAuditSelectListController {
 	@ResponseBody
 	public List<Tsl010200Vo> findCondition1(@RequestBody PlanFromWsVo vo) {
 		logger.debug("saveToTaPlanSearchRick");
-		List<Tsl010200Vo> list = planFromWsHeaderService.findCondition1(vo);
-		return list;
+		try {
+			List<Tsl010200Vo> list = planFromWsHeaderService.findCondition1(vo);
+			return list;
+			
+		} catch (Exception e) {
+			List<Tsl010200Vo> list = new ArrayList<Tsl010200Vo>();
+			return list;
+		}
 	}
 	@PostMapping("/findCondition2")
 	@ResponseBody
 	public List<Tsl010200Vo> findCondition2(@RequestBody PlanFromWsVo vo) {
 		logger.debug("saveToTaPlanSearchRick");
-		return planFromWsHeaderService.findCondition2(vo);
+		try {
+			return planFromWsHeaderService.findCondition2(vo);
+			
+		} catch (Exception e) {
+			List<Tsl010200Vo> list = new ArrayList<Tsl010200Vo>();
+			return list;
+		}
 	}
 	
 	@PostMapping("/saveCondition1")
