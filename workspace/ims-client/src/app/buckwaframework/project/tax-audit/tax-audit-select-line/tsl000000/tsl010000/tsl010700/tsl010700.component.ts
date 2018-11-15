@@ -244,7 +244,28 @@ class data {
   riskTypeDesc: string;
   dateCalendar: string;
   companyAddress: string;
-
+  //user login
   officer: string;
+  
+  //radio1
+  resultGetRaw:string;
+  resultGetRawValue:string;
+  resultGetRawBox:string;
+  //radio2
+  resultPayRaw:string;
+  resultPayRawValue:string;
+  resultPayRawBox:string;
+  //radio3
+  buyInvoiceBox:string;
+  buyInvoiceNum:string;
+  buyInvoiceValue:string;
+  buyInvoice:string;
+  //radio4
+  taxInvoiceBox:string;
+  taxInvoiceNumNum:string
+  taxInvoiceValue:string;
+  taxInvoiceNum:string;
+
+  
 
 } 
