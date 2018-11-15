@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.cop.persistence.vo.Cop0711FormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop0711Vo;
@@ -31,33 +32,17 @@ public class CopCheckFiscalYearDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	private final String SQL_COP_CHECK_FISCAL_YEAR = " SELECT * FROM COP_CHECK_FISCAL_YEAR WHERE IS_DELETED='N' ";
-	private final String SQL_COP_CHECK_FISCAL_YEAR_DTL = " SELECT * FROM COP_CHECK_FISCAL_YEAR_DTL WHERE IS_DELETED='N' ";
+	private final String SQL_COP_CHECK_FISCAL_YEAR = " SELECT * FROM COP_CHECK_FISCAL_YEAR WHERE IS_DELETED='N' AND CREATED_BY_ID = ? ";
+	private final String SQL_COP_CHECK_FISCAL_YEAR_DTL = " SELECT * FROM COP_CHECK_FISCAL_YEAR_DTL WHERE IS_DELETED='N'  AND CREATED_BY_ID = ? ";
 	
-	
-	public Long countCop071(Cop071FormVo formVo) {
-		
-		StringBuilder sql = new StringBuilder(SQL_COP_CHECK_FISCAL_YEAR);
-		List<Object> params = new ArrayList<>();
-		
-
-		if (StringUtils.isNotBlank(formVo.getFiscalYear())) {
-			sql.append(" AND  SUBSTR(FISCAL_YEAR,4,4)=?");
-			params.add(formVo.getFiscalYear());
-		}
-		
-
-		String countSql = OracleUtils.countForDatatable(sql);
-        Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
-        return count;
-    }
 
 	public List<Cop071Vo> findAllCop071(Cop071FormVo formVo) {
 		
 		StringBuilder sql = new StringBuilder(SQL_COP_CHECK_FISCAL_YEAR);
 		List<Object> params = new ArrayList<>();
 
-
+		params.add(UserLoginUtils.getCurrentUserBean().getUsername());
+		
 		if (StringUtils.isNotBlank(formVo.getFiscalYear())) {
 			sql.append(" AND  SUBSTR(FISCAL_YEAR,4,4)=?");
 			params.add(formVo.getFiscalYear());
@@ -116,7 +101,10 @@ public class CopCheckFiscalYearDao {
 	    		    "OUTSIDE_PLAN_NUMBER," +
 	    		    "OUTSIDE_PLAN_SUCCESS," +
 	    			"OUTSIDE_PLAN_WAIT, "+ 
-	    			"IS_DELETED "+ 
+	    			"CREATED_BY_ID,"+
+	    			"CREATED_BY,"+
+	    			"CREATED_DATE,"+
+	    			"IS_DELETED"+
 	    			")VALUES( " + 
 	    			"?, " + 
 	    			"?, " + 
@@ -126,6 +114,9 @@ public class CopCheckFiscalYearDao {
 	    			"?, " + 
 	    			"?, " + 
 	    			"?, " + 
+	    			"?, " + 
+	    			"?, " + 
+	    			"sysdate, " + 
 	    			"?) ",new Object[] {
 	    					id,
 	    					vo.getFiscalYear(),
@@ -135,38 +126,21 @@ public class CopCheckFiscalYearDao {
 	    		    		vo.getOutsidePlanNumber(),
 	    		    		0,
 	    		    		vo.getOutsidePlanWait(),
+	    		    		UserLoginUtils.getCurrentUserBean().getUsername(),
+	    		    		UserLoginUtils.getCurrentUserBean().getUsername(),
 	    		    		"N"});
 	    	
 	    	return id;
 	}
 	    
-	    public Long countCop0711(Cop0711FormVo formVo) {
-			
-			StringBuilder sql = new StringBuilder(SQL_COP_CHECK_FISCAL_YEAR_DTL);
-			List<Object> params = new ArrayList<>();
-			
-
-			if (!BeanUtils.isEmpty(formVo.getId())) {
-				sql.append(" AND  ID_MASTER = ? ");
-				params.add(formVo.getId());
-			}
-			if (!BeanUtils.isEmpty(formVo.getActionPlan())) {
-				sql.append(" AND  ACTION_PLAN = ? ");
-				params.add(formVo.getActionPlan());
-			}
-			
-
-			String countSql = OracleUtils.countForDatatable(sql);
-	        Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
-	        return count;
-	    }
 
 		public List<Cop0711Vo> findAllCop0711(Cop0711FormVo formVo) {
 			
 			StringBuilder sql = new StringBuilder(SQL_COP_CHECK_FISCAL_YEAR_DTL);
 			List<Object> params = new ArrayList<>();
 
-
+			params.add(UserLoginUtils.getCurrentUserBean().getUsername());
+			
 			if (!BeanUtils.isEmpty(formVo.getId())) {
 				sql.append(" AND  ID_MASTER = ? ");
 				params.add(formVo.getId());
@@ -213,9 +187,11 @@ public class CopCheckFiscalYearDao {
 		    			"ENTREPRENEUR_LOCA, " +
 		    			"CHECK_DATE, " +
 		    			"ACTION_PLAN, " + 
-		    			"STATUS, " + 
+		    			"STATUS, " + 	
+		    			"CREATED_BY_ID,"+
 		    			"IS_DELETED "+ 
 		    			")VALUES( " + 
+		    			"?, " + 
 		    			"?, " + 
 		    			"?, " + 
 		    			"?, " + 
@@ -235,6 +211,7 @@ public class CopCheckFiscalYearDao {
 		    					DateConstant.convertStrDDMMYYYYToDate(vo.getCheckDate()),
 		    					vo.getActionPlan(),
 		    					"1875",
+		    		    		UserLoginUtils.getCurrentUserBean().getUsername(),
 		    					"N"});
 		    	
 		    	return id;
@@ -317,33 +294,19 @@ public class CopCheckFiscalYearDao {
 			    	
 			    }
 			    
-			    public Long countCop091(Cop091FormVo formVo) {
-					
-					StringBuilder sql = new StringBuilder(SQL_COP_CHECK_FISCAL_YEAR_DTL);
-					List<Object> params = new ArrayList<>();
-					
-
-					if (!BeanUtils.isEmpty(formVo.getFiscalYear())) {
-						sql.append(" AND  SUBSTR(FISCALYEAR,4,4)=? ");
-						params.add(formVo.getFiscalYear());
-					}
-					
-					if (!BeanUtils.isEmpty(formVo.getActionPlan())) {
-						sql.append(" AND  ACTION_PLAN = ? ");
-						params.add(formVo.getActionPlan());
-					}
-					
-
-					String countSql = OracleUtils.countForDatatable(sql);
-			        Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
-			        return count;
+			    public void updateStatusCopCheckFiscalYearDtlById (Long id) {
+			    	
+			    	jdbcTemplate.update(" UPDATE COP_CHECK_FISCAL_YEAR_DTL SET STATUS = '1874' WHERE ID = ? ",new Object[] {id});
+	
 			    }
+			    
 			    
 			    public List<Cop091Vo> findAllCop091(Cop091FormVo formVo) {
 					
 					StringBuilder sql = new StringBuilder(SQL_COP_CHECK_FISCAL_YEAR_DTL);
 					List<Object> params = new ArrayList<>();
 
+					params.add(UserLoginUtils.getCurrentUserBean().getUsername());
 
 					if (!BeanUtils.isEmpty(formVo.getFiscalYear())) {
 						sql.append(" AND  SUBSTR(FISCALYEAR,4,4)=? ");

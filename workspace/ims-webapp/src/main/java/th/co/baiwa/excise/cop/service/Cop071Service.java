@@ -32,7 +32,7 @@ public class Cop071Service {
 		List<Cop071Vo> list = new ArrayList<Cop071Vo>();
 		
 		list = copCheckFiscalYearDao.findAllCop071(formVo);
-		Long count = copCheckFiscalYearDao.countCop071(formVo);
+		Long count = Long.valueOf(list.size());
 
 		
 		for(int i=0;i<12;i++){

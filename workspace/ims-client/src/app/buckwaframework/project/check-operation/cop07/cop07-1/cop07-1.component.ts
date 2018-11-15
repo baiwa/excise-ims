@@ -92,12 +92,12 @@ export class Cop071Component implements OnInit {
             return (data==null)?'-':data;
           }
         }, {
-          "data": "asPlanSuccess","className":"right",
+          "data": "asPlanWait","className":"right",
           "render": function (data, type, row) {
             return (data==null)?'-':data;
           }
         }, {
-          "data": "asPlanWait","className":"right",
+          "data": "asPlanSuccess","className":"right",
           "render": function (data, type, row) {
             return (data==null)?'-':data;
           }
@@ -107,12 +107,12 @@ export class Cop071Component implements OnInit {
             return (data==null)?'-':data;
           }
         }, {
-          "data": "outsidePlanSuccess","className":"right",
+          "data": "outsidePlanWait","className":"right",
           "render": function (data, type, row) {
             return (data==null)?'-':data;
           }
         }, {
-          "data": "outsidePlanWait","className":"right",
+          "data": "outsidePlanSuccess","className":"right",
           "render": function (data, type, row) {
             return (data==null)?'-':data;
           }

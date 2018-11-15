@@ -27,8 +27,13 @@ export class Cop091Component implements OnInit {
   totalOutsidePlanSuccess: Number = 0;
   totalOutsidePlanWait: Number = 0;
 
-  dataList:any;
-  
+  dataList: any;
+
+  idUpdate: any = 0;
+
+  table1: any;
+  table2: any;
+
 
   constructor(
     private message: MessageBarService,
@@ -62,7 +67,7 @@ export class Cop091Component implements OnInit {
 
   }
 
-  clickSearch = ()=> {
+  clickSearch = () => {
     if ($("#fiscalYear").val() == "") {
       this.message.alert("กรุณาระบุ แผนการตรวจปฏิบัติการประจำปี");
       return false;
@@ -75,9 +80,9 @@ export class Cop091Component implements OnInit {
 
   dataTable = () => {
     if ($('#tableData').DataTable() != null) { $('#tableData').DataTable().destroy(); };
-    var table = $('#tableData').DataTableTh({
+    this.table1 = $('#tableData').DataTableTh({
       "lengthChange": true,
-      "serverSide": false,
+      "serverSide": true,
       "searching": false,
       "ordering": false,
       "processing": true,
@@ -95,14 +100,15 @@ export class Cop091Component implements OnInit {
       },
       "columns": [
         {
+          "data": "id",
           "className": "ui center aligned",
-          "render": (data, row)=> {
-            return  '<button class="mini ui primary button btn-record" type="button" ><i class="edit icon"></i>เลือก</button>';
+          "render": (data, type, full, meta,row) => {
+            return (row.status != '1874')?'<button class="mini ui primary button btn-record" id="detail-' + full.id + '" type="button" ><i class="edit icon"></i>เลือก</button>':'';
           }
         }, {
           "data": "id",
           "className": "ui center aligned",
-          "render":  (data, type, row, meta) => {
+          "render": (data, type, row, meta) => {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         }, {
@@ -115,7 +121,7 @@ export class Cop091Component implements OnInit {
           "data": "checkDate", "className": "ui center aligned"
         }, {
           "data": "actionPlan", "className": "ui center aligned",
-          "render":  (data, type, row, meta) => {
+          "render": (data, type, row, meta) => {
             let s = '';
             if (data == '1871') {
               s = 'ตามแผนปฏิบัติการ';
@@ -138,19 +144,37 @@ export class Cop091Component implements OnInit {
         }
       ]
     });
-    table.on('click', 'tbody tr button.btn-record',(e)=> {
-      var closestRow = $(e.target).closest('tr');
-      var data = table.row(closestRow).data();
-      this.setDataT(data);
-     this.showModalTable();
+    $("#tableData tbody").on("click", "button", e => {
+      // Important dont change 
+      const btn = e.currentTarget.id.split("-");
+      let dataList = this.table1.data();
+      let dataArray = [];
+      for (let i = 0; i < dataList.length; i++) {
+        dataArray.push(dataList[i]);
+      }
+
+      // Data select by id
+      let dataSelected = dataArray.filter(obj => obj.id == btn[1]);
+      if (dataSelected.length > 0) {
+        dataSelected = dataSelected[0];
+        console.log("dataSelected :", dataSelected);
+        this.idUpdate = btn[1];
+      }
+
+      if ("detail" == btn[0]) { // รายละเอียด
+        this.setDataT(dataSelected);
+        this.showModalTable();
+      }
+
     });
   }
 
   dataTable2 = () => {
-    if ($('#tableData2').DataTable() != null) { $('#tableData2').DataTable().destroy(); };
-    var table2 = $('#tableData2').DataTableTh({
+    this.table2 = $('#tableData2').DataTable();
+    if (this.table2 != null) { this.table2.destroy(); };
+    this.table2 = $('#tableData2').DataTableTh({
       "lengthChange": true,
-      "serverSide": false,
+      "serverSide": true,
       "searching": false,
       "ordering": false,
       "processing": true,
@@ -168,9 +192,10 @@ export class Cop091Component implements OnInit {
       },
       "columns": [
         {
+          "data": "id",
           "className": "ui center aligned",
-          "render": (data, row)=> {
-            return '<button class="mini ui primary button btn-record2" type="button" ><i class="edit icon"></i>เลือก</button>';
+          "render": (data, type, full, meta ,row) => {
+            return (row.status != '1874')?'<button class="mini ui primary button btn-record2" id="detail-' + full.id + '" type="button" ><i class="edit icon"></i>เลือก</button>':'';
           }
         }, {
           "data": "id",
@@ -188,7 +213,7 @@ export class Cop091Component implements OnInit {
           "data": "checkDate", "className": "ui center aligned"
         }, {
           "data": "actionPlan", "className": "ui center aligned",
-          "render":  (data, type, row, meta) => {
+          "render": (data, type, row, meta) => {
             let s = '';
             if (data == '1871') {
               s = 'ตามแผนปฏิบัติการ';
@@ -199,7 +224,7 @@ export class Cop091Component implements OnInit {
           }
         }, {
           "data": "status", "className": "ui center aligned",
-          "render":  (data, type, row, meta) =>{
+          "render": (data, type, row, meta) => {
             let s = '';
             if (data == '1874') {
               s = 'เสร็จสิ้น';
@@ -212,39 +237,57 @@ export class Cop091Component implements OnInit {
       ]
     });
 
-    table2.on('click', 'tbody tr button.btn-record2',(e)=> {
-      var closestRow = $(e.target).closest('tr');
-      var data = table2.row(closestRow).data();
-      this.setDataT(data);
-     this.showModalTable();
+    $("#tableData2 tbody").on("click", "button", e => {
+      // Important dont change 
+      const btn = e.currentTarget.id.split("-");
+      let dataList = this.table2.data();
+      let dataArray = [];
+      for (let i = 0; i < dataList.length; i++) {
+        dataArray.push(dataList[i]);
+      }
+
+      // Data select by id
+      let dataSelected = dataArray.filter(obj => obj.id == btn[1]);
+      if (dataSelected.length > 0) {
+        dataSelected = dataSelected[0];
+        console.log("dataSelected :", dataSelected);
+        this.idUpdate = btn[1];
+      }
+
+      if ("detail" == btn[0]) { // รายละเอียด
+        this.setDataT(dataSelected);
+        this.showModalTable();
+      }
+
     });
 
   };
 
-  showModalTable(){
-     $('#modalTsl').modal({
-        onShow: () => {
-          setTimeout(() => {
-            this.calenda();
-          }, 500);
-        }
-      }).modal('show');
+  showModalTable() {
+    $('#modalTsl').modal({
+      onShow: () => {
+        setTimeout(() => {
+          this.calenda();
+        }, 500);
+      }
+    }).modal('show');
   }
-  setDataT=(data)=>{
-    console.log("setDataT :",data);
-    this.dataList = { analysisNumber: "25611115-01-03721",
-    companyAddress: "252/133 อาคาร- ซอย- ถนนรัชดาภิเษก แขวงห้วยขวาง เขตห้วยขวาง  จังหวัดกรุงเทพมหานคร 10310",
-    companyName: "บริษัท ดัชมิลด์ ดิไวซ์ เซลส์ (ประเทศไทย) จำกัด",
-    exciseArea: "สรรพสามิตภาคที่ 1",
-    exciseId: "0105540039831-3-001",
-    exciseSubArea: "สรรพสามิตพื้นที่ปทุมธานี 2",
-    flag: "1",
-    flagDesc: "รอดำเนินการ",
-    product: null,
-    riskType: "1",
-    riskTypeDesc: "ความถี่ของเดือนที่ชำระภาษี",
-    taYearPlanId: 63,
-    userId: null
+  setDataT = (data) => {
+    console.log("setDataT :", data);
+    this.dataList = {
+      analysisNumber: "25611115-01-03721",
+      companyAddress: "252/133 อาคาร- ซอย- ถนนรัชดาภิเษก แขวงห้วยขวาง เขตห้วยขวาง  จังหวัดกรุงเทพมหานคร 10310",
+      companyName: "บริษัท ดัชมิลด์ ดิไวซ์ เซลส์ (ประเทศไทย) จำกัด",
+      exciseArea: "สรรพสามิตภาคที่ 1",
+      exciseId: "0105540039831-3-001",
+      exciseSubArea: "สรรพสามิตพื้นที่ปทุมธานี 2",
+      flag: "1",
+      flagDesc: "รอดำเนินการ",
+      product: null,
+      riskType: "1",
+      riskTypeDesc: "ความถี่ของเดือนที่ชำระภาษี",
+      taYearPlanId: 63,
+      userId: null
     }
   }
 
@@ -254,16 +297,18 @@ export class Cop091Component implements OnInit {
     this.dataService.setData(this.dataList);
     setTimeout(() => {
       // this.router.navigate(["/cop09/2"],
-    this.router.navigate(["/tax-audit-select-line/tsl0107-00"],
-    {
-      queryParams: {
-        "dateCalendar": $("#dateM").val(),
-        "searchFlag": "TRUE"
-      }
-    }
-  );
+      this.router.navigate(["/cop09/2"],
+        {
+          queryParams: {
+            "dateCalendar": $("#dateM").val(),
+            "searchFlag": "TRUE",
+            "id": this.idUpdate,
+            "fiscalYear": $("#fiscalYear").val()
+          }
+        }
+      );
     }, 500);
-   
+
   }
 
   ngOnInit() {
@@ -273,7 +318,6 @@ export class Cop091Component implements OnInit {
     this.dataTable();
     this.dataTable2();
 
-  
   }
 
 }

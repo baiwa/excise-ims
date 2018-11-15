@@ -29,6 +29,7 @@ export class Cop092Component implements OnInit {
   obj: data;
   dateCalendar: string = "";
   id: any;
+  idUpdate:any=0;
 
   constructor(
     private dataService: IaService,
@@ -46,6 +47,8 @@ export class Cop092Component implements OnInit {
   }
 
   ngOnInit() {
+
+    this.idUpdate = this.route.snapshot.queryParams["id"];
     this.authService.reRenderVersionProgram('cop092').then(user => {
       this.obj.officer = user.fullName;
       console.log(this.obj.officer);
@@ -57,10 +60,10 @@ export class Cop092Component implements OnInit {
   onReport() {
     this.message.comfirm(confirm => {
       if (confirm) {
-        const URL = "exciseTax/report/updateFlag";
-        this.ajax.post(URL, parseInt(this.dataRecord.taYearPlanId) || 0, response => {
+        const URL = "cop/cop092/updateFlag";
+        this.ajax.post(URL, {"id":this.idUpdate}, response => {
           this.message.successModal(response.json().messageTh);
-          this.router.navigate(["/tax-audit-select-line/tsl0106-00"]);
+          this.router.navigate(["/cop09/1"]);
         }).catch(err => {
           this.message.errorModal("ไม่สามารถทำการบันทึกได้");
           console.error(err);
@@ -213,7 +216,7 @@ export class Cop092Component implements OnInit {
   };
 
   onClickBack() {
-    this.router.navigate(["/tax-audit-select-line/tsl0106-00"], {
+    this.router.navigate(["cop09/1"], {
       queryParams: {}
     });
   }

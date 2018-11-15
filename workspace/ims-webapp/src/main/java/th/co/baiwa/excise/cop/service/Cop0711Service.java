@@ -24,7 +24,7 @@ public class Cop0711Service {
 		formVo.setActionPlan("1871");
 		// query data
 		List<Cop0711Vo> list = copCheckFiscalYearDao.findAllCop0711(formVo);
-		Long count = copCheckFiscalYearDao.countCop0711(formVo);
+		Long count = Long.valueOf(list.size());
 
 		// set data table
 		DataTableAjax<Cop0711Vo> dataTableAjax = new DataTableAjax<>();
@@ -43,7 +43,7 @@ public class Cop0711Service {
 		formVo.setActionPlan("1872");
 		// query data
 		List<Cop0711Vo> list = copCheckFiscalYearDao.findAllCop0711(formVo);
-		Long count = copCheckFiscalYearDao.countCop0711(formVo);
+		Long count = Long.valueOf(list.size());
 
 		// set data table
 		DataTableAjax<Cop0711Vo> dataTableAjax = new DataTableAjax<>();

@@ -14,16 +14,17 @@ public class Cop064FormVo extends DataTableRequest {
 	private static final long serialVersionUID = 5141138090662896644L;
 	private String taExciseAcc0502Id;
 
+	private Long id;
 	private String fiscalYear;
 	private String exciseId;
 	private String exciseName;
 	private String exciseAddress;
 	private String exciseType;
 	private String productType;
-	
-	private String dateFrom ;
+
+	private String dateFrom;
 	private String dateTo;
-	
+
 	private MultipartFile fileName;
 	private List<Cop064ExcelVo> dataExcel;
 	private List<Cop064FormVo> dataList;
@@ -35,6 +36,14 @@ public class Cop064FormVo extends DataTableRequest {
 
 	public void setTaExciseAcc0502Id(String taExciseAcc0502Id) {
 		this.taExciseAcc0502Id = taExciseAcc0502Id;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getFiscalYear() {
@@ -85,6 +94,22 @@ public class Cop064FormVo extends DataTableRequest {
 		this.productType = productType;
 	}
 
+	public String getDateFrom() {
+		return dateFrom;
+	}
+
+	public void setDateFrom(String dateFrom) {
+		this.dateFrom = dateFrom;
+	}
+
+	public String getDateTo() {
+		return dateTo;
+	}
+
+	public void setDateTo(String dateTo) {
+		this.dateTo = dateTo;
+	}
+
 	public MultipartFile getFileName() {
 		return fileName;
 	}
@@ -109,10 +134,6 @@ public class Cop064FormVo extends DataTableRequest {
 		this.dataList = dataList;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	public List<Cop064Vo> getDataListVo() {
 		return dataListVo;
 	}
@@ -121,23 +142,8 @@ public class Cop064FormVo extends DataTableRequest {
 		this.dataListVo = dataListVo;
 	}
 
-	public String getDateFrom() {
-		return dateFrom;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
-
-	public void setDateFrom(String dateFrom) {
-		this.dateFrom = dateFrom;
-	}
-
-	public String getDateTo() {
-		return dateTo;
-	}
-
-	public void setDateTo(String dateTo) {
-		this.dateTo = dateTo;
-	}
-	
-	
-	
 
 }
