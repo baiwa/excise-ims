@@ -51,6 +51,7 @@ export class Tsl010700Component implements OnInit {
     this.authService.reRenderVersionProgram('tsl010700').then(user => {
       this.obj.officer = user.fullName;
     });
+    
   }
 
 
@@ -64,6 +65,12 @@ export class Tsl010700Component implements OnInit {
     this.obj.riskTypeDesc =   $("#riskTypeDesc").val();
     this.obj.dateCalendar =   $("#dateCalendar").val();
     this.obj.companyAddress =   $("#companyAddress").val();
+
+    this.obj.resultGetRaw =   $("#resultGetRaw").val();
+    this.obj.resultPayRaw =   $("#resultPayRaw").val();
+    this.obj.receiptInvoiceRaw =   $("#receiptInvoiceRaw").val();
+    this.obj.payInvoiceRaw =   $("#payInvoiceRaw").val();
+
     //console.log(this.obj);
      var form = document.createElement("form");
      form.method = "POST";
@@ -76,19 +83,19 @@ export class Tsl010700Component implements OnInit {
      document.body.appendChild(form);
      form.submit();
      
-    // const URL = "exciseTax/report/updateFlag";
-    // this.message.comfirm(confirm => {
-    //   if (confirm) {
-    //     const URL = "exciseTax/report/updateFlag";
-    //     this.ajax.post(URL, parseInt(this.dataRecord.taYearPlanId) || 0, response => {
-    //       this.message.successModal(response.json().messageTh);
-    //       this.router.navigate(["/tax-audit-select-line/tsl0106-00"]);
-    //     }).catch(err => {
-    //       this.message.errorModal("ไม่สามารถทำการบันทึกได้");
-    //       console.error(err);
-    //     });
-    //   }
-    // }, "ยืนยันการบันทึกข้อมูล");
+    const URL = "exciseTax/report/updateFlag";
+    this.message.comfirm(confirm => {
+      if (confirm) {
+        const URL = "exciseTax/report/updateFlag";
+        this.ajax.post(URL, parseInt(this.dataRecord.taYearPlanId) || 0, response => {
+          this.message.successModal(response.json().messageTh);
+          this.router.navigate(["/tax-audit-select-line/tsl0106-00"]);
+        }).catch(err => {
+          this.message.errorModal("ไม่สามารถทำการบันทึกได้");
+          console.error(err);
+        });
+      }
+    }, "ยืนยันการบันทึกข้อมูล");
 
   }
 
@@ -258,22 +265,16 @@ class dataTax {
   
   //radio1
   resultGetRaw:string;
-  resultGetRawValue:string;
   resultGetRawBox:string;
   //radio2
   resultPayRaw:string;
-  resultPayRawValue:string;
   resultPayRawBox:string;
   //radio3
-  // buyInvoiceBox:string;
-  // buyInvoiceNum:string;
-  // buyInvoiceValue:string;
-  // buyInvoice:string;
+  receiptInvoiceBox:string;
+  receiptInvoiceRaw:string;
   //radio4
-  // taxInvoiceBox:string;
-  // taxInvoiceNumNum:string
-  // taxInvoiceValue:string;
-  // taxInvoiceNum:string;
+  payInvoiceBox:string;
+  payInvoiceRaw:string;
 
   
 

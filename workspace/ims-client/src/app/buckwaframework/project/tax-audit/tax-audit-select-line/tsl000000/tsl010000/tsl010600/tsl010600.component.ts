@@ -72,7 +72,7 @@ export class Tsl010600Component implements OnInit {
           render: function (data, row) {
             console.log(data, row)
             if(data=="2") {
-              return '<p>เลือก</p>';
+              return '<i class="check icon" style="color:green"> </i>';
             }
             return '<a href="#" class="select-record"><u>เลือก</u></a>';
           }
