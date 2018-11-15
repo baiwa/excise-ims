@@ -4,10 +4,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,38 +60,14 @@ public class TaxAuditReportService {
 	@SuppressWarnings("unchecked")
 	public byte[] exciseTaxToPDF(ReportJsonBean reportJsonBean) throws IOException, JRException {
 
-/*		Gson gson = new Gson();
-		Map<String, Object> params = new HashMap<String, Object>();
-		params = (Map<String, Object>) gson.fromJson(reportJsonBean.getJson(), params.getClass());
-
-		// params.put("logo1",
-		// ReportUtils.getResourceFile(PATH.IMAGE_PATH,"logo1.jpg"));
-
-		JasperPrint jasperPrint1 = ReportUtils.exportReport("exciseTaxForm001", params, new JREmptyDataSource());
-		JasperPrint jasperPrint2 = ReportUtils.exportReport("exciseTaxForm002", params, new JREmptyDataSource());
-
-		List<ExporterInputItem> items = new ArrayList<ExporterInputItem>();
-		items.add(new SimpleExporterInputItem(jasperPrint1));
-		items.add(new SimpleExporterInputItem(jasperPrint2));
-
-		JRPdfExporter exporter = new JRPdfExporter();
-		exporter.setExporterInput(new SimpleExporterInput(items));
-
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
-		exporter.exportReport();
-		byte[] content = outputStream.toByteArray();
-
-		ReportUtils.closeResourceFileInputStream(params);
-
-		return content;*/
-		
 		
 		Gson gson = new Gson();
 		Map<String, Object> params = new HashMap<String, Object>();
 		params = (Map<String, Object>) gson.fromJson(reportJsonBean.getJson(), params.getClass());
 
-		//params.put("logo1", ReportUtils.getResourceFile(PATH.IMAGE_PATH, "logo1.jpg"));
+		Date reqDate = new Date();
+				
+		params.put("date", DateFormatUtils.format(reqDate, "dd /  MMMM  / yyyy", new Locale("th", "TH")));
 
 		JasperPrint jasperPrint = ReportUtils.exportReport("TaxAuditForm001", params, new JREmptyDataSource());
 

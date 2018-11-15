@@ -39,7 +39,7 @@ public class ExciseTaxReportController {
 	public void pdfTs(@ModelAttribute ReportJsonBean reportJsonBean, HttpServletResponse response) throws IOException, JRException {
 		byte[] reportFile = taxAuditReportService.exciseTaxToPDF(reportJsonBean);
 		
-		String fileName = URLEncoder.encode("ตรวจสอบข้อมูลด้านภาษีสรรพาสามิต","UTF-8") ;
+		String fileName = URLEncoder.encode("รายงานผลการตรวจสอบภาษี","UTF-8") ;
 		
 		response.setContentType("application/pdf");
 		response.addHeader("Content-Disposition", "inline;filename="+fileName+".pdf");

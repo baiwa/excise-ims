@@ -41,20 +41,16 @@ export class Tsl010700Component implements OnInit {
     private ajax: AjaxService,
   ) {
     this.dataRecord = this.dataService.getData();
-    console.log("dataRecord", this.dataRecord);
+    //console.log("dataRecord", this.dataRecord);
     this.dateCalendar = this.route.snapshot.queryParams['dateCalendar'];
     this.searchFlag = this.route.snapshot.queryParams['searchFlag'];
     this.obj = new dataTax();
-
-    //let date = moment(new Date()).locale('th');
-    //console.log(date)
   }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('tsl010700').then(user => {
       this.obj.officer = user.fullName;
     });
-   
   }
 
 
@@ -68,12 +64,7 @@ export class Tsl010700Component implements OnInit {
     this.obj.riskTypeDesc =   $("#riskTypeDesc").val();
     this.obj.dateCalendar =   $("#dateCalendar").val();
     this.obj.companyAddress =   $("#companyAddress").val();
-    // if(this.obj.resultGetRaw==="1"){
-    //   this.obj.resultGetRawValue="";
-    // }
-    
-    console.log(this.obj);
-
+    //console.log(this.obj);
      var form = document.createElement("form");
      form.method = "POST";
      form.action = AjaxService.CONTEXT_PATH + "exciseTax/report/pdf/tax/checkExciseTax";
