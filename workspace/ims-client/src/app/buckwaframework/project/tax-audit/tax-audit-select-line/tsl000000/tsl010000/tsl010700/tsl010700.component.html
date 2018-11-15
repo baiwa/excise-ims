@@ -21,13 +21,13 @@
         <label>สรรพสามิตภาค :</label>
       </div>
       <div class="four wide field ">
-        <input type="text" value="{{dataRecord.exciseArea}}">
+        <input type="text" id="exciseArea" value="{{dataRecord.exciseArea}}">
       </div>
       <div class="two wide field ">
         <label>สรรพสามิตภาคพื้นที่ :</label>
       </div>
       <div class="four wide field ">
-        <input type="text" value="{{dataRecord.exciseSubArea}}">
+        <input type="text" id="exciseSubArea" value="{{dataRecord.exciseSubArea}}">
       </div>
     </div>
     <div class="inline fields">
@@ -36,13 +36,13 @@
         <label>เลขทะเบียนสรรพสามิต :</label>
       </div>
       <div class="four wide field ">
-        <input type="text" value="{{dataRecord.exciseId}}">
+        <input type="text"  id="exciseId" value="{{dataRecord.exciseId}}">
       </div>
       <div class="two wide field ">
         <label>ชื่อผู้ประกอบการ/โรงอุตสาหกรรม :</label>
       </div>
       <div class="four wide field ">
-        <input type="text" value="{{dataRecord.companyName}}">
+        <input type="text"  id="companyName" value="{{dataRecord.companyName}}">
       </div>
     </div>
     <div class="inline fields">
@@ -51,13 +51,13 @@
         <label>สินค้า :</label>
       </div>
       <div class="four wide field ">
-        <input type="text" value="{{dataRecord.product}}">
+        <input type="text" id="product" value="{{dataRecord.product}}">
       </div>
       <div class="two wide field ">
         <label>ความเสี่ยงที่ถูกตรวจสอบ :</label>
       </div>
       <div class="four wide field ">
-        <input type="text" value="{{dataRecord.riskTypeDesc}}">
+        <input type="text"  id="riskTypeDesc" value="{{dataRecord.riskTypeDesc}}">
       </div>
     </div>
     <div class="inline fields">
@@ -66,7 +66,7 @@
         <label>เวลาที่ตรวจสอบ (ปีปฏิทิน) :</label>
       </div>
       <div class="four wide field ">
-        <input type="text" value="{{dateCalendar}}">
+        <input type="text" id="dateCalendar" value="{{dateCalendar}}">
       </div>
     </div>
     <div class="inline fields">
@@ -75,7 +75,7 @@
         <label>ที่อยู่สถานบริการ/โรงอุตสาหกรรม :</label>
       </div>
       <div class="four wide field ">
-        <textarea rows="5" value="{{dataRecord.companyAddress}}"></textarea>
+        <textarea rows="5"  id="companyAddress" value="{{dataRecord.companyAddress}}"></textarea>
       </div>
     </div>
   </div>
@@ -114,20 +114,20 @@
     <div class="inline fields">
       <div class="four wide field"></div>
       <div class="eight wide field ">
-        <textarea name="resultGetRawBox" rows="5"></textarea>
+        <textarea  id="resultGetRawBox" name="resultGetRawBox" [(ngModel)]="obj.resultGetRawBox" rows="5"></textarea>
       </div>
     </div>
     <div class="inline fields">
       <div class="four wide field"></div>
       <div class="two wide field ">
         <div class="ui radio checkbox">
-          <input type="radio" name="resultGetRaw" value="0" [checked]="true">
+          <input type="radio" id="resultGetRaw" name="resultGetRaw" [(ngModel)]="obj.resultGetRaw" value="ข้อมูลถูกต้อง">
           <label>ข้อมูลถูกต้อง</label>
         </div>
       </div>
       <div class="two wide field ">
         <div class="ui radio checkbox">
-          <input type="radio" name="resultGetRaw" value="1">
+          <input type="radio" id="resultGetRaw" name="resultGetRaw" [(ngModel)]="obj.resultGetRaw" value="ข้อมูลไม่ถูกต้อง">
           <label>ข้อมูลไม่ถูกต้อง</label>
         </div>
       </div>
@@ -170,28 +170,39 @@
     <div class="inline fields">
       <div class="four wide field"></div>
       <div class="eight wide field ">
-        <textarea name="resultPayRawBox" rows="5"></textarea>
+        <textarea id="resultPayRawBox" name="resultPayRawBox" [(ngModel)]="obj.resultPayRawBox" rows="5"></textarea>
       </div>
     </div>
     <div class="inline fields">
       <div class="four wide field"></div>
       <div class="two wide field ">
         <div class="ui radio checkbox">
-          <input type="radio" name="resultPayRaw" value="0" [checked]="true">
+          <input type="radio" id="resultPayRaw" name="resultPayRaw" [(ngModel)]="obj.resultPayRaw" value="ข้อมูลถูกต้อง" >
           <label>ข้อมูลถูกต้อง</label>
         </div>
       </div>
       <div class="two wide field ">
         <div class="ui radio checkbox">
-          <input type="radio" name="resultPayRaw" value="1">
+          <input type="radio" id="resultPayRaw" name="resultPayRaw" [(ngModel)]="obj.resultPayRaw" value="ข้อมูลไม่ถูกต้อง">
           <label>ข้อมูลไม่ถูกต้อง</label>
         </div>
       </div>
     </div>
-  </div>
+    <br />
+    <div class="ui center aligned grid">
+      <div class="sixteen wide column">
+        <button class="ui primary mini button" (click)="onReport()" >รายงานการตรวจ</button>
+        <button class="ui mini button" type="button" (click)="onClickBack()">ย้อนกลับ</button>
+      </div>
+    </div>
+  </div>  
 </div>
-
-<div class="ui segment" style="width: 100%;">
+<!-- onReport -->
+<form  id="onReport" method="POST"> 
+  <input type="hidden" name="dataJson" id="dataJson">
+</form>
+<!-- onReport -->
+<!-- <div class="ui segment" style="width: 100%;">
   <br />
   <div class="ui grid center aligned">
     <div class="sixteen wide column">
@@ -238,8 +249,8 @@
       </div>
     </div>
   </div>
-</div>
-
+</div> -->
+<!-- 
 <div class="ui segment" style="width: 100%;">
   <br />
   <div class="ui grid center aligned">
@@ -344,4 +355,4 @@
     </div>
   </div>
   <br />
-</div>
+</div> -->

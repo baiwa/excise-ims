@@ -5,7 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { IaService } from 'services/ia.service';
 import { AuthService } from 'services/auth.service';
 import { MessageBarService } from 'services/index';
-
+import * as moment from 'moment';
+import { TextDateTH } from 'helpers/index';
 declare var $: any;
 
 @Component({
@@ -27,7 +28,7 @@ export class Tsl010700Component implements OnInit {
   getRawTable: any;
   payRawTable: any;
   dataRecord: any;
-  obj: data;
+  obj: dataTax;
   dateCalendar: string = "";
   id: any;
 
@@ -43,43 +44,60 @@ export class Tsl010700Component implements OnInit {
     console.log("dataRecord", this.dataRecord);
     this.dateCalendar = this.route.snapshot.queryParams['dateCalendar'];
     this.searchFlag = this.route.snapshot.queryParams['searchFlag'];
-    this.obj = new data();
+    this.obj = new dataTax();
+
+    //let date = moment(new Date()).locale('th');
+    //console.log(date)
   }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('tsl010700').then(user => {
       this.obj.officer = user.fullName;
-      console.log(this.obj.officer);
     });
+   
   }
 
 
 
   onReport() {
-    // console.log(this.obj);
-    // var form = document.createElement("form");
-    // form.method = "POST";
-    // form.action = AjaxService.CONTEXT_PATH + "internalAudit/report/pdf/int/reportCheckIncome";
-    // form.style.display = "none";    
-    // var jsonInput = document.createElement("input");
-    // jsonInput.name = "json";
-    // jsonInput.value = JSON.stringify(this.obj);
-    // form.appendChild(jsonInput);
+    this.obj.exciseArea =   $("#exciseArea").val();
+    this.obj.exciseSubArea =   $("#exciseSubArea").val();
+    this.obj.exciseId =   $("#exciseId").val();
+    this.obj.companyName =   $("#companyName").val();
+    this.obj.product =   $("#product").val();
+    this.obj.riskTypeDesc =   $("#riskTypeDesc").val();
+    this.obj.dateCalendar =   $("#dateCalendar").val();
+    this.obj.companyAddress =   $("#companyAddress").val();
+    // if(this.obj.resultGetRaw==="1"){
+    //   this.obj.resultGetRawValue="";
+    // }
+    
+    console.log(this.obj);
 
-    // document.body.appendChild(form);
-    // form.submit();
-    this.message.comfirm(confirm => {
-      if (confirm) {
-        const URL = "exciseTax/report/updateFlag";
-        this.ajax.post(URL, parseInt(this.dataRecord.taYearPlanId) || 0, response => {
-          this.message.successModal(response.json().messageTh);
-          this.router.navigate(["/tax-audit-select-line/tsl0106-00"]);
-        }).catch(err => {
-          this.message.errorModal("ไม่สามารถทำการบันทึกได้");
-          console.error(err);
-        });
-      }
-    }, "ยืนยันการบันทึกข้อมูล");
+     var form = document.createElement("form");
+     form.method = "POST";
+     form.action = AjaxService.CONTEXT_PATH + "exciseTax/report/pdf/tax/checkExciseTax";
+     form.style.display = "none";    
+     var jsonInput = document.createElement("input");
+     jsonInput.name = "json";
+     jsonInput.value = JSON.stringify(this.obj);
+     form.appendChild(jsonInput);
+     document.body.appendChild(form);
+     form.submit();
+     
+    // const URL = "exciseTax/report/updateFlag";
+    // this.message.comfirm(confirm => {
+    //   if (confirm) {
+    //     const URL = "exciseTax/report/updateFlag";
+    //     this.ajax.post(URL, parseInt(this.dataRecord.taYearPlanId) || 0, response => {
+    //       this.message.successModal(response.json().messageTh);
+    //       this.router.navigate(["/tax-audit-select-line/tsl0106-00"]);
+    //     }).catch(err => {
+    //       this.message.errorModal("ไม่สามารถทำการบันทึกได้");
+    //       console.error(err);
+    //     });
+    //   }
+    // }, "ยืนยันการบันทึกข้อมูล");
 
   }
 
@@ -235,7 +253,7 @@ export class Tsl010700Component implements OnInit {
 
 }
 
-class data {
+class dataTax {
   exciseArea: string;
   exciseSubArea: string;
   exciseId: string;
@@ -256,15 +274,15 @@ class data {
   resultPayRawValue:string;
   resultPayRawBox:string;
   //radio3
-  buyInvoiceBox:string;
-  buyInvoiceNum:string;
-  buyInvoiceValue:string;
-  buyInvoice:string;
+  // buyInvoiceBox:string;
+  // buyInvoiceNum:string;
+  // buyInvoiceValue:string;
+  // buyInvoice:string;
   //radio4
-  taxInvoiceBox:string;
-  taxInvoiceNumNum:string
-  taxInvoiceValue:string;
-  taxInvoiceNum:string;
+  // taxInvoiceBox:string;
+  // taxInvoiceNumNum:string
+  // taxInvoiceValue:string;
+  // taxInvoiceNum:string;
 
   
 
