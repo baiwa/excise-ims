@@ -1,21 +1,20 @@
-import { Component, OnInit } from "@angular/core";
-import { TextDateTH, formatter, stringToDate } from "../../../../common/helper/datepicker";
-import { AjaxService, MessageBarService, AuthService } from "../../../../common/services";
-import { TravelCostHeader } from "../../../../common/models";
-import { Router, ActivatedRoute } from "@angular/router";
-import { TravelCostDetail } from "app/buckwaframework/common/models/travelcostdetail";
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { TextDateTH, formatter } from "../../../../common/helper/datepicker";
+import { MessageBarService, AuthService } from "../../../../common/services";
+import { Router } from "@angular/router";
 import { IaService } from 'app/buckwaframework/common/services/ia.service';
 import { BreadCrumb } from 'models/index';
 import { setTimeout } from "timers";
-
+import { Cop9, Cop9Service } from "../cop9.service";
 
 declare var $: any;
+
 @Component({
   selector: "app-cop09-1",
   templateUrl: "./cop09-1.component.html",
   styleUrls: ["./cop09-1.component.css"]
 })
-export class Cop091Component implements OnInit {
+export class Cop091Component implements OnInit, OnDestroy {
 
   searchFlag: String;
   breadcrumb: BreadCrumb[];
@@ -27,44 +26,40 @@ export class Cop091Component implements OnInit {
   totalOutsidePlanSuccess: Number = 0;
   totalOutsidePlanWait: Number = 0;
 
-  dataList: any;
+  dataList: Cop9;
+  testList: Cop9;
 
   idUpdate: any = 0;
 
   table1: any;
   table2: any;
 
-
   constructor(
     private message: MessageBarService,
-    private ajax: AjaxService,
-    private route: ActivatedRoute,
     private router: Router,
     private dataService: IaService,
     private authService: AuthService,
-    private iaService: IaService,
-    private msg: MessageBarService
+    private cop9Service: Cop9Service
   ) {
     this.breadcrumb = [
       { label: "ตรวจปฏิบัติการ", route: "#" },
       { label: "ตรวจสอบข้อมูล", route: "#" }
     ];
-
   }
 
   calenda = () => {
-
     $("#date").calendar({
       type: "year",
       text: TextDateTH,
+      autofocus: false,
       formatter: formatter("ป")
     });
     $("#dateModal").calendar({
       type: "month",
       text: TextDateTH,
+      autofocus: false,
       formatter: formatter("month-year")
     });
-
   }
 
   clickSearch = () => {
@@ -100,28 +95,28 @@ export class Cop091Component implements OnInit {
       },
       "columns": [
         {
-          "data": "id",
-          "className": "ui center aligned",
-          "render": (data, type, full, meta,row) => {
-            return (row.status != '1874')?'<button class="mini ui primary button btn-record" id="detail-' + full.id + '" type="button" ><i class="edit icon"></i>เลือก</button>':'';
+          data: "id",
+          className: "ui center aligned",
+          render: (data, type, full, meta) => {
+            return (full.status != '1874') ?
+              '<button class="mini ui primary button btn-record" id="detail-' + full.id + '" type="button" ><i class="edit icon"></i>เลือก</button>'
+              : '<i class="check icon" style="color:green"> </i>';
           }
-        }, {
-          "data": "id",
-          "className": "ui center aligned",
-          "render": (data, type, row, meta) => {
+        },
+        {
+          data: "id",
+          className: "ui center aligned",
+          render: (data, type, row, meta) => {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
-        }, {
-          "data": "entrepreneurNo", "className": "ui center aligned"
-        }, {
-          "data": "entrepreneurName"
-        }, {
-          "data": "entrepreneurLoca"
-        }, {
-          "data": "checkDate", "className": "ui center aligned"
-        }, {
-          "data": "actionPlan", "className": "ui center aligned",
-          "render": (data, type, row, meta) => {
+        },
+        { data: "entrepreneurNo", className: "ui center aligned" },
+        { data: "entrepreneurName" },
+        { data: "entrepreneurLoca" },
+        { data: "checkDate", className: "ui center aligned" },
+        {
+          data: "actionPlan", className: "ui center aligned",
+          render: (data, type, row, meta) => {
             let s = '';
             if (data == '1871') {
               s = 'ตามแผนปฏิบัติการ';
@@ -130,20 +125,22 @@ export class Cop091Component implements OnInit {
             }
             return s;
           }
-        }, {
-          "data": "status", "className": "ui center aligned",
-          "render": (data, type, row, meta) => {
-            let s = '';
+        },
+        {
+          data: "status", className: "ui center aligned",
+          render: (data, type, row, meta) => {
+            let status = '';
             if (data == '1874') {
-              s = 'เสร็จสิ้น';
+              status = 'เสร็จสิ้น';
             } else {
-              s = 'รอการดำเนินการ';
+              status = 'รอการดำเนินการ';
             }
-            return s;
+            return status;
           }
         }
       ]
     });
+
     $("#tableData tbody").on("click", "button", e => {
       // Important dont change 
       const btn = e.currentTarget.id.split("-");
@@ -194,8 +191,10 @@ export class Cop091Component implements OnInit {
         {
           "data": "id",
           "className": "ui center aligned",
-          "render": (data, type, full, meta ,row) => {
-            return (row.status != '1874')?'<button class="mini ui primary button btn-record2" id="detail-' + full.id + '" type="button" ><i class="edit icon"></i>เลือก</button>':'';
+          "render": (data, type, full, meta, row) => {
+            return (full.status != '1874') ?
+              '<button class="mini ui primary button btn-record2" id="detail-' + full.id + '" type="button" ><i class="edit icon"></i>เลือก</button>'
+              : '<i class="check icon" style="color:green"></i>';
           }
         }, {
           "data": "id",
@@ -250,7 +249,7 @@ export class Cop091Component implements OnInit {
       let dataSelected = dataArray.filter(obj => obj.id == btn[1]);
       if (dataSelected.length > 0) {
         dataSelected = dataSelected[0];
-        console.log("dataSelected :", dataSelected);
+        // console.log("dataSelected :", dataSelected);
         this.idUpdate = btn[1];
       }
 
@@ -273,13 +272,13 @@ export class Cop091Component implements OnInit {
     }).modal('show');
   }
   setDataT = (data) => {
-    console.log("setDataT :", data);
+    // console.log("setDataT :", data);
     this.dataList = {
       analysisNumber: "25611115-01-03721",
-      companyAddress: "252/133 อาคาร- ซอย- ถนนรัชดาภิเษก แขวงห้วยขวาง เขตห้วยขวาง  จังหวัดกรุงเทพมหานคร 10310",
-      companyName: "บริษัท ดัชมิลด์ ดิไวซ์ เซลส์ (ประเทศไทย) จำกัด",
+      companyAddress: "252/133 อาคาร- ซอย- ถนนรัชดาภิเษก แขวงห้วยขวาง เขตห้วยขวาง  จังหวัดกรุงเทพมหานคร 10310", // data.entrepreneurLoca,
+      companyName: "บริษัท ดัชมิลด์ ดิไวซ์ เซลส์ (ประเทศไทย) จำกัด", // data.entrepreneurName,
       exciseArea: "สรรพสามิตภาคที่ 1",
-      exciseId: "0105540039831-3-001",
+      exciseId: "0105540039831-3-001", // data.entrepreneurNo,
       exciseSubArea: "สรรพสามิตพื้นที่ปทุมธานี 2",
       flag: "1",
       flagDesc: "รอดำเนินการ",
@@ -296,7 +295,7 @@ export class Cop091Component implements OnInit {
 
     this.dataService.setData(this.dataList);
     setTimeout(() => {
-      // this.router.navigate(["/cop09/2"],
+      this.cop9Service.setCop9(this.dataList);
       this.router.navigate(["/cop09/2"],
         {
           queryParams: {
@@ -317,7 +316,10 @@ export class Cop091Component implements OnInit {
     this.calenda();
     this.dataTable();
     this.dataTable2();
+  }
 
+  ngOnDestroy() {
+    $('#modalTsl').remove();
   }
 
 }

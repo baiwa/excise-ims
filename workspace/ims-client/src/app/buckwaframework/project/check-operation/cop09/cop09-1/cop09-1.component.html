@@ -21,7 +21,8 @@
           <div class="ui calendar" id="date" style="width: 100%;">
             <div class="ui input left icon">
               <i class="calendar alter nate outline icon"></i>
-              <input id="fiscalYear" type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="ปปปป" [attr.required]="true">
+              <input id="fiscalYear" type="text" name="date-raw" autocomplete="off" [attr.readonly]="null" placeholder="ปปปป"
+                [attr.required]="true">
             </div>
           </div>
         </div>
@@ -89,25 +90,26 @@
 </div>
 <!-- Modal -->
 <div class="ui small modal transition hidden" id='modalTsl'>
-    <div class="header" style="text-align: center !important;background: #1e83db;color: white;">
-        เลือกเดือนที่ต้องการตรวจสอบข้อมูล
-    </div>
-    <div class="content">
-        <div class="ui calendar full-width" id="dateModal" style="text-align: center;">
-          <div class="ui input left icon">
-            <i class="clock icon"></i>
-            <input id="dateM" name="dateM" type="text" autocomplete="off" [attr.readonly]="null" placeholder="ดด/ปปปป" [attr.required]="true">
-          </div>
-        </div>
+  <div class="header" style="text-align: center !important;background: #1e83db;color: white;">
+    เลือกเดือนที่ต้องการตรวจสอบข้อมูล
+  </div>
+  <div class="content">
+    <div class="ui calendar full-width" id="dateModal" style="text-align: center;">
+      <div class="ui input left icon">
+        <i class="clock icon"></i>
+        <input id="dateM" name="dateM" type="text" autocomplete="off" [attr.readonly]="null" placeholder="ดด/ปปปป"
+          [attr.required]="true">
       </div>
-  
-    <div class="actions">
-      <div class="ui mini yellow button" type="button"  (click)="onClickOK()">
-        <i class="edit icon"></i>ตรวจสอบ</div>
-      <div class="ui mini deny button" type="button" >
-        <i class="close icon"></i>ยกเลิก</div>
     </div>
   </div>
+
+  <div class="actions">
+    <button class="ui mini yellow button" type="button" (click)="onClickOK()">
+      <i class="edit icon"></i>ตรวจสอบ</button>
+    <button class="ui mini deny button" type="button">
+      <i class="close icon"></i>ยกเลิก</button>
+  </div>
+</div>
 
 
 <!-- End Modal -->

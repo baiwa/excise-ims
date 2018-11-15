@@ -21,13 +21,13 @@
         <label>สรรพสามิตภาค :</label>
       </div>
       <div class="four wide field ">
-        <input type="text" value="{{dataRecord.exciseArea}}">
+        <input type="text" id="exciseArea" value="{{dataRecord.exciseArea}}">
       </div>
       <div class="two wide field ">
         <label>สรรพสามิตภาคพื้นที่ :</label>
       </div>
       <div class="four wide field ">
-        <input type="text" value="{{dataRecord.exciseSubArea}}">
+        <input type="text" id="exciseSubArea" value="{{dataRecord.exciseSubArea}}">
       </div>
     </div>
     <div class="inline fields">
@@ -36,13 +36,13 @@
         <label>เลขทะเบียนสรรพสามิต :</label>
       </div>
       <div class="four wide field ">
-        <input type="text" value="{{dataRecord.exciseId}}">
+        <input type="text" id="exciseId" value="{{dataRecord.exciseId}}">
       </div>
       <div class="two wide field ">
         <label>ชื่อผู้ประกอบการ/โรงอุตสาหกรรม :</label>
       </div>
       <div class="four wide field ">
-        <input type="text" value="{{dataRecord.companyName}}">
+        <input type="text" id="companyName" value="{{dataRecord.companyName}}">
       </div>
     </div>
     <div class="inline fields">
@@ -51,13 +51,13 @@
         <label>สินค้า :</label>
       </div>
       <div class="four wide field ">
-        <input type="text" value="{{dataRecord.product}}">
+        <input type="text" id="product" value="{{dataRecord.product}}">
       </div>
       <div class="two wide field ">
         <label>ความเสี่ยงที่ถูกตรวจสอบ :</label>
       </div>
       <div class="four wide field ">
-        <input type="text" value="{{dataRecord.riskTypeDesc}}">
+        <input type="text" id="riskTypeDesc" value="{{dataRecord.riskTypeDesc}}">
       </div>
     </div>
     <div class="inline fields">
@@ -66,7 +66,7 @@
         <label>เวลาที่ตรวจสอบ (ปีปฏิทิน) :</label>
       </div>
       <div class="four wide field ">
-        <input type="text" value="{{dateCalendar}}">
+        <input type="text" id="dateCalendar" value="{{dateCalendar}}">
       </div>
     </div>
     <div class="inline fields">
@@ -75,7 +75,7 @@
         <label>ที่อยู่สถานบริการ/โรงอุตสาหกรรม :</label>
       </div>
       <div class="four wide field ">
-        <textarea rows="5" value="{{dataRecord.companyAddress}}"></textarea>
+        <textarea rows="5" id="companyAddress" value="{{dataRecord.companyAddress}}"></textarea>
       </div>
     </div>
   </div>
@@ -114,20 +114,20 @@
     <div class="inline fields">
       <div class="four wide field"></div>
       <div class="eight wide field ">
-        <textarea name="resultGetRawBox" rows="5"></textarea>
+        <textarea id="resultGetRawBox" name="resultGetRawBox" [(ngModel)]="obj.resultGetRawBox" maxlength="300" rows="5"></textarea>
       </div>
     </div>
     <div class="inline fields">
       <div class="four wide field"></div>
       <div class="two wide field ">
         <div class="ui radio checkbox">
-          <input type="radio" name="resultGetRaw" value="0" [checked]="true">
+          <input type="radio" name="resultGetRaw" id="resultGetRaw" (change)="onChangeRadio('resultGetRaw', $event)" value="0">
           <label>ข้อมูลถูกต้อง</label>
         </div>
       </div>
       <div class="two wide field ">
         <div class="ui radio checkbox">
-          <input type="radio" name="resultGetRaw" value="1">
+          <input type="radio" name="resultGetRaw" id="resultGetRaw" (change)="onChangeRadio('resultGetRaw', $event)" value="1">
           <label>ข้อมูลไม่ถูกต้อง</label>
         </div>
       </div>
@@ -170,20 +170,20 @@
     <div class="inline fields">
       <div class="four wide field"></div>
       <div class="eight wide field ">
-        <textarea name="resultPayRawBox" rows="5"></textarea>
+        <textarea id="resultPayRawBox" name="resultPayRawBox" [(ngModel)]="obj.resultPayRawBox" maxlength="300" rows="5"></textarea>
       </div>
     </div>
     <div class="inline fields">
       <div class="four wide field"></div>
       <div class="two wide field ">
         <div class="ui radio checkbox">
-          <input type="radio" name="resultPayRaw" value="0" [checked]="true">
+          <input type="radio" name="resultPayRaw" id="resultPayRaw" (change)="onChangeRadio('resultPayRaw', $event)" value="0">
           <label>ข้อมูลถูกต้อง</label>
         </div>
       </div>
       <div class="two wide field ">
         <div class="ui radio checkbox">
-          <input type="radio" name="resultPayRaw" value="1">
+          <input type="radio" name="resultPayRaw" id="resultPayRaw" (change)="onChangeRadio('resultPayRaw', $event)" value="1">
           <label>ข้อมูลไม่ถูกต้อง</label>
         </div>
       </div>
@@ -191,25 +191,32 @@
   </div>
 </div>
 
+<!-- Datatable III -->
 <div class="ui segment" style="width: 100%;">
   <br />
   <div class="ui grid center aligned">
     <div class="sixteen wide column">
-      <h4>ข้อมูลใบสั่งซื้อ</h4>
+      <h4>ข้อมูลการรับสินค้าสำเร็จรูป</h4>
     </div>
   </div>
+  <br>
+
+  <table id="tableReceiveProduct" class="ui small celled table nowrap striped selectable" style="width: 100%;">
+    <thead>
+      <tr>
+        <th style="text-align: center !important;">ลำดับ</th>
+        <th style="text-align: center !important;">รายการสินค้าสำเร็จรูป</th>
+        <th style="text-align: center !important;">หน่วยสินค้า</th>
+        <th style="text-align: center !important;">ยอดคงเหลือยกมา</th>
+        <th style="text-align: center !important;">รับจากการผลิต</th>
+        <th style="text-align: center !important;">รับคืนจากคลังสินค้าฑัณบน</th>
+        <th style="text-align: center !important;">อื่นๆ</th>
+        <th style="text-align: center !important;">รวม</th>
+      </tr>
+    </thead>
+  </table>
   <br />
   <div id="" class="ui form">
-    <div class="inline fields">
-      <div class="four wide field"></div>
-      <div class="two wide field ">
-        <label>ใบสั่งซื้อทั้งหมด: </label>
-      </div>
-      <div class="two wide field ">
-        <input name="buyInvoiceNum" type="text">
-        <label> &nbsp; ฉบับ</label>
-      </div>
-    </div>
     <div class="inline fields">
       <div class="four wide field"></div>
       <div class="two wide field ">
@@ -219,20 +226,20 @@
     <div class="inline fields">
       <div class="four wide field"></div>
       <div class="eight wide field ">
-        <textarea name="buyInvoiceBox" rows="5"></textarea>
+        <textarea id="receiptInvoiceBox" name="receiptInvoiceBox" [(ngModel)]="obj.receiptInvoiceBox" maxlength="300" rows="5"></textarea>
       </div>
     </div>
     <div class="inline fields">
       <div class="four wide field"></div>
       <div class="two wide field ">
         <div class="ui radio checkbox">
-          <input type="radio" name="buyInvoice" value="0" [checked]="true">
+          <input type="radio" id="receiptInvoiceRaw" name="receiptInvoiceRaw" (change)="onChangeRadio('receiptInvoiceRaw', $event)" value="0">
           <label>ข้อมูลถูกต้อง</label>
         </div>
       </div>
       <div class="two wide field ">
         <div class="ui radio checkbox">
-          <input type="radio" name="buyInvoice" value="1">
+          <input type="radio" id="receiptInvoiceRaw" name="receiptInvoiceRaw" (change)="onChangeRadio('receiptInvoiceRaw', $event)" value="1">
           <label>ข้อมูลไม่ถูกต้อง</label>
         </div>
       </div>
@@ -240,25 +247,34 @@
   </div>
 </div>
 
+<!-- Datatable IV -->
 <div class="ui segment" style="width: 100%;">
   <br />
   <div class="ui grid center aligned">
     <div class="sixteen wide column">
-      <h4>ข้อมูลใบกำกับภาษี</h4>
+      <h4>ข้อมูลการจ่ายสินค้าสำเร็จรูป</h4>
     </div>
   </div>
+  <br>
+
+  <table id="tablePayProduct" class="ui small celled table nowrap striped selectable" style="width: 100%;">
+    <thead>
+      <tr>
+        <th style="text-align: center !important;">ลำดับ</th>
+        <th style="text-align: center !important;">รายการสินค้าสำเร็จรูป</th>
+        <th style="text-align: center !important;">หน่วยสินค้า</th>
+        <th style="text-align: center !important;">จำหน่ายในประเทศ</th>
+        <th style="text-align: center !important;">จำหน่ายต่างประเทศ</th>
+        <th style="text-align: center !important;">ใช้ในโรงงานอุตสาหกรรม</th>
+        <th style="text-align: center !important;">คลังสินค้าฑัณบน</th>
+        <th style="text-align: center !important;">เสียหาย</th>
+        <th style="text-align: center !important;">อื่นๆ</th>
+        <th style="text-align: center !important;">รวม</th>
+      </tr>
+    </thead>
+  </table>
   <br />
   <div id="" class="ui form">
-    <div class="inline fields">
-      <div class="four wide field"></div>
-      <div class="two wide field ">
-        <label>ข้อมูลใบกำกับภาษีทั้งหมด: </label>
-      </div>
-      <div class="two wide field ">
-        <input type="text" name="taxInvoiceNum">
-        <label> &nbsp; ฉบับ</label>
-      </div>
-    </div>
     <div class="inline fields">
       <div class="four wide field"></div>
       <div class="two wide field ">
@@ -268,80 +284,40 @@
     <div class="inline fields">
       <div class="four wide field"></div>
       <div class="eight wide field ">
-        <textarea rows="5" name="taxInvoiceBox"></textarea>
+        <textarea id="payInvoiceBox" name="payInvoiceBox" [(ngModel)]="obj.payInvoiceBox" maxlength="300" rows="5"></textarea>
       </div>
     </div>
     <div class="inline fields">
       <div class="four wide field"></div>
       <div class="two wide field ">
         <div class="ui radio checkbox">
-          <input type="radio" name="taxInvoice" value="0" [checked]="true">
+          <input type="radio" id="payInvoiceRaw" name="payInvoiceRaw" (change)="onChangeRadio('payInvoiceRaw', $event)" value="0">
           <label>ข้อมูลถูกต้อง</label>
         </div>
       </div>
       <div class="two wide field ">
         <div class="ui radio checkbox">
-          <input type="radio" name="taxInvoice" value="1">
+          <input type="radio" id="payInvoiceRaw" name="payInvoiceRaw" (change)="onChangeRadio('payInvoiceRaw', $event)" value="1">
           <label>ข้อมูลไม่ถูกต้อง</label>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="inline field">
+    <div class="ui center aligned grid">
+      <div class="sixteen wide column">
+        <button class="ui primary mini button" (click)="onReport()">รายงานการตรวจ</button>
+        <button class="ui mini button" type="button" (click)="onClickBack()">ย้อนกลับ</button>
       </div>
     </div>
   </div>
 </div>
 
-<div class="ui segment" style="width: 100%;">
-  <br />
-  <div class="ui grid center aligned">
-    <div class="sixteen wide column">
-      <h4>ข้อมูลบัญชีงบดุล</h4>
-    </div>
-  </div>
-  <br />
-  <div id="" class="ui form">
-    <div class="inline fields">
-      <div class="four wide field"></div>
-      <div class="two wide field ">
-        <label>บัญชีงบดุล: </label>
-      </div>
-      <div class="two wide field ">
-        <input type="text" name="balanceAccountNum">
-        <label> &nbsp; ฉบับ</label>
-      </div>
-    </div>
-    <div class="inline fields">
-      <div class="four wide field"></div>
-      <div class="two wide field ">
-        <label>ผลการตรวจสอบ :</label>
-      </div>
-    </div>
-    <div class="inline fields">
-      <div class="four wide field"></div>
-      <div class="eight wide field ">
-        <textarea rows="5" name="balanceAccountBox"></textarea>
-      </div>
-    </div>
-    <div class="inline fields">
-      <div class="four wide field"></div>
-      <div class="two wide field ">
-        <div class="ui radio checkbox">
-          <input type="radio" name="balanceAccount" value="0" [checked]="true">
-          <label>ข้อมูลถูกต้อง</label>
-        </div>
-      </div>
-      <div class="two wide field ">
-        <div class="ui radio checkbox">
-          <input type="radio" name="balanceAccount" value="1">
-          <label>ข้อมูลไม่ถูกต้อง</label>
-        </div>
-      </div>
-    </div>
-  </div>
-  <br />
-  <div class="ui center aligned grid">
-    <div class="sixteen wide column">
-      <button class="ui primary mini button" (click)="onReport()" >รายงานการตรวจ</button>
-      <button class="ui mini button" type="button" (click)="onClickBack()">ย้อนกลับ</button>
-    </div>
-  </div>
-  <br />
-</div>
+
+
+<!-- onReport -->
+<form  id="onReport" method="POST"> 
+  <input type="hidden" name="dataJson" id="dataJson">
+</form>
+<!-- onReport -->

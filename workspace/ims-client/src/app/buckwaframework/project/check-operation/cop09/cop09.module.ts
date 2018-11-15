@@ -7,6 +7,7 @@ import { AuthGuard } from "app/buckwaframework/common/services";
 import { BreadcrumbModule } from "app/buckwaframework/common/components";
 import { Cop091Component } from "projects/check-operation/cop09/cop09-1/cop09-1.component";
 import { Cop092Component } from "projects/check-operation/cop09/cop09-2/cop09-2.component";
+import { Cop9Service } from "./cop9.service";
 
 const routes: Routes = [
   { path: "1", component: Cop091Component, canActivate: [AuthGuard] },
@@ -16,6 +17,7 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes), CommonModule,FormsModule,BreadcrumbModule],
   declarations: [Cop091Component,Cop092Component],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [Cop9Service]
 })
 export class Cop09Module {}

@@ -5,6 +5,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { IaService } from 'services/ia.service';
 import { AuthService } from 'services/auth.service';
 import { MessageBarService } from 'services/index';
+import { Cop9, Cop9Service } from '../cop9.service';
+import { UserDetail } from 'models/index';
+import { ThYearToEnYear } from 'helpers/index';
+import * as moment from 'moment';
 
 declare var $: any;
 
@@ -26,10 +30,16 @@ export class Cop092Component implements OnInit {
   getRawTable: any;
   payRawTable: any;
   dataRecord: any;
-  obj: data;
+  obj: data = new data();
   dateCalendar: string = "";
+  dateCalendarEn: string = "";
+  dateMonth: Date = new Date();
   id: any;
-  idUpdate:any=0;
+  idUpdate: any = 0;
+
+  dataList: Cop9;
+
+  user: UserDetail;
 
   constructor(
     private dataService: IaService,
@@ -38,31 +48,40 @@ export class Cop092Component implements OnInit {
     private authService: AuthService,
     private message: MessageBarService,
     private ajax: AjaxService,
+    private cop9Service: Cop9Service
   ) {
     this.dataRecord = this.dataService.getData();
     console.log("dataRecord", this.dataRecord);
     this.dateCalendar = this.route.snapshot.queryParams['dateCalendar'];
     this.searchFlag = this.route.snapshot.queryParams['searchFlag'];
-    this.obj = new data();
+    this.dateMonth = new Date();
+    this.dateMonth.setFullYear(parseInt(ThYearToEnYear(this.dateCalendar.split("/")[1])));
+    this.dateMonth.setMonth(parseInt(this.dateCalendar.split("/")[0]) - 1);
+    this.dateCalendarEn = moment(this.dateMonth).format('DD/MM/YYYY');
   }
 
-  ngOnInit() {
-
+  async ngOnInit() {
     this.idUpdate = this.route.snapshot.queryParams["id"];
-    this.authService.reRenderVersionProgram('cop092').then(user => {
-      this.obj.officer = user.fullName;
-      console.log(this.obj.officer);
-    });
+    this.user = await this.authService.reRenderVersionProgram('cop092');
   }
-
-
 
   onReport() {
+    this.obj.exciseArea =   $("#exciseArea").val();
+    this.obj.exciseSubArea =   $("#exciseSubArea").val();
+    this.obj.exciseId =   $("#exciseId").val();
+    this.obj.companyName =   $("#companyName").val();
+    this.obj.product =   $("#product").val();
+    this.obj.riskTypeDesc =   $("#riskTypeDesc").val();
+    this.obj.dateCalendar =   $("#dateCalendar").val();
+    this.obj.companyAddress =   $("#companyAddress").val();
+    this.obj.officer = this.user.fullName;
+
     this.message.comfirm(confirm => {
       if (confirm) {
         const URL = "cop/cop092/updateFlag";
-        this.ajax.post(URL, {"id":this.idUpdate}, response => {
-          this.message.successModal(response.json().messageTh);
+        this.ajax.post(URL, { "id": this.idUpdate }, response => {
+          this.exportPdf();
+          this.message.successModal(response.json().msg.messageTh);
           this.router.navigate(["/cop09/1"]);
         }).catch(err => {
           this.message.errorModal("ไม่สามารถทำการบันทึกได้");
@@ -73,13 +92,35 @@ export class Cop092Component implements OnInit {
 
   }
 
+  onChangeRadio(name: string, e) {
+    const result = ["ข้อมูลถูกต้อง", "ข้อมูลไม่ถูกต้อง"]
+    this.obj[name] = result[parseInt(e.target.value)];
+  }
+
+  exportPdf() {
+    var form = document.createElement("form");
+    form.method = "POST";
+    form.action = AjaxService.CONTEXT_PATH + "exciseOperation/report/pdf/operation/checkExciseOperation";
+    // form.action = AjaxService.CONTEXT_PATH + "exciseTax/report/pdf/tax/checkExciseTax";
+    form.style.display = "none";
+    form.target = "_blank"    
+    var jsonInput = document.createElement("input");
+    jsonInput.name = "json";
+    jsonInput.value = JSON.stringify(this.obj);
+    form.appendChild(jsonInput);
+    document.body.appendChild(form);
+    form.submit();
+  }
+
   ngAfterViewInit() {
     this.initGetRawDatatable();
     this.initPayRawDatatable();
+    this.initGetProductDatatable();
+    this.initPayProductDatatable();
   }
 
   initGetRawDatatable = () => {
-    const URL = AjaxService.CONTEXT_PATH + "taxAudit/checkDisplay/search";
+    const URL = AjaxService.CONTEXT_PATH + "cop/cop092/budget/list";
     this.getRawTable = $("#tableGetRawMaterial").DataTableTh({
       serverSide: true,
       searching: false,
@@ -92,8 +133,8 @@ export class Cop092Component implements OnInit {
         contentType: "application/json",
         data: (d) => {
           return JSON.stringify($.extend({}, d, {
-            "exciseId": this.dataRecord.exciseId,
-            "dateCalendar": this.dateCalendar,
+            "excise": this.dataRecord.exciseId,
+            "monthBuget": this.dateCalendarEn,
             "searchFlag": this.searchFlag
           }));
         }
@@ -143,7 +184,7 @@ export class Cop092Component implements OnInit {
   };
 
   initPayRawDatatable = () => {
-    const URL = AjaxService.CONTEXT_PATH + "taxAudit/checkDisplay/search";
+    const URL = AjaxService.CONTEXT_PATH + "cop/cop092/budget/list";
     this.payRawTable = $("#tablePayRawMaterial").DataTableTh({
       serverSide: true,
       searching: false,
@@ -156,8 +197,8 @@ export class Cop092Component implements OnInit {
         contentType: "application/json",
         data: (d) => {
           return JSON.stringify($.extend({}, d, {
-            "exciseId": this.dataRecord.exciseId,
-            "dateCalendar": this.dateCalendar,
+            "excise": this.dataRecord.exciseId,
+            "monthBuget": this.dateCalendarEn,
             "searchFlag": this.searchFlag
           }));
         }
@@ -215,13 +256,196 @@ export class Cop092Component implements OnInit {
     });
   };
 
+  initGetProductDatatable = () => {
+    const URL = AjaxService.CONTEXT_PATH + "cop/cop092/product/list";
+    this.getRawTable = $("#tableReceiveProduct").DataTableTh({
+      serverSide: true,
+      searching: false,
+      processing: true,
+      ordering: false,
+      scrollX: true,
+      ajax: {
+        type: "POST",
+        url: URL,
+        contentType: "application/json",
+        data: (d) => {
+          return JSON.stringify($.extend({}, d, {
+            "excise": this.dataRecord.exciseId,
+            "monthBuget": this.dateCalendarEn,
+            "searchFlag": this.searchFlag
+          }));
+        }
+      },
+      columns: [
+        {
+          className: "ui center aligned",
+          render: function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          }
+        }, {
+          data: "list",
+          className: "ui left aligned"
+        }, {
+          data: "unit",
+          className: "ui left aligned"
+        }, {
+          data: "stock",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        },
+        {
+          data: "getPro",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        },
+        {
+          data: "receive",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        },
+        {
+          data: "other",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        }, {
+          data: "receiveTotal",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        }
+      ],
+    });
+  };
+
+  initPayProductDatatable = () => {
+    const URL = AjaxService.CONTEXT_PATH + "cop/cop092/product/list";
+    this.payRawTable = $("#tablePayProduct").DataTableTh({
+      serverSide: true,
+      searching: false,
+      processing: true,
+      ordering: false,
+      scrollX: true,
+      ajax: {
+        type: "POST",
+        url: URL,
+        contentType: "application/json",
+        data: (d) => {
+          return JSON.stringify($.extend({}, d, {
+            "excise": this.dataRecord.exciseId,
+            "monthBuget": this.dateCalendarEn,
+            "searchFlag": this.searchFlag
+          }));
+        }
+      },
+      columns: [
+        {
+          className: "ui center aligned",
+          render: function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          }
+        }, {
+          data: "list",
+          className: "ui left aligned"
+        }, {
+          data: "unit",
+          className: "ui left aligned"
+        }, {
+          data: "domDist",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        }, {
+          data: "foreignSale",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        }, {
+          data: "inHouseUse",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        }, {
+          data: "warehouse",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        }, {
+          data: "corrupt",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        }, {
+          data: "other1",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        }, {
+          data: "total",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        }
+      ],
+    });
+  };
+
   onClickBack() {
     this.router.navigate(["cop09/1"], {
       queryParams: {}
     });
   }
-
-
 
 }
 
@@ -239,23 +463,14 @@ class data {
   
   //radio1
   resultGetRaw:string;
-  resultGetRawValue:string;
   resultGetRawBox:string;
   //radio2
   resultPayRaw:string;
-  resultPayRawValue:string;
   resultPayRawBox:string;
   //radio3
-  buyInvoiceBox:string;
-  buyInvoiceNum:string;
-  buyInvoiceValue:string;
-  buyInvoice:string;
+  receiptInvoiceBox:string;
+  receiptInvoiceRaw:string;
   //radio4
-  taxInvoiceBox:string;
-  taxInvoiceNumNum:string
-  taxInvoiceValue:string;
-  taxInvoiceNum:string;
-
-  
-
+  payInvoiceBox:string;
+  payInvoiceRaw:string;
 } 

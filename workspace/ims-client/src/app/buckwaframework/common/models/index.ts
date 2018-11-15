@@ -5,7 +5,7 @@ import { ExciseTax } from "./exciseTax";
 import { Message } from "./message";
 import { ParameterGroup } from "./parameterGroup";
 import { ParameterInfo } from "./parameterInfo";
-import { User } from "./user";
+import { User, UserDetail } from "./user";
 import { UserManagement } from "./userManagement";
 import { File } from "./file";
 import { TravelCostHeader } from "./travelcostheader";
@@ -47,5 +47,6 @@ export {
   AssetMaintenance,
   IntCtrlAss,
   RiskAssRiskWsHdr,
-  RiskAssInfHdr
+  RiskAssInfHdr,
+  UserDetail
 };
