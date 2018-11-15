@@ -72,22 +72,13 @@ export class Tsl010700Component implements OnInit {
     this.obj.payInvoiceRaw =   $("#payInvoiceRaw").val();
 
     //console.log(this.obj);
-     var form = document.createElement("form");
-     form.method = "POST";
-     form.action = AjaxService.CONTEXT_PATH + "exciseTax/report/pdf/tax/checkExciseTax";
-     form.style.display = "none";    
-     var jsonInput = document.createElement("input");
-     jsonInput.name = "json";
-     jsonInput.value = JSON.stringify(this.obj);
-     form.appendChild(jsonInput);
-     document.body.appendChild(form);
-     form.submit();
      
     const URL = "exciseTax/report/updateFlag";
     this.message.comfirm(confirm => {
       if (confirm) {
         const URL = "exciseTax/report/updateFlag";
         this.ajax.post(URL, parseInt(this.dataRecord.taYearPlanId) || 0, response => {
+          this.exportPdf();
           this.message.successModal(response.json().messageTh);
           this.router.navigate(["/tax-audit-select-line/tsl0106-00"]);
         }).catch(err => {
@@ -97,6 +88,21 @@ export class Tsl010700Component implements OnInit {
       }
     }, "ยืนยันการบันทึกข้อมูล");
 
+  }
+
+  exportPdf() {
+    var form = document.createElement("form");
+    form.method = "POST";
+    //form.action = AjaxService.CONTEXT_PATH + "exciseOperation/report/pdf/operation/checkExciseOperation";
+    form.action = AjaxService.CONTEXT_PATH + "exciseTax/report/pdf/tax/checkExciseTax";
+    form.style.display = "none";
+    form.target = "_blank"    
+    var jsonInput = document.createElement("input");
+    jsonInput.name = "json";
+    jsonInput.value = JSON.stringify(this.obj);
+    form.appendChild(jsonInput);
+    document.body.appendChild(form);
+    form.submit();
   }
 
   ngAfterViewInit() {
