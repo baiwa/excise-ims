@@ -42,6 +42,7 @@ export class Cop0711Component implements OnInit, OnDestroy {
 
   travelTo1AddList: any;
   travelTo2AddList: any;
+  checkTypeList: any;
 
   travelToDescription: any;
 
@@ -88,6 +89,7 @@ export class Cop0711Component implements OnInit, OnDestroy {
     this.dataTable();
     this.dataTable2();
     this.travelTo1AddDropdown();
+    this.checkTypeDropdown();
   }
 
   ngOnDestroy() {
@@ -110,6 +112,13 @@ export class Cop0711Component implements OnInit, OnDestroy {
       this.setTravelToAdd(e);
     });
   }
+  }
+
+  checkTypeDropdown = () =>{
+    const URL = "combobox/controller/getDropByTypeAndParentId";
+    this.ajax.post(URL, { type: "CHECK_OPERATION",lovIdMaster:2214}, res => {
+      this.checkTypeList = res.json();
+    });		
   }
 
   changeExciseId = (e) => {
@@ -204,6 +213,7 @@ export class Cop0711Component implements OnInit, OnDestroy {
          $("#entrepreneurNo").dropdown('set selected',data.entrepreneurNo);
          $("#checkDate").val(data.checkDate);
          $("#actionPlan").dropdown('set selected',data.actionPlan);
+         $("#checkType").dropdown('set selected',data.checkType);
       },
       autofocus: false
     }).modal('show');
@@ -229,7 +239,8 @@ export class Cop0711Component implements OnInit, OnDestroy {
       fiscalyear:this.fiscalYear,
       entrepreneurNo: $("#entrepreneurNo").val(),
       checkDate: $("#checkDate").val(),
-      actionPlan: $("#actionPlan").val()
+      actionPlan: $("#actionPlan").val(),
+      checkType: $("#checkType").val()
       }
     },res => {
       const commonMessage = res.json();
@@ -254,7 +265,8 @@ export class Cop0711Component implements OnInit, OnDestroy {
       id:$("#id").val(),
       entrepreneurNo:$("#entrepreneurNo").val(),
       checkDate:$("#checkDate").val(),
-      actionPlan:$("#actionPlan").val()
+      actionPlan:$("#actionPlan").val(),
+      checkType: $("#checkType").val()
      }
     },res => {
       const commonMessage = res.json();
@@ -314,6 +326,17 @@ export class Cop0711Component implements OnInit, OnDestroy {
               s = 'ตามแผนปฏิบัติการ';
             }else{
               s = 'นอกแผนปฏิบัติการ';
+            }
+            return s;
+          }
+        }, {
+          "data": "checkType","className": "ui center aligned",
+          "render": function (data, type, row, meta) {
+            let s = '';
+            if(data=='2215'){
+              s = 'ตรวจโซเว็นท์';
+            }else{
+              s = 'ตรวจโรงอุตสาหกรรม';
             }
             return s;
           }
@@ -414,6 +437,17 @@ export class Cop0711Component implements OnInit, OnDestroy {
               s = 'ตามแผนปฏิบัติการ';
             }else{
               s = 'นอกแผนปฏิบัติการ';
+            }
+            return s;
+          }
+        }, {
+          "data": "checkType","className": "ui center aligned",
+          "render": function (data, type, row, meta) {
+            let s = '';
+            if(data=='2215'){
+              s = 'ตรวจโซเว็นท์';
+            }else{
+              s = 'ตรวจโรงอุตสาหกรรม';
             }
             return s;
           }

@@ -169,6 +169,7 @@ public class CopCheckFiscalYearDao {
 		    		vo.setEntrepreneurLoca(rs.getString("ENTREPRENEUR_LOCA"));
 		    		vo.setCheckDate(DateConstant.convertDateToStrDDMMYYYY(rs.getDate("CHECK_DATE")));
 		    		vo.setActionPlan(rs.getString("ACTION_PLAN"));
+		    		vo.setCheckType(rs.getString("CHECK_TYPE"));
 		    		vo.setStatus(rs.getString("STATUS"));
 		    	    	
 		    		return vo;
@@ -186,11 +187,13 @@ public class CopCheckFiscalYearDao {
 		    			"ENTREPRENEUR_NAME, " +
 		    			"ENTREPRENEUR_LOCA, " +
 		    			"CHECK_DATE, " +
-		    			"ACTION_PLAN, " + 
+		    			"ACTION_PLAN, " +
+		    			"CHECK_TYPE, " +
 		    			"STATUS, " + 	
 		    			"CREATED_BY_ID,"+
 		    			"IS_DELETED "+ 
 		    			")VALUES( " + 
+		    			"?, " + 
 		    			"?, " + 
 		    			"?, " + 
 		    			"?, " + 
@@ -210,6 +213,7 @@ public class CopCheckFiscalYearDao {
 		    					vo.getEntrepreneurLoca(),
 		    					DateConstant.convertStrDDMMYYYYToDate(vo.getCheckDate()),
 		    					vo.getActionPlan(),
+		    					vo.getCheckType(),
 		    					"1875",
 		    		    		UserLoginUtils.getCurrentUserBean().getUsername(),
 		    					"N"});
@@ -223,12 +227,13 @@ public class CopCheckFiscalYearDao {
 		    			"ENTREPRENEUR_NAME=?, " +
 		    			"ENTREPRENEUR_LOCA=?, " +
 		    			"CHECK_DATE=?, " +
-		    			"ACTION_PLAN=? WHERE ID = ? ",new Object[] {
+		    			"ACTION_PLAN=?,CHECK_TYPE=? WHERE ID = ? ",new Object[] {
 		    					vo.getEntrepreneurNo(),
 		    					vo.getEntrepreneurName(),
 		    					vo.getEntrepreneurLoca(),
 		    					DateConstant.convertStrDDMMYYYYToDate(vo.getCheckDate()),
 		    					vo.getActionPlan(),
+		    					vo.getCheckType(),
 		    					vo.getId()
 		    					});
 		    	

@@ -34,6 +34,7 @@
           <th style="text-align: center !important;">สถานที่ตั้งของผู้ประกอบการ</th>
           <th style="text-align: center !important;">วันที่ตรวจ</th>
           <th style="text-align: center !important;">แผนปฏิบัติการ</th>
+          <th style="text-align: center !important;">ประเภทการตรวจ</th>
           <th style="text-align: center !important;">สถานะ</th>
           <th style="text-align: center !important;width:180px !important">จัดการ</th>
         </tr>
@@ -60,6 +61,7 @@
             <th style="text-align: center !important;">สถานที่ตั้งของผู้ประกอบการ</th>
             <th style="text-align: center !important;">วันที่ตรวจ</th>
             <th style="text-align: center !important;">แผนปฏิบัติการ</th>
+            <th style="text-align: center !important;">ประเภทการตรวจ</th>
             <th style="text-align: center !important;">สถานะ</th>
             <th style="text-align: center !important;width:180px !important">จัดการ</th>
           </tr>
@@ -130,7 +132,7 @@
               <div class="three wide field ui right aligned">
                 <label>ผู้ประกอบการ</label>
               </div>
-              <div class="ten wide field">
+              <div class="eleven wide field">
                 <div class="ui input left icon">
                   <input class="custom-readonly" type="text" id="exciseName" value="{{exciseName}}" readonly >
                 </div>
@@ -163,6 +165,18 @@
             </div>
 
           </div>
+          <div class="inline fields">
+              <div class="one wide field"></div>
+              <div class="three wide field right aligned">
+                <label>ประเภทการตรวจสอบ</label>
+              </div>
+              <div class="four wide field">
+                <select class="ui dropdown ai search full-width office" id="checkType" name="checkType" autocomplete="off" style="width: 100%" >
+                  <option value="">กรุณาเลือก</option>
+                  <option *ngFor="let data of checkTypeList" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+                </select>
+              </div>
+            </div>
 
           <br>
         </div>

@@ -37,7 +37,7 @@ export class Cop071Component implements OnInit {
   ) {
     this.breadcrumb = [
       { label: "ตรวจปฏิบัติการ", route: "#" },
-      { label: "แผนการตรวจปฏิบัติการประจำปี", route: "#" }
+      { label: "แผนการตรวจปฏิบัติการ", route: "#" }
     ];
     
    }

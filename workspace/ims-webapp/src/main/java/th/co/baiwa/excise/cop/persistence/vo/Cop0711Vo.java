@@ -18,6 +18,7 @@ public class Cop0711Vo extends DataTableRequest {
 	private String entrepreneurLoca;
 	private String checkDate;
 	private String actionPlan;
+	private String checkType;
 	private String status;
 
 	public String getSearchFlag() {
@@ -90,6 +91,14 @@ public class Cop0711Vo extends DataTableRequest {
 
 	public void setActionPlan(String actionPlan) {
 		this.actionPlan = actionPlan;
+	}
+
+	public String getCheckType() {
+		return checkType;
+	}
+
+	public void setCheckType(String checkType) {
+		this.checkType = checkType;
 	}
 
 	public String getStatus() {
