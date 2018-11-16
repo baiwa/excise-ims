@@ -58,11 +58,14 @@ export class Cop092Component implements OnInit {
     this.dateMonth.setFullYear(parseInt(ThYearToEnYear(this.dateCalendar.split("/")[1])));
     this.dateMonth.setMonth(parseInt(this.dateCalendar.split("/")[0]) - 1);
     this.dateCalendarEn = moment(this.dateMonth).format('DD/MM/YYYY');
+
   }
 
   async ngOnInit() {
     this.idUpdate = this.route.snapshot.queryParams["id"];
     this.user = await this.authService.reRenderVersionProgram('cop092');
+
+
   }
 
 
@@ -86,7 +89,13 @@ export class Cop092Component implements OnInit {
     // this.obj.receiptInvoiceRaw =   $("#receiptInvoiceRaw").val();
     // this.obj.payInvoiceRaw =   $("#payInvoiceRaw").val();
 
-    this.obj.officer = this.user.fullName;
+
+    if (this.user.fullName != null && this.user.fullName != undefined && this.user.fullName != '') {
+      this.obj.officer = this.user.fullName;
+    }else{
+      this.obj.officer = "";
+    }
+
 
     console.log(this.obj);
     this.message.comfirm(confirm => {
