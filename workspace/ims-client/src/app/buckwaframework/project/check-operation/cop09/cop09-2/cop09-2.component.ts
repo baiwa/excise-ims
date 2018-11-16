@@ -65,6 +65,12 @@ export class Cop092Component implements OnInit {
     this.user = await this.authService.reRenderVersionProgram('cop092');
   }
 
+
+  // onChangeRadio(name: string, e) {
+  //   const result = ["ข้อมูลถูกต้อง", "ข้อมูลไม่ถูกต้อง"]
+  //   this.obj[name] = result[parseInt(e.target.value)];
+  // }
+
   onReport() {
     this.obj.exciseArea =   $("#exciseArea").val();
     this.obj.exciseSubArea =   $("#exciseSubArea").val();
@@ -74,8 +80,15 @@ export class Cop092Component implements OnInit {
     this.obj.riskTypeDesc =   $("#riskTypeDesc").val();
     this.obj.dateCalendar =   $("#dateCalendar").val();
     this.obj.companyAddress =   $("#companyAddress").val();
+
+    // this.obj.resultGetRaw =   $("#resultGetRaw").val();
+    // this.obj.resultPayRaw =   $("#resultPayRaw").val();
+    // this.obj.receiptInvoiceRaw =   $("#receiptInvoiceRaw").val();
+    // this.obj.payInvoiceRaw =   $("#payInvoiceRaw").val();
+
     this.obj.officer = this.user.fullName;
 
+    console.log(this.obj);
     this.message.comfirm(confirm => {
       if (confirm) {
         const URL = "cop/cop092/updateFlag";
@@ -92,10 +105,6 @@ export class Cop092Component implements OnInit {
 
   }
 
-  onChangeRadio(name: string, e) {
-    const result = ["ข้อมูลถูกต้อง", "ข้อมูลไม่ถูกต้อง"]
-    this.obj[name] = result[parseInt(e.target.value)];
-  }
 
   exportPdf() {
     var form = document.createElement("form");

@@ -121,13 +121,13 @@
       <div class="four wide field"></div>
       <div class="two wide field ">
         <div class="ui radio checkbox">
-          <input type="radio" name="resultGetRaw" id="resultGetRaw" (change)="onChangeRadio('resultGetRaw', $event)" value="0">
+          <input type="radio" name="resultGetRaw" id="resultGetRaw"  [(ngModel)]="obj.resultGetRaw" value="ข้อมูลถูกต้อง">
           <label>ข้อมูลถูกต้อง</label>
         </div>
       </div>
       <div class="two wide field ">
         <div class="ui radio checkbox">
-          <input type="radio" name="resultGetRaw" id="resultGetRaw" (change)="onChangeRadio('resultGetRaw', $event)" value="1">
+          <input type="radio" name="resultGetRaw" id="resultGetRaw"  [(ngModel)]="obj.resultGetRaw" value="ข้อมูลไม่ถูกต้อง">
           <label>ข้อมูลไม่ถูกต้อง</label>
         </div>
       </div>
@@ -177,13 +177,13 @@
       <div class="four wide field"></div>
       <div class="two wide field ">
         <div class="ui radio checkbox">
-          <input type="radio" name="resultPayRaw" id="resultPayRaw" (change)="onChangeRadio('resultPayRaw', $event)" value="0">
+          <input type="radio" name="resultPayRaw" id="resultPayRaw"  [(ngModel)]="obj.resultPayRaw" value="ข้อมูลถูกต้อง">
           <label>ข้อมูลถูกต้อง</label>
         </div>
       </div>
       <div class="two wide field ">
         <div class="ui radio checkbox">
-          <input type="radio" name="resultPayRaw" id="resultPayRaw" (change)="onChangeRadio('resultPayRaw', $event)" value="1">
+          <input type="radio" name="resultPayRaw" id="resultPayRaw" [(ngModel)]="obj.resultPayRaw"  value="ข้อมูลไม่ถูกต้อง">
           <label>ข้อมูลไม่ถูกต้อง</label>
         </div>
       </div>
@@ -233,13 +233,13 @@
       <div class="four wide field"></div>
       <div class="two wide field ">
         <div class="ui radio checkbox">
-          <input type="radio" id="receiptInvoiceRaw" name="receiptInvoiceRaw" (change)="onChangeRadio('receiptInvoiceRaw', $event)" value="0">
+          <input type="radio" id="receiptInvoiceRaw" name="receiptInvoiceRaw" [(ngModel)]="obj.receiptInvoiceRaw" value="ข้อมูลถูกต้อง">
           <label>ข้อมูลถูกต้อง</label>
         </div>
       </div>
       <div class="two wide field ">
         <div class="ui radio checkbox">
-          <input type="radio" id="receiptInvoiceRaw" name="receiptInvoiceRaw" (change)="onChangeRadio('receiptInvoiceRaw', $event)" value="1">
+          <input type="radio" id="receiptInvoiceRaw" name="receiptInvoiceRaw" [(ngModel)]="obj.receiptInvoiceRaw" value="ข้อมูลไม่ถูกต้อง">
           <label>ข้อมูลไม่ถูกต้อง</label>
         </div>
       </div>
@@ -291,13 +291,13 @@
       <div class="four wide field"></div>
       <div class="two wide field ">
         <div class="ui radio checkbox">
-          <input type="radio" id="payInvoiceRaw" name="payInvoiceRaw" (change)="onChangeRadio('payInvoiceRaw', $event)" value="0">
+          <input type="radio" id="payInvoiceRaw" name="payInvoiceRaw" [(ngModel)]="obj.payInvoiceRaw"  value="ข้อมูลถูกต้อง">
           <label>ข้อมูลถูกต้อง</label>
         </div>
       </div>
       <div class="two wide field ">
         <div class="ui radio checkbox">
-          <input type="radio" id="payInvoiceRaw" name="payInvoiceRaw" (change)="onChangeRadio('payInvoiceRaw', $event)" value="1">
+          <input type="radio" id="payInvoiceRaw" name="payInvoiceRaw" [(ngModel)]="obj.payInvoiceRaw" value="ข้อมูลไม่ถูกต้อง">
           <label>ข้อมูลไม่ถูกต้อง</label>
         </div>
       </div>
