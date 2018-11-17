@@ -2,14 +2,14 @@
 <br>
 
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-  <span>ตรวจสอบจำนวนครั้งในการเบิก</span>
+    <span>ตรวจสอบจำนวนครั้งในการเบิก</span>
 </div>
-<form>
-  <div class="ui attached segment">
-    <br>
-    <div class="ui form">
-      <div class="ui attached">
-        <!-- <div class="inline fields">
+<form [formGroup]="searchForm" (submit)="handleSearch($event)">
+    <div class="ui attached segment">
+        <br>
+        <div class="ui form">
+            <div class="ui attached">
+                <!-- <div class="inline fields">
           <div class="one wide field"></div>
           <div class="two wide field">
             <label class="full-width text-right">เลือกประเภทเอกสาร</label>
@@ -23,96 +23,102 @@
             </select>
         </div>
         </div> -->
-        <div class="inline fields  ui grid">
-          <div class="three wide field ">
-              <label class="text-right full-width">สำนักงานสรรพสามิตภาค</label>
-          </div>
-          <div class="four wide field">
-            <select  class="ui dropdown ai search full-width" id="travelTo1" (change)="travelTo2Dropdown($event)">
+                <div class="inline fields  ui grid">
+                    <div class="three wide field ">
+                        <label class="text-right full-width">สำนักงานสรรพสามิตภาค</label>
+                    </div>
+                    <div class="four wide field" [ngClass]="{ 'error': validateField('combo1') }">
+                        <select class="ui dropdown ai search full-width" formControlName="combo1" id="combo1" (change)="travelTo2Dropdown($event)">
               <option value="">กรุณาเลือก</option>
-              <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+              <option *ngFor="let data of travelTo1List | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
             </select>
-          </div>
-          <div class="three wide field ">
-              <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่</label>
-          </div>
-          <div class="four wide field">
-            <select  class="ui dropdown ai search full-width" id="travelTo2" (change)="travelTo3Dropdown($event)">
+                    </div>
+                    <div class="three wide field ">
+                        <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่</label>
+                    </div>
+                    <div class="four wide field" [ngClass]="{ 'error': validateField('combo2') }">
+                        <select class="ui dropdown ai search full-width" formControlName="combo2" id="combo2">
               <option value="">กรุณาเลือก</option>
-              <option *ngFor="let data of travelTo2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+              <option *ngFor="let data of travelTo2List | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
             </select>
-          </div>
-      </div>
-
-      <div class="inline fields">
-        <div class="three wide field">
-            <label class="text-right full-width">ระยะเวลาการตรวจสอบ (ปีปฏิทิน)</label>
-        </div>
-        <div class="four wide field">
-            <div class="ui calendar" id="dateF" style="width:100%">
-                <div class="ui input left icon">
-                    <i class="calendar alter nate outline icon"></i>
-                    <input type="text" placeholder="ดด/ปปปป">
+                    </div>
                 </div>
+
+                <div class="inline fields">
+                    <div class="three wide field">
+                        <label class="text-right full-width">ระยะเวลาการตรวจสอบ (ปีปฏิทิน)</label>
+                    </div>
+                    <div class="four wide field" [ngClass]="{ 'error': validateField('dateStart') }">
+                        <div class="ui calendar" id="dateF" style="width:100%">
+                            <div class="ui input left icon">
+                                <i class="calendar alter nate outline icon"></i>
+                                <input type="text" formControlName="dateStart" placeholder="ดด/ปปปป">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="three wide field">
+                        <label class="text-right right full-width">ถึง</label>
+                    </div>
+                    <div class="four wide field" [ngClass]="{ 'error': validateField('dateEnd') }">
+                        <div class="ui calendar" id="dateT" style="width:100%">
+                            <div class="ui input left icon">
+                                <i class="calendar alter nate outline icon"></i>
+                                <input type="text" formControlName="dateEnd" placeholder="ดด/ปปปป">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="inline fields">
+                    <div class="three wide field">
+                        <label class="text-right right full-width">จำนวนครั้งในการเบิกเงิน</label>
+                    </div>
+                    <div class="four wide field" [ngClass]="{ 'error': validateField('withdrawAmount') }">
+                        <input type="text" formControlName="withdrawAmount">
+                    </div>
+                    <div class="three wide field">
+                        <label>ครั้ง</label>
+                    </div>
+                </div>
+                <div class="ui center aligned grid">
+                    <div class="sixteen wide column">
+                        <button class="ui mini primary button">
+                          <i class="save icon"></i>
+                        วิเคราะห์ข้อมูลเบื้องต้น
+                        </button>
+                        <button class="ui mini button" type="reset" (click)="onReset()">
+                          <i class="refresh icon"></i>ล้างข้อมูล
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class="ui segment">
+                    <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%;">
+                        <thead>
+                            <tr class="text-center">
+                                <th>
+                                    <div class="ui checkbox"> <input id="checkAll" type="checkbox" (click)="clickCheckAll($event)"><label></label></div>
+                                </th>
+                                <th>ลำดับที่</th>
+                                <th>ชื่อผู้เบิก</th>
+                                <th>รายการเบิก</th>
+                                <th>จำนวนครั้งที่เบิก</th>
+                            </tr>
+
+                        </thead>
+                    </table>
+
+                    <div class="ui center aligned grid" style="margin-top: 20px;">
+                        <div class="sixteen wide column">
+
+                            <button class="ui mini primary button" type="button" (click)="export($event)">
+                              <i class="print plane icon"></i> ส่งออกไฟล์ Excel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-        <div class="three wide field">
-            <label class="text-right right full-width">ถึง</label>
-        </div>
-        <div class="four wide field">
-            <div class="ui calendar" id="dateT" style="width:100%">
-                <div class="ui input left icon">
-                    <i class="calendar alter nate outline icon"></i>
-                    <input type="text" placeholder="ดด/ปปปป">
-                </div>
-            </div>
-        </div>
     </div>
-    <div class="inline fields">
-      <div class="three wide field">
-        <label class="text-right right full-width">จำนวนครั้งในการเบิกเงิน</label>
-    </div>
-    <div class="four wide field">
-      <input type="text">
-    </div>
-    <div class="three wide field">
-      <label>ครั้ง</label>
-  </div>
-    </div>
-    <div class="ui center aligned grid">
-      <div class="sixteen wide column">
-        <button class="ui mini primary button">
-          <i class="save icon"></i>
-        วิเคราะห์ข้อมูลเบื้องต้น
-        </button>      
-      </div>
-    </div>
-
-
-    <div class="ui segment">
-      <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%;">
-          <thead>
-              <tr style="text-align: center">
-                  <th>ลำดับที่</th>
-                  <th>ชื่อผู้เบิก</th>
-                  <th>รายการเบิก</th>
-                  <th>จำนวนครั้งที่เบิก</th>               
-              </tr>
-         
-          </thead>
-      </table>
-  
-      <div class="ui center aligned grid" style="margin-top: 20px;">
-          <div class="sixteen wide column">            
-  
-              <button class="ui mini primary button" >
-                  <i class="print plane icon"></i> ส่งออกไฟล์ Excel
-                </button>
-          </div>
-      </div>
-  </div>
-
-      </div>
-    </div>
-  </div>
 </form>

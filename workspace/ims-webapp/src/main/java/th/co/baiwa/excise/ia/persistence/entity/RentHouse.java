@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
@@ -79,6 +80,9 @@ public class RentHouse extends BaseEntity {
 	
 	@Column(name = "IA_DIS_REQ_ID")
 	private BigDecimal iaDisReqId;
+	
+	@Transient
+	String typeSet;
 
 	public BigDecimal getRentHouseId() {
 		return rentHouseId;
@@ -234,6 +238,14 @@ public class RentHouse extends BaseEntity {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getTypeSet() {
+		return typeSet;
+	}
+
+	public void setTypeSet(String typeSet) {
+		this.typeSet = typeSet;
 	}
 
 	

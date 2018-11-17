@@ -6,22 +6,20 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { MessageBarService } from "services/message-bar.service";
 
-
-
 const URL = {
-    DROPDOWN: "combobox/controller/getDropByTypeAndParentId"
-  };
-  declare var $: any;
-  @Injectable()
+  DROPDOWN: "combobox/controller/getDropByTypeAndParentId"
+};
+declare var $: any;
+@Injectable()
 export class Int0614Service {
   dataTable: any;
-  constructor(    private ajax: AjaxService,
+  constructor(
+    private ajax: AjaxService,
     private msg: MessageBarService,
-    private router: Router) {}
+    private router: Router
+  ) {}
 
-
-    
-dropdown = (type: string, id?: number): Observable<any> => {
+  dropdown = (type: string, id?: number): Observable<any> => {
     const DATA = { type: type, lovIdMaster: id || null };
     return new Observable<ComboBox[]>(obs => {
       this.ajax
@@ -33,14 +31,12 @@ dropdown = (type: string, id?: number): Observable<any> => {
         });
     });
   };
-  
+
   clear = () => {
-    $(".office").dropdown('restore defaults');
-  }
+    $(".office").dropdown("restore defaults");
+  };
 
   superdataTable = () => {
-    this.dataTable = $("#dataTable").DataTableTh({
-  
-    });
-  }
+    this.dataTable = $("#dataTable").DataTableTh({});
+  };
 }
