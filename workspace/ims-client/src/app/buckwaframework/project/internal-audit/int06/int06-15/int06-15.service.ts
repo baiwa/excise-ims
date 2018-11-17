@@ -74,8 +74,7 @@ export class Int0615Service {
   
     let dataSave = []; 
 
-    let node = this.table.rows().nodes();
-    console.log("dataSave : ",node);
+    let node = this.table.rows().nodes();    
     $.each(node, function(index, value) {
       if ($(this).find("input[type=checkbox]").is(":checked")) {
 
