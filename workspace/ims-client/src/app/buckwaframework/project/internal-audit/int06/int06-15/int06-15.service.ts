@@ -79,7 +79,7 @@ export class Int0615Service {
     $.each(node, function(index, value) {
       if ($(this).find("input[type=checkbox]").is(":checked")) {
 
-        let data = this.table.rows().data()[index];
+        let data = $("#dataTable").DataTable().data()[index];
         dataSave.push(data);
       }
     });
