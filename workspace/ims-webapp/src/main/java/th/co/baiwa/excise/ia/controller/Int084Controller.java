@@ -3,7 +3,9 @@ package th.co.baiwa.excise.ia.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.excise.cop.persistence.vo.Cop061Vo;
-import th.co.baiwa.excise.cop.persistence.vo.Cop0711FormVo;
 import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.vo.Int084FormVo;
@@ -30,6 +30,8 @@ import th.co.baiwa.excise.ia.service.Int084Service;
 public class Int084Controller {
 
 	private Logger log = LoggerFactory.getLogger(Int084Controller.class);
+	
+	private static final String sessionDataInt084 = "sessionDataInt084";
 
 	
 	@Autowired
@@ -63,9 +65,9 @@ public class Int084Controller {
 	
 	@GetMapping("/exportFile2")
 	@ResponseBody
-	public  void exportFile2(@ModelAttribute Int084FormVo formVo, HttpServletResponse response) throws Exception {
+	public  void exportFile2(@ModelAttribute Int084FormVo formVo, HttpServletResponse response,HttpServletRequest request) throws Exception {
 		try {
-			int084Service.exportFile2(formVo,response);
+			int084Service.exportFile2(formVo,response,request);
 		} catch (Exception e) {
 			log.error("Error ! ==> exportFile2 method exportFile",e);
 		}
@@ -74,12 +76,14 @@ public class Int084Controller {
 	
 	   @PostMapping("/save")
 	    @ResponseBody
-	    public CommonMessage<Long> save(@RequestBody List<Int084Vo> int084VoList){
+	    public CommonMessage<Long> save(@RequestBody List<Int084Vo> int084VoList,HttpServletRequest request){
 			Long id = 0L;
 			log.error("Save Int084Vo");
 			CommonMessage<Long> message = new CommonMessage<Long>();
 			try {
-				id = int084Service.save(int084VoList);	
+				HttpSession session = request.getSession();
+				session.setAttribute(sessionDataInt084,int084VoList);
+//				id = int084Service.save(int084VoList);	
 				message.setData(id);
 			} catch (Exception e) {
 				log.error("Error ! add ",e);

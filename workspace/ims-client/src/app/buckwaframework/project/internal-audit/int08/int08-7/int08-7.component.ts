@@ -4,9 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { AjaxService } from 'services/ajax.service';
 import { TextDateTH, formatter } from 'helpers/datepicker';
 import { AuthService } from 'services/auth.service';
+import { Utils } from "helpers/utils";
 
 
 declare var $: any;
+const URL = {
+  LIST: AjaxService.CONTEXT_PATH + "ia/int0806/list"
+};
 
 @Component({
   selector: 'app-int08-7',
@@ -20,6 +24,8 @@ export class Int087Component implements OnInit {
   obj: data;
   box1: Boolean;
   box2: Boolean;
+  table2:any;
+  searchData:any;
  
   constructor( 
     private route: ActivatedRoute,
@@ -32,6 +38,15 @@ export class Int087Component implements OnInit {
       { label: "รายงานผลการตรวจสอบรายได้", route: "#" },
     ];
 
+    this.searchData = {
+      startDate: "",
+      endDate: "",
+      account: "",
+      combo1: "",
+      combo2: "",
+      flag: ""
+    };
+
     this.obj = new data();
    }
 
@@ -42,6 +57,8 @@ export class Int087Component implements OnInit {
    this.obj.position=user.title;
     });
     this.calenda();
+    this.dataTable();
+    this.dataTable2();
   }
 
   calenda = () => {
@@ -56,6 +73,150 @@ export class Int087Component implements OnInit {
     });
 
   }
+  dataTable=()=>{
+    if ($('#tableData').DataTable() != null) {$('#tableData').DataTable().destroy();};
+    var table = $('#tableData').DataTableTh({
+      "lengthChange":true,
+      "serverSide": false,
+      "searching": false,
+      "ordering": false,
+      "processing": true,
+      "scrollX": true,    
+
+      "ajax" : {
+        "url" : '/ims-webapp/api/ia/int085/list',
+        "contentType": "application/json",
+        "type" : "POST",
+        "data" : (d) => {
+          return JSON.stringify($.extend({}, d, {
+            "searchFlag" : $("#searchFlag").val(),
+            "billLost"  : $("#billLost").val()
+            
+          }));
+        },  
+      },
+      "columns": [
+        {
+          "data": "officeCode",
+          "render": function (data, type, row, meta) {
+              return meta.row + meta.settings._iDisplayStart + 1;
+          },
+          "className": "ui center aligned"
+        }, {
+          "data": "officeName"
+        }, {
+          "data": "startDate","className":"center"
+        }, {
+          "data": "endDate","className":"center"
+        }, {
+          "data": "billAll","className":"right"
+        }, {
+          "data": "billWaste","className":"right"
+        }, {
+          "data": "riskRemark"
+        }
+      ]
+    });
+  }
+  dataTable2=()=> {
+    if (this.table2 != null || this.table2 != undefined) {
+      this.table2.destroy();
+    }
+
+    //render check number is null or empty
+    let renderNumber = function(data, type, row, meta) {
+      return Utils.isNull($.trim(data))
+        ? "-"
+        : $.fn.dataTable.render.number(",", ".", 2, "").display(data);
+    };
+
+    //render check string is null or empty
+    let renderString = function(data, type, row, meta) {
+      if (Utils.isNull(data)) {
+        data = "-";
+      }
+      return data;
+    };
+
+    this.table2 = $("#dataTable2").DataTableTh({
+      lengthChange: false,
+      searching: false,
+      ordering: false,
+      pageLength: 10,
+      processing: true,
+      serverSide: false,
+      paging: true,
+      ajax: {
+        type: "POST",
+        url: URL.LIST,
+        data : this.searchData
+      },
+      columns: [
+        {
+          render: function(data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          }
+        },
+        {
+          data: "receiptNo",
+          render: renderString
+        },
+        {
+          data: "trnDateStr",
+          render: renderString
+        },
+        {
+          data: "depositDateStr",
+          render: renderString
+        },
+        {
+          data: "nettaxAmount",
+          render: renderNumber
+        },
+        {
+          data: "netlocAmount",
+          render: renderNumber
+        },
+        {
+          render: function(data, type, full, meta) {
+            let icon = "-";
+            if (full.statusDate === "S") {
+              icon = `<i class="check icon" style="color:green"> </i>`;
+            } else if (full.statusDate === "F") {
+              icon = `<i class="close icon" style="color:red"> </i>`;
+            }
+            return icon;
+          }
+        },
+        {
+          render: function(data, type, full, meta) {
+            let icon = "-";
+            if (full.statusMoney === "S") {
+              icon = `<i class="check icon" style="color:green"> </i>`;
+            } else if (full.statusMoney === "F") {
+              icon = `<i class="close icon" style="color:red"> </i>`;
+            }
+            return icon;
+          }
+        }
+      ],
+      columnDefs: [
+        {
+          targets: [0, 1, 2, 3, 6, 7],
+          className: "center"
+        },
+        {
+          targets: [4, 5],
+          className: "right"
+        }
+      ],
+
+      rowCallback: (row, data, index) => {
+        console.log(data);
+      }
+    });
+  }
+
 
   onSubmit = e => {
     if(this.box1 && !this.box2){

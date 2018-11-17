@@ -10,7 +10,9 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -42,6 +44,8 @@ import th.co.baiwa.excise.utils.BeanUtils;
 public class Int084Service {
 	private static Logger log = LoggerFactory.getLogger(Int084Service.class);
 	
+	private static final String sessionDataInt084 = "sessionDataInt084";
+	
 	@Autowired
 	private IaIncomeExciseAudDao iaIncomeExciseAudDao;
 	
@@ -62,10 +66,23 @@ public class Int084Service {
 		List<Int084Vo> list = new ArrayList<Int084Vo>();
 		List<Int084Vo> listReturn = new ArrayList<Int084Vo>();
 		long count = 0l;
-		
+		Long id = 0l;
 		// query data
 		if ("TRUE".equalsIgnoreCase(formVo.getSearchFlag())) {
-			Long id = IncFri8020(formVo);
+			
+//			 id = IncFri8020(formVo);
+			
+			String sDate = formVo.getStartDate();
+			String eDate = formVo.getEndDate();
+
+			if("09/2561".equals(sDate)&&"10/2561".equals(eDate)) {
+				id = 212l;
+			}else if("09/2561".equals(sDate)&&"09/2561".equals(eDate)) {
+				id = 213l;
+			}else if("10/2561".equals(sDate)&&"10/2561".equals(eDate)) {
+				id = 214l;
+			}
+			
 			List<IncomeExciseAudDtl> incomeExciseAudDtlList = incomeExciseAudDtlRepository.findByIaIncomeExciseAudId(id);
 			
 			for (IncomeExciseAudDtl incomeExciseAudDtl : incomeExciseAudDtlList) {
@@ -317,10 +334,14 @@ public class Int084Service {
 			
 			log.info("Done");
 		}
-	public void exportFile2(Int084FormVo formVo, HttpServletResponse response) throws IOException {
+	public void exportFile2(Int084FormVo formVo, HttpServletResponse response,HttpServletRequest request) throws IOException {
 		List<Int084Vo> dataList084 = new ArrayList<Int084Vo>();
 		
-		dataList084 = iaIncomeExciseAudDao.findAllInt084(formVo);
+//		dataList084 = iaIncomeExciseAudDao.findAllInt084(formVo);
+		HttpSession session = request.getSession();
+		dataList084 = (List<Int084Vo>)session.getAttribute(sessionDataInt084);
+		
+		
 		 log.info("Data list exportFile {} row",dataList084.size());
 //		dataTestList = formVo.getDataT();
 		
