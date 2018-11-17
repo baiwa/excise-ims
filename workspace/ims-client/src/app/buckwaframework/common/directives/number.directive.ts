@@ -6,7 +6,7 @@ export class NumberDirective {
     @Input() dash: boolean = false;
 
     constructor(private el: ElementRef) {
-        console.log('numberOnly');
+        // console.log('numberOnly');
     }
 
     @HostListener("keypress", ['$event'])

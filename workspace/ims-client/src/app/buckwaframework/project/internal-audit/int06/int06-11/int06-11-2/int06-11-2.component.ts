@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { AuthService } from 'services/auth.service';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { AjaxService } from 'services/ajax.service';
@@ -16,7 +16,7 @@ declare var $: any;
   templateUrl: './int06-11-2.component.html',
   styleUrls: ['./int06-11-2.component.css']
 })
-export class Int06112Component implements OnInit {
+export class Int06112Component implements OnInit, AfterViewInit {
   breadcrumb: BreadCrumb[];
 
   medicalWelfareForm: FormGroup = new FormGroup({});
@@ -29,7 +29,7 @@ export class Int06112Component implements OnInit {
   user: any;
   titleList: any[] = [];
   hospitalList: any[] = [];
-  receipts: FormArray = new FormArray([]);
+  receipts: FormArray = new FormArray([], Validators.required);
 
   constructor(
     private authService: AuthService,
@@ -126,7 +126,7 @@ export class Int06112Component implements OnInit {
       otherClaim4: [''],
       files: [],
       type: [''],
-      receipts: this.fb.array([])
+      receipts: this.fb.array([], Validators.required)
     });
   }
 
@@ -146,6 +146,10 @@ export class Int06112Component implements OnInit {
     $('.ui.dropdown.ai').dropdown().css('width', '100%');
     this.calendar();
 
+  }
+
+  ngAfterViewInit() {
+    console.clear();
   }
 
   calendar = () => {
@@ -205,7 +209,7 @@ export class Int06112Component implements OnInit {
       receiptNo: ['', Validators.required],
       receiptAmount: ['', Validators.required],
       receiptDate: ['', Validators.required]
-    }));
+    }, Validators.required));
     setTimeout(() => {
       $(`#receiptD${index}`).calendar({
         type: "date",
@@ -279,8 +283,15 @@ export class Int06112Component implements OnInit {
     this.delFlag = true;
     this.submittedFlag = true;
     if (this.medicalWelfareForm.invalid || this.medicalWelfareForm.get('receiptQuantity').value == 0) {
-      this.message.errorModal("กรุณากรอกข้อมูลให้ครบ");
-      return;
+      for (let key in this.medicalWelfareForm.controls) {
+        if (this.medicalWelfareForm.get(key).invalid) {
+          if (AjaxService.isDebug) {
+            console.error("REQUIRED : " + key);
+          }
+          this.message.errorModal("กรุณากรอกข้อมูลให้ครบ");
+          return;
+        }
+      }
     }
     this.message.comfirm(confirm => {
       const form = this.medicalWelfareForm;
