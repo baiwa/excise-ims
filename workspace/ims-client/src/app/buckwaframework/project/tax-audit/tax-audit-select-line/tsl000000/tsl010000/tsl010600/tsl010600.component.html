@@ -26,24 +26,26 @@
 </div>
 
 <!-- Modal -->
-<div class="ui modal" id="modalTsl" style="width: 400px;">
-  <div class="header">เลือกเดือนที่ต้องการตรวจสอบข้อมูล</div>
-  <div class="content">
-    <div class="ui calendar full-width" id="date" style="text-align: center;">
-      <div class="ui input left icon">
-        <i class="clock icon"></i>
-        <input id="dateCalendar" name="dateCalendar" type="text" autocomplete="off" [readonly]="true" placeholder="ดด/ปปปป">
+<div class="ui dimmer modals page top aligned transition" [ngClass]="{'visible active block-ui-modal-fw': activeModal}">
+  <div class="ui modal " [ngClass]="{'active': activeModal}" id="modalTsl111" style="width: 400px;">
+    <div class="header">เลือกเดือนที่ต้องการตรวจสอบข้อมูล</div>
+    <div class="content">
+      <div class="ui calendar full-width" id="date" style="text-align: center;">
+        <div class="ui input left icon">
+          <i class="clock icon"></i>
+          <input id="dateCalendar" name="dateCalendar" type="text" autocomplete="off" [readonly]="true" placeholder="ดด/ปปปป">
+        </div>
       </div>
     </div>
-  </div>
-  <div class="actions">
-    <div class="ui primary button" (click)="onClickOK()">
-      <i class="edit icon"></i>
-      ตรวจสอบ
-    </div>
-    <div class="ui icon deny button">
-      <i class="close icon"></i>
-      ยกเลิก
+    <div class="actions">
+      <button type="button" class="ui primary button" (click)="onClickOK()">
+        <i class="edit icon"></i>
+        ตรวจสอบ
+      </button>
+      <div class="ui icon deny button">
+        <i class="close icon"></i>
+        ยกเลิก
+      </div>
     </div>
   </div>
 </div>

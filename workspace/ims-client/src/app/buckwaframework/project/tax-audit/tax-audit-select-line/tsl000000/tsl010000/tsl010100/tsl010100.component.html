@@ -10,8 +10,9 @@
       <form class="ui form" [formGroup]="formControl" (submit)="save()">
         <!-- row 1 -->
         <div class="inline fields  ui grid">
-          <div class="four wide field"></div>
-          <div class="three wide field required">
+            <div class="two wide field"></div>
+          <div class="three wide field"></div>
+          <div class="four wide field required">
             <label>ช่วงเวลาที่ตรวจสอบข้อมูล(ตามปีปฏิทิน)</label>
           </div>
           <div class="three wide field" [ngClass]="{ 'error': submitted && f.dateFrom.invalid }">
@@ -19,7 +20,7 @@
               <div class="ui input left icon">
                 <i class="clock icon"></i>
                 <input type="text" id="dateFrom" name="dateFrom" formControlName="dateFrom" autocomplete="off"
-                  [attr.readonly]="null" placeholder="ดด/ปปปป" [attr.required]="true">
+                  [attr.readonly]="null" placeholder="ปปปป" [attr.required]="true">
               </div>
             </div>
           </div>
@@ -39,13 +40,17 @@
         <!-- row 2 -->
         <br><br>
         <div class="inline fields  ui grid">
-          <div class="four wide field"></div>
+            <div class="two wide field"></div>
+          <div class="four wide field">
+            <label class="text-center full-width">เงื่อนไขที่ 1 </label>
+          </div>
           <div class="six wide field">
-            <u>เงื่อนไขที่ 1 ความถี่ของเดือนที่ชำระภาษี</u>
+            <b>ความถี่ของเดือนที่ชำระภาษี</b>
           </div>
         </div>
         <!-- row 3 -->
         <div class="inline fields  ui grid">
+            <div class="two wide field"></div>
           <div class="four wide field"></div>
           <div class="three wide field">
             <label>จำนวนเดือนที่ไม่ชำระภาษีติดต่อกัน</label>
@@ -63,16 +68,20 @@
         <!-- row 4 -->
         <br><br>
         <div class="inline fields  ui grid">
-          <div class="four wide field"></div>
+            <div class="two wide field"></div>
+          <div class="four wide field">
+            <label class="text-center full-width">เงื่อนไขที่ 2</label>
+          </div>
           <div class="six wide field ">
-            <u>เงื่อนไขที่ 2 เปรียบเทียบจำนวนภาษีระหว่างเดือน</u>
+            <b>เปรียบเทียบจำนวนภาษีระหว่างเดือน</b>
           </div>
         </div>
-        <!-- row 3 -->
+        <!-- row 5 -->
         <div class="inline fields  ui grid">
-          <div class="four wide field"></div>
-          <div class="three wide field ">
-            <label>ความแตกต่างของภาษีระหว่างเดือนมากกว่าหรือเท่ากับร้อยละ</label>
+            <div class="two wide field"></div>
+          <div class="two wide field"></div>
+          <div class="five wide field ">
+            <label class="text-right full-width">ความแตกต่างของภาษีระหว่างเดือนมากกว่าหรือเท่ากับร้อยละ</label>
           </div>
           <div class="two wide field">
             <input type="number" id="percent1" name="percent1" formControlName="percent1">
@@ -85,11 +94,12 @@
           </div>
         </div>
 
-        <!-- row 4 -->
+        <!-- row 6 -->
         <div class="inline fields  ui grid">
-          <div class="four wide field"></div>
-          <div class="three wide field ">
-            <label>ความแตกต่างของภาษีระหว่างเดือนน้อยกว่าหรือเท่ากับร้อยละ</label>
+            <div class="two wide field"></div>
+          <div class="two wide field"></div>
+          <div class="five wide field ">
+            <label class="text-right full-width">ความแตกต่างของภาษีระหว่างเดือนน้อยกว่าหรือเท่ากับร้อยละ</label>
           </div>
           <div class="two wide field">
             <input type="number" id="percent2" name="percent2" formControlName="percent2">
@@ -102,11 +112,12 @@
           </div>
         </div>
 
-        <!-- row 5-->
+        <!-- row 7-->
         <div class="inline fields  ui grid">
-          <div class="four wide field"></div>
-          <div class="three wide field ">
-            <label>ความแตกต่างของภาษีระหว่างเดือนเท่ากับร้อยละ</label>
+            <div class="two wide field"></div>
+          <div class="two wide field"></div>
+          <div class="five wide field ">
+            <label class="text-right full-width">ความแตกต่างของภาษีระหว่างเดือนเท่ากับร้อยละ</label>
           </div>
           <div class="two wide field">
             <input type="number" id="percent3" name="percent3" formControlName="percent3">
@@ -119,16 +130,20 @@
         </div>
         <br><br>
         <div class="inline fields  ui grid">
-          <div class="four wide field"></div>
+            <div class="two wide field"></div>
+          <div class="four wide field">
+            <label class="text-center full-width">เงื่อนไขที่ 3</label>
+          </div>
           <div class="seven wide field ">
-            <u>เงื่อนไขที่ 3 เปรียบเทียบความแต่งต่างการชำระภาษีระหว่างปี</u>
+            <b>เปรียบเทียบความแต่งต่างการชำระภาษีระหว่างปี</b>
           </div>
         </div>
-        <!-- row 3 -->
+        <!-- row 8 -->
         <div class="inline fields  ui grid">
-          <div class="four wide field"></div>
-          <div class="three wide field ">
-            <label>ความแตกต่างของภาษีระหว่างเดือนมากกว่าหรือเท่ากับร้อยละ</label>
+            <div class="two wide field"></div>
+          <div class="two wide field"></div>
+          <div class="five wide field ">
+            <label class="text-right full-width">ความแตกต่างของภาษีระหว่างเดือนมากกว่าหรือเท่ากับร้อยละ</label>
           </div>
           <div class="two wide field">
             <input type="number" id="" name="" >
@@ -141,11 +156,12 @@
           </div>
         </div>
 
-        <!-- row 4 -->
+        <!-- row 9 -->
         <div class="inline fields  ui grid">
-          <div class="four wide field"></div>
-          <div class="three wide field ">
-            <label>ความแตกต่างของภาษีระหว่างเดือนน้อยกว่าหรือเท่ากับร้อยละ</label>
+            <div class="two wide field"></div>
+          <div class="two wide field"></div>
+          <div class="five wide field ">
+            <label class="text-right full-width">ความแตกต่างของภาษีระหว่างเดือนน้อยกว่าหรือเท่ากับร้อยละ</label>
           </div>
           <div class="two wide field">
             <input type="number" id="" name="">
@@ -158,11 +174,12 @@
           </div>
         </div>
 
-        <!-- row 5-->
+        <!-- row 10-->
         <div class="inline fields  ui grid">
-          <div class="four wide field"></div>
-          <div class="three wide field ">
-            <label>ความแตกต่างของภาษีระหว่างเดือนเท่ากับร้อยละ</label>
+            <div class="two wide field"></div>
+          <div class="two wide field"></div>
+          <div class="five wide field ">
+            <label class="text-right full-width">ความแตกต่างของภาษีระหว่างเดือนเท่ากับร้อยละ</label>
           </div>
           <div class="two wide field">
             <input type="number" id="" name="" >
@@ -184,7 +201,7 @@
             </button>
             <button class="ui mini button" (click)="clear()">
               <i class="refresh icon"></i>
-              ยกเลิก
+              ล้างข้อมูล
             </button>
           </div>
         </div>

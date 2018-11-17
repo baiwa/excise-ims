@@ -20,7 +20,7 @@ export class Tsl010600Component implements OnInit {
     { label: 'การคัดเลือกราย', route: '#' },
     { label: 'ตารางผลการคัดเลือกรายประจำปี', route: '#' }
   ];
-
+  activeModal :boolean = false;
   datatable: any;
   dateCalendar: String = "";
   searchFlag: string = "TRUE";
@@ -34,6 +34,7 @@ export class Tsl010600Component implements OnInit {
 
   ngAfterViewInit() {
     this.initDatatable();
+    this.calendar();
   }
 
   calendar = () => {
@@ -71,7 +72,7 @@ export class Tsl010600Component implements OnInit {
           className: "ui center aligned",
           render: function (data, row) {
             console.log(data, row)
-            if(data=="2") {
+            if (data == "2") {
               return '<i class="check icon" style="color:green"> </i>';
             }
             return '<a href="#" class="select-record"><u>เลือก</u></a>';
@@ -103,22 +104,29 @@ export class Tsl010600Component implements OnInit {
         },
       ],
     });
-
-    this.datatable.on("click", "td > .select-record", (event) => {
+    this.datatable.on('click', 'tbody tr .select-record', (e) => {
       event.preventDefault();
-      var data = this.datatable.row($(event.currentTarget).closest("tr")).data();
+      var closestRow = $(e.target).closest('tr');
+      var data = this.datatable.row(closestRow).data();
+      console.log(data);      
       this.dataService.setData(data);
-      $('#modalTsl').modal({
-        onShow: () => {
-          this.calendar();
-        }
-      }).modal('show');
+      this.activeModal = true;
+      // $('#modalTsl111').modal({
+      //   onShow: () => {
+      //     //  this.calendar();
+      //   }
+      // }).modal('show');
     });
+    // this.datatable.on("click", "td > .select-record", (event) => {
+    //   event.preventDefault();
+    //   var data = this.datatable.row($(event.currentTarget).closest("tr")).data();
 
+    // });
   };
 
   onClickOK() {
-    $('#modalTsl').modal('hide');
+    console.log("onClickOk");   
+    this.activeModal = false;  
     this.router.navigate(["/tax-audit-select-line/tsl0107-00"],
       {
         queryParams: {
@@ -127,6 +135,10 @@ export class Tsl010600Component implements OnInit {
         }
       }
     );
+  }
+
+  onCancel(){
+    this.activeModal = true;  
   }
 
 }

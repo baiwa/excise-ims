@@ -248,9 +248,7 @@ export class Tsl010700Component implements OnInit {
   };
 
   onClickBack() {
-    this.router.navigate(["/tax-audit-select-line/tsl0106-00"], {
-      queryParams: {}
-    });
+    this.router.navigate(["/tax-audit-select-line/tsl0106-00"]);
   }
 
 
