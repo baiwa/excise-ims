@@ -4,116 +4,107 @@
 <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
   <span>ตรวจสอบจำนวนเงินที่เบิกเกิน</span>
 </div>
-<form>
+<form [formGroup]="formControl" >
   <div class="ui attached segment">
     <br>
     <div class="ui form">
       <div class="ui attached">
-        <!-- <div class="inline fields">
-          <div class="one wide field"></div>
-          <div class="two wide field">
-            <label class="full-width text-right">ประเภทเอกสาร</label>
-          </div>
-          <div class="four wide field" >
-            <select class="ui dropdown ai search full-width">
-              <option value="">กรุณาเลือก</option>
-              <option *ngFor="let wdr of withdrawRequestList | async;" [value]="wdr.lovId">
-                {{ wdr.typeDescription }}
-              </option>
-            </select>
-        </div>
-        </div> -->
         <div class="inline fields  ui grid">
           <div class="three wide field ">
-              <label class="text-right full-width">สำนักงานสรรพสามิตภาค</label>
+            <label class="text-right full-width">สำนักงานสรรพสามิตภาค</label>
           </div>
-          <div class="four wide field">
-            <select  class="ui dropdown ai search full-width" id="travelTo1" (change)="travelTo2Dropdown($event)">
+          <div class="four wide field" [ngClass]="{ 'error': submitted && f.sector.invalid }">
+            <select class="ui dropdown ai search full-width" id="sector" name="sector" formControlName="sector" (change)="travelTo2Dropdown($event)">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
             </select>
           </div>
           <div class="three wide field ">
-              <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่</label>
+            <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่</label>
           </div>
-          <div class="four wide field">
-            <select  class="ui dropdown ai search full-width" id="travelTo2" (change)="travelTo3Dropdown($event)">
+          <div class="four wide field" [ngClass]="{ 'error': submitted && f.area.invalid }">
+            <select class="ui dropdown ai search full-width" id="area" formControlName="area" name="area">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let data of travelTo2List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
             </select>
           </div>
-      </div>
+        </div>
 
-      <div class="inline fields">
-        <div class="three wide field">
+        <div class="inline fields">
+          <div class="three wide field">
             <label class="text-right full-width">ระยะเวลาการตรวจสอบ (ปีปฏิทิน)</label>
-        </div>
-        <div class="four wide field">
-            <div class="ui calendar" id="dateF" style="width:100%">
-                <div class="ui input left icon">
-                    <i class="calendar alter nate outline icon"></i>
-                    <input type="text" placeholder="ดด/ปปปป">
-                </div>
-            </div>
-        </div>
-        <div class="three wide field">
-            <label class="text-right right full-width">ถึง</label>
-        </div>
-        <div class="four wide field">
-            <div class="ui calendar" id="dateT" style="width:100%">
-                <div class="ui input left icon">
-                    <i class="calendar alter nate outline icon"></i>
-                    <input type="text" placeholder="ดด/ปปปป">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="inline fields">
-      <div class="three wide field">
-        <label class="text-right right full-width">จำนวนเงินในการเบิกเกิน</label>
-    </div>
-    <div class="four wide field">
-      <input type="text">
-    </div>
-    <div class="three wide field">
-      <label>บาท</label>
-  </div>
-    </div>
-    <div class="ui center aligned grid">
-      <div class="sixteen wide column">
-        <button class="ui mini primary button">
-          <i class="save icon"></i>
-        วิเคราะห์ข้อมูลเบื้องต้น
-        </button>      
-      </div>
-    </div>
-    
-
-    
-
-    <div class="ui segment">
-      <table id="dataTable" class="ui small celled table striped selectable" style="width: 100%;">
-          <thead>
-              <tr style="text-align: center">
-                  <th>ลำดับที่</th>
-                  <th>ชื่อผู้เบิก</th>
-                  <th>ตำแหน่ง</th>
-                  <th>รายการเชค</th>  
-                  <th>จำนวนเงิน</th>             
-              </tr>
-         
-          </thead>
-      </table>
-  
-      <div class="ui center aligned grid" style="margin-top: 20px;">
-          <div class="sixteen wide column">            
-  
-              <button class="ui mini primary button" >
-                  <i class="print plane icon"></i> ส่งออกไฟล์ Excel
-                </button>
           </div>
-      </div>
-  </div>
+          <div class="four wide field" [ngClass]="{ 'error': submitted && f.startDate.invalid }">
+            <div class="ui calendar" id="dateF" style="width:100%">
+              <div class="ui input left icon">
+                <i class="calendar alter nate outline icon"></i>
+                <input type="text" placeholder="ดด/ปปปป" formControlName="startDate">
+              </div>
+            </div>
+          </div>
+          <div class="three wide field">
+            <label class="text-right right full-width">ถึง</label>
+          </div>
+          <div class="four wide field" [ngClass]="{ 'error': submitted && f.endDate.invalid }">
+            <div class="ui calendar" id="dateT" style="width:100%">
+              <div class="ui input left icon">
+                <i class="calendar alter nate outline icon"></i>
+                <input type="text" placeholder="ดด/ปปปป" formControlName="endDate">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="inline fields">
+          <div class="three wide field" >
+            <label class="text-right right full-width">จำนวนเงินในการเบิกเกิน</label>
+          </div>
+          <div class="four wide field" [ngClass]="{ 'error': submitted && f.money.invalid }">
+            <input type="text" name="money" id="money" formControlName="money" numberOnly>
+          </div>
+          <div class="three wide field">
+            <label>บาท</label>
+          </div>
+        </div>
+        <div class="ui center aligned grid">
+          <div class="sixteen wide column">
+            <button class="ui mini primary button" type="button" (click)="search()">
+              <i class="save icon"></i>
+              วิเคราะห์ข้อมูลเบื้องต้น
+            </button>
+            <button class="ui mini button" type="button" (click)="clear()">
+                <i class="sync icon"></i>
+                ล้างข้อมูล
+              </button>
+          </div>
+        </div>
+
+
+
+
+        <div class="ui segment">
+          <table id="dataTable" class="ui small celled table striped nowrap selectable" style="width: 100%;">
+            <thead>
+              <tr style="text-align: center">
+                <th style="text-align: center !important;"><input class="ui checkbox" type="checkbox" name="select-all" id="select-all" (click)="checkAll($event)"></th>
+                <th style="text-align: center !important">ลำดับที่</th>
+                <th style="text-align: center !important">ชื่อผู้เบิก</th>
+                <th style="text-align: center !important">ตำแหน่ง</th>
+                <th style="text-align: center !important">รายการเชค</th>
+                <th style="text-align: center !important">จำนวนเงิน</th>
+              </tr>
+
+            </thead>
+          </table>
+
+          <div class="ui center aligned grid" style="margin-top: 20px;">
+            <div class="sixteen wide column">
+
+              <button class="ui mini primary button" type="button" (click)="export()">
+                <i class="print plane icon"></i> ส่งออกไฟล์ Excel
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

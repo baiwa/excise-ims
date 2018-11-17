@@ -5,6 +5,7 @@ import { AuthGuard } from 'services/auth-guard.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BreadcrumbModule } from 'components/breadcrumb/breadcrumb.module';
 import { Int0615Component } from './int06-15.component';
+import { DirectivesModule } from 'app/buckwaframework/common/directives/directives.module';
 
 
 const routes: Routes = [
@@ -17,7 +18,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    DirectivesModule
   ],
   declarations: [Int0615Component],
   providers: [Int0615Component]
