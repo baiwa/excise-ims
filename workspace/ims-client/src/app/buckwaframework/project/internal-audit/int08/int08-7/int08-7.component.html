@@ -1,5 +1,47 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <br>
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+  <span>รายละเอียดการตรวจสอบใบเสร็จเสีย</span>
+</div>
+<div class="ui attached  segment">
+
+  <table id="tableData" class="ui small celled table nowrap striped selectable" style="width: 100%">
+    <thead>
+      <tr>
+        <th style="text-align: center !important;">ลำดับที่</th>
+        <th style="text-align: center !important;">ชื่อสำนักงานสรรพสามิต</th>
+        <th style="text-align: center !important;">ช่วงเดือนที่</th>
+        <th style="text-align: center !important;">ถึงเดือนที่</th>
+        <th style="text-align: center !important;">จำนวนใบเสร็จ</th>
+        <th style="text-align: center !important;">จำนวนใบเสีย</th>
+        <th style="text-align: center !important;">รายละเอียดความเสี่ยง</th>
+      </tr>
+    </thead>
+  </table>
+  <br>
+</div>
+<br>
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <span>รายละเอียดการตรวจสอบการนำเงินฝากเข้าบัญชีพักหน่วยงานและกองทุน</span>
+</div>
+<div class="ui attached  segment">
+
+    <table id="dataTable2" class="ui small celled table nowrap striped selectable" style="width: 100%">
+        <thead>
+            <tr>
+                <th class="text-center">ลำดับที่</th>
+                <th class="text-center">เลขที่ใบเสร็จ</th>
+                <th class="text-center">วันที่จัดเก็บ</th>
+                <th class="text-center">วันที่นำฝาก</th>
+                <th class="text-center">เงินจัดเก็บ</th>
+                <th class="text-center">เงินนำฝาก</th>
+                <th class="text-center">สถานะการตรวจวันที่</th>
+                <th class="text-center">สถานะการตรวจจำนวนเงิน</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<br>
 <form (submit)="onSubmit($event)" ngNativeValidate>
   <div class="ui grid">
     <div class="sixteen wide column">

@@ -114,16 +114,19 @@ export class Int084Component implements OnInit {
     if ($('#tableData').DataTable() != null) {$('#tableData').DataTable().destroy();};
     this.int084VoList = [];
     var table = $('#tableData').DataTableTh({
-      "serverSide": false,
-      "searching": false,
-      "processing": true,
-      "scrollX": true,    
-
-      "ajax" : {
-        "url" : '/ims-webapp/api/ia/int084/list',
-        "contentType": "application/json",
-        "type" : "POST",
-        "data" : (d) => {
+      lengthChange: false,
+      searching: false,
+      ordering: false,
+      pageLength: 10,
+      processing: true,
+      serverSide: false,
+      paging: true,
+      scrollX: true, 
+      ajax : {
+        url : '/ims-webapp/api/ia/int084/list',
+        contentType: "application/json",
+        type : "POST",
+        data : (d) => {
           return JSON.stringify($.extend({}, d, {
             "searchFlag" : $("#searchFlag").val(),
             "sector" :  $("#sector").val(),
@@ -138,16 +141,21 @@ export class Int084Component implements OnInit {
       },
       "columns": [
         {
+          render: function (data, type, full, meta) {
+            return `<input class="ui checkbox" type="checkbox" name="chk${meta.row}" id="chk${
+              meta.row
+              }" value="${$("<div/>")
+                .text(data)
+                .html()}">`;
+          },
+          className: "center"
+        },{
           "data": "officeCode",
           "render": function (data, type, row, meta) {
               return meta.row + meta.settings._iDisplayStart + 1;
           },
           "className": "ui center aligned"
-        }, 
-        // {
-        //   "data": "officeCode","className":"center"
-        // }, 
-        {
+        }, {
           "data": "officeName"
         }, {
           "data": "startDate","className":"center"
@@ -177,18 +185,36 @@ export class Int084Component implements OnInit {
       }
     });
   }
+  checkAll=event=>{
+    var rows = $('#tableData').DataTable().rows({ search: "applied" }).nodes();
+    $('input[type="checkbox"]', rows).prop("checked",event.target.checked);
 
-saveData=()=>{
+  }
+  saveData=()=>{
     console.log("saveData",this.int084VoList);
     let url = "/ia/int084/save";
+    let dataSave = []; 
 
-    this.ajax.post(url,this.int084VoList, res => {        
+    let node = $("#tableData").DataTable().rows().nodes();
+    $.each(node, function(index, value) {
+      if ($(this).find("input[type=checkbox]").is(":checked")) {
+
+        let data = $("#tableData").DataTable().rows().data()[index];
+        dataSave.push(data);
+      }
+    });
+
+   console.log("dataSave : ",dataSave);
+
+    this.ajax.post(url,dataSave, res => {        
       const msg = res.json();
 
       // this.exportFile();
       this.exportFile2();
     });
   }
+
+  
 
 
   exportFile=()=>{
