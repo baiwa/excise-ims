@@ -138,7 +138,7 @@ export class Tsl010600Component implements OnInit {
   }
 
   onCancel(){
-    this.activeModal = true;  
+    this.activeModal = false;  
   }
 
 }
