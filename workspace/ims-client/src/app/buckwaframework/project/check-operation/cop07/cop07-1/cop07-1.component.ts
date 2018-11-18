@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { TextDateTH, formatter ,stringToDate} from "../../../../common/helper/datepicker";
+import { TextDateTH, formatter, stringToDate, ThaiFormatter } from "../../../../common/helper/datepicker";
 import { AjaxService, MessageBarService, AuthService } from "../../../../common/services";
 import { TravelCostHeader } from "../../../../common/models";
 import { Router, ActivatedRoute } from "@angular/router";
@@ -19,12 +19,12 @@ export class Cop071Component implements OnInit {
   searchFlag: String;
   breadcrumb: BreadCrumb[];
 
-  totalAsPlanNumber:Number=0;
-  totalAsPlanSuccess:Number=0;
-  totalAsPlanWait:Number=0;
-  totalOutsidePlanNumber:Number=0;
-  totalOutsidePlanSuccess:Number=0;
-  totalOutsidePlanWait:Number=0;   
+  totalAsPlanNumber: Number = 0;
+  totalAsPlanSuccess: Number = 0;
+  totalAsPlanWait: Number = 0;
+  totalOutsidePlanNumber: Number = 0;
+  totalOutsidePlanSuccess: Number = 0;
+  totalOutsidePlanWait: Number = 0;
 
   constructor(
     private message: MessageBarService,
@@ -39,11 +39,12 @@ export class Cop071Component implements OnInit {
       { label: "ตรวจปฏิบัติการ", route: "#" },
       { label: "แผนการตรวจปฏิบัติการ", route: "#" }
     ];
-    
-   }
+
+  }
   calenda = function () {
-   
+
     $("#date").calendar({
+      minDate: new Date(),
       type: "year",
       text: TextDateTH,
       formatter: formatter("ป")
@@ -51,7 +52,7 @@ export class Cop071Component implements OnInit {
   }
 
   clickSearch = function () {
-    if ($("#fiscalYear").val()=="") {
+    if ($("#fiscalYear").val() == "") {
       this.message.alert("กรุณาระบุ แผนการตรวจปฏิบัติการประจำปี");
       return false;
     }
@@ -61,7 +62,7 @@ export class Cop071Component implements OnInit {
     $('#tableData').DataTable().ajax.reload();
   }
 
-  dataTable = function () {
+  dataTable = () => {
     var table = $('#tableData').DataTable({
       "lengthChange": false,
       "paging": false,
@@ -87,42 +88,48 @@ export class Cop071Component implements OnInit {
         {
           "data": "fiscalYearText"
         }, {
-          "data": "asPlanNumber","className":"right",
-          "render": function (data, type, row) {
-            return (data==null)?'-':data;
+          "data": "asPlanNumber", "className": "right",
+          "render": (data, type, row) => {
+            return (data == null) ? '-' : data;
           }
         }, {
-          "data": "asPlanWait","className":"right",
-          "render": function (data, type, row) {
-            return (data==null)?'-':data;
+          "data": "asPlanWait", "className": "right",
+          "render": (data, type, row) => {
+            return (data == null) ? '-' : data;
           }
         }, {
-          "data": "asPlanSuccess","className":"right",
-          "render": function (data, type, row) {
-            return (data==null)?'-':data;
+          "data": "asPlanSuccess", "className": "right",
+          "render": (data, type, row) => {
+            return (data == null) ? '-' : data;
           }
         }, {
-          "data": "outsidePlanNumber","className":"right",
-          "render": function (data, type, row) {
-            return (data==null)?'-':data;
+          "data": "outsidePlanNumber", "className": "right",
+          "render": (data, type, row) => {
+            return (data == null) ? '-' : data;
           }
         }, {
-          "data": "outsidePlanWait","className":"right",
-          "render": function (data, type, row) {
-            return (data==null)?'-':data;
+          "data": "outsidePlanWait", "className": "right",
+          "render": (data, type, row) => {
+            return (data == null) ? '-' : data;
           }
         }, {
-          "data": "outsidePlanSuccess","className":"right",
-          "render": function (data, type, row) {
-            return (data==null)?'-':data;
+          "data": "outsidePlanSuccess", "className": "right",
+          "render": (data, type, row) => {
+            return (data == null) ? '-' : data;
           }
         }, {
           "data": "fiscalYear",
-          "render": function (data, type, row) {
+          "render": (data, type, row) => {
             var btn = '';
-            btn += '<button class="mini ui yellow button btn-edit"><i class="edit icon"></i>แก้ไข</button>';
-            btn += '<button class="mini ui primary button btn-description"><i class="eye icon"></i>รายละเอียด</button>';
-           
+            if(this.validateDate(data)){
+
+              btn += '<button class="mini ui yellow button btn-edit" disabled><i class="edit icon"></i>แก้ไข</button>';
+              btn += '<button class="mini ui primary button btn-description"><i class="eye icon"></i>รายละเอียด</button>';
+            }else{
+              
+              btn += '<button class="mini ui yellow button btn-edit"><i class="edit icon"></i>แก้ไข</button>';
+              btn += '<button class="mini ui primary button btn-description"><i class="eye icon"></i>รายละเอียด</button>';
+            }
             return btn;
           }
         }
@@ -140,102 +147,119 @@ export class Cop071Component implements OnInit {
       }
       this.router.navigate(['/cop07/1/1'], {
         queryParams: {
-          id:data.id,
-          fiscalYear:data.fiscalYear,
-          asPlanNumber:data.asPlanNumber,
-          asPlanSuccess:data.asPlanSuccess,
-          outsidePlanNumber:data.outsidePlanNumber,
-          outsidePlanSuccess:data.outsidePlanSuccess
+          id: data.id,
+          fiscalYear: data.fiscalYear,
+          asPlanNumber: data.asPlanNumber,
+          asPlanSuccess: data.asPlanSuccess,
+          outsidePlanNumber: data.outsidePlanNumber,
+          outsidePlanSuccess: data.outsidePlanSuccess
 
         }
       });
       console.log(data);
     });
 
-    table.on('click', 'tbody tr button.btn-edit',(e)=> {
+    table.on('click', 'tbody tr button.btn-edit', (e) => {
       var closestRow = $(e.target).closest('tr');
       var data = table.row(closestRow).data();
       this.modalEdit(data);
     });
 
   }
-  sum = ( row, data ) => {
-    console.log("data : ",data);
-    this.totalAsPlanNumber+=data.asPlanNumber;
-    this.totalAsPlanSuccess+=data.asPlanSuccess;
-    this.totalAsPlanWait+=data.asPlanWait;
-    this.totalOutsidePlanNumber+=data.outsidePlanNumber;
-    this.totalOutsidePlanSuccess+=data.outsidePlanSuccess;
-    this.totalOutsidePlanWait+=data.outsidePlanWait;
-  
+
+
+
+  sum = (row, data) => {
+    console.log("data : ", data);
+    this.totalAsPlanNumber += data.asPlanNumber;
+    this.totalAsPlanSuccess += data.asPlanSuccess;
+    this.totalAsPlanWait += data.asPlanWait;
+    this.totalOutsidePlanNumber += data.outsidePlanNumber;
+    this.totalOutsidePlanSuccess += data.outsidePlanSuccess;
+    this.totalOutsidePlanWait += data.outsidePlanWait;
+
   }
 
-  setSum0 = () =>{
-    this.totalAsPlanNumber=0;
-    this.totalAsPlanSuccess=0;
-    this.totalAsPlanWait=0;
-    this.totalOutsidePlanNumber=0;
-    this.totalOutsidePlanSuccess=0;
-    this.totalOutsidePlanWait=0;
+  setSum0 = () => {
+    this.totalAsPlanNumber = 0;
+    this.totalAsPlanSuccess = 0;
+    this.totalAsPlanWait = 0;
+    this.totalOutsidePlanNumber = 0;
+    this.totalOutsidePlanSuccess = 0;
+    this.totalOutsidePlanWait = 0;
   }
 
-modalEdit=(data)=> {
-    console.log("data edit : ",data);
-   
+  modalEdit = (data) => {
+    console.log("data edit : ", data);
+
     $('#modalEdit').modal({
-      onShow: ()=>{
-         this.calenda();
-         $("#id").val(data.id);
-         $("#fiscalYearEdit").val(data.fiscalYear);
-         $("#asPlanNumber").val(data.asPlanNumber);
-         $("#asPlanSuccess").val(data.asPlanSuccess);
-         $("#outsidePlanNumber").val(data.outsidePlanNumber);
-         $("#outsidePlanSuccess").val(data.outsidePlanSuccess);
+      onShow: () => {
+        this.calenda();
+        $("#id").val(data.id);
+        $("#fiscalYearEdit").val(data.fiscalYear);
+        $("#asPlanNumber").val(data.asPlanNumber);
+        $("#asPlanSuccess").val(data.asPlanSuccess);
+        $("#outsidePlanNumber").val(data.outsidePlanNumber);
+        $("#outsidePlanSuccess").val(data.outsidePlanSuccess);
 
       }
     }).modal('show');
-   
-  }
 
+  }
+  validateDate = (req) => {
+    var str = req.split("/");
+    str = str[1] + str[0];
+    var date = new Date();
+    var datenow = date.toLocaleDateString()
+    var datenowstr = datenow.split("/");
+    var result = datenowstr[2] + datenowstr[1];
+
+    var res = false;
+
+    if (result > str) {
+      res = true;
+    }
+    return res;
+  }
   editData() {
     console.log("Edit");
     $('modalEdit').modal('hide');
     const URL = "cop/cop071/edit";
-    this.ajax.post(URL, { 
-      cop071Vo:{
-        id:(!$("#id").val())?0:$("#id").val(),
-        fiscalYear:$("#fiscalYearEdit").val(),
-        asPlanNumber:$("#asPlanNumber").val(),
-        asPlanSuccess:(!$("#asPlanSuccess").val())?0:$("#asPlanSuccess").val(),
-        outsidePlanNumber:$("#outsidePlanNumber").val(),
-        outsidePlanSuccess:(!$("#outsidePlanSuccess").val())?0:$("#outsidePlanSuccess").val()
+    this.ajax.post(URL, {
+      cop071Vo: {
+        id: (!$("#id").val()) ? 0 : $("#id").val(),
+        fiscalYear: $("#fiscalYearEdit").val(),
+        asPlanNumber: $("#asPlanNumber").val(),
+        asPlanSuccess: (!$("#asPlanSuccess").val()) ? 0 : $("#asPlanSuccess").val(),
+        outsidePlanNumber: $("#outsidePlanNumber").val(),
+        outsidePlanSuccess: (!$("#outsidePlanSuccess").val()) ? 0 : $("#outsidePlanSuccess").val()
       }
-     
-    },res => {
+
+    }, res => {
       const commonMessage = res.json();
-      
-    if (commonMessage.msg.messageType == "C") {
-      this.msg.successModal(commonMessage.msg.messageTh);
-    } else {
-      this.msg.errorModal(commonMessage.msg.messageTh);
-    }
-    $("#searchFlag").val("TRUE");
-    this.setSum0();
-    $('#tableData').DataTable().ajax.reload();
+
+      if (commonMessage.msg.messageType == "C") {
+        this.msg.successModal(commonMessage.msg.messageTh);
+      } else {
+        this.msg.errorModal(commonMessage.msg.messageTh);
+      }
+      $("#searchFlag").val("TRUE");
+      this.setSum0();
+      $('#tableData').DataTable().ajax.reload();
     });
   }
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('OPE-07100');
-    
-    this.dataTable();
-    this.calenda(); 
 
-    if(this.route.snapshot.queryParams["fiscalYear"]){
+    this.dataTable();
+    this.calenda();
+
+    if (this.route.snapshot.queryParams["fiscalYear"]) {
       $("#fiscalYear").val(this.route.snapshot.queryParams["fiscalYear"]);
       this.clickSearch();
     }
-    
+
   }
 
 }
