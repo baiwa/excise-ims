@@ -1,5 +1,8 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Int0615FormVo {
 
 	private String sector;
@@ -8,6 +11,16 @@ public class Int0615FormVo {
 	private String endDate;
 	private String money;
 	private String searchFlag;
+
+	private List<Int0615Vo> dataList = new ArrayList<>();;
+
+	public List<Int0615Vo> getDataList() {
+		return dataList;
+	}
+
+	public void setDataList(List<Int0615Vo> dataList) {
+		this.dataList = dataList;
+	}
 
 	public String getSearchFlag() {
 		return searchFlag;

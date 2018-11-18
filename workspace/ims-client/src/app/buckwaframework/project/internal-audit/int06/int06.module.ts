@@ -18,11 +18,12 @@ const routes: Routes = [
   { path: "13", loadChildren: "./int06-13/int06-13.module#Int0613Module" },
   { path: "14", loadChildren: "./int06-14/int06-14.module#Int0614Module" },
   { path: "15", loadChildren: "./int06-15/int06-15.module#Int0615Module" },
+  { path: "16", loadChildren: "./int06-16/int06-16.module#Int0616Module" },
+  
 ];
-
 @NgModule({
   imports: [
-    RouterModule.forChild(routes), 
+    RouterModule.forChild(routes),
     CommonModule,
 
   ],

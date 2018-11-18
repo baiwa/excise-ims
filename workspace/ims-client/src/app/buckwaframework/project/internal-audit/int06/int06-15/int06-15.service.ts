@@ -25,7 +25,7 @@ export class Int0615Service {
     startDate: "",
     endDate: "",
     money: "",
-    searchFlag : "FALSE"
+    searchFlag: "FALSE"
   }
   constructor(private ajax: AjaxService,
     private msg: MessageBarService,
@@ -65,25 +65,32 @@ export class Int0615Service {
     this.table.ajax.reload();
   }
 
-  checkAll=event=>{
+  checkAll = event => {
     var rows = this.table.rows({ search: "applied" }).nodes();
-    $('input[type="checkbox"]', rows).prop("checked",event.target.checked);
+    $('input[type="checkbox"]', rows).prop("checked", event.target.checked);
 
   }
-  export=()=>{    
-  
-    let dataSave = []; 
+  save = () => {
+    this.msg.comfirm((res) => {
+      if (res) {
+        let dataSave = [];
 
-    let node = this.table.rows().nodes();    
-    $.each(node, function(index, value) {
-      if ($(this).find("input[type=checkbox]").is(":checked")) {
+        let node = this.table.rows().nodes();
+        $.each(node, function (index, value) {
+          if ($(this).find("input[type=checkbox]").is(":checked")) {
 
-        let data = $("#dataTable").DataTable().data()[index];
-        dataSave.push(data);
+            let data = $("#dataTable").DataTable().data()[index];
+            dataSave.push(data);
+          }
+        });
+        console.log("dataSave : ", dataSave);
+
+        let url = "ia/int0615/save"
+        this.ajax.post(url, JSON.stringify({ dataList: dataSave }), res => {
+          this.msg.successModal("บันทึกรายการสำเร็จ");
+        })
       }
-    });
-
-   console.log("dataSave : ",dataSave);
+    }, "บันทึกรายการ");
   }
   datatable = () => {
     this.table = $("#dataTable").DataTableTh({
@@ -102,7 +109,7 @@ export class Int0615Service {
             startDate: this.form.startDate,
             endDate: this.form.endDate,
             money: this.form.money,
-            searchFlag : this.form.searchFlag
+            searchFlag: this.form.searchFlag
           }));
         },
       },
@@ -131,16 +138,16 @@ export class Int0615Service {
         {
           data: "position",
           className: "ui left aligned"
-        },{
+        }, {
           data: "flag",
           className: "ui left aligned",
-          render : (data, row)=>{
+          render: (data, row) => {
             return this.checkType(data);
           }
-        },{
+        }, {
           data: "money",
           className: "ui right aligned",
-          render : (data,row)=>{
+          render: (data, row) => {
             return Utils.moneyFormatDecimal(data);
           }
         },
@@ -148,15 +155,15 @@ export class Int0615Service {
     });
   }
 
-  checkType(type){
+  checkType(type) {
     var result = '';
-    if(type == MessegeConstants.WIDTHDRAW.HOME_CODE){
+    if (type == MessegeConstants.WIDTHDRAW.HOME_CODE) {
       result = MessegeConstants.WIDTHDRAW.HOME
     }
-    if(type == MessegeConstants.WIDTHDRAW.MEDICAL_CODE){
+    if (type == MessegeConstants.WIDTHDRAW.MEDICAL_CODE) {
       result = MessegeConstants.WIDTHDRAW.MEDICAL
     }
-    if(type == MessegeConstants.WIDTHDRAW.TUITO_CODE){
+    if (type == MessegeConstants.WIDTHDRAW.TUITO_CODE) {
       result = MessegeConstants.WIDTHDRAW.TUITO
     }
     return result;

@@ -1,0 +1,181 @@
+<app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
+
+<br>
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+  <span>จำนวนครั้งในการเบิกเงิน</span>
+</div>
+<div class="ui attached  segment">
+
+  <table id="dataTable1" class="ui small celled table nowrap striped selectable" style="width: 100%">
+    <thead>
+      <tr>
+        <th style="text-align: center !important">ลำดับที่</th>
+        <th style="text-align: center !important">ชื่อผู้เบิก</th>
+        <th style="text-align: center !important">รายการเบิก</th>
+        <th style="text-align: center !important">จำนวนครั้งที่เบิก</th>
+      </tr>
+    </thead>
+  </table>
+  <br>
+</div>
+<br>
+<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+  <span>ตรวจสอบจำนวนเงินที่เบิกเกิน</span>
+</div>
+<div class="ui attached  segment">
+
+  <table id="dataTable2" class="ui small celled table nowrap striped selectable" style="width: 100%">
+    <thead>
+      <tr>
+        <th style="text-align: center !important">ลำดับที่</th>
+        <th style="text-align: center !important">ชื่อผู้เบิก</th>
+        <th style="text-align: center !important">ตำแหน่ง</th>
+        <th style="text-align: center !important">รายการเชค</th>
+        <th style="text-align: center !important">จำนวนเงิน</th>
+      </tr>
+    </thead>
+  </table>
+</div>
+<br>
+<!-- <form (submit)="onSubmit($event)" ngNativeValidate>
+  <div class="ui grid">
+    <div class="sixteen wide column">
+
+      <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+        <span>รายงานผลการตรวจสอบรายได้</span>
+      </div>
+
+      <div class="ui attached segment">
+        <div class="ui grid center aligned">
+          <div class="ui center aligned centered fourteen wide column">
+            <div class="ui form center aligned">
+
+
+              <div class="inline fields">
+                <div class="two wide field"></div>
+                <div class="two wide field">
+                  <label>ส่วนราชการ</label>
+                </div>
+                <div class="ten wide field">
+                  <input type="text" id="government" name="government" [(ngModel)]="obj.government">
+                </div>
+              </div>
+
+              <div class="inline fields">
+                <div class="two wide field"></div>
+                <div class="two wide field">
+                  <label>ที่</label>
+                </div>
+                <div class="four wide field">
+                  <input type="text" id="documentNo" name="documentNo" >
+                </div>
+                <div class="one wide field"></div>
+                <div class="one wide field">
+                  <label> วันที่</label>
+                </div>
+                <div class="four wide field ui calendar" id="date1">
+                  <div class="ui input left icon">
+                    <i class="calendar alter nate outline icon"></i>
+                    <input type="calendar" placeholder="วว/ดด/ปปปป" id="date" name="date" [(ngModel)]="obj.date" autocomplete="off">
+                  </div>
+                </div>
+              </div>
+
+              <div class="inline fields">
+                <div class="two wide field"></div>
+                <div class="two wide field">
+                  <label>เรื่อง</label>
+                </div>
+                <div class="ten wide field">
+                  รายงานผลการตรวจสอบรายได้
+                </div>
+              </div>
+
+              <div class="inline fields">
+                 <div class="two wide field"></div>
+                <div class="two wide field">
+                  <label> เรียน
+                  </label>
+                </div>
+                <div class="ten wide field">
+                  <input type="text" id="study" name="study" [(ngModel)]="obj.study">
+                </div>
+              </div>
+              <br>
+              <div class="inline fields">
+                <div class="two wide field"></div>
+                <div class="eight wide field">
+                  <div class="ui checkbox">
+                    <input type="checkbox" name="box1" [(ngModel)]="box1">
+                    <label>&nbsp;&nbsp;&nbsp;1)&nbsp;ผลการตรวจสอบใบเสร็จเสีย</label>
+                  </div>
+                </div>
+              </div>
+              <div class="inline fields">
+                <div class="two wide field"></div>
+                <div class="twelve wide field" [ngClass]="{'disabled': !box1}">
+                  <textarea  role="8" cols="10" [(ngModel)]="obj.billLost" id="billLost" name="billLost" maxlength="500"></textarea>
+                </div>
+              </div>
+              <br>
+
+              <div class="inline fields">
+                <div class="two wide field"></div>
+                <div class="eight wide field">
+                  <div class="ui checkbox">
+                    <input type="checkbox" name="box2" [(ngModel)]="box2">
+                    <label>&nbsp;&nbsp;&nbsp;2)&nbsp;ผลการตรวจสอบการนำเงินฝากเข้าบัญชีพักพน่วยงานและกองทุน</label>
+                  </div>
+                </div>
+              </div>
+              <div class="inline fields">
+                <div class="two wide field"></div>
+                <div class="twelve wide field" [ngClass]="{'disabled': !box2}">
+                  <textarea role="8" cols="10" [(ngModel)]="obj.sendMoney" id="sendMoney" name="sendMoney" maxlength="500"></textarea>
+                </div>
+              </div>
+              <br>
+
+              <div class="inline fields">
+                <div class="two wide field"></div>
+                <div class="two wide field">
+                  <label>ผู้ตรวจสอบ</label>
+                </div>
+                <div class="four wide field">
+                  <input type="text" id="officer" name="officer" [(ngModel)]="obj.officer" disabled>
+                </div>
+              </div>
+
+
+              <div class="inline fields">
+                <div class="two wide field"></div>
+                <div class="two wide field">
+                  <label>ตำแหน่ง</label>
+                </div>
+                <div class="four wide field">
+                  <input type="text" id="position" name="position" [(ngModel)]="obj.position" disabled>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>
+
+  <div class="ui bottom centered attached segment">
+    <div class="ui center aligned grid">
+      <div class="eight wide column">
+        <button class="ui mini yellow button" type="submit">
+          <i class="print icon"></i>
+          ส่งออก
+        </button>
+      </div>
+    </div>
+  </div>
+
+</form> -->

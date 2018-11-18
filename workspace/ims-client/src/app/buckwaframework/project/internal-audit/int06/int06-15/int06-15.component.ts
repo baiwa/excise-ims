@@ -138,8 +138,8 @@ export class Int0615Component implements OnInit, AfterViewInit {
   checkAll = (e) => {
     this.selfService.checkAll(e);
   }
-  export = () => {
-    this.selfService.export();
+  save = () => {
+    this.selfService.save();
   }
   calenda = () => {
     $("#dateF").calendar({

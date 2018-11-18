@@ -29,18 +29,18 @@
                     </div>
                     <div class="four wide field" [ngClass]="{ 'error': validateField('combo1') }">
                         <select class="ui dropdown ai search full-width" formControlName="combo1" id="combo1" (change)="travelTo2Dropdown($event)">
-              <option value="">กรุณาเลือก</option>
-              <option *ngFor="let data of travelTo1List | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
-            </select>
+                            <option value="">กรุณาเลือก</option>
+                            <option *ngFor="let data of travelTo1List | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+                        </select>
                     </div>
                     <div class="three wide field ">
                         <label class="text-right full-width">สำนักงานสรรพสามิตพื้นที่</label>
                     </div>
                     <div class="four wide field" [ngClass]="{ 'error': validateField('combo2') }">
                         <select class="ui dropdown ai search full-width" formControlName="combo2" id="combo2">
-              <option value="">กรุณาเลือก</option>
-              <option *ngFor="let data of travelTo2List | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
-            </select>
+                            <option value="">กรุณาเลือก</option>
+                            <option *ngFor="let data of travelTo2List | async" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
+                        </select>
                     </div>
                 </div>
 
@@ -82,11 +82,11 @@
                 <div class="ui center aligned grid">
                     <div class="sixteen wide column">
                         <button class="ui mini primary button">
-                          <i class="save icon"></i>
-                        วิเคราะห์ข้อมูลเบื้องต้น
+                            <i class="save icon"></i>
+                            วิเคราะห์ข้อมูลเบื้องต้น
                         </button>
                         <button class="ui mini button" type="reset" (click)="onReset()">
-                          <i class="refresh icon"></i>ล้างข้อมูล
+                            <i class="refresh icon"></i>ล้างข้อมูล
                         </button>
                     </div>
                 </div>
@@ -110,9 +110,11 @@
 
                     <div class="ui center aligned grid" style="margin-top: 20px;">
                         <div class="sixteen wide column">
-
-                            <button class="ui mini primary button" type="button" (click)="export($event)">
-                              <i class="print plane icon"></i> ส่งออกไฟล์ Excel
+                            <button class="ui mini primary button" type="button" (click)="save($event)">
+                                <i class="save icon"></i>บันทึกรายการที่เลือก
+                            </button>
+                            <button class="ui mini primary button" type="button" >
+                                <i class="print plane icon"></i> ส่งออกไฟล์ Excel
                             </button>
                         </div>
                     </div>

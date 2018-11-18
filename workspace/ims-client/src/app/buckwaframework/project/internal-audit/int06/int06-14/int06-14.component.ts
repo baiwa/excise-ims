@@ -158,22 +158,21 @@ export class Int0614Component implements OnInit {
     }
 
     //render check number is null or empty
-    let renderNumber = function(data, type, row, meta) {
+    let renderNumber = function (data, type, row, meta) {
       return Utils.isNull($.trim(data))
         ? "-"
         : $.fn.dataTable.render.number(",", ".", 2, "").display(data);
     };
 
     //render check string is null or empty
-    let renderString = function(data, type, row, meta) {
+    let renderString = function (data, type, row, meta) {
       if (Utils.isNull(data)) {
         data = "-";
       }
       return data;
     };
 
-    let renderType = function(data, type, row, meta) {
-      console.log(data);
+    let renderType = function (data, type, row, meta) {
       var result = "";
       if (data == MessegeConstants.WIDTHDRAW.HOME_CODE) {
         result = MessegeConstants.WIDTHDRAW.HOME;
@@ -202,16 +201,16 @@ export class Int0614Component implements OnInit {
       },
       columns: [
         {
-          render: function(data, type, full, meta) {
+          render: function (data, type, full, meta) {
             return `<div class="ui checkbox"> <input type="checkbox" name="chk-${
               meta.row
-            }" id="chk-${meta.row}" value="${$("<div/>")
-              .text(full.qtnHeaderId)
-              .html()}"> <label></label></div>`;
+              }" id="chk-${meta.row}" value="${$("<div/>")
+                .text(full.qtnHeaderId)
+                .html()}"> <label></label></div>`;
           }
         },
         {
-          render: function(data, type, row, meta) {
+          render: function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
         },
@@ -251,7 +250,7 @@ export class Int0614Component implements OnInit {
         .DataTable()
         .rows()
         .nodes();
-      $.each(node, function(index, value) {
+      $.each(node, function (index, value) {
         $(this)
           .find("input")
           .prop("checked", true);
@@ -261,7 +260,7 @@ export class Int0614Component implements OnInit {
         .DataTable()
         .rows()
         .nodes();
-      $.each(node, function(index, value) {
+      $.each(node, function (index, value) {
         $(this)
           .find("input")
           .prop("checked", false);
@@ -269,17 +268,25 @@ export class Int0614Component implements OnInit {
     }
   };
 
-  export = e => {
-    e.preventDefault();
-    let dataSave = [];
+  save = (e) => {
+    this.msg.comfirm((res) => {
+      if (res) {
+        let dataSave = [];
 
-    let node = this.dataTable.rows().nodes();
-    $.each(node, (index, value) => {
-      if ($('input[type="checkbox"]').is(":checked")) {
-        let data = this.dataTable.rows().data()[index];
-        dataSave.push(data);
+        let node = this.dataTable.rows().nodes();
+        $.each(node, function (index, value) {
+          if ($(this).find("input[type=checkbox]").is(":checked")) {
+
+            let data = $("#dataTable").DataTable().data()[index];
+            dataSave.push(data);
+          }
+        });
         console.log("dataSave : ", dataSave);
+        let url = "ia/int0614/save"
+        this.ajax.post(url, JSON.stringify({ dataList: dataSave }), res => {
+          this.msg.successModal("บันทึกรายการสำเร็จ");
+        })
       }
-    });
-  };
+    }, "บันทึกรายการ");
+  }
 }
