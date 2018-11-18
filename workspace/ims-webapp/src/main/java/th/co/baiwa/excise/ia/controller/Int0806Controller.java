@@ -22,10 +22,8 @@ import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.entity.MoneyCheck;
 import th.co.baiwa.excise.ia.persistence.vo.Int0806FormSearchVo;
-import th.co.baiwa.excise.ia.persistence.vo.Int084FormVo;
-import th.co.baiwa.excise.ia.persistence.vo.Int084Vo;
-import th.co.baiwa.excise.ia.persistence.vo.Int085FormVo;
 import th.co.baiwa.excise.ia.service.Int0806Service;
+import th.co.baiwa.excise.utils.BeanUtils;
 
 @Controller
 @RequestMapping("api/ia/int0806")
@@ -84,7 +82,7 @@ public class Int0806Controller {
 		try {
 			HttpSession session = request.getSession();
 			list2 = (List<MoneyCheck>)session.getAttribute(sessionDataInt086);
-			list.setData(list2);
+			list.setData((BeanUtils.isEmpty(list2))? new ArrayList<MoneyCheck>():list2);
 //				 list = int085Service.findAll(formVo);
 			 log.info("Data list {} row",list.getData().size());
 		} catch (Exception e) {

@@ -20,6 +20,7 @@ import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.vo.Int084Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int085FormVo;
 import th.co.baiwa.excise.ia.service.Int085Service;
+import th.co.baiwa.excise.utils.BeanUtils;
 
 @Controller
 @RequestMapping("api/ia/int085")
@@ -41,7 +42,7 @@ public class Int085Controller {
 		try {
 			HttpSession session = request.getSession();
 			list2 = (List<Int084Vo>)session.getAttribute(sessionDataInt084);
-			list.setData(list2);
+			list.setData((BeanUtils.isEmpty(list2))? new ArrayList<Int084Vo>():list2);
 //			 list = int085Service.findAll(formVo);
 			 log.info("Data list {} row",list.getData().size());
 		} catch (Exception e) {
