@@ -7,6 +7,7 @@ import { Int0615Service } from './int06-15.service';
 import { AjaxService } from 'services/ajax.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageBarService } from 'services/message-bar.service';
+import { AuthService } from 'services/auth.service';
 
 declare var $: any;
 const URL = {
@@ -44,8 +45,11 @@ export class Int0615Component implements OnInit, AfterViewInit {
     private selfService: Int0615Service,
     private ajax: AjaxService,
     private formBuilder: FormBuilder,
-    private msg : MessageBarService
+    private msg : MessageBarService,
+    private authService : AuthService
   ) {
+    this.authService.reRenderVersionProgram('INT-061500');
+
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบเบิกจ่าย", route: "#" },

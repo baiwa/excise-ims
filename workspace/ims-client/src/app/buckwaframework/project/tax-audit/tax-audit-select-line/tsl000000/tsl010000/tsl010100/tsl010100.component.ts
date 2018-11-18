@@ -3,6 +3,7 @@ import { Tsl010100Service } from './tsl010100.service';
 import { BreadCrumb } from 'models/breadcrumb';
 import { TextDateTH, formatter } from 'helpers/datepicker';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'services/auth.service';
 declare var $: any;
 @Component({
   selector: 'app-tsl010100',
@@ -31,8 +32,10 @@ export class Tsl010100Component implements OnInit {
   constructor(
     private myService: Tsl010100Service,
     private formBuilder: FormBuilder,
+    private authService : AuthService
   ) {
     this.newForm();
+    this.authService.reRenderVersionProgram('TSL-010100');
   }
 
   ngOnInit() {

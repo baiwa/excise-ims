@@ -4,6 +4,7 @@ import { AjaxService } from 'services/ajax.service';
 import { Router } from '@angular/router';
 import { TextDateTH, formatter } from 'helpers/datepicker';
 import { IaService } from 'services/ia.service';
+import { AuthService } from 'services/auth.service';
 
 
 declare var $: any;
@@ -27,10 +28,13 @@ export class Tsl010600Component implements OnInit {
 
   constructor(
     private dataService: IaService,
-    private router: Router
+    private router: Router,
+    private authService : AuthService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.authService.reRenderVersionProgram('TSL-010600');
+   }
 
   ngAfterViewInit() {
     this.initDatatable();
