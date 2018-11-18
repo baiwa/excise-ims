@@ -105,11 +105,15 @@
         <br>
         <div class="ui center aligned grid">
             <div class="sixteen wide column">
+                <button class="ui mini primary button" (click)="getCheckBox($event)">
+                    <i class="check icon"></i>
+                    เลือกรายการ
+                </button>
 
                 <button class="ui mini yellow button" (click)="export()">
-            <i class="print icon"></i>
-            ส่งออกไฟล์ excel
-          </button>
+                    <i class="print icon"></i>
+                    ส่งออกไฟล์ excel
+                </button>
             </div>
         </div>
     </div>

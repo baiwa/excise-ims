@@ -1,6 +1,7 @@
 package th.co.baiwa.excise.ia.service;
 
 import java.math.BigDecimal;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -26,44 +27,46 @@ public class Int0806Service {
 
 	public DataTableAjax<MoneyCheck> search(Int0806FormSearchVo en) {
 		List<MoneyCheck> dataList = new ArrayList<MoneyCheck>();
-			//query find subtype
-		if("S".equals(en.getFlag())) {
-			if("0".equals(en.getCombo1())) {
+		// query find subtype
+		if ("S".equals(en.getFlag())) {
+			if ("0".equals(en.getCombo1())) {
 				en.setOfficeCode("");
-			}else {
-				String s1 =  int0806Dao.getSubtype(en.getCombo1());
-				String s2 =  int0806Dao.getSubtype(en.getCombo2());
-				//set office code
+			} else {
+				String s1 = int0806Dao.getSubtype(en.getCombo1());
+				String s2 = int0806Dao.getSubtype(en.getCombo2());
+				// set office code
 				en.setOfficeCode(s1 + s2 + "00");
-//				en.setOfficeCode(en.getCombo1() + en.getCombo2() + "00");
+				// en.setOfficeCode(en.getCombo1() + en.getCombo2() + "00");
 			}
-		}
-			
-			//filter data
+			// filter data
 			dataList = int0806Dao.queryByfilter(en);
-			
-			if(dataList.size() > 0) {
-				for (MoneyCheck m : dataList) {
-					long diffInMillies = Math.abs(m.getDepositDate().getTime() - m.getTrnDate().getTime());
-				    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-					if(diff < 1) {
-						m.setStatusDate("S");
-						m.setDepositDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getDepositDate()));
-						m.setTrnDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getTrnDate()));
-					}else {
-						m.setStatusDate("F");
-						m.setDepositDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getDepositDate()));
-						m.setTrnDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getTrnDate()));
-					}
-//					if(BigDecimal.ZERO.equals( m.getNetlocAmount().subtract(m.getNettaxAmount()) )) {
-					Long sum = m.getNetlocAmount().longValue() - m.getNettaxAmount().longValue();
-						if(sum == 0) {
-						m.setStatusMoney("S");
-					}else {
-						m.setStatusMoney("F");
-					}
+		}
+
+		if (dataList.size() > 0) {
+			for (MoneyCheck m : dataList) {
+				long diffInMillies = Math.abs(m.getDepositDate().getTime() - m.getTrnDate().getTime());
+				long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+//				 long diffDate = m.getDepositDate().getTime() -  m.getTrnDate().getTime();
+//				 long diff = (diffDate / (1000*60*60*24));
+				if (diff < 2) {
+					m.setStatusDate("S");
+					m.setDepositDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getDepositDate()));
+					m.setTrnDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getTrnDate()));
+				} else {
+					m.setStatusDate("F");
+					m.setDepositDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getDepositDate()));
+					m.setTrnDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getTrnDate()));
+				}
+				// if(BigDecimal.ZERO.equals( m.getNetlocAmount().subtract(m.getNettaxAmount())
+				// )) {
+				Long sum = m.getNetlocAmount().longValue() - m.getNettaxAmount().longValue();
+				if (sum == 0) {
+					m.setStatusMoney("S");
+				} else {
+					m.setStatusMoney("F");
 				}
 			}
+		}
 	
 		DataTableAjax<MoneyCheck> dataTableAjax = new DataTableAjax<>();
 		dataTableAjax.setRecordsTotal(Long.valueOf(dataList.size()));
