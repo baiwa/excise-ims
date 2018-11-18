@@ -98,6 +98,7 @@ export class Int0614Component implements OnInit {
 
   travelTo2Dropdown = e => {
     let id = e.target.value;
+    $("#combo2").dropdown('restore defaults');
     this.travelTo2List = this.selfService.dropdown("SECTOR_VALUE", id);
   };
 

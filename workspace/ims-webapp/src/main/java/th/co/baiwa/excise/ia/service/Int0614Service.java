@@ -28,8 +28,11 @@ public class Int0614Service {
 
 			String strStartdate = DateConstant.convertDateToStr(startDate, "yyyyMM", DateConstant.LOCAL_EN);
 			String strEnddate = DateConstant.convertDateToStr(endDate, "yyyyMM", DateConstant.LOCAL_EN);
-
-			data = int0614Dao.findInRentHouse(strStartdate, strEnddate, typeD1);
+			
+			form.setDateStart(strStartdate);
+			form.setDateEnd(strEnddate);
+			form.setSector(typeD1);
+			data = int0614Dao.findInRentHouse(form);
 		}
 		
 

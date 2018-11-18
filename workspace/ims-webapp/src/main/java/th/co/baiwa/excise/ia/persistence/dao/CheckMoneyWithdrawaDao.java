@@ -53,7 +53,7 @@ public class CheckMoneyWithdrawaDao {
 		params.add(formVo.getEndDate());
 
 		if (StringUtils.isNotBlank(formVo.getMoney())) {
-			sql.append(" AND MONEY <= ?");
+			sql.append(" AND MONEY >= ?");
 			params.add(formVo.getMoney());
 		}
 
@@ -80,7 +80,7 @@ public class CheckMoneyWithdrawaDao {
 		params.add(formVo.getEndDate());
 		
 		if (StringUtils.isNotBlank(formVo.getMoney())) {
-			sql.append(" AND MONEY <= ?");
+			sql.append(" AND MONEY >= ?");
 			params.add(formVo.getMoney());
 		}
 		sql.append(" ORDER BY T1.NAME ASC");

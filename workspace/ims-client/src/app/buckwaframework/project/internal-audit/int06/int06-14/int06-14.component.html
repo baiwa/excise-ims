@@ -73,7 +73,7 @@
                         <label class="text-right right full-width">จำนวนครั้งในการเบิกเงิน</label>
                     </div>
                     <div class="four wide field" [ngClass]="{ 'error': validateField('withdrawAmount') }">
-                        <input type="text" formControlName="withdrawAmount">
+                        <input type="text" formControlName="withdrawAmount" numberOnly>
                     </div>
                     <div class="three wide field">
                         <label>ครั้ง</label>

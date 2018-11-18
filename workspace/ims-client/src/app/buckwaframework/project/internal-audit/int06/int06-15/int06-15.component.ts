@@ -6,6 +6,8 @@ import { ComboBox } from 'models/combobox';
 import { Int0615Service } from './int06-15.service';
 import { AjaxService } from 'services/ajax.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageBarService } from 'services/message-bar.service';
+
 declare var $: any;
 const URL = {
   DROPDOWN: "combobox/controller/getDropByTypeAndParentId"
@@ -41,7 +43,8 @@ export class Int0615Component implements OnInit, AfterViewInit {
   constructor(
     private selfService: Int0615Service,
     private ajax: AjaxService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private msg : MessageBarService
   ) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
@@ -82,6 +85,7 @@ export class Int0615Component implements OnInit, AfterViewInit {
     this.submitted = true;
 
     if (this.formControl.invalid) {
+     this.msg.errorModal("กรุณากรอกข้อมูลให้ครบ");
       return false;
     }
 
