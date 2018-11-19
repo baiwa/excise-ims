@@ -272,7 +272,7 @@ export class Cop091Component implements OnInit, OnDestroy {
     }).modal('show');
   }
   setDataT = (data) => {
-    // console.log("setDataT :", data);
+   //console.log("setDataT :", data);
     this.dataList = {
       analysisNumber: "25611115-01-03721",
       companyAddress: "252/133 อาคาร- ซอย- ถนนรัชดาภิเษก แขวงห้วยขวาง เขตห้วยขวาง  จังหวัดกรุงเทพมหานคร 10310", // data.entrepreneurLoca,
@@ -286,7 +286,9 @@ export class Cop091Component implements OnInit, OnDestroy {
       riskType: "1",
       riskTypeDesc: "ความถี่ของเดือนที่ชำระภาษี",
       taYearPlanId: 63,
-      userId: null
+      userId: null,
+      id:data.id
+
     }
   }
 

@@ -52,6 +52,7 @@ export class Cop092Component implements OnInit {
   ) {
     this.dataRecord = this.dataService.getData();
     console.log("dataRecord", this.dataRecord);
+   // console.log("id", this.dataRecord.id);
     this.dateCalendar = this.route.snapshot.queryParams['dateCalendar'];
     this.searchFlag = this.route.snapshot.queryParams['searchFlag'];
     this.dateMonth = new Date();
@@ -75,16 +76,17 @@ export class Cop092Component implements OnInit {
   // }
 
   onReport() {
+    this.obj.fiscalYearId = this.dataRecord.id;
     this.obj.exciseArea =   $("#exciseArea").val();
     this.obj.exciseSubArea =   $("#exciseSubArea").val();
     this.obj.exciseId =   $("#exciseId").val();
     this.obj.companyName =   $("#companyName").val();
     this.obj.product =   $("#product").val();
-    this.obj.riskTypeDesc =   $("#riskTypeDesc").val();
+    //this.obj.riskTypeDesc =   $("#riskTypeDesc").val();
     this.obj.dateCalendar =   $("#dateCalendar").val();
     this.obj.companyAddress =   $("#companyAddress").val();
 
-    // this.obj.resultGetRaw =   $("#resultGetRaw").val();
+    //this.obj.resultGetRaw =   $("#resultGetRaw").val();
     // this.obj.resultPayRaw =   $("#resultPayRaw").val();
     // this.obj.receiptInvoiceRaw =   $("#receiptInvoiceRaw").val();
     // this.obj.payInvoiceRaw =   $("#payInvoiceRaw").val();
@@ -98,10 +100,12 @@ export class Cop092Component implements OnInit {
 
 
     console.log(this.obj);
+    
     this.message.comfirm(confirm => {
       if (confirm) {
         const URL = "cop/cop092/updateFlag";
         this.ajax.post(URL, { "id": this.idUpdate }, response => {
+          this.saveDataReport();
           this.exportPdf();
           this.message.successModal(response.json().msg.messageTh);
           this.router.navigate(["/cop09/1"]);
@@ -129,6 +133,34 @@ export class Cop092Component implements OnInit {
     document.body.appendChild(form);
     form.submit();
   }
+
+
+  saveDataReport() {
+      const URL = "cop/cop092/saveReport";
+
+      this.ajax.post(URL, 
+        { fiscalYearId: this.obj.fiscalYearId, 
+          exciseArea: this.obj.exciseArea, 
+          exciseSubArea: this.obj.exciseSubArea, 
+          exciseId: this.obj.exciseId, 
+          companyName:this.obj.companyName,
+          product:this.obj.product,
+          dateCalendar:this.obj.dateCalendar,
+          companyAddress:this.obj.companyAddress,
+          resultGetRaw:this.obj.resultGetRaw,
+          resultGetBox:this.obj.resultGetRawBox,
+          resultPayRaw:this.obj.resultPayRaw,
+          resultPayBox:this.obj.resultPayRawBox,
+          receiptInvoiceRaw:this.obj.receiptInvoiceRaw,
+          receiptInvoiceBox:this.obj.receiptInvoiceBox,
+          payInvoiceRaw:this.obj.payInvoiceRaw,
+          payInvoiceBox:this.obj.payInvoiceBox,
+          officer:this.obj.officer
+        }, res => { 
+      });
+
+  }
+
 
   ngAfterViewInit() {
     this.initGetRawDatatable();
@@ -468,12 +500,13 @@ export class Cop092Component implements OnInit {
 }
 
 class data {
+  fiscalYearId:any;
   exciseArea: string;
   exciseSubArea: string;
   exciseId: string;
   companyName: string;
   product: string;
-  riskTypeDesc: string;
+  //riskTypeDesc: string;
   dateCalendar: string;
   companyAddress: string;
   //user login

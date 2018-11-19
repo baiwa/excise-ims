@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.cop.persistence.entity.CopCheckFiscalReport;
 import th.co.baiwa.excise.cop.persistence.vo.Cop064FormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop092BudgetFormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop092BudgetVo;
@@ -73,4 +74,12 @@ public class Cop092Controller {
 		return list;
 	}
 
+	
+	@PostMapping("/saveReport")
+	@ResponseBody
+	public void saveReport(@RequestBody CopCheckFiscalReport copCheckFiscalReport) {	
+		cop092Service.saveCopCheckFiscalReport(copCheckFiscalReport);
+
+	}	
+	
 }

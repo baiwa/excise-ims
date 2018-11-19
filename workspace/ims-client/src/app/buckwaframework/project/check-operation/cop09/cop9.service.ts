@@ -31,4 +31,5 @@ export interface Cop9 {
     riskTypeDesc: string,
     taYearPlanId: number,
     userId: number
+    id: number
 } 
