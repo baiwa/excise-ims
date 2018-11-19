@@ -217,7 +217,15 @@ export class Int086Component implements OnInit, AfterViewInit {
           }
         },
         {
+          data: "accountType",
+          render: renderString
+        },
+        {
           data: "receiptNo",
+          render: renderString
+        },
+        {
+          data: "createdDateStr",
           render: renderString
         },
         {
@@ -261,7 +269,7 @@ export class Int086Component implements OnInit, AfterViewInit {
       ],
       columnDefs: [
         {
-          targets: [0, 1, 2, 3, 4, 7, 8],
+          targets: [0, 1, 2, 3, 4, 5, 6, 9, 10],
           className: "center"
         },
         {

@@ -83,18 +83,6 @@ public class MoneyCheck extends BaseEntity {
 
 	@Column(name="TRN_DATE")
 	private Date trnDate;
-	
-	@Transient
-	private String depositDateStr;
-	
-	@Transient
-	private String statusDate;
-	
-	@Transient
-	private String statusMoney;
-	
-	@Transient
-	private String trnDateStr;
 
 	public BigDecimal getId() {
 		return id;
@@ -254,38 +242,6 @@ public class MoneyCheck extends BaseEntity {
 
 	public void setTrnDate(Date trnDate) {
 		this.trnDate = trnDate;
-	}
-
-	public String getDepositDateStr() {
-		return depositDateStr;
-	}
-
-	public void setDepositDateStr(String depositDateStr) {
-		this.depositDateStr = depositDateStr;
-	}
-
-	public String getStatusDate() {
-		return statusDate;
-	}
-
-	public void setStatusDate(String statusDate) {
-		this.statusDate = statusDate;
-	}
-
-	public String getStatusMoney() {
-		return statusMoney;
-	}
-
-	public void setStatusMoney(String statusMoney) {
-		this.statusMoney = statusMoney;
-	}
-
-	public String getTrnDateStr() {
-		return trnDateStr;
-	}
-
-	public void setTrnDateStr(String trnDateStr) {
-		this.trnDateStr = trnDateStr;
 	}
 
 }

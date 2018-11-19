@@ -1,7 +1,5 @@
 package th.co.baiwa.excise.ia.service;
 
-import java.math.BigDecimal;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.excise.ia.persistence.Int0806Vo;
 import th.co.baiwa.excise.ia.persistence.dao.Int0806Dao;
 import th.co.baiwa.excise.ia.persistence.entity.MoneyCheck;
 import th.co.baiwa.excise.ia.persistence.vo.Int0806FormSearchVo;
@@ -25,8 +24,10 @@ public class Int0806Service {
 		return int0806Dao.getValue1(en);
 	}
 
-	public DataTableAjax<MoneyCheck> search(Int0806FormSearchVo en) {
-		List<MoneyCheck> dataList = new ArrayList<MoneyCheck>();
+	public DataTableAjax<Int0806Vo> search(Int0806FormSearchVo en) {
+		List<Int0806Vo> dataList = new ArrayList<Int0806Vo>();
+		List<MoneyCheck> list = new ArrayList<MoneyCheck>();
+		Int0806Vo obj;
 		// query find subtype
 		if ("S".equals(en.getFlag())) {
 			if ("0".equals(en.getCombo1())) {
@@ -39,36 +40,50 @@ public class Int0806Service {
 				// en.setOfficeCode(en.getCombo1() + en.getCombo2() + "00");
 			}
 			// filter data
-			dataList = int0806Dao.queryByfilter(en);
+			list = int0806Dao.queryByfilter(en);
 		}
 
-		if (dataList.size() > 0) {
-			for (MoneyCheck m : dataList) {
+		if (list.size() > 0) {
+			for (MoneyCheck m : list) {
+				obj = new Int0806Vo();
 				long diffInMillies = Math.abs(m.getDepositDate().getTime() - m.getTrnDate().getTime());
 				long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-//				 long diffDate = m.getDepositDate().getTime() -  m.getTrnDate().getTime();
-//				 long diff = (diffDate / (1000*60*60*24));
 				if (diff < 2) {
-					m.setStatusDate("S");
-					m.setDepositDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getDepositDate()));
-					m.setTrnDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getTrnDate()));
+					obj.setStatusDate("S");
 				} else {
-					m.setStatusDate("F");
-					m.setDepositDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getDepositDate()));
-					m.setTrnDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getTrnDate()));
+					obj.setStatusDate("F");
 				}
+				obj.setId(m.getId());
+				obj.setReceiptNo(m.getReceiptNo());
+				obj.setDepositDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getDepositDate()));
+				obj.setTrnDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getTrnDate()));
+				obj.setNetlocAmount(m.getNetlocAmount());
+				obj.setNettaxAmount(m.getNettaxAmount());
+				obj.setCreatedDateStr(DateConstant.convertDateToStrDDMMYYYY(m.getCreatedDate()));
+				obj.setIncomeCode(m.getIncomeCode());
+
+				//find type account from income code
+//				 Lov incomeFilter = int0806Dao.filerByIncomeCode("ACCOUNT", m.getIncomeCode());
+//				obj.setAccountType(accountType);
+				
+				/*
+				 * bug
+				 */
 				// if(BigDecimal.ZERO.equals( m.getNetlocAmount().subtract(m.getNettaxAmount())
 				// )) {
-				Long sum = m.getNetlocAmount().longValue() - m.getNettaxAmount().longValue();
+				
+				Long sum = obj.getNetlocAmount().longValue() - obj.getNettaxAmount().longValue();
 				if (sum == 0) {
-					m.setStatusMoney("S");
+					obj.setStatusMoney("S");
 				} else {
-					m.setStatusMoney("F");
+					obj.setStatusMoney("F");
 				}
+				
+				dataList.add(obj);
 			}
 		}
 	
-		DataTableAjax<MoneyCheck> dataTableAjax = new DataTableAjax<>();
+		DataTableAjax<Int0806Vo> dataTableAjax = new DataTableAjax<>();
 		dataTableAjax.setRecordsTotal(Long.valueOf(dataList.size()));
 		dataTableAjax.setRecordsFiltered(Long.valueOf(dataList.size()));
 		dataTableAjax.setData(dataList);

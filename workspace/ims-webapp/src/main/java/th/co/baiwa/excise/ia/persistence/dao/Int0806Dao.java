@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.ia.persistence.dao;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -48,6 +49,42 @@ public class Int0806Dao {
 		}
 	};
 	
+	public Lov filerByIncomeCode(String type, BigDecimal incomeCode) {
+
+		List<Object> valueList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder(" SELECT L.VALUE1 FROM SYS_LOV L ");
+		sql.append(" WHERE L.TYPE = ? ");
+		valueList.add(type);
+		sql.append(" AND L.VALUE2 = ? ");
+		valueList.add(incomeCode);
+
+		Lov dataList = jdbcTemplate.queryForObject(sql.toString(), valueList.toArray(), fieldMappingfilerByIncomeCode);
+		return dataList;
+	}
+	
+	private RowMapper<Lov> fieldMappingfilerByIncomeCode = new RowMapper<Lov>() {
+		@Override
+		public Lov mapRow(ResultSet rs, int arg1) throws SQLException {
+			Lov en = new Lov();
+			en.setLovId(rs.getLong("LOV_ID"));
+			en.setLovIdMaster(rs.getLong("LOV_ID_MASTER"));
+			en.setType(rs.getString("TYPE"));
+			en.setValue1(rs.getString("VALUE1"));
+			en.setValue1(rs.getString("VALUE2"));
+			return en;
+		}
+	};
+	
+	public String getSubtype(String id) {
+		List<Object> valueList = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder(" SELECT L.SUB_TYPE FROM SYS_LOV L ");
+		sql.append(" WHERE L.LOV_ID = ? ");
+		valueList.add(id);
+
+		String data = jdbcTemplate.queryForObject(sql.toString(), valueList.toArray(), String.class);
+		return data;
+	}
+	
 	public List<MoneyCheck> queryByfilter(Int0806FormSearchVo en) {
 		List<Object> valueList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(" SELECT * FROM IA_MONEY_CHECK M ");
@@ -82,18 +119,10 @@ public class Int0806Dao {
 			en.setTrnDate(rs.getDate("TRN_DATE"));
 			en.setNettaxAmount(rs.getBigDecimal("NETTAX_AMOUNT"));
 			en.setNetlocAmount(rs.getBigDecimal("NETLOC_AMOUNT"));
+			en.setCreatedDate(rs.getDate("CREATED_DATE"));
+			en.setIncomeCode(rs.getBigDecimal("INCOME_CODE"));
 			return en;
 		}
 	};
-	
-	public String getSubtype(String id) {
-		List<Object> valueList = new ArrayList<Object>();
-		StringBuilder sql = new StringBuilder(" SELECT L.SUB_TYPE FROM SYS_LOV L ");
-		sql.append(" WHERE L.LOV_ID = ? ");
-		valueList.add(id);
-
-		String data = jdbcTemplate.queryForObject(sql.toString(), valueList.toArray(), String.class);
-		return data;
-	}
 
 }
