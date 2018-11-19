@@ -28,7 +28,8 @@ export class Int06116Service {
     private router: Router) {
     this.formData = {
       withdrawRequest: "",
-      dataApprove:[]
+      dataApprove:[],
+      createdBy:""
     };
   }
 
@@ -47,7 +48,8 @@ export class Int06116Service {
 
   search(formData: any) {
     this.formData = {
-      withdrawRequest: formData.withdrawRequest
+      withdrawRequest: formData.withdrawRequest,
+      createdBy:formData.createdBy
     };
     this.idToWithdrawRequest = formData.withdrawRequest;
     this.Datatable();

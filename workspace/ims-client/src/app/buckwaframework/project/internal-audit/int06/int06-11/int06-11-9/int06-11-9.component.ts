@@ -21,7 +21,6 @@ declare var $: any;
   providers: [Int06119Service]
 })
 export class Int06119Component implements OnInit {
-  createWdRequest: FormGroup;
   searchForm: FormGroup;
   breadcrumb: BreadCrumb[];
   submitted: boolean = false;
@@ -34,7 +33,8 @@ export class Int06119Component implements OnInit {
     private msg: MessageBarService,
     private router: Router,
     private route: ActivatedRoute,
-    private ajax: AjaxService
+    private ajax: AjaxService,
+    private authService: AuthService,
   ) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
@@ -47,12 +47,20 @@ export class Int06119Component implements OnInit {
 
   setVariable() {
     this.searchForm = this.fb.group({
-      withdrawRequest: ["", Validators]
+      withdrawRequest: ["", Validators.required],
+      createdBy: [""]
     });
   }
 
-  ngOnInit() {
-   
+  ngOnInit() {  
+    this.authService.reRenderVersionProgram("INT-06119").then(obj => {
+      this.searchForm.patchValue({
+        createdBy: obj.fullName,
+        // position: obj.title,
+        // affiliation: "-"
+      });
+    });
+    
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown ai").css("width", "100%");
     this.setVariable();
@@ -64,7 +72,6 @@ export class Int06119Component implements OnInit {
 
   handleSearch(e) {
     e.preventDefault();
-    console.log(this.searchForm.value);
     this.selfService.search(this.searchForm.value);
     
   }

@@ -34,7 +34,8 @@ export class Int06116Component implements OnInit {
     private msg: MessageBarService,
     private router: Router,
     private route: ActivatedRoute,
-    private ajax: AjaxService
+    private ajax: AjaxService,
+    private authService: AuthService,
   ) {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
@@ -47,11 +48,19 @@ export class Int06116Component implements OnInit {
 
   setVariable() {
     this.searchForm = this.fb.group({
-      withdrawRequest: ["", Validators]
+      withdrawRequest: ["", Validators.required],
+      createdBy: [""]
     });
   }
 
   ngOnInit() {
+    this.authService.reRenderVersionProgram("INT-06116").then(obj => {
+      this.searchForm.patchValue({
+        createdBy: obj.fullName,
+        // position: obj.title,
+        // affiliation: "-"
+      });
+    });
    
     $(".ui.dropdown").dropdown();
     $(".ui.dropdown ai").css("width", "100%");
@@ -116,6 +125,7 @@ export class Int06116Component implements OnInit {
     $('#dataTable').DataTable().ajax.reload();
     });
   }
+  
   approve=(status)=>{
     console.log("Approve");
     const URL = "ia/int061106/approve";

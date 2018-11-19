@@ -3,6 +3,7 @@ package th.co.baiwa.excise.ia.persistence.vo;
 import java.math.BigDecimal;
 
 public class Int061106FormVo {
+	private String createdBy;
 	private String status;
 	private String withdrawRequest;
 	private BigDecimal idSelect;
@@ -13,6 +14,14 @@ public class Int061106FormVo {
 	private String amountPay;
 	
 	
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
 
 	public String getStatus() {
 		return status;

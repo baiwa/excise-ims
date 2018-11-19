@@ -17,6 +17,7 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.entity.DisbursementRequest;
 import th.co.baiwa.excise.ia.persistence.vo.Int061109FormVo;
+import th.co.baiwa.excise.utils.BeanUtils;
 
 @Repository
 public class Int061109Dao {
@@ -34,9 +35,11 @@ public class Int061109Dao {
 			
 			StringBuilder sql = new StringBuilder(SQL_IA_DISBURSEMENT_REQUEST);
 			List<Object> params = new ArrayList<>();
-
-				params.add(formVo.getWithdrawRequest());
-			
+			params.add(formVo.getWithdrawRequest());
+			if(BeanUtils.isNotEmpty(formVo.getCreatedBy())) {
+				sql.append(" AND CREATED_BY = ? ");
+				params.add(formVo.getCreatedBy());
+			}
             
 //			sql.append(" ORDER BY OFFICE_CODE asc");
 			log.info("findAllInt085 sql : {}",sql);

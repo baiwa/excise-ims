@@ -13,7 +13,7 @@
           <div class="two wide field">
             <label class="text-right full-width">ประเภทการขอเบิก</label>
           </div>
-          <div class="four wide field">
+          <div class="five wide field">
             <select class="ui dropdown ai search full-width" formControlName="withdrawRequest" id="withdrawRequest">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let wdr of withdrawRequestList | async;" [value]="wdr.lovId">
