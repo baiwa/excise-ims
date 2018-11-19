@@ -33,14 +33,14 @@ export class Cop091Component implements OnInit, OnDestroy {
 
   table1: any;
   table2: any;
-
+  dataListTable2 : any =[{}];
   constructor(
     private message: MessageBarService,
     private router: Router,
     private dataService: IaService,
     private authService: AuthService,
     private cop9Service: Cop9Service,
-    private ajax : AjaxService
+    private ajax: AjaxService
   ) {
     this.breadcrumb = [
       { label: "ตรวจปฏิบัติการ", route: "#" },
@@ -72,6 +72,14 @@ export class Cop091Component implements OnInit, OnDestroy {
     $("#searchFlag").val("TRUE");
     this.dataTable();
     this.dataTable2();
+
+    this.table2.on('click', 'tbody tr .success', (e) => {
+      event.preventDefault();
+      var closestRow = $(e.target).closest('tr');
+      var data = this.table2.row(closestRow).data();
+      this.report(data.id);
+    });
+
   }
 
   dataTable = () => {
@@ -236,17 +244,7 @@ export class Cop091Component implements OnInit, OnDestroy {
         }
       ]
     });
-    this.table2.on('click', 'tbody tr .success', (e) => {
-      event.preventDefault();
-      var closestRow = $(e.target).closest('tr');
-      var data = this.table2.row(closestRow).data();           
 
-      let url = "cop/cop091/dataReport"
-      this.ajax.post(url,JSON.stringify(data.id),(res)=>{
-        console.log("Res : ",res.json());
-      });
-      
-    });
     $("#tableData2 tbody").on("click", "button", e => {
       // Important dont change 
       const btn = e.currentTarget.id.split("-");
@@ -282,8 +280,37 @@ export class Cop091Component implements OnInit, OnDestroy {
       }
     }).modal('show');
   }
+
+  report(id) {
+    console.log("report")
+    let url = "cop/cop091/dataReport"
+    this.ajax.post(url, JSON.stringify(id), (res) => {
+      console.log("Res : ", res.json());
+
+      this.exportPdf(res.json());
+
+
+
+    });
+  }
+
+  exportPdf(obj) {
+    var form = document.createElement("form");
+    form.method = "POST";
+    form.action = AjaxService.CONTEXT_PATH + "exciseOperation/report/pdf/operation/checkExciseOperation";
+    // form.action = AjaxService.CONTEXT_PATH + "exciseTax/report/pdf/tax/checkExciseTax";
+    form.style.display = "none";
+    form.target = "_blank"    
+    var jsonInput = document.createElement("input");
+    jsonInput.name = "json";
+    jsonInput.value = JSON.stringify(obj);
+    form.appendChild(jsonInput);
+    document.body.appendChild(form);
+    form.submit();
+  } 
+
   setDataT = (data) => {
-   //console.log("setDataT :", data);
+    //console.log("setDataT :", data);
     this.dataList = {
       analysisNumber: "25611115-01-03721",
       companyAddress: "252/133 อาคาร- ซอย- ถนนรัชดาภิเษก แขวงห้วยขวาง เขตห้วยขวาง  จังหวัดกรุงเทพมหานคร 10310", // data.entrepreneurLoca,
@@ -298,7 +325,7 @@ export class Cop091Component implements OnInit, OnDestroy {
       riskTypeDesc: "ความถี่ของเดือนที่ชำระภาษี",
       taYearPlanId: 63,
       userId: null,
-      id:data.id
+      id: data.id
 
     }
   }

@@ -11,68 +11,68 @@ import javax.persistence.Table;
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
-@Table(name="COP_CHECK_FISCAL_REPORT")
-public class CopCheckFiscalReport extends BaseEntity  {
+@Table(name = "COP_CHECK_FISCAL_REPORT")
+public class CopCheckFiscalReport extends BaseEntity {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 370085863774409717L;
-	
+
 	@Id
-	@SequenceGenerator(name="COP_CHECK_FISCAL_REPORT_GEN", sequenceName="COP_CHECK_FISCAL_REPORT_SEQ", allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="COP_CHECK_FISCAL_REPORT_GEN")
-	@Column(name="FISCAL_REPORT_ID")
+	@SequenceGenerator(name = "COP_CHECK_FISCAL_REPORT_GEN", sequenceName = "COP_CHECK_FISCAL_REPORT_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COP_CHECK_FISCAL_REPORT_GEN")
+	@Column(name = "FISCAL_REPORT_ID")
 	private Long fiscalReportId;
-	
-	@Column(name="FISCAL_YEAR_ID")
+
+	@Column(name = "FISCAL_YEAR_ID")
 	private Long fiscalYearId;
-	
-	@Column(name="EXCISE_AREA")
+
+	@Column(name = "EXCISE_AREA")
 	private String exciseArea;
-	
-	@Column(name="EXCISE_SUB_AREA")
+
+	@Column(name = "EXCISE_SUB_AREA")
 	private String exciseSubArea;
-	
-	@Column(name="EXCISE_ID")
+
+	@Column(name = "EXCISE_ID")
 	private String exciseId;
-	
-	@Column(name="COMPANY_NAME")
+
+	@Column(name = "COMPANY_NAME")
 	private String companyName;
-	
-	@Column(name="PRODUCT")
+
+	@Column(name = "PRODUCT")
 	private String product;
-	
-	@Column(name="DATE_CALENDAR")
+
+	@Column(name = "DATE_CALENDAR")
 	private String dateCalendar;
-	
-	@Column(name="COMPANY_ADDRESS")
+
+	@Column(name = "COMPANY_ADDRESS")
 	private String companyAddress;
-	
-	@Column(name="RESULT_GET_RAW")
+
+	@Column(name = "RESULT_GET_RAW")
 	private String resultGetRaw;
-	
-	@Column(name="RESULT_GET_BOX")
-	private String resultGetBox;
-	
-	@Column(name="RESULT_PAY_RAW")
+
+	@Column(name = "RESULT_GET_RAW_BOX")
+	private String resultGetRawBox;
+
+	@Column(name = "RESULT_PAY_RAW")
 	private String resultPayRaw;
-	
-	@Column(name="RESULT_PAY_BOX")
-	private String resultPayBox;
-	
-	@Column(name="RECEIPT_INVOICE_RAW")
+
+	@Column(name = "RESULT_PAY_RAW_BOX")
+	private String resultPayRawBox;
+
+	@Column(name = "RECEIPT_INVOICE_RAW")
 	private String receiptInvoiceRaw;
-	
-	@Column(name="RECEIPT_INVOICE_BOX")
+
+	@Column(name = "RECEIPT_INVOICE_BOX")
 	private String receiptInvoiceBox;
-	
-	@Column(name="PAY_INVOICE_RAW")
+
+	@Column(name = "PAY_INVOICE_RAW")
 	private String payInvoiceRaw;
-	
-	@Column(name="PAY_INVOICE_BOX")
+
+	@Column(name = "PAY_INVOICE_BOX")
 	private String payInvoiceBox;
 
-	@Column(name="OFFICER")
+	@Column(name = "OFFICER")
 	private String officer;
 
 	public Long getFiscalReportId() {
@@ -155,12 +155,12 @@ public class CopCheckFiscalReport extends BaseEntity  {
 		this.resultGetRaw = resultGetRaw;
 	}
 
-	public String getResultGetBox() {
-		return resultGetBox;
+	public String getResultGetRawBox() {
+		return resultGetRawBox;
 	}
 
-	public void setResultGetBox(String resultGetBox) {
-		this.resultGetBox = resultGetBox;
+	public void setResultGetRawBox(String resultGetRawBox) {
+		this.resultGetRawBox = resultGetRawBox;
 	}
 
 	public String getResultPayRaw() {
@@ -171,12 +171,12 @@ public class CopCheckFiscalReport extends BaseEntity  {
 		this.resultPayRaw = resultPayRaw;
 	}
 
-	public String getResultPayBox() {
-		return resultPayBox;
+	public String getResultPayRawBox() {
+		return resultPayRawBox;
 	}
 
-	public void setResultPayBox(String resultPayBox) {
-		this.resultPayBox = resultPayBox;
+	public void setResultPayRawBox(String resultPayRawBox) {
+		this.resultPayRawBox = resultPayRawBox;
 	}
 
 	public String getReceiptInvoiceRaw() {
@@ -219,17 +219,8 @@ public class CopCheckFiscalReport extends BaseEntity  {
 		this.officer = officer;
 	}
 
-	@Override
-	public String toString() {
-		return "CopCheckFiscalReport [fiscalReportId=" + fiscalReportId + ", fiscalYearId=" + fiscalYearId
-				+ ", exciseArea=" + exciseArea + ", exciseSubArea=" + exciseSubArea + ", exciseId=" + exciseId
-				+ ", companyName=" + companyName + ", product=" + product + ", dateCalendar=" + dateCalendar
-				+ ", companyAddress=" + companyAddress + ", resultGetRaw=" + resultGetRaw + ", resultGetBox="
-				+ resultGetBox + ", resultPayRaw=" + resultPayRaw + ", resultPayBox=" + resultPayBox
-				+ ", receiptInvoiceRaw=" + receiptInvoiceRaw + ", receiptInvoiceBox=" + receiptInvoiceBox
-				+ ", payInvoiceRaw=" + payInvoiceRaw + ", payInvoiceBox=" + payInvoiceBox + ", officer=" + officer
-				+ "]";
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
-	
 
 }

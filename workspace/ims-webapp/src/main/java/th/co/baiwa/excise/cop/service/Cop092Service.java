@@ -15,6 +15,7 @@ import th.co.baiwa.excise.cop.persistence.vo.Cop092BudgetVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop092ProductFormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop092ProductVo;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class Cop092Service {
@@ -67,7 +68,40 @@ public class Cop092Service {
 	}
 	
 	public void saveCopCheckFiscalReport(CopCheckFiscalReport data) {
-		copCheckFiscalReportRepository.save(data);
+		CopCheckFiscalReport checkFiscalReport = null; 
+		try {
+			checkFiscalReport = copCheckFiscalReportRepository.findByFiscalYearId(data.getFiscalYearId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(BeanUtils.isNotEmpty(checkFiscalReport)) {
+			checkFiscalReport.setExciseArea(data.getExciseArea());
+			checkFiscalReport.setExciseSubArea(data.getExciseSubArea());
+			checkFiscalReport.setExciseId(data.getExciseId());
+			checkFiscalReport.setCompanyName(data.getCompanyName());
+			checkFiscalReport.setProduct(data.getProduct());
+			checkFiscalReport.setDateCalendar(data.getDateCalendar());
+			checkFiscalReport.setCompanyAddress(data.getCompanyAddress());
+			
+			checkFiscalReport.setResultGetRaw(data.getResultGetRaw());
+			checkFiscalReport.setResultGetRawBox(data.getResultGetRawBox());
+			
+			checkFiscalReport.setResultPayRaw(data.getResultPayRaw());
+			checkFiscalReport.setResultPayRawBox(data.getResultPayRawBox());
+			
+			checkFiscalReport.setReceiptInvoiceRaw(data.getReceiptInvoiceRaw());
+			checkFiscalReport.setReceiptInvoiceBox(data.getReceiptInvoiceBox());
+			
+			checkFiscalReport.setPayInvoiceRaw(data.getPayInvoiceRaw());
+			checkFiscalReport.setPayInvoiceBox(data.getPayInvoiceBox());
+			
+			checkFiscalReport.setOfficer(data.getOfficer());
+			
+			copCheckFiscalReportRepository.save(checkFiscalReport);
+		}else {
+			copCheckFiscalReportRepository.save(data);
+		}
+		
 	}
 
 }

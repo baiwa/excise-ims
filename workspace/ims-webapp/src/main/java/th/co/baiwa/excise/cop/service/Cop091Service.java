@@ -62,11 +62,11 @@ public class Cop091Service {
 		return dataTableAjax;
 	}
 
-	public List<CopCheckFiscalReport> dataReport(Long id) {
+	public CopCheckFiscalReport dataReport(Long id) {
 		
-		List<CopCheckFiscalReport> list = copCheckFiscalReportRepository.findByFiscalYearId(id);
+		CopCheckFiscalReport report = copCheckFiscalReportRepository.findByFiscalYearId(id);
 		log.info("Cop091Service method dataReport ");
-		return list;
+		return report;
 	}
 
 }

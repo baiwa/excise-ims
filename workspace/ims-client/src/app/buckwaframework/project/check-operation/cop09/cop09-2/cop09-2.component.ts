@@ -30,7 +30,7 @@ export class Cop092Component implements OnInit {
   getRawTable: any;
   payRawTable: any;
   dataRecord: any;
-  obj: data = new data();
+  obj: data;
   dateCalendar: string = "";
   dateCalendarEn: string = "";
   dateMonth: Date = new Date();
@@ -51,7 +51,7 @@ export class Cop092Component implements OnInit {
     private cop9Service: Cop9Service
   ) {
     this.dataRecord = this.dataService.getData();
-    console.log("dataRecord", this.dataRecord);
+    //console.log("dataRecord", this.dataRecord);
    // console.log("id", this.dataRecord.id);
     this.dateCalendar = this.route.snapshot.queryParams['dateCalendar'];
     this.searchFlag = this.route.snapshot.queryParams['searchFlag'];
@@ -59,7 +59,7 @@ export class Cop092Component implements OnInit {
     this.dateMonth.setFullYear(parseInt(ThYearToEnYear(this.dateCalendar.split("/")[1])));
     this.dateMonth.setMonth(parseInt(this.dateCalendar.split("/")[0]) - 1);
     this.dateCalendarEn = moment(this.dateMonth).format('DD/MM/YYYY');
-
+    this.obj = new data();
   }
 
   async ngOnInit() {
@@ -99,7 +99,7 @@ export class Cop092Component implements OnInit {
     }
 
 
-    console.log(this.obj);
+    //console.log(this.obj);
     
     this.message.comfirm(confirm => {
       if (confirm) {
@@ -148,9 +148,9 @@ export class Cop092Component implements OnInit {
           dateCalendar:this.obj.dateCalendar,
           companyAddress:this.obj.companyAddress,
           resultGetRaw:this.obj.resultGetRaw,
-          resultGetBox:this.obj.resultGetRawBox,
+          resultGetRawBox:this.obj.resultGetRawBox,
           resultPayRaw:this.obj.resultPayRaw,
-          resultPayBox:this.obj.resultPayRawBox,
+          resultPayRawBox:this.obj.resultPayRawBox,
           receiptInvoiceRaw:this.obj.receiptInvoiceRaw,
           receiptInvoiceBox:this.obj.receiptInvoiceBox,
           payInvoiceRaw:this.obj.payInvoiceRaw,

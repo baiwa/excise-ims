@@ -58,7 +58,7 @@ public class Cop091Controller {
 
 	@PostMapping("/dataReport")
 	@ResponseBody
-	public List<CopCheckFiscalReport> dataReport(@RequestBody Long id) {
+	public CopCheckFiscalReport dataReport(@RequestBody Long id) {
 		return cop091Service.dataReport(id);
 
 	}
