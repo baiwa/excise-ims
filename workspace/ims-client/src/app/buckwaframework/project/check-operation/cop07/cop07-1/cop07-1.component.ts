@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { TextDateTH, formatter, stringToDate, ThaiFormatter } from "../../../../common/helper/datepicker";
+import { TextDateTH, formatter, stringToDate, ThaiFormatter, toDateLocale } from "../../../../common/helper/datepicker";
 import { AjaxService, MessageBarService, AuthService } from "../../../../common/services";
 import { TravelCostHeader } from "../../../../common/models";
 import { Router, ActivatedRoute } from "@angular/router";
@@ -166,17 +166,17 @@ export class Cop071Component implements OnInit {
       var closestRow = $(e.target).closest('tr');
       var data = table.row(closestRow).data();
       this.longMonthYear(data.fiscalYear);
-     
+
       this.modalEdit(data);
     });
 
   }
 
 
-  longMonthYear(date){
+  longMonthYear(date) {
     let data = date.split("/");
 
-    this.modalMonth =  TextDateTH.months[parseInt(data[0]) -1];
+    this.modalMonth = TextDateTH.months[parseInt(data[0]) - 1];
     this.modalYear = data[1];
   }
 
@@ -204,6 +204,7 @@ export class Cop071Component implements OnInit {
     console.log("data edit : ", data);
 
     $('#modalEdit').modal({
+      autofocus: false,
       onShow: () => {
         this.calenda();
         $("#id").val(data.id);
@@ -273,6 +274,10 @@ export class Cop071Component implements OnInit {
       this.clickSearch();
     }
 
+    let date = new Date();
+    let month = date.getMonth();
+    let _year = toDateLocale(date)[0].split("/")[2];    
+    $("#fiscalYear").val(_year);
   }
 
 }
