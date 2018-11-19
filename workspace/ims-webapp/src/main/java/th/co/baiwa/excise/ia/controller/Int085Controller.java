@@ -34,6 +34,7 @@ public class Int085Controller {
 	private Int085Service int085Service;
 	
 
+	@SuppressWarnings("unchecked")
 	@PostMapping("/list")
 	@ResponseBody
 	public DataTableAjax<Int084Vo> list(@RequestBody Int085FormVo formVo,HttpServletRequest request){
@@ -42,9 +43,11 @@ public class Int085Controller {
 		try {
 			HttpSession session = request.getSession();
 			list2 = (List<Int084Vo>)session.getAttribute(sessionDataInt084);
-			list.setData((BeanUtils.isEmpty(list2))? new ArrayList<Int084Vo>():list2);
-//			 list = int085Service.findAll(formVo);
-			 log.info("Data list {} row",list.getData().size());
+			if (!BeanUtils.isEmpty(list2)) {
+				list.setData(list2);
+			}
+			
+//			 list = int085Service.findAll(formVo);			 
 		} catch (Exception e) {
 			log.error("Error ! findAll",e);
 		}

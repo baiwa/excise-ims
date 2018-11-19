@@ -50,7 +50,8 @@ public class Int0806Controller {
 		return int0806Service.search(en);
 	}
 	
-   @PostMapping("/save")
+   @SuppressWarnings("unchecked")
+@PostMapping("/save")
     @ResponseBody
     public CommonMessage<Long> save(@RequestBody List<MoneyCheck> int0806VoList,HttpServletRequest request){
 		Long id = 0L;
@@ -74,6 +75,7 @@ public class Int0806Controller {
 		return message;
 	}
    
+	@SuppressWarnings("unchecked")
 	@PostMapping("/list")
 	@ResponseBody
 	public DataTableAjax<MoneyCheck> list(@ModelAttribute Int0806FormSearchVo formVo,HttpServletRequest request){
@@ -83,10 +85,12 @@ public class Int0806Controller {
 			HttpSession session = request.getSession();
 			list2 = (List<MoneyCheck>)session.getAttribute(sessionDataInt086);
 			list.setData((BeanUtils.isEmpty(list2))? new ArrayList<MoneyCheck>():list2);
+			if (!BeanUtils.isEmpty(list2)) {
+				list.setData(list2);
+			}			
 //				 list = int085Service.findAll(formVo);
-			 log.info("Data list {} row",list.getData().size());
 		} catch (Exception e) {
-			log.error("Error ! findAll",e);
+			log.error("Error ! findAll",e);	
 		}
 		
 		return list;
