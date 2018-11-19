@@ -158,7 +158,7 @@ export class Int086Component implements OnInit, AfterViewInit {
     this.searchData = {
       startDate: this.searchForm.value.startDate,
       endDate: this.searchForm.value.endDate,
-      account: this.searchForm.value.account,
+      account: this.searchForm.value.account == "0" ? "" : this.searchForm.value.account,
       combo1: this.searchForm.value.combo1,
       combo2: this.searchForm.value.combo2,
       flag: "S"

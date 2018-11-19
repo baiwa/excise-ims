@@ -25,7 +25,7 @@
 
                     <div class="four wide field" [ngClass]="{ 'error': validateField('combo2'), 'disabled': formDisabled}">
                         <select class="ui search dropdown ai search full-width" formControlName="combo2" id="combo2">
-                            <option value="">กรุณาเลือก</option>
+                            <option value="">กรุณาเลือก</option>                            
                             <option *ngFor="let data of comboBox2" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
                         </select>
                     </div>
@@ -39,6 +39,7 @@
                     <div class="four wide field" [ngClass]="{ 'error': validateField('account') }">
                         <select class="ui dropdown ai search full-width" formControlName="account" id="account">
                         <option value="">กรุณาเลือก</option>
+                        <option value="0">ทั้งหมด</option>
                         <option *ngFor="let data of accounts | async" [value]="data.value2">
                             {{ data.value1 }}
                         </option>
