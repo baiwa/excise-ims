@@ -76,11 +76,11 @@ public class Int084Service {
 			String eDate = formVo.getEndDate();
 
 			if("09/2561".equals(sDate)&&"10/2561".equals(eDate)) {
-				id = 212l;
+				id = 216l;
 			}else if("09/2561".equals(sDate)&&"09/2561".equals(eDate)) {
-				id = 213l;
+				id = 217l;
 			}else if("10/2561".equals(sDate)&&"10/2561".equals(eDate)) {
-				id = 214l;
+				id = 218l;
 			}
 			
 			List<IncomeExciseAudDtl> incomeExciseAudDtlList = incomeExciseAudDtlRepository.findByIaIncomeExciseAudId(id);
