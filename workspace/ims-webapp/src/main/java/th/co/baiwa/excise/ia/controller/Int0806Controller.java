@@ -55,7 +55,7 @@ public class Int0806Controller {
     @ResponseBody
     public CommonMessage<Long> save(@RequestBody List<MoneyCheck> int0806VoList,HttpServletRequest request){
 		Long id = 0L;
-		log.error("Save Int084Vo");
+		log.error("Save Int086Vo");
 		CommonMessage<Long> message = new CommonMessage<Long>();
 		List<MoneyCheck> list2 = new ArrayList<MoneyCheck>();
 		try {

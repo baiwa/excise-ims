@@ -203,16 +203,15 @@ export class Int086Component implements OnInit, AfterViewInit {
       },
       columns: [
         {
-          render: function(data, type, full, meta) {
-            return `<input class="ui checkbox" type="checkbox" name="chk${
+          render: function (data, type, full, meta) {
+            return `<input class="ui checkbox" type="checkbox" name="chk${meta.row}" id="chk${
               meta.row
-            }" id="chk${meta.row}" value="${$("<div/>")
-              .text(data)
-              .html()}">`;
+              }" value="${$("<div/>")
+                .text(data)
+                .html()}">`;
           },
           className: "center"
-        },
-        {
+        },{
           render: function(data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
@@ -277,45 +276,38 @@ export class Int086Component implements OnInit, AfterViewInit {
     });
   }
 
-  checkAll = event => {
-    var rows = $("#dataTable")
-      .DataTable()
-      .rows({ search: "applied" })
-      .nodes();
-    $('input[type="checkbox"]', rows).prop("checked", event.target.checked);
-  };
+  checkAll=event=>{
+    var rows = $('#dataTable').DataTable().rows({ search: "applied" }).nodes();
+    $('input[type="checkbox"]', rows).prop("checked",event.target.checked);
 
-  saveData = () => {
+  }
+  saveData=()=>{
     console.log("saveData");
     let url = "ia/int0806/save";
-    let dataSave = [];
+    let dataSave = []; 
 
-    let node = $("#dataTable")
-      .DataTable()
-      .rows()
-      .nodes();
+    let node = $("#dataTable").DataTable().rows().nodes();
     $.each(node, function(index, value) {
-      if (
-        $(this)
-          .find("input[type=checkbox]")
-          .is(":checked")
-      ) {
-        let data = $("#dataTable")
-          .DataTable()
-          .rows()
-          .data()[index];
+      if ($(this).find("input[type=checkbox]").is(":checked")) {
+
+        let data = $("#dataTable").DataTable().rows().data()[index];
         dataSave.push(data);
       }
     });
 
-    console.log("dataSave : ", dataSave);
+   console.log("dataSave : ",dataSave);
 
-    this.ajax.post(url, dataSave, res => {
-      const msg = res.json();
+    this.ajax.post(url,dataSave, res => {        
+      const commonMessage = res.json();
+      if (commonMessage.msg.messageType == "C") {
+        this.msg.successModal(commonMessage.msg.messageTh);
+      } else {
+        this.msg.errorModal(commonMessage.msg.messageTh);
+      }
     });
 
-    return dataSave;
-  };
+  return dataSave;
+  }
 
   onReset() {
     $("#combo1").dropdown("restore defaults");
@@ -337,34 +329,11 @@ export class Int086Component implements OnInit, AfterViewInit {
 
   // export
   export = () => {
-    let dataSave = [];
-
-    let node = $("#dataTable")
-      .DataTable()
-      .rows()
-      .nodes();
-    $.each(node, function(index, value) {
-      if (
-        $(this)
-          .find("input[type=checkbox]")
-          .is(":checked")
-      ) {
-        let data = $("#dataTable")
-          .DataTable()
-          .rows()
-          .data()[index];
-        dataSave.push(data);
-      }
-    });
-    // let data = this.getDataExcel();
+    let dataSave = this.saveData();
+    let data = this.getDataExcel();
     let formExcel = $("#form-data-excel").get(0);
     formExcel.action = AjaxService.CONTEXT_PATH + "ia/int068/export";
     formExcel.dataJson.value = JSON.stringify({ int068ExcelList: dataSave });
     formExcel.submit();
-  };
-
-  getCheckBox = e => {
-    e.preventDefault();
-    this.saveData();
   };
 }

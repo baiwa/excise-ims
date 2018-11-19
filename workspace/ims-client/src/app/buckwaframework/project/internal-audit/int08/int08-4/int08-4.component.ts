@@ -193,8 +193,25 @@ export class Int084Component implements OnInit {
   saveData=()=>{
     console.log("saveData",this.int084VoList);
     let url = "/ia/int084/save";
-    let dataSave = []; 
 
+    let dataSave = this.getDataCheck(); 
+   console.log("dataSave : ",dataSave);
+
+    this.ajax.post(url,dataSave, res => {        
+      const commonMessage = res.json();
+
+      if (commonMessage.msg.messageType == "C") {
+        this.messageBarService.successModal(commonMessage.msg.messageTh);
+      } else {
+        this.messageBarService.errorModal(commonMessage.msg.messageTh);
+      }
+      // this.exportFile();
+      // this.exportFile2();
+    });
+  }
+
+  getDataCheck=()=>{
+    let dataSave = []; 
     let node = $("#tableData").DataTable().rows().nodes();
     $.each(node, function(index, value) {
       if ($(this).find("input[type=checkbox]").is(":checked")) {
@@ -203,18 +220,8 @@ export class Int084Component implements OnInit {
         dataSave.push(data);
       }
     });
-
-   console.log("dataSave : ",dataSave);
-
-    this.ajax.post(url,dataSave, res => {        
-      const msg = res.json();
-
-      // this.exportFile();
-      this.exportFile2();
-    });
+    return dataSave;
   }
-
-  
 
 
   exportFile=()=>{
