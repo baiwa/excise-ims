@@ -39,10 +39,16 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.translateService.use("th");
     this.user = this.authService.getUser();
+
   }
 
   logout() {
-    this.authService.logout();
+    this.messageBarService.comfirm((res) => {
+      if (res) {
+        this.authService.logout();
+      }
+    }, "ยืนยันการออกจากระบบ")
+
   }
 
   ngAfterViewInit() {
