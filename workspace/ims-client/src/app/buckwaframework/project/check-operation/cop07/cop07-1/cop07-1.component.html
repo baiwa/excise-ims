@@ -64,12 +64,12 @@
       <tfoot>
           <tr> 
             <th style="text-align: center !important;"> รวม </th>
-            <th rowspan="1" style="text-align: right !important;">{{totalAsPlanNumber}}</th>            
-            <th rowspan="1" style="text-align: right !important;">{{totalAsPlanWait}}</th>
-            <th rowspan="1" style="text-align: right !important;">{{totalAsPlanSuccess}}</th>
-            <th rowspan="1" style="text-align: right !important;">{{totalOutsidePlanNumber}}</th>
-            <th rowspan="1" style="text-align: right !important;">{{totalOutsidePlanSuccess}}</th>
-            <th rowspan="1" style="text-align: right !important;">{{totalOutsidePlanWait}}</th>
+            <th style="text-align: right !important;">{{totalAsPlanNumber}}</th>            
+            <th style="text-align: right !important;">{{totalAsPlanWait}}</th>
+            <th style="text-align: right !important;">{{totalAsPlanSuccess}}</th>
+            <th style="text-align: right !important;">{{totalOutsidePlanNumber}}</th>
+            <th style="text-align: right !important;">{{totalOutsidePlanWait}}</th>
+            <th style="text-align: right !important;">{{totalOutsidePlanSuccess}}</th>            
             <th style="text-align: center !important;"></th>
           </tr>
     
@@ -81,7 +81,7 @@
 <!-- Edit modal -->
 <div class="ui small modal transition hidden" id='modalEdit'>
   <div class="header" style="text-align: center !important;">
-      แก้ไขจำนวนแผนปฏิบัติการ เดือน
+      แก้ไขจำนวนแผนปฏิบัติการ เดือน {{modalMonth}} {{modalYear}}
   </div>
 
   <div class="scrolling content">
@@ -99,7 +99,7 @@
             <label>ตามแผนปฏิบัติการ  จำนวน</label>
           </div>
           <div class="three wide field">
-            <input id="asPlanNumber" type="number">
+            <input id="asPlanNumber" type="text" name="asPlanNumber" value="0" numberOnly>
           </div>
           <div class="one wide field right aligned">
             <label>ราย</label>
@@ -111,7 +111,7 @@
             <label>นอกแผนปฏิบัติการ  จำนวน</label>
           </div>
           <div class="three wide field">
-            <input id="outsidePlanNumber" type="number">
+            <input id="outsidePlanNumber" type="text" name="outsidePlanNumber" value="0" numberOnly>
           </div>
           <div class="one wide field right aligned">
             <label>ราย</label>

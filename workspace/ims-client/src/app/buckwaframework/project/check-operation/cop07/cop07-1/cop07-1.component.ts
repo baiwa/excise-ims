@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { TravelCostDetail } from "app/buckwaframework/common/models/travelcostdetail";
 import { IaService } from 'app/buckwaframework/common/services/ia.service';
 import { BreadCrumb } from 'models/index';
+import { Utils } from "helpers/utils";
 
 
 declare var $: any;
@@ -26,6 +27,8 @@ export class Cop071Component implements OnInit {
   totalOutsidePlanSuccess: Number = 0;
   totalOutsidePlanWait: Number = 0;
 
+  modalMonth: string = '';
+  modalYear: string = '';
   constructor(
     private message: MessageBarService,
     private ajax: AjaxService,
@@ -63,7 +66,7 @@ export class Cop071Component implements OnInit {
   }
 
   dataTable = () => {
-    var table = $('#tableData').DataTable({
+    var table = $('#tableData').DataTableTh({
       "lengthChange": false,
       "paging": false,
       "info": false,
@@ -121,12 +124,12 @@ export class Cop071Component implements OnInit {
           "data": "fiscalYear",
           "render": (data, type, row) => {
             var btn = '';
-            if(this.validateDate(data)){
+            if (this.validateDate(data)) {
 
               btn += '<button class="mini ui yellow button btn-edit" disabled><i class="edit icon"></i>แก้ไข</button>';
               btn += '<button class="mini ui primary button btn-description"><i class="eye icon"></i>รายละเอียด</button>';
-            }else{
-              
+            } else {
+
               btn += '<button class="mini ui yellow button btn-edit"><i class="edit icon"></i>แก้ไข</button>';
               btn += '<button class="mini ui primary button btn-description"><i class="eye icon"></i>รายละเอียด</button>';
             }
@@ -162,12 +165,20 @@ export class Cop071Component implements OnInit {
     table.on('click', 'tbody tr button.btn-edit', (e) => {
       var closestRow = $(e.target).closest('tr');
       var data = table.row(closestRow).data();
+      this.longMonthYear(data.fiscalYear);
+     
       this.modalEdit(data);
     });
 
   }
 
 
+  longMonthYear(date){
+    let data = date.split("/");
+
+    this.modalMonth =  TextDateTH.months[parseInt(data[0]) -1];
+    this.modalYear = data[1];
+  }
 
   sum = (row, data) => {
     console.log("data : ", data);
@@ -197,9 +208,9 @@ export class Cop071Component implements OnInit {
         this.calenda();
         $("#id").val(data.id);
         $("#fiscalYearEdit").val(data.fiscalYear);
-        $("#asPlanNumber").val(data.asPlanNumber);
+        $("#asPlanNumber").val(Utils.isNotNull(data.asPlanNumber) ? data.asPlanNumber : 0);
         $("#asPlanSuccess").val(data.asPlanSuccess);
-        $("#outsidePlanNumber").val(data.outsidePlanNumber);
+        $("#outsidePlanNumber").val(Utils.isNotNull(data.outsidePlanNumber) ? data.outsidePlanNumber : 0);
         $("#outsidePlanSuccess").val(data.outsidePlanSuccess);
 
       }
@@ -222,6 +233,8 @@ export class Cop071Component implements OnInit {
     return res;
   }
   editData() {
+
+
     console.log("Edit");
     $('modalEdit').modal('hide');
     const URL = "cop/cop071/edit";
