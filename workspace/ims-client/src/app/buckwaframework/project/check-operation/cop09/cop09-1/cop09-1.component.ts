@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { TextDateTH, formatter } from "../../../../common/helper/datepicker";
-import { MessageBarService, AuthService } from "../../../../common/services";
+import { MessageBarService, AuthService, AjaxService } from "../../../../common/services";
 import { Router } from "@angular/router";
 import { IaService } from 'app/buckwaframework/common/services/ia.service';
 import { BreadCrumb } from 'models/index';
@@ -39,7 +39,8 @@ export class Cop091Component implements OnInit, OnDestroy {
     private router: Router,
     private dataService: IaService,
     private authService: AuthService,
-    private cop9Service: Cop9Service
+    private cop9Service: Cop9Service,
+    private ajax : AjaxService
   ) {
     this.breadcrumb = [
       { label: "ตรวจปฏิบัติการ", route: "#" },
@@ -189,7 +190,7 @@ export class Cop091Component implements OnInit, OnDestroy {
       },
       "columns": [
         {
-          "data": "id",
+          "data": "idMaster",
           "className": "ui center aligned",
           "render": (data, type, full, meta, row) => {
             return (full.status != '1874') ?
@@ -226,7 +227,7 @@ export class Cop091Component implements OnInit, OnDestroy {
           "render": (data, type, row, meta) => {
             let s = '';
             if (data == '1874') {
-              s = 'เสร็จสิ้น';
+              s = '<a href="#" class="success">เสร็จสิ้น</a>';
             } else {
               s = 'รอการดำเนินการ';
             }
@@ -235,7 +236,17 @@ export class Cop091Component implements OnInit, OnDestroy {
         }
       ]
     });
+    this.table2.on('click', 'tbody tr .success', (e) => {
+      event.preventDefault();
+      var closestRow = $(e.target).closest('tr');
+      var data = this.table2.row(closestRow).data();           
 
+      let url = "cop/cop091/dataReport"
+      this.ajax.post(url,JSON.stringify(data.id),(res)=>{
+        console.log("Res : ",res.json());
+      });
+      
+    });
     $("#tableData2 tbody").on("click", "button", e => {
       // Important dont change 
       const btn = e.currentTarget.id.split("-");

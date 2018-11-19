@@ -1,6 +1,5 @@
 package th.co.baiwa.excise.cop.service;
 
-import java.text.ParseException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -9,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.cop.persistence.dao.CopCheckFiscalYearDao;
+import th.co.baiwa.excise.cop.persistence.entity.CopCheckFiscalReport;
+import th.co.baiwa.excise.cop.persistence.repository.CopCheckFiscalReportRepository;
 import th.co.baiwa.excise.cop.persistence.vo.Cop091FormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop091Vo;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
@@ -16,9 +17,12 @@ import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 @Service
 public class Cop091Service {
 	private static Logger log = LoggerFactory.getLogger(Cop091Service.class);
-	
+
 	@Autowired
 	private CopCheckFiscalYearDao copCheckFiscalYearDao;
+
+	@Autowired
+	private CopCheckFiscalReportRepository copCheckFiscalReportRepository;
 
 	public DataTableAjax<Cop091Vo> findAll(Cop091FormVo formVo) {
 		formVo.setActionPlan("1871");
@@ -38,7 +42,7 @@ public class Cop091Service {
 
 		return dataTableAjax;
 	}
-	
+
 	public DataTableAjax<Cop091Vo> findAll2(Cop091FormVo formVo) {
 		formVo.setActionPlan("1872");
 		// query data
@@ -57,6 +61,12 @@ public class Cop091Service {
 
 		return dataTableAjax;
 	}
-	
-	
+
+	public List<CopCheckFiscalReport> dataReport(Long id) {
+		
+		List<CopCheckFiscalReport> list = copCheckFiscalReportRepository.findByFiscalYearId(id);
+		log.info("Cop091Service method dataReport ");
+		return list;
+	}
+
 }

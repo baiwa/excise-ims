@@ -1,6 +1,5 @@
 package th.co.baiwa.excise.cop.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import th.co.baiwa.excise.cop.persistence.vo.Cop092BudgetVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop092ProductFormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop092ProductVo;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
-import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class Cop092Service {
@@ -67,21 +65,8 @@ public class Cop092Service {
 
 		return dataTableAjax;
 	}
-
+	
 	public void saveCopCheckFiscalReport(CopCheckFiscalReport data) {
-
-		List<CopCheckFiscalReport> cheackFiscalYearId = copCheckFiscalReportRepository.findByFiscalYearId(data.getFiscalYearId());
-		
-		if (BeanUtils.isNotEmpty(cheackFiscalYearId)) {
-			
-			List<Long> ids = new ArrayList<>();
-			
-			for (CopCheckFiscalReport datacheck : cheackFiscalYearId) {
-				ids.add(datacheck.getFiscalReportId());
-			}
-			copCheckFiscalReportRepository.delete(ids);
-		}
-
 		copCheckFiscalReportRepository.save(data);
 	}
 

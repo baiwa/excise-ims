@@ -80,6 +80,8 @@ public class Cop092Controller {
 	public void saveReport(@RequestBody CopCheckFiscalReport copCheckFiscalReport) {	
 		cop092Service.saveCopCheckFiscalReport(copCheckFiscalReport);
 
-	}	
+	}
+	
+	
 	
 }
