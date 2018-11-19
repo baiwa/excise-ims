@@ -24,6 +24,7 @@
 	<parameter name="sendMoney" class="java.lang.String"/>
 	<parameter name="officer" class="java.lang.String"/>
 	<parameter name="position" class="java.lang.String"/>
+	<parameter name="documentNo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -44,54 +45,54 @@
 					<textElement verticalAlignment="Bottom"/>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement style="detial" x="30" y="35" width="417" height="175" uuid="5ab2ee53-999c-42d6-9d78-e6a65d9aa21e"/>
+					<reportElement style="detial" x="0" y="35" width="447" height="175" uuid="5ab2ee53-999c-42d6-9d78-e6a65d9aa21e"/>
 					<textElement verticalAlignment="Top"/>
-					<textFieldExpression><![CDATA[$P{billLost}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["         "+$P{billLost}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement style="detial" x="30" y="54" width="426" height="18" uuid="588eaf3f-e82f-4d54-a1bf-a7b4581301db"/>
+					<reportElement style="detial" x="0" y="54" width="456" height="18" uuid="588eaf3f-e82f-4d54-a1bf-a7b4581301db"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
 					<textElement verticalAlignment="Bottom"/>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement style="detial" x="30" y="74" width="426" height="18" uuid="0ce14fa7-11d7-4b68-95ef-aaa80b5c0a35"/>
+					<reportElement style="detial" x="0" y="74" width="456" height="18" uuid="0ce14fa7-11d7-4b68-95ef-aaa80b5c0a35"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
 					<textElement verticalAlignment="Bottom"/>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement style="detial" x="30" y="118" width="426" height="18" uuid="fececbb2-a0d1-4ca5-a9d3-b16cf2b89dfc"/>
+					<reportElement style="detial" x="0" y="118" width="456" height="18" uuid="fececbb2-a0d1-4ca5-a9d3-b16cf2b89dfc"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
 					<textElement verticalAlignment="Bottom"/>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement style="detial" x="30" y="96" width="426" height="18" uuid="84706d24-d001-481a-88a5-a9d0264f2f71"/>
+					<reportElement style="detial" x="0" y="96" width="456" height="18" uuid="84706d24-d001-481a-88a5-a9d0264f2f71"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
 					<textElement verticalAlignment="Bottom"/>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement style="detial" x="30" y="140" width="426" height="18" uuid="f6526649-965e-49c5-810f-73033e55854d"/>
+					<reportElement style="detial" x="0" y="140" width="456" height="18" uuid="f6526649-965e-49c5-810f-73033e55854d"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
 					<textElement verticalAlignment="Bottom"/>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement style="detial" x="30" y="162" width="426" height="18" uuid="5256ffe3-a289-4100-b9a9-e978f3689f4b"/>
+					<reportElement style="detial" x="0" y="162" width="456" height="18" uuid="5256ffe3-a289-4100-b9a9-e978f3689f4b"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
 					<textElement verticalAlignment="Bottom"/>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement style="detial" x="30" y="184" width="426" height="18" uuid="413f3b7f-1d85-46ed-8811-f8bc34d25912"/>
+					<reportElement style="detial" x="0" y="184" width="456" height="18" uuid="413f3b7f-1d85-46ed-8811-f8bc34d25912"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
@@ -117,54 +118,54 @@
 					<textElement verticalAlignment="Bottom"/>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement style="detial" x="30" y="35" width="417" height="175" uuid="58a1a212-ffbb-4ccc-a425-93b9d97a5a7f"/>
+					<reportElement style="detial" x="0" y="35" width="447" height="175" uuid="58a1a212-ffbb-4ccc-a425-93b9d97a5a7f"/>
 					<textElement verticalAlignment="Top"/>
-					<textFieldExpression><![CDATA[$P{sendMoney}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["         "+$P{sendMoney}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement style="detial" x="30" y="54" width="426" height="18" uuid="15b63479-d9e0-472f-9f9d-6be793f89824"/>
+					<reportElement style="detial" x="0" y="54" width="456" height="18" uuid="15b63479-d9e0-472f-9f9d-6be793f89824"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
 					<textElement verticalAlignment="Bottom"/>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement style="detial" x="30" y="74" width="426" height="18" uuid="75a9aeea-1e07-4c4e-aeb3-4dd4a8a3603b"/>
+					<reportElement style="detial" x="0" y="74" width="456" height="18" uuid="75a9aeea-1e07-4c4e-aeb3-4dd4a8a3603b"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
 					<textElement verticalAlignment="Bottom"/>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement style="detial" x="30" y="118" width="426" height="18" uuid="02d51052-4aee-4fa7-b5c9-9fc1d2a63d8b"/>
+					<reportElement style="detial" x="0" y="118" width="456" height="18" uuid="02d51052-4aee-4fa7-b5c9-9fc1d2a63d8b"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
 					<textElement verticalAlignment="Bottom"/>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement style="detial" x="30" y="96" width="426" height="18" uuid="c82341ca-0c32-48ad-8ef0-fd349ce89d44"/>
+					<reportElement style="detial" x="0" y="96" width="456" height="18" uuid="c82341ca-0c32-48ad-8ef0-fd349ce89d44"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
 					<textElement verticalAlignment="Bottom"/>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement style="detial" x="30" y="140" width="426" height="18" uuid="c7e199e1-4b2d-4da0-8ff5-353f0dc720be"/>
+					<reportElement style="detial" x="0" y="140" width="456" height="18" uuid="c7e199e1-4b2d-4da0-8ff5-353f0dc720be"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
 					<textElement verticalAlignment="Bottom"/>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement style="detial" x="30" y="162" width="426" height="18" uuid="4eef05f4-828a-4c2f-b519-cef6032396d6"/>
+					<reportElement style="detial" x="0" y="162" width="456" height="18" uuid="4eef05f4-828a-4c2f-b519-cef6032396d6"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
 					<textElement verticalAlignment="Bottom"/>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement style="detial" x="30" y="184" width="426" height="18" uuid="8b4b73b8-6f4f-40d5-a87a-8d1205be1f5f"/>
+					<reportElement style="detial" x="0" y="184" width="456" height="18" uuid="8b4b73b8-6f4f-40d5-a87a-8d1205be1f5f"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 					</box>
@@ -272,6 +273,11 @@
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{study}]]></textFieldExpression>
 			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="detial" x="20" y="26" width="200" height="25" uuid="ace4ad9a-8dbb-4d1e-8604-177b8cbeabe4"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{documentNo}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnFooter>
@@ -282,7 +288,7 @@
 			<textField isBlankWhenNull="true">
 				<reportElement style="detial" x="176" y="42" width="280" height="25" uuid="5e8e718b-a2c3-4d43-af40-a367fbdb61a7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["( "+$P{officer}+" )" ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["( "+$P{officer}+" )"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="detial" x="176" y="67" width="280" height="25" uuid="3d1f7f1b-f853-4889-8ff1-5bc6fc21692e"/>

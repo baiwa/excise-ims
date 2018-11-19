@@ -53,8 +53,20 @@ export class Int087Component implements OnInit {
   ngOnInit() {
     this.authService.reRenderVersionProgram('INT-087').then(user=>{
     //this.user= user;
-   this.obj.officer= user.fullName;
-   this.obj.position=user.title;
+
+    if (user.fullName) {
+      this.obj.officer = user.fullName;
+    }else{
+      this.obj.officer = "";
+    }
+
+    if(user.title){
+      this.obj.position=user.title;
+    }else{
+      this.obj.position="";
+    }
+
+   
     });
     this.calenda();
     this.dataTable();
@@ -243,7 +255,8 @@ export class Int087Component implements OnInit {
     var form = document.createElement("form");
 		form.method = "POST";
 		form.action = AjaxService.CONTEXT_PATH + "internalAudit/report/pdf/int/reportCheckIncome";
-    form.style.display = "none";    
+    form.style.display = "none";
+    form.target = "_blank"       
     var jsonInput = document.createElement("input");
     jsonInput.name = "json";
     jsonInput.value = JSON.stringify(this.obj);
