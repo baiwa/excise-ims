@@ -127,7 +127,7 @@ public class Int061105Service {
 				/**
 			     * ใบเบิกเงินสวัสดิการเกี่ยวกับการรักษาพยาบาล (แบบ 7131)
 			     */
-				HealthCareWelFareEntity update = healthCareWelFareRepository.findOne(ids.getIdSelect().longValue());
+				HealthCareWelFareEntity update = healthCareWelFareRepository.findOne(ids.getIdSelect());
 				/* check status */
 				if("APPROVE".equals(ids.getComment())) {
 					update.setStatusCheck(ExciseConstants.IA.STATUS.PASS);

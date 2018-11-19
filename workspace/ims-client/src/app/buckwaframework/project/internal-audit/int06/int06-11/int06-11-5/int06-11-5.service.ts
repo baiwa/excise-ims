@@ -87,10 +87,10 @@ export class Int061105Service {
     };
 
     this.dataTable = $("#dataTable").DataTableTh({
-      lengthChange: false,
+      //lengthChange: false,
       searching: false,
       ordering: false,
-      pageLength: 10,
+     // pageLength: 10,
       processing: true,
       serverSide: false,
       paging: true,
@@ -124,9 +124,9 @@ export class Int061105Service {
             if (status === "2048") {
               status = "รอดำเนินการ";
             } else if (status === "2055") {
-              status = "ผ่าน";
+              status = "ตรวจแล้ว";
             } else if (status === "2056") {
-              status = "ไม่ผ่าน";
+              status = "ส่งคืน";
             } else if (status === "2057") {
               status = "สำเร็จ";
             } else {
@@ -137,21 +137,9 @@ export class Int061105Service {
         },
         {
           render: function(data, type, full, meta) {
-            return (
-              // // `<button type="button" class="ui mini button blue" id="dtl-${
-              // //   full.id
-              // // }"><i class="eye icon"></i>รายละเอียด</button>` 
-              // +
-              `<button type="button" class="ui mini button green ${
-                full.status === "2055" ? "hidden" : ""
-              }" id="approve-${
-                full.id
-              }"><i class="check icon"></i>ผ่าน</button>` +
-              `<button type="button" class="ui mini button red ${
-                full.status === "2056" ? "hidden" : ""
-              }" id="reject-${
-                full.id
-              }"><i class="close icon"></i>ไม่ผ่าน</button>`
+            return (            
+              `<button type="button" class="ui mini button green ${full.status === "2055" ? "hidden" : ""}" id="approve-${full.id}"><i class="check icon"></i>ผ่าน</button>` +
+              `<button type="button" class="ui mini button red ${full.status === "2056" ? "hidden" : ""}" id="reject-${full.id}"><i class="close icon"></i>ไม่ผ่าน</button>`
             );
           }
         }
