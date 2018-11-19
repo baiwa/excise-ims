@@ -25,6 +25,7 @@
 	<parameter name="officer" class="java.lang.String"/>
 	<parameter name="position" class="java.lang.String"/>
 	<parameter name="documentNo" class="java.lang.String"/>
+	<parameter name="title" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -254,7 +255,7 @@
 			<textField isBlankWhenNull="true">
 				<reportElement style="detial" x="30" y="51" width="417" height="25" uuid="030d549a-d7e4-4cea-8bc5-5a17853e8be0"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["รายงานผลการตรวจสอบรายได้"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="detial" x="30" y="51" width="426" height="18" uuid="eadfb9e1-0ebb-4453-a0b0-7f9e2c3329b9"/>

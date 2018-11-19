@@ -37,12 +37,12 @@
   </table>
 </div>
 <br>
-<!-- <form (submit)="onSubmit($event)" ngNativeValidate>
+ <form (submit)="onSubmit($event)" ngNativeValidate>
   <div class="ui grid">
     <div class="sixteen wide column">
 
       <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-        <span>รายงานผลการตรวจสอบรายได้</span>
+        <span>รายงานผลการตรวจสอบเบิกจ่าย</span>
       </div>
 
       <div class="ui attached segment">
@@ -67,7 +67,7 @@
                   <label>ที่</label>
                 </div>
                 <div class="four wide field">
-                  <input type="text" id="documentNo" name="documentNo" >
+                  <input type="text" id="documentNo" name="documentNo" [(ngModel)]="obj.documentNo">
                 </div>
                 <div class="one wide field"></div>
                 <div class="one wide field">
@@ -178,4 +178,4 @@
     </div>
   </div>
 
-</form> -->
+</form> 

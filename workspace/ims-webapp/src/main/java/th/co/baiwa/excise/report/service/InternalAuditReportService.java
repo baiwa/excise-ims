@@ -20,7 +20,7 @@ import th.co.baiwa.excise.report.bean.ReportJsonBean;
 public class InternalAuditReportService {
 
 	@SuppressWarnings("unchecked")
-	public byte[] reportCheckIncomeToPDF(ReportJsonBean reportJsonBean) throws IOException, JRException {
+	public byte[] reportCheckToPDF(ReportJsonBean reportJsonBean) throws IOException, JRException {
 
 		Gson gson = new Gson();
 		Map<String, Object> params = new HashMap<String, Object>();

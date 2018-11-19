@@ -35,7 +35,7 @@ export class Int087Component implements OnInit {
     this.breadcrumb = [
       { label: "ตรวจสอบภายใน", route: "#" },
       { label: "ตรวจสอบรายได้", route: "#" },
-      { label: "รายงานผลการตรวจสอบรายได้", route: "#" },
+      { label: "รายงานผลการตรวจสอบ", route: "#" },
     ];
 
     this.searchData = {
@@ -231,6 +231,7 @@ export class Int087Component implements OnInit {
 
 
   onSubmit = e => {
+    this.obj.title="รายงานผลการตรวจสอบรายได้"
     if(this.box1 && !this.box2){
       console.log("1,!2")
       this.obj.group1Flag="Y"
@@ -278,6 +279,7 @@ export class Int087Component implements OnInit {
 
 class data {
   logo: string = "logo1.jpg";
+  title:string ;
   government : string;
   date : string;   
   study : string;
@@ -287,5 +289,6 @@ class data {
   group2Flag: string;
   officer:string;
   position:string;
+  documentNo:string;
 } 
 

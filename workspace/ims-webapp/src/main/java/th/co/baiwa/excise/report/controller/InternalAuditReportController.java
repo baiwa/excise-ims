@@ -25,11 +25,11 @@ public class InternalAuditReportController {
 	
 	
 	@PostMapping("/pdf/int/reportCheckIncome")
-	public void pdfTs(@ModelAttribute ReportJsonBean reportJsonBean, HttpServletResponse response) throws IOException, JRException {
+	public void reportCheckIncomePdf(@ModelAttribute ReportJsonBean reportJsonBean, HttpServletResponse response) throws IOException, JRException {
 		
 		String fileName = URLEncoder.encode("รายงานผลการตรวจสอบรายได้","UTF-8") ;
 		
-		byte[] reportFile = internalAuditReportService.reportCheckIncomeToPDF(reportJsonBean);
+		byte[] reportFile = internalAuditReportService.reportCheckToPDF(reportJsonBean);
 		
 		response.setContentType("application/pdf");
 		response.addHeader("Content-Disposition", "inline;filename="+fileName+".pdf");
@@ -38,6 +38,18 @@ public class InternalAuditReportController {
 	}
 
 
+	@PostMapping("/pdf/int/reportCheckDisburse")
+	public void reportCheckDisbursePdf(@ModelAttribute ReportJsonBean reportJsonBean, HttpServletResponse response) throws IOException, JRException {
+		
+		String fileName = URLEncoder.encode("รายงานผลการตรวจสอบเบิกจ่าย","UTF-8") ;
+		
+		byte[] reportFile = internalAuditReportService.reportCheckToPDF(reportJsonBean);
+		
+		response.setContentType("application/pdf");
+		response.addHeader("Content-Disposition", "inline;filename="+fileName+".pdf");
+		
+		IOUtils.write(reportFile, response.getOutputStream());
+	}
 	
 	
 }
