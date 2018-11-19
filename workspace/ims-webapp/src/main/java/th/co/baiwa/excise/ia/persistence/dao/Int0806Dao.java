@@ -49,16 +49,22 @@ public class Int0806Dao {
 		}
 	};
 	
-	public Lov filerByIncomeCode(String type, BigDecimal incomeCode) {
+	public List<Lov> filerByIncomeCode(String type, BigDecimal incomeCode) {
 
 		List<Object> valueList = new ArrayList<Object>();
-		StringBuilder sql = new StringBuilder(" SELECT L.VALUE1 FROM SYS_LOV L ");
+		StringBuilder sql = new StringBuilder(" SELECT * FROM SYS_LOV L ");
 		sql.append(" WHERE L.TYPE = ? ");
 		valueList.add(type);
 		sql.append(" AND L.VALUE2 = ? ");
 		valueList.add(incomeCode);
 
-		Lov dataList = jdbcTemplate.queryForObject(sql.toString(), valueList.toArray(), fieldMappingfilerByIncomeCode);
+		List<Lov> dataList = jdbcTemplate.query(sql.toString(), valueList.toArray(), fieldMappingfilerByIncomeCode);
+//		List<Lov> dataReturn;
+//		if(dataList.size() < 1) {
+//			dataReturn = new Lov();
+//		}else {
+//			dataReturn = dataList.get(0);
+//		}
 		return dataList;
 	}
 	
@@ -67,10 +73,9 @@ public class Int0806Dao {
 		public Lov mapRow(ResultSet rs, int arg1) throws SQLException {
 			Lov en = new Lov();
 			en.setLovId(rs.getLong("LOV_ID"));
-			en.setLovIdMaster(rs.getLong("LOV_ID_MASTER"));
 			en.setType(rs.getString("TYPE"));
 			en.setValue1(rs.getString("VALUE1"));
-			en.setValue1(rs.getString("VALUE2"));
+			en.setValue2(rs.getString("VALUE2"));
 			return en;
 		}
 	};

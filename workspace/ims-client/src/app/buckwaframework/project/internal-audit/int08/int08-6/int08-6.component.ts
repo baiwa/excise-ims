@@ -33,6 +33,7 @@ export class Int086Component implements OnInit, AfterViewInit {
   comboBox2: any;
   searchData: any;
   formDisabled: boolean = false;
+  searchTB:boolean = false;
 
   constructor(
     private selfService: Int0806Service,
@@ -166,6 +167,7 @@ export class Int086Component implements OnInit, AfterViewInit {
     // combo1: subT1[0].subType,
     // combo2: subT2[0].subType
     this.Datatable();
+    this.searchTB = true;
   }
 
   Datatable(): void {

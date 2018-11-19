@@ -63,8 +63,11 @@ public class Int0806Service {
 				obj.setIncomeCode(m.getIncomeCode());
 
 				//find type account from income code
-//				 Lov incomeFilter = int0806Dao.filerByIncomeCode("ACCOUNT", m.getIncomeCode());
-//				obj.setAccountType(accountType);
+				List<Lov> incomeFilter = new ArrayList<Lov>();
+				 incomeFilter = int0806Dao.filerByIncomeCode("ACCOUNT", m.getIncomeCode());
+				 if(incomeFilter.size() > 0) {
+					 obj.setAccountType(incomeFilter.get(0).getValue1());
+				 }
 				
 				/*
 				 * bug
