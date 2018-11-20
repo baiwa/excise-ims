@@ -30,7 +30,7 @@
         <th style="text-align: center !important">ลำดับที่</th>
         <th style="text-align: center !important">ชื่อผู้เบิก</th>
         <th style="text-align: center !important">ตำแหน่ง</th>
-        <th style="text-align: center !important">รายการเชค</th>
+        <th style="text-align: center !important">รายการเบิก</th>
         <th style="text-align: center !important">จำนวนเงิน</th>
       </tr>
     </thead>
@@ -87,7 +87,7 @@
                   <label>เรื่อง</label>
                 </div>
                 <div class="ten wide field">
-                  รายงานผลการตรวจสอบรายได้
+                  รายงานผลการตรวจสอบเบิกจ่าย
                 </div>
               </div>
 
@@ -107,7 +107,7 @@
                 <div class="eight wide field">
                   <div class="ui checkbox">
                     <input type="checkbox" name="box1" [(ngModel)]="box1">
-                    <label>&nbsp;&nbsp;&nbsp;1)&nbsp;ผลการตรวจสอบใบเสร็จเสีย</label>
+                    <label>&nbsp;&nbsp;&nbsp;1)&nbsp;ผลการตรวจสอบจำนวนครั้งในการเบิกเงิน</label>
                   </div>
                 </div>
               </div>
@@ -124,7 +124,7 @@
                 <div class="eight wide field">
                   <div class="ui checkbox">
                     <input type="checkbox" name="box2" [(ngModel)]="box2">
-                    <label>&nbsp;&nbsp;&nbsp;2)&nbsp;ผลการตรวจสอบการนำเงินฝากเข้าบัญชีพักพน่วยงานและกองทุน</label>
+                    <label>&nbsp;&nbsp;&nbsp;2)&nbsp;ผลการตรวจสอบจำนวนเงินที่เบิกเกิน</label>
                   </div>
                 </div>
               </div>
@@ -172,7 +172,7 @@
       <div class="eight wide column">
         <button class="ui mini yellow button" type="submit">
           <i class="print icon"></i>
-          ส่งออก
+          พิมพ์รายงาน
         </button>
       </div>
     </div>

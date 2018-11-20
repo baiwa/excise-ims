@@ -12,6 +12,7 @@ export class Int0616Service {
 
   callDatatable1 = () => {
     this.dataTable1 = $("#dataTable1").DataTableTh({
+      "lengthChange":false,
       "serverSide": false,
       "processing": true,
       "scrollX": true,
@@ -63,6 +64,7 @@ export class Int0616Service {
   }
   callDatatable2 = () => {
     this.dataTable2 = $("#dataTable2").DataTableTh({
+      "lengthChange":false,
       "serverSide": false,
       "processing": true,
       "scrollX": true,

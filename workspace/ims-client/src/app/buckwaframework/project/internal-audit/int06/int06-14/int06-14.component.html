@@ -57,7 +57,7 @@
                         </div>
                     </div>
                     <div class="three wide field">
-                        <label class="text-right right full-width">ถึง</label>
+                        <label class="text-center full-width">ถึง</label>
                     </div>
                     <div class="four wide field" [ngClass]="{ 'error': validateField('dateEnd') }">
                         <div class="ui calendar" id="dateT" style="width:100%">
@@ -82,7 +82,7 @@
                 <div class="ui center aligned grid">
                     <div class="sixteen wide column">
                         <button class="ui mini primary button">
-                            <i class="save icon"></i>
+                            <i class="search icon"></i>
                             วิเคราะห์ข้อมูลเบื้องต้น
                         </button>
                         <button class="ui mini button" type="reset" (click)="onReset()">
@@ -111,9 +111,9 @@
                     <div class="ui center aligned grid" style="margin-top: 20px;">
                         <div class="sixteen wide column">
                             <button class="ui mini primary button" type="button" (click)="save($event)">
-                                <i class="save icon"></i>บันทึกรายการที่เลือก
+                                <i class="check icon"></i>เลือกรายการ
                             </button>
-                            <button class="ui mini primary button" type="button" >
+                            <button class="ui mini yellow button" type="button" >
                                 <i class="print plane icon"></i> ส่งออกไฟล์ Excel
                             </button>
                         </div>
