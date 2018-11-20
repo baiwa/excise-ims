@@ -29,7 +29,8 @@ export class Tsl010600Component implements OnInit {
   constructor(
     private dataService: IaService,
     private router: Router,
-    private authService : AuthService
+    private authService : AuthService,
+    private ajax: AjaxService
   ) { }
 
   ngOnInit() {
@@ -79,7 +80,8 @@ export class Tsl010600Component implements OnInit {
             if (data == "2") {
               return '<i class="check icon" style="color:green"> </i>';
             }
-            return '<a href="#" class="select-record"><u>เลือก</u></a>';
+            return '<button class="mini ui primary button  select-record" type="button" ><i class="edit icon"></i>เลือก</button>';
+            
           }
         }, {
           data: "exciseId",
@@ -102,9 +104,18 @@ export class Tsl010600Component implements OnInit {
         }, {
           data: "riskTypeDesc",
           className: "ui left aligned"
-        }, {
-          data: "flagDesc",
-          className: "ui left aligned"
+        }, 
+        {
+          data: "flagDesc", className: "ui center aligned",
+          render: (data, type, row, meta) => {
+            let status = '';
+            if (data == 'ตรวจสอบเสร็จสิ้น') {
+              status = '<a href="#" class="success">ตรวจสอบเสร็จสิ้น</a>';
+            } else {
+              status = 'รอการดำเนินการ';
+            }
+            return status;
+          }
         },
       ],
     });
@@ -126,6 +137,13 @@ export class Tsl010600Component implements OnInit {
     //   var data = this.datatable.row($(event.currentTarget).closest("tr")).data();
 
     // });
+    this.datatable.on('click', 'tbody tr .success', (e) => {
+      event.preventDefault();
+      var closestRow = $(e.target).closest('tr');
+      var data = this.datatable.row(closestRow).data();
+      this.report(data.taYearPlanId);
+      //console.log("click me"+data.taYearPlanId);
+    });
   };
 
   onClickOK() {
@@ -140,6 +158,34 @@ export class Tsl010600Component implements OnInit {
       }
     );
   }
+
+
+  report(id) {
+    console.log("report")
+    let url = "exciseTax/report/dataReport"
+    this.ajax.post(url, JSON.stringify(id), (res) => {
+      console.log("Res : ", res.json());
+      this.exportPdf(res.json());
+
+    });
+  }
+
+  exportPdf(obj) {
+    var form = document.createElement("form");
+    form.method = "POST";
+    //form.action = AjaxService.CONTEXT_PATH + "exciseOperation/report/pdf/operation/checkExciseOperation";
+    form.action = AjaxService.CONTEXT_PATH + "exciseTax/report/pdf/tax/checkExciseTax";
+    form.style.display = "none";
+    form.target = "_blank"    
+    var jsonInput = document.createElement("input");
+    jsonInput.name = "json";
+    jsonInput.value = JSON.stringify(obj);
+    form.appendChild(jsonInput);
+    document.body.appendChild(form);
+    form.submit();
+  }
+
+
 
   onCancel(){
     this.activeModal = false;  
