@@ -6,7 +6,7 @@ import { IaService } from 'services/ia.service';
 import { AuthService } from 'services/auth.service';
 import { MessageBarService } from 'services/index';
 import * as moment from 'moment';
-import { TextDateTH } from 'helpers/index';
+import { TextDateTH, ThYearToEnYear } from 'helpers/index';
 declare var $: any;
 
 @Component({
@@ -31,7 +31,9 @@ export class Tsl010700Component implements OnInit {
   obj: dataTax;
   dateCalendar: string = "";
   id: any;
-
+  exciseIdMock:any;
+  dateCalendarEn: string = "";
+  dateMonth: Date = new Date();
   constructor(
     private dataService: IaService,
     private router: Router,
@@ -43,8 +45,16 @@ export class Tsl010700Component implements OnInit {
     this.dataRecord = this.dataService.getData();
     //console.log("dataRecord", this.dataRecord);
     this.dateCalendar = this.route.snapshot.queryParams['dateCalendar'];
+
+    this.dateMonth = new Date();
+    this.dateMonth.setFullYear(parseInt(ThYearToEnYear(this.dateCalendar.split("/")[1])));
+    this.dateMonth.setMonth(parseInt(this.dateCalendar.split("/")[0]) - 1);
+    this.dateCalendarEn = moment(this.dateMonth).format('DD/MM/YYYY');
+
     this.searchFlag = this.route.snapshot.queryParams['searchFlag'];
     this.obj = new dataTax();
+
+    this.exciseIdMock="0105540039831-3-001";
   }
 
   ngOnInit() {
@@ -300,8 +310,8 @@ export class Tsl010700Component implements OnInit {
         contentType: "application/json",
         data: (d) => {
           return JSON.stringify($.extend({}, d, {
-            "excise": this.dataRecord.exciseId,
-            "monthBuget": this.dateCalendar,
+            "excise": this.exciseIdMock,
+            "monthBuget": this.dateCalendarEn,
             "searchFlag": this.searchFlag
           }));
         }
@@ -385,8 +395,8 @@ export class Tsl010700Component implements OnInit {
         contentType: "application/json",
         data: (d) => {
           return JSON.stringify($.extend({}, d, {
-            "excise": this.dataRecord.exciseId,
-            "monthBuget": this.dateCalendar,
+            "excise": this.exciseIdMock,
+            "monthBuget": this.dateCalendarEn,
             "searchFlag": this.searchFlag
           }));
         }
