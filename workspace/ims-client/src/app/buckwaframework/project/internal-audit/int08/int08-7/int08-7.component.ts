@@ -170,7 +170,15 @@ export class Int087Component implements OnInit {
           }
         },
         {
+          data: "accountType",
+          render: renderString
+        },
+        {
           data: "receiptNo",
+          render: renderString
+        },
+        {
+          data: "createdDateStr",
           render: renderString
         },
         {
@@ -211,21 +219,18 @@ export class Int087Component implements OnInit {
             return icon;
           }
         }
-      ],
+      ]
+      ,
       columnDefs: [
         {
-          targets: [0, 1, 2, 3, 6, 7],
+          targets: [0, 1, 2, 3, 4, 5, 8, 9],
           className: "center"
         },
         {
-          targets: [4, 5],
+          targets: [5, 6],
           className: "right"
         }
-      ],
-
-      rowCallback: (row, data, index) => {
-        console.log(data);
-      }
+      ]
     });
   }
 

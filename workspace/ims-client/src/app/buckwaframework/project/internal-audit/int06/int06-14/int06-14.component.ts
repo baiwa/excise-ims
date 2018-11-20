@@ -224,7 +224,7 @@ export class Int0614Component implements OnInit {
         },
         {
           data: "withdrawAmount",
-          render: renderNumber
+          render: renderString
         }
       ],
       columnDefs: [

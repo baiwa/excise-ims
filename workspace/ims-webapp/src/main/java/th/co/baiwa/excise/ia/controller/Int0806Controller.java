@@ -54,16 +54,16 @@ public class Int0806Controller {
    @SuppressWarnings("unchecked")
 @PostMapping("/save")
     @ResponseBody
-    public CommonMessage<Long> save(@RequestBody List<MoneyCheck> int0806VoList,HttpServletRequest request){
+    public CommonMessage<Long> save(@RequestBody List<Int0806Vo> int0806VoList,HttpServletRequest request){
 		Long id = 0L;
 		log.error("Save Int086Vo");
 		CommonMessage<Long> message = new CommonMessage<Long>();
-		List<MoneyCheck> list2 = new ArrayList<MoneyCheck>();
+		List<Int0806Vo> list2 = new ArrayList<Int0806Vo>();
 		try {
 			HttpSession session = request.getSession();
 			session.setAttribute(sessionDataInt086,int0806VoList);
 			
-			list2 = (List<MoneyCheck>)session.getAttribute(sessionDataInt086);
+			list2 = (List<Int0806Vo>)session.getAttribute(sessionDataInt086);
 			
 			log.error("save Int0806 list2.size() {} ",list2.size());
 			message.setData(id);
@@ -79,13 +79,13 @@ public class Int0806Controller {
 	@SuppressWarnings("unchecked")
 	@PostMapping("/list")
 	@ResponseBody
-	public DataTableAjax<MoneyCheck> list(@ModelAttribute Int0806FormSearchVo formVo,HttpServletRequest request){
-		DataTableAjax<MoneyCheck> list = new DataTableAjax<MoneyCheck>();
-		List<MoneyCheck> list2 = new ArrayList<MoneyCheck>();
+	public DataTableAjax<Int0806Vo> list(@ModelAttribute Int0806FormSearchVo formVo,HttpServletRequest request){
+		DataTableAjax<Int0806Vo> list = new DataTableAjax<Int0806Vo>();
+		List<Int0806Vo> list2 = new ArrayList<Int0806Vo>();
 		try {
 			HttpSession session = request.getSession();
-			list2 = (List<MoneyCheck>)session.getAttribute(sessionDataInt086);
-			list.setData((BeanUtils.isEmpty(list2))? new ArrayList<MoneyCheck>():list2);
+			list2 = (List<Int0806Vo>)session.getAttribute(sessionDataInt086);
+			list.setData((BeanUtils.isEmpty(list2))? new ArrayList<Int0806Vo>():list2);
 			if (!BeanUtils.isEmpty(list2)) {
 				list.setData(list2);
 			}			

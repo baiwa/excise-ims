@@ -278,11 +278,7 @@ export class Int086Component implements OnInit, AfterViewInit {
           targets: [5, 6],
           className: "right"
         }
-      ],
-
-      rowCallback: (row, data, index) => {
-        console.log(data);
-      }
+      ]
     });
   }
 
@@ -293,7 +289,7 @@ export class Int086Component implements OnInit, AfterViewInit {
   }
   saveData=()=>{
     console.log("saveData");
-    let url = "ia/int0806/save";
+    
     let dataSave = []; 
 
     let node = $("#dataTable").DataTable().rows().nodes();
@@ -306,15 +302,6 @@ export class Int086Component implements OnInit, AfterViewInit {
     });
 
    console.log("dataSave : ",dataSave);
-
-    this.ajax.post(url,dataSave, res => {        
-      const commonMessage = res.json();
-      if (commonMessage.msg.messageType == "C") {
-        this.msg.successModal(commonMessage.msg.messageTh);
-      } else {
-        this.msg.errorModal(commonMessage.msg.messageTh);
-      }
-    });
 
   return dataSave;
   }
@@ -346,4 +333,28 @@ export class Int086Component implements OnInit, AfterViewInit {
     formExcel.dataJson.value = JSON.stringify({ int068ExcelList: dataSave });
     formExcel.submit();
   };
+
+  saveCheckbox = (e) => {
+    e.preventDefault();
+    let dataSave = []; 
+
+    let node = $("#dataTable").DataTable().rows().nodes();
+    $.each(node, function(index, value) {
+      if ($(this).find("input[type=checkbox]").is(":checked")) {
+
+        let data = $("#dataTable").DataTable().rows().data()[index];
+        dataSave.push(data);
+      }
+    });
+
+    let url = "ia/int0806/save";
+    this.ajax.post(url,dataSave, res => {        
+      const commonMessage = res.json();
+      if (commonMessage.msg.messageType == "C") {
+        this.msg.successModal(commonMessage.msg.messageTh);
+      } else {
+        this.msg.errorModal(commonMessage.msg.messageTh);
+      }
+    });
+  }
 }
