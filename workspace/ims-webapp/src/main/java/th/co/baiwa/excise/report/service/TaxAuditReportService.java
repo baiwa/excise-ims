@@ -28,14 +28,20 @@ import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.report.bean.ReportJsonBean;
+import th.co.baiwa.excise.ta.persistence.entity.TaYearPlanReport;
 import th.co.baiwa.excise.ta.persistence.entity.YearPlan;
+import th.co.baiwa.excise.ta.persistence.repository.TaYearPlanReportRepository;
 import th.co.baiwa.excise.ta.persistence.repository.YearPlanRepository;
+import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class TaxAuditReportService {
 
 	@Autowired
 	private YearPlanRepository yearPlanRepository;
+
+	@Autowired
+	private TaYearPlanReportRepository taYearPlanReportRepository;
 
 	public Message updateFlag(BigDecimal id) {
 		Message message = null;
@@ -104,6 +110,49 @@ public class TaxAuditReportService {
 		ReportUtils.closeResourceFileInputStream(params);
 
 		return content;
+	}
+
+	public void saveTaYearPlanReport(TaYearPlanReport data) {
+		TaYearPlanReport checkReport = null;
+		try {
+			checkReport = taYearPlanReportRepository.findByYearPlanId(data.getYearPlanId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (BeanUtils.isNotEmpty(checkReport)) {
+			checkReport.setExciseArea(data.getExciseArea());
+			checkReport.setExciseSubArea(data.getExciseSubArea());
+			checkReport.setExciseId(data.getExciseId());
+			checkReport.setCompanyName(data.getCompanyName());
+			checkReport.setProduct(data.getProduct());
+			checkReport.setRiskTypeDesc(data.getRiskTypeDesc());
+			checkReport.setDateCalendar(data.getDateCalendar());
+			checkReport.setCompanyAddress(data.getCompanyAddress());
+
+			checkReport.setResultGetRaw(data.getResultGetRaw());
+			checkReport.setResultGetRawBox(data.getResultGetRawBox());
+
+			checkReport.setResultPayRaw(data.getResultPayRaw());
+			checkReport.setResultPayRawBox(data.getResultPayRawBox());
+
+			checkReport.setReceiptInvoiceRaw(data.getReceiptInvoiceRaw());
+			checkReport.setReceiptInvoiceBox(data.getReceiptInvoiceBox());
+
+			checkReport.setPayInvoiceRaw(data.getPayInvoiceRaw());
+			checkReport.setPayInvoiceBox(data.getPayInvoiceBox());
+
+			checkReport.setOfficer(data.getOfficer());
+
+			taYearPlanReportRepository.save(checkReport);
+		} else {
+			taYearPlanReportRepository.save(data);
+		}
+
+	}
+
+	public TaYearPlanReport dataReport(Long id) {
+		TaYearPlanReport report = taYearPlanReportRepository.findByYearPlanId(id);
+		return report;
 	}
 
 }

@@ -49,14 +49,21 @@ export class Tsl010700Component implements OnInit {
 
   ngOnInit() {
     this.authService.reRenderVersionProgram('tsl010700').then(user => {
-      this.obj.officer = user.fullName;
-    });
-    
+      if (user.fullName) {
+        this.obj.officer = user.fullName;
+      }else{
+        this.obj.officer = "";
+      }
+     
+      }); 
+
   }
 
 
 
   onReport() {
+    this.obj.yearPlanId = this.dataRecord.taYearPlanId;
+
     this.obj.exciseArea =   $("#exciseArea").val();
     this.obj.exciseSubArea =   $("#exciseSubArea").val();
     this.obj.exciseId =   $("#exciseId").val();
@@ -66,18 +73,20 @@ export class Tsl010700Component implements OnInit {
     this.obj.dateCalendar =   $("#dateCalendar").val();
     this.obj.companyAddress =   $("#companyAddress").val();
 
+
     // this.obj.resultGetRaw =   $("#resultGetRaw").val();
     // this.obj.resultPayRaw =   $("#resultPayRaw").val();
     // this.obj.receiptInvoiceRaw =   $("#receiptInvoiceRaw").val();
     // this.obj.payInvoiceRaw =   $("#payInvoiceRaw").val();
 
-    //console.log(this.obj);
+    console.log(this.obj);
      
     const URL = "exciseTax/report/updateFlag";
     this.message.comfirm(confirm => {
       if (confirm) {
         const URL = "exciseTax/report/updateFlag";
         this.ajax.post(URL, parseInt(this.dataRecord.taYearPlanId) || 0, response => {
+          this.saveDataReport();
           this.exportPdf();
           this.message.successModal(response.json().messageTh);
           this.router.navigate(["/tax-audit-select-line/tsl0106-00"]);
@@ -104,6 +113,33 @@ export class Tsl010700Component implements OnInit {
     document.body.appendChild(form);
     form.submit();
   }
+
+  saveDataReport() {
+    const URL = "exciseTax/report/saveReport";
+
+    this.ajax.post(URL, 
+      { yearPlanId: this.obj.yearPlanId, 
+        exciseArea: this.obj.exciseArea, 
+        exciseSubArea: this.obj.exciseSubArea, 
+        exciseId: this.obj.exciseId, 
+        companyName:this.obj.companyName,
+        product:this.obj.product,
+        riskTypeDesc:this.obj.riskTypeDesc,
+        dateCalendar:this.obj.dateCalendar,
+        companyAddress:this.obj.companyAddress,
+        resultGetRaw:this.obj.resultGetRaw,
+        resultGetRawBox:this.obj.resultGetRawBox,
+        resultPayRaw:this.obj.resultPayRaw,
+        resultPayRawBox:this.obj.resultPayRawBox,
+        receiptInvoiceRaw:this.obj.receiptInvoiceRaw,
+        receiptInvoiceBox:this.obj.receiptInvoiceBox,
+        payInvoiceRaw:this.obj.payInvoiceRaw,
+        payInvoiceBox:this.obj.payInvoiceBox,
+        officer:this.obj.officer
+      }, res => { 
+    });
+
+}
 
   ngAfterViewInit() {
     this.initGetRawDatatable();
@@ -448,6 +484,8 @@ export class Tsl010700Component implements OnInit {
 }
 
 class dataTax {
+
+  yearPlanId:any;
   exciseArea: string;
   exciseSubArea: string;
   exciseId: string;
