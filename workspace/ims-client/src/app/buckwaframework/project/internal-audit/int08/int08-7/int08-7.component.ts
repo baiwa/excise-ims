@@ -88,7 +88,7 @@ export class Int087Component implements OnInit {
   dataTable=()=>{
     if ($('#tableData').DataTable() != null) {$('#tableData').DataTable().destroy();};
     var table = $('#tableData').DataTableTh({
-      "lengthChange":true,
+      "lengthChange":false,
       "serverSide": false,
       "searching": false,
       "ordering": false,
