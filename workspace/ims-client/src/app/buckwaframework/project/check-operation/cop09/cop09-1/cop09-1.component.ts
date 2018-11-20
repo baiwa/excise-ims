@@ -80,6 +80,12 @@ export class Cop091Component implements OnInit, OnDestroy {
       this.report(data.id);
     });
 
+    this.table1.on('click', 'tbody tr .success', (e) => {
+      event.preventDefault();
+      var closestRow = $(e.target).closest('tr');
+      var data = this.table1.row(closestRow).data();
+      this.report(data.id);
+    });
   }
 
   dataTable = () => {
@@ -140,7 +146,7 @@ export class Cop091Component implements OnInit, OnDestroy {
           render: (data, type, row, meta) => {
             let status = '';
             if (data == '1874') {
-              status = 'เสร็จสิ้น';
+              status = '<a href="#" class="success">เสร็จสิ้น</a>';
             } else {
               status = 'รอการดำเนินการ';
             }
