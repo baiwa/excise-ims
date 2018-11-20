@@ -18,14 +18,12 @@ import com.google.gson.Gson;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.export.ExporterInputItem;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleExporterInputItem;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
-import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
@@ -57,24 +55,55 @@ public class TaxAuditReportService {
 		return message;
 	}
 
+	/*
+	 * @SuppressWarnings("unchecked") public byte[] exciseTaxToPDF(ReportJsonBean
+	 * reportJsonBean) throws IOException, JRException {
+	 * 
+	 * 
+	 * Gson gson = new Gson(); Map<String, Object> params = new HashMap<String,
+	 * Object>(); params = (Map<String, Object>)
+	 * gson.fromJson(reportJsonBean.getJson(), params.getClass());
+	 * 
+	 * Date reqDate = new Date();
+	 * 
+	 * params.put("date", DateFormatUtils.format(reqDate, "dd /  MMMM  / yyyy", new
+	 * Locale("th", "TH")));
+	 * 
+	 * JasperPrint jasperPrint = ReportUtils.exportReport("TaxAuditForm001", params,
+	 * new JREmptyDataSource());
+	 * 
+	 * byte[] reportFile = JasperExportManager.exportReportToPdf(jasperPrint);
+	 * 
+	 * ReportUtils.closeResourceFileInputStream(params); return reportFile; }
+	 */
+
 	@SuppressWarnings("unchecked")
 	public byte[] exciseTaxToPDF(ReportJsonBean reportJsonBean) throws IOException, JRException {
 
-		
 		Gson gson = new Gson();
 		Map<String, Object> params = new HashMap<String, Object>();
 		params = (Map<String, Object>) gson.fromJson(reportJsonBean.getJson(), params.getClass());
 
-		Date reqDate = new Date();
-				
-		params.put("date", DateFormatUtils.format(reqDate, "dd /  MMMM  / yyyy", new Locale("th", "TH")));
+		params.put("date", DateFormatUtils.format(new Date(), "dd /  MMMM  / yyyy", new Locale("th", "TH")));
 
-		JasperPrint jasperPrint = ReportUtils.exportReport("TaxAuditForm001", params, new JREmptyDataSource());
+		JasperPrint jasperPrint1 = ReportUtils.exportReport("TaxAuditForm001", params, new JREmptyDataSource());
+		JasperPrint jasperPrint2 = ReportUtils.exportReport("TaxAuditForm002", params, new JREmptyDataSource());
 
-		byte[] reportFile = JasperExportManager.exportReportToPdf(jasperPrint);
+		List<ExporterInputItem> items = new ArrayList<ExporterInputItem>();
+		items.add(new SimpleExporterInputItem(jasperPrint1));
+		items.add(new SimpleExporterInputItem(jasperPrint2));
+
+		JRPdfExporter exporter = new JRPdfExporter();
+		exporter.setExporterInput(new SimpleExporterInput(items));
+
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
+		exporter.exportReport();
+		byte[] content = outputStream.toByteArray();
 
 		ReportUtils.closeResourceFileInputStream(params);
-		return reportFile;
+
+		return content;
 	}
 
 }

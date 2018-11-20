@@ -66,10 +66,10 @@ export class Tsl010700Component implements OnInit {
     this.obj.dateCalendar =   $("#dateCalendar").val();
     this.obj.companyAddress =   $("#companyAddress").val();
 
-    this.obj.resultGetRaw =   $("#resultGetRaw").val();
-    this.obj.resultPayRaw =   $("#resultPayRaw").val();
-    this.obj.receiptInvoiceRaw =   $("#receiptInvoiceRaw").val();
-    this.obj.payInvoiceRaw =   $("#payInvoiceRaw").val();
+    // this.obj.resultGetRaw =   $("#resultGetRaw").val();
+    // this.obj.resultPayRaw =   $("#resultPayRaw").val();
+    // this.obj.receiptInvoiceRaw =   $("#receiptInvoiceRaw").val();
+    // this.obj.payInvoiceRaw =   $("#payInvoiceRaw").val();
 
     //console.log(this.obj);
      
@@ -108,6 +108,8 @@ export class Tsl010700Component implements OnInit {
   ngAfterViewInit() {
     this.initGetRawDatatable();
     this.initPayRawDatatable();
+    this.initGetProductDatatable();
+    this.initPayProductDatatable();
   }
 
   initGetRawDatatable = () => {
@@ -247,9 +249,199 @@ export class Tsl010700Component implements OnInit {
     });
   };
 
+
+  initGetProductDatatable = () => {
+    const URL = AjaxService.CONTEXT_PATH + "cop/cop092/product/list";
+    this.getRawTable = $("#tableReceiveProduct").DataTableTh({
+      serverSide: true,
+      searching: false,
+      processing: true,
+      ordering: false,
+      scrollX: true,
+      ajax: {
+        type: "POST",
+        url: URL,
+        contentType: "application/json",
+        data: (d) => {
+          return JSON.stringify($.extend({}, d, {
+            "excise": this.dataRecord.exciseId,
+            "monthBuget": this.dateCalendar,
+            "searchFlag": this.searchFlag
+          }));
+        }
+      },
+      columns: [
+        {
+          className: "ui center aligned",
+          render: function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          }
+        }, {
+          data: "list",
+          className: "ui left aligned"
+        }, {
+          data: "unit",
+          className: "ui left aligned"
+        }, {
+          data: "stock",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        },
+        {
+          data: "getPro",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        },
+        {
+          data: "receive",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        },
+        {
+          data: "other",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        }, {
+          data: "receiveTotal",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        }
+      ],
+    });
+  };
+
+  initPayProductDatatable = () => {
+    const URL = AjaxService.CONTEXT_PATH + "cop/cop092/product/list";
+    this.payRawTable = $("#tablePayProduct").DataTableTh({
+      serverSide: true,
+      searching: false,
+      processing: true,
+      ordering: false,
+      scrollX: true,
+      ajax: {
+        type: "POST",
+        url: URL,
+        contentType: "application/json",
+        data: (d) => {
+          return JSON.stringify($.extend({}, d, {
+            "excise": this.dataRecord.exciseId,
+            "monthBuget": this.dateCalendar,
+            "searchFlag": this.searchFlag
+          }));
+        }
+      },
+      columns: [
+        {
+          className: "ui center aligned",
+          render: function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          }
+        }, {
+          data: "list",
+          className: "ui left aligned"
+        }, {
+          data: "unit",
+          className: "ui left aligned"
+        }, {
+          data: "domDist",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        }, {
+          data: "foreignSale",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        }, {
+          data: "inHouseUse",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        }, {
+          data: "warehouse",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        }, {
+          data: "corrupt",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        }, {
+          data: "other1",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        }, {
+          data: "total",
+          className: "ui right aligned",
+          render: function (data, type, row) {
+            if ($.trim(data) == "") {
+              return "-";
+            }
+            return data;
+          }
+        }
+      ],
+    });
+  };
+
   onClickBack() {
     this.router.navigate(["/tax-audit-select-line/tsl0106-00"]);
   }
+
+
+
+
 
 
 
