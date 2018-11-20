@@ -1,10 +1,11 @@
 <app-breadcrumb [route]="breadcrumb"></app-breadcrumb>
 <br>
 
-<div class="ui top centered attached header segment" style="background: #1e83db;color: white">
-  <span>รายละเอียดการตรวจสอบจำนวนเงินที่เบิกเกิน (ครั้ง/เดือน)</span>
-</div>
-<form [formGroup]="formControl" >
+
+<form [formGroup]="formControl">
+  <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <span>รายละเอียดการตรวจสอบจำนวนเงินที่เบิกเกิน (ครั้ง/เดือน)</span>
+  </div>
   <div class="ui attached segment">
     <br>
     <div class="ui form">
@@ -14,7 +15,8 @@
             <label class="text-right full-width">สำนักงานสรรพสามิตภาค</label>
           </div>
           <div class="four wide field" [ngClass]="{ 'error': submitted && f.sector.invalid }">
-            <select class="ui dropdown ai search full-width" id="sector" name="sector" formControlName="sector" (change)="travelTo2Dropdown($event)">
+            <select class="ui dropdown ai search full-width" id="sector" name="sector" formControlName="sector"
+              (change)="travelTo2Dropdown($event)">
               <option value="">กรุณาเลือก</option>
               <option *ngFor="let data of travelTo1List" value="{{data.lovId}}">{{data.subTypeDescription}}</option>
             </select>
@@ -55,7 +57,7 @@
           </div>
         </div>
         <div class="inline fields">
-          <div class="three wide field" >
+          <div class="three wide field">
             <label class="text-right right full-width">จำนวนเงินในการเบิกเกิน</label>
           </div>
           <div class="four wide field" [ngClass]="{ 'error': submitted && f.money.invalid }">
@@ -72,41 +74,43 @@
               วิเคราะห์ข้อมูลเบื้องต้น
             </button>
             <button class="ui mini button" type="button" (click)="clear()">
-                <i class="sync icon"></i>
-                ล้างข้อมูล
-              </button>
+              <i class="sync icon"></i>
+              ล้างข้อมูล
+            </button>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="ui top centered attached header segment" style="background: #1e83db;color: white">
+    <span>ผลการค้นหา การตรวจสอบจำนวนเงินที่เบิกเกิน (ครั้ง/เดือน)</span>
+  </div>
+  <div class="ui attached segment">
+    <table id="dataTable" class="ui small celled table striped nowrap selectable" style="width: 100%;">
+      <thead>
+        <tr style="text-align: center">
+          <th style="text-align: center !important;"><input class="ui checkbox" type="checkbox" name="select-all" id="select-all"
+              (click)="checkAll($event)"></th>
+          <th style="text-align: center !important">ลำดับที่</th>
+          <th style="text-align: center !important">ชื่อผู้เบิก</th>
+          <th style="text-align: center !important">ตำแหน่ง</th>
+          <th style="text-align: center !important">รายการเบิก</th>
+          <th style="text-align: center !important">จำนวนเงิน</th>
+        </tr>
 
+      </thead>
+    </table>
 
-
-
-        <div class="ui segment">
-          <table id="dataTable" class="ui small celled table striped nowrap selectable" style="width: 100%;">
-            <thead>
-              <tr style="text-align: center">
-                <th style="text-align: center !important;"><input class="ui checkbox" type="checkbox" name="select-all" id="select-all" (click)="checkAll($event)"></th>
-                <th style="text-align: center !important">ลำดับที่</th>
-                <th style="text-align: center !important">ชื่อผู้เบิก</th>
-                <th style="text-align: center !important">ตำแหน่ง</th>
-                <th style="text-align: center !important">รายการเบิก</th>
-                <th style="text-align: center !important">จำนวนเงิน</th>
-              </tr>
-
-            </thead>
-          </table>
-
-          <div class="ui center aligned grid" style="margin-top: 20px;">
-            <div class="sixteen wide column">
-                <button class="ui mini primary button" type="button" (click)="save()">
-                    <i class="check icon"></i>เลือกรายการ
-                </button>
-              <button class="ui mini yellow button" type="button" (click)="export()">
-                <i class="print plane icon"></i> ส่งออกไฟล์ Excel
-              </button>
-            </div>
-          </div>
-        </div>
+    <div class="ui center aligned grid" style="margin-top: 20px;">
+      <div class="sixteen wide column">
+        <button class="ui mini primary button" type="button" (click)="save()">
+          <i class="check icon"></i>เลือกรายการ
+        </button>
+        <button class="ui mini yellow button" type="button" (click)="export()">
+          <i class="print plane icon"></i> ส่งออกไฟล์ Excel
+        </button>
       </div>
     </div>
   </div>
