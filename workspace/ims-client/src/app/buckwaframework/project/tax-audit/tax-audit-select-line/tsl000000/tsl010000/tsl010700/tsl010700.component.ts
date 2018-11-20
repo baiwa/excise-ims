@@ -20,7 +20,7 @@ export class Tsl010700Component implements OnInit {
     { label: 'ตรวจสอบภาษี', route: '#' },
     { label: 'การคัดเลือกราย', route: '#' },
     { label: 'ตารางผลการคัดเลือกรายประจำปี', route: '#' },
-    { label: 'ตรวจสอบข้อมูลด้านภาษีสรรพาสามิต', route: '#' },
+    { label: 'ตรวจสอบข้อมูลด้านภาษีสรรพสามิต', route: '#' },
   ];
 
   searchFlag: string = "FALSE";
