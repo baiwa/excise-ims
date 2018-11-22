@@ -126,13 +126,14 @@ export class Cop071Component implements OnInit {
             var btn = '';
             if (this.validateDate(data)) {
 
-              btn += '<button class="mini ui yellow button btn-edit" disabled><i class="edit icon"></i>แก้ไข</button>';
-              btn += '<button class="mini ui primary button btn-description"><i class="eye icon"></i>รายละเอียด</button>';
+              // btn += '<button class="mini ui yellow button btn-edit" disabled><i class="edit icon"></i>แก้ไข</button>';
+              // btn += '<button class="mini ui primary button btn-description"><i class="eye icon"></i>รายละเอียด</button>';
             } else {
 
               btn += '<button class="mini ui yellow button btn-edit"><i class="edit icon"></i>แก้ไข</button>';
-              btn += '<button class="mini ui primary button btn-description"><i class="eye icon"></i>รายละเอียด</button>';
+             
             }
+            btn += '<button class="mini ui primary button btn-description"><i class="eye icon"></i>รายละเอียด</button>';
             return btn;
           }
         }

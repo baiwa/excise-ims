@@ -365,8 +365,8 @@ export class Cop0711Component implements OnInit, OnDestroy {
           "render": (data, type, row) => {
             var btn = '';
             if (this.validateDate(this.fiscalYear)) {
-              btn += '<button class="mini ui yellow button btn-edit" type="button" disabled><i class="edit icon"></i>แก้ไข</button>';
-              btn += '<button class="mini ui red button btn-delete" type="button" disabled><i class="trash alternate icon"></i>ลบ</button>';
+              // btn += '<button class="mini ui yellow button btn-edit" type="button" disabled><i class="edit icon"></i>แก้ไข</button>';
+              // btn += '<button class="mini ui red button btn-delete" type="button" disabled><i class="trash alternate icon"></i>ลบ</button>';
             } else {
               btn += '<button class="mini ui yellow button btn-edit" type="button" ><i class="edit icon"></i>แก้ไข</button>';
               btn += '<button class="mini ui red button btn-delete" type="button" ><i class="trash alternate icon"></i>ลบ</button>';
@@ -482,8 +482,8 @@ export class Cop0711Component implements OnInit, OnDestroy {
           "render": (data, type, row) => {
             var btn = '';
             if (this.validateDate(this.fiscalYear)) {
-              btn += '<button class="mini ui yellow button btn-edit" type="button" disabled><i class="edit icon"></i>แก้ไข</button>';
-              btn += '<button class="mini ui red button btn-delete" type="button" disabled><i class="trash alternate icon"></i>ลบ</button>';
+              // btn += '<button class="mini ui yellow button btn-edit" type="button" disabled><i class="edit icon"></i>แก้ไข</button>';
+              // btn += '<button class="mini ui red button btn-delete" type="button" disabled><i class="trash alternate icon"></i>ลบ</button>';
             } else {
               btn += '<button class="mini ui yellow button btn-edit" type="button" ><i class="edit icon"></i>แก้ไข</button>';
               btn += '<button class="mini ui red button btn-delete" type="button" ><i class="trash alternate icon"></i>ลบ</button>';

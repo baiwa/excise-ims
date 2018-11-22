@@ -14,7 +14,7 @@
   <div class="inline fields" style="text-align: center !important;">
     <!-- <button class="mini ui yellow button">
       <i class="edit icon"></i>แก้ไขจำนวนแผนปฏิบัติการ</button> -->
-    <button class="ui mini green button" type="button" (click)="modalAdd()" [disabled]="btnAddDisabled">
+    <button class="ui mini green button" type="button" (click)="modalAdd()"  *ngIf="!btnAddDisabled">
       <i class="plus icon"></i>เพิ่มข้อมูล</button>
   </div>
 </div>
