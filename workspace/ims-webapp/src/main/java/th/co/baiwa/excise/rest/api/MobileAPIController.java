@@ -1,5 +1,10 @@
 package th.co.baiwa.excise.rest.api;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.management.Notification;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +49,18 @@ public class MobileAPIController {
 	public ResponseApiSaveIncome updateRiskTask(@RequestBody RequestApiSaveIncome requestApiSaveIncome) {
 		logger.info("updateRiskTask");
 		return mobileCheckExciseIncomeService.updateRiskTask(requestApiSaveIncome);
+	}
+	
+	
+	
+	@PostMapping("/simpleNotificationMockup")
+	@ResponseBody
+	public List<Notification>simpleNotificationMockup() {
+		logger.info("simpleNotificationMockup");
+		List<Notification> notificationList = new ArrayList<Notification>();
+		notificationList.add( new Notification("TaxAudit", "แจ้งเตือน", 1, "สร้างกระดาษทำการเสร็จ"));
+		notificationList.add( new Notification("TaxAudit", "แจ้งเตือนขออนุมัติแผ่นการตรวจสอบ", 1, "รบกวนขออนุมัติแผนการตรวจสอบภาษีประจำปีงบประมาณ 2562"));
+		return notificationList;
 	}
 	
 	
