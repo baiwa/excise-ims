@@ -17,7 +17,7 @@ import th.co.baiwa.excise.ta.persistence.vo.PlanTaxAuditVo;
 import th.co.baiwa.excise.ta.service.PlanTaxAuditService;
 
 @Controller
-@RequestMapping("api/filter/exise")
+@RequestMapping("api/tax00001")
 public class Tax00001Controller {
 	private Logger logger = LoggerFactory.getLogger(Tax00001Controller.class);
 
