@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 import th.co.baiwa.excise.ta.persistence.entity.PlanTaxAudit;
@@ -49,9 +50,11 @@ public class Tax00001Controller {
 	
 	@PostMapping("/findPlanTaxAuditByBudgetYearForDataTable")
 	@ResponseBody
-	public List<PlanTaxAudit> findPlanTaxAuditByBudgetYearForDataTable(@ModelAttribute DataTableRequest dataTableRequest,@RequestBody PlanTaxAuditVo planTaxAuditVo) {
+	public ResponseDataTable<PlanTaxAudit> findPlanTaxAuditByBudgetYearForDataTable(@ModelAttribute DataTableRequest dataTableRequest,@RequestBody PlanTaxAuditVo planTaxAuditVo) {
 		logger.info("findPlanTaxAuditByBudgetYearForDataTable");
-		return planTaxAuditService.findByBudgetYearOrderByTaPlanTaxAuditId(planTaxAuditVo.getBudgetYear());
+		PlanTaxAudit plan = new PlanTaxAudit();
+		plan.setBudgetYear(planTaxAuditVo.getBudgetYear());
+		return planTaxAuditService.findByBudgetYearOrderByTaPlanTaxAuditIdForDataTable(plan , dataTableRequest);
 	}
 	
 	
