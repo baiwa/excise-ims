@@ -12,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 import th.co.baiwa.excise.ta.persistence.dao.PlanWorksheetHeaderDao;
 import th.co.baiwa.excise.ta.persistence.entity.PlanCriteria;
 import th.co.baiwa.excise.ta.persistence.entity.PlanTaxAudit;
@@ -23,7 +25,6 @@ import th.co.baiwa.excise.ta.persistence.repository.PlanTaxAuditRepository;
 
 @Service
 public class PlanTaxAuditService {
-
 	private Logger logger = LoggerFactory.getLogger(PlanTaxAuditService.class);
 
 	@Autowired
@@ -80,6 +81,18 @@ public class PlanTaxAuditService {
 	public List<PlanTaxAudit> findByBudgetYearOrderByTaPlanTaxAuditId(String budgetYear){
 		logger.info("findByBudgetYearOrderByTaPlanTaxAuditId in budget_year : {}" , budgetYear);
 		return planTaxAuditRepository.findByBudgetYearOrderByTaPlanTaxAuditId(budgetYear);
+	}
+	
+	
+	public ResponseDataTable<PlanTaxAudit> findByBudgetYearOrderByTaPlanTaxAuditIdForDataTable(PlanTaxAudit planTaxAudit , DataTableRequest dataTableRequest){
+		long count = planTaxAuditRepository.countPlanTaxAuditByCriteriaForDataTable(planTaxAudit);
+		ResponseDataTable<PlanTaxAudit> responseDataTable = new ResponseDataTable<PlanTaxAudit>();
+		List<PlanTaxAudit> planTaxAuditList = planTaxAuditRepository.findPlanTaxAuditByCriteriaForDataTable(planTaxAudit, dataTableRequest.getStart(), dataTableRequest.getLength());
+		responseDataTable.setDraw(dataTableRequest.getDraw().intValue() + 1);
+		responseDataTable.setData(planTaxAuditList);
+		responseDataTable.setRecordsTotal((int) count);
+		responseDataTable.setRecordsFiltered((int) count);
+		return responseDataTable;
 	}
 	
 	public void createNewPlanWorkSheetHeaderByAnalysNumber(String analysNumber) {
