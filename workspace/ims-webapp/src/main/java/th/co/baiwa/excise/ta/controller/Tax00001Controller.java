@@ -50,7 +50,7 @@ public class Tax00001Controller {
 	
 	@PostMapping("/findPlanTaxAuditByBudgetYearForDataTable")
 	@ResponseBody
-	public ResponseDataTable<PlanTaxAudit> findPlanTaxAuditByBudgetYearForDataTable(@ModelAttribute DataTableRequest dataTableRequest,@RequestBody PlanTaxAuditVo planTaxAuditVo) {
+	public ResponseDataTable<PlanTaxAudit> findPlanTaxAuditByBudgetYearForDataTable(DataTableRequest dataTableRequest,PlanTaxAuditVo planTaxAuditVo) {
 		logger.info("findPlanTaxAuditByBudgetYearForDataTable");
 		PlanTaxAudit plan = new PlanTaxAudit();
 		plan.setBudgetYear(planTaxAuditVo.getBudgetYear());
