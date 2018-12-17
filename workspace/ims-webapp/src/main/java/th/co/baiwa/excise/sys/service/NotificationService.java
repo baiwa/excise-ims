@@ -48,8 +48,8 @@ public class NotificationService {
 		return msg;
 	}
 	
-	public List<Notification> findAllNotification(){
+	public List<Notification> findNotificationByType(Notification notification){
 		logger.info("findAllNotification");
-		return notificationDao.findAllNotification();
+		return notificationDao.findNotificationByType(notification.getType());
 	}
 }

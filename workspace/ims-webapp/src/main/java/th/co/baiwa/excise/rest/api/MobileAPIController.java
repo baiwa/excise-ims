@@ -57,10 +57,9 @@ public class MobileAPIController {
 	
 	@PostMapping("/simpleNotificationMockup")
 	@ResponseBody
-	public List<Notification>simpleNotificationMockup() {
+	public List<Notification>simpleNotificationMockup(Notification notification) {
 		logger.info("simpleNotificationMockup");
-		
-		return notificationService.findAllNotification();
+		return notificationService.findNotificationByType(notification);
 	}
 	
 	

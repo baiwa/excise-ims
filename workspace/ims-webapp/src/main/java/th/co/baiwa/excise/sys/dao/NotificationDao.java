@@ -16,6 +16,7 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.dao.CommonJdbcDao;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.sys.domain.Notification;
+import th.co.baiwa.excise.utils.BeanUtils;
 
 @Repository
 public class NotificationDao {
@@ -38,11 +39,15 @@ public class NotificationDao {
 	}
 	
 	
-	public List<Notification> findAllNotification() {
+	public List<Notification> findNotificationByType(String type) {
 		
 		logger.info("findExciseIdOrderByPercenTax");
 		List<Object> params = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder("SELECT ID, TYPE, SUBJECT, DETAIL_MESSAGE, STATUS,VIEW_DATE, NVL2(VIEW_DATE , 'N' , 'Y') VIEW_STATUS, IS_DELETED, CREATED_BY, CREATED_DATE, UPDATED_BY, UPDATED_DATE, VERSION FROM SYS_NOTIFICATION N WHERE N.IS_DELETED = 'N' ");
+		if(BeanUtils.isNotEmpty(type)) {
+			sql.append(" AND TYPE = ? ");
+			params.add(type);
+		}
 		return commonJdbcDao.executeQuery(sql.toString(), params.toArray(), mappingSelectStarNotification);
 	}
 	
