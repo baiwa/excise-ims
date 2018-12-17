@@ -891,6 +891,108 @@ public class PlanWorksheetHeaderDao {
 		return result;
 	}
 	
+	public void createNewPlanWorkSheetHeaderByAnalysNumber(String analysNumber) {
+		
+		List<Object> valueList = new ArrayList<Object>();
+		valueList.add(analysNumber);
+		
+		StringBuilder sql = new StringBuilder(" INSERT INTO ta_plan_work_sheet_header ( " + 
+				"    work_sheet_header_id, " + 
+				"    analys_number, " + 
+				"    excise_id, " + 
+				"    company_name, " + 
+				"    factory_name, " + 
+				"    factory_address, " + 
+				"    excise_owner_area, " + 
+				"    product_type, " + 
+				"    excise_owner_area_1, " + 
+				"    total_amount, " + 
+				"    percentage, " + 
+				"    total_month, " + 
+				"    decide_type, " + 
+				"    flag, " + 
+				"    created_by, " + 
+				"    created_date, " + 
+				"    updated_by, " + 
+				"    updated_date, " + 
+				"    first_month, " + 
+				"    last_month, " + 
+				"    work_sheet_number, " + 
+				"    is_deleted, " + 
+				"    month_date, " + 
+				"    full_month, " + 
+				"    version, " + 
+				"    view_status, " + 
+				"    central, " + 
+				"    sector " + 
+				") SELECT " + 
+				"    ta_plan_work_sheet_header_seq.NEXTVAL, " + 
+				"    ?, " + 
+				"    excise_id, " + 
+				"    company_name, " + 
+				"    factory_name, " + 
+				"    factory_address, " + 
+				"    excise_owner_area, " + 
+				"    product_type, " + 
+				"    excise_owner_area_1, " + 
+				"    total_amount, " + 
+				"    percentage, " + 
+				"    total_month, " + 
+				"    decide_type, " + 
+				"    flag, " + 
+				"    created_by, " + 
+				"    created_date, " + 
+				"    updated_by, " + 
+				"    updated_date, " + 
+				"    first_month, " + 
+				"    last_month, " + 
+				"    work_sheet_number, " + 
+				"    is_deleted, " + 
+				"    month_date, " + 
+				"    full_month, " + 
+				"    version, " + 
+				"    view_status, " + 
+				"    central, " + 
+				"    sector " + 
+				"FROM " + 
+				"    ta_plan_from_ws_header ");
+		
+		
+		jdbcTemplate.update(sql.toString(), valueList.toArray());
+	
+	}
+	
+public void createNewPlanWorkSheetDetailByAnalysNumber(String analysNumber) {
+		
+		List<Object> valueList = new ArrayList<Object>();
+		valueList.add(analysNumber);
+		
+		StringBuilder sql = new StringBuilder(" INSERT INTO ta_plan_work_sheet_detail SELECT " + 
+				"ta_plan_work_sheet_detail_seq.NEXTVAL, " + 
+				"excise_id, " + 
+				"?, " + 
+				"month, " + 
+				"year, " + 
+				"amount, " + 
+				"created_by, " + 
+				"created_date, " + 
+				"updated_by, " + 
+				"updated_date, " + 
+				"is_deleted, " + 
+				"version, " + 
+				"max_values, " + 
+				"result " + 
+				"FROM " + 
+				"ta_plan_from_ws_detail ");
+		
+		
+		jdbcTemplate.update(sql.toString(), valueList.toArray());
+	
+	}
+	
+	
+	
+	
 	
 	
 

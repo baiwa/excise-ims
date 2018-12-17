@@ -112,14 +112,17 @@ public class PlanTaxAuditService {
 		responseDataTable.setRecordsFiltered((int) count);
 		return responseDataTable;
 	}
-	
+	@Transactional
 	public void createNewPlanWorkSheetHeaderByAnalysNumber(String analysNumber) {
 		logger.info("createNewPlanWorkSheetHeaderByAnalysNumber in analysNumber : {}" , analysNumber);
-		PlanTaxAudit planTaxAudit = planTaxAuditRepository.findByAnalysNumber(analysNumber);
-		LocalDate dateFrom = LocalDate.parse("01/"+planTaxAudit.getMonthFrom(), DateTimeFormatter.ofPattern(DateConstant.DD_MM_YYYY) );
-		LocalDate dateTo = LocalDate.parse("01/"+planTaxAudit.getMonthTo(), DateTimeFormatter.ofPattern(DateConstant.DD_MM_YYYY) );
-		long daysBetween = ChronoUnit.MONTHS.between(dateFrom, dateTo);
-		logger.info("from : {} ==> to : {} Diff :  {}" , planTaxAudit.getMonthFrom() ,planTaxAudit.getMonthTo() , daysBetween );
+//		PlanTaxAudit planTaxAudit = planTaxAuditRepository.findByAnalysNumber(analysNumber);
+//		LocalDate dateFrom = LocalDate.parse("01/"+planTaxAudit.getMonthFrom(), DateTimeFormatter.ofPattern(DateConstant.DD_MM_YYYY) );
+//		LocalDate dateTo = LocalDate.parse("01/"+planTaxAudit.getMonthTo(), DateTimeFormatter.ofPattern(DateConstant.DD_MM_YYYY) );
+//		long daysBetween = ChronoUnit.MONTHS.between(dateFrom, dateTo);
+//		logger.info("from : {} ==> to : {} Diff :  {}" , planTaxAudit.getMonthFrom() ,planTaxAudit.getMonthTo() , daysBetween );
+		
+		planWorksheetHeaderDao.createNewPlanWorkSheetHeaderByAnalysNumber(analysNumber);
+		planWorksheetHeaderDao.createNewPlanWorkSheetDetailByAnalysNumber(analysNumber);
 		
 	}
 	
