@@ -11,8 +11,14 @@ public class PlanTaxAuditVo {
 	private List<PlanCriteria> planCriteriaList;
 	private String budgetYear;
 	private String analysNumber;
+	private Long id;
 	
-	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getAnalysNumber() {
 		return analysNumber;
 	}

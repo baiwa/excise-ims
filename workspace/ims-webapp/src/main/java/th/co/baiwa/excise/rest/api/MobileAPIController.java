@@ -24,6 +24,7 @@ import th.co.baiwa.excise.ta.persistence.entity.PlanTaxAudit;
 import th.co.baiwa.excise.ta.persistence.vo.NotificationFormVo;
 import th.co.baiwa.excise.ta.persistence.vo.NotificationVo;
 import th.co.baiwa.excise.ta.persistence.vo.PlanCriteriaVo;
+import th.co.baiwa.excise.ta.persistence.vo.PlanTaxAuditVo;
 
 @Controller
 @RequestMapping("mobile-api")
@@ -84,11 +85,12 @@ public class MobileAPIController {
 	
 	@PostMapping("/viewTaCriteriaByTaPlanTaxAuditId")
 	@ResponseBody
-	public List<PlanCriteriaVo> viewTaCriteriaByTaPlanTaxAuditId(@RequestBody PlanTaxAudit planTaxAudit) {
+	public List<PlanCriteriaVo> viewTaCriteriaByTaPlanTaxAuditId(@RequestBody PlanTaxAuditVo planTaxAudit ) {
 		logger.info("viewTaCriteriaByTaPlanTaxAuditId");
 		List<PlanCriteriaVo> planCriteriaVoList = new ArrayList<PlanCriteriaVo>();
 		 try {
 			 planCriteriaVoList = notificationService.findPlanConditionDetail(planTaxAudit.getAnalysNumber());
+			 notificationService.updateNotification(planTaxAudit.getId());
 		} catch (Exception e) {
 			logger.info("updateNotification fail :",e);
 		}
