@@ -14,6 +14,7 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 import th.co.baiwa.excise.sys.domain.Notification;
 import th.co.baiwa.excise.sys.service.NotificationService;
@@ -42,8 +43,9 @@ public class PlanTaxAuditService {
 	
 
 	@Transactional
-	public Message createPlanTaxAuditRepository(PlanTaxAudit planTaxAudit, List<PlanCriteria> planCriteriaList) {
+	public CommonMessage<String> createPlanTaxAuditRepository(PlanTaxAudit planTaxAudit, List<PlanCriteria> planCriteriaList) {
 		Message msg = null;
+		CommonMessage<String> commonMessage = new CommonMessage<String>();
 		try {
 			logger.info("createPlanTacAuditRepository in budget_year : {}" , planTaxAudit.getBudgetYear());
 			String analysNumber = DateConstant.DateToString(new Date(), DateConstant.YYYYMMDD) + "-01-"
@@ -63,11 +65,14 @@ public class PlanTaxAuditService {
 			notification.setDetailMessage("หมายเลขคัดกรอง : "+ analysNumber);
 			notification.setStatus(FLAG.N_FLAG);
 			msg = notificationService.createNotificationService(notification);
+			
+			commonMessage.setMsg(msg);
+			commonMessage.setData(analysNumber);
 		} catch (Exception e) {
 			e.printStackTrace();
 			msg = ApplicationCache.getMessage("MSG_00003");
 		}
-		return msg;
+		return commonMessage;
 	}
 	
 	@Transactional

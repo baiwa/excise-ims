@@ -1,7 +1,5 @@
 package th.co.baiwa.excise.domain;
 
-import java.util.List;
-
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 
 public class CommonMessage<T> {

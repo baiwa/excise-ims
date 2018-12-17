@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
+import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.domain.datatable.DataTableRequest;
 import th.co.baiwa.excise.ta.persistence.entity.PlanTaxAudit;
 import th.co.baiwa.excise.ta.persistence.vo.PlanTaxAuditVo;
@@ -28,7 +29,7 @@ public class Tax00001Controller {
 
 	@PostMapping("/createPlanTaxAudit")
 	@ResponseBody
-	public Message createPlanTaxAudit(@RequestBody PlanTaxAuditVo planTaxAuditVo) {
+	public CommonMessage<String> createPlanTaxAudit(@RequestBody PlanTaxAuditVo planTaxAuditVo) {
 		logger.info("createPlanTaxAudit");
 		return planTaxAuditService.createPlanTaxAuditRepository(planTaxAuditVo.getPlanTaxAudit(), planTaxAuditVo.getPlanCriteriaList());
 	}
