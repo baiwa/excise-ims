@@ -157,6 +157,9 @@ public class PlanTaxAuditService {
 		return planTaxAuditVo;
 	}
 	
+	public PlanTaxAudit  findPlanTaxAuditById(Long id) {
+		return planTaxAuditRepository.findOne(id);
+	}
 	
 	
 	public void createPlanWorkSheet(String analysNumber) {

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import sun.net.www.content.text.plain;
 import th.co.baiwa.excise.ia.persistence.vo.InputIncomeExciseAudit;
 import th.co.baiwa.excise.ia.persistence.vo.RequestApiSaveIncome;
 import th.co.baiwa.excise.ia.persistence.vo.ResponseApiSaveIncome;
@@ -25,6 +26,7 @@ import th.co.baiwa.excise.ta.persistence.vo.NotificationFormVo;
 import th.co.baiwa.excise.ta.persistence.vo.NotificationVo;
 import th.co.baiwa.excise.ta.persistence.vo.PlanCriteriaVo;
 import th.co.baiwa.excise.ta.persistence.vo.PlanTaxAuditVo;
+import th.co.baiwa.excise.ta.service.PlanTaxAuditService;
 
 @Controller
 @RequestMapping("mobile-api")
@@ -42,6 +44,9 @@ public class MobileAPIController {
 	
 	@Autowired
 	private NotificationService notificationService;
+	
+	@Autowired
+	private PlanTaxAuditService planTaxAuditService;
 
 	@PostMapping("/mobileCheckIncomeExicse")
 	@ResponseBody
@@ -97,6 +102,20 @@ public class MobileAPIController {
 		return planCriteriaVoList;
 	}
 	
+	@PostMapping("/findPlanTaxAuditById")
+	@ResponseBody
+	public List<PlanCriteriaVo> findPlanTaxAuditById(@RequestBody PlanTaxAuditVo planTaxAudit ) {
+		logger.info("findPlanTaxAuditById");
+		List<PlanCriteriaVo> planCriteriaVoList = new ArrayList<PlanCriteriaVo>();
+		 try {
+			 planCriteriaVoList = notificationService.findPlanConditionDetail(planTaxAudit.getAnalysNumber());
+			 notificationService.updateNotification(planTaxAudit.getId());
+		} catch (Exception e) {
+			logger.info("updateNotification fail :",e);
+		}
+		return planCriteriaVoList;
+	}
+	
 	
 	@PostMapping("/countNotification")
 	@ResponseBody
@@ -110,6 +129,21 @@ public class MobileAPIController {
 		}
 		return notificationVoList;
 	}
+	
+	@PostMapping("/findPlanTaxAuditViewById")
+	@ResponseBody
+	public PlanTaxAudit findPlanTaxAuditViewById(@RequestBody PlanTaxAuditVo planTaxAuditVo) {
+		logger.info("findPlanTaxAuditOById");
+		PlanTaxAudit planTaxAudit = null;
+		try {
+			planTaxAudit = planTaxAuditService.findPlanTaxAuditById(planTaxAuditVo.getId());
+		} catch (Exception e) {
+			logger.info("countNotification fail :",e);
+		}
+		return planTaxAudit;
+	}
+	
+	
 	
 	
 	
