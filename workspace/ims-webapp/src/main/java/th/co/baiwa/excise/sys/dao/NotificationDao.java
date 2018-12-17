@@ -89,7 +89,7 @@ public class NotificationDao {
 				"                FROM SYS_NOTIFICATION C  " + 
 				"                WHERE C.IS_DELETED = 'N'  " + 
 				"                AND C.TYPE = M.TYPE  " + 
-				"                AND C.VIEW_DATE IS NOT NULL " + 
+				"                AND C.VIEW_DATE IS NULL " + 
 				"                ) COUNTTYPE   " + 
 				"FROM SYS_NOTIFICATION M " + 
 				"WHERE IS_DELETED = 'N' " + 
