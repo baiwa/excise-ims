@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
@@ -782,6 +783,12 @@ public class PlanWorksheetHeaderService {
 		
 		return tsl010200VoList;
 	
+	}
+	
+	public List<PlanWorksheetHeader> approvePlanHeaderListMobile() {
+		List<PlanWorksheetHeader> planWorksheetHeaderList = new ArrayList<PlanWorksheetHeader>();
+		planWorksheetHeaderList = planWorksheetHeaderRepository.findByFlag("N");
+		return planWorksheetHeaderList;
 	}
 
 }

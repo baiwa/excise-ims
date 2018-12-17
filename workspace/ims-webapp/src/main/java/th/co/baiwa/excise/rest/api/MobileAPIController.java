@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.rest.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -19,6 +20,8 @@ import th.co.baiwa.excise.ia.service.IncomeExciseAudService;
 import th.co.baiwa.excise.ia.service.MobileCheckExciseIncomeService;
 import th.co.baiwa.excise.sys.domain.Notification;
 import th.co.baiwa.excise.sys.service.NotificationService;
+import th.co.baiwa.excise.ta.persistence.vo.NotificationFormVo;
+import th.co.baiwa.excise.ta.persistence.vo.NotificationVo;
 
 @Controller
 @RequestMapping("mobile-api")
@@ -61,6 +64,34 @@ public class MobileAPIController {
 		logger.info("simpleNotificationMockup");
 		return notificationService.findNotificationByType(notification);
 	}
+	
+	@PostMapping("/updateNotification")
+	@ResponseBody
+	public String updateNotification(@RequestBody NotificationFormVo notificationFormVo) {
+		logger.info("updateNotification");
+		String status = "Success";
+		 try {
+			 notificationService.updateNotification(notificationFormVo.getId());
+		} catch (Exception e) {
+			status = "fail";
+			logger.info("updateNotification fail :",e);
+		}
+		return status;
+	}
+	
+	@PostMapping("/countNotification")
+	@ResponseBody
+	public List<NotificationVo> countNotification() {
+		logger.info("countNotification");
+		List<NotificationVo> notificationVoList = new ArrayList<NotificationVo>();
+		 try {
+			 notificationVoList = notificationService.countNotification();
+		} catch (Exception e) {
+			logger.info("countNotification fail :",e);
+		}
+		return notificationVoList;
+	}
+	
 	
 	
 }

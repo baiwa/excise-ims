@@ -14,4 +14,6 @@ public interface PlanWorksheetHeaderRepository extends CommonJpaCrudRepository<P
 	
 	public List<PlanWorksheetHeader> findByAnalysNumber(String analysNumber);
 	
+	public List<PlanWorksheetHeader> findByFlag(String flag);
+	
 }

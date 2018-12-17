@@ -1,5 +1,6 @@
 package th.co.baiwa.excise.sys.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.sys.dao.NotificationDao;
 import th.co.baiwa.excise.sys.domain.Notification;
+import th.co.baiwa.excise.ta.persistence.vo.NotificationVo;
 
 @Service
 public class NotificationService {
@@ -52,4 +54,20 @@ public class NotificationService {
 		logger.info("findAllNotification");
 		return notificationDao.findNotificationByType(notification.getType());
 	}
+	
+	public void updateNotification(Long id){
+		logger.info("updateNotification");
+		notificationDao.updateNotification(id);
+	}
+	
+	public List<NotificationVo> countNotification(){
+		logger.info("countNotification");
+		List<NotificationVo> notificationVoList = new ArrayList<NotificationVo>();
+		
+			 notificationVoList = notificationDao.countNotification();
+			 
+			 return notificationVoList;
+	}
+	
+	
 }

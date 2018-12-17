@@ -17,6 +17,7 @@ import th.co.baiwa.buckwaframework.common.persistence.dao.CommonJdbcDao;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.sys.domain.Notification;
 import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.excise.ta.persistence.vo.NotificationVo;
 
 @Repository
 public class NotificationDao {
@@ -38,6 +39,14 @@ public class NotificationDao {
 		return jdbcTemplate.update(sql.toString(), new Object[] {notification.getType() , notification.getSubject() ,notification.getDetailMessage() , notification.getStatus() , FLAG.N_FLAG , UserLoginUtils.getCurrentUsername() });
 	}
 	
+	public void updateNotification(Long id) {
+		
+		logger.info("updateNotification");
+		StringBuilder sql = new StringBuilder(" UPDATE SYS_NOTIFICATION SET VIEW_DATE = SYSDATE WHERE ID = ? ");
+		commonJdbcDao.executeUpdate(sql.toString(),new Object[]{id});
+	}
+	
+	
 	
 	public List<Notification> findNotificationByType(String type) {
 		
@@ -51,7 +60,6 @@ public class NotificationDao {
 		sql.append(" ORDER BY ID DESC ");
 		return commonJdbcDao.executeQuery(sql.toString(), params.toArray(), mappingSelectStarNotification);
 	}
-	
 	
 	private RowMapper<Notification> mappingSelectStarNotification = new RowMapper<Notification>() {
 		@Override
@@ -70,6 +78,33 @@ public class NotificationDao {
 			Notification.setCreatedDate(rs.getDate("CREATED_DATE"));
 			Notification.setUpdatedBy(rs.getString("UPDATED_BY"));
 			Notification.setUpdatedDate(rs.getDate("UPDATED_DATE"));
+			return Notification;
+		}
+	};
+	
+	public List<NotificationVo> countNotification() {
+		
+		logger.info("countNotification");
+		StringBuilder sql = new StringBuilder(" SELECT TYPE  , (SELECT COUNT(1) " + 
+				"                FROM SYS_NOTIFICATION C  " + 
+				"                WHERE C.IS_DELETED = 'N'  " + 
+				"                AND C.TYPE = M.TYPE  " + 
+				"                AND C.VIEW_DATE IS NOT NULL " + 
+				"                ) COUNTTYPE   " + 
+				"FROM SYS_NOTIFICATION M " + 
+				"WHERE IS_DELETED = 'N' " + 
+				"GROUP BY TYPE  " + 
+				"ORDER BY TYPE ");
+		return commonJdbcDao.executeQuery(sql.toString(), mappingCountNotification);
+	}
+	
+	private RowMapper<NotificationVo> mappingCountNotification= new RowMapper<NotificationVo>() {
+		@Override
+		public NotificationVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+			NotificationVo Notification = new NotificationVo();
+			Notification.setType(rs.getString("TYPE"));
+			Notification.setCountType(rs.getLong("countType"));
+			
 			return Notification;
 		}
 	};
