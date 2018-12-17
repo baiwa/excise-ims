@@ -1,5 +1,7 @@
 package th.co.baiwa.excise.sys.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +46,10 @@ public class NotificationService {
 			e.printStackTrace();
 		}
 		return msg;
+	}
+	
+	public List<Notification> findAllNotification(){
+		logger.info("findAllNotification");
+		return notificationDao.findAllNotification();
 	}
 }

@@ -1,9 +1,6 @@
 package th.co.baiwa.excise.rest.api;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.management.Notification;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +17,8 @@ import th.co.baiwa.excise.ia.persistence.vo.ResponseApiSaveIncome;
 import th.co.baiwa.excise.ia.persistence.vo.ResponseMobileCheckIncomeExciseAudit;
 import th.co.baiwa.excise.ia.service.IncomeExciseAudService;
 import th.co.baiwa.excise.ia.service.MobileCheckExciseIncomeService;
+import th.co.baiwa.excise.sys.domain.Notification;
+import th.co.baiwa.excise.sys.service.NotificationService;
 
 @Controller
 @RequestMapping("mobile-api")
@@ -34,6 +33,9 @@ public class MobileAPIController {
 	
 	@Autowired
 	private MobileCheckExciseIncomeService mobileCheckExciseIncomeService;
+	
+	@Autowired
+	private NotificationService notificationService;
 
 	@PostMapping("/mobileCheckIncomeExicse")
 	@ResponseBody
@@ -57,10 +59,8 @@ public class MobileAPIController {
 	@ResponseBody
 	public List<Notification>simpleNotificationMockup() {
 		logger.info("simpleNotificationMockup");
-		List<Notification> notificationList = new ArrayList<Notification>();
-		notificationList.add( new Notification("TaxAudit", "แจ้งเตือน", 1, "สร้างกระดาษทำการเสร็จ"));
-		notificationList.add( new Notification("TaxAudit", "แจ้งเตือนขออนุมัติแผ่นการตรวจสอบ", 1, "รบกวนขออนุมัติแผนการตรวจสอบภาษีประจำปีงบประมาณ 2562"));
-		return notificationList;
+		
+		return notificationService.findAllNotification();
 	}
 	
 	

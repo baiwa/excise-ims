@@ -15,6 +15,10 @@ public class Notification extends BaseEntity {
 	private String status;
 	private Date viewDate;
 	
+//	no field in table
+	private String viewStatus;
+	
+	
 	public Date getViewDate() {
 		return viewDate;
 	}
@@ -51,5 +55,11 @@ public class Notification extends BaseEntity {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getViewStatus() {
+		return viewStatus;
+	}
+	public void setViewStatus(String viewStatus) {
+		this.viewStatus = viewStatus;
 	}
 }
