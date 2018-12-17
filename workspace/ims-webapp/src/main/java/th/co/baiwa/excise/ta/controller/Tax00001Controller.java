@@ -62,6 +62,13 @@ public class Tax00001Controller {
 		return planTaxAuditService.findByBudgetYearOrderByTaPlanTaxAuditIdForDataTable(plan , dataTableRequest);
 	}
 	
+	@PostMapping("/findPlanTaxAuditAndPlanCriteriaListByTaPlanTaxAuditId")
+	@ResponseBody
+	public PlanTaxAuditVo findPlanTaxAuditAndPlanCriteriaListByTaPlanTaxAuditId(PlanTaxAudit planTaxAudit) {
+		logger.info("findPlanTaxAuditAndPlanCriteriaListByTaPlanTaxAuditId");
+		return planTaxAuditService.findPlanTaxAuditAndPlanCriteriaListByTaPlanTaxAuditId(planTaxAudit);
+	}
+	
 	
 	@PostMapping("/syncDataForPlanDetail")
 	@ResponseBody

@@ -48,6 +48,7 @@ public class NotificationDao {
 			sql.append(" AND TYPE = ? ");
 			params.add(type);
 		}
+		sql.append(" ORDER BY ID DESC ");
 		return commonJdbcDao.executeQuery(sql.toString(), params.toArray(), mappingSelectStarNotification);
 	}
 	

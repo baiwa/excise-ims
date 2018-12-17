@@ -25,6 +25,7 @@ import th.co.baiwa.excise.ta.persistence.entity.PlanCriteria;
 import th.co.baiwa.excise.ta.persistence.entity.PlanTaxAudit;
 import th.co.baiwa.excise.ta.persistence.repository.PlanCriteriaRepository;
 import th.co.baiwa.excise.ta.persistence.repository.PlanTaxAuditRepository;
+import th.co.baiwa.excise.ta.persistence.vo.PlanTaxAuditVo;
 
 @Service
 public class PlanTaxAuditService {
@@ -134,6 +135,16 @@ public class PlanTaxAuditService {
 		return msg;
 	}
 	
+	
+	public PlanTaxAuditVo findPlanTaxAuditAndPlanCriteriaListByTaPlanTaxAuditId(PlanTaxAudit planTaxAudit) {
+		logger.info("findPlanTaxAuditAndPlanCriteriaListTaPlanTaxAuditId : {}" , planTaxAudit.getTaPlanTaxAuditId());
+		PlanTaxAuditVo planTaxAuditVo = new PlanTaxAuditVo();
+		planTaxAudit = planTaxAuditRepository.findOne(planTaxAudit.getTaPlanTaxAuditId());
+		List<PlanCriteria> planCriteriaList = planCriteriaRepository.findByTaPlanTaxAuditIdOrderByTaPlanCriteriaId(planTaxAudit.getTaPlanTaxAuditId());
+		planTaxAuditVo.setPlanTaxAudit(planTaxAudit);
+		planTaxAuditVo.setPlanCriteriaList(planCriteriaList);
+		return planTaxAuditVo;
+	}
 	
 	
 	
