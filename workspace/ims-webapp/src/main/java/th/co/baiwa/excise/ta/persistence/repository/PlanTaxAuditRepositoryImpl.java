@@ -3,7 +3,6 @@ package th.co.baiwa.excise.ta.persistence.repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -92,7 +91,7 @@ public class PlanTaxAuditRepositoryImpl implements PlanTaxAuditCustom{
 	};
 	
 	@Override
-	public long countDetailWorkSheetInCriteria(String analysNumber, Long backDate , Date endDate) {
+	public long countDetailWorkSheetInCriteria(String analysNumber, Long backDate , String endDate) {
 		logger.info("countDetailWorkSheetInCriteria");
 		List<Object> params = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder();
@@ -105,7 +104,7 @@ public class PlanTaxAuditRepositoryImpl implements PlanTaxAuditCustom{
 		sql.append(" AND D.IS_DELETED = 'N' ");
 		sql.append(" AND H.ANALYS_NUMBER = ? ");
 		sql.append(" AND D.MONTH IN ( ");
-		sql.append(" SELECT REPLACE(TO_CHAR( ADD_MONTHS( ?, LEVEL-? ) , 'MON yy', 'NLS_CALENDAR=''THAI BUDDHA'' NLS_DATE_LANGUAGE=THAI'), ' ', ' ' ) MONTH_AFTER ");
+		sql.append(" SELECT REPLACE(TO_CHAR( ADD_MONTHS( to_date(?,'dd/mm/yyyy'), LEVEL-? ) , 'MON yy', 'NLS_CALENDAR=''THAI BUDDHA'' NLS_DATE_LANGUAGE=THAI'), ' ', ' ' ) MONTH_AFTER ");
 		sql.append(" 	FROM DUAL CONNECT BY LEVEL <= ? ");
 		sql.append(" ) ");
 		sql.append(" ) ");

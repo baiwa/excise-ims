@@ -1,13 +1,11 @@
 package th.co.baiwa.excise.ta.service;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -193,12 +191,12 @@ public class PlanTaxAuditService {
 		List<PlanCriteria> planCriteriaList = planCriteriaRepository.findByTaPlanTaxAuditIdOrderByTaPlanCriteriaId(planTaxAudit.getTaPlanTaxAuditId());
 		PlanCriteriaVo planCriteriaVo = null;
 		String[] spEndDate = plan.getMonthTo().split("/");
-		Date enDate = DateConstant.StringtoDate("01/"+spEndDate[0]+"/"+ (Integer.parseInt(spEndDate[1])-543), DateConstant.DD_MM_YYYY);
+		String endDate = "01/"+spEndDate[0]+"/"+ (Integer.parseInt(spEndDate[1])-543);
 		for (PlanCriteria planCriteria : planCriteriaList) {
 			planCriteriaVo = new PlanCriteriaVo();
 			planCriteriaVo = gson.fromJson(gson.toJson(planCriteria), PlanCriteriaVo.class);
 			
-			long count = planTaxAuditRepository.countDetailWorkSheetInCriteria(analysNumber, month, enDate);
+			long count = planTaxAuditRepository.countDetailWorkSheetInCriteria(analysNumber, month, endDate);
 			planCriteriaVo.setWorkSheetCount(count);
 			planCriteriaVoList.add(planCriteriaVo);
 		}
