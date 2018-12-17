@@ -1,6 +1,6 @@
 package th.co.baiwa.excise.sys.domain;
 
-import java.math.BigDecimal;
+import java.util.Date;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
@@ -8,17 +8,24 @@ public class Notification extends BaseEntity {
 	
 	private static final long serialVersionUID = -3535145934761374877L;
 	
-	
-	private BigDecimal id;
+	private Long id;
 	private String type;
 	private String subject;
 	private String detailMessage;
 	private String status;
+	private Date viewDate;
 	
-	public BigDecimal getId() {
+	public Date getViewDate() {
+		return viewDate;
+	}
+	public void setViewDate(Date viewDate) {
+		this.viewDate = viewDate;
+	}
+	
+	public Long getId() {
 		return id;
 	}
-	public void setId(BigDecimal id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getType() {
@@ -45,8 +52,4 @@ public class Notification extends BaseEntity {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
-	
-	
 }

@@ -13,10 +13,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.datatable.DataTableRequest;
+import th.co.baiwa.excise.sys.domain.Notification;
+import th.co.baiwa.excise.sys.service.NotificationService;
 import th.co.baiwa.excise.ta.persistence.dao.PlanWorksheetHeaderDao;
 import th.co.baiwa.excise.ta.persistence.entity.PlanCriteria;
 import th.co.baiwa.excise.ta.persistence.entity.PlanTaxAudit;
@@ -35,9 +38,13 @@ public class PlanTaxAuditService {
 	
 	@Autowired
 	private PlanWorksheetHeaderDao planWorksheetHeaderDao;
+	
+	@Autowired
+	private NotificationService notificationService;
+	
 
 	@Transactional
-	public Message createPlanTacAuditRepository(PlanTaxAudit planTaxAudit, List<PlanCriteria> planCriteriaList) {
+	public Message createPlanTaxAuditRepository(PlanTaxAudit planTaxAudit, List<PlanCriteria> planCriteriaList) {
 		Message msg = null;
 		try {
 			logger.info("createPlanTacAuditRepository in budget_year : {}" , planTaxAudit.getBudgetYear());
@@ -50,7 +57,17 @@ public class PlanTaxAuditService {
 			}
 			msg = ApplicationCache.getMessage("MSG_00002");
 			planCriteriaRepository.save(planCriteriaList);
+			
+			
+			Notification notification = new Notification();
+			notification.setType(NotificationService.CREATE_PLAN);
+			notification.setSubject("");
+			notification.setDetailMessage("");
+			notification.setStatus(FLAG.N_FLAG);
+			msg = notificationService.createNotificationService(notification);
+			
 		} catch (Exception e) {
+			e.printStackTrace();
 			msg = ApplicationCache.getMessage("MSG_00003");
 		}
 		return msg;

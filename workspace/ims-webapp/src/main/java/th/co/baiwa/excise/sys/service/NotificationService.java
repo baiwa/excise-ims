@@ -1,0 +1,48 @@
+package th.co.baiwa.excise.sys.service;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.excise.sys.dao.NotificationDao;
+import th.co.baiwa.excise.sys.domain.Notification;
+
+@Service
+public class NotificationService {
+	
+	private Logger logger = LoggerFactory.getLogger(NotificationService.class);
+	
+	public static final String CREATE_PLAN = "CREATE_PLAN";
+	
+	@Autowired
+	private NotificationDao notificationDao;
+	
+	/**
+	 * 
+	 * notification Type 
+	 * CREATE_PLAN :  create plan for select excise
+	 * 
+	 * 
+	 */
+	public Message createNotificationService(Notification notification) {
+		logger.info("createNotificationService : {}" , notification.getType());
+		Message msg = null;
+		try {
+			int count = notificationDao.createNotification(notification);
+			if (count == 0) {
+				msg = ApplicationCache.getMessage("MSG_00003");
+			} else {
+				msg = ApplicationCache.getMessage("MSG_00002");
+			}
+		} catch (Exception e) {
+			msg = ApplicationCache.getMessage("MSG_00003");
+			msg.setMessageEn(e.getMessage());
+			logger.error("createNotificationService : {}" , e.getMessage());
+			e.printStackTrace();
+		}
+		return msg;
+	}
+}

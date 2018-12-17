@@ -22,7 +22,7 @@ public class PlanTaxAudit extends BaseEntity{
 	@SequenceGenerator(name="TA_PLAN_TAX_AUDIT_GEN", sequenceName="TA_PLAN_TAX_AUDIT_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TA_PLAN_TAX_AUDIT_GEN")
 	@Column(name="TA_PLAN_TAX_AUDIT_ID")
-	private long taPlanTaxAuditId;
+	private Long taPlanTaxAuditId;
 
 	@Column(name="ANALYS_NUMBER")
 	private String analysNumber;
@@ -39,11 +39,11 @@ public class PlanTaxAudit extends BaseEntity{
 	@Column(name="STATUS_PLAN")
 	private String statusPlan;
 
-	public long getTaPlanTaxAuditId() {
+	public Long getTaPlanTaxAuditId() {
 		return taPlanTaxAuditId;
 	}
 
-	public void setTaPlanTaxAuditId(long taPlanTaxAuditId) {
+	public void setTaPlanTaxAuditId(Long taPlanTaxAuditId) {
 		this.taPlanTaxAuditId = taPlanTaxAuditId;
 	}
 
@@ -88,5 +88,4 @@ public class PlanTaxAudit extends BaseEntity{
 	}
 
 	
-
 }
