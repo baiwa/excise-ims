@@ -1,13 +1,21 @@
 package th.co.baiwa.excise.ta.service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.google.gson.Gson;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
@@ -23,6 +31,7 @@ import th.co.baiwa.excise.ta.persistence.entity.PlanCriteria;
 import th.co.baiwa.excise.ta.persistence.entity.PlanTaxAudit;
 import th.co.baiwa.excise.ta.persistence.repository.PlanCriteriaRepository;
 import th.co.baiwa.excise.ta.persistence.repository.PlanTaxAuditRepository;
+import th.co.baiwa.excise.ta.persistence.vo.PlanCriteriaVo;
 import th.co.baiwa.excise.ta.persistence.vo.PlanTaxAuditVo;
 
 @Service
@@ -64,6 +73,7 @@ public class PlanTaxAuditService {
 			notification.setSubject("ข้อมูลการคัดกรอง");
 			notification.setDetailMessage("หมายเลขคัดกรอง : "+ analysNumber);
 			notification.setStatus(FLAG.N_FLAG);
+			notification.setReferenceId(planTaxAudit.getTaPlanTaxAuditId());
 			msg = notificationService.createNotificationService(notification);
 			
 			commonMessage.setMsg(msg);
@@ -165,9 +175,34 @@ public class PlanTaxAuditService {
 		notification = new Notification();
 		notification.setType(NotificationService.PROCESS_PLAN_COMPLETED);
 		notification.setSubject("ข้อมูลการคัดกรอง");
-		notification.setDetailMessage("สร้างหมายเลขคัดกรอง : "+ analysNumber+"สำเร็จ");
+		notification.setDetailMessage("สร้างหมายเลขคัดกรอง : "+ analysNumber+" สำเร็จ");
 		notification.setStatus(FLAG.N_FLAG);
 		notificationService.createNotificationService(notification);
+	}
+	
+	
+	public List<PlanCriteriaVo> findPlanCriteriaByAnalysNumber(String analysNumber) {
+		Gson gson = new Gson();
+		PlanTaxAudit plan = planTaxAuditRepository.findByAnalysNumber(analysNumber);
+		LocalDate dateFrom = LocalDate.parse("01/"+plan.getMonthFrom(), DateTimeFormatter.ofPattern(DateConstant.DD_MM_YYYY) );
+		LocalDate dateTo = LocalDate.parse("01/"+plan.getMonthTo(), DateTimeFormatter.ofPattern(DateConstant.DD_MM_YYYY) );
+		long month = ChronoUnit.MONTHS.between(dateFrom, dateTo);
+		logger.info("from : {} ==> to : {} Diff :  {}" , plan.getMonthFrom() ,plan.getMonthTo() , month );
+		List<PlanCriteriaVo> planCriteriaVoList = new ArrayList<PlanCriteriaVo>();
+		PlanTaxAudit planTaxAudit = planTaxAuditRepository.findByAnalysNumber(analysNumber);
+		List<PlanCriteria> planCriteriaList = planCriteriaRepository.findByTaPlanTaxAuditIdOrderByTaPlanCriteriaId(planTaxAudit.getTaPlanTaxAuditId());
+		PlanCriteriaVo planCriteriaVo = null;
+		String[] spEndDate = plan.getMonthTo().split("/");
+		Date enDate = DateConstant.StringtoDate("01/"+spEndDate[0]+"/"+ (Integer.parseInt(spEndDate[1])-543), DateConstant.DD_MM_YYYY);
+		for (PlanCriteria planCriteria : planCriteriaList) {
+			planCriteriaVo = new PlanCriteriaVo();
+			planCriteriaVo = gson.fromJson(gson.toJson(planCriteria), PlanCriteriaVo.class);
+			
+			long count = planTaxAuditRepository.countDetailWorkSheetInCriteria(analysNumber, month, enDate);
+			planCriteriaVo.setWorkSheetCount(count);
+			planCriteriaVoList.add(planCriteriaVo);
+		}
+		return planCriteriaVoList;
 	}
 	
 	

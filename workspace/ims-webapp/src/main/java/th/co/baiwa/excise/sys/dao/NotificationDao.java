@@ -33,10 +33,10 @@ public class NotificationDao {
 	public int createNotification(Notification notification) {
 		
 		logger.info("createNotification");
-		StringBuilder sql = new StringBuilder("INSERT INTO SYS_NOTIFICATION (ID, TYPE, SUBJECT, DETAIL_MESSAGE, STATUS, IS_DELETED, CREATED_BY, CREATED_DATE)" ); 
-		sql.append("VALUES (SYS_NOTIFICATION_SEQ.nextval, ?, ?, ?, ?, ?, ?, sysdate) ");
+		StringBuilder sql = new StringBuilder("INSERT INTO SYS_NOTIFICATION (ID, TYPE, SUBJECT, DETAIL_MESSAGE, STATUS, IS_DELETED, CREATED_BY, CREATED_DATE , REFERENCE_ID)" ); 
+		sql.append("VALUES (SYS_NOTIFICATION_SEQ.nextval, ?, ?, ?, ?, ?, ?, sysdate ,?) ");
 		
-		return jdbcTemplate.update(sql.toString(), new Object[] {notification.getType() , notification.getSubject() ,notification.getDetailMessage() , notification.getStatus() , FLAG.N_FLAG , UserLoginUtils.getCurrentUsername() });
+		return jdbcTemplate.update(sql.toString(), new Object[] {notification.getType() , notification.getSubject() ,notification.getDetailMessage() , notification.getStatus() , FLAG.N_FLAG , UserLoginUtils.getCurrentUsername() ,notification.getReferenceId() });
 	}
 	
 	public void updateNotification(Long id) {
