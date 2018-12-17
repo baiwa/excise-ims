@@ -14,13 +14,14 @@ public class Notification extends BaseEntity {
 	private String detailMessage;
 	private String status;
 	private Date viewDate;
-	private Long referenceId;
+	private String referenceId;
 
-	public Long getReferenceId() {
+
+	public String getReferenceId() {
 		return referenceId;
 	}
 
-	public void setReferenceId(Long referenceId) {
+	public void setReferenceId(String referenceId) {
 		this.referenceId = referenceId;
 	}
 

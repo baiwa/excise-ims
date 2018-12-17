@@ -71,7 +71,7 @@ public class PlanTaxAuditService {
 			notification.setSubject("ข้อมูลการคัดกรอง");
 			notification.setDetailMessage("หมายเลขคัดกรอง : "+ analysNumber);
 			notification.setStatus(FLAG.N_FLAG);
-			notification.setReferenceId(planTaxAudit.getTaPlanTaxAuditId());
+			notification.setReferenceId(analysNumber);
 			msg = notificationService.createNotificationService(notification);
 			
 			commonMessage.setMsg(msg);
@@ -175,6 +175,7 @@ public class PlanTaxAuditService {
 		notification.setSubject("ข้อมูลการคัดกรอง");
 		notification.setDetailMessage("สร้างหมายเลขคัดกรอง : "+ analysNumber+" สำเร็จ");
 		notification.setStatus(FLAG.N_FLAG);
+		notification.setReferenceId(analysNumber);
 		notificationService.createNotificationService(notification);
 	}
 	
