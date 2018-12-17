@@ -52,7 +52,7 @@ public class NotificationDao {
 		
 		logger.info("findExciseIdOrderByPercenTax");
 		List<Object> params = new ArrayList<Object>();
-		StringBuilder sql = new StringBuilder("SELECT ID, TYPE, SUBJECT, DETAIL_MESSAGE, STATUS,VIEW_DATE, NVL2(VIEW_DATE , 'N' , 'Y') VIEW_STATUS, IS_DELETED, CREATED_BY, CREATED_DATE, UPDATED_BY, UPDATED_DATE, VERSION,REFERENCE FROM SYS_NOTIFICATION N WHERE N.IS_DELETED = 'N' ");
+		StringBuilder sql = new StringBuilder("SELECT ID, TYPE, SUBJECT, DETAIL_MESSAGE, STATUS,VIEW_DATE, NVL2(VIEW_DATE , 'Y' , 'N') VIEW_STATUS, IS_DELETED, CREATED_BY, CREATED_DATE, UPDATED_BY, UPDATED_DATE, VERSION,REFERENCE FROM SYS_NOTIFICATION N WHERE N.IS_DELETED = 'N' ");
 		if(BeanUtils.isNotEmpty(type)) {
 			sql.append(" AND TYPE = ? ");
 			params.add(type);
