@@ -1,4 +1,4 @@
-package th.co.baiwa.excise.ta.persistence.entity;
+package th.co.baiwa.excise.sys.domain;
 
 import java.math.BigDecimal;
 
