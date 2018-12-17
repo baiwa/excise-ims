@@ -130,13 +130,13 @@ public class MobileAPIController {
 		return notificationVoList;
 	}
 	
-	@PostMapping("/findPlanTaxAuditViewById")
+	@PostMapping("/findPlanTaxAuditByAnalysNumber")
 	@ResponseBody
-	public PlanTaxAudit findPlanTaxAuditViewById(@RequestBody PlanTaxAuditVo planTaxAuditVo) {
+	public PlanTaxAudit findPlanTaxAuditByAnalysNumber(@RequestBody PlanTaxAuditVo planTaxAuditVo) {
 		logger.info("findPlanTaxAuditOById");
 		PlanTaxAudit planTaxAudit = null;
 		try {
-			planTaxAudit = planTaxAuditService.findPlanTaxAuditById(planTaxAuditVo.getId());
+			planTaxAudit = planTaxAuditService.findPlanTaxAuditByAnalysNumber(planTaxAuditVo.getAnalysNumber());
 		} catch (Exception e) {
 			logger.info("countNotification fail :",e);
 		}

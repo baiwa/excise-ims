@@ -207,6 +207,10 @@ public class PlanTaxAuditService {
 		return planCriteriaVoList;
 	}
 	
+	public PlanTaxAudit findPlanTaxAuditByAnalysNumber(String analysNumber) {
+		return planTaxAuditRepository.findByAnalysNumber(analysNumber);
+	}
+	
 	
 	
 }
