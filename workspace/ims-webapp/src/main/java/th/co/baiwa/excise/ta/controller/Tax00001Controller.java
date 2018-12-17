@@ -46,6 +46,12 @@ public class Tax00001Controller {
 		logger.info("findPlanTaxAuditByBudgetYear");
 		return planTaxAuditService.findByBudgetYearOrderByTaPlanTaxAuditId(planTaxAuditVo.getBudgetYear());
 	}
+	@PostMapping("/deltePlanTaxAuditById")
+	@ResponseBody
+	public Message deltePlanTaxAuditById(@RequestBody PlanTaxAudit planTaxAudit) {
+		logger.info("findPlanTaxAuditByBudgetYear");
+		return planTaxAuditService.deltePlanTaxAuditById(planTaxAudit);
+	}
 	
 	@PostMapping("/findPlanTaxAuditByBudgetYearForDataTable")
 	@ResponseBody

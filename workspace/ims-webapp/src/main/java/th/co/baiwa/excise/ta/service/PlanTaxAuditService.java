@@ -122,5 +122,19 @@ public class PlanTaxAuditService {
 		
 	}
 	
+	public Message deltePlanTaxAuditById(PlanTaxAudit planTaxAudit) {
+		Message msg = null;
+		try {
+			planTaxAuditRepository.delete(planTaxAudit.getTaPlanTaxAuditId());
+			msg = ApplicationCache.getMessage("MSG_00005");
+		} catch (Exception e) {
+			msg = ApplicationCache.getMessage("MSG_00006");
+			msg.setMessageTh(e.getMessage());
+		}
+		return msg;
+	}
+	
+	
+	
 	
 }
