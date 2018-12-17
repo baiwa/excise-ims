@@ -1,8 +1,5 @@
 package th.co.baiwa.excise.ta.service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 
@@ -62,11 +59,10 @@ public class PlanTaxAuditService {
 			
 			Notification notification = new Notification();
 			notification.setType(NotificationService.CREATE_PLAN);
-			notification.setSubject("");
-			notification.setDetailMessage("");
+			notification.setSubject("ข้อมูลการคัดกรอง");
+			notification.setDetailMessage("หมายเลขคัดกรอง : "+ analysNumber);
 			notification.setStatus(FLAG.N_FLAG);
 			msg = notificationService.createNotificationService(notification);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			msg = ApplicationCache.getMessage("MSG_00003");
@@ -112,7 +108,6 @@ public class PlanTaxAuditService {
 		responseDataTable.setRecordsFiltered((int) count);
 		return responseDataTable;
 	}
-	@Transactional
 	public void createNewPlanWorkSheetHeaderByAnalysNumber(String analysNumber) {
 		logger.info("createNewPlanWorkSheetHeaderByAnalysNumber in analysNumber : {}" , analysNumber);
 //		PlanTaxAudit planTaxAudit = planTaxAuditRepository.findByAnalysNumber(analysNumber);
@@ -147,6 +142,27 @@ public class PlanTaxAuditService {
 		planTaxAuditVo.setPlanTaxAudit(planTaxAudit);
 		planTaxAuditVo.setPlanCriteriaList(planCriteriaList);
 		return planTaxAuditVo;
+	}
+	
+	
+	
+	public void createPlanWorkSheet(String analysNumber) {
+		logger.info("createPlanWorkSheet analysNumber : {}" , analysNumber);
+		try {
+			Thread.sleep(1000*30);
+		} catch (InterruptedException e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}
+		createNewPlanWorkSheetHeaderByAnalysNumber(analysNumber);
+		logger.info("Create Data Completed analysNumber : {}" , analysNumber);
+		Notification notification = new Notification();
+		notification = new Notification();
+		notification.setType(NotificationService.PROCESS_PLAN_COMPLETED);
+		notification.setSubject("ข้อมูลการคัดกรอง");
+		notification.setDetailMessage("สร้างหมายเลขคัดกรอง : "+ analysNumber+"สำเร็จ");
+		notification.setStatus(FLAG.N_FLAG);
+		notificationService.createNotificationService(notification);
 	}
 	
 	

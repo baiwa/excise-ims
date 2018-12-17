@@ -20,6 +20,7 @@ public class NotificationService {
 	private Logger logger = LoggerFactory.getLogger(NotificationService.class);
 	
 	public static final String CREATE_PLAN = "CREATE_PLAN";
+	public static final String PROCESS_PLAN_COMPLETED = "PROCESS_PLAN_COMPLETED";
 	
 	@Autowired
 	private NotificationDao notificationDao;

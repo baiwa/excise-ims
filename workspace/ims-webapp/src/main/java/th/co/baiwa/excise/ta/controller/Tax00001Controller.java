@@ -74,8 +74,11 @@ public class Tax00001Controller {
 	@ResponseBody
 	public void syncDataForPlanDetail(@RequestBody PlanTaxAuditVo planTaxAuditVo) {
 		logger.info("syncDataForPlanDetail syncDataForPlanDetail : {}" , planTaxAuditVo.getAnalysNumber() );
-		planTaxAuditService.createNewPlanWorkSheetHeaderByAnalysNumber(planTaxAuditVo.getAnalysNumber());
+		planTaxAuditService.createPlanWorkSheet(planTaxAuditVo.getAnalysNumber());
 	}
+	
+	
+	
 	
 	
 

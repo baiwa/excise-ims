@@ -20,6 +20,7 @@ import th.co.baiwa.excise.ia.service.IncomeExciseAudService;
 import th.co.baiwa.excise.ia.service.MobileCheckExciseIncomeService;
 import th.co.baiwa.excise.sys.domain.Notification;
 import th.co.baiwa.excise.sys.service.NotificationService;
+import th.co.baiwa.excise.ta.persistence.entity.PlanTaxAudit;
 import th.co.baiwa.excise.ta.persistence.vo.NotificationFormVo;
 import th.co.baiwa.excise.ta.persistence.vo.NotificationVo;
 
@@ -60,7 +61,7 @@ public class MobileAPIController {
 	
 	@PostMapping("/simpleNotificationMockup")
 	@ResponseBody
-	public List<Notification>simpleNotificationMockup(@RequestBody Notification notification) {
+	public List<Notification> simpleNotificationMockup(@RequestBody Notification notification) {
 		logger.info("simpleNotificationMockup");
 		return notificationService.findNotificationByType(notification);
 	}
@@ -78,6 +79,22 @@ public class MobileAPIController {
 		}
 		return status;
 	}
+	
+	
+	@PostMapping("/viewTaCriteriaByTaPlanTaxAuditId")
+	@ResponseBody
+	public String viewTaCriteriaByTaPlanTaxAuditId(@RequestBody PlanTaxAudit planTaxAudit) {
+		logger.info("viewTaCriteriaByTaPlanTaxAuditId");
+		String status = "Success";
+		 try {
+//			 notificationService.updateNotification(taPlanTaxAuditId.get);
+		} catch (Exception e) {
+			status = "fail";
+			logger.info("updateNotification fail :",e);
+		}
+		return status;
+	}
+	
 	
 	@PostMapping("/countNotification")
 	@ResponseBody
