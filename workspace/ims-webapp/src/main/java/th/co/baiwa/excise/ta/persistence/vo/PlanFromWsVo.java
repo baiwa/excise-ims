@@ -12,6 +12,51 @@ public class PlanFromWsVo{
      private String percent2;
      private String percent3;
      
+     private String yearCondition1;
+     private String yearCondition2;
+     private String yearCondition3;
+     private String yearPercent1;
+     private String yearPercent2;
+     
+     public String getYearCondition1() {
+		return yearCondition1;
+	}
+	public void setYearCondition1(String yearCondition1) {
+		this.yearCondition1 = yearCondition1;
+	}
+	public String getYearCondition2() {
+		return yearCondition2;
+	}
+	public void setYearCondition2(String yearCondition2) {
+		this.yearCondition2 = yearCondition2;
+	}
+	public String getYearCondition3() {
+		return yearCondition3;
+	}
+	public void setYearCondition3(String yearCondition3) {
+		this.yearCondition3 = yearCondition3;
+	}
+	public String getYearPercent1() {
+		return yearPercent1;
+	}
+	public void setYearPercent1(String yearPercent1) {
+		this.yearPercent1 = yearPercent1;
+	}
+	public String getYearPercent2() {
+		return yearPercent2;
+	}
+	public void setYearPercent2(String yearPercent2) {
+		this.yearPercent2 = yearPercent2;
+	}
+	public String getYearPercent3() {
+		return yearPercent3;
+	}
+	public void setYearPercent3(String yearPercent3) {
+		this.yearPercent3 = yearPercent3;
+	}
+	private String yearPercent3;
+     
+     
 	public String getDateFrom() {
 		return dateFrom;
 	}
