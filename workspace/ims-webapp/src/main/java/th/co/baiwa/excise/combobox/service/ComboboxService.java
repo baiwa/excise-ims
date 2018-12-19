@@ -6,7 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
+import th.co.baiwa.excise.combobox.dao.ConfigDao;
 import th.co.baiwa.excise.combobox.entity.Combobox;
+import th.co.baiwa.excise.combobox.entity.ConfigCreteria;
 import th.co.baiwa.excise.ia.persistence.dao.QuestionnaireHeaderDao;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireHeader;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
@@ -24,6 +27,9 @@ public class ComboboxService {
 	
 	@Autowired
 	private RiskAssInfService riskAssInfService;
+	
+	@Autowired
+	private ConfigDao configDao;
 	
 	public List<Combobox> findQuestionnaireHeader(){
 		List<Combobox> comboboxList = new ArrayList<Combobox>();
@@ -63,5 +69,15 @@ public class ComboboxService {
 			comboboxList.add(combobox);
 		}
 		return comboboxList;
+	}
+	
+	public ConfigCreteria configCreteria() {
+		Lov lov = configDao.getConfigCreteria();
+		ConfigCreteria config = new ConfigCreteria();
+		config.setMonthNonPay(lov.getValue1());
+		config.setPercent1(lov.getValue2());
+		config.setPercent2(lov.getValue3());
+		config.setPercent3(lov.getValue4());
+		return config;
 	}
 }
