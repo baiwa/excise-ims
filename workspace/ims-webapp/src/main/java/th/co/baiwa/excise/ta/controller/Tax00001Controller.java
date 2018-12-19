@@ -65,7 +65,7 @@ public class Tax00001Controller {
 	
 	@PostMapping("/findPlanTaxAuditAndPlanCriteriaListByTaPlanTaxAuditId")
 	@ResponseBody
-	public PlanTaxAuditVo findPlanTaxAuditAndPlanCriteriaListByTaPlanTaxAuditId(PlanTaxAudit planTaxAudit) {
+	public PlanTaxAuditVo findPlanTaxAuditAndPlanCriteriaListByTaPlanTaxAuditId(@RequestBody PlanTaxAudit planTaxAudit) {
 		logger.info("findPlanTaxAuditAndPlanCriteriaListByTaPlanTaxAuditId");
 		return planTaxAuditService.findPlanTaxAuditAndPlanCriteriaListByTaPlanTaxAuditId(planTaxAudit);
 	}
