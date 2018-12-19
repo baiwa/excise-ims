@@ -53,8 +53,56 @@ public class YearPlan extends BaseEntity {
 	@Column(name = "FLAG")
 	private String flag;
 	
+	@Column(name = "START_DATE")
+	private String startDate;
+	
+	@Column(name = "END_DATE")
+	private String endDate;
+	
+	@Column(name = "STATUS")
+	private String status;
+	
+	@Column(name = "PATTERND")
+	private String patternd;
+	
 	@Column(name = "ANALYSIS_NUMBER")
 	private String analysisNumber;
+	
+	
+	
+	
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getPatternd() {
+		return patternd;
+	}
+
+	public void setPatternd(String patternd) {
+		this.patternd = patternd;
+	}
 
 	public BigDecimal getTaYearPlanId() {
 		return taYearPlanId;

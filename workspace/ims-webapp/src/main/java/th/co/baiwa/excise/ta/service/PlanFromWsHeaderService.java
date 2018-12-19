@@ -334,6 +334,7 @@ public class PlanFromWsHeaderService {
 			entity.setExciseSubArea(vo.getArea());
 			entity.setFlag(PROCESS);
 			entity.setRiskType("1");
+			entity.setStatus("2239");
 //			*1 = ความถี่ของเดือนที่ชำระภาษี,
 //			2 = เปรียบเทียบจำนวนภาษีระหว่างเดือน,
 //			3 = เปรียบเทียบความแต่งต่างการชำระภาษีระหว่างปี
