@@ -49,7 +49,7 @@ public class TaxAuditReportService {
 			if (id.intValue() != 0) {
 				YearPlan data = yearPlanRepository.findOne(id);
 				data.setFlag("2");
-				data.setStatus("2239");
+				data.setStatus("2293");
 				yearPlanRepository.save(data);
 				message = ApplicationCache.getMessage("MSG_00002");
 			} else {
