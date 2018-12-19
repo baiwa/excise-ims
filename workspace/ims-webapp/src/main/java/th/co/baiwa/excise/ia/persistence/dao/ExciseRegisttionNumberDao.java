@@ -37,53 +37,52 @@ public class ExciseRegisttionNumberDao {
 		sql.append(" ON H.TA_EXCISE_ID = D.TA_EXCISE_ID");
 		sql.append(" AND D.TA_EXCISE_TAX_RECEIVE_MONTH  IN");
 		sql.append(" (SELECT REPLACE(TO_CHAR( add_MONTHS( ?, LEVEL- ? ) , 'MON yy', 'NLS_CALENDAR=''THAI BUDDHA'' NLS_DATE_LANGUAGE=THAI'), '  ', ' ' ) Month_AFTER");
-		sql.append(" FROM dual CONNECT BY LEVEL <= ?) where SUBSTR(H.TA_EXCISE_ID,15,1)=? " );
+		sql.append(" FROM dual CONNECT BY LEVEL <= ?) where SUBSTR(H.TA_EXCISE_ID,15,1)=? ");
 		sql.append(" AND H.TA_EXCISE_PRODUCT_TYPE=?");
 		List<Object> params = new ArrayList<>();
-		
+
 		Date date = DateConstant.convertStrToDate(StringUtils.trim(countVo.getDateFrom()), DateConstant.MM_YYYY, DateConstant.LOCAL_TH);
 		params.add(date);
 		params.add(countVo.getDateTo());
 		params.add(countVo.getDateTo());
 		params.add(countVo.getCoordinatesFlag());
 		params.add(countVo.getProductionType());
-		
-		if (StringUtils.isNotBlank(countVo.getFormSearch())){
-            sql.append(" AND H.TA_EXCISE_OPERATOR_NAME LIKE ?");
-            sql.append(" OR H.TA_EXCISE_ID LIKE ?");
-            sql.append(" OR H.TA_EXCISE_FAC_ADDRESS LIKE ?");
-            sql.append(" OR H.TA_EXCISE_SECTOR_AREA LIKE ?");
-            sql.append(" OR H.TA_EXCISE_AREA LIKE ?");
 
-            params.add("%"+StringUtils.trim(countVo.getFormSearch())+"%");
-            params.add("%"+StringUtils.trim(countVo.getFormSearch())+"%");
-            params.add("%"+StringUtils.trim(countVo.getFormSearch())+"%");
-            params.add("%"+StringUtils.trim(countVo.getFormSearch())+"%");
-            params.add("%"+StringUtils.trim(countVo.getFormSearch())+"%");
-        }	
+		if (StringUtils.isNotBlank(countVo.getFormSearch())) {
+			sql.append(" AND H.TA_EXCISE_OPERATOR_NAME LIKE ?");
+			sql.append(" OR H.TA_EXCISE_ID LIKE ?");
+			sql.append(" OR H.TA_EXCISE_FAC_ADDRESS LIKE ?");
+			sql.append(" OR H.TA_EXCISE_SECTOR_AREA LIKE ?");
+			sql.append(" OR H.TA_EXCISE_AREA LIKE ?");
+
+			params.add("%" + StringUtils.trim(countVo.getFormSearch()) + "%");
+			params.add("%" + StringUtils.trim(countVo.getFormSearch()) + "%");
+			params.add("%" + StringUtils.trim(countVo.getFormSearch()) + "%");
+			params.add("%" + StringUtils.trim(countVo.getFormSearch()) + "%");
+			params.add("%" + StringUtils.trim(countVo.getFormSearch()) + "%");
+		}
 		sql.append("))");
 		Long count = jdbcTemplate.queryForObject(sql.toString(), params.toArray(), Long.class);
 
 		return count;
 	}
-	public List<ExciseRegistartionNumber> queryByExciseId(String register, String exciseProductType,  List<String> conditionList, String formSearch, String coordinatesFlag) {
+
+	public List<ExciseRegistartionNumber> queryByExciseId(String register, String exciseProductType, List<String> conditionList, String formSearch, String coordinatesFlag) {
 		List<Object> objList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(SQL_REGIS);
 		if (BeanUtils.isNotEmpty(conditionList)) {
-			sql.append(
-					" LEFT JOIN  ( SELECT D.TA_EXCISE_ID ,SUM(TO_NUMBER(REPLACE(trim(D.TA_EXCISE_TAX_RECEIVE_AMOUNT), ',',''), '99999999999999.99')) as total_amount FROM TA_EXCISE_TAX_RECEIVE D ");
+			sql.append(" LEFT JOIN  ( SELECT D.TA_EXCISE_ID ,SUM(TO_NUMBER(REPLACE(trim(D.TA_EXCISE_TAX_RECEIVE_AMOUNT), ',',''), '99999999999999.99')) as total_amount FROM TA_EXCISE_TAX_RECEIVE D ");
 			sql.append(" group by D.TA_EXCISE_ID ) JO ON JO.TA_EXCISE_ID = D.TA_EXCISE_ID");
 
 		}
 		sql.append(" where 1=1 ");
 
-
 		if (exciseProductType != null && exciseProductType.length() > 0) {
 			sql.append(" and  TA_EXCISE_PRODUCT_TYPE = ? ");
 			objList.add(exciseProductType);
 		}
-		
-		if(StringUtils.isNotBlank(coordinatesFlag)) {
+
+		if (StringUtils.isNotBlank(coordinatesFlag)) {
 			sql.append("AND SUBSTR(TA_EXCISE_ID,15,1) = ? ");
 			objList.add(coordinatesFlag);
 		}
@@ -115,22 +114,21 @@ public class ExciseRegisttionNumberDao {
 			}
 			sql.append(" ) ");
 		}
-        if (StringUtils.isNotBlank(formSearch)){
-            sql.append(" AND D.TA_EXCISE_OPERATOR_NAME LIKE ?");
-            sql.append(" OR D.TA_EXCISE_ID LIKE ?");
-            sql.append(" OR D.TA_EXCISE_FAC_ADDRESS LIKE ?");
-            sql.append(" OR D.TA_EXCISE_SECTOR_AREA LIKE ?");
-            sql.append(" OR D.TA_EXCISE_AREA LIKE ?");
+		if (StringUtils.isNotBlank(formSearch)) {
+			sql.append(" AND D.TA_EXCISE_OPERATOR_NAME LIKE ?");
+			sql.append(" OR D.TA_EXCISE_ID LIKE ?");
+			sql.append(" OR D.TA_EXCISE_FAC_ADDRESS LIKE ?");
+			sql.append(" OR D.TA_EXCISE_SECTOR_AREA LIKE ?");
+			sql.append(" OR D.TA_EXCISE_AREA LIKE ?");
 
-            objList.add("%"+StringUtils.trim(formSearch)+"%");
-            objList.add("%"+StringUtils.trim(formSearch)+"%");
-            objList.add("%"+StringUtils.trim(formSearch)+"%");
-            objList.add("%"+StringUtils.trim(formSearch)+"%");
-            objList.add("%"+StringUtils.trim(formSearch)+"%");
-        }
+			objList.add("%" + StringUtils.trim(formSearch) + "%");
+			objList.add("%" + StringUtils.trim(formSearch) + "%");
+			objList.add("%" + StringUtils.trim(formSearch) + "%");
+			objList.add("%" + StringUtils.trim(formSearch) + "%");
+			objList.add("%" + StringUtils.trim(formSearch) + "%");
+		}
 		sql.append(" order By TA_EXCISE_REGISTTION_NUMBER_ID ");
-		List<ExciseRegistartionNumber> list = jdbcTemplate.query(sql.toString(), objList.toArray(),
-				exciseRegisttionRowmapper);
+		List<ExciseRegistartionNumber> list = jdbcTemplate.query(sql.toString(), objList.toArray(), exciseRegisttionRowmapper);
 
 		return list;
 	}
@@ -139,8 +137,7 @@ public class ExciseRegisttionNumberDao {
 		List<Object> objList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(SQL_REGIS);
 		if (BeanUtils.isNotEmpty(conditionList)) {
-			sql.append(
-					" LEFT JOIN  ( SELECT D.TA_EXCISE_ID ,SUM(TO_NUMBER(REPLACE(trim(D.TA_EXCISE_TAX_RECEIVE_AMOUNT), ',',''), '99999999999999.99')) as total_amount FROM TA_EXCISE_TAX_RECEIVE D ");
+			sql.append(" LEFT JOIN  ( SELECT D.TA_EXCISE_ID ,SUM(TO_NUMBER(REPLACE(trim(D.TA_EXCISE_TAX_RECEIVE_AMOUNT), ',',''), '99999999999999.99')) as total_amount FROM TA_EXCISE_TAX_RECEIVE D ");
 			sql.append(" group by D.TA_EXCISE_ID ) JO ON JO.TA_EXCISE_ID = D.TA_EXCISE_ID");
 
 		}
@@ -149,8 +146,8 @@ public class ExciseRegisttionNumberDao {
 			sql.append(" and  TA_EXCISE_PRODUCT_TYPE = ? ");
 			objList.add(exciseProductType);
 		}
-		
-		if(StringUtils.isNotBlank(coordinatesFlag)) {
+
+		if (StringUtils.isNotBlank(coordinatesFlag)) {
 			sql.append("AND SUBSTR(TA_EXCISE_ID,15,1) = ? ");
 			objList.add(coordinatesFlag);
 		}
@@ -182,22 +179,21 @@ public class ExciseRegisttionNumberDao {
 			}
 			sql.append(" ) ");
 		}
-        if (StringUtils.isNotBlank(formSearch)){
-            sql.append(" AND D.TA_EXCISE_OPERATOR_NAME LIKE ?");
-            sql.append(" OR D.TA_EXCISE_ID LIKE ?");
-            sql.append(" OR D.TA_EXCISE_FAC_ADDRESS LIKE ?");
-            sql.append(" OR D.TA_EXCISE_SECTOR_AREA LIKE ?");
-            sql.append(" OR D.TA_EXCISE_AREA LIKE ?");
+		if (StringUtils.isNotBlank(formSearch)) {
+			sql.append(" AND D.TA_EXCISE_OPERATOR_NAME LIKE ?");
+			sql.append(" OR D.TA_EXCISE_ID LIKE ?");
+			sql.append(" OR D.TA_EXCISE_FAC_ADDRESS LIKE ?");
+			sql.append(" OR D.TA_EXCISE_SECTOR_AREA LIKE ?");
+			sql.append(" OR D.TA_EXCISE_AREA LIKE ?");
 
-            objList.add("%"+StringUtils.trim(formSearch)+"%");
-            objList.add("%"+StringUtils.trim(formSearch)+"%");
-            objList.add("%"+StringUtils.trim(formSearch)+"%");
-            objList.add("%"+StringUtils.trim(formSearch)+"%");
-            objList.add("%"+StringUtils.trim(formSearch)+"%");
-        }
+			objList.add("%" + StringUtils.trim(formSearch) + "%");
+			objList.add("%" + StringUtils.trim(formSearch) + "%");
+			objList.add("%" + StringUtils.trim(formSearch) + "%");
+			objList.add("%" + StringUtils.trim(formSearch) + "%");
+			objList.add("%" + StringUtils.trim(formSearch) + "%");
+		}
 		sql.append(" order By TA_EXCISE_REGISTTION_NUMBER_ID ");
-		long count = jdbcTemplate.queryForObject(OracleUtils.countForDatatable(sql.toString()), objList.toArray(),
-				Long.class);
+		long count = jdbcTemplate.queryForObject(OracleUtils.countForDatatable(sql.toString()), objList.toArray(), Long.class);
 
 		return count;
 	}
@@ -227,16 +223,13 @@ public class ExciseRegisttionNumberDao {
 
 		}
 
-
 	};
 
-	public List<ExciseRegistartionNumber> queryByExciseRegistionNumber(String exciseProductType,
-			List<String> conditionList) {
+	public List<ExciseRegistartionNumber> queryByExciseRegistionNumber(String exciseProductType, List<String> conditionList) {
 		List<Object> objList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(SQL_REGIS);
 		if (BeanUtils.isNotEmpty(conditionList)) {
-			sql.append(
-					" LEFT JOIN  ( SELECT D.TA_EXCISE_ID ,SUM(TO_NUMBER(REPLACE(trim(D.TA_EXCISE_TAX_RECEIVE_AMOUNT), ',',''), '99999999999999.99')) as total_amount FROM TA_EXCISE_TAX_RECEIVE D ");
+			sql.append(" LEFT JOIN  ( SELECT D.TA_EXCISE_ID ,SUM(TO_NUMBER(REPLACE(trim(D.TA_EXCISE_TAX_RECEIVE_AMOUNT), ',',''), '99999999999999.99')) as total_amount FROM TA_EXCISE_TAX_RECEIVE D ");
 			sql.append(" group by D.TA_EXCISE_ID ) JO ON JO.TA_EXCISE_ID = D.TA_EXCISE_ID");
 
 		}
@@ -284,42 +277,29 @@ public class ExciseRegisttionNumberDao {
 			sql.append(" ) ");
 		}
 
-		List<ExciseRegistartionNumber> list = jdbcTemplate.query(sql.toString(), objList.toArray(),
-				exciseRegisttionRowmapper);
+		List<ExciseRegistartionNumber> list = jdbcTemplate.query(sql.toString(), objList.toArray(), exciseRegisttionRowmapper);
 
 		return list;
 	}
-	
+
 	public BigDecimal average(MockupForm form) {
-		String sqlQuery = "SELECT * FROM (SELECT to_number(D.TA_EXCISE_TAX_RECEIVE_AMOUNT) amount , " + 
-				"  H.TA_EXCISE_ID TA_EXCISE_ID, " + 
-				"  H.TA_EXCISE_PRODUCT_TYPE TA_EXCISE_PRODUCT_TYPE " + 
-				" FROM TA_EXCISE_REGISTTION_NUMBER H " + 
-				" INNER JOIN TA_EXCISE_TAX_RECEIVE D " + 
-				" ON H.TA_EXCISE_ID = D.TA_EXCISE_ID " + 
-				" AND D.TA_EXCISE_TAX_RECEIVE_MONTH IN " + 
-				"  (SELECT REPLACE(TO_CHAR( add_MONTHS( Sysdate, LEVEL-12 ) , 'MON yy', 'NLS_CALENDAR=''THAI BUDDHA'' NLS_DATE_LANGUAGE=THAI'), '  ', ' ' ) Month_AFTER " + 
-				"  FROM dual " + 
-				"    CONNECT BY LEVEL <= 12 " + 
-				"  )) " + 
-				"WHERE TA_EXCISE_PRODUCT_TYPE  = 'น้ำมัน' " + 
-				"AND SUBSTR(TA_EXCISE_ID,15,1) = '1'";
+		String sqlQuery = "SELECT * FROM (SELECT to_number(D.TA_EXCISE_TAX_RECEIVE_AMOUNT) amount , " + "  H.TA_EXCISE_ID TA_EXCISE_ID, " + "  H.TA_EXCISE_PRODUCT_TYPE TA_EXCISE_PRODUCT_TYPE " + " FROM TA_EXCISE_REGISTTION_NUMBER H " + " INNER JOIN TA_EXCISE_TAX_RECEIVE D "
+				+ " ON H.TA_EXCISE_ID = D.TA_EXCISE_ID " + " AND D.TA_EXCISE_TAX_RECEIVE_MONTH IN " + "  (SELECT REPLACE(TO_CHAR( add_MONTHS( Sysdate, LEVEL-12 ) , 'MON yy', 'NLS_CALENDAR=''THAI BUDDHA'' NLS_DATE_LANGUAGE=THAI'), '  ', ' ' ) Month_AFTER " + "  FROM dual "
+				+ "    CONNECT BY LEVEL <= 12 " + "  )) " + "WHERE TA_EXCISE_PRODUCT_TYPE  = 'น้ำมัน' " + "AND SUBSTR(TA_EXCISE_ID,15,1) = '1'";
 		List<Object> objList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(sqlQuery);
-		
-		
-		List<ExciseRegistartionNumber> list = jdbcTemplate.query(sql.toString(), objList.toArray(),
-				exciseRegisttionRowmapper);
+
+		List<ExciseRegistartionNumber> list = jdbcTemplate.query(sql.toString(), objList.toArray(), exciseRegisttionRowmapper);
 
 		return new BigDecimal(0);
 	}
-	
-	public List<ExciseRegistartionNumber> searchAllRegistartionNumber(String sector){
+
+	public List<ExciseRegistartionNumber> searchAllRegistartionNumber(String sector) {
 		List<Object> objList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(SQL_REGIS);
-//		sql.append("where d.TA_EXCISE_SECTOR_AREA = ? ");
-//		objList.add(sector);
-		return  jdbcTemplate.query(sql.toString(),objList.toArray()  ,exciseRegisttionRowmapper);
+		sql.append("where d.TA_EXCISE_SECTOR_AREA = ? ");
+		objList.add(sector);
+		return jdbcTemplate.query(sql.toString(), objList.toArray(), exciseRegisttionRowmapper);
 	}
 
 }

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import sun.net.www.content.text.plain;
 import th.co.baiwa.excise.ia.persistence.vo.InputIncomeExciseAudit;
 import th.co.baiwa.excise.ia.persistence.vo.RequestApiSaveIncome;
 import th.co.baiwa.excise.ia.persistence.vo.ResponseApiSaveIncome;
@@ -29,7 +28,7 @@ import th.co.baiwa.excise.ta.persistence.vo.PlanTaxAuditVo;
 import th.co.baiwa.excise.ta.service.PlanTaxAuditService;
 
 @Controller
-@RequestMapping("mobile-api")
+@RequestMapping("api/mobile-api")
 public class MobileAPIController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MobileAPIController.class);

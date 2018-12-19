@@ -3,7 +3,9 @@ package th.co.baiwa.excise.ta.controller;
 import java.beans.PropertyEditorSupport;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -19,11 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.excise.ia.persistence.dao.ExciseTaxReceiveDao;
 import th.co.baiwa.excise.ta.persistence.vo.PlanFromWsVo;
 import th.co.baiwa.excise.ta.persistence.vo.Tsl010200FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Tsl010200Vo;
 import th.co.baiwa.excise.ta.service.PlanFromWsHeaderService;
-import th.co.baiwa.excise.utils.BeanUtils;
 
 @Controller
 @RequestMapping("api/taxAudit/selectList")
@@ -34,7 +36,8 @@ public class TaxAuditSelectListController {
 	@Autowired
 	private PlanFromWsHeaderService planFromWsHeaderService;
 	
-	
+	@Autowired
+	private ExciseTaxReceiveDao exciseTaxReceiveDao;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -55,6 +58,23 @@ public class TaxAuditSelectListController {
 				}
 			}
 		});
+	}
+	
+	@PostMapping("/findMonthList")
+	@ResponseBody
+	public List<String> findMonthList(@RequestBody PlanFromWsVo vo) {
+		logger.debug("findMonthList");
+		try {
+			Date startDate = DateConstant.convertStrToDate(vo.getDateFrom(), DateConstant.MM_YYYY);
+			Date endDate = DateConstant.convertStrToDate(vo.getDateTo(), DateConstant.MM_YYYY);
+			int daysBetween = (int) ChronoUnit.MONTHS.between(DateConstant.dateToLocalDadte(startDate), DateConstant.dateToLocalDadte(endDate));
+			List<String> monthList = exciseTaxReceiveDao.queryMonthShotName(endDate, daysBetween+1);
+			return monthList;
+			
+		} catch (Exception e) {
+			List<String> list = new ArrayList<String>();
+			return list;
+		}
 	}
 	
 	@PostMapping("/findCondition1")
