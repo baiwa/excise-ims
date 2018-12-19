@@ -24,6 +24,9 @@ public class UserDetails extends User implements UserBean {
 	private String telephoneNo;
 	private String officeId;
 	private String accessAttr;
+	private String role;
+
+	
 
 	// Constructor
 	public UserDetails(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
@@ -142,6 +145,12 @@ public class UserDetails extends User implements UserBean {
 	public void setAccessAttr(String accessAttr) {
 		this.accessAttr = accessAttr;
 	}
+	public String getRole() {
+		return role;
+	}
 
+	public void setRole(String role) {
+		this.role = role;
+	}
 	
 }

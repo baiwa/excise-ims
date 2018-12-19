@@ -41,6 +41,7 @@ public class UserProfileRestController {
 			UserDetails userDetail = (UserDetails) authentication.getPrincipal();
 			userDetail.setExciseBaseControl(exciseAuthenService.getAuthenPage());
 			response.setData(userDetail);
+			userDetail.setRole(exciseAuthenService.findRoleByUserLogin());
 		}
 		return new ResponseEntity<ResponseData<UserDetails>>(response, HttpStatus.OK);
 	}

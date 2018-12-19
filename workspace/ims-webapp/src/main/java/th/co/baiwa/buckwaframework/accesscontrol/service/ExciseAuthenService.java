@@ -3,6 +3,7 @@ package th.co.baiwa.buckwaframework.accesscontrol.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,10 @@ public class ExciseAuthenService {
 		}
 		String page[] = {};
 		return pageList.toArray(page);
+	}
+	
+	public String findRoleByUserLogin() {
+		UserManagement user = userManagementService.getUserManagementByUsername(UserLoginUtils.getCurrentUsername()); 
+		return user.getExciseBaseControl();
 	}
 }

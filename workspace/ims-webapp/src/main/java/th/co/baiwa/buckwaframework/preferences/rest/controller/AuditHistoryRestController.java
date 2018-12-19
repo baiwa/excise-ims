@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.SysAuditHistoryAction;
 import th.co.baiwa.buckwaframework.preferences.service.SysAuditHistoryActionService;
+import th.co.baiwa.buckwaframework.security.domain.UserBean;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 
 @Controller
@@ -29,5 +30,12 @@ public class AuditHistoryRestController {
 		String userLogin = UserLoginUtils.getCurrentUsername();
 		logger.info("add audit log by : " , userLogin);
 		sysAuditHistoryActionService.insertSysAuditHistoryAction(sysAuditHistoryAction);
+	}
+	
+	@PostMapping("/findUserloginProfile")
+	@ResponseBody
+	public UserBean findUserloginProfile() {
+		  return UserLoginUtils.getCurrentUserBean();
+		
 	}
 }
