@@ -10,40 +10,48 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import th.co.baiwa.excise.ta.persistence.vo.TaxHomeVo;
-import th.co.baiwa.excise.ta.persistence.vo.Tsl010700Vo;
-import th.co.baiwa.excise.utils.OracleUtils;
-import th.co.baiwa.excise.ia.persistence.vo.Int09111And3FormVo;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.ta.persistence.vo.TaxHomeFormVo;
+import th.co.baiwa.excise.ta.persistence.vo.TaxHomeVo;
+import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.excise.utils.OracleUtils;
 
 @Repository
 public class TaxHomeDao {
-	
+
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
-	private final String SQL_SELECT_TYPE = "SELECT * FROM ta_year_plan ";
-	private final String SQL_SELECT_TYPE_COUNT = "SELECT COUNT(*) FROM ta_year_plan ";
-	
+
+	private final String SQL_SELECT_TYPE = "SELECT * FROM ta_year_plan WHERE ROWNUM <= 5 ";
+	private final String SQL_SELECT_TYPE_COUNT = "SELECT COUNT(1) FROM ta_year_plan WHERE  RISK_TYPE = ? ";
+
 	public Long countTableTyp(TaxHomeFormVo taxHomeFormVo) {
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeId();
 		StringBuilder sql = new StringBuilder(SQL_SELECT_TYPE_COUNT);
 		List<Object> params = new ArrayList<>();
-		
-		sql.append(" WHERE RISK_TYPE = ? ");
 		params.add(taxHomeFormVo.getType());
-			
+		if (BeanUtils.isNotEmpty(officeCode) && !"00".equals(officeCode.substring(0, 2))) {
+			sql.append("AND EXCISE_OFFICE_CODE like ? ");
+			if ("00".equals(officeCode.substring(2, 4))) {
+				officeCode = officeCode.substring(0, 2) + "____";
+			} else if ("00".equals(officeCode.substring(4, 6))) {
+				officeCode = officeCode.substring(0, 4) + "__";
+			}
+			params.add(officeCode);
+		}
+		sql.append(" AND ROWNUM <= 5");
+		sql.append(" ORDER BY CREATED_DATE DESC ");
 		String countSql = OracleUtils.countForDatatable(sql);
-        Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
-        return count;
-    }
-	
+		Long count = jdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
+		return count;
+	}
+
 	public List<TaxHomeVo> selectType(TaxHomeFormVo taxHomeFormVo) {
 		StringBuilder sql = new StringBuilder(SQL_SELECT_TYPE);
 		List<Object> params = new ArrayList<>();
-		
-		if(StringUtils.isNotBlank(taxHomeFormVo.getType())) {
+
+		if (StringUtils.isNotBlank(taxHomeFormVo.getType())) {
 			sql.append(" WHERE RISK_TYPE = ? ");
 			params.add(taxHomeFormVo.getType());
 		}
