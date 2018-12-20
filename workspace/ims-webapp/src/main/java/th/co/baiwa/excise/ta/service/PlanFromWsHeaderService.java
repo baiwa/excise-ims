@@ -76,9 +76,9 @@ public class PlanFromWsHeaderService {
 		// DateConstant.YYYYMMDD) + "-01-"+ planWorksheetHeaderDao.getAnalysNumber();
 		List<String> monthList = exciseTaxReceiveDao.queryMonthShotName(endDate, daysBetween+1);
 		List<Tsl010200Vo> tlTsl010200VoAllList = new ArrayList<Tsl010200Vo>();
-		String officeId = UserLoginUtils.getCurrentUserBean().getOfficeId().substring(0, 2);
-		List<Lov> lovList = ApplicationCache.getListOfValueByValueType("SECTOR_VALUE", officeId);
-		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.searchAllRegistartionNumber(lovList.get(0).getValue1());
+		String officeId = UserLoginUtils.getCurrentUserBean().getOfficeId().substring(0, 4)+"00";
+//		List<Lov> lovList = ApplicationCache.getListOfValueByValueType("SECTOR_VALUE", officeId);
+		List<ExciseRegistartionNumber> regisNumberList = exciseRegisttionNumberDao.searchAllRegistartionNumber(officeId);
 		if (BeanUtils.isNotEmpty(regisNumberList)) {
 			Tsl010200Vo indexDate = new Tsl010200Vo();
 			for (ExciseRegistartionNumber registartionNumber : regisNumberList) {
@@ -320,7 +320,8 @@ public class PlanFromWsHeaderService {
 
 	public void saveCondition1(Tsl010200FormVo formVo){
 		List<Tsl010200Vo> dataList = formVo.getDataList();
-		
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeId();
+		officeCode = officeCode.substring(0, 4)+"00";
 		String analysNumber = DateConstant.DateToString(new Date(),DateConstant.YYYYMMDD) + "-01-"+ planWorksheetHeaderDao.getAnalysNumber();
 		List<YearPlan> entitys = new ArrayList<>();
 		for (Tsl010200Vo vo : dataList) {
@@ -335,6 +336,7 @@ public class PlanFromWsHeaderService {
 			entity.setFlag(PROCESS);
 			entity.setRiskType("1");
 			entity.setStatus("2293");
+			entity.setExciseOfficeCode(officeCode);
 //			*1 = ความถี่ของเดือนที่ชำระภาษี,
 //			2 = เปรียบเทียบจำนวนภาษีระหว่างเดือน,
 //			3 = เปรียบเทียบความแต่งต่างการชำระภาษีระหว่างปี

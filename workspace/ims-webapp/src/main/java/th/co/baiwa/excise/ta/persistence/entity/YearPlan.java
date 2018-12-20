@@ -69,7 +69,8 @@ public class YearPlan extends BaseEntity {
 	private String analysisNumber;
 	
 	
-	
+	@Column(name = "EXCISE_OFFICE_CODE")
+	private String exciseOfficeCode;
 	
 
 	public String getStartDate() {
@@ -190,6 +191,14 @@ public class YearPlan extends BaseEntity {
 
 	public void setAnalysisNumber(String analysisNumber) {
 		this.analysisNumber = analysisNumber;
+	}
+
+	public String getExciseOfficeCode() {
+		return exciseOfficeCode;
+	}
+
+	public void setExciseOfficeCode(String exciseOfficeCode) {
+		this.exciseOfficeCode = exciseOfficeCode;
 	}
 
 }

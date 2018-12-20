@@ -294,12 +294,47 @@ public class ExciseRegisttionNumberDao {
 		return new BigDecimal(0);
 	}
 
-	public List<ExciseRegistartionNumber> searchAllRegistartionNumber(String sector) {
+	public List<ExciseRegistartionNumber> searchAllRegistartionNumber(String officeCode) {
 		List<Object> objList = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder(SQL_REGIS);
-		sql.append("where d.TA_EXCISE_SECTOR_AREA = ? ");
-		objList.add(sector);
+		if(BeanUtils.isNotEmpty(officeCode) && !"00".equals(officeCode.substring(0, 2))) {
+			sql.append("where d.EXCISE_OFFICE_CODE like ? ");
+			if("00".equals(officeCode.substring(2,4))) {
+				officeCode = officeCode.substring(0, 2)+"____";
+			}else if("00".equals(officeCode.substring(4,6))){
+				officeCode = officeCode.substring(0, 4)+"__";
+			}
+			objList.add(officeCode);
+		}
 		return jdbcTemplate.query(sql.toString(), objList.toArray(), exciseRegisttionRowmapper);
 	}
 
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
