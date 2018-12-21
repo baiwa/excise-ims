@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepositoryImpl;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
@@ -63,6 +65,10 @@ public class PlanFromWsHeaderService {
 	
 	@Autowired
 	private YearPlanRepository yearPlanRepository;
+	
+	
+	@Autowired
+	private LovRepository lovRepository;
 
 	private final String RISK_TYPE_NON_PAY = "NON_PAY";
 	private final String RISK_TYPE_PERCENT_DIFF = "PERCENT_DIFF";
@@ -324,7 +330,10 @@ public class PlanFromWsHeaderService {
 		officeCode = officeCode.substring(0, 4)+"00";
 		String analysNumber = DateConstant.DateToString(new Date(),DateConstant.YYYYMMDD) + "-01-"+ planWorksheetHeaderDao.getAnalysNumber();
 		List<YearPlan> entitys = new ArrayList<>();
+		Lov lov = null;
 		for (Tsl010200Vo vo : dataList) {
+			lov = new Lov();
+			lov = lovRepository.findAreaByProvice(vo.getArea());
 			
 			YearPlan entity = new YearPlan();
 			entity.setAnalysisNumber(analysNumber);
@@ -336,7 +345,7 @@ public class PlanFromWsHeaderService {
 			entity.setFlag(PROCESS);
 			entity.setRiskType("1");
 			entity.setStatus("2293");
-			entity.setExciseOfficeCode(officeCode);
+			entity.setExciseOfficeCode(lov.getSubType());
 //			*1 = ความถี่ของเดือนที่ชำระภาษี,
 //			2 = เปรียบเทียบจำนวนภาษีระหว่างเดือน,
 //			3 = เปรียบเทียบความแต่งต่างการชำระภาษีระหว่างปี
