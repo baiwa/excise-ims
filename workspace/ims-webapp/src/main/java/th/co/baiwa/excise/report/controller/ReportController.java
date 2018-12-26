@@ -1,17 +1,20 @@
 package th.co.baiwa.excise.report.controller;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +26,7 @@ import com.lowagie.text.BadElementException;
 import net.sf.jasperreports.engine.JRException;
 import th.co.baiwa.buckwaframework.common.util.ThaiNumberUtils;
 import th.co.baiwa.excise.report.bean.ContractBean;
+import th.co.baiwa.excise.report.bean.ReportJsonBean;
 import th.co.baiwa.excise.report.service.ReportService;
 import th.co.baiwa.excise.report.service.AskForMoneyReportService;
 
@@ -87,11 +91,18 @@ public class ReportController {
 		byte[] report = reportService.objectToPDF(name, json); // null
 		//return report;
 	}
-//	
-//	@PostMapping("/pdf/ts/{report}")
-//	@ResponseBody // byte[]
-//	public void pdfTsReport(@PathVariable("reporter") String name, @RequestBody String json) throws IOException, JRException { // byte[]
-//		byte[] report = reporterService.objectToPDF(name, json); // null
-//		//return report;
-//	}
+
+	@SuppressWarnings("deprecation")
+	@PostMapping("/pdf/ts/01/17")
+	public void pdfTs(@ModelAttribute ReportJsonBean reportJsonBean, HttpServletResponse response) throws IOException, JRException {
+		byte[] reportFile = reportService.ts01_17(reportJsonBean);
+		
+		String fileName = URLEncoder.encode("mis_t_s_01_17") ;
+		
+		response.setContentType("application/pdf");
+		response.addHeader("Content-Disposition", "inline;filename="+fileName+".pdf");
+		
+		IOUtils.write(reportFile, response.getOutputStream());
+	}
+	
 }

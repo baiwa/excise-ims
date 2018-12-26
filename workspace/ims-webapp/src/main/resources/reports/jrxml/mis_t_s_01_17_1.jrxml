@@ -1170,7 +1170,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="-1" y="320" width="357" height="15" uuid="3d441ff1-f207-4ea4-b245-801dc5a14b40"/>
+				<reportElement style="data" x="-1" y="320" width="454" height="15" uuid="3d441ff1-f207-4ea4-b245-801dc5a14b40"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
