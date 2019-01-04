@@ -437,7 +437,7 @@
 				<textFieldExpression><![CDATA["เงินเพิ่มคิดถึงวันที่"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="277" y="358" width="76" height="19" uuid="392b462c-0c91-445c-b935-0d94ac643c56"/>
+				<reportElement style="data" x="277" y="358" width="71" height="19" uuid="392b462c-0c91-445c-b935-0d94ac643c56"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -445,7 +445,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{tax}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -454,7 +454,7 @@
 				<textFieldExpression><![CDATA["บาท"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="277" y="377" width="75" height="19" uuid="28a861f0-26d6-4049-9bd4-0dc1e272a56a"/>
+				<reportElement style="data" x="277" y="377" width="71" height="19" uuid="28a861f0-26d6-4049-9bd4-0dc1e272a56a"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -462,7 +462,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{fine}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -471,7 +471,7 @@
 				<textFieldExpression><![CDATA["บาท"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="277" y="396" width="76" height="19" uuid="244f8561-3ef2-45f4-9e2b-38b858758297"/>
+				<reportElement style="data" x="277" y="396" width="71" height="19" uuid="244f8561-3ef2-45f4-9e2b-38b858758297"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -479,7 +479,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{exteamoney}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -488,7 +488,7 @@
 				<textFieldExpression><![CDATA["บาท"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="277" y="415" width="76" height="19" uuid="d17f2d45-df8b-4a83-ae40-cc8eb8ba1ae1"/>
+				<reportElement style="data" x="277" y="415" width="71" height="19" uuid="d17f2d45-df8b-4a83-ae40-cc8eb8ba1ae1"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -496,7 +496,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{includes}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -505,7 +505,7 @@
 				<textFieldExpression><![CDATA["บาท"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="277" y="434" width="76" height="19" uuid="42ad73a8-aa84-47bc-9baa-2b75b5180d44"/>
+				<reportElement style="data" x="277" y="434" width="71" height="19" uuid="42ad73a8-aa84-47bc-9baa-2b75b5180d44"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -513,7 +513,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{gorernment}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -522,7 +522,7 @@
 				<textFieldExpression><![CDATA["บาท"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="277" y="453" width="76" height="19" uuid="8057c875-0280-47f5-8bdd-3f77a14cfd84"/>
+				<reportElement style="data" x="277" y="453" width="71" height="19" uuid="8057c875-0280-47f5-8bdd-3f77a14cfd84"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -530,7 +530,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{total}]]></textFieldExpression>
 			</textField>
 			<textField>
