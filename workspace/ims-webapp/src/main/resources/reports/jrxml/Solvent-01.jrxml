@@ -36,6 +36,8 @@
 	<parameter name="province1" class="java.lang.String"/>
 	<parameter name="zipCode1" class="java.lang.String"/>
 	<parameter name="moo" class="java.lang.String"/>
+	<parameter name="service" class="java.lang.Boolean"/>
+	<parameter name="factory" class="java.lang.Boolean"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -356,7 +358,7 @@
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{factory} && $P{factory} != null)? "\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="75" y="304" width="440" height="23" uuid="32cb4c1a-1e81-4670-a2e3-c2a6d99793a9"/>
@@ -377,7 +379,7 @@
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{service} && $P{service} != null)? "\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="73" y="356" width="274" height="23" uuid="ea0d7bd7-71e4-422c-b53b-1490ee723c8b"/>

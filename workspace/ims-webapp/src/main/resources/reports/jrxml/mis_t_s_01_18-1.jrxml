@@ -12,11 +12,11 @@
 	</style>
 	<parameter name="logo" class="java.io.InputStream"/>
 	<parameter name="name" class="java.lang.String"/>
-	<parameter name="atNumber1" class="java.lang.String"/>
+	<parameter name="atNumber1" class="java.lang.Boolean"/>
 	<parameter name="atNumber2" class="java.lang.String"/>
 	<parameter name="nameOfTax" class="java.lang.String"/>
 	<parameter name="date" class="java.lang.String"/>
-	<parameter name="agreeBox1" class="java.lang.String"/>
+	<parameter name="agreeBox1" class="java.lang.Boolean"/>
 	<parameter name="agreeBox2" class="java.lang.String"/>
 	<parameter name="agreeBox3" class="java.lang.String"/>
 	<parameter name="exciseRegistration" class="java.lang.String"/>
@@ -31,6 +31,9 @@
 	<parameter name="day" class="java.lang.String"/>
 	<parameter name="month" class="java.lang.String"/>
 	<parameter name="year" class="java.lang.String"/>
+	<parameter name="factory" class="java.lang.Boolean"/>
+	<parameter name="service" class="java.lang.Boolean"/>
+	<parameter name="company" class="java.lang.Boolean"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -69,12 +72,12 @@
 				</textElement>
 				<textFieldExpression><![CDATA["ตส. ๐๑-๑๘"]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="298" y="94" width="10" height="17" uuid="bb4f7001-70a4-400c-87ac-1f6cdd06c80b"/>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="FixRelativeToBottom" x="291" y="94" width="17" height="17" uuid="bb4f7001-70a4-400c-87ac-1f6cdd06c80b"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{factory} && $P{factory} != null)? "\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="312" y="94" width="77" height="17" uuid="b40532e7-dcf4-441c-95ef-a159817eb8be"/>
@@ -98,12 +101,12 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{nameOfTax}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="298" y="111" width="10" height="17" uuid="d45f449a-9423-4007-8b02-88635cfd8107"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="291" y="111" width="17" height="17" uuid="d45f449a-9423-4007-8b02-88635cfd8107"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{service} && $P{service} != null)? "\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="312" y="111" width="58" height="17" uuid="d90435a0-2dde-4f98-8c5b-b5263697288e"/>
@@ -127,12 +130,12 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="298" y="128" width="10" height="17" uuid="781f959b-9e56-4545-aa25-0c2d5b4b42b9"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="291" y="128" width="17" height="17" uuid="781f959b-9e56-4545-aa25-0c2d5b4b42b9"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{company} && $P{company} != null)? "\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="312" y="128" width="104" height="17" uuid="9a47a47f-d8a0-4428-ba18-4c553c75be8a"/>
