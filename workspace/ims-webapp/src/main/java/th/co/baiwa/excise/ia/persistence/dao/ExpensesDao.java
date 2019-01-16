@@ -20,7 +20,7 @@ import th.co.baiwa.excise.ia.persistence.vo.Int06113FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int06113Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int06121FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int06121Vo;
-import th.co.baiwa.excise.utils.OracleUtils;
+import th.co.baiwa.buckwaframework.common.util.OracleUtils;
 
 @Repository
 public class ExpensesDao {

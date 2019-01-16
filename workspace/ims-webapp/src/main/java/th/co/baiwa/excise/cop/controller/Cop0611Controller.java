@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import th.co.baiwa.buckwaframework.common.util.BeanUtils;
 import th.co.baiwa.excise.cop.service.Cop0611Service;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041DataTable;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
 import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
 import th.co.baiwa.excise.upload.service.UploadFileExciseService;
-import th.co.baiwa.excise.utils.BeanUtils;
 
 @Controller
 @RequestMapping("api/cop0611")

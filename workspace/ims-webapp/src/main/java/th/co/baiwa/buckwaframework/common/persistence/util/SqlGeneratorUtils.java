@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import org.springframework.util.CollectionUtils;
 
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils;
 
 public class SqlGeneratorUtils {
 	

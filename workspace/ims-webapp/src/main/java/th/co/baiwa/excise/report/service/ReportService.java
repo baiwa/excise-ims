@@ -37,7 +37,7 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.excise.report.bean.ExampleBean;
 import th.co.baiwa.excise.report.bean.ReportJsonBean;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Service
 public class ReportService {

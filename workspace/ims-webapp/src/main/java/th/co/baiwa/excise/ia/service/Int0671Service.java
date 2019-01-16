@@ -17,7 +17,7 @@ import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.ia.persistence.entity.TimeSet;
 import th.co.baiwa.excise.ia.persistence.repository.TimeSetRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int0671FormVo;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Service
 public class Int0671Service {

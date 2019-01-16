@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.constant.DateConstant;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.Int0614Dao;
 import th.co.baiwa.excise.ia.persistence.vo.Int0614FormSearchVo;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Service
 public class Int0614Service {

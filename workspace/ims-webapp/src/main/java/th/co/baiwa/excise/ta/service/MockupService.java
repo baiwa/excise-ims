@@ -10,14 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.domain.MockupVo;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.ExciseRegisttionNumberDao;
 import th.co.baiwa.excise.ia.persistence.dao.ExciseTaxReceiveDao;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseRegistartionNumber;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseTaxReceive;
 import th.co.baiwa.excise.ta.persistence.vo.AnalysisFromCountVo;
 import th.co.baiwa.excise.ta.persistence.vo.MockupForm;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Service
 public class MockupService {

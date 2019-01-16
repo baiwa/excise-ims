@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import th.co.baiwa.buckwaframework.common.util.ExcelUtils;
 import th.co.baiwa.excise.ta.service.ExciseDetailService;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Service
 public class UploadFileExciseService {

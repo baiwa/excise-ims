@@ -16,7 +16,7 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.ia.persistence.entity.IntCtrlAss;
 import th.co.baiwa.excise.ia.service.Int02m51Service;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 import th.co.baiwa.excise.ws.entity.response.assessment.Assessment;
 import th.co.baiwa.excise.ws.entity.response.assessment.AssessmentVo;
 import th.co.baiwa.excise.ws.entity.response.assessment.Datum;

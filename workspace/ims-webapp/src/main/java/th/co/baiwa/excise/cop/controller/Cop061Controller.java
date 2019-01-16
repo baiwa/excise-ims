@@ -19,7 +19,7 @@ import th.co.baiwa.excise.cop.persistence.vo.Cop061FormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop061Vo;
 import th.co.baiwa.excise.cop.service.Cop061Service;
 import th.co.baiwa.excise.domain.LabelValueBean;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 
 @Controller
 @RequestMapping("api/cop/cop061")

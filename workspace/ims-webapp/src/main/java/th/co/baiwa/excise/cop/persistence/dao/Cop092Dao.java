@@ -13,13 +13,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
-import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils;
 import th.co.baiwa.excise.cop.persistence.vo.Cop092BudgetFormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop092BudgetVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop092ProductFormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop092ProductVo;
-import th.co.baiwa.excise.utils.BeanUtils;
 
 @Repository
 public class Cop092Dao {

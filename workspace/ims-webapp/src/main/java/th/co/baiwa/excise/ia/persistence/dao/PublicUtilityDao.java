@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.entity.PublicUtility;
 import th.co.baiwa.excise.ia.persistence.vo.Int068FormVo;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Repository
 public class PublicUtilityDao {

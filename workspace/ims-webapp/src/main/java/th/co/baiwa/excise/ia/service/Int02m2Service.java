@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
@@ -35,7 +36,6 @@ import th.co.baiwa.excise.ia.persistence.vo.QtnReportDetailVo;
 import th.co.baiwa.excise.ia.persistence.vo.QtnReportHeaderVo;
 import th.co.baiwa.excise.ia.persistence.vo.QtnReportMainVo;
 import th.co.baiwa.excise.ia.persistence.vo.QtnScore;
-import th.co.baiwa.excise.utils.BeanUtils;
 import th.co.baiwa.excise.ws.WebServiceExciseService;
 
 @Service

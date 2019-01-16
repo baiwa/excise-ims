@@ -15,8 +15,8 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnReportDetail;
 import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnReportMain;
 import th.co.baiwa.excise.ia.persistence.vo.Int023Vo;
-import th.co.baiwa.excise.utils.BeanUtils;
-import th.co.baiwa.excise.utils.OracleUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
+import th.co.baiwa.buckwaframework.common.util.OracleUtils;
 
 @Repository
 public class QtnReportMainDao {

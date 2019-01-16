@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.IaTravelEstimatorDao;
 import th.co.baiwa.excise.ia.persistence.vo.Int09111And3FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int09TableDtlVo;

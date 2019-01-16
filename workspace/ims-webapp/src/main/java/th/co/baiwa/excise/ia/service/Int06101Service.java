@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.BeanUtils;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
@@ -21,7 +22,6 @@ import th.co.baiwa.excise.ia.persistence.repository.IaWithdrawalListRepository;
 import th.co.baiwa.excise.ia.persistence.repository.IaWithdrawalPersonsRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int06101FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int06101FormVoRequest;
-import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class Int06101Service {

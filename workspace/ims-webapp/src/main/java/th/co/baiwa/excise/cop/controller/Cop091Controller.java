@@ -15,7 +15,7 @@ import th.co.baiwa.excise.cop.persistence.entity.CopCheckFiscalReport;
 import th.co.baiwa.excise.cop.persistence.vo.Cop091FormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop091Vo;
 import th.co.baiwa.excise.cop.service.Cop091Service;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 
 @Controller
 @RequestMapping("api/cop/cop091")

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import th.co.baiwa.excise.domain.datatable.DataTableRequest;
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 
 public class Cop064FormVo extends DataTableRequest {
 

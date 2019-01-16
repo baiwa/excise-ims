@@ -16,7 +16,7 @@ import th.co.baiwa.excise.ia.persistence.repository.CwpScwdDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.CwpTblDtlRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int0621CompareFormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0621Vo;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Service
 public class Int0621Service {

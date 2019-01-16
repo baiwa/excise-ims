@@ -35,7 +35,7 @@ import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.constant.ExciseConstants.SEARCH_FLAG;
 import th.co.baiwa.excise.constant.IaConstant.IA_REGIS_TRACK_CONTROL.STATUS;
 import th.co.baiwa.excise.domain.LabelValueBean;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.IaFollowUpDepartmentDao;
 import th.co.baiwa.excise.ia.persistence.entity.IaFollowUpDepartment;
 import th.co.baiwa.excise.ia.persistence.repository.IaFollowUpDepartmentRepository;

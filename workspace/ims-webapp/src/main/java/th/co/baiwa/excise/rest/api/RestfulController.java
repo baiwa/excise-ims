@@ -18,7 +18,7 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.CommonHeader;
 import th.co.baiwa.excise.ta.persistence.entity.analysis.PlanWorksheetHeader;
 import th.co.baiwa.excise.ta.service.PlanWorksheetHeaderService;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Controller
 @RequestMapping("api/restful")

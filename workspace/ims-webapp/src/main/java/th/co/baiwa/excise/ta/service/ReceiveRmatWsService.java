@@ -12,7 +12,7 @@ import th.co.baiwa.excise.ta.persistence.entity.ReceiveRmatWsHeader;
 import th.co.baiwa.excise.ta.persistence.repository.ReceiveRmatWsDetailRepository;
 import th.co.baiwa.excise.ta.persistence.repository.ReceiveRmatWsHeaderRepository;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041DataTable;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Service
 public class ReceiveRmatWsService {

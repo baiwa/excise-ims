@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.entity.TransferList;
 import th.co.baiwa.excise.ia.persistence.vo.Int069FormVo;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Repository
 public class TransferListDao {

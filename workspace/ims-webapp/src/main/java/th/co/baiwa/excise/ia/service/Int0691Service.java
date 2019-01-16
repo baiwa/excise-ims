@@ -20,7 +20,7 @@ import th.co.baiwa.excise.ia.persistence.entity.BudgetList;
 import th.co.baiwa.excise.ia.persistence.entity.TransferList;
 import th.co.baiwa.excise.ia.persistence.repository.BudgetListRepository;
 import th.co.baiwa.excise.ia.persistence.repository.TransferListRepository;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Service
 public class Int0691Service {

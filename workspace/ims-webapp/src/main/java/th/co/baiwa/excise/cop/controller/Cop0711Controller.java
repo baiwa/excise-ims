@@ -15,7 +15,7 @@ import th.co.baiwa.excise.cop.persistence.vo.Cop0711FormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop0711Vo;
 import th.co.baiwa.excise.cop.service.Cop0711Service;
 import th.co.baiwa.excise.domain.CommonMessage;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.vo.Int09111And3FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int091FormVo;
 

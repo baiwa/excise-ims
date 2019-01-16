@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.DataTableRequest;
@@ -20,8 +21,7 @@ import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireMinor;
 import th.co.baiwa.excise.ia.persistence.repository.QuestionnaireMainDetailRepository;
 import th.co.baiwa.excise.ia.persistence.repository.QuestionnaireMinorDetailRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int023Vo;
-import th.co.baiwa.excise.ia.persistence.vo.Int02m31FormVo;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.excise.ia.persistence.vo.Int02m31FormVo; 
 
 @Service
 public class QuestionnaireMainDetailService {

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils;
 import th.co.baiwa.buckwaframework.preferences.persistence.dao.SEQDao;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.domain.DataTableRequest;
@@ -21,8 +22,7 @@ import th.co.baiwa.excise.ia.persistence.dao.QuestionnaireMinorDao;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireDetail;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireMain;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireMinor;
-import th.co.baiwa.excise.ia.persistence.vo.Int023Vo;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.excise.ia.persistence.vo.Int023Vo; 
 
 @Service
 public class QuestionnaireDetailService {

@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import th.co.baiwa.buckwaframework.common.util.BeanUtils;
 import th.co.baiwa.excise.ia.persistence.entity.AssetBalance;
 import th.co.baiwa.excise.ia.persistence.entity.AssetMaintenance;
 import th.co.baiwa.excise.ia.persistence.repository.AssetBalanceRepository;
-import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class AssetBalanceService {

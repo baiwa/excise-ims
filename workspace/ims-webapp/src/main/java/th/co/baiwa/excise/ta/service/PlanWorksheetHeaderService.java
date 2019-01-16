@@ -41,8 +41,8 @@ import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
 import th.co.baiwa.excise.ta.persistence.vo.ResVo;
 import th.co.baiwa.excise.ta.persistence.vo.SectorMapValue;
 import th.co.baiwa.excise.ta.persistence.vo.Tsl010200Vo;
-import th.co.baiwa.excise.utils.BeanUtils;
-import th.co.baiwa.excise.utils.NumberUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 
 @Service
 public class PlanWorksheetHeaderService {

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
-import th.co.baiwa.excise.domain.datatable.DataTableRequest;
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 import th.co.baiwa.excise.ia.persistence.entity.IaIceReportHdr;
 import th.co.baiwa.excise.ia.service.Int02m052Service;
 

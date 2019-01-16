@@ -16,7 +16,7 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.ta.persistence.entity.PlanFromWsHeader;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetDetail;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetHeaderDetail;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 public class PlanFromWsHeaderRepositoryImpl implements PlanFromWsHeaderCustom {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());

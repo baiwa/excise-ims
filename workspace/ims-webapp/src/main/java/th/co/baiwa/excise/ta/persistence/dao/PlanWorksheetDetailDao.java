@@ -17,7 +17,7 @@ import th.co.baiwa.buckwaframework.common.persistence.dao.BatchSetter;
 import th.co.baiwa.buckwaframework.common.persistence.dao.CommonJdbcDao;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.ta.persistence.entity.PlanWorksheetDetail;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Repository
 public class PlanWorksheetDetailDao{

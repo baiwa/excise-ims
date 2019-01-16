@@ -11,15 +11,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import th.co.baiwa.excise.constant.DateConstant;
+import th.co.baiwa.buckwaframework.common.util.OracleUtils;
 import th.co.baiwa.excise.cop.persistence.vo.Cop061FormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop061Vo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop064FormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop064Vo;
-import th.co.baiwa.excise.cop.persistence.vo.Cop0711Vo;
-import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041DataTable;
-import th.co.baiwa.excise.utils.OracleUtils;
 
 @Repository
 public class ReportCheckOperationDao {

@@ -15,7 +15,7 @@ import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.constant.ExciseConstants.TSL;
 import th.co.baiwa.excise.ta.persistence.vo.Tan010000FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Tan010000Vo;
-import th.co.baiwa.excise.utils.OracleUtils;
+import th.co.baiwa.buckwaframework.common.util.OracleUtils;
 
 @Repository
 public class Tan010000Dao {

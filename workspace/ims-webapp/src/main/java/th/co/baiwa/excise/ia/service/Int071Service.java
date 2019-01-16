@@ -22,14 +22,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ExcelUtils;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.entity.VerifyAccountDetil;
 import th.co.baiwa.excise.ia.persistence.entity.VerifyAccountHeader;
 import th.co.baiwa.excise.ia.persistence.repository.VerifyAccountDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.VerifyAccountHdRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int071ExcelVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int071FormVo;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Service
 public class Int071Service {

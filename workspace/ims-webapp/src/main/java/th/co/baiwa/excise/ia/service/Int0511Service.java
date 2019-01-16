@@ -31,7 +31,7 @@ import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovReposit
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.LabelValueBean;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.CheckStampAreaDao;
 import th.co.baiwa.excise.ia.persistence.entity.IaStampDetail;
 import th.co.baiwa.excise.ia.persistence.entity.IaStampFile;

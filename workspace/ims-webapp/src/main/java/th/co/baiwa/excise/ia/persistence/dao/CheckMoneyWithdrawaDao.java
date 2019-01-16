@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.vo.Int0615FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0615Vo;
-import th.co.baiwa.excise.utils.OracleUtils;
+import th.co.baiwa.buckwaframework.common.util.OracleUtils;
 
 @Repository
 public class CheckMoneyWithdrawaDao {

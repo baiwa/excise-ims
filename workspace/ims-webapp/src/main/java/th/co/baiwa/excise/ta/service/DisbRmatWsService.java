@@ -12,7 +12,7 @@ import th.co.baiwa.excise.ta.persistence.entity.DisbRmatWorksheetHeader;
 import th.co.baiwa.excise.ta.persistence.repository.DisbRmatWsDetailRepository;
 import th.co.baiwa.excise.ta.persistence.repository.DisbRmatWsHeaderRepository;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041DataTable;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Service
 public class DisbRmatWsService {

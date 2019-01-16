@@ -16,7 +16,7 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.ia.persistence.entity.BudgetList;
 import th.co.baiwa.excise.ia.persistence.entity.TransferList;
 import th.co.baiwa.excise.ia.service.Int0691Service;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Controller
 @RequestMapping("api/ia/int0691")

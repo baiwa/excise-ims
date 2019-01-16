@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.excise.cop.persistence.dao.CopCheckFiscalYearDao;
 import th.co.baiwa.excise.cop.persistence.vo.Cop0711FormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop0711Vo;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 
 @Service
 public class Cop0711Service {

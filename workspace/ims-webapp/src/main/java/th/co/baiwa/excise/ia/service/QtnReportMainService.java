@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
@@ -20,8 +21,7 @@ import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnReportMain;
 import th.co.baiwa.excise.ia.persistence.repository.qtn.rep.QtnReportDetailRepository;
 import th.co.baiwa.excise.ia.persistence.repository.qtn.rep.QtnReportMainRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int023FormVo;
-import th.co.baiwa.excise.ia.persistence.vo.Int023Vo;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.excise.ia.persistence.vo.Int023Vo; 
 
 @Service
 public class QtnReportMainService {

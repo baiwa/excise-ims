@@ -18,7 +18,7 @@ import th.co.baiwa.excise.cop.persistence.vo.Cop092ProductFormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop092ProductVo;
 import th.co.baiwa.excise.cop.service.Cop092Service;
 import th.co.baiwa.excise.domain.CommonMessage;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 
 @Controller
 @RequestMapping("api/cop/cop092")

@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.excise.ia.persistence.vo.QtnReportDetailVo;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 public class QtnReportDetailRepositoryImpl implements QtnReportDetailRepositoryCustom {
 

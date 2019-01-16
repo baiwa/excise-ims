@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import th.co.baiwa.buckwaframework.common.util.BeanUtils;
 import th.co.baiwa.buckwaframework.preferences.constant.MessageConstants.MESSAGE_LANG;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
@@ -24,7 +25,6 @@ import th.co.baiwa.buckwaframework.preferences.persistence.repository.MessageRep
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.ParameterGroupRepository;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.ParameterInfoRepository;
 import th.co.baiwa.excise.ta.service.ListOfValueService;
-import th.co.baiwa.excise.utils.BeanUtils;
 
 @Component
 public class ApplicationCache {

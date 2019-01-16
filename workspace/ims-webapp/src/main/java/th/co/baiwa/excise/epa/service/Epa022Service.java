@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.constant.ExciseConstants;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.epa.persistence.dao.ExportCheckingConnectDao;
 import th.co.baiwa.excise.epa.persistence.vo.Epa012FormVo;
 import th.co.baiwa.excise.epa.persistence.vo.Epa012Vo;

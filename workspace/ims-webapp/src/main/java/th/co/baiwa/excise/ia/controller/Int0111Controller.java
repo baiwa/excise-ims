@@ -22,7 +22,7 @@ import th.co.baiwa.excise.ia.persistence.entity.tax.IaTaxReceiptReq;
 import th.co.baiwa.excise.ia.persistence.entity.tax.IaTaxReceiptVo;
 import th.co.baiwa.excise.ia.persistence.entity.tax.TaxReceipt;
 import th.co.baiwa.excise.ia.service.TaxReceiptService;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 import th.co.baiwa.excise.ws.entity.response.incfri8020.IncFri8020;
 
 @Controller

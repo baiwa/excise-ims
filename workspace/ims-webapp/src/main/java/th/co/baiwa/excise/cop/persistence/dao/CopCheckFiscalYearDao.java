@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.co.baiwa.buckwaframework.common.util.BeanUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.cop.persistence.vo.Cop0711FormVo;
@@ -21,8 +22,6 @@ import th.co.baiwa.excise.cop.persistence.vo.Cop071FormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop071Vo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop091FormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop091Vo;
-import th.co.baiwa.excise.utils.BeanUtils;
-import th.co.baiwa.excise.utils.OracleUtils;
 
 @Repository
 public class CopCheckFiscalYearDao {

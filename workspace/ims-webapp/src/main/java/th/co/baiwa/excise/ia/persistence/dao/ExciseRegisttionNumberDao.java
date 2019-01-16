@@ -17,8 +17,8 @@ import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseRegistartionNumber;
 import th.co.baiwa.excise.ta.persistence.vo.AnalysisFromCountVo;
 import th.co.baiwa.excise.ta.persistence.vo.MockupForm;
-import th.co.baiwa.excise.utils.BeanUtils;
-import th.co.baiwa.excise.utils.OracleUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
+import th.co.baiwa.buckwaframework.common.util.OracleUtils;
 
 @Repository
 public class ExciseRegisttionNumberDao {

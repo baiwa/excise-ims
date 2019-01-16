@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ta.persistence.vo.TaxHomeFormVo;
 import th.co.baiwa.excise.ta.persistence.vo.TaxHomeVo;
 import th.co.baiwa.excise.ta.service.TaxHomeService;

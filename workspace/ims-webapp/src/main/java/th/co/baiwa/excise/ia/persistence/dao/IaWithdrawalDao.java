@@ -20,7 +20,7 @@ import th.co.baiwa.excise.ia.persistence.vo.Int0610FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0610Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int065FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int065Vo;
-import th.co.baiwa.excise.utils.OracleUtils;
+import th.co.baiwa.buckwaframework.common.util.OracleUtils;
 
 @Repository
 public class IaWithdrawalDao {

@@ -32,7 +32,7 @@ import th.co.baiwa.excise.ta.persistence.repository.YearPlanRepository;
 import th.co.baiwa.excise.ta.persistence.vo.PlanFromWsVo;
 import th.co.baiwa.excise.ta.persistence.vo.Tsl010200FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Tsl010200Vo;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Service
 public class PlanFromWsHeaderService {

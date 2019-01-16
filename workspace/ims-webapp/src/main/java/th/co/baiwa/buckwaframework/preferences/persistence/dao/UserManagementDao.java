@@ -18,11 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.dao.CommonJdbcDao;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
+import th.co.baiwa.buckwaframework.common.util.OracleUtils;
 import th.co.baiwa.buckwaframework.preferences.constant.UserManagementConstants;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.UserManagement;
 import th.co.baiwa.buckwaframework.preferences.persistence.mapper.UserManagementRowMapper;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
-import th.co.baiwa.excise.utils.OracleUtils;
 
 @Transactional
 @Repository

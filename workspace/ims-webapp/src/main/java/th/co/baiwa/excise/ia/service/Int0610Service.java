@@ -11,7 +11,7 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.constant.DateConstant;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.IaWithdrawalDao;
 import th.co.baiwa.excise.ia.persistence.repository.IaWithdrawalListRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int0610FormVo;

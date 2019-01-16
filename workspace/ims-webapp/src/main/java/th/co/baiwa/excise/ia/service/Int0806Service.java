@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.excise.constant.DateConstant;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.Int0806Vo;
 import th.co.baiwa.excise.ia.persistence.dao.Int0806Dao;
 import th.co.baiwa.excise.ia.persistence.entity.MoneyCheck;

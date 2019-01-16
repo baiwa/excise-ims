@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
@@ -17,7 +18,6 @@ import th.co.baiwa.excise.ia.persistence.dao.ExpensesDao;
 import th.co.baiwa.excise.ia.persistence.entity.Expenses;
 import th.co.baiwa.excise.ia.persistence.repository.ExpensesRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int06121Vo;
-import th.co.baiwa.excise.utils.NumberUtils;
 
 @Service
 public class Int06122Service {

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.CommonMessage;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.entity.DisbursementRequest;
 import th.co.baiwa.excise.ia.persistence.vo.Int061109FormVo;
 import th.co.baiwa.excise.ia.service.Int061109Service;

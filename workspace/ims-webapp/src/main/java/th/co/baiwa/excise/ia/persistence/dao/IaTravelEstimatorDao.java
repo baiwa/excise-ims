@@ -26,7 +26,7 @@ import th.co.baiwa.excise.ia.persistence.vo.Int091FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int091Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int09FormDtlVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int09TableDtlVo;
-import th.co.baiwa.excise.utils.OracleUtils;
+import th.co.baiwa.buckwaframework.common.util.OracleUtils;
 
 @Repository
 public class IaTravelEstimatorDao {

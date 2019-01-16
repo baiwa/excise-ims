@@ -7,11 +7,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.BeanUtils;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.constant.ExciseConstants;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.Int061105Dao;
 import th.co.baiwa.excise.ia.persistence.entity.DisbursementRequest;
 import th.co.baiwa.excise.ia.persistence.entity.HealthCareWelFareEntity;
@@ -22,7 +23,6 @@ import th.co.baiwa.excise.ia.persistence.repository.HealthCareWelFareRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RentHouseRepository;
 import th.co.baiwa.excise.ia.persistence.repository.TuitionFeeRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int061105FormSearchVo;
-import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class Int061105Service {

@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.excise.ia.persistence.entity.License;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 public class LicenseRepositoryImpl implements LicenseRepositoryCustom{
 	private Logger logger = LoggerFactory.getLogger(this.getClass());

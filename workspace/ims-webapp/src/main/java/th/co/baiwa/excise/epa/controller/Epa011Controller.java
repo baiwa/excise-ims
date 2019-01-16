@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.BusinessException;
 import th.co.baiwa.buckwaframework.common.bean.FormResponse;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.epa.persistence.vo.Epa011DtlVo;
 import th.co.baiwa.excise.epa.persistence.vo.Epa011FormVo;
 import th.co.baiwa.excise.epa.persistence.vo.Epa011Vo;

@@ -14,8 +14,8 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.ta.persistence.vo.TaxHomeFormVo;
 import th.co.baiwa.excise.ta.persistence.vo.TaxHomeVo;
-import th.co.baiwa.excise.utils.BeanUtils;
-import th.co.baiwa.excise.utils.OracleUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
+import th.co.baiwa.buckwaframework.common.util.OracleUtils;
 
 @Repository
 public class TaxHomeDao {

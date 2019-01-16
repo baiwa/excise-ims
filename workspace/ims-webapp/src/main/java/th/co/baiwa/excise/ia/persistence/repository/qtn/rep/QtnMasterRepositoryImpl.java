@@ -14,7 +14,7 @@ import org.springframework.jdbc.core.RowMapper;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.excise.domain.QtnHdrConditionVo;
 import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnMaster;
-import th.co.baiwa.excise.utils.OracleUtils;
+import th.co.baiwa.buckwaframework.common.util.OracleUtils;
 
 public class QtnMasterRepositoryImpl implements QtnMasterRepositoryCustom {
 	

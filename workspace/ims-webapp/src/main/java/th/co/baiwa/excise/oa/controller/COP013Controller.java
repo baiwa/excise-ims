@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
-import th.co.baiwa.excise.domain.DataTableRequest;
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 import th.co.baiwa.excise.oa.persistence.entity.OaOperPlan;
 import th.co.baiwa.excise.oa.service.COP013Service;
 

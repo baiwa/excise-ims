@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.constant.ExciseConstants;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.IaStampDetailDao;
 import th.co.baiwa.excise.ia.persistence.entity.IaStamGenre;
 import th.co.baiwa.excise.ia.persistence.entity.IaStamType;

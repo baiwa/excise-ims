@@ -32,7 +32,7 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfHdr;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssPerDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsDtl;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 import th.co.baiwa.excise.ws.entity.api.RequestServiceExcise;
 import th.co.baiwa.excise.ws.entity.api.RequestServiceExciseFromSubmit;
 import th.co.baiwa.excise.ws.entity.api.ResponseServiceExciseFromSubmit;

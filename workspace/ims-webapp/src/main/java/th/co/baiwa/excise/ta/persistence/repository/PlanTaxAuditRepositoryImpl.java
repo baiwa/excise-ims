@@ -14,8 +14,8 @@ import org.springframework.jdbc.core.RowMapper;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.excise.ta.persistence.entity.PlanTaxAudit;
-import th.co.baiwa.excise.utils.BeanUtils;
-import th.co.baiwa.excise.utils.OracleUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
+import th.co.baiwa.buckwaframework.common.util.OracleUtils;
 
 public class PlanTaxAuditRepositoryImpl implements PlanTaxAuditCustom{
 	private Logger logger = LoggerFactory.getLogger(PlanTaxAuditRepositoryImpl.class);

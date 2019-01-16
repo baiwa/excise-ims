@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.excise.domain.CommonMessage;
-import th.co.baiwa.excise.domain.DataTableRequest;
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireHeader;
 import th.co.baiwa.excise.ia.service.QuestionnaireHeaderService;
 import th.co.baiwa.excise.ia.service.QuestionnaireMainDetailService;

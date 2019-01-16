@@ -14,7 +14,7 @@ import th.co.baiwa.excise.ia.persistence.entity.IncomeExciseAud;
 import th.co.baiwa.excise.ia.service.IncomeExciseAudService;
 import th.co.baiwa.excise.ta.persistence.vo.PlanFromWsVo;
 import th.co.baiwa.excise.ta.service.PlanFromWsHeaderService;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 import th.co.baiwa.excise.ws.entity.response.IncFri8000.res.IncFri8000Res;
 import th.co.baiwa.excise.ws.entity.response.IncFri8000.res.IncomeList8000Res;
 import th.co.baiwa.excise.ws.entity.response.IncFri8000.res.ResponseData8000Res;

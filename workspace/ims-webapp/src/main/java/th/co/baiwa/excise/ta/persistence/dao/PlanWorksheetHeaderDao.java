@@ -24,8 +24,8 @@ import th.co.baiwa.excise.ta.persistence.entity.RequestFilterMapping;
 import th.co.baiwa.excise.ta.persistence.entity.analysis.PlanWorksheetHeader;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
 import th.co.baiwa.excise.ta.persistence.vo.PlanWorksheetVo;
-import th.co.baiwa.excise.utils.BeanUtils;
-import th.co.baiwa.excise.utils.OracleUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
+import th.co.baiwa.buckwaframework.common.util.OracleUtils;
 
 @Repository
 public class PlanWorksheetHeaderDao {

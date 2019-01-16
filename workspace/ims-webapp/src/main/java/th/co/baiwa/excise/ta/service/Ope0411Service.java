@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.domain.LabelValueBean;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ta.persistence.dao.DisplayRawMaterialChrckerHeaderDao;
 import th.co.baiwa.excise.ta.persistence.vo.Ope0411Vo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope0462FormVo;

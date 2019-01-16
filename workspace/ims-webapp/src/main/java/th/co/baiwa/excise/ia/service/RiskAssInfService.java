@@ -33,7 +33,7 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.LovRepository;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.excise.domain.DataTableRequest;
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 import th.co.baiwa.excise.domain.Int0802Vo;
 import th.co.baiwa.excise.domain.RiskFullDataInt0802Vo;
 import th.co.baiwa.excise.ia.persistence.entity.Condition;
@@ -43,7 +43,7 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfOtherDtl;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssInfDtlRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssInfHdrRepository;
 import th.co.baiwa.excise.ia.persistence.repository.RiskAssInfOtherDtlRepository;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 import th.co.baiwa.excise.ws.WebServiceExciseService;
 
 

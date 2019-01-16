@@ -3,7 +3,7 @@ package th.co.baiwa.excise.epa.persistence.vo;
 import java.util.ArrayList;
 import java.util.List;
 
-import th.co.baiwa.excise.domain.datatable.DataTableRequest;
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 
 public class Epa012FormVo extends DataTableRequest {
 

@@ -2,7 +2,7 @@ package th.co.baiwa.excise.ia.persistence.vo;
 
 import java.util.List;
 
-import th.co.baiwa.excise.domain.datatable.DataTableRequest;
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 import th.co.baiwa.excise.ws.entity.response.licfri6020.LicenseList6020;
 
 public class Int0161Vo extends DataTableRequest {

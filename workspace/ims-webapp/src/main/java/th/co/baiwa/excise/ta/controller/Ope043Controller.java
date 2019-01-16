@@ -25,14 +25,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope043DataTable;
 import th.co.baiwa.excise.ta.persistence.vo.Ope043ExcelVo;
 import th.co.baiwa.excise.ta.service.MaterialsWsService;
 import th.co.baiwa.excise.ta.service.Ope04ExcelService;
 import th.co.baiwa.excise.upload.service.UploadFileExciseService;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Controller
 @RequestMapping("api/ope043")

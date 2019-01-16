@@ -16,7 +16,7 @@ import th.co.baiwa.excise.ta.persistence.vo.Ope0421Vo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope0422Vo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope0461FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope0462FormVo;
-import th.co.baiwa.excise.utils.OracleUtils;
+import th.co.baiwa.buckwaframework.common.util.OracleUtils;
 
 @Repository
 public class DisplayPayRawMaterialCheckerDao {

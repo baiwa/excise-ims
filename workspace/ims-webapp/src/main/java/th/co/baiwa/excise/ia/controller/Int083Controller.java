@@ -21,7 +21,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.excise.domain.DataTableRequest;
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 import th.co.baiwa.excise.domain.Int0801Vo;
 import th.co.baiwa.excise.domain.Int0803Vo;
 import th.co.baiwa.excise.domain.QtnMasterVo;
@@ -36,7 +36,7 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssExcRecDtl;
 import th.co.baiwa.excise.ia.service.RiskAssExcAreaService;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
 import th.co.baiwa.excise.upload.service.UploadFileExciseService;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Controller
 @RequestMapping("api/ia/int083")

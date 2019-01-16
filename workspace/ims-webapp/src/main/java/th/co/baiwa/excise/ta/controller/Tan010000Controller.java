@@ -13,7 +13,7 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.cop.persistence.vo.Cop071FormVo;
 import th.co.baiwa.excise.domain.CommonMessage;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ta.persistence.vo.Tan010000FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Tan010000Vo;
 import th.co.baiwa.excise.ta.service.Tan010000Service;

@@ -35,7 +35,7 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ExcelUtils;
 import th.co.baiwa.excise.ia.persistence.vo.Int076Vo;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Service
 public class Int076Service {

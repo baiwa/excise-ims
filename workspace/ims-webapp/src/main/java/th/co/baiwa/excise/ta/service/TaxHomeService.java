@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ta.persistence.dao.TaxHomeDao;
 import th.co.baiwa.excise.ta.persistence.vo.TaxHomeFormVo;
 import th.co.baiwa.excise.ta.persistence.vo.TaxHomeVo;

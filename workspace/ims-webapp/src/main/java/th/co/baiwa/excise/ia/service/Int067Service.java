@@ -11,7 +11,7 @@ import th.co.baiwa.excise.ia.persistence.dao.PublicUtilityDao;
 import th.co.baiwa.excise.ia.persistence.entity.PublicUtility;
 import th.co.baiwa.excise.ia.persistence.repository.PublicUtilityRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int068FormVo;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Service
 public class Int067Service {

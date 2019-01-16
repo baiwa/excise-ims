@@ -18,8 +18,8 @@ import th.co.baiwa.excise.ta.persistence.repository.MaterialsWsDetailRepository;
 import th.co.baiwa.excise.ta.persistence.repository.MaterialsWsHeaderRepository;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope043DataTable;
-import th.co.baiwa.excise.utils.BeanUtils;
-import th.co.baiwa.excise.utils.NumberUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 
 @Service
 public class MaterialsWsService {

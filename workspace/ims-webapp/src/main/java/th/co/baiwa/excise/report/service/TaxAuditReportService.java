@@ -32,7 +32,7 @@ import th.co.baiwa.excise.ta.persistence.entity.TaYearPlanReport;
 import th.co.baiwa.excise.ta.persistence.entity.YearPlan;
 import th.co.baiwa.excise.ta.persistence.repository.TaYearPlanReportRepository;
 import th.co.baiwa.excise.ta.persistence.repository.YearPlanRepository;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Service
 public class TaxAuditReportService {

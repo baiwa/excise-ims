@@ -13,9 +13,9 @@ import org.springframework.data.domain.Pageable;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.co.baiwa.buckwaframework.common.util.OracleUtils;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.persistence.mapper.MessageRowMapper;
-import th.co.baiwa.excise.utils.OracleUtils;
 
 public class MessageRepositoryImpl implements MessageRepositoryCustom {
 	

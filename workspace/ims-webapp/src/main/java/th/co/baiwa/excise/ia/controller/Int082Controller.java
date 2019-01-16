@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.excise.domain.DataTableRequest;
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 import th.co.baiwa.excise.domain.Int0802Vo;
 import th.co.baiwa.excise.domain.RiskFullDataInt0802Vo;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfDtl;
@@ -32,7 +32,7 @@ import th.co.baiwa.excise.ia.persistence.entity.RiskAssInfOtherDtl;
 import th.co.baiwa.excise.ia.service.RiskAssInfService;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041Vo;
 import th.co.baiwa.excise.upload.service.UploadFileExciseService;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Controller
 @RequestMapping("api/ia/int082")

@@ -15,9 +15,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.co.baiwa.buckwaframework.common.util.OracleUtils;
 import th.co.baiwa.excise.epa.persistence.vo.Epa012FormVo;
 import th.co.baiwa.excise.epa.persistence.vo.Epa012Vo;
-import th.co.baiwa.excise.utils.OracleUtils;
 
 @Repository
 public class ExportCheckingConnectDao {

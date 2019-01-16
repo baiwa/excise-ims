@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ta.persistence.vo.Tsl010600FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Tsl010600Vo;
 import th.co.baiwa.excise.ta.service.Tsl010600Service;

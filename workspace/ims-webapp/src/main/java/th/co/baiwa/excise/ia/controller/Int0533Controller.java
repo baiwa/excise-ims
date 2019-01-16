@@ -21,13 +21,13 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
-import th.co.baiwa.excise.domain.DataTableRequest;
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 import th.co.baiwa.excise.domain.Int0533Vo;
 import th.co.baiwa.excise.ia.persistence.entity.AssetBalance;
 import th.co.baiwa.excise.ia.persistence.entity.AssetMaintenance;
 import th.co.baiwa.excise.ia.service.AssetBalanceService;
 import th.co.baiwa.excise.ia.service.AssetMaintenanceService;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Controller
 @RequestMapping("api/ia/int0533")

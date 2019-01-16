@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.CommonManageReq;
 import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.domain.DataTableRequest;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.domain.ia.Int023MappingVO;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireDetail;
 import th.co.baiwa.excise.ia.persistence.entity.QuestionnaireMinor;
@@ -35,8 +36,7 @@ import th.co.baiwa.excise.ia.persistence.vo.Int023Vo;
 import th.co.baiwa.excise.ia.service.QtnMasterService;
 import th.co.baiwa.excise.ia.service.QtnReportHeaderService;
 import th.co.baiwa.excise.ia.service.QtnReportMainService;
-import th.co.baiwa.excise.ia.service.QuestionnaireDetailService;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.excise.ia.service.QuestionnaireDetailService; 
 
 @Controller
 @RequestMapping("api/ia/int02")

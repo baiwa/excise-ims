@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ta.persistence.dao.ResultAnalysisDao;
 import th.co.baiwa.excise.ta.persistence.vo.ResultAnalysisRequestvo;
 import th.co.baiwa.excise.ta.persistence.vo.ResultAnalysisVo;

@@ -25,7 +25,7 @@ import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.dao.IaTravelEstimatorDao;
 import th.co.baiwa.excise.ia.persistence.vo.Int09FormDtlVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int09TableDtlVo;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Service
 public class Int09DataDtlService {

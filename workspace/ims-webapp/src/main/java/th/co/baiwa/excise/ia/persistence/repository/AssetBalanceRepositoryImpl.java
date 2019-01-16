@@ -14,7 +14,7 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.excise.ia.persistence.entity.AssetBalance;
 import th.co.baiwa.excise.ia.persistence.repository.AssetBalanceRepositoryCustom;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 public class AssetBalanceRepositoryImpl implements AssetBalanceRepositoryCustom {
 	private static final Logger logger = LoggerFactory.getLogger(AssetBalanceRepositoryImpl.class);

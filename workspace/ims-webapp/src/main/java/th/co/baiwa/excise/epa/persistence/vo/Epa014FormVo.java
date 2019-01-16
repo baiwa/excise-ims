@@ -1,6 +1,6 @@
 package th.co.baiwa.excise.epa.persistence.vo;
 
-import th.co.baiwa.excise.domain.datatable.DataTableRequest;
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 
 public class Epa014FormVo extends DataTableRequest {
 

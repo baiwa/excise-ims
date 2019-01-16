@@ -16,7 +16,7 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.ia.persistence.vo.Int0671FormVo;
 import th.co.baiwa.excise.ia.service.Int0671Service;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Controller
 @RequestMapping("api/ia/int0671")

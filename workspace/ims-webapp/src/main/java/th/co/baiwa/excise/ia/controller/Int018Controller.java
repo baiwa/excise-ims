@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.excise.domain.Int018Vo;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 import th.co.baiwa.excise.ws.WebServiceExciseService;
 import th.co.baiwa.excise.ws.entity.response.incfri8020.IncFri8020;
 import th.co.baiwa.excise.ws.entity.response.incfri8020.IncomeList;

@@ -17,7 +17,7 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.domain.Int0121Vo;
 import th.co.baiwa.excise.ia.persistence.entity.License;
 import th.co.baiwa.excise.ia.service.LicenseService;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 import th.co.baiwa.excise.ws.WebServiceExciseService;
 import th.co.baiwa.excise.ws.entity.response.licfri6010.LicFri6010;
 import th.co.baiwa.excise.ws.entity.response.licfri6010.LicenseList6010;

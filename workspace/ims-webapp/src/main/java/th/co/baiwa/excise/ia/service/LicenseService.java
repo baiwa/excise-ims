@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.ia.persistence.entity.License;
 import th.co.baiwa.excise.ia.persistence.repository.LicenseRepository;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Service
 public class LicenseService {

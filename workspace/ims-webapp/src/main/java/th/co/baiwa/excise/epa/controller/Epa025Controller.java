@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.epa.persistence.vo.Epa012FormVo;
 import th.co.baiwa.excise.epa.persistence.vo.Epa012Vo;
 import th.co.baiwa.excise.epa.service.Epa025Service;

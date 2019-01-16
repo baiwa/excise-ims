@@ -42,7 +42,7 @@ import th.co.baiwa.excise.ia.persistence.vo.Int062CwpDtlVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int062FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int062Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int062paymentInfoVo;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Service
 public class Int062Service {

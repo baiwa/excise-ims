@@ -1,7 +1,7 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
 import org.springframework.web.multipart.MultipartFile;
-import th.co.baiwa.excise.domain.datatable.DataTableRequest;
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 
 public class Int0911T2Vo extends DataTableRequest {
 

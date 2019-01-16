@@ -21,7 +21,7 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.domain.CommonMessage;
-import th.co.baiwa.excise.domain.datatable.DataTableRequest;
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 import th.co.baiwa.excise.sys.domain.Notification;
 import th.co.baiwa.excise.sys.service.NotificationService;
 import th.co.baiwa.excise.ta.persistence.dao.PlanWorksheetHeaderDao;

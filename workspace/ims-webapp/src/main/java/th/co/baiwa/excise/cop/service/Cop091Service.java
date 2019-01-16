@@ -12,7 +12,7 @@ import th.co.baiwa.excise.cop.persistence.entity.CopCheckFiscalReport;
 import th.co.baiwa.excise.cop.persistence.repository.CopCheckFiscalReportRepository;
 import th.co.baiwa.excise.cop.persistence.vo.Cop091FormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop091Vo;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 
 @Service
 public class Cop091Service {

@@ -1,6 +1,6 @@
 package th.co.baiwa.excise.ia.persistence.vo;
 
-import th.co.baiwa.excise.domain.datatable.DataTableRequest;
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 
 
 public class Int09111And3FormVo extends DataTableRequest {

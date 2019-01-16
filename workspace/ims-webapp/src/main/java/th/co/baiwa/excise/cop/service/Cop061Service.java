@@ -26,7 +26,7 @@ import th.co.baiwa.excise.cop.persistence.vo.Cop061ExcelVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop061FormVo;
 import th.co.baiwa.excise.cop.persistence.vo.Cop061Vo;
 import th.co.baiwa.excise.domain.LabelValueBean;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.oa.persistence.entity.OaTaxReduceWsDtl;
 import th.co.baiwa.excise.ta.persistence.entity.TaxReduceWsDtlS;
 import th.co.baiwa.excise.ta.persistence.repository.TaxReduceWsDtlRepository;

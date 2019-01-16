@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Lov;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.cop.persistence.vo.Cop0711FormVo;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.IaIncomeExciseAudDao;
 import th.co.baiwa.excise.ia.persistence.entity.IncomeExciseAud;
 import th.co.baiwa.excise.ia.persistence.entity.IncomeExciseAudDtl;
@@ -38,7 +38,7 @@ import th.co.baiwa.excise.ia.persistence.repository.IncomeExciseAudDtlRepository
 import th.co.baiwa.excise.ia.persistence.vo.Int084FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int084Vo;
 import th.co.baiwa.excise.upload.service.ExcalService;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Service
 public class Int084Service {

@@ -13,7 +13,6 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.excise.ia.persistence.entity.Condition;
 import th.co.baiwa.excise.ia.persistence.repository.ConditionRepository;
 import th.co.baiwa.excise.ia.persistence.vo.ConditionFormVo;
-import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class ConditionService {

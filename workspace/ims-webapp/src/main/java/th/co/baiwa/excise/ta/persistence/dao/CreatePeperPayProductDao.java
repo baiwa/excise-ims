@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.excise.domain.LabelValueBean;
 import th.co.baiwa.excise.ta.persistence.vo.Ope045FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope045Vo;
-import th.co.baiwa.excise.utils.OracleUtils;
+import th.co.baiwa.buckwaframework.common.util.OracleUtils;
 
 @Repository
 public class CreatePeperPayProductDao {

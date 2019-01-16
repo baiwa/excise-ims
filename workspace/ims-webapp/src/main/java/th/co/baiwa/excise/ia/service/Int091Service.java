@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.excise.constant.IaConstant.VALUE.IAPROOF_OF_PAYMENT_DOCUMENT_TYPE;
 import th.co.baiwa.excise.domain.LabelValueBean;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.IaTravelEstimatorDao;
 import th.co.baiwa.excise.ia.persistence.entity.Budget;
 import th.co.baiwa.excise.ia.persistence.vo.Int091FormVo;

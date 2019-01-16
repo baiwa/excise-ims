@@ -2,7 +2,7 @@ package th.co.baiwa.excise.cop.persistence.vo;
 
 import java.util.Date;
 
-import th.co.baiwa.excise.domain.datatable.DataTableRequest;
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 
 public class Cop092BudgetFormVo extends DataTableRequest {
 

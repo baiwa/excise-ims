@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.excise.ta.persistence.entity.ExciseDetail;
 import th.co.baiwa.excise.ta.persistence.entity.ExciseTax;
-import th.co.baiwa.excise.utils.OracleUtils;
+import th.co.baiwa.buckwaframework.common.util.OracleUtils;
 
 @Repository
 public class ExciseDetailDao {

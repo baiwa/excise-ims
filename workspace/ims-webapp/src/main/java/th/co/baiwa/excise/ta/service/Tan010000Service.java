@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.excise.constant.ExciseConstants;
 import th.co.baiwa.excise.cop.persistence.vo.Cop071FormVo;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ta.persistence.dao.Tan010000Dao;
 import th.co.baiwa.excise.ta.persistence.vo.Tan010000FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Tan010000Vo;

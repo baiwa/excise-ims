@@ -22,7 +22,7 @@ import th.co.baiwa.excise.constant.ExciseConstants;
 import th.co.baiwa.excise.domain.CommonMessage;
 import th.co.baiwa.excise.domain.QtnHdrConditionVo;
 import th.co.baiwa.excise.domain.QtnMasterVo;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.QtnReportMasterDao;
 import th.co.baiwa.excise.ia.persistence.entity.Condition;
 import th.co.baiwa.excise.ia.persistence.entity.qtn.QtnMaster;
@@ -30,7 +30,7 @@ import th.co.baiwa.excise.ia.persistence.repository.qtn.alt.QtnTimeAlertReposito
 import th.co.baiwa.excise.ia.persistence.repository.qtn.rep.QtnMasterRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int021Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int022FormVo;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 import th.co.baiwa.excise.ws.WebServiceExciseService;
 
 @Service

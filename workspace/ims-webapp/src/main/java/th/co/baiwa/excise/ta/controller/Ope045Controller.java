@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 
 import th.co.baiwa.excise.domain.LabelValueBean;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ta.persistence.vo.Ope044SumVo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope044Vo;
 import th.co.baiwa.excise.ta.persistence.vo.Ope045FormVo;

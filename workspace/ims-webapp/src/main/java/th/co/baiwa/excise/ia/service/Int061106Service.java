@@ -8,20 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
-import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.excise.constant.ExciseConstants;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.dao.Int061106Dao;
 import th.co.baiwa.excise.ia.persistence.entity.DisbursementRequest;
-import th.co.baiwa.excise.ia.persistence.entity.HealthCareWelFareEntity;
-import th.co.baiwa.excise.ia.persistence.entity.RentHouse;
-import th.co.baiwa.excise.ia.persistence.entity.TuitionFee;
-import th.co.baiwa.excise.ia.persistence.repository.HealthCareWelFareRepository;
-import th.co.baiwa.excise.ia.persistence.repository.RentHouseRepository;
-import th.co.baiwa.excise.ia.persistence.repository.TuitionFeeRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int061106FormVo;
-import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class Int061106Service {

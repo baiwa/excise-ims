@@ -23,7 +23,7 @@ import th.co.baiwa.excise.ia.persistence.repository.AllocatedBudgetRepository;
 import th.co.baiwa.excise.ia.persistence.repository.PublicUtilityRepository;
 import th.co.baiwa.excise.ia.persistence.repository.TimeSetRepository;
 import th.co.baiwa.excise.ia.persistence.vo.Int068FormVo;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Service
 public class Int068Service {

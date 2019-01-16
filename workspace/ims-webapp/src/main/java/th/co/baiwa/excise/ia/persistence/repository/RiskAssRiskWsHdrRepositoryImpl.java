@@ -16,7 +16,7 @@ import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
 import th.co.baiwa.excise.domain.Int0801Vo;
 import th.co.baiwa.excise.ia.persistence.entity.RiskAssRiskWsHdr;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 public class RiskAssRiskWsHdrRepositoryImpl implements RiskAssRiskWsHdrRepositoryCustom {
 

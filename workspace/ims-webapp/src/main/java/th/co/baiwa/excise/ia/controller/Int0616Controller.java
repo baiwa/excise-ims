@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.excise.constant.IaConstant;
-import th.co.baiwa.excise.domain.datatable.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.excise.ia.persistence.vo.Int0614FormSearchVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0615FormVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0615Vo;

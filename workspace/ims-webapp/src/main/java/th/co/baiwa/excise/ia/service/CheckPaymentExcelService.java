@@ -21,11 +21,11 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.BeanUtils;
 import th.co.baiwa.excise.ia.persistence.vo.Int0610Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int065Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int068Vo;
 import th.co.baiwa.excise.ia.persistence.vo.Int069Vo;
-import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class CheckPaymentExcelService {

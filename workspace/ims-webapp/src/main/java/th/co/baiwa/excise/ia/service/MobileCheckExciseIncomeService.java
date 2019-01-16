@@ -13,7 +13,7 @@ import th.co.baiwa.excise.ia.persistence.vo.ResponseApiSaveIncome;
 import th.co.baiwa.excise.ia.persistence.vo.RisTaskChecking;
 import th.co.baiwa.excise.ia.persistence.vo.RiskTaskChecking;
 import th.co.baiwa.excise.ia.persistence.vo.RiskType;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Service
 public class MobileCheckExciseIncomeService {

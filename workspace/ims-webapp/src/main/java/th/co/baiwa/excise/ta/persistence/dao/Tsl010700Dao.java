@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ta.persistence.vo.Tsl010700FormVo;
 import th.co.baiwa.excise.ta.persistence.vo.Tsl010700Vo;
-import th.co.baiwa.excise.utils.OracleUtils;
+import th.co.baiwa.buckwaframework.common.util.OracleUtils;
 
 @Repository
 public class Tsl010700Dao {

@@ -10,7 +10,7 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.excise.constant.DateConstant;
 import th.co.baiwa.excise.ia.persistence.entity.tax.TaxReceipt;
 import th.co.baiwa.excise.ia.persistence.entity.tax.IaTaxReceiptVo;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

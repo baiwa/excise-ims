@@ -17,7 +17,7 @@ import th.co.baiwa.excise.ia.persistence.entity.MoneyCheck;
 import th.co.baiwa.excise.ia.persistence.entity.RentHouse;
 import th.co.baiwa.excise.ia.persistence.vo.Int061105FormSearchVo;
 import th.co.baiwa.excise.ia.persistence.vo.Int0806FormSearchVo;
-import th.co.baiwa.excise.utils.BeanUtils;
+import th.co.baiwa.buckwaframework.common.util.BeanUtils; 
 
 @Repository
 public class Int0806Dao {

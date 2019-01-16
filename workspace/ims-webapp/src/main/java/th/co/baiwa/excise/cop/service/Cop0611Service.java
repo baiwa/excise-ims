@@ -7,13 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.BeanUtils;
 import th.co.baiwa.excise.cop.persistence.dao.ReportCheckOperationDao;
-import th.co.baiwa.excise.ta.persistence.entity.DisbRmatWorksheetDetail;
-import th.co.baiwa.excise.ta.persistence.entity.DisbRmatWorksheetHeader;
-import th.co.baiwa.excise.ta.persistence.repository.DisbRmatWsDetailRepository;
-import th.co.baiwa.excise.ta.persistence.repository.DisbRmatWsHeaderRepository;
 import th.co.baiwa.excise.ta.persistence.vo.Ope041DataTable;
-import th.co.baiwa.excise.utils.BeanUtils;
 
 @Service
 public class Cop0611Service {
