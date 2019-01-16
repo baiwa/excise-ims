@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataTableRequest2 implements Serializable {
+public class DataTableRequest implements Serializable {
 	
 	private static final long serialVersionUID = -2101666256658867880L;
 	int start;
