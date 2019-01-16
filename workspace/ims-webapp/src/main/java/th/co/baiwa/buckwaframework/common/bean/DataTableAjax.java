@@ -1,34 +1,35 @@
 package th.co.baiwa.buckwaframework.common.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataTableAjax<T> {
-	private Integer draw = 0;
-	private Integer recordsTotal = 0;
-	private Integer recordsFiltered = 0;
-	private List<T> data;
+	private Long draw = 0l;
+	private Long recordsTotal = 0l;
+	private Long recordsFiltered = 0l;
+	private List<T> data = new ArrayList<>();
 
-	public Integer getDraw() {
+	public Long getDraw() {
 		return draw;
 	}
 
-	public void setDraw(Integer draw) {
+	public void setDraw(Long draw) {
 		this.draw = draw;
 	}
 
-	public Integer getRecordsTotal() {
+	public Long getRecordsTotal() {
 		return recordsTotal;
 	}
 
-	public void setRecordsTotal(Integer recordsTotal) {
+	public void setRecordsTotal(Long recordsTotal) {
 		this.recordsTotal = recordsTotal;
 	}
 
-	public Integer getRecordsFiltered() {
+	public Long getRecordsFiltered() {
 		return recordsFiltered;
 	}
 
-	public void setRecordsFiltered(Integer recordsFiltered) {
+	public void setRecordsFiltered(Long recordsFiltered) {
 		this.recordsFiltered = recordsFiltered;
 	}
 
@@ -39,5 +40,4 @@ public class DataTableAjax<T> {
 	public void setData(List<T> data) {
 		this.data = data;
 	}
-
 }

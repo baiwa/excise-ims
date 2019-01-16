@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.bean.BusinessException;
 import th.co.baiwa.excise.constant.ExciseConstants.SEARCH_FLAG;
 import th.co.baiwa.excise.domain.datatable.DataTableAjax;
 import th.co.baiwa.excise.epa.persistence.dao.ExportCheckingDao;
@@ -55,13 +56,15 @@ public class Epa011Service {
 		return dataTableAjax;
 	}
 
-	public InvhdrFormVo getInvDetail(InvhdrFormVo invhdrFormVo) {
+	public InvhdrFormVo getInvDetail(InvhdrFormVo invhdrFormVo) throws Exception {
 
 		Epa011Vo taxhdr = exportCheckingDao.getHDR(invhdrFormVo.getHdrId());
 		invhdrFormVo.setHdrVo(taxhdr);
 		
 		Epa011DtlVo taxdtl = exportCheckingDao.getDTL(invhdrFormVo.getDtlId());
 		invhdrFormVo.setDtlVo(taxdtl);
+		
+
 		
 		return invhdrFormVo;
 	}

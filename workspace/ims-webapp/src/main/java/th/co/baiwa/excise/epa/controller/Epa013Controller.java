@@ -42,7 +42,13 @@ public class Epa013Controller {
 	@PostMapping("/getInvDetail")
 	@ResponseBody
 	public InvhdrFormVo getInvDetail(@RequestBody InvhdrFormVo InvhdrFormVo) {
-		 return epa011Service.getInvDetail(InvhdrFormVo);
+		InvhdrFormVo data = new InvhdrFormVo();
+		try {
+			data = epa011Service.getInvDetail(InvhdrFormVo);
+		} catch (Exception e) {
+
+		}
+		return data;
 	}
 	
 	@PostMapping("/saveInv")

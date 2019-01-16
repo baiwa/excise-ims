@@ -26,8 +26,8 @@ public class Int069Service {
 		listData = transferListDao.queryByFilter(en);
 
 		DataTableAjax<TransferList> dataTableAjax = new DataTableAjax<>();
-		dataTableAjax.setRecordsTotal(listData.size());
-		dataTableAjax.setRecordsFiltered(listData.size());
+		dataTableAjax.setRecordsTotal((long) listData.size());
+		dataTableAjax.setRecordsFiltered((long) listData.size());
 		dataTableAjax.setData(listData);
 		return dataTableAjax;
 	}

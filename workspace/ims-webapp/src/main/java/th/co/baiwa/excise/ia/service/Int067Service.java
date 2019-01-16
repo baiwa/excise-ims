@@ -30,8 +30,8 @@ public class Int067Service {
 		}
 		
 		DataTableAjax<Int068FormVo> dataTableAjax = new DataTableAjax<>();
-		dataTableAjax.setRecordsTotal(listData.size());
-		dataTableAjax.setRecordsFiltered(listData.size());
+		dataTableAjax.setRecordsTotal((long) listData.size());
+		dataTableAjax.setRecordsFiltered((long) listData.size());
 		dataTableAjax.setData(listData);
 		return dataTableAjax;
 	}
