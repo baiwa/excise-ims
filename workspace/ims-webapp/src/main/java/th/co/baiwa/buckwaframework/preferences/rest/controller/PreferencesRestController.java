@@ -46,7 +46,7 @@ public class PreferencesRestController {
 	public ResponseEntity<?> reloadCache() {
 		logger.info("reloadCache");
 		
-		applicationCache.reloadCache();
+//		applicationCache.reloadCache();
 		
 		Map<String, String> map = new HashMap<>();
 		map.put("status", "reload cache successful");

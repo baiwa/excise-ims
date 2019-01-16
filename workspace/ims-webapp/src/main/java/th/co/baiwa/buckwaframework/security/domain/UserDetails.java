@@ -1,127 +1,119 @@
 package th.co.baiwa.buckwaframework.security.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 public class UserDetails extends User implements UserBean {
-
-	private static final long serialVersionUID = 2637807472705815470L;
-
-	private Long userId;
-	// Add More Information about USER here.
-
-	private String[] exciseBaseControl;
-	private String userThaiId;
-	private String userThaiName;
-	private String userThaiSurname;
-	private String userEngName;
-	private String userEngSurname;
-	private String title;
-	private String email;
-	private String cnName;
-	private String telephoneNo;
-	private String officeId;
-	private String accessAttr;
-	private String role;
-
 	
-
+	private static final long serialVersionUID = 2637807472705815470L;
+	
+	private String userId;
+	// Add More Information about USER here.
+	private List<String> auths = new ArrayList<>();
+	private String firstName;
+	private String lastName;
+	private String branchCode;
+	private String officeCode;
+	private String department;
+    private String group;
+	private String belongto;
+	private String telephoneNo;
+	private String email;
+	private String departmentCode;
+	
+	
 	// Constructor
-	public UserDetails(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
+	public UserDetails(String username, String password, boolean enabled,boolean accountNonExpired,
+			boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 	}
-
+	
 	// Constructor
 	public UserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, authorities);
 	}
-
+	
+	
 	// ==================================================
 	// Getter & Setter Method
 	// ==================================================
-	@Override
-	public Long getUserId() {
+	
+	
+	public List<String> getAuths() {
+		return auths;
+	}
+
+	public void setAuths(List<String> auths) {
+		this.auths = auths;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
-	public String[] getExciseBaseControl() {
-		return exciseBaseControl;
+	public String getBranchCode() {
+		return branchCode;
 	}
 
-	public void setExciseBaseControl(String[] exciseBaseControl) {
-		this.exciseBaseControl = exciseBaseControl;
-	}
-	@Override
-	public String getUserThaiId() {
-		return userThaiId;
+	public void setBranchCode(String branchCode) {
+		this.branchCode = branchCode;
 	}
 
-	public void setUserThaiId(String userThaiId) {
-		this.userThaiId = userThaiId;
-	}
-	@Override
-	public String getUserThaiName() {
-		return userThaiName;
+	public String getOfficeCode() {
+		return officeCode;
 	}
 
-	public void setUserThaiName(String userThaiName) {
-		this.userThaiName = userThaiName;
-	}
-	@Override
-	public String getUserThaiSurname() {
-		return userThaiSurname;
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
 	}
 
-	public void setUserThaiSurname(String userThaiSurname) {
-		this.userThaiSurname = userThaiSurname;
-	}
-	@Override
-	public String getUserEngName() {
-		return userEngName;
+	public String getDepartment() {
+		return department;
 	}
 
-	public void setUserEngName(String userEngName) {
-		this.userEngName = userEngName;
-	}
-	@Override
-	public String getUserEngSurname() {
-		return userEngSurname;
+	public void setDepartment(String department) {
+		this.department = department;
 	}
 
-	public void setUserEngSurname(String userEngSurname) {
-		this.userEngSurname = userEngSurname;
-	}
-	@Override
-	public String getTitle() {
-		return title;
+	public String getGroup() {
+		return group;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	@Override
-	public String getEmail() {
-		return email;
+	public void setGroup(String group) {
+		this.group = group;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	@Override
-	public String getCnName() {
-		return cnName;
+	public String getBelongto() {
+		return belongto;
 	}
 
-	public void setCnName(String cnName) {
-		this.cnName = cnName;
+	public void setBelongto(String belongto) {
+		this.belongto = belongto;
 	}
-	@Override
+
 	public String getTelephoneNo() {
 		return telephoneNo;
 	}
@@ -129,28 +121,23 @@ public class UserDetails extends User implements UserBean {
 	public void setTelephoneNo(String telephoneNo) {
 		this.telephoneNo = telephoneNo;
 	}
-	@Override
-	public String getOfficeId() {
-		return officeId;
+
+	public String getEmail() {
+		return email;
 	}
 
-	public void setOfficeId(String officeId) {
-		this.officeId = officeId;
-	}
-	@Override
-	public String getAccessAttr() {
-		return accessAttr;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public void setAccessAttr(String accessAttr) {
-		this.accessAttr = accessAttr;
-	}
-	public String getRole() {
-		return role;
+	public String getDepartmentCode() {
+		return departmentCode;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setDepartmentCode(String departmentCode) {
+		this.departmentCode = departmentCode;
 	}
 	
+	
+
 }

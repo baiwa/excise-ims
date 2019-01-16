@@ -1,7 +1,5 @@
 package th.co.baiwa.buckwaframework.common.util;
 
-import org.springframework.data.domain.Pageable;
-
 public class OracleUtils {
 
 	public static String limit(String sql , int min , int max) {
@@ -39,15 +37,5 @@ public class OracleUtils {
 		return countForDatatable(sql.toString());
 	}
 	
-	public static String limit(String sql, Pageable pageable) {
-		int min = pageable.getOffset() + 1;
-		int max = pageable.getOffset() + pageable.getPageSize();
-		
-		final StringBuilder pagingSelect = new StringBuilder(sql.length() + 120);
-		pagingSelect.append(" select * from (select row_.*, rownum rownum_ from ( ");
-		pagingSelect.append(sql);
-		pagingSelect.append(" ) row_ where rownum <= ").append(max).append(") where rownum_ >= ").append(min);
-		
-		return pagingSelect.toString();
-	}
+	
 }

@@ -5,18 +5,18 @@
 		http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>th.go.excise</groupId>
-	<artifactId>ims-webapp</artifactId>
+	<groupId>com.tmb</groupId>
+	<artifactId>ecert-webapp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>ims-webapp</name>
-	<description>Backend side for ims</description>
+	<name>ecert-webapp</name>
+	<description>Backend side for ecert-webapp</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.8.RELEASE</version>
+		<version>2.0.5.RELEASE</version>
 	</parent>
 
 	<properties>
@@ -28,16 +28,19 @@
 		<commons.lang3.version>3.6</commons.lang3.version>
 		<commons.fileupload.version>1.3.3</commons.fileupload.version>
 		<commons.io.version>2.5</commons.io.version>
+		<commons.compress>1.18</commons.compress>
 		<thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
-		<ojdbc6.version>11.2.0.3</ojdbc6.version>
 		<hikaricp.version>2.6.3</hikaricp.version>
 		<p6spy.version>3.0.0</p6spy.version>
 		<swagger.version>2.7.0</swagger.version>
+		<poi.version>3.17</poi.version>
+		<poi.ooxml.version>3.17</poi.ooxml.version>
 		<jasperreports.version>6.5.1</jasperreports.version>
 		<itext.version>2.1.7</itext.version>
-		<apache.cxf.version>3.2.1</apache.cxf.version>
 		<!-- Plugin Version -->
 		<maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+		<quartz.version>2.2.1</quartz.version>
+		<jsch.version>0.1.54</jsch.version>
 	</properties>
 
 	<dependencies>
@@ -46,7 +49,6 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>${commons.lang3.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-fileupload</groupId>
@@ -93,16 +95,16 @@
 		</dependency>
 
 		<!-- Spring data JPA, default tomcat pool, exclude it -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.tomcat</groupId>
-					<artifactId>tomcat-jdbc</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>org.springframework.boot</groupId> -->
+		<!-- <artifactId>spring-boot-starter-data-jpa</artifactId> -->
+		<!-- <exclusions> -->
+		<!-- <exclusion> -->
+		<!-- <groupId>org.apache.tomcat</groupId> -->
+		<!-- <artifactId>tomcat-jdbc</artifactId> -->
+		<!-- </exclusion> -->
+		<!-- </exclusions> -->
+		<!-- </dependency> -->
 
 		<!-- Starter for building MVC web applications using Thymeleaf views -->
 		<dependency>
@@ -122,18 +124,6 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
-		<!-- Spring Security LDAP -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-ldap</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.unboundid</groupId>
-			<artifactId>unboundid-ldapsdk</artifactId>
-			<scope>test</scope>
-		</dependency>
-
 		<!-- Starter for testing Spring Boot applications with libraries including 
 			JUnit, Hamcrest and Mockito -->
 		<dependency>
@@ -143,11 +133,11 @@
 		</dependency>
 
 		<!-- Spring Security Test -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>org.springframework.security</groupId> -->
+		<!-- <artifactId>spring-security-test</artifactId> -->
+		<!-- <scope>test</scope> -->
+		<!-- </dependency> -->
 
 		<!-- Spring Boot Developer Tools -->
 		<dependency>
@@ -157,15 +147,6 @@
 		</dependency>
 
 		<!-- Database -->
-		<!-- <dependency> -->
-		<!-- <groupId>mysql</groupId> -->
-		<!-- <artifactId>mysql-connector-java</artifactId> -->
-		<!-- </dependency> -->
-		<!-- <dependency> -->
-		<!-- <groupId>com.oracle</groupId> -->
-		<!-- <artifactId>ojdbc6</artifactId> -->
-		<!-- <version>${ojdbc6.version}</version> -->
-		<!-- </dependency> -->
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc7</artifactId>
@@ -173,17 +154,12 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/ojdbc7.jar</systemPath>
 		</dependency>
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
 
 		<!-- DataSource -->
-		<dependency>
-			<groupId>com.zaxxer</groupId>
-			<artifactId>HikariCP</artifactId>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>com.zaxxer</groupId> -->
+		<!-- <artifactId>HikariCP</artifactId> -->
+		<!-- </dependency> -->
 
 		<!-- Gson: A Java serialization/deserialization library to convert Java 
 			Objects into JSON and back -->
@@ -209,6 +185,29 @@
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${swagger.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-compress</artifactId>
+			<version>${commons.compress}</version>
+		</dependency>
+
+		<!-- Used to work with the older excel file format - `.xls` -->
+		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${poi.version}</version>
+		</dependency>
+
+		<!-- Used to work with the newer excel file format - `.xlsx` -->
+		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>${poi.ooxml.version}</version>
 		</dependency>
 
 		<!-- JasperReports -->
@@ -321,221 +320,102 @@
 			</exclusions>
 		</dependency>
 
-		<!-- Apache CXF Spring Boot Starter JAX-WS -->
+		<!-- quartz -->
 		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-spring-boot-starter-jaxws</artifactId>
-			<version>${apache.cxf.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.validation</groupId>
-					<artifactId>validation-api</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<!-- <version>${quartz.version}</version> -->
+		</dependency>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz-jobs</artifactId>
+			<!-- <version>${quartz.version}</version> -->
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.0</version><!--$NO-MVN-MAN-VER$ -->
 		</dependency>
 
-		<!-- Apache CXF Advanced Logging Feature -->
+		<!-- JSch is a pure Java implementation of SSH2 -->
 		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-features-logging</artifactId>
-			<version>${apache.cxf.version}</version>
+			<groupId>com.jcraft</groupId>
+			<artifactId>jsch</artifactId>
+			<version>${jsch.version}</version>
 		</dependency>
 
-		<!-- Used to work with the older excel file format - `.xls` -->
-		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.bouncycastle</groupId> -->
+		<!-- <artifactId>bcprov-jdk15on</artifactId> -->
+		<!-- <version>1.60</version> -->
+		<!-- </dependency> -->
+		<!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk16 -->
 		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>3.17</version>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk16</artifactId>
+			<version>1.46</version>
 		</dependency>
 
-		<!-- Used to work with the newer excel file format - `.xlsx` -->
-		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
 		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
-			<version>3.17</version>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
+
+		<!-- Spring LDAP -->
+		<dependency>
+			<groupId>org.springframework.ldap</groupId>
+			<artifactId>spring-ldap-core</artifactId>
+			<!-- <version>${spring.ldap.version}</version> -->
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.expectit</groupId>
+			<artifactId>expectit-core</artifactId>
+			<version>0.9.0</version>
 		</dependency>
 
 	</dependencies>
 
-	<repositories>
-		<repository>
-			<id>spring-plugins</id>
-			<name>Spring Plugins Repository</name>
-			<url>http://repo.spring.io/plugins-release/</url>
-		</repository>
-	</repositories>
-
 	<build>
 
 		<!-- This is the name of the bundled project when it is finally built. -->
-		<finalName>${project.name}</finalName>
+		<finalName>ecert-webapp</finalName>
 
 		<!-- List of resource elements that each describe what and where to include 
 			files associated with this project. -->
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
+		<!-- <resources> -->
+		<!-- <resource> -->
+		<!-- <directory>src/main/resources</directory> -->
+		<!-- <filtering>true</filtering> -->
+		<!-- </resource> -->
+		<!-- </resources> -->
 
 		<plugins>
 
 			<!-- Allowing to package executable jar or war archives and run an application 
 				"in-place" -->
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<!-- repackaged for executable jar/war -->
-				<configuration>
-					<mainClass>${start-class}</mainClass>
-					<classifier>exec</classifier>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<!-- The Resources Plugin handles the copying of project resources to 
-				the output directory -->
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<configuration>
-					<encoding>UTF-8</encoding>
-				</configuration>
-				<executions>
-					<execution>
-						<id>copy-resources</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/target/classes/static/</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${basedir}/../ims-client/dist</directory>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<configuration>
-					<delimiters>
-						<delimiter>@</delimiter>
-					</delimiters>
-					<useDefaultDelimiters>false</useDefaultDelimiters>
-					<nonFilteredFileExtensions>
-						<nonFilteredFileExtension>pdf</nonFilteredFileExtension>
-						<nonFilteredFileExtension>eot</nonFilteredFileExtension>
-						<nonFilteredFileExtension>svg</nonFilteredFileExtension>
-						<nonFilteredFileExtension>ttf</nonFilteredFileExtension>
-						<nonFilteredFileExtension>woff</nonFilteredFileExtension>
-						<nonFilteredFileExtension>woff2</nonFilteredFileExtension>
-						<nonFilteredFileExtension>png</nonFilteredFileExtension>
-						<nonFilteredFileExtension>jpg</nonFilteredFileExtension>
-						<nonFilteredFileExtension>gif</nonFilteredFileExtension>
-						<nonFilteredFileExtension>jasper</nonFilteredFileExtension>
-						<nonFilteredFileExtension>xlsx</nonFilteredFileExtension>
-						<nonFilteredFileExtension>xls</nonFilteredFileExtension>
-					</nonFilteredFileExtensions>
-				</configuration>
-			</plugin>
-
-			<!-- Apache CXF Code Generation Maven2 Plugins -->
-			<plugin>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-codegen-plugin</artifactId>
-				<version>${apache.cxf.version}</version>
-				<executions>
-					<execution>
-						<id>generate-sources</id>
-						<phase>generate-sources</phase>
-						<configuration>
-							<sourceRoot>${project.build.directory}/generated-sources/cxf</sourceRoot>
-							<wsdlOptions>
-								<wsdlOption>
-									<wsdl>${basedir}/src/test/resources/wsdl/CurrentDate.wsdl</wsdl>
-									<extraargs>
-										<extraarg>-verbose</extraarg>
-										<extraarg>-p</extraarg><!-- targetNamespace -->
-										<extraarg>http://ws.baiwa.th.com=th.co.baiwa.exampleproject.ws.consumer.currentdate.operation</extraarg>
-										<extraarg>-wsdlLocation</extraarg>
-										<extraarg>classpath:wsdl/CurrentDate.wsdl</extraarg>
-									</extraargs>
-								</wsdlOption>
-								<wsdlOption>
-									<wsdl>${basedir}/src/test/resources/wsdl/LoginLdap.wsdl</wsdl>
-									<extraargs>
-										<extraarg>-verbose</extraarg>
-										<extraarg>-p</extraarg><!-- targetNamespace -->
-										<extraarg>http://ws.baiwa.th.com=th.co.baiwa.exampleproject.ws.userldap</extraarg>
-										<extraarg>-wsdlLocation</extraarg>
-										<extraarg>classpath:wsdl/LoginLdap.wsdl</extraarg>
-									</extraargs>
-								</wsdlOption>
-<!-- 								<wsdlOption> -->
-<!-- 									<wsdl>${basedir}/src/test/resources/wsdl/LDPAGAuthenAndGetUserRoleService.wsdl</wsdl> -->
-<!-- 									<extraargs> -->
-<!-- 										<extraarg>-verbose</extraarg> -->
-<!-- 										<extraarg>-p</extraarg>targetNamespace -->
-<!-- 										<extraarg>http://ws.baiwa.th.com=th.co.baiwa.exampleproject.ws.excisews</extraarg> -->
-<!-- 										<extraarg>-wsdlLocation</extraarg> -->
-<!-- 										<extraarg>classpath:wsdl/LDPAGAuthenAndGetUserRoleService.wsdl</extraarg> -->
-<!-- 									</extraargs> -->
-<!-- 								</wsdlOption> -->
-							</wsdlOptions>
-						</configuration>
-						<goals>
-							<goal>wsdl2java</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+			<!-- <plugin> -->
+			<!-- <groupId>org.springframework.boot</groupId> -->
+			<!-- <artifactId>spring-boot-maven-plugin</artifactId> -->
+			<!-- repackaged for executable jar/war -->
+			<!-- <configuration> -->
+			<!-- <mainClass>${start-class}</mainClass> -->
+			<!-- <classifier>exec</classifier> -->
+			<!-- </configuration> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <goals> -->
+			<!-- <goal>repackage</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
 
 		</plugins>
 	</build>
-
-	<profiles>
-		<!-- DEV Environment -->
-		<profile>
-			<id>dev</id>
-			<properties>
-				<activatedProperties>dev</activatedProperties>
-			</properties>
-		</profile>
-		<!-- SIT Environment -->
-		<profile>
-			<id>sit</id>
-			<properties>
-				<activatedProperties>sit</activatedProperties>
-			</properties>
-		</profile>
-		<!-- UAT Environment -->
-		<profile>
-			<id>uat</id>
-			<properties>
-				<activatedProperties>uat</activatedProperties>
-			</properties>
-		</profile>
-		<!-- Production Environment -->
-		<profile>
-			<id>prod</id>
-			<properties>
-				<activatedProperties>prod</activatedProperties>
-			</properties>
-		</profile>
-	</profiles>
 
 </project>

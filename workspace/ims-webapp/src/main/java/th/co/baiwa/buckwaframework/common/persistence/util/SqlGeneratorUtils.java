@@ -2,9 +2,8 @@ package th.co.baiwa.buckwaframework.common.persistence.util;
 
 import java.util.Collection;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
-
-import th.co.baiwa.buckwaframework.common.util.BeanUtils;
 
 public class SqlGeneratorUtils {
 	
@@ -50,11 +49,10 @@ public class SqlGeneratorUtils {
 	}
 	
 	public static String oracleSqlWhereCondition(String fieldName, String value) {
-		if(BeanUtils.isNotEmpty(value) && (value.indexOf("*") > 0 || value.indexOf("%") >0)) {
+		if(StringUtils.isNotEmpty(value) && (value.indexOf("*") > 0 || value.indexOf("%") >0)) {
 			return " AND "+fieldName +" like ?";
 		}
 		return " AND "+fieldName +" = ?";
 	}
-	
 	
 }

@@ -24,18 +24,4 @@ public class CommonConstants {
 		public static final String SUCCESS = "0";
 	}
 	
-	public static final class MESSAGE_CODE {
-		public static final String MSG_SYSTEM = "MSG_SYSTEM";
-		
-		public static final String MSG00009 = "MSG_00009";
-		public static final String MSG00010 = "MSG_00010";
-	}
-	
-	public static final class COMMON_STATUS {
-		public static final String ERROR = "1";
-		public static final String SUCCESS = "0";
-		public static final String ERROR_DESC = "Internal server error see in log";
-
-	}
-	
 }
