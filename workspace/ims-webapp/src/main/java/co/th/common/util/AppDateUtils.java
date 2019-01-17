@@ -1,4 +1,4 @@
-package th.co.baiwa.buckwaframework.common.util;
+package co.th.common.util;
 
 import java.text.ParseException;
 import java.time.LocalDate;
