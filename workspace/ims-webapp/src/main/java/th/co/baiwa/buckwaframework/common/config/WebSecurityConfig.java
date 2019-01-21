@@ -176,7 +176,7 @@ public class WebSecurityConfig {
 				.and()
 				.sessionManagement()
 					.invalidSessionUrl(SecurityConstants.URL.LOGIN_WEB)
-					.maximumSessions(10)
+					.maximumSessions(500)
 					.sessionRegistry(sessionRegistry());
 			
 			http.csrf().disable();
