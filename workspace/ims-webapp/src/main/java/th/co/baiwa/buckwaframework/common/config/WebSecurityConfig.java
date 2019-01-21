@@ -80,47 +80,48 @@ public class WebSecurityConfig {
 				.and()
 				.formLogin()
 					.loginProcessingUrl(URL.LOGIN_REST).permitAll()
-					.successHandler(restAuthenticationSuccessHandler())
-					.failureHandler(restAuthenticationFailureHandler())
+//					.successHandler(restAuthenticationSuccessHandler())
+//					.failureHandler(restAuthenticationFailureHandler())
 					.usernameParameter(SecurityConstants.USERNAME_PARAM)
 					.passwordParameter(SecurityConstants.PASSWORD_PARAM)
 				.and()
 				.logout()
 					.permitAll()
 					.logoutRequestMatcher(new AntPathRequestMatcher(URL.LOGIN_REST, HttpMethod.DELETE.toString()))
-					.logoutSuccessHandler(restLogoutSuccessHandler())
-				.and()
-				.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint())
+//					.logoutSuccessHandler(restLogoutSuccessHandler())
+//				.and()
+//				.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint())
 				.and()
 				.requestCache().requestCache(new NullRequestCache())
 				.and()
 				.sessionManagement()
-					.maximumSessions(2)
-					.sessionRegistry(sessionRegistry());
+//					.maximumSessions(100)
+//					.sessionRegistry(sessionRegistry())
+					;
 			
 			http.csrf().disable();
 		}
 		
-		@Bean
-		public RestAuthenticationSuccessHandler restAuthenticationSuccessHandler() {
-			return new RestAuthenticationSuccessHandler();
-		}
-		
-		@Bean
-		public SimpleUrlAuthenticationFailureHandler restAuthenticationFailureHandler() {
-			return new SimpleUrlAuthenticationFailureHandler();
-		}
-		
-		@Bean
-		public RestLogoutSuccessHandler restLogoutSuccessHandler() {
-			return new RestLogoutSuccessHandler();
-		}
-		
-		@Bean
-		public RestAuthenticationEntryPoint restAuthenticationEntryPoint() {
-			return new RestAuthenticationEntryPoint();
-		}
-		
+//		@Bean
+//		public RestAuthenticationSuccessHandler restAuthenticationSuccessHandler() {
+//			return new RestAuthenticationSuccessHandler();
+//		}
+//		
+//		@Bean
+//		public SimpleUrlAuthenticationFailureHandler restAuthenticationFailureHandler() {
+//			return new SimpleUrlAuthenticationFailureHandler();
+//		}
+//		
+//		@Bean
+//		public RestLogoutSuccessHandler restLogoutSuccessHandler() {
+//			return new RestLogoutSuccessHandler();
+//		}
+//		
+//		@Bean
+//		public RestAuthenticationEntryPoint restAuthenticationEntryPoint() {
+//			return new RestAuthenticationEntryPoint();
+//		}
+//		
 		@Bean
 		public SessionRegistry sessionRegistry() {
 			return new SessionRegistryImpl();
@@ -176,16 +177,17 @@ public class WebSecurityConfig {
 				.and()
 				.sessionManagement()
 					.invalidSessionUrl(SecurityConstants.URL.LOGIN_WEB)
-					.maximumSessions(500)
-					.sessionRegistry(sessionRegistry());
+//					.maximumSessions(10)
+//					.sessionRegistry(sessionRegistry())
+					;
 			
 			http.csrf().disable();
 		}
 		
-		@Bean
-		public SessionRegistry sessionRegistry() {
-			return new SessionRegistryImpl();
-		}
+//		@Bean
+//		public SessionRegistry sessionRegistry() {
+//			return new SessionRegistryImpl();
+//		}
 		
 	}
 	
