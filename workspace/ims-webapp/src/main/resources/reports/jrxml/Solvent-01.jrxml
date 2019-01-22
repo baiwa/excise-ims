@@ -582,7 +582,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA["เป็นผู้นําการตรวจบัตรประจําตัวประชาชนเลขที่"]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="241" y="469" width="276" height="23" uuid="644dd069-d3b2-43fc-bfd0-62048416b2b2"/>
 				<box leftPadding="5">
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>

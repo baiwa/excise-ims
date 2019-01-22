@@ -26,12 +26,15 @@ public class HydDocabonService {
 	public byte[] objectToPDF(ReportJsonBean reportJsonBean) throws IOException, JRException {
 
 		Map<String, Object> params = new HashMap<String, Object>();
-
+		
 		JasperPrint jasperPrint1 = ReportUtils.exportReport("Report_01", params, new JREmptyDataSource());
 		JasperPrint jasperPrint2 = ReportUtils.exportReport("Report_05", params, new JREmptyDataSource());
 		JasperPrint jasperPrint3 = ReportUtils.exportReport("Report_03", params, new JREmptyDataSource());
 		JasperPrint jasperPrint4 = ReportUtils.exportReport("Report_04", params, new JREmptyDataSource());
 		JasperPrint jasperPrint5 = ReportUtils.exportReport("Report_02", params, new JREmptyDataSource());
+		JasperPrint jasperPrint6 = ReportUtils.exportReport("Solvent-01", params, new JREmptyDataSource());
+		JasperPrint jasperPrint7 = ReportUtils.exportReport("Solvent-02", params, new JREmptyDataSource());
+		
 		
 		List<ExporterInputItem> items = new ArrayList<ExporterInputItem>();
 		items.add(new SimpleExporterInputItem(jasperPrint1));
@@ -39,6 +42,10 @@ public class HydDocabonService {
 		items.add(new SimpleExporterInputItem(jasperPrint3));
 		items.add(new SimpleExporterInputItem(jasperPrint4));
 		items.add(new SimpleExporterInputItem(jasperPrint5));
+		items.add(new SimpleExporterInputItem(jasperPrint6));
+		items.add(new SimpleExporterInputItem(jasperPrint7));		
+		
+		
 		JRPdfExporter exporter = new JRPdfExporter();
 		exporter.setExporterInput(new SimpleExporterInput(items));
 
