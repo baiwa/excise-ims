@@ -3,6 +3,15 @@ package co.th.baiwa.buckwaframework.common.bean;
 import java.util.Date;
 
 public abstract class BaseVo {
+
+	public static class Field {
+		public static final String IS_DELETED = "IS_DELETED";
+		public static final String CREATED_BY = "CREATED_BY";
+		public static final String CREATED_DATE = "CREATED_DATE";
+		public static final String UPDATED_BY = "UPDATED_BY";
+		public static final String UPDATED_DATE = "UPDATED_DATE";
+	}
+
 	private String createdBy;
 	private Date createdDate;
 	private String updatedBy;
