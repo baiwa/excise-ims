@@ -297,7 +297,7 @@
 					<font fontName="TH Sarabun New" size="16"/>
 					<paragraph lineSpacingSize="0.0"/>
 				</textElement>
-				<textFieldExpression><![CDATA["เอกสารประกอบการลงบัญชี"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["เอกสารประกอบ"+"\n"+"การลงบัญชี"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="447" y="151" width="153" height="49" uuid="76468404-1a84-46cc-a3b5-df80b38e8371"/>
