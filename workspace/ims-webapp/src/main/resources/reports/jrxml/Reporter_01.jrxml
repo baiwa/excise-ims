@@ -61,7 +61,7 @@
 				<textFieldExpression><![CDATA["รายการเก่า ตามใบอนุญาตเลขที่"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="184" y="100" width="68" height="14" uuid="cfeff693-239b-4b36-bef4-81b4a499ff7b"/>
+				<reportElement style="normalText" x="184" y="100" width="68" height="14" uuid="cfeff693-239b-4b36-bef4-81b4a499ff7b"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -95,7 +95,7 @@
 				<textFieldExpression><![CDATA["วันที่"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="342" y="100" width="32" height="14" uuid="3f808154-0e58-4b46-99e7-1bddfad981e2"/>
+				<reportElement style="normalText" x="342" y="100" width="32" height="14" uuid="3f808154-0e58-4b46-99e7-1bddfad981e2"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -112,7 +112,7 @@
 				<textFieldExpression><![CDATA["เดือน"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="396" y="100" width="57" height="14" uuid="0b9386bb-f176-4929-bc86-a5228f656bde"/>
+				<reportElement style="normalText" x="402" y="100" width="57" height="14" uuid="0b9386bb-f176-4929-bc86-a5228f656bde"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -129,7 +129,7 @@
 				<textFieldExpression><![CDATA["พ.ศ"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="470" y="100" width="42" height="14" uuid="4dbccabd-851a-4502-9c5d-449bf4e6d64f"/>
+				<reportElement style="normalText" x="470" y="100" width="42" height="14" uuid="4dbccabd-851a-4502-9c5d-449bf4e6d64f"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -166,7 +166,7 @@
 				<textFieldExpression><![CDATA["๑.๑ ชื่อ"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="89" y="170" width="453" height="14" uuid="fb57cabd-68e8-4415-8e8e-5997f6411bc4"/>
+				<reportElement style="normalText" x="89" y="170" width="453" height="14" uuid="fb57cabd-68e8-4415-8e8e-5997f6411bc4"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -183,7 +183,7 @@
 				<textFieldExpression><![CDATA["๑.๒ เลขประจำตัวผู้เสียภาษีอากร"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="187" y="190" width="355" height="14" uuid="8a3547f8-3ae5-4143-ad02-2392abd05cac"/>
+				<reportElement style="normalText" x="187" y="190" width="355" height="14" uuid="8a3547f8-3ae5-4143-ad02-2392abd05cac"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -200,7 +200,7 @@
 				<textFieldExpression><![CDATA["๑.๓ จำนวนพนักงานทั้งหมด"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="168" y="210" width="47" height="14" uuid="4c515ac9-99a2-43ad-a1ee-c32fd4895d9a"/>
+				<reportElement style="normalText" x="168" y="210" width="47" height="14" uuid="4c515ac9-99a2-43ad-a1ee-c32fd4895d9a"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -217,7 +217,7 @@
 				<textFieldExpression><![CDATA["คน พนักงานจำเป็น"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="294" y="210" width="47" height="14" uuid="ebcd4021-f88d-4a2b-b51a-a5f0a6f4efd1"/>
+				<reportElement style="normalText" x="294" y="210" width="47" height="14" uuid="ebcd4021-f88d-4a2b-b51a-a5f0a6f4efd1"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -234,7 +234,7 @@
 				<textFieldExpression><![CDATA["คน พนักงานชั่วคราว"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="425" y="210" width="48" height="14" uuid="971004c9-2c80-4707-b4a0-180e476c9801"/>
+				<reportElement style="normalText" x="425" y="210" width="48" height="14" uuid="971004c9-2c80-4707-b4a0-180e476c9801"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -265,7 +265,7 @@
 				<textFieldExpression><![CDATA["๑)"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="94" y="250" width="447" height="14" uuid="96404199-d80b-4865-ad6d-5df54182651b"/>
+				<reportElement style="normalText" x="94" y="250" width="447" height="14" uuid="96404199-d80b-4865-ad6d-5df54182651b"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -275,7 +275,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="94" y="270" width="448" height="14" uuid="7c1bddb4-0c07-4696-9ead-0cde019c91c9"/>
+				<reportElement style="normalText" x="94" y="270" width="448" height="14" uuid="7c1bddb4-0c07-4696-9ead-0cde019c91c9"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -299,7 +299,7 @@
 				<textFieldExpression><![CDATA["๓)"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="94" y="290" width="448" height="14" uuid="495a18eb-6f82-43ad-9ecb-414f9caddc63"/>
+				<reportElement style="normalText" x="94" y="290" width="448" height="14" uuid="495a18eb-6f82-43ad-9ecb-414f9caddc63"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -316,7 +316,7 @@
 				<textFieldExpression><![CDATA["๔)"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="94" y="310" width="448" height="14" uuid="32cb70bb-6317-40bf-994f-1fca1e48ed71"/>
+				<reportElement style="normalText" x="94" y="310" width="448" height="14" uuid="32cb70bb-6317-40bf-994f-1fca1e48ed71"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -333,7 +333,7 @@
 				<textFieldExpression><![CDATA["๕)"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="94" y="330" width="448" height="14" uuid="4e1e0a60-1b09-421c-9e19-7dd0d02f246f"/>
+				<reportElement style="normalText" x="94" y="330" width="448" height="14" uuid="4e1e0a60-1b09-421c-9e19-7dd0d02f246f"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -364,7 +364,7 @@
 				<textFieldExpression><![CDATA["เช่าเดือนละ"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="337" y="345" width="53" height="14" uuid="b1b02b18-879d-4031-b712-0327c982051c"/>
+				<reportElement style="normalText" x="337" y="345" width="53" height="14" uuid="b1b02b18-879d-4031-b712-0327c982051c"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -395,7 +395,7 @@
 				<textFieldExpression><![CDATA["- เวลาเริ่มปฏิบัติและสิ้นสุดงาน ตั้งแต่เวลา"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="248" y="385" width="53" height="14" uuid="26e28372-2e12-4888-ad9e-7b23aba3125e"/>
+				<reportElement style="normalText" x="248" y="385" width="53" height="14" uuid="26e28372-2e12-4888-ad9e-7b23aba3125e"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -419,7 +419,7 @@
 				<textFieldExpression><![CDATA["ถึง"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="335" y="385" width="54" height="14" uuid="e4f174ba-def1-4f41-8a24-afa6ce5266d4"/>
+				<reportElement style="normalText" x="335" y="385" width="54" height="14" uuid="e4f174ba-def1-4f41-8a24-afa6ce5266d4"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -443,7 +443,7 @@
 				<textFieldExpression><![CDATA["- เวลาเริ่มปฏิบัติงานจริงต่อเดือน"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="211" y="405" width="54" height="14" uuid="6e11032d-20ea-41c9-8125-6beed01d6d3d"/>
+				<reportElement style="normalText" x="211" y="405" width="54" height="14" uuid="6e11032d-20ea-41c9-8125-6beed01d6d3d"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -460,14 +460,14 @@
 				<textFieldExpression><![CDATA["วัน"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="normalText" x="57" y="425" width="178" height="20" uuid="7b1691a6-f80a-4a84-b1f3-07796f6da248"/>
+				<reportElement style="normalText" x="57" y="425" width="172" height="20" uuid="7b1691a6-f80a-4a84-b1f3-07796f6da248"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["๑.๗ จำนวนถังเก็บสารละลายไฮโดรคาร์บอน มีจำนวน"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["๑.๗ จำนวนถังเก็บน้ำมันหล่อลื่น มีจำนวน"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="233" y="425" width="57" height="14" uuid="dec08d81-1f8a-4ccb-8872-23f4a34f4a15"/>
+				<reportElement style="normalText" x="228" y="425" width="57" height="14" uuid="dec08d81-1f8a-4ccb-8872-23f4a34f4a15"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -477,21 +477,21 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="normalText" x="292" y="425" width="17" height="20" uuid="5dcdb6b9-751c-468c-8e87-3a12e8709c29"/>
+				<reportElement style="normalText" x="287" y="425" width="17" height="20" uuid="5dcdb6b9-751c-468c-8e87-3a12e8709c29"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
 				<textFieldExpression><![CDATA["ถัง"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="normalText" x="309" y="425" width="163" height="20" uuid="bb697a70-05e2-418b-b51e-47bc814a7aa5"/>
+				<reportElement style="normalText" x="304" y="425" width="163" height="20" uuid="bb697a70-05e2-418b-b51e-47bc814a7aa5"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
 				<textFieldExpression><![CDATA["ประกอบด้วย ถังขนาดความจุ ดังนี้"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="50" y="442" width="491" height="14" uuid="e2fd76f7-6d8b-455a-b8b2-a99d93b853f5"/>
+				<reportElement style="normalText" x="50" y="442" width="491" height="14" uuid="e2fd76f7-6d8b-455a-b8b2-a99d93b853f5"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -501,7 +501,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="50" y="460" width="491" height="14" uuid="45cac9bb-732e-40b5-bfbb-4066863ec518"/>
+				<reportElement style="normalText" x="50" y="460" width="491" height="14" uuid="45cac9bb-732e-40b5-bfbb-4066863ec518"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -511,7 +511,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="50" y="478" width="491" height="14" uuid="e39f56ec-b7e5-4f42-87f0-68b0d20ba931"/>
+				<reportElement style="normalText" x="50" y="478" width="491" height="14" uuid="e39f56ec-b7e5-4f42-87f0-68b0d20ba931"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -521,7 +521,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="50" y="497" width="491" height="14" uuid="81725352-d087-456d-8697-af1e14a5560b"/>
+				<reportElement style="normalText" x="50" y="497" width="491" height="14" uuid="81725352-d087-456d-8697-af1e14a5560b"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -538,7 +538,7 @@
 				<textFieldExpression><![CDATA["๑.๘ จำนวนเครื่องมือเครื่องใช้ที่สำคัญ (อาทิ ถังผสม ถังกวน ถังปั่น) ขนาดความจุ ดังนี้"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="50" y="539" width="491" height="14" uuid="fd3983df-92ee-4c20-9a3b-998ffe558a08"/>
+				<reportElement style="normalText" x="50" y="539" width="491" height="14" uuid="fd3983df-92ee-4c20-9a3b-998ffe558a08"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -548,7 +548,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="50" y="557" width="491" height="14" uuid="afe9b2ed-dbc9-443d-b210-143e4fa93e2a"/>
+				<reportElement style="normalText" x="50" y="557" width="491" height="14" uuid="afe9b2ed-dbc9-443d-b210-143e4fa93e2a"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -558,7 +558,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="50" y="575" width="491" height="14" uuid="bf8b6fef-4d90-4913-8ebd-a0a27a2bd9ff"/>
+				<reportElement style="normalText" x="50" y="575" width="491" height="14" uuid="bf8b6fef-4d90-4913-8ebd-a0a27a2bd9ff"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -568,7 +568,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="50" y="594" width="491" height="14" uuid="996bc97f-da77-4b87-80ad-20dcb9015f67"/>
+				<reportElement style="normalText" x="50" y="594" width="491" height="14" uuid="996bc97f-da77-4b87-80ad-20dcb9015f67"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
@@ -582,7 +582,7 @@
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["๑.๙ วิธีการสั่งซื้อสารละลาย ฯ"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["๑.๙ วิธีการสั่งซื้อน้ำมันหล่อลื่น"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement positionType="FixRelativeToBottom" x="198" y="614" width="20" height="20" uuid="344fcfdd-3490-49cb-8706-eb5888772d9e"/>

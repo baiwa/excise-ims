@@ -46,7 +46,7 @@
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["บัญชีประจำวันแสดงการรับ-จ่ายสารละลายฯ (สค.๐๓)"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["บัญชีประจำวันแสดงการรับ-จ่ายน้ำมันหล่อลื่น (สค.๐๓)"]]></textFieldExpression>
 			</textField>
 			<ellipse>
 				<reportElement x="56" y="101" width="3" height="3" backcolor="#000000" uuid="27da23e9-3900-44cb-b846-2b86e4f3c7e0"/>
@@ -155,7 +155,7 @@
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["งบเดือนแสดงรายการรับ-จ่ายสารละลาย (สค.๐๔)"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["งบเดือนแสดงรายการรับ-จ่ายน้ำมันหล่อลื่น (สค.๐๔)"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="font" x="395" y="196" width="19" height="20" uuid="f9294dd6-0008-4e13-879b-8bc8c3f6d8fe"/>
@@ -254,7 +254,7 @@
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["งบเดือนแสดงรายการรับ-จ่ายสารละลาย (สค.๐๔ก)"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["งบเดือนแสดงรายการรับ-จ่ายน้ำมันหล่อลื่น (สค.๐๔ก)"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="font" positionType="FixRelativeToBottom" x="344" y="358" width="20" height="20" uuid="caad60a6-9c92-4958-ab63-3c64591e24ee"/>
@@ -400,7 +400,7 @@
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["ซื้อน้ำมันหล่อลื่นจาก"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ซื้อสารละลาย ฯ จาก"]]></textFieldExpression>
 			</textField>
 			<ellipse>
 				<reportElement x="47" y="546" width="3" height="3" backcolor="#000000" uuid="861f6038-705e-45c3-806a-dbf0a2b80b9a"/>
@@ -410,7 +410,7 @@
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["การซื้อน้ำมันหล่อลื่น มีจำนวนการซื้อ"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["การซื้อสารละลาย ฯ มีจำนวนการซื้อ"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="font" positionType="FixRelativeToBottom" x="194" y="557" width="20" height="20" uuid="318196f4-afa1-43e0-add9-3358d3c4e150"/>
