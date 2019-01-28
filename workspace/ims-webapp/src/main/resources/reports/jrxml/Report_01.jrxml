@@ -214,7 +214,7 @@
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["คน พนักงานจำเป็น"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["คน พนักงานประจำ"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="294" y="210" width="47" height="14" uuid="ebcd4021-f88d-4a2b-b51a-a5f0a6f4efd1"/>

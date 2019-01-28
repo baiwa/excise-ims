@@ -421,7 +421,7 @@
 				<textFieldExpression><![CDATA["ลิตร"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement stretchType="RelativeToTallestObject" x="57" y="264" width="472" height="44" uuid="adca01b9-d876-404d-aeb7-30a4bdca03c4"/>
+				<reportElement stretchType="RelativeToTallestObject" x="57" y="257" width="472" height="44" uuid="adca01b9-d876-404d-aeb7-30a4bdca03c4"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -431,7 +431,7 @@
 				<textElement>
 					<font fontName="TH Sarabun New" size="15" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" ๓. การเปรียบเทียบจำนวนยอดคงเหลือตามบัญชีกับจำนวนการตรวจวัดสารละลายประเภทไฮโดรคาร์บอนคงเหลือ"+"\n"+"    (เฉพาะรายเก่า)"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" ๓. การเปรียบเทียบจำนวนยอดคงเหลือตามบัญชีกับจำนวนการตรวจวัดสารละลายประเภทไฮโดรคาร์บอนคงเหลือ   "+"\n"+   "      (เฉพาะรายเก่า)"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="480" y="300" width="50" height="18" uuid="5baace51-3810-4f12-a823-b66a3c4852da"/>
