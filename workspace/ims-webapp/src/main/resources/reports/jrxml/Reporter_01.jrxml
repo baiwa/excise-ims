@@ -30,7 +30,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="20" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["สารละลายประเภทไฮโดรคาร์บอนที่ได้รับสิทธิอัตราศูนย์"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["น้ำมันหล่อลื่นที่ได้รับสิทธิอัตราศูนย์"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement positionType="FixRelativeToBottom" x="36" y="80" width="20" height="20" uuid="257e0fa4-0f2c-4bef-837f-f863110f5fd2"/>
@@ -210,14 +210,14 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="normalText" x="217" y="210" width="83" height="20" uuid="ec4e5b79-cf68-4cd8-9b54-15611bb281dc"/>
+				<reportElement style="normalText" x="217" y="209" width="87" height="20" uuid="ec4e5b79-cf68-4cd8-9b54-15611bb281dc"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["คน พนักงานจำเป็น"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["คน พนักงานประจำ"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="normalText" x="294" y="210" width="47" height="14" uuid="ebcd4021-f88d-4a2b-b51a-a5f0a6f4efd1"/>
+				<reportElement style="normalText" x="295" y="210" width="47" height="14" uuid="ebcd4021-f88d-4a2b-b51a-a5f0a6f4efd1"/>
 				<box>
 					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
 				</box>
