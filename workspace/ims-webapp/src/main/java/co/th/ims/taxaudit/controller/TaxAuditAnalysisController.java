@@ -25,7 +25,7 @@ public class TaxAuditAnalysisController {
 		try {
 			response.setData(taxAuditAnalysisService.findAll());
 			response.setMessage("SUCCESS");
-			response.setStatus(RESPONSE_STATUS.SUCCEED);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			response.setMessage("ERROR");
 			response.setStatus(RESPONSE_STATUS.FAILED);
