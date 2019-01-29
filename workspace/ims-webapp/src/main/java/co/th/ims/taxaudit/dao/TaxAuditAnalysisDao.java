@@ -1,4 +1,4 @@
-package co.th.ims.taxaudit.dao.jdbc;
+package co.th.ims.taxaudit.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
