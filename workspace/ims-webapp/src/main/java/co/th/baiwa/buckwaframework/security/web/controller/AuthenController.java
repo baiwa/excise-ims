@@ -52,8 +52,8 @@ public class AuthenController {
 		}
 	}
 
-	@PostMapping("/onloginseccess")
-	public AjaxLoginVo onLoginSeccess(HttpServletRequest request, HttpServletResponse response) {
+	@PostMapping("/onloginsuccess")
+	public AjaxLoginVo onLoginSuccess(HttpServletRequest request, HttpServletResponse response) {
 
 		AjaxLoginVo vo = new AjaxLoginVo();
 		UserDetails user = null;

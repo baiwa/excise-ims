@@ -25,13 +25,13 @@ import co.th.baiwa.buckwaframework.security.domain.TMBPerson;
 @Service("tmbldapManager")
 public class TMBLDAPManager {
 
-	@Value("${ldap.url}")
+//	@Value("${ldap.url}")
 	private String url;
 	
-	@Value("${ldap.base}")
+//	@Value("${ldap.base}")
 	private String base;
 
-	@Value("${ldap.domain}")
+//	@Value("${ldap.domain}")
 	private String domain;
 	
 	public TMBPerson isAuthenticate(String username, String password) throws Exception {

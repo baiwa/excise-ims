@@ -39,26 +39,12 @@ public class UserDetailsService
 		if ("ADMIN".equalsIgnoreCase(username)) {
 			grantedAuthorityList.add(new SimpleGrantedAuthority(ADConstant.ROLE_ADMIN));
 			userDetails.setFirstName("ผู้ดูแลระบบ");
-			userDetails.setLastName("ธนาคารทหารไทย");
+			userDetails.setLastName("กรมสรรพสามิต");
 			userDetails.setUserId("0001");
 			userDetails.setBranchCode("001");
 		}
-		if ("ADMIN2".equalsIgnoreCase(username)) {
-			grantedAuthorityList.add(new SimpleGrantedAuthority(ADConstant.ROLE_ADMIN));
-			userDetails.setFirstName("ผู้ดูแลระบบ 2");
-			userDetails.setLastName("ธนาคารทหารไทย");
-			userDetails.setUserId("0007");
-			userDetails.setBranchCode("001");
-		}
-		if ("ADMIN3".equalsIgnoreCase(username)) {
-			grantedAuthorityList.add(new SimpleGrantedAuthority(ADConstant.ROLE_ADMIN));
-			userDetails.setFirstName("ผู้ดูแลระบบ 3");
-			userDetails.setLastName("ธนาคารทหารไทย");
-			userDetails.setUserId("0008");
-			userDetails.setBranchCode("001");
-		}
 
-		UserDetails rs = new UserDetails(username, passwordEncoder.encode("password"), grantedAuthorityList);
+		UserDetails rs = new UserDetails(username, passwordEncoder.encode("passwords"), grantedAuthorityList);
 		rs.setUserId(userDetails.getUserId());
 		rs.setFirstName(userDetails.getFirstName());
 		rs.setLastName(userDetails.getLastName());

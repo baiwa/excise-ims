@@ -27,10 +27,8 @@ public class TmbAuthenticationProvider  implements AuthenticationProvider {
 //	@Value("${ldap.useLdap}")
 //	private String useLdap;
 
-	@Autowired
-	private TMBLDAPManager tmbldapManager;
-
-
+//	@Autowired
+//	private TMBLDAPManager tmbldapManager;
 
 //	@Autowired
 //	@Qualifier("passwordEncoder")
@@ -52,9 +50,9 @@ public class TmbAuthenticationProvider  implements AuthenticationProvider {
 		UserDetails user = null;
 
 		try {
-			TMBPerson tmb = tmbldapManager.isAuthenticate(username, password);
-			logger.info("AD is OK. user :{} ,  userid : {} " , username, tmb.getUserid());
-			user = userDetailsService.loadUserByUsername(username, tmb);
+//			TMBPerson tmb = tmbldapManager.isAuthenticate(username, password);
+//			logger.info("AD is OK. user :{} ,  userid : {} " , username, tmb.getUserid());
+//			user = userDetailsService.loadUserByUsername(username, tmb);
 			
 		} catch (Exception e) {
 			logger.error(e.getMessage());

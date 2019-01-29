@@ -12,7 +12,7 @@ import co.th.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STAT
 import co.th.ims.taxaudit.service.TaxAuditAnalysisService;
 import co.th.ims.taxaudit.vo.TaxAuditAnalysisVo;
 
-@RequestMapping("/app/tax-audit/analysis")
+@RequestMapping("/api/tax-audit/analysis")
 @RestController
 public class TaxAuditAnalysisController {
 	
