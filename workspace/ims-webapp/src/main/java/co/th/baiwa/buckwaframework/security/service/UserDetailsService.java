@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import co.th.baiwa.buckwaframework.security.constant.ADConstant;
 import co.th.baiwa.buckwaframework.security.domain.TMBPerson;
 import co.th.baiwa.buckwaframework.security.domain.UserDetails;
+import co.th.ims.user.dao.UserDao;
+import co.th.ims.user.domain.User;
 
 @Service
 public class UserDetailsService
@@ -24,6 +26,9 @@ public class UserDetailsService
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private UserDao userDao;
 
 //	@Autowired
 //	private UserProfileDao userProfileDao;
@@ -34,7 +39,6 @@ public class UserDetailsService
 
 		// Initial Granted Authority
 		List<GrantedAuthority> grantedAuthorityList = new ArrayList<GrantedAuthority>();
-//		passwordEncoder.encode("password")
 		UserDetails userDetails = new UserDetails(username, "", grantedAuthorityList);
 		if ("ADMIN".equalsIgnoreCase(username)) {
 			grantedAuthorityList.add(new SimpleGrantedAuthority(ADConstant.ROLE_ADMIN));
@@ -43,8 +47,9 @@ public class UserDetailsService
 			userDetails.setUserId("0001");
 			userDetails.setBranchCode("001");
 		}
-
-		UserDetails rs = new UserDetails(username, passwordEncoder.encode("passwords"), grantedAuthorityList);
+		User user = userDao.findUsername(username);
+		String password = user.getPassword();
+		UserDetails rs = new UserDetails(username, password, grantedAuthorityList);
 		rs.setUserId(userDetails.getUserId());
 		rs.setFirstName(userDetails.getFirstName());
 		rs.setLastName(userDetails.getLastName());
