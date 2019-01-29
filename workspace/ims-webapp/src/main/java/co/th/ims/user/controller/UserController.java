@@ -34,7 +34,7 @@ public class UserController {
 			response.setMessage("SUCCESS");
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			response.setMessage("ERROR");
+			response.setMessage(e.getMessage());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		} finally {
 			response.setData(users);
@@ -51,7 +51,7 @@ public class UserController {
 			response.setMessage("SUCCESS");
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			response.setMessage("ERROR");
+			response.setMessage(e.getMessage());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -65,8 +65,7 @@ public class UserController {
 			response.setMessage("SUCCESS");
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			e.printStackTrace();
-			response.setMessage("ERROR");
+			response.setMessage(e.getMessage());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -81,8 +80,7 @@ public class UserController {
 			response.setMessage("SUCCESS");
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			e.printStackTrace();
-			response.setMessage("ERROR");
+			response.setMessage(e.getMessage());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -96,8 +94,7 @@ public class UserController {
 			response.setMessage("SUCCESS");
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			e.printStackTrace();
-			response.setMessage("ERROR");
+			response.setMessage(e.getMessage());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;

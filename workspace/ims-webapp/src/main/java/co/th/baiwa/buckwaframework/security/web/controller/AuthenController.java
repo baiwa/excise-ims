@@ -42,7 +42,7 @@ public class AuthenController {
 		try {
 			user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			List<SessionInformation> inallsess = sessionRegistry.getAllSessions(user, false);
-			if (inallsess.size() >= 2) {
+			if (inallsess.size() >= 10) {
 				String id = inallsess.get(0).getSessionId();
 				inallsess.get(0).expireNow();
 				sessionRegistry.removeSessionInformation(id);
@@ -82,23 +82,25 @@ public class AuthenController {
 			List<SessionInformation> inallsess = sessionRegistry.getAllSessions(user, false);
 
 			logger.info("{}", inallsess.size());
+			
+			return vo;
 
-			if (inallsess.size() >= 2) {
-				vo.setStatus(LOGIN_STATUS.DUP_LOGIN);
-				if (!session.getId().equals(inallsess.get(1).getSessionId())) { // Currently user
-					this.forceLogOut(request, response);
-					vo = new AjaxLoginVo();
-					vo.setStatus(LOGIN_STATUS.FAIL);
-					return vo;
-				}
-			} else {
-				if (!session.getId().equals(inallsess.get(0).getSessionId())) { // Previously user
-					this.forceLogOut(request, response);
-					vo = new AjaxLoginVo();
-					vo.setStatus(LOGIN_STATUS.FAIL);
-					return vo;
-				}
-			}
+//			if (inallsess.size() >= 2) {
+//				vo.setStatus(LOGIN_STATUS.DUP_LOGIN);
+//				if (!session.getId().equals(inallsess.get(1).getSessionId())) { // Currently user
+//					this.forceLogOut(request, response);
+//					vo = new AjaxLoginVo();
+//					vo.setStatus(LOGIN_STATUS.FAIL);
+//					return vo;
+//				}
+//			} else {
+//				if (!session.getId().equals(inallsess.get(0).getSessionId())) { // Previously user
+//					this.forceLogOut(request, response);
+//					vo = new AjaxLoginVo();
+//					vo.setStatus(LOGIN_STATUS.FAIL);
+//					return vo;
+//				}
+//			}
 
 			// check out off service
 //			String timefrom = ApplicationCache.getParamValueByName(SERVICE_TIMMING.SHUTDOWN_TIME_FROM);
