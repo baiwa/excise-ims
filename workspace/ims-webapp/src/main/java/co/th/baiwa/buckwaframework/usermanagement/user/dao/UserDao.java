@@ -60,6 +60,7 @@ public class UserDao {
 	public List<User> findAll() {
 		String template = " select * from EXCISE_USER where IS_DELETED = 'N' ";
 		StringBuilder sql = new StringBuilder(template);
+		sql.append(" order by USER_ID desc ");
 		List<User> users = jdbcTemplate.query(sql.toString(), rowMapper);
 		return users;
 	}

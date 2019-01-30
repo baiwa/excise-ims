@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 import co.th.baiwa.buckwaframework.security.constant.ADConstant;
 import co.th.baiwa.buckwaframework.security.domain.TMBPerson;
 import co.th.baiwa.buckwaframework.security.domain.UserDetails;
-import co.th.ims.user.dao.UserDao;
-import co.th.ims.user.domain.User;
+import co.th.baiwa.buckwaframework.usermanagement.user.dao.UserDao;
+import co.th.baiwa.buckwaframework.usermanagement.user.domain.User;
 
 @Service
 public class UserDetailsService
