@@ -6,12 +6,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.tmb</groupId>
-	<artifactId>ecert-webapp</artifactId>
+	<artifactId>excise-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>ecert-webapp</name>
-	<description>Backend side for ecert-webapp</description>
+	<name>excise-backend</name>
+	<description>Backend side for excise-backend</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
