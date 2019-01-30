@@ -371,7 +371,7 @@
 	<build>
 
 		<!-- This is the name of the bundled project when it is finally built. -->
-		<finalName>ecert-webapp</finalName>
+		<finalName>excise-backend</finalName>
 
 		<!-- List of resource elements that each describe what and where to include 
 			files associated with this project. -->
