@@ -31,7 +31,7 @@ public class ExciseGeoDao {
 				param.add(exciseGeo.getGeoId());
 			}
 			
-			if(StringUtils.isEmpty(exciseGeo.getGeoName())) {
+			if(StringUtils.isNotBlank(exciseGeo.getGeoName())) {
 				sql.append(" AND ").append(ExciseGeo.Field.GEO_NAME).append(" ? ");
 				param.add(exciseGeo.getGeoName());
 			}

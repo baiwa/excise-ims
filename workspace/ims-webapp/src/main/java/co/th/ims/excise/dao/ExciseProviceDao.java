@@ -34,11 +34,11 @@ public class ExciseProviceDao {
 				sql.append(" AND ").append(ExciseProvice.Field.PROVINCE_ID).append(" ? ");
 				param.add(exciseProvice.getProviceId());
 			}
-			if(StringUtils.isEmpty(exciseProvice.getProviceCode())) {
+			if(StringUtils.isNotBlank(exciseProvice.getProviceCode())) {
 				sql.append(" AND ").append(ExciseProvice.Field.PROVINCE_CODE).append(" ? ");
 				param.add(exciseProvice.getProviceCode());
 			}
-			if(StringUtils.isEmpty(exciseProvice.getProviceName())) {
+			if(StringUtils.isNotBlank(exciseProvice.getProviceName())) {
 				sql.append(" AND ").append(ExciseProvice.Field.PROVINCE_NAME).append(" ? ");
 				param.add(exciseProvice.getProviceName());
 			}
