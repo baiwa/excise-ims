@@ -1,5 +1,7 @@
+
 package co.th.baiwa.buckwaframework.support;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Component;
 import co.th.ims.excise.domain.ExciseArea;
 import co.th.ims.excise.domain.ExciseBranch;
 import co.th.ims.excise.domain.ExciseSector;
+import co.th.ims.excise.service.ExciseAreaService;
+import co.th.ims.excise.service.ExciseBranchService;
 import co.th.ims.excise.service.ExciseSectorService;
 
 @Component
@@ -24,11 +28,17 @@ public class ApplicationCache {
 	
 	@Autowired
 	public final ExciseSectorService exciseSectorService = null;
+	
+	@Autowired
+	public final ExciseAreaService exciseAreaService = null;
+	
+	@Autowired
+	public final ExciseBranchService exciseBranchService = null;
 
 	
 	private static final List<ExciseSector> EXCISE_SECTOR_LIST = new ArrayList<ExciseSector>();
-	private static final ConcurrentHashMap<String, ExciseArea> EXCISE_AREA_MAPPER = new ConcurrentHashMap<String, ExciseArea>();
-	private static final ConcurrentHashMap<String, ExciseBranch> EXCISE_BRANCH_MAPPER = new ConcurrentHashMap<String, ExciseBranch>();
+	private static final ConcurrentHashMap<BigDecimal, List<ExciseArea>> EXCISE_AREA_MAPPER = new ConcurrentHashMap<BigDecimal, List<ExciseArea>>();
+	private static final ConcurrentHashMap<BigDecimal, List<ExciseBranch>> EXCISE_BRANCH_MAPPER = new ConcurrentHashMap<BigDecimal, List<ExciseBranch>>();
 	
 	
 	@Autowired
@@ -56,10 +66,37 @@ public class ApplicationCache {
 			}
 		}
 //		EXCISE_AREA_MAPPER
+		List<ExciseArea> exciseAreaList = null;
+		List<ExciseBranch> exciseBranchList = null;
 		for (ExciseSector exciseSector : exciseSectorList) {
-			
+			exciseAreaList = new ArrayList<>();
+			exciseAreaList = exciseAreaService.findAllExciseSector(exciseSector.getSectorId());
+			if(exciseAreaList != null && exciseAreaList.size() >= 0) {
+				EXCISE_AREA_MAPPER.put(exciseSector.getSectorId(),exciseAreaList);
+				for (ExciseArea exciseArea : exciseAreaList) {
+					exciseBranchList =  new ArrayList<ExciseBranch>();
+					exciseBranchList = exciseBranchService.findBySectorId(exciseArea.getAreaId());
+					if(exciseBranchList != null) {
+						EXCISE_BRANCH_MAPPER.put(exciseArea.getAreaId(), exciseBranchList);
+					}
+				}
+			}
 		}
 	}
+	
+	public static List<ExciseSector> getExciseSectorList(){
+		return EXCISE_SECTOR_LIST;
+	}
+	
+	public static List<ExciseArea> getExciseAreaList(BigDecimal sectorId){
+		return EXCISE_AREA_MAPPER.get(sectorId);
+	}
+	
+	public static List<ExciseBranch> getExciseBranchList(BigDecimal areaId){
+		return EXCISE_BRANCH_MAPPER.get(areaId);
+	}
+	
+	
 	
 	
 	

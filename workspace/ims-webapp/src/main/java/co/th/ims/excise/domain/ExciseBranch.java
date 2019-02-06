@@ -17,49 +17,51 @@ public class ExciseBranch extends BaseVo{
 		
 	}
 	
+	private BigDecimal branchId; 
 	private BigDecimal areaId; 
-	private BigDecimal sectorId; 
 	private String officeCode; 
-	private String areaName; 
-	private String areaShotName; 
-	private String areaShotName2;
+	private String branchName; 
+	private String branchShotName; 
+	private String branchShotName2;
 	
-	
+	public BigDecimal getBranchId() {
+		return branchId;
+	}
+	public void setBranchId(BigDecimal branchId) {
+		this.branchId = branchId;
+	}
 	public BigDecimal getAreaId() {
 		return areaId;
 	}
 	public void setAreaId(BigDecimal areaId) {
 		this.areaId = areaId;
 	}
-
 	public String getOfficeCode() {
 		return officeCode;
 	}
 	public void setOfficeCode(String officeCode) {
 		this.officeCode = officeCode;
 	}
-	public String getAreaName() {
-		return areaName;
+	public String getBranchName() {
+		return branchName;
 	}
-	public void setAreaName(String areaName) {
-		this.areaName = areaName;
+	public void setBranchName(String branchName) {
+		this.branchName = branchName;
 	}
-	public String getAreaShotName() {
-		return areaShotName;
+	public String getBranchShotName() {
+		return branchShotName;
 	}
-	public void setAreaShotName(String areaShotName) {
-		this.areaShotName = areaShotName;
+	public void setBranchShotName(String branchShotName) {
+		this.branchShotName = branchShotName;
 	}
-	public String getAreaShotName2() {
-		return areaShotName2;
+	public String getBranchShotName2() {
+		return branchShotName2;
 	}
-	public void setAreaShotName2(String areaShotName2) {
-		this.areaShotName2 = areaShotName2;
+	public void setBranchShotName2(String branchShotName2) {
+		this.branchShotName2 = branchShotName2;
 	}
-	public BigDecimal getSectorId() {
-		return sectorId;
-	}
-	public void setSectorId(BigDecimal sectorId) {
-		this.sectorId = sectorId;
-	} 
+	
+	
+	
+
 }

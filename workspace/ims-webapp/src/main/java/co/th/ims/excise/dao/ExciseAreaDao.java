@@ -1,5 +1,6 @@
 package co.th.ims.excise.dao;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,11 +20,13 @@ public class ExciseAreaDao {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
-	public List<ExciseArea> findAll() {
-		String sqlTemplate = " SELECT * FROM EXCISE_AREA ";
+	public List<ExciseArea> findBySectorId(BigDecimal sectorId) {
+		List<Object> paramList = new ArrayList<Object>();
+		paramList.add(sectorId);
+		String sqlTemplate = " SELECT * FROM EXCISE_AREA WHERE SECTOR_ID = ? ";
 		StringBuilder sql = new StringBuilder(sqlTemplate);
 		List<ExciseArea> list = new ArrayList<ExciseArea>();
-		list = jdbcTemplate.query(sql.toString(), rowMapper);
+		list = jdbcTemplate.query(sql.toString(),paramList.toArray(), rowMapper);
 		return list;
 	}
 	
