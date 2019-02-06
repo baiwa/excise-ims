@@ -1,21 +1,20 @@
 package co.th.ims.excise.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import co.th.ims.excise.dao.ExciseAreaDao;
-import co.th.ims.excise.domain.ExciseArea;
+import co.th.ims.excise.dao.ExciseGeoDao;
+import co.th.ims.excise.domain.ExciseGeo;
 
 @Service
 public class ExciseGeoService {
 
 	@Autowired
-	private ExciseAreaDao exciseAreaDao;
+	private ExciseGeoDao exciseGeoDao;
 	
-	public List<ExciseArea> findAllExciseSector(BigDecimal sectorId){
-		return exciseAreaDao.findBySectorId(sectorId);
+	public List<ExciseGeo> findExciseGeoListByCriteria(ExciseGeo exciseGeo){
+		return exciseGeoDao.findByCriteria(exciseGeo);
 	}
 }

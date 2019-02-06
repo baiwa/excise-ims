@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 import co.th.baiwa.buckwaframework.common.bean.BaseVo;
 import co.th.ims.excise.domain.ExciseGeo;
-import co.th.ims.excise.domain.ExciseGeo;
 
 @Repository
 public class ExciseGeoDao {
@@ -21,7 +20,7 @@ public class ExciseGeoDao {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
-	public List<ExciseGeo> findbyCriteria(ExciseGeo exciseGeo) {
+	public List<ExciseGeo> findByCriteria(ExciseGeo exciseGeo) {
 		List<ExciseGeo> list = new ArrayList<ExciseGeo>();
 		List<Object> param = new ArrayList<Object>();
 		StringBuilder sql = new StringBuilder("SELECT * FROM EXCISE_GEO WHERE 1 = 1");

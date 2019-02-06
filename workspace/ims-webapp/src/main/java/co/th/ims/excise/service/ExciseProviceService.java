@@ -15,6 +15,6 @@ public class ExciseProviceService {
 	private ExciseProviceDao exciseProviceDao;
 	
 	public List<ExciseProvice> findProviceByCriteria(ExciseProvice exciseProvice){
-		return exciseProviceDao.findbyCriteria(exciseProvice);
+		return exciseProviceDao.findByCriteria(exciseProvice);
 	}
 }
