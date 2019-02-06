@@ -27,19 +27,19 @@ public class ExciseProviceDao {
 		if(exciseProvice != null) {
 			
 			if(exciseProvice.getGeoId() != null) {
-				sql.append(" AND ").append(ExciseProvice.Field.GEO_ID).append(" ? ");
+				sql.append(" AND ").append(ExciseProvice.Field.GEO_ID).append(" = ? ");
 				param.add(exciseProvice.getGeoId());
 			}
 			if(exciseProvice.getProviceId() != null) {
-				sql.append(" AND ").append(ExciseProvice.Field.PROVINCE_ID).append(" ? ");
+				sql.append(" AND ").append(ExciseProvice.Field.PROVINCE_ID).append(" = ? ");
 				param.add(exciseProvice.getProviceId());
 			}
 			if(StringUtils.isNotBlank(exciseProvice.getProviceCode())) {
-				sql.append(" AND ").append(ExciseProvice.Field.PROVINCE_CODE).append(" ? ");
+				sql.append(" AND ").append(ExciseProvice.Field.PROVINCE_CODE).append(" = ? ");
 				param.add(exciseProvice.getProviceCode());
 			}
 			if(StringUtils.isNotBlank(exciseProvice.getProviceName())) {
-				sql.append(" AND ").append(ExciseProvice.Field.PROVINCE_NAME).append(" ? ");
+				sql.append(" AND ").append(ExciseProvice.Field.PROVINCE_NAME).append(" = ? ");
 				param.add(exciseProvice.getProviceName());
 			}
 		}

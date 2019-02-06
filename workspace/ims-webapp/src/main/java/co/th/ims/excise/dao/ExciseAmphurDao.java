@@ -28,23 +28,23 @@ public class ExciseAmphurDao {
 		if(exciseAmphur != null) {
 			
 			if(exciseAmphur.getAmphurId() != null) {
-				sql.append(" AND ").append(ExciseAmphur.Field.AMPHUR_ID).append(" ? ");
+				sql.append(" AND ").append(ExciseAmphur.Field.AMPHUR_ID).append(" = ? ");
 				param.add(exciseAmphur.getAmphurId());
 			}
 			if(exciseAmphur.getGeoId() != null) {
-				sql.append(" AND ").append(ExciseAmphur.Field.GEO_ID).append(" ? ");
+				sql.append(" AND ").append(ExciseAmphur.Field.GEO_ID).append(" = ? ");
 				param.add(exciseAmphur.getGeoId());
 			}
 			if(exciseAmphur.getProvinceId() != null) {
-				sql.append(" AND ").append(ExciseAmphur.Field.PROVINCE_ID).append(" ? ");
+				sql.append(" AND ").append(ExciseAmphur.Field.PROVINCE_ID).append(" = ? ");
 				param.add(exciseAmphur.getProvinceId());
 			}
 			if(StringUtils.isNotBlank(exciseAmphur.getAmphurCode())) {
-				sql.append(" AND ").append(ExciseAmphur.Field.AMPHUR_CODE).append(" ? ");
+				sql.append(" AND ").append(ExciseAmphur.Field.AMPHUR_CODE).append(" = ? ");
 				param.add(exciseAmphur.getAmphurCode());
 			}
 			if(StringUtils.isNotBlank(exciseAmphur.getAmphurName())) {
-				sql.append(" AND ").append(ExciseAmphur.Field.AMPHUR_NAME).append(" ? ");
+				sql.append(" AND ").append(ExciseAmphur.Field.AMPHUR_NAME).append(" = ? ");
 				param.add(exciseAmphur.getAmphurName());
 			}
 

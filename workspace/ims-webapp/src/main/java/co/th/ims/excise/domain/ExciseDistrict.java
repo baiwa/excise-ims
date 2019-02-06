@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import co.th.baiwa.buckwaframework.common.bean.BaseVo;
 
-public class ExiseDistrict extends BaseVo{
+public class ExciseDistrict extends BaseVo{
 	
 	public static class Field {
 		

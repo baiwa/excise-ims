@@ -23,16 +23,16 @@ public class ExciseGeoDao {
 	public List<ExciseGeo> findByCriteria(ExciseGeo exciseGeo) {
 		List<ExciseGeo> list = new ArrayList<ExciseGeo>();
 		List<Object> param = new ArrayList<Object>();
-		StringBuilder sql = new StringBuilder("SELECT * FROM EXCISE_GEO WHERE 1 = 1");
+		StringBuilder sql = new StringBuilder("SELECT * FROM EXCISE_GEO WHERE 1 = 1 ");
 		if(exciseGeo != null) {
 			
 			if(exciseGeo.getGeoId() != null) {
-				sql.append(" AND ").append(ExciseGeo.Field.GEO_ID).append(" ? ");
+				sql.append(" AND ").append(ExciseGeo.Field.GEO_ID).append(" = ? ");
 				param.add(exciseGeo.getGeoId());
 			}
 			
 			if(StringUtils.isNotBlank(exciseGeo.getGeoName())) {
-				sql.append(" AND ").append(ExciseGeo.Field.GEO_NAME).append(" ? ");
+				sql.append(" AND ").append(ExciseGeo.Field.GEO_NAME).append(" = ? ");
 				param.add(exciseGeo.getGeoName());
 			}
 			

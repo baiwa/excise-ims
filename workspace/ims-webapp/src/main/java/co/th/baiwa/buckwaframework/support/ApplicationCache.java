@@ -13,11 +13,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import co.th.ims.excise.dao.ExciseDistrictDao;
+import co.th.ims.excise.domain.ExciseAmphur;
 import co.th.ims.excise.domain.ExciseArea;
 import co.th.ims.excise.domain.ExciseBranch;
+import co.th.ims.excise.domain.ExciseDistrict;
+import co.th.ims.excise.domain.ExciseGeo;
+import co.th.ims.excise.domain.ExciseProvice;
 import co.th.ims.excise.domain.ExciseSector;
+import co.th.ims.excise.service.ExciseAmphurService;
 import co.th.ims.excise.service.ExciseAreaService;
 import co.th.ims.excise.service.ExciseBranchService;
+import co.th.ims.excise.service.ExciseDistrictService;
+import co.th.ims.excise.service.ExciseGeoService;
+import co.th.ims.excise.service.ExciseProviceService;
 import co.th.ims.excise.service.ExciseSectorService;
 
 @Component
@@ -34,11 +43,27 @@ public class ApplicationCache {
 	
 	@Autowired
 	public final ExciseBranchService exciseBranchService = null;
+	
+	@Autowired
+	public final ExciseGeoService exciseGeoService = null;
+	
+	@Autowired
+	public final ExciseProviceService exciseProviceService = null;
+	
+	@Autowired
+	public final ExciseAmphurService exciseAmphurService = null;
 
+	@Autowired
+	public final ExciseDistrictService exciseDistrictService = null;
 	
 	private static final List<ExciseSector> EXCISE_SECTOR_LIST = new ArrayList<ExciseSector>();
 	private static final ConcurrentHashMap<BigDecimal, List<ExciseArea>> EXCISE_AREA_MAPPER = new ConcurrentHashMap<BigDecimal, List<ExciseArea>>();
 	private static final ConcurrentHashMap<BigDecimal, List<ExciseBranch>> EXCISE_BRANCH_MAPPER = new ConcurrentHashMap<BigDecimal, List<ExciseBranch>>();
+	
+	private static final List<ExciseGeo> EXCISE_GEO_LIST = new ArrayList<ExciseGeo>();
+	private static final ConcurrentHashMap<BigDecimal, List<ExciseProvice>> EXCISE_PROVICE_MAPPER = new ConcurrentHashMap<BigDecimal, List<ExciseProvice>>();
+	private static final ConcurrentHashMap<BigDecimal, List<ExciseAmphur>> EXCISE_AMPHUR_MAPPER = new ConcurrentHashMap<BigDecimal, List<ExciseAmphur>>();
+	private static final ConcurrentHashMap<BigDecimal, List<ExciseDistrict>> EXCISE_DISTRICT_MAPPER = new ConcurrentHashMap<BigDecimal, List<ExciseDistrict>>();
 	
 	
 	@Autowired
@@ -50,13 +75,14 @@ public class ApplicationCache {
 	@PostConstruct
 	public synchronized void reloadCache() {
 		logger.info("ApplicationCache Reloading...");
-
-	
-		exciseSectorAreaBranchInitialData();
+		
+		loadSectorAreaBranch();
+		loadGioProviceAumhurDistrictAndMapping();
+		
 		logger.info("ApplicationCache Reloaded");
 	}
 	
-	public void exciseSectorAreaBranchInitialData() {
+	public void loadSectorAreaBranch() {
 		logger.info("exciseSectorAreaBranchInitialData");
 		List<ExciseSector> exciseSectorList = exciseSectorService.findAllExciseSector();
 		if(exciseSectorList != null && exciseSectorList.size() > 0) {
@@ -79,6 +105,38 @@ public class ApplicationCache {
 					if(exciseBranchList != null) {
 						EXCISE_BRANCH_MAPPER.put(exciseArea.getAreaId(), exciseBranchList);
 					}
+				}
+			}
+		}
+	}
+	
+	public void loadGioProviceAumhurDistrictAndMapping() {
+		List<ExciseGeo> ecExciseGeoList = exciseGeoService.findExciseGeoListByCriteria(null);
+		List<ExciseAmphur> exciseAmphurList;
+		ExciseProvice exciseProvice;
+		ExciseAmphur exciseAmphur;
+		ExciseDistrict exciseDistrict;
+		List<ExciseProvice> exciseProviceList;
+		List<ExciseDistrict> exciseDistricList;
+		for (ExciseGeo exciseGeo : ecExciseGeoList) {
+			EXCISE_GEO_LIST.add(exciseGeo);
+			exciseProvice = new ExciseProvice();
+			exciseProvice.setGeoId(exciseGeo.getGeoId());
+			exciseProviceList = new ArrayList<>();
+			exciseProviceList = exciseProviceService.findProviceByCriteria(exciseProvice);
+			EXCISE_PROVICE_MAPPER.put(exciseGeo.getGeoId(), exciseProviceList);
+			for (ExciseProvice provice : exciseProviceList) {
+				exciseAmphur = new ExciseAmphur();
+				exciseAmphur.setProvinceId(provice.getProviceId());
+				exciseAmphurList = new ArrayList<ExciseAmphur>();
+				exciseAmphurList = exciseAmphurService.findExciseAmphurListByCriteria(exciseAmphur);
+				EXCISE_AMPHUR_MAPPER.put(provice.getProviceId(), exciseAmphurList);
+				for (ExciseAmphur amphur : exciseAmphurList) {
+					exciseDistrict = new ExciseDistrict();
+					exciseDistrict.setAmphurId(amphur.getAmphurId());
+					exciseDistricList = new ArrayList<ExciseDistrict>();
+					exciseDistricList = exciseDistrictService.findExciseDistrictListByCriteria(exciseDistrict);
+					EXCISE_DISTRICT_MAPPER.put(amphur.getAmphurId(), exciseDistricList);
 				}
 			}
 		}
