@@ -1,11 +1,11 @@
 package co.th.ims.excise.dao;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -18,13 +18,40 @@ public class ExciseDistrictDao {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
-	public List<ExiseDistrict> findByCriteria(BigDecimal districtId) {
-		List<Object> paramList = new ArrayList<Object>();
-		paramList.add(districtId);
-		String sqlTemplate = " SELECT * FROM EXCISE_DISTRICT WHERE DISTRICT_ID = ? ";
-		StringBuilder sql = new StringBuilder(sqlTemplate);
+	public List<ExiseDistrict> findByCriteria(ExiseDistrict exiseDistrict) {
 		List<ExiseDistrict> list = new ArrayList<ExiseDistrict>();
-		list = jdbcTemplate.query(sql.toString(),paramList.toArray(), rowMapper);
+		List<Object> param = new ArrayList<Object>();
+		StringBuilder sql = new StringBuilder("SELECT * FROM EXCISE_DISTRICT WHERE 1 = 1");
+		if(exiseDistrict != null) {
+			
+			if(exiseDistrict.getDistrictId() != null) {
+				sql.append(" AND ").append(ExiseDistrict.Field.DISTRICT_ID).append(" ? ");
+				param.add(exiseDistrict.getDistrictId());
+			}
+			if(exiseDistrict.getProvinceId() != null) {
+				sql.append(" AND ").append(ExiseDistrict.Field.PROVINCE_ID).append(" ? ");
+				param.add(exiseDistrict.getProvinceId());
+			}
+			if(exiseDistrict.getGeoId() != null) {
+				sql.append(" AND ").append(ExiseDistrict.Field.GEO_ID).append(" ? ");
+				param.add(exiseDistrict.getGeoId());
+			}
+			if(exiseDistrict.getAmphurId() != null) {
+				sql.append(" AND ").append(ExiseDistrict.Field.AMPHUR_ID).append(" ? ");
+				param.add(exiseDistrict.getAmphurId());
+			}
+			if(StringUtils.isNotBlank(exiseDistrict.getDistrictCode())) {
+				sql.append(" AND ").append(ExiseDistrict.Field.DISTRICT_CODE).append(" ? ");
+				param.add(exiseDistrict.getDistrictCode());
+			}
+			if(StringUtils.isNotBlank(exiseDistrict.getDistrictName())) {
+				sql.append(" AND ").append(ExiseDistrict.Field.DISTRICT_NAME).append(" ? ");
+				param.add(exiseDistrict.getDistrictName());
+			}
+
+			
+		}
+		list = jdbcTemplate.query(sql.toString(),param.toArray(), rowMapper);
 		return list;
 	}
 	
