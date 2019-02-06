@@ -20,10 +20,10 @@ public class ExciseProviceDao {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
-	public List<ExciseProvice> findbyCriteria(ExciseProvice exciseProvice) {
+	public List<ExciseProvice> findByCriteria(ExciseProvice exciseProvice) {
 		List<ExciseProvice> list = new ArrayList<ExciseProvice>();
 		List<Object> param = new ArrayList<Object>();
-		StringBuilder sql = new StringBuilder("SELECT * FROM EXCISE_PROVICE WHERE 1 = 1");
+		StringBuilder sql = new StringBuilder("SELECT * FROM EXCISE_PROVICE WHERE 1 = 1 ");
 		if(exciseProvice != null) {
 			
 			if(exciseProvice.getGeoId() != null) {
