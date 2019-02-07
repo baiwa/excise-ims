@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import co.th.ims.excise.dao.ExciseDistrictDao;
 import co.th.ims.excise.domain.ExciseAmphur;
 import co.th.ims.excise.domain.ExciseArea;
 import co.th.ims.excise.domain.ExciseBranch;
@@ -154,6 +153,21 @@ public class ApplicationCache {
 		return EXCISE_BRANCH_MAPPER.get(areaId);
 	}
 	
+	public static List<ExciseGeo> getExciseGeoList(BigDecimal geoId){
+		return EXCISE_GEO_LIST;
+	}
+	
+	public static List<ExciseProvice> getExciseProviceList(BigDecimal proviceId){
+		return EXCISE_PROVICE_MAPPER.get(proviceId);
+	}
+	
+	public static List<ExciseAmphur> getExciseAmphurList(BigDecimal amphurId){
+		return EXCISE_AMPHUR_MAPPER.get(amphurId);
+	}
+	
+	public static List<ExciseDistrict> getExciseDistrictList(BigDecimal districtId){
+		return EXCISE_DISTRICT_MAPPER.get(districtId);
+	}
 	
 	
 	
