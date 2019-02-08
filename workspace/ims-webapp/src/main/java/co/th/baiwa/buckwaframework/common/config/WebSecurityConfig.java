@@ -22,7 +22,6 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 
 import co.th.baiwa.buckwaframework.security.constant.ADConstant;
 import co.th.baiwa.buckwaframework.security.constant.SecurityConstants.LOGIN_STATUS;
-import co.th.baiwa.buckwaframework.security.provider.TmbAuthenticationProvider;
 import co.th.baiwa.buckwaframework.security.service.UserDetailsService;
 
 @Configuration
@@ -31,64 +30,74 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
-	
+
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	};
 
 	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		
-		auth.inMemoryAuthentication().withUser("admin").password("password").roles(ADConstant.ROLE_ADMIN);
-		
+	public void configureGlobal(AuthenticationManagerBuilder auth)
+			throws Exception {
+
+		auth.inMemoryAuthentication().withUser("admin").password("password")
+				.roles(ADConstant.ROLE_ADMIN);
+
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/","/onlogout","/app/**").permitAll()
-				.anyRequest().authenticated().and().formLogin().permitAll()
+		http.authorizeRequests().antMatchers("/", "/onlogout", "/api/**")
+				.permitAll().anyRequest().authenticated().and().formLogin()
+				.loginPage("/login").permitAll()
 				.successForwardUrl("/onloginsuccess")
-				.failureHandler(customfailHandler()).and().logout().permitAll().and().csrf().disable();
-		
-		http.sessionManagement().maximumSessions(10).sessionRegistry(sessionRegistry());
+				.failureHandler(customfailHandler()).and().logout().permitAll()
+				.and().csrf().disable();
+
+		http.sessionManagement().maximumSessions(10)
+				.sessionRegistry(sessionRegistry());
 
 	}
 
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.authenticationProvider(tmbAuthenticationProvider());
-		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+	protected void configure(AuthenticationManagerBuilder auth)
+			throws Exception {
+		// auth.authenticationProvider(tmbAuthenticationProvider());
+		auth.userDetailsService(userDetailsService).passwordEncoder(
+				passwordEncoder());
 	}
 
 	@Bean
-	public SimpleUrlAuthenticationFailureHandler customfailHandler () {
-		return new SimpleUrlAuthenticationFailureHandler (){
+	public SimpleUrlAuthenticationFailureHandler customfailHandler() {
+		return new SimpleUrlAuthenticationFailureHandler() {
 
 			@Override
-			public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-					AuthenticationException exception) throws IOException, ServletException {
-				
+			public void onAuthenticationFailure(HttpServletRequest request,
+					HttpServletResponse response,
+					AuthenticationException exception) throws IOException,
+					ServletException {
+
 				System.out.println("customfailHandler");
-				if(exception instanceof BadCredentialsException ) {
-					request.getRequestDispatcher("/onloginerror?error=" + LOGIN_STATUS.FAIL).forward(request, response);
+				if (exception instanceof BadCredentialsException) {
+					request.getRequestDispatcher(
+							"/onloginerror?error=" + LOGIN_STATUS.FAIL)
+							.forward(request, response);
 				}
 
 			}
 		};
 	}
-	
-	
+
 	@Bean
 	public SessionRegistry sessionRegistry() {
-	    return new SessionRegistryImpl();
+		return new SessionRegistryImpl();
 	}
-	
-//	@Bean("tmbAuthenticationProvider")
-//	public TmbAuthenticationProvider tmbAuthenticationProvider() {
-//		TmbAuthenticationProvider p = new TmbAuthenticationProvider();
-//		p.setUserDetailsService(userDetailsService);
-//		return p;
-//	}
+
+	// @Bean("tmbAuthenticationProvider")
+	// public TmbAuthenticationProvider tmbAuthenticationProvider() {
+	// TmbAuthenticationProvider p = new TmbAuthenticationProvider();
+	// p.setUserDetailsService(userDetailsService);
+	// return p;
+	// }
 
 }
