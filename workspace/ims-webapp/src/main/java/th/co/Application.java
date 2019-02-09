@@ -1,4 +1,4 @@
-package co.th;
+package th.co;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,7 +9,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @SpringBootApplication(
 	scanBasePackages = {
 		"co.th.baiwa.buckwaframework",
-		"co.th.ims"
+		"go.excise.ims"
 	},
 	exclude = {
 //		HibernateJpaAutoConfiguration.class,

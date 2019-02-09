@@ -13,20 +13,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import co.th.ims.excise.domain.ExciseAmphur;
-import co.th.ims.excise.domain.ExciseArea;
-import co.th.ims.excise.domain.ExciseBranch;
-import co.th.ims.excise.domain.ExciseDistrict;
-import co.th.ims.excise.domain.ExciseGeo;
-import co.th.ims.excise.domain.ExciseProvice;
-import co.th.ims.excise.domain.ExciseSector;
-import co.th.ims.excise.service.ExciseAmphurService;
-import co.th.ims.excise.service.ExciseAreaService;
-import co.th.ims.excise.service.ExciseBranchService;
-import co.th.ims.excise.service.ExciseDistrictService;
-import co.th.ims.excise.service.ExciseGeoService;
-import co.th.ims.excise.service.ExciseProviceService;
-import co.th.ims.excise.service.ExciseSectorService;
+import go.excise.ims.general.domain.ExciseAmphur;
+import go.excise.ims.general.domain.ExciseArea;
+import go.excise.ims.general.domain.ExciseBranch;
+import go.excise.ims.general.domain.ExciseDistrict;
+import go.excise.ims.general.domain.ExciseGeo;
+import go.excise.ims.general.domain.ExciseProvice;
+import go.excise.ims.general.domain.ExciseSector;
+import go.excise.ims.general.service.ExciseAmphurService;
+import go.excise.ims.general.service.ExciseAreaService;
+import go.excise.ims.general.service.ExciseBranchService;
+import go.excise.ims.general.service.ExciseDistrictService;
+import go.excise.ims.general.service.ExciseGeoService;
+import go.excise.ims.general.service.ExciseProviceService;
+import go.excise.ims.general.service.ExciseSectorService;
 
 @Component
 public class ApplicationCache {
