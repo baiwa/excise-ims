@@ -21,12 +21,12 @@ import th.go.excise.ims.common.domain.ExciseProvince;
 
 
 @RestController
-@RequestMapping("/app/excise/exciseGeneral")
+@RequestMapping("/api/excise/excise-general")
 public class ExciseGeneralController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ExciseGeneralController.class);
 	
-	@PostMapping("/GeolList")
+	@PostMapping("/geo-list")
 	public ResponseData<List<ExciseGeo>> findAllGeolList(){
 		logger.info("findAllGeneralList");
 		ResponseData<List<ExciseGeo>> response = new ResponseData<>();
@@ -42,7 +42,7 @@ public class ExciseGeneralController {
 		return response;
 	}
 	
-	@PostMapping("/proviceList/{proviceId}")
+	@PostMapping("/provice-list/{proviceId}")
 	public ResponseData<List<ExciseProvince>> findProviceListByProviceId(@PathVariable("proviceId")String proviceId){
 		ResponseData<List<ExciseProvince>> response = new ResponseData<>();
 		List<ExciseProvince> exciseProvinceList = new ArrayList<>();
@@ -57,7 +57,7 @@ public class ExciseGeneralController {
 		return response;
 	}
 	
-	@PostMapping("/amphurList/{amphurId}")
+	@PostMapping("/amphur-list/{amphurId}")
 	public ResponseData<List<ExciseAmphur>> findAmphurListByAmphurId(@PathVariable("amphurId")String amphurId){
 		ResponseData<List<ExciseAmphur>> response = new ResponseData<>();
 		List<ExciseAmphur> exciseAmphurList = new ArrayList<>();
@@ -72,7 +72,7 @@ public class ExciseGeneralController {
 		return response;
 	}
 	
-	@PostMapping("/districtList/{districtId}")
+	@PostMapping("/district-list/{districtId}")
 	public ResponseData<List<ExciseDistrict>> findDistrictListBydistrictId(@PathVariable("districtId")String districtId){
 		ResponseData<List<ExciseDistrict>> response = new ResponseData<>();
 		List<ExciseDistrict> exciseDistrictList = new ArrayList<>();
