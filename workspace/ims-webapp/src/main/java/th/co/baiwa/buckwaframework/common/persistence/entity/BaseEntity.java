@@ -19,6 +19,16 @@ public abstract class BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 8097234880020524307L;
 
+	public static class Field {
+		public static final String IS_DELETED = "IS_DELETED";
+		public static final String CREATED_BY = "CREATED_BY";
+		public static final String CREATED_DATE = "CREATED_DATE";
+		public static final String UPDATED_BY = "UPDATED_BY";
+		public static final String UPDATED_DATE = "UPDATED_DATE";
+		public static final String VERSION = "VERSION";
+	}
+	
+	
 	@Column(name = "IS_DELETED")
 	protected String isDeleted;
 

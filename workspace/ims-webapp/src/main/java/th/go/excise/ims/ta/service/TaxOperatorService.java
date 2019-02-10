@@ -1,10 +1,7 @@
 package th.go.excise.ims.ta.service;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

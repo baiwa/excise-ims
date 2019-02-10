@@ -1,6 +1,5 @@
 package th.go.excise.ims.common.controller;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.common.domain.ExciseArea;
-import th.go.excise.ims.common.domain.ExciseBranch;
-import th.go.excise.ims.common.domain.ExciseSector;
+import th.go.excise.ims.common.persistence.entity.ExciseDepartment;
 
 @RestController
 @RequestMapping("/app/excise/sectorareabranch")
@@ -25,10 +22,10 @@ public class SectorAreaBranchController {
 	private static final Logger logger = LoggerFactory.getLogger(SectorAreaBranchController.class);
 	
 	@PostMapping("/sectorList")
-	public ResponseData<List<ExciseSector>> findAllSectorList(){
+	public ResponseData<List<ExciseDepartment>> findAllSectorList(){
 		logger.info("findAllSectorList");
-		ResponseData<List<ExciseSector>> response = new ResponseData<>();
-		List<ExciseSector> exciseSectors = new ArrayList<ExciseSector>();
+		ResponseData<List<ExciseDepartment>> response = new ResponseData<>();
+		List<ExciseDepartment> exciseSectors = new ArrayList<ExciseDepartment>();
 		try {
 			exciseSectors = ApplicationCache.getExciseSectorList();
 			response.setData(exciseSectors);
@@ -40,12 +37,12 @@ public class SectorAreaBranchController {
 		return response;
 	} 
 	
-	@PostMapping("/areaList/{sectorId}")
-	public ResponseData<List<ExciseArea>> findAreaListBySectorId(@PathVariable("sectorId")String sectorId){
-		ResponseData<List<ExciseArea>> response = new ResponseData<>();
-		List<ExciseArea> exciseAreaList = new ArrayList<>();
+	@PostMapping("/areaList/{officeCode}")
+	public ResponseData<List<ExciseDepartment>> findAreaListBySectorId(@PathVariable("officeCode")String officeCode){
+		ResponseData<List<ExciseDepartment>> response = new ResponseData<>();
+		List<ExciseDepartment> exciseAreaList = new ArrayList<>();
  		try {
- 			exciseAreaList = ApplicationCache.getExciseAreaList(new BigDecimal(sectorId));
+ 			exciseAreaList = ApplicationCache.getExciseAreaList(officeCode);
 			response.setData(exciseAreaList);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
@@ -56,12 +53,12 @@ public class SectorAreaBranchController {
 	}
 	
 	
-	@PostMapping("/branchList/{areaId}")
-	public ResponseData<List<ExciseBranch>> findbranchListByAreaId(@PathVariable("areaId") String areaId){
-		ResponseData<List<ExciseBranch>> response = new ResponseData<>();
-		List<ExciseBranch> exciseBranchList = new ArrayList<ExciseBranch>();
+	@PostMapping("/branchList/{officeCode}")
+	public ResponseData<List<ExciseDepartment>> findbranchListByAreaId(@PathVariable("officeCode") String officeCode){
+		ResponseData<List<ExciseDepartment>> response = new ResponseData<>();
+		List<ExciseDepartment> exciseBranchList = new ArrayList<ExciseDepartment>();
  		try {
- 			exciseBranchList = ApplicationCache.getExciseBranchList(new BigDecimal(areaId));
+ 			exciseBranchList = ApplicationCache.getExciseBranchList(officeCode);
 			response.setData(exciseBranchList);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 
@@ -24,56 +25,45 @@ import th.co.baiwa.buckwaframework.preferences.persistence.repository.ParameterI
 import th.co.baiwa.buckwaframework.support.domain.ParamGroup;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.domain.ExciseAmphur;
-import th.go.excise.ims.common.domain.ExciseArea;
-import th.go.excise.ims.common.domain.ExciseBranch;
 import th.go.excise.ims.common.domain.ExciseDistrict;
 import th.go.excise.ims.common.domain.ExciseGeo;
 import th.go.excise.ims.common.domain.ExciseProvince;
-import th.go.excise.ims.common.domain.ExciseSector;
+import th.go.excise.ims.common.persistence.entity.ExciseDepartment;
 import th.go.excise.ims.common.service.ExciseAmphurService;
-import th.go.excise.ims.common.service.ExciseAreaService;
-import th.go.excise.ims.common.service.ExciseBranchService;
+import th.go.excise.ims.common.service.ExciseDepartmentService;
 import th.go.excise.ims.common.service.ExciseDistrictService;
 import th.go.excise.ims.common.service.ExciseGeoService;
 import th.go.excise.ims.common.service.ExciseProvinceService;
-import th.go.excise.ims.common.service.ExciseSectorService;
 
 @Component
 public class ApplicationCache {
 
 	private static final Logger logger = LoggerFactory.getLogger(ApplicationCache.class);
-	
+
 	@Autowired
-	public final ExciseSectorService exciseSectorService = null;
-	
-	@Autowired
-	public final ExciseAreaService exciseAreaService = null;
-	
-	@Autowired
-	public final ExciseBranchService exciseBranchService = null;
-	
+	public final ExciseDepartmentService exciseDepartmentService = null;
+
 	@Autowired
 	public final ExciseGeoService exciseGeoService = null;
-	
+
 	@Autowired
 	public final ExciseProvinceService exciseProvinceService = null;
-	
+
 	@Autowired
 	public final ExciseAmphurService exciseAmphurService = null;
 
 	@Autowired
 	public final ExciseDistrictService exciseDistrictService = null;
-	
-	private static final List<ExciseSector> EXCISE_SECTOR_LIST = new ArrayList<ExciseSector>();
-	private static final ConcurrentHashMap<BigDecimal, List<ExciseArea>> EXCISE_AREA_MAPPER = new ConcurrentHashMap<BigDecimal, List<ExciseArea>>();
-	private static final ConcurrentHashMap<BigDecimal, List<ExciseBranch>> EXCISE_BRANCH_MAPPER = new ConcurrentHashMap<BigDecimal, List<ExciseBranch>>();
-	
+
+	private static final List<ExciseDepartment> EXCISE_SECTOR_LIST = new ArrayList<ExciseDepartment>();
+	private static final ConcurrentHashMap<String, List<ExciseDepartment>> EXCISE_AREA_MAPPER = new ConcurrentHashMap<String, List<ExciseDepartment>>();
+	private static final ConcurrentHashMap<String, List<ExciseDepartment>> EXCISE_BRANCH_MAPPER = new ConcurrentHashMap<String, List<ExciseDepartment>>();
+
 	private static final List<ExciseGeo> EXCISE_GEO_LIST = new ArrayList<ExciseGeo>();
 	private static final ConcurrentHashMap<BigDecimal, List<ExciseProvince>> EXCISE_PROVINCE_MAPPER = new ConcurrentHashMap<BigDecimal, List<ExciseProvince>>();
 	private static final ConcurrentHashMap<BigDecimal, List<ExciseAmphur>> EXCISE_AMPHUR_MAPPER = new ConcurrentHashMap<BigDecimal, List<ExciseAmphur>>();
 	private static final ConcurrentHashMap<BigDecimal, List<ExciseDistrict>> EXCISE_DISTRICT_MAPPER = new ConcurrentHashMap<BigDecimal, List<ExciseDistrict>>();
-	
-	
+
 	private static final ConcurrentHashMap<String, ParamGroupWrapper> PARAM_GROUP_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<Long, ParamInfo> PARAM_INFO_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, Message> MESSAGE_MAP = new ConcurrentHashMap<>();
@@ -85,46 +75,50 @@ public class ApplicationCache {
 	private final ParameterInfoRepository parameterInfoRepository = null;
 	@Autowired
 	private final MessageRepository messageRepository = null;
-	
+
 	/** Reload */
 	@PostConstruct
 	public synchronized void reloadCache() {
 		logger.info("ApplicationCache Reloading...");
-		
+
 		loadSectorAreaBranch();
-		loadGioProviceAumhurDistrictAndMapping();
-		
+//		loadGioProviceAumhurDistrictAndMapping();
+
 		logger.info("ApplicationCache Reloaded");
 	}
-	
+
 	public void loadSectorAreaBranch() {
 		logger.info("exciseSectorAreaBranchInitialData");
-		List<ExciseSector> exciseSectorList = exciseSectorService.findAllExciseSector();
-		if(exciseSectorList != null && exciseSectorList.size() > 0) {
-			for (ExciseSector exciseSector : exciseSectorList) {
-				EXCISE_SECTOR_LIST.add(exciseSector);
-				
-			}
-		}
-//		EXCISE_AREA_MAPPER
-		List<ExciseArea> exciseAreaList = null;
-		List<ExciseBranch> exciseBranchList = null;
-		for (ExciseSector exciseSector : exciseSectorList) {
-			exciseAreaList = new ArrayList<>();
-			exciseAreaList = exciseAreaService.findAllExciseSector(exciseSector.getSectorId());
-			if(exciseAreaList != null && exciseAreaList.size() >= 0) {
-				EXCISE_AREA_MAPPER.put(exciseSector.getSectorId(),exciseAreaList);
-				for (ExciseArea exciseArea : exciseAreaList) {
-					exciseBranchList =  new ArrayList<ExciseBranch>();
-					exciseBranchList = exciseBranchService.findBySectorId(exciseArea.getAreaId());
-					if(exciseBranchList != null) {
-						EXCISE_BRANCH_MAPPER.put(exciseArea.getAreaId(), exciseBranchList);
-					}
+		List<ExciseDepartment> exciseDepartmentList = exciseDepartmentService.findAll();
+		for (ExciseDepartment exciseDepartment : exciseDepartmentList) {
+			if (Pattern.matches("^.{2}0{4}$", exciseDepartment.getOfficeCode())) {
+				EXCISE_SECTOR_LIST.add(exciseDepartment);
+			} else if (Pattern.matches(exciseDepartment.getOfficeCode().substring(0, 2) + "([0-9]{1}[1-9]{1}|[1-9][0-9])00", exciseDepartment.getOfficeCode())) {
+				List<ExciseDepartment> areaList = EXCISE_AREA_MAPPER.get(exciseDepartment.getOfficeCode().substring(0, 2) + "0000");
+				if (areaList == null) {
+					areaList = new ArrayList<>();
+					areaList.add(exciseDepartment);
+				} else {
+					areaList.add(exciseDepartment);
 				}
+				EXCISE_AREA_MAPPER.put(exciseDepartment.getOfficeCode().substring(0, 2) + "0000", areaList);
+
+			} else if (Pattern.matches(exciseDepartment.getOfficeCode().substring(0, 4) + "([0-9]{1}[1-9]{1}|[1-9][0-9])", exciseDepartment.getOfficeCode())) {
+				List<ExciseDepartment> branch = EXCISE_BRANCH_MAPPER.get(exciseDepartment.getOfficeCode().substring(0, 4) + "00");
+				if (branch == null) {
+					branch = new ArrayList<>();
+					branch.add(exciseDepartment);
+				} else {
+					branch.add(exciseDepartment);
+				}
+				EXCISE_BRANCH_MAPPER.put(exciseDepartment.getOfficeCode().substring(0, 4) + "00", branch);
+
+			} else {
+				logger.info(exciseDepartment.getOfficeCode());
 			}
 		}
 	}
-	
+
 	public void loadGioProviceAumhurDistrictAndMapping() {
 		List<ExciseGeo> ecExciseGeoList = exciseGeoService.findExciseGeoListByCriteria(null);
 		List<ExciseAmphur> exciseAmphurList;
@@ -156,50 +150,50 @@ public class ApplicationCache {
 			}
 		}
 	}
-	
-	public static List<ExciseSector> getExciseSectorList(){
-		return EXCISE_SECTOR_LIST;
+
+	public static List<ExciseDepartment> getExciseSectorList() {
+		return Collections.unmodifiableList(EXCISE_SECTOR_LIST);
 	}
-	
-	public static List<ExciseArea> getExciseAreaList(BigDecimal sectorId){
-		return EXCISE_AREA_MAPPER.get(sectorId);
+
+	public static List<ExciseDepartment> getExciseAreaList(String officeCode) {
+		return Collections.unmodifiableList(EXCISE_AREA_MAPPER.get(officeCode));
 	}
-	
-	public static List<ExciseBranch> getExciseBranchList(BigDecimal areaId){
-		return EXCISE_BRANCH_MAPPER.get(areaId);
+
+	public static List<ExciseDepartment> getExciseBranchList(String officeCode) {
+		return Collections.unmodifiableList(EXCISE_BRANCH_MAPPER.get(officeCode));
 	}
-	
-	public static List<ExciseGeo> getExciseGeoList(BigDecimal geoId){
-		return EXCISE_GEO_LIST;
+
+	public static List<ExciseGeo> getExciseGeoList() {
+		return Collections.unmodifiableList(EXCISE_GEO_LIST);
 	}
-	
-	public static List<ExciseProvince> getExciseProvinceList(BigDecimal proviceId){
-		return EXCISE_PROVINCE_MAPPER.get(proviceId);
+
+	public static List<ExciseProvince> getExciseProvinceList(BigDecimal geoId) {
+		return Collections.unmodifiableList(EXCISE_PROVINCE_MAPPER.get(geoId));
 	}
-	
-	public static List<ExciseAmphur> getExciseAmphurList(BigDecimal amphurId){
-		return EXCISE_AMPHUR_MAPPER.get(amphurId);
+
+	public static List<ExciseAmphur> getExciseAmphurList(BigDecimal proviceId) {
+		return Collections.unmodifiableList(EXCISE_AMPHUR_MAPPER.get(proviceId));
 	}
-	
-	public static List<ExciseDistrict> getExciseDistrictList(BigDecimal districtId){
-		return EXCISE_DISTRICT_MAPPER.get(districtId);
+
+	public static List<ExciseDistrict> getExciseDistrictList(BigDecimal proviceId) {
+		return Collections.unmodifiableList(EXCISE_DISTRICT_MAPPER.get(proviceId));
 	}
-	
+
 	/********************* Method for Get Cache - Start *********************/
 
 	/** Parameter Group & Parameter Info */
 	public static ParamGroup getParamGroupByCode(String paramGroupCode) {
 		return PARAM_GROUP_MAP.get(paramGroupCode).getParamGroup();
 	}
-	
+
 	public static ParamInfo getParamInfoById(Long paramInfoId) {
 		return PARAM_INFO_MAP.get(paramInfoId);
 	}
-	
+
 	public static ParamInfo getParamInfoByCode(String paramGroupCode, String paramInfoCode) {
 		return PARAM_GROUP_MAP.get(paramGroupCode).getParamInfoCodeMap().get(paramInfoCode);
 	}
-	
+
 	public static List<ParamGroup> getParamGroupList() {
 		List<ParamGroup> resultList = new ArrayList<>();
 		for (Entry<String, ParamGroupWrapper> entry : PARAM_GROUP_MAP.entrySet()) {
@@ -207,19 +201,19 @@ public class ApplicationCache {
 		}
 		return Collections.unmodifiableList(resultList);
 	}
-	
+
 	public static List<ParamInfo> getParamInfoListByGroupCode(String paramGroupCode) {
 		ParamGroupWrapper paramGroupWrapper = PARAM_GROUP_MAP.get(paramGroupCode);
-		
+
 		List<ParamInfo> resultList = new ArrayList<>();
 		for (Entry<String, ParamInfo> entry : paramGroupWrapper.getParamInfoCodeMap().entrySet()) {
 			resultList.add(entry.getValue());
 		}
 		resultList.sort((p1, p2) -> p1.getSortingOrder() - p2.getSortingOrder());
-		
+
 		return Collections.unmodifiableList(resultList);
 	}
-	
+
 	final class ParamGroupWrapper {
 
 		private ParamGroup paramGroup;
@@ -264,37 +258,37 @@ public class ApplicationCache {
 	}
 
 	/********************* Method for Get Cache - End *********************/
-	
+
 	private void loadParameter() {
 		logger.info("load Paramter loading...");
-		
+
 		PARAM_GROUP_MAP.clear();
 		PARAM_INFO_MAP.clear();
-		
+
 		List<? extends ParamGroup> paramGroupList = parameterGroupRepository.findAll();
 		List<? extends ParamInfo> paramInfoList = null;
 		for (ParamGroup paramGroup : paramGroupList) {
 			logger.debug("load parameterGroupCode: {}", paramGroup.getParamGroupCode());
-			
+
 			paramInfoList = parameterInfoRepository.findByParamGroupId(paramGroup.getParamGroupId());
 			for (ParamInfo paramInfo : paramInfoList) {
 				PARAM_INFO_MAP.put(paramInfo.getParamInfoId(), paramInfo);
 			}
-			
+
 			PARAM_GROUP_MAP.put(paramGroup.getParamGroupCode(), new ParamGroupWrapper(paramGroup, paramInfoList));
 		}
-		
+
 		logger.info("load Paramter loaded [{}]", PARAM_GROUP_MAP.size());
 	}
 
 	private void loadMessage() {
 		logger.info("load Message loading...");
-		
+
 		MESSAGE_MAP.clear();
-		
+
 		messageRepository.findAll().forEach(m -> MESSAGE_MAP.put(m.getMessageCode(), m));
-		
+
 		logger.info("load Message loaded [{}]", MESSAGE_MAP.size());
 	}
-	
+
 }

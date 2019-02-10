@@ -32,7 +32,7 @@ public class ExciseGeneralController {
 		ResponseData<List<ExciseGeo>> response = new ResponseData<>();
 		List<ExciseGeo> exciseGeos = new ArrayList<ExciseGeo>();
 		try {
-			exciseGeos = ApplicationCache.getExciseGeoList(null);
+			exciseGeos = ApplicationCache.getExciseGeoList();
 			response.setData(exciseGeos);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
