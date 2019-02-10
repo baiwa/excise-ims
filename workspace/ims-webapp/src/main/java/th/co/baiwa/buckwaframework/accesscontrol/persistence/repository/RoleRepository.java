@@ -4,5 +4,7 @@ import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.Role;
 import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRepository;
 
 public interface RoleRepository extends CommonJpaCrudRepository<Role, Long> {
-
+	
+	public Role findByRoleCode(String roleCode);
+	
 }

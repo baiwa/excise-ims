@@ -2,7 +2,9 @@ package th.co.baiwa.buckwaframework.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
+import com.fasterxml.classmate.TypeResolver;
 import com.google.common.collect.Lists;
 
 import springfox.documentation.builders.PathSelectors;
@@ -10,7 +12,12 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.spring.web.plugins.DocumentationPluginsManager;
+import springfox.documentation.spring.web.scanners.ApiDescriptionReader;
+import springfox.documentation.spring.web.scanners.ApiListingScanner;
+import springfox.documentation.spring.web.scanners.ApiModelReader;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import th.co.baiwa.buckwaframework.security.rest.documentation.FormLoginOperations;
 
 @Configuration
 @EnableSwagger2
@@ -35,14 +42,14 @@ public class SwaggerConfig {
 			Lists.newArrayList());
 	}
 	
-//	@Primary
-//	@Bean
-//	public ApiListingScanner addExtraOperations(
-//			ApiDescriptionReader apiDescriptionReader,
-//			ApiModelReader apiModelReader,
-//			DocumentationPluginsManager pluginsManager,
-//			TypeResolver typeResolver) {
-//		return new FormLoginOperations(apiDescriptionReader, apiModelReader, pluginsManager, typeResolver);
-//	}
+	@Primary
+	@Bean
+	public ApiListingScanner addExtraOperations(
+			ApiDescriptionReader apiDescriptionReader,
+			ApiModelReader apiModelReader,
+			DocumentationPluginsManager pluginsManager,
+			TypeResolver typeResolver) {
+		return new FormLoginOperations(apiDescriptionReader, apiModelReader, pluginsManager, typeResolver);
+	}
 	
 }

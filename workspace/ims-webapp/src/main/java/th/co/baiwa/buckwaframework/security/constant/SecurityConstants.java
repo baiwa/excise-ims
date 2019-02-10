@@ -17,4 +17,11 @@ public class SecurityConstants {
 		public static final String USER = "USER";
 		public static final String ADMIN = "ADMIN";
 	}
+	
+	public static final String ROLE_USER = "ROLE_USER";
+	public static final String ROLE_ADMIN = "ROLE_ADMIN";
+	public static final String ROLE_INTERNAL_AUDIT = "ROLE_INTERNAL_AUDIT";
+	public static final String ROLE_TAX_AUDIT = "ROLE_TAX_AUDIT";
+	public static final String ROLE_OPERATOR_AUDIT = "ROLE_OPERATOR_AUDIT";
+	public static final String ROLE_EXPORT_AUDIT = "ROLE_EXPORT_AUDIT";
 }

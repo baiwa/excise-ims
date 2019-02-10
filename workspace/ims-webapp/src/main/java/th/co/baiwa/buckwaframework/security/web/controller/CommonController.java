@@ -26,14 +26,10 @@ public class CommonController {
 		return "redirect:/index.html";
 	}
 	
-	@RequestMapping(value = "/anonymous.htm")
-	public ModelAndView anonymous() {
-		logger.info(" # anonymous 0 ");
-		
+	@RequestMapping(value = {"/index.html"})
+	public ModelAndView index() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("anonymous");
-		
-		logger.info(" # anonymous success ");
+		mav.setViewName("index");
 		
 		return mav;
 	}
