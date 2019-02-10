@@ -1,4 +1,4 @@
-package co.th.baiwa.buckwaframework.preferences.rest.controller;
+/*package co.th.baiwa.buckwaframework.preferences.rest.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,3 +58,4 @@ public class PreferencesRestController {
 	}
 	
 }
+*/

@@ -1,0 +1,122 @@
+package co.th.ims.taxaudit.dao.jdbc;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
+
+import co.th.ims.taxaudit.vo.TaxOperatorVo;
+import co.th.ims.taxaudit.vo.TaxOperatorVo.TaxPay;
+
+@Repository
+public class TaxOperatorRepository {
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+
+
+
+    public List<TaxOperatorVo> getOperator(TaxOperatorVo.TaxOperatorFormVo formVo) {
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT ");
+        sql.append("   WS4000.NEW_REG_ID,");
+        sql.append("   WS4000.CUS_FULLNAME,");
+        sql.append("   WS4000.FAC_FULLNAME,  ");
+        sql.append("   WS4000.FAC_ADDRESS,");
+        sql.append("   WS4000.OFFICE_CODE,");
+        sql.append("   EXC_SEC.SECTOR_NAME2 SECTOR_NAME,");
+        sql.append("   EXC_AR.AREA_SHOT_NAME");
+        sql.append(" FROM TA_WS_REG4000 WS4000");
+        sql.append("   INNER JOIN TA_WS_INC8000_M WS8000 ");
+        sql.append("     ON WS4000.NEW_REG_ID=WS8000.NEW_REG_ID");
+        sql.append("   INNER JOIN EXCISE_AREA EXC_AR");
+        sql.append("     ON WS4000.OFFICE_CODE=EXC_AR.OFFICE_CODE");
+        sql.append("   INNER JOIN EXCISE_SECTOR EXC_SEC");
+        sql.append("    ON EXC_AR.SECTOR_ID=EXC_SEC.SECTOR_ID");
+        sql.append("   WHERE 1=1 ");
+        sql.append("   AND WS8000.TAX_YEAR BETWEEN ? AND ? ");
+        sql.append(" GROUP BY ");
+        sql.append("  WS4000.NEW_REG_ID,");
+        sql.append("   WS4000.CUS_FULLNAME,");
+        sql.append("   WS4000.FAC_FULLNAME,  ");
+        sql.append("   WS4000.FAC_ADDRESS,");
+        sql.append("   WS4000.OFFICE_CODE,");
+        sql.append("   EXC_SEC.SECTOR_NAME2,");
+        sql.append("   EXC_AR.AREA_SHOT_NAME");
+        sql.append(" ");
+        sql.append(" ORDER BY WS4000.NEW_REG_ID");
+        sql.append(" ");
+
+        List<Object> params = new ArrayList<>();
+        params.add(formVo.getYearStart());
+        params.add(formVo.getYearEnd());
+        return jdbcTemplate.query(sql.toString(), params.toArray(), rowMapper);
+    }
+
+    protected RowMapper<TaxOperatorVo> rowMapper = new RowMapper<TaxOperatorVo>() {
+        @Override
+        public TaxOperatorVo mapRow(ResultSet rs, int arg1) throws SQLException {
+            TaxOperatorVo vo = new TaxOperatorVo();
+            vo.setNewRegId(rs.getString("NEW_REG_ID"));
+            vo.setCusFullname(rs.getString("CUS_FULLNAME"));
+            vo.setFacFullname(rs.getString("FAC_FULLNAME"));
+            vo.setFacAddress(rs.getString("FAC_ADDRESS"));
+            vo.setOfficeCode(rs.getString("OFFICE_CODE"));;
+            vo.setSectorName(rs.getString("SECTOR_NAME"));
+            vo.setAreaShotName(rs.getString("AREA_SHOT_NAME"));
+            return vo;
+        }
+    };
+
+    public List<String> getYearTax(TaxOperatorVo.TaxOperatorFormVo formVo) {
+    	StringBuilder sql = new StringBuilder();
+    	sql.append(" SELECT DISTINCT TAX_YEAR from TA_WS_INC8000_M ");
+    	sql.append(" WHERE NEW_REG_ID=?");
+    	sql.append(" AND (TAX_YEAR BETWEEN ? AND ? AND TAX_MONTH BETWEEN 1 AND 12)");
+    	sql.append(" ORDER BY TAX_YEAR ASC");
+    	
+    	 List<Object> params = new ArrayList<>();
+    	 params.add(formVo.getNewRegId());
+         params.add(formVo.getYearStart());
+         params.add(formVo.getYearEnd());
+    	 return jdbcTemplate.query(sql.toString(), params.toArray(), yearRowMapper);
+    }
+    
+    protected RowMapper<String> yearRowMapper = new RowMapper<String>() {
+        @Override
+        public String mapRow(ResultSet rs, int arg1) throws SQLException {
+        	        
+            return rs.getString("TAX_YEAR");
+        }
+    };
+
+    public List<TaxPay> getMonthTax(TaxOperatorVo.TaxOperatorFormVo formVo, String year) {
+    	StringBuilder sql = new StringBuilder();
+    	sql.append(" SELECT  TAX_YEAR, TAX_MONTH, TAX_AMOUNT FROM TA_WS_INC8000_M ");
+    	sql.append(" WHERE NEW_REG_ID=?");
+    	sql.append(" AND TAX_YEAR=?");
+    	
+    	 List<Object> params = new ArrayList<>();
+    	 params.add(formVo.getNewRegId());
+         params.add(year);
+    	 return jdbcTemplate.query(sql.toString(), params.toArray(), MonthRowMapper);
+    }
+    
+    protected RowMapper<TaxPay> MonthRowMapper = new RowMapper<TaxPay>() {
+        @Override
+        public TaxPay mapRow(ResultSet rs, int arg1) throws SQLException {
+        	TaxPay taxPay = new TaxPay();
+        	taxPay.setYear(rs.getString("TAX_YEAR"));
+        	taxPay.setMonth(rs.getString("TAX_MONTH"));
+        	taxPay.setTaxAmount(rs.getBigDecimal("TAX_AMOUNT"));
+            return taxPay;
+        }
+    };
+}
+

@@ -9,7 +9,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @SpringBootApplication(
 	scanBasePackages = {
 		"co.th.baiwa.buckwaframework",
-		"go.excise.ims"
+		"co.th.ims"
 	},
 	exclude = {
 //		HibernateJpaAutoConfiguration.class,
