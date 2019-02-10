@@ -20,7 +20,7 @@ import th.co.baiwa.buckwaframework.common.persistence.repository.support.CommonS
 @EnableJpaRepositories(
 	basePackages = {
 		"th.co.baiwa.buckwaframework",
-		"com.saicmotorcp.helpdesk.webportal"
+		"th.go.excise.ims"
 	},
 	repositoryBaseClass = CommonSimpleJpaRepository.class
 )
@@ -44,7 +44,7 @@ public class DataSourceConfig {
 		factory.setJpaVendorAdapter(vendorAdapter);
 		factory.setPackagesToScan(
 			"th.co.baiwa.buckwaframework",
-			"com.saicmotorcp.helpdesk.webportal"
+			"th.go.excise.ims"
 		);
 		factory.setDataSource(dataSource);
 		

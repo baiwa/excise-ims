@@ -2,17 +2,17 @@
 
 <fontFamilies>
 
-	<fontFamily name="Cordia New">
-		<normal>report/fonts/cordia.ttf</normal>
-		<bold>report/fonts/cordiab.ttf</bold>
-		<italic>report/fonts/cordiai.ttf</italic>
-		<boldItalic>report/fonts/cordiaz.ttf</boldItalic>
+	<fontFamily name="TH Sarabun New">
+		<normal>reports/fonts/THSarabunNew.ttf</normal>
+		<bold>reports/fonts/THSarabunNew-Bold.ttf</bold>
+		<italic>reports/fonts/THSarabunNew-Italic.ttf</italic>
+		<boldItalic>reports/fonts/THSarabunNew-BoldItalic.ttf</boldItalic>
 		<pdfEncoding>Identity-H</pdfEncoding>
 		<pdfEmbedded>true</pdfEmbedded>
 	</fontFamily>
 
 	<fontFamily name="DejaVu Sans">
-		<normal>report/fonts/DejaVuSans.ttf</normal>
+		<normal>reports/fonts/DejaVuSans.ttf</normal>
 		<pdfEncoding>Identity-H</pdfEncoding>
 		<pdfEmbedded>true</pdfEmbedded>
 	</fontFamily>

@@ -148,7 +148,7 @@ public class CommonJdbcTemplate extends JdbcTemplate {
 	@Override
 	public <T> int[][] batchUpdate(String sql, final Collection<T> batchArgs, final int batchSize,
 			final ParameterizedPreparedStatementSetter<T> pss) throws DataAccessException {
-		logger.debug("Batch Process Start");
+		logger.info("Batch Process Start");
 		long start = System.currentTimeMillis();
 		
 		Connection connection = null;
@@ -171,14 +171,14 @@ public class CommonJdbcTemplate extends JdbcTemplate {
 					pss.setValues(ps, obj);
 					ps.addBatch();
 					if (count % batchSize == 0) {
-						logger.debug("## ps.executeBatch() at count={}", count);
+						logger.info("## ps.executeBatch() at count={}", count);
 						count = 0;
 						rowsAffected.add(ps.executeBatch());
 						ps.clearBatch();
 					}
 				}
 				if (count > 0) {
-					logger.debug("## ps.executeBatch() at count={}", count);
+					logger.info("## ps.executeBatch() at count={}", count);
 					rowsAffected.add(ps.executeBatch());
 					ps.clearBatch();
 				}
@@ -202,7 +202,7 @@ public class CommonJdbcTemplate extends JdbcTemplate {
 		}
 		
 		long end = System.currentTimeMillis();
-		logger.debug("Batch Process Success, using {} seconds", (float) (end - start) / 1000F);
+		logger.info("Batch Process Success, using {} seconds", (float) (end - start) / 1000F);
 		return result;
 	}
 	
