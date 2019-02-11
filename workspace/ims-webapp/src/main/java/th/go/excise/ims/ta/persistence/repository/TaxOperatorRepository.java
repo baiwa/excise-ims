@@ -19,43 +19,45 @@ public class TaxOperatorRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-
-
-
+    // TODO get operator
     public List<TaxOperatorVo> getOperator(TaxOperatorVo.TaxOperatorFormVo formVo) {
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT ");
-        sql.append("   WS4000.NEW_REG_ID,");
-        sql.append("   WS4000.CUS_FULLNAME,");
-        sql.append("   WS4000.FAC_FULLNAME,  ");
-        sql.append("   WS4000.FAC_ADDRESS,");
-        sql.append("   WS4000.OFFICE_CODE,");
-        sql.append("   EXC_SEC.SECTOR_NAME2 SECTOR_NAME,");
-        sql.append("   EXC_AR.AREA_SHOT_NAME");
+        sql.append(" WS4000.NEW_REG_ID,");
+        sql.append(" WS4000.CUS_FULLNAME,");
+        sql.append(" WS4000.FAC_FULLNAME,  ");
+        sql.append(" WS4000.FAC_ADDRESS,");
+        sql.append(" WS4000.OFFICE_CODE,");
+        sql.append(" EXC_SEC.SECTOR_NAME2 SECTOR_NAME,");
+        sql.append(" EXC_AR.AREA_SHOT_NAME");
         sql.append(" FROM TA_WS_REG4000 WS4000");
-        sql.append("   INNER JOIN TA_WS_INC8000_M WS8000 ");
-        sql.append("     ON WS4000.NEW_REG_ID=WS8000.NEW_REG_ID");
-        sql.append("   INNER JOIN EXCISE_AREA EXC_AR");
-        sql.append("     ON WS4000.OFFICE_CODE=EXC_AR.OFFICE_CODE");
-        sql.append("   INNER JOIN EXCISE_SECTOR EXC_SEC");
-        sql.append("    ON EXC_AR.SECTOR_ID=EXC_SEC.SECTOR_ID");
-        sql.append("   WHERE 1=1 ");
-        sql.append("   AND WS8000.TAX_YEAR BETWEEN ? AND ? ");
+        sql.append(" INNER JOIN TA_WS_INC8000_M WS8000 ");
+        sql.append("   ON WS4000.NEW_REG_ID=WS8000.NEW_REG_ID");
+        sql.append(" INNER JOIN EXCISE_AREA EXC_AR");
+        sql.append("   ON WS4000.OFFICE_CODE=EXC_AR.OFFICE_CODE");
+        sql.append(" INNER JOIN EXCISE_SECTOR EXC_SEC");
+        sql.append("  ON EXC_AR.SECTOR_ID=EXC_SEC.SECTOR_ID");
+        sql.append(" WHERE 1=1 ");
+        sql.append(" AND CONCAT(");
+        sql.append("     TAX_YEAR,");
+        sql.append("     CASE");
+        sql.append("     WHEN  LENGTH(TAX_MONTH)=1 THEN CONCAT('0',TAX_MONTH)");
+        sql.append("     ELSE TAX_MONTH");
+        sql.append("     END");
+        sql.append("   ) BETWEEN ? AND ?");
         sql.append(" GROUP BY ");
-        sql.append("  WS4000.NEW_REG_ID,");
-        sql.append("   WS4000.CUS_FULLNAME,");
-        sql.append("   WS4000.FAC_FULLNAME,  ");
-        sql.append("   WS4000.FAC_ADDRESS,");
-        sql.append("   WS4000.OFFICE_CODE,");
-        sql.append("   EXC_SEC.SECTOR_NAME2,");
-        sql.append("   EXC_AR.AREA_SHOT_NAME");
-        sql.append(" ");
+        sql.append(" WS4000.NEW_REG_ID,");
+        sql.append(" WS4000.CUS_FULLNAME,");
+        sql.append(" WS4000.FAC_FULLNAME,  ");
+        sql.append(" WS4000.FAC_ADDRESS,");
+        sql.append(" WS4000.OFFICE_CODE,");
+        sql.append(" EXC_SEC.SECTOR_NAME2,");
+        sql.append(" EXC_AR.AREA_SHOT_NAME");
         sql.append(" ORDER BY WS4000.NEW_REG_ID");
-        sql.append(" ");
 
         List<Object> params = new ArrayList<>();
-        params.add(formVo.getYearStart());
-        params.add(formVo.getYearEnd());
+        params.add(formVo.getDateStart());
+        params.add(formVo.getDateEnd());
         return jdbcTemplate.query(sql.toString(), params.toArray(), rowMapper);
     }
 
@@ -73,18 +75,26 @@ public class TaxOperatorRepository {
             return vo;
         }
     };
-
+    // TODO get tax pay operator
     public List<String> getYearTax(TaxOperatorVo.TaxOperatorFormVo formVo) {
     	StringBuilder sql = new StringBuilder();
-    	sql.append(" SELECT DISTINCT TAX_YEAR from TA_WS_INC8000_M ");
-    	sql.append(" WHERE NEW_REG_ID=?");
-    	sql.append(" AND (TAX_YEAR BETWEEN ? AND ? AND TAX_MONTH BETWEEN 1 AND 12)");
-    	sql.append(" ORDER BY TAX_YEAR ASC");
+    	sql.append(" select  ");
+    	sql.append("     DISTINCT ");
+    	sql.append("     TAX_YEAR ");
+    	sql.append(" from TA_WS_INC8000_M  ");
+    	sql.append(" WHERE NEW_REG_ID=? ");
+    	sql.append(" AND CONCAT( ");
+    	sql.append("       TAX_YEAR, ");
+    	sql.append("       CASE ");
+    	sql.append("       WHEN  LENGTH(TAX_MONTH)=1 THEN concat('0',TAX_MONTH) ");
+    	sql.append("       ELSE TAX_MONTH ");
+    	sql.append("       END ");
+    	sql.append("     ) between ? and ? ORDER BY TAX_YEAR ASC ");
     	
     	 List<Object> params = new ArrayList<>();
     	 params.add(formVo.getNewRegId());
-         params.add(formVo.getYearStart());
-         params.add(formVo.getYearEnd());
+    	 params.add(formVo.getDateStart());
+         params.add(formVo.getDateEnd());
     	 return jdbcTemplate.query(sql.toString(), params.toArray(), yearRowMapper);
     }
     
@@ -96,15 +106,42 @@ public class TaxOperatorRepository {
         }
     };
 
-    public List<TaxPay> getMonthTax(TaxOperatorVo.TaxOperatorFormVo formVo, String year) {
+    public List<TaxPay> getMonthTax(TaxOperatorVo.TaxOperatorFormVo formVo) {
     	StringBuilder sql = new StringBuilder();
-    	sql.append(" SELECT  TAX_YEAR, TAX_MONTH, TAX_AMOUNT FROM TA_WS_INC8000_M ");
+    	sql.append(" SELECT ");
+    	sql.append(" TAX_YEAR, ");
+    	sql.append(" TAX_MONTH,");
+    	sql.append(" CONCAT(");
+    	sql.append("   TAX_YEAR,CASE");
+    	sql.append("   WHEN  LENGTH(TAX_MONTH)=1 THEN CONCAT('0',TAX_MONTH)");
+    	sql.append("   ELSE TAX_MONTH");
+    	sql.append("   END");
+    	sql.append(" ) TAX_DATE,");
+    	sql.append(" SUM(TAX_AMOUNT)TAX_AMOUNT");
+    	sql.append(" FROM TA_WS_INC8000_M ");
     	sql.append(" WHERE NEW_REG_ID=?");
-    	sql.append(" AND TAX_YEAR=?");
+    	sql.append(" AND CONCAT(");
+    	sql.append("   TAX_YEAR,");
+    	sql.append("   CASE");
+    	sql.append("   WHEN  LENGTH(TAX_MONTH)=1 THEN CONCAT('0',TAX_MONTH)");
+    	sql.append("   ELSE TAX_MONTH");
+    	sql.append("   END");
+    	sql.append(" ) BETWEEN ? AND ?");
+    	sql.append(" GROUP BY ");
+    	sql.append(" TAX_YEAR,");
+    	sql.append(" TAX_MONTH,");
+    	sql.append(" CONCAT(TAX_YEAR,CASE");
+    	sql.append("               WHEN  LENGTH(TAX_MONTH)=1 THEN CONCAT('0',TAX_MONTH)");
+    	sql.append("               ELSE TAX_MONTH");
+    	sql.append("               END");
+    	sql.append("    )");
+    	sql.append(" ORDER BY     TAX_DATE ASC");
+
     	
     	 List<Object> params = new ArrayList<>();
     	 params.add(formVo.getNewRegId());
-         params.add(year);
+    	 params.add(formVo.getDateStart());
+         params.add(formVo.getDateEnd());
     	 return jdbcTemplate.query(sql.toString(), params.toArray(), MonthRowMapper);
     }
     

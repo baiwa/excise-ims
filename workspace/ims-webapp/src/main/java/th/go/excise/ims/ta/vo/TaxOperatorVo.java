@@ -11,20 +11,36 @@ public class TaxOperatorVo {
 	private String facFullname;
 	private String facAddress;
 	private String officeCode;
+	private Integer countTaxPayOfMonth = 0;
 	private List<String> taxYear = new ArrayList<>();
 	private List<String> taxMonth = new ArrayList<>();
-	private BigDecimal taxAmountBefore;
-	private BigDecimal taxAmountAfter;
+	private BigDecimal taxAmountBefore = new BigDecimal(0);
+	private BigDecimal taxAmountAfter = new BigDecimal(0);
+	private BigDecimal diffTaxAmount = new BigDecimal(0);
 	private List<BigDecimal> taxAmount = new ArrayList<>();
 	private String sectorName;
 	private String areaShotName;
 
 	public static class TaxOperatorFormVo {
-		private String yearStart;
-		private String yearEnd;
-		private String monthStart;
-		private String monthEnd;
+		private String dateStart;
+		private String dateEnd;
 		private String newRegId;
+
+		public String getDateStart() {
+			return dateStart;
+		}
+
+		public void setDateStart(String dateStart) {
+			this.dateStart = dateStart;
+		}
+
+		public String getDateEnd() {
+			return dateEnd;
+		}
+
+		public void setDateEnd(String dateEnd) {
+			this.dateEnd = dateEnd;
+		}
 
 		public String getNewRegId() {
 			return newRegId;
@@ -34,37 +50,6 @@ public class TaxOperatorVo {
 			this.newRegId = newRegId;
 		}
 
-		public String getYearStart() {
-			return yearStart;
-		}
-
-		public void setYearStart(String yearStart) {
-			this.yearStart = yearStart;
-		}
-
-		public String getYearEnd() {
-			return yearEnd;
-		}
-
-		public void setYearEnd(String yearEnd) {
-			this.yearEnd = yearEnd;
-		}
-
-		public String getMonthStart() {
-			return monthStart;
-		}
-
-		public void setMonthStart(String monthStart) {
-			this.monthStart = monthStart;
-		}
-
-		public String getMonthEnd() {
-			return monthEnd;
-		}
-
-		public void setMonthEnd(String monthEnd) {
-			this.monthEnd = monthEnd;
-		}
 	}
 
 	public static class TaxPay {
@@ -96,6 +81,22 @@ public class TaxOperatorVo {
 			this.taxAmount = taxAmount;
 		}
 
+	}
+
+	public BigDecimal getDiffTaxAmount() {
+		return diffTaxAmount;
+	}
+
+	public void setDiffTaxAmount(BigDecimal diffTaxAmount) {
+		this.diffTaxAmount = diffTaxAmount;
+	}
+
+	public Integer getCountTaxPayOfMonth() {
+		return countTaxPayOfMonth;
+	}
+
+	public void setCountTaxPayOfMonth(Integer countTaxPayOfMonth) {
+		this.countTaxPayOfMonth = countTaxPayOfMonth;
 	}
 
 	public String getNewRegId() {
