@@ -9,11 +9,15 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.URL;
 
 @Controller
@@ -62,6 +66,15 @@ public class AuthenController {
 		}
 		
 		return error;
+	}
+	
+	@PostMapping("/api/security/on-login-success")
+	@ResponseBody
+	public ResponseData<String> onloginsuccess() {
+		ResponseData<String> respData = new ResponseData<>();
+		respData.setStatus(RESPONSE_STATUS.SUCCESS);
+		respData.setMessage("Yeah!!");
+		return respData;
 	}
 	
 }
