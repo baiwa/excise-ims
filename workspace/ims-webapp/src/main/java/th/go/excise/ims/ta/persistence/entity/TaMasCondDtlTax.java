@@ -21,8 +21,8 @@ public class TaMasCondDtlTax extends BaseEntity {
 	@SequenceGenerator(name = "TA_MAS_COND_DTL_TAX_GEN", sequenceName = "TA_MAS_COND_DTL_TAX_SEQ", allocationSize = 1)
 	@Column(name = "COND_DTL_ID")
 	private Long condDtlId;
-	@Column(name = "COND_HDR_ID")
-	private Long condHdrId;
+	@Column(name = "BUDGET_YEAR")
+	private String budgetYear;
 	@Column(name = "COND_GROUP")
 	private String condGroup;
 	@Column(name = "PRODUCT_TYPE")
@@ -46,12 +46,12 @@ public class TaMasCondDtlTax extends BaseEntity {
 		this.condDtlId = condDtlId;
 	}
 
-	public Long getCondHdrId() {
-		return condHdrId;
+	public String getBudgetYear() {
+		return budgetYear;
 	}
 
-	public void setCondHdrId(Long condHdrId) {
-		this.condHdrId = condHdrId;
+	public void setBudgetYear(String budgetYear) {
+		this.budgetYear = budgetYear;
 	}
 
 	public String getCondGroup() {
