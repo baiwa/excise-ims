@@ -19,10 +19,10 @@ import th.go.excise.ims.ta.vo.TaMasCondHdrDtlVo;
 @Controller
 @RequestMapping("/api/tax-audit/create-work-sheet")
 public class TaMasCondHdrController {
-	
+
 	@Autowired
 	TaMasCondHdrService taMasCondHdrService;
-	
+
 	@PostMapping("/createworksheet")
 	@ResponseBody
 	public ResponseData<List<TaMasCondHdrDtlVo>> insertWorkSheet(@RequestBody TaMasCondHdrDtlVo formVo) {
@@ -39,7 +39,24 @@ public class TaMasCondHdrController {
 		}
 		return responseData;
 	}
-	
+
+	@PostMapping("/updateworksheet")
+	@ResponseBody
+	public ResponseData<List<TaMasCondHdrDtlVo>> updateWorkSheet(@RequestBody TaMasCondHdrDtlVo formVo) {
+		ResponseData<List<TaMasCondHdrDtlVo>> responseData = new ResponseData<List<TaMasCondHdrDtlVo>>();
+		try {
+			taMasCondHdrService.updateWorkSheet(formVo);
+			responseData.setData(null);
+			responseData.setMessage("SUCCESS");
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			responseData.setMessage("ERROR");
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+
 	@PostMapping("/findbudgetyearhdr")
 	@ResponseBody
 	public ResponseData<TaMasCondHdr> findByBudgetYearHdr(@RequestBody TaMasCondHdr formVo) {
@@ -55,7 +72,7 @@ public class TaMasCondHdrController {
 		}
 		return responseData;
 	}
-	
+
 	@PostMapping("/findbudgetyeardtl")
 	@ResponseBody
 	public ResponseData<List<TaMasCondDtlTax>> findByBudgetYearDtl(@RequestBody TaMasCondDtlTax formVo) {
