@@ -79,10 +79,10 @@ public class ApplicationCache {
 	@PostConstruct
 	public synchronized void reloadCache() {
 		logger.info("ApplicationCache Reloading...");
-
 		loadSectorAreaBranch();
 		loadGioProviceAumhurDistrictAndMapping();
-
+		loadParameter();
+		loadMessage();
 		logger.info("ApplicationCache Reloaded");
 	}
 
