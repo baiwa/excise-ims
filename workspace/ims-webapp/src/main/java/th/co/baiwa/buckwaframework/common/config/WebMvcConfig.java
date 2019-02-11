@@ -24,10 +24,10 @@ import th.co.baiwa.buckwaframework.common.rest.adapter.LocalDateTimeJsonSerializ
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 	
-	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/login").setViewName("login.html");
-		registry.addViewController("/welcomepage").setViewName("welcome.html");
-	}
+//	public void addViewControllers(ViewControllerRegistry registry) {
+//		registry.addViewController("/login").setViewName("login.html");
+//		registry.addViewController("/welcomepage").setViewName("welcome.html");
+//	}
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

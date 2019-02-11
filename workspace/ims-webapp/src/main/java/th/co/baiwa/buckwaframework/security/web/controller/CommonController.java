@@ -42,6 +42,14 @@ public class CommonController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView login() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("login.html");
+		
+		return mav;
+	}
+	
 	// for 403 access denied page
 	@RequestMapping(value = "/403.html", method = RequestMethod.GET)
 	public ModelAndView accesssDenied() {
