@@ -1,6 +1,5 @@
 package th.go.excise.ims.common.controller;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +46,7 @@ public class ExciseGeneralController {
 		ResponseData<List<ExciseProvince>> response = new ResponseData<>();
 		List<ExciseProvince> exciseProvinceList = new ArrayList<>();
  		try {
- 			exciseProvinceList = ApplicationCache.getExciseProvinceList(new BigDecimal(proviceId));
+ 			exciseProvinceList = ApplicationCache.getExciseProvinceList(proviceId);
 			response.setData(exciseProvinceList);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
@@ -62,7 +61,7 @@ public class ExciseGeneralController {
 		ResponseData<List<ExciseAmphur>> response = new ResponseData<>();
 		List<ExciseAmphur> exciseAmphurList = new ArrayList<>();
  		try {
- 			exciseAmphurList = ApplicationCache.getExciseAmphurList(new BigDecimal(amphurId));
+ 			exciseAmphurList = ApplicationCache.getExciseAmphurList(amphurId);
 			response.setData(exciseAmphurList);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
@@ -77,7 +76,7 @@ public class ExciseGeneralController {
 		ResponseData<List<ExciseDistrict>> response = new ResponseData<>();
 		List<ExciseDistrict> exciseDistrictList = new ArrayList<>();
  		try {
- 			exciseDistrictList = ApplicationCache.getExciseDistrictList(new BigDecimal(districtId));
+ 			exciseDistrictList = ApplicationCache.getExciseDistrictList(districtId);
 			response.setData(exciseDistrictList);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
