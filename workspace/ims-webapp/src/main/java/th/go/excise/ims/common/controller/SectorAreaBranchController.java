@@ -16,12 +16,12 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.persistence.entity.ExciseDepartment;
 
 @RestController
-@RequestMapping("/app/excise/sectorareabranch")
+@RequestMapping("/api/excise/sectorareabranch")
 public class SectorAreaBranchController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SectorAreaBranchController.class);
 	
-	@PostMapping("/sectorList")
+	@PostMapping("/sector-list")
 	public ResponseData<List<ExciseDepartment>> findAllSectorList(){
 		logger.info("findAllSectorList");
 		ResponseData<List<ExciseDepartment>> response = new ResponseData<>();
@@ -37,7 +37,7 @@ public class SectorAreaBranchController {
 		return response;
 	} 
 	
-	@PostMapping("/areaList/{officeCode}")
+	@PostMapping("/area-list/{officeCode}")
 	public ResponseData<List<ExciseDepartment>> findAreaListBySectorId(@PathVariable("officeCode")String officeCode){
 		ResponseData<List<ExciseDepartment>> response = new ResponseData<>();
 		List<ExciseDepartment> exciseAreaList = new ArrayList<>();
@@ -53,7 +53,7 @@ public class SectorAreaBranchController {
 	}
 	
 	
-	@PostMapping("/branchList/{officeCode}")
+	@PostMapping("/branch-list/{officeCode}")
 	public ResponseData<List<ExciseDepartment>> findbranchListByAreaId(@PathVariable("officeCode") String officeCode){
 		ResponseData<List<ExciseDepartment>> response = new ResponseData<>();
 		List<ExciseDepartment> exciseBranchList = new ArrayList<ExciseDepartment>();
