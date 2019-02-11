@@ -11,6 +11,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.google.gson.Gson;
@@ -22,6 +23,11 @@ import th.co.baiwa.buckwaframework.common.rest.adapter.LocalDateTimeJsonSerializ
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+	
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/login").setViewName("login.html");
+		registry.addViewController("/welcomepage").setViewName("welcome.html");
+	}
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
