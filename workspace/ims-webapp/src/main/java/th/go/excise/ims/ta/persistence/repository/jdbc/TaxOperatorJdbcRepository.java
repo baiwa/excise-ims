@@ -1,4 +1,4 @@
-package th.go.excise.ims.ta.persistence.repository;
+package th.go.excise.ims.ta.persistence.repository.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,17 +10,18 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 import th.go.excise.ims.ta.vo.TaxOperatorVo;
-import th.go.excise.ims.ta.vo.TaxOperatorVo.TaxPay;
+import th.go.excise.ims.ta.vo.TaxPay;
 
 @Repository
-public class TaxOperatorRepository {
+public class TaxOperatorJdbcRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     // TODO get operator
-    public List<TaxOperatorVo> getOperator(TaxOperatorVo.TaxOperatorFormVo formVo) {
+    public List<TaxOperatorVo> getOperator(TaxOperatorFormVo formVo) {
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT ");
         sql.append(" WS4000.NEW_REG_ID,");
@@ -76,7 +77,7 @@ public class TaxOperatorRepository {
         }
     };
     // TODO get tax pay operator
-    public List<String> getYearTax(TaxOperatorVo.TaxOperatorFormVo formVo) {
+    public List<String> getYearTax(TaxOperatorFormVo formVo) {
     	StringBuilder sql = new StringBuilder();
     	sql.append(" select  ");
     	sql.append("     DISTINCT ");
@@ -106,7 +107,7 @@ public class TaxOperatorRepository {
         }
     };
 
-    public List<TaxPay> getMonthTax(TaxOperatorVo.TaxOperatorFormVo formVo) {
+    public List<TaxPay> getMonthTax(TaxOperatorFormVo formVo) {
     	StringBuilder sql = new StringBuilder();
     	sql.append(" SELECT ");
     	sql.append(" TAX_YEAR, ");

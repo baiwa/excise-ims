@@ -7,6 +7,7 @@ import java.util.List;
 public class TaxOperatorVo {
 
 	private String newRegId;
+	private String condGroup;
 	private String cusFullname;
 	private String facFullname;
 	private String facAddress;
@@ -14,73 +15,19 @@ public class TaxOperatorVo {
 	private Integer countTaxPayOfMonth = 0;
 	private List<String> taxYear = new ArrayList<>();
 	private List<String> taxMonth = new ArrayList<>();
-	private BigDecimal taxAmountBefore = new BigDecimal(0);
-	private BigDecimal taxAmountAfter = new BigDecimal(0);
-	private BigDecimal diffTaxAmount = new BigDecimal(0);
+	private BigDecimal taxAmountBefore = BigDecimal.ZERO;
+	private BigDecimal taxAmountAfter = BigDecimal.ZERO;
+	private BigDecimal diffTaxAmount = BigDecimal.ZERO;
 	private List<BigDecimal> taxAmount = new ArrayList<>();
 	private String sectorName;
 	private String areaShotName;
 
-	public static class TaxOperatorFormVo {
-		private String dateStart;
-		private String dateEnd;
-		private String newRegId;
-
-		public String getDateStart() {
-			return dateStart;
-		}
-
-		public void setDateStart(String dateStart) {
-			this.dateStart = dateStart;
-		}
-
-		public String getDateEnd() {
-			return dateEnd;
-		}
-
-		public void setDateEnd(String dateEnd) {
-			this.dateEnd = dateEnd;
-		}
-
-		public String getNewRegId() {
-			return newRegId;
-		}
-
-		public void setNewRegId(String newRegId) {
-			this.newRegId = newRegId;
-		}
-
+	public String getCondGroup() {
+		return condGroup;
 	}
 
-	public static class TaxPay {
-		private String year;
-		private String month;
-		private BigDecimal taxAmount;
-
-		public String getYear() {
-			return year;
-		}
-
-		public void setYear(String year) {
-			this.year = year;
-		}
-
-		public String getMonth() {
-			return month;
-		}
-
-		public void setMonth(String month) {
-			this.month = month;
-		}
-
-		public BigDecimal getTaxAmount() {
-			return taxAmount;
-		}
-
-		public void setTaxAmount(BigDecimal taxAmount) {
-			this.taxAmount = taxAmount;
-		}
-
+	public void setCondGroup(String condGroup) {
+		this.condGroup = condGroup;
 	}
 
 	public BigDecimal getDiffTaxAmount() {
