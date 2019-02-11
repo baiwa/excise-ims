@@ -12,4 +12,5 @@ public interface TaMasCondHdrRepository extends CommonJpaCrudRepository<TaMasCon
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.budgetYear = :budgetYear")
 	public TaMasCondHdr findByBudgetYear(@Param("budgetYear") String budgetYear);
 	
+	
 }
