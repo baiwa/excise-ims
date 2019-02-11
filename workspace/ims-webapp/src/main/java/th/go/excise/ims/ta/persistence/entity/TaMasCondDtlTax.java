@@ -19,8 +19,8 @@ public class TaMasCondDtlTax extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_MAS_COND_DTL_TAX_GEN")
 	@SequenceGenerator(name = "TA_MAS_COND_DTL_TAX_GEN", sequenceName = "TA_MAS_COND_DTL_TAX_SEQ", allocationSize = 1)
-	@Column(name = "COND_DTL_ID")
-	private Long condDtlId;
+	@Column(name = "COND_DTL_TAX_ID")
+	private Long condDtlTaxId;
 	@Column(name = "BUDGET_YEAR")
 	private String budgetYear;
 	@Column(name = "COND_GROUP")
@@ -38,12 +38,12 @@ public class TaMasCondDtlTax extends BaseEntity {
 	@Column(name = "RISK_LEVEL")
 	private String riskLevel;
 
-	public Long getCondDtlId() {
-		return condDtlId;
+	public Long getCondDtlTaxId() {
+		return condDtlTaxId;
 	}
 
-	public void setCondDtlId(Long condDtlId) {
-		this.condDtlId = condDtlId;
+	public void setCondDtlTaxId(Long condDtlTaxId) {
+		this.condDtlTaxId = condDtlTaxId;
 	}
 
 	public String getBudgetYear() {
