@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -79,6 +80,22 @@ public class TaMasCondHdrController {
 		ResponseData<List<TaMasCondDtlTax>> responseData = new ResponseData<List<TaMasCondDtlTax>>();
 		try {
 			responseData.setData(taMasCondHdrService.findByBudgetYearDtl(formVo));
+			responseData.setMessage("SUCCESS");
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			responseData.setMessage("ERROR");
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
+	@GetMapping("/find-allhdr")
+	@ResponseBody
+	public ResponseData<List<TaMasCondHdr>> findAllHdr() {
+		ResponseData<List<TaMasCondHdr>> responseData = new ResponseData<List<TaMasCondHdr>>();
+		try {
+			responseData.setData(taMasCondHdrService.findAllHdr());
 			responseData.setMessage("SUCCESS");
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

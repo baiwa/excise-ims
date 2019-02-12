@@ -79,5 +79,10 @@ public class TaMasCondHdrService {
 		budgetYear = taMasCondDtlTaxRepository.findByBudgetYear(dtl.getBudgetYear());
 		return budgetYear;
 	}
+	
+	public List<TaMasCondHdr> findAllHdr() {
+		List<TaMasCondHdr> list = taMasCondHdrRepository.findAll();
+		return list;
+	}
 
 }
