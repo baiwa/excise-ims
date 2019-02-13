@@ -17,6 +17,15 @@ public class TaWsInc8000M extends BaseEntity {
 
 	private static final long serialVersionUID = 2162840180558825946L;
 
+	public static class Field {
+		public static final String WS_INC8000_M_ID = "WS_INC8000_M_ID";
+		public static final String NEW_REG_ID = "NEW_REG_ID";
+		public static final String TAX_YEAR = "TAX_YEAR";
+		public static final String TAX_MONTH = "TAX_MONTH";
+		public static final String TAX_AMOUNT = "TAX_AMOUNT";
+	}
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_WS_INC8000_M_GEN")
 	@SequenceGenerator(name = "TA_WS_INC8000_M_GEN", sequenceName = "TA_WS_INC8000_M_SEQ", allocationSize = 1)

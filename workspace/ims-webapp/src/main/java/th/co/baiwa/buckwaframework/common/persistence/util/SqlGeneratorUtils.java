@@ -36,6 +36,10 @@ public class SqlGeneratorUtils {
 		return builder.toString();
 	}
 	
+	public static String genSqlInsert(String tableName, Collection<String> fieldNameList, String seqName) {
+		return genSqlInsert(tableName, fieldNameList).replace("(?", "("+seqName + ".NEXTVAL");
+	}
+	
 	public static String genSqlUpdate(String tableName, Collection<String> fieldNameList, Collection<String> conditionFieldNameList) {
 		StringBuilder builder = new StringBuilder();
 		builder.append(" UPDATE ").append(tableName);
