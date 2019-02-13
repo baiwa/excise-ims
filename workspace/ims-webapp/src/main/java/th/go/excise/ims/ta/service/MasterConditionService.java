@@ -10,18 +10,19 @@ import th.go.excise.ims.ta.persistence.entity.TaMasCondDtlTax;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondHdr;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondDtlTaxRepository;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondHdrRepository;
-import th.go.excise.ims.ta.vo.TaMasCondHdrDtlVo;
+import th.go.excise.ims.ta.vo.MasterConditionHdrDtlVo;
 
 @Service
-public class TaMasCondHdrService {
+public class MasterConditionService {
 
 	@Autowired
 	TaMasCondHdrRepository taMasCondHdrRepository;
 
 	@Autowired
 	TaMasCondDtlTaxRepository taMasCondDtlTaxRepository;
+	
 
-	public void insertWorkSheet(TaMasCondHdrDtlVo formVo) {
+	public void insertMaster(MasterConditionHdrDtlVo formVo) {
 		TaMasCondDtlTax dtl = null;
 		TaMasCondHdr header = new TaMasCondHdr();
 		header = taMasCondHdrRepository.save(formVo.getHeader());
@@ -41,7 +42,7 @@ public class TaMasCondHdrService {
 		}
 	}
 
-	public void updateWorkSheet(TaMasCondHdrDtlVo formVo) {
+	public void updateWorkSheet(MasterConditionHdrDtlVo formVo) {
 		TaMasCondDtlTax dtl = null;
 		TaMasCondHdr header = taMasCondHdrRepository.findById(formVo.getHeader().getCondHdrId()).get();
 		header.setBudgetYear(formVo.getHeader().getBudgetYear());

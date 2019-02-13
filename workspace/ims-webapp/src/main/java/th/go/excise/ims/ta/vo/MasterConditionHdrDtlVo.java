@@ -5,7 +5,7 @@ import java.util.List;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondDtlTax;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondHdr;
 
-public class TaMasCondHdrDtlVo {
+public class MasterConditionHdrDtlVo {
 	
 	TaMasCondHdr header;
 	List<TaMasCondDtlTax> detail;

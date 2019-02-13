@@ -14,22 +14,22 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondDtlTax;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondHdr;
-import th.go.excise.ims.ta.service.TaMasCondHdrService;
-import th.go.excise.ims.ta.vo.TaMasCondHdrDtlVo;
+import th.go.excise.ims.ta.service.MasterConditionService;
+import th.go.excise.ims.ta.vo.MasterConditionHdrDtlVo;
 
 @Controller
-@RequestMapping("/api/tax-audit/create-work-sheet")
-public class TaMasCondHdrController {
+@RequestMapping("/api/ta/master-condition")
+public class MasterConditionController {
 
 	@Autowired
-	TaMasCondHdrService taMasCondHdrService;
+	MasterConditionService masterConditionService;
 
-	@PostMapping("/createworksheet")
+	@PostMapping("/create-master-condition")
 	@ResponseBody
-	public ResponseData<List<TaMasCondHdrDtlVo>> insertWorkSheet(@RequestBody TaMasCondHdrDtlVo formVo) {
-		ResponseData<List<TaMasCondHdrDtlVo>> responseData = new ResponseData<List<TaMasCondHdrDtlVo>>();
+	public ResponseData<List<MasterConditionHdrDtlVo>> insertMaster(@RequestBody MasterConditionHdrDtlVo formVo) {
+		ResponseData<List<MasterConditionHdrDtlVo>> responseData = new ResponseData<List<MasterConditionHdrDtlVo>>();
 		try {
-			taMasCondHdrService.insertWorkSheet(formVo);
+			masterConditionService.insertMaster(formVo);
 			responseData.setData(null);
 			responseData.setMessage("SUCCESS");
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
@@ -41,12 +41,12 @@ public class TaMasCondHdrController {
 		return responseData;
 	}
 
-	@PostMapping("/updateworksheet")
+	@PostMapping("/update-master-condition")
 	@ResponseBody
-	public ResponseData<List<TaMasCondHdrDtlVo>> updateWorkSheet(@RequestBody TaMasCondHdrDtlVo formVo) {
-		ResponseData<List<TaMasCondHdrDtlVo>> responseData = new ResponseData<List<TaMasCondHdrDtlVo>>();
+	public ResponseData<List<MasterConditionHdrDtlVo>> updateWorkSheet(@RequestBody MasterConditionHdrDtlVo formVo) {
+		ResponseData<List<MasterConditionHdrDtlVo>> responseData = new ResponseData<List<MasterConditionHdrDtlVo>>();
 		try {
-			taMasCondHdrService.updateWorkSheet(formVo);
+			masterConditionService.updateWorkSheet(formVo);
 			responseData.setData(null);
 			responseData.setMessage("SUCCESS");
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
@@ -63,7 +63,7 @@ public class TaMasCondHdrController {
 	public ResponseData<TaMasCondHdr> findByBudgetYearHdr(@RequestBody TaMasCondHdr formVo) {
 		ResponseData<TaMasCondHdr> responseData = new ResponseData<TaMasCondHdr>();
 		try {
-			responseData.setData(taMasCondHdrService.findByBudgetYearHdr(formVo));
+			responseData.setData(masterConditionService.findByBudgetYearHdr(formVo));
 			responseData.setMessage("SUCCESS");
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
@@ -79,7 +79,7 @@ public class TaMasCondHdrController {
 	public ResponseData<List<TaMasCondDtlTax>> findByBudgetYearDtl(@RequestBody TaMasCondDtlTax formVo) {
 		ResponseData<List<TaMasCondDtlTax>> responseData = new ResponseData<List<TaMasCondDtlTax>>();
 		try {
-			responseData.setData(taMasCondHdrService.findByBudgetYearDtl(formVo));
+			responseData.setData(masterConditionService.findByBudgetYearDtl(formVo));
 			responseData.setMessage("SUCCESS");
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
@@ -89,13 +89,13 @@ public class TaMasCondHdrController {
 		}
 		return responseData;
 	}
-	
+
 	@GetMapping("/find-allhdr")
 	@ResponseBody
 	public ResponseData<List<TaMasCondHdr>> findAllHdr() {
 		ResponseData<List<TaMasCondHdr>> responseData = new ResponseData<List<TaMasCondHdr>>();
 		try {
-			responseData.setData(taMasCondHdrService.findAllHdr());
+			responseData.setData(masterConditionService.findAllHdr());
 			responseData.setMessage("SUCCESS");
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
