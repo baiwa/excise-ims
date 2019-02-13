@@ -4,6 +4,15 @@ public class TaxOperatorFormVo {
 	private String dateStart;
 	private String dateEnd;
 	private String newRegId;
+	private String analysisNumber;
+
+	public String getAnalysisNumber() {
+		return analysisNumber;
+	}
+
+	public void setAnalysisNumber(String analysisNumber) {
+		this.analysisNumber = analysisNumber;
+	}
 
 	public String getDateStart() {
 		return dateStart;

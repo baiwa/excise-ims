@@ -1,8 +1,5 @@
 package th.go.excise.ims.ta.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,9 +12,10 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STAT
 import th.go.excise.ims.ta.service.TaxOperatorService;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 import th.go.excise.ims.ta.vo.TaxOperatorVo;
+import th.go.excise.ims.ta.vo.YearMonthVo;
 
 @Controller
-@RequestMapping("/api/tax-operator")
+@RequestMapping("/api/ta/tax-operator")
 public class TaxOperatorController {
 
 	@Autowired
@@ -25,9 +23,9 @@ public class TaxOperatorController {
 
 	@PostMapping("/")
 	@ResponseBody
-	public ResponseData<List<TaxOperatorVo>> getOperator(@RequestBody TaxOperatorFormVo formVo) {
+	public ResponseData<TaxOperatorVo> getOperator(@RequestBody TaxOperatorFormVo formVo) {
 
-		ResponseData<List<TaxOperatorVo>> response = new ResponseData<>();
+		ResponseData<TaxOperatorVo> response = new ResponseData<>();
 
 		try {
 			response.setData(this.taxOperatorService.getOperator(formVo));
@@ -35,7 +33,24 @@ public class TaxOperatorController {
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.setData(new ArrayList<>());
+			response.setMessage("FAIL");
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+
+	@PostMapping("/get-month-start")
+	@ResponseBody
+	public ResponseData<YearMonthVo> getMonthStart(@RequestBody TaxOperatorFormVo formVo) {
+
+		ResponseData<YearMonthVo> response = new ResponseData<>();
+
+		try {
+			response.setData(this.taxOperatorService.monthStart(formVo));
+			response.setMessage("SUCCESS");
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
 			response.setMessage("FAIL");
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
