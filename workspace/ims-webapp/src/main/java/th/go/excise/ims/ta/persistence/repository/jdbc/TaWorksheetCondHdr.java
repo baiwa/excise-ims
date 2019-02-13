@@ -12,12 +12,16 @@ public class TaWorksheetCondHdr {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
-	@SuppressWarnings("unchecked")
 	public YearMonthVo monthStart(String analysisNumber) {
-		String sql = "SELECT YEAR_MONTH_START, YEAR_MONTH_END, MONTH_NUM MONTH_TOTAL, TO_NUMBER(SUBSTR(YEAR_MONTH_START,5,5)) MONTH_START  FROM TA_WORKSHEET_COND_HDR WHERE ANALYSIS_NUMBER = ? ";
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT  YEAR_MONTH_START, YEAR_MONTH_END, MONTH_NUM MONTH_TOTAL, TO_NUMBER(SUBSTR(YEAR_MONTH_START,5,5)) MONTH_START  ");
+		sql.append(" FROM TA_WORKSHEET_COND_HDR ");
+		sql.append(" WHERE ANALYSIS_NUMBER =  ");
+		sql.append(" (select ANALYSIS_NUMBER from  ");
+		sql.append(" (select ANALYSIS_NUMBER from  ");
+		sql.append("     TA_WORKSHEET_COND_HDR order by ANALYSIS_NUMBER DESC )  where rownum=1) ");
 
-		@SuppressWarnings("rawtypes")
-		YearMonthVo obj = (YearMonthVo) this.commonJdbcTemplate.queryForObject(sql, new Object[] { analysisNumber }, new BeanPropertyRowMapper(YearMonthVo.class));
+		YearMonthVo obj = (YearMonthVo) this.commonJdbcTemplate.queryForObject(sql.toString(), new BeanPropertyRowMapper<YearMonthVo>(YearMonthVo.class));
 		return obj;
 	}
 }
