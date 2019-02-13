@@ -1,8 +1,5 @@
 package th.go.excise.ims.ta.service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
-import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.go.excise.ims.ta.persistence.repository.jdbc.TaMasCondDtlTaxJdbcRepository;
 import th.go.excise.ims.ta.persistence.repository.jdbc.TaWorksheetCondHdr;
 import th.go.excise.ims.ta.persistence.repository.jdbc.TaxOperatorJdbcRepository;
