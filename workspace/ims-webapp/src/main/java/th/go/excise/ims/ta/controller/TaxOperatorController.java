@@ -3,6 +3,7 @@ package th.go.excise.ims.ta.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import th.co.baiwa.buckwaframework.common.bean.BusinessException;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ta.service.TaxOperatorService;
@@ -29,6 +30,9 @@ public class TaxOperatorController {
         try {
             response.setData(this.taxOperatorService.getOperator(formVo));
             response.setMessage("SUCCESS");
+            response.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (BusinessException be) {
+            response.setMessage(be.getErrorDesc());
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
