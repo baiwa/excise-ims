@@ -26,11 +26,10 @@ public class WorksheetConditionController {
 
 	@PostMapping("/create-worksheet-condition")
 	@ResponseBody
-	public ResponseData<List<TaWsCondHdr>> insertWorkSheet(@RequestBody TaWsCondHdr formVo) {
-		ResponseData<List<TaWsCondHdr>> responseData = new ResponseData<List<TaWsCondHdr>>();
+	public ResponseData<String> insertWorkSheet(@RequestBody TaWsCondHdr formVo) {
+		ResponseData<String> responseData = new ResponseData<String>();
 		try {
-			worksheetConditionService.insertWorkSheet(formVo);
-			responseData.setData(null);
+			responseData.setData(worksheetConditionService.insertWorkSheet(formVo));
 			responseData.setMessage("SUCCESS");
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

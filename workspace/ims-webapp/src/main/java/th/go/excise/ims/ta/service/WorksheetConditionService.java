@@ -1,12 +1,16 @@
 package th.go.excise.ims.ta.service;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.cxf.BusException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.bean.BusinessException;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.preferences.constant.MessageConstants;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondDtlTax;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWsCondDtlTax;
@@ -15,7 +19,6 @@ import th.go.excise.ims.ta.persistence.repository.TaMasCondDtlTaxRepository;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsCondDtlTaxRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsCondHdrRepository;
-import th.go.excise.ims.ta.vo.WorksheetConditionHdrDtlVo;
 
 @Service
 public class WorksheetConditionService {
@@ -33,7 +36,10 @@ public class WorksheetConditionService {
 	@Autowired
 	TaMasCondDtlTaxRepository taMasCondDtlTaxRepository;
 	
-	public void insertWorkSheet(TaWsCondHdr formVo) {
+	@Autowired
+	private TaxAuditFactorySelectionService taxAuditFactorySelectionService;
+	
+	public String insertWorkSheet(TaWsCondHdr formVo) throws SQLException {
 		TaMasCondHdr headerMas = taMasCondHdrRepository.findByBudgetYear(formVo.getBudgetYear());
 		List<TaMasCondDtlTax> dtlMas = taMasCondDtlTaxRepository.findByBudgetYear(formVo.getBudgetYear());
 		TaWsCondDtlTax dtlWs = null;
@@ -58,10 +64,12 @@ public class WorksheetConditionService {
 
 				taWsCondDtlTaxRepository.save(dtlWs);
 			}
+			taxAuditFactorySelectionService.selectFactoryProcess(analysisNumber);
 		}
+		return analysisNumber;
 	}
 	
-	public List<TaWsCondHdr> findAllHdr() {
+	public List<TaWsCondHdr> findAllHdr() throws BusException {
 		List<TaWsCondHdr> list = taWsCondHdrRepository.findAll();
 		return list;
 	}
