@@ -4,86 +4,95 @@ import java.math.BigDecimal;
 
 public class CondGroupVo {
 
-	private Long condDtlId;
-	private String budgetYear;
-	private String condGroup;
-	private String productType;
-	private Integer taxMonthStart;
-	private Integer taxMonthEnd;
-	private BigDecimal rangeStart;
-	private BigDecimal rangeEnd;
-	private Integer riskLevel;
+    private Long condDtlId;
+    private String budgetYear;
+    private String condGroup;
+    private String productType;
+    private Integer taxMonthStart;
+    private Integer taxMonthEnd;
+    private BigDecimal rangeStart;
+    private BigDecimal rangeEnd;
+    private Integer riskLevel;
+    private String analysisNumber;
 
-	public Long getCondDtlId() {
-		return condDtlId;
-	}
+    public String getAnalysisNumber() {
+        return analysisNumber;
+    }
 
-	public void setCondDtlId(Long condDtlId) {
-		this.condDtlId = condDtlId;
-	}
+    public void setAnalysisNumber(String analysisNumber) {
+        this.analysisNumber = analysisNumber;
+    }
 
-	public String getBudgetYear() {
-		return budgetYear;
-	}
+    public Long getCondDtlId() {
+        return condDtlId;
+    }
 
-	public void setBudgetYear(String budgetYear) {
-		this.budgetYear = budgetYear;
-	}
+    public void setCondDtlId(Long condDtlId) {
+        this.condDtlId = condDtlId;
+    }
 
-	public String getCondGroup() {
-		return condGroup;
-	}
+    public String getBudgetYear() {
+        return budgetYear;
+    }
 
-	public void setCondGroup(String condGroup) {
-		this.condGroup = condGroup;
-	}
+    public void setBudgetYear(String budgetYear) {
+        this.budgetYear = budgetYear;
+    }
 
-	public String getProductType() {
-		return productType;
-	}
+    public String getCondGroup() {
+        return condGroup;
+    }
 
-	public void setProductType(String productType) {
-		this.productType = productType;
-	}
+    public void setCondGroup(String condGroup) {
+        this.condGroup = condGroup;
+    }
 
-	public Integer getTaxMonthStart() {
-		return taxMonthStart;
-	}
+    public String getProductType() {
+        return productType;
+    }
 
-	public void setTaxMonthStart(Integer taxMonthStart) {
-		this.taxMonthStart = taxMonthStart;
-	}
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
 
-	public Integer getTaxMonthEnd() {
-		return taxMonthEnd;
-	}
+    public Integer getTaxMonthStart() {
+        return taxMonthStart;
+    }
 
-	public void setTaxMonthEnd(Integer taxMonthEnd) {
-		this.taxMonthEnd = taxMonthEnd;
-	}
+    public void setTaxMonthStart(Integer taxMonthStart) {
+        this.taxMonthStart = taxMonthStart;
+    }
 
-	public BigDecimal getRangeStart() {
-		return rangeStart;
-	}
+    public Integer getTaxMonthEnd() {
+        return taxMonthEnd;
+    }
 
-	public void setRangeStart(BigDecimal rangeStart) {
-		this.rangeStart = rangeStart;
-	}
+    public void setTaxMonthEnd(Integer taxMonthEnd) {
+        this.taxMonthEnd = taxMonthEnd;
+    }
 
-	public BigDecimal getRangeEnd() {
-		return rangeEnd;
-	}
+    public BigDecimal getRangeStart() {
+        return rangeStart;
+    }
 
-	public void setRangeEnd(BigDecimal rangeEnd) {
-		this.rangeEnd = rangeEnd;
-	}
+    public void setRangeStart(BigDecimal rangeStart) {
+        this.rangeStart = rangeStart;
+    }
 
-	public Integer getRiskLevel() {
-		return riskLevel;
-	}
+    public BigDecimal getRangeEnd() {
+        return rangeEnd;
+    }
 
-	public void setRiskLevel(Integer riskLevel) {
-		this.riskLevel = riskLevel;
-	}
+    public void setRangeEnd(BigDecimal rangeEnd) {
+        this.rangeEnd = rangeEnd;
+    }
+
+    public Integer getRiskLevel() {
+        return riskLevel;
+    }
+
+    public void setRiskLevel(Integer riskLevel) {
+        this.riskLevel = riskLevel;
+    }
 
 }
