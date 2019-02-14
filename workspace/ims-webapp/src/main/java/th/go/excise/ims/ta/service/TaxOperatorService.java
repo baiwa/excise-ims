@@ -32,7 +32,7 @@ public class TaxOperatorService {
     public TaxOperatorVo getOperator(TaxOperatorFormVo formVo) throws BusinessException {
         List<String> listCondGroups = this.taxOperatorRepository.listCondGroups(formVo.getAnalysisNumber());
         List<TaxOperatorVoList> list = this.taxOperatorRepository.getTaxOperator(formVo.getAnalysisNumber());
-        if (list.isEmpty()) throw new BusinessException(MessageConstants.TA.NOT_DATA_CODE,MessageConstants.TA.NOT_DATA );
+
         TaxOperatorVo vo = new TaxOperatorVo();
         vo.setCondGroups(listCondGroups);
         vo.setDatas(list);

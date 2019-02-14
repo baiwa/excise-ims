@@ -31,9 +31,6 @@ public class TaxOperatorController {
             response.setData(this.taxOperatorService.getOperator(formVo));
             response.setMessage("SUCCESS");
             response.setStatus(RESPONSE_STATUS.SUCCESS);
-        } catch (BusinessException be) {
-            response.setMessage(be.getErrorDesc());
-            response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
             response.setMessage("FAIL");
