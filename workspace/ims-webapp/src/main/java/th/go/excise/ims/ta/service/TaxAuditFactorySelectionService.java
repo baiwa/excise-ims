@@ -139,9 +139,7 @@ public class TaxAuditFactorySelectionService {
 			}
 			taWorksheetHdr.setCondTaxGrp("0");
 			taWorksheetHdr.setTaxMonthNo(new BigDecimal(countTaxMonthNo));
-			if(taWsReg4000.getNewRegId().equals("2536000055")) {
-				System.out.println();
-			}
+			
 			for (TaWorksheetCondDtlTax condition : taWorksheetCondDtlTaxList) {
 				if(condition.getTaxMonthStart().compareTo(taWorksheetHdr.getTaxMonthNo()) != 1
 						&& condition.getTaxMonthEnd().compareTo(taWorksheetHdr.getTaxMonthNo()) != -1
