@@ -13,19 +13,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
-import th.go.excise.ims.ia.service.IaQuestionnaireHdrService;
-import th.go.excise.ims.ia.vo.IaQuestionnaireHdrVo;
+import th.go.excise.ims.ia.service.Int02Service;
+import th.go.excise.ims.ia.vo.Int02Vo;
 
 @Controller
 @RequestMapping("/api/ia/questionnaire-hdr")
-public class IaQuestionnaireHdrController {
+public class Int02Controller {
 	
 	@Autowired
-	private IaQuestionnaireHdrService iaQuestionnaireHdrService;
+	private Int02Service iaQuestionnaireHdrService;
 	
 	@PostMapping("/filter-qtn-hdr")
 	@ResponseBody
-	public ResponseData<List<IaQuestionnaireHdr>> filterQtnHdr(@RequestBody IaQuestionnaireHdrVo request) {
+	public ResponseData<List<IaQuestionnaireHdr>> filterQtnHdr(@RequestBody Int02Vo request) {
 		ResponseData<List<IaQuestionnaireHdr>> responseData = new ResponseData<List<IaQuestionnaireHdr>>();
 		List<IaQuestionnaireHdr> data = new ArrayList<IaQuestionnaireHdr>();
 		

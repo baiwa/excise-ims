@@ -2,7 +2,7 @@ package th.go.excise.ims.ia.vo;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
-public class IaQuestionnaireHdrVo extends BaseEntity {
+public class Int02Vo extends BaseEntity {
 	
 	/**
 	 * 
