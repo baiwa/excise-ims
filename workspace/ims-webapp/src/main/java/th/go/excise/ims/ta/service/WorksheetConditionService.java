@@ -69,7 +69,7 @@ public class WorksheetConditionService {
 		return analysisNumber;
 	}
 	
-	public List<TaWsCondHdr> findAllHdr() throws BusException {
+	public List<TaWsCondHdr> findAllHdr() {
 		List<TaWsCondHdr> list = taWsCondHdrRepository.findAll();
 		return list;
 	}

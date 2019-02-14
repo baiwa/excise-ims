@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import th.co.baiwa.buckwaframework.common.bean.BusinessException;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
-import th.go.excise.ims.ta.persistence.entity.TaMasCondHdr;
+import th.co.baiwa.buckwaframework.preferences.constant.MessageConstants;
 import th.go.excise.ims.ta.persistence.entity.TaWsCondHdr;
 import th.go.excise.ims.ta.service.WorksheetConditionService;
-import th.go.excise.ims.ta.vo.WorksheetConditionHdrDtlVo;
 
 @Controller
 @RequestMapping("/api/ta/worksheet-condition")
@@ -45,8 +45,13 @@ public class WorksheetConditionController {
 	public ResponseData<List<TaWsCondHdr>> findAllHdr() {
 		ResponseData<List<TaWsCondHdr>> responseData = new ResponseData<List<TaWsCondHdr>>();
 		try {
-			responseData.setData(worksheetConditionService.findAllHdr());
-			responseData.setMessage("SUCCESS");
+			List<TaWsCondHdr> list = worksheetConditionService.findAllHdr();
+			String msg = "SUCCESS";
+			if (list.isEmpty()) {
+				msg =  MessageConstants.TA.NOT_DATA;
+			}
+			responseData.setData(list);
+			responseData.setMessage(msg);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
