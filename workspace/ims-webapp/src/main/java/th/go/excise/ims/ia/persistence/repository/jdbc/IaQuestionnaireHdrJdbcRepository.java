@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
-import th.go.excise.ims.ia.vo.IaQuestionnaireHdrVo;
+import th.go.excise.ims.ia.vo.Int02Vo;
 
 @Repository
 public class IaQuestionnaireHdrJdbcRepository {
@@ -19,7 +19,7 @@ public class IaQuestionnaireHdrJdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 	
-	public List<IaQuestionnaireHdr> getDataFilter(IaQuestionnaireHdrVo request) {
+	public List<IaQuestionnaireHdr> getDataFilter(Int02Vo request) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 		sql.append(" SELECT * FROM IA_QUESTIONNAIRE_HDR WHERE IS_DELETED='N' ");
