@@ -12,5 +12,10 @@ public class MessageConstants {
 		public static final String TH = "TH";
 		public static final String EN = "EN";
 	}
+
+	public static final class TA {
+		public static final String NOT_DATA = "ไม่พบข้อมูล";
+		public static final String NOT_DATA_CODE = "NOT_DATA00";
+	}
 	
 }

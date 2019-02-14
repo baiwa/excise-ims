@@ -2,7 +2,9 @@ package th.go.excise.ims.ta.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import th.co.baiwa.buckwaframework.common.bean.BusinessException;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.preferences.constant.MessageConstants;
 import th.go.excise.ims.ta.persistence.repository.jdbc.TaWorksheetCondDtlTaxJdbcRepository;
 import th.go.excise.ims.ta.persistence.repository.jdbc.TaWorksheetCondHdrJdbcRepository;
 import th.go.excise.ims.ta.persistence.repository.jdbc.TaxOperatorJdbcRepository;
@@ -27,10 +29,10 @@ public class TaxOperatorService {
     @Autowired
     private TaWorksheetCondDtlTaxJdbcRepository taWorksheetCondDtlTaxJdbcRepository;
 
-    public TaxOperatorVo getOperator(TaxOperatorFormVo formVo) {
+    public TaxOperatorVo getOperator(TaxOperatorFormVo formVo) throws BusinessException {
         List<String> listCondGroups = this.taxOperatorRepository.listCondGroups(formVo.getAnalysisNumber());
         List<TaxOperatorVoList> list = this.taxOperatorRepository.getTaxOperator(formVo.getAnalysisNumber());
-
+        if (list.isEmpty()) throw new BusinessException(MessageConstants.TA.NOT_DATA_CODE,MessageConstants.TA.NOT_DATA );
         TaxOperatorVo vo = new TaxOperatorVo();
         vo.setCondGroups(listCondGroups);
         vo.setDatas(list);
