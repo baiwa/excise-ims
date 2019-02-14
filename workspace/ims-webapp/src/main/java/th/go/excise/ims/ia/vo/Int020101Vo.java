@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
-public class IaQuestionnaireSideVo extends BaseEntity {
+public class Int020101Vo extends BaseEntity {
 
     private BigDecimal id;
     private BigDecimal idHead;
