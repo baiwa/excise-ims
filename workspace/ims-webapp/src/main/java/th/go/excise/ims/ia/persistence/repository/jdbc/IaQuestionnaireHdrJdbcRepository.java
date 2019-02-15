@@ -35,8 +35,8 @@ public class IaQuestionnaireHdrJdbcRepository {
 		}
 		
 		if(StringUtils.isNotBlank(request.getStartDate()) && StringUtils.isNotBlank(request.getEndDate())) {
-			sql.append(" AND CREATED_DATE > ? ");
-			sql.append(" AND CREATED_DATE < ? ");
+			sql.append(" AND CREATED_DATE >= ? ");
+			sql.append(" AND CREATED_DATE <= ? ");
 			/* convert string to date */
 			params.add(ConvertDateUtils.parseStringToDate(request.getStartDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 			params.add(ConvertDateUtils.parseStringToDate(request.getEndDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
