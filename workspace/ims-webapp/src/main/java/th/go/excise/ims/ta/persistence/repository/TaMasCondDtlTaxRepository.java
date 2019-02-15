@@ -14,4 +14,7 @@ public interface TaMasCondDtlTaxRepository extends CommonJpaCrudRepository<TaMas
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.budgetYear = :budgetYear")
 	public List<TaMasCondDtlTax> findByBudgetYear(@Param("budgetYear") String budgetYear);
 	
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.Y_FLAG + "' and e.budgetYear = :budgetYear")
+	public List<TaMasCondDtlTax> findByBudgetYearY(@Param("budgetYear") String budgetYear);
+	
 }
