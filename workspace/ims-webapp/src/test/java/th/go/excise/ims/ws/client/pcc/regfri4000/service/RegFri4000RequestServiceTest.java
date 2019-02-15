@@ -1,5 +1,8 @@
 package th.go.excise.ims.ws.client.pcc.regfri4000.service;
 
+import java.io.IOException;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.ws.client.pcc.regfri4000.oxm.RegFri4000Request;
-import th.go.excise.ims.ws.client.pcc.regfri4000.oxm.ResponseData;
+import th.go.excise.ims.ws.client.pcc.regfri4000.oxm.RegMaster60List;
 
 
 
@@ -33,6 +36,13 @@ public class RegFri4000RequestServiceTest {
 		incFri8000Request.setActive("1");
 		incFri8000Request.setPageNo("1");
 		incFri8000Request.setDataPerPage("10");
-		ResponseData regFri4000Response = regFri4000RequestService.postRestFul(incFri8000Request);
+		try {
+			List<RegMaster60List> regFri4000Response = regFri4000RequestService.postRestFul(incFri8000Request);
+			for (RegMaster60List regMaster60List : regFri4000Response) {
+				System.out.println(regMaster60List.getNewregId());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

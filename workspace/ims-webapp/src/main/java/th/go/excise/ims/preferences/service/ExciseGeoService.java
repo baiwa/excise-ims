@@ -1,12 +1,12 @@
-package th.go.excise.ims.common.service;
+package th.go.excise.ims.preferences.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.go.excise.ims.common.dao.ExciseGeoDao;
-import th.go.excise.ims.common.domain.ExciseGeo;
+import th.go.excise.ims.preferences.dao.ExciseGeoDao;
+import th.go.excise.ims.preferences.domain.ExciseGeo;
 
 @Service
 public class ExciseGeoService {

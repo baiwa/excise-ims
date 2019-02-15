@@ -24,4 +24,9 @@ public class SecurityConstants {
 	public static final String ROLE_TAX_AUDIT = "ROLE_TAX_AUDIT";
 	public static final String ROLE_OPERATOR_AUDIT = "ROLE_OPERATOR_AUDIT";
 	public static final String ROLE_EXPORT_AUDIT = "ROLE_EXPORT_AUDIT";
+	
+	public static final class SYSTEM_USER {
+		public static final String SYSTEM = "SYSTEM";
+	}
+	
 }

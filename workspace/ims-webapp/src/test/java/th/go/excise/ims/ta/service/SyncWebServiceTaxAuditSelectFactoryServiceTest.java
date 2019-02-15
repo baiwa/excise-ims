@@ -1,7 +1,5 @@
 package th.go.excise.ims.ta.service;
 
-import java.util.Date;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,22 +15,16 @@ import th.go.excise.ims.Application;
 @SpringBootTest(classes = Application.class)
 @WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
 @ActiveProfiles(value = PROFILE.UNITTEST)
-public class TaxAuditFactorySelectionServiceTest {
+public class SyncWebServiceTaxAuditSelectFactoryServiceTest {
 
-	@Autowired
-	private TaxAuditFactorySelectionService taxAuditFactorySelectionService;
-	
+	@Autowired 
+	private SyncWebServiceTaxAuditSelectFactoryService syncWebServiceTaxAuditSelectFactoryService;
 	@Test
-	public void test() {
-//		taxAuditFactorySelectionService.selectFactoryProcess("20190211221720");
+	public void syncWebServiceTaxAuditSelectFactoryService() {
 		try {
-			System.out.println(new Date());
-			taxAuditFactorySelectionService.selectFactoryProcess("20190214141302");
-			System.out.println(new Date());
+			syncWebServiceTaxAuditSelectFactoryService.suncData();
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
 	}
 }

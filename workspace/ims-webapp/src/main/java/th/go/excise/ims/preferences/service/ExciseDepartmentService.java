@@ -1,12 +1,12 @@
-package th.go.excise.ims.common.service;
+package th.go.excise.ims.preferences.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.go.excise.ims.common.persistence.entity.ExciseDepartment;
-import th.go.excise.ims.common.persistence.repository.ExciseDepartmentRepository;
+import th.go.excise.ims.preferences.persistence.entity.ExciseDepartment;
+import th.go.excise.ims.preferences.persistence.repository.ExciseDepartmentRepository;
 
 @Service
 public class ExciseDepartmentService {

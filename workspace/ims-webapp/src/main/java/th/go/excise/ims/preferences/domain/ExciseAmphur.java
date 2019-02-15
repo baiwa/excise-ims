@@ -1,4 +1,4 @@
-package th.go.excise.ims.common.domain;
+package th.go.excise.ims.preferences.domain;
 
 import java.math.BigDecimal;
 

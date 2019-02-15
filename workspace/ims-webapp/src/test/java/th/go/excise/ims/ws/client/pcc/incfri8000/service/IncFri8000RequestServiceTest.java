@@ -32,10 +32,10 @@ public class IncFri8000RequestServiceTest {
 		incFri8000Request.setYearMonthTo("201808");
 		incFri8000Request.setDateType("Income");
 		incFri8000Request.setPageNo("1");
-		incFri8000Request.setDataPerPage("10");
-		ResponseData IncFri8000Response = IncFri8000RequestService.postRestFul(incFri8000Request);
-		for (IncomeList incomeList : IncFri8000Response.getIncomeList()) {
-			System.out.println("ReceiptNo : "+ incomeList.getReceiptNo());
-		}
+//		incFri8000Request.setDataPerPage("10");
+//		ResponseData IncFri8000Response = IncFri8000RequestService.postRestFul(incFri8000Request);
+//		for (IncomeList incomeList : IncFri8000Response.getIncomeList()) {
+//			System.out.println("ReceiptNo : "+ incomeList.getReceiptNo());
+//		}
 	}
 }

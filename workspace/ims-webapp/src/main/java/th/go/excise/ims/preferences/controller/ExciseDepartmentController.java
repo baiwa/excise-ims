@@ -1,4 +1,4 @@
-package th.go.excise.ims.common.controller;
+package th.go.excise.ims.preferences.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.common.persistence.entity.ExciseDepartment;
+import th.go.excise.ims.preferences.persistence.entity.ExciseDepartment;
 
 @RestController
-@RequestMapping("/api/excise/sectorareabranch")
-public class SectorAreaBranchController {
+@RequestMapping("/api/preferences/department")
+public class ExciseDepartmentController {
 
-	private static final Logger logger = LoggerFactory.getLogger(SectorAreaBranchController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ExciseDepartmentController.class);
 	
 	@PostMapping("/sector-list")
 	public ResponseData<List<ExciseDepartment>> findAllSectorList(){

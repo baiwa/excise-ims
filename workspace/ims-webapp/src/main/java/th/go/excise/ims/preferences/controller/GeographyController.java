@@ -1,4 +1,4 @@
-package th.go.excise.ims.common.controller;
+package th.go.excise.ims.preferences.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,17 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.common.domain.ExciseAmphur;
-import th.go.excise.ims.common.domain.ExciseDistrict;
-import th.go.excise.ims.common.domain.ExciseGeo;
-import th.go.excise.ims.common.domain.ExciseProvince;
+import th.go.excise.ims.preferences.domain.ExciseAmphur;
+import th.go.excise.ims.preferences.domain.ExciseDistrict;
+import th.go.excise.ims.preferences.domain.ExciseGeo;
+import th.go.excise.ims.preferences.domain.ExciseProvince;
 
 
 @RestController
-@RequestMapping("/api/excise/excise-general")
-public class ExciseGeneralController {
+@RequestMapping("/api/preferences/geography")
+public class GeographyController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(ExciseGeneralController.class);
+	private static final Logger logger = LoggerFactory.getLogger(GeographyController.class);
 	
 	@PostMapping("/geo-list")
 	public ResponseData<List<ExciseGeo>> findAllGeolList(){

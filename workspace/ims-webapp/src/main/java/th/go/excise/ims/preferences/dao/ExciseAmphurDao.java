@@ -1,4 +1,4 @@
-package th.go.excise.ims.common.dao;
+package th.go.excise.ims.preferences.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.bean.BaseVo;
-import th.go.excise.ims.common.domain.ExciseAmphur;
+import th.go.excise.ims.preferences.domain.ExciseAmphur;
 
 @Repository
 public class ExciseAmphurDao {

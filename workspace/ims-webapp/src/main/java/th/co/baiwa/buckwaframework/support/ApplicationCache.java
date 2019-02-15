@@ -23,16 +23,16 @@ import th.co.baiwa.buckwaframework.preferences.persistence.repository.ParameterG
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.ParameterInfoRepository;
 import th.co.baiwa.buckwaframework.support.domain.ParamGroup;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
-import th.go.excise.ims.common.domain.ExciseAmphur;
-import th.go.excise.ims.common.domain.ExciseDistrict;
-import th.go.excise.ims.common.domain.ExciseGeo;
-import th.go.excise.ims.common.domain.ExciseProvince;
-import th.go.excise.ims.common.persistence.entity.ExciseDepartment;
-import th.go.excise.ims.common.service.ExciseAmphurService;
-import th.go.excise.ims.common.service.ExciseDepartmentService;
-import th.go.excise.ims.common.service.ExciseDistrictService;
-import th.go.excise.ims.common.service.ExciseGeoService;
-import th.go.excise.ims.common.service.ExciseProvinceService;
+import th.go.excise.ims.preferences.domain.ExciseAmphur;
+import th.go.excise.ims.preferences.domain.ExciseDistrict;
+import th.go.excise.ims.preferences.domain.ExciseGeo;
+import th.go.excise.ims.preferences.domain.ExciseProvince;
+import th.go.excise.ims.preferences.persistence.entity.ExciseDepartment;
+import th.go.excise.ims.preferences.service.ExciseAmphurService;
+import th.go.excise.ims.preferences.service.ExciseDepartmentService;
+import th.go.excise.ims.preferences.service.ExciseDistrictService;
+import th.go.excise.ims.preferences.service.ExciseGeoService;
+import th.go.excise.ims.preferences.service.ExciseProvinceService;
 
 @Component
 public class ApplicationCache {

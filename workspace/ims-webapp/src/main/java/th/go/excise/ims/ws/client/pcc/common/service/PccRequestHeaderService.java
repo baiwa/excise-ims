@@ -1,4 +1,6 @@
 package th.go.excise.ims.ws.client.pcc.common.service;
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +42,7 @@ public class PccRequestHeaderService {
 	private WsService wsService;
 	
 	
-	public String postRestful(String endPoint, Object object) {
+	public String postRestful(String endPoint, Object object) throws IOException {
 		logger.info(" endPoint : {}",  endPoint);
 		PccRequestHeader requestRestful = new PccRequestHeader();
 		requestRestful.setSystemId(systemId);
@@ -50,7 +52,7 @@ public class PccRequestHeaderService {
 		requestRestful.setRequestData(object);
 		Gson gson = new Gson();
 		String json = gson.toJson(requestRestful);
-		return wsService.postRestful(endPoint, json);
+		return wsService.post(endPoint, json);
 	}
 	
 	
