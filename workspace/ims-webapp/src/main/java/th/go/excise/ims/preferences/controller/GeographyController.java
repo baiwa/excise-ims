@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.preferences.domain.ExciseAmphur;
-import th.go.excise.ims.preferences.domain.ExciseDistrict;
-import th.go.excise.ims.preferences.domain.ExciseGeo;
-import th.go.excise.ims.preferences.domain.ExciseProvince;
+import th.go.excise.ims.preferences.persistence.entity.ExciseAmphur;
+import th.go.excise.ims.preferences.persistence.entity.ExciseDistrict;
+import th.go.excise.ims.preferences.persistence.entity.ExciseGeo;
+import th.go.excise.ims.preferences.persistence.entity.ExciseProvice;
 
 
 @RestController
@@ -41,20 +41,20 @@ public class GeographyController {
 		return response;
 	}
 	
-	@PostMapping("/provice-list/{proviceId}")
-	public ResponseData<List<ExciseProvince>> findProviceListByProviceId(@PathVariable("proviceId")String proviceId){
-		ResponseData<List<ExciseProvince>> response = new ResponseData<>();
-		List<ExciseProvince> exciseProvinceList = new ArrayList<>();
- 		try {
- 			exciseProvinceList = ApplicationCache.getExciseProvinceList(proviceId);
-			response.setData(exciseProvinceList);
-			response.setStatus(RESPONSE_STATUS.SUCCESS);
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			response.setStatus(RESPONSE_STATUS.FAILED);
-		}
-		return response;
-	}
+//	@PostMapping("/provice-list/{proviceId}")
+//	public ResponseData<List<ExciseProvice>> findProviceListByProviceId(@PathVariable("proviceId")String proviceId){
+//		ResponseData<List<ExciseProvice>> response = new ResponseData<>();
+//		List<ExciseProvice> exciseProviceList = new ArrayList<>();
+// 		try {
+// 			exciseProviceList = ApplicationCache.getExciseProviceList(proviceId);
+//			response.setData(exciseProviceList);
+//			response.setStatus(RESPONSE_STATUS.SUCCESS);
+//		} catch (Exception e) {
+//			logger.error(e.getMessage());
+//			response.setStatus(RESPONSE_STATUS.FAILED);
+//		}
+//		return response;
+//	}
 	
 	@PostMapping("/amphur-list/{amphurId}")
 	public ResponseData<List<ExciseAmphur>> findAmphurListByAmphurId(@PathVariable("amphurId")String amphurId){

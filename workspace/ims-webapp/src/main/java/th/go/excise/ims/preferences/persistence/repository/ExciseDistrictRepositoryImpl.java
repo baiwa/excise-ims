@@ -1,4 +1,4 @@
-package th.go.excise.ims.preferences.dao;
+package th.go.excise.ims.preferences.persistence.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,13 +9,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
 
-import th.co.baiwa.buckwaframework.common.bean.BaseVo;
-import th.go.excise.ims.preferences.domain.ExciseDistrict;
+import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
+import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
+import th.go.excise.ims.preferences.persistence.entity.ExciseDistrict;
 
-@Repository
-public class ExciseDistrictDao {
+public class ExciseDistrictRepositoryImpl implements ExciseDistrictCustom{
 	
 	@Autowired
 	JdbcTemplate jdbcTemplate;
@@ -69,11 +68,11 @@ public class ExciseDistrictDao {
 			vo.setDistrictCode(rs.getString(ExciseDistrict.Field.DISTRICT_CODE));
 			vo.setDistrictName(rs.getString(ExciseDistrict.Field.DISTRICT_NAME));
 			
-			vo.setIsDeleted(rs.getString(BaseVo.Field.IS_DELETED));
-			vo.setCreatedBy(rs.getString(BaseVo.Field.CREATED_BY));
-			vo.setCreatedDate(rs.getDate(BaseVo.Field.CREATED_DATE));
-			vo.setUpdatedBy(rs.getString(BaseVo.Field.UPDATED_BY));
-			vo.setUpdatedDate(rs.getDate(BaseVo.Field.UPDATED_DATE));
+			vo.setIsDeleted(rs.getString(BaseEntity.Field.IS_DELETED));
+			vo.setCreatedBy(rs.getString(BaseEntity.Field.CREATED_BY));
+			vo.setCreatedDate(LocalDateTimeConverter.convertToEntityAttribute(rs.getTimestamp(BaseEntity.Field.CREATED_DATE)));
+			vo.setUpdatedBy(rs.getString(BaseEntity.Field.UPDATED_BY));
+			vo.setUpdatedDate(LocalDateTimeConverter.convertToEntityAttribute(rs.getTimestamp(BaseEntity.Field.UPDATED_DATE)));
 			return vo;
 		}
 	};

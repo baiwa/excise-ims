@@ -41,12 +41,14 @@ public class SyncWebServiceTaxAuditSelectFactoryService {
 
 	@Autowired
 	private TaWsInc8000Repository taWsInc8000Repository;
+	
+	private String wsDataSizeWs = "2000";
 
 	public void suncData() throws IOException {
 		logger.info("SyncData : {}", LocalDateTime.now());
 		RegFri4000Request regFri4000Request = new RegFri4000Request();
 		regFri4000Request.setType("1");
-		regFri4000Request.setDataPerPage("100");
+		regFri4000Request.setDataPerPage(wsDataSizeWs);
 		regFri4000Request.setActive("1");
 		regFri4000Request.setNewregId("");
 		regFri4000Request.setNid("");
@@ -100,7 +102,7 @@ public class SyncWebServiceTaxAuditSelectFactoryService {
 			} else {
 				logger.info("ws 4000 no response data", regMaster60List.size());
 			}
-		} while (regMaster60List.size() == 100);
+		} while (regMaster60List.size() == Integer.parseInt(wsDataSizeWs));
 
 		LocalDate localDateFrom = LocalDate.of(2016, 2, 14);
 		String dateFrom = localDateFrom.format(DateTimeFormatter.ofPattern("yyyyMM"));
@@ -110,7 +112,7 @@ public class SyncWebServiceTaxAuditSelectFactoryService {
 		incFri8000Request.setYearMonthFrom(dateFrom);
 		incFri8000Request.setYearMonthTo(dateTo);
 		incFri8000Request.setDateType("Income");
-		incFri8000Request.setDataPerPage("100");
+		incFri8000Request.setDataPerPage(wsDataSizeWs);
 		indexPage = 0;
 		List<IncomeList> incomeList = new ArrayList<>();
 		do {
@@ -149,7 +151,7 @@ public class SyncWebServiceTaxAuditSelectFactoryService {
 					e.printStackTrace();
 				}
 			}
-		} while (incomeList.size() == 100);
+		} while (incomeList.size() == Integer.parseInt(wsDataSizeWs));
 
 	}
 

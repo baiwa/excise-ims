@@ -23,16 +23,16 @@ import th.co.baiwa.buckwaframework.preferences.persistence.repository.ParameterG
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.ParameterInfoRepository;
 import th.co.baiwa.buckwaframework.support.domain.ParamGroup;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
-import th.go.excise.ims.preferences.domain.ExciseAmphur;
-import th.go.excise.ims.preferences.domain.ExciseDistrict;
-import th.go.excise.ims.preferences.domain.ExciseGeo;
-import th.go.excise.ims.preferences.domain.ExciseProvince;
+import th.go.excise.ims.preferences.persistence.entity.ExciseAmphur;
 import th.go.excise.ims.preferences.persistence.entity.ExciseDepartment;
+import th.go.excise.ims.preferences.persistence.entity.ExciseDistrict;
+import th.go.excise.ims.preferences.persistence.entity.ExciseGeo;
+import th.go.excise.ims.preferences.persistence.entity.ExciseProvice;
 import th.go.excise.ims.preferences.service.ExciseAmphurService;
 import th.go.excise.ims.preferences.service.ExciseDepartmentService;
 import th.go.excise.ims.preferences.service.ExciseDistrictService;
 import th.go.excise.ims.preferences.service.ExciseGeoService;
-import th.go.excise.ims.preferences.service.ExciseProvinceService;
+import th.go.excise.ims.preferences.service.ExciseProviceService;
 
 @Component
 public class ApplicationCache {
@@ -46,7 +46,7 @@ public class ApplicationCache {
 	public final ExciseGeoService exciseGeoService = null;
 
 	@Autowired
-	public final ExciseProvinceService exciseProvinceService = null;
+	public final ExciseProviceService exciseProvinceService = null;
 
 	@Autowired
 	public final ExciseAmphurService exciseAmphurService = null;
@@ -59,7 +59,7 @@ public class ApplicationCache {
 	private static final ConcurrentHashMap<String, List<ExciseDepartment>> EXCISE_BRANCH_MAPPER = new ConcurrentHashMap<String, List<ExciseDepartment>>();
 
 	private static final List<ExciseGeo> EXCISE_GEO_LIST = new ArrayList<ExciseGeo>();
-	private static final ConcurrentHashMap<String, List<ExciseProvince>> EXCISE_PROVINCE_MAPPER = new ConcurrentHashMap<String, List<ExciseProvince>>();
+	private static final ConcurrentHashMap<String, List<ExciseProvice>> EXCISE_PROVINCE_MAPPER = new ConcurrentHashMap<String, List<ExciseProvice>>();
 	private static final ConcurrentHashMap<String, List<ExciseAmphur>> EXCISE_AMPHUR_MAPPER = new ConcurrentHashMap<String, List<ExciseAmphur>>();
 	private static final ConcurrentHashMap<String, List<ExciseDistrict>> EXCISE_DISTRICT_MAPPER = new ConcurrentHashMap<String, List<ExciseDistrict>>();
 
@@ -120,16 +120,16 @@ public class ApplicationCache {
 
 	public void loadGioProviceAumhurDistrictAndMapping() {
 		List<ExciseGeo> ecExciseGeoList = exciseGeoService.findExciseGeoListByCriteria(null);
-		List<ExciseProvince> exciseProvinceList = exciseProvinceService.findProviceByCriteria(null);
+		List<ExciseProvice> exciseProvinceList = exciseProvinceService.findByCriteria(null);
 		List<ExciseAmphur> exciseAmphurList = exciseAmphurService.findExciseAmphurListByCriteria(null);
 		List<ExciseDistrict> exciseDistricList = exciseDistrictService.findExciseDistrictListByCriteria(null);
 		for (ExciseGeo exciseGeo : ecExciseGeoList) {
 			EXCISE_GEO_LIST.add(exciseGeo);
 		}
-		for (ExciseProvince province : exciseProvinceList) {
-			List<ExciseProvince> provinceList = EXCISE_PROVINCE_MAPPER.get(province.getGeoId().toString());
+		for (ExciseProvice province : exciseProvinceList) {
+			List<ExciseProvice> provinceList = EXCISE_PROVINCE_MAPPER.get(province.getGeoId().toString());
 			if(provinceList == null) {
-				provinceList = new ArrayList<ExciseProvince>();
+				provinceList = new ArrayList<ExciseProvice>();
 			}
 			provinceList.add(province);
 			EXCISE_PROVINCE_MAPPER.put(province.getGeoId().toString(), provinceList);
@@ -164,12 +164,15 @@ public class ApplicationCache {
 	public static List<ExciseDepartment> getExciseBranchList(String officeCode) {
 		return Collections.unmodifiableList(EXCISE_BRANCH_MAPPER.get(officeCode));
 	}
+	public static List<ExciseDepartment> getExcisepro(String officeCode) {
+		return Collections.unmodifiableList(EXCISE_BRANCH_MAPPER.get(officeCode));
+	}
 
 	public static List<ExciseGeo> getExciseGeoList() {
 		return Collections.unmodifiableList(EXCISE_GEO_LIST);
 	}
 
-	public static List<ExciseProvince> getExciseProvinceList(String geoId) {
+	public static List<ExciseProvice> getExciseProviceList(String geoId) {
 		return Collections.unmodifiableList(EXCISE_PROVINCE_MAPPER.get(geoId));
 	}
 
