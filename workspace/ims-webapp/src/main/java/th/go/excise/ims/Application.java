@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfigurati
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 @SpringBootApplication(
@@ -23,6 +24,9 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 		JmxAutoConfiguration.class
 	}
 )
+@PropertySource(value = {
+	"classpath:/application.properties"
+})
 public class Application extends SpringBootServletInitializer {
 	
 	public static void main(String[] args) throws Exception {

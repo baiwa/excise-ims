@@ -445,7 +445,7 @@
 									<extraargs>
 										<extraarg>-verbose</extraarg>
 										<extraarg>-p</extraarg><!-- targetNamespace -->
-										<extraarg>http://ws.baiwa.th.com=th.co.baiwa.exampleproject.ws.userldap</extraarg>
+										<extraarg>http://ws.th.co.baiwa=th.co.baiwa.ims.ws.userldap</extraarg>
 										<extraarg>-wsdlLocation</extraarg>
 										<extraarg>classpath:wsdl/LoginLdap.wsdl</extraarg>
 									</extraargs>

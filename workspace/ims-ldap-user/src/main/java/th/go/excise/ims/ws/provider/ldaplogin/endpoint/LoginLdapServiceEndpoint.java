@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.ws.userldap.LoginLdap;
-import th.co.baiwa.ws.userldap.Response;
+import baiwa.co.th.ws.LoginLdap;
+import baiwa.co.th.ws.Response;
 import th.go.excise.ims.ldaplogin.persistence.entity.WsUser;
 import th.go.excise.ims.ldaplogin.persistence.repository.WsUserRepository;
 

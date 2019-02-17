@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions targetNamespace="http://th.co.baiwa.ws" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://th.co.baiwa.ws" xmlns:intf="http://th.co.baiwa.ws" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<wsdl:definitions targetNamespace="http://ws.th.co.baiwa" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://ws.th.co.baiwa" xmlns:intf="http://ws.th.co.baiwa" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 <!--WSDL created by Apache Axis version: 1.4
 Built on Apr 22, 2006 (06:55:48 PDT)-->
  <wsdl:types>
-  <schema elementFormDefault="qualified" targetNamespace="http://th.co.baiwa.ws" xmlns="http://www.w3.org/2001/XMLSchema">
+  <schema elementFormDefault="qualified" targetNamespace="http://ws.th.co.baiwa" xmlns="http://www.w3.org/2001/XMLSchema">
    <element name="login">
     <complexType>
      <sequence>
@@ -102,7 +102,8 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       <wsdl:port binding="impl:LoginLdapSoapBinding" name="LoginLdap">
 
-         <wsdlsoap:address location="http://localhost:11374/LdapUserLogin/services/LoginLdap"/>
+<!--          <wsdlsoap:address location="http://localhost:8181/LdapUserLogin/services/LoginLdap"/> -->
+         <wsdlsoap:address location="http://150.95.24.42:8080/LdapUserLogin/services/LoginLdap"/>
 
       </wsdl:port>
 
