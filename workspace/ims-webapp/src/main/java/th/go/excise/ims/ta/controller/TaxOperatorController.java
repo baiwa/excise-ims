@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import th.co.baiwa.buckwaframework.common.bean.BusinessException;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ta.service.TaxOperatorService;
 import th.go.excise.ims.ta.vo.CondGroupVo;
@@ -29,11 +30,11 @@ public class TaxOperatorController {
 
         try {
             response.setData(this.taxOperatorService.getOperator(formVo));
-            response.setMessage("SUCCESS");
+            response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            response.setMessage("FAIL");
+            response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
             response.setStatus(RESPONSE_STATUS.FAILED);
         }
         return response;
@@ -46,11 +47,11 @@ public class TaxOperatorController {
         ResponseData<List<String>> response = new ResponseData<>();
         try {
             response.setData(this.taxOperatorService.findAllAnalysisNumber());
-            response.setMessage("SUCCESS");
+            response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            response.setMessage("FAIL");
+            response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
             response.setStatus(RESPONSE_STATUS.FAILED);
         }
         return response;
@@ -63,11 +64,11 @@ public class TaxOperatorController {
         ResponseData<List<CondGroupVo>> response = new ResponseData<>();
         try {
             response.setData(this.taxOperatorService.findCondGroupDtl(formVo));
-            response.setMessage("SUCCESS");
+            response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            response.setMessage("FAIL");
+            response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
             response.setStatus(RESPONSE_STATUS.FAILED);
         }
         return response;
@@ -81,11 +82,11 @@ public class TaxOperatorController {
 
         try {
             response.setData(this.taxOperatorService.monthStart(formVo));
-            response.setMessage("SUCCESS");
+            response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            response.setMessage("FAIL");
+            response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
             response.setStatus(RESPONSE_STATUS.FAILED);
         }
         return response;
