@@ -1,40 +1,30 @@
 package th.go.excise.ims.ia.vo;
 
-import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 
-public class Int02Vo extends BaseEntity {
+public class Int02Vo extends IaQuestionnaireHdr {
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3503222137383083315L;
+	private static final long serialVersionUID = 7493503564882947512L;
+	private String createdDateStr;
+	private String updatedDateStr;
 	
-	private String budgetYear;
-	private String startDate;
-	private String endDate;
-	
-	public String getBudgetYear() {
-		return budgetYear;
+	public String getCreatedDateStr() {
+		return createdDateStr;
 	}
-	public void setBudgetYear(String budgetYear) {
-		this.budgetYear = budgetYear;
+	public void setCreatedDateStr(String createdDateStr) {
+		this.createdDateStr = createdDateStr;
 	}
-	public String getStartDate() {
-		return startDate;
+	public String getUpdatedDateStr() {
+		return updatedDateStr;
 	}
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-	public String getEndDate() {
-		return endDate;
-	}
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public void setUpdatedDateStr(String updatedDateStr) {
+		this.updatedDateStr = updatedDateStr;
 	}
 	
-
-
+	
+	
+	
 }
