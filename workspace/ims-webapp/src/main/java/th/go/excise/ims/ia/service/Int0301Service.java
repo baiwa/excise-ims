@@ -25,8 +25,8 @@ public class Int0301Service {
 		
 	}
 	
-//	pubilc void saveRiskFactorsLevel() {
-//		
-//	}
+	public void saveRiskFactorsLevel(Int0301FormVo form) {
+		int0301JdbcRepository.saveRiskFactorsLevel(form);
+	}
 
 }

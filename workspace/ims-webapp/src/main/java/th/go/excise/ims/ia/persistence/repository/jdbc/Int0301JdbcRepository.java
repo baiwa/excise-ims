@@ -18,6 +18,7 @@ import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
+import th.go.excise.ims.ia.vo.Int030102FormVo;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
 
 @Repository
@@ -57,9 +58,6 @@ public class Int0301JdbcRepository {
 			vo.setRiskFactors(rs .getString("RISK_FACTORS"));	
 			vo.setBudgetYear(rs .getString("BUDGET_YEAR"));
 			vo.setSide(rs .getString("SIDE"));
-			vo.setFactorsLow(rs .getString("FACTORS_LOW"));	
-			vo.setFactorsMedium(rs .getString("FACTORS_MEDIUM"));
-			vo.setFactorsHigh(rs .getString("FACTORS_HIGH"));
 			vo.setStatusScreen(rs .getString("STATUS_SCREEN"));
 			vo.setDateCriteria(rs .getString("DATE_CRITERIA"));	
 			vo.setInspectionWork(rs .getBigDecimal("INSPECTION_WORK"));
@@ -83,6 +81,16 @@ public class Int0301JdbcRepository {
 			return vo;
 		}
 	};
+	
+	public void saveRiskFactorsLevel(Int0301FormVo form){
+		StringBuilder sql = new StringBuilder(" UPDATE IA_RISK_FACTORS_CONFIG B SET B.FACTORS_LEVEL = ? WHERE B.ID = (SELECT B.ID " + 
+				"FROM IA_RISK_FACTORS A   " + 
+				"INNER JOIN IA_RISK_FACTORS_CONFIG B " + 
+				"ON A.ID = B.ID_FACTORS " + 
+				"WHERE A.BUDGET_YEAR = ? )");	
+		commonJdbcTemplate.update(sql.toString(),new Object[] {form.getFactorsLevel(),form.getBudgetYear()});
+	
+	}
 }
 
 

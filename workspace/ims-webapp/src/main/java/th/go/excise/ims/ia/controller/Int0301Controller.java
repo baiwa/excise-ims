@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.service.Int0301Service;
@@ -46,21 +47,22 @@ public class Int0301Controller {
 		return response;
 	}
 	
-//	@PostMapping("/saveRiskFactorsLevel")
-//	@ResponseBody
-//	public ResponseData<String> saveRiskFactorsLevel(@RequestBody Int0301FormVo form) {
-//		ResponseData<String> response = new ResponseData<String>();
-//		try {	
-//			Int0301Service.saveRiskFactorsLevel(form);
-//			response.setData("SUCCESS");
-//			response.setMessage("SUCCESS");
-//			response.setStatus(RESPONSE_STATUS.SUCCESS);
-//		} catch (Exception e) {
-//			logger.error("Int0301Controller : " , e);
-//			response.setMessage("ERROR");
-//			response.setStatus(RESPONSE_STATUS.FAILED);
-//		}
-//		return response;
-//	}
+	@PostMapping("/saveRiskFactorsLevel")
+	@ResponseBody
+	public ResponseData<String> saveRiskFactorsLevel(@RequestBody Int0301FormVo form) {
+		ResponseData<String> response = new ResponseData<String>();
+		try {	
+			Int0301Service.saveRiskFactorsLevel(form);
+			response.setData("SUCCESS");
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+
+		} catch (Exception e) {
+			logger.error("Int0301Controller saveRiskFactorsLevel : ", e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
 
 }

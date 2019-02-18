@@ -9,6 +9,7 @@ public class Int0301FormVo {
 	
 	private BigDecimal id;	
 	private String budgetYear;	
+	private String factorsLevel ;	
 	private BigDecimal inspectionWork;
 	
 	public BigDecimal getId() {
@@ -23,12 +24,20 @@ public class Int0301FormVo {
 	public void setBudgetYear(String budgetYear) {
 		this.budgetYear = budgetYear;
 	}
+	public String getFactorsLevel() {
+		return factorsLevel;
+	}
+	public void setFactorsLevel(String factorsLevel) {
+		this.factorsLevel = factorsLevel;
+	}
 	public BigDecimal getInspectionWork() {
 		return inspectionWork;
 	}
 	public void setInspectionWork(BigDecimal inspectionWork) {
 		this.inspectionWork = inspectionWork;
 	}
+	
+	
 	
 
 }
