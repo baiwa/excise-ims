@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondDtlTax;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondHdr;
@@ -31,11 +32,11 @@ public class MasterConditionController {
 		try {
 			masterConditionService.insertMaster(formVo);
 			responseData.setData(null);
-			responseData.setMessage("SUCCESS");
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
-			responseData.setMessage("ERROR");
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -48,11 +49,11 @@ public class MasterConditionController {
 		try {
 			masterConditionService.updateWorkSheet(formVo);
 			responseData.setData(null);
-			responseData.setMessage("SUCCESS");
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
-			responseData.setMessage("ERROR");
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -64,11 +65,11 @@ public class MasterConditionController {
 		ResponseData<TaMasCondHdr> responseData = new ResponseData<TaMasCondHdr>();
 		try {
 			responseData.setData(masterConditionService.findByBudgetYearHdr(formVo));
-			responseData.setMessage("SUCCESS");
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
-			responseData.setMessage("ERROR");
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -80,11 +81,11 @@ public class MasterConditionController {
 		ResponseData<List<TaMasCondDtlTax>> responseData = new ResponseData<List<TaMasCondDtlTax>>();
 		try {
 			responseData.setData(masterConditionService.findByBudgetYearDtl(formVo));
-			responseData.setMessage("SUCCESS");
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
-			responseData.setMessage("ERROR");
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -96,11 +97,11 @@ public class MasterConditionController {
 		ResponseData<List<TaMasCondHdr>> responseData = new ResponseData<List<TaMasCondHdr>>();
 		try {
 			responseData.setData(masterConditionService.findAllHdr());
-			responseData.setMessage("SUCCESS");
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
-			responseData.setMessage("ERROR");
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;

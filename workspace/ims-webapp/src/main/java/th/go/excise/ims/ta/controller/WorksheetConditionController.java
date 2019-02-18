@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.BusinessException;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.preferences.constant.MessageConstants;
 import th.go.excise.ims.ta.persistence.entity.TaWsCondHdr;
@@ -30,11 +31,11 @@ public class WorksheetConditionController {
 		ResponseData<String> responseData = new ResponseData<String>();
 		try {
 			responseData.setData(worksheetConditionService.insertWorkSheet(formVo));
-			responseData.setMessage("SUCCESS");
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
-			responseData.setMessage("ERROR");
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -55,7 +56,7 @@ public class WorksheetConditionController {
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
-			responseData.setMessage("ERROR");
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;

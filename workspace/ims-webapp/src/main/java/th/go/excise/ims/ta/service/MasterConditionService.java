@@ -56,31 +56,38 @@ public class MasterConditionService {
 
 		if (header.getBudgetYear() != null) {
 			List<TaMasCondDtlTax> list = taMasCondDtlTaxRepository.findByBudgetYear(formVo.getHeader().getBudgetYear());
-			List<TaMasCondDtlTax> listY = taMasCondDtlTaxRepository
-					.findByBudgetYearY(formVo.getHeader().getBudgetYear());
-			
+//			List<TaMasCondDtlTax> listY = taMasCondDtlTaxRepository
+//					.findByBudgetYearY(formVo.getHeader().getBudgetYear());
+
 			Collections.sort(list, new Comparator<TaMasCondDtlTax>() {
 				public int compare(TaMasCondDtlTax dtlTax, TaMasCondDtlTax dtlTax2) {
-					int condDtlTaxId = dtlTax.getCondDtlTaxId().compareTo(dtlTax2.getCondDtlTaxId()); 
+					int condDtlTaxId = dtlTax.getCondDtlTaxId().compareTo(dtlTax2.getCondDtlTaxId());
 					if (condDtlTaxId == 0) {
 						return condDtlTaxId;
 					}
-					return dtlTax.getCondDtlTaxId() > dtlTax2.getCondDtlTaxId() ? 1 : dtlTax.getCondDtlTaxId() < dtlTax2.getCondDtlTaxId() ? -1 : 0;
+					return dtlTax.getCondDtlTaxId() > dtlTax2.getCondDtlTaxId() ? 1
+							: dtlTax.getCondDtlTaxId() < dtlTax2.getCondDtlTaxId() ? -1 : 0;
 				}
 			});
-			
-			int i = 0;
+
 			if (list.size() - formVo.getDetail().size() > 0) {
+				boolean checkDelete = true;
 				for (TaMasCondDtlTax obj : list) {
-					i++;
-					if (i > formVo.getDetail().size()) {
+					checkDelete = true;
+					for (TaMasCondDtlTax ob : formVo.getDetail()) {
+						if (ob.getCondDtlTaxId() == obj.getCondDtlTaxId()) {
+							checkDelete = false;
+							break;
+						}
+					}
+					if (checkDelete) {
 						dtl = taMasCondDtlTaxRepository.findById(obj.getCondDtlTaxId()).get();
 						dtl.setIsDeleted("Y");
-
-						taMasCondDtlTaxRepository.save(dtl);
+						
+						taMasCondDtlTaxRepository.save(dtl);						
 					}
 				}
-			} 
+			}
 //			else if (list.size() - formVo.getDetail().size() < 0) {
 //				for (TaMasCondDtlTax obj : listY) {
 //					****** cannot use findById cause cannot find isDelete value is 'Y' *****
