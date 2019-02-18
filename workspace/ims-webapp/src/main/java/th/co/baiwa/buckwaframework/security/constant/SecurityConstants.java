@@ -20,10 +20,10 @@ public class SecurityConstants {
 	
 	public static final String ROLE_USER = "ROLE_USER";
 	public static final String ROLE_ADMIN = "ROLE_ADMIN";
-	public static final String ROLE_INTERNAL_AUDIT = "ROLE_INTERNAL_AUDIT";
-	public static final String ROLE_TAX_AUDIT = "ROLE_TAX_AUDIT";
-	public static final String ROLE_OPERATOR_AUDIT = "ROLE_OPERATOR_AUDIT";
-	public static final String ROLE_EXPORT_AUDIT = "ROLE_EXPORT_AUDIT";
+	public static final String ROLE_INTERNAL_AUDIT = "ROLE_IA";
+	public static final String ROLE_TAX_AUDIT = "ROLE_TA";
+	public static final String ROLE_OPERATOR_AUDIT = "ROLE_OA";
+	public static final String ROLE_EXPORT_AUDIT = "ROLE_EA";
 	
 	public static final class SYSTEM_USER {
 		public static final String SYSTEM = "SYSTEM";
