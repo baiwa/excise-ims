@@ -34,6 +34,8 @@ public class TaxAuditFactorySelectionService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TaxAuditFactorySelectionService.class);
 	
+	private static final String NO_TAX_AMOUNT = "-";
+	
 	@Autowired
 	private TaWsReg4000Repository taWsReg4000Repository;
 
@@ -133,10 +135,14 @@ public class TaxAuditFactorySelectionService {
 			
 			for (TaWsInc8000M wsInc8000M : wsInc8000MList) {
 				countTaxMonthNo++;
-				taxAmount = decimalFormat.format(wsInc8000M.getTaxAmount());
 				if (countG1 < formVo.getDateRange() / 2) {
 					// Group 1
-					sumTaxAmtG1 = sumTaxAmtG1.add(wsInc8000M.getTaxAmount());
+					if (wsInc8000M.getTaxAmount() != null) {
+						taxAmount = decimalFormat.format(wsInc8000M.getTaxAmount());
+						sumTaxAmtG1 = sumTaxAmtG1.add(wsInc8000M.getTaxAmount());
+					} else {
+						taxAmount = NO_TAX_AMOUNT;
+					}
 					countG1++;
 					if (countG1 == 1) {
 						detailVo.setTaxAmtG1M1(taxAmount);
@@ -165,7 +171,12 @@ public class TaxAuditFactorySelectionService {
 					}
 				} else {
 					// Group 2
-					sumTaxAmtG2 = sumTaxAmtG2.add(wsInc8000M.getTaxAmount());
+					if (wsInc8000M.getTaxAmount() != null) {
+						taxAmount = decimalFormat.format(wsInc8000M.getTaxAmount());
+						sumTaxAmtG2 = sumTaxAmtG2.add(wsInc8000M.getTaxAmount());
+					} else {
+						taxAmount = NO_TAX_AMOUNT;
+					}
 					countG2++;
 					if (countG2 == 1) {
 						detailVo.setTaxAmtG2M1(taxAmount);

@@ -1,6 +1,5 @@
 package th.go.excise.ims.ta.persistence.repository;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MCustom {
 					}
 					TaWsInc8000M taWsInc8000M = new TaWsInc8000M();
 					taWsInc8000M.setNewRegId(rs.getString(TaWsInc8000M.Field.WS_INC8000_M_ID));
-					taWsInc8000M.setTaxAmount(rs.getBigDecimal(TaWsInc8000M.Field.TAX_AMOUNT) != null ? rs.getBigDecimal(TaWsInc8000M.Field.TAX_AMOUNT) : BigDecimal.ZERO);
+					taWsInc8000M.setTaxAmount(rs.getBigDecimal(TaWsInc8000M.Field.TAX_AMOUNT));
 					taWsInc8000M.setTaxYear(rs.getString(TaWsInc8000M.Field.TAX_YEAR));
 					taWsInc8000M.setTaxMonth(rs.getString(TaWsInc8000M.Field.TAX_MONTH));
 					dataList.add(taWsInc8000M);
