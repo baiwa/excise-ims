@@ -13,62 +13,90 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "IA_RISK_FACTORS_MASTER")
-public class IaRiskFactorsMaster
-    extends BaseEntity
-{
+public class IaRiskFactorsMaster extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_RISK_FACTORS_MASTER_GEN")
-    @SequenceGenerator(name = "IA_RISK_FACTORS_MASTER_GEN", sequenceName = "IA_RISK_FACTORS_MASTER_SEQ", allocationSize = 1)
-    @Column(name = "ID")
-    private BigDecimal id;
-    @Column(name = "RISK_FACTORS_MASTER")
-    private String riskFactorsMaster;
-    @Column(name = "BUDGET_YEAR")
-    private String budgetYear;
-    @Column(name = "STATUS")
-    private String status;
-    @Column(name = "STATUS_CHICKING")
-    private BigDecimal statusChicking;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_RISK_FACTORS_MASTER_GEN")
+	@SequenceGenerator(name = "IA_RISK_FACTORS_MASTER_GEN", sequenceName = "IA_RISK_FACTORS_MASTER_SEQ", allocationSize = 1)
+	@Column(name = "ID")
+	private BigDecimal id;
+	@Column(name = "RISK_FACTORS_MASTER")
+	private String riskFactorsMaster;
+	@Column(name = "BUDGET_YEAR")
+	private String budgetYear;
+	@Column(name = "STATUS")
+	private String status;
+	@Column(name = "INSPECTION_WORK")
+	private BigDecimal inspectionWork;
 
-    public BigDecimal getId() {
-        return id;
-    }
+	private String createdDateDesc;
+	private String updateDateDesc;
+	
+	private String notDelete;
+	
+	public BigDecimal getId() {
+		return id;
+	}
 
-    public void setId(BigDecimal id) {
-        this.id = id;
-    }
+	public void setId(BigDecimal id) {
+		this.id = id;
+	}
 
-    public String getRiskFactorsMaster() {
-        return riskFactorsMaster;
-    }
+	public String getRiskFactorsMaster() {
+		return riskFactorsMaster;
+	}
 
-    public void setRiskFactorsMaster(String riskFactorsMaster) {
-        this.riskFactorsMaster = riskFactorsMaster;
-    }
+	public void setRiskFactorsMaster(String riskFactorsMaster) {
+		this.riskFactorsMaster = riskFactorsMaster;
+	}
 
-    public String getBudgetYear() {
-        return budgetYear;
-    }
+	public String getBudgetYear() {
+		return budgetYear;
+	}
 
-    public void setBudgetYear(String budgetYear) {
-        this.budgetYear = budgetYear;
-    }
+	public void setBudgetYear(String budgetYear) {
+		this.budgetYear = budgetYear;
+	}
 
-    public String getStatus() {
-        return status;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    public BigDecimal getStatusChicking() {
-        return statusChicking;
-    }
+	public BigDecimal getInspectionWork() {
+		return inspectionWork;
+	}
 
-    public void setStatusChicking(BigDecimal statusChicking) {
-        this.statusChicking = statusChicking;
-    }
+	public void setInspectionWork(BigDecimal inspectionWork) {
+		this.inspectionWork = inspectionWork;
+	}
 
+	public String getCreatedDateDesc() {
+		return createdDateDesc;
+	}
+
+	public void setCreatedDateDesc(String createdDateDesc) {
+		this.createdDateDesc = createdDateDesc;
+	}
+
+	public String getUpdateDateDesc() {
+		return updateDateDesc;
+	}
+
+	public void setUpdateDateDesc(String updateDateDesc) {
+		this.updateDateDesc = updateDateDesc;
+	}
+
+	public String getNotDelete() {
+		return notDelete;
+	}
+
+	public void setNotDelete(String notDelete) {
+		this.notDelete = notDelete;
+	}
+	
+	
 }
