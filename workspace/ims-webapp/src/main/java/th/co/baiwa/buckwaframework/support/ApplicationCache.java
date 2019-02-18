@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
@@ -170,10 +171,8 @@ public class ApplicationCache {
 	}
 	
 	public static List<ExciseDept> getExciseSectorList() {
-		List<ExciseDept> resultList = new ArrayList<>();
-		for (Entry<String, ExciseDept> entry : EXCISE_SECTOR_MAP.entrySet()) {
-			resultList.add(entry.getValue());
-		}
+		List<ExciseDept> resultList = EXCISE_SECTOR_MAP.values().stream().collect(Collectors.toList());
+		resultList.sort((p1, p2) -> p1.getOfficeCode().compareTo(p2.getOfficeCode()));
 		return Collections.unmodifiableList(resultList);
 	}
 
@@ -239,7 +238,14 @@ public class ApplicationCache {
 	private void loadExciseDepartment() {
 		logger.info("load ExciseDepartment loading...");
 		
+		EXCISE_DEPT_MAP.clear();
+		EXCISE_SECTOR_MAP.clear();
+		EXCISE_AREA_MAP.clear();
+		EXCISE_BRANCH_MAP.clear();
+		
 		List<? extends ExciseDept> exciseDepartmentList = exciseDepartmentRepository.findAll();
+		exciseDepartmentList.sort((p1, p2) -> p2.getOfficeCode().compareTo(p1.getOfficeCode()));
+		
 		for (ExciseDept exciseDepartment : exciseDepartmentList) {
 			EXCISE_DEPT_MAP.put(exciseDepartment.getOfficeCode(), exciseDepartment);
 			
@@ -270,10 +276,19 @@ public class ApplicationCache {
 			}
 		}
 		
+		// Sorting
+		EXCISE_AREA_MAP.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getOfficeCode().compareTo(p2.getOfficeCode())));
+		EXCISE_BRANCH_MAP.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getOfficeCode().compareTo(p2.getOfficeCode())));
+		
 		logger.info("load ExciseDepartment Sector={}, Area={}, Branch={}", EXCISE_SECTOR_MAP.size(), EXCISE_AREA_MAP.size(), EXCISE_BRANCH_MAP.size());
 	}
 
 	private void loadGeography() {
+		EXCISE_GEO_LIST.clear();
+		EXCISE_PROVINCE_MAPPER.clear();
+		EXCISE_AMPHUR_MAPPER.clear();
+		EXCISE_DISTRICT_MAPPER.clear();
+		
 		List<ExciseGeo> ecExciseGeoList = exciseGeoService.findExciseGeoListByCriteria(null);
 		List<ExciseProvice> exciseProvinceList = exciseProvinceService.findByCriteria(null);
 		List<ExciseAmphur> exciseAmphurList = exciseAmphurService.findExciseAmphurListByCriteria(null);

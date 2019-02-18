@@ -7,6 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 
@@ -139,4 +142,9 @@ public class ParameterInfo extends BaseEntity implements ParamInfo {
 		this.isDefault = isDefault;
 	}
 
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+	
 }

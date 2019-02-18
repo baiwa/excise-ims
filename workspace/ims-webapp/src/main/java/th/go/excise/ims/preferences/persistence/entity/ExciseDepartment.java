@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 
@@ -78,4 +81,9 @@ public class ExciseDepartment extends BaseEntity implements ExciseDept {
 		this.deptShortName2 = deptShortName2;
 	}
 
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+	
 }
