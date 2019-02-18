@@ -60,6 +60,7 @@ public class ApplicationCache {
 	private static final ConcurrentHashMap<Long, ParamInfo> PARAM_INFO_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, Message> MESSAGE_MAP = new ConcurrentHashMap<>();
 
+	private static final ConcurrentHashMap<String, ExciseDept> EXCISE_DEPT_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, ExciseDept> EXCISE_SECTOR_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, List<ExciseDept>> EXCISE_AREA_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, List<ExciseDept>> EXCISE_BRANCH_MAP = new ConcurrentHashMap<>();
@@ -164,6 +165,10 @@ public class ApplicationCache {
 	}
 	
 	/** Excise Department */
+	public static ExciseDept getExciseDept(String officeCode) {
+		return EXCISE_DEPT_MAP.get(officeCode);
+	}
+	
 	public static List<ExciseDept> getExciseSectorList() {
 		List<ExciseDept> resultList = new ArrayList<>();
 		for (Entry<String, ExciseDept> entry : EXCISE_SECTOR_MAP.entrySet()) {
@@ -236,6 +241,8 @@ public class ApplicationCache {
 		
 		List<? extends ExciseDept> exciseDepartmentList = exciseDepartmentRepository.findAll();
 		for (ExciseDept exciseDepartment : exciseDepartmentList) {
+			EXCISE_DEPT_MAP.put(exciseDepartment.getOfficeCode(), exciseDepartment);
+			
 			if (Pattern.matches("^.{2}0{4}$", exciseDepartment.getOfficeCode())) {
 				EXCISE_SECTOR_MAP.put(exciseDepartment.getOfficeCode(), exciseDepartment);
 			} else if (Pattern.matches(exciseDepartment.getOfficeCode().substring(0, 2) + "([0-9]{1}[1-9]{1}|[1-9][0-9])00", exciseDepartment.getOfficeCode())) {

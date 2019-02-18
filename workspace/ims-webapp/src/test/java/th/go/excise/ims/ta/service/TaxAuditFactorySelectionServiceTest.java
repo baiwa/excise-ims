@@ -12,6 +12,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
+import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
+import th.go.excise.ims.ta.vo.TaxOperatorVo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
@@ -22,7 +24,7 @@ public class TaxAuditFactorySelectionServiceTest {
 	@Autowired
 	private TaxAuditFactorySelectionService taxAuditFactorySelectionService;
 	
-	@Test
+//	@Test
 	public void test() {
 //		taxAuditFactorySelectionService.selectFactoryProcess("20190211221720");
 		try {
@@ -30,9 +32,26 @@ public class TaxAuditFactorySelectionServiceTest {
 			taxAuditFactorySelectionService.selectFactoryProcess("20190214141302");
 			System.out.println(new Date());
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 		
 	}
+	
+	@Test
+	public void test_getPreviewData() {
+		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
+		formVo.setDateStart("201505");
+		formVo.setDateEnd("201704");
+		formVo.setDateRange(24);
+		
+		try {
+			System.out.println(new Date());
+			TaxOperatorVo vo = taxAuditFactorySelectionService.getPreviewData(formVo);
+			System.out.println(new Date());
+			System.out.println(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

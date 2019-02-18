@@ -1,18 +1,11 @@
 package th.go.excise.ims.ta.vo;
 
 public class TaxOperatorFormVo {
+
 	private String dateStart;
 	private String dateEnd;
-	private String newRegId;
+	private int dateRange;
 	private String analysisNumber;
-
-	public String getAnalysisNumber() {
-		return analysisNumber;
-	}
-
-	public void setAnalysisNumber(String analysisNumber) {
-		this.analysisNumber = analysisNumber;
-	}
 
 	public String getDateStart() {
 		return dateStart;
@@ -30,12 +23,20 @@ public class TaxOperatorFormVo {
 		this.dateEnd = dateEnd;
 	}
 
-	public String getNewRegId() {
-		return newRegId;
+	public int getDateRange() {
+		return dateRange;
 	}
 
-	public void setNewRegId(String newRegId) {
-		this.newRegId = newRegId;
+	public void setDateRange(int dateRange) {
+		this.dateRange = dateRange;
+	}
+
+	public String getAnalysisNumber() {
+		return analysisNumber;
+	}
+
+	public void setAnalysisNumber(String analysisNumber) {
+		this.analysisNumber = analysisNumber;
 	}
 
 }
