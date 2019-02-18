@@ -1,22 +1,17 @@
 package th.go.excise.ims.ia.persistence.repository.jdbc;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.usermodel.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
@@ -100,9 +95,30 @@ public class Int030102JdbcRepository {
 			StringBuilder sql = new StringBuilder(" UPDATE IA_RISK_FACTORS_MASTER SET STATUS = ? WHERE ID = ?");
 			String status = ("N".equals(form.getStatus())?"Y":"N");			
 			commonJdbcTemplate.update(sql.toString(),new Object[] {status,form.getId()});
-			
-		
 		}
-	 
+		
+		public List<IaRiskFactorsMaster> listSaveFactors(Int030102FormVo form){
+			List<IaRiskFactorsMaster> iaRiskFactorsMasterList = new ArrayList<IaRiskFactorsMaster>();
+			StringBuilder sql = new StringBuilder(" SELECT * FROM IA_RISK_FACTORS_MASTER WHERE IS_DELETED = 'N' AND STATUS = 'Y' AND INSPECTION_WORK = ? AND BUDGET_YEAR = ? ");		
+			iaRiskFactorsMasterList = commonJdbcTemplate.query(sql.toString(),new Object[] {form.getInspectionWork(),form.getBudgetYear()}, listRowmapperSave);
+			
+			return iaRiskFactorsMasterList;
+		}
+		
+		private RowMapper<IaRiskFactorsMaster> listRowmapperSave = new RowMapper<IaRiskFactorsMaster>() {
+		       @Override
+		       public IaRiskFactorsMaster mapRow(ResultSet rs, int arg1) throws SQLException {
+		    	   IaRiskFactorsMaster  vo = new IaRiskFactorsMaster();
+
+		    		vo.setRiskFactorsMaster(rs.getString("RISK_FACTORS_MASTER"));
+		    		vo.setBudgetYear(rs.getString("BUDGET_YEAR"));
+//		    		vo.setStatus(rs.getString("STATUS"));
+		    		
+		    		vo.setInspectionWork(rs.getBigDecimal("INSPECTION_WORK"));
+
+		        return vo;
+		       }
+
+		  };
 }
 

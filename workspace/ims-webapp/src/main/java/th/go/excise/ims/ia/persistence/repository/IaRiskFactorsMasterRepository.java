@@ -7,6 +7,6 @@ import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
 
 public interface IaRiskFactorsMasterRepository extends CommonJpaCrudRepository<IaRiskFactorsMaster, BigDecimal>
 {
-
+	
 
 }

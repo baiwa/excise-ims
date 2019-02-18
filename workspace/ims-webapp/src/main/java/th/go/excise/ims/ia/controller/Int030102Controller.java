@@ -58,12 +58,12 @@ public class Int030102Controller {
 		try {
 			int030102Service.delete(form);
 			response.setData(id);
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 
 		} catch (Exception e) {
 			logger.error("Int030102Controller Delete : ", e);
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.FAILED);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -84,6 +84,26 @@ public class Int030102Controller {
 		} catch (Exception e) {
 			logger.error("Int030102Controller Delete : ", e);
 			response.setMessage("ERROR");
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	@PostMapping("/save")
+	@ResponseBody
+	public ResponseData<String> save(@RequestBody Int030102FormVo form) {
+		ResponseData<String> response = new ResponseData<String>();
+		String save = "บันทึกเรียบร้อบ";
+
+		try {
+			int030102Service.save(form);
+			response.setData(save);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+
+		} catch (Exception e) {
+			logger.error("Int030102Controller Delete : ", e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
