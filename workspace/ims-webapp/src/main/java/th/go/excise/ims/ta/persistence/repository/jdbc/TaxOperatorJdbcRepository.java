@@ -23,22 +23,32 @@ public class TaxOperatorJdbcRepository {
     public List<TaxOperatorVoList> getTaxOperator(String analysisNumber) {
 
         StringBuilder sql = new StringBuilder();
-        sql.append(" SELECT  ");
-        sql.append("     R4000.CUS_FULLNAME, ");
-        sql.append("     R4000.FAC_FULLNAME, ");
-        sql.append("     R4000.FAC_ADDRESS, ");
-        sql.append("     R4000.OFFICE_CODE, ");
-        sql.append("      SEC.SECTOR_NAME2, ");
-        sql.append("     EXC_AR.AREA_SHOT_NAME, ");
-        sql.append("     TA_W_HDR.*  ");
-        sql.append(" FROM TA_WORKSHEET_HDR TA_W_HDR  ");
-        sql.append("   INNER JOIN TA_WS_REG4000 R4000 ");
-        sql.append("     ON R4000.NEW_REG_ID=TA_W_HDR.NEW_REG_ID ");
-        sql.append("   INNER JOIN EXCISE_AREA EXC_AR ");
-        sql.append("     ON R4000.OFFICE_CODE=EXC_AR.OFFICE_CODE ");
-        sql.append("   INNER JOIN EXCISE_SECTOR SEC ");
-        sql.append("     ON SEC.SECTOR_ID=EXC_AR.SECTOR_ID ");
-        sql.append("     WHERE ANALYSIS_NUMBER= ?");
+        sql.append(" SELECT ");
+        sql.append("   R4000.CUS_FULLNAME,");
+        sql.append("   R4000.FAC_FULLNAME,");
+        sql.append("   R4000.FAC_ADDRESS,");
+        sql.append("   R4000.OFFICE_CODE,");
+        sql.append("   ED_SECTOR.OFFICE_CODE SEC_CODE,");
+        sql.append("   ED_SECTOR.DEPT_SHORT_NAME SEC_DESC,");
+        sql.append("   ED_AREA.OFFICE_CODE AREA_CODE,");
+        sql.append("   ED_AREA.DEPT_SHORT_NAME AREA_DESC,");
+        sql.append("   TA_W_HDR.*");
+        sql.append(" FROM TA_WORKSHEET_HDR TA_W_HDR");
+        sql.append(" INNER JOIN TA_WS_REG4000 R4000 ON R4000.NEW_REG_ID = TA_W_HDR.NEW_REG_ID AND R4000.IS_DELETED = 'N'");
+        sql.append(" INNER JOIN (");
+        sql.append("   SELECT OFFICE_CODE, DEPT_NAME, DEPT_SHORT_NAME");
+        sql.append("   FROM EXCISE_DEPARTMENT");
+        sql.append("   WHERE IS_DELETED = 'N'");
+        sql.append("     AND CONCAT(SUBSTR(OFFICE_CODE, 0, 2),'0000') = OFFICE_CODE");
+        sql.append(" ) ED_SECTOR ON ED_SECTOR.OFFICE_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000')");
+        sql.append(" INNER JOIN (");
+        sql.append("   SELECT OFFICE_CODE, DEPT_NAME, DEPT_SHORT_NAME");
+        sql.append("   FROM EXCISE_DEPARTMENT");
+        sql.append("   WHERE IS_DELETED = 'N'");
+        sql.append("     AND CONCAT(SUBSTR(OFFICE_CODE, 0, 4),'00') = OFFICE_CODE");
+        sql.append(" ) ED_AREA ON ED_AREA.OFFICE_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 4),'00')");
+        sql.append(" WHERE TA_W_HDR.IS_DELETED = 'N'");
+        sql.append("   AND ANALYSIS_NUMBER = ?");
 
         return jdbcTemplate.query(sql.toString(), new Object[]{ analysisNumber }, taxOperatorrowMapper);
     }
@@ -53,8 +63,10 @@ public class TaxOperatorJdbcRepository {
             vo.setFacFullname(rs.getString("FAC_FULLNAME"));
             vo.setFacAddress(rs.getString("FAC_ADDRESS"));
             vo.setOfficeCode(rs.getString("OFFICE_CODE"));
-            vo.setSectorName2(rs.getString("SECTOR_NAME2"));
-            vo.setAreaShotName(rs.getString("AREA_SHOT_NAME"));
+            vo.setSecCode(rs.getString("SEC_CODE"));
+            vo.setSecDesc(rs.getString("SEC_DESC"));
+            vo.setAreaCode(rs.getString("AREA_CODE"));
+            vo.setAreaDesc(rs.getString("AREA_DESC"));
             vo.setWorksheetHdrId(rs.getString("WORKSHEET_HDR_ID"));
             vo.setAnalysisNumber(rs.getString("ANALYSIS_NUMBER"));
             vo.setNewRegId(rs.getString("NEW_REG_ID"));
@@ -94,16 +106,38 @@ public class TaxOperatorJdbcRepository {
     public List<String> listCondGroups(String analysisNumber) {
 
         StringBuilder sql = new StringBuilder();
-        sql.append(" SELECT  ");
-        sql.append("     DISTINCT TA_W_HDR.COND_TAX_GRP  ");
-        sql.append(" FROM TA_WORKSHEET_HDR TA_W_HDR  ");
-        sql.append("   INNER JOIN TA_WS_REG4000 R4000 ");
-        sql.append("     ON R4000.NEW_REG_ID=TA_W_HDR.NEW_REG_ID ");
-        sql.append("   INNER JOIN EXCISE_AREA EXC_AR ");
-        sql.append("     ON R4000.OFFICE_CODE=EXC_AR.OFFICE_CODE ");
-        sql.append("   INNER JOIN EXCISE_SECTOR SEC ");
-        sql.append("     ON SEC.SECTOR_ID=EXC_AR.SECTOR_ID ");
-        sql.append("     WHERE ANALYSIS_NUMBER=? ORDER BY TA_W_HDR.COND_TAX_GRP ASC");
+        sql.append(" SELECT DISTINCT COND_TAX_GRP FROM ( ");
+        sql.append("  SELECT R4000.CUS_FULLNAME, ");
+        sql.append("         R4000.FAC_FULLNAME, ");
+        sql.append("         R4000.FAC_ADDRESS, ");
+        sql.append("         R4000.OFFICE_CODE, ");
+        sql.append("         AREA.SEC_CODE, ");
+        sql.append("         AREA.SEC_DESC, ");
+        sql.append("         AREA.AREA_CODE, ");
+        sql.append("         AREA.AREA_DESC, ");
+        sql.append("         TA_W_HDR.* ");
+        sql.append("         FROM TA_WORKSHEET_HDR TA_W_HDR ");
+        sql.append("         INNER JOIN TA_WS_REG4000 R4000 ");
+        sql.append("         ON R4000.NEW_REG_ID=TA_W_HDR.NEW_REG_ID ");
+        sql.append("         INNER JOIN EXCISE_DEPARTMENT EXC_AR ");
+        sql.append("         ON R4000.OFFICE_CODE=EXC_AR.OFFICE_CODE ");
+        sql.append("         INNER JOIN ( ");
+        sql.append("         SELECT DISTINCT ");
+        sql.append("         CONCAT(SUBSTR(T1.OFFICE_CODE,0,2),'0000') SEC_CODE, ");
+        sql.append("         T2.DEPT_SHORT_NAME SEC_DESC, ");
+        sql.append("         CONCAT(SUBSTR(T1.OFFICE_CODE,0,4),'00') AREA_CODE, ");
+        sql.append("         T3.DEPT_SHORT_NAME AREA_DESC ");
+        sql.append("         FROM EXCISE_DEPARTMENT T1 ");
+        sql.append("         INNER JOIN EXCISE_DEPARTMENT  T2 ");
+        sql.append("         ON T2.OFFICE_CODE=CONCAT(SUBSTR(T1.OFFICE_CODE,0,2),'0000') ");
+        sql.append("         INNER JOIN EXCISE_DEPARTMENT T3 ");
+        sql.append("         ON T3.OFFICE_CODE = CONCAT(SUBSTR(T1.OFFICE_CODE,0,4),'00') ");
+        sql.append("         ) AREA ");
+        sql.append("         ON AREA.AREA_CODE=CONCAT(SUBSTR(EXC_AR.OFFICE_CODE,0,4),'00') ");
+        sql.append("  ");
+        sql.append("  ");
+        sql.append("         WHERE TA_W_HDR.ANALYSIS_NUMBER= ? ");
+        sql.append(" ) ORDER BY COND_TAX_GRP ASC ");
 
         return jdbcTemplate.queryForList(sql.toString(), new Object[]{ analysisNumber }, String.class);
     }

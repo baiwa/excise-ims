@@ -30,6 +30,7 @@ public class TaxOperatorService {
     private TaWorksheetCondDtlTaxJdbcRepository taWorksheetCondDtlTaxJdbcRepository;
 
     public TaxOperatorVo getOperator(TaxOperatorFormVo formVo) throws BusinessException {
+        //formVo.setAnalysisNumber("20190214173112");
         List<String> listCondGroups = this.taxOperatorRepository.listCondGroups(formVo.getAnalysisNumber());
         List<TaxOperatorVoList> list = this.taxOperatorRepository.getTaxOperator(formVo.getAnalysisNumber());
 

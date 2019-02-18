@@ -72,8 +72,8 @@ public class TaxOperatorController {
             response.setStatus(RESPONSE_STATUS.FAILED);
         }
         return response;
-    }
 
+}
     @PostMapping("/get-month-start")
     @ResponseBody
     public ResponseData<YearMonthVo> getMonthStart(@RequestBody TaxOperatorFormVo formVo) {
