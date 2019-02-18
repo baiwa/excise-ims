@@ -1,5 +1,6 @@
 package th.go.excise.ims.ia.persistence.repository.jdbc;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,5 +47,17 @@ public class IaQuestionnaireHdrJdbcRepository {
 		List<IaQuestionnaireHdr> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper(IaQuestionnaireHdr.class));
 
 		return datas;
+	}
+	
+	public IaQuestionnaireHdr findOne(BigDecimal id) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT * FROM IA_QUESTIONNAIRE_HDR WHERE IS_DELETED='N' ");
+		sql.append(" AND ID=? ");
+		params.add(id);
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		IaQuestionnaireHdr data = (IaQuestionnaireHdr) commonJdbcTemplate.queryForObject(sql.toString(), params.toArray(), new BeanPropertyRowMapper(IaQuestionnaireHdr.class));
+
+		return data;
 	}
 }

@@ -8,7 +8,6 @@ public class Int02Vo extends BaseEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = -3503222137383083315L;
-	
 	private String budgetYear;
 	private String startDate;
 	private String endDate;
@@ -35,6 +34,4 @@ public class Int02Vo extends BaseEntity {
 		return serialVersionUID;
 	}
 	
-
-
 }

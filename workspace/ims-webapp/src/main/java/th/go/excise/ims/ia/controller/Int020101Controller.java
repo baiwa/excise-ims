@@ -5,17 +5,19 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
 import th.go.excise.ims.ia.service.Int020101Service;
-import th.go.excise.ims.ia.vo.Int020101FormVo;
 import th.go.excise.ims.ia.vo.Int020101Vo;
 
 @Controller
@@ -63,9 +65,42 @@ public class Int020101Controller {
 	
 	@PostMapping("/save")
 	@ResponseBody
-	public ResponseData<?> save(@RequestBody Int020101FormVo request) {
-		ResponseData<?> responseData = new ResponseData<>();
+	public ResponseData<IaQuestionnaireSide> save(@RequestBody IaQuestionnaireSide request) {
+		ResponseData<IaQuestionnaireSide> responseData = new ResponseData<IaQuestionnaireSide>();
 		try {
+			responseData.setData(int020101Service.save(request));
+			responseData.setMessage("SUCCESS");
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			// e.printStackTrace();
+			responseData.setMessage("ERROR");
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
+	@PutMapping("/update/{id}")
+	@ResponseBody
+	public ResponseData<IaQuestionnaireSide> save(@PathVariable("id") String idStr, @RequestBody IaQuestionnaireSide request) {
+		ResponseData<IaQuestionnaireSide> responseData = new ResponseData<IaQuestionnaireSide>();
+		try {
+			responseData.setData(int020101Service.update(idStr, request));
+			responseData.setMessage("SUCCESS");
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			// e.printStackTrace();
+			responseData.setMessage("ERROR");
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
+	@DeleteMapping("/delete/{id}")
+	@ResponseBody
+	public ResponseData<IaQuestionnaireSide> delete(@PathVariable("id") String idStr) {
+		ResponseData<IaQuestionnaireSide> responseData = new ResponseData<IaQuestionnaireSide>();
+		try {
+			responseData.setData(int020101Service.delete(idStr));
 			responseData.setMessage("SUCCESS");
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
