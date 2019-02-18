@@ -25,3 +25,4 @@ public class ProjectConstant {
     public static final String SHORT_DATETIME_FORMAT = "dd/MM/yyyy HH:mm";
 
 }
+
