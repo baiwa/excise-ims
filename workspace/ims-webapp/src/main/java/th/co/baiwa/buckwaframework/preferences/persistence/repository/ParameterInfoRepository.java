@@ -11,7 +11,7 @@ import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo;
 
 public interface ParameterInfoRepository extends CommonJpaPagingAndSortingRepository<ParameterInfo, Long> {
 	
-	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.paramGroupId = :paramGroupId")
-	public List<ParameterInfo> findByParamGroupId(@Param("paramGroupId") Long paramGroupId);
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.paramGroupCode = :paramGroupCode")
+	public List<ParameterInfo> findByParamGroupCode(@Param("paramGroupCode") String paramGroupCode);
 	
 }

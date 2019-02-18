@@ -4,7 +4,7 @@ public interface ParamInfo {
 
 	public Long getParamInfoId();
 
-	public Long getParamGroupId();
+	public String getParamGroupCode();
 
 	public String getParamCode();
 

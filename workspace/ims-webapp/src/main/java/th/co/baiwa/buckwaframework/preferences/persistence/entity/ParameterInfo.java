@@ -21,8 +21,8 @@ public class ParameterInfo extends BaseEntity implements ParamInfo {
 	@Column(name = "PARAM_INFO_ID")
 	private Long paramInfoId;
 
-	@Column(name = "PARAM_GROUP_ID")
-	private Long paramGroupId;
+	@Column(name = "PARAM_GROUP_CODE")
+	private String paramGroupCode;
 
 	@Column(name = "PARAM_CODE")
 	private String paramCode;
@@ -59,12 +59,12 @@ public class ParameterInfo extends BaseEntity implements ParamInfo {
 		this.paramInfoId = paramInfoId;
 	}
 
-	public Long getParamGroupId() {
-		return paramGroupId;
+	public String getParamGroupCode() {
+		return paramGroupCode;
 	}
 
-	public void setParamGroupId(Long paramGroupId) {
-		this.paramGroupId = paramGroupId;
+	public void setParamGroupCode(String paramGroupCode) {
+		this.paramGroupCode = paramGroupCode;
 	}
 
 	public String getParamCode() {

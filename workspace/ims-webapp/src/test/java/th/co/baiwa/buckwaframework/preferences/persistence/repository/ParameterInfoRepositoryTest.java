@@ -43,7 +43,7 @@ public class ParameterInfoRepositoryTest {
 	@Test
 	public void test_findByParamGroupId() {
 		System.out.println("- - - - - findByParamGroupId - - - - -");
-		List<ParameterInfo> paramInfoList = parameterInfoRepository.findByParamGroupId(2L);
+		List<ParameterInfo> paramInfoList = parameterInfoRepository.findByParamGroupCode("SYSTEM_CONFIG");
 		System.out.println(paramInfoList);
 		Assert.assertNotEquals(0, paramInfoList.size());
 	}
@@ -52,7 +52,7 @@ public class ParameterInfoRepositoryTest {
 	public void test_save_new() {
 		System.out.println("- - - - - save_new - - - - -");
 		ParameterInfo paramInfo = new ParameterInfo();
-		paramInfo.setParamGroupId(2L);
+		paramInfo.setParamGroupCode("Test Group");
 		paramInfo.setParamCode("TEST2");
 		paramInfo.setValue1("v1");
 		paramInfo.setValue2("v2");
