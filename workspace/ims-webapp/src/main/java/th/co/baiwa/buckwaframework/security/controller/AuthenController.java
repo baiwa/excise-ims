@@ -1,5 +1,9 @@
 package th.co.baiwa.buckwaframework.security.controller;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
@@ -7,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +26,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.DocumentConstants.MODULE_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.URL;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 
 @Controller
 public class AuthenController {
@@ -76,10 +82,31 @@ public class AuthenController {
 		value = "Checking Login?"
 	)
 	@ResponseBody
-	public ResponseData<String> onloginsuccess() {
+	public ResponseData<String> onLoginSuccess() {
 		ResponseData<String> respData = new ResponseData<>();
 		respData.setStatus(RESPONSE_STATUS.SUCCESS);
 		respData.setMessage("Yeah!!");
+		return respData;
+	}
+	
+	@PostMapping("/api/security/authority-list")
+	@ApiOperation(
+		tags = MODULE_NAME.AUTHENTICATION,
+		value = "Get Authority List"
+	)
+	@ResponseBody
+	public ResponseData<List<String>> getGrantedAuthorityList() {
+		Collection<GrantedAuthority> grantedAuthorityList = UserLoginUtils.getCurrentUserBean().getAuthorities();
+		
+		List<String> authorityList = new ArrayList<>();
+		for (GrantedAuthority grantedAuthority : grantedAuthorityList) {
+			authorityList.add(grantedAuthority.getAuthority());
+		}
+		
+		ResponseData<List<String>> respData = new ResponseData<>();
+		respData.setData(authorityList);
+		respData.setStatus(RESPONSE_STATUS.SUCCESS);
+		
 		return respData;
 	}
 	
