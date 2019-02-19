@@ -1,8 +1,8 @@
-package th.co.baiwa.buckwaframework.preferences.domain;
+package th.co.baiwa.buckwaframework.preferences.vo;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 
-public class MessageCriteria extends DataTableRequest {
+public class MessageCriteriaVo extends DataTableRequest {
 
 	private String messageCode;
 	private String messageEn;

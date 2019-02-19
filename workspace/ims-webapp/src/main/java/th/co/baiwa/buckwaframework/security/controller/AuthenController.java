@@ -1,4 +1,4 @@
-package th.co.baiwa.buckwaframework.security.web.controller;
+package th.co.baiwa.buckwaframework.security.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import io.swagger.annotations.ApiOperation;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.DocumentConstants.MODULE_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.URL;
 
@@ -69,6 +71,10 @@ public class AuthenController {
 	}
 	
 	@PostMapping("/api/security/on-login-success")
+	@ApiOperation(
+		tags = MODULE_NAME.AUTHENTICATION,
+		value = "Checking Login?"
+	)
 	@ResponseBody
 	public ResponseData<String> onloginsuccess() {
 		ResponseData<String> respData = new ResponseData<>();

@@ -1,4 +1,4 @@
-package th.co.baiwa.buckwaframework.preferences.rest.controller;
+package th.co.baiwa.buckwaframework.preferences.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,14 +23,14 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 
 @RestController
 @RequestMapping("/api/preferences/reload-cache")
-public class PreferencesRestController {
+public class PreferencesController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(PreferencesRestController.class);
+	private static final Logger logger = LoggerFactory.getLogger(PreferencesController.class);
 	
 	private final ApplicationCache applicationCache;
 	
 	@Autowired
-	public PreferencesRestController(ApplicationCache applicationCache) {
+	public PreferencesController(ApplicationCache applicationCache) {
 		this.applicationCache = applicationCache;
 	}
 	

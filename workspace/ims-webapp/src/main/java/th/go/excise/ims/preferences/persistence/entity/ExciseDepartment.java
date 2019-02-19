@@ -9,11 +9,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
-import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 
 @Entity
 @Table(name = "EXCISE_DEPARTMENT")
-public class ExciseDepartment extends BaseEntity implements ExciseDept {
+public class ExciseDepartment extends BaseEntity {
 
 	private static final long serialVersionUID = 7708307533948442803L;
 

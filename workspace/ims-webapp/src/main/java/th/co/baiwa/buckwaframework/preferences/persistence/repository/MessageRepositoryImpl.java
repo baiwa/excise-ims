@@ -15,8 +15,8 @@ import org.springframework.jdbc.core.RowMapper;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.MySqlUtils;
-import th.co.baiwa.buckwaframework.preferences.domain.MessageCriteria;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
+import th.co.baiwa.buckwaframework.preferences.vo.MessageCriteriaVo;
 
 public class MessageRepositoryImpl implements MessageRepositoryCustom {
 	
@@ -29,7 +29,7 @@ public class MessageRepositoryImpl implements MessageRepositoryCustom {
 		this.commonJdbcTemplate = commonJdbcTemplate;
 	}
 	
-	private void buildSearchQuery(StringBuilder sql, List<Object> params, MessageCriteria criteria) {
+	private void buildSearchQuery(StringBuilder sql, List<Object> params, MessageCriteriaVo criteria) {
 		sql.append(" SELECT message_id, message_code, message_en, message_th, message_type ");
 		sql.append(" FROM sys_message ");
 		sql.append(" WHERE is_deleted = ? ");
@@ -58,7 +58,7 @@ public class MessageRepositoryImpl implements MessageRepositoryCustom {
 	}
 	
 	@Override
-	public Integer countByCriteria(MessageCriteria criteria) {
+	public Integer countByCriteria(MessageCriteriaVo criteria) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		buildSearchQuery(sql, params, criteria);
@@ -71,7 +71,7 @@ public class MessageRepositoryImpl implements MessageRepositoryCustom {
 	}
 	
 	@Override
-	public List<Message> findByCriteria(MessageCriteria criteria, Pageable pageable) {
+	public List<Message> findByCriteria(MessageCriteriaVo criteria, Pageable pageable) {
 		logger.debug("findByCriteria message.messageCode={}, message.messageEn={}, message.messageTh={}, message.messageType={}, pageable={}",
 			criteria.getMessageCode(), criteria.getMessageEn(), criteria.getMessageTh(), criteria.getMessageType(), pageable);
 		

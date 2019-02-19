@@ -1,7 +1,4 @@
-
 package th.go.excise.ims.preferences.persistence.entity;
-
-import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,10 +14,9 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 @Table(name = "EXCISE_DISTRICT")
 public class ExciseDistrict extends BaseEntity {
 
-	
 	private static final long serialVersionUID = -3842361723874645749L;
-	public static class Field {
 
+	public static class Field {
 		public static final String DISTRICT_ID = "DISTRICT_ID";
 		public static final String GEO_ID = "GEO_ID";
 		public static final String PROVINCE_ID = "PROVINCE_ID";
@@ -28,50 +24,50 @@ public class ExciseDistrict extends BaseEntity {
 		public static final String DISTRICT_CODE = "DISTRICT_CODE";
 		public static final String DISTRICT_NAME = "DISTRICT_NAME";
 	}
-	
+
 	@Id
 	@Column(name = "DISTRICT_ID")
-	private BigDecimal districtId;
+	private Long districtId;
 	@Column(name = "PROVINCE_ID")
-	private BigDecimal provinceId;
+	private Long provinceId;
 	@Column(name = "GEO_ID")
-	private BigDecimal geoId;
+	private Long geoId;
 	@Column(name = "AMPHUR_ID")
-	private BigDecimal amphurId;
+	private Long amphurId;
 	@Column(name = "DISTRICT_CODE")
 	private String districtCode;
 	@Column(name = "DISTRICT_NAME")
 	private String districtName;
 
-	public BigDecimal getDistrictId() {
+	public Long getDistrictId() {
 		return districtId;
 	}
 
-	public void setDistrictId(BigDecimal districtId) {
+	public void setDistrictId(Long districtId) {
 		this.districtId = districtId;
 	}
 
-	public BigDecimal getProvinceId() {
+	public Long getProvinceId() {
 		return provinceId;
 	}
 
-	public void setProvinceId(BigDecimal provinceId) {
+	public void setProvinceId(Long provinceId) {
 		this.provinceId = provinceId;
 	}
 
-	public BigDecimal getGeoId() {
+	public Long getGeoId() {
 		return geoId;
 	}
 
-	public void setGeoId(BigDecimal geoId) {
+	public void setGeoId(Long geoId) {
 		this.geoId = geoId;
 	}
 
-	public BigDecimal getAmphurId() {
+	public Long getAmphurId() {
 		return amphurId;
 	}
 
-	public void setAmphurId(BigDecimal amphurId) {
+	public void setAmphurId(Long amphurId) {
 		this.amphurId = amphurId;
 	}
 

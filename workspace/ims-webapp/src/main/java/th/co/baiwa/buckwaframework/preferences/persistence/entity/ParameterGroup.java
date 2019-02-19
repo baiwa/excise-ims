@@ -8,11 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
-import th.co.baiwa.buckwaframework.support.domain.ParamGroup;
 
 @Entity
 @Table(name = "SYS_PARAMETER_GROUP")
-public class ParameterGroup extends BaseEntity implements ParamGroup {
+public class ParameterGroup extends BaseEntity {
 
 	private static final long serialVersionUID = 6435965186481199454L;
 

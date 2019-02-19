@@ -1,56 +1,19 @@
-package th.co.baiwa.buckwaframework.preferences.persistence.entity;
+package th.co.baiwa.buckwaframework.preferences.vo;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+public class ParameterInfoVo implements ParamInfo {
 
-import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
-
-@Entity
-@Table(name = "SYS_PARAMETER_INFO")
-public class ParameterInfo extends BaseEntity {
-
-	private static final long serialVersionUID = 5841123178056803593L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "PARAM_INFO_ID")
 	private Long paramInfoId;
-
-	@Column(name = "PARAM_GROUP_CODE")
 	private String paramGroupCode;
-
-	@Column(name = "PARAM_CODE")
 	private String paramCode;
-
-	@Column(name = "VALUE_1")
 	private String value1;
-
-	@Column(name = "VALUE_2")
 	private String value2;
-
-	@Column(name = "VALUE_3")
 	private String value3;
-
-	@Column(name = "VALUE_4")
 	private String value4;
-
-	@Column(name = "VALUE_5")
 	private String value5;
-
-	@Column(name = "VALUE_6")
 	private String value6;
-
-	@Column(name = "SORTING_ORDER")
 	private Integer sortingOrder;
-
-	@Column(name = "IS_DEFAULT")
 	private String isDefault;
 
 	public Long getParamInfoId() {
@@ -141,9 +104,4 @@ public class ParameterInfo extends BaseEntity {
 		this.isDefault = isDefault;
 	}
 
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-	}
-	
 }

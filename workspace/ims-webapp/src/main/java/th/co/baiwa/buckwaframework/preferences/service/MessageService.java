@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.DataTablesPageRequest;
-import th.co.baiwa.buckwaframework.preferences.domain.MessageCriteria;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.MessageRepository;
+import th.co.baiwa.buckwaframework.preferences.vo.MessageCriteriaVo;
 
 @Service
 public class MessageService {
@@ -28,7 +28,7 @@ public class MessageService {
 		this.messageRepository = messageRepository;
 	}
 	
-	public DataTableAjax<Message> searchByCriteria(MessageCriteria criteria) {
+	public DataTableAjax<Message> searchByCriteria(MessageCriteriaVo criteria) {
 		logger.info("searchByCriteria criteria={}", ToStringBuilder.reflectionToString(criteria, ToStringStyle.JSON_STYLE));
 		
 		Pageable pageable = new DataTablesPageRequest(criteria.getStart(), 10);

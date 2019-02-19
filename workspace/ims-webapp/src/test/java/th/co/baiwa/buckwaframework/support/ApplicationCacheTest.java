@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.co.baiwa.buckwaframework.preferences.constant.MessageConstants.MESSAGE_LANG;
-import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
+import th.co.baiwa.buckwaframework.support.domain.Message;
 import th.co.baiwa.buckwaframework.support.domain.ParamGroup;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 

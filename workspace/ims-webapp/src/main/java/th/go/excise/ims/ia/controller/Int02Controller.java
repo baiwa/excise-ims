@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
-import th.co.baiwa.buckwaframework.preferences.rest.controller.MessageRestController;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.service.Int02Service;
 import th.go.excise.ims.ia.vo.Int02FormVo;
@@ -27,7 +26,7 @@ import th.go.excise.ims.ia.vo.Int02Vo;
 @Controller
 @RequestMapping("/api/ia/int02")
 public class Int02Controller {
-	private static final Logger logger = LoggerFactory.getLogger(MessageRestController.class);
+	private static final Logger logger = LoggerFactory.getLogger(Int02Controller.class);
 	
 	@Autowired
 	private Int02Service int02Service;

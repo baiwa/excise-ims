@@ -1,7 +1,4 @@
-
 package th.go.excise.ims.preferences.persistence.entity;
-
-import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,41 +14,38 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 @Table(name = "EXCISE_PROVICE")
 public class ExciseProvice extends BaseEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3875429400246075553L;
-	
-	public static class Field {
 
+	public static class Field {
 		public static final String PROVINCE_ID = "PROVINCE_ID";
 		public static final String GEO_ID = "GEO_ID";
 		public static final String PROVINCE_CODE = "PROVINCE_CODE";
 		public static final String PROVINCE_NAME = "PROVINCE_NAME";
 	}
+
 	@Id
 	@Column(name = "PROVINCE_ID")
-	private BigDecimal provinceId;
+	private Long provinceId;
 	@Column(name = "GEO_ID")
-	private BigDecimal geoId;
+	private Long geoId;
 	@Column(name = "PROVINCE_CODE")
 	private String provinceCode;
 	@Column(name = "PROVINCE_NAME")
 	private String provinceName;
 
-	public BigDecimal getProvinceId() {
+	public Long getProvinceId() {
 		return provinceId;
 	}
 
-	public void setProvinceId(BigDecimal provinceId) {
+	public void setProvinceId(Long provinceId) {
 		this.provinceId = provinceId;
 	}
 
-	public BigDecimal getGeoId() {
+	public Long getGeoId() {
 		return geoId;
 	}
 
-	public void setGeoId(BigDecimal geoId) {
+	public void setGeoId(Long geoId) {
 		this.geoId = geoId;
 	}
 

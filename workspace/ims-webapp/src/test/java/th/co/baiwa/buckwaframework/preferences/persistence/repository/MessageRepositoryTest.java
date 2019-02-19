@@ -18,8 +18,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import th.co.baiwa.buckwaframework.common.bean.DataTablesPageRequest;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.co.baiwa.buckwaframework.preferences.constant.MessageConstants.MESSAGE_TYPE;
-import th.co.baiwa.buckwaframework.preferences.domain.MessageCriteria;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
+import th.co.baiwa.buckwaframework.preferences.vo.MessageCriteriaVo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -49,7 +49,7 @@ public class MessageRepositoryTest {
 	public void test_findByCriteria() {
 		System.out.println("- - - - - findByCriteria - - - - -");
 		
-		MessageCriteria message = new MessageCriteria();
+		MessageCriteriaVo message = new MessageCriteriaVo();
 		Pageable pageable = new DataTablesPageRequest(0, 2);
 		
 		List<Message> messageList = messageRepository.findByCriteria(message, pageable);
