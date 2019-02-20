@@ -17,7 +17,11 @@ public class IaQuestionnaireSideDtl
     extends BaseEntity
 {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8834285629175187031L;
+	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_QUESTIONNAIRE_SIDE_DTL_GEN")
     @SequenceGenerator(name = "IA_QUESTIONNAIRE_SIDE_DTL_GEN", sequenceName = "IA_QUESTIONNAIRE_SIDE_DTL_SEQ", allocationSize = 1)
     @Column(name = "ID")

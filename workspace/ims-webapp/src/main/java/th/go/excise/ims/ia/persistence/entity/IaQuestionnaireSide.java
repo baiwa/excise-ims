@@ -15,6 +15,11 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 @Table(name = "IA_QUESTIONNAIRE_SIDE")
 public class IaQuestionnaireSide extends BaseEntity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6327506371102352994L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_QUESTIONNAIRE_SIDE_GEN")
 	@SequenceGenerator(name = "IA_QUESTIONNAIRE_SIDE_GEN", sequenceName = "IA_QUESTIONNAIRE_SIDE_SEQ", allocationSize = 1)
