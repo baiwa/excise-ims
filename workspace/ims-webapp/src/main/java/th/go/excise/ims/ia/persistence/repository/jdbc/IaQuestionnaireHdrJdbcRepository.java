@@ -33,8 +33,8 @@ public class IaQuestionnaireHdrJdbcRepository {
 		}
 		
 		if(StringUtils.isNotBlank(request.getCreatedBy())) {
-			sql.append(" AND CREATED_BY = ? ");
-			params.add(request.getCreatedBy());
+			sql.append(" AND CREATED_BY LIKE ?");
+			params.add(request.getCreatedBy() + "%");
 		}
 		
 		if(StringUtils.isNotBlank(request.getStartDate()) && StringUtils.isNotBlank(request.getEndDate())) {
@@ -65,8 +65,8 @@ public class IaQuestionnaireHdrJdbcRepository {
 		}
 		
 		if(StringUtils.isNotBlank(request.getCreatedBy())) {
-			sql.append(" AND CREATED_BY = ? ");
-			params.add(request.getCreatedBy());
+			sql.append(" AND CREATED_BY LIKE ? ");
+			params.add(request.getCreatedBy() + "%");
 		}
 		
 		if(StringUtils.isNotBlank(request.getStartDate()) && StringUtils.isNotBlank(request.getEndDate())) {
