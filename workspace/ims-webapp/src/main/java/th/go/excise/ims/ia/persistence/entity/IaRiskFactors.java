@@ -16,6 +16,8 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 @Table(name = "IA_RISK_FACTORS")
 public class IaRiskFactors extends BaseEntity {
 
+	private static final long serialVersionUID = 4555373160270977016L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_RISK_FACTORS_GEN")
 	@SequenceGenerator(name = "IA_RISK_FACTORS_GEN", sequenceName = "IA_RISK_FACTORS_SEQ", allocationSize = 1)
@@ -34,9 +36,6 @@ public class IaRiskFactors extends BaseEntity {
 	@Column(name = "INSPECTION_WORK")
 	private BigDecimal inspectionWork;
 
-	private String createdDateDesc;
-
-	private String updateDateDesc;
 
 	public BigDecimal getId() {
 		return id;
@@ -94,20 +93,5 @@ public class IaRiskFactors extends BaseEntity {
 		this.inspectionWork = inspectionWork;
 	}
 
-	public String getCreatedDateDesc() {
-		return createdDateDesc;
-	}
-
-	public void setCreatedDateDesc(String createdDateDesc) {
-		this.createdDateDesc = createdDateDesc;
-	}
-
-	public String getUpdateDateDesc() {
-		return updateDateDesc;
-	}
-
-	public void setUpdateDateDesc(String updateDateDesc) {
-		this.updateDateDesc = updateDateDesc;
-	}
 
 }

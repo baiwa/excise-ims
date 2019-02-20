@@ -67,14 +67,14 @@ public class Int0301JdbcRepository {
 			LocalDateTime createdDate = LocalDateTimeConverter.convertToEntityAttribute(rs .getTimestamp("CREATED_DATE"));
 			vo.setCreatedDate(createdDate);
 			
-			vo.setCreatedDateDesc(ConvertDateUtils.formatDateToString(rs .getDate("CREATED_DATE"), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			//vo.setCreatedDateDesc(ConvertDateUtils.formatDateToString(rs .getDate("CREATED_DATE"), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 			
 			vo.setUpdatedBy(rs .getString("UPDATED_BY"));
 			
 			LocalDateTime updatedDate = LocalDateTimeConverter.convertToEntityAttribute(rs .getTimestamp("UPDATED_DATE"));
 			vo.setUpdatedDate(updatedDate);
 			
-			vo.setUpdateDateDesc(ConvertDateUtils.formatDateToString(rs .getDate("UPDATED_DATE"), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			//vo.setUpdateDateDesc(ConvertDateUtils.formatDateToString(rs .getDate("UPDATED_DATE"), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 			
 			
 	
