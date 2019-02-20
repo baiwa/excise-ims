@@ -23,13 +23,12 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.Message;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.UserManagement;
-import th.co.baiwa.buckwaframework.preferences.rest.controller.MessageRestController;
 
 @RestController
 @RequestMapping("/api/preferences/userManagement")
 public class UserManagementRestController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(MessageRestController.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserManagementRestController.class);
 	
 	@Autowired
 	private UserManagementService userManagementService;
