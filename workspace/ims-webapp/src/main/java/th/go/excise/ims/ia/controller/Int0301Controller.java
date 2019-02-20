@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.service.Int0301Service;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
+import th.go.excise.ims.ia.vo.Int0301Vo;
 
 @Controller
 @RequestMapping("/api/ia/int03/01")
@@ -31,18 +32,14 @@ public class Int0301Controller {
 
 	@PostMapping("/list")
 	@ResponseBody
-	public ResponseData<List<IaRiskFactors>> list(@RequestBody Int0301FormVo form) {
-		ResponseData<List<IaRiskFactors>> response = new ResponseData<List<IaRiskFactors>>();
-		List<IaRiskFactors> iaRiskFactorsList = new ArrayList<IaRiskFactors>();
+	public DataTableAjax<Int0301Vo> list(@RequestBody Int0301FormVo form) {
+		DataTableAjax<Int0301Vo> response = new DataTableAjax<Int0301Vo>();
+		List<Int0301Vo> iaRiskFactorsList = new ArrayList<Int0301Vo>();
 		try {	
 			iaRiskFactorsList = Int0301Service.list(form);
 			response.setData(iaRiskFactorsList);
-			response.setMessage("SUCCESS");
-			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("Int0301Controller : " , e);
-			response.setMessage("ERROR");
-			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
 	}
@@ -64,5 +61,10 @@ public class Int0301Controller {
 		}
 		return response;
 	}
+	
+	
+	
+	
+	
 
 }
