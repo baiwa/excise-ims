@@ -26,8 +26,8 @@ public class IaQuestionnaireSideDtl
     private BigDecimal idSide;
     @Column(name = "SIDE_DTL")
     private String sideDtl;
-    @Column(name = "LEVEL")
-    private BigDecimal level;
+    @Column(name = "QTN_LEVEL")
+    private BigDecimal qtnLevel;
     @Column(name = "SEQ")
     private BigDecimal seq;
     @Column(name = "SEQ_DTL")
@@ -57,15 +57,15 @@ public class IaQuestionnaireSideDtl
         this.sideDtl = sideDtl;
     }
 
-    public BigDecimal getLevel() {
-        return level;
-    }
+    public BigDecimal getQtnLevel() {
+		return qtnLevel;
+	}
 
-    public void setLevel(BigDecimal level) {
-        this.level = level;
-    }
+	public void setQtnLevel(BigDecimal qtnLevel) {
+		this.qtnLevel = qtnLevel;
+	}
 
-    public BigDecimal getSeq() {
+	public BigDecimal getSeq() {
         return seq;
     }
 

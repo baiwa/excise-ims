@@ -1,16 +1,26 @@
 package th.go.excise.ims.ia.vo;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 public class Int02010101Vo extends BaseEntity {
 	private BigDecimal id;
 	private BigDecimal idSide;
-	private String sideName;
-	private BigDecimal level;
+	private String sideDtl;
+	private BigDecimal qtnLevel;
 	private BigDecimal seq;
 	private BigDecimal seqDtl;
+	private List<Int02010101Vo> children;
+
+	public List<Int02010101Vo> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Int02010101Vo> children) {
+		this.children = children;
+	}
 
 	public BigDecimal getId() {
 		return id;
@@ -28,20 +38,20 @@ public class Int02010101Vo extends BaseEntity {
 		this.idSide = idSide;
 	}
 
-	public String getSideName() {
-		return sideName;
+	public String getSideDtl() {
+		return sideDtl;
 	}
 
-	public void setSideName(String sideName) {
-		this.sideName = sideName;
+	public void setSideDtl(String sideDtl) {
+		this.sideDtl = sideDtl;
 	}
 
-	public BigDecimal getLevel() {
-		return level;
+	public BigDecimal getQtnLevel() {
+		return qtnLevel;
 	}
 
-	public void setLevel(BigDecimal level) {
-		this.level = level;
+	public void setQtnLevel(BigDecimal qtnLevel) {
+		this.qtnLevel = qtnLevel;
 	}
 
 	public BigDecimal getSeq() {
