@@ -33,13 +33,13 @@ public class Int02Controller {
 	public DataTableAjax<Int02Vo> filterQtnHdr(@RequestBody Int02FormVo request) {
 		logger.info("filter Datatable int02");
 
-		DataTableAjax<Int02Vo> list = new DataTableAjax<>();
+		DataTableAjax<Int02Vo> response = new DataTableAjax<>();
 		try {
-			list  = int02Service.filterQtnHdr(request);
+			response  = int02Service.filterQtnHdr(request);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return list;
+		return response;
 	}
 	
 	@GetMapping("/{id}")
