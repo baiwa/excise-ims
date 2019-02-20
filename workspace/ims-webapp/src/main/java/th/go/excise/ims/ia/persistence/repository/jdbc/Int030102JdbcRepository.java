@@ -17,108 +17,120 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
 import th.go.excise.ims.ia.vo.Int030102FormVo;
+import th.go.excise.ims.ia.vo.Int030102Vo;
 
 @Repository
 public class Int030102JdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
-	
+
 	private final String SQL_IA_RISK_FACTORS_MASTER = " SELECT * FROM IA_RISK_FACTORS_MASTER WHERE IS_DELETED = 'N' AND INSPECTION_WORK = ? ";
-	
-	public List<IaRiskFactorsMaster> list(Int030102FormVo form){
-		List<IaRiskFactorsMaster> iaRiskFactorsMasterList = new ArrayList<IaRiskFactorsMaster>();
+
+	public List<Int030102Vo> list(Int030102FormVo form) {
+		List<Int030102Vo> iaRiskFactorsMasterList = new ArrayList<Int030102Vo>();
 		StringBuilder sql = new StringBuilder(SQL_IA_RISK_FACTORS_MASTER);
 		List<Object> params = new ArrayList<Object>();
-		
+
 		params.add(form.getInspectionWork());
-		
-		if(StringUtils.isNotBlank(form.getBudgetYear())) {
+
+		if (StringUtils.isNotBlank(form.getBudgetYear())) {
 			sql.append(" AND BUDGET_YEAR = ? ");
 			params.add(form.getBudgetYear());
 		}
 		sql.append(" ORDER BY CREATED_DATE ASC ");
-		
-		iaRiskFactorsMasterList = commonJdbcTemplate.query(sql.toString(),params.toArray(), listRowmapper);
-		
-		return iaRiskFactorsMasterList;
-	
-	}
-	
-	
-	  private RowMapper<IaRiskFactorsMaster> listRowmapper = new RowMapper<IaRiskFactorsMaster>() {
-	       @Override
-	       public IaRiskFactorsMaster mapRow(ResultSet rs, int arg1) throws SQLException {
-	    	   IaRiskFactorsMaster  vo = new IaRiskFactorsMaster();
-	    	   
-	    		vo.setId(rs.getBigDecimal("ID"));
-	    		vo.setRiskFactorsMaster(rs.getString("RISK_FACTORS_MASTER"));
-	    		vo.setBudgetYear(rs.getString("BUDGET_YEAR"));
-	    		vo.setStatus(rs.getString("STATUS"));
-	    		
-	    		LocalDateTime createdDate = LocalDateTimeConverter.convertToEntityAttribute(rs.getTimestamp("CREATED_DATE"));
-	    		vo.setCreatedDate(createdDate);
-	    		vo.setCreatedBy(rs.getString("CREATED_BY"));
-	    		
-	    		String date = checkAndConvertDateToString(rs .getDate("CREATED_DATE"));
-	    		vo.setCreatedDateDesc(date); 
-	    		
-	    		LocalDateTime updatedDate = LocalDateTimeConverter.convertToEntityAttribute(rs.getTimestamp("UPDATED_DATE"));
-	    		vo.setUpdatedDate(updatedDate);
-	    		vo.setUpdatedBy(rs.getString("UPDATED_BY"));
-	    		
-	    		String date2 = checkAndConvertDateToString(rs .getDate("UPDATED_DATE"));
-	    		vo.setUpdateDateDesc(date2);
-	    	   
-	    		vo.setNotDelete(rs.getString("NOT_DELETE"));
-	        return vo;
-	       }
 
-	  };
-	  
-	  private String checkAndConvertDateToString(Date date) {
+		iaRiskFactorsMasterList = commonJdbcTemplate.query(sql.toString(), params.toArray(), listRowmapper);
+
+		return iaRiskFactorsMasterList;
+
+	}
+
+	private RowMapper<Int030102Vo> listRowmapper = new RowMapper<Int030102Vo>() {
+		@Override
+		public Int030102Vo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Int030102Vo vo = new Int030102Vo();
+			IaRiskFactorsMaster iarfm = new IaRiskFactorsMaster();
+			iarfm.setId(rs.getBigDecimal("ID"));
+
+			iarfm.setRiskFactorsMaster(rs.getString("RISK_FACTORS_MASTER"));
+			iarfm.setBudgetYear(rs.getString("BUDGET_YEAR"));
+			iarfm.setStatus(rs.getString("STATUS"));
+
+			LocalDateTime createdDate = LocalDateTimeConverter
+					.convertToEntityAttribute(rs.getTimestamp("CREATED_DATE"));
+			iarfm.setCreatedDate(createdDate);
+			iarfm.setCreatedBy(rs.getString("CREATED_BY"));
+
+			LocalDateTime updatedDate = LocalDateTimeConverter
+					.convertToEntityAttribute(rs.getTimestamp("UPDATED_DATE"));
+			iarfm.setUpdatedDate(updatedDate);
+			iarfm.setUpdatedBy(rs.getString("UPDATED_BY"));
+			iarfm.setNotDelete(rs.getString("NOT_DELETE"));
+
+			String date = checkAndConvertDateToString(rs.getDate("CREATED_DATE"));
+			vo.setCreatedDateDesc(date);
+
+			String date2 = checkAndConvertDateToString(rs.getDate("UPDATED_DATE"));
+			vo.setUpdateDateDesc(date2);
+
+			vo.setIaRiskFactorsMaster(iarfm);
+			return vo;
+		}
+
+	};
+
+	private String checkAndConvertDateToString(Date date) {
 		String dateSting = "";
-		if(date!= null) {
-			dateSting = ConvertDateUtils.formatDateToString(date, ConvertDateUtils.DD_MM_YYYY,ConvertDateUtils.LOCAL_TH);
+		if (date != null) {
+			dateSting = ConvertDateUtils.formatDateToString(date, ConvertDateUtils.DD_MM_YYYY,
+					ConvertDateUtils.LOCAL_TH);
 		}
 		return dateSting;
 	}
-	  
-		public void delete(Int030102FormVo form){
-			StringBuilder sql = new StringBuilder(" UPDATE IA_RISK_FACTORS_MASTER SET IS_DELETED = 'Y' WHERE ID = ? ");
-	
-			commonJdbcTemplate.update(sql.toString(),new Object[] {form.getId()});
-			
-		
-		}
-		
-		public void editStatus(Int030102FormVo form){
-			StringBuilder sql = new StringBuilder(" UPDATE IA_RISK_FACTORS_MASTER SET STATUS = ? WHERE ID = ?");
-			String status = ("N".equals(form.getStatus())?"Y":"N");			
-			commonJdbcTemplate.update(sql.toString(),new Object[] {status,form.getId()});
-		}
-		
-		public List<IaRiskFactorsMaster> listSaveFactors(Int030102FormVo form){
-			List<IaRiskFactorsMaster> iaRiskFactorsMasterList = new ArrayList<IaRiskFactorsMaster>();
-			StringBuilder sql = new StringBuilder(" SELECT * FROM IA_RISK_FACTORS_MASTER WHERE IS_DELETED = 'N' AND STATUS = 'Y' AND INSPECTION_WORK = ? AND BUDGET_YEAR = ? ");		
-			iaRiskFactorsMasterList = commonJdbcTemplate.query(sql.toString(),new Object[] {form.getInspectionWork(),form.getBudgetYear()}, listRowmapperSave);
-			
-			return iaRiskFactorsMasterList;
-		}
-		
-		private RowMapper<IaRiskFactorsMaster> listRowmapperSave = new RowMapper<IaRiskFactorsMaster>() {
-		       @Override
-		       public IaRiskFactorsMaster mapRow(ResultSet rs, int arg1) throws SQLException {
-		    	   IaRiskFactorsMaster  vo = new IaRiskFactorsMaster();
 
-		    		vo.setRiskFactorsMaster(rs.getString("RISK_FACTORS_MASTER"));
-		    		vo.setBudgetYear(rs.getString("BUDGET_YEAR"));
+	public void delete(Int030102FormVo form) {
+		StringBuilder sql = new StringBuilder(" UPDATE IA_RISK_FACTORS_MASTER SET IS_DELETED = 'Y' WHERE ID = ? ");
+
+		commonJdbcTemplate.update(sql.toString(), new Object[] { form.getId() });
+
+	}
+
+	public void editStatus(Int030102FormVo form) {
+		StringBuilder sql = new StringBuilder(" UPDATE IA_RISK_FACTORS_MASTER SET STATUS = ? WHERE ID = ?");
+		String status = ("N".equals(form.getStatus()) ? "Y" : "N");
+		commonJdbcTemplate.update(sql.toString(), new Object[] { status, form.getId() });
+	}
+
+	public List<IaRiskFactorsMaster> listSaveFactors(Int030102FormVo form) {
+		List<IaRiskFactorsMaster> iaRiskFactorsMasterList = new ArrayList<IaRiskFactorsMaster>();
+		StringBuilder sql = new StringBuilder(
+				" SELECT * FROM IA_RISK_FACTORS_MASTER WHERE IS_DELETED = 'N' AND STATUS = 'Y' AND INSPECTION_WORK = ? AND BUDGET_YEAR = ? ");
+		iaRiskFactorsMasterList = commonJdbcTemplate.query(sql.toString(),
+				new Object[] { form.getInspectionWork(), form.getBudgetYear() }, listRowmapperSave);
+
+		return iaRiskFactorsMasterList;
+	}
+
+	public void deleteOldFactors(Int030102FormVo form) {
+		StringBuilder sql = new StringBuilder(
+				" DELETE FROM IA_RISK_FACTORS WHERE BUDGET_YEAR = ? AND INSPECTION_WORK = ? ");
+		commonJdbcTemplate.update(sql.toString(), new Object[] { form.getBudgetYear(), form.getInspectionWork() });
+
+	}
+
+	private RowMapper<IaRiskFactorsMaster> listRowmapperSave = new RowMapper<IaRiskFactorsMaster>() {
+		@Override
+		public IaRiskFactorsMaster mapRow(ResultSet rs, int arg1) throws SQLException {
+			IaRiskFactorsMaster vo = new IaRiskFactorsMaster();
+
+			vo.setRiskFactorsMaster(rs.getString("RISK_FACTORS_MASTER"));
+			vo.setBudgetYear(rs.getString("BUDGET_YEAR"));
 //		    		vo.setStatus(rs.getString("STATUS"));
-		    		
-		    		vo.setInspectionWork(rs.getBigDecimal("INSPECTION_WORK"));
 
-		        return vo;
-		       }
+			vo.setInspectionWork(rs.getBigDecimal("INSPECTION_WORK"));
 
-		  };
+			return vo;
+		}
+
+	};
 }
-

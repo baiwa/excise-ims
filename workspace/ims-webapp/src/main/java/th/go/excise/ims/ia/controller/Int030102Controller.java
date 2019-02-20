@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
-import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
 import th.go.excise.ims.ia.service.Int030102Service;
 import th.go.excise.ims.ia.vo.Int030102FormVo;
+import th.go.excise.ims.ia.vo.Int030102Vo;
 
 @Controller
 @RequestMapping("/api/ia/int03/01/02")
@@ -31,20 +32,16 @@ public class Int030102Controller {
 
 	@PostMapping("/list")
 	@ResponseBody
-	public ResponseData<List<IaRiskFactorsMaster>> list(@RequestBody Int030102FormVo form) {
-		ResponseData<List<IaRiskFactorsMaster>> response = new ResponseData<List<IaRiskFactorsMaster>>();
-		List<IaRiskFactorsMaster> iaRiskFactorsMasterList = new ArrayList<IaRiskFactorsMaster>();
+	public DataTableAjax<Int030102Vo> list(@RequestBody Int030102FormVo form) {
+		DataTableAjax<Int030102Vo> response = new DataTableAjax<Int030102Vo>();
+		List<Int030102Vo> iaRiskFactorsMasterList = new ArrayList<Int030102Vo>();
 
 		try {
 			iaRiskFactorsMasterList = int030102Service.list(form);
 			response.setData(iaRiskFactorsMasterList);
-			response.setMessage("SUCCESS");
-			response.setStatus(RESPONSE_STATUS.SUCCESS);
 
 		} catch (Exception e) {
 			logger.error("Int030102Controller List : ", e);
-			response.setMessage("ERROR");
-			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
 	}
@@ -102,7 +99,7 @@ public class Int030102Controller {
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 
 		} catch (Exception e) {
-			logger.error("Int030102Controller Delete : ", e);
+			logger.error("Int030102Controller Save : ", e);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
