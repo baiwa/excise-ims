@@ -45,6 +45,24 @@ public class Int020101Controller {
 		return responseData;
 	}
 	
+	@GetMapping("/by/id/{id}")
+	@ResponseBody
+	public ResponseData<IaQuestionnaireSide> findById(@PathVariable("id") String idStr) {
+		ResponseData<IaQuestionnaireSide> responseData = new ResponseData<IaQuestionnaireSide>();
+		IaQuestionnaireSide data;
+		try {
+			data = int020101Service.findOne(idStr);
+			responseData.setData(data);
+			responseData.setMessage("SUCCESS");
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			// e.printStackTrace();
+			responseData.setMessage("ERROR");
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
 	@GetMapping("/by/head/{head}")
 	@ResponseBody
 	public ResponseData<List<Int020101Vo>> findByIdHead(@PathVariable("head") String idHead) {

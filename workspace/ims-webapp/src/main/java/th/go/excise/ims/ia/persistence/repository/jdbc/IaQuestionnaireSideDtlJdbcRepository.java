@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSideDtl;
 import th.go.excise.ims.ia.vo.Int02010101Vo;
 
 @Repository
@@ -23,6 +24,7 @@ public class IaQuestionnaireSideDtlJdbcRepository {
 		sqlBuilder.append(" SELECT * FROM  IA_QUESTIONNAIRE_SIDE_DTL WHERE 1=1 AND IS_DELETED = 'N' ");
 		sqlBuilder.append(" AND ID_SIDE = ? ");
 		sqlBuilder.append(" AND QTN_LEVEL = 1 ");
+		sqlBuilder.append(" ORDER BY SEQ ASC");
 		params.add(idSide);
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<Int02010101Vo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(),new BeanPropertyRowMapper(Int02010101Vo.class));
@@ -36,11 +38,23 @@ public class IaQuestionnaireSideDtlJdbcRepository {
 		sqlBuilder.append(" AND ID_SIDE = ? ");
 		sqlBuilder.append(" AND QTN_LEVEL = 2 ");
 		sqlBuilder.append(" AND SEQ = ? ");
+		sqlBuilder.append(" ORDER BY SEQ_DTL ASC");
 		params.add(idSide);
 		params.add(seq);
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<Int02010101Vo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(),new BeanPropertyRowMapper(Int02010101Vo.class));
 		return datas;
+	}
+	
+	public IaQuestionnaireSideDtl findById(BigDecimal id) {
+		StringBuilder sqlBuilder = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		sqlBuilder.append(" SELECT * FROM  IA_QUESTIONNAIRE_SIDE_DTL WHERE 1=1 AND IS_DELETED = 'N' ");
+		sqlBuilder.append(" AND ID = ? ");
+		params.add(id);
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		IaQuestionnaireSideDtl data = (IaQuestionnaireSideDtl) commonJdbcTemplate.queryForObject(sqlBuilder.toString(), params.toArray(),new BeanPropertyRowMapper(IaQuestionnaireSideDtl.class));
+		return data;
 	}
 	
 }
