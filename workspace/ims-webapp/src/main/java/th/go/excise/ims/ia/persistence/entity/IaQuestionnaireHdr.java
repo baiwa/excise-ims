@@ -22,6 +22,7 @@ public class IaQuestionnaireHdr extends BaseEntity
 	 * 
 	 */
 	private static final long serialVersionUID = 2034486539682880770L;
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_QUESTIONNAIRE_HDR_GEN")
     @SequenceGenerator(name = "IA_QUESTIONNAIRE_HDR_GEN", sequenceName = "IA_QUESTIONNAIRE_HDR_SEQ", allocationSize = 1)

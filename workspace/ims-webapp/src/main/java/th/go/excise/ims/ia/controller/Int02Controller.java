@@ -1,8 +1,5 @@
 package th.go.excise.ims.ia.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,16 +32,14 @@ public class Int02Controller {
 	@ResponseBody
 	public DataTableAjax<Int02Vo> filterQtnHdr(@RequestBody Int02FormVo request) {
 		logger.info("filter Datatable int02");
-		List<Int02Vo> data = new ArrayList<Int02Vo>();
-		DataTableAjax<Int02Vo> dataTableAjax = new DataTableAjax<Int02Vo>();
+
+		DataTableAjax<Int02Vo> list = new DataTableAjax<>();
 		try {
-			data = int02Service.filterQtnHdr(request);
+			list  = int02Service.filterQtnHdr(request);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		dataTableAjax.setData(data);
-		dataTableAjax.setRecordsTotal(data.size());
-		return dataTableAjax;
+		return list;
 	}
 	
 	@GetMapping("/{id}")

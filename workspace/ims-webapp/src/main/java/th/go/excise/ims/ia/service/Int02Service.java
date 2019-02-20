@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireHdrJdbcRepository;
@@ -26,7 +27,8 @@ public class Int02Service {
 	@Autowired
 	private IaQuestionnaireHdrRepository iaQuestionnaireHdrRepository;
 
-	public List<Int02Vo> filterQtnHdr(Int02FormVo request) {
+	public DataTableAjax<Int02Vo> filterQtnHdr(Int02FormVo request) {
+		
 		List<Int02Vo> data = iaQuestionnaireHdrJdbcRepository.getDataFilter(request);
 		/* convert date to string */
 		for (Int02Vo obj : data) {
@@ -41,7 +43,13 @@ public class Int02Service {
 			}
 		}
 		
-		return data;
+		DataTableAjax<Int02Vo> dataTableAjax = new DataTableAjax<Int02Vo>();
+		dataTableAjax.setDraw(request.getDraw() + 1);
+		dataTableAjax.setData(data);
+		dataTableAjax.setRecordsTotal(iaQuestionnaireHdrJdbcRepository.countDatafilter(request));
+		dataTableAjax.setRecordsFiltered(data.size());
+		
+		return dataTableAjax;
 	}
 	
 	public IaQuestionnaireHdr findOne(String idStr) {
