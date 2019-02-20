@@ -124,4 +124,23 @@ public class TaxOperatorController {
 		return response;
 	}
 	
+	@PostMapping("/save-draft")
+	@ResponseBody
+	public ResponseData<?> saveDraft(@RequestBody TaxOperatorFormVo formVo){ 
+		ResponseData<YearMonthVo> response = new ResponseData<>();
+
+		try {
+			this.taxOperatorService.saveDraft(formVo);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);	
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		
+		return response;
+	}
+	
+	
 }
