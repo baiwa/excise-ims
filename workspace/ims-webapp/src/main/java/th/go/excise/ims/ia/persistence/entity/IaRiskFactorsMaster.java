@@ -31,10 +31,10 @@ public class IaRiskFactorsMaster extends BaseEntity {
 	private String status;
 	@Column(name = "INSPECTION_WORK")
 	private BigDecimal inspectionWork;
-
-
-	
+	@Column(name = "NOT_DELETE")
 	private String notDelete;
+	
+	
 	
 	public BigDecimal getId() {
 		return id;

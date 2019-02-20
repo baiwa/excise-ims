@@ -2,8 +2,6 @@ package th.go.excise.ims.ia.vo;
 
 import java.math.BigDecimal;
 
-import javax.persistence.Column;
-
 public class Int0301FormVo {
 
 	private BigDecimal id;
@@ -11,6 +9,8 @@ public class Int0301FormVo {
 	private String factorsLevel;
 	private BigDecimal inspectionWork;
 
+	private BigDecimal idMaster;
+	
 	public BigDecimal getId() {
 		return id;
 	}
@@ -43,4 +43,10 @@ public class Int0301FormVo {
 		this.inspectionWork = inspectionWork;
 	}
 
+	public BigDecimal getIdMaster() {
+		return idMaster;
+	}
+	public void setIdMaster(BigDecimal idMaster) {
+		this.idMaster = idMaster;
+	}
 }
