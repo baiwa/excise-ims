@@ -3,6 +3,7 @@ package th.go.excise.ims.ia.service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,10 +31,30 @@ public class Int030102Service {
 
 	public List<Int030102Vo> list(Int030102FormVo form) {
 		List<Int030102Vo> iaRiskFactorsMasterList = new ArrayList<Int030102Vo>();
-
+//		listUpdateStatus(form);
 		iaRiskFactorsMasterList = int030102JdbcRepository.list(form);
 
 		return iaRiskFactorsMasterList;
+	}
+
+	public void listUpdateStatus(Int030102FormVo form) {
+		List<Int030102Vo> iaRiskFactorsMasterList = int030102JdbcRepository.listUpdateStatus(form);
+		
+		//List<IaRiskFactorsMaster> riskMas = new ArrayList<>();
+		
+		for (Int030102Vo int030102Vo : iaRiskFactorsMasterList) {
+			 Optional<IaRiskFactorsMaster> data = iaRiskFactorsMasterRepository.findById(int030102Vo.getIdMaster());
+			if (data.isPresent()) {
+				if (int030102Vo.getIdMaster() != null) {
+					data.get().setStatus("Y");
+				} else {
+					data.get().setStatus("N");
+				}
+				iaRiskFactorsMasterRepository.save(data.get());
+			}
+		}
+
+		
 	}
 
 	public void delete(Int030102FormVo form) {
@@ -63,6 +84,6 @@ public class Int030102Service {
 			data.setCreatedDate(LocalDateTime.now());
 			iaRiskFactorsRepository.save(data);
 		}
-		
+
 	}
 }

@@ -46,5 +46,10 @@ public class Int020101Service {
 		iaQtnSideRep.deleteById(id);
 		return data;
 	}
+	
+	public IaQuestionnaireSide findOne(String idStr) {
+		BigDecimal id = new BigDecimal(idStr);
+		return iaQtnSideJdbcRep.findOne(id);
+	}
 
 }

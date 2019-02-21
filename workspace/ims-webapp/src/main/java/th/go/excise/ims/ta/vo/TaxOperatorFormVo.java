@@ -6,6 +6,15 @@ public class TaxOperatorFormVo {
 	private String dateEnd;
 	private int dateRange;
 	private String analysisNumber;
+	private String budgetYear;
+
+	public String getBudgetYear() {
+		return budgetYear;
+	}
+
+	public void setBudgetYear(String budgetYear) {
+		this.budgetYear = budgetYear;
+	}
 
 	public String getDateStart() {
 		return dateStart;

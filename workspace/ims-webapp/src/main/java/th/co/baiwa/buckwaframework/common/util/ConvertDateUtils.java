@@ -16,6 +16,7 @@ public class ConvertDateUtils {
 
     public static final String YYYYMMDD = "yyyyMMdd";
     public static final String YYYYMM = "yyyyMM";
+    public static final String YYYY = "yyyy";
     public static final String MM_YYYY = "MM/yyyy";
     public static final String DD_MM_YYYY = "dd/MM/yyyy";
     public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";

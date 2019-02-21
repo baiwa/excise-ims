@@ -1,13 +1,15 @@
 package th.go.excise.ims.ia.vo;
 
+import java.math.BigDecimal;
+
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
 
 public class Int030102Vo {
 	private IaRiskFactorsMaster iaRiskFactorsMaster;
 	private String createdDateDesc;
 	private String updateDateDesc;
-	
-	
+	private BigDecimal idMaster;
+
 	public IaRiskFactorsMaster getIaRiskFactorsMaster() {
 		return iaRiskFactorsMaster;
 	}
@@ -26,5 +28,12 @@ public class Int030102Vo {
 	public void setUpdateDateDesc(String updateDateDesc) {
 		this.updateDateDesc = updateDateDesc;
 	}
+	public BigDecimal getIdMaster() {
+		return idMaster;
+	}
+	public void setIdMaster(BigDecimal idMaster) {
+		this.idMaster = idMaster;
+	}
+
 	
 }

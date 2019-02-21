@@ -45,6 +45,8 @@ public class Int030102JdbcRepository {
 
 	}
 
+
+
 	private RowMapper<Int030102Vo> listRowmapper = new RowMapper<Int030102Vo>() {
 		@Override
 		public Int030102Vo mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -79,6 +81,39 @@ public class Int030102JdbcRepository {
 
 	};
 
+	public List<Int030102Vo> listUpdateStatus(Int030102FormVo form) {
+		List<Int030102Vo> iaRiskFactorsMasterList = new ArrayList<Int030102Vo>();
+		StringBuilder sql = new StringBuilder(" SELECT a.RISK_FACTORS, " + 
+				"  a.ID, " + 
+				"  a.ID_MASTER, " + 
+				"  b.STATUS " + 
+				"FROM IA_RISK_FACTORS a " + 
+				"RIGHT JOIN IA_RISK_FACTORS_MASTER b " + 
+				"ON a.ID_MASTER = b.ID "+
+				 "WHERE a.BUDGET_YEAR   = ? "+
+				 "AND a.INSPECTION_WORK = ? ");
+
+		iaRiskFactorsMasterList = commonJdbcTemplate.query(sql.toString(),new Object[] { form.getBudgetYear(),form.getInspectionWork()}, listUpdateStatusRowmapper);
+
+		return iaRiskFactorsMasterList;
+
+	}
+	
+	private RowMapper<Int030102Vo> listUpdateStatusRowmapper = new RowMapper<Int030102Vo>() {
+		@Override
+		public Int030102Vo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Int030102Vo vo = new Int030102Vo();
+			IaRiskFactorsMaster iarfm = new IaRiskFactorsMaster();
+			iarfm.setId(rs.getBigDecimal("ID"));
+			iarfm.setStatus(rs.getString("STATUS"));
+			vo.setIaRiskFactorsMaster(iarfm);
+			vo.setIdMaster(rs.getBigDecimal("ID_MASTER"));
+			
+			return vo;
+		}
+
+	};
+	
 	private String checkAndConvertDateToString(Date date) {
 		String dateSting = "";
 		if (date != null) {
