@@ -42,7 +42,7 @@ public class SyncWebServiceTaxAuditSelectFactoryService {
 	@Autowired
 	private TaWsInc8000Repository taWsInc8000Repository;
 	
-	private String wsDataSizeWs = "2000";
+	private String wsDataSizeWs = "1000";
 
 	public void suncData() throws IOException {
 		logger.info("SyncData : {}", LocalDateTime.now());
