@@ -77,8 +77,12 @@ public class TaxOperatorService {
 		return this.worksheetCondHdrJdbcRepository.findAllAnalysisNumber();
 	}
 
-	public void getWorkSheetHdrDraft(TaxOperatorFormVo formVo) {
-
+	public TaxOperatorVo getOperatorDraft(TaxOperatorFormVo formVo) {
+		List<TaxOperatorDetailVo> list = this.taxOperatorRepository.getTaxOperatorDraft(formVo.getAnalysisNumber());
+		
+		TaxOperatorVo vo = new TaxOperatorVo();
+		vo.setDatas(list);
+		return vo;
 	}
 
 	public List<String> findAllAnalysisNumberDraft() {
