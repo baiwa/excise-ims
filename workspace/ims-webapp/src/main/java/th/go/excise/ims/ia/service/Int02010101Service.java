@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ import th.go.excise.ims.ia.vo.Int02010101Vo;
 @Service
 public class Int02010101Service {
 
+	private static final Logger logger = LoggerFactory.getLogger(Int02010101Service.class);
+	
 	@Autowired
 	private IaQuestionnaireSideDtlJdbcRepository iaQuestionnaireSideDtlJdbcRepository;
 

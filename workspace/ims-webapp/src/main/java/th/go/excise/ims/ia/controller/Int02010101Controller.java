@@ -3,6 +3,8 @@ package th.go.excise.ims.ia.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
-import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSideDtl;
 import th.go.excise.ims.ia.service.Int02010101Service;
 import th.go.excise.ims.ia.vo.Int02010101FormVo;
 import th.go.excise.ims.ia.vo.Int02010101Vo;
@@ -22,6 +24,8 @@ import th.go.excise.ims.ia.vo.Int02010101Vo;
 @Controller
 @RequestMapping("/api/ia/int02/01/01/01")
 public class Int02010101Controller {
+	
+	private static final Logger logger = LoggerFactory.getLogger(Int02010101Controller.class);
 
 	@Autowired
 	private Int02010101Service int02010101Service;
@@ -37,8 +41,8 @@ public class Int02010101Controller {
 			responseData.setMessage("SUCCESS");
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			// e.printStackTrace();
-			responseData.setMessage("ERROR");
+			logger.error("Int02010101Controller::findByIdHead ", e.getCause());
+			responseData.setMessage(RESPONSE_MESSAGE.ERROR500);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -52,11 +56,11 @@ public class Int02010101Controller {
 		try {
 			data = int02010101Service.saveAll(form);
 			responseData.setData(data);
-			responseData.setMessage("SUCCESS");
+			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			 e.printStackTrace();
-			responseData.setMessage("ERROR");
+			logger.error("Int02010101Controller::saveAll ", e.getCause());
+			responseData.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;

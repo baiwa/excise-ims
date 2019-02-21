@@ -155,7 +155,7 @@ public class TaxOperatorJdbcRepository {
 		sql.append("   ED_AREA.OFFICE_CODE AREA_CODE,");
 		sql.append("   ED_AREA.DEPT_SHORT_NAME AREA_DESC,");
 		sql.append("   TA_W_HDR.*");
-		sql.append(" FROM TA_DRAFT_WORKSHEET TA_W_HDR");
+		sql.append(" FROM TA_DRAFT_WORKSHEET_DTL TA_W_HDR");
 		sql.append(" INNER JOIN TA_WS_REG4000 R4000");
 		sql.append(" ON R4000.NEW_REG_ID  = TA_W_HDR.NEW_REG_ID");
 		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_SECTOR");

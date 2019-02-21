@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.BusinessException;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
-import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheet;
+import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondDtlTax;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondDtlTax;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondHdr;
-import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetRepository;
+import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondDtlTaxRepository;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondDtlTaxRepository;
@@ -58,18 +58,18 @@ public class TaxOperatorService {
 	private TaxAuditFactorySelectionService taxAuditFactorySelectionService;
 
 	@Autowired
-	private TaDraftWorksheetRepository draftWorksheetRepository;
+	private TaDraftWorksheetDtlRepository draftWorksheetRepository;
 
 	@Autowired
 	private TaDraftWorksheetJdbcRepository draftWorksheetJdbcRepository;
-
+	
 	public TaxOperatorVo getOperator(TaxOperatorFormVo formVo) throws BusinessException {
 		List<String> listCondGroups = this.taxOperatorRepository.listCondGroups(formVo.getAnalysisNumber());
 		List<TaxOperatorDetailVo> list = this.taxOperatorRepository.getTaxOperator(formVo.getAnalysisNumber());
 
 		TaxOperatorVo vo = new TaxOperatorVo();
 		vo.setCondGroups(listCondGroups);
-		vo.setDatas(list);
+		vo.setDatas(taxAuditFactorySelectionService.summaryDatatable(list, formVo));
 		return vo;
 	}
 
@@ -81,7 +81,7 @@ public class TaxOperatorService {
 		List<TaxOperatorDetailVo> list = this.taxOperatorRepository.getTaxOperatorDraft(formVo.getAnalysisNumber());
 		
 		TaxOperatorVo vo = new TaxOperatorVo();
-		vo.setDatas(list);
+		vo.setDatas(taxAuditFactorySelectionService.summaryDatatable(list, formVo));
 		return vo;
 	}
 
@@ -154,10 +154,10 @@ public class TaxOperatorService {
 		// TODO ==>save draft
 		List<TaxOperatorDetailVo> rsSearch = this.taxAuditFactorySelectionService.prepareTaxOperatorDetailVoList(formVo);
 
-		List<TaDraftWorksheet> dratfs = new ArrayList<>();
+		List<TaDraftWorksheetDtl> dratfs = new ArrayList<>();
 		for (TaxOperatorDetailVo rs : rsSearch) {
 
-			TaDraftWorksheet draft = new TaDraftWorksheet();
+			TaDraftWorksheetDtl draft = new TaDraftWorksheetDtl();
 
 			draft.setAnalysisNumber(analysisNumber);
 			draft.setNewRegId(rs.getNewRegId());
