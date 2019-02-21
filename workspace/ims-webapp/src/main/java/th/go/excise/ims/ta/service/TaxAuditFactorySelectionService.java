@@ -96,7 +96,7 @@ public class TaxAuditFactorySelectionService {
 	}
 
 	private String getTaxAmtByField(TaxOperatorDetailVo taxOperatorDetailVo, int i, int dataRange) {
-		String taxAmt = "0";
+		String taxAmt = "0.00";
 		if (i < dataRange / 2) {
 			if (i + 1 == 1) {
 				taxAmt = taxOperatorDetailVo.getTaxAmtG1M1();
@@ -120,6 +120,8 @@ public class TaxAuditFactorySelectionService {
 				taxAmt = taxOperatorDetailVo.getTaxAmtG1M10();
 			} else if (i + 1 == 11) {
 				taxAmt = taxOperatorDetailVo.getTaxAmtG1M11();
+			} else if (i + 1 == 12) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG1M12();
 			}
 		} else {
 			if (i + 1 - (dataRange / 2) == 1) {
@@ -144,6 +146,8 @@ public class TaxAuditFactorySelectionService {
 				taxAmt = taxOperatorDetailVo.getTaxAmtG2M10();
 			} else if (i + 1 - (dataRange / 2) == 11) {
 				taxAmt = taxOperatorDetailVo.getTaxAmtG2M11();
+			} else if (i + 1 - (dataRange / 2) == 12) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG2M12();
 			}
 		}
 
