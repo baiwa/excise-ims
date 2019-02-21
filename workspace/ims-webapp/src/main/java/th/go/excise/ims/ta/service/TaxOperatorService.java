@@ -62,14 +62,14 @@ public class TaxOperatorService {
 
 	@Autowired
 	private TaDraftWorksheetJdbcRepository draftWorksheetJdbcRepository;
-
+	
 	public TaxOperatorVo getOperator(TaxOperatorFormVo formVo) throws BusinessException {
 		List<String> listCondGroups = this.taxOperatorRepository.listCondGroups(formVo.getAnalysisNumber());
 		List<TaxOperatorDetailVo> list = this.taxOperatorRepository.getTaxOperator(formVo.getAnalysisNumber());
 
 		TaxOperatorVo vo = new TaxOperatorVo();
 		vo.setCondGroups(listCondGroups);
-		vo.setDatas(list);
+		vo.setDatas(taxAuditFactorySelectionService.summaryDatatable(list, formVo));
 		return vo;
 	}
 

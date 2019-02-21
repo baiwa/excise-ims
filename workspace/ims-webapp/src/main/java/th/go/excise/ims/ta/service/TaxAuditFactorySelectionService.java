@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondDtlTax;
@@ -25,6 +27,7 @@ import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsInc8000MRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
+import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 import th.go.excise.ims.ta.vo.TaxOperatorVo;
@@ -52,17 +55,109 @@ public class TaxAuditFactorySelectionService {
 	private TaWorksheetCondDtlTaxRepository taWorksheetCondDtlTaxRepository;
 
 	public TaxOperatorVo getPreviewData(TaxOperatorFormVo formVo) {
+		
+		List<TaxOperatorDetailVo> taxOperatorDetailVoList = prepareTaxOperatorDetailVoList(formVo);
 		TaxOperatorVo vo = new TaxOperatorVo();
-		vo.setDatas(prepareTaxOperatorDetailVoList(formVo));
+		vo.setDatas(summaryDatatable(taxOperatorDetailVoList, formVo));
 
 		return vo;
+	}
+	
+	public List<TaxOperatorDatatableVo> summaryDatatable(List<TaxOperatorDetailVo> taxOperatorDetailVoList ,TaxOperatorFormVo formVo) {
+		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = new ArrayList<>();
+		TaxOperatorDatatableVo taxOperatorDatatableVo = null;
+		List<String> taxAmtList = null;
+		for (TaxOperatorDetailVo taxOperatorDetailVo : taxOperatorDetailVoList) {
+			taxAmtList = new ArrayList<>();
+			taxOperatorDatatableVo = new TaxOperatorDatatableVo();
+			taxOperatorDatatableVo.setCusFullname(taxOperatorDetailVo.getCusFullname());
+			taxOperatorDatatableVo.setFacFullname(taxOperatorDetailVo.getFacFullname());
+			taxOperatorDatatableVo.setFacAddress(taxOperatorDetailVo.getFacAddress());
+			taxOperatorDatatableVo.setOfficeCode(taxOperatorDetailVo.getOfficeCode());
+			taxOperatorDatatableVo.setSecCode(taxOperatorDetailVo.getSecCode());
+			taxOperatorDatatableVo.setSecDesc(taxOperatorDetailVo.getSecDesc());
+			taxOperatorDatatableVo.setAreaCode(taxOperatorDetailVo.getAreaCode());
+			taxOperatorDatatableVo.setAreaDesc(taxOperatorDetailVo.getAreaDesc());
+			taxOperatorDatatableVo.setWorksheetHdrId(taxOperatorDetailVo.getWorksheetHdrId());
+			taxOperatorDatatableVo.setAnalysisNumber(taxOperatorDetailVo.getAnalysisNumber());
+			taxOperatorDatatableVo.setNewRegId(taxOperatorDetailVo.getNewRegId());
+			taxOperatorDatatableVo.setSumTaxAmtG1(taxOperatorDetailVo.getSumTaxAmtG1());
+			taxOperatorDatatableVo.setSumTaxAmtG2(taxOperatorDetailVo.getSumTaxAmtG2());
+			taxOperatorDatatableVo.setTaxAmtChnPnt(taxOperatorDetailVo.getTaxAmtChnPnt());
+			taxOperatorDatatableVo.setTaxMonthNo(taxOperatorDetailVo.getTaxMonthNo());
+			for (int i = 0; i < formVo.getDateRange(); i++) {
+				taxAmtList.add(getTaxAmtByField(taxOperatorDetailVo, i, formVo.getDateRange()));
+			}
+			taxOperatorDatatableVo.setTaxAmtList(taxAmtList);
+			taxOperatorDatatableVoList.add(taxOperatorDatatableVo);
+
+		}
+		return taxOperatorDatatableVoList;
+	}
+
+	private String getTaxAmtByField(TaxOperatorDetailVo taxOperatorDetailVo, int i, int dataRange) {
+		String taxAmt = "0";
+		if (i < dataRange / 2) {
+			if (i + 1 == 1) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG1M1();
+			} else if (i + 1 == 2) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG1M2();
+			} else if (i + 1 == 3) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG1M3();
+			} else if(i + 1 == 4) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG1M4();
+			} else if (i + 1 == 5) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG1M5();
+			} else if (i + 1 == 6) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG1M6();
+			} else if (i + 1 == 7) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG1M7();
+			} else if (i + 1 == 8) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG1M8();
+			} else if (i + 1 == 9) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG1M9();
+			} else if (i + 1 == 10) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG1M10();
+			} else if (i + 1 == 11) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG1M11();
+			}
+		} else {
+			if (i + 1 - (dataRange / 2) == 1) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG2M1();
+			} else if (i + 1 - (dataRange / 2) == 2) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG2M2();
+			} else if (i + 1 - (dataRange / 2) == 3) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG2M3();
+			} else if (i + 1 - (dataRange / 2) == 4) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG2M4();
+			} else if (i + 1 - (dataRange / 2) == 5) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG2M5();
+			} else if (i + 1 - (dataRange / 2) == 6) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG2M6();
+			} else if (i + 1 - (dataRange / 2) == 7) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG2M7();
+			} else if (i + 1 - (dataRange / 2) == 8) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG2M8();
+			} else if (i + 1 - (dataRange / 2) == 9) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG2M9();
+			} else if (i + 1 - (dataRange / 2) == 10) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG2M10();
+			} else if (i + 1 - (dataRange / 2) == 11) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG2M11();
+			}
+		}
+
+		return taxAmt;
 	}
 
 	public List<TaxOperatorDetailVo> prepareTaxOperatorDetailVoList(TaxOperatorFormVo formVo) {
 		logger.info("prepareTaxOperatorDetailVoList startDate={}, endDate={}, dateRange={}", formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
-
+		Date ymStart = ConvertDateUtils.parseStringToDate(formVo.getDateStart(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
+		Date ymEnd = ConvertDateUtils.parseStringToDate(formVo.getDateEnd(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
+		String ymStartStr = ConvertDateUtils.formatDateToString(ymStart, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
+		String ymEndStr = ConvertDateUtils.formatDateToString(ymEnd, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findAll();
-		Map<String, List<TaWsInc8000M>> wsInc8000MMap = taWsInc8000MRepository.findByMonthRange(formVo.getDateStart(), formVo.getDateEnd());
+		Map<String, List<TaWsInc8000M>> wsInc8000MMap = taWsInc8000MRepository.findByMonthRange(ymStartStr, ymEndStr);
 
 		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
 		List<TaWsInc8000M> wsInc8000MList = null;

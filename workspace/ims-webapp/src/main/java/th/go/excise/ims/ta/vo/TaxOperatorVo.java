@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class TaxOperatorVo {
 
 	private List<String> condGroups;
-	private List<TaxOperatorDetailVo> datas;
+	private List<TaxOperatorDatatableVo> datas;
 
 	public List<String> getCondGroups() {
 		return condGroups;
@@ -18,17 +18,17 @@ public class TaxOperatorVo {
 		this.condGroups = condGroups;
 	}
 
-	public List<TaxOperatorDetailVo> getDatas() {
-		return datas;
-	}
-
-	public void setDatas(List<TaxOperatorDetailVo> datas) {
-		this.datas = datas;
-	}
-
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+	public List<TaxOperatorDatatableVo> getDatas() {
+		return datas;
+	}
+
+	public void setDatas(List<TaxOperatorDatatableVo> datas) {
+		this.datas = datas;
 	}
 
 }
