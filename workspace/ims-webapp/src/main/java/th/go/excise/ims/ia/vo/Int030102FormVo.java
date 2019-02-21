@@ -10,6 +10,8 @@ public class Int030102FormVo {
 	private BigDecimal inspectionWork;
 	private String status;
 	
+	private String budgetYearTo;
+	
 
 	public BigDecimal getId() {
 		return id;
@@ -51,4 +53,13 @@ public class Int030102FormVo {
 		this.status = status;
 	}
 
+	public String getBudgetYearTo() {
+		return budgetYearTo;
+	}
+
+	public void setBudgetYearTo(String budgetYearTo) {
+		this.budgetYearTo = budgetYearTo;
+	}
+
+	
 }

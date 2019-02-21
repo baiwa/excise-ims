@@ -28,16 +28,29 @@ public class Int030102JdbcRepository {
 
 	public List<Int030102Vo> list(Int030102FormVo form) {
 		List<Int030102Vo> iaRiskFactorsMasterList = new ArrayList<Int030102Vo>();
-		StringBuilder sql = new StringBuilder(SQL_IA_RISK_FACTORS_MASTER);
+		StringBuilder sql = new StringBuilder("SELECT a.ID," + 
+				"a.RISK_FACTORS_MASTER, " + 
+				"b.BUDGET_YEAR, " + 
+				"b.INSPECTION_WORK, " + 
+				"b.STATUS, " + 
+				"a.CREATED_BY, " + 
+				"a.CREATED_DATE, " +
+				"a.NOT_DELETE " + 
+				"FROM IA_RISK_FACTORS_MASTER a " + 
+				"LEFT JOIN IA_RISK_FACTORS_STATUS b " + 
+				"ON a.ID = b.ID_MASTER " + 
+				"WHERE a.IS_DELETED = 'N' AND " + 
+				"b.INSPECTION_WORK = ? ");
+		
 		List<Object> params = new ArrayList<Object>();
 
 		params.add(form.getInspectionWork());
 
 		if (StringUtils.isNotBlank(form.getBudgetYear())) {
-			sql.append(" AND BUDGET_YEAR = ? ");
+			sql.append(" AND b.BUDGET_YEAR = ? ");
 			params.add(form.getBudgetYear());
 		}
-		sql.append(" ORDER BY CREATED_DATE ASC ");
+		sql.append(" ORDER BY a.CREATED_DATE ASC ");
 
 		iaRiskFactorsMasterList = commonJdbcTemplate.query(sql.toString(), params.toArray(), listRowmapper);
 
@@ -63,17 +76,17 @@ public class Int030102JdbcRepository {
 			iarfm.setCreatedDate(createdDate);
 			iarfm.setCreatedBy(rs.getString("CREATED_BY"));
 
-			LocalDateTime updatedDate = LocalDateTimeConverter
-					.convertToEntityAttribute(rs.getTimestamp("UPDATED_DATE"));
-			iarfm.setUpdatedDate(updatedDate);
-			iarfm.setUpdatedBy(rs.getString("UPDATED_BY"));
+//			LocalDateTime updatedDate = LocalDateTimeConverter
+//					.convertToEntityAttribute(rs.getTimestamp("UPDATED_DATE"));
+//			iarfm.setUpdatedDate(updatedDate);
+//			iarfm.setUpdatedBy(rs.getString("UPDATED_BY"));
 			iarfm.setNotDelete(rs.getString("NOT_DELETE"));
 
 			String date = checkAndConvertDateToString(rs.getDate("CREATED_DATE"));
 			vo.setCreatedDateDesc(date);
 
-			String date2 = checkAndConvertDateToString(rs.getDate("UPDATED_DATE"));
-			vo.setUpdateDateDesc(date2);
+//			String date2 = checkAndConvertDateToString(rs.getDate("UPDATED_DATE"));
+//			vo.setUpdateDateDesc(date2);
 
 			vo.setIaRiskFactorsMaster(iarfm);
 			return vo;
@@ -81,38 +94,6 @@ public class Int030102JdbcRepository {
 
 	};
 
-	public List<Int030102Vo> listUpdateStatus(Int030102FormVo form) {
-		List<Int030102Vo> iaRiskFactorsMasterList = new ArrayList<Int030102Vo>();
-		StringBuilder sql = new StringBuilder(" SELECT a.RISK_FACTORS, " + 
-				"  a.ID, " + 
-				"  a.ID_MASTER, " + 
-				"  b.STATUS " + 
-				"FROM IA_RISK_FACTORS a " + 
-				"RIGHT JOIN IA_RISK_FACTORS_MASTER b " + 
-				"ON a.ID_MASTER = b.ID "+
-				 "WHERE a.BUDGET_YEAR   = ? "+
-				 "AND a.INSPECTION_WORK = ? ");
-
-		iaRiskFactorsMasterList = commonJdbcTemplate.query(sql.toString(),new Object[] { form.getBudgetYear(),form.getInspectionWork()}, listUpdateStatusRowmapper);
-
-		return iaRiskFactorsMasterList;
-
-	}
-	
-	private RowMapper<Int030102Vo> listUpdateStatusRowmapper = new RowMapper<Int030102Vo>() {
-		@Override
-		public Int030102Vo mapRow(ResultSet rs, int arg1) throws SQLException {
-			Int030102Vo vo = new Int030102Vo();
-			IaRiskFactorsMaster iarfm = new IaRiskFactorsMaster();
-			iarfm.setId(rs.getBigDecimal("ID"));
-			iarfm.setStatus(rs.getString("STATUS"));
-			vo.setIaRiskFactorsMaster(iarfm);
-			vo.setIdMaster(rs.getBigDecimal("ID_MASTER"));
-			
-			return vo;
-		}
-
-	};
 	
 	private String checkAndConvertDateToString(Date date) {
 		String dateSting = "";
@@ -129,9 +110,25 @@ public class Int030102JdbcRepository {
 		commonJdbcTemplate.update(sql.toString(), new Object[] { form.getId() });
 
 	}
+	
+	public void listUpdateStatus(Int030102FormVo form) {
+		StringBuilder sqlUpdateN = new StringBuilder(" UPDATE IA_RISK_FACTORS_STATUS c SET c.STATUS = 'N' WHERE c.BUDGET_YEAR = ? ");
+		StringBuilder sqlUpdateY = new StringBuilder(" UPDATE IA_RISK_FACTORS_STATUS f SET f.STATUS = 'Y' WHERE f.BUDGET_YEAR = ? AND f.ID_MASTER IN " + 
+				"( SELECT b.ID_MASTER " + 
+				"  FROM IA_RISK_FACTORS_MASTER a  " + 
+				"  LEFT JOIN (SELECT * FROM IA_RISK_FACTORS_STATUS WHERE BUDGET_YEAR = ? ) b  " + 
+				"  ON a.ID = b.ID_MASTER " + 
+				"  WHERE a.INSPECTION_WORK = ?  " + 
+				"  AND b.status = 'Y') ");
+
+		commonJdbcTemplate.update(sqlUpdateN.toString(), new Object[] { form.getBudgetYear() });
+		commonJdbcTemplate.update(sqlUpdateY.toString(), new Object[] { form.getBudgetYear(),form.getBudgetYearTo(),form.getInspectionWork()});
+
+
+	}
 
 	public void editStatus(Int030102FormVo form) {
-		StringBuilder sql = new StringBuilder(" UPDATE IA_RISK_FACTORS_MASTER SET STATUS = ? WHERE ID = ?");
+		StringBuilder sql = new StringBuilder(" UPDATE IA_RISK_FACTORS_STATUS SET STATUS = ? WHERE ID_MASTER = ?");
 		String status = ("N".equals(form.getStatus()) ? "Y" : "N");
 		commonJdbcTemplate.update(sql.toString(), new Object[] { status, form.getId() });
 	}
@@ -139,7 +136,21 @@ public class Int030102JdbcRepository {
 	public List<IaRiskFactorsMaster> listSaveFactors(Int030102FormVo form) {
 		List<IaRiskFactorsMaster> iaRiskFactorsMasterList = new ArrayList<IaRiskFactorsMaster>();
 		StringBuilder sql = new StringBuilder(
-				" SELECT * FROM IA_RISK_FACTORS_MASTER WHERE IS_DELETED = 'N' AND STATUS = 'Y' AND INSPECTION_WORK = ? AND BUDGET_YEAR = ? ");
+				" SELECT a.ID, " + 
+				"a.RISK_FACTORS_MASTER, " + 
+				"b.BUDGET_YEAR, " + 
+				"b.INSPECTION_WORK, " + 
+				"b.STATUS,  " + 
+				"a.CREATED_BY, " + 
+				"a.CREATED_DATE, " + 
+				"a.NOT_DELETE " + 
+				"FROM IA_RISK_FACTORS_MASTER a " + 
+				"RIGHT JOIN IA_RISK_FACTORS_STATUS b " + 
+				"ON a.ID = b.ID_MASTER " + 
+				"WHERE b.STATUS = 'Y' " + 
+				"AND a.IS_DELETED = 'N' " + 
+				"AND b.INSPECTION_WORK = ? " + 
+				"AND b.BUDGET_YEAR = ? ");
 		iaRiskFactorsMasterList = commonJdbcTemplate.query(sql.toString(),
 				new Object[] { form.getInspectionWork(), form.getBudgetYear() }, listRowmapperSave);
 
@@ -168,4 +179,11 @@ public class Int030102JdbcRepository {
 		}
 
 	};
+	
+	public int checkAndInsertTableFactorsStatus(Int030102FormVo form) {
+		StringBuilder sql = new StringBuilder(
+				" SELECT count(*) FROM IA_RISK_FACTORS_STATUS WHERE BUDGET_YEAR = ? AND INSPECTION_WORK = ? ");
+		int count = commonJdbcTemplate.queryForObject(sql.toString(), new Object[] { form.getBudgetYear(), form.getInspectionWork() }, int.class);
+		return count;
+	}
 }

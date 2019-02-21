@@ -95,11 +95,31 @@ public class Int030102Controller {
 		try {
 			int030102Service.save(form);
 			response.setData(save);
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 
 		} catch (Exception e) {
 			logger.error("Int030102Controller Save : ", e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	@PostMapping("/listUpdateStatus")
+	@ResponseBody
+	public ResponseData<String> listUpdateStatus(@RequestBody Int030102FormVo form) {
+		ResponseData<String> response = new ResponseData<String>();
+		String save = "บันทึกเรียบร้อบ";
+
+		try {
+			int030102Service.listUpdateStatus(form);
+			response.setData(save);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+
+		} catch (Exception e) {
+			logger.error("Int030102Controller ListYear : ", e);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
