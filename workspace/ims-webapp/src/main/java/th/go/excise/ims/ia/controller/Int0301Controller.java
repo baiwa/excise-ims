@@ -62,6 +62,24 @@ public class Int0301Controller {
 		return response;
 	}
 	
+	@PostMapping("/saveRiskFactorsConfig")
+	@ResponseBody
+	public ResponseData<String> saveRiskFactorsConfig(@RequestBody Int0301FormVo form) {
+		ResponseData<String> response = new ResponseData<String>();
+		try {	
+			Int0301Service.saveRiskFactorsConfig(form);
+			response.setData("SUCCESS");
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+
+		} catch (Exception e) {
+			logger.error("Int0301Controller saveRiskFactorsConfig : ", e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
 	
 	
 	

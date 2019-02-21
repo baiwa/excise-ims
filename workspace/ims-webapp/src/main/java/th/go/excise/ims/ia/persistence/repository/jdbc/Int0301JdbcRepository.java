@@ -65,6 +65,7 @@ public class Int0301JdbcRepository {
 			irf.setDateCriteria(rs.getString("DATE_CRITERIA"));
 			irf.setInspectionWork(rs.getBigDecimal("INSPECTION_WORK"));
 			irf.setCreatedBy(rs.getString("CREATED_BY"));
+			irf.setIdMaster(rs.getBigDecimal("ID_MASTER"));
 			
 			//vo.setCreatedDateDesc(ConvertDateUtils.formatDateToString(rs .getDate("CREATED_DATE"), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 			LocalDateTime createdDate = LocalDateTimeConverter
@@ -90,9 +91,7 @@ public class Int0301JdbcRepository {
 			irfc.setId(rs .getBigDecimal("ID_CONFIG"));
 			irfc.setIdFactors(rs .getBigDecimal("ID_FACTORS"));
 			irfc.setFactorsLevel(rs .getBigDecimal("FACTORS_LEVEL"));
-			vo.setIaRiskFactorsConfig(irfc);
-			
-					
+			vo.setIaRiskFactorsConfig(irfc);					
 			return vo;
 		}
 	};

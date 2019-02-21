@@ -8,6 +8,7 @@ public class Int0301Vo extends DataTableRequest {
 
 	private IaRiskFactors iaRiskFactors;
 	private IaRiskFactorsConfig iaRiskFactorsConfig;
+	
 	private String createdDateDesc;
 	private String updateDateDesc;
 

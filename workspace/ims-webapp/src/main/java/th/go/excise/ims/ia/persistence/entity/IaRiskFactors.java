@@ -35,63 +35,62 @@ public class IaRiskFactors extends BaseEntity {
 	private String dateCriteria;
 	@Column(name = "INSPECTION_WORK")
 	private BigDecimal inspectionWork;
-
-
+	@Column(name = "ID_MASTER")
+	private BigDecimal idMaster;
+	
+	
 	public BigDecimal getId() {
 		return id;
 	}
-
 	public void setId(BigDecimal id) {
 		this.id = id;
 	}
-
 	public String getRiskFactors() {
 		return riskFactors;
 	}
-
 	public void setRiskFactors(String riskFactors) {
 		this.riskFactors = riskFactors;
 	}
-
 	public String getBudgetYear() {
 		return budgetYear;
 	}
-
 	public void setBudgetYear(String budgetYear) {
 		this.budgetYear = budgetYear;
 	}
-
 	public String getSide() {
 		return side;
 	}
-
 	public void setSide(String side) {
 		this.side = side;
 	}
-
 	public String getStatusScreen() {
 		return statusScreen;
 	}
-
 	public void setStatusScreen(String statusScreen) {
 		this.statusScreen = statusScreen;
 	}
-
 	public String getDateCriteria() {
 		return dateCriteria;
 	}
-
 	public void setDateCriteria(String dateCriteria) {
 		this.dateCriteria = dateCriteria;
 	}
-
 	public BigDecimal getInspectionWork() {
 		return inspectionWork;
 	}
-
 	public void setInspectionWork(BigDecimal inspectionWork) {
 		this.inspectionWork = inspectionWork;
 	}
+	public BigDecimal getIdMaster() {
+		return idMaster;
+	}
+	public void setIdMaster(BigDecimal idMaster) {
+		this.idMaster = idMaster;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
+	
 
 }
