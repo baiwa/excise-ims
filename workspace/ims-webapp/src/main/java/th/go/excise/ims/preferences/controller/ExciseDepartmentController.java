@@ -85,5 +85,26 @@ public class ExciseDepartmentController {
 		
 		return response;
 	}
+	
+	@PostMapping("/dept-dtl/{officeCode}")
+	@ApiOperation(
+			tags = MODULE_NAME.PREFERENCES,
+			value = "Get Excise Dept Dtl"
+			)
+	public ResponseData<ExciseDept> getExciseDept(@PathVariable("officeCode") String officeCode) {
+		logger.info("getBranchListByAreaCode officeCode={}", officeCode);
+		
+		ResponseData<ExciseDept> response = new ResponseData<>();
+		ExciseDept exciseDept = ApplicationCache.getExciseDept(officeCode);
+		if (exciseDept != null ) {
+			response.setData(exciseDept);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} else {
+			response.setMessage("Office Code Not Found");
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		
+		return response;
+	}
 
 }
