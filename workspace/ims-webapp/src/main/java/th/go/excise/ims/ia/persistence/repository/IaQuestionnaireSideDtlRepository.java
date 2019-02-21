@@ -9,6 +9,4 @@ import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSideDtl;
 
 public interface IaQuestionnaireSideDtlRepository extends CommonJpaCrudRepository<IaQuestionnaireSideDtl, BigDecimal> {
 
-	List<IaQuestionnaireSideDtl> findByidSideOrderBySeqDtlAsc(BigDecimal id);
-
 }

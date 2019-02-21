@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
-import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSideDtl;
-import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireSideDtlRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireSideRepository;
+import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireSideDtlJdbcRepository;
+import th.go.excise.ims.ia.vo.Int02010101Vo;
 import th.go.excise.ims.ia.vo.Int0201FormVo;
 import th.go.excise.ims.ia.vo.Int0201FormVo2;
 import th.go.excise.ims.ia.vo.Int0201Vo;
@@ -19,30 +19,33 @@ public class Int0201Service {
 
 	@Autowired
 	private IaQuestionnaireSideRepository iaQuestionnaireSideRepository;
-
+	
 	@Autowired
-	private IaQuestionnaireSideDtlRepository iaQuestionnaireSideDtlRepository;
+	private IaQuestionnaireSideDtlJdbcRepository iaQuestionnaireSideDtlJdbcRepository;
 
 	public List<IaQuestionnaireSide> findQtnSideById(Int0201FormVo request) {
 		return iaQuestionnaireSideRepository.findByidHead(request.getId());
 	}
+	
+	public Int0201Vo findQtnSideDtlById(Int0201FormVo2 request) {
+		List<Int02010101Vo> dataHdr = null;
+		List<Int02010101Vo> dataDtl = null;
+		List<List<Int02010101Vo>> dataRes = new ArrayList<>();
 
-	public List<Int0201Vo> findQtnSideDtlById(Int0201FormVo2 request) {
-
-		List<IaQuestionnaireSideDtl> dataDtl = null;
-		List<Int0201Vo> response = new ArrayList<Int0201Vo>();
-		Int0201Vo data = null;
-
-		for (Int0201FormVo obj : request.getRequest()) {
-			dataDtl = new ArrayList<IaQuestionnaireSideDtl>();
-			data = new Int0201Vo();
-
-			dataDtl = iaQuestionnaireSideDtlRepository.findByidSideOrderBySeqDtlAsc(obj.getId());
-			data.setId(obj.getId());
-			data.setSideName(obj.getSideName());
-			data.setDetail(dataDtl);
-			response.add(data);
+		Int0201Vo response = new Int0201Vo();
+		for (Int0201FormVo dataRequest : request.getRequest()) {
+			dataHdr = new ArrayList<Int02010101Vo>();
+			dataHdr = iaQuestionnaireSideDtlJdbcRepository.findByIdSide(dataRequest.getId());
+			
+			for (Int02010101Vo objHdr : dataHdr) {
+				dataDtl = new ArrayList<Int02010101Vo>();
+				dataDtl = iaQuestionnaireSideDtlJdbcRepository.findDtlByIdSide(objHdr.getIdSide(), objHdr.getSeq());
+				objHdr.setChildren(dataDtl);
+			}
+			dataRes.add(dataHdr);
 		}
+		response.setData(dataRes);
+		
 		return response;
 	}
 
