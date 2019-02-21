@@ -2,7 +2,6 @@
 package th.go.excise.ims.ta.persistence.entity;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
@@ -93,12 +94,7 @@ public class TaWorksheetHdr extends BaseEntity {
 	private String sectorSelFlag;
 	@Column(name = "AREA_SEL_FLAG")
 	private String areaSelFlag;
-	@Column(name = "FAC_TYPE")
-	private String facType;
-	@Column(name = "REG_DATE")
-	private LocalDateTime regDate;
-	@Column(name = "REG_CAPITAL")
-	private String regCapital;
+	
 
 	public String getAnalysisNumber() {
 		return analysisNumber;
@@ -384,28 +380,6 @@ public class TaWorksheetHdr extends BaseEntity {
 		this.worksheetHdrId = worksheetHdrId;
 	}
 
-	public String getFacType() {
-		return facType;
-	}
-
-	public void setFacType(String facType) {
-		this.facType = facType;
-	}
-
-	public LocalDateTime getRegDate() {
-		return regDate;
-	}
-
-	public void setRegDate(LocalDateTime regDate) {
-		this.regDate = regDate;
-	}
-
-	public String getRegCapital() {
-		return regCapital;
-	}
-
-	public void setRegCapital(String regCapital) {
-		this.regCapital = regCapital;
-	}
+	
 
 }

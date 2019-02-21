@@ -132,9 +132,6 @@ public class TaWorksheetHdrRepositoryImpl implements TaWorksheetHdrCustom {
 			vo.setTaxAmtG2M10(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M10") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M10")));
 			vo.setTaxAmtG2M11(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M11") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M11")));
 			vo.setTaxAmtG2M12(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M12") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M12")));
-			vo.setFacType(rs.getString("FAC_TYPE"));
-			vo.setRegDate(LocalDateTimeConverter.convertToEntityAttribute(rs.getTimestamp("REG_DATE")));
-			vo.setRegCapital(decimalFormat.format(rs.getBigDecimal("REG_CAPITAL") == null ? BigDecimal.ZERO : rs.getBigDecimal("REG_CAPITAL")));
 			return vo;
 		}
 	};
