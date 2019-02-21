@@ -31,13 +31,18 @@ public class Int02Service {
 		/* convert date to string */
 		for (Int02Vo obj : data) {
 			DateTimeFormatter d = DateTimeFormatter.ofPattern(ProjectConstant.SHORT_DATE_FORMAT, Locale.US);
-			obj.getCreatedDate().format(d);
 			
 			if(obj.getCreatedDate() != null) {
 				obj.setCreatedDateStr(obj.getCreatedDate().format(d));
 			}
 			if(obj.getUpdatedDate() != null) {
 				obj.setUpdatedDateStr(obj.getUpdatedDate().format(d));
+			}
+			if(obj.getStartDate() != null) {
+				obj.setStartDateStr(obj.getStartDate().format(d));
+			}
+			if(obj.getEndDate() != null) {
+				obj.setEndDateStr(obj.getEndDate().format(d));
 			}
 		}
 		
