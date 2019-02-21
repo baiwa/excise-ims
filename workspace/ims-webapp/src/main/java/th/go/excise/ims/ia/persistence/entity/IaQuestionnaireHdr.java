@@ -2,6 +2,8 @@
 package th.go.excise.ims.ia.persistence.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,6 +36,12 @@ public class IaQuestionnaireHdr extends BaseEntity
     private String qtnHeaderName;
     @Column(name = "NOTE")
     private String note;
+    @Column(name = "START_DATE")
+    private LocalDateTime startDate;
+    @Column(name = "END_DATE")
+    private LocalDateTime endDate;
+    @Column(name = "STATUS")
+    private String status;
 
     public BigDecimal getId() {
         return id;
@@ -70,5 +78,29 @@ public class IaQuestionnaireHdr extends BaseEntity
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
     }
+
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
+	}
+
+	public LocalDateTime getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDateTime endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 }

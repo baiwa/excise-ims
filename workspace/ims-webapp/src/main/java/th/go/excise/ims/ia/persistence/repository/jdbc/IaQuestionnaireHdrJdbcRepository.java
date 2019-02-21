@@ -25,7 +25,7 @@ public class IaQuestionnaireHdrJdbcRepository {
 	public List<Int02Vo> getDataFilter(Int02FormVo request) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" SELECT * FROM IA_QUESTIONNAIRE_HDR WHERE IS_DELETED='N' ");
+		sql.append(" SELECT * FROM IA_QUESTIONNAIRE_HDR WHERE 1=1 AND IS_DELETED='N' ");
 		
 		if(StringUtils.isNotBlank(request.getBudgetYear())) {
 			sql.append(" AND BUDGET_YEAR = ? ");

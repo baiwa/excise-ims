@@ -30,15 +30,15 @@ public class TaxOperatorController {
 
 	@Autowired
 	private TaxOperatorService taxOperatorService;
-	
+
 	@Autowired
 	private TaxAuditFactorySelectionService taxAuditFactorySelectionService;
-	
+
 	@PostMapping("/preview-data")
 	@ResponseBody
 	public ResponseData<TaxOperatorVo> previewData(@RequestBody TaxOperatorFormVo formVo) {
 		ResponseData<TaxOperatorVo> response = new ResponseData<>();
-		
+
 		try {
 			response.setData(taxAuditFactorySelectionService.getPreviewData(formVo));
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
@@ -48,7 +48,7 @@ public class TaxOperatorController {
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
-		
+
 		return response;
 	}
 
@@ -84,25 +84,7 @@ public class TaxOperatorController {
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
-		
-		return response;
-	}
-	
-	@GetMapping("/find-all-analysis-number-draft")
-	@ResponseBody
-	public ResponseData<List<String>> findAllAnalysisNumberDraft() {
-		ResponseData<List<String>> response = new ResponseData<>();
 
-		try {
-			response.setData(taxOperatorService.findAllAnalysisNumberDraft());
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
-			response.setStatus(RESPONSE_STATUS.SUCCESS);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
-			response.setStatus(RESPONSE_STATUS.FAILED);
-		}
-		
 		return response;
 	}
 
@@ -110,7 +92,7 @@ public class TaxOperatorController {
 	@ResponseBody
 	public ResponseData<List<CondGroupVo>> findCondGroupDtl(@RequestBody TaxOperatorFormVo formVo) {
 		ResponseData<List<CondGroupVo>> response = new ResponseData<>();
-		
+
 		try {
 			response.setData(taxOperatorService.findCondGroupDtl(formVo));
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
@@ -120,7 +102,7 @@ public class TaxOperatorController {
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
-		
+
 		return response;
 	}
 
@@ -138,13 +120,49 @@ public class TaxOperatorController {
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
-		
+
 		return response;
 	}
-	
+
+	@PostMapping("/draft")
+	@ResponseBody
+	public ResponseData<TaxOperatorVo> getOperatorDraft(@RequestBody TaxOperatorFormVo formVo) {
+		ResponseData<TaxOperatorVo> response = new ResponseData<>();
+
+		try {
+			response.setData(taxOperatorService.getOperatorDraft(formVo));
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+
+		return response;
+	}
+
+	@GetMapping("/find-all-analysis-number-draft")
+	@ResponseBody
+	public ResponseData<List<String>> findAllAnalysisNumberDraft() {
+		ResponseData<List<String>> response = new ResponseData<>();
+
+		try {
+			response.setData(taxOperatorService.findAllAnalysisNumberDraft());
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+
+		return response;
+	}
+
 	@PostMapping("/save-draft")
 	@ResponseBody
-	public ResponseData<?> saveDraft(@RequestBody TaxOperatorFormVo formVo){ 
+	public ResponseData<?> saveDraft(@RequestBody TaxOperatorFormVo formVo) {
 		ResponseData<YearMonthVo> response = new ResponseData<>();
 
 		try {
@@ -152,13 +170,12 @@ public class TaxOperatorController {
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			logger.error(e.getMessage(), e);	
+			logger.error(e.getMessage(), e);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
-		
+
 		return response;
 	}
-	
-	
+
 }

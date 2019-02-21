@@ -52,7 +52,7 @@ public class Int0201Controller {
 	@PostMapping("/find-qtnside-dtl-by-id")
 	@ResponseBody
 	public ResponseData<List<Int0201Vo>> findQtnSideDtlById(@RequestBody Int0201FormVo2 request) {
-		logger.info("find-by-id IaQuestionnaireSide");
+		logger.info("find-by-id IaQuestionnaireSideDtl");
 		
 		ResponseData<List<Int0201Vo>> response = new ResponseData<List<Int0201Vo>>();
 		List<Int0201Vo> data = null;

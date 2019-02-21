@@ -10,6 +10,8 @@ public class Int02Vo extends IaQuestionnaireHdr {
 	private static final long serialVersionUID = 7493503564882947512L;
 	private String createdDateStr;
 	private String updatedDateStr;
+	private String startDateStr;
+	private String endDateStr;
 	
 	public String getCreatedDateStr() {
 		return createdDateStr;
@@ -23,8 +25,17 @@ public class Int02Vo extends IaQuestionnaireHdr {
 	public void setUpdatedDateStr(String updatedDateStr) {
 		this.updatedDateStr = updatedDateStr;
 	}
-	
-	
-	
+	public String getStartDateStr() {
+		return startDateStr;
+	}
+	public void setStartDateStr(String startDateStr) {
+		this.startDateStr = startDateStr;
+	}
+	public String getEndDateStr() {
+		return endDateStr;
+	}
+	public void setEndDateStr(String endDateStr) {
+		this.endDateStr = endDateStr;
+	}
 	
 }

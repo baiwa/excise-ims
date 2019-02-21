@@ -6,8 +6,8 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "TA_DRAFT_WORKSHEET")
-public class TaDraftWorksheet extends BaseEntity {
+@Table(name = "TA_DRAFT_WORKSHEET_DTL")
+public class TaDraftWorksheetDtl extends BaseEntity {
 
 	private static final long serialVersionUID = 1299545505531306595L;
 	@Id

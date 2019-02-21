@@ -15,7 +15,7 @@ public class TaDraftWorksheetJdbcRepository {
 
 	public List<String> analysisNumberDraft() {
 
-		String sql = "SELECT DISTINCT ANALYSIS_NUMBER  FROM (SELECT * FROM TA_DRAFT_WORKSHEET ORDER BY CREATED_DATE DESC)";
+		String sql = "SELECT DISTINCT ANALYSIS_NUMBER  FROM TA_DRAFT_WORKSHEET_DTL ORDER BY ANALYSIS_NUMBER DESC";
 		List<String> analysisNumber = this.commonJdbcTemplate.queryForList(sql, String.class);
 		return analysisNumber;
 	}
