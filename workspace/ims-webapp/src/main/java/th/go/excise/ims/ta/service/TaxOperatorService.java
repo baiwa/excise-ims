@@ -20,6 +20,7 @@ import th.go.excise.ims.ta.persistence.repository.TaMasCondDtlTaxRepository;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondDtlTaxRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondHdrRepository;
+import th.go.excise.ims.ta.persistence.repository.jdbc.TaDraftWorksheetJdbcRepository;
 import th.go.excise.ims.ta.persistence.repository.jdbc.TaWorksheetCondDtlTaxJdbcRepository;
 import th.go.excise.ims.ta.persistence.repository.jdbc.TaWorksheetCondHdrJdbcRepository;
 import th.go.excise.ims.ta.persistence.repository.jdbc.TaxOperatorJdbcRepository;
@@ -55,9 +56,12 @@ public class TaxOperatorService {
 
 	@Autowired
 	private TaxAuditFactorySelectionService taxAuditFactorySelectionService;
-	
+
 	@Autowired
-	private TaDraftWorksheetRepository draftWorksheetRepository; 
+	private TaDraftWorksheetRepository draftWorksheetRepository;
+
+	@Autowired
+	private TaDraftWorksheetJdbcRepository draftWorksheetJdbcRepository;
 
 	public TaxOperatorVo getOperator(TaxOperatorFormVo formVo) throws BusinessException {
 		List<String> listCondGroups = this.taxOperatorRepository.listCondGroups(formVo.getAnalysisNumber());
@@ -68,13 +72,17 @@ public class TaxOperatorService {
 		vo.setDatas(list);
 		return vo;
 	}
-	
-	public void getWorkSheetHdrDraft(TaxOperatorFormVo formVo){
-		
-	}
 
 	public List<String> findAllAnalysisNumber() {
 		return this.worksheetCondHdrJdbcRepository.findAllAnalysisNumber();
+	}
+
+	public void getWorkSheetHdrDraft(TaxOperatorFormVo formVo) {
+
+	}
+
+	public List<String> findAllAnalysisNumberDraft() {
+		return this.draftWorksheetJdbcRepository.analysisNumberDraft();
 	}
 
 	public YearMonthVo monthStart(TaxOperatorFormVo formVo) {
@@ -147,7 +155,7 @@ public class TaxOperatorService {
 
 			TaDraftWorksheet draft = new TaDraftWorksheet();
 
-			draft.setAnalysisNumber(rs.getAnalysisNumber());
+			draft.setAnalysisNumber(analysisNumber);
 			draft.setNewRegId(rs.getNewRegId());
 			draft.setSumTaxAmtG1(new BigDecimal(rs.getSumTaxAmtG1()));
 			draft.setSumTaxAmtG2(new BigDecimal(rs.getSumTaxAmtG2()));
@@ -181,7 +189,7 @@ public class TaxOperatorService {
 			draft.setTaxAmtG2M12(rs.getTaxAmtG2M12());
 
 			draft.setCondTaxGrp(rs.getCondTaxGrp());
-			
+
 			dratfs.add(draft);
 		}
 		this.draftWorksheetRepository.saveAll(dratfs);
