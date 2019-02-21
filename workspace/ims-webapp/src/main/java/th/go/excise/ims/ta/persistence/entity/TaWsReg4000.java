@@ -1,5 +1,7 @@
 package th.go.excise.ims.ta.persistence.entity;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -53,6 +55,12 @@ public class TaWsReg4000 extends BaseEntity {
 	private String activeFlag;
 	@Column(name = "DUTY_CODE")
 	private String dutyCode;
+	@Column(name = "FAC_TYPE")
+	private String facType;
+	@Column(name = "REG_DATE")
+	private LocalDateTime regDate;
+	@Column(name = "REG_CAPITAL")
+	private String regCapital;
 
 	public Long getWsReg4000Id() {
 		return wsReg4000Id;
@@ -188,6 +196,30 @@ public class TaWsReg4000 extends BaseEntity {
 
 	public void setDutyCode(String dutyCode) {
 		this.dutyCode = dutyCode;
+	}
+
+	public String getFacType() {
+		return facType;
+	}
+
+	public void setFacType(String facType) {
+		this.facType = facType;
+	}
+
+	public LocalDateTime getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(LocalDateTime regDate) {
+		this.regDate = regDate;
+	}
+
+	public String getRegCapital() {
+		return regCapital;
+	}
+
+	public void setRegCapital(String regCapital) {
+		this.regCapital = regCapital;
 	}
 
 }
