@@ -182,8 +182,10 @@ public class TaxAuditFactorySelectionService {
 			int countG2 = 0;
 			sumTaxAmtG1 = BigDecimal.ZERO;
 			sumTaxAmtG2 = BigDecimal.ZERO;
-
+			
 			detailVo = new TaxOperatorDetailVo();
+			
+			detailVo.setDutyCode(wsReg4000.getDutyCode());
 			detailVo.setNewRegId(wsReg4000.getNewRegId());
 			detailVo.setCusFullname(wsReg4000.getCusFullname());
 			detailVo.setFacFullname(wsReg4000.getFacFullname());

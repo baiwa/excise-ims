@@ -170,7 +170,7 @@ public class TaxOperatorJdbcRepository {
 	}
 
 	protected RowMapper<TaxOperatorDetailVo> taxOperatorDraftrowMapper = new RowMapper<TaxOperatorDetailVo>() {
-		private DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+		//private DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
 
 		@Override
 		public TaxOperatorDetailVo mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -188,34 +188,34 @@ public class TaxOperatorJdbcRepository {
 			vo.setWorksheetHdrId(rs.getString("ID"));
 			vo.setAnalysisNumber(rs.getString("ANALYSIS_NUMBER"));
 			vo.setNewRegId(rs.getString("NEW_REG_ID"));
-			vo.setSumTaxAmtG1(decimalFormat.format(rs.getBigDecimal("SUM_TAX_AMT_G1") == null ? BigDecimal.ZERO : rs.getBigDecimal("SUM_TAX_AMT_G1")));
-			vo.setSumTaxAmtG2(decimalFormat.format(rs.getBigDecimal("SUM_TAX_AMT_G2") == null ? BigDecimal.ZERO : rs.getBigDecimal("SUM_TAX_AMT_G2")));
-			vo.setTaxAmtChnPnt(decimalFormat.format(rs.getBigDecimal("TAX_AMT_CHN_PNT") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_CHN_PNT")));
-			vo.setTaxMonthNo(decimalFormat.format(rs.getBigDecimal("TAX_MONTH_NO") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_MONTH_NO")));
-			vo.setTaxAmtG1M1(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M1") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M1")));
-			vo.setTaxAmtG1M2(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M2") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M2")));
-			vo.setTaxAmtG1M3(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M3") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M3")));
-			vo.setTaxAmtG1M4(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M4") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M4")));
-			vo.setTaxAmtG1M5(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M5") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M5")));
-			vo.setTaxAmtG1M6(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M6") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M6")));
-			vo.setTaxAmtG1M7(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M7") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M7")));
-			vo.setTaxAmtG1M8(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M8") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M8")));
-			vo.setTaxAmtG1M9(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M9") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M9")));
-			vo.setTaxAmtG1M10(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M10") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M10")));
-			vo.setTaxAmtG1M11(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M11") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M11")));
-			vo.setTaxAmtG1M12(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M12") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M12")));
-			vo.setTaxAmtG2M1(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M1") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M1")));
-			vo.setTaxAmtG2M2(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M2") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M2")));
-			vo.setTaxAmtG2M3(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M3") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M3")));
-			vo.setTaxAmtG2M4(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M4") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M4")));
-			vo.setTaxAmtG2M5(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M5") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M5")));
-			vo.setTaxAmtG2M6(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M6") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M6")));
-			vo.setTaxAmtG2M7(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M7") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M7")));
-			vo.setTaxAmtG2M8(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M8") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M8")));
-			vo.setTaxAmtG2M9(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M9") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M9")));
-			vo.setTaxAmtG2M10(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M10") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M10")));
-			vo.setTaxAmtG2M11(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M11") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M11")));
-			vo.setTaxAmtG2M12(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M12") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M12")));
+			vo.setSumTaxAmtG1( rs.getString("SUM_TAX_AMT_G1"));
+			vo.setSumTaxAmtG2( rs.getString("SUM_TAX_AMT_G2"));
+			vo.setTaxAmtChnPnt( rs.getString("TAX_AMT_CHN_PNT"));
+			vo.setTaxMonthNo( rs.getString("TAX_MONTH_NO"));
+			vo.setTaxAmtG1M1( rs.getString("TAX_AMT_G1_M1"));
+			vo.setTaxAmtG1M2( rs.getString("TAX_AMT_G1_M2"));
+			vo.setTaxAmtG1M3( rs.getString("TAX_AMT_G1_M3"));
+			vo.setTaxAmtG1M4( rs.getString("TAX_AMT_G1_M4"));
+			vo.setTaxAmtG1M5( rs.getString("TAX_AMT_G1_M5"));
+			vo.setTaxAmtG1M6( rs.getString("TAX_AMT_G1_M6"));
+			vo.setTaxAmtG1M7( rs.getString("TAX_AMT_G1_M7"));
+			vo.setTaxAmtG1M8( rs.getString("TAX_AMT_G1_M8"));
+			vo.setTaxAmtG1M9( rs.getString("TAX_AMT_G1_M9"));
+			vo.setTaxAmtG1M10( rs.getString("TAX_AMT_G1_M10"));
+			vo.setTaxAmtG1M11( rs.getString("TAX_AMT_G1_M11"));
+			vo.setTaxAmtG1M12( rs.getString("TAX_AMT_G1_M12"));
+			vo.setTaxAmtG2M1( rs.getString("TAX_AMT_G2_M1"));
+			vo.setTaxAmtG2M2( rs.getString("TAX_AMT_G2_M2"));
+			vo.setTaxAmtG2M3( rs.getString("TAX_AMT_G2_M3"));
+			vo.setTaxAmtG2M4( rs.getString("TAX_AMT_G2_M4"));
+			vo.setTaxAmtG2M5( rs.getString("TAX_AMT_G2_M5"));
+			vo.setTaxAmtG2M6( rs.getString("TAX_AMT_G2_M6"));
+			vo.setTaxAmtG2M7( rs.getString("TAX_AMT_G2_M7"));
+			vo.setTaxAmtG2M8( rs.getString("TAX_AMT_G2_M8"));
+			vo.setTaxAmtG2M9( rs.getString("TAX_AMT_G2_M9"));
+			vo.setTaxAmtG2M10( rs.getString("TAX_AMT_G2_M10"));
+			vo.setTaxAmtG2M11( rs.getString("TAX_AMT_G2_M11"));
+			vo.setTaxAmtG2M12( rs.getString("TAX_AMT_G2_M12"));
 			vo.setCondTaxGrp(rs.getString("COND_TAX_GRP"));
 			return vo;
 		}

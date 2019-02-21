@@ -6,7 +6,7 @@ import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetDtl;
 
 import java.math.BigDecimal;
 
-public interface TaDraftWorksheetDtlRepository extends CommonJpaCrudRepository<TaDraftWorksheetDtl, BigDecimal> {
-
+public interface TaDraftWorksheetDtlRepository extends CommonJpaCrudRepository<TaDraftWorksheetDtl, BigDecimal>, TaDraftWorksheetDtlCustom {
+	
 
 }

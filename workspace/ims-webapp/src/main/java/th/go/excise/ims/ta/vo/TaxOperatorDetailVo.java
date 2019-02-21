@@ -4,7 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class TaxOperatorDetailVo {
-	
+
 	private String cusFullname;
 	private String facFullname;
 	private String facAddress;
@@ -45,6 +45,15 @@ public class TaxOperatorDetailVo {
 	private String taxAmtG2M11;
 	private String taxAmtG2M12;
 	private String condTaxGrp;
+	private String dutyCode;
+
+	public String getDutyCode() {
+		return dutyCode;
+	}
+
+	public void setDutyCode(String dutyCode) {
+		this.dutyCode = dutyCode;
+	}
 
 	public String getCusFullname() {
 		return cusFullname;
@@ -365,10 +374,10 @@ public class TaxOperatorDetailVo {
 	public void setCondTaxGrp(String condTaxGrp) {
 		this.condTaxGrp = condTaxGrp;
 	}
-	
+
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
-	
+
 }

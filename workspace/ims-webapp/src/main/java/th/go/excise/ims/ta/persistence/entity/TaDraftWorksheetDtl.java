@@ -12,7 +12,7 @@ public class TaDraftWorksheetDtl extends BaseEntity {
 	private static final long serialVersionUID = 1299545505531306595L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_DRAFT_WORKSHEET_GEN")
-	@SequenceGenerator(name = "TA_DRAFT_WORKSHEET_GEN", sequenceName = "TA_DRAFT_WORKSHEET_SEQ", allocationSize = 1)
+	@SequenceGenerator(name = "TA_DRAFT_WORKSHEET_GEN", sequenceName = "TA_DRAFT_WORKSHEET_DTL_SEQ", allocationSize = 1)
 	@Column(name = "ID")
 	private BigDecimal id;
 	@Column(name = "ANALYSIS_NUMBER")
@@ -83,6 +83,16 @@ public class TaDraftWorksheetDtl extends BaseEntity {
 	private String sectorSelFlag;
 	@Column(name = "AREA_SEL_FLAG")
 	private String areaSelFlag;
+	@Column(name = "OFFICE_CODE")
+	private String officeCode;
+
+	public String getOfficeCode() {
+		return officeCode;
+	}
+
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
+	}
 
 	public BigDecimal getId() {
 		return id;

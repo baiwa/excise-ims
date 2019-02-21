@@ -1,6 +1,8 @@
 package th.go.excise.ims.ta.service;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,12 +12,15 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.BusinessException;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetDtl;
+import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetHdr;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondDtlTax;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondDtlTax;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondHdr;
 import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondDtlTaxRepository;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondDtlTaxRepository;
@@ -62,7 +67,10 @@ public class TaxOperatorService {
 
 	@Autowired
 	private TaDraftWorksheetJdbcRepository draftWorksheetJdbcRepository;
-	
+
+	@Autowired
+	private TaDraftWorksheetHdrRepository draftWorksheetHdrRepository;
+
 	public TaxOperatorVo getOperator(TaxOperatorFormVo formVo) throws BusinessException {
 		List<String> listCondGroups = this.taxOperatorRepository.listCondGroups(formVo.getAnalysisNumber());
 		List<TaxOperatorDetailVo> list = this.taxOperatorRepository.getTaxOperator(formVo.getAnalysisNumber());
@@ -79,7 +87,7 @@ public class TaxOperatorService {
 
 	public TaxOperatorVo getOperatorDraft(TaxOperatorFormVo formVo) {
 		List<TaxOperatorDetailVo> list = this.taxOperatorRepository.getTaxOperatorDraft(formVo.getAnalysisNumber());
-		
+
 		TaxOperatorVo vo = new TaxOperatorVo();
 		vo.setDatas(taxAuditFactorySelectionService.summaryDatatable(list, formVo));
 		return vo;
@@ -106,7 +114,7 @@ public class TaxOperatorService {
 		return this.worksheetCondDtlTaxJdbcRepository.findCondGroupDtl(formVo.getAnalysisNumber());
 	}
 
-	public void saveDraft(TaxOperatorFormVo formVo) {
+	public void saveDraft(TaxOperatorFormVo formVo) throws SQLException {
 
 		formVo.setBudgetYear(ConvertDateUtils.formatDateToString(new Date(), ConvertDateUtils.YYYY));
 		// TODO convert date MM/yyyy to yyyyMM
@@ -152,6 +160,16 @@ public class TaxOperatorService {
 		this.taWorksheetCondDtlTaxRepository.saveAll(condDetails);
 
 		// TODO ==>save draft
+		// Header
+		TaDraftWorksheetHdr draftHdr = new TaDraftWorksheetHdr();
+		draftHdr.setAnalysisNumber(analysisNumber);
+		draftHdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeId());
+		draftHdr.setYearMonthStart(dateStartStr);
+		draftHdr.setYearMonthEnd(dateEndStr);
+	
+		this.draftWorksheetHdrRepository.save(draftHdr);
+		
+		//Detail
 		List<TaxOperatorDetailVo> rsSearch = this.taxAuditFactorySelectionService.prepareTaxOperatorDetailVoList(formVo);
 
 		List<TaDraftWorksheetDtl> dratfs = new ArrayList<>();
@@ -161,42 +179,60 @@ public class TaxOperatorService {
 
 			draft.setAnalysisNumber(analysisNumber);
 			draft.setNewRegId(rs.getNewRegId());
-			draft.setSumTaxAmtG1(new BigDecimal(rs.getSumTaxAmtG1()));
-			draft.setSumTaxAmtG2(new BigDecimal(rs.getSumTaxAmtG2()));
-			draft.setTaxAmtChnPnt(new BigDecimal(rs.getTaxAmtChnPnt()));
-			draft.setTaxMonthNo(new BigDecimal(rs.getTaxMonthNo()));
 
-			draft.setTaxAmtG1M1(rs.getTaxAmtG1M1());
-			draft.setTaxAmtG1M2(rs.getTaxAmtG1M2());
-			draft.setTaxAmtG1M3(rs.getTaxAmtG1M3());
-			draft.setTaxAmtG1M4(rs.getTaxAmtG1M4());
-			draft.setTaxAmtG1M5(rs.getTaxAmtG1M5());
-			draft.setTaxAmtG1M6(rs.getTaxAmtG1M6());
-			draft.setTaxAmtG1M7(rs.getTaxAmtG1M7());
-			draft.setTaxAmtG1M8(rs.getTaxAmtG1M8());
-			draft.setTaxAmtG1M9(rs.getTaxAmtG1M9());
-			draft.setTaxAmtG1M10(rs.getTaxAmtG1M10());
-			draft.setTaxAmtG1M11(rs.getTaxAmtG1M11());
-			draft.setTaxAmtG1M12(rs.getTaxAmtG1M12());
+			draft.setSumTaxAmtG1(this.checkNull(rs.getSumTaxAmtG1()));
+			draft.setSumTaxAmtG2(this.checkNull(rs.getSumTaxAmtG2()));
+			draft.setTaxAmtChnPnt(this.checkNull(rs.getTaxAmtChnPnt()));
+			draft.setTaxMonthNo(this.checkNull(rs.getTaxMonthNo()));
 
-			draft.setTaxAmtG2M1(rs.getTaxAmtG2M1());
-			draft.setTaxAmtG2M2(rs.getTaxAmtG2M2());
-			draft.setTaxAmtG2M3(rs.getTaxAmtG2M3());
-			draft.setTaxAmtG2M4(rs.getTaxAmtG2M4());
-			draft.setTaxAmtG2M5(rs.getTaxAmtG2M5());
-			draft.setTaxAmtG2M6(rs.getTaxAmtG2M6());
-			draft.setTaxAmtG2M7(rs.getTaxAmtG2M7());
-			draft.setTaxAmtG2M8(rs.getTaxAmtG2M8());
-			draft.setTaxAmtG2M9(rs.getTaxAmtG2M9());
-			draft.setTaxAmtG2M10(rs.getTaxAmtG2M10());
-			draft.setTaxAmtG2M11(rs.getTaxAmtG2M11());
-			draft.setTaxAmtG2M12(rs.getTaxAmtG2M12());
+			draft.setTaxAmtG1M1(this.replaceStringNull(rs.getTaxAmtG1M1()));
+			draft.setTaxAmtG1M2(this.replaceStringNull(rs.getTaxAmtG1M2()));
+			draft.setTaxAmtG1M3(this.replaceStringNull(rs.getTaxAmtG1M3()));
+			draft.setTaxAmtG1M4(this.replaceStringNull(rs.getTaxAmtG1M4()));
+			draft.setTaxAmtG1M5(this.replaceStringNull(rs.getTaxAmtG1M5()));
+			draft.setTaxAmtG1M6(this.replaceStringNull(rs.getTaxAmtG1M6()));
+			draft.setTaxAmtG1M7(this.replaceStringNull(rs.getTaxAmtG1M7()));
+			draft.setTaxAmtG1M8(this.replaceStringNull(rs.getTaxAmtG1M8()));
+			draft.setTaxAmtG1M9(this.replaceStringNull(rs.getTaxAmtG1M9()));
+			draft.setTaxAmtG1M10(this.replaceStringNull(rs.getTaxAmtG1M10()));
+			draft.setTaxAmtG1M11(this.replaceStringNull(rs.getTaxAmtG1M11()));
+			draft.setTaxAmtG1M12(this.replaceStringNull(rs.getTaxAmtG1M12()));
+
+			draft.setTaxAmtG2M1(this.replaceStringNull(rs.getTaxAmtG2M1()));
+			draft.setTaxAmtG2M2(this.replaceStringNull(rs.getTaxAmtG2M2()));
+			draft.setTaxAmtG2M3(this.replaceStringNull(rs.getTaxAmtG2M3()));
+			draft.setTaxAmtG2M4(this.replaceStringNull(rs.getTaxAmtG2M4()));
+			draft.setTaxAmtG2M5(this.replaceStringNull(rs.getTaxAmtG2M5()));
+			draft.setTaxAmtG2M6(this.replaceStringNull(rs.getTaxAmtG2M6()));
+			draft.setTaxAmtG2M7(this.replaceStringNull(rs.getTaxAmtG2M7()));
+			draft.setTaxAmtG2M8(this.replaceStringNull(rs.getTaxAmtG2M8()));
+			draft.setTaxAmtG2M9(this.replaceStringNull(rs.getTaxAmtG2M9()));
+			draft.setTaxAmtG2M10(this.replaceStringNull(rs.getTaxAmtG2M10()));
+			draft.setTaxAmtG2M11(this.replaceStringNull(rs.getTaxAmtG2M11()));
+			draft.setTaxAmtG2M12(this.replaceStringNull(rs.getTaxAmtG2M12()));
 
 			draft.setCondTaxGrp(rs.getCondTaxGrp());
-
+			draft.setCreatedBy(UserLoginUtils.getCurrentUsername());
+			draft.setCreatedDate(LocalDateTime.now());
+			draft.setOfficeCode(rs.getOfficeCode());
 			dratfs.add(draft);
 		}
-		this.draftWorksheetRepository.saveAll(dratfs);
+		this.draftWorksheetRepository.saveBatchDraft(dratfs);
 	}
 
+	public BigDecimal checkNull(String amount) {
+
+		if (amount != null) {
+			return new BigDecimal(amount.replace(",", ""));
+		}
+		return null;
+	}
+
+	public String replaceStringNull(String amount) {
+
+		if (amount != null) {
+			return amount.replace(",", "");
+		}
+		return null;
+	}
 }

@@ -18,10 +18,6 @@ public class TaxOperatorVo {
 		this.condGroups = condGroups;
 	}
 
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-	}
 
 	public List<TaxOperatorDatatableVo> getDatas() {
 		return datas;
@@ -31,4 +27,8 @@ public class TaxOperatorVo {
 		this.datas = datas;
 	}
 
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
 }
