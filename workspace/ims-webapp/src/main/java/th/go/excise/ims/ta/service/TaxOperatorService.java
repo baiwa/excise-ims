@@ -81,7 +81,7 @@ public class TaxOperatorService {
 		List<TaxOperatorDetailVo> list = this.taxOperatorRepository.getTaxOperatorDraft(formVo.getAnalysisNumber());
 		
 		TaxOperatorVo vo = new TaxOperatorVo();
-		vo.setDatas(list);
+		vo.setDatas(taxAuditFactorySelectionService.summaryDatatable(list, formVo));
 		return vo;
 	}
 
