@@ -87,6 +87,24 @@ public class TaxOperatorController {
 		
 		return response;
 	}
+	
+	@GetMapping("/find-all-analysis-number-draft")
+	@ResponseBody
+	public ResponseData<List<String>> findAllAnalysisNumberDraft() {
+		ResponseData<List<String>> response = new ResponseData<>();
+
+		try {
+			response.setData(taxOperatorService.findAllAnalysisNumberDraft());
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		
+		return response;
+	}
 
 	@PostMapping("/find-cond-group-dtl")
 	@ResponseBody
