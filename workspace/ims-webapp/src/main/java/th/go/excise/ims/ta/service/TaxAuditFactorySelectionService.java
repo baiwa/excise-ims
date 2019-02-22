@@ -11,6 +11,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -57,11 +58,14 @@ public class TaxAuditFactorySelectionService {
 	private TaWorksheetCondDtlTaxRepository taWorksheetCondDtlTaxRepository;
 
 	public TaxOperatorVo getPreviewData(TaxOperatorFormVo formVo) {
-		
-		List<TaxOperatorDetailVo> taxOperatorDetailVoList = prepareTaxOperatorDetailVoList(formVo);
 		TaxOperatorVo vo = new TaxOperatorVo();
-		vo.setDatas(summaryDatatable(taxOperatorDetailVoList, formVo));
-
+		try {
+			List<TaxOperatorDetailVo> taxOperatorDetailVoList = prepareTaxOperatorDetailVoList(formVo);
+			vo.setDatas(summaryDatatable(taxOperatorDetailVoList, formVo));
+			vo.setCount(taWsReg4000Repository.countAll());
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
 		return vo;
 	}
 	
@@ -156,13 +160,13 @@ public class TaxAuditFactorySelectionService {
 		return taxAmt;
 	}
 
-	public List<TaxOperatorDetailVo> prepareTaxOperatorDetailVoList(TaxOperatorFormVo formVo) {
+	public List<TaxOperatorDetailVo> prepareTaxOperatorDetailVoList(TaxOperatorFormVo formVo) throws SQLException {
 		logger.info("prepareTaxOperatorDetailVoList startDate={}, endDate={}, dateRange={}", formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
 		Date ymStart = ConvertDateUtils.parseStringToDate(formVo.getDateStart(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
 		Date ymEnd = ConvertDateUtils.parseStringToDate(formVo.getDateEnd(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
 		String ymStartStr = ConvertDateUtils.formatDateToString(ymStart, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		String ymEndStr = ConvertDateUtils.formatDateToString(ymEnd, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
-		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findAll();
+		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findAllPagination(formVo.getStart(), formVo.getLength());
 		Map<String, List<TaWsInc8000M>> wsInc8000MMap = taWsInc8000MRepository.findByMonthRange(ymStartStr, ymEndStr);
 
 		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");

@@ -1,6 +1,7 @@
 package th.go.excise.ims.ta.persistence.repository;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,9 +9,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
+import org.springframework.jdbc.core.RowMapper;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
+import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
 
 public class TaWsReg4000RepositoryImpl implements TaWsReg4000Custom {
@@ -55,5 +60,48 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000Custom {
 		commonJdbcTemplate.update("TRUNCATE TABLE TA_WS_REG4000");
 		
 	}
+
+	@Override
+	public List<TaWsReg4000> findAllPagination(int start, int length) throws SQLException {
+		StringBuilder sql = new StringBuilder(" SELECT * FROM TA_WS_REG4000 WHERE IS_DELETED = '").append(FLAG.N_FLAG).append("' ORDER BY DUTY_CODE , NEW_REG_ID ");
+		return this.commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), start, length),  rowMappping);
+	}
+	@Override
+	public Long countAll() throws SQLException {
+		StringBuilder sql = new StringBuilder(" SELECT * FROM TA_WS_REG4000 WHERE IS_DELETED = '").append(FLAG.N_FLAG).append("' ORDER BY DUTY_CODE , NEW_REG_ID ");
+		return this.commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()),  Long.class);
+	}
+	
+	
+	
+	protected RowMapper<TaWsReg4000> rowMappping = new RowMapper<TaWsReg4000>() {
+
+		@Override
+		public TaWsReg4000 mapRow(ResultSet re, int arg1) throws SQLException {
+			TaWsReg4000 vo = new TaWsReg4000();
+			vo.setWsReg4000Id(re.getLong("WS_REG4000_ID"));
+			vo.setNewRegId(re.getString("NEW_REG_ID"));
+			vo.setCusId(re.getString("CUS_ID"));
+			vo.setCusFullname(re.getString("CUS_FULLNAME"));
+			vo.setCusAddress(re.getString("CUS_ADDRESS"));
+			vo.setCusTelno(re.getString("CUS_TELNO"));
+			vo.setCusEmail(re.getString("CUS_EMAIL"));
+			vo.setCusUrl(re.getString("CUS_URL"));
+			vo.setFacId(re.getString("FAC_ID"));
+			vo.setFacFullname(re.getString("FAC_FULLNAME"));
+			vo.setFacAddress(re.getString("FAC_ADDRESS"));
+			vo.setFacTelno(re.getString("FAC_TELNO"));
+			vo.setFacEmail(re.getString("FAC_EMAIL"));
+			vo.setFacUrl(re.getString("FAC_URL"));
+			vo.setFacType(re.getString("FAC_TYPE"));
+			vo.setRegDate(LocalDateTimeConverter.convertToEntityAttribute(re.getTimestamp("REG_DATE")));
+			vo.setRegCapital(re.getString("REG_CAPITAL"));
+			vo.setOfficeCode(re.getString("OFFICE_CODE"));
+			vo.setActiveFlag(re.getString("ACTIVE_FLAG"));
+			vo.setDutyCode(re.getString("DUTY_CODE"));
+			
+			return vo;
+		}
+	};
 
 }
