@@ -38,6 +38,8 @@ public class TaxAuditFactorySelectionService {
 	private static final Logger logger = LoggerFactory.getLogger(TaxAuditFactorySelectionService.class);
 
 	private static final String NO_TAX_AMOUNT = "-";
+	private static final String EXCISE_PRODUCT_TYPE = "EXCISE_PRODUCT_TYPE";
+	private static final String EXCISE_SERVICE_TYPE = "EXCISE_SERVICE_TYPE";
 
 	@Autowired
 	private TaWsReg4000Repository taWsReg4000Repository;
@@ -207,7 +209,7 @@ public class TaxAuditFactorySelectionService {
 			wsInc8000MList = wsInc8000MMap.get(wsReg4000.getNewRegId());
 			if (CollectionUtils.isEmpty(wsInc8000MList)) {
 				// Set Default Value
-				taxAmount = decimalFormat.format(BigDecimal.ZERO);
+				taxAmount = NO_TAX_AMOUNT;
 				detailVo.setTaxAmtG1M1(taxAmount);
 				detailVo.setTaxAmtG1M2(taxAmount);
 				detailVo.setTaxAmtG1M3(taxAmount);
@@ -327,7 +329,16 @@ public class TaxAuditFactorySelectionService {
 				taxAmtChnPnt = (sumTaxAmtG2.subtract(sumTaxAmtG1)).multiply(new BigDecimal("100")).divide(sumTaxAmtG1, 2, BigDecimal.ROUND_HALF_UP);
 			}
 			detailVo.setTaxAmtChnPnt(decimalFormat.format(taxAmtChnPnt));
-
+			try {
+				if("1".equals(wsReg4000.getFacType()) || "3".equals(wsReg4000.getFacType())) {
+					detailVo.setDutyName(ApplicationCache.getParamInfoByCode(EXCISE_PRODUCT_TYPE, wsReg4000.getDutyCode()).getValue1());
+				}else {
+					detailVo.setDutyName(ApplicationCache.getParamInfoByCode(EXCISE_SERVICE_TYPE, wsReg4000.getDutyCode()).getValue1());
+				}
+			} catch (Exception e) {
+				logger.info(e.getMessage());
+			}
+			
 			detailVoList.add(detailVo);
 		}
 

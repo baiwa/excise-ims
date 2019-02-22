@@ -40,8 +40,8 @@ public class TaxAuditFactorySelectionServiceTest {
 	@Test
 	public void test_getPreviewData() {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
-		formVo.setDateStart("201505");
-		formVo.setDateEnd("201704");
+		formVo.setDateStart("05/2558");
+		formVo.setDateEnd("04/2560");
 		formVo.setDateRange(24);
 		
 		try {

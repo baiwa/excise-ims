@@ -46,6 +46,7 @@ public class TaxOperatorDetailVo {
 	private String taxAmtG2M12;
 	private String condTaxGrp;
 	private String dutyCode;
+	private String dutyName;
 
 	public String getDutyCode() {
 		return dutyCode;
@@ -378,6 +379,14 @@ public class TaxOperatorDetailVo {
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+	public String getDutyName() {
+		return dutyName;
+	}
+
+	public void setDutyName(String dutyName) {
+		this.dutyName = dutyName;
 	}
 
 }
