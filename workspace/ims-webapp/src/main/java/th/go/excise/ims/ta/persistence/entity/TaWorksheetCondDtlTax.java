@@ -2,7 +2,6 @@
 package th.go.excise.ims.ta.persistence.entity;
 
 import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,10 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
@@ -23,12 +20,12 @@ public class TaWorksheetCondDtlTax extends BaseEntity {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5026626898547053068L;
+	private static final long serialVersionUID = 3435649806322176521L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_WORKSHEET_COND_DTL_TAX_GEN")
 	@SequenceGenerator(name = "TA_WORKSHEET_COND_DTL_TAX_GEN", sequenceName = "TA_WORKSHEET_COND_DTL_TAX_SEQ", allocationSize = 1)
 	@Column(name = "WORKSHEET_COND_DTL_TAX_ID")
-	private BigDecimal worksheetCondDtlTaxId;
+	private Long worksheetCondDtlTaxId;
 	@Column(name = "ANALYSIS_NUMBER")
 	private String analysisNumber;
 	@Column(name = "COND_GROUP")
@@ -50,11 +47,11 @@ public class TaWorksheetCondDtlTax extends BaseEntity {
 
 	
 
-	public BigDecimal getWorksheetCondDtlTaxId() {
+	public Long getWorksheetCondDtlTaxId() {
 		return worksheetCondDtlTaxId;
 	}
 
-	public void setWorksheetCondDtlTaxId(BigDecimal worksheetCondDtlTaxId) {
+	public void setWorksheetCondDtlTaxId(Long worksheetCondDtlTaxId) {
 		this.worksheetCondDtlTaxId = worksheetCondDtlTaxId;
 	}
 
@@ -121,7 +118,7 @@ public class TaWorksheetCondDtlTax extends BaseEntity {
 	public void setRiskLevel(String riskLevel) {
 		this.riskLevel = riskLevel;
 	}
-	
+
 	public String getCondType() {
 		return condType;
 	}

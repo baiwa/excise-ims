@@ -16,7 +16,6 @@ import org.springframework.jdbc.core.RowMapper;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
-import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
 
 public class TaWorksheetHdrRepositoryImpl implements TaWorksheetHdrCustom {
@@ -38,36 +37,6 @@ public class TaWorksheetHdrRepositoryImpl implements TaWorksheetHdrCustom {
 			public void setValues(PreparedStatement ps, TaWorksheetHdr taWorksheetHdr) throws SQLException {
 				List<Object> paramList = new ArrayList<Object>();
 				paramList.add(taWorksheetHdr.getAnalysisNumber());
-				paramList.add(taWorksheetHdr.getNewRegId());
-				paramList.add(taWorksheetHdr.getSumTaxAmtG1());
-				paramList.add(taWorksheetHdr.getSumTaxAmtG2());
-				paramList.add(taWorksheetHdr.getTaxAmtChnPnt());
-				paramList.add(taWorksheetHdr.getTaxMonthNo());
-				paramList.add(taWorksheetHdr.getTaxAmtG1M1());
-				paramList.add(taWorksheetHdr.getTaxAmtG1M2());
-				paramList.add(taWorksheetHdr.getTaxAmtG1M3());
-				paramList.add(taWorksheetHdr.getTaxAmtG1M4());
-				paramList.add(taWorksheetHdr.getTaxAmtG1M5());
-				paramList.add(taWorksheetHdr.getTaxAmtG1M6());
-				paramList.add(taWorksheetHdr.getTaxAmtG1M7());
-				paramList.add(taWorksheetHdr.getTaxAmtG1M8());
-				paramList.add(taWorksheetHdr.getTaxAmtG1M9());
-				paramList.add(taWorksheetHdr.getTaxAmtG1M10());
-				paramList.add(taWorksheetHdr.getTaxAmtG1M11());
-				paramList.add(taWorksheetHdr.getTaxAmtG1M12());
-				paramList.add(taWorksheetHdr.getTaxAmtG2M1());
-				paramList.add(taWorksheetHdr.getTaxAmtG2M2());
-				paramList.add(taWorksheetHdr.getTaxAmtG2M3());
-				paramList.add(taWorksheetHdr.getTaxAmtG2M4());
-				paramList.add(taWorksheetHdr.getTaxAmtG2M5());
-				paramList.add(taWorksheetHdr.getTaxAmtG2M6());
-				paramList.add(taWorksheetHdr.getTaxAmtG2M7());
-				paramList.add(taWorksheetHdr.getTaxAmtG2M8());
-				paramList.add(taWorksheetHdr.getTaxAmtG2M9());
-				paramList.add(taWorksheetHdr.getTaxAmtG2M10());
-				paramList.add(taWorksheetHdr.getTaxAmtG2M11());
-				paramList.add(taWorksheetHdr.getTaxAmtG2M12());
-				paramList.add(taWorksheetHdr.getCondTaxGrp());
 				paramList.add("SYSTEM");
 
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
@@ -101,37 +70,7 @@ public class TaWorksheetHdrRepositoryImpl implements TaWorksheetHdrCustom {
 		public TaWorksheetHdr mapRow(ResultSet rs, int arg1) throws SQLException {
 			TaWorksheetHdr vo = new TaWorksheetHdr();
 
-			vo.setNewRegId(rs.getString("NEW_REG_ID"));
 			vo.setAnalysisNumber(rs.getString("ANALYSIS_NUMBER"));
-			vo.setNewRegId(rs.getString("NEW_REG_ID"));
-			vo.setSumTaxAmtG1(rs.getBigDecimal("SUM_TAX_AMT_G1") == null ? BigDecimal.ZERO : rs.getBigDecimal("SUM_TAX_AMT_G1"));
-			vo.setSumTaxAmtG2(rs.getBigDecimal("SUM_TAX_AMT_G2") == null ? BigDecimal.ZERO : rs.getBigDecimal("SUM_TAX_AMT_G2"));
-			vo.setTaxAmtChnPnt(rs.getBigDecimal("TAX_AMT_CHN_PNT") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_CHN_PNT"));
-			vo.setTaxMonthNo(rs.getBigDecimal("TAX_MONTH_NO") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_MONTH_NO"));
-			vo.setTaxAmtG1M1(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M1") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M1")));
-			vo.setTaxAmtG1M2(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M2") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M2")));
-			vo.setTaxAmtG1M3(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M3") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M3")));
-			vo.setTaxAmtG1M4(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M4") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M4")));
-			vo.setTaxAmtG1M5(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M5") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M5")));
-			vo.setTaxAmtG1M6(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M6") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M6")));
-			vo.setTaxAmtG1M7(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M7") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M7")));
-			vo.setTaxAmtG1M8(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M8") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M8")));
-			vo.setTaxAmtG1M9(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M9") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M9")));
-			vo.setTaxAmtG1M10(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M10") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M10")));
-			vo.setTaxAmtG1M11(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M11") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M11")));
-			vo.setTaxAmtG1M12(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G1_M12") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G1_M12")));
-			vo.setTaxAmtG2M1(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M1") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M1")));
-			vo.setTaxAmtG2M2(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M2") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M2")));
-			vo.setTaxAmtG2M3(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M3") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M3")));
-			vo.setTaxAmtG2M4(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M4") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M4")));
-			vo.setTaxAmtG2M5(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M5") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M5")));
-			vo.setTaxAmtG2M6(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M6") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M6")));
-			vo.setTaxAmtG2M7(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M7") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M7")));
-			vo.setTaxAmtG2M8(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M8") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M8")));
-			vo.setTaxAmtG2M9(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M9") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M9")));
-			vo.setTaxAmtG2M10(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M10") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M10")));
-			vo.setTaxAmtG2M11(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M11") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M11")));
-			vo.setTaxAmtG2M12(decimalFormat.format(rs.getBigDecimal("TAX_AMT_G2_M12") == null ? BigDecimal.ZERO : rs.getBigDecimal("TAX_AMT_G2_M12")));
 			return vo;
 		}
 	};

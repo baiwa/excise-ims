@@ -35,7 +35,7 @@ public class TaWorksheetHdrServiceTest {
 		try {
 			List<TaWorksheetHdr> taWorksheetHdrList = taWorksheetHdrRepository.findSubConditionRegCapital(BigDecimal.valueOf(19000), null);
 			for (TaWorksheetHdr taWorksheetHdr : taWorksheetHdrList) {
-				logger.info(taWorksheetHdr.getNewRegId());
+//				logger.info(taWorksheetHdr.getNewRegId());
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
