@@ -143,8 +143,10 @@ public class TaWorksheetHdrService {
 						for (TaWorksheetCondDtlTax taWorksheetCondDtlTax : condDetails) {
 							try {
 								if (TA_MAS_COND_MAIN_TYPE.TAX.equals(taWorksheetCondDtlTax.getCondType())) {
-									if (taWorksheetCondDtlTax.getTaxMonthStart().compareTo(taxDratfVo.getTaxMonthNo()) != 1 && taWorksheetCondDtlTax.getTaxMonthEnd().compareTo(taxDratfVo.getTaxMonthNo()) != -1 && taWorksheetCondDtlTax.getRangeStart().compareTo(taxDratfVo.getTaxAmtChnPnt()) != 1
-											&& taWorksheetCondDtlTax.getRangeEnd().compareTo(taxDratfVo.getTaxAmtChnPnt()) != -1) {
+									if (taxDratfVo.getTaxMonthNo().intValue() >= taWorksheetCondDtlTax.getTaxMonthStart().intValue()
+											&& taxDratfVo.getTaxMonthNo().intValue() <= taWorksheetCondDtlTax.getTaxMonthEnd().intValue()
+											&& taWorksheetCondDtlTax.getRangeStart().compareTo(floorAndCeilPercentage(taxDratfVo.getTaxAmtChnPnt())) != 1
+											&& taWorksheetCondDtlTax.getRangeEnd().compareTo(floorAndCeilPercentage(taxDratfVo.getTaxAmtChnPnt())) != -1) {
 										taWorksheetDtl.setCondMainGrp(taWorksheetCondDtlTax.getCondGroup());
 										break;
 									}
@@ -166,4 +168,17 @@ public class TaWorksheetHdrService {
 		}
 
 	}
+	
+	private BigDecimal floorAndCeilPercentage(BigDecimal amount) {
+		BigDecimal amountPlus100 = new BigDecimal("100");
+		BigDecimal amountMinus100 = new BigDecimal("-100");
+		if (amount.compareTo(amountPlus100) == 1) {
+			return amountPlus100;
+		} else if (amount.compareTo(amountMinus100) == -1) {
+			return amountMinus100;
+		} else {
+			return amount;
+		}
+	}
+	
 }
