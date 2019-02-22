@@ -10,6 +10,33 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	private int dateRange;
 	private String draftNumber;
 	private String budgetYear;
+	private String facType;
+	private String dutyCode;
+	private String officeCode;
+
+	public String getOfficeCode() {
+		return officeCode;
+	}
+
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
+	}
+
+	public String getFacType() {
+		return facType;
+	}
+
+	public void setFacType(String facType) {
+		this.facType = facType;
+	}
+
+	public String getDutyCode() {
+		return dutyCode;
+	}
+
+	public void setDutyCode(String dutyCode) {
+		this.dutyCode = dutyCode;
+	}
 
 	public String getBudgetYear() {
 		return budgetYear;
