@@ -37,6 +37,8 @@ public class TaMasCondDtlTax extends BaseEntity {
 	private Integer rangeEnd;
 	@Column(name = "RISK_LEVEL")
 	private String riskLevel;
+	@Column(name = "COND_TYPE")
+	private String condType;
 
 	public Long getCondDtlTaxId() {
 		return condDtlTaxId;
@@ -108,6 +110,14 @@ public class TaMasCondDtlTax extends BaseEntity {
 
 	public void setRiskLevel(String riskLevel) {
 		this.riskLevel = riskLevel;
+	}
+
+	public String getCondType() {
+		return condType;
+	}
+
+	public void setCondType(String condType) {
+		this.condType = condType;
 	}
 
 }
