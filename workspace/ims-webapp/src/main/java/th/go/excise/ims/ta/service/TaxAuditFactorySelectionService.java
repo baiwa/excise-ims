@@ -1,5 +1,6 @@
 package th.go.excise.ims.ta.service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -8,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,14 +63,24 @@ public class TaxAuditFactorySelectionService {
 		try {
 			List<TaxOperatorDetailVo> taxOperatorDetailVoList = prepareTaxOperatorDetailVoList(formVo);
 			vo.setDatas(summaryDatatable(taxOperatorDetailVoList, formVo));
-			vo.setCount(taWsReg4000Repository.countAll());
+			vo.setCount(taWsReg4000Repository.countAll(formVoToTaWsReg4000(formVo)));
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
 		return vo;
 	}
-	
-	public List<TaxOperatorDatatableVo> summaryDatatable(List<TaxOperatorDetailVo> taxOperatorDetailVoList ,TaxOperatorFormVo formVo) {
+	private TaWsReg4000 formVoToTaWsReg4000(TaxOperatorFormVo formVo) {
+		TaWsReg4000 taWsReg4000 = new TaWsReg4000();
+		try {
+			BeanUtils.copyProperties(taWsReg4000, formVo);
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			logger.error(e.getMessage() , e);
+		}
+		
+		return taWsReg4000;
+	}
+
+	public List<TaxOperatorDatatableVo> summaryDatatable(List<TaxOperatorDetailVo> taxOperatorDetailVoList, TaxOperatorFormVo formVo) {
 		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = new ArrayList<>();
 		TaxOperatorDatatableVo taxOperatorDatatableVo = null;
 		List<String> taxAmtList = null;
@@ -109,7 +121,7 @@ public class TaxAuditFactorySelectionService {
 				taxAmt = taxOperatorDetailVo.getTaxAmtG1M2();
 			} else if (i + 1 == 3) {
 				taxAmt = taxOperatorDetailVo.getTaxAmtG1M3();
-			} else if(i + 1 == 4) {
+			} else if (i + 1 == 4) {
 				taxAmt = taxOperatorDetailVo.getTaxAmtG1M4();
 			} else if (i + 1 == 5) {
 				taxAmt = taxOperatorDetailVo.getTaxAmtG1M5();
@@ -166,11 +178,8 @@ public class TaxAuditFactorySelectionService {
 		String ymStartStr = ConvertDateUtils.formatDateToString(ymStart, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		String ymEndStr = ConvertDateUtils.formatDateToString(ymEnd, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		List<TaWsReg4000> wsReg4000List = null;
-		if(formVo.getStart() == null && formVo.getLength() == null ) {
-			wsReg4000List = taWsReg4000Repository.findAll();
-		}else {
-			wsReg4000List = taWsReg4000Repository.findAllPagination(formVo.getStart(), formVo.getLength());
-		}
+		
+		wsReg4000List = taWsReg4000Repository.findAllPagination(formVoToTaWsReg4000(formVo),formVo.getStart(), formVo.getLength());
 		Map<String, List<TaWsInc8000M>> wsInc8000MMap = taWsInc8000MRepository.findByMonthRange(ymStartStr, ymEndStr);
 		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
 		List<TaWsInc8000M> wsInc8000MList = null;
@@ -191,9 +200,9 @@ public class TaxAuditFactorySelectionService {
 			int countG2 = 0;
 			sumTaxAmtG1 = BigDecimal.ZERO;
 			sumTaxAmtG2 = BigDecimal.ZERO;
-			
+
 			detailVo = new TaxOperatorDetailVo();
-			
+
 			detailVo.setDutyCode(wsReg4000.getDutyCode());
 			detailVo.setNewRegId(wsReg4000.getNewRegId());
 			detailVo.setCusFullname(wsReg4000.getCusFullname());
@@ -337,15 +346,15 @@ public class TaxAuditFactorySelectionService {
 			}
 			detailVo.setTaxAmtChnPnt(decimalFormat.format(taxAmtChnPnt));
 			try {
-				if("1".equals(wsReg4000.getFacType()) || "3".equals(wsReg4000.getFacType())) {
+				if ("1".equals(wsReg4000.getFacType()) || "3".equals(wsReg4000.getFacType())) {
 					detailVo.setDutyName(ApplicationCache.getParamInfoByCode(EXCISE_PRODUCT_TYPE, wsReg4000.getDutyCode()).getValue1());
-				}else {
+				} else {
 					detailVo.setDutyName(ApplicationCache.getParamInfoByCode(EXCISE_SERVICE_TYPE, wsReg4000.getDutyCode()).getValue1());
 				}
 			} catch (Exception e) {
 				logger.info(e.getMessage());
 			}
-			
+
 			detailVoList.add(detailVo);
 		}
 

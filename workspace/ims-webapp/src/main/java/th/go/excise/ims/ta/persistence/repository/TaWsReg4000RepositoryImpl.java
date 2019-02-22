@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
@@ -62,14 +63,38 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000Custom {
 	}
 
 	@Override
-	public List<TaWsReg4000> findAllPagination(int start, int length) throws SQLException {
-		StringBuilder sql = new StringBuilder(" SELECT * FROM TA_WS_REG4000 WHERE IS_DELETED = '").append(FLAG.N_FLAG).append("' ORDER BY DUTY_CODE , NEW_REG_ID ");
-		return this.commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), start, length),  rowMappping);
+	public List<TaWsReg4000> findAllPagination(TaWsReg4000 taWsReg4000, int start, int length) throws SQLException {
+		List<Object> paramList = new ArrayList<>();
+		StringBuilder sql = new StringBuilder(" SELECT * FROM TA_WS_REG4000 WHERE IS_DELETED = '").append(FLAG.N_FLAG).append("' ");
+		if(StringUtils.isNotBlank(taWsReg4000.getFacType())) {
+			paramList.add(taWsReg4000.getFacType());
+			sql.append(" AND FAC_TYPE = ?");
+		}
+		
+		if(StringUtils.isNotBlank(taWsReg4000.getDutyCode())) {
+			paramList.add(taWsReg4000.getDutyCode());
+			sql.append(" AND DUTY_CODE = ?");
+		}
+		
+		sql.append(" ORDER BY DUTY_CODE , NEW_REG_ID ");
+		return this.commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), start, length),paramList.toArray(),  rowMappping);
 	}
 	@Override
-	public Long countAll() throws SQLException {
-		StringBuilder sql = new StringBuilder(" SELECT * FROM TA_WS_REG4000 WHERE IS_DELETED = '").append(FLAG.N_FLAG).append("' ORDER BY DUTY_CODE , NEW_REG_ID ");
-		return this.commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()),  Long.class);
+	public Long countAll(TaWsReg4000 taWsReg4000) throws SQLException {
+		List<Object> paramList = new ArrayList<>();
+		StringBuilder sql = new StringBuilder(" SELECT * FROM TA_WS_REG4000 WHERE IS_DELETED = '").append(FLAG.N_FLAG).append("' ");;
+		if(StringUtils.isNotBlank(taWsReg4000.getFacType())) {
+			paramList.add(taWsReg4000.getFacType());
+			sql.append(" AND FAC_TYPE = ?");
+		}
+		
+		if(StringUtils.isNotBlank(taWsReg4000.getDutyCode())) {
+			paramList.add(taWsReg4000.getDutyCode());
+			sql.append(" AND DUTY_CODE = ?");
+		}
+		
+		sql.append(" ORDER BY DUTY_CODE , NEW_REG_ID ");
+		return this.commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), paramList.toArray(), Long.class);
 	}
 	
 	
