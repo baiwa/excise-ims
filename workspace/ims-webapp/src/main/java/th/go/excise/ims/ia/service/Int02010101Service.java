@@ -35,7 +35,8 @@ public class Int02010101Service {
 			BigDecimal seq = main.get(i).getSeq();
 			detail = iaQuestionnaireSideDtlJdbcRepository.findDtlByIdSide(idSide, seq);
 			for(int j= 0; j< detail.toArray().length; j++) {
-				details = iaQuestionnaireSideDtlJdbcRepository.findDtlsByIdSide(idSide, seq);
+				BigDecimal seqDtl = detail.get(j).getSeqDtl();
+				details = iaQuestionnaireSideDtlJdbcRepository.findDtlsByIdSide(idSide, seqDtl);
 				detail.get(j).setChildren(details);
 			}
 			main.get(i).setChildren(detail);
