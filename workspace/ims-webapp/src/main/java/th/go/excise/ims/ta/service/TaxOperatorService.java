@@ -69,12 +69,13 @@ public class TaxOperatorService {
 	private TaDraftWorksheetHdrRepository draftWorksheetHdrRepository;
 
 	public TaxOperatorVo getOperator(TaxOperatorFormVo formVo) throws BusinessException {
-		List<String> listCondGroups = this.taxOperatorRepository.listCondGroups(formVo.getDraftNumber());
-		List<TaxOperatorDetailVo> list = this.taxOperatorRepository.getTaxOperator(formVo.getDraftNumber());
+		//List<String> listCondGroups = this.taxOperatorRepository.listCondGroups(formVo.getDraftNumber());
+		List<TaxOperatorDetailVo> list = this.taxOperatorRepository.getTaxOperator(formVo);
 
 		TaxOperatorVo vo = new TaxOperatorVo();
-		vo.setCondGroups(listCondGroups);
+		//vo.setCondGroups(listCondGroups);
 		vo.setDatas(taxAuditFactorySelectionService.summaryDatatable(list, formVo));
+		vo.setCount(this.taxOperatorRepository.countTaxOperator(formVo));
 		return vo;
 	}
 
@@ -114,7 +115,19 @@ public class TaxOperatorService {
 	}
 
 	public YearMonthVo monthStart(TaxOperatorFormVo formVo) {
-		YearMonthVo obj = this.worksheetCondHdrJdbcRepository.monthStart(formVo.getDraftNumber());
+		YearMonthVo obj = this.worksheetCondHdrJdbcRepository.monthStart(formVo.getAnalysisNumber());
+
+		Date ymStart = ConvertDateUtils.parseStringToDate(obj.getYearMonthStart(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
+		Date ymEnd = ConvertDateUtils.parseStringToDate(obj.getYearMonthEnd(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
+		String ymStartStr = ConvertDateUtils.formatDateToString(ymStart, ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
+		String ymEndStr = ConvertDateUtils.formatDateToString(ymEnd, ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
+
+		obj.setYearMonthStart(ymStartStr);
+		obj.setYearMonthEnd(ymEndStr);
+		return obj;
+	}
+	public YearMonthVo monthStartDraft(TaxOperatorFormVo formVo) {
+		YearMonthVo obj = this.draftWorksheetJdbcRepository.monthStartDraft(formVo.getDraftNumber());
 
 		Date ymStart = ConvertDateUtils.parseStringToDate(obj.getYearMonthStart(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		Date ymEnd = ConvertDateUtils.parseStringToDate(obj.getYearMonthEnd(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
@@ -127,7 +140,7 @@ public class TaxOperatorService {
 	}
 
 	public List<CondGroupVo> findCondGroupDtl(TaxOperatorFormVo formVo) {
-		return this.worksheetCondDtlTaxJdbcRepository.findCondGroupDtl(formVo.getDraftNumber());
+		return this.worksheetCondDtlTaxJdbcRepository.findCondGroupDtl(formVo.getAnalysisNumber());
 	}
 
 	public void saveDraft(TaxOperatorFormVo formVo) throws SQLException {

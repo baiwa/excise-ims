@@ -20,19 +20,19 @@ public class TaxOperatorJdbcRepository {
 
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
-
-	public List<TaxOperatorDetailVo> getTaxOperator(String analysisNumber) {
+	public Long countTaxOperator(TaxOperatorFormVo formVo) {
 
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT R4000.CUS_FULLNAME ");
 		sql.append("   ,R4000.FAC_FULLNAME ");
 		sql.append("   ,R4000.FAC_ADDRESS ");
-		sql.append("   ,R4000.OFFICE_CODE ");
+		sql.append("   ,R4000.OFFICE_CODE OFFICE_CODE_R4000");
 		sql.append("   ,ED_SECTOR.OFFICE_CODE SEC_CODE ");
 		sql.append("   ,ED_SECTOR.DEPT_SHORT_NAME SEC_DESC ");
 		sql.append("   ,ED_AREA.OFFICE_CODE AREA_CODE ");
 		sql.append("   ,ED_AREA.DEPT_SHORT_NAME AREA_DESC ");
 		sql.append("   ,TA_W_DTL.COND_MAIN_GRP ");
+		sql.append("   , TA_W_HDR.ANALYSIS_NUMBER");
 		sql.append("   ,TA_DW_DTL.* ");
 		sql.append(" FROM TA_WORKSHEET_DTL TA_W_DTL ");
 		sql.append(" INNER JOIN TA_WORKSHEET_HDR TA_W_HDR ON TA_W_DTL.OFFICE_CODE = TA_W_HDR.OFFICE_CODE ");
@@ -58,9 +58,70 @@ public class TaxOperatorJdbcRepository {
 		sql.append(" ) ED_AREA ON ED_AREA.OFFICE_CODE = CONCAT (SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
 		sql.append(" WHERE TA_W_HDR.IS_DELETED = 'N' ");
 		sql.append("   AND TA_W_HDR.ANALYSIS_NUMBER = ? ");
-		//sql.append("   AND TA_W_HDR.OFFICE_CODE = '010000' ");
+		// sql.append("   AND TA_W_HDR.OFFICE_CODE = '010000' ");
 
-		return commonJdbcTemplate.query(sql.toString(), new Object[] { analysisNumber }, taxOperatorrowMapper);
+		List<Object> params = new ArrayList<>();
+		//params.add(formVo.getAnalysisNumber());
+		params.add("20190222194307");
+
+		if (StringUtils.isNotBlank(formVo.getCond())) {
+			sql.append("AND TA_W_DTL.COND_MAIN_GRP=? ");
+			params.add(formVo.getCond());
+		}
+		String countSql = OracleUtils.countForDataTable(sql.toString());
+		return commonJdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
+	}
+
+	public List<TaxOperatorDetailVo> getTaxOperator(TaxOperatorFormVo formVo) {
+
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT R4000.CUS_FULLNAME ");
+		sql.append("   ,R4000.FAC_FULLNAME ");
+		sql.append("   ,R4000.FAC_ADDRESS ");
+		sql.append("   ,R4000.OFFICE_CODE OFFICE_CODE_R4000");
+		sql.append("   ,ED_SECTOR.OFFICE_CODE SEC_CODE ");
+		sql.append("   ,ED_SECTOR.DEPT_SHORT_NAME SEC_DESC ");
+		sql.append("   ,ED_AREA.OFFICE_CODE AREA_CODE ");
+		sql.append("   ,ED_AREA.DEPT_SHORT_NAME AREA_DESC ");
+		sql.append("   ,TA_W_DTL.COND_MAIN_GRP ");
+		sql.append("   , TA_W_HDR.ANALYSIS_NUMBER");
+		sql.append("   ,TA_DW_DTL.* ");
+		sql.append(" FROM TA_WORKSHEET_DTL TA_W_DTL ");
+		sql.append(" INNER JOIN TA_WORKSHEET_HDR TA_W_HDR ON TA_W_DTL.OFFICE_CODE = TA_W_HDR.OFFICE_CODE ");
+		sql.append("   AND TA_W_DTL.ANALYSIS_NUMBER = TA_W_HDR.ANALYSIS_NUMBER ");
+		sql.append("   AND TA_W_DTL.IS_DELETED = 'N' ");
+		sql.append(" INNER JOIN TA_DRAFT_WORKSHEET_DTL TA_DW_DTL ON TA_DW_DTL.OFFICE_CODE = TA_W_DTL.OFFICE_CODE ");
+		sql.append("   AND TA_DW_DTL.DRAFT_NUMBER = TA_W_HDR.DRAFT_NUMBER ");
+		sql.append("   AND TA_DW_DTL.NEW_REG_ID = TA_W_DTL.NEW_REG_ID ");
+		sql.append("   AND TA_DW_DTL.IS_DELETED = 'N' ");
+		sql.append(" INNER JOIN TA_WS_REG4000 R4000 ON R4000.NEW_REG_ID = TA_W_DTL.NEW_REG_ID ");
+		sql.append("   AND R4000.IS_DELETED = 'N' ");
+		sql.append(" INNER JOIN ( ");
+		sql.append("   SELECT OFFICE_CODE,DEPT_NAME,DEPT_SHORT_NAME ");
+		sql.append("   FROM EXCISE_DEPARTMENT ");
+		sql.append("   WHERE IS_DELETED = 'N' ");
+		sql.append("     AND CONCAT (SUBSTR(OFFICE_CODE, 0, 2),'0000') = OFFICE_CODE ");
+		sql.append(" ) ED_SECTOR ON ED_SECTOR.OFFICE_CODE = CONCAT (SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000') ");
+		sql.append(" INNER JOIN ( ");
+		sql.append("   SELECT OFFICE_CODE,DEPT_NAME,DEPT_SHORT_NAME ");
+		sql.append("   FROM EXCISE_DEPARTMENT ");
+		sql.append("   WHERE IS_DELETED = 'N' ");
+		sql.append("     AND CONCAT (SUBSTR(OFFICE_CODE, 0, 4),'00') = OFFICE_CODE ");
+		sql.append(" ) ED_AREA ON ED_AREA.OFFICE_CODE = CONCAT (SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
+		sql.append(" WHERE TA_W_HDR.IS_DELETED = 'N' ");
+		sql.append("   AND TA_W_HDR.ANALYSIS_NUMBER = ? ");
+		// sql.append("   AND TA_W_HDR.OFFICE_CODE = '010000' ");
+
+		List<Object> params = new ArrayList<>();
+		params.add(formVo.getAnalysisNumber());
+		//params.add("20190222194307");
+
+		if (StringUtils.isNotBlank(formVo.getCond())) {
+			sql.append("AND TA_W_DTL.COND_MAIN_GRP=? ");
+			params.add(formVo.getCond());
+		}
+		String limit = OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength());
+		return commonJdbcTemplate.query(limit, params.toArray(), taxOperatorrowMapper);
 	}
 
 	protected RowMapper<TaxOperatorDetailVo> taxOperatorrowMapper = new RowMapper<TaxOperatorDetailVo>() {
@@ -68,16 +129,15 @@ public class TaxOperatorJdbcRepository {
 		public TaxOperatorDetailVo mapRow(ResultSet rs, int arg1) throws SQLException {
 			TaxOperatorDetailVo vo = new TaxOperatorDetailVo();
 
-			vo.setNewRegId(rs.getString("NEW_REG_ID"));
 			vo.setCusFullname(rs.getString("CUS_FULLNAME"));
 			vo.setFacFullname(rs.getString("FAC_FULLNAME"));
 			vo.setFacAddress(rs.getString("FAC_ADDRESS"));
-			vo.setOfficeCode(rs.getString("OFFICE_CODE"));
+			vo.setOfficeCode(rs.getString("OFFICE_CODE_R4000"));
 			vo.setSecCode(rs.getString("SEC_CODE"));
 			vo.setSecDesc(rs.getString("SEC_DESC"));
 			vo.setAreaCode(rs.getString("AREA_CODE"));
 			vo.setAreaDesc(rs.getString("AREA_DESC"));
-			//vo.setWorksheetHdrId(rs.getString("WORKSHEET_HDR_ID"));
+			// vo.setWorksheetHdrId(rs.getString("WORKSHEET_HDR_ID"));
 			vo.setDraftNumber(rs.getString("DRAFT_NUMBER"));
 			vo.setAnalysisNumber(rs.getString("ANALYSIS_NUMBER"));
 			vo.setNewRegId(rs.getString("NEW_REG_ID"));
@@ -109,7 +169,7 @@ public class TaxOperatorJdbcRepository {
 			vo.setTaxAmtG2M10(rs.getString("TAX_AMT_G2_M10"));
 			vo.setTaxAmtG2M11(rs.getString("TAX_AMT_G2_M11"));
 			vo.setTaxAmtG2M12(rs.getString("TAX_AMT_G2_M12"));
-			vo.setCondTaxGrp(rs.getString("COND_TAX_GRP"));
+			vo.setCondTaxGrp(rs.getString("COND_MAIN_GRP"));
 			return vo;
 		}
 	};
@@ -153,11 +213,10 @@ public class TaxOperatorJdbcRepository {
 		return commonJdbcTemplate.queryForList(sql.toString(), new Object[] { analysisNumber }, String.class);
 	}
 
-	
 	public Long countTaxOperatorDraft(TaxOperatorFormVo formVo) {
 
 		List<Object> params = new ArrayList<>();
-		
+
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT R4000.CUS_FULLNAME,");
 		sql.append("   R4000.FAC_FULLNAME,");
@@ -178,9 +237,9 @@ public class TaxOperatorJdbcRepository {
 		sql.append(" WHERE TA_W_HDR.IS_DELETED = 'N'");
 		sql.append(" AND R4000.IS_DELETED      = 'N'");
 		sql.append(" AND TA_W_HDR.DRAFT_NUMBER = ?");
-		
+
 		params.add(formVo.getDraftNumber());
-		
+
 		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
 			sql.append(" AND  R4000.OFFICE_CODE like ?");
 			params.add(formVo.getOfficeCode());
@@ -193,15 +252,15 @@ public class TaxOperatorJdbcRepository {
 			sql.append(" AND R4000.DUTY_CODE=?");
 			params.add(formVo.getDutyCode());
 		}
-		
+
 		String sqlCount = OracleUtils.countForDataTable(sql.toString());
 		return commonJdbcTemplate.queryForObject(sqlCount, params.toArray(), Long.class);
 	}
-	
+
 	public List<TaxOperatorDetailVo> getTaxOperatorDraft(TaxOperatorFormVo formVo) {
 
 		List<Object> params = new ArrayList<>();
-		
+
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT R4000.CUS_FULLNAME,");
 		sql.append("   R4000.FAC_FULLNAME,");
@@ -222,10 +281,10 @@ public class TaxOperatorJdbcRepository {
 		sql.append(" WHERE TA_W_HDR.IS_DELETED = 'N'");
 		sql.append(" AND R4000.IS_DELETED      = 'N'");
 		sql.append(" AND TA_W_HDR.DRAFT_NUMBER = ?");
-		
+
 		params.add(formVo.getDraftNumber());
-		
-		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {			
+
+		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
 			sql.append(" AND  R4000.OFFICE_CODE like ?");
 			params.add(formVo.getOfficeCode());
 		}
@@ -237,13 +296,13 @@ public class TaxOperatorJdbcRepository {
 			sql.append(" AND R4000.DUTY_CODE=?");
 			params.add(formVo.getDutyCode());
 		}
-		
+
 		String limit = OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength());
 		return commonJdbcTemplate.query(limit, params.toArray(), taxOperatorDraftrowMapper);
 	}
 
 	protected RowMapper<TaxOperatorDetailVo> taxOperatorDraftrowMapper = new RowMapper<TaxOperatorDetailVo>() {
-		//private DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+		// private DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
 
 		@Override
 		public TaxOperatorDetailVo mapRow(ResultSet rs, int arg1) throws SQLException {

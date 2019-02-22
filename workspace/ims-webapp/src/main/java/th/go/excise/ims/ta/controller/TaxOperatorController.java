@@ -34,25 +34,6 @@ public class TaxOperatorController {
 	@Autowired
 	private TaxAuditFactorySelectionService taxAuditFactorySelectionService;
 
-	@PostMapping("/preview-data")
-	@ResponseBody
-	public ResponseData<TaxOperatorVo> previewData(@RequestBody TaxOperatorFormVo formVo) {
-		ResponseData<TaxOperatorVo> response = new ResponseData<>();
-
-		try {
-			response.setData(taxAuditFactorySelectionService.getPreviewData(formVo));
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
-			response.setStatus(RESPONSE_STATUS.SUCCESS);
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error(e.getMessage(), e);
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
-			response.setStatus(RESPONSE_STATUS.FAILED);
-		}
-
-		return response;
-	}
-
 	@PostMapping("/")
 	@ResponseBody
 	public ResponseData<TaxOperatorVo> getOperator(@RequestBody TaxOperatorFormVo formVo) {
@@ -106,7 +87,7 @@ public class TaxOperatorController {
 
 		return response;
 	}
-
+	
 	@PostMapping("/get-month-start")
 	@ResponseBody
 	public ResponseData<YearMonthVo> getMonthStart(@RequestBody TaxOperatorFormVo formVo) {
@@ -114,6 +95,46 @@ public class TaxOperatorController {
 
 		try {
 			response.setData(taxOperatorService.monthStart(formVo));
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+
+		return response;
+	}
+
+	// TODO DRAFT
+	
+	@PostMapping("/preview-data")
+	@ResponseBody
+	public ResponseData<TaxOperatorVo> previewData(@RequestBody TaxOperatorFormVo formVo) {
+		ResponseData<TaxOperatorVo> response = new ResponseData<>();
+
+		try {
+			response.setData(taxAuditFactorySelectionService.getPreviewData(formVo));
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage(), e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+
+		return response;
+	}
+
+	
+	@PostMapping("/get-month-start-draft")
+	@ResponseBody
+	public ResponseData<YearMonthVo> getMonthStartDraft(@RequestBody TaxOperatorFormVo formVo) {
+		ResponseData<YearMonthVo> response = new ResponseData<>();
+
+		try {
+			response.setData(taxOperatorService.monthStartDraft(formVo));
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

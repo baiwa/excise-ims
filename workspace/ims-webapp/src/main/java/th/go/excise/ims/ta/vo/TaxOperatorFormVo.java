@@ -13,6 +13,24 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	private String facType;
 	private String dutyCode;
 	private String officeCode;
+	private String analysisNumber;
+	private String cond;
+
+	public String getCond() {
+		return cond;
+	}
+
+	public void setCond(String cond) {
+		this.cond = cond;
+	}
+
+	public String getAnalysisNumber() {
+		return analysisNumber;
+	}
+
+	public void setAnalysisNumber(String analysisNumber) {
+		this.analysisNumber = analysisNumber;
+	}
 
 	public String getOfficeCode() {
 		return officeCode;
