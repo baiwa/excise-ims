@@ -14,6 +14,9 @@ public interface TaMasCondDtlTaxRepository extends CommonJpaCrudRepository<TaMas
 	
 	public List<TaMasCondDtlTax> findByBudgetYear(String budgetYear);
 	
+	public List<TaMasCondDtlTax> findByBudgetYearAndIsDeleted(String budgetYear, String isDeleted);
+	
 	public List<TaMasCondDtlTax> findByBudgetYearAndCondType(String budgetYear , String condType);
 	
+	public List<TaMasCondDtlTax> findByBudgetYearAndCondTypeAndIsDeleted(String budgetYear , String condType, String isDeleted);
 }
