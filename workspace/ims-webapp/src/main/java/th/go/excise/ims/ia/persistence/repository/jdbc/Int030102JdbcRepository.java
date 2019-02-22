@@ -106,9 +106,9 @@ public class Int030102JdbcRepository {
 	}
 
 	public void editStatus(Int030102FormVo form) {
-		StringBuilder sql = new StringBuilder(" UPDATE IA_RISK_FACTORS_STATUS SET STATUS = ? WHERE ID_MASTER = ?");
+		StringBuilder sql = new StringBuilder(" UPDATE IA_RISK_FACTORS_STATUS SET STATUS = ? WHERE ID_MASTER = ? AND Budget_Year= ? AND Inspection_Work= ?");
 		String status = ("N".equals(form.getStatus()) ? "Y" : "N");
-		commonJdbcTemplate.update(sql.toString(), new Object[] { status, form.getId() });
+		commonJdbcTemplate.update(sql.toString(), new Object[] { status, form.getId(),form.getBudgetYear(), form.getInspectionWork() });
 	}
 
 	public List<IaRiskFactorsMaster> listSaveFactors(Int030102FormVo form) {
