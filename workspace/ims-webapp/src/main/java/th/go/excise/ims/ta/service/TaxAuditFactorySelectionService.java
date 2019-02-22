@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,14 +70,30 @@ public class TaxAuditFactorySelectionService {
 		}
 		return vo;
 	}
+
 	private TaWsReg4000 formVoToTaWsReg4000(TaxOperatorFormVo formVo) {
 		TaWsReg4000 taWsReg4000 = new TaWsReg4000();
 		try {
 			BeanUtils.copyProperties(taWsReg4000, formVo);
+			String officeCode = taWsReg4000.getOfficeCode();
+			if (StringUtils.isNotBlank(officeCode) && officeCode.length() == 6) {
+				if ("000000".equals(officeCode)) {
+					officeCode = null;
+				} else if ("00".equals(officeCode.substring(officeCode.length() - 2, officeCode.length()))) {
+					if ("00".equals(officeCode.substring(officeCode.length() - 4, officeCode.length() - 2))) {
+						officeCode = officeCode.substring(0, officeCode.length() - 4) + "____";
+					} else {
+						officeCode = officeCode.substring(0, officeCode.length() - 2) + "__";
+					}
+				}
+				taWsReg4000.setOfficeCode(officeCode);
+			} else {
+				taWsReg4000.setOfficeCode(null);
+			}
 		} catch (IllegalAccessException | InvocationTargetException e) {
-			logger.error(e.getMessage() , e);
+			logger.error(e.getMessage(), e);
 		}
-		
+
 		return taWsReg4000;
 	}
 
@@ -178,8 +195,8 @@ public class TaxAuditFactorySelectionService {
 		String ymStartStr = ConvertDateUtils.formatDateToString(ymStart, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		String ymEndStr = ConvertDateUtils.formatDateToString(ymEnd, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		List<TaWsReg4000> wsReg4000List = null;
-		
-		wsReg4000List = taWsReg4000Repository.findAllPagination(formVoToTaWsReg4000(formVo),formVo.getStart(), formVo.getLength());
+
+		wsReg4000List = taWsReg4000Repository.findAllPagination(formVoToTaWsReg4000(formVo), formVo.getStart(), formVo.getLength());
 		Map<String, List<TaWsInc8000M>> wsInc8000MMap = taWsInc8000MRepository.findByMonthRange(ymStartStr, ymEndStr);
 		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
 		List<TaWsInc8000M> wsInc8000MList = null;

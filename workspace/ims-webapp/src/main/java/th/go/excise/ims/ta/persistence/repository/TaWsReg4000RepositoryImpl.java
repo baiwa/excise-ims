@@ -76,6 +76,11 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000Custom {
 			sql.append(" AND DUTY_CODE = ?");
 		}
 		
+		if(StringUtils.isNotBlank(taWsReg4000.getOfficeCode())) {
+			paramList.add(taWsReg4000.getOfficeCode());
+			sql.append(" AND DUTY_CODE like ?");
+		}
+		
 		sql.append(" ORDER BY DUTY_CODE , NEW_REG_ID ");
 		return this.commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), start, length),paramList.toArray(),  rowMappping);
 	}
