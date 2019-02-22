@@ -61,8 +61,7 @@ public class TaxOperatorJdbcRepository {
 		// sql.append("   AND TA_W_HDR.OFFICE_CODE = '010000' ");
 
 		List<Object> params = new ArrayList<>();
-		//params.add(formVo.getAnalysisNumber());
-		params.add("20190222194307");
+		params.add(formVo.getAnalysisNumber());
 
 		if (StringUtils.isNotBlank(formVo.getCond())) {
 			sql.append("AND TA_W_DTL.COND_MAIN_GRP=? ");
@@ -114,7 +113,6 @@ public class TaxOperatorJdbcRepository {
 
 		List<Object> params = new ArrayList<>();
 		params.add(formVo.getAnalysisNumber());
-		//params.add("20190222194307");
 
 		if (StringUtils.isNotBlank(formVo.getCond())) {
 			sql.append("AND TA_W_DTL.COND_MAIN_GRP=? ");
@@ -317,7 +315,7 @@ public class TaxOperatorJdbcRepository {
 			vo.setSecDesc(rs.getString("SEC_DESC"));
 			vo.setAreaCode(rs.getString("AREA_CODE"));
 			vo.setAreaDesc(rs.getString("AREA_DESC"));
-			vo.setWorksheetHdrId(rs.getString("TA_DRAFT_WORKSHEET_DTL_ID"));
+			vo.setWorksheetHdrId(rs.getString("DRAFT_WORKSHEET_DTL_ID"));
 			vo.setDraftNumber(rs.getString("DRAFT_NUMBER"));
 			vo.setNewRegId(rs.getString("NEW_REG_ID"));
 			vo.setSumTaxAmtG1(rs.getString("SUM_TAX_AMT_G1"));

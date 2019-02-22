@@ -47,9 +47,9 @@
 	<logger name="th.co.baiwa.buckwaframework.common.persistence.jdbc" level="INFO" additivity="false">
 		<appender-ref ref="STDOUT" />
 	</logger>
-	<logger name="org.springframework.transaction.interceptor" level="TRACE" additivity="false">
-		<appender-ref ref="STDOUT" />
-	</logger>
+<!-- 	<logger name="org.springframework.transaction.interceptor" level="TRACE" additivity="false"> -->
+<!-- 		<appender-ref ref="STDOUT" /> -->
+<!-- 	</logger> -->
 	
 	<!-- DEV Profile Log Level -->
 	<springProfile name="dev">

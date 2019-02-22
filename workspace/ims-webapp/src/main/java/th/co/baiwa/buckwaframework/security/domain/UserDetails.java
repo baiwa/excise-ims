@@ -131,6 +131,7 @@ public class UserDetails extends User implements UserBean {
 	}
 	@Override
 	public String getOfficeId() {
+		officeId = "010000";
 		return officeId;
 	}
 
