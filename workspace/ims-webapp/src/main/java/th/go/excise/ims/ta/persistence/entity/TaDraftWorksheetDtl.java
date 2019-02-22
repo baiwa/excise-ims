@@ -13,10 +13,12 @@ public class TaDraftWorksheetDtl extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_DRAFT_WORKSHEET_GEN")
 	@SequenceGenerator(name = "TA_DRAFT_WORKSHEET_GEN", sequenceName = "TA_DRAFT_WORKSHEET_DTL_SEQ", allocationSize = 1)
-	@Column(name = "ID")
-	private BigDecimal id;
-	@Column(name = "ANALYSIS_NUMBER")
-	private String analysisNumber;
+	@Column(name = "TA_DRAFT_WORKSHEET_DTL_ID")
+	private Long taDraftWorksheetDtlId;
+	@Column(name = "OFFICE_CODE")
+	private String officeCode;
+	@Column(name = "DRAFT_NUMBER")
+	private String draftNumber;
 	@Column(name = "NEW_REG_ID")
 	private String newRegId;
 	@Column(name = "SUM_TAX_AMT_G1")
@@ -75,16 +77,14 @@ public class TaDraftWorksheetDtl extends BaseEntity {
 	private String taxAmtG2M11;
 	@Column(name = "TAX_AMT_G2_M12")
 	private String taxAmtG2M12;
-	@Column(name = "COND_TAX_GRP")
-	private String condTaxGrp;
-	@Column(name = "CENTER_SEL_FLAG")
-	private String centerSelFlag;
-	@Column(name = "SECTOR_SEL_FLAG")
-	private String sectorSelFlag;
-	@Column(name = "AREA_SEL_FLAG")
-	private String areaSelFlag;
-	@Column(name = "OFFICE_CODE")
-	private String officeCode;
+
+	public Long getTaDraftWorksheetDtlId() {
+		return taDraftWorksheetDtlId;
+	}
+
+	public void setTaDraftWorksheetDtlId(Long taDraftWorksheetDtlId) {
+		this.taDraftWorksheetDtlId = taDraftWorksheetDtlId;
+	}
 
 	public String getOfficeCode() {
 		return officeCode;
@@ -94,20 +94,12 @@ public class TaDraftWorksheetDtl extends BaseEntity {
 		this.officeCode = officeCode;
 	}
 
-	public BigDecimal getId() {
-		return id;
+	public String getDraftNumber() {
+		return draftNumber;
 	}
 
-	public void setId(BigDecimal id) {
-		this.id = id;
-	}
-
-	public String getAnalysisNumber() {
-		return analysisNumber;
-	}
-
-	public void setAnalysisNumber(String analysisNumber) {
-		this.analysisNumber = analysisNumber;
+	public void setDraftNumber(String draftNumber) {
+		this.draftNumber = draftNumber;
 	}
 
 	public String getNewRegId() {
@@ -340,38 +332,6 @@ public class TaDraftWorksheetDtl extends BaseEntity {
 
 	public void setTaxAmtG2M12(String taxAmtG2M12) {
 		this.taxAmtG2M12 = taxAmtG2M12;
-	}
-
-	public String getCondTaxGrp() {
-		return condTaxGrp;
-	}
-
-	public void setCondTaxGrp(String condTaxGrp) {
-		this.condTaxGrp = condTaxGrp;
-	}
-
-	public String getCenterSelFlag() {
-		return centerSelFlag;
-	}
-
-	public void setCenterSelFlag(String centerSelFlag) {
-		this.centerSelFlag = centerSelFlag;
-	}
-
-	public String getSectorSelFlag() {
-		return sectorSelFlag;
-	}
-
-	public void setSectorSelFlag(String sectorSelFlag) {
-		this.sectorSelFlag = sectorSelFlag;
-	}
-
-	public String getAreaSelFlag() {
-		return areaSelFlag;
-	}
-
-	public void setAreaSelFlag(String areaSelFlag) {
-		this.areaSelFlag = areaSelFlag;
 	}
 
 }

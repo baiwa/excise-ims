@@ -8,7 +8,7 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	private String dateStart;
 	private String dateEnd;
 	private int dateRange;
-	private String analysisNumber;
+	private String draftNumber;
 	private String budgetYear;
 
 	public String getBudgetYear() {
@@ -43,12 +43,12 @@ public class TaxOperatorFormVo extends DataTableRequest {
 		this.dateRange = dateRange;
 	}
 
-	public String getAnalysisNumber() {
-		return analysisNumber;
+	public String getDraftNumber() {
+		return draftNumber;
 	}
 
-	public void setAnalysisNumber(String analysisNumber) {
-		this.analysisNumber = analysisNumber;
+	public void setDraftNumber(String draftNumber) {
+		this.draftNumber = draftNumber;
 	}
 
 }

@@ -11,7 +11,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -85,7 +84,7 @@ public class TaxAuditFactorySelectionService {
 			taxOperatorDatatableVo.setAreaCode(taxOperatorDetailVo.getAreaCode());
 			taxOperatorDatatableVo.setAreaDesc(taxOperatorDetailVo.getAreaDesc());
 			taxOperatorDatatableVo.setWorksheetHdrId(taxOperatorDetailVo.getWorksheetHdrId());
-			taxOperatorDatatableVo.setAnalysisNumber(taxOperatorDetailVo.getAnalysisNumber());
+			taxOperatorDatatableVo.setDraftNumber(taxOperatorDetailVo.getDraftNumber());
 			taxOperatorDatatableVo.setNewRegId(taxOperatorDetailVo.getNewRegId());
 			taxOperatorDatatableVo.setSumTaxAmtG1(taxOperatorDetailVo.getSumTaxAmtG1());
 			taxOperatorDatatableVo.setSumTaxAmtG2(taxOperatorDetailVo.getSumTaxAmtG2());

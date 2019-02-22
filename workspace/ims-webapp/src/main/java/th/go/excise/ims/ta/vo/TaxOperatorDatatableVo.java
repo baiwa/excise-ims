@@ -16,7 +16,7 @@ public class TaxOperatorDatatableVo {
 	private String areaCode;
 	private String areaDesc;
 	private String worksheetHdrId;
-	private String analysisNumber;
+	private String draftNumber;
 	private String newRegId;
 	private String sumTaxAmtG1;
 	private String sumTaxAmtG2;
@@ -96,12 +96,12 @@ public class TaxOperatorDatatableVo {
 		this.worksheetHdrId = worksheetHdrId;
 	}
 
-	public String getAnalysisNumber() {
-		return analysisNumber;
+	public String getDraftNumber() {
+		return draftNumber;
 	}
 
-	public void setAnalysisNumber(String analysisNumber) {
-		this.analysisNumber = analysisNumber;
+	public void setDraftNumber(String draftNumber) {
+		this.draftNumber = draftNumber;
 	}
 
 	public String getNewRegId() {

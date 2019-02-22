@@ -4,13 +4,10 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.cxf.BusException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.common.bean.BusinessException;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
-import th.co.baiwa.buckwaframework.preferences.constant.MessageConstants;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondDtlTax;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWsCondDtlTax;
