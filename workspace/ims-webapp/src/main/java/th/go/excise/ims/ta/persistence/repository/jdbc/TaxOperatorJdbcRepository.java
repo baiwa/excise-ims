@@ -4,14 +4,18 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
+import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 
 @Repository
 public class TaxOperatorJdbcRepository {
@@ -143,8 +147,11 @@ public class TaxOperatorJdbcRepository {
 		return commonJdbcTemplate.queryForList(sql.toString(), new Object[] { analysisNumber }, String.class);
 	}
 
-	public List<TaxOperatorDetailVo> getTaxOperatorDraft(String draftNumber) {
+	
+	public Long countTaxOperatorDraft(TaxOperatorFormVo formVo) {
 
+		List<Object> params = new ArrayList<>();
+		
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT R4000.CUS_FULLNAME,");
 		sql.append("   R4000.FAC_FULLNAME,");
@@ -157,16 +164,76 @@ public class TaxOperatorJdbcRepository {
 		sql.append("   TA_W_HDR.*");
 		sql.append(" FROM TA_DRAFT_WORKSHEET_DTL TA_W_HDR");
 		sql.append(" INNER JOIN TA_WS_REG4000 R4000");
-		sql.append(" ON R4000.NEW_REG_ID  = TA_W_HDR.NEW_REG_ID");
+		sql.append(" ON R4000.NEW_REG_ID = TA_W_HDR.NEW_REG_ID");
 		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_SECTOR");
-		sql.append(" on ED_SECTOR.OFFICE_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000')");
-		sql.append(" inner join EXCISE_DEPARTMENT ED_AREA");
-		sql.append(" on  ED_AREA.OFFICE_CODE    = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 4),'00')");
+		sql.append(" ON ED_SECTOR.OFFICE_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000')");
+		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_AREA");
+		sql.append(" ON ED_AREA.OFFICE_CODE    = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 4),'00')");
 		sql.append(" WHERE TA_W_HDR.IS_DELETED = 'N'");
-		sql.append(" AND R4000.IS_DELETED = 'N'");
+		sql.append(" AND R4000.IS_DELETED      = 'N'");
 		sql.append(" AND TA_W_HDR.DRAFT_NUMBER = ?");
+		
+		params.add(formVo.getDraftNumber());
+		
+		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
+			sql.append(" AND  R4000.OFFICE_CODE like ?");
+			params.add(formVo.getOfficeCode());
+		}
+		if (StringUtils.isNotBlank(formVo.getFacType())) {
+			sql.append(" AND R4000.FAC_TYPE=?");
+			params.add(formVo.getFacType());
+		}
+		if (StringUtils.isNotBlank(formVo.getDutyCode())) {
+			sql.append(" AND R4000.DUTY_CODE=?");
+			params.add(formVo.getDutyCode());
+		}
+		
+		String sqlCount = OracleUtils.countForDataTable(sql.toString());
+		return commonJdbcTemplate.queryForObject(sqlCount, params.toArray(), Long.class);
+	}
+	
+	public List<TaxOperatorDetailVo> getTaxOperatorDraft(TaxOperatorFormVo formVo) {
 
-		return commonJdbcTemplate.query(sql.toString(), new Object[] { draftNumber }, taxOperatorDraftrowMapper);
+		List<Object> params = new ArrayList<>();
+		
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT R4000.CUS_FULLNAME,");
+		sql.append("   R4000.FAC_FULLNAME,");
+		sql.append("   R4000.FAC_ADDRESS,");
+		sql.append("   R4000.OFFICE_CODE OFFICE_CODE_R4000,");
+		sql.append("   ED_SECTOR.OFFICE_CODE SEC_CODE,");
+		sql.append("   ED_SECTOR.DEPT_SHORT_NAME SEC_DESC,");
+		sql.append("   ED_AREA.OFFICE_CODE AREA_CODE,");
+		sql.append("   ED_AREA.DEPT_SHORT_NAME AREA_DESC,");
+		sql.append("   TA_W_HDR.*");
+		sql.append(" FROM TA_DRAFT_WORKSHEET_DTL TA_W_HDR");
+		sql.append(" INNER JOIN TA_WS_REG4000 R4000");
+		sql.append(" ON R4000.NEW_REG_ID = TA_W_HDR.NEW_REG_ID");
+		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_SECTOR");
+		sql.append(" ON ED_SECTOR.OFFICE_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000')");
+		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_AREA");
+		sql.append(" ON ED_AREA.OFFICE_CODE    = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 4),'00')");
+		sql.append(" WHERE TA_W_HDR.IS_DELETED = 'N'");
+		sql.append(" AND R4000.IS_DELETED      = 'N'");
+		sql.append(" AND TA_W_HDR.DRAFT_NUMBER = ?");
+		
+		params.add(formVo.getDraftNumber());
+		
+		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {			
+			sql.append(" AND  R4000.OFFICE_CODE like ?");
+			params.add(formVo.getOfficeCode());
+		}
+		if (StringUtils.isNotBlank(formVo.getFacType())) {
+			sql.append(" AND R4000.FAC_TYPE=?");
+			params.add(formVo.getFacType());
+		}
+		if (StringUtils.isNotBlank(formVo.getDutyCode())) {
+			sql.append(" AND R4000.DUTY_CODE=?");
+			params.add(formVo.getDutyCode());
+		}
+		
+		String limit = OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength());
+		return commonJdbcTemplate.query(limit, params.toArray(), taxOperatorDraftrowMapper);
 	}
 
 	protected RowMapper<TaxOperatorDetailVo> taxOperatorDraftrowMapper = new RowMapper<TaxOperatorDetailVo>() {
@@ -180,7 +247,7 @@ public class TaxOperatorJdbcRepository {
 			vo.setCusFullname(rs.getString("CUS_FULLNAME"));
 			vo.setFacFullname(rs.getString("FAC_FULLNAME"));
 			vo.setFacAddress(rs.getString("FAC_ADDRESS"));
-			vo.setOfficeCode(rs.getString("OFFICE_CODE"));
+			vo.setOfficeCode(rs.getString("OFFICE_CODE_R4000"));
 			vo.setSecCode(rs.getString("SEC_CODE"));
 			vo.setSecDesc(rs.getString("SEC_DESC"));
 			vo.setAreaCode(rs.getString("AREA_CODE"));

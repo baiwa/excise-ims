@@ -78,7 +78,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000Custom {
 		
 		if(StringUtils.isNotBlank(taWsReg4000.getOfficeCode())) {
 			paramList.add(taWsReg4000.getOfficeCode());
-			sql.append(" AND DUTY_CODE like ?");
+			sql.append(" AND OFFICE_CODE like ?");
 		}
 		
 		sql.append(" ORDER BY DUTY_CODE , NEW_REG_ID ");
@@ -96,6 +96,11 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000Custom {
 		if(StringUtils.isNotBlank(taWsReg4000.getDutyCode())) {
 			paramList.add(taWsReg4000.getDutyCode());
 			sql.append(" AND DUTY_CODE = ?");
+		}
+		
+		if(StringUtils.isNotBlank(taWsReg4000.getOfficeCode())) {
+			paramList.add(taWsReg4000.getOfficeCode());
+			sql.append(" AND OFFICE_CODE like ?");
 		}
 		
 		sql.append(" ORDER BY DUTY_CODE , NEW_REG_ID ");

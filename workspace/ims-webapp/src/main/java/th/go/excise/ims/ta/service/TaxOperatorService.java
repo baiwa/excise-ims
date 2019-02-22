@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -86,10 +87,29 @@ public class TaxOperatorService {
 	}
 
 	public TaxOperatorVo getOperatorDraft(TaxOperatorFormVo formVo) {
-		List<TaxOperatorDetailVo> list = this.taxOperatorRepository.getTaxOperatorDraft(formVo.getDraftNumber());
+		
+		String officeCode = formVo.getOfficeCode();
+		if (StringUtils.isNotBlank(officeCode) && officeCode.length() == 6) {
+			if ("000000".equals(officeCode)) {
+				officeCode = null;
+			} else if ("00".equals(officeCode.substring(officeCode.length() - 2, officeCode.length()))) {
+				if ("00".equals(officeCode.substring(officeCode.length() - 4, officeCode.length() - 2))) {
+					officeCode = officeCode.substring(0, officeCode.length() - 4) + "____";
+				} else {
+					officeCode = officeCode.substring(0, officeCode.length() - 2) + "__";
+				}
+			}
+			formVo.setOfficeCode(officeCode);
+		} else {
+			formVo.setOfficeCode(null);
+		}
+		
+		List<TaxOperatorDetailVo> list = this.taxOperatorRepository.getTaxOperatorDraft(formVo);
 
 		TaxOperatorVo vo = new TaxOperatorVo();
 		vo.setDatas(taxAuditFactorySelectionService.summaryDatatable(list, formVo));
+		vo.setCount(this.taxOperatorRepository.countTaxOperatorDraft(formVo));
+		
 		return vo;
 	}
 
@@ -148,10 +168,20 @@ public class TaxOperatorService {
 
 			condDetail.setAnalysisNumber(draftNumber);
 			condDetail.setCondGroup(detail.getCondGroup());
-			condDetail.setTaxMonthStart(new BigDecimal(detail.getTaxMonthStart()));
-			condDetail.setTaxMonthEnd(new BigDecimal(detail.getTaxMonthEnd()));
-			condDetail.setRangeStart(new BigDecimal(detail.getRangeStart()));
-			condDetail.setRangeEnd(new BigDecimal(detail.getRangeEnd()));
+
+			if (detail.getTaxMonthStart() != null) {
+				condDetail.setTaxMonthStart(new BigDecimal(detail.getTaxMonthStart()));
+			}
+			if (detail.getTaxMonthEnd() != null) {
+				condDetail.setTaxMonthEnd(new BigDecimal(detail.getTaxMonthEnd()));
+			}
+			if (detail.getRangeStart() != null) {
+				condDetail.setRangeStart(new BigDecimal(detail.getRangeStart()));
+			}
+			if (detail.getRangeEnd() != null) {
+				condDetail.setRangeEnd(new BigDecimal(detail.getRangeEnd()));
+			}
+
 			condDetail.setRiskLevel(detail.getRiskLevel());
 
 			condDetails.add(condDetail);
@@ -166,10 +196,10 @@ public class TaxOperatorService {
 		draftHdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeId());
 		draftHdr.setYearMonthStart(dateStartStr);
 		draftHdr.setYearMonthEnd(dateEndStr);
-	
+
 		this.draftWorksheetHdrRepository.save(draftHdr);
-		
-		//Detail
+
+		// Detail
 		List<TaxOperatorDetailVo> rsSearch = this.taxAuditFactorySelectionService.prepareTaxOperatorDetailVoList(formVo);
 
 		List<TaDraftWorksheetDtl> dratfs = new ArrayList<>();
