@@ -30,9 +30,14 @@ public class Int02010101Service {
 		BigDecimal idSide = new BigDecimal(idSideStr);
 		List<Int02010101Vo> main = iaQuestionnaireSideDtlJdbcRepository.findByIdSide(idSide);
 		List<Int02010101Vo> detail = new ArrayList<>();
+		List<Int02010101Vo> details = new ArrayList<>();
 		for (int i = 0; i < main.toArray().length; i++) {
 			BigDecimal seq = main.get(i).getSeq();
 			detail = iaQuestionnaireSideDtlJdbcRepository.findDtlByIdSide(idSide, seq);
+			for(int j= 0; j< detail.toArray().length; j++) {
+				details = iaQuestionnaireSideDtlJdbcRepository.findDtlsByIdSide(idSide, seq);
+				detail.get(j).setChildren(details);
+			}
 			main.get(i).setChildren(detail);
 		}
 		return main;
