@@ -18,7 +18,11 @@ public class IaRiskFactorsConfig
     extends BaseEntity
 {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7188721507455629630L;
+	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_RISK_FACTORS_CONFIG_GEN")
     @SequenceGenerator(name = "IA_RISK_FACTORS_CONFIG_GEN", sequenceName = "IA_RISK_FACTORS_CONFIG_SEQ", allocationSize = 1)
     @Column(name = "ID")
