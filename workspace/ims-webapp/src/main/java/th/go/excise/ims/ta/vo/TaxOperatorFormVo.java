@@ -1,7 +1,10 @@
 package th.go.excise.ims.ta.vo;
 
-public class TaxOperatorFormVo {
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 
+public class TaxOperatorFormVo extends DataTableRequest {
+
+	private static final long serialVersionUID = 2104725920450722805L;
 	private String dateStart;
 	private String dateEnd;
 	private int dateRange;
