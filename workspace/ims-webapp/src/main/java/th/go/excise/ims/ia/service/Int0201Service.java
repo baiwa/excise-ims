@@ -2,11 +2,19 @@ package th.go.excise.ims.ia.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.constant.MessageContants;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMade;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
+import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
+import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireSideRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireSideDtlJdbcRepository;
 import th.go.excise.ims.ia.vo.Int02010101Vo;
@@ -22,6 +30,12 @@ public class Int0201Service {
 	
 	@Autowired
 	private IaQuestionnaireSideDtlJdbcRepository iaQuestionnaireSideDtlJdbcRepository;
+	
+	@Autowired
+	private IaQuestionnaireMadeRepository iaQuestionnaireMadeRepository;
+	
+	@Autowired
+	private IaQuestionnaireHdrRepository iaQuestionnaireHdrRepository;
 
 	public List<IaQuestionnaireSide> findQtnSideById(Int0201FormVo request) {
 		return iaQuestionnaireSideRepository.findByidHead(request.getId());
@@ -47,6 +61,27 @@ public class Int0201Service {
 		response.setData(dataRes);
 		
 		return response;
+	}
+	
+	public void sendQtnForm(Int0201FormVo request) {
+		/* save questionnaire Made */
+		if(request.getQtnMadeList().size() > 0) {
+			for (IaQuestionnaireMade qtnMade : request.getQtnMadeList()) {
+				iaQuestionnaireMadeRepository.save(qtnMade);
+			}
+		}
+		
+		/* update questionnaire header */
+		if(request.getId() != null) {
+			Optional<IaQuestionnaireHdr> hdrRes = iaQuestionnaireHdrRepository.findById(request.getId());
+			if(hdrRes.isPresent()) {
+				IaQuestionnaireHdr dataHdr = hdrRes.get();
+				dataHdr.setStartDate(ConvertDateUtils.parseStringThaiDateToLocalDate(request.getStartDateSend(), ProjectConstant.SHORT_DATE_FORMAT));
+				dataHdr.setEndDate(ConvertDateUtils.parseStringThaiDateToLocalDate(request.getEndDateSend(), ProjectConstant.SHORT_DATE_FORMAT));
+				dataHdr.setStatus(MessageContants.IA.SEND_QTN_SUCCES);
+				iaQuestionnaireHdrRepository.save(dataHdr);
+			}
+		}
 	}
 
 }

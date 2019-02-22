@@ -69,5 +69,23 @@ public class Int0201Controller {
 		
 		return response;
 	}
+	
+	@PostMapping("/send-qtn-form")
+	@ResponseBody
+	public ResponseData<?> sendQtnForm(@RequestBody Int0201FormVo request){
+		logger.info("send questionaire form");
+		
+		ResponseData<?> response = new ResponseData<>();
+		try {
+			int0201Service.sendQtnForm(request);
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
 
 }
