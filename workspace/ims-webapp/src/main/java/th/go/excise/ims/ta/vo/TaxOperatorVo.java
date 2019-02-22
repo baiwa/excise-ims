@@ -9,6 +9,7 @@ public class TaxOperatorVo {
 
 	private List<String> condGroups;
 	private List<TaxOperatorDatatableVo> datas;
+	private Long count;
 
 	public List<String> getCondGroups() {
 		return condGroups;
@@ -30,5 +31,13 @@ public class TaxOperatorVo {
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+	public Long getCount() {
+		return count;
+	}
+
+	public void setCount(Long count) {
+		this.count = count;
 	}
 }

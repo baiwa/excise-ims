@@ -31,9 +31,13 @@ public class OracleUtils {
 	}
 	
 	public static String limitForDatable(String sql, int start, int length) {
-		int min = start + 1;
-		int max = start + length;
-		return limit(sql, min, max);
+		if(start != 0  && length != 0 ) {
+			int min = start + 1;
+			int max = start + length;
+			return limit(sql, min, max);
+		}else {
+			return sql;
+		}
 	}
 	
 	public static String limit(String sql, Pageable pageable) {

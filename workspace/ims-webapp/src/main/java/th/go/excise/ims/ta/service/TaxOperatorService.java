@@ -72,8 +72,8 @@ public class TaxOperatorService {
 	private TaDraftWorksheetHdrRepository draftWorksheetHdrRepository;
 
 	public TaxOperatorVo getOperator(TaxOperatorFormVo formVo) throws BusinessException {
-		List<String> listCondGroups = this.taxOperatorRepository.listCondGroups(formVo.getAnalysisNumber());
-		List<TaxOperatorDetailVo> list = this.taxOperatorRepository.getTaxOperator(formVo.getAnalysisNumber());
+		List<String> listCondGroups = this.taxOperatorRepository.listCondGroups(formVo.getDraftNumber());
+		List<TaxOperatorDetailVo> list = this.taxOperatorRepository.getTaxOperator(formVo.getDraftNumber());
 
 		TaxOperatorVo vo = new TaxOperatorVo();
 		vo.setCondGroups(listCondGroups);
@@ -86,7 +86,7 @@ public class TaxOperatorService {
 	}
 
 	public TaxOperatorVo getOperatorDraft(TaxOperatorFormVo formVo) {
-		List<TaxOperatorDetailVo> list = this.taxOperatorRepository.getTaxOperatorDraft(formVo.getAnalysisNumber());
+		List<TaxOperatorDetailVo> list = this.taxOperatorRepository.getTaxOperatorDraft(formVo.getDraftNumber());
 
 		TaxOperatorVo vo = new TaxOperatorVo();
 		vo.setDatas(taxAuditFactorySelectionService.summaryDatatable(list, formVo));
@@ -98,7 +98,7 @@ public class TaxOperatorService {
 	}
 
 	public YearMonthVo monthStart(TaxOperatorFormVo formVo) {
-		YearMonthVo obj = this.worksheetCondHdrJdbcRepository.monthStart(formVo.getAnalysisNumber());
+		YearMonthVo obj = this.worksheetCondHdrJdbcRepository.monthStart(formVo.getDraftNumber());
 
 		Date ymStart = ConvertDateUtils.parseStringToDate(obj.getYearMonthStart(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		Date ymEnd = ConvertDateUtils.parseStringToDate(obj.getYearMonthEnd(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
@@ -111,7 +111,7 @@ public class TaxOperatorService {
 	}
 
 	public List<CondGroupVo> findCondGroupDtl(TaxOperatorFormVo formVo) {
-		return this.worksheetCondDtlTaxJdbcRepository.findCondGroupDtl(formVo.getAnalysisNumber());
+		return this.worksheetCondDtlTaxJdbcRepository.findCondGroupDtl(formVo.getDraftNumber());
 	}
 
 	public void saveDraft(TaxOperatorFormVo formVo) throws SQLException {
@@ -123,14 +123,14 @@ public class TaxOperatorService {
 		Date dateEnd = ConvertDateUtils.parseStringToDate(formVo.getDateEnd(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
 		String dateEndStr = ConvertDateUtils.formatDateToString(dateEnd, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 
-		String analysisNumber = ConvertDateUtils.formatDateToString(new Date(), ConvertDateUtils.YYYYMMDDHHMMSS, ConvertDateUtils.LOCAL_EN);
+		String draftNumber = ConvertDateUtils.formatDateToString(new Date(), ConvertDateUtils.YYYYMMDDHHMMSS, ConvertDateUtils.LOCAL_EN);
 
 		TaMasCondHdr masHeader = this.masCondHdrRepository.findByBudgetYear(formVo.getBudgetYear());
 		List<TaMasCondDtlTax> masDetail = this.masCondDtlTaxRepository.findByBudgetYear(masHeader.getBudgetYear());
 
 		// ==> save header
 		TaWorksheetCondHdr conHdr = new TaWorksheetCondHdr();
-		conHdr.setAnalysisNumber(analysisNumber);
+		conHdr.setAnalysisNumber(draftNumber);
 		conHdr.setBudgetYear(formVo.getBudgetYear());
 		conHdr.setMonthNum(new BigDecimal(masHeader.getMonthNum()));
 		conHdr.setYearMonthStart(dateStartStr);
@@ -146,7 +146,7 @@ public class TaxOperatorService {
 
 			TaWorksheetCondDtlTax condDetail = new TaWorksheetCondDtlTax();
 
-			condDetail.setAnalysisNumber(analysisNumber);
+			condDetail.setAnalysisNumber(draftNumber);
 			condDetail.setCondGroup(detail.getCondGroup());
 			condDetail.setTaxMonthStart(new BigDecimal(detail.getTaxMonthStart()));
 			condDetail.setTaxMonthEnd(new BigDecimal(detail.getTaxMonthEnd()));
@@ -162,7 +162,7 @@ public class TaxOperatorService {
 		// TODO ==>save draft
 		// Header
 		TaDraftWorksheetHdr draftHdr = new TaDraftWorksheetHdr();
-		draftHdr.setAnalysisNumber(analysisNumber);
+		draftHdr.setAnalysisNumber(draftNumber);
 		draftHdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeId());
 		draftHdr.setYearMonthStart(dateStartStr);
 		draftHdr.setYearMonthEnd(dateEndStr);
@@ -177,7 +177,7 @@ public class TaxOperatorService {
 
 			TaDraftWorksheetDtl draft = new TaDraftWorksheetDtl();
 
-			draft.setAnalysisNumber(analysisNumber);
+			draft.setDraftNumber(draftNumber);
 			draft.setNewRegId(rs.getNewRegId());
 
 			draft.setSumTaxAmtG1(this.checkNull(rs.getSumTaxAmtG1()));
@@ -211,7 +211,6 @@ public class TaxOperatorService {
 			draft.setTaxAmtG2M11(this.replaceStringNull(rs.getTaxAmtG2M11()));
 			draft.setTaxAmtG2M12(this.replaceStringNull(rs.getTaxAmtG2M12()));
 
-			draft.setCondTaxGrp(rs.getCondTaxGrp());
 			draft.setCreatedBy(UserLoginUtils.getCurrentUsername());
 			draft.setCreatedDate(LocalDateTime.now());
 			draft.setOfficeCode(rs.getOfficeCode());

@@ -14,7 +14,7 @@ public class TaxOperatorDetailVo {
 	private String areaCode;
 	private String areaDesc;
 	private String worksheetHdrId;
-	private String analysisNumber;
+	private String draftNumber;
 	private String newRegId;
 	private String sumTaxAmtG1;
 	private String sumTaxAmtG2;
@@ -46,6 +46,7 @@ public class TaxOperatorDetailVo {
 	private String taxAmtG2M12;
 	private String condTaxGrp;
 	private String dutyCode;
+	private String dutyName;
 
 	public String getDutyCode() {
 		return dutyCode;
@@ -127,12 +128,12 @@ public class TaxOperatorDetailVo {
 		this.worksheetHdrId = worksheetHdrId;
 	}
 
-	public String getAnalysisNumber() {
-		return analysisNumber;
+	public String getDraftNumber() {
+		return draftNumber;
 	}
 
-	public void setAnalysisNumber(String analysisNumber) {
-		this.analysisNumber = analysisNumber;
+	public void setDraftNumber(String draftNumber) {
+		this.draftNumber = draftNumber;
 	}
 
 	public String getNewRegId() {
@@ -378,6 +379,14 @@ public class TaxOperatorDetailVo {
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+	public String getDutyName() {
+		return dutyName;
+	}
+
+	public void setDutyName(String dutyName) {
+		this.dutyName = dutyName;
 	}
 
 }

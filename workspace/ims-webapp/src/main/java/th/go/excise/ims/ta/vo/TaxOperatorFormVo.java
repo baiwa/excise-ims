@@ -1,12 +1,42 @@
 package th.go.excise.ims.ta.vo;
 
-public class TaxOperatorFormVo {
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 
+public class TaxOperatorFormVo extends DataTableRequest {
+
+	private static final long serialVersionUID = 2104725920450722805L;
 	private String dateStart;
 	private String dateEnd;
 	private int dateRange;
-	private String analysisNumber;
+	private String draftNumber;
 	private String budgetYear;
+	private String facType;
+	private String dutyCode;
+	private String officeCode;
+
+	public String getOfficeCode() {
+		return officeCode;
+	}
+
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
+	}
+
+	public String getFacType() {
+		return facType;
+	}
+
+	public void setFacType(String facType) {
+		this.facType = facType;
+	}
+
+	public String getDutyCode() {
+		return dutyCode;
+	}
+
+	public void setDutyCode(String dutyCode) {
+		this.dutyCode = dutyCode;
+	}
 
 	public String getBudgetYear() {
 		return budgetYear;
@@ -40,12 +70,12 @@ public class TaxOperatorFormVo {
 		this.dateRange = dateRange;
 	}
 
-	public String getAnalysisNumber() {
-		return analysisNumber;
+	public String getDraftNumber() {
+		return draftNumber;
 	}
 
-	public void setAnalysisNumber(String analysisNumber) {
-		this.analysisNumber = analysisNumber;
+	public void setDraftNumber(String draftNumber) {
+		this.draftNumber = draftNumber;
 	}
 
 }

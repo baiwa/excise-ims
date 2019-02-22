@@ -69,7 +69,7 @@ public class TaxOperatorJdbcRepository {
 			vo.setAreaCode(rs.getString("AREA_CODE"));
 			vo.setAreaDesc(rs.getString("AREA_DESC"));
 			vo.setWorksheetHdrId(rs.getString("WORKSHEET_HDR_ID"));
-			vo.setAnalysisNumber(rs.getString("ANALYSIS_NUMBER"));
+			vo.setDraftNumber(rs.getString("DRAFT_NUMBER"));
 			vo.setNewRegId(rs.getString("NEW_REG_ID"));
 			vo.setSumTaxAmtG1(decimalFormat.format(rs.getBigDecimal("SUM_TAX_AMT_G1") == null ? BigDecimal.ZERO : rs.getBigDecimal("SUM_TAX_AMT_G1")));
 			vo.setSumTaxAmtG2(decimalFormat.format(rs.getBigDecimal("SUM_TAX_AMT_G2") == null ? BigDecimal.ZERO : rs.getBigDecimal("SUM_TAX_AMT_G2")));
@@ -143,7 +143,7 @@ public class TaxOperatorJdbcRepository {
 		return commonJdbcTemplate.queryForList(sql.toString(), new Object[] { analysisNumber }, String.class);
 	}
 
-	public List<TaxOperatorDetailVo> getTaxOperatorDraft(String analysisNumber) {
+	public List<TaxOperatorDetailVo> getTaxOperatorDraft(String draftNumber) {
 
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT R4000.CUS_FULLNAME,");
@@ -164,9 +164,9 @@ public class TaxOperatorJdbcRepository {
 		sql.append(" on  ED_AREA.OFFICE_CODE    = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 4),'00')");
 		sql.append(" WHERE TA_W_HDR.IS_DELETED = 'N'");
 		sql.append(" AND R4000.IS_DELETED = 'N'");
-		sql.append(" AND TA_W_HDR.ANALYSIS_NUMBER = ?");
+		sql.append(" AND TA_W_HDR.DRAFT_NUMBER = ?");
 
-		return commonJdbcTemplate.query(sql.toString(), new Object[] { analysisNumber }, taxOperatorDraftrowMapper);
+		return commonJdbcTemplate.query(sql.toString(), new Object[] { draftNumber }, taxOperatorDraftrowMapper);
 	}
 
 	protected RowMapper<TaxOperatorDetailVo> taxOperatorDraftrowMapper = new RowMapper<TaxOperatorDetailVo>() {
@@ -185,8 +185,8 @@ public class TaxOperatorJdbcRepository {
 			vo.setSecDesc(rs.getString("SEC_DESC"));
 			vo.setAreaCode(rs.getString("AREA_CODE"));
 			vo.setAreaDesc(rs.getString("AREA_DESC"));
-			vo.setWorksheetHdrId(rs.getString("ID"));
-			vo.setAnalysisNumber(rs.getString("ANALYSIS_NUMBER"));
+			vo.setWorksheetHdrId(rs.getString("TA_DRAFT_WORKSHEET_DTL_ID"));
+			vo.setDraftNumber(rs.getString("DRAFT_NUMBER"));
 			vo.setNewRegId(rs.getString("NEW_REG_ID"));
 			vo.setSumTaxAmtG1( rs.getString("SUM_TAX_AMT_G1"));
 			vo.setSumTaxAmtG2( rs.getString("SUM_TAX_AMT_G2"));
@@ -216,7 +216,6 @@ public class TaxOperatorJdbcRepository {
 			vo.setTaxAmtG2M10( rs.getString("TAX_AMT_G2_M10"));
 			vo.setTaxAmtG2M11( rs.getString("TAX_AMT_G2_M11"));
 			vo.setTaxAmtG2M12( rs.getString("TAX_AMT_G2_M12"));
-			vo.setCondTaxGrp(rs.getString("COND_TAX_GRP"));
 			return vo;
 		}
 	};

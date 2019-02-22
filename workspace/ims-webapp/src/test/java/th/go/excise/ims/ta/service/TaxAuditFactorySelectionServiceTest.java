@@ -2,6 +2,7 @@ package th.go.excise.ims.ta.service;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +16,15 @@ import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 import th.go.excise.ims.ta.vo.TaxOperatorVo;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class)
-@WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
-@ActiveProfiles(value = PROFILE.UNITTEST)
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = Application.class)
+//@WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
+//@ActiveProfiles(value = PROFILE.UNITTEST)
 public class TaxAuditFactorySelectionServiceTest {
 
 	@Autowired
 	private TaxAuditFactorySelectionService taxAuditFactorySelectionService;
-	
+
 //	@Test
 	public void test() {
 //		taxAuditFactorySelectionService.selectFactoryProcess("20190211221720");
@@ -34,16 +35,17 @@ public class TaxAuditFactorySelectionServiceTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	@Test
+
+//	@Test
 	public void test_getPreviewData() {
+
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
-		formVo.setDateStart("201505");
-		formVo.setDateEnd("201704");
+		formVo.setDateStart("05/2558");
+		formVo.setDateEnd("04/2560");
 		formVo.setDateRange(24);
-		
+
 		try {
 			System.out.println(new Date());
 			TaxOperatorVo vo = taxAuditFactorySelectionService.getPreviewData(formVo);
@@ -53,5 +55,24 @@ public class TaxAuditFactorySelectionServiceTest {
 			e.printStackTrace();
 		}
 	}
-	
+
+	@Test
+	public void testOffice() {
+
+		String officeCode = "010110";
+		if (StringUtils.isNotBlank(officeCode) && officeCode.length() == 6) {
+			if ("000000".equals(officeCode)) {
+				officeCode = null;
+			} else if ("00".equals(officeCode.substring(officeCode.length() - 2, officeCode.length()))) {
+				if ("00".equals(officeCode.substring(officeCode.length() - 4, officeCode.length() - 2))) {
+					officeCode = officeCode.substring(0, officeCode.length() - 4) + "____";
+				} else {
+					officeCode = officeCode.substring(0, officeCode.length() - 2) + "__";
+				}
+			}
+
+		}
+		System.out.println(officeCode);
+	}
+
 }
