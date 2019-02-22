@@ -45,6 +45,10 @@ public class TaWorksheetCondDtlTax extends BaseEntity {
 	private BigDecimal rangeEnd;
 	@Column(name = "RISK_LEVEL")
 	private String riskLevel;
+	@Column(name = "COND_TYPE")
+	private String condType;
+
+	
 
 	public BigDecimal getWorksheetCondDtlTaxId() {
 		return worksheetCondDtlTaxId;
@@ -116,6 +120,14 @@ public class TaWorksheetCondDtlTax extends BaseEntity {
 
 	public void setRiskLevel(String riskLevel) {
 		this.riskLevel = riskLevel;
+	}
+	
+	public String getCondType() {
+		return condType;
+	}
+
+	public void setCondType(String condType) {
+		this.condType = condType;
 	}
 
 	public String toString() {
