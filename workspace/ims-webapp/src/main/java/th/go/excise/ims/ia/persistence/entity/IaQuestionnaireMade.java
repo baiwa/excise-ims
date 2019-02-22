@@ -31,6 +31,8 @@ public class IaQuestionnaireMade extends BaseEntity {
 	private BigDecimal idSideDtl;
 	@Column(name = "CHECK_FLAG")
 	private String checkFlag;
+	@Column(name = "OFFICE_CODE")
+	private String officeCode;
 
 	public BigDecimal getId() {
 		return id;
@@ -58,6 +60,14 @@ public class IaQuestionnaireMade extends BaseEntity {
 
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+	public String getOfficeCode() {
+		return officeCode;
+	}
+
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
 	}
 
 }
