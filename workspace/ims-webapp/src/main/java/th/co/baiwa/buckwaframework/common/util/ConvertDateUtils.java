@@ -1,9 +1,8 @@
 package th.co.baiwa.buckwaframework.common.util;
 
 import java.text.ParseException;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
@@ -65,6 +64,15 @@ public class ConvertDateUtils {
         }
         return dateString;
     }
-
+    
+    public static LocalDate parseStringThaiDateToLocalDate(String strDate, String patten) {
+    	if (StringUtils.isNotBlank(strDate)) {
+    		LocalDate localDate = LocalDate.parse(strDate, DateTimeFormatter.ofPattern(patten, LOCAL_TH));
+    		ThaiBuddhistDate thaiDate = ThaiBuddhistDate.of(localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth());
+    		return LocalDate.from(thaiDate);
+    	} else {
+    		return LocalDate.now();
+    	}
+    }
 
 }
