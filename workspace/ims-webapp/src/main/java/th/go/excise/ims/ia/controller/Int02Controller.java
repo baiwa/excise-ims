@@ -91,4 +91,21 @@ public class Int02Controller {
 		
 		return responseData;
 	}
+	
+	@PutMapping("/cancel-send-qtn/{id}")
+	@ResponseBody
+	public ResponseData<IaQuestionnaireHdr> cancelSendQtn(@PathVariable("id") String idStr) {
+		ResponseData<IaQuestionnaireHdr> responseData = new ResponseData<IaQuestionnaireHdr>();
+		try {
+			responseData.setData(int02Service.updateStatus(idStr));
+			responseData.setMessage("UPDATE SUCCESS");
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			responseData.setMessage("UPDATE ERROR");
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		
+		return responseData;
+	}
 }
