@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondDtlTax;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWsCondDtlTax;
@@ -39,7 +40,7 @@ public class WorksheetConditionService {
 	
 	public String insertWorkSheet(TaWsCondHdr formVo) throws SQLException {
 		TaMasCondHdr headerMas = taMasCondHdrRepository.findByBudgetYear(formVo.getBudgetYear());
-		List<TaMasCondDtlTax> dtlMas = taMasCondDtlTaxRepository.findByBudgetYear(formVo.getBudgetYear());
+		List<TaMasCondDtlTax> dtlMas = taMasCondDtlTaxRepository.findByBudgetYearAndCondType(formVo.getBudgetYear(), TA_MAS_COND_MAIN_TYPE.TAX);
 		TaWsCondDtlTax dtlWs = null;
 		TaWsCondHdr headerWs = new TaWsCondHdr();
 		String analysisNumber = ConvertDateUtils.formatDateToString(new Date(), ConvertDateUtils.YYYYMMDDHHMMSS, ConvertDateUtils.LOCAL_EN);

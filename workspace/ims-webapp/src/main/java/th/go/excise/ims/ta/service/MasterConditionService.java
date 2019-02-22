@@ -68,7 +68,7 @@ public class MasterConditionService {
 		taMasCondHdrRepository.save(header);
 
 		if (header.getBudgetYear() != null) {
-			List<TaMasCondDtlTax> list = taMasCondDtlTaxRepository.findByBudgetYear(formVo.getHeader().getBudgetYear());
+			List<TaMasCondDtlTax> list = taMasCondDtlTaxRepository.findByBudgetYearAndCondType(formVo.getHeader().getBudgetYear(), TA_MAS_COND_MAIN_TYPE.TAX);
 //			List<TaMasCondDtlTax> listY = taMasCondDtlTaxRepository
 //					.findByBudgetYearY(formVo.getHeader().getBudgetYear());
 
@@ -138,7 +138,7 @@ public class MasterConditionService {
 				dtlList.add(dtl);
 
 			}
-			dtl = taMasCondDtlTaxRepository.findByCondTypeO(formVo.getHeader().getBudgetYear()).get(0);
+			dtl = taMasCondDtlTaxRepository.findByBudgetYearAndCondType(formVo.getHeader().getBudgetYear(),TA_MAS_COND_MAIN_TYPE.OTHER).get(0);
 			dtl.setCondGroup(String.valueOf(formVo.getDetail().size() + 1));
 			dtlList.add(dtl);
 			taMasCondDtlTaxRepository.saveAll(dtlList);
@@ -153,7 +153,7 @@ public class MasterConditionService {
 
 	public List<TaMasCondDtlTax> findByBudgetYearDtl(TaMasCondDtlTax dtl) {
 		List<TaMasCondDtlTax> budgetYear = new ArrayList<TaMasCondDtlTax>();
-		budgetYear = taMasCondDtlTaxRepository.findByBudgetYear(dtl.getBudgetYear());
+		budgetYear = taMasCondDtlTaxRepository.findByBudgetYearAndCondType(dtl.getBudgetYear(), TA_MAS_COND_MAIN_TYPE.TAX);
 		return budgetYear;
 	}
 
