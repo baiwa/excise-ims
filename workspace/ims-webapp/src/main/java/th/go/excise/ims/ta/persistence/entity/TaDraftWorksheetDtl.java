@@ -13,8 +13,8 @@ public class TaDraftWorksheetDtl extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_DRAFT_WORKSHEET_GEN")
 	@SequenceGenerator(name = "TA_DRAFT_WORKSHEET_GEN", sequenceName = "TA_DRAFT_WORKSHEET_DTL_SEQ", allocationSize = 1)
-	@Column(name = "TA_DRAFT_WORKSHEET_DTL_ID")
-	private Long taDraftWorksheetDtlId;
+	@Column(name = "DRAFT_WORKSHEET_DTL_ID")
+	private Long draftWorksheetDtlId;
 	@Column(name = "OFFICE_CODE")
 	private String officeCode;
 	@Column(name = "DRAFT_NUMBER")
@@ -78,12 +78,13 @@ public class TaDraftWorksheetDtl extends BaseEntity {
 	@Column(name = "TAX_AMT_G2_M12")
 	private String taxAmtG2M12;
 
-	public Long getTaDraftWorksheetDtlId() {
-		return taDraftWorksheetDtlId;
+	
+	public Long getDraftWorksheetDtlId() {
+		return draftWorksheetDtlId;
 	}
 
-	public void setTaDraftWorksheetDtlId(Long taDraftWorksheetDtlId) {
-		this.taDraftWorksheetDtlId = taDraftWorksheetDtlId;
+	public void setDraftWorksheetDtlId(Long draftWorksheetDtlId) {
+		this.draftWorksheetDtlId = draftWorksheetDtlId;
 	}
 
 	public String getOfficeCode() {

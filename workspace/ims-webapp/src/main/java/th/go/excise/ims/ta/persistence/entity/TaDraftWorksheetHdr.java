@@ -18,8 +18,8 @@ public class TaDraftWorksheetHdr extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_DRAFT_WORKSHEET_HDR_GEN")
 	@SequenceGenerator(name = "TA_DRAFT_WORKSHEET_HDR_GEN", sequenceName = "TA_DRAFT_WORKSHEET_HDR_SEQ", allocationSize = 1)
-	@Column(name = "TA_DRAFT_WORKSHEET_HDR_ID")
-	private BigDecimal taDraftWorksheetHdrId;
+	@Column(name = "DRAFT_WORKSHEET_HDR_ID")
+	private Long draftWorksheetHdrId;
 	@Column(name = "ANALYSIS_NUMBER")
 	private String analysisNumber;
 	@Column(name = "OFFICE_CODE")
@@ -29,12 +29,14 @@ public class TaDraftWorksheetHdr extends BaseEntity {
 	@Column(name = "YEAR_MONTH_END")
 	private String yearMonthEnd;
 
-	public BigDecimal getTaDraftWorksheetHdrId() {
-		return taDraftWorksheetHdrId;
+	
+
+	public Long getDraftWorksheetHdrId() {
+		return draftWorksheetHdrId;
 	}
 
-	public void setTaDraftWorksheetHdrId(BigDecimal taDraftWorksheetHdrId) {
-		this.taDraftWorksheetHdrId = taDraftWorksheetHdrId;
+	public void setDraftWorksheetHdrId(Long draftWorksheetHdrId) {
+		this.draftWorksheetHdrId = draftWorksheetHdrId;
 	}
 
 	public String getAnalysisNumber() {
