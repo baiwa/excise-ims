@@ -29,7 +29,10 @@ public class TaWorksheetHdrServiceTest {
 	@Autowired
 	private TaWorksheetHdrRepository taWorksheetHdrRepository;
 	
-	@Test
+	@Autowired
+	private TaWorksheetHdrService taWorksheetHdrService;
+	
+	//@Test
 	public void testFindBySubCondition() {
 		
 		try {
@@ -41,5 +44,12 @@ public class TaWorksheetHdrServiceTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	
+	@Test
+	public void addTaWorksheetHdrByCondition() {
+		taWorksheetHdrService.addTaWorksheetHdrByCondition("20190222180907", "2562");
+
 	}
 }

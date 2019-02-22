@@ -1,6 +1,5 @@
 package th.go.excise.ims.ta.persistence.entity;
 
-import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
@@ -20,8 +20,8 @@ public class TaDraftWorksheetHdr extends BaseEntity {
 	@SequenceGenerator(name = "TA_DRAFT_WORKSHEET_HDR_GEN", sequenceName = "TA_DRAFT_WORKSHEET_HDR_SEQ", allocationSize = 1)
 	@Column(name = "DRAFT_WORKSHEET_HDR_ID")
 	private Long draftWorksheetHdrId;
-	@Column(name = "ANALYSIS_NUMBER")
-	private String analysisNumber;
+	@Column(name = "DRAFT_NUMBER")
+	private String draftNumber;
 	@Column(name = "OFFICE_CODE")
 	private String officeCode;
 	@Column(name = "YEAR_MONTH_START")
@@ -39,12 +39,12 @@ public class TaDraftWorksheetHdr extends BaseEntity {
 		this.draftWorksheetHdrId = draftWorksheetHdrId;
 	}
 
-	public String getAnalysisNumber() {
-		return analysisNumber;
+	public String getDraftNumber() {
+		return draftNumber;
 	}
 
-	public void setAnalysisNumber(String analysisNumber) {
-		this.analysisNumber = analysisNumber;
+	public void setDraftNumber(String draftNumber) {
+		this.draftNumber = draftNumber;
 	}
 
 	public String getOfficeCode() {

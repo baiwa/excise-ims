@@ -16,8 +16,9 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
-import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
+import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
+import th.go.excise.ims.ta.vo.TaxDratfVo;
 
 public class TaWsReg4000RepositoryImpl implements TaWsReg4000Custom {
 	@Autowired
@@ -84,6 +85,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000Custom {
 		sql.append(" ORDER BY DUTY_CODE , NEW_REG_ID ");
 		return this.commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), start, length),paramList.toArray(),  rowMappping);
 	}
+	
 	@Override
 	public Long countAll(TaWsReg4000 taWsReg4000) throws SQLException {
 		List<Object> paramList = new ArrayList<>();
@@ -129,12 +131,57 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000Custom {
 			vo.setFacEmail(re.getString("FAC_EMAIL"));
 			vo.setFacUrl(re.getString("FAC_URL"));
 			vo.setFacType(re.getString("FAC_TYPE"));
-			vo.setRegDate(LocalDateTimeConverter.convertToEntityAttribute(re.getTimestamp("REG_DATE")));
+			vo.setRegDate(LocalDateConverter.convertToEntityAttribute(re.getDate("REG_DATE")));
 			vo.setRegCapital(re.getString("REG_CAPITAL"));
 			vo.setOfficeCode(re.getString("OFFICE_CODE"));
 			vo.setActiveFlag(re.getString("ACTIVE_FLAG"));
 			vo.setDutyCode(re.getString("DUTY_CODE"));
 			
+			return vo;
+		}
+	};
+	
+	
+	@Override
+	public List<TaxDratfVo> findByDraftNumbwe(String draftNumbwe) throws SQLException {
+		List<Object> paramList = new ArrayList<>();
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT T.* , D.TAX_AMT_CHN_PNT, D.TAX_MONTH_NO FROM TA_WS_REG4000 T ");
+		sql.append(" INNER JOIN TA_DRAFT_WORKSHEET_DTL D ");
+		sql.append(" ON T.NEW_REG_ID = D.NEW_REG_ID ");
+		sql.append(" WHERE T.IS_DELETED = 'N' ");
+		sql.append(" AND D.IS_DELETED = 'N' ");
+		sql.append(" AND D.DRAFT_NUMBER = ? ");
+		paramList.add(draftNumbwe);
+		return this.commonJdbcTemplate.query(sql.toString(),paramList.toArray(),  rowMapppingTaxDratfVo);
+	}
+	protected RowMapper<TaxDratfVo> rowMapppingTaxDratfVo = new RowMapper<TaxDratfVo>() {
+		
+		@Override
+		public TaxDratfVo mapRow(ResultSet re, int arg1) throws SQLException {
+			TaxDratfVo vo = new TaxDratfVo();
+			vo.setWsReg4000Id(re.getLong("WS_REG4000_ID"));
+			vo.setNewRegId(re.getString("NEW_REG_ID"));
+			vo.setCusId(re.getString("CUS_ID"));
+			vo.setCusFullname(re.getString("CUS_FULLNAME"));
+			vo.setCusAddress(re.getString("CUS_ADDRESS"));
+			vo.setCusTelno(re.getString("CUS_TELNO"));
+			vo.setCusEmail(re.getString("CUS_EMAIL"));
+			vo.setCusUrl(re.getString("CUS_URL"));
+			vo.setFacId(re.getString("FAC_ID"));
+			vo.setFacFullname(re.getString("FAC_FULLNAME"));
+			vo.setFacAddress(re.getString("FAC_ADDRESS"));
+			vo.setFacTelno(re.getString("FAC_TELNO"));
+			vo.setFacEmail(re.getString("FAC_EMAIL"));
+			vo.setFacUrl(re.getString("FAC_URL"));
+			vo.setFacType(re.getString("FAC_TYPE"));
+			vo.setRegDate(LocalDateConverter.convertToEntityAttribute(re.getDate("REG_DATE")));
+			vo.setRegCapital(re.getString("REG_CAPITAL"));
+			vo.setOfficeCode(re.getString("OFFICE_CODE"));
+			vo.setActiveFlag(re.getString("ACTIVE_FLAG"));
+			vo.setDutyCode(re.getString("DUTY_CODE"));
+			vo.setTaxAmtChnPnt(re.getBigDecimal("TAX_AMT_CHN_PNT"));
+			vo.setTaxMonthNo(re.getBigDecimal("TAX_MONTH_NO"));
 			return vo;
 		}
 	};

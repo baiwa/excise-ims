@@ -1,5 +1,7 @@
 package th.go.excise.ims.ta.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
@@ -56,7 +58,7 @@ public class TaxAuditFactorySelectionServiceTest {
 		}
 	}
 
-	@Test
+	//@Test
 	public void testOffice() {
 
 		String officeCode = "010110";
@@ -73,6 +75,19 @@ public class TaxAuditFactorySelectionServiceTest {
 
 		}
 		System.out.println(officeCode);
+	}
+	
+	
+	@Test
+	public void testDate() {
+
+		String startDate = "201801";
+		String endDate  = "201804";
+		
+		String regisDate = "201903";
+		
+		System.out.println(regisDate.compareTo(startDate) >= 0  && regisDate.compareTo(endDate) <= 0);
+		//System.out.println(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")));
 	}
 
 }

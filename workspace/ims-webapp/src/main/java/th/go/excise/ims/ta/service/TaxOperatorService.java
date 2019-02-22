@@ -189,10 +189,9 @@ public class TaxOperatorService {
 
 		this.taWorksheetCondDtlTaxRepository.saveAll(condDetails);
 
-		// TODO ==>save draft
 		// Header
 		TaDraftWorksheetHdr draftHdr = new TaDraftWorksheetHdr();
-		draftHdr.setAnalysisNumber(draftNumber);
+		draftHdr.setDraftNumber(draftNumber);
 		draftHdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeId());
 		draftHdr.setYearMonthStart(dateStartStr);
 		draftHdr.setYearMonthEnd(dateEndStr);
