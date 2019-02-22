@@ -1,9 +1,7 @@
 package th.go.excise.ims.ta.persistence.repository.jdbc;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 

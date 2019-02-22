@@ -16,10 +16,6 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetHdr;
-import th.go.excise.ims.ta.persistence.entity.TaMasCondDtlTax;
-import th.go.excise.ims.ta.persistence.entity.TaMasCondHdr;
-import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondDtlTax;
-import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondHdr;
 import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondDtlTaxRepository;
@@ -145,11 +141,11 @@ public class TaxOperatorService {
 
 		String draftNumber = ConvertDateUtils.formatDateToString(new Date(), ConvertDateUtils.YYYYMMDDHHMMSS, ConvertDateUtils.LOCAL_EN);
 
-		TaMasCondHdr masHeader = this.masCondHdrRepository.findByBudgetYear(formVo.getBudgetYear());
-		List<TaMasCondDtlTax> masDetail = this.masCondDtlTaxRepository.findByBudgetYear(masHeader.getBudgetYear());
+		/*TaMasCondHdr masHeader = this.masCondHdrRepository.findByBudgetYear(formVo.getBudgetYear());
+		List<TaMasCondDtlTax> masDetail = this.masCondDtlTaxRepository.findByBudgetYear(masHeader.getBudgetYear());*/
 
 		// ==> save header
-		TaWorksheetCondHdr conHdr = new TaWorksheetCondHdr();
+		/*TaWorksheetCondHdr conHdr = new TaWorksheetCondHdr();
 		conHdr.setAnalysisNumber(draftNumber);
 		conHdr.setBudgetYear(formVo.getBudgetYear());
 		conHdr.setMonthNum(new BigDecimal(masHeader.getMonthNum()));
@@ -158,10 +154,10 @@ public class TaxOperatorService {
 		conHdr.setAreaSeeFlag(masHeader.getAreaSeeFlag());
 		conHdr.setAreaSelectFlag(masHeader.getAreaSelectFlag());
 		conHdr.setNoAuditYearNum(new BigDecimal(masHeader.getNoAuditYearNum()));
-		this.taWorksheetCondHdrRepository.save(conHdr);
+		this.taWorksheetCondHdrRepository.save(conHdr);*/
 
 		// ==> save detail
-		List<TaWorksheetCondDtlTax> condDetails = new ArrayList<>();
+/*		List<TaWorksheetCondDtlTax> condDetails = new ArrayList<>();
 		for (TaMasCondDtlTax detail : masDetail) {
 
 			TaWorksheetCondDtlTax condDetail = new TaWorksheetCondDtlTax();
@@ -187,7 +183,7 @@ public class TaxOperatorService {
 			condDetails.add(condDetail);
 		}
 
-		this.taWorksheetCondDtlTaxRepository.saveAll(condDetails);
+		this.taWorksheetCondDtlTaxRepository.saveAll(condDetails);*/
 
 		// Header
 		TaDraftWorksheetHdr draftHdr = new TaDraftWorksheetHdr();
@@ -195,7 +191,8 @@ public class TaxOperatorService {
 		draftHdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeId());
 		draftHdr.setYearMonthStart(dateStartStr);
 		draftHdr.setYearMonthEnd(dateEndStr);
-
+		draftHdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeId());
+		draftHdr.setMonthNum(formVo.getDateRange());
 		this.draftWorksheetHdrRepository.save(draftHdr);
 
 		// Detail
@@ -242,7 +239,7 @@ public class TaxOperatorService {
 
 			draft.setCreatedBy(UserLoginUtils.getCurrentUsername());
 			draft.setCreatedDate(LocalDateTime.now());
-			draft.setOfficeCode(rs.getOfficeCode());
+			draft.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeId());
 			dratfs.add(draft);
 		}
 		this.draftWorksheetRepository.saveBatchDraft(dratfs);
