@@ -130,7 +130,7 @@ public class TaWorksheetHdrService {
 			for (TaxDratfVo taxDratfVo : taxDratfVoList) {
 				taWorksheetDtl = new TaWorksheetDtl();
 				BeanUtils.copyProperties(taWorksheetDtl, taxDratfVo);
-				
+				taWorksheetDtl.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeId());
 				taWorksheetDtl.setAnalysisNumber(analysisNumber);
 				taWorksheetDtl.setCondMainGrp("0");
 				if (taxDratfVo.getRegDate() != null) {

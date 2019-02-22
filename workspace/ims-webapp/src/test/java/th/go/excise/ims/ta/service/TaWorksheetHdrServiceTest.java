@@ -49,7 +49,7 @@ public class TaWorksheetHdrServiceTest {
 	
 	@Test
 	public void addTaWorksheetHdrByCondition() {
-		taWorksheetHdrService.addTaWorksheetHdrByCondition("20190222180907", "2562");
+		taWorksheetHdrService.addTaWorksheetHdrByCondition("20190222233659", "2562");
 
 	}
 }

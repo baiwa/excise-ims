@@ -18,14 +18,16 @@ import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 import th.go.excise.ims.ta.vo.TaxOperatorVo;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest(classes = Application.class)
-//@WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
-//@ActiveProfiles(value = PROFILE.UNITTEST)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Application.class)
+@WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
+@ActiveProfiles(value = PROFILE.UNITTEST)
 public class TaxAuditFactorySelectionServiceTest {
 
 	@Autowired
 	private TaxAuditFactorySelectionService taxAuditFactorySelectionService;
+	@Autowired
+	private TaxOperatorService taxOperatorService;
 
 //	@Test
 	public void test() {
@@ -40,19 +42,19 @@ public class TaxAuditFactorySelectionServiceTest {
 
 	}
 
-//	@Test
+	@Test
 	public void test_getPreviewData() {
 
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
 		formVo.setDateStart("05/2558");
 		formVo.setDateEnd("04/2560");
 		formVo.setDateRange(24);
-
+		formVo.setStart(0);
+		formVo.setLength(0);
 		try {
 			System.out.println(new Date());
-			TaxOperatorVo vo = taxAuditFactorySelectionService.getPreviewData(formVo);
+			taxOperatorService.saveDraft(formVo);
 			System.out.println(new Date());
-			System.out.println(vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -78,7 +80,7 @@ public class TaxAuditFactorySelectionServiceTest {
 	}
 	
 	
-	@Test
+//	@Test
 	public void testDate() {
 
 		String startDate = "201801";
