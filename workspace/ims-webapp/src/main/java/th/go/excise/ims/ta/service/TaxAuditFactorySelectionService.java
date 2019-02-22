@@ -276,12 +276,12 @@ public class TaxAuditFactorySelectionService {
 			}
 
 			for (TaWsInc8000M wsInc8000M : wsInc8000MList) {
-				countTaxMonthNo++;
 				if (countG1 < formVo.getDateRange() / 2) {
 					// Group 1
 					if (wsInc8000M.getTaxAmount() != null) {
 						taxAmount = decimalFormat.format(wsInc8000M.getTaxAmount());
 						sumTaxAmtG1 = sumTaxAmtG1.add(wsInc8000M.getTaxAmount());
+						countTaxMonthNo++;
 					} else {
 						taxAmount = NO_TAX_AMOUNT;
 					}
@@ -316,6 +316,7 @@ public class TaxAuditFactorySelectionService {
 					if (wsInc8000M.getTaxAmount() != null) {
 						taxAmount = decimalFormat.format(wsInc8000M.getTaxAmount());
 						sumTaxAmtG2 = sumTaxAmtG2.add(wsInc8000M.getTaxAmount());
+						countTaxMonthNo++;
 					} else {
 						taxAmount = NO_TAX_AMOUNT;
 					}

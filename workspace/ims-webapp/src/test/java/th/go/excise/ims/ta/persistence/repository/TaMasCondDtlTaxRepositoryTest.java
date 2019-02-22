@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondDtlTax;
 
 @RunWith(SpringRunner.class)
@@ -27,7 +28,7 @@ public class TaMasCondDtlTaxRepositoryTest {
 	
 	@Test
 	public void test_findByBudgetYear() {
-		List<TaMasCondDtlTax> masCondDtlTaxList = taMasCondDtlTaxRepository.findByBudgetYearAndCondTypeT("2562");
+		List<TaMasCondDtlTax> masCondDtlTaxList = taMasCondDtlTaxRepository.findByBudgetYearAndCondType("2562", TA_MAS_COND_MAIN_TYPE.TAX);
 		for (TaMasCondDtlTax masCondDtlTax : masCondDtlTaxList) {
 			System.out.println(ToStringBuilder.reflectionToString(masCondDtlTax, ToStringStyle.JSON_STYLE));
 		}
