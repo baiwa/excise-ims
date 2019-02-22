@@ -40,7 +40,8 @@ public class Int0301Service {
 		IaRiskFactorsConfig formConfig = form.getIaRiskFactorsConfig();
 		entity = iaRiskFactorsConfigRepository.findById(formConfig.getId()).get();
 		entity.setIdFactors(formConfig.getIdFactors());	
-		
+		entity.setInfoUsedRiskDesc(formConfig.getInfoUsedRiskDesc());
+			
 		entity.setVerylow(formConfig.getVerylow());
 		entity.setVerylowStart(formConfig.getVerylowStart());
 		entity.setVerylowEnd(formConfig.getVerylowEnd());
