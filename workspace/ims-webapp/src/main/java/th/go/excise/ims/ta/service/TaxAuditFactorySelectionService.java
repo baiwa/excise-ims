@@ -166,9 +166,13 @@ public class TaxAuditFactorySelectionService {
 		Date ymEnd = ConvertDateUtils.parseStringToDate(formVo.getDateEnd(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
 		String ymStartStr = ConvertDateUtils.formatDateToString(ymStart, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		String ymEndStr = ConvertDateUtils.formatDateToString(ymEnd, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
-		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findAllPagination(formVo.getStart(), formVo.getLength());
+		List<TaWsReg4000> wsReg4000List = null;
+		if(formVo.getStart() == null && formVo.getLength() == null ) {
+			wsReg4000List = taWsReg4000Repository.findAll();
+		}else {
+			wsReg4000List = taWsReg4000Repository.findAllPagination(formVo.getStart(), formVo.getLength());
+		}
 		Map<String, List<TaWsInc8000M>> wsInc8000MMap = taWsInc8000MRepository.findByMonthRange(ymStartStr, ymEndStr);
-
 		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
 		List<TaWsInc8000M> wsInc8000MList = null;
 		BigDecimal sumTaxAmtG1 = null;
