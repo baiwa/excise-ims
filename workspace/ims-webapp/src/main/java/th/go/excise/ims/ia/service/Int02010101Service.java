@@ -43,14 +43,21 @@ public class Int02010101Service {
 	}
 
 	public Int02010101FormVo saveAll(Int02010101FormVo form) {
+		// DELETE
+		if (form.getDelete().toArray().length > 0) {
+			List<IaQuestionnaireSideDtl> delete = form.getDelete();
+			for (IaQuestionnaireSideDtl iaQuestionnaireSideDtl : delete) {
+				iaQuestionnaireSideDtlRepository.deleteById(iaQuestionnaireSideDtl.getId());
+			}
+		}
 		// SAVE
 		if (form.getSave().toArray().length > 0) {
 			IaQuestionnaireSideDtl save;
 			for (int i = 0; i < form.getSave().toArray().length; i++) {
 				save = new IaQuestionnaireSideDtl();
 				IaQuestionnaireSideDtl item = form.getSave().get(i);
-				BigDecimal id = item.getId();
 				if (item.getId() != null) {
+					BigDecimal id = item.getId();
 					save = iaQuestionnaireSideDtlJdbcRepository.findById(id);
 					save.setQtnLevel(item.getQtnLevel());
 					save.setSideDtl(item.getSideDtl());
@@ -61,11 +68,6 @@ public class Int02010101Service {
 				}
 				form.getSave().set(i, iaQuestionnaireSideDtlRepository.save(save));
 			}
-		}
-		// DELETE
-		if (form.getDelete().toArray().length > 0) {
-			List<IaQuestionnaireSideDtl> delete = form.getDelete();
-			iaQuestionnaireSideDtlRepository.deleteAll(delete);
 		}
 		return form;
 	}
