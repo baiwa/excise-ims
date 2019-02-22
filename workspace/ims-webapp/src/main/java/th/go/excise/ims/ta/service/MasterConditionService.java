@@ -26,6 +26,7 @@ public class MasterConditionService {
 
     public void insertMaster(MasterConditionHdrDtlVo formVo) {
         TaMasCondDtlTax dtl = null;
+        List<TaMasCondDtlTax> dtlList = new ArrayList<>();
         TaMasCondHdr header = new TaMasCondHdr();
         header = taMasCondHdrRepository.save(formVo.getHeader());
         if (header.getBudgetYear() != null) {
@@ -38,14 +39,21 @@ public class MasterConditionService {
                 dtl.setRangeStart(obj.getRangeStart());
                 dtl.setRangeEnd(obj.getRangeEnd());
                 dtl.setRiskLevel(obj.getRiskLevel());
-
-                taMasCondDtlTaxRepository.save(dtl);
+                dtl.setCondType("T");
+                dtlList.add(dtl);
             }
+            dtl = new TaMasCondDtlTax();
+            dtl.setBudgetYear(header.getBudgetYear());
+            dtl.setCondGroup(String.valueOf(formVo.getDetail().size()+1));
+            dtl.setCondType("O");
+            dtlList.add(dtl);
+            taMasCondDtlTaxRepository.saveAll(dtlList);
         }
     }
 
     public void updateWorkSheet(MasterConditionHdrDtlVo formVo) {
         TaMasCondDtlTax dtl = null;
+        List<TaMasCondDtlTax> dtlList = new ArrayList<>();
         TaMasCondHdr header = taMasCondHdrRepository.findById(formVo.getHeader().getCondHdrId()).get();
         header.setBudgetYear(formVo.getHeader().getBudgetYear());
         header.setMonthNum(formVo.getHeader().getMonthNum());
@@ -84,10 +92,10 @@ public class MasterConditionService {
                     if (checkDelete) {
                         dtl = taMasCondDtlTaxRepository.findById(obj.getCondDtlTaxId()).get();
                         dtl.setIsDeleted("Y");
-
-                        taMasCondDtlTaxRepository.save(dtl);
+                        dtlList.add(dtl);
                     }
                 }
+                taMasCondDtlTaxRepository.saveAll(dtlList);
             }
 //			else if (list.size() - formVo.getDetail().size() < 0) {
 //				for (TaMasCondDtlTax obj : listY) {
@@ -100,7 +108,7 @@ public class MasterConditionService {
 //				}
 //
 //			}
-
+            dtlList = new ArrayList<>();
             for (TaMasCondDtlTax obj : formVo.getDetail()) {
                 if (obj.getCondDtlTaxId() == null) {
                     dtl = new TaMasCondDtlTax();
@@ -111,6 +119,7 @@ public class MasterConditionService {
                     dtl.setRangeStart(obj.getRangeStart());
                     dtl.setRangeEnd(obj.getRangeEnd());
                     dtl.setRiskLevel(obj.getRiskLevel());
+                    dtl.setCondType("T");
 
                 } else {
                     dtl = taMasCondDtlTaxRepository.findById(obj.getCondDtlTaxId()).get();
@@ -122,10 +131,14 @@ public class MasterConditionService {
                     dtl.setRangeEnd(obj.getRangeEnd());
                     dtl.setRiskLevel(obj.getRiskLevel());
                 }
-
-                taMasCondDtlTaxRepository.save(dtl);
+                
+                dtlList.add(dtl);
 
             }
+            dtl = taMasCondDtlTaxRepository.findByCondTypeO(formVo.getHeader().getBudgetYear()).get(0);
+            dtl.setCondGroup(String.valueOf(formVo.getDetail().size()+1));
+            dtlList.add(dtl);
+            taMasCondDtlTaxRepository.saveAll(dtlList);
         }
     }
 

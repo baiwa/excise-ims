@@ -1,5 +1,6 @@
 package th.go.excise.ims.ta.service;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -55,8 +56,8 @@ public class WorksheetConditionService {
 				dtlWs.setCondGroup(obj.getCondGroup());
 				dtlWs.setTaxMonthStart(obj.getTaxMonthStart());
 				dtlWs.setTaxMonthEnd(obj.getTaxMonthEnd());
-				dtlWs.setRangeStart(obj.getRangeStart());
-				dtlWs.setRangeEnd(obj.getRangeEnd());
+				dtlWs.setRangeStart(new BigDecimal(obj.getRangeStart()));
+				dtlWs.setRangeEnd(new BigDecimal(obj.getRangeEnd()));
 				dtlWs.setRiskLevel(obj.getRiskLevel());
 
 				taWsCondDtlTaxRepository.save(dtlWs);
