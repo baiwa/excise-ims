@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetHdr;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondDtlTax;
@@ -22,7 +23,6 @@ import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondDtlTax;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
-import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondDtlTaxRepository;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondHdrRepository;
@@ -39,9 +39,6 @@ public class TaWorksheetHdrService {
 
 	@Autowired
 	private TaWorksheetHdrRepository taWorksheetHdrRepository;
-
-	@Autowired
-	private TaDraftWorksheetDtlRepository taDraftWorksheetDtlRepository;
 
 	@Autowired
 	private TaWsReg4000Repository taWsReg4000Repository;
@@ -78,6 +75,7 @@ public class TaWorksheetHdrService {
 		String analysisNumber = ConvertDateUtils.formatDateToString(new Date(), ConvertDateUtils.YYYYMMDDHHMMSS, ConvertDateUtils.LOCAL_EN);
 		TaWorksheetHdr taWorksheetHdr = null;
 		TaWorksheetDtl taWorksheetDtl = null;
+		List<TaWorksheetDtl> taWorksheetDtlList = new ArrayList<>();
 		try {
 			TaDraftWorksheetHdr taDraftWorksheetHdr = taDraftWorksheetHdrRepository.findByDraftNumber(draftNumber);
 			TaMasCondHdr masHeader = this.taMasCondHdrRepository.findByBudgetYear(budgetYear);
@@ -124,12 +122,15 @@ public class TaWorksheetHdrService {
 			this.taWorksheetCondDtlTaxRepository.saveAll(condDetails);
 
 			List<TaxDratfVo> taxDratfVoList = taWsReg4000Repository.findByDraftNumbwe(draftNumber);
+			taWorksheetHdr = new TaWorksheetHdr();
+			taWorksheetHdr.setAnalysisNumber(analysisNumber);
+			taWorksheetHdr.setDraftNumber(draftNumber);
+			taWorksheetHdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeId());
+			taWorksheetHdr.setWorksheetStatus("C");
 			for (TaxDratfVo taxDratfVo : taxDratfVoList) {
-				taWorksheetHdr = new TaWorksheetHdr();
 				taWorksheetDtl = new TaWorksheetDtl();
-				BeanUtils.copyProperties(taWorksheetHdr, taxDratfVo);
 				BeanUtils.copyProperties(taWorksheetDtl, taxDratfVo);
-				taWorksheetHdr.setAnalysisNumber(analysisNumber);
+				
 				taWorksheetDtl.setAnalysisNumber(analysisNumber);
 				taWorksheetDtl.setCondMainGrp("0");
 				if (taxDratfVo.getRegDate() != null) {
@@ -141,28 +142,24 @@ public class TaWorksheetHdrService {
 						// Check Case T
 						for (TaWorksheetCondDtlTax taWorksheetCondDtlTax : condDetails) {
 							try {
-								if(TA_MAS_COND_MAIN_TYPE.TAX.equals(taWorksheetCondDtlTax.getCondType())) {
+								if (TA_MAS_COND_MAIN_TYPE.TAX.equals(taWorksheetCondDtlTax.getCondType())) {
 									if (taWorksheetCondDtlTax.getTaxMonthStart().compareTo(taxDratfVo.getTaxMonthNo()) != 1 && taWorksheetCondDtlTax.getTaxMonthEnd().compareTo(taxDratfVo.getTaxMonthNo()) != -1 && taWorksheetCondDtlTax.getRangeStart().compareTo(taxDratfVo.getTaxAmtChnPnt()) != 1
 											&& taWorksheetCondDtlTax.getRangeEnd().compareTo(taxDratfVo.getTaxAmtChnPnt()) != -1) {
 										taWorksheetDtl.setCondMainGrp(taWorksheetCondDtlTax.getCondGroup());
 										break;
 									}
 								}
-								
+
 							} catch (Exception e) {
-								System.out.println("####################################");
-								System.out.println("####################################");
-								System.out.println(taxDratfVo.getNewRegId());
-								System.out.println("####################################");
-								System.out.println("####################################");
-								e.printStackTrace();
+								logger.error(e.getMessage(), e);
 							}
 						}
 					}
 				}
-				taWorksheetHdrRepository.save(taWorksheetHdr);
-				taWorksheetDtlRepository.save(taWorksheetDtl);
+				taWorksheetDtlList.add(taWorksheetDtl);
 			}
+			taWorksheetHdrRepository.save(taWorksheetHdr);
+			taWorksheetDtlRepository.insertBatch(taWorksheetDtlList);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

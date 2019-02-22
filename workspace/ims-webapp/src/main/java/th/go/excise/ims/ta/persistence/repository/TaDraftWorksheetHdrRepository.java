@@ -5,5 +5,4 @@ import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetHdr;
 
 public interface TaDraftWorksheetHdrRepository extends CommonJpaCrudRepository<TaDraftWorksheetHdr, Long> {
 	public TaDraftWorksheetHdr findByDraftNumber(String draftNumber);
-	
 }

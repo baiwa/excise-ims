@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.RowMapper;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
 
 public class TaWorksheetHdrRepositoryImpl implements TaWorksheetHdrCustom {
@@ -27,18 +28,16 @@ public class TaWorksheetHdrRepositoryImpl implements TaWorksheetHdrCustom {
 
 	@Override
 	public void insertBatch(List<TaWorksheetHdr> taWorksheetHdrList) throws SQLException {
-		String sql = SqlGeneratorUtils.genSqlInsert(TABLE_NAME,
-				Arrays.asList("worksheet_hdr_id", "analysis_number", "new_reg_id", "sum_tax_amt_g1", "sum_tax_amt_g2", "tax_amt_chn_pnt", "tax_month_no", "tax_amt_g1_m1", "tax_amt_g1_m2", "tax_amt_g1_m3", "tax_amt_g1_m4", "tax_amt_g1_m5", "tax_amt_g1_m6", "tax_amt_g1_m7", "tax_amt_g1_m8",
-						"tax_amt_g1_m9", "tax_amt_g1_m10", "tax_amt_g1_m11", "tax_amt_g1_m12", "tax_amt_g2_m1", "tax_amt_g2_m2", "tax_amt_g2_m3", "tax_amt_g2_m4", "tax_amt_g2_m5", "tax_amt_g2_m6", "tax_amt_g2_m7", "tax_amt_g2_m8", "tax_amt_g2_m9", "tax_amt_g2_m10", "tax_amt_g2_m11",
-						"tax_amt_g2_m12", "cond_tax_grp", "created_by"),
-				"TA_WORKSHEET_HDR_SEQ");
+		String sql = SqlGeneratorUtils.genSqlInsert(TABLE_NAME, Arrays.asList("WORKSHEET_HDR_ID", "OFFICE_CODE", "DRAFT_NUMBER", "ANALYSIS_NUMBER", "WORKSHEET_STATUS",  "CREATED_BY"), "TA_WORKSHEET_HDR_SEQ");
 
 		commonJdbcTemplate.batchUpdate(sql, taWorksheetHdrList, 1000, new ParameterizedPreparedStatementSetter<TaWorksheetHdr>() {
 			public void setValues(PreparedStatement ps, TaWorksheetHdr taWorksheetHdr) throws SQLException {
 				List<Object> paramList = new ArrayList<Object>();
+				paramList.add(taWorksheetHdr.getOfficeCode());
+				paramList.add(taWorksheetHdr.getDraftNumber());
 				paramList.add(taWorksheetHdr.getAnalysisNumber());
-				paramList.add("SYSTEM");
-
+				paramList.add(taWorksheetHdr.getWorksheetStatus());
+				paramList.add(UserLoginUtils.getCurrentUsername());
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
 			}
 

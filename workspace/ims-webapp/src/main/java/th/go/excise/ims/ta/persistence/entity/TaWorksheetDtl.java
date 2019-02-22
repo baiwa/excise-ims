@@ -1,7 +1,6 @@
 
 package th.go.excise.ims.ta.persistence.entity;
 
-import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,14 +8,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "TA_WORKSHEET_DTL")
 public class TaWorksheetDtl extends BaseEntity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6358831230496999116L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_WORKSHEET_DTL_GEN")
 	@SequenceGenerator(name = "TA_WORKSHEET_DTL_GEN", sequenceName = "TA_WORKSHEET_DTL_SEQ", allocationSize = 1)
@@ -24,8 +29,6 @@ public class TaWorksheetDtl extends BaseEntity {
 	private Long worksheetDtlId;
 	@Column(name = "OFFICE_CODE")
 	private String officeCode;
-	@Column(name = "DRAFT_NUMBER")
-	private String draftNumber;
 	@Column(name = "ANALYSIS_NUMBER")
 	private String analysisNumber;
 	@Column(name = "NEW_REG_ID")
@@ -54,14 +57,6 @@ public class TaWorksheetDtl extends BaseEntity {
 
 	public void setOfficeCode(String officeCode) {
 		this.officeCode = officeCode;
-	}
-
-	public String getDraftNumber() {
-		return draftNumber;
-	}
-
-	public void setDraftNumber(String draftNumber) {
-		this.draftNumber = draftNumber;
 	}
 
 	public String getAnalysisNumber() {
