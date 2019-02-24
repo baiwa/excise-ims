@@ -20,7 +20,7 @@ public interface UserBean extends UserDetails {
 	public String getEmail();
 	public String getCnName();
 	public String getTelephoneNo();
-	public String getOfficeId();
+	public String getOfficeCode();
 	public String getAccessAttr();
 	
 	public Collection<GrantedAuthority> getAuthorities();

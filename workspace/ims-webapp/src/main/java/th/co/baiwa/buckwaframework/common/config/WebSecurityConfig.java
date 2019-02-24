@@ -36,13 +36,13 @@ public class WebSecurityConfig {
 	@Qualifier("jdbcAuthenticationProvider")
 	private AuthenticationProvider jdbcAuthenticationProvider;
 	
-//	@Autowired
-//	@Qualifier("wsAuthenticationProvider")
-//	private AuthenticationProvider webServiceAuthenticationProvider;
+	@Autowired
+	@Qualifier("wsAuthenticationProvider")
+	private AuthenticationProvider webServiceAuthenticationProvider;
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.authenticationProvider(webServiceAuthenticationProvider);
+		auth.authenticationProvider(webServiceAuthenticationProvider);
 		auth.authenticationProvider(jdbcAuthenticationProvider);
 	}
 	
@@ -76,7 +76,7 @@ public class WebSecurityConfig {
 			http.authorizeRequests().antMatchers("/mobile-api/**").permitAll().and()
 				.antMatcher("/api/**")
 					.authorizeRequests().anyRequest()
-					.hasAnyRole(ROLE.USER)
+					.hasAnyAuthority(ROLE.USER)
 				.and()
 				.formLogin()
 					.loginProcessingUrl(URL.LOGIN_REST).permitAll()
@@ -160,7 +160,7 @@ public class WebSecurityConfig {
 			http
 				.antMatcher("/backend/**")
 					.authorizeRequests().anyRequest()
-					.hasAnyRole(ROLE.USER, ROLE.ADMIN)
+					.hasAnyAuthority(ROLE.USER, ROLE.ADMIN)
 				.and()
 				.formLogin()
 					.loginPage(URL.LOGIN_WEB).permitAll()
