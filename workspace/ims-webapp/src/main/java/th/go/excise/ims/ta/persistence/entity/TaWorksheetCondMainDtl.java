@@ -14,16 +14,16 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
-@Table(name = "TA_WORKSHEET_COND_DTL_TAX")
+@Table(name = "TA_WORKSHEET_COND_MAIN_DTL")
 public class TaWorksheetCondMainDtl extends BaseEntity {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3435649806322176521L;
+	private static final long serialVersionUID = -1202684927537493350L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_WORKSHEET_COND_DTL_TAX_GEN")
-	@SequenceGenerator(name = "TA_WORKSHEET_COND_DTL_TAX_GEN", sequenceName = "TA_WORKSHEET_COND_DTL_TAX_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_WORKSHEET_COND_MAIN_DTL_GEN")
+	@SequenceGenerator(name = "TA_WORKSHEET_COND_MAIN_DTL_GEN", sequenceName = "TA_WORKSHEET_COND_MAIN_DTL_SEQ", allocationSize = 1)
 	@Column(name = "WORKSHEET_COND_MAIN_DTL_ID")
 	private Long worksheetCondMainDtlId;
 	@Column(name = "ANALYSIS_NUMBER")
@@ -44,7 +44,6 @@ public class TaWorksheetCondMainDtl extends BaseEntity {
 	private String riskLevel;
 	@Column(name = "COND_TYPE")
 	private String condType;
-
 
 	public Long getWorksheetCondMainDtlId() {
 		return worksheetCondMainDtlId;
