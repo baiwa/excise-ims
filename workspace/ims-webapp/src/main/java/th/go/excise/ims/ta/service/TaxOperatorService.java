@@ -41,8 +41,6 @@ public class TaxOperatorService {
 	@Autowired
 	private TaWorksheetCondDtlTaxJdbcRepository worksheetCondDtlTaxJdbcRepository;
 
-	
-
 	@Autowired
 	private TaxAuditFactorySelectionService taxAuditFactorySelectionService;
 
@@ -136,7 +134,6 @@ public class TaxOperatorService {
 	public void saveDraft(TaxOperatorFormVo formVo) throws SQLException {
 
 		formVo.setBudgetYear(ConvertDateUtils.formatDateToString(new Date(), ConvertDateUtils.YYYY));
-		// TODO convert date MM/yyyy to yyyyMM
 		Date dateStart = ConvertDateUtils.parseStringToDate(formVo.getDateStart(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
 		String dateStartStr = ConvertDateUtils.formatDateToString(dateStart, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		Date dateEnd = ConvertDateUtils.parseStringToDate(formVo.getDateEnd(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
@@ -194,7 +191,8 @@ public class TaxOperatorService {
 		draftHdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 		draftHdr.setYearMonthStart(dateStartStr);
 		draftHdr.setYearMonthEnd(dateEndStr);
-		draftHdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+		draftHdr.setMonthNum(BigDecimal.valueOf(formVo.getDateRange()));
+		draftHdr.setBudgetYear(formVo.getBudgetYear());
 		this.draftWorksheetHdrRepository.save(draftHdr);
 
 		// Detail
