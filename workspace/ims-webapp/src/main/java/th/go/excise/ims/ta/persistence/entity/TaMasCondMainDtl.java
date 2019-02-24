@@ -11,16 +11,16 @@ import javax.persistence.Table;
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
-@Table(name = "TA_MAS_COND_DTL_TAX")
-public class TaMasCondDtlTax extends BaseEntity {
+@Table(name = "TA_MAS_COND_MAIN_DTL")
+public class TaMasCondMainDtl extends BaseEntity {
 
 	private static final long serialVersionUID = 7980671915299106648L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_MAS_COND_DTL_TAX_GEN")
-	@SequenceGenerator(name = "TA_MAS_COND_DTL_TAX_GEN", sequenceName = "TA_MAS_COND_DTL_TAX_SEQ", allocationSize = 1)
-	@Column(name = "COND_DTL_TAX_ID")
-	private Long condDtlTaxId;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_MAS_COND_MAIN_DTL_GEN")
+	@SequenceGenerator(name = "TA_MAS_COND_MAIN_DTL_GEN", sequenceName = "TA_MAS_COND_MAIN_DTL_SEQ", allocationSize = 1)
+	@Column(name = "COND_MAIN_DTL_ID")
+	private Long condMainDtlId;
 	@Column(name = "BUDGET_YEAR")
 	private String budgetYear;
 	@Column(name = "COND_GROUP")
@@ -40,12 +40,13 @@ public class TaMasCondDtlTax extends BaseEntity {
 	@Column(name = "COND_TYPE")
 	private String condType;
 
-	public Long getCondDtlTaxId() {
-		return condDtlTaxId;
+
+	public Long getCondMainDtlId() {
+		return condMainDtlId;
 	}
 
-	public void setCondDtlTaxId(Long condDtlTaxId) {
-		this.condDtlTaxId = condDtlTaxId;
+	public void setCondMainDtlId(Long condMainDtlId) {
+		this.condMainDtlId = condMainDtlId;
 	}
 
 	public String getBudgetYear() {

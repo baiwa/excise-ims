@@ -21,7 +21,7 @@ import th.go.excise.ims.ta.vo.ConditionMessageVo;
 public class MasterConditionServiceTest {
 	
 	@Autowired
-	private MasterConditionService masterConditionService;
+	private MasterConditionMainService masterConditionService;
 	
 	@Test
 	public void test() {

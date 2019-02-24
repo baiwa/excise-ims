@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
-import th.go.excise.ims.ta.persistence.entity.TaMasCondDtlTax;
-import th.go.excise.ims.ta.persistence.entity.TaMasCondHdr;
+import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
+import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWsCondDtlTax;
 import th.go.excise.ims.ta.persistence.entity.TaWsCondHdr;
-import th.go.excise.ims.ta.persistence.repository.TaMasCondDtlTaxRepository;
-import th.go.excise.ims.ta.persistence.repository.TaMasCondHdrRepository;
+import th.go.excise.ims.ta.persistence.repository.TaMasCondMainDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaMasCondMainHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsCondDtlTaxRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsCondHdrRepository;
 
@@ -30,28 +30,25 @@ public class WorksheetConditionService {
 	TaWsCondDtlTaxRepository taWsCondDtlTaxRepository;
 	
 	@Autowired
-	TaMasCondHdrRepository taMasCondHdrRepository;
+	TaMasCondMainHdrRepository taMasCondHdrRepository;
 	
 	@Autowired
-	TaMasCondDtlTaxRepository taMasCondDtlTaxRepository;
+	TaMasCondMainDtlRepository taMasCondDtlTaxRepository;
 	
 	@Autowired
 	private TaxAuditFactorySelectionService taxAuditFactorySelectionService;
 	
 	public String insertWorkSheet(TaWsCondHdr formVo) throws SQLException {
-		TaMasCondHdr headerMas = taMasCondHdrRepository.findByBudgetYear(formVo.getBudgetYear());
-		List<TaMasCondDtlTax> dtlMas = taMasCondDtlTaxRepository.findByBudgetYearAndCondType(formVo.getBudgetYear(), TA_MAS_COND_MAIN_TYPE.TAX);
+		TaMasCondMainHdr headerMas = taMasCondHdrRepository.findByBudgetYear(formVo.getBudgetYear());
+		List<TaMasCondMainDtl> dtlMas = taMasCondDtlTaxRepository.findByBudgetYearAndCondType(formVo.getBudgetYear(), TA_MAS_COND_MAIN_TYPE.TAX);
 		TaWsCondDtlTax dtlWs = null;
 		TaWsCondHdr headerWs = new TaWsCondHdr();
 		String analysisNumber = ConvertDateUtils.formatDateToString(new Date(), ConvertDateUtils.YYYYMMDDHHMMSS, ConvertDateUtils.LOCAL_EN);
 		formVo.setAnalysisNumber(analysisNumber);
 		formVo.setMonthNum(headerMas.getMonthNum());
-		formVo.setAreaSeeFlag(headerMas.getAreaSeeFlag());
-		formVo.setAreaSelectFlag(headerMas.getAreaSelectFlag());
-		formVo.setNoAuditYearNum(headerMas.getNoAuditYearNum());
 		headerWs = taWsCondHdrRepository.save(formVo);
 		if (headerWs.getBudgetYear() != null) {
-			for (TaMasCondDtlTax obj : dtlMas) {
+			for (TaMasCondMainDtl obj : dtlMas) {
 				dtlWs = new TaWsCondDtlTax();
 				dtlWs.setAnalysisNumber(headerWs.getAnalysisNumber());
 				dtlWs.setCondGroup(obj.getCondGroup());

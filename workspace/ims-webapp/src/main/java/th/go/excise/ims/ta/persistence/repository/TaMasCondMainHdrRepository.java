@@ -5,12 +5,12 @@ import org.springframework.data.repository.query.Param;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRepository;
-import th.go.excise.ims.ta.persistence.entity.TaMasCondHdr;
+import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
 
-public interface TaMasCondHdrRepository extends CommonJpaCrudRepository<TaMasCondHdr, Long> {
+public interface TaMasCondMainHdrRepository extends CommonJpaCrudRepository<TaMasCondMainHdr, Long> {
 	
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.budgetYear = :budgetYear")
-	public TaMasCondHdr findByBudgetYear(@Param("budgetYear") String budgetYear);
+	public TaMasCondMainHdr findByBudgetYear(@Param("budgetYear") String budgetYear);
 	
 	
 }
