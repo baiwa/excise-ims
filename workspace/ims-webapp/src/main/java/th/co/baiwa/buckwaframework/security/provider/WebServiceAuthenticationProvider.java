@@ -18,6 +18,7 @@ import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.ROLE;
 import th.co.baiwa.buckwaframework.security.domain.UserDetails;
 import th.co.baiwa.ims.ws.userldap.LoginLdap;
 import th.co.baiwa.ims.ws.userldap.Response;
+import th.co.baiwa.ims.ws.userldap.Role;
 
 @Component("wsAuthenticationProvider")
 public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
@@ -64,11 +65,22 @@ public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthent
 			// Login with LoginLdapUser
 			Response response = loginLdapProxy.login(username, password);
 			if ("000".equals(response.getCode())) {
+				// Assign Default ROLE_USER
 				List<SimpleGrantedAuthority> grantedAuthorityList = new ArrayList<>();
 				grantedAuthorityList.add(new SimpleGrantedAuthority(ROLE.USER));
-				grantedAuthorityList.add(new SimpleGrantedAuthority(ROLE.ADMIN));
+				// Assign ROLE_ADMIN
+				if (username.contains("admin")) {
+					grantedAuthorityList.add(new SimpleGrantedAuthority(ROLE.ADMIN));
+				}
+				// Assign ROLE from WS
+				for (Role wsRole : response.getRoles().getRole()) {
+					grantedAuthorityList.add(new SimpleGrantedAuthority(wsRole.getRoleName()));
+				}
+				
+				// Create UserDetails
 				userDetails = new UserDetails(username, password, grantedAuthorityList);
 				
+				// Assign Detail for UserDetailes
 				userDetails.setUserThaiName(response.getUserThaiName());
 				userDetails.setUserThaiSurname(response.getUserThaiSurname());
 				userDetails.setTitle(response.getTitle());

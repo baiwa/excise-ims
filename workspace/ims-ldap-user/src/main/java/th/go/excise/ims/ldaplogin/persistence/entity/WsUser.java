@@ -1,7 +1,5 @@
 package th.go.excise.ims.ldaplogin.persistence.entity;
 
-import java.math.BigDecimal;
-
 public class WsUser {
 
 	private Long wsUserId;

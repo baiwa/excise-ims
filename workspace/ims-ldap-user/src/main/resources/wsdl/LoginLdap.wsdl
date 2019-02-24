@@ -37,8 +37,22 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="userThaiId" nillable="true" type="xsd:string"/>
      <element name="userThaiName" nillable="true" type="xsd:string"/>
      <element name="userThaiSurname" nillable="true" type="xsd:string"/>
+     <element name="roles" type="impl:Roles" minOccurs="0" />
     </sequence>
    </complexType>
+    
+   <complexType name="Roles">
+     <sequence>
+       <element name="role" type="impl:Role"	 minOccurs="0" maxOccurs="unbounded" />
+     </sequence>
+   </complexType>
+   
+   <complexType name="Role">
+     <sequence>
+       <element name="roleName" type="string" minOccurs="1" />
+     </sequence>
+   </complexType>
+   
   </schema>
  </wsdl:types>
 
