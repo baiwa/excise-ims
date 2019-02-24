@@ -1,6 +1,8 @@
 package th.go.excise.ims.preferences.service;
 
 import java.time.LocalDate;
+import java.time.chrono.ThaiBuddhistDate;
+import java.time.temporal.ChronoField;
 
 import org.springframework.stereotype.Service;
 
@@ -8,17 +10,14 @@ import org.springframework.stereotype.Service;
 public class BudgetYearService {
 
 	public String getCurrentBudgetYear() {
-
 		return getBudgetYearByLocalDate(LocalDate.now());
 	}
 
 	public String getBudgetYearByLocalDate(LocalDate localDate) {
-		//  01/05/2561 == "2561"
-		//  01/10/2561 == "2562"
-		//  01/01/2562 == "2562"
-		//  30/09/2562 == "2562"
-		//  01/10/2562 == "2563"
-		
-		return "";
+		int budgetYear = ThaiBuddhistDate.from(localDate).get(ChronoField.YEAR);
+		if (localDate.getMonthValue() >= 10) {
+			budgetYear++;
+		}
+		return String.valueOf(budgetYear);
 	}
 }
