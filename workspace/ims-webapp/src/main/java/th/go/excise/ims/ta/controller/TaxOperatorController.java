@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.go.excise.ims.ta.service.TaWorksheetHdrService;
 import th.go.excise.ims.ta.service.TaxAuditFactorySelectionService;
 import th.go.excise.ims.ta.service.TaxOperatorService;
 import th.go.excise.ims.ta.vo.CondGroupVo;
@@ -32,25 +33,10 @@ public class TaxOperatorController {
 	private TaxOperatorService taxOperatorService;
 
 	@Autowired
+	private TaWorksheetHdrService taWorksheetHdrService;
+	
+	@Autowired
 	private TaxAuditFactorySelectionService taxAuditFactorySelectionService;
-
-	@PostMapping("/preview-data")
-	@ResponseBody
-	public ResponseData<TaxOperatorVo> previewData(@RequestBody TaxOperatorFormVo formVo) {
-		ResponseData<TaxOperatorVo> response = new ResponseData<>();
-
-		try {
-			response.setData(taxAuditFactorySelectionService.getPreviewData(formVo));
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
-			response.setStatus(RESPONSE_STATUS.SUCCESS);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
-			response.setStatus(RESPONSE_STATUS.FAILED);
-		}
-
-		return response;
-	}
 
 	@PostMapping("/")
 	@ResponseBody
@@ -105,7 +91,7 @@ public class TaxOperatorController {
 
 		return response;
 	}
-
+	
 	@PostMapping("/get-month-start")
 	@ResponseBody
 	public ResponseData<YearMonthVo> getMonthStart(@RequestBody TaxOperatorFormVo formVo) {
@@ -113,6 +99,64 @@ public class TaxOperatorController {
 
 		try {
 			response.setData(taxOperatorService.monthStart(formVo));
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+
+		return response;
+	}
+	
+	@PostMapping("/prepare-tax-grouping")
+	@ResponseBody
+	public ResponseData<?> prepareTaxGrouping(@RequestBody TaxOperatorFormVo formVo) {
+		ResponseData<List<CondGroupVo>> response = new ResponseData<>();
+
+		try {
+			taWorksheetHdrService.addTaWorksheetHdrByCondition(formVo.getDraftNumber(), formVo.getBudgetYear());
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+
+		return response;
+	}
+
+	// TODO DRAFT
+	
+	@PostMapping("/preview-data")
+	@ResponseBody
+	public ResponseData<TaxOperatorVo> previewData(@RequestBody TaxOperatorFormVo formVo) {
+		ResponseData<TaxOperatorVo> response = new ResponseData<>();
+
+		try {
+			response.setData(taxAuditFactorySelectionService.getPreviewData(formVo));
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage(), e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+
+		return response;
+	}
+
+	
+	@PostMapping("/get-month-start-draft")
+	@ResponseBody
+	public ResponseData<YearMonthVo> getMonthStartDraft(@RequestBody TaxOperatorFormVo formVo) {
+		ResponseData<YearMonthVo> response = new ResponseData<>();
+
+		try {
+			response.setData(taxOperatorService.monthStartDraft(formVo));
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

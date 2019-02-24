@@ -22,11 +22,9 @@ public class UserDetails extends User implements UserBean {
 	private String email;
 	private String cnName;
 	private String telephoneNo;
-	private String officeId;
+	private String officeCode;
 	private String accessAttr;
 	private String role;
-
-	
 
 	// Constructor
 	public UserDetails(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
@@ -41,7 +39,6 @@ public class UserDetails extends User implements UserBean {
 	// ==================================================
 	// Getter & Setter Method
 	// ==================================================
-	@Override
 	public Long getUserId() {
 		return userId;
 	}
@@ -57,7 +54,7 @@ public class UserDetails extends User implements UserBean {
 	public void setExciseBaseControl(String[] exciseBaseControl) {
 		this.exciseBaseControl = exciseBaseControl;
 	}
-	@Override
+
 	public String getUserThaiId() {
 		return userThaiId;
 	}
@@ -65,7 +62,7 @@ public class UserDetails extends User implements UserBean {
 	public void setUserThaiId(String userThaiId) {
 		this.userThaiId = userThaiId;
 	}
-	@Override
+
 	public String getUserThaiName() {
 		return userThaiName;
 	}
@@ -73,7 +70,7 @@ public class UserDetails extends User implements UserBean {
 	public void setUserThaiName(String userThaiName) {
 		this.userThaiName = userThaiName;
 	}
-	@Override
+
 	public String getUserThaiSurname() {
 		return userThaiSurname;
 	}
@@ -81,7 +78,7 @@ public class UserDetails extends User implements UserBean {
 	public void setUserThaiSurname(String userThaiSurname) {
 		this.userThaiSurname = userThaiSurname;
 	}
-	@Override
+
 	public String getUserEngName() {
 		return userEngName;
 	}
@@ -89,7 +86,7 @@ public class UserDetails extends User implements UserBean {
 	public void setUserEngName(String userEngName) {
 		this.userEngName = userEngName;
 	}
-	@Override
+
 	public String getUserEngSurname() {
 		return userEngSurname;
 	}
@@ -97,7 +94,7 @@ public class UserDetails extends User implements UserBean {
 	public void setUserEngSurname(String userEngSurname) {
 		this.userEngSurname = userEngSurname;
 	}
-	@Override
+
 	public String getTitle() {
 		return title;
 	}
@@ -105,7 +102,7 @@ public class UserDetails extends User implements UserBean {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	@Override
+
 	public String getEmail() {
 		return email;
 	}
@@ -113,7 +110,7 @@ public class UserDetails extends User implements UserBean {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	@Override
+
 	public String getCnName() {
 		return cnName;
 	}
@@ -121,7 +118,7 @@ public class UserDetails extends User implements UserBean {
 	public void setCnName(String cnName) {
 		this.cnName = cnName;
 	}
-	@Override
+
 	public String getTelephoneNo() {
 		return telephoneNo;
 	}
@@ -129,15 +126,15 @@ public class UserDetails extends User implements UserBean {
 	public void setTelephoneNo(String telephoneNo) {
 		this.telephoneNo = telephoneNo;
 	}
-	@Override
-	public String getOfficeId() {
-		return officeId;
+
+	public String getOfficeCode() {
+		return officeCode;
 	}
 
-	public void setOfficeId(String officeId) {
-		this.officeId = officeId;
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
 	}
-	@Override
+
 	public String getAccessAttr() {
 		return accessAttr;
 	}
@@ -145,6 +142,7 @@ public class UserDetails extends User implements UserBean {
 	public void setAccessAttr(String accessAttr) {
 		this.accessAttr = accessAttr;
 	}
+
 	public String getRole() {
 		return role;
 	}
@@ -152,5 +150,5 @@ public class UserDetails extends User implements UserBean {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	
+
 }

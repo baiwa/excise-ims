@@ -1,6 +1,5 @@
 package th.go.excise.ims.ta.persistence.entity;
 
-import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
@@ -18,31 +18,41 @@ public class TaDraftWorksheetHdr extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_DRAFT_WORKSHEET_HDR_GEN")
 	@SequenceGenerator(name = "TA_DRAFT_WORKSHEET_HDR_GEN", sequenceName = "TA_DRAFT_WORKSHEET_HDR_SEQ", allocationSize = 1)
-	@Column(name = "TA_DRAFT_WORKSHEET_HDR_ID")
-	private BigDecimal taDraftWorksheetHdrId;
-	@Column(name = "ANALYSIS_NUMBER")
-	private String analysisNumber;
+	@Column(name = "DRAFT_WORKSHEET_HDR_ID")
+	private Long draftWorksheetHdrId;
+	@Column(name = "DRAFT_NUMBER")
+	private String draftNumber;
 	@Column(name = "OFFICE_CODE")
 	private String officeCode;
 	@Column(name = "YEAR_MONTH_START")
 	private String yearMonthStart;
 	@Column(name = "YEAR_MONTH_END")
 	private String yearMonthEnd;
+	@Column(name = "MONTH_NUM")
+	private Integer monthNum;
 
-	public BigDecimal getTaDraftWorksheetHdrId() {
-		return taDraftWorksheetHdrId;
+	public Integer getMonthNum() {
+		return monthNum;
 	}
 
-	public void setTaDraftWorksheetHdrId(BigDecimal taDraftWorksheetHdrId) {
-		this.taDraftWorksheetHdrId = taDraftWorksheetHdrId;
+	public void setMonthNum(Integer monthNum) {
+		this.monthNum = monthNum;
 	}
 
-	public String getAnalysisNumber() {
-		return analysisNumber;
+	public Long getDraftWorksheetHdrId() {
+		return draftWorksheetHdrId;
 	}
 
-	public void setAnalysisNumber(String analysisNumber) {
-		this.analysisNumber = analysisNumber;
+	public void setDraftWorksheetHdrId(Long draftWorksheetHdrId) {
+		this.draftWorksheetHdrId = draftWorksheetHdrId;
+	}
+
+	public String getDraftNumber() {
+		return draftNumber;
+	}
+
+	public void setDraftNumber(String draftNumber) {
+		this.draftNumber = draftNumber;
 	}
 
 	public String getOfficeCode() {

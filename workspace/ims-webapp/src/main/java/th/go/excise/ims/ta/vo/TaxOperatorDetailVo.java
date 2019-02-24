@@ -14,6 +14,7 @@ public class TaxOperatorDetailVo {
 	private String areaCode;
 	private String areaDesc;
 	private String worksheetHdrId;
+	private String draftNumber;
 	private String analysisNumber;
 	private String newRegId;
 	private String sumTaxAmtG1;
@@ -126,6 +127,14 @@ public class TaxOperatorDetailVo {
 
 	public void setWorksheetHdrId(String worksheetHdrId) {
 		this.worksheetHdrId = worksheetHdrId;
+	}
+
+	public String getDraftNumber() {
+		return draftNumber;
+	}
+
+	public void setDraftNumber(String draftNumber) {
+		this.draftNumber = draftNumber;
 	}
 
 	public String getAnalysisNumber() {

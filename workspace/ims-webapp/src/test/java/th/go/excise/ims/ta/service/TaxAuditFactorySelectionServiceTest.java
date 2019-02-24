@@ -1,7 +1,10 @@
 package th.go.excise.ims.ta.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +26,9 @@ public class TaxAuditFactorySelectionServiceTest {
 
 	@Autowired
 	private TaxAuditFactorySelectionService taxAuditFactorySelectionService;
-	
+	@Autowired
+	private TaxOperatorService taxOperatorService;
+
 //	@Test
 	public void test() {
 //		taxAuditFactorySelectionService.selectFactoryProcess("20190211221720");
@@ -34,24 +39,57 @@ public class TaxAuditFactorySelectionServiceTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	@Test
 	public void test_getPreviewData() {
+
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
 		formVo.setDateStart("05/2558");
 		formVo.setDateEnd("04/2560");
 		formVo.setDateRange(24);
-		
+		formVo.setStart(0);
+		formVo.setLength(0);
 		try {
 			System.out.println(new Date());
-			TaxOperatorVo vo = taxAuditFactorySelectionService.getPreviewData(formVo);
+			taxOperatorService.saveDraft(formVo);
 			System.out.println(new Date());
-			System.out.println(vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
+	//@Test
+	public void testOffice() {
+
+		String officeCode = "010110";
+		if (StringUtils.isNotBlank(officeCode) && officeCode.length() == 6) {
+			if ("000000".equals(officeCode)) {
+				officeCode = null;
+			} else if ("00".equals(officeCode.substring(officeCode.length() - 2, officeCode.length()))) {
+				if ("00".equals(officeCode.substring(officeCode.length() - 4, officeCode.length() - 2))) {
+					officeCode = officeCode.substring(0, officeCode.length() - 4) + "____";
+				} else {
+					officeCode = officeCode.substring(0, officeCode.length() - 2) + "__";
+				}
+			}
+
+		}
+		System.out.println(officeCode);
+	}
 	
+	
+//	@Test
+	public void testDate() {
+
+		String startDate = "201801";
+		String endDate  = "201804";
+		
+		String regisDate = "201903";
+		
+		System.out.println(regisDate.compareTo(startDate) >= 0  && regisDate.compareTo(endDate) <= 0);
+		//System.out.println(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")));
+	}
+
 }

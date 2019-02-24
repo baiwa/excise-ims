@@ -1,5 +1,6 @@
 package th.go.excise.ims.ta.service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -8,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,15 +60,44 @@ public class TaxAuditFactorySelectionService {
 	private TaWorksheetCondDtlTaxRepository taWorksheetCondDtlTaxRepository;
 
 	public TaxOperatorVo getPreviewData(TaxOperatorFormVo formVo) {
-		
-		List<TaxOperatorDetailVo> taxOperatorDetailVoList = prepareTaxOperatorDetailVoList(formVo);
 		TaxOperatorVo vo = new TaxOperatorVo();
-		vo.setDatas(summaryDatatable(taxOperatorDetailVoList, formVo));
-
+		try {
+			List<TaxOperatorDetailVo> taxOperatorDetailVoList = prepareTaxOperatorDetailVoList(formVo);
+			vo.setDatas(summaryDatatable(taxOperatorDetailVoList, formVo));
+			vo.setCount(taWsReg4000Repository.countAll(formVoToTaWsReg4000(formVo)));
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
 		return vo;
 	}
-	
-	public List<TaxOperatorDatatableVo> summaryDatatable(List<TaxOperatorDetailVo> taxOperatorDetailVoList ,TaxOperatorFormVo formVo) {
+
+	private TaWsReg4000 formVoToTaWsReg4000(TaxOperatorFormVo formVo) {
+		TaWsReg4000 taWsReg4000 = new TaWsReg4000();
+		try {
+			BeanUtils.copyProperties(taWsReg4000, formVo);
+			String officeCode = taWsReg4000.getOfficeCode();
+			if (StringUtils.isNotBlank(officeCode) && officeCode.length() == 6) {
+				if ("000000".equals(officeCode)) {
+					officeCode = null;
+				} else if ("00".equals(officeCode.substring(officeCode.length() - 2, officeCode.length()))) {
+					if ("00".equals(officeCode.substring(officeCode.length() - 4, officeCode.length() - 2))) {
+						officeCode = officeCode.substring(0, officeCode.length() - 4) + "____";
+					} else {
+						officeCode = officeCode.substring(0, officeCode.length() - 2) + "__";
+					}
+				}
+				taWsReg4000.setOfficeCode(officeCode);
+			} else {
+				taWsReg4000.setOfficeCode(null);
+			}
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return taWsReg4000;
+	}
+
+	public List<TaxOperatorDatatableVo> summaryDatatable(List<TaxOperatorDetailVo> taxOperatorDetailVoList, TaxOperatorFormVo formVo) {
 		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = new ArrayList<>();
 		TaxOperatorDatatableVo taxOperatorDatatableVo = null;
 		List<String> taxAmtList = null;
@@ -81,7 +113,7 @@ public class TaxAuditFactorySelectionService {
 			taxOperatorDatatableVo.setAreaCode(taxOperatorDetailVo.getAreaCode());
 			taxOperatorDatatableVo.setAreaDesc(taxOperatorDetailVo.getAreaDesc());
 			taxOperatorDatatableVo.setWorksheetHdrId(taxOperatorDetailVo.getWorksheetHdrId());
-			taxOperatorDatatableVo.setAnalysisNumber(taxOperatorDetailVo.getAnalysisNumber());
+			taxOperatorDatatableVo.setDraftNumber(taxOperatorDetailVo.getDraftNumber());
 			taxOperatorDatatableVo.setNewRegId(taxOperatorDetailVo.getNewRegId());
 			taxOperatorDatatableVo.setSumTaxAmtG1(taxOperatorDetailVo.getSumTaxAmtG1());
 			taxOperatorDatatableVo.setSumTaxAmtG2(taxOperatorDetailVo.getSumTaxAmtG2());
@@ -106,7 +138,7 @@ public class TaxAuditFactorySelectionService {
 				taxAmt = taxOperatorDetailVo.getTaxAmtG1M2();
 			} else if (i + 1 == 3) {
 				taxAmt = taxOperatorDetailVo.getTaxAmtG1M3();
-			} else if(i + 1 == 4) {
+			} else if (i + 1 == 4) {
 				taxAmt = taxOperatorDetailVo.getTaxAmtG1M4();
 			} else if (i + 1 == 5) {
 				taxAmt = taxOperatorDetailVo.getTaxAmtG1M5();
@@ -156,15 +188,16 @@ public class TaxAuditFactorySelectionService {
 		return taxAmt;
 	}
 
-	public List<TaxOperatorDetailVo> prepareTaxOperatorDetailVoList(TaxOperatorFormVo formVo) {
+	public List<TaxOperatorDetailVo> prepareTaxOperatorDetailVoList(TaxOperatorFormVo formVo) throws SQLException {
 		logger.info("prepareTaxOperatorDetailVoList startDate={}, endDate={}, dateRange={}", formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
 		Date ymStart = ConvertDateUtils.parseStringToDate(formVo.getDateStart(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
 		Date ymEnd = ConvertDateUtils.parseStringToDate(formVo.getDateEnd(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
 		String ymStartStr = ConvertDateUtils.formatDateToString(ymStart, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		String ymEndStr = ConvertDateUtils.formatDateToString(ymEnd, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
-		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findAll();
-		Map<String, List<TaWsInc8000M>> wsInc8000MMap = taWsInc8000MRepository.findByMonthRange(ymStartStr, ymEndStr);
+		List<TaWsReg4000> wsReg4000List = null;
 
+		wsReg4000List = taWsReg4000Repository.findAllPagination(formVoToTaWsReg4000(formVo), formVo.getStart(), formVo.getLength());
+		Map<String, List<TaWsInc8000M>> wsInc8000MMap = taWsInc8000MRepository.findByMonthRange(ymStartStr, ymEndStr);
 		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
 		List<TaWsInc8000M> wsInc8000MList = null;
 		BigDecimal sumTaxAmtG1 = null;
@@ -184,9 +217,9 @@ public class TaxAuditFactorySelectionService {
 			int countG2 = 0;
 			sumTaxAmtG1 = BigDecimal.ZERO;
 			sumTaxAmtG2 = BigDecimal.ZERO;
-			
+
 			detailVo = new TaxOperatorDetailVo();
-			
+
 			detailVo.setDutyCode(wsReg4000.getDutyCode());
 			detailVo.setNewRegId(wsReg4000.getNewRegId());
 			detailVo.setCusFullname(wsReg4000.getCusFullname());
@@ -243,12 +276,12 @@ public class TaxAuditFactorySelectionService {
 			}
 
 			for (TaWsInc8000M wsInc8000M : wsInc8000MList) {
-				countTaxMonthNo++;
 				if (countG1 < formVo.getDateRange() / 2) {
 					// Group 1
 					if (wsInc8000M.getTaxAmount() != null) {
 						taxAmount = decimalFormat.format(wsInc8000M.getTaxAmount());
 						sumTaxAmtG1 = sumTaxAmtG1.add(wsInc8000M.getTaxAmount());
+						countTaxMonthNo++;
 					} else {
 						taxAmount = NO_TAX_AMOUNT;
 					}
@@ -283,6 +316,7 @@ public class TaxAuditFactorySelectionService {
 					if (wsInc8000M.getTaxAmount() != null) {
 						taxAmount = decimalFormat.format(wsInc8000M.getTaxAmount());
 						sumTaxAmtG2 = sumTaxAmtG2.add(wsInc8000M.getTaxAmount());
+						countTaxMonthNo++;
 					} else {
 						taxAmount = NO_TAX_AMOUNT;
 					}
@@ -330,15 +364,15 @@ public class TaxAuditFactorySelectionService {
 			}
 			detailVo.setTaxAmtChnPnt(decimalFormat.format(taxAmtChnPnt));
 			try {
-				if("1".equals(wsReg4000.getFacType()) || "3".equals(wsReg4000.getFacType())) {
+				if ("1".equals(wsReg4000.getFacType()) || "3".equals(wsReg4000.getFacType())) {
 					detailVo.setDutyName(ApplicationCache.getParamInfoByCode(EXCISE_PRODUCT_TYPE, wsReg4000.getDutyCode()).getValue1());
-				}else {
+				} else {
 					detailVo.setDutyName(ApplicationCache.getParamInfoByCode(EXCISE_SERVICE_TYPE, wsReg4000.getDutyCode()).getValue1());
 				}
 			} catch (Exception e) {
 				logger.info(e.getMessage());
 			}
-			
+
 			detailVoList.add(detailVo);
 		}
 
@@ -366,7 +400,7 @@ public class TaxAuditFactorySelectionService {
 			index2 = 0;
 			taWorksheetHdr = new TaWorksheetHdr();
 			taWorksheetHdr.setAnalysisNumber(analysisNumber);
-			taWorksheetHdr.setNewRegId(taWsReg4000.getNewRegId());
+//			taWorksheetHdr.setNewRegId(taWsReg4000.getNewRegId());
 
 			List<TaWsInc8000M> taWsInc8000MList = data8000.get(taWsReg4000.getNewRegId());
 			if (taWsInc8000MList != null && taWsInc8000MList.size() > 0) {
@@ -378,85 +412,85 @@ public class TaxAuditFactorySelectionService {
 						if (index <= taWorksheetCondHdr.getMonthNum().intValue() / 2) {
 							sumTaxAmtG1 += taWsInc8000M.getTaxAmount().doubleValue();
 
-							if (index == 1) {
-								taWorksheetHdr.setTaxAmtG1M1(taxAmount);
-							} else if (index == 2) {
-								taWorksheetHdr.setTaxAmtG1M2(taxAmount);
-							} else if (index == 3) {
-								taWorksheetHdr.setTaxAmtG1M3(taxAmount);
-							} else if (index == 4) {
-								taWorksheetHdr.setTaxAmtG1M4(taxAmount);
-							} else if (index == 5) {
-								taWorksheetHdr.setTaxAmtG1M5(taxAmount);
-							} else if (index == 6) {
-								taWorksheetHdr.setTaxAmtG1M6(taxAmount);
-							} else if (index == 7) {
-								taWorksheetHdr.setTaxAmtG1M7(taxAmount);
-							} else if (index == 8) {
-								taWorksheetHdr.setTaxAmtG1M8(taxAmount);
-							} else if (index == 9) {
-								taWorksheetHdr.setTaxAmtG1M9(taxAmount);
-							} else if (index == 10) {
-								taWorksheetHdr.setTaxAmtG1M10(taxAmount);
-							} else if (index == 11) {
-								taWorksheetHdr.setTaxAmtG1M11(taxAmount);
-							} else if (index == 12) {
-								taWorksheetHdr.setTaxAmtG1M12(taxAmount);
-							}
+//							if (index == 1) {
+//								taWorksheetHdr.setTaxAmtG1M1(taxAmount);
+//							} else if (index == 2) {
+//								taWorksheetHdr.setTaxAmtG1M2(taxAmount);
+//							} else if (index == 3) {
+//								taWorksheetHdr.setTaxAmtG1M3(taxAmount);
+//							} else if (index == 4) {
+//								taWorksheetHdr.setTaxAmtG1M4(taxAmount);
+//							} else if (index == 5) {
+//								taWorksheetHdr.setTaxAmtG1M5(taxAmount);
+//							} else if (index == 6) {
+//								taWorksheetHdr.setTaxAmtG1M6(taxAmount);
+//							} else if (index == 7) {
+//								taWorksheetHdr.setTaxAmtG1M7(taxAmount);
+//							} else if (index == 8) {
+//								taWorksheetHdr.setTaxAmtG1M8(taxAmount);
+//							} else if (index == 9) {
+//								taWorksheetHdr.setTaxAmtG1M9(taxAmount);
+//							} else if (index == 10) {
+//								taWorksheetHdr.setTaxAmtG1M10(taxAmount);
+//							} else if (index == 11) {
+//								taWorksheetHdr.setTaxAmtG1M11(taxAmount);
+//							} else if (index == 12) {
+//								taWorksheetHdr.setTaxAmtG1M12(taxAmount);
+//							}
 
 						} else {
 							sumTaxAmtG2 += taWsInc8000M.getTaxAmount().doubleValue();
 							index2++;
-							if (index2 == 1) {
-								taWorksheetHdr.setTaxAmtG2M1(taxAmount);
-							} else if (index2 == 2) {
-								taWorksheetHdr.setTaxAmtG2M2(taxAmount);
-							} else if (index2 == 3) {
-								taWorksheetHdr.setTaxAmtG2M3(taxAmount);
-							} else if (index2 == 4) {
-								taWorksheetHdr.setTaxAmtG2M4(taxAmount);
-							} else if (index2 == 5) {
-								taWorksheetHdr.setTaxAmtG2M5(taxAmount);
-							} else if (index2 == 6) {
-								taWorksheetHdr.setTaxAmtG2M6(taxAmount);
-							} else if (index2 == 7) {
-								taWorksheetHdr.setTaxAmtG2M7(taxAmount);
-							} else if (index2 == 8) {
-								taWorksheetHdr.setTaxAmtG2M8(taxAmount);
-							} else if (index2 == 9) {
-								taWorksheetHdr.setTaxAmtG2M9(taxAmount);
-							} else if (index2 == 10) {
-								taWorksheetHdr.setTaxAmtG2M10(taxAmount);
-							} else if (index2 == 11) {
-								taWorksheetHdr.setTaxAmtG2M11(taxAmount);
-							} else if (index2 == 12) {
-								taWorksheetHdr.setTaxAmtG2M12(taxAmount);
-							}
+//							if (index2 == 1) {
+//								taWorksheetHdr.setTaxAmtG2M1(taxAmount);
+//							} else if (index2 == 2) {
+//								taWorksheetHdr.setTaxAmtG2M2(taxAmount);
+//							} else if (index2 == 3) {
+//								taWorksheetHdr.setTaxAmtG2M3(taxAmount);
+//							} else if (index2 == 4) {
+//								taWorksheetHdr.setTaxAmtG2M4(taxAmount);
+//							} else if (index2 == 5) {
+//								taWorksheetHdr.setTaxAmtG2M5(taxAmount);
+//							} else if (index2 == 6) {
+//								taWorksheetHdr.setTaxAmtG2M6(taxAmount);
+//							} else if (index2 == 7) {
+//								taWorksheetHdr.setTaxAmtG2M7(taxAmount);
+//							} else if (index2 == 8) {
+//								taWorksheetHdr.setTaxAmtG2M8(taxAmount);
+//							} else if (index2 == 9) {
+//								taWorksheetHdr.setTaxAmtG2M9(taxAmount);
+//							} else if (index2 == 10) {
+//								taWorksheetHdr.setTaxAmtG2M10(taxAmount);
+//							} else if (index2 == 11) {
+//								taWorksheetHdr.setTaxAmtG2M11(taxAmount);
+//							} else if (index2 == 12) {
+//								taWorksheetHdr.setTaxAmtG2M12(taxAmount);
+//							}
 						}
 					}
 				}
 
-				taWorksheetHdr.setSumTaxAmtG1(new BigDecimal(sumTaxAmtG1).setScale(2, BigDecimal.ROUND_HALF_UP));
-				taWorksheetHdr.setSumTaxAmtG2(new BigDecimal(sumTaxAmtG2).setScale(2, BigDecimal.ROUND_HALF_UP));
-				if (sumTaxAmtG2 != 0 && sumTaxAmtG1 != 00) {
-					taWorksheetHdr.setTaxAmtChnPnt(new BigDecimal((sumTaxAmtG2 - sumTaxAmtG1) / sumTaxAmtG1 * 100).setScale(2, BigDecimal.ROUND_HALF_UP));
-				} else if (sumTaxAmtG2 == 0 && sumTaxAmtG1 == 00) {
-					taWorksheetHdr.setTaxAmtChnPnt(BigDecimal.ZERO);
-				} else if (sumTaxAmtG2 == 0 && sumTaxAmtG1 != 0) {
-					taWorksheetHdr.setTaxAmtChnPnt(new BigDecimal(100));
-				} else {
-					taWorksheetHdr.setTaxAmtChnPnt(new BigDecimal(-100));
-				}
-				taWorksheetHdr.setCondTaxGrp("0");
-				taWorksheetHdr.setTaxMonthNo(new BigDecimal(countTaxMonthNo));
+//				taWorksheetHdr.setSumTaxAmtG1(new BigDecimal(sumTaxAmtG1).setScale(2, BigDecimal.ROUND_HALF_UP));
+//				taWorksheetHdr.setSumTaxAmtG2(new BigDecimal(sumTaxAmtG2).setScale(2, BigDecimal.ROUND_HALF_UP));
+//				if (sumTaxAmtG2 != 0 && sumTaxAmtG1 != 00) {
+//					taWorksheetHdr.setTaxAmtChnPnt(new BigDecimal((sumTaxAmtG2 - sumTaxAmtG1) / sumTaxAmtG1 * 100).setScale(2, BigDecimal.ROUND_HALF_UP));
+//				} else if (sumTaxAmtG2 == 0 && sumTaxAmtG1 == 00) {
+//					taWorksheetHdr.setTaxAmtChnPnt(BigDecimal.ZERO);
+//				} else if (sumTaxAmtG2 == 0 && sumTaxAmtG1 != 0) {
+//					taWorksheetHdr.setTaxAmtChnPnt(new BigDecimal(100));
+//				} else {
+//					taWorksheetHdr.setTaxAmtChnPnt(new BigDecimal(-100));
+//				}
+//				taWorksheetHdr.setCondTaxGrp("0");
+//				taWorksheetHdr.setTaxMonthNo(new BigDecimal(countTaxMonthNo));
 
-				for (TaWorksheetCondDtlTax condition : taWorksheetCondDtlTaxList) {
-					if (condition.getTaxMonthStart().compareTo(taWorksheetHdr.getTaxMonthNo()) != 1 && condition.getTaxMonthEnd().compareTo(taWorksheetHdr.getTaxMonthNo()) != -1 && condition.getRangeStart().compareTo(taWorksheetHdr.getTaxAmtChnPnt()) != 1
-							&& condition.getRangeEnd().compareTo(taWorksheetHdr.getTaxAmtChnPnt()) != -1) {
-						taWorksheetHdr.setCondTaxGrp(condition.getCondGroup());
-					}
-
-				}
+//				for (TaWorksheetCondDtlTax condition : taWorksheetCondDtlTaxList) {
+//					if (condition.getTaxMonthStart().compareTo(taWorksheetHdr.getTaxMonthNo()) != 1 && condition.getTaxMonthEnd().compareTo(taWorksheetHdr.getTaxMonthNo()) != -1 && condition.getRangeStart().compareTo(taWorksheetHdr.getTaxAmtChnPnt()) != 1
+//							&& condition.getRangeEnd().compareTo(taWorksheetHdr.getTaxAmtChnPnt()) != -1) {
+//						taWorksheetHdr.setCondTaxGrp(condition.getCondGroup());
+//					}
+//
+//				}
 				taWorksheetHdrList.add(taWorksheetHdr);
 			}
 		}

@@ -11,10 +11,12 @@ import th.go.excise.ims.ta.persistence.entity.TaMasCondDtlTax;
 
 public interface TaMasCondDtlTaxRepository extends CommonJpaCrudRepository<TaMasCondDtlTax, Long> {
 	
-	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.budgetYear = :budgetYear")
-	public List<TaMasCondDtlTax> findByBudgetYear(@Param("budgetYear") String budgetYear);
 	
-	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.Y_FLAG + "' and e.budgetYear = :budgetYear")
-	public List<TaMasCondDtlTax> findByBudgetYearY(@Param("budgetYear") String budgetYear);
+	public List<TaMasCondDtlTax> findByBudgetYear(String budgetYear);
 	
+	public List<TaMasCondDtlTax> findByBudgetYearAndIsDeleted(String budgetYear, String isDeleted);
+	
+	public List<TaMasCondDtlTax> findByBudgetYearAndCondType(String budgetYear , String condType);
+	
+	public List<TaMasCondDtlTax> findByBudgetYearAndCondTypeAndIsDeleted(String budgetYear , String condType, String isDeleted);
 }

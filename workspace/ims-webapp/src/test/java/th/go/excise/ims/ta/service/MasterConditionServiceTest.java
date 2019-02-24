@@ -1,6 +1,4 @@
-package th.go.excise.ims.ta.persistence.repository;
-
-import java.util.List;
+package th.go.excise.ims.ta.service;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -14,24 +12,21 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
-import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
-import th.go.excise.ims.ta.persistence.entity.TaMasCondDtlTax;
+import th.go.excise.ims.ta.vo.ConditionMessageVo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 @WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
 @ActiveProfiles(value = PROFILE.UNITTEST)
-public class TaMasCondDtlTaxRepositoryTest {
+public class MasterConditionServiceTest {
 	
 	@Autowired
-	private TaMasCondDtlTaxRepository taMasCondDtlTaxRepository;
+	private MasterConditionService masterConditionService;
 	
 	@Test
-	public void test_findByBudgetYear() {
-		List<TaMasCondDtlTax> masCondDtlTaxList = taMasCondDtlTaxRepository.findByBudgetYearAndCondType("2562", TA_MAS_COND_MAIN_TYPE.TAX);
-		for (TaMasCondDtlTax masCondDtlTax : masCondDtlTaxList) {
-			System.out.println(ToStringBuilder.reflectionToString(masCondDtlTax, ToStringStyle.JSON_STYLE));
-		}
+	public void test() {
+		ConditionMessageVo conditionMessageVo = masterConditionService.conditionMessage();
+		System.out.println(ToStringBuilder.reflectionToString(conditionMessageVo, ToStringStyle.JSON_STYLE));
 	}
 	
 }

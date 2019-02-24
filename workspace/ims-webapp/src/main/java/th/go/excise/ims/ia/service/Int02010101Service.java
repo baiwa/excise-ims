@@ -30,9 +30,15 @@ public class Int02010101Service {
 		BigDecimal idSide = new BigDecimal(idSideStr);
 		List<Int02010101Vo> main = iaQuestionnaireSideDtlJdbcRepository.findByIdSide(idSide);
 		List<Int02010101Vo> detail = new ArrayList<>();
+		List<Int02010101Vo> details = new ArrayList<>();
 		for (int i = 0; i < main.toArray().length; i++) {
 			BigDecimal seq = main.get(i).getSeq();
 			detail = iaQuestionnaireSideDtlJdbcRepository.findDtlByIdSide(idSide, seq);
+			for(int j= 0; j< detail.toArray().length; j++) {
+				BigDecimal seqDtl = detail.get(j).getSeqDtl();
+				details = iaQuestionnaireSideDtlJdbcRepository.findDtlsByIdSide(idSide, seqDtl);
+				detail.get(j).setChildren(details);
+			}
 			main.get(i).setChildren(detail);
 		}
 		return main;
@@ -43,14 +49,21 @@ public class Int02010101Service {
 	}
 
 	public Int02010101FormVo saveAll(Int02010101FormVo form) {
+		// DELETE
+		if (form.getDelete().toArray().length > 0) {
+			List<IaQuestionnaireSideDtl> delete = form.getDelete();
+			for (IaQuestionnaireSideDtl iaQuestionnaireSideDtl : delete) {
+				iaQuestionnaireSideDtlRepository.deleteById(iaQuestionnaireSideDtl.getId());
+			}
+		}
 		// SAVE
 		if (form.getSave().toArray().length > 0) {
 			IaQuestionnaireSideDtl save;
 			for (int i = 0; i < form.getSave().toArray().length; i++) {
 				save = new IaQuestionnaireSideDtl();
 				IaQuestionnaireSideDtl item = form.getSave().get(i);
-				BigDecimal id = item.getId();
 				if (item.getId() != null) {
+					BigDecimal id = item.getId();
 					save = iaQuestionnaireSideDtlJdbcRepository.findById(id);
 					save.setQtnLevel(item.getQtnLevel());
 					save.setSideDtl(item.getSideDtl());
@@ -61,11 +74,6 @@ public class Int02010101Service {
 				}
 				form.getSave().set(i, iaQuestionnaireSideDtlRepository.save(save));
 			}
-		}
-		// DELETE
-		if (form.getDelete().toArray().length > 0) {
-			List<IaQuestionnaireSideDtl> delete = form.getDelete();
-			iaQuestionnaireSideDtlRepository.deleteAll(delete);
 		}
 		return form;
 	}

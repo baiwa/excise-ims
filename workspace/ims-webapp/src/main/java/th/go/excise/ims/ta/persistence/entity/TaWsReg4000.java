@@ -1,6 +1,6 @@
 package th.go.excise.ims.ta.persistence.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -58,7 +58,7 @@ public class TaWsReg4000 extends BaseEntity {
 	@Column(name = "FAC_TYPE")
 	private String facType;
 	@Column(name = "REG_DATE")
-	private LocalDateTime regDate;
+	private LocalDate regDate;
 	@Column(name = "REG_CAPITAL")
 	private String regCapital;
 
@@ -206,11 +206,11 @@ public class TaWsReg4000 extends BaseEntity {
 		this.facType = facType;
 	}
 
-	public LocalDateTime getRegDate() {
+	public LocalDate getRegDate() {
 		return regDate;
 	}
 
-	public void setRegDate(LocalDateTime regDate) {
+	public void setRegDate(LocalDate regDate) {
 		this.regDate = regDate;
 	}
 

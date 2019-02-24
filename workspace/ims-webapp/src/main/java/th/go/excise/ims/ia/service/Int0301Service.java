@@ -30,8 +30,9 @@ public class Int0301Service {
 		return iaRiskFactorsList;
 	}
 
-	public void saveRiskFactorsLevel(Int0301FormVo form) {
-		int0301JdbcRepository.saveRiskFactorsLevel(form);
+	public void saveRiskFactorsLevel(Int0301FormVo form) {	
+		int0301JdbcRepository.saveRiskFactorsLevel(form);	
+	
 	}
 	
 	public void saveRiskFactorsConfig(Int0301FormVo form) {		
@@ -39,11 +40,42 @@ public class Int0301Service {
 		IaRiskFactorsConfig formConfig = form.getIaRiskFactorsConfig();
 		entity = iaRiskFactorsConfigRepository.findById(formConfig.getId()).get();
 		entity.setIdFactors(formConfig.getIdFactors());	
+		entity.setInfoUsedRiskDesc(formConfig.getInfoUsedRiskDesc());
+			
 		entity.setVerylow(formConfig.getVerylow());
 		entity.setVerylowStart(formConfig.getVerylowStart());
 		entity.setVerylowEnd(formConfig.getVerylowEnd());
 		entity.setVerylowRating(formConfig.getVerylowRating());	
+		entity.setVerylowColor(formConfig.getVerylowColor());
 		entity.setVerylowCondition(formConfig.getVerylowCondition());
+		
+		entity.setLow(formConfig.getLow());
+		entity.setLowStart(formConfig.getLowStart());
+		entity.setLowEnd(formConfig.getLowEnd());
+		entity.setLowRating(formConfig.getLowRating());
+		entity.setLowColor(formConfig.getLowColor());
+		entity.setLowCondition(formConfig.getLowCondition());
+		
+		entity.setMedium(formConfig.getMedium());
+		entity.setMediumStart(formConfig.getMediumStart());
+		entity.setMediumEnd(formConfig.getMediumEnd());
+		entity.setMediumRating(formConfig.getMediumRating());
+		entity.setMediumColor(formConfig.getMediumColor());
+		entity.setMediumCondition(formConfig.getMediumCondition());
+		
+		entity.setHigh(formConfig.getHigh());
+		entity.setHighStart(formConfig.getHighStart());
+		entity.setHighEnd(formConfig.getHighEnd());
+		entity.setHighRating(formConfig.getHighRating());
+		entity.setHighColor(formConfig.getHighColor());
+		entity.setHighCondition(formConfig.getHighCondition());
+		
+		entity.setVeryhigh(formConfig.getVeryhigh());
+		entity.setVeryhighStart(formConfig.getVeryhighStart());
+		entity.setVeryhighEnd(formConfig.getVeryhighEnd());
+		entity.setVeryhighRating(formConfig.getVeryhighRating());
+		entity.setVeryhighColor(formConfig.getVeryhighColor());
+		entity.setVeryhighCondition(formConfig.getVeryhighCondition());		
 		
 		Date startDate = ConvertDateUtils.parseStringToDate(form.getStartDate(), ConvertDateUtils.DD_MM_YYYY);
 		entity.setStartDate(startDate);

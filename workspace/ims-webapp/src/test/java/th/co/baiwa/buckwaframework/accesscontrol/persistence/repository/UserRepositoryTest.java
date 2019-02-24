@@ -185,12 +185,12 @@ public class UserRepositoryTest {
 		
 		User user = userRepository.findByUsername("admin");
 		List<String> roleCodeList = Arrays.asList(new String[] {
-			SecurityConstants.ROLE_USER,
-			SecurityConstants.ROLE_ADMIN,
-			SecurityConstants.ROLE_INTERNAL_AUDIT,
-			SecurityConstants.ROLE_TAX_AUDIT,
-			SecurityConstants.ROLE_OPERATOR_AUDIT,
-			SecurityConstants.ROLE_EXPORT_AUDIT
+			ROLE.USER,
+			ROLE.ADMIN,
+			ROLE.IA,
+			ROLE.TA,
+			ROLE.OA,
+			ROLE.EA
 		});
 		
 		UserRole userRole = null;

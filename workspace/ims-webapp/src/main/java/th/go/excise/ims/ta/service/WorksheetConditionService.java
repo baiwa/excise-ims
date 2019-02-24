@@ -1,16 +1,15 @@
 package th.go.excise.ims.ta.service;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.cxf.BusException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.common.bean.BusinessException;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
-import th.co.baiwa.buckwaframework.preferences.constant.MessageConstants;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondDtlTax;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWsCondDtlTax;
@@ -41,7 +40,7 @@ public class WorksheetConditionService {
 	
 	public String insertWorkSheet(TaWsCondHdr formVo) throws SQLException {
 		TaMasCondHdr headerMas = taMasCondHdrRepository.findByBudgetYear(formVo.getBudgetYear());
-		List<TaMasCondDtlTax> dtlMas = taMasCondDtlTaxRepository.findByBudgetYear(formVo.getBudgetYear());
+		List<TaMasCondDtlTax> dtlMas = taMasCondDtlTaxRepository.findByBudgetYearAndCondType(formVo.getBudgetYear(), TA_MAS_COND_MAIN_TYPE.TAX);
 		TaWsCondDtlTax dtlWs = null;
 		TaWsCondHdr headerWs = new TaWsCondHdr();
 		String analysisNumber = ConvertDateUtils.formatDateToString(new Date(), ConvertDateUtils.YYYYMMDDHHMMSS, ConvertDateUtils.LOCAL_EN);
@@ -58,8 +57,8 @@ public class WorksheetConditionService {
 				dtlWs.setCondGroup(obj.getCondGroup());
 				dtlWs.setTaxMonthStart(obj.getTaxMonthStart());
 				dtlWs.setTaxMonthEnd(obj.getTaxMonthEnd());
-				dtlWs.setRangeStart(obj.getRangeStart());
-				dtlWs.setRangeEnd(obj.getRangeEnd());
+				dtlWs.setRangeStart(new BigDecimal(obj.getRangeStart()));
+				dtlWs.setRangeEnd(new BigDecimal(obj.getRangeEnd()));
 				dtlWs.setRiskLevel(obj.getRiskLevel());
 
 				taWsCondDtlTaxRepository.save(dtlWs);

@@ -8,8 +8,53 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	private String dateStart;
 	private String dateEnd;
 	private int dateRange;
-	private String analysisNumber;
+	private String draftNumber;
 	private String budgetYear;
+	private String facType;
+	private String dutyCode;
+	private String officeCode;
+	private String analysisNumber;
+	private String cond;
+
+	public String getCond() {
+		return cond;
+	}
+
+	public void setCond(String cond) {
+		this.cond = cond;
+	}
+
+	public String getAnalysisNumber() {
+		return analysisNumber;
+	}
+
+	public void setAnalysisNumber(String analysisNumber) {
+		this.analysisNumber = analysisNumber;
+	}
+
+	public String getOfficeCode() {
+		return officeCode;
+	}
+
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
+	}
+
+	public String getFacType() {
+		return facType;
+	}
+
+	public void setFacType(String facType) {
+		this.facType = facType;
+	}
+
+	public String getDutyCode() {
+		return dutyCode;
+	}
+
+	public void setDutyCode(String dutyCode) {
+		this.dutyCode = dutyCode;
+	}
 
 	public String getBudgetYear() {
 		return budgetYear;
@@ -43,12 +88,12 @@ public class TaxOperatorFormVo extends DataTableRequest {
 		this.dateRange = dateRange;
 	}
 
-	public String getAnalysisNumber() {
-		return analysisNumber;
+	public String getDraftNumber() {
+		return draftNumber;
 	}
 
-	public void setAnalysisNumber(String analysisNumber) {
-		this.analysisNumber = analysisNumber;
+	public void setDraftNumber(String draftNumber) {
+		this.draftNumber = draftNumber;
 	}
 
 }

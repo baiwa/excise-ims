@@ -29,17 +29,27 @@ public class TaWorksheetHdrServiceTest {
 	@Autowired
 	private TaWorksheetHdrRepository taWorksheetHdrRepository;
 	
-	@Test
+	@Autowired
+	private TaWorksheetHdrService taWorksheetHdrService;
+	
+	//@Test
 	public void testFindBySubCondition() {
 		
 		try {
 			List<TaWorksheetHdr> taWorksheetHdrList = taWorksheetHdrRepository.findSubConditionRegCapital(BigDecimal.valueOf(19000), null);
 			for (TaWorksheetHdr taWorksheetHdr : taWorksheetHdrList) {
-				logger.info(taWorksheetHdr.getNewRegId());
+//				logger.info(taWorksheetHdr.getNewRegId());
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	
+	@Test
+	public void addTaWorksheetHdrByCondition() {
+		taWorksheetHdrService.addTaWorksheetHdrByCondition("20190222233659", "2562");
+
 	}
 }

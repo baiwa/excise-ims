@@ -79,7 +79,7 @@ public class Int030102Controller {
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 
 		} catch (Exception e) {
-			logger.error("Int030102Controller Delete : ", e);
+			logger.error("Int030102Controller EditStatus : ", e);
 			response.setMessage("ERROR");
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
@@ -99,7 +99,7 @@ public class Int030102Controller {
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 
 		} catch (Exception e) {
-			logger.error("Int030102Controller Save : ", e);
+			logger.error("Int030102Controller save : ", e);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
@@ -119,7 +119,7 @@ public class Int030102Controller {
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 
 		} catch (Exception e) {
-			logger.error("Int030102Controller ListYear : ", e);
+			logger.error("Int030102Controller listUpdateStatus : ", e);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}

@@ -46,6 +46,21 @@ public class IaQuestionnaireSideDtlJdbcRepository {
 		return datas;
 	}
 	
+	public List<Int02010101Vo> findDtlsByIdSide(BigDecimal idSide, BigDecimal seq) {
+		StringBuilder sqlBuilder = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		sqlBuilder.append(" SELECT * FROM  IA_QUESTIONNAIRE_SIDE_DTL WHERE 1=1 AND IS_DELETED = 'N' ");
+		sqlBuilder.append(" AND ID_SIDE = ? ");
+		sqlBuilder.append(" AND QTN_LEVEL = 3 ");
+		sqlBuilder.append(" AND SEQ = ? ");
+		sqlBuilder.append(" ORDER BY SEQ_DTL ASC");
+		params.add(idSide);
+		params.add(seq);
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		List<Int02010101Vo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(),new BeanPropertyRowMapper(Int02010101Vo.class));
+		return datas;
+	}
+	
 	public IaQuestionnaireSideDtl findById(BigDecimal id) {
 		StringBuilder sqlBuilder = new StringBuilder();
 		List<Object> params = new ArrayList<>();

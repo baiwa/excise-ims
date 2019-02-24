@@ -14,7 +14,7 @@ public class TaWorksheetCondHdrJdbcRepository {
     private CommonJdbcTemplate commonJdbcTemplate;
 
     public List<String> findAllAnalysisNumber() {
-        String sql = "SELECT ANALYSIS_NUMBER FROM TA_WORKSHEET_COND_HDR ORDER BY ANALYSIS_NUMBER DESC";
+        String sql = "SELECT ANALYSIS_NUMBER  FROM TA_WORKSHEET_COND_HDR ORDER BY ANALYSIS_NUMBER DESC";
         List<String> listAnalysisNumber = this.commonJdbcTemplate.queryForList(sql.toString(), String.class);
         return listAnalysisNumber;
     }

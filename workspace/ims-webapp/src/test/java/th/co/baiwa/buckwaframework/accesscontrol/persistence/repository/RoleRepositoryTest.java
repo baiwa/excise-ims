@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.Role;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
-import th.co.baiwa.buckwaframework.security.constant.SecurityConstants;
+import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.ROLE;
 import th.go.excise.ims.Application;
 
 @RunWith(SpringRunner.class)
@@ -87,32 +87,32 @@ public class RoleRepositoryTest {
 		List<Role> roleList = new ArrayList<>();
 		
 		Role roleUser = new Role();
-		roleUser.setRoleCode(SecurityConstants.ROLE_USER);
+		roleUser.setRoleCode(ROLE.USER);
 		roleUser.setRoleDesc("Normal User");
 		roleList.add(roleUser);
 		
 		Role roleAdmin = new Role();
-		roleAdmin.setRoleCode(SecurityConstants.ROLE_ADMIN);
+		roleAdmin.setRoleCode(ROLE.ADMIN);
 		roleAdmin.setRoleDesc("Administrator");
 		roleList.add(roleAdmin);
 		
 		Role roleInternalAudit = new Role();
-		roleInternalAudit.setRoleCode(SecurityConstants.ROLE_INTERNAL_AUDIT);
+		roleInternalAudit.setRoleCode(ROLE.IA);
 		roleInternalAudit.setRoleDesc("Internal Audit");
 		roleList.add(roleInternalAudit);
 		
 		Role roleTaxAudit = new Role();
-		roleTaxAudit.setRoleCode(SecurityConstants.ROLE_TAX_AUDIT);
+		roleTaxAudit.setRoleCode(ROLE.TA);
 		roleTaxAudit.setRoleDesc("Tax Audit");
 		roleList.add(roleTaxAudit);
 		
 		Role roleOperatorAudit = new Role();
-		roleOperatorAudit.setRoleCode(SecurityConstants.ROLE_OPERATOR_AUDIT);
+		roleOperatorAudit.setRoleCode(ROLE.OA);
 		roleOperatorAudit.setRoleDesc("Operator Audit");
 		roleList.add(roleOperatorAudit);
 		
 		Role roleExportAudit = new Role();
-		roleExportAudit.setRoleCode(SecurityConstants.ROLE_EXPORT_AUDIT);
+		roleExportAudit.setRoleCode(ROLE.EA);
 		roleExportAudit.setRoleDesc("Export Audit");
 		roleList.add(roleExportAudit);
 				
