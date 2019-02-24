@@ -125,12 +125,12 @@ public class TaWorksheetHdrService {
 			taWorksheetHdr = new TaWorksheetHdr();
 			taWorksheetHdr.setAnalysisNumber(analysisNumber);
 			taWorksheetHdr.setDraftNumber(draftNumber);
-			taWorksheetHdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeId());
+			taWorksheetHdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 			taWorksheetHdr.setWorksheetStatus("C");
 			for (TaxDratfVo taxDratfVo : taxDratfVoList) {
 				taWorksheetDtl = new TaWorksheetDtl();
 				BeanUtils.copyProperties(taWorksheetDtl, taxDratfVo);
-				taWorksheetDtl.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeId());
+				taWorksheetDtl.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 				taWorksheetDtl.setAnalysisNumber(analysisNumber);
 				taWorksheetDtl.setCondMainGrp("0");
 				if (taxDratfVo.getRegDate() != null) {

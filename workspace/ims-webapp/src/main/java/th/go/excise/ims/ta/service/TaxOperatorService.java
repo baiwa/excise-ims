@@ -201,10 +201,10 @@ public class TaxOperatorService {
 		// Header
 		TaDraftWorksheetHdr draftHdr = new TaDraftWorksheetHdr();
 		draftHdr.setDraftNumber(draftNumber);
-		draftHdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeId());
+		draftHdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 		draftHdr.setYearMonthStart(dateStartStr);
 		draftHdr.setYearMonthEnd(dateEndStr);
-		draftHdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeId());
+		draftHdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 		draftHdr.setMonthNum(formVo.getDateRange());
 		this.draftWorksheetHdrRepository.save(draftHdr);
 
@@ -252,7 +252,7 @@ public class TaxOperatorService {
 
 			draft.setCreatedBy(UserLoginUtils.getCurrentUsername());
 			draft.setCreatedDate(LocalDateTime.now());
-			draft.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeId());
+			draft.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 			dratfs.add(draft);
 		}
 		this.draftWorksheetRepository.saveBatchDraft(dratfs);
