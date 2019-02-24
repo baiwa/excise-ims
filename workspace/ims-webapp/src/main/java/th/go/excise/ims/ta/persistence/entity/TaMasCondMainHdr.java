@@ -26,7 +26,6 @@ public class TaMasCondMainHdr extends BaseEntity {
 	@Column(name = "MONTH_NUM")
 	private Integer monthNum;
 
-
 	public Long getCondMainHdrId() {
 		return condMainHdrId;
 	}

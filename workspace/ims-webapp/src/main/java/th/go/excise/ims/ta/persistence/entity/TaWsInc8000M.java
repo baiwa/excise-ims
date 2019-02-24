@@ -24,8 +24,7 @@ public class TaWsInc8000M extends BaseEntity {
 		public static final String TAX_MONTH = "TAX_MONTH";
 		public static final String TAX_AMOUNT = "TAX_AMOUNT";
 	}
-	
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_WS_INC8000_M_GEN")
 	@SequenceGenerator(name = "TA_WS_INC8000_M_GEN", sequenceName = "TA_WS_INC8000_M_SEQ", allocationSize = 1)

@@ -1,7 +1,7 @@
-
 package th.go.excise.ims.ta.persistence.entity;
 
 import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,18 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "TA_WORKSHEET_COND_MAIN_DTL")
 public class TaWorksheetCondMainDtl extends BaseEntity {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1202684927537493350L;
+	private static final long serialVersionUID = 6018625077163491064L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_WORKSHEET_COND_MAIN_DTL_GEN")
 	@SequenceGenerator(name = "TA_WORKSHEET_COND_MAIN_DTL_GEN", sequenceName = "TA_WORKSHEET_COND_MAIN_DTL_SEQ", allocationSize = 1)
@@ -33,9 +30,9 @@ public class TaWorksheetCondMainDtl extends BaseEntity {
 	@Column(name = "PRODUCT_TYPE")
 	private String productType;
 	@Column(name = "TAX_MONTH_START")
-	private BigDecimal taxMonthStart;
+	private Integer taxMonthStart;
 	@Column(name = "TAX_MONTH_END")
-	private BigDecimal taxMonthEnd;
+	private Integer taxMonthEnd;
 	@Column(name = "RANGE_START")
 	private BigDecimal rangeStart;
 	@Column(name = "RANGE_END")
@@ -77,19 +74,19 @@ public class TaWorksheetCondMainDtl extends BaseEntity {
 		this.productType = productType;
 	}
 
-	public BigDecimal getTaxMonthStart() {
+	public Integer getTaxMonthStart() {
 		return taxMonthStart;
 	}
 
-	public void setTaxMonthStart(BigDecimal taxMonthStart) {
+	public void setTaxMonthStart(Integer taxMonthStart) {
 		this.taxMonthStart = taxMonthStart;
 	}
 
-	public BigDecimal getTaxMonthEnd() {
+	public Integer getTaxMonthEnd() {
 		return taxMonthEnd;
 	}
 
-	public void setTaxMonthEnd(BigDecimal taxMonthEnd) {
+	public void setTaxMonthEnd(Integer taxMonthEnd) {
 		this.taxMonthEnd = taxMonthEnd;
 	}
 
@@ -123,10 +120,6 @@ public class TaWorksheetCondMainDtl extends BaseEntity {
 
 	public void setCondType(String condType) {
 		this.condType = condType;
-	}
-
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
 }

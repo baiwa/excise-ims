@@ -1,7 +1,5 @@
-
 package th.go.excise.ims.ta.persistence.entity;
 
-import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,15 +7,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "TA_WORKSHEET_COND_MAIN_HDR")
 public class TaWorksheetCondMainHdr extends BaseEntity {
 
-	private static final long serialVersionUID = 2602780889778602147L;
+	private static final long serialVersionUID = 1530094003754133011L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_WORKSHEET_COND_MAIN_HDR_GEN")
 	@SequenceGenerator(name = "TA_WORKSHEET_COND_MAIN_HDR_GEN", sequenceName = "TA_WORKSHEET_COND_MAIN_HDR_SEQ", allocationSize = 1)
@@ -26,7 +24,7 @@ public class TaWorksheetCondMainHdr extends BaseEntity {
 	@Column(name = "ANALYSIS_NUMBER")
 	private String analysisNumber;
 	@Column(name = "MONTH_NUM")
-	private BigDecimal monthNum;
+	private Integer monthNum;
 	@Column(name = "YEAR_MONTH_START")
 	private String yearMonthStart;
 	@Column(name = "YEAR_MONTH_END")
@@ -48,11 +46,11 @@ public class TaWorksheetCondMainHdr extends BaseEntity {
 		this.analysisNumber = analysisNumber;
 	}
 
-	public BigDecimal getMonthNum() {
+	public Integer getMonthNum() {
 		return monthNum;
 	}
 
-	public void setMonthNum(BigDecimal monthNum) {
+	public void setMonthNum(Integer monthNum) {
 		this.monthNum = monthNum;
 	}
 
@@ -70,10 +68,6 @@ public class TaWorksheetCondMainHdr extends BaseEntity {
 
 	public void setYearMonthEnd(String yearMonthEnd) {
 		this.yearMonthEnd = yearMonthEnd;
-	}
-
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
 }

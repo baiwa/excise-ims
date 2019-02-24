@@ -11,9 +11,11 @@ import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
+import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
 import th.go.excise.ims.ta.persistence.entity.TaWsInc8000;
 
 public class TaWsInc8000RepositoryImpl implements TaWsInc8000Custom {
+	
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
@@ -41,11 +43,9 @@ public class TaWsInc8000RepositoryImpl implements TaWsInc8000Custom {
 				paramList.add(taWsInc8000.getSendDate());
 				paramList.add(taWsInc8000.getIncomeCode());
 				paramList.add(taWsInc8000.getIncomeType());
-				paramList.add("SYSTEM");
-
+				paramList.add(SYSTEM_USER.SYSTEM);
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
 			}
-
 		});
 
 	}

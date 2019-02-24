@@ -7,5 +7,6 @@ import th.go.excise.ims.ta.persistence.entity.TaWsInc8000;
 
 public interface TaWsInc8000Custom {
 	
-	public void insertBatchList(List<TaWsInc8000> taWsInc8000List)throws SQLException;
+	public void insertBatchList(List<TaWsInc8000> taWsInc8000List) throws SQLException;
+	
 }

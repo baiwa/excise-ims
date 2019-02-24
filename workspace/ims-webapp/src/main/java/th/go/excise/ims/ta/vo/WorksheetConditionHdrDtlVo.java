@@ -2,24 +2,27 @@ package th.go.excise.ims.ta.vo;
 
 import java.util.List;
 
-import th.go.excise.ims.ta.persistence.entity.TaWsCondDtlTax;
-import th.go.excise.ims.ta.persistence.entity.TaWsCondHdr;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainDtl;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainHdr;
 
 public class WorksheetConditionHdrDtlVo {
 
-	TaWsCondHdr header;
-	List<TaWsCondDtlTax> detail;
-	
-	public TaWsCondHdr getHeader() {
+	private TaWorksheetCondMainHdr header;
+	private List<TaWorksheetCondMainDtl> detail;
+
+	public TaWorksheetCondMainHdr getHeader() {
 		return header;
 	}
-	public void setHeader(TaWsCondHdr header) {
+
+	public void setHeader(TaWorksheetCondMainHdr header) {
 		this.header = header;
 	}
-	public List<TaWsCondDtlTax> getDetail() {
+
+	public List<TaWorksheetCondMainDtl> getDetail() {
 		return detail;
 	}
-	public void setDetail(List<TaWsCondDtlTax> detail) {
+
+	public void setDetail(List<TaWorksheetCondMainDtl> detail) {
 		this.detail = detail;
 	}
 }

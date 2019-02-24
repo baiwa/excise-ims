@@ -191,7 +191,7 @@ public class TaxOperatorService {
 		draftHdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 		draftHdr.setYearMonthStart(dateStartStr);
 		draftHdr.setYearMonthEnd(dateEndStr);
-		draftHdr.setMonthNum(BigDecimal.valueOf(formVo.getDateRange()));
+		draftHdr.setMonthNum(formVo.getDateRange());
 		draftHdr.setBudgetYear(formVo.getBudgetYear());
 		this.draftWorksheetHdrRepository.save(draftHdr);
 
@@ -241,7 +241,7 @@ public class TaxOperatorService {
 			draft.setCreatedDate(LocalDateTime.now());
 			dratfs.add(draft);
 		}
-		this.draftWorksheetRepository.saveBatchDraft(dratfs);
+		this.draftWorksheetRepository.save(dratfs);
 	}
 
 	public BigDecimal checkNull(String amount) {

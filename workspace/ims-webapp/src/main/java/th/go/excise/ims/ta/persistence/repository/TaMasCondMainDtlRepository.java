@@ -10,13 +10,10 @@ import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRe
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
 
 public interface TaMasCondMainDtlRepository extends CommonJpaCrudRepository<TaMasCondMainDtl, Long> {
+
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.budgetYear = :budgetYear")
+	public List<TaMasCondMainDtl> findByBudgetYear(@Param("budgetYear") String budgetYear);
 	
-	
-	public List<TaMasCondMainDtl> findByBudgetYear(String budgetYear);
-	
-	public List<TaMasCondMainDtl> findByBudgetYearAndIsDeleted(String budgetYear, String isDeleted);
-	
-	public List<TaMasCondMainDtl> findByBudgetYearAndCondType(String budgetYear , String condType);
-	
-	public List<TaMasCondMainDtl> findByBudgetYearAndCondTypeAndIsDeleted(String budgetYear , String condType, String isDeleted);
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.budgetYear = :budgetYear and e.condType = :condType")
+	public List<TaMasCondMainDtl> findByBudgetYearAndCondType(@Param("budgetYear") String budgetYear, @Param("condType") String condType);
 }

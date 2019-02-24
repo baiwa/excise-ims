@@ -1,7 +1,5 @@
 package th.go.excise.ims.ta.persistence.entity;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,75 +24,75 @@ public class TaDraftWorksheetHdr extends BaseEntity {
 	@Column(name = "DRAFT_WORKSHEET_HDR_ID")
 	private Long draftWorksheetHdrId;
 	@Column(name = "OFFICE_CODE")
-    private String officeCode;
-    @Column(name = "BUDGET_YEAR")
-    private String budgetYear;
-    @Column(name = "DRAFT_NUMBER")
-    private String draftNumber;
-    @Column(name = "YEAR_MONTH_START")
-    private String yearMonthStart;
-    @Column(name = "YEAR_MONTH_END")
-    private String yearMonthEnd;
-    @Column(name = "MONTH_NUM")
-    private BigDecimal monthNum;
+	private String officeCode;
+	@Column(name = "BUDGET_YEAR")
+	private String budgetYear;
+	@Column(name = "DRAFT_NUMBER")
+	private String draftNumber;
+	@Column(name = "YEAR_MONTH_START")
+	private String yearMonthStart;
+	@Column(name = "YEAR_MONTH_END")
+	private String yearMonthEnd;
+	@Column(name = "MONTH_NUM")
+	private Integer monthNum;
 
-    public Long getDraftWorksheetHdrId() {
-        return draftWorksheetHdrId;
-    }
+	public Long getDraftWorksheetHdrId() {
+		return draftWorksheetHdrId;
+	}
 
-    public void setDraftWorksheetHdrId(Long draftWorksheetHdrId) {
-        this.draftWorksheetHdrId = draftWorksheetHdrId;
-    }
+	public void setDraftWorksheetHdrId(Long draftWorksheetHdrId) {
+		this.draftWorksheetHdrId = draftWorksheetHdrId;
+	}
 
-    public String getOfficeCode() {
-        return officeCode;
-    }
+	public String getOfficeCode() {
+		return officeCode;
+	}
 
-    public void setOfficeCode(String officeCode) {
-        this.officeCode = officeCode;
-    }
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
+	}
 
-    public String getBudgetYear() {
-        return budgetYear;
-    }
+	public String getBudgetYear() {
+		return budgetYear;
+	}
 
-    public void setBudgetYear(String budgetYear) {
-        this.budgetYear = budgetYear;
-    }
+	public void setBudgetYear(String budgetYear) {
+		this.budgetYear = budgetYear;
+	}
 
-    public String getDraftNumber() {
-        return draftNumber;
-    }
+	public String getDraftNumber() {
+		return draftNumber;
+	}
 
-    public void setDraftNumber(String draftNumber) {
-        this.draftNumber = draftNumber;
-    }
+	public void setDraftNumber(String draftNumber) {
+		this.draftNumber = draftNumber;
+	}
 
-    public String getYearMonthStart() {
-        return yearMonthStart;
-    }
+	public String getYearMonthStart() {
+		return yearMonthStart;
+	}
 
-    public void setYearMonthStart(String yearMonthStart) {
-        this.yearMonthStart = yearMonthStart;
-    }
+	public void setYearMonthStart(String yearMonthStart) {
+		this.yearMonthStart = yearMonthStart;
+	}
 
-    public String getYearMonthEnd() {
-        return yearMonthEnd;
-    }
+	public String getYearMonthEnd() {
+		return yearMonthEnd;
+	}
 
-    public void setYearMonthEnd(String yearMonthEnd) {
-        this.yearMonthEnd = yearMonthEnd;
-    }
+	public void setYearMonthEnd(String yearMonthEnd) {
+		this.yearMonthEnd = yearMonthEnd;
+	}
 
-    public BigDecimal getMonthNum() {
-        return monthNum;
-    }
+	public Integer getMonthNum() {
+		return monthNum;
+	}
 
-    public void setMonthNum(BigDecimal monthNum) {
-        this.monthNum = monthNum;
-    }
+	public void setMonthNum(Integer monthNum) {
+		this.monthNum = monthNum;
+	}
 
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
 }

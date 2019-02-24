@@ -7,8 +7,8 @@ import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
 
 public class MasterConditionMainHdrDtlVo {
 	
-	TaMasCondMainHdr header;
-	List<TaMasCondMainDtl> detail;
+	private TaMasCondMainHdr header;
+	private List<TaMasCondMainDtl> detail;
 	
 	public TaMasCondMainHdr getHeader() {
 		return header;

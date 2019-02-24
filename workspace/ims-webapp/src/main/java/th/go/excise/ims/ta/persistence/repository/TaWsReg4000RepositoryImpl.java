@@ -17,10 +17,12 @@ import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
+import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
 import th.go.excise.ims.ta.vo.TaxDratfVo;
 
 public class TaWsReg4000RepositoryImpl implements TaWsReg4000Custom {
+	
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
@@ -48,8 +50,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000Custom {
 				paramList.add(taWsReg4000.getOfficeCode());
 				paramList.add(taWsReg4000.getActiveFlag());
 				paramList.add(taWsReg4000.getDutyCode());
-				paramList.add("SYSTEM");
-
+				paramList.add(SYSTEM_USER.SYSTEM);
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
 			}
 
@@ -60,59 +61,61 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000Custom {
 	@Override
 	public void truncateTaWsReg4000() throws SQLException {
 		commonJdbcTemplate.update("TRUNCATE TABLE TA_WS_REG4000");
-		
 	}
 
 	@Override
 	public List<TaWsReg4000> findAllPagination(TaWsReg4000 taWsReg4000, int start, int length) throws SQLException {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sql = new StringBuilder(" SELECT * FROM TA_WS_REG4000 WHERE IS_DELETED = '").append(FLAG.N_FLAG).append("' ");
-		if(StringUtils.isNotBlank(taWsReg4000.getFacType())) {
+		
+		// Factory Type
+		if (StringUtils.isNotBlank(taWsReg4000.getFacType())) {
 			paramList.add(taWsReg4000.getFacType());
 			sql.append(" AND FAC_TYPE = ?");
 		}
 		
-		if(StringUtils.isNotBlank(taWsReg4000.getDutyCode())) {
+		// Duty Code
+		if (StringUtils.isNotBlank(taWsReg4000.getDutyCode())) {
 			paramList.add(taWsReg4000.getDutyCode());
 			sql.append(" AND DUTY_CODE = ?");
 		}
 		
-		if(StringUtils.isNotBlank(taWsReg4000.getOfficeCode())) {
+		// Office Code
+		if (StringUtils.isNotBlank(taWsReg4000.getOfficeCode())) {
 			paramList.add(taWsReg4000.getOfficeCode());
 			sql.append(" AND OFFICE_CODE like ?");
 		}
-		
+
 		sql.append(" ORDER BY DUTY_CODE , NEW_REG_ID ");
-		return this.commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), start, length),paramList.toArray(),  rowMappping);
+		
+		return this.commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), start, length), paramList.toArray(), rowMappping);
 	}
-	
+
 	@Override
 	public Long countAll(TaWsReg4000 taWsReg4000) throws SQLException {
 		List<Object> paramList = new ArrayList<>();
-		StringBuilder sql = new StringBuilder(" SELECT * FROM TA_WS_REG4000 WHERE IS_DELETED = '").append(FLAG.N_FLAG).append("' ");;
-		if(StringUtils.isNotBlank(taWsReg4000.getFacType())) {
+		StringBuilder sql = new StringBuilder(" SELECT * FROM TA_WS_REG4000 WHERE IS_DELETED = '").append(FLAG.N_FLAG).append("' ");
+		
+		if (StringUtils.isNotBlank(taWsReg4000.getFacType())) {
 			paramList.add(taWsReg4000.getFacType());
 			sql.append(" AND FAC_TYPE = ?");
 		}
-		
-		if(StringUtils.isNotBlank(taWsReg4000.getDutyCode())) {
+
+		if (StringUtils.isNotBlank(taWsReg4000.getDutyCode())) {
 			paramList.add(taWsReg4000.getDutyCode());
 			sql.append(" AND DUTY_CODE = ?");
 		}
-		
-		if(StringUtils.isNotBlank(taWsReg4000.getOfficeCode())) {
+
+		if (StringUtils.isNotBlank(taWsReg4000.getOfficeCode())) {
 			paramList.add(taWsReg4000.getOfficeCode());
 			sql.append(" AND OFFICE_CODE like ?");
 		}
-		
+
 		sql.append(" ORDER BY DUTY_CODE , NEW_REG_ID ");
 		return this.commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), paramList.toArray(), Long.class);
 	}
-	
-	
-	
-	protected RowMapper<TaWsReg4000> rowMappping = new RowMapper<TaWsReg4000>() {
 
+	protected RowMapper<TaWsReg4000> rowMappping = new RowMapper<TaWsReg4000>() {
 		@Override
 		public TaWsReg4000 mapRow(ResultSet re, int arg1) throws SQLException {
 			TaWsReg4000 vo = new TaWsReg4000();
@@ -136,12 +139,10 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000Custom {
 			vo.setOfficeCode(re.getString("OFFICE_CODE"));
 			vo.setActiveFlag(re.getString("ACTIVE_FLAG"));
 			vo.setDutyCode(re.getString("DUTY_CODE"));
-			
 			return vo;
 		}
 	};
-	
-	
+
 	@Override
 	public List<TaxDratfVo> findByDraftNumbwe(String draftNumbwe) throws SQLException {
 		List<Object> paramList = new ArrayList<>();
@@ -153,10 +154,10 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000Custom {
 		sql.append(" AND D.IS_DELETED = 'N' ");
 		sql.append(" AND D.DRAFT_NUMBER = ? ");
 		paramList.add(draftNumbwe);
-		return this.commonJdbcTemplate.query(sql.toString(),paramList.toArray(),  rowMapppingTaxDratfVo);
+		return this.commonJdbcTemplate.query(sql.toString(), paramList.toArray(), rowMapppingTaxDratfVo);
 	}
+
 	protected RowMapper<TaxDratfVo> rowMapppingTaxDratfVo = new RowMapper<TaxDratfVo>() {
-		
 		@Override
 		public TaxDratfVo mapRow(ResultSet re, int arg1) throws SQLException {
 			TaxDratfVo vo = new TaxDratfVo();

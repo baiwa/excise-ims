@@ -26,7 +26,7 @@ public class TaWorksheetCondDtlTaxJdbcRepository {
         sql.append(" TAX_MONTH_END, ");
         sql.append(" RANGE_START, ");
         sql.append(" RANGE_END ");
-        sql.append(" FROM TA_WORKSHEET_COND_DTL_TAX  ");
+        sql.append(" FROM TA_WORKSHEET_COND_MAIN_DTL  ");
         sql.append(" WHERE IS_DELETED='N' ");
         sql.append(" AND ANALYSIS_NUMBER=? ORDER BY COND_GROUP ASC");
 

@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
 import th.go.excise.ims.preferences.service.TaWorksheetSeqCtrlService;
@@ -27,8 +25,8 @@ import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
 import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondMainDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondMainHdrRepository;
-import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondDtlTaxRepository;
-import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondHdrRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondMainDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondMainHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
@@ -36,31 +34,29 @@ import th.go.excise.ims.ta.vo.TaxDratfVo;
 
 @Service
 public class TaWorksheetHdrService {
+	
 	private final Logger logger = LoggerFactory.getLogger(TaWorksheetHdrService.class);
-
-	@Autowired
-	private TaWorksheetHdrRepository taWorksheetHdrRepository;
-
+	
 	@Autowired
 	private TaWsReg4000Repository taWsReg4000Repository;
-
+	
+	@Autowired
+	private TaMasCondMainHdrRepository taMasCondMainHdrRepository;
+	@Autowired
+	private TaMasCondMainDtlRepository taMasCondMainDtlRepository;
+	
 	@Autowired
 	private TaDraftWorksheetHdrRepository taDraftWorksheetHdrRepository;
-
+	
+	@Autowired
+	private TaWorksheetHdrRepository taWorksheetHdrRepository;
 	@Autowired
 	private TaWorksheetDtlRepository taWorksheetDtlRepository;
 
 	@Autowired
-	private TaMasCondMainHdrRepository taMasCondHdrRepository;
-
+	private TaWorksheetCondMainHdrRepository taWorksheetCondMainHdrRepository;
 	@Autowired
-	private TaMasCondMainDtlRepository taMasCondDtlTaxRepository;
-
-	@Autowired
-	private TaWorksheetCondHdrRepository taWorksheetCondHdrRepository;
-
-	@Autowired
-	private TaWorksheetCondDtlTaxRepository taWorksheetCondDtlTaxRepository;
+	private TaWorksheetCondMainDtlRepository taWorksheetCondMainDtlRepository;
 	
 	@Autowired
 	private TaWorksheetSeqCtrlService taWorksheetSeqCtrlService;
@@ -82,16 +78,16 @@ public class TaWorksheetHdrService {
 		List<TaWorksheetDtl> taWorksheetDtlList = new ArrayList<>();
 		try {
 			TaDraftWorksheetHdr taDraftWorksheetHdr = taDraftWorksheetHdrRepository.findByDraftNumber(draftNumber);
-			TaMasCondMainHdr masHeader = this.taMasCondHdrRepository.findByBudgetYear(budgetYear);
-			List<TaMasCondMainDtl> masDetail = this.taMasCondDtlTaxRepository.findByBudgetYear(masHeader.getBudgetYear());
+			TaMasCondMainHdr masHeader = taMasCondMainHdrRepository.findByBudgetYear(budgetYear);
+			List<TaMasCondMainDtl> masDetail = taMasCondMainDtlRepository.findByBudgetYear(masHeader.getBudgetYear());
 
 			// ==> save header
 			TaWorksheetCondMainHdr conHdr = new TaWorksheetCondMainHdr();
 			conHdr.setAnalysisNumber(analysisNumber);
-			conHdr.setMonthNum(new BigDecimal(masHeader.getMonthNum()));
+			conHdr.setMonthNum(masHeader.getMonthNum());
 			conHdr.setYearMonthStart(taDraftWorksheetHdr.getYearMonthStart());
 			conHdr.setYearMonthEnd(taDraftWorksheetHdr.getYearMonthEnd());
-			this.taWorksheetCondHdrRepository.save(conHdr);
+			this.taWorksheetCondMainHdrRepository.save(conHdr);
 			String indexLastCondition = "";
 			// ==> save detail
 			List<TaWorksheetCondMainDtl> condDetails = new ArrayList<>();
@@ -100,16 +96,16 @@ public class TaWorksheetHdrService {
 				condDetail.setAnalysisNumber(analysisNumber);
 				condDetail.setCondGroup(detail.getCondGroup());
 				if (detail.getTaxMonthStart() != null) {
-					condDetail.setTaxMonthStart(new BigDecimal(detail.getTaxMonthStart()));
+					condDetail.setTaxMonthStart(detail.getTaxMonthStart());
 				}
 				if (detail.getTaxMonthEnd() != null) {
-					condDetail.setTaxMonthEnd(new BigDecimal(detail.getTaxMonthEnd()));
+					condDetail.setTaxMonthEnd(detail.getTaxMonthEnd());
 				}
 				if (detail.getRangeStart() != null) {
-					condDetail.setRangeStart(new BigDecimal(detail.getRangeStart()));
+					condDetail.setRangeStart(detail.getRangeStart());
 				}
 				if (detail.getRangeEnd() != null) {
-					condDetail.setRangeEnd(new BigDecimal(detail.getRangeEnd()));
+					condDetail.setRangeEnd(detail.getRangeEnd());
 				}
 				condDetail.setRiskLevel(detail.getRiskLevel());
 				condDetail.setCondType(detail.getCondType());
@@ -119,7 +115,7 @@ public class TaWorksheetHdrService {
 				condDetails.add(condDetail);
 			}
 
-			this.taWorksheetCondDtlTaxRepository.saveAll(condDetails);
+			this.taWorksheetCondMainDtlRepository.saveAll(condDetails);
 
 			List<TaxDratfVo> taxDratfVoList = taWsReg4000Repository.findByDraftNumbwe(draftNumber);
 			taWorksheetHdr = new TaWorksheetHdr();

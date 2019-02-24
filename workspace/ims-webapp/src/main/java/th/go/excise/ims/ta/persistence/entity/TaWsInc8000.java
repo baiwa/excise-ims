@@ -1,4 +1,3 @@
-
 package th.go.excise.ims.ta.persistence.entity;
 
 import java.math.BigDecimal;
@@ -18,8 +17,7 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 public class TaWsInc8000 extends BaseEntity {
 
 	private static final long serialVersionUID = 6475180011633542723L;
-	
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_WS_INC8000_GEN")
 	@SequenceGenerator(name = "TA_WS_INC8000_GEN", sequenceName = "TA_WS_INC8000_SEQ", allocationSize = 1)

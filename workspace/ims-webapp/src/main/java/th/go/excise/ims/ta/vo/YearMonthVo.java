@@ -1,6 +1,7 @@
 package th.go.excise.ims.ta.vo;
 
 public class YearMonthVo {
+	
 	private String yearMonthStart;
 	private String yearMonthEnd;
 	private Integer monthTotal;

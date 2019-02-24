@@ -1,5 +1,7 @@
 package th.go.excise.ims.ta.persistence.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,14 +34,13 @@ public class TaMasCondMainDtl extends BaseEntity {
 	@Column(name = "TAX_MONTH_END")
 	private Integer taxMonthEnd;
 	@Column(name = "RANGE_START")
-	private Integer rangeStart;
+	private BigDecimal rangeStart;
 	@Column(name = "RANGE_END")
-	private Integer rangeEnd;
+	private BigDecimal rangeEnd;
 	@Column(name = "RISK_LEVEL")
 	private String riskLevel;
 	@Column(name = "COND_TYPE")
 	private String condType;
-
 
 	public Long getCondMainDtlId() {
 		return condMainDtlId;
@@ -89,19 +90,19 @@ public class TaMasCondMainDtl extends BaseEntity {
 		this.taxMonthEnd = taxMonthEnd;
 	}
 
-	public Integer getRangeStart() {
+	public BigDecimal getRangeStart() {
 		return rangeStart;
 	}
 
-	public void setRangeStart(Integer rangeStart) {
+	public void setRangeStart(BigDecimal rangeStart) {
 		this.rangeStart = rangeStart;
 	}
 
-	public Integer getRangeEnd() {
+	public BigDecimal getRangeEnd() {
 		return rangeEnd;
 	}
 
-	public void setRangeEnd(Integer rangeEnd) {
+	public void setRangeEnd(BigDecimal rangeEnd) {
 		this.rangeEnd = rangeEnd;
 	}
 
