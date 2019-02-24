@@ -24,7 +24,7 @@ import th.go.excise.ims.ta.vo.MasterConditionMainHdrDtlVo;
 public class MasterConditionMainController {
 
     @Autowired
-    MasterConditionMainService masterConditionService;
+    private MasterConditionMainService masterConditionService;
 
     @PostMapping("/create")
     @ResponseBody

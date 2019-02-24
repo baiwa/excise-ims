@@ -23,10 +23,10 @@ import th.go.excise.ims.ta.vo.MasterConditionMainHdrDtlVo;
 public class MasterConditionMainService {
 
 	@Autowired
-	TaMasCondMainHdrRepository taMasCondHdrRepository;
+	private TaMasCondMainHdrRepository taMasCondHdrRepository;
 
 	@Autowired
-	TaMasCondMainDtlRepository taMasCondDtlTaxRepository;
+	private TaMasCondMainDtlRepository taMasCondDtlTaxRepository;
 
 	public void insertMaster(MasterConditionMainHdrDtlVo formVo) {
 		TaMasCondMainDtl dtl = null;

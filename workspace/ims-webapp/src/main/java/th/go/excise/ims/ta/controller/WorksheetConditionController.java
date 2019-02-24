@@ -23,7 +23,7 @@ import th.go.excise.ims.ta.service.WorksheetConditionService;
 public class WorksheetConditionController {
 	
 	@Autowired
-	WorksheetConditionService worksheetConditionService;
+	private WorksheetConditionService worksheetConditionService;
 
 	@PostMapping("/create-worksheet-condition")
 	@ResponseBody
