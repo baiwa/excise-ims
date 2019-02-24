@@ -1,4 +1,4 @@
-package th.co.baiwa.buckwaframework.accesscontrol.rest.controller;
+package th.co.baiwa.buckwaframework.accesscontrol.controller;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(value = PROFILE.UNITTEST)
-public class RoleRestControllerTest {
+public class RoleControllerTest {
 	
 	@Autowired
 	private WebApplicationContext wac;
