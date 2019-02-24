@@ -20,8 +20,8 @@ import org.springframework.util.CollectionUtils;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
-import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondDtlTax;
-import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondHdr;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainDtl;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWsInc8000M;
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
@@ -382,9 +382,9 @@ public class TaxAuditFactorySelectionService {
 	public List<TaWorksheetHdr> selectFactoryProcess(String analysisNumber) throws SQLException {
 		logger.info("selectFactoryProcess analysisNumber={}");
 
-		TaWorksheetCondHdr taWorksheetCondHdr = taWorksheetCondHdrRepository.findByAnalysisNumber(analysisNumber);
+		TaWorksheetCondMainHdr taWorksheetCondHdr = taWorksheetCondHdrRepository.findByAnalysisNumber(analysisNumber);
 		List<TaWsReg4000> taWsReg4000List = taWsReg4000Repository.findAll();
-		List<TaWorksheetCondDtlTax> taWorksheetCondDtlTaxList = taWorksheetCondDtlTaxRepository.findByAnalysisNumber(analysisNumber);
+		List<TaWorksheetCondMainDtl> taWorksheetCondDtlTaxList = taWorksheetCondDtlTaxRepository.findByAnalysisNumber(analysisNumber);
 		Map<String, List<TaWsInc8000M>> data8000 = taWsInc8000MRepository.findByMonthRange(taWorksheetCondHdr.getYearMonthStart(), taWorksheetCondHdr.getYearMonthEnd());
 		List<TaWorksheetHdr> taWorksheetHdrList = new ArrayList<TaWorksheetHdr>();
 		TaWorksheetHdr taWorksheetHdr = new TaWorksheetHdr();

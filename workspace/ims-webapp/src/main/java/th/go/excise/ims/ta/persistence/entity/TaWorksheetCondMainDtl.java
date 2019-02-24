@@ -15,7 +15,7 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "TA_WORKSHEET_COND_DTL_TAX")
-public class TaWorksheetCondDtlTax extends BaseEntity {
+public class TaWorksheetCondMainDtl extends BaseEntity {
 
 	/**
 	 * 
@@ -24,8 +24,8 @@ public class TaWorksheetCondDtlTax extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_WORKSHEET_COND_DTL_TAX_GEN")
 	@SequenceGenerator(name = "TA_WORKSHEET_COND_DTL_TAX_GEN", sequenceName = "TA_WORKSHEET_COND_DTL_TAX_SEQ", allocationSize = 1)
-	@Column(name = "WORKSHEET_COND_DTL_TAX_ID")
-	private Long worksheetCondDtlTaxId;
+	@Column(name = "WORKSHEET_COND_MAIN_DTL_ID")
+	private Long worksheetCondMainDtlId;
 	@Column(name = "ANALYSIS_NUMBER")
 	private String analysisNumber;
 	@Column(name = "COND_GROUP")
@@ -45,14 +45,13 @@ public class TaWorksheetCondDtlTax extends BaseEntity {
 	@Column(name = "COND_TYPE")
 	private String condType;
 
-	
 
-	public Long getWorksheetCondDtlTaxId() {
-		return worksheetCondDtlTaxId;
+	public Long getWorksheetCondMainDtlId() {
+		return worksheetCondMainDtlId;
 	}
 
-	public void setWorksheetCondDtlTaxId(Long worksheetCondDtlTaxId) {
-		this.worksheetCondDtlTaxId = worksheetCondDtlTaxId;
+	public void setWorksheetCondMainDtlId(Long worksheetCondMainDtlId) {
+		this.worksheetCondMainDtlId = worksheetCondMainDtlId;
 	}
 
 	public String getAnalysisNumber() {

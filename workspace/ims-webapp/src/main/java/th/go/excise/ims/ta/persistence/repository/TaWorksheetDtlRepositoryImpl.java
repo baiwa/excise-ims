@@ -23,7 +23,6 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlCustom {
 	public void insertBatch(List<TaWorksheetDtl> taWorksheetHdrList) throws SQLException {
 		String sql = SqlGeneratorUtils.genSqlInsert("TA_WORKSHEET_DTL", Arrays.asList(
 				"WORKSHEET_DTL_ID",
-				"OFFICE_CODE",
 				"ANALYSIS_NUMBER", 
 				"NEW_REG_ID",
 				"COND_MAIN_GRP",
@@ -33,15 +32,14 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlCustom {
 				"CREATED_BY"), "TA_WORKSHEET_HDR_SEQ");
 
 		commonJdbcTemplate.batchUpdate(sql, taWorksheetHdrList, 1000, new ParameterizedPreparedStatementSetter<TaWorksheetDtl>() {
-			public void setValues(PreparedStatement ps, TaWorksheetDtl taWorksheetHdr) throws SQLException {
+			public void setValues(PreparedStatement ps, TaWorksheetDtl taWorksheetDtl) throws SQLException {
 				List<Object> paramList = new ArrayList<Object>();
-				paramList.add(taWorksheetHdr.getOfficeCode());
-				paramList.add(taWorksheetHdr.getAnalysisNumber());
-				paramList.add(taWorksheetHdr.getNewRegId());
-				paramList.add(taWorksheetHdr.getCondMainGrp());
-				paramList.add(taWorksheetHdr.getCenterSelFlag());
-				paramList.add(taWorksheetHdr.getSectorSelFlag());
-				paramList.add(taWorksheetHdr.getAreaSelFlag());
+				paramList.add(taWorksheetDtl.getAnalysisNumber());
+				paramList.add(taWorksheetDtl.getNewRegId());
+				paramList.add(taWorksheetDtl.getCondMainGrp());
+				paramList.add(taWorksheetDtl.getCenterSelFlag());
+				paramList.add(taWorksheetDtl.getSectorSelFlag());
+				paramList.add(taWorksheetDtl.getAreaSelFlag());
 				paramList.add(UserLoginUtils.getCurrentUsername());
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
 			}

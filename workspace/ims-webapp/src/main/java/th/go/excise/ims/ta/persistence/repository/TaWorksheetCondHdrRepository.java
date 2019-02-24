@@ -2,8 +2,8 @@
 package th.go.excise.ims.ta.persistence.repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRepository;
-import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondHdr;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainHdr;
 
-public interface TaWorksheetCondHdrRepository extends CommonJpaCrudRepository<TaWorksheetCondHdr, Long> {
-	public TaWorksheetCondHdr findByAnalysisNumber(String analysisNumber);
+public interface TaWorksheetCondHdrRepository extends CommonJpaCrudRepository<TaWorksheetCondMainHdr, Long> {
+	public TaWorksheetCondMainHdr findByAnalysisNumber(String analysisNumber);
 }

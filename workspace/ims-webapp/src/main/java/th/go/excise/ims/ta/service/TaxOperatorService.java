@@ -19,10 +19,6 @@ import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetHdr;
 import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetHdrRepository;
-import th.go.excise.ims.ta.persistence.repository.TaMasCondMainDtlRepository;
-import th.go.excise.ims.ta.persistence.repository.TaMasCondMainHdrRepository;
-import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondDtlTaxRepository;
-import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.jdbc.TaDraftWorksheetJdbcRepository;
 import th.go.excise.ims.ta.persistence.repository.jdbc.TaWorksheetCondDtlTaxJdbcRepository;
 import th.go.excise.ims.ta.persistence.repository.jdbc.TaWorksheetCondHdrJdbcRepository;
@@ -45,17 +41,7 @@ public class TaxOperatorService {
 	@Autowired
 	private TaWorksheetCondDtlTaxJdbcRepository worksheetCondDtlTaxJdbcRepository;
 
-	@Autowired
-	private TaMasCondMainHdrRepository masCondHdrRepository;
-
-	@Autowired
-	private TaMasCondMainDtlRepository masCondDtlTaxRepository;
-
-	@Autowired
-	private TaWorksheetCondHdrRepository taWorksheetCondHdrRepository;
-
-	@Autowired
-	private TaWorksheetCondDtlTaxRepository taWorksheetCondDtlTaxRepository;
+	
 
 	@Autowired
 	private TaxAuditFactorySelectionService taxAuditFactorySelectionService;
@@ -209,7 +195,6 @@ public class TaxOperatorService {
 		draftHdr.setYearMonthStart(dateStartStr);
 		draftHdr.setYearMonthEnd(dateEndStr);
 		draftHdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
-		draftHdr.setMonthNum(formVo.getDateRange());
 		this.draftWorksheetHdrRepository.save(draftHdr);
 
 		// Detail
@@ -256,7 +241,6 @@ public class TaxOperatorService {
 
 			draft.setCreatedBy(UserLoginUtils.getCurrentUsername());
 			draft.setCreatedDate(LocalDateTime.now());
-			draft.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 			dratfs.add(draft);
 		}
 		this.draftWorksheetRepository.saveBatchDraft(dratfs);

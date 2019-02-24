@@ -20,8 +20,8 @@ import th.go.excise.ims.preferences.service.TaWorksheetSeqCtrlService;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetHdr;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
-import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondDtlTax;
-import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondHdr;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainDtl;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
 import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetHdrRepository;
@@ -86,18 +86,17 @@ public class TaWorksheetHdrService {
 			List<TaMasCondMainDtl> masDetail = this.taMasCondDtlTaxRepository.findByBudgetYear(masHeader.getBudgetYear());
 
 			// ==> save header
-			TaWorksheetCondHdr conHdr = new TaWorksheetCondHdr();
+			TaWorksheetCondMainHdr conHdr = new TaWorksheetCondMainHdr();
 			conHdr.setAnalysisNumber(analysisNumber);
-			conHdr.setBudgetYear(budgetYear);
 			conHdr.setMonthNum(new BigDecimal(masHeader.getMonthNum()));
 			conHdr.setYearMonthStart(taDraftWorksheetHdr.getYearMonthStart());
 			conHdr.setYearMonthEnd(taDraftWorksheetHdr.getYearMonthEnd());
 			this.taWorksheetCondHdrRepository.save(conHdr);
 			String indexLastCondition = "";
 			// ==> save detail
-			List<TaWorksheetCondDtlTax> condDetails = new ArrayList<>();
+			List<TaWorksheetCondMainDtl> condDetails = new ArrayList<>();
 			for (TaMasCondMainDtl detail : masDetail) {
-				TaWorksheetCondDtlTax condDetail = new TaWorksheetCondDtlTax();
+				TaWorksheetCondMainDtl condDetail = new TaWorksheetCondMainDtl();
 				condDetail.setAnalysisNumber(analysisNumber);
 				condDetail.setCondGroup(detail.getCondGroup());
 				if (detail.getTaxMonthStart() != null) {
@@ -131,7 +130,6 @@ public class TaWorksheetHdrService {
 			for (TaxDratfVo taxDratfVo : taxDratfVoList) {
 				taWorksheetDtl = new TaWorksheetDtl();
 				BeanUtils.copyProperties(taWorksheetDtl, taxDratfVo);
-				taWorksheetDtl.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 				taWorksheetDtl.setAnalysisNumber(analysisNumber);
 				taWorksheetDtl.setCondMainGrp("0");
 				if (taxDratfVo.getRegDate() != null) {
@@ -141,7 +139,7 @@ public class TaWorksheetHdrService {
 						taWorksheetDtl.setCondMainGrp(indexLastCondition);
 					} else {
 						// Check Case T
-						for (TaWorksheetCondDtlTax taWorksheetCondDtlTax : condDetails) {
+						for (TaWorksheetCondMainDtl taWorksheetCondDtlTax : condDetails) {
 							try {
 								if (TA_MAS_COND_MAIN_TYPE.TAX.equals(taWorksheetCondDtlTax.getCondType())) {
 									if (taxDratfVo.getTaxMonthNo().intValue() >= taWorksheetCondDtlTax.getTaxMonthStart().intValue()
