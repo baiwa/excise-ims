@@ -9,9 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
+import th.go.excise.ims.preferences.service.TaWorksheetSeqCtrlService;
+import th.go.excise.ims.ta.persistence.entity.TaMasCondDtlTax;
+import th.go.excise.ims.ta.persistence.entity.TaMasCondHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWsCondDtlTax;
 import th.go.excise.ims.ta.persistence.entity.TaWsCondHdr;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondMainDtlRepository;
@@ -24,16 +28,23 @@ public class WorksheetConditionService {
 	
 
 	@Autowired
-	TaWsCondHdrRepository taWsCondHdrRepository;
+	private TaWsCondHdrRepository taWsCondHdrRepository;
 	
 	@Autowired
-	TaWsCondDtlTaxRepository taWsCondDtlTaxRepository;
+	private TaWsCondDtlTaxRepository taWsCondDtlTaxRepository;
 	
 	@Autowired
-	TaMasCondMainHdrRepository taMasCondHdrRepository;
+	private TaMasCondMainHdrRepository taMasCondHdrRepository;
 	
 	@Autowired
 	TaMasCondMainDtlRepository taMasCondDtlTaxRepository;
+	private TaMasCondHdrRepository taMasCondHdrRepository;
+	
+	@Autowired
+	private TaMasCondDtlTaxRepository taMasCondDtlTaxRepository;
+	
+	@Autowired
+	private TaWorksheetSeqCtrlService taWorksheetSeqCtrlService;
 	
 	@Autowired
 	private TaxAuditFactorySelectionService taxAuditFactorySelectionService;
@@ -43,7 +54,7 @@ public class WorksheetConditionService {
 		List<TaMasCondMainDtl> dtlMas = taMasCondDtlTaxRepository.findByBudgetYearAndCondType(formVo.getBudgetYear(), TA_MAS_COND_MAIN_TYPE.TAX);
 		TaWsCondDtlTax dtlWs = null;
 		TaWsCondHdr headerWs = new TaWsCondHdr();
-		String analysisNumber = ConvertDateUtils.formatDateToString(new Date(), ConvertDateUtils.YYYYMMDDHHMMSS, ConvertDateUtils.LOCAL_EN);
+		String analysisNumber = taWorksheetSeqCtrlService.getAnalysisNumber(UserLoginUtils.getCurrentUserBean().getOfficeCode(), formVo.getBudgetYear());
 		formVo.setAnalysisNumber(analysisNumber);
 		formVo.setMonthNum(headerMas.getMonthNum());
 		headerWs = taWsCondHdrRepository.save(formVo);

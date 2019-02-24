@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.bean.BusinessException;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.preferences.service.TaWorksheetSeqCtrlService;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetHdr;
 import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetDtlRepository;
@@ -67,6 +68,9 @@ public class TaxOperatorService {
 
 	@Autowired
 	private TaDraftWorksheetHdrRepository draftWorksheetHdrRepository;
+	
+	@Autowired
+	private TaWorksheetSeqCtrlService taWorksheetSeqCtrlService;
 
 	public TaxOperatorVo getOperator(TaxOperatorFormVo formVo) throws BusinessException {
 		//List<String> listCondGroups = this.taxOperatorRepository.listCondGroups(formVo.getDraftNumber());
@@ -152,7 +156,7 @@ public class TaxOperatorService {
 		Date dateEnd = ConvertDateUtils.parseStringToDate(formVo.getDateEnd(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
 		String dateEndStr = ConvertDateUtils.formatDateToString(dateEnd, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 
-		String draftNumber = ConvertDateUtils.formatDateToString(new Date(), ConvertDateUtils.YYYYMMDDHHMMSS, ConvertDateUtils.LOCAL_EN);
+		String draftNumber = taWorksheetSeqCtrlService.getDraftNumber(UserLoginUtils.getCurrentUserBean().getOfficeCode(), formVo.getBudgetYear());
 
 		/*TaMasCondHdr masHeader = this.masCondHdrRepository.findByBudgetYear(formVo.getBudgetYear());
 		List<TaMasCondDtlTax> masDetail = this.masCondDtlTaxRepository.findByBudgetYear(masHeader.getBudgetYear());*/

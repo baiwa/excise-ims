@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
+import th.go.excise.ims.preferences.service.TaWorksheetSeqCtrlService;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetHdr;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
@@ -60,6 +61,9 @@ public class TaWorksheetHdrService {
 
 	@Autowired
 	private TaWorksheetCondDtlTaxRepository taWorksheetCondDtlTaxRepository;
+	
+	@Autowired
+	private TaWorksheetSeqCtrlService taWorksheetSeqCtrlService;
 
 	public List<TaWorksheetHdr> findTaWorksheetHdrBySubConditionRegCapital(BigDecimal from, BigDecimal to) {
 		logger.info("findTaWorksheetHdrBySubConditionRegCapital from {} to {} ", from, to);
@@ -72,7 +76,7 @@ public class TaWorksheetHdrService {
 	}
 
 	public void addTaWorksheetHdrByCondition(String draftNumber, String budgetYear) {
-		String analysisNumber = ConvertDateUtils.formatDateToString(new Date(), ConvertDateUtils.YYYYMMDDHHMMSS, ConvertDateUtils.LOCAL_EN);
+		String analysisNumber = taWorksheetSeqCtrlService.getAnalysisNumber(UserLoginUtils.getCurrentUserBean().getOfficeCode(), budgetYear);
 		TaWorksheetHdr taWorksheetHdr = null;
 		TaWorksheetDtl taWorksheetDtl = null;
 		List<TaWorksheetDtl> taWorksheetDtlList = new ArrayList<>();
