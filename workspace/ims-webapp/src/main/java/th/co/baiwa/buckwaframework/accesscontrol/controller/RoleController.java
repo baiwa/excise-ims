@@ -36,19 +36,19 @@ public class RoleController {
 	}
 	
 	
-	@PostMapping("/filter")
-	@ResponseBody
-	public DataTableAjax<Role> filterRole(@RequestBody Role request) {
-		logger.info("filter Datatable int02");
-
-		DataTableAjax<Role> response = new DataTableAjax<>();
-		try {
-			response  = roleService.filterRole(request);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return response;
-	}
+//	@PostMapping("/filter")
+//	@ResponseBody
+//	public DataTableAjax<Role> filterRole(@RequestBody Role request) {
+//		logger.info("filter Datatable int02");
+//
+//		DataTableAjax<Role> response = new DataTableAjax<>();
+//		try {
+//			response  = roleService.filterRole(request);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return response;
+//	}
 	
 /*	@GetMapping("list")
 	public ResponseEntity<?> getAll(@RequestParam("draw") Integer draw, @RequestParam("start") Integer start, @RequestParam("length") Integer length) {
