@@ -21,7 +21,7 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 
 @Controller
-@RequestMapping("/api/preferences/prameter")
+@RequestMapping("/api/preferences/parameter")
 public class ParameterController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ParameterController.class);
