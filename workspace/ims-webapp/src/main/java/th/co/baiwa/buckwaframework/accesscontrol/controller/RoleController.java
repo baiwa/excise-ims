@@ -1,7 +1,5 @@
 package th.co.baiwa.buckwaframework.accesscontrol.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.Role;
 import th.co.baiwa.buckwaframework.accesscontrol.service.RoleService;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
-import th.co.baiwa.buckwaframework.common.bean.ResponseDataTable;
 
 @Controller
 @RequestMapping("/api/access-control/role")
@@ -37,7 +35,22 @@ public class RoleController {
 		this.roleService = roleService;
 	}
 	
-	@GetMapping
+	
+	@PostMapping("/filter")
+	@ResponseBody
+	public DataTableAjax<Role> filterRole(@RequestBody Role request) {
+		logger.info("filter Datatable int02");
+
+		DataTableAjax<Role> response = new DataTableAjax<>();
+		try {
+			response  = roleService.filterRole(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
+	}
+	
+/*	@GetMapping("list")
 	public ResponseEntity<?> getAll(@RequestParam("draw") Integer draw, @RequestParam("start") Integer start, @RequestParam("length") Integer length) {
 		logger.info("getAll");
 		
@@ -53,7 +66,7 @@ public class RoleController {
 		response.setRecordsFiltered(recordsTotal);
 		
 		return new ResponseEntity<ResponseDataTable<Role>>(response, HttpStatus.OK);
-	}
+	}*/
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getRole(@PathVariable("id") long id) {

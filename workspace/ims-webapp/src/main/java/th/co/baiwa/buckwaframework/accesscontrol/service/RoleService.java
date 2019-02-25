@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.Role;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.repository.RoleRepository;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
+import th.go.excise.ims.ia.vo.Int02FormVo;
+import th.go.excise.ims.ia.vo.Int02Vo;
 
 @Service
 public class RoleService {
@@ -20,6 +23,19 @@ public class RoleService {
 	@Autowired
 	public RoleService(RoleRepository roleRepository) {
 		this.roleRepository = roleRepository;
+	}
+	
+	
+	public DataTableAjax<Role> filterRole(Role request) {
+		List<Role> data = roleRepository.findAll();
+		
+//		DataTableAjax<Role> dataTableAjax = new DataTableAjax<Role>();
+//		dataTableAjax.setDraw(request.getDraw() + 1);
+//		dataTableAjax.setData(data);
+//		dataTableAjax.setRecordsTotal(iaQuestionnaireHdrJdbcRepository.countDatafilter(request));
+//		dataTableAjax.setRecordsFiltered(data.size());	
+		
+		return null;
 	}
 	
 	
