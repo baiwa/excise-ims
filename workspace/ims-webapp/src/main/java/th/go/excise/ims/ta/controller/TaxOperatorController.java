@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.go.excise.ims.ta.service.DraftWorksheetService;
 import th.go.excise.ims.ta.service.TaWorksheetHdrService;
-import th.go.excise.ims.ta.service.TaxAuditFactorySelectionService;
 import th.go.excise.ims.ta.service.TaxOperatorService;
 import th.go.excise.ims.ta.vo.CondGroupVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
@@ -31,12 +31,12 @@ public class TaxOperatorController {
 
 	@Autowired
 	private TaxOperatorService taxOperatorService;
+	
+	@Autowired
+	private DraftWorksheetService draftWorksheetService;
 
 	@Autowired
 	private TaWorksheetHdrService taWorksheetHdrService;
-	
-	@Autowired
-	private TaxAuditFactorySelectionService taxAuditFactorySelectionService;
 
 	@PostMapping("/")
 	@ResponseBody
@@ -136,7 +136,7 @@ public class TaxOperatorController {
 		ResponseData<TaxOperatorVo> response = new ResponseData<>();
 
 		try {
-			response.setData(taxAuditFactorySelectionService.getPreviewData(formVo));
+			response.setData(draftWorksheetService.getPreviewData(formVo));
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
@@ -210,7 +210,7 @@ public class TaxOperatorController {
 		ResponseData<YearMonthVo> response = new ResponseData<>();
 
 		try {
-			this.taxOperatorService.saveDraft(formVo);
+			draftWorksheetService.saveDraft(formVo);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

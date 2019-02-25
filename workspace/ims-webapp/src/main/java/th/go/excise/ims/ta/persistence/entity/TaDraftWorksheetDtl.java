@@ -32,7 +32,7 @@ public class TaDraftWorksheetDtl extends BaseEntity {
 	@Column(name = "TAX_AMT_SD")
 	private BigDecimal taxAmtSd;
 	@Column(name = "TAX_MONTH_NO")
-	private BigDecimal taxMonthNo;
+	private Integer taxMonthNo;
 	@Column(name = "TAX_AUDIT_LAST3")
 	private String taxAuditLast3;
 	@Column(name = "TAX_AUDIT_LAST2")
@@ -150,11 +150,11 @@ public class TaDraftWorksheetDtl extends BaseEntity {
 		this.taxAmtSd = taxAmtSd;
 	}
 
-	public BigDecimal getTaxMonthNo() {
+	public Integer getTaxMonthNo() {
 		return taxMonthNo;
 	}
 
-	public void setTaxMonthNo(BigDecimal taxMonthNo) {
+	public void setTaxMonthNo(Integer taxMonthNo) {
 		this.taxMonthNo = taxMonthNo;
 	}
 

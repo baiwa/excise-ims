@@ -17,4 +17,11 @@ public class ParameterConstants {
 		public static final String LOGIN_ATTEMPTS = "LOGIN_ATTEMPTS";
 	}
 	
+	// Parameter Group: EXCISE_FACTORY_TYPE
+	public static final class EXCISE_FACTORY_TYPE {
+		public static final String PRODUCT = "1";
+		public static final String SERVICE = "2";
+		public static final String IMPORT = "3";
+	}
+	
 }
