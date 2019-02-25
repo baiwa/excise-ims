@@ -45,7 +45,8 @@ public class Int0201Service {
 	public Int0201Vo findQtnSideDtlById(Int0201FormVo2 request) {
 		List<Int02010101Vo> dataHdr = null;
 		List<Int02010101Vo> dataDtl = null;
-		List<List<Int02010101Vo>> dataRes = new ArrayList<>();
+		List<Int02010101Vo> dataDtls = null;
+		List<List<Int02010101Vo>> dataRes = new ArrayList<List<Int02010101Vo>>();
 
 		Int0201Vo response = new Int0201Vo();
 		for (Int0201FormVo dataRequest : request.getRequest()) {
@@ -54,7 +55,12 @@ public class Int0201Service {
 			
 			for (Int02010101Vo objHdr : dataHdr) {
 				dataDtl = new ArrayList<Int02010101Vo>();
-				dataDtl = iaQuestionnaireSideDtlJdbcRepository.findDtlByIdSide(objHdr.getIdSide(), objHdr.getSeq(), objHdr.getIdHeading());
+				dataDtl = iaQuestionnaireSideDtlJdbcRepository.findDtlByIdSide(objHdr.getIdSide(), objHdr.getSeq(), objHdr.getId());
+				for (Int02010101Vo objDtl : dataDtl) {
+					dataDtls = new ArrayList<Int02010101Vo>();
+					dataDtls = iaQuestionnaireSideDtlJdbcRepository.findDtlsByIdSide(objDtl.getIdSide(), objDtl.getSeqDtl(), objDtl.getId());
+					objDtl.setChildren(dataDtls);
+				}
 				objHdr.setChildren(dataDtl);
 			}
 			dataRes.add(dataHdr);
