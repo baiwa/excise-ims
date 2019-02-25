@@ -9,37 +9,33 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.Role;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.repository.RoleRepository;
+import th.co.baiwa.buckwaframework.accesscontrol.vo.RoleFormVo;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
-import th.go.excise.ims.ia.vo.Int02FormVo;
-import th.go.excise.ims.ia.vo.Int02Vo;
 
 @Service
 public class RoleService {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(RoleService.class);
-	
+
 	private final RoleRepository roleRepository;
-	
+
 	@Autowired
 	public RoleService(RoleRepository roleRepository) {
 		this.roleRepository = roleRepository;
 	}
-	
-	
-	public DataTableAjax<Role> filterRole(Role request) {
-		List<Role> data = roleRepository.findAll();
-		
-//		DataTableAjax<Role> dataTableAjax = new DataTableAjax<Role>();
-//		dataTableAjax.setDraw(request.getDraw() + 1);
-//		dataTableAjax.setData(data);
-//		dataTableAjax.setRecordsTotal(iaQuestionnaireHdrJdbcRepository.countDatafilter(request));
-//		dataTableAjax.setRecordsFiltered(data.size());	
-		
-		return null;
+
+	public DataTableAjax<Role> list(RoleFormVo request) {
+		List<Role> data = roleRepository.findByCriteria(request);
+
+		DataTableAjax<Role> dataTableAjax = new DataTableAjax<Role>();
+		dataTableAjax.setDraw(request.getDraw() + 1);
+		dataTableAjax.setData(data);
+		dataTableAjax.setRecordsTotal(roleRepository.countByCriteria(request));
+		dataTableAjax.setRecordsFiltered(data.size());
+
+		return dataTableAjax;
 	}
-	
-	
-	
+
 	public List<Role> getRoleAll() {
 		logger.info("getAllRole");
 		return roleRepository.findAll();
@@ -49,7 +45,7 @@ public class RoleService {
 		logger.info("getRoleById");
 		return roleRepository.findById(roleId).get();
 	}
-	
+
 	public long getRoleCount() {
 		logger.info("getRoleCount");
 		return roleRepository.count();
