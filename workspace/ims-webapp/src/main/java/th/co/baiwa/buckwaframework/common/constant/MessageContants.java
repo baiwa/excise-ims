@@ -14,5 +14,17 @@ public class MessageContants {
 		public static final String QTN_CREATED = "ยังไม่ได้ทำแบบสอบถาม";
 		public static final String QTN_WAIT = "รอทำแบบสอบถาม";
 		public static final String QTN_FINISH = "ทำแบบสอบถามสำเร็จ";
+		public static String qtnStatus(String status) {
+			if ("CREATED".equalsIgnoreCase(status)) {
+				return QTN_CREATED;
+			}
+			if ("WAIT".equalsIgnoreCase(status)) {
+				return QTN_WAIT;
+			}
+			if ("FINISH".equalsIgnoreCase(status)) {
+				return QTN_FINISH;
+			}
+			return QTN_CREATED;
+		}
 	}
 }
