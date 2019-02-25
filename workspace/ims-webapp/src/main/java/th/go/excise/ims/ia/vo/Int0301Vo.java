@@ -1,5 +1,7 @@
 package th.go.excise.ims.ia.vo;
 
+import java.util.List;
+
 import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
@@ -11,6 +13,7 @@ public class Int0301Vo extends DataTableRequest {
 	
 	private String createdDateDesc;
 	private String updateDateDesc;
+	private List<String> datalistdynamic;
 
 	public IaRiskFactors getIaRiskFactors() {
 		return iaRiskFactors;
@@ -43,5 +46,15 @@ public class Int0301Vo extends DataTableRequest {
 	public void setUpdateDateDesc(String updateDateDesc) {
 		this.updateDateDesc = updateDateDesc;
 	}
+
+	public List<String> getDatalistdynamic() {
+		return datalistdynamic;
+	}
+
+	public void setDatalistdynamic(List<String> datalistdynamic) {
+		this.datalistdynamic = datalistdynamic;
+	}
+	
+	
 
 }

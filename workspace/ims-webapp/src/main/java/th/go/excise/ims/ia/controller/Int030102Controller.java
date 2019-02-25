@@ -20,6 +20,7 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STAT
 import th.go.excise.ims.ia.service.Int030102Service;
 import th.go.excise.ims.ia.vo.Int030102FormVo;
 import th.go.excise.ims.ia.vo.Int030102Vo;
+import th.go.excise.ims.ia.vo.Int0301FormVo;
 
 @Controller
 @RequestMapping("/api/ia/int03/01/02")
@@ -120,6 +121,24 @@ public class Int030102Controller {
 
 		} catch (Exception e) {
 			logger.error("Int030102Controller listUpdateStatus : ", e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	@PostMapping("/saveRiskFactorsLevel")
+	@ResponseBody
+	public ResponseData<String> saveRiskFactorsLevel(@RequestBody Int0301FormVo form) {
+		ResponseData<String> response = new ResponseData<String>();
+		try {	
+			int030102Service.saveRiskFactorsLevel(form);
+			response.setData("SUCCESS");
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+
+		} catch (Exception e) {
+			logger.error("Int0301Controller saveRiskFactorsLevel : ", e);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
