@@ -7,7 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.common.bean.BusinessException;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ta.persistence.repository.jdbc.TaDraftWorksheetJdbcRepository;
 import th.go.excise.ims.ta.persistence.repository.jdbc.TaWorksheetCondDtlTaxJdbcRepository;
@@ -34,7 +33,7 @@ public class TaxOperatorService {
 	@Autowired
 	private TaDraftWorksheetJdbcRepository taDraftWorksheetJdbcRepository;
 
-	public TaxOperatorVo getOperator(TaxOperatorFormVo formVo) throws BusinessException {
+	public TaxOperatorVo getOperator(TaxOperatorFormVo formVo) {
 		//List<String> listCondGroups = this.taxOperatorRepository.listCondGroups(formVo.getDraftNumber());
 		List<TaxOperatorDetailVo> list = this.taxOperatorRepository.getTaxOperator(formVo);
 
