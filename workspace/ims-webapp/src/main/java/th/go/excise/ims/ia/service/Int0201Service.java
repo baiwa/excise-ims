@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.constant.MessageContants;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMade;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
@@ -53,7 +54,7 @@ public class Int0201Service {
 			
 			for (Int02010101Vo objHdr : dataHdr) {
 				dataDtl = new ArrayList<Int02010101Vo>();
-				dataDtl = iaQuestionnaireSideDtlJdbcRepository.findDtlByIdSide(objHdr.getIdSide(), objHdr.getSeq());
+				dataDtl = iaQuestionnaireSideDtlJdbcRepository.findDtlByIdSide(objHdr.getIdSide(), objHdr.getSeq(), objHdr.getIdHeading());
 				objHdr.setChildren(dataDtl);
 			}
 			dataRes.add(dataHdr);
@@ -67,6 +68,7 @@ public class Int0201Service {
 		/* save questionnaire Made */
 		if(request.getQtnMadeList().size() > 0) {
 			for (IaQuestionnaireMade qtnMade : request.getQtnMadeList()) {
+				qtnMade.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 				iaQuestionnaireMadeRepository.save(qtnMade);
 			}
 		}
