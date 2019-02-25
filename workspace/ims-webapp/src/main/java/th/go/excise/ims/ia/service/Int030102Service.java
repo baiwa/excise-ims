@@ -20,6 +20,7 @@ import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsStatusRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int030102JdbcRepository;
 import th.go.excise.ims.ia.vo.Int030102FormVo;
 import th.go.excise.ims.ia.vo.Int030102Vo;
+import th.go.excise.ims.ia.vo.Int0301FormVo;
 
 @Service
 public class Int030102Service {
@@ -130,5 +131,9 @@ public class Int030102Service {
 
 		}
 
+	}
+	
+	public void saveRiskFactorsLevel(Int0301FormVo form) {	
+		int030102JdbcRepository.saveRiskFactorsLevel(form);	
 	}
 }
