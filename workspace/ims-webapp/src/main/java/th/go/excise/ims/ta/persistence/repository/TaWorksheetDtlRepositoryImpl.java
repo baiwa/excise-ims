@@ -29,7 +29,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlCustom {
 				"CENTER_SEL_FLAG",
 				"SECTOR_SEL_FLAG",
 				"AREA_SEL_FLAG" ,
-				"CREATED_BY"), "TA_WORKSHEET_HDR_SEQ");
+				"CREATED_BY"), "TA_WORKSHEET_DTL_SEQ");
 
 		commonJdbcTemplate.batchUpdate(sql, taWorksheetHdrList, 1000, new ParameterizedPreparedStatementSetter<TaWorksheetDtl>() {
 			public void setValues(PreparedStatement ps, TaWorksheetDtl taWorksheetDtl) throws SQLException {
