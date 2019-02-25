@@ -19,7 +19,7 @@ import th.go.excise.ims.ia.vo.Int02010101Vo;
 public class Int02010101Service {
 
 	private static final Logger logger = LoggerFactory.getLogger(Int02010101Service.class);
-	
+
 	@Autowired
 	private IaQuestionnaireSideDtlJdbcRepository iaQuestionnaireSideDtlJdbcRepository;
 
@@ -28,20 +28,20 @@ public class Int02010101Service {
 
 	public List<Int02010101Vo> findByIdSide(String idSideStr) {
 		BigDecimal idSide = new BigDecimal(idSideStr);
-		List<Int02010101Vo> main = iaQuestionnaireSideDtlJdbcRepository.findByIdSide(idSide);
-		List<Int02010101Vo> detail = new ArrayList<>();
+		List<Int02010101Vo> mains = iaQuestionnaireSideDtlJdbcRepository.findByIdSide(idSide);
 		List<Int02010101Vo> details = new ArrayList<>();
-		for (int i = 0; i < main.toArray().length; i++) {
-			BigDecimal seq = main.get(i).getSeq();
-			detail = iaQuestionnaireSideDtlJdbcRepository.findDtlByIdSide(idSide, seq);
-			for(int j= 0; j< detail.toArray().length; j++) {
-				BigDecimal seqDtl = detail.get(j).getSeqDtl();
-				details = iaQuestionnaireSideDtlJdbcRepository.findDtlsByIdSide(idSide, seqDtl);
-				detail.get(j).setChildren(details);
+		List<Int02010101Vo> detailDtls = new ArrayList<>();
+		for (Int02010101Vo main : mains) {
+			BigDecimal seq = main.getSeq();
+			details = iaQuestionnaireSideDtlJdbcRepository.findDtlByIdSide(idSide, seq);
+			for (Int02010101Vo detail : details) {
+				BigDecimal seqDtl = detail.getSeqDtl();
+				detailDtls = iaQuestionnaireSideDtlJdbcRepository.findDtlsByIdSide(idSide, seqDtl);
+				detail.setChildren(detailDtls);
 			}
-			main.get(i).setChildren(detail);
+			main.setChildren(details);
 		}
-		return main;
+		return mains;
 	}
 
 	public List<IaQuestionnaireSideDtl> save(List<IaQuestionnaireSideDtl> request) {
@@ -58,10 +58,8 @@ public class Int02010101Service {
 		}
 		// SAVE
 		if (form.getSave().toArray().length > 0) {
-			IaQuestionnaireSideDtl save;
-			for (int i = 0; i < form.getSave().toArray().length; i++) {
-				save = new IaQuestionnaireSideDtl();
-				IaQuestionnaireSideDtl item = form.getSave().get(i);
+			for (IaQuestionnaireSideDtl save : form.getSave()) {
+				IaQuestionnaireSideDtl item = save;
 				if (item.getId() != null) {
 					BigDecimal id = item.getId();
 					save = iaQuestionnaireSideDtlJdbcRepository.findById(id);
@@ -72,7 +70,7 @@ public class Int02010101Service {
 				} else {
 					save = item;
 				}
-				form.getSave().set(i, iaQuestionnaireSideDtlRepository.save(save));
+				save = iaQuestionnaireSideDtlRepository.save(save);
 			}
 		}
 		return form;

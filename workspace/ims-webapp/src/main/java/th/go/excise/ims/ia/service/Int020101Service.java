@@ -20,7 +20,7 @@ import th.go.excise.ims.ia.vo.Int020101YearVo;
 
 @Service
 public class Int020101Service {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(Int020101Service.class);
 
 	@Autowired
@@ -28,7 +28,7 @@ public class Int020101Service {
 
 	@Autowired
 	private IaQuestionnaireSideRepository iaQtnSideRep;
-	
+
 	@Autowired
 	private IaQuestionnaireSideDtlRepository iaQtnSideDtlRep;
 
@@ -40,11 +40,11 @@ public class Int020101Service {
 		BigDecimal idHead = new BigDecimal(idHeadStr);
 		return iaQtnSideJdbcRep.findByIdHead(idHead);
 	}
-	
+
 	public List<Int020101YearVo> findByUsername(String username) {
 		return iaQtnSideJdbcRep.findByUsername(username);
 	}
-	
+
 	public List<Int020101NameVo> findByYearAndUsername(String year, String username) {
 		return iaQtnSideJdbcRep.findByYearAndUsername(year, username);
 	}
@@ -56,24 +56,24 @@ public class Int020101Service {
 	public List<IaQuestionnaireSide> saveAll(List<IaQuestionnaireSide> request) {
 		// array of old id
 		List<BigDecimal> ids = new ArrayList<>();
-		for(int i=0; i<request.toArray().length; i++) {
-			ids.add(request.get(i).getId()); // add idSide
-			request.get(i).setId(null); // remove old id
+		for (IaQuestionnaireSide req : request) {
+			ids.add(req.getId()); // add idSide
+			req.setId(null); // remove old id
 		}
-		
+
 		// Saved
 		List<IaQuestionnaireSide> newSides = (List<IaQuestionnaireSide>) iaQtnSideRep.saveAll(request);
 		logger.debug("Int020101Service::saveAll => SAVED");
-		
+
 		// array of new id
 		List<BigDecimal> idsNew = new ArrayList<>();
-		for(int i=0; i<newSides.toArray().length; i++) {
-			idsNew.add(newSides.get(i).getId()); // add idSide
+		for (IaQuestionnaireSide newSide : newSides) {
+			idsNew.add(newSide.getId()); // add idSide
 		}
 		List<IaQuestionnaireSideDtl> qtnDtls = iaQtnSideJdbcRep.findBySideIds(ids);
-		for(int i=0; i<qtnDtls.toArray().length; i++) {
-			for(int j=0; j<ids.toArray().length; j++) {
-				if (ids.get(j).compareTo(qtnDtls.get(i).getIdSide())==0) {
+		for (int i = 0; i < qtnDtls.toArray().length; i++) {
+			for (int j = 0; j < ids.toArray().length; j++) {
+				if (ids.get(j).compareTo(qtnDtls.get(i).getIdSide()) == 0) {
 					qtnDtls.get(i).setIdSide(idsNew.get(j));
 				}
 			}
@@ -81,7 +81,7 @@ public class Int020101Service {
 		iaQtnSideDtlRep.saveAll(qtnDtls);
 		return newSides;
 	}
-	
+
 	public IaQuestionnaireSide update(String idStr, IaQuestionnaireSide request) {
 		BigDecimal id = new BigDecimal(idStr);
 		IaQuestionnaireSide data = iaQtnSideJdbcRep.findOne(id);
@@ -95,7 +95,7 @@ public class Int020101Service {
 		iaQtnSideRep.deleteById(id);
 		return data;
 	}
-	
+
 	public IaQuestionnaireSide findOne(String idStr) {
 		BigDecimal id = new BigDecimal(idStr);
 		return iaQtnSideJdbcRep.findOne(id);

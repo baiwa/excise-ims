@@ -24,12 +24,12 @@ import th.go.excise.ims.ia.vo.Int02010101Vo;
 @Controller
 @RequestMapping("/api/ia/int02/01/01/01")
 public class Int02010101Controller {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(Int02010101Controller.class);
 
 	@Autowired
 	private Int02010101Service int02010101Service;
-	
+
 	@GetMapping("/by/side/{idSide}")
 	@ResponseBody
 	public ResponseData<List<Int02010101Vo>> findByIdHead(@PathVariable("idSide") String idSideStr) {
@@ -41,13 +41,13 @@ public class Int02010101Controller {
 			responseData.setMessage("SUCCESS");
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			logger.error("Int02010101Controller::findByIdHead ", e.getCause());
+			logger.error("Int02010101Controller::findByIdHead ", e);
 			responseData.setMessage(RESPONSE_MESSAGE.ERROR500);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
 	}
-	
+
 	@PostMapping("/save/side/all")
 	@ResponseBody
 	public ResponseData<Int02010101FormVo> saveAll(@RequestBody Int02010101FormVo form) {
@@ -59,11 +59,11 @@ public class Int02010101Controller {
 			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			logger.error("Int02010101Controller::saveAll ", e.getCause());
+			logger.error("Int02010101Controller::saveAll ", e);
 			responseData.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
 	}
-	
+
 }

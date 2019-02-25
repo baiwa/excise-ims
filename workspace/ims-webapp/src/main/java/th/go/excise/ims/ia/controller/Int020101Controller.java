@@ -29,12 +29,12 @@ import th.go.excise.ims.ia.vo.Int020101YearVo;
 @Controller
 @RequestMapping("/api/ia/int02/01/01")
 public class Int020101Controller {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(Int020101Controller.class);
 
 	@Autowired
 	private Int020101Service int020101Service;
-	
+
 	@GetMapping("/all")
 	@ResponseBody
 	public ResponseData<List<Int020101Vo>> findAllQtnSide() {
@@ -45,13 +45,13 @@ public class Int020101Controller {
 			responseData.setData(data);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			logger.error("Int020101Controller::findAllQtnSide ", e.getCause());
+			logger.error("Int020101Controller::findAllQtnSide ", e);
 			responseData.setMessage("ERROR");
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
 	}
-	
+
 	@GetMapping("/by/id/{id}")
 	@ResponseBody
 	public ResponseData<IaQuestionnaireSide> findById(@PathVariable("id") String idStr) {
@@ -62,13 +62,13 @@ public class Int020101Controller {
 			responseData.setData(data);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			logger.error("Int020101Controller::findById ", e.getCause());
+			logger.error("Int020101Controller::findById ", e);
 			responseData.setMessage(RESPONSE_MESSAGE.ERROR500);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
 	}
-	
+
 	@GetMapping("/by/head/{head}")
 	@ResponseBody
 	public ResponseData<List<Int020101Vo>> findByIdHead(@PathVariable("head") String idHead) {
@@ -79,13 +79,13 @@ public class Int020101Controller {
 			responseData.setData(data);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			logger.error("Int020101Controller::findByIdHead ", e.getCause());
+			logger.error("Int020101Controller::findByIdHead ", e);
 			responseData.setMessage(RESPONSE_MESSAGE.ERROR500);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
 	}
-	
+
 	@PostMapping("/save")
 	@ResponseBody
 	public ResponseData<IaQuestionnaireSide> save(@RequestBody IaQuestionnaireSide request) {
@@ -95,13 +95,13 @@ public class Int020101Controller {
 			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			logger.error("Int020101Controller::save ", e.getCause());
+			logger.error("Int020101Controller::save ", e);
 			responseData.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
 	}
-	
+
 	@PostMapping("/save/all")
 	@ResponseBody
 	public ResponseData<List<IaQuestionnaireSide>> saveAll(@RequestBody List<IaQuestionnaireSide> request) {
@@ -117,23 +117,24 @@ public class Int020101Controller {
 		}
 		return responseData;
 	}
-	
+
 	@PutMapping("/update/{id}")
 	@ResponseBody
-	public ResponseData<IaQuestionnaireSide> update(@PathVariable("id") String idStr, @RequestBody IaQuestionnaireSide request) {
+	public ResponseData<IaQuestionnaireSide> update(@PathVariable("id") String idStr,
+			@RequestBody IaQuestionnaireSide request) {
 		ResponseData<IaQuestionnaireSide> responseData = new ResponseData<IaQuestionnaireSide>();
 		try {
 			responseData.setData(int020101Service.update(idStr, request));
 			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			logger.error("Int020101Controller::update ", e.getCause());
+			logger.error("Int020101Controller::update ", e);
 			responseData.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
 	@ResponseBody
 	public ResponseData<IaQuestionnaireSide> delete(@PathVariable("id") String idStr) {
@@ -143,13 +144,13 @@ public class Int020101Controller {
 			responseData.setMessage(RESPONSE_MESSAGE.DELETE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			logger.error("Int020101Controller::delete ", e.getCause());
+			logger.error("Int020101Controller::delete ", e);
 			responseData.setMessage(RESPONSE_MESSAGE.DELETE.FAILED);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
 	}
-	
+
 	@GetMapping("/by/user")
 	@ResponseBody
 	public ResponseData<List<Int020101YearVo>> getByUsername() {
@@ -162,13 +163,13 @@ public class Int020101Controller {
 			responseData.setMessage("SUCCESS");
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			logger.error("Int020101Controller::getByUsername ", e.getCause());
+			logger.error("Int020101Controller::getByUsername ", e);
 			responseData.setMessage(RESPONSE_MESSAGE.ERROR500);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
 	}
-	
+
 	@GetMapping("/by/year/{year}/user")
 	@ResponseBody
 	public ResponseData<List<Int020101NameVo>> getByYearAndUsername(@PathVariable("year") String year) {
@@ -181,11 +182,11 @@ public class Int020101Controller {
 			responseData.setMessage("SUCCESS");
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			logger.error("Int020101Controller::getByYearAndUsername ", e.getCause());
+			logger.error("Int020101Controller::getByYearAndUsername ", e);
 			responseData.setMessage(RESPONSE_MESSAGE.ERROR500);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
 	}
-	
+
 }
