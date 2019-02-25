@@ -10,27 +10,27 @@ import th.go.excise.ims.ta.persistence.entity.TaWorksheetSeqCtrl;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetSeqCtrlRepository;
 
 @Service
-public class TaWorksheetSeqCtrlService {
+public class WorksheetSequenceService {
 
-	private static final Logger logger = LoggerFactory.getLogger(TaWorksheetSeqCtrlService.class);
+	private static final Logger logger = LoggerFactory.getLogger(WorksheetSequenceService.class);
 	
-	public static final String RUNNING_TYPE_A = "A";
-	public static final String RUNNING_TYPE_D = "D";
+	public static final String RUNNING_TYPE_ANALYSIS = "A";
+	public static final String RUNNING_TYPE_DRAFT = "D";
 
 	@Autowired
 	private TaWorksheetSeqCtrlRepository taWorksheetSeqCtrlRepository;
 
 	public String getAnalysisNumber(String officeCode, String budgetYear) {
 		logger.info("getAnalysisNumber of officeCode : {} || budgetYear : {}", officeCode, budgetYear);
-		return genarateRunningNumberByType(officeCode, budgetYear, RUNNING_TYPE_A);
+		return genarateRunningNumber(officeCode, budgetYear, RUNNING_TYPE_ANALYSIS);
 	}
 
 	public String getDraftNumber(String officeCode, String budgetYear) {
 		logger.info("getDraftNumber of officeCode : {} || budgetYear : {}", officeCode, budgetYear);
-		return genarateRunningNumberByType(officeCode, budgetYear, RUNNING_TYPE_D);
+		return genarateRunningNumber(officeCode, budgetYear, RUNNING_TYPE_DRAFT);
 	}
 
-	private String genarateRunningNumberByType(String officeCode, String budgetYear, String runningType) {
+	private String genarateRunningNumber(String officeCode, String budgetYear, String runningType) {
 		StringBuilder runningNumber = new StringBuilder(officeCode).append("-").append(budgetYear).append("-");
 		TaWorksheetSeqCtrl taWorksheetSeqCtrl = taWorksheetSeqCtrlRepository.findByOfficeCodeAndBudgetYearAndRunningType(officeCode, budgetYear, runningType);
 		if (taWorksheetSeqCtrl == null) {

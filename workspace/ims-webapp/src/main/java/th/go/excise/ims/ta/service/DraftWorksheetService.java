@@ -55,7 +55,7 @@ public class DraftWorksheetService {
 	private TaDraftWorksheetDtlRepository taDraftWorksheetDtlRepository;
 	
 	@Autowired
-	private TaWorksheetSeqCtrlService taWorksheetSeqCtrlService;
+	private WorksheetSequenceService worksheetSequenceService;
 	@Autowired
 	private BudgetYearService budgetYearService;
 
@@ -286,7 +286,7 @@ public class DraftWorksheetService {
 		String dateStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateStart(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		String dateEnd = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateEnd(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 
-		String draftNumber = taWorksheetSeqCtrlService.getDraftNumber(UserLoginUtils.getCurrentUserBean().getOfficeCode(), formVo.getBudgetYear());
+		String draftNumber = worksheetSequenceService.getDraftNumber(UserLoginUtils.getCurrentUserBean().getOfficeCode(), formVo.getBudgetYear());
 
 		// Header
 		TaDraftWorksheetHdr draftHdr = new TaDraftWorksheetHdr();

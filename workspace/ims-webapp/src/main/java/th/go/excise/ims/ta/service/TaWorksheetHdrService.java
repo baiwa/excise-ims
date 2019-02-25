@@ -58,7 +58,7 @@ public class TaWorksheetHdrService {
 	private TaWorksheetCondMainDtlRepository taWorksheetCondMainDtlRepository;
 	
 	@Autowired
-	private TaWorksheetSeqCtrlService taWorksheetSeqCtrlService;
+	private WorksheetSequenceService worksheetSeqCtrlService;
 
 	public List<TaWorksheetHdr> findTaWorksheetHdrBySubConditionRegCapital(BigDecimal from, BigDecimal to) {
 		logger.info("findTaWorksheetHdrBySubConditionRegCapital from {} to {} ", from, to);
@@ -71,7 +71,7 @@ public class TaWorksheetHdrService {
 	}
 
 	public void addTaWorksheetHdrByCondition(String draftNumber, String budgetYear) {
-		String analysisNumber = taWorksheetSeqCtrlService.getAnalysisNumber(UserLoginUtils.getCurrentUserBean().getOfficeCode(), budgetYear);
+		String analysisNumber = worksheetSeqCtrlService.getAnalysisNumber(UserLoginUtils.getCurrentUserBean().getOfficeCode(), budgetYear);
 		TaWorksheetHdr taWorksheetHdr = null;
 		TaWorksheetDtl taWorksheetDtl = null;
 		List<TaWorksheetDtl> taWorksheetDtlList = new ArrayList<>();
