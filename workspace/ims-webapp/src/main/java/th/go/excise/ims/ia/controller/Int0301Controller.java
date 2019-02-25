@@ -44,6 +44,19 @@ public class Int0301Controller {
 		return response;
 	}
 	
+	@PostMapping("/listdynamic")
+	@ResponseBody
+	public List<Int0301Vo> listdynamic(@RequestBody Int0301FormVo form) {
+		List<Int0301Vo> response = new ArrayList<Int0301Vo>();
+		try {	
+			response = Int0301Service.listdynamic(form);
+		} catch (Exception e) {
+			logger.error("Int0301Controller : " , e);
+		}
+		return response;
+	}
+	
+	
 	@PostMapping("/saveRiskFactorsLevel")
 	@ResponseBody
 	public ResponseData<String> saveRiskFactorsLevel(@RequestBody Int0301FormVo form) {

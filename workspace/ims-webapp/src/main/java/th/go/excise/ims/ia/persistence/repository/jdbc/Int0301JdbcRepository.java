@@ -89,8 +89,27 @@ public class Int0301JdbcRepository {
 //			setentityIaRiskFactorsConfig		
 
 			irfc.setId(rs.getBigDecimal("ID_CONFIG"));
+			
 			irfc.setIdFactors(rs.getBigDecimal("ID_FACTORS"));
 			irfc.setFactorsLevel(rs.getBigDecimal("FACTORS_LEVEL"));
+			
+			irfc.setVerylowStart(rs.getString("VERYLOW_START"));
+			irfc.setVerylowEnd(rs.getString("VERYLOW_END"));
+			
+			irfc.setLowStart(rs.getString("LOW_START"));
+			irfc.setLowEnd(rs.getString("LOW_END"));
+			
+			irfc.setMediumStart(rs.getString("MEDIUM_START"));
+			irfc.setMediumEnd(rs.getString("MEDIUM_END"));
+			
+			irfc.setHighStart(rs.getString("HIGH_START"));
+			irfc.setHighEnd(rs.getString("HIGH_END"));
+			
+			irfc.setVeryhighStart(rs.getString("VERYHIGH_START"));
+			irfc.setVeryhighEnd(rs.getString("VERYHIGH_END"));
+			
+			
+			
 			vo.setIaRiskFactorsConfig(irfc);
 			return vo;
 		}
@@ -139,11 +158,8 @@ public class Int0301JdbcRepository {
 		sql.append("                 INNER JOIN IA_RISK_FACTORS_CONFIG B     ");
 		sql.append("                 ON A.ID = B.ID_FACTORS                  ");
 		sql.append("                 WHERE A.BUDGET_YEAR = ? )    ");
-		
+
 		commonJdbcTemplate.update(sql.toString(), new Object[] { form.getFactorsLevel(), form.getBudgetYear() });
-		
-		
+
 	}
 }
-
-
