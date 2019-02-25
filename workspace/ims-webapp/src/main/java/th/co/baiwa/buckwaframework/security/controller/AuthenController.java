@@ -1,17 +1,15 @@
 package th.co.baiwa.buckwaframework.security.controller;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +24,8 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.DocumentConstants.MODULE_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.URL;
+import th.co.baiwa.buckwaframework.security.domain.UserBean;
+import th.co.baiwa.buckwaframework.security.domain.UserProfileVo;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 
 @Controller
@@ -85,27 +85,30 @@ public class AuthenController {
 	public ResponseData<String> onLoginSuccess() {
 		ResponseData<String> respData = new ResponseData<>();
 		respData.setStatus(RESPONSE_STATUS.SUCCESS);
-		respData.setMessage("Yeah!!");
+		respData.setMessage("Session Alive");
 		return respData;
 	}
 	
-	@PostMapping("/api/security/authority-list")
+	@PostMapping("/api/security/user-profile")
 	@ApiOperation(
-		tags = MODULE_NAME.AUTHENTICATION,
-		value = "Get Authority List"
-	)
+			tags = MODULE_NAME.AUTHENTICATION,
+			value = "Get User Profile"
+			)
 	@ResponseBody
-	public ResponseData<List<String>> getGrantedAuthorityList() {
-		Collection<GrantedAuthority> grantedAuthorityList = UserLoginUtils.getCurrentUserBean().getAuthorities();
+	public ResponseData<UserProfileVo> getUserProfile() {
+		ResponseData<UserProfileVo> respData = new ResponseData<>();
 		
-		List<String> authorityList = new ArrayList<>();
-		for (GrantedAuthority grantedAuthority : grantedAuthorityList) {
-			authorityList.add(grantedAuthority.getAuthority());
+		try {
+			UserBean userBean = UserLoginUtils.getCurrentUserBean();
+			UserProfileVo userProfileVo = new UserProfileVo();
+			BeanUtils.copyProperties(userProfileVo, userBean);
+			userProfileVo.setAuthorityList(UserLoginUtils.getGrantedAuthorityList());
+			respData.setData(userProfileVo);
+			respData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			respData.setStatus(RESPONSE_STATUS.FAILED);
+			respData.setMessage(e.getMessage());
 		}
-		
-		ResponseData<List<String>> respData = new ResponseData<>();
-		respData.setData(authorityList);
-		respData.setStatus(RESPONSE_STATUS.SUCCESS);
 		
 		return respData;
 	}

@@ -1,6 +1,7 @@
 package th.co.baiwa.buckwaframework.security.domain;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -12,7 +13,6 @@ public class UserDetails extends User implements UserBean {
 	private Long userId;
 	// Add More Information about USER here.
 
-	private String[] exciseBaseControl;
 	private String userThaiId;
 	private String userThaiName;
 	private String userThaiSurname;
@@ -24,7 +24,7 @@ public class UserDetails extends User implements UserBean {
 	private String telephoneNo;
 	private String officeCode;
 	private String accessAttr;
-	private String role;
+	private List<String> authorityList;
 
 	// Constructor
 	public UserDetails(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
@@ -45,14 +45,6 @@ public class UserDetails extends User implements UserBean {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
-	}
-
-	public String[] getExciseBaseControl() {
-		return exciseBaseControl;
-	}
-
-	public void setExciseBaseControl(String[] exciseBaseControl) {
-		this.exciseBaseControl = exciseBaseControl;
 	}
 
 	public String getUserThaiId() {
@@ -143,12 +135,12 @@ public class UserDetails extends User implements UserBean {
 		this.accessAttr = accessAttr;
 	}
 
-	public String getRole() {
-		return role;
+	public List<String> getAuthorityList() {
+		return authorityList;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setAuthorityList(List<String> authorityList) {
+		this.authorityList = authorityList;
 	}
 
 }
