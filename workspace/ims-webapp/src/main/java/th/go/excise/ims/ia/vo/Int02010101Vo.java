@@ -13,6 +13,15 @@ public class Int02010101Vo extends BaseEntity {
 	private BigDecimal seq;
 	private BigDecimal seqDtl;
 	private List<Int02010101Vo> children;
+	private BigDecimal idHeading;
+
+	public BigDecimal getIdHeading() {
+		return idHeading;
+	}
+
+	public void setIdHeading(BigDecimal idHeading) {
+		this.idHeading = idHeading;
+	}
 
 	public List<Int02010101Vo> getChildren() {
 		return children;

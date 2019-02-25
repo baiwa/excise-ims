@@ -33,10 +33,10 @@ public class Int02010101Service {
 		List<Int02010101Vo> detailDtls = new ArrayList<>();
 		for (Int02010101Vo main : mains) {
 			BigDecimal seq = main.getSeq();
-			details = iaQuestionnaireSideDtlJdbcRepository.findDtlByIdSide(idSide, seq);
+			details = iaQuestionnaireSideDtlJdbcRepository.findDtlByIdSide(idSide, seq, main.getId());
 			for (Int02010101Vo detail : details) {
 				BigDecimal seqDtl = detail.getSeqDtl();
-				detailDtls = iaQuestionnaireSideDtlJdbcRepository.findDtlsByIdSide(idSide, seqDtl);
+				detailDtls = iaQuestionnaireSideDtlJdbcRepository.findDtlsByIdSide(idSide, seqDtl, detail.getId());
 				detail.setChildren(detailDtls);
 			}
 			main.setChildren(details);
@@ -49,6 +49,9 @@ public class Int02010101Service {
 	}
 
 	public Int02010101FormVo saveAll(Int02010101FormVo form) {
+		// VARIABLES
+		BigDecimal idLevel1 = null;
+		BigDecimal idLevel2 = null;
 		// DELETE
 		if (form.getDelete().toArray().length > 0) {
 			List<IaQuestionnaireSideDtl> delete = form.getDelete();
@@ -67,10 +70,23 @@ public class Int02010101Service {
 					save.setSideDtl(item.getSideDtl());
 					save.setSeq(item.getSeq());
 					save.setSeqDtl(item.getSeqDtl());
+					save.setIdHeading(item.getIdHeading());
 				} else {
 					save = item;
+					if (save.getQtnLevel().compareTo(new BigDecimal(2)) == 0) {
+						save.setIdHeading(idLevel1);
+					}
+					if (save.getQtnLevel().compareTo(new BigDecimal(3)) == 0) {
+						save.setIdHeading(idLevel2);
+					}
 				}
 				save = iaQuestionnaireSideDtlRepository.save(save);
+				if (save.getQtnLevel().compareTo(new BigDecimal(1)) == 0) {
+					idLevel1 = save.getId();
+				}
+				if (save.getQtnLevel().compareTo(new BigDecimal(2)) == 0) {
+					idLevel2 = save.getId();
+				}
 			}
 		}
 		return form;

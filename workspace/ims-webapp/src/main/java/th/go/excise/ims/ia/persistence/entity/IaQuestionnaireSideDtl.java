@@ -13,55 +13,63 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "IA_QUESTIONNAIRE_SIDE_DTL")
-public class IaQuestionnaireSideDtl
-    extends BaseEntity
-{
+public class IaQuestionnaireSideDtl extends BaseEntity {
 
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8834285629175187031L;
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_QUESTIONNAIRE_SIDE_DTL_GEN")
-    @SequenceGenerator(name = "IA_QUESTIONNAIRE_SIDE_DTL_GEN", sequenceName = "IA_QUESTIONNAIRE_SIDE_DTL_SEQ", allocationSize = 1)
-    @Column(name = "ID")
-    private BigDecimal id;
-    @Column(name = "ID_SIDE")
-    private BigDecimal idSide;
-    @Column(name = "SIDE_DTL")
-    private String sideDtl;
-    @Column(name = "QTN_LEVEL")
-    private BigDecimal qtnLevel;
-    @Column(name = "SEQ")
-    private BigDecimal seq;
-    @Column(name = "SEQ_DTL")
-    private BigDecimal seqDtl;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_QUESTIONNAIRE_SIDE_DTL_GEN")
+	@SequenceGenerator(name = "IA_QUESTIONNAIRE_SIDE_DTL_GEN", sequenceName = "IA_QUESTIONNAIRE_SIDE_DTL_SEQ", allocationSize = 1)
+	@Column(name = "ID")
+	private BigDecimal id;
+	@Column(name = "ID_SIDE")
+	private BigDecimal idSide;
+	@Column(name = "SIDE_DTL")
+	private String sideDtl;
+	@Column(name = "QTN_LEVEL")
+	private BigDecimal qtnLevel;
+	@Column(name = "SEQ")
+	private BigDecimal seq;
+	@Column(name = "SEQ_DTL")
+	private BigDecimal seqDtl;
+	@Column(name = "ID_HEADING")
+	private BigDecimal idHeading;
 
-    public BigDecimal getId() {
-        return id;
-    }
+	public BigDecimal getIdHeading() {
+		return idHeading;
+	}
 
-    public void setId(BigDecimal id) {
-        this.id = id;
-    }
+	public void setIdHeading(BigDecimal idHeading) {
+		this.idHeading = idHeading;
+	}
 
-    public BigDecimal getIdSide() {
-        return idSide;
-    }
+	public BigDecimal getId() {
+		return id;
+	}
 
-    public void setIdSide(BigDecimal idSide) {
-        this.idSide = idSide;
-    }
+	public void setId(BigDecimal id) {
+		this.id = id;
+	}
 
-    public String getSideDtl() {
-        return sideDtl;
-    }
+	public BigDecimal getIdSide() {
+		return idSide;
+	}
 
-    public void setSideDtl(String sideDtl) {
-        this.sideDtl = sideDtl;
-    }
+	public void setIdSide(BigDecimal idSide) {
+		this.idSide = idSide;
+	}
 
-    public BigDecimal getQtnLevel() {
+	public String getSideDtl() {
+		return sideDtl;
+	}
+
+	public void setSideDtl(String sideDtl) {
+		this.sideDtl = sideDtl;
+	}
+
+	public BigDecimal getQtnLevel() {
 		return qtnLevel;
 	}
 
@@ -70,19 +78,19 @@ public class IaQuestionnaireSideDtl
 	}
 
 	public BigDecimal getSeq() {
-        return seq;
-    }
+		return seq;
+	}
 
-    public void setSeq(BigDecimal seq) {
-        this.seq = seq;
-    }
+	public void setSeq(BigDecimal seq) {
+		this.seq = seq;
+	}
 
-    public BigDecimal getSeqDtl() {
-        return seqDtl;
-    }
+	public BigDecimal getSeqDtl() {
+		return seqDtl;
+	}
 
-    public void setSeqDtl(BigDecimal seqDtl) {
-        this.seqDtl = seqDtl;
-    }
+	public void setSeqDtl(BigDecimal seqDtl) {
+		this.seqDtl = seqDtl;
+	}
 
 }
