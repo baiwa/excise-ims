@@ -25,6 +25,7 @@ public class RoleService {
 	}
 
 	public DataTableAjax<Role> list(RoleFormVo request) {
+
 		List<Role> data = roleRepository.findByCriteria(request);
 
 		DataTableAjax<Role> dataTableAjax = new DataTableAjax<Role>();
