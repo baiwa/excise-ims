@@ -75,8 +75,8 @@ public class Int0201Service {
 	
 	public void sendQtnForm(Int0201FormVo request) {
 		/* update Questionnaire Header */
-		if(request.getId() != null) {
-			Optional<IaQuestionnaireHdr> hdrRes = iaQuestionnaireHdrRepository.findById(request.getId());
+		if(request.getIdHead() != null) {
+			Optional<IaQuestionnaireHdr> hdrRes = iaQuestionnaireHdrRepository.findById(request.getIdHead());
 			if(hdrRes.isPresent()) {
 				IaQuestionnaireHdr dataHdr = hdrRes.get();
 				dataHdr.setStartDate(ConvertDateUtils.parseStringThaiDateToLocalDate(request.getStartDateSend(), ProjectConstant.SHORT_DATE_FORMAT));
