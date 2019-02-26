@@ -33,6 +33,8 @@ public class Int02Service {
 		List<Int02Vo> data = iaQuestionnaireHdrJdbcRepository.getDataFilter(request);
 		/* convert date to string */
 		for (Int02Vo obj : data) {
+			/* to string status */
+			obj.setStatus(MessageContants.IA.qtnStatus(obj.getStatus()));
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ProjectConstant.SHORT_DATE_FORMAT);
 
 			if (obj.getCreatedDate() != null) {
@@ -77,9 +79,7 @@ public class Int02Service {
 
 	public IaQuestionnaireHdr save(IaQuestionnaireHdr request) {
 		request.setStatus("WAIT_HDR");
-		 IaQuestionnaireHdr response = iaQuestionnaireHdrRepository.save(request);
-		 response.setStatus(MessageContants.IA.qtnStatus(response.getStatus()));
-		 return response;
+		return iaQuestionnaireHdrRepository.save(request);
 	}
 
 	public IaQuestionnaireHdr update(String idStr, IaQuestionnaireHdr request) {
@@ -91,16 +91,13 @@ public class Int02Service {
 		return iaQuestionnaireHdrRepository.save(data);
 	}
 
-	public IaQuestionnaireHdr updateStatus(String idStr) {
-		IaQuestionnaireHdr response = new IaQuestionnaireHdr();
+	public void updateStatus(String idStr) {
 		Optional<IaQuestionnaireHdr> dataRes = iaQuestionnaireHdrRepository.findById(new BigDecimal(idStr));
 		if (dataRes.isPresent()) {
 			IaQuestionnaireHdr daraHdr = dataRes.get();
 			daraHdr.setStatus("FAIL_HDR");
-			response = iaQuestionnaireHdrRepository.save(daraHdr);
-			response.setStatus(MessageContants.IA.qtnStatus(response.getStatus()));
+			iaQuestionnaireHdrRepository.save(daraHdr);
 		}
-		return response;
 	}
 
 }

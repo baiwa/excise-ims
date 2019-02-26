@@ -1,5 +1,6 @@
 package th.go.excise.ims.ia.controller;
 
+import org.apache.poi.ss.formula.functions.T;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,10 +95,10 @@ public class Int02Controller {
 	
 	@PutMapping("/cancel-send-qtn/{id}")
 	@ResponseBody
-	public ResponseData<IaQuestionnaireHdr> cancelSendQtn(@PathVariable("id") String idStr) {
-		ResponseData<IaQuestionnaireHdr> responseData = new ResponseData<IaQuestionnaireHdr>();
+	public ResponseData<T> cancelSendQtn(@PathVariable("id") String idStr) {
+		ResponseData<T> responseData = new ResponseData<T>();
 		try {
-			responseData.setData(int02Service.updateStatus(idStr));
+			int02Service.updateStatus(idStr);
 			responseData.setMessage("UPDATE SUCCESS");
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
