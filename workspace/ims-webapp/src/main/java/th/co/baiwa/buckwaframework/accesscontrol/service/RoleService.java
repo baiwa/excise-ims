@@ -1,6 +1,5 @@
 package th.co.baiwa.buckwaframework.accesscontrol.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -12,7 +11,6 @@ import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.Role;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.repository.RoleRepository;
 import th.co.baiwa.buckwaframework.accesscontrol.vo.RoleFormVo;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
-import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
 
 @Service
 public class RoleService {
@@ -34,8 +32,7 @@ public class RoleService {
 		dataTableAjax.setDraw(request.getDraw() + 1);
 		dataTableAjax.setData(data);
 		dataTableAjax.setRecordsTotal(roleRepository.countByCriteria(request));
-		dataTableAjax.setRecordsFiltered(data.size());
-
+		dataTableAjax.setRecordsFiltered(roleRepository.countByCriteria(request));		
 		return dataTableAjax;
 	}
 
@@ -60,12 +57,16 @@ public class RoleService {
 		return role;
 	}
 
-	public Role updateRole(Role role) {
+	public Role updateRole(String idStr, Role role) {
 		logger.info("updateRole");
-		roleRepository.save(role);
-		return role;
+		Role data = roleRepository.findById(Long.valueOf(idStr)).get();
+		data.setRoleCode(role.getRoleCode());
+		data.setRoleDesc(role.getRoleDesc());
+		return roleRepository.save(data);
 	}
-
+	
+	
+	
 	public Role deleteRole(String idStr) {
 		logger.info("deleteRole");
 		Role data = roleRepository.findById(Long.valueOf(idStr)).get();
