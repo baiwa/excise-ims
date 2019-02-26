@@ -54,7 +54,7 @@ public class TaxOperatorDetailVo {
     private String taxAmtG2M9;
     private String taxAmtG2M10;
     private String taxAmtG2M11;
-    private String taxAmtG2M12;
+	private String taxAmtG2M12;
     private String condTaxGrp;
     private String dutyCode;
     private String dutyName;

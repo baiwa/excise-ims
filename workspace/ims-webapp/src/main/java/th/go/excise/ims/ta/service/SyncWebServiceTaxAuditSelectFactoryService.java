@@ -56,11 +56,7 @@ public class SyncWebServiceTaxAuditSelectFactoryService {
 		List<RegMaster60List> regMaster60List;
 		List<TaWsReg4000> taWsReg4000List = new ArrayList<>();
 		TaWsReg4000 taWsReg4000 = new TaWsReg4000();
-		try {
-			taWsReg4000Repository.truncateTaWsReg4000();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+		taWsReg4000Repository.truncateTaWsReg4000();
 		do {
 			
 			regMaster60List = new ArrayList<>();

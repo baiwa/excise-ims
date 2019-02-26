@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
-import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAMETER_GROUP;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
@@ -159,11 +159,11 @@ public class MasterConditionMainService {
 
 	public ConditionMessageVo conditionMessage() {
 		ConditionMessageVo msgVo = new ConditionMessageVo();
-		msgVo.setMsgMonth1(ApplicationCache.getParamInfoByCode(PARAMETER_GROUP.TA_MAS_COND_MAIN_DESC, "MONTH1").getValue1());
-		msgVo.setMsgMonth2(ApplicationCache.getParamInfoByCode(PARAMETER_GROUP.TA_MAS_COND_MAIN_DESC, "MONTH2").getValue1());
-		msgVo.setMsgTax1(ApplicationCache.getParamInfoByCode(PARAMETER_GROUP.TA_MAS_COND_MAIN_DESC, "TAX1").getValue1());
-		msgVo.setMsgTax2(ApplicationCache.getParamInfoByCode(PARAMETER_GROUP.TA_MAS_COND_MAIN_DESC, "TAX2").getValue1());
-		msgVo.setMsgTax3(ApplicationCache.getParamInfoByCode(PARAMETER_GROUP.TA_MAS_COND_MAIN_DESC, "TAX3").getValue1());
+		msgVo.setMsgMonth1(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "MONTH1").getValue1());
+		msgVo.setMsgMonth2(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "MONTH2").getValue1());
+		msgVo.setMsgTax1(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "TAX1").getValue1());
+		msgVo.setMsgTax2(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "TAX2").getValue1());
+		msgVo.setMsgTax3(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "TAX3").getValue1());
 		return msgVo;
 	}
 

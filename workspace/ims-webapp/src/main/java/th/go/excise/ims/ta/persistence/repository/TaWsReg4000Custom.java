@@ -10,11 +10,11 @@ public interface TaWsReg4000Custom {
 
 	public void insertBatch(List<TaWsReg4000> taWsReg4000List) throws SQLException;
 
-	public void truncateTaWsReg4000() throws SQLException;
+	public void truncateTaWsReg4000();
 
-	public List<TaWsReg4000> findAllPagination(TaWsReg4000 taWsReg4000, int start, int length) throws SQLException;
+	public List<TaWsReg4000> findAllPagination(TaWsReg4000 taWsReg4000, int start, int length);
 
-	public Long countAll(TaWsReg4000 taWsReg4000) throws SQLException;
+	public Long countAll(TaWsReg4000 taWsReg4000);
 
-	public List<TaxDratfVo> findByDraftNumbwe(String draftNumbwe) throws SQLException;
+	public List<TaxDratfVo> findByDraftNumbwe(String draftNumbwe);
 }

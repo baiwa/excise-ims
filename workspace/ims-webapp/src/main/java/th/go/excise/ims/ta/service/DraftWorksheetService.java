@@ -3,6 +3,7 @@ package th.go.excise.ims.ta.service;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,8 @@ import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.math3.stat.StatUtils;
+import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +21,11 @@ import org.springframework.util.CollectionUtils;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
-import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.EXCISE_FACTORY_TYPE;
-import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAMETER_GROUP;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
+import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetHdr;
@@ -69,11 +72,15 @@ public class DraftWorksheetService {
 		return vo;
 	}
 	
-	public List<TaxOperatorDetailVo> prepareTaxOperatorDetailVoList(TaxOperatorFormVo formVo) throws SQLException {
+	public List<TaxOperatorDetailVo> prepareTaxOperatorDetailVoList(TaxOperatorFormVo formVo) {
 		logger.info("prepareTaxOperatorDetailVoList startDate={}, endDate={}, dateRange={}", formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
 		
 		String ymStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateStart(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		String ymEnd = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateEnd(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
+		
+		List<ParamInfo> paramInfoList = new ArrayList<>();
+		paramInfoList.addAll(ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.EXCISE_PRODUCT_TYPE));
+		paramInfoList.addAll(ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.EXCISE_SERVICE_TYPE));
 		
 		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findAllPagination(formVoToWsReg4000(formVo), formVo.getStart(), formVo.getLength());
 		Map<String, List<TaWsInc8000M>> wsInc8000MMap = taWsInc8000MRepository.findByMonthRange(ymStart, ymEnd);
@@ -84,6 +91,7 @@ public class DraftWorksheetService {
 		ExciseDept exciseDeptSector = null;
 		ExciseDept exciseDeptArea = null;
 		String taxAmount = null;
+		List<Double> taxAmountList = null;
 
 		TaxOperatorDetailVo detailVo = null;
 		List<TaxOperatorDetailVo> detailVoList = new ArrayList<>();
@@ -95,9 +103,9 @@ public class DraftWorksheetService {
 			int countG2 = 0;
 			sumTaxAmtG1 = BigDecimal.ZERO;
 			sumTaxAmtG2 = BigDecimal.ZERO;
+			taxAmountList = new ArrayList<>();
 
 			detailVo = new TaxOperatorDetailVo();
-
 			detailVo.setDutyCode(wsReg4000.getDutyCode());
 			detailVo.setNewRegId(wsReg4000.getNewRegId());
 			detailVo.setCusFullname(wsReg4000.getCusFullname());
@@ -149,6 +157,10 @@ public class DraftWorksheetService {
 				detailVo.setSumTaxAmtG2(taxAmount);
 				detailVo.setTaxMonthNo(String.valueOf(BigDecimal.ZERO));
 				detailVo.setTaxAmtChnPnt(taxAmount);
+				detailVo.setTaxAmtSd(taxAmount);
+				detailVo.setTaxAmtMean(taxAmount);
+				detailVo.setTaxAmtMaxPnt(taxAmount);
+				detailVo.setTaxAmtMinPnt(taxAmount);
 				detailVoList.add(detailVo);
 				continue;
 			}
@@ -158,6 +170,7 @@ public class DraftWorksheetService {
 					// Group 1
 					if (wsInc8000M.getTaxAmount() != null) {
 						taxAmount = wsInc8000M.getTaxAmount().toString();
+						taxAmountList.add(wsInc8000M.getTaxAmount().doubleValue());
 						sumTaxAmtG1 = sumTaxAmtG1.add(wsInc8000M.getTaxAmount());
 						countTaxMonthNo++;
 					} else {
@@ -193,6 +206,7 @@ public class DraftWorksheetService {
 					// Group 2
 					if (wsInc8000M.getTaxAmount() != null) {
 						taxAmount = wsInc8000M.getTaxAmount().toString();
+						taxAmountList.add(wsInc8000M.getTaxAmount().doubleValue());
 						sumTaxAmtG2 = sumTaxAmtG2.add(wsInc8000M.getTaxAmount());
 						countTaxMonthNo++;
 					} else {
@@ -239,10 +253,15 @@ public class DraftWorksheetService {
 			}
 			detailVo.setTaxAmtChnPnt(taxAmtChnPnt.toString());
 			
-			if (EXCISE_FACTORY_TYPE.PRODUCT.equals(wsReg4000.getFacType()) || EXCISE_FACTORY_TYPE.IMPORT.equals(wsReg4000.getFacType())) {
-				detailVo.setDutyName(ApplicationCache.getParamInfoByCode(PARAMETER_GROUP.EXCISE_PRODUCT_TYPE, wsReg4000.getDutyCode()).getValue1());
-			} else {
-				detailVo.setDutyName(ApplicationCache.getParamInfoByCode(PARAMETER_GROUP.EXCISE_SERVICE_TYPE, wsReg4000.getDutyCode()).getValue1());
+			// Calculate S.D.
+			calculateSD(detailVo, taxAmountList);
+			
+			// Find DutyCode Description
+			for (ParamInfo paramInfo : paramInfoList) {
+				if (paramInfo.getParamCode().equals(wsReg4000.getDutyCode())) {
+					detailVo.setDutyName(paramInfo.getValue1());
+					break;
+				}
 			}
 
 			detailVoList.add(detailVo);
@@ -277,6 +296,27 @@ public class DraftWorksheetService {
 		return wsReg4000;
 	}
 	
+	private void calculateSD(TaxOperatorDetailVo detailVo, List<Double> taxAmountList) {
+		DecimalFormat decimalFormat = new DecimalFormat("#.00");
+		
+		double[] taxAmounts = taxAmountList.stream().mapToDouble(d -> d).toArray();
+		double mean = StatUtils.mean(taxAmounts);
+		String taxAmountMean = decimalFormat.format(mean);
+		detailVo.setTaxAmtMean(taxAmountMean);
+		
+		StandardDeviation standardDeviation = new StandardDeviation();
+		String taxAmountSd = decimalFormat.format(standardDeviation.evaluate(taxAmounts, mean));
+		detailVo.setTaxAmtSd(taxAmountSd);
+		
+		double max = StatUtils.max(taxAmounts);
+		String taxAmtMaxPnt = decimalFormat.format(((max - mean) / mean) * 100);
+		detailVo.setTaxAmtMaxPnt(taxAmtMaxPnt);
+		
+		double min = StatUtils.min(taxAmounts);
+		String taxAmtMinPnt = decimalFormat.format(((min - mean) / mean) * 100);
+		detailVo.setTaxAmtMinPnt(taxAmtMinPnt);
+	}
+	
 	public void saveDraft(TaxOperatorFormVo formVo) throws SQLException {
 		logger.info("saveDraft");
 		
@@ -307,9 +347,9 @@ public class DraftWorksheetService {
 			draftDtl.setDraftNumber(draftNumber);
 			draftDtl.setNewRegId(rs.getNewRegId());
 
-			draftDtl.setSumTaxAmtG1(NumberUtils.nullToZero(NumberUtils.toBigDecimal(rs.getSumTaxAmtG1())));
-			draftDtl.setSumTaxAmtG2(NumberUtils.nullToZero(NumberUtils.toBigDecimal(rs.getSumTaxAmtG2())));
-			draftDtl.setTaxAmtChnPnt(NumberUtils.nullToZero(NumberUtils.toBigDecimal(rs.getTaxAmtChnPnt())));
+			draftDtl.setSumTaxAmtG1(NO_TAX_AMOUNT.equals(rs.getSumTaxAmtG1()) ? null : NumberUtils.toBigDecimal(rs.getSumTaxAmtG1()));
+			draftDtl.setSumTaxAmtG2(NO_TAX_AMOUNT.equals(rs.getSumTaxAmtG2()) ? null : NumberUtils.toBigDecimal(rs.getSumTaxAmtG2()));
+			draftDtl.setTaxAmtChnPnt(NO_TAX_AMOUNT.equals(rs.getTaxAmtChnPnt()) ? null : NumberUtils.toBigDecimal(rs.getTaxAmtChnPnt()));
 			draftDtl.setTaxMonthNo(Integer.parseInt(rs.getTaxMonthNo()));
 
 			draftDtl.setTaxAmtG1M1(rs.getTaxAmtG1M1());
@@ -337,6 +377,11 @@ public class DraftWorksheetService {
 			draftDtl.setTaxAmtG2M10(rs.getTaxAmtG2M10());
 			draftDtl.setTaxAmtG2M11(rs.getTaxAmtG2M11());
 			draftDtl.setTaxAmtG2M12(rs.getTaxAmtG2M12());
+			
+			draftDtl.setTaxAmtSd(NO_TAX_AMOUNT.equals(rs.getTaxAmtSd()) ? null : NumberUtils.toBigDecimal(rs.getTaxAmtSd()));
+			draftDtl.setTaxAmtMean(NO_TAX_AMOUNT.equals(rs.getTaxAmtMean()) ? null : NumberUtils.toBigDecimal(rs.getTaxAmtMean()));
+			draftDtl.setTaxAmtMaxPnt(NO_TAX_AMOUNT.equals(rs.getTaxAmtMaxPnt()) ? null : NumberUtils.toBigDecimal(rs.getTaxAmtMaxPnt()));
+			draftDtl.setTaxAmtMinPnt(NO_TAX_AMOUNT.equals(rs.getTaxAmtMinPnt()) ? null : NumberUtils.toBigDecimal(rs.getTaxAmtMinPnt()));
 
 			draftDtl.setCreatedBy(UserLoginUtils.getCurrentUsername());
 			draftDtl.setCreatedDate(LocalDateTime.now());

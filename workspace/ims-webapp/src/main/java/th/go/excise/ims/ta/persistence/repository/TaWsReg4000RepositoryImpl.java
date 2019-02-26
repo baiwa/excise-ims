@@ -59,12 +59,12 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000Custom {
 	}
 
 	@Override
-	public void truncateTaWsReg4000() throws SQLException {
+	public void truncateTaWsReg4000() {
 		commonJdbcTemplate.update("TRUNCATE TABLE TA_WS_REG4000");
 	}
 
 	@Override
-	public List<TaWsReg4000> findAllPagination(TaWsReg4000 taWsReg4000, int start, int length) throws SQLException {
+	public List<TaWsReg4000> findAllPagination(TaWsReg4000 taWsReg4000, int start, int length) {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sql = new StringBuilder(" SELECT * FROM TA_WS_REG4000 WHERE IS_DELETED = '").append(FLAG.N_FLAG).append("' ");
 		
@@ -92,7 +92,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000Custom {
 	}
 
 	@Override
-	public Long countAll(TaWsReg4000 taWsReg4000) throws SQLException {
+	public Long countAll(TaWsReg4000 taWsReg4000) {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sql = new StringBuilder(" SELECT * FROM TA_WS_REG4000 WHERE IS_DELETED = '").append(FLAG.N_FLAG).append("' ");
 		
@@ -144,7 +144,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000Custom {
 	};
 
 	@Override
-	public List<TaxDratfVo> findByDraftNumbwe(String draftNumbwe) throws SQLException {
+	public List<TaxDratfVo> findByDraftNumbwe(String draftNumbwe) {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT T.* , D.TAX_AMT_CHN_PNT, D.TAX_MONTH_NO FROM TA_WS_REG4000 T ");

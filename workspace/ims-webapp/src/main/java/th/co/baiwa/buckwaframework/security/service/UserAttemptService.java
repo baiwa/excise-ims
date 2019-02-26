@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.User;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.repository.UserRepository;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
-import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAMETER_GROUP;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.SYSTEM_CONFIG;
 import th.co.baiwa.buckwaframework.security.persistence.entity.UserAttempt;
 import th.co.baiwa.buckwaframework.security.persistence.repository.UserAttemptRepository;
@@ -68,7 +68,7 @@ public class UserAttemptService {
 			userAttempt.setLastModified(LocalDateTime.now());
 			userAttemptRepository.save(userAttempt);
 			
-			ParamInfo maxLoginAttempts = ApplicationCache.getParamInfoByCode(PARAMETER_GROUP.SYSTEM_CONFIG, SYSTEM_CONFIG.LOGIN_ATTEMPTS);
+			ParamInfo maxLoginAttempts = ApplicationCache.getParamInfoByCode(PARAM_GROUP.SYSTEM_CONFIG, SYSTEM_CONFIG.LOGIN_ATTEMPTS);
 			if (FLAG.Y_FLAG.equals(maxLoginAttempts.getValue1()) && userAttempt.getAttempts() + 1 >= Integer.parseInt(maxLoginAttempts.getValue2())) {
 				// Locked User
 				User user = userRepository.findByUsername(username);

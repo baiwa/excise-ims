@@ -21,7 +21,19 @@ public class TaxOperatorDatatableVo {
 	private String sumTaxAmtG1;
 	private String sumTaxAmtG2;
 	private String taxAmtChnPnt;
+	private String taxAmtSd;
 	private String taxMonthNo;
+	private String taxAuditLast3;
+	private String taxAuditLast2;
+	private String taxAuditLast1;
+	private String oldRegId;
+	private String lastedStatus;
+	private String regStatus;
+	private String taxAmtMean;
+	private String taxAmtMaxPnt;
+	private String taxAmtMinPnt;
+	private String dutyName;
+	private String otherDutyName;
 	private List<String> taxAmtList;
 
 	public String getCusFullname() {
@@ -136,12 +148,108 @@ public class TaxOperatorDatatableVo {
 		this.taxAmtChnPnt = taxAmtChnPnt;
 	}
 
+	public String getTaxAmtSd() {
+		return taxAmtSd;
+	}
+
+	public void setTaxAmtSd(String taxAmtSd) {
+		this.taxAmtSd = taxAmtSd;
+	}
+
 	public String getTaxMonthNo() {
 		return taxMonthNo;
 	}
 
 	public void setTaxMonthNo(String taxMonthNo) {
 		this.taxMonthNo = taxMonthNo;
+	}
+
+	public String getTaxAuditLast3() {
+		return taxAuditLast3;
+	}
+
+	public void setTaxAuditLast3(String taxAuditLast3) {
+		this.taxAuditLast3 = taxAuditLast3;
+	}
+
+	public String getTaxAuditLast2() {
+		return taxAuditLast2;
+	}
+
+	public void setTaxAuditLast2(String taxAuditLast2) {
+		this.taxAuditLast2 = taxAuditLast2;
+	}
+
+	public String getTaxAuditLast1() {
+		return taxAuditLast1;
+	}
+
+	public void setTaxAuditLast1(String taxAuditLast1) {
+		this.taxAuditLast1 = taxAuditLast1;
+	}
+
+	public String getOldRegId() {
+		return oldRegId;
+	}
+
+	public void setOldRegId(String oldRegId) {
+		this.oldRegId = oldRegId;
+	}
+
+	public String getLastedStatus() {
+		return lastedStatus;
+	}
+
+	public void setLastedStatus(String lastedStatus) {
+		this.lastedStatus = lastedStatus;
+	}
+
+	public String getRegStatus() {
+		return regStatus;
+	}
+
+	public void setRegStatus(String regStatus) {
+		this.regStatus = regStatus;
+	}
+
+	public String getTaxAmtMean() {
+		return taxAmtMean;
+	}
+
+	public void setTaxAmtMean(String taxAmtMean) {
+		this.taxAmtMean = taxAmtMean;
+	}
+
+	public String getTaxAmtMaxPnt() {
+		return taxAmtMaxPnt;
+	}
+
+	public void setTaxAmtMaxPnt(String taxAmtMaxPnt) {
+		this.taxAmtMaxPnt = taxAmtMaxPnt;
+	}
+
+	public String getTaxAmtMinPnt() {
+		return taxAmtMinPnt;
+	}
+
+	public void setTaxAmtMinPnt(String taxAmtMinPnt) {
+		this.taxAmtMinPnt = taxAmtMinPnt;
+	}
+
+	public String getDutyName() {
+		return dutyName;
+	}
+
+	public void setDutyName(String dutyName) {
+		this.dutyName = dutyName;
+	}
+
+	public String getOtherDutyName() {
+		return otherDutyName;
+	}
+
+	public void setOtherDutyName(String otherDutyName) {
+		this.otherDutyName = otherDutyName;
 	}
 
 	public List<String> getTaxAmtList() {

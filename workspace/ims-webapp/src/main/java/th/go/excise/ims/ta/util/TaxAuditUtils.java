@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.BeanUtilsBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
@@ -14,6 +15,8 @@ import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 
 @Component
 public class TaxAuditUtils {
+	
+	private static final Logger logger = LoggerFactory.getLogger(TaxAuditUtils.class);
 	
 	public static List<TaxOperatorDatatableVo> prepareTaxOperatorDatatable(List<TaxOperatorDetailVo> taxOperatorDetailVoList, TaxOperatorFormVo formVo) {
 		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = new ArrayList<>();
@@ -24,6 +27,7 @@ public class TaxAuditUtils {
 			try {
 				BeanUtils.copyProperties(taxOperatorDatatableVo, taxOperatorDetailVo);
 			} catch (IllegalAccessException | InvocationTargetException e) {
+				logger.warn(e.getMessage());
 				taxOperatorDatatableVo.setCusFullname(taxOperatorDetailVo.getCusFullname());
 				taxOperatorDatatableVo.setFacFullname(taxOperatorDetailVo.getFacFullname());
 				taxOperatorDatatableVo.setFacAddress(taxOperatorDetailVo.getFacAddress());
@@ -39,17 +43,17 @@ public class TaxAuditUtils {
 				taxOperatorDatatableVo.setSumTaxAmtG2(taxOperatorDetailVo.getSumTaxAmtG2());
 				taxOperatorDatatableVo.setTaxAmtChnPnt(taxOperatorDetailVo.getTaxAmtChnPnt());
 				taxOperatorDatatableVo.setTaxMonthNo(taxOperatorDetailVo.getTaxMonthNo());
-				e.printStackTrace();
-			} 
+			}
+			
 			taxAmtList = new ArrayList<>();
 			for (int i = 0; i < formVo.getDateRange(); i++) {
 				taxAmtList.add(getTaxAmtByField(taxOperatorDetailVo, i, formVo.getDateRange()));
 			}
 			taxOperatorDatatableVo.setTaxAmtList(taxAmtList);
-			
+
 			taxOperatorDatatableVoList.add(taxOperatorDatatableVo);
 		}
-		
+
 		return taxOperatorDatatableVoList;
 	}
 
