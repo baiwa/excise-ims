@@ -71,21 +71,23 @@ public class Int020301JdbcRepository {
 		}
 	};
 	
-	public List<Int020301DataVo> findDataByIdSide(BigDecimal idSide, String budgetYear) {
+	public List<Int020301DataVo> findDataByIdSide(BigDecimal idSide, String budgetYear, String officeCode) {
 		StringBuilder sqlBuilder = new StringBuilder();
 		sqlBuilder.append(" SELECT QSR.ID AS ID, ");
 		sqlBuilder.append(" (SELECT COUNT(1) FROM IA_QUESTIONNAIRE_SIDE_DTL QDL ");
-		sqlBuilder.append(" INNER JOIN IA_QUESTIONNAIRE_MADE QME ON QME.ID_SIDE_DTL = QDL.ID ");
+		sqlBuilder.append(" INNER JOIN IA_QUESTIONNAIRE_MADE QME ON QME.ID_SIDE_DTL = QDL.ID AND QME.OFFICE_CODE = ? ");
 		sqlBuilder.append(" WHERE QME.IS_DELETED = 'N' AND QME.CHECK_FLAG = 'T' ");
 		sqlBuilder.append(" AND QDL.ID_SIDE = QSR.ID GROUP BY QME.CHECK_FLAG) AS ACCEPT, ");
 		sqlBuilder.append(" (SELECT COUNT(1) FROM IA_QUESTIONNAIRE_SIDE_DTL QDL2 ");
-		sqlBuilder.append(" INNER JOIN IA_QUESTIONNAIRE_MADE QME2 ON QME2.ID_SIDE_DTL = QDL2.ID ");
+		sqlBuilder.append(" INNER JOIN IA_QUESTIONNAIRE_MADE QME2 ON QME2.ID_SIDE_DTL = QDL2.ID AND QME2.OFFICE_CODE = ? ");
 		sqlBuilder.append(" WHERE QME2.IS_DELETED = 'N' AND (QME2.CHECK_FLAG = 'F' OR QME2.CHECK_FLAG IS NULL) ");
 		sqlBuilder.append(" AND QDL2.ID_SIDE = QSR.ID GROUP BY QME2.CHECK_FLAG) AS DECLINE ");
 		sqlBuilder.append(" FROM IA_QUESTIONNAIRE_HDR QHR ");
 		sqlBuilder.append(" INNER JOIN IA_QUESTIONNAIRE_SIDE QSR ON QSR.ID_HEAD = QHR.ID ");
 		sqlBuilder.append(" WHERE 1=1 AND QHR.IS_DELETED = 'N' AND QHR.ID = ? AND QHR.BUDGET_YEAR = ? GROUP BY QSR.ID ");
 		List<Object> params = new ArrayList<>();
+		params.add(officeCode);
+		params.add(officeCode);
 		params.add(idSide);
 		params.add(budgetYear);
 		List<Int020301DataVo> data = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), dataRowMapper);

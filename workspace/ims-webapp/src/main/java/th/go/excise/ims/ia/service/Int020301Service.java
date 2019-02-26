@@ -31,21 +31,10 @@ public class Int020301Service {
 		List<Int020301InfoVo> datas = new ArrayList<>();
 		datas = int020301JdbcRepository.findInfoByIdSide(idSide, budgetYear);
 		for (Int020301InfoVo data : datas) {
-			// Finding Sector and Area Name
-			List<ExciseDept> exciseDepts = ApplicationCache.getExciseSectorList();
-			ExciseDept exciseDepart = ApplicationCache.getExciseDept(data.getAreaName());
-			String area = exciseDepart.getDeptName();
-			data.setAreaName(area);
-			data.setStatusText(IA.qtnStatus(data.getStatusText()));
-			for (ExciseDept exciseDept : exciseDepts) {
-				if (exciseDept.getOfficeCode().substring(0, 2).equals(data.getSectorName().substring(0, 2))) {
-					data.setSectorName(exciseDept.getDeptName());
-				}
-			}
 			// Sides Data
 			int passValue = 0;
 			int failValue = 0;
-			List<Int020301DataVo> sideDtls = int020301JdbcRepository.findDataByIdSide(idSide, budgetYear);
+			List<Int020301DataVo> sideDtls = int020301JdbcRepository.findDataByIdSide(idSide, budgetYear, data.getAreaName());
 			for (Int020301DataVo sideDtl : sideDtls) {
 				// Calculate RiskName
 				if (sideDtl.getAcceptValue() != null && sideDtl.getDeclineValue() != null) {
@@ -82,6 +71,18 @@ public class Int020301Service {
 			// Sum Data
 			data.setPassValue(new BigDecimal(passValue));
 			data.setFailValue(new BigDecimal(failValue));
+			// Finding Sector and Area Name
+			List<ExciseDept> exciseDepts = ApplicationCache.getExciseSectorList();
+			ExciseDept exciseDepart = ApplicationCache.getExciseDept(data.getAreaName());
+			String area = exciseDepart.getDeptName();
+			data.setAreaName(area);
+			data.setStatusText(IA.qtnStatus(data.getStatusText()));
+			for (ExciseDept exciseDept : exciseDepts) {
+				if (exciseDept.getOfficeCode().substring(0, 2).equals(data.getSectorName().substring(0, 2))) {
+					data.setSectorName(exciseDept.getDeptName());
+				}
+			}
+
 		}
 		return datas;
 	}
