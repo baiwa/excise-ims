@@ -1,6 +1,5 @@
 package th.go.excise.ims.ia.service;
 
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -45,10 +44,10 @@ public class Int030101Service {
 
 	@Autowired
 	private IaRiskFactorsConfigRepository iaRiskFactorsConfigRepository;
-	
+
 	@Autowired
 	private IaRiskFactorsStatusRepository iaRiskFactorsStatusRepository;
-	
+
 	private CellStyle thStyle;
 	private CellStyle cellCenter;
 	private CellStyle cellRight;
@@ -128,7 +127,7 @@ public class Int030101Service {
 		dataFactorsStatus.setStatus("Y");
 		dataFactorsStatus.setInspectionWork(form.getInspectionWork());
 		iaRiskFactorsStatusRepository.save(dataFactorsStatus);
-		
+
 		// Save IaRiskFactors
 		IaRiskFactors dataFactors = new IaRiskFactors();
 		dataFactors.setIdMaster(dataFactorsMasterRes.getId());
@@ -152,7 +151,7 @@ public class Int030101Service {
 		dataFactorsConfig.setFactorsLevel(new BigDecimal(3));
 		iaRiskFactorsConfigRepository.save(dataFactorsConfig);
 	}
-	
+
 	public ByteArrayOutputStream exportInt030101() throws IOException {
 		/* create spreadsheet */
 		List<IaRiskFactorsMaster> dataFactorsMasterList = new ArrayList<IaRiskFactorsMaster>();
@@ -164,41 +163,41 @@ public class Int030101Service {
 		Cell cell = row.createCell(cellNum);
 
 		/* Header */
-		String[] tbTH1 = {"ลำดับ", "หน่วยงาน", "ค่าความเสี่ยง "};
-		
+		String[] tbTH1 = { "ลำดับ", "หน่วยงาน", "ค่าความเสี่ยง " };
+
 		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH1[cellNum]);
 			cell.setCellStyle(thStyle);
 		}
-		
+
 		/* set sheet */
 
 		// setColumnWidth
 		for (int i = 1; i <= 2; i++) {
-			if (i == 1 || i == 2 ) {
+			if (i == 1 || i == 2) {
 				sheet.setColumnWidth(i, 76 * 60);
-			}  else {
+			} else {
 				sheet.setColumnWidth(i, 76 * 100);
 			}
-			
+
 		}
 
 		/* Detail */
 		rowNum = 1;
 		cellNum = 0;
 		int no = 1;
-        for(IaRiskFactorsMaster item : dataFactorsMasterList) {
-        	row = sheet.createRow(rowNum);
+		for (IaRiskFactorsMaster item : dataFactorsMasterList) {
+			row = sheet.createRow(rowNum);
 			// No.
 			cell = row.createCell(cellNum);
 			cell.setCellValue(no);
 			cellNum++;
-			
+
 			no++;
 			rowNum++;
 			cellNum = 0;
-        }
+		}
 
 		/* EndDetail */
 
@@ -209,5 +208,4 @@ public class Int030101Service {
 		return outByteStream;
 	}
 
-	
 }
