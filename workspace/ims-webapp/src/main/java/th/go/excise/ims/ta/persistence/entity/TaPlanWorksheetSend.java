@@ -27,6 +27,8 @@ public class TaPlanWorksheetSend extends BaseEntity {
 	private String planNumber;
 	@Column(name = "OFFICE_CODE")
 	private String officeCode;
+	@Column(name = "SEND_DATE")
+	private LocalDate sendDate;
 	@Column(name = "SUBMIT_DATE")
 	private LocalDate submitDate;
 	@Column(name = "FAC_IN_NUM")
@@ -64,6 +66,14 @@ public class TaPlanWorksheetSend extends BaseEntity {
 
 	public void setOfficeCode(String officeCode) {
 		this.officeCode = officeCode;
+	}
+
+	public LocalDate getSendDate() {
+		return sendDate;
+	}
+
+	public void setSendDate(LocalDate sendDate) {
+		this.sendDate = sendDate;
 	}
 
 	public LocalDate getSubmitDate() {
