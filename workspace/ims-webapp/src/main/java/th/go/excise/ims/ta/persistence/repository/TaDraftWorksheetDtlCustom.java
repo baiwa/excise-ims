@@ -7,6 +7,6 @@ import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetDtl;
 
 public interface TaDraftWorksheetDtlCustom {
 	
-	public void save(List<TaDraftWorksheetDtl> draftWorksheetList) throws SQLException;
+	public void save(List<TaDraftWorksheetDtl> draftWorksheetDtlList) throws SQLException;
 	
 }

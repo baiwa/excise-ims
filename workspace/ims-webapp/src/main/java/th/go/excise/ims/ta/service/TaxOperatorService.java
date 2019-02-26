@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
-import th.go.excise.ims.ta.persistence.repository.jdbc.TaDraftWorksheetJdbcRepository;
+import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.jdbc.TaWorksheetCondDtlTaxJdbcRepository;
 import th.go.excise.ims.ta.persistence.repository.jdbc.TaWorksheetCondHdrJdbcRepository;
 import th.go.excise.ims.ta.persistence.repository.jdbc.TaxOperatorJdbcRepository;
@@ -31,16 +31,16 @@ public class TaxOperatorService {
 	private TaWorksheetCondDtlTaxJdbcRepository taWorksheetCondDtlTaxJdbcRepository;
 
 	@Autowired
-	private TaDraftWorksheetJdbcRepository taDraftWorksheetJdbcRepository;
+	private TaDraftWorksheetHdrRepository taDraftWorksheetHdrRepository;
 
 	public TaxOperatorVo getOperator(TaxOperatorFormVo formVo) {
 		//List<String> listCondGroups = this.taxOperatorRepository.listCondGroups(formVo.getDraftNumber());
-		List<TaxOperatorDetailVo> list = this.taxOperatorRepository.getTaxOperator(formVo);
+		List<TaxOperatorDetailVo> list = taxOperatorRepository.getTaxOperator(formVo);
 
 		TaxOperatorVo vo = new TaxOperatorVo();
 		//vo.setCondGroups(listCondGroups);
 		vo.setDatas(TaxAuditUtils.prepareTaxOperatorDatatable(list, formVo));
-		vo.setCount(this.taxOperatorRepository.countTaxOperator(formVo));
+		vo.setCount(taxOperatorRepository.countTaxOperator(formVo));
 		return vo;
 	}
 
@@ -66,21 +66,21 @@ public class TaxOperatorService {
 			formVo.setOfficeCode(null);
 		}
 		
-		List<TaxOperatorDetailVo> list = this.taxOperatorRepository.getTaxOperatorDraft(formVo);
+		List<TaxOperatorDetailVo> list = taxOperatorRepository.getTaxOperatorDraft(formVo);
 
 		TaxOperatorVo vo = new TaxOperatorVo();
 		vo.setDatas(TaxAuditUtils.prepareTaxOperatorDatatable(list, formVo));
-		vo.setCount(this.taxOperatorRepository.countTaxOperatorDraft(formVo));
+		vo.setCount(taxOperatorRepository.countTaxOperatorDraft(formVo));
 		
 		return vo;
 	}
 
-	public List<String> findAllAnalysisNumberDraft() {
-		return this.taDraftWorksheetJdbcRepository.analysisNumberDraft();
+	public List<String> findAllDraftNumber() {
+		return taDraftWorksheetHdrRepository.findAllDraftNumber();
 	}
 
 	public YearMonthVo monthStart(TaxOperatorFormVo formVo) {
-		YearMonthVo obj = this.taWorksheetCondHdrJdbcRepository.monthStart(formVo.getAnalysisNumber());
+		YearMonthVo obj = taWorksheetCondHdrJdbcRepository.monthStart(formVo.getAnalysisNumber());
 
 		Date ymStart = ConvertDateUtils.parseStringToDate(obj.getYearMonthStart(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		Date ymEnd = ConvertDateUtils.parseStringToDate(obj.getYearMonthEnd(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
@@ -92,7 +92,7 @@ public class TaxOperatorService {
 		return obj;
 	}
 	public YearMonthVo monthStartDraft(TaxOperatorFormVo formVo) {
-		YearMonthVo obj = this.taDraftWorksheetJdbcRepository.monthStartDraft(formVo.getDraftNumber());
+		YearMonthVo obj = taDraftWorksheetHdrRepository.findMonthStartByDraftNumber(formVo.getDraftNumber());
 
 		Date ymStart = ConvertDateUtils.parseStringToDate(obj.getYearMonthStart(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		Date ymEnd = ConvertDateUtils.parseStringToDate(obj.getYearMonthEnd(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
@@ -105,7 +105,7 @@ public class TaxOperatorService {
 	}
 
 	public List<CondGroupVo> findCondGroupDtl(TaxOperatorFormVo formVo) {
-		return this.taWorksheetCondDtlTaxJdbcRepository.findCondGroupDtl(formVo.getAnalysisNumber());
+		return taWorksheetCondDtlTaxJdbcRepository.findCondGroupDtl(formVo.getAnalysisNumber());
 	}
 	
 }

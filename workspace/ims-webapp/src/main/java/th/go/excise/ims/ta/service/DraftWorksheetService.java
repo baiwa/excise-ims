@@ -23,7 +23,7 @@ import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
-import th.go.excise.ims.preferences.service.BudgetYearService;
+import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWsInc8000M;
@@ -56,8 +56,6 @@ public class DraftWorksheetService {
 	
 	@Autowired
 	private WorksheetSequenceService worksheetSequenceService;
-	@Autowired
-	private BudgetYearService budgetYearService;
 
 	public TaxOperatorVo getPreviewData(TaxOperatorFormVo formVo) {
 		TaxOperatorVo vo = new TaxOperatorVo();
@@ -282,7 +280,7 @@ public class DraftWorksheetService {
 	public void saveDraft(TaxOperatorFormVo formVo) throws SQLException {
 		logger.info("saveDraft");
 		
-		formVo.setBudgetYear(budgetYearService.getCurrentBudgetYear());
+		formVo.setBudgetYear(ExciseUtils.getCurrentBudgetYear());
 		String dateStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateStart(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		String dateEnd = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateEnd(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 

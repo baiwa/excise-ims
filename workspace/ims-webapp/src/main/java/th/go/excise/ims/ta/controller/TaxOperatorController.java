@@ -194,7 +194,7 @@ public class TaxOperatorController {
         ResponseData<List<String>> response = new ResponseData<>();
 
         try {
-            response.setData(taxOperatorService.findAllAnalysisNumberDraft());
+            response.setData(taxOperatorService.findAllDraftNumber());
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
