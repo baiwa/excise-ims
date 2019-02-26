@@ -74,6 +74,7 @@ public class Int0201Service {
 		/* save questionnaire Made */
 		if(request.getQtnMadeList().size() > 0) {
 			for (IaQuestionnaireMade qtnMade : request.getQtnMadeList()) {
+				qtnMade.setStatus(MessageContants.IA.QTN_CREATED);
 				qtnMade.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 				iaQuestionnaireMadeRepository.save(qtnMade);
 			}
