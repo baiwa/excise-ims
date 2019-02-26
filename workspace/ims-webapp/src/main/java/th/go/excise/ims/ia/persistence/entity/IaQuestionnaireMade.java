@@ -33,6 +33,10 @@ public class IaQuestionnaireMade extends BaseEntity {
 	private String checkFlag;
 	@Column(name = "OFFICE_CODE")
 	private String officeCode;
+	@Column(name = "QTN_LEVEL")
+	private String qtnLevel;
+	@Column(name = "STATUS")
+	private String status;
 
 	public BigDecimal getId() {
 		return id;
@@ -68,6 +72,22 @@ public class IaQuestionnaireMade extends BaseEntity {
 
 	public void setOfficeCode(String officeCode) {
 		this.officeCode = officeCode;
+	}
+
+	public String getQtnLevel() {
+		return qtnLevel;
+	}
+
+	public void setQtnLevel(String qtnLevel) {
+		this.qtnLevel = qtnLevel;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }
