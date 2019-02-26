@@ -8,16 +8,16 @@ import th.go.excise.ims.ia.vo.Int030101FormVo;
 
 @Repository
 public class int030101JdbcRepository {
-	@Autowired
-	private CommonJdbcTemplate commonJdbcTemplate;
-	
-	public void saveFactors(Int030101FormVo form) {
-		StringBuilder sql = new StringBuilder();
-//		sql.append("   UPDATE IA_RISK_FACTORS_CONFIG C                       ");
-//		sql.append("   SET C.FACTORS_LEVEL   = ? ,                           ");
-//		sql.append("   C.START_DATE          = null,                         ");
-//		sql.append("                 WHERE A.BUDGET_YEAR = ? )    ");
-		
-		commonJdbcTemplate.update(sql.toString(), new Object[] { });
-	}
+//	@Autowired
+//	private CommonJdbcTemplate commonJdbcTemplate;
+//
+//	public void saveFactorsConfig(Int030101FormVo form) {
+//		StringBuilder sql = new StringBuilder();
+////		sql.append("   UPDATE IA_RISK_FACTORS_CONFIG C                       ");
+////		sql.append("   SET C.FACTORS_LEVEL   = ? ,                           ");
+////		sql.append("   C.START_DATE          = null,                         ");
+////		sql.append("                 WHERE A.BUDGET_YEAR = ? )    ");
+//		
+//		commonJdbcTemplate.update(sql.toString(), new Object[] { });
+//	}
 }
