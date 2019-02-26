@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.service.Int030101Service;
 import th.go.excise.ims.ia.vo.Int030101FormVo;
@@ -37,6 +38,7 @@ public class Int030101Controller {
 		ResponseData<String> response = new ResponseData<String>();
 		String save = "บันทึกเรียบร้อบ";
 
+		//UserLoginUtils.getCurrentUserBean().getUserId()
 		try {
 			int030101Service.saveFactors(form);
 			response.setData(save);
@@ -62,7 +64,7 @@ public class Int030101Controller {
 		String fileName = URLEncoder.encode("บันทึกข้อมูลเบิกจ่าย", "UTF-8");
 
 		// write it as an excel attachment
-		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		ByteArrayOutputStream outByteStream = int030101Service.exportInt030101();
 		byte[] outArray = outByteStream.toByteArray();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);
@@ -73,51 +75,5 @@ public class Int030101Controller {
 		outStream.flush();
 		outStream.close();
 	}
-	
-//	@PostMapping("/downloadNewTempage")
-//	@ResponseBody
-//	public void downloadNewTempage(){
-//		logger.info("downloadNewTempage officeCode {} year {}" ,intput.getOfficeCode() , intput.getBudgetYear() );
-//		if(BeanUtils.isEmpty(intCtrlAsseList)) {
-//			logger.info("new Data");
-//			IntCtrlAss intCtrlAss = null;
-//			List<Lov> lovConfigList = ApplicationCache.getListOfValueByValueType(ASSESSMENT_INTERNAL_AUDIT);
-//			for (Lov lov : lovConfigList) {
-//				intCtrlAss = new IntCtrlAss();
-//				intCtrlAss.setBudgetYear(intput.getBudgetYear());
-//				intCtrlAss.setOfficeCode(intput.getOfficeCode());
-//				intCtrlAss.setIntCtrlAssName(lov.getValue1());
-//				int02m51Service.insertIntCtrlAss(intCtrlAss);
-//			}
-//			intCtrlAsseList = int02m51Service.findByBudgetYearAndOfficeCode(intput.getBudgetYear(), intput.getOfficeCode());
-//		}else {
-//			logger.info("Exist Data");
-//		}
-//	}
-//	
-//	
-//	
-//	
-//	
-//	
-//	@PostMapping("/dowloadTemplate")
-//	@ResponseBody
-//	public ResponseData<String> dowloadTemplate() {
-//		ResponseData<String> response = new ResponseData<String>();
-//		String save = "บันทึกเรียบร้อบ";
-//
-//		try {
-//			int030101Service.dowloadTemplate();
-//			response.setData(save);
-//			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
-//			response.setStatus(RESPONSE_STATUS.SUCCESS);
-//
-//		} catch (Exception e) {
-//			logger.error("Int030102Controller save : ", e);
-//			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
-//			response.setStatus(RESPONSE_STATUS.FAILED);
-//		}
-//		return response;
-//	}
 	
 }
