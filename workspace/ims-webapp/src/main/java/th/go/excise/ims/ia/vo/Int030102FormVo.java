@@ -9,6 +9,7 @@ public class Int030102FormVo {
 	private String budgetYear;
 	private BigDecimal inspectionWork;
 	private String status;
+	private String factorsLevel;
 	
 	private String budgetYearTo;
 	
@@ -60,6 +61,15 @@ public class Int030102FormVo {
 	public void setBudgetYearTo(String budgetYearTo) {
 		this.budgetYearTo = budgetYearTo;
 	}
+
+	public String getFactorsLevel() {
+		return factorsLevel;
+	}
+
+	public void setFactorsLevel(String factorsLevel) {
+		this.factorsLevel = factorsLevel;
+	}
+	
 
 	
 }

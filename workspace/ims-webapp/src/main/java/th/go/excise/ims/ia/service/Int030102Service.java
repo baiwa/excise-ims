@@ -44,13 +44,19 @@ public class Int030102Service {
 		checkAndInsertTableFactorsStatus(form);
 		List<Int030102Vo> iaRiskFactorsMasterList = new ArrayList<Int030102Vo>();
 		iaRiskFactorsMasterList = int030102JdbcRepository.list(form);
+		int index = 0;
+		for (Int030102Vo int030102Vo : iaRiskFactorsMasterList) {
+			IaRiskFactorsConfig irfc = new IaRiskFactorsConfig();
+			if (int030102Vo.getIdConfig() != null) {
+				irfc = iaRiskFactorsConfigRepository.findById(int030102Vo.getIdConfig()).get();
+
+				iaRiskFactorsMasterList.get(index).setIaRiskFactorsConfig(irfc);
+			}
+
+			index++;
+		}
+
 		return iaRiskFactorsMasterList;
-	}
-
-	public void listUpdateStatus(Int030102FormVo form) {
-
-		int030102JdbcRepository.listUpdateStatus(form);
-
 	}
 
 	public void checkAndInsertTableFactorsStatus(Int030102FormVo form) {
@@ -90,7 +96,7 @@ public class Int030102Service {
 
 		List<IaRiskFactors> iaRiskFactorsList = iaRiskFactorsRepository
 				.findByInspectionWorkByBudgetYear(form.getInspectionWork(), form.getBudgetYear());
-		
+
 		int030102JdbcRepository.updateFactorsIsDeleteY(form);
 
 		for (IaRiskFactorsMaster iaRiskFactorsMaster : iaRiskFactorsMasterList) {
@@ -126,14 +132,15 @@ public class Int030102Service {
 
 			} else if ("Update".equals(check)) {
 				int030102JdbcRepository.updateIsDelete(id);
-			//	iaRiskFactorsRepository.rrrrrr(id);
+				// iaRiskFactorsRepository.rrrrrr(id);
 			}
 
 		}
 
 	}
-	
-	public void saveRiskFactorsLevel(Int0301FormVo form) {	
-		int030102JdbcRepository.saveRiskFactorsLevel(form);	
+
+	public void saveRiskFactorsLevelAndUpdateStatus(Int030102FormVo form) {
+		int030102JdbcRepository.listUpdateStatus(form);
+		int030102JdbcRepository.saveRiskFactorsLevel(form);
 	}
 }

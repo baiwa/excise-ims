@@ -13,6 +13,7 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
+import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0301JdbcRepository;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
 import th.go.excise.ims.ia.vo.Int0301Vo;
@@ -25,6 +26,9 @@ public class Int0301Service {
 
 	@Autowired
 	private IaRiskFactorsConfigRepository iaRiskFactorsConfigRepository;
+
+	@Autowired
+	private IaRiskFactorsRepository iaRiskFactorsRepository;
 
 	public List<Int0301Vo> list(Int0301FormVo form) {
 		List<Int0301Vo> iaRiskFactorsList = new ArrayList<Int0301Vo>();
@@ -41,24 +45,26 @@ public class Int0301Service {
 
 		if (iaRiskFactorsList.size() != 0) {
 
-			    BigDecimal factorsLevel = iaRiskFactorsList.get(0).getIaRiskFactorsConfig().getFactorsLevel();
+			BigDecimal factorsLevel = iaRiskFactorsList.get(0).getIaRiskFactorsConfig().getFactorsLevel();
 
 			if (new BigDecimal("3").equals(factorsLevel)) {
 
 				for (Int0301Vo int0301Vo : iaRiskFactorsList) {
 					List<String> listdynamic = new ArrayList<String>();
-					
+
 					String lowS = int0301Vo.getIaRiskFactorsConfig().getLowStart();
-					String low = (StringUtils.isNotBlank(lowS))?"น้อยกว่า" + lowS:"";
+					String low = (StringUtils.isNotBlank(lowS)) ? "น้อยกว่า" + lowS : "";
 					listdynamic.add(low);
-					
+
 					String mediumS = int0301Vo.getIaRiskFactorsConfig().getMediumStart();
 					String mediumE = int0301Vo.getIaRiskFactorsConfig().getMediumEnd();
-					String medium = (StringUtils.isNotBlank(mediumS)&&StringUtils.isNotBlank(mediumE))?"ระหว่าง" + mediumS + "ถึง" + mediumE:"";
+					String medium = (StringUtils.isNotBlank(mediumS) && StringUtils.isNotBlank(mediumE))
+							? "ระหว่าง" + mediumS + "ถึง" + mediumE
+							: "";
 					listdynamic.add(medium);
-					
+
 					String highS = int0301Vo.getIaRiskFactorsConfig().getHighStart();
-					String high = (StringUtils.isNotBlank(highS))?"มากกว่า" + highS:"";
+					String high = (StringUtils.isNotBlank(highS)) ? "มากกว่า" + highS : "";
 					listdynamic.add(high);
 
 					int0301Vo.setDatalistdynamic(listdynamic);
@@ -70,26 +76,32 @@ public class Int0301Service {
 					List<String> listdynamic = new ArrayList<String>();
 
 					String veryLowS = int0301Vo2.getIaRiskFactorsConfig().getVerylowStart();
-					String veryLow = (StringUtils.isNotBlank(veryLowS))?"น้อยกว่า" + veryLowS:"";
+					String veryLow = (StringUtils.isNotBlank(veryLowS)) ? "น้อยกว่า" + veryLowS : "";
 					listdynamic.add(veryLow);
 
 					String lowS = int0301Vo2.getIaRiskFactorsConfig().getLowStart();
 					String lowE = int0301Vo2.getIaRiskFactorsConfig().getLowEnd();
-					String low = (StringUtils.isNotBlank(lowS)&&StringUtils.isNotBlank(lowE))?"ระหว่าง" + lowS + "ถึง" + lowE:"";
+					String low = (StringUtils.isNotBlank(lowS) && StringUtils.isNotBlank(lowE))
+							? "ระหว่าง" + lowS + "ถึง" + lowE
+							: "";
 					listdynamic.add(low);
-					
+
 					String mediumS = int0301Vo2.getIaRiskFactorsConfig().getMediumStart();
 					String mediumE = int0301Vo2.getIaRiskFactorsConfig().getMediumEnd();
-					String medium = (StringUtils.isNotBlank(mediumS)&&StringUtils.isNotBlank(mediumE))?"ระหว่าง" + mediumS + "ถึง" + mediumE:"";
+					String medium = (StringUtils.isNotBlank(mediumS) && StringUtils.isNotBlank(mediumE))
+							? "ระหว่าง" + mediumS + "ถึง" + mediumE
+							: "";
 					listdynamic.add(medium);
-					
+
 					String highS = int0301Vo2.getIaRiskFactorsConfig().getHighStart();
-					String highE= int0301Vo2.getIaRiskFactorsConfig().getHighEnd();
-					String high = (StringUtils.isNotBlank(highS)&&StringUtils.isNotBlank(highE))?"ระหว่าง" + highS + "ถึง" + highE:"";
+					String highE = int0301Vo2.getIaRiskFactorsConfig().getHighEnd();
+					String high = (StringUtils.isNotBlank(highS) && StringUtils.isNotBlank(highE))
+							? "ระหว่าง" + highS + "ถึง" + highE
+							: "";
 					listdynamic.add(high);
 
 					String veryHighS = int0301Vo2.getIaRiskFactorsConfig().getVeryhighStart();
-					String veryHigh = (StringUtils.isNotBlank(veryHighS))?"มากกว่า" + veryHighS:"";
+					String veryHigh = (StringUtils.isNotBlank(veryHighS)) ? "มากกว่า" + veryHighS : "";
 					listdynamic.add(veryHigh);
 
 					int0301Vo2.setDatalistdynamic(listdynamic);
@@ -99,7 +111,7 @@ public class Int0301Service {
 
 		}
 
-	return iaRiskFactorsList2;
+		return iaRiskFactorsList2;
 
 	}
 
@@ -158,6 +170,14 @@ public class Int0301Service {
 
 		iaRiskFactorsConfigRepository.save(entity);
 
+		IaRiskFactors entityFactors = new IaRiskFactors();
+		if (formConfig.getIdFactors() != null) {
+			entityFactors = iaRiskFactorsRepository.findById(formConfig.getIdFactors()).get();
+			entityFactors.setStatusScreen("กำหนดแล้ว");
+			entityFactors.setDateCriteria(ConvertDateUtils.formatDateToString(new Date(), ConvertDateUtils.DD_MM_YYYY));
+			iaRiskFactorsRepository.save(entityFactors);
+		}
+		
 	}
 
 }

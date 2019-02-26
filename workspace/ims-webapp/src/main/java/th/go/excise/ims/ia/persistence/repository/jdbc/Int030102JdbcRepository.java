@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -16,10 +15,10 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
+import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
 import th.go.excise.ims.ia.vo.Int030102FormVo;
 import th.go.excise.ims.ia.vo.Int030102Vo;
-import th.go.excise.ims.ia.vo.Int0301FormVo;
 
 @Repository
 public class Int030102JdbcRepository {
@@ -28,26 +27,34 @@ public class Int030102JdbcRepository {
 	
 	public List<Int030102Vo> list(Int030102FormVo form) {
 		List<Int030102Vo> iaRiskFactorsMasterList = new ArrayList<Int030102Vo>();
-		StringBuilder sql = new StringBuilder("SELECT a.ID," + 
-				"a.RISK_FACTORS_MASTER, " + 
-				"b.BUDGET_YEAR, " + 
-				"b.INSPECTION_WORK, " + 
-				"b.STATUS, " + 
-				"a.CREATED_BY, " + 
-				"a.CREATED_DATE, " +
-				"a.NOT_DELETE " + 
-				"FROM IA_RISK_FACTORS_MASTER a " + 
-				"LEFT JOIN IA_RISK_FACTORS_STATUS b " + 
-				"ON a.ID = b.ID_MASTER " + 
-				"WHERE a.IS_DELETED = 'N' AND " + 
-				"b.INSPECTION_WORK = ? ");
+		StringBuilder sql = new StringBuilder(" SELECT  a.ID AS ID_MASTER_RES,  " + 
+				"        c.ID_CONFIG AS ID_CONFIG_RES, " + 
+				"				a.RISK_FACTORS_MASTER,   " + 
+				"				b.BUDGET_YEAR,   " + 
+				"				b.INSPECTION_WORK,   " + 
+				"				b.STATUS,   " + 
+				"				a.CREATED_BY AS CREATED_BY_RES,   " + 
+				"				a.CREATED_DATE  AS CREATED_DATE_RES,  " + 
+				"				a.NOT_DELETE , " + 
+				"        c.* " + 
+				"				FROM IA_RISK_FACTORS_MASTER a  " + 
+				"				LEFT JOIN IA_RISK_FACTORS_STATUS b  " + 
+				"				ON a.ID = b.ID_MASTER  " + 
+				"        LEFT JOIN (SELECT e.id AS ID_CONFIG,d.ID_MASTER,e.* from IA_RISK_FACTORS d  " + 
+				"                    FULL JOIN IA_RISK_FACTORS_CONFIG e  " + 
+				"                    ON d.ID = e.ID_FACTORS  " + 
+				"                    WHERE d.IS_DELETED = 'N'  " + 
+				"                    AND d.INSPECTION_WORK =  ?  " + 
+				"                    AND d.BUDGET_YEAR = ? ) c " + 
+				"        ON a.ID = c.ID_MASTER  " + 
+				"				WHERE a.IS_DELETED = 'N' AND  " + 
+				"				b.INSPECTION_WORK = ? " + 
+				"				AND b.BUDGET_YEAR = ? ");
 		List<Object> params = new ArrayList<Object>();
 		params.add(form.getInspectionWork());
-		if (StringUtils.isNotBlank(form.getBudgetYear())) {
-			sql.append(" AND b.BUDGET_YEAR = ? ");
-			params.add(form.getBudgetYear());
-		}
-		sql.append(" ORDER BY a.CREATED_DATE ASC ");
+		params.add(form.getBudgetYear());
+		params.add(form.getInspectionWork());	
+		params.add(form.getBudgetYear());
 		iaRiskFactorsMasterList = commonJdbcTemplate.query(sql.toString(), params.toArray(), listRowmapper);
 		return iaRiskFactorsMasterList;
 	}
@@ -58,19 +65,28 @@ public class Int030102JdbcRepository {
 		@Override
 		public Int030102Vo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Int030102Vo vo = new Int030102Vo();
-			IaRiskFactorsMaster iarfm = new IaRiskFactorsMaster();
-			iarfm.setId(rs.getBigDecimal("ID"));
+			IaRiskFactorsMaster iarfm = new IaRiskFactorsMaster();	
+			IaRiskFactorsConfig iarfc = new IaRiskFactorsConfig();	
+			
+
+			iarfm.setId(rs.getBigDecimal("ID_MASTER_RES"));
 			iarfm.setRiskFactorsMaster(rs.getString("RISK_FACTORS_MASTER"));
 			iarfm.setBudgetYear(rs.getString("BUDGET_YEAR"));
 			iarfm.setStatus(rs.getString("STATUS"));
 			LocalDateTime createdDate = LocalDateTimeConverter
-					.convertToEntityAttribute(rs.getTimestamp("CREATED_DATE"));
+					.convertToEntityAttribute(rs.getTimestamp("CREATED_DATE_RES"));
 			iarfm.setCreatedDate(createdDate);
-			iarfm.setCreatedBy(rs.getString("CREATED_BY"));
+			iarfm.setCreatedBy(rs.getString("CREATED_BY_RES"));
 			iarfm.setNotDelete(rs.getString("NOT_DELETE"));
-			String date = checkAndConvertDateToString(rs.getDate("CREATED_DATE"));
+			String date = checkAndConvertDateToString(rs.getDate("CREATED_DATE_RES"));
+			
 			vo.setCreatedDateDesc(date);
 			vo.setIaRiskFactorsMaster(iarfm);
+			
+			vo.setIdConfig(rs.getBigDecimal("ID_CONFIG_RES"));
+			iarfc.setId(rs.getBigDecimal("ID_CONFIG_RES"));
+			vo.setIaRiskFactorsConfig(iarfc);
+	
 			return vo;
 		}
 	};
@@ -168,7 +184,7 @@ public class Int030102JdbcRepository {
 		return count;
 	}
 	
-	public void saveRiskFactorsLevel(Int0301FormVo form) {
+	public void saveRiskFactorsLevel(Int030102FormVo form) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("   UPDATE IA_RISK_FACTORS_CONFIG C                       ");
 		sql.append("   SET C.FACTORS_LEVEL   = ? ,                           ");
