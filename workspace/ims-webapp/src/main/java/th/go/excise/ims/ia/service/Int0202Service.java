@@ -62,7 +62,7 @@ public class Int0202Service {
 		dataTableAjax.setDraw(request.getDraw() + 1);
 		dataTableAjax.setData(data);
 		dataTableAjax.setRecordsTotal(iaQuestionnaireMadeHdrJdbcRepository.countDatafilter(request));
-		dataTableAjax.setRecordsFiltered(data.size());
+		dataTableAjax.setRecordsFiltered(iaQuestionnaireMadeHdrJdbcRepository.countDatafilter(request));
 
 		return dataTableAjax;
 	}
