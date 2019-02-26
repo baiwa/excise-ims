@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 public class ExciseUtils {
 	
 	public static boolean isCentral(String officeCode) {
-		return "00".equals(officeCode.substring(0, 2));
+		return "00".equals(officeCode.substring(0, 2)) && officeCode != null && officeCode.length() == 6;
 	}
 	
 	public static boolean isSector(String officeCode) {
@@ -24,14 +24,12 @@ public class ExciseUtils {
 	
 	public static String whereInLocalOfficeCode(String officeCode) {
 		if (StringUtils.isNotBlank(officeCode) && officeCode.length() == 6) {
-			if ("000000".equals(officeCode)) {
+			if (isCentral(officeCode)) {
 				officeCode = "%";
-			} else if ("00".equals(officeCode.substring(officeCode.length() - 2, officeCode.length()))) {
-				if ("00".equals(officeCode.substring(officeCode.length() - 4, officeCode.length() - 2))) {
-					officeCode = officeCode.substring(0, officeCode.length() - 4) + "____";
-				} else {
-					officeCode = officeCode.substring(0, officeCode.length() - 2) + "__";
-				}
+			} else if(isSector(officeCode)) {
+				officeCode = officeCode.substring(0, 2) + "____";
+			}else if(isArea(officeCode)) {
+				officeCode = officeCode.substring(0, 4) + "__";
 			}
 		} 
 		return officeCode;
