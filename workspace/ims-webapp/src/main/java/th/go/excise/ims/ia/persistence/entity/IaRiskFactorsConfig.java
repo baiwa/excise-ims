@@ -95,6 +95,8 @@ public class IaRiskFactorsConfig extends BaseEntity {
 	private String veryhighCondition;
 	@Column(name = "RISK_UNIT")
 	private String riskUnit;
+	@Column(name = "PERCENT")
+	private BigDecimal percent;
 
 	public BigDecimal getId() {
 		return id;
@@ -399,5 +401,17 @@ public class IaRiskFactorsConfig extends BaseEntity {
 	public void setRiskUnit(String riskUnit) {
 		this.riskUnit = riskUnit;
 	}
+
+	public BigDecimal getPercent() {
+		return percent;
+	}
+
+	public void setPercent(BigDecimal percent) {
+		this.percent = percent;
+	}
+
+
+	
+	
 
 }

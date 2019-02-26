@@ -108,6 +108,9 @@ public class Int0301JdbcRepository {
 			irfc.setVeryhighStart(rs.getString("VERYHIGH_START"));
 			irfc.setVeryhighEnd(rs.getString("VERYHIGH_END"));
 			
+			irfc.setRiskUnit(rs.getString("RISK_UNIT"));
+			irfc.setPercent(rs.getBigDecimal("PERCENT"));
+			
 			
 			
 			vo.setIaRiskFactorsConfig(irfc);
