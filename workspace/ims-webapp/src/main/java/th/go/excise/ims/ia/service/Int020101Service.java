@@ -64,7 +64,7 @@ public class Int020101Service {
 		// Saved
 		List<IaQuestionnaireSide> newSides = (List<IaQuestionnaireSide>) iaQtnSideRep.saveAll(request);
 		logger.debug("Int020101Service::saveAll => SAVED");
-
+		
 		// array of new id
 		List<BigDecimal> idsNew = new ArrayList<>();
 		for (IaQuestionnaireSide newSide : newSides) {
@@ -78,7 +78,32 @@ public class Int020101Service {
 				}
 			}
 		}
+		
+		// On Saved Details
+		qtnDtls = (List<IaQuestionnaireSideDtl>) iaQtnSideDtlRep.saveAll(qtnDtls);
+		
+		// VARIABLES
+		BigDecimal idLevel1 = null;
+		BigDecimal idLevel2 = null;
+		for (IaQuestionnaireSideDtl qtnDtl: qtnDtls) {
+			// On Level 1
+			if (qtnDtl.getQtnLevel().compareTo(new BigDecimal(1)) == 0) {
+				idLevel1 = qtnDtl.getId();
+			}
+			// On Level 2
+			if (qtnDtl.getQtnLevel().compareTo(new BigDecimal(2)) == 0) {
+				qtnDtl.setIdHeading(idLevel1);
+				idLevel2 = qtnDtl.getId();
+			}
+			// On Level 3
+			if (qtnDtl.getQtnLevel().compareTo(new BigDecimal(3)) == 0) {
+				qtnDtl.setIdHeading(idLevel2);
+			}
+		}
+		
+		// On Saved Details after add id heading
 		iaQtnSideDtlRep.saveAll(qtnDtls);
+		
 		return newSides;
 	}
 
