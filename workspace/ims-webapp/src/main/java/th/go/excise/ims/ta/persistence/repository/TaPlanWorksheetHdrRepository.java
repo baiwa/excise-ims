@@ -5,4 +5,5 @@ import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
 
 public interface TaPlanWorksheetHdrRepository extends CommonJpaCrudRepository<TaPlanWorksheetHdr, Long> {
 
+    TaPlanWorksheetHdr findByBudgetYear(String budgetYear);
 }

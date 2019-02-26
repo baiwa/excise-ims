@@ -1,26 +1,23 @@
 package th.go.excise.ims.ta.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.bind.annotation.*;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
+import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
 import th.go.excise.ims.ta.service.DraftWorksheetService;
 import th.go.excise.ims.ta.service.PlanWorkSheetService;
 import th.go.excise.ims.ta.service.TaWorksheetHdrService;
 import th.go.excise.ims.ta.service.TaxOperatorService;
 import th.go.excise.ims.ta.vo.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/api/ta/tax-operator")
@@ -224,13 +221,14 @@ public class TaxOperatorController {
         return response;
     }
 
-    @PostMapping("/save-plan-work-sheet")
+    // TODO PLAN
+    @PostMapping("/save-plan-work-sheet-hdr")
     @ResponseBody
-    public ResponseData<?> savePlanWorkSheet(@RequestBody PlanWorkSheetVo formVo) {
-        ResponseData<YearMonthVo> response = new ResponseData<>();
+    public ResponseData<?> savePlanWorkSheetHdr(@RequestBody PlanWorkSheetVo formVo) {
+        ResponseData<?> response = new ResponseData<>();
 
         try {
-            planWorkSheetService.savePlanWorkSheet(formVo);
+            planWorkSheetService.savePlanWorkSheetHdr(formVo);
             response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
@@ -238,7 +236,57 @@ public class TaxOperatorController {
             response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
             response.setStatus(RESPONSE_STATUS.FAILED);
         }
+        return response;
+    }
 
+    @PostMapping("/find-one-budget-plan-header")
+    @ResponseBody
+    public ResponseData<TaPlanWorksheetHdr> CheckBudgetPlanHeader(@RequestBody PlanWorkSheetVo formVo) {
+        ResponseData<TaPlanWorksheetHdr> response = new ResponseData<>();
+
+        try {
+            response.setData(planWorkSheetService.checkBudgetPlanHeader(formVo));
+            response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+            response.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.FAILED);
+        }
+        return response;
+    }
+
+    @PostMapping("/save-plan-work-sheet-dtl")
+    @ResponseBody
+    public ResponseData<?> savePlanWorkSheetDtl(@RequestBody PlanWorkSheetVo formVo) {
+        ResponseData<?> response = new ResponseData<>();
+
+        try {
+            planWorkSheetService.savePlanWorkSheetDtl(formVo);
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.FAILED);
+        }
+        return response;
+    }
+
+    @PostMapping("/find-plan-worksheet-dtl")
+    @ResponseBody
+    public ResponseData<List<TaPlanWorksheetDtl>> findPlanWorkSheetDtl(@RequestBody PlanWorkSheetVo formVo){
+        ResponseData<List<TaPlanWorksheetDtl>> response = new ResponseData<>();
+
+        try {
+            response.setData(planWorkSheetService.findPlanWorkSheetDtl(formVo));
+            response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+            response.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.FAILED);
+        }
         return response;
     }
 }

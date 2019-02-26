@@ -25,7 +25,11 @@ public class TaWorksheetCondHdrJdbcRepository {
         sql.append(" FROM TA_WORKSHEET_COND_MAIN_HDR ");
         sql.append(" WHERE ANALYSIS_NUMBER =  ? ");
 
-        YearMonthVo obj = (YearMonthVo) this.commonJdbcTemplate.queryForObject(sql.toString(), new Object[]{analysisNumber}, new BeanPropertyRowMapper<YearMonthVo>(YearMonthVo.class));
+        List<YearMonthVo> objs = this.commonJdbcTemplate.query(sql.toString(), new Object[]{analysisNumber}, new BeanPropertyRowMapper<YearMonthVo>(YearMonthVo.class));
+        YearMonthVo obj = new YearMonthVo();
+        if (!objs.isEmpty()){
+            obj = objs.get(0);
+        }
         return obj;
     }
 }

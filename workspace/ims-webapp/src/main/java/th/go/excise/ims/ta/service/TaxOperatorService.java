@@ -82,13 +82,15 @@ public class TaxOperatorService {
 	public YearMonthVo monthStart(TaxOperatorFormVo formVo) {
 		YearMonthVo obj = taWorksheetCondHdrJdbcRepository.monthStart(formVo.getAnalysisNumber());
 
-		Date ymStart = ConvertDateUtils.parseStringToDate(obj.getYearMonthStart(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
-		Date ymEnd = ConvertDateUtils.parseStringToDate(obj.getYearMonthEnd(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
-		String ymStartStr = ConvertDateUtils.formatDateToString(ymStart, ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
-		String ymEndStr = ConvertDateUtils.formatDateToString(ymEnd, ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
+		if (obj != null){
+			Date ymStart = ConvertDateUtils.parseStringToDate(obj.getYearMonthStart(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
+			Date ymEnd = ConvertDateUtils.parseStringToDate(obj.getYearMonthEnd(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
+			String ymStartStr = ConvertDateUtils.formatDateToString(ymStart, ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
+			String ymEndStr = ConvertDateUtils.formatDateToString(ymEnd, ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
 
-		obj.setYearMonthStart(ymStartStr);
-		obj.setYearMonthEnd(ymEndStr);
+			obj.setYearMonthStart(ymStartStr);
+			obj.setYearMonthEnd(ymEndStr);
+		}
 		return obj;
 	}
 	public YearMonthVo monthStartDraft(TaxOperatorFormVo formVo) {

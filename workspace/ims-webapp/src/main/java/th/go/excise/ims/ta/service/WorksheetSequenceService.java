@@ -14,8 +14,9 @@ public class WorksheetSequenceService {
 
 	private static final Logger logger = LoggerFactory.getLogger(WorksheetSequenceService.class);
 	
-	public static final String RUNNING_TYPE_ANALYSIS = "A";
-	public static final String RUNNING_TYPE_DRAFT = "D";
+	private static final String RUNNING_TYPE_ANALYSIS = "A";
+	private static final String RUNNING_TYPE_DRAFT = "D";
+	private static final String RUNNING_TYPE_PLAN = "P";
 
 	@Autowired
 	private TaWorksheetSeqCtrlRepository taWorksheetSeqCtrlRepository;
@@ -28,6 +29,11 @@ public class WorksheetSequenceService {
 	public String getDraftNumber(String officeCode, String budgetYear) {
 		logger.info("getDraftNumber of officeCode : {} || budgetYear : {}", officeCode, budgetYear);
 		return genarateRunningNumber(officeCode, budgetYear, RUNNING_TYPE_DRAFT);
+	}
+
+	public String getPlanNumber(String officeCode, String budgetYear) {
+		logger.info("getDraftNumber of officeCode : {} || budgetYear : {}", officeCode, budgetYear);
+		return genarateRunningNumber(officeCode, budgetYear, RUNNING_TYPE_PLAN);
 	}
 
 	private String genarateRunningNumber(String officeCode, String budgetYear, String runningType) {
