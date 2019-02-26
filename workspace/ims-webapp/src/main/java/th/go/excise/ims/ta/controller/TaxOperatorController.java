@@ -226,7 +226,7 @@ public class TaxOperatorController {
 
     @PostMapping("/save-plan-work-sheet")
     @ResponseBody
-    public ResponseData<?> savePlanWorkSheet(PlanWorkSheetVo formVo) {
+    public ResponseData<?> savePlanWorkSheet(@RequestBody PlanWorkSheetVo formVo) {
         ResponseData<YearMonthVo> response = new ResponseData<>();
 
         try {

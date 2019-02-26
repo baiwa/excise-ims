@@ -14,7 +14,7 @@ public class ProjectConstant {
         public class SAVE {
             public static final String SUCCESS_CODE = "MSG_00002";
             public static final String SUCCESS = "บันทึกเรียบร้อยแล้ว";
-            public static final String FAILED_CODE = "บันทึกไม่สำเร็จ";
+            public static final String FAILED_CODE = "MSG_00003";
             public static final String FAILED = "บันทึกไม่สำเร็จ";
         }
 
