@@ -46,11 +46,9 @@ public class Int020301JdbcRepository {
 	
 	public List<Int020301InfoVo> findInfoByIdSide(BigDecimal idSide, String budgetYear) {
 		StringBuilder sqlBuilder = new StringBuilder();
-		sqlBuilder.append(" select distinct qme.OFFICE_CODE as OFFICE_CODE, qme.UPDATED_DATE as UPDATED_DATE, qme.STATUS as STATUS from IA_QUESTIONNAIRE_HDR qhr ");
-		sqlBuilder.append(" inner join IA_QUESTIONNAIRE_SIDE qse on qse.ID_HEAD = qhr.ID ");
-		sqlBuilder.append(" inner join IA_QUESTIONNAIRE_SIDE_DTL qdl on qdl.ID_SIDE = qse.ID ");
-		sqlBuilder.append(" inner join IA_QUESTIONNAIRE_MADE qme on qme.ID_SIDE_DTL = qdl.ID ");
-		sqlBuilder.append(" where qhr.BUDGET_YEAR = ? and qhr.ID = ? AND qhr.IS_DELETED = 'N' AND qme.IS_DELETED = 'N' AND qdl.IS_DELETED = 'N' ");
+		sqlBuilder.append(" select qmh.OFFICE_CODE as OFFICE_CODE, qmh.UPDATED_DATE as UPDATED_DATE, qmh.STATUS as STATUS from IA_QUESTIONNAIRE_HDR qhr ");
+		sqlBuilder.append(" inner join IA_QUESTIONNAIRE_MADE_HDR qmh on qmh.ID_HDR = qhr.ID ");
+		sqlBuilder.append(" where qhr.BUDGET_YEAR = ? and qhr.ID = ? AND qhr.IS_DELETED = 'N' AND qmh.IS_DELETED = 'N' ORDER BY qmh.OFFICE_CODE ASC ");
 		List<Object> params = new ArrayList<>();
 		params.add(budgetYear);
 		params.add(idSide);
