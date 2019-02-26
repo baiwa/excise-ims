@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
 import th.go.excise.ims.ta.service.MasterConditionMainService;
@@ -33,11 +34,11 @@ public class MasterConditionMainController {
         try {
             masterConditionService.insertMaster(formVo);
             responseData.setData(null);
-            responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+            responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
             responseData.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+            responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
             responseData.setStatus(RESPONSE_STATUS.FAILED);
         }
         return responseData;
@@ -50,11 +51,11 @@ public class MasterConditionMainController {
         try {
             masterConditionService.updateMaster(formVo);
             responseData.setData(null);
-            responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+            responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
             responseData.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+            responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
             responseData.setStatus(RESPONSE_STATUS.FAILED);
         }
         return responseData;
@@ -70,7 +71,7 @@ public class MasterConditionMainController {
             responseData.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
+            responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
             responseData.setStatus(RESPONSE_STATUS.FAILED);
         }
         return responseData;
@@ -86,7 +87,7 @@ public class MasterConditionMainController {
             responseData.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
+            responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
             responseData.setStatus(RESPONSE_STATUS.FAILED);
         }
         return responseData;
@@ -102,7 +103,7 @@ public class MasterConditionMainController {
             responseData.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
+            responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
             responseData.setStatus(RESPONSE_STATUS.FAILED);
         }
         return responseData;
