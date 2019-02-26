@@ -12,6 +12,7 @@ public class Int0201FormVo {
 	List<IaQuestionnaireMade> qtnMadeList = null;
 	private String startDateSend;
 	private String endDateSend;
+	private BigDecimal idSide;
 	
 	public BigDecimal getId() {
 		return id;
@@ -42,6 +43,12 @@ public class Int0201FormVo {
 	}
 	public void setEndDateSend(String endDateSend) {
 		this.endDateSend = endDateSend;
+	}
+	public BigDecimal getIdSide() {
+		return idSide;
+	}
+	public void setIdSide(BigDecimal idSide) {
+		this.idSide = idSide;
 	}
 	
 }

@@ -10,11 +10,12 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.constant.MessageContants;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
-import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMade;
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMadeHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
+import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireSideRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireSideDtlJdbcRepository;
@@ -37,6 +38,9 @@ public class Int0201Service {
 	
 	@Autowired
 	private IaQuestionnaireHdrRepository iaQuestionnaireHdrRepository;
+	
+	@Autowired
+	private IaQuestionnaireMadeHdrRepository iaQuestionnaireMadeHdrRepository;
 
 	public List<IaQuestionnaireSide> findQtnSideById(Int0201FormVo request) {
 		return iaQuestionnaireSideRepository.findByidHead(request.getId());
@@ -71,16 +75,7 @@ public class Int0201Service {
 	}
 	
 	public void sendQtnForm(Int0201FormVo request) {
-		/* save questionnaire Made */
-		if(request.getQtnMadeList().size() > 0) {
-			for (IaQuestionnaireMade qtnMade : request.getQtnMadeList()) {
-				qtnMade.setStatus(MessageContants.IA.QTN_CREATED);
-				qtnMade.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
-				iaQuestionnaireMadeRepository.save(qtnMade);
-			}
-		}
-		
-		/* update questionnaire header */
+		/* update Questionnaire Header */
 		if(request.getId() != null) {
 			Optional<IaQuestionnaireHdr> hdrRes = iaQuestionnaireHdrRepository.findById(request.getId());
 			if(hdrRes.isPresent()) {
@@ -89,6 +84,44 @@ public class Int0201Service {
 				dataHdr.setEndDate(ConvertDateUtils.parseStringThaiDateToLocalDate(request.getEndDateSend(), ProjectConstant.SHORT_DATE_FORMAT));
 				dataHdr.setStatus(MessageContants.IA.SEND_QTN_SUCCES);
 				iaQuestionnaireHdrRepository.save(dataHdr);
+			}
+		}
+		
+		/* save Questionnaire Made Hdr */
+		if(request.getIdSide() != null) {
+			 Optional<IaQuestionnaireHdr> hdrRes = iaQuestionnaireHdrRepository.findById(request.getIdSide());
+			 if(hdrRes.isPresent()) {
+				 IaQuestionnaireHdr dataHdr = hdrRes.get();
+				 IaQuestionnaireMadeHdr dataMadeHdr = null;
+				 IaQuestionnaireMade qtnMade = null;
+				 int loopCount = 3;
+				 
+				 for(int i = 0; i < loopCount; i++) {
+					 dataMadeHdr = new IaQuestionnaireMadeHdr();
+					 dataMadeHdr.setIdHdr(dataHdr.getId());
+					 dataMadeHdr.setBudgetYear(dataHdr.getBudgetYear());
+					 dataMadeHdr.setNote(dataHdr.getNote());
+					 dataMadeHdr.setQtnHeaderName(dataHdr.getQtnHeaderName());
+					 dataMadeHdr.setStartDate(ConvertDateUtils.parseStringThaiDateToLocalDate(request.getStartDateSend(), ProjectConstant.SHORT_DATE_FORMAT));
+					 dataMadeHdr.setEndDate(ConvertDateUtils.parseStringThaiDateToLocalDate(request.getEndDateSend(), ProjectConstant.SHORT_DATE_FORMAT));
+					 dataMadeHdr.setStatus("CREATED");
+					 dataMadeHdr.setOfficeCode("0" + i + "0000");
+					 IaQuestionnaireMadeHdr resMadeHdr = iaQuestionnaireMadeHdrRepository.save(dataMadeHdr);
+					 
+					 /* save Questionnaire Made */
+						if(request.getQtnMadeList().size() > 0) {
+							for (IaQuestionnaireMade objMade : request.getQtnMadeList()) {
+								qtnMade = new IaQuestionnaireMade();
+								qtnMade.setIdSideDtl(objMade.getIdSideDtl());
+								qtnMade.setQtnLevel(objMade.getQtnLevel());
+								qtnMade.setStatus("CREATED");
+								qtnMade.setOfficeCode("0" + i + "0000");
+								qtnMade.setIdMadeHdr(resMadeHdr.getId());
+								qtnMade.setCheckFlag("F");
+								iaQuestionnaireMadeRepository.save(qtnMade);
+							} // end loop 2
+					}
+				 } // end loop 1
 			}
 		}
 	}
