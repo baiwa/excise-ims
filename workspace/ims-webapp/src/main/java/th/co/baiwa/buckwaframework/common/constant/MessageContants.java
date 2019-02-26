@@ -24,13 +24,13 @@ public class MessageContants {
 			if ("FINISH".equalsIgnoreCase(status)) {
 				return QTN_FINISH;
 			}
-			if ("WAIT".equalsIgnoreCase(status)) {
+			if ("WAIT_HDR".equalsIgnoreCase(status)) {
 				return SEND_QTN_WAIT;
 			}
-			if ("SUCCESS".equalsIgnoreCase(status)) {
+			if ("SUCCESS_HDR".equalsIgnoreCase(status)) {
 				return SEND_QTN_SUCCESS;
 			}
-			if ("FAIL".equalsIgnoreCase(status)) {
+			if ("FAIL_HDR".equalsIgnoreCase(status)) {
 				return SEND_QTN_FAIL;
 			}
 			return QTN_CREATED;

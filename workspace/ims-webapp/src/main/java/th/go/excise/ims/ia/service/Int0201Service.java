@@ -81,7 +81,7 @@ public class Int0201Service {
 				IaQuestionnaireHdr dataHdr = hdrRes.get();
 				dataHdr.setStartDate(ConvertDateUtils.parseStringThaiDateToLocalDate(request.getStartDateSend(), ProjectConstant.SHORT_DATE_FORMAT));
 				dataHdr.setEndDate(ConvertDateUtils.parseStringThaiDateToLocalDate(request.getEndDateSend(), ProjectConstant.SHORT_DATE_FORMAT));
-				dataHdr.setStatus("SUCCESS");
+				dataHdr.setStatus("SUCCESS_HDR");
 				iaQuestionnaireHdrRepository.save(dataHdr);
 			}
 		}

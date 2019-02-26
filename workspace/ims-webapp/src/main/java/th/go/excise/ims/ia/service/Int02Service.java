@@ -76,7 +76,7 @@ public class Int02Service {
 	}
 
 	public IaQuestionnaireHdr save(IaQuestionnaireHdr request) {
-		request.setStatus("WAIT");
+		request.setStatus("WAIT_HDR");
 		 IaQuestionnaireHdr response = iaQuestionnaireHdrRepository.save(request);
 		 response.setStatus(MessageContants.IA.qtnStatus(response.getStatus()));
 		 return response;
@@ -96,7 +96,7 @@ public class Int02Service {
 		Optional<IaQuestionnaireHdr> dataRes = iaQuestionnaireHdrRepository.findById(new BigDecimal(idStr));
 		if (dataRes.isPresent()) {
 			IaQuestionnaireHdr daraHdr = dataRes.get();
-			daraHdr.setStatus("FAIL");
+			daraHdr.setStatus("FAIL_HDR");
 			response = iaQuestionnaireHdrRepository.save(daraHdr);
 			response.setStatus(MessageContants.IA.qtnStatus(response.getStatus()));
 		}
