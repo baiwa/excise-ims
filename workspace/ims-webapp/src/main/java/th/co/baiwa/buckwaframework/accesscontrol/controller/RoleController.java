@@ -22,6 +22,10 @@ import th.co.baiwa.buckwaframework.accesscontrol.service.RoleService;
 import th.co.baiwa.buckwaframework.accesscontrol.vo.RoleFormVo;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
 
 @Controller
 @RequestMapping("/api/access-control/role")
@@ -50,6 +54,53 @@ public class RoleController {
 		return response;
 	}
 
+	
+	@PostMapping("/create")
+	@ResponseBody
+	public ResponseData<Role> save(@RequestBody Role request) {
+		ResponseData<Role> responseData = new ResponseData<Role>();
+		try {
+			responseData.setData(roleService.createRole(request));
+			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("RoleController::create ", e);
+			responseData.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
+
+	@DeleteMapping("/delete/{id}")
+	@ResponseBody
+	public ResponseData<Role> delete(@PathVariable("id") String idStr) {
+		ResponseData<Role> responseData = new ResponseData<Role>();
+		try {
+			responseData.setData(roleService.deleteRole(idStr));
+			responseData.setMessage(RESPONSE_MESSAGE.DELETE.SUCCESS);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("RoleController::delete ", e);
+			responseData.setMessage(RESPONSE_MESSAGE.DELETE.FAILED);
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
+/*	@PostMapping
+	public ResponseEntity<?> create(@RequestBody Role role, UriComponentsBuilder ucBuilder) {
+		logger.info("create [role={}]", role);
+
+		Role newRole = roleService.createRole(role);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(
+				ucBuilder.path("/api/access-control/role/{id}").buildAndExpand(newRole.getRoleId()).toUri());
+
+		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+	}*/
+	
+	
 	/*
 	 * @GetMapping("list") public ResponseEntity<?> getAll(@RequestParam("draw")
 	 * Integer draw, @RequestParam("start") Integer start, @RequestParam("length")
@@ -77,17 +128,7 @@ public class RoleController {
 //		return new ResponseEntity<ResponseData<Role>>(response, HttpStatus.OK);
 //	}
 //
-//	@PostMapping
-//	public ResponseEntity<?> create(@RequestBody Role role, UriComponentsBuilder ucBuilder) {
-//		logger.info("create [role={}]", role);
-//
-//		Role newRole = roleService.createRole(role);
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setLocation(
-//				ucBuilder.path("/api/access-control/role/{id}").buildAndExpand(newRole.getRoleId()).toUri());
-//
-//		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
-//	}
+
 //
 //	@PutMapping
 //	public ResponseEntity<?> update(@RequestBody Role role, UriComponentsBuilder ucBuilder) {
