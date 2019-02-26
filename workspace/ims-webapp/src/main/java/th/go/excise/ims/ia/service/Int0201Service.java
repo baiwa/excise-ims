@@ -87,8 +87,8 @@ public class Int0201Service {
 		}
 		
 		/* save Questionnaire Made Hdr */
-		if(request.getIdSide() != null) {
-			 Optional<IaQuestionnaireHdr> hdrRes = iaQuestionnaireHdrRepository.findById(request.getIdSide());
+		if(request.getIdHead() != null) {
+			 Optional<IaQuestionnaireHdr> hdrRes = iaQuestionnaireHdrRepository.findById(request.getIdHead());
 			 if(hdrRes.isPresent()) {
 				 IaQuestionnaireHdr dataHdr = hdrRes.get();
 				 IaQuestionnaireMadeHdr dataMadeHdr = null;

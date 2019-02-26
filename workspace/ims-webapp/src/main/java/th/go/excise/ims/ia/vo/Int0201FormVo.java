@@ -12,7 +12,7 @@ public class Int0201FormVo {
 	List<IaQuestionnaireMade> qtnMadeList = null;
 	private String startDateSend;
 	private String endDateSend;
-	private BigDecimal idSide;
+	private BigDecimal idHead;
 	
 	public BigDecimal getId() {
 		return id;
@@ -44,11 +44,11 @@ public class Int0201FormVo {
 	public void setEndDateSend(String endDateSend) {
 		this.endDateSend = endDateSend;
 	}
-	public BigDecimal getIdSide() {
-		return idSide;
+	public BigDecimal getIdHead() {
+		return idHead;
 	}
-	public void setIdSide(BigDecimal idSide) {
-		this.idSide = idSide;
+	public void setIdHead(BigDecimal idHead) {
+		this.idHead = idHead;
 	}
 	
 }
