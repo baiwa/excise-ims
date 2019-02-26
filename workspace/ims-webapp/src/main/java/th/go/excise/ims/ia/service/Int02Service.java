@@ -76,8 +76,10 @@ public class Int02Service {
 	}
 
 	public IaQuestionnaireHdr save(IaQuestionnaireHdr request) {
-		request.setStatus(MessageContants.IA.SEND_QTN_WAIT);
-		return iaQuestionnaireHdrRepository.save(request);
+		request.setStatus("WAIT");
+		 IaQuestionnaireHdr response = iaQuestionnaireHdrRepository.save(request);
+		 response.setStatus(MessageContants.IA.qtnStatus(response.getStatus()));
+		 return response;
 	}
 
 	public IaQuestionnaireHdr update(String idStr, IaQuestionnaireHdr request) {
@@ -94,8 +96,9 @@ public class Int02Service {
 		Optional<IaQuestionnaireHdr> dataRes = iaQuestionnaireHdrRepository.findById(new BigDecimal(idStr));
 		if (dataRes.isPresent()) {
 			IaQuestionnaireHdr daraHdr = dataRes.get();
-			daraHdr.setStatus(MessageContants.IA.SEND_QTN_FAIL);
+			daraHdr.setStatus("FAIL");
 			response = iaQuestionnaireHdrRepository.save(daraHdr);
+			response.setStatus(MessageContants.IA.qtnStatus(response.getStatus()));
 		}
 		return response;
 	}

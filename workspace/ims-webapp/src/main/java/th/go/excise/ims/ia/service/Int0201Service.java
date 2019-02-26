@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.common.constant.MessageContants;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
@@ -82,7 +81,7 @@ public class Int0201Service {
 				IaQuestionnaireHdr dataHdr = hdrRes.get();
 				dataHdr.setStartDate(ConvertDateUtils.parseStringThaiDateToLocalDate(request.getStartDateSend(), ProjectConstant.SHORT_DATE_FORMAT));
 				dataHdr.setEndDate(ConvertDateUtils.parseStringThaiDateToLocalDate(request.getEndDateSend(), ProjectConstant.SHORT_DATE_FORMAT));
-				dataHdr.setStatus(MessageContants.IA.SEND_QTN_SUCCES);
+				dataHdr.setStatus("SUCCESS");
 				iaQuestionnaireHdrRepository.save(dataHdr);
 			}
 		}
