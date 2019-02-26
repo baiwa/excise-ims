@@ -9,7 +9,7 @@ public class MessageContants {
 
 	public static final class IA {
 		public static final String SEND_QTN_WAIT = "รอส่งแบบสอบถาม";
-		public static final String SEND_QTN_SUCCES = "ส่งแบบสอบถามเรียบร้อย";
+		public static final String SEND_QTN_SUCCESS = "ส่งแบบสอบถามเรียบร้อย";
 		public static final String SEND_QTN_FAIL = "ยกเลิกแบบสอบถาม";
 		public static final String QTN_CREATED = "ยังไม่ได้ทำแบบสอบถาม";
 		public static final String QTN_WAIT = "รอทำแบบสอบถาม";
@@ -23,6 +23,15 @@ public class MessageContants {
 			}
 			if ("FINISH".equalsIgnoreCase(status)) {
 				return QTN_FINISH;
+			}
+			if ("WAIT".equalsIgnoreCase(status)) {
+				return SEND_QTN_WAIT;
+			}
+			if ("SUCCESS".equalsIgnoreCase(status)) {
+				return SEND_QTN_SUCCESS;
+			}
+			if ("FAIL".equalsIgnoreCase(status)) {
+				return SEND_QTN_FAIL;
 			}
 			return QTN_CREATED;
 		}
