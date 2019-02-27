@@ -1,10 +1,17 @@
 package th.go.excise.ims.ta.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
@@ -13,12 +20,14 @@ import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
 import th.go.excise.ims.ta.service.DraftWorksheetService;
-import th.go.excise.ims.ta.service.PlanWorkSheetService;
+import th.go.excise.ims.ta.service.PlanWorksheetService;
 import th.go.excise.ims.ta.service.TaWorksheetHdrService;
 import th.go.excise.ims.ta.service.TaxOperatorService;
-import th.go.excise.ims.ta.vo.*;
-
-import java.util.List;
+import th.go.excise.ims.ta.vo.CondGroupVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetVo;
+import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
+import th.go.excise.ims.ta.vo.TaxOperatorVo;
+import th.go.excise.ims.ta.vo.YearMonthVo;
 
 @Controller
 @RequestMapping("/api/ta/tax-operator")
@@ -36,7 +45,7 @@ public class TaxOperatorController {
     private TaWorksheetHdrService taWorksheetHdrService;
 
     @Autowired
-    private PlanWorkSheetService planWorkSheetService;
+    private PlanWorksheetService planWorksheetService;
 
     // TODO worksheet header
     @PostMapping("/")
@@ -226,11 +235,11 @@ public class TaxOperatorController {
     // TODO PLAN
     @PostMapping("/save-plan-work-sheet-hdr")
     @ResponseBody
-    public ResponseData<?> savePlanWorkSheetHdr(@RequestBody PlanWorkSheetVo formVo) {
+    public ResponseData<?> savePlanWorkSheetHdr(@RequestBody PlanWorksheetVo formVo) {
         ResponseData<?> response = new ResponseData<>();
-
+        
         try {
-            planWorkSheetService.savePlanWorkSheetHdr(formVo);
+            planWorksheetService.savePlanWorksheetHdr(formVo);
             response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
@@ -238,16 +247,17 @@ public class TaxOperatorController {
             response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
             response.setStatus(RESPONSE_STATUS.FAILED);
         }
+        
         return response;
     }
 
     @PostMapping("/find-one-budget-plan-header")
     @ResponseBody
-    public ResponseData<TaPlanWorksheetHdr> CheckBudgetPlanHeader(@RequestBody PlanWorkSheetVo formVo) {
+    public ResponseData<TaPlanWorksheetHdr> CheckBudgetPlanHeader(@RequestBody PlanWorksheetVo formVo) {
         ResponseData<TaPlanWorksheetHdr> response = new ResponseData<>();
-
+        
         try {
-            response.setData(planWorkSheetService.getPlanWorksheetHdr(formVo));
+            response.setData(planWorksheetService.getPlanWorksheetHdr(formVo));
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
@@ -255,16 +265,17 @@ public class TaxOperatorController {
             response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
             response.setStatus(RESPONSE_STATUS.FAILED);
         }
+        
         return response;
     }
 
     @PostMapping("/save-plan-work-sheet-dtl")
     @ResponseBody
-    public ResponseData<?> savePlanWorkSheetDtl(@RequestBody PlanWorkSheetVo formVo) {
+    public ResponseData<?> savePlanWorkSheetDtl(@RequestBody PlanWorksheetVo formVo) {
         ResponseData<?> response = new ResponseData<>();
-
+        
         try {
-            planWorkSheetService.savePlanWorkSheetDtl(formVo);
+            planWorksheetService.savePlanWorksheetDtl(formVo);
             response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
@@ -272,16 +283,17 @@ public class TaxOperatorController {
             response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
             response.setStatus(RESPONSE_STATUS.FAILED);
         }
+        
         return response;
     }
 
     @PostMapping("/find-plan-worksheet-dtl")
     @ResponseBody
-    public ResponseData<List<TaPlanWorksheetDtl>> findPlanWorkSheetDtl(@RequestBody PlanWorkSheetVo formVo){
+    public ResponseData<List<TaPlanWorksheetDtl>> findPlanWorkSheetDtl(@RequestBody PlanWorksheetVo formVo){
         ResponseData<List<TaPlanWorksheetDtl>> response = new ResponseData<>();
-
+        
         try {
-            response.setData(planWorkSheetService.findPlanWorkSheetDtl(formVo));
+            response.setData(planWorksheetService.findPlanWorksheetDtl(formVo));
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
@@ -289,6 +301,7 @@ public class TaxOperatorController {
             response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
             response.setStatus(RESPONSE_STATUS.FAILED);
         }
+        
         return response;
     }
     
@@ -296,8 +309,9 @@ public class TaxOperatorController {
     @ResponseBody
     public ResponseData<List<TaPlanWorksheetSend>> getPlanWorkSheetSend() {
     	ResponseData<List<TaPlanWorksheetSend>> responseData = new ResponseData<>();
+    	
     	try {
-			responseData.setData(planWorkSheetService.getPlanWorkSheetSend());
+			responseData.setData(planWorksheetService.getPlanWorksheetSend());
 			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
@@ -305,6 +319,8 @@ public class TaxOperatorController {
 			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
+    	
     	return responseData;
     }
+    
 }

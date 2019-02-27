@@ -2,7 +2,8 @@ package th.go.excise.ims.ta.vo;
 
 import java.util.List;
 
-public class PlanWorkSheetVo {
+public class PlanWorksheetVo {
+	
     private Boolean typeCheckedAll = false;
     private List<String> ids;
 

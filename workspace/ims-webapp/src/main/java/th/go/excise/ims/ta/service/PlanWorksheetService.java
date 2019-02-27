@@ -18,12 +18,12 @@ import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetSendRepository;
-import th.go.excise.ims.ta.vo.PlanWorkSheetVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 
 @Service
-public class PlanWorkSheetService {
+public class PlanWorksheetService {
 
-	private static final Logger logger = LoggerFactory.getLogger(PlanWorkSheetService.class);
+	private static final Logger logger = LoggerFactory.getLogger(PlanWorksheetService.class);
 
 	@Autowired
 	private WorksheetSequenceService worksheetSequenceService;
@@ -35,12 +35,12 @@ public class PlanWorkSheetService {
 	@Autowired
 	private TaPlanWorksheetSendRepository planWorksheetSendRepository;
 
-	public TaPlanWorksheetHdr getPlanWorksheetHdr(PlanWorkSheetVo formVo) {
+	public TaPlanWorksheetHdr getPlanWorksheetHdr(PlanWorksheetVo formVo) {
 		logger.info("getPlanWorksheetHdr budgetYear={}", formVo.getBudgetYear());
 		return planWorksheetHdrRepository.findByBudgetYear(formVo.getBudgetYear());
 	}
 
-	public void savePlanWorkSheetHdr(PlanWorkSheetVo formVo) {
+	public void savePlanWorksheetHdr(PlanWorksheetVo formVo) {
 		logger.info("savePlanWorkSheetHdr formVo={}", ToStringBuilder.reflectionToString(formVo, ToStringStyle.JSON_STYLE));
 		
 		TaPlanWorksheetHdr plantHdr = new TaPlanWorksheetHdr();
@@ -53,7 +53,7 @@ public class PlanWorkSheetService {
 		// Add more logic for support Send All and Send Hierarchy
 	}
 
-	public void savePlanWorkSheetDtl(PlanWorkSheetVo formVo) {
+	public void savePlanWorksheetDtl(PlanWorksheetVo formVo) {
 		logger.info("savePlanWorkSheetDtl formVo={}", ToStringBuilder.reflectionToString(formVo, ToStringStyle.JSON_STYLE));
 
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
@@ -80,13 +80,13 @@ public class PlanWorkSheetService {
 		planWorksheetDtlRepository.saveAll(planWorksheetDtls);
 	}
 
-	public List<TaPlanWorksheetDtl> findPlanWorkSheetDtl(PlanWorkSheetVo formVo) {
+	public List<TaPlanWorksheetDtl> findPlanWorksheetDtl(PlanWorksheetVo formVo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		logger.info("findPlanWorkSheetDtl planNumber={}, officeCode={}", formVo.getPlanNumber(), officeCode);
 		return planWorksheetDtlRepository.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), officeCode);
 	}
 
-	public List<TaPlanWorksheetSend> getPlanWorkSheetSend() {
+	public List<TaPlanWorksheetSend> getPlanWorksheetSend() {
 		logger.info("getPlanWorkSheetSend budgetYear={}", ExciseUtils.getCurrentBudgetYear());
 		return planWorksheetSendRepository.findByBudgetYear(ExciseUtils.getCurrentBudgetYear());
 	}
