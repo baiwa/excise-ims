@@ -12,13 +12,21 @@ import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 
 public interface TaPlanWorksheetDtlRepository extends CommonJpaCrudRepository<TaPlanWorksheetDtl, Long>, TaPlanWorksheetDtlRepositoryCustom {
 
-	@Query("select e from #{#entityName} e where e.analysisNumber = :analysisNumber and e.planNumber = :planNumber and e.officeCode = :officeCode")
-	public List<TaPlanWorksheetDtl> findByAnalysisNumberAndPlanNumberAndOfficeCode(@Param("analysisNumber") String analysisNumber, @Param("planNumber") String planNumber, @Param("officeCode") String officeCode);
-
+	@Query("select new java.lang.String(e.newRegId) from #{#entityName} e where e.planNumber = :planNumber and e.officeCode = :officeCode")
+	public List<String> findByPlanNumberAndOfficeCodeWithoutIsDeletedFlag(@Param("planNumber") String planNumber, @Param("officeCode") String officeCode);
+	
+	@Query("select e from #{#entityName} e where e.planNumber = :planNumber and e.newRegId = :newRegId")
+	public TaPlanWorksheetDtl findByPlanNumberAndNewRegIdWithoutIsDeletedFlag(@Param("planNumber") String planNumber, @Param("newRegId") String newRegId);
+	
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.planNumber = :planNumber and e.officeCode = :officeCode")
 	public List<TaPlanWorksheetDtl> findByPlanNumberAndOfficeCode(@Param("planNumber") String planNumber, @Param("officeCode") String officeCode);
-
+	
 	@Modifying
 	@Query(value = "update TA_PLAN_WORKSHEET_DTL set IS_DELETED ='Y' where PLAN_NUMBER	= :planNumber and NEW_REG_ID = :newRegId", nativeQuery = true)
 	public void deleteByPlanNumberAndNewRegId(@Param("planNumber") String planNumber, @Param("newRegId") String newRegId);
+	
+	@Modifying
+	@Query("update #{#entityName} e set e.isDeleted = :isDelete where e.planNumber = :planNumber and e.newRegId = :newRegId")
+	public void updateIsDeletedByPlanNumberAndNewRegId(@Param("isDelete") String isDelete, @Param("planNumber") String planNumber, @Param("newRegId") String newRegId);
+	
 }
