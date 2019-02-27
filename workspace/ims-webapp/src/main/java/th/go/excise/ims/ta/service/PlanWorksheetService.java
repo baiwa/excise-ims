@@ -158,10 +158,6 @@ public class PlanWorksheetService {
 		return planWorksheetDtlRepository.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), officeCode);
 	}
 
-	public List<TaPlanWorksheetSend> getPlanWorksheetSend() {
-		logger.info("getPlanWorkSheetSend budgetYear={}", ExciseUtils.getCurrentBudgetYear());
-		return planWorksheetSendRepository.findByBudgetYear(ExciseUtils.getCurrentBudgetYear());
-	}
 
 	public DataTableAjax<PlanWorksheetDatatableVo> planDtlDatatable(PlanWorksheetVo formVo) {
 
