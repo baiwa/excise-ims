@@ -17,10 +17,12 @@ import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMade;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMadeHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
+import th.go.excise.ims.ia.persistence.entity.IaRiskQtnConfig;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireSideRepository;
+import th.go.excise.ims.ia.persistence.repository.IaRiskQtnConfigRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireSideDtlJdbcRepository;
 import th.go.excise.ims.ia.vo.Int02010101Vo;
 import th.go.excise.ims.ia.vo.Int0201FormVo;
@@ -45,6 +47,9 @@ public class Int0201Service {
 
 	@Autowired
 	private IaQuestionnaireMadeHdrRepository iaQuestionnaireMadeHdrRepository;
+
+	@Autowired
+	private IaRiskQtnConfigRepository iaRiskQtnConfigRepository;
 
 	public List<IaQuestionnaireSide> findQtnSideById(Int0201FormVo request) {
 		return iaQuestionnaireSideRepository.findByidHead(request.getId());
@@ -99,8 +104,9 @@ public class Int0201Service {
 		if ("ส่งแบบสอบถามเรียบร้อย".equals(request.getStatus())) {
 			logger.info("delete QtnMade by idSideDtl");
 			/* find id made header from request */
-			List<IaQuestionnaireMade> filterQtnMade = iaQuestionnaireMadeRepository.findByIdSideDtl(request.getQtnMadeList().get(0).getIdSideDtl());
-			
+			List<IaQuestionnaireMade> filterQtnMade = iaQuestionnaireMadeRepository
+					.findByIdSideDtl(request.getQtnMadeList().get(0).getIdSideDtl());
+
 			if (request.getQtnMadeList().size() > 0) {
 				for (IaQuestionnaireMade sideDtl : request.getQtnMadeList()) {
 					iaQuestionnaireMadeRepository.deleteByIdSideDtl(sideDtl.getIdSideDtl());
@@ -109,7 +115,7 @@ public class Int0201Service {
 //			updateQtnMadeHdr(request);
 
 			/* save Questionnaire Made */
-			if(filterQtnMade.size() > 0) {
+			if (filterQtnMade.size() > 0) {
 				for (int i = 0; i < filterQtnMade.size(); i++) {
 					saveQtnMade(request, i, filterQtnMade.get(i).getIdMadeHdr());
 				}
@@ -178,8 +184,9 @@ public class Int0201Service {
 						/* update Questionnaire Made Detail */
 						if (request.getQtnMadeList().size() > 0) {
 							for (IaQuestionnaireMade madeDtl : request.getQtnMadeList()) {
-								List<IaQuestionnaireMade> filterQtnMadeDtl = iaQuestionnaireMadeRepository.findByIdSideDtl(madeDtl.getIdSideDtl());
-								if(filterQtnMadeDtl.size() > 0) {
+								List<IaQuestionnaireMade> filterQtnMadeDtl = iaQuestionnaireMadeRepository
+										.findByIdSideDtl(madeDtl.getIdSideDtl());
+								if (filterQtnMadeDtl.size() > 0) {
 									for (IaQuestionnaireMade objQtnMadeDtl : filterQtnMadeDtl) {
 										objQtnMadeDtl.setCheckFlag("F");
 										objQtnMadeDtl.setUpdatedBy(UserLoginUtils.getCurrentUsername());
@@ -211,5 +218,43 @@ public class Int0201Service {
 			} // end loop 2
 		}
 	}
+
+	/*
+	 * ==================== == CONFIGS `START`== ====================
+	 */
+	public IaRiskQtnConfig findConfigByIdQtnHdr(String idQtnHdrStr) {
+		BigDecimal idQtnHdr = new BigDecimal(idQtnHdrStr);
+		// Find
+		Optional<IaRiskQtnConfig> risk = iaRiskQtnConfigRepository.findByIdQtnHdr(idQtnHdr);
+		if (risk.isPresent()) {
+			// Response here
+			return risk.get();
+		}
+		return new IaRiskQtnConfig();
+	}
+
+	public IaRiskQtnConfig saveConfig(IaRiskQtnConfig request) throws Exception {
+		// Save
+		IaRiskQtnConfig risk = iaRiskQtnConfigRepository.save(request);
+		if (risk != null) {
+			// Response here
+			return risk;
+		}
+		throw new Exception();
+	}
+
+	public IaRiskQtnConfig updateConfig(IaRiskQtnConfig request) throws Exception {
+		// Find
+		Optional<IaRiskQtnConfig> riskOpt = iaRiskQtnConfigRepository.findById(request.getId());
+		if (riskOpt.isPresent()) {
+			// Update here
+			IaRiskQtnConfig risk = iaRiskQtnConfigRepository.save(riskOpt.get());
+			return risk;
+		}
+		throw new Exception();
+	}
+	/*
+	 * ==================== == CONFIGS `END`== ====================
+	 */
 
 }
