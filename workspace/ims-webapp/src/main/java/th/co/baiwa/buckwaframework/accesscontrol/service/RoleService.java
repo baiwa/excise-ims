@@ -32,7 +32,7 @@ public class RoleService {
 		dataTableAjax.setDraw(request.getDraw() + 1);
 		dataTableAjax.setData(data);
 		dataTableAjax.setRecordsTotal(roleRepository.countByCriteria(request));
-		dataTableAjax.setRecordsFiltered(roleRepository.countByCriteria(request));		
+		dataTableAjax.setRecordsFiltered(roleRepository.countByCriteria(request));
 		return dataTableAjax;
 	}
 
@@ -41,9 +41,9 @@ public class RoleService {
 		return roleRepository.findAll();
 	}
 
-	public Role getRoleById(Long roleId) {
+	public Role getRoleById(String idStr) {
 		logger.info("getRoleById");
-		return roleRepository.findById(roleId).get();
+		return roleRepository.findById(Long.valueOf(idStr)).get();
 	}
 
 	public long getRoleCount() {
@@ -64,9 +64,7 @@ public class RoleService {
 		data.setRoleDesc(role.getRoleDesc());
 		return roleRepository.save(data);
 	}
-	
-	
-	
+
 	public Role deleteRole(String idStr) {
 		logger.info("deleteRole");
 		Role data = roleRepository.findById(Long.valueOf(idStr)).get();

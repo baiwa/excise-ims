@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -95,15 +96,19 @@ public class RoleController {
 		return responseData;
 	}
 
-//	@GetMapping("/{id}")
-//	public ResponseEntity<?> getRole(@PathVariable("id") long id) {
-//		logger.info("getRole [id={}]", id);
-//
-//		Role role = roleService.getRoleById(id);
-//		ResponseData<Role> response = new ResponseData<Role>();
-//		response.setData(role);
-//		return new ResponseEntity<ResponseData<Role>>(response, HttpStatus.OK);
-//	}
-//
+	@GetMapping("/find-by-id/{id}")
+	@ResponseBody
+	public ResponseData<Role> findById(@PathVariable("id") String idStr) {
+		ResponseData<Role> responseData = new ResponseData<Role>();
+		try {
+			responseData.setData(roleService.getRoleById(idStr));
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("RoleController::findById ", e);
+			responseData.setMessage(RESPONSE_MESSAGE.ERROR500);
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
 
 }
