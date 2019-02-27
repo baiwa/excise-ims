@@ -123,9 +123,7 @@ public class Int0301JdbcRepository {
 		sql.append("   UPDATE IA_RISK_FACTORS_CONFIG C                       ");
 		sql.append("   SET C.FACTORS_LEVEL   = ? ,                           ");
 		sql.append("   C.START_DATE          = null,                         ");
-		sql.append("   C.END_DATE            = null,                         ");
-		sql.append("   C.INFO_USED_RISK      = null,                         ");
-		sql.append("   C.INFO_USED_RISK_DESC = null,                         ");
+		sql.append("   C.END_DATE            = null,                         "); 
 		sql.append("   C.VERYLOW             = null,                         ");
 		sql.append("   C.VERYLOW_START       = null,                         ");
 		sql.append("   C.VERYLOW_END         = null,                         ");

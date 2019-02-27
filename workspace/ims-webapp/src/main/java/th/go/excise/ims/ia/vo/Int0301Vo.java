@@ -10,7 +10,6 @@ public class Int0301Vo extends DataTableRequest {
 
 	private IaRiskFactors iaRiskFactors;
 	private IaRiskFactorsConfig iaRiskFactorsConfig;
-	
 	private String createdDateDesc;
 	private String updateDateDesc;
 	private List<String> datalistdynamic;
@@ -54,7 +53,5 @@ public class Int0301Vo extends DataTableRequest {
 	public void setDatalistdynamic(List<String> datalistdynamic) {
 		this.datalistdynamic = datalistdynamic;
 	}
-	
-	
 
 }
