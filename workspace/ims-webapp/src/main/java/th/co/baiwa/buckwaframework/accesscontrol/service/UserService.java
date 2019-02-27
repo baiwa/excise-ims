@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.Role;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.User;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.repository.UserRepository;
 import th.co.baiwa.buckwaframework.accesscontrol.vo.UserFormVo;
@@ -51,12 +52,12 @@ private final UserRepository userRepository;
 		return userRepository.findById(userId).get();
 	}
 
-	public long getRoleCount() {
+	public long getUserCount() {
 		logger.info("getUserCount");
 		return userRepository.count();
 	}
 
-	public User createRole(User user) {
+	public User createUser(User user) {
 		logger.info("createUser");
 		userRepository.save(user);
 		return user;
@@ -68,9 +69,11 @@ private final UserRepository userRepository;
 		return user;
 	}
 
-	public void deleteRole(Long userId) {
-		logger.info("deleteUser");
-		userRepository.deleteById(userId);
+	public User deleteUser(String idStr) {
+		logger.info("deleteRole");
+		User data = userRepository.findById(Long.valueOf(idStr)).get();
+		 userRepository.deleteById(Long.valueOf(idStr));
+		return data;
 	}
 
 }

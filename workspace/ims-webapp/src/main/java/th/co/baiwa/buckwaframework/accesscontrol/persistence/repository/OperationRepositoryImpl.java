@@ -37,7 +37,7 @@ private static final Logger logger = LoggerFactory.getLogger(OperationRepository
 		
 		if (StringUtils.isNotBlank(operationFormVo.getOperationCode())) {
 			sql.append(" AND operation_code LIKE  ? ");
-			params.add("%" + StringUtils.trim(operationFormVo.getOperationDesc()) + "%");
+			params.add("%" + StringUtils.trim(operationFormVo.getOperationCode()) + "%");
 		}
 	
 		

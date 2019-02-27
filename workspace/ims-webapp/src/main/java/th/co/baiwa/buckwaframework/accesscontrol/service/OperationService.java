@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.Operation;
+import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.Role;
+import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.User;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.repository.OperationRepository;
 import th.co.baiwa.buckwaframework.accesscontrol.vo.OperationFormVo;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
@@ -36,7 +38,7 @@ public class OperationService {
 		result.setDraw(operationFormVo.getDraw() + 1);
 		result.setData(operationList);
 		result.setRecordsTotal(operationRepository.countByCriteria(operationFormVo));
-		result.setRecordsFiltered(operationList.size());
+		result.setRecordsFiltered(operationRepository.countByCriteria(operationFormVo));
 
 
 		
@@ -47,9 +49,9 @@ public class OperationService {
 		return operationRepository.findAll();
 	}
 
-	public Operation getRoleById(Long roleId) {
+	public Operation getRoleById(Long operationId) {
 		logger.info("getOperationById");
-		return operationRepository.findById(roleId).get();
+		return operationRepository.findById(operationId).get();
 	}
 
 	public long getOperationCount() {
@@ -58,20 +60,25 @@ public class OperationService {
 	}
 
 	public Operation createOperation(Operation operation) {
-		logger.info("createOperation");
+		logger.info("createRole");
 		operationRepository.save(operation);
 		return operation;
 	}
 
-	public Operation updateOperation(Operation operation) {
+
+	public Operation updateRole(String idStr, Operation operation) {
 		logger.info("updateOperation");
-		operationRepository.save(operation);
-		return operation;
+		Operation data = operationRepository.findById(Long.valueOf(idStr)).get();
+		data.setOperationCode(operation.getOperationCode());
+		data.setOperationDesc(operation.getOperationDesc());
+		return operationRepository.save(data);
 	}
 
-	public void deleteOperation(Long operationId) {
+
+	public Operation deleteOperation(String idStr) {
 		logger.info("deleteOperation");
-		operationRepository.deleteById(operationId);
+		Operation data = operationRepository.findById(Long.valueOf(idStr)).get();
+		operationRepository.deleteById(Long.valueOf(idStr));
+		return data;
 	}
-	
 }
