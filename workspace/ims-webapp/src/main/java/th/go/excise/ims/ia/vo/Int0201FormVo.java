@@ -13,6 +13,7 @@ public class Int0201FormVo {
 	private String startDateSend;
 	private String endDateSend;
 	private BigDecimal idHead;
+	private String status;
 	
 	public BigDecimal getId() {
 		return id;
@@ -49,6 +50,12 @@ public class Int0201FormVo {
 	}
 	public void setIdHead(BigDecimal idHead) {
 		this.idHead = idHead;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }
