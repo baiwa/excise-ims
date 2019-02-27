@@ -294,10 +294,10 @@ public class TaxOperatorController {
     
     @PostMapping("/get-plan-ws-send")
     @ResponseBody
-    public ResponseData<List<TaPlanWorksheetSend>> getPlanWorkSheetSend(@RequestBody TaPlanWorksheetSend form) {
+    public ResponseData<List<TaPlanWorksheetSend>> getPlanWorkSheetSend() {
     	ResponseData<List<TaPlanWorksheetSend>> responseData = new ResponseData<>();
     	try {
-			responseData.setData(planWorkSheetService.getPlanWorkSheetSend(form));
+			responseData.setData(planWorkSheetService.getPlanWorkSheetSend());
 			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

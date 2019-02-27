@@ -3,6 +3,7 @@ package th.go.excise.ims.ta.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
@@ -83,9 +84,9 @@ public class PlanWorkSheetService {
         return list;
     }
     
-    public List<TaPlanWorksheetSend> getPlanWorkSheetSend(TaPlanWorksheetSend form) {
+    public List<TaPlanWorksheetSend> getPlanWorkSheetSend() {
     	List<TaPlanWorksheetSend> list = new ArrayList<>();
-    	list = planWorksheetSendRepository.findByBudgetYear(form.getBudgetYear());
+    	list = planWorksheetSendRepository.findByBudgetYear(ExciseUtils.getCurrentBudgetYear());
     	return list;
     }
 }
