@@ -13,7 +13,25 @@ public class Int020301InfoVo {
 	BigDecimal riskQuantity;
 	BigDecimal passValue;
 	BigDecimal failValue;
+	BigDecimal avgRisk;
+	String riskText;
 	List<Int020301DataVo> sideDtls;
+
+	public BigDecimal getAvgRisk() {
+		return avgRisk;
+	}
+
+	public void setAvgRisk(BigDecimal avgRisk) {
+		this.avgRisk = avgRisk;
+	}
+
+	public String getRiskText() {
+		return riskText;
+	}
+
+	public void setRiskText(String riskText) {
+		this.riskText = riskText;
+	}
 
 	public String getStatus() {
 		return status;

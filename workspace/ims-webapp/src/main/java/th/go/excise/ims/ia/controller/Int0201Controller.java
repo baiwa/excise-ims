@@ -97,10 +97,10 @@ public class Int0201Controller {
 	 */
 	@GetMapping("/config/{idQtnHdr}")
 	@ResponseBody
-	public ResponseData<IaRiskQtnConfig> findConfigByIdQtnHdr(@PathVariable("idQtnHdr") String idQtnHdrStr) {
-		ResponseData<IaRiskQtnConfig> response = new ResponseData<IaRiskQtnConfig>();
+	public ResponseData<List<IaRiskQtnConfig>> findConfigByIdQtnHdr(@PathVariable("idQtnHdr") String idQtnHdrStr) {
+		ResponseData<List<IaRiskQtnConfig>> response = new ResponseData<List<IaRiskQtnConfig>>();
 		try {
-			IaRiskQtnConfig data = int0201Service.findConfigByIdQtnHdr(idQtnHdrStr);
+			List<IaRiskQtnConfig> data = int0201Service.findConfigByIdQtnHdr(idQtnHdrStr);
 			response.setData(data);
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
@@ -115,10 +115,10 @@ public class Int0201Controller {
 
 	@PutMapping("/config/")
 	@ResponseBody
-	public ResponseData<IaRiskQtnConfig> updateConfig(@RequestBody IaRiskQtnConfig request) {
-		ResponseData<IaRiskQtnConfig> response = new ResponseData<IaRiskQtnConfig>();
+	public ResponseData<List<IaRiskQtnConfig>> updateConfig(@RequestBody List<IaRiskQtnConfig> request) {
+		ResponseData<List<IaRiskQtnConfig>> response = new ResponseData<List<IaRiskQtnConfig>>();
 		try {
-			IaRiskQtnConfig data = int0201Service.updateConfig(request);
+			List<IaRiskQtnConfig> data = int0201Service.updateConfig(request);
 			response.setData(data);
 			response.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
@@ -133,10 +133,10 @@ public class Int0201Controller {
 
 	@PostMapping("/config/")
 	@ResponseBody
-	public ResponseData<IaRiskQtnConfig> saveConfig(@RequestBody IaRiskQtnConfig request) {
-		ResponseData<IaRiskQtnConfig> response = new ResponseData<IaRiskQtnConfig>();
+	public ResponseData<List<IaRiskQtnConfig>> saveConfig(@RequestBody List<IaRiskQtnConfig> request) {
+		ResponseData<List<IaRiskQtnConfig>> response = new ResponseData<List<IaRiskQtnConfig>>();
 		try {
-			IaRiskQtnConfig data = int0201Service.saveConfig(request);
+			List<IaRiskQtnConfig> data = int0201Service.saveConfig(request);
 			response.setData(data);
 			response.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);

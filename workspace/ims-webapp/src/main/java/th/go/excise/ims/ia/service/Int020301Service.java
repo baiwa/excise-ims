@@ -89,6 +89,17 @@ public class Int020301Service {
 			// Sum Data
 			data.setPassValue(new BigDecimal(passValue));
 			data.setFailValue(new BigDecimal(failValue));
+			double all = passValue+failValue;
+			double value = (failValue/all)*100;
+			data.setAvgRisk(new BigDecimal(Math.round(value)));
+			// calculate Risk
+			if (passValue > failValue) {
+				data.setRiskText("ต่ำ");
+			} else if (passValue == failValue) {
+				data.setRiskText("ปานกลาง");
+			} else {
+				data.setRiskText("สูง");
+			}
 			// Finding Sector and Area Name
 			List<ExciseDept> exciseDepts = ApplicationCache.getExciseSectorList();
 			data.setStatusText(IA.qtnStatus(data.getStatusText()));
@@ -121,7 +132,8 @@ public class Int020301Service {
 		Row row = sheet.createRow(rowNum);
 		Cell cell = row.createCell(cellNum);
 		List<ExcelHeaderNameVo> headerNames = new ArrayList<>();
-		String[] tbTH1 = { "NO", "FECT_NAME", "FECT_NAME2", "RISK_QUANTITY", "PASS_VALUE", "FAIL_VALUE" };
+		String[] tbTH1 = { "ลำดับ", "สำนักงานสรรพสามิตภาค", "สำนักงานสรรพสามิตพื้นที่", "จำนวนด้านความเสี่ยง",
+				"อัตราความเสี่ยงเฉลี่ย", "แปลค่าความเสี่ยง" };
 		for (int i = 0; i < tbTH1.length; i++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH1[i]);
@@ -132,11 +144,11 @@ public class Int020301Service {
 		headerNames = iaQuestionnaireSideJdbcRep.findNameByIdHdr(idHdr);
 		for (int i = 0; i < headerNames.size() * 3; i++) {
 			cell = row.createCell(cellNum);
-			cell.setCellValue("TEST");
+			cell.setCellValue("ด้าน");
 			cell.setCellStyle(thStyle);
 			cellNum++;
 		}
-		String[] tbTH2 = { "SENT_DATE", "STATUS" };
+		String[] tbTH2 = { "ส่งเมื่อ", "สถานะการดำเนินการ" };
 		for (int i = 0; i < tbTH2.length; i++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH2[i]);
@@ -179,7 +191,7 @@ public class Int020301Service {
 			cellNumtbTH3++;
 		}
 		// Text Cell Row [2]
-		String[] tbTH3 = { "A", "B", "C" };
+		String[] tbTH3 = { "มี/ใช่", "ไม่มี/ไม่ใช่", "ระดับความเสี่ยง" };
 		for (int i = 0; i < headerNames.size(); i++) {
 			for (int j = 0; j < tbTH3.length; j++) {
 				cell = row.createCell(cellNumtbTH3);
@@ -211,16 +223,20 @@ public class Int020301Service {
 
 		// setColumnWidth
 		int width = 76;
-		sheet.setColumnWidth(0, width * 20);
+		sheet.setColumnWidth(0, width * 30);
 		for (int i = 1; i <= 6; i++) {
 			if (i >= 1 && i <= 2) {
-				sheet.setColumnWidth(i, width * 200);
+				sheet.setColumnWidth(i, width * 180);
 			} else {
-				sheet.setColumnWidth(i, width * 50);
+				sheet.setColumnWidth(i, width * 76);
 			}
 		}
 		for (int i = 6; i <= headerNames.size() * 3 + 6; i++) {
-			sheet.setColumnWidth(i, width * 30);
+			if (i % 3 == 2) {
+				sheet.setColumnWidth(i, width * 50);
+			} else {
+				sheet.setColumnWidth(i, width * 40);
+			}
 		}
 		for (int i = headerNames.size() * 3 + 6; i < headerNames.size() * 3 + 6 + 2; i++) {
 			sheet.setColumnWidth(i, width * 76);
@@ -259,12 +275,12 @@ public class Int020301Service {
 			cellNum++;
 			// Column 5
 			cell = row.createCell(cellNum);
-			cell.setCellValue(detail.getPassValue().doubleValue());
+			cell.setCellValue(detail.getAvgRisk().doubleValue());
 			cell.setCellStyle(tdStyle);
 			cellNum++;
 			// Column 6
 			cell = row.createCell(cellNum);
-			cell.setCellValue(detail.getFailValue().doubleValue());
+			cell.setCellValue(detail.getRiskText());
 			cell.setCellStyle(tdStyle);
 			cellNum++;
 

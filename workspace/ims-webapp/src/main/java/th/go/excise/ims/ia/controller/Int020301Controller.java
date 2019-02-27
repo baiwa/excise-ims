@@ -74,7 +74,7 @@ public class Int020301Controller {
 	@GetMapping("/export/excel/{idHdr}/{budgetYear}")
 	public void export(@PathVariable("idHdr") String idHdrStr, @PathVariable("budgetYear") String budgetYear, HttpServletResponse response) throws Exception {
 		// set fileName
-		String fileName = URLEncoder.encode("บันทึกข้อมูลเบิกจ่าย", "UTF-8");
+		String fileName = URLEncoder.encode("สรุปผลแบบสอบถามระบบการควบคุมภายใน", "UTF-8");
 
 		// write it as an excel attachment
 		ByteArrayOutputStream outByteStream = int020301Service.exportInt020301(idHdrStr, budgetYear);
