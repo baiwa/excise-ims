@@ -84,6 +84,7 @@ public class PlanWorkSheetService {
     public List<TaPlanWorksheetDtl> findPlanWorkSheetDtl(PlanWorkSheetVo formVo) {
         List<TaPlanWorksheetDtl> list = planWorksheetDtlRepository.findByAnalysisNumberAndPlanNumberAndOfficeCodeAndIsDeleted(formVo.getAnalysisNumber(), formVo.getPlanNumber(), UserLoginUtils.getCurrentUserBean().getOfficeCode(), "N");
         return list;
+    }
     
     public List<TaPlanWorksheetSend> getPlanWorkSheetSend(TaPlanWorksheetSend form) {
     	List<TaPlanWorksheetSend> list = new ArrayList<>();
