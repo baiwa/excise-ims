@@ -51,20 +51,18 @@ public class PlanWorkSheetService {
         planWorksheetHdrRepository.save(plantHdr);
     }
 
-    public void savePlanWorkSheetDtl(PlanWorkSheetVo formVo) {
-        TaPlanWorksheetHdr hdr = planWorksheetHdrRepository.findByBudgetYear(formVo.getBudgetYear());
+    public void savePlanWorkSheetDtl(PlanWorkSheetVo formVo) {    	    
+    	
+        TaPlanWorksheetHdr hdr = planWorksheetHdrRepository.findByBudgetYear(formVo.getBudgetYear());        
         TaxOperatorFormVo formVoTax = new TaxOperatorFormVo();
         // set data search all start 0 length 0
         formVoTax.setAnalysisNumber(hdr.getAnalysisNumber());
         List<TaxOperatorDetailVo> list = taxOperatorJdbcRepository.getTaxOperatorFromSelect(formVo);
 
         List<TaPlanWorksheetDtl> planWorksheetDtls = new ArrayList<>();
-        for (TaxOperatorDetailVo item : list) {
-
-            TaPlanWorksheetDtl findOnePlanDtl = planWorksheetDtlRepository.findByAnalysisNumberAndPlanNumberAndOfficeCodeAndNewRegId(hdr.getAnalysisNumber(), hdr.getPlanNumber(), UserLoginUtils.getCurrentUserBean().getOfficeCode(), item.getNewRegId());
-            if (findOnePlanDtl != null) {
-                planWorksheetDtlRepository.updateIsDelete(hdr.getAnalysisNumber(), hdr.getPlanNumber(), UserLoginUtils.getCurrentUserBean().getOfficeCode(), item.getNewRegId());
-            } else {
+        for (TaxOperatorDetailVo item : list) {                   
+                
+            
                 TaPlanWorksheetDtl planDtl = new TaPlanWorksheetDtl();
                 planDtl.setPlanNumber(hdr.getPlanNumber());
                 planDtl.setAnalysisNumber(hdr.getAnalysisNumber());
@@ -76,7 +74,6 @@ public class PlanWorkSheetService {
                 planDtl.setAuditEndDate(null);
 
                 planWorksheetDtls.add(planDtl);
-            }
         }
         planWorksheetDtlRepository.saveAll(planWorksheetDtls);
     }

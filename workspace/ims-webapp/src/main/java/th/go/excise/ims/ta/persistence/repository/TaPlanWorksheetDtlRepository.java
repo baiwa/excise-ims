@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface TaPlanWorksheetDtlRepository extends CommonJpaCrudRepository<TaPlanWorksheetDtl, Long>,TaPlanWorksheetDtlRepositoryCustom {
 
-    List<TaPlanWorksheetDtl> findByAnalysisNumberAndPlanNumberAndOfficeCodeAndIsDeleted(String analysisNumber, String planNumber, String officeCode, String isDeleted);
-    TaPlanWorksheetDtl findByAnalysisNumberAndPlanNumberAndOfficeCodeAndNewRegId(String analysisNumber, String planNumber, String officeCode, String newRegId);
+    List<TaPlanWorksheetDtl> findByAnalysisNumberAndPlanNumberAndOfficeCodeAndIsDeleted(String analysisNumber, String planNumber, String officeCode, String isDeleted);    
 }
