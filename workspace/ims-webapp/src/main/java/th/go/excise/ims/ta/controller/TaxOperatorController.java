@@ -11,6 +11,7 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STAT
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
+import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
 import th.go.excise.ims.ta.service.DraftWorksheetService;
 import th.go.excise.ims.ta.service.PlanWorkSheetService;
 import th.go.excise.ims.ta.service.TaWorksheetHdrService;
@@ -288,5 +289,21 @@ public class TaxOperatorController {
             response.setStatus(RESPONSE_STATUS.FAILED);
         }
         return response;
+    }
+    
+    @PostMapping("/get-plan-ws-send")
+    @ResponseBody
+    public ResponseData<List<TaPlanWorksheetSend>> getPlanWorkSheetSend(@RequestBody TaPlanWorksheetSend form) {
+    	ResponseData<List<TaPlanWorksheetSend>> responseData = new ResponseData<>();
+    	try {
+			responseData.setData(planWorkSheetService.getPlanWorkSheetSend(form));
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+    	return responseData;
     }
 }

@@ -5,8 +5,10 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
+import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetHdrRepository;
+import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetSendRepository;
 import th.go.excise.ims.ta.persistence.repository.jdbc.TaxOperatorJdbcRepository;
 import th.go.excise.ims.ta.vo.PlanWorkSheetVo;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
@@ -26,6 +28,9 @@ public class PlanWorkSheetService {
 
     @Autowired
     private TaPlanWorksheetDtlRepository planWorksheetDtlRepository;
+    
+    @Autowired
+    private TaPlanWorksheetSendRepository planWorksheetSendRepository;
 
     @Autowired
     private WorksheetSequenceService worksheetSequenceService;
@@ -79,5 +84,10 @@ public class PlanWorkSheetService {
     public List<TaPlanWorksheetDtl> findPlanWorkSheetDtl(PlanWorkSheetVo formVo) {
         List<TaPlanWorksheetDtl> list = planWorksheetDtlRepository.findByAnalysisNumberAndPlanNumberAndOfficeCodeAndIsDeleted(formVo.getAnalysisNumber(), formVo.getPlanNumber(), UserLoginUtils.getCurrentUserBean().getOfficeCode(), "N");
         return list;
+    
+    public List<TaPlanWorksheetSend> getPlanWorkSheetSend(TaPlanWorksheetSend form) {
+    	List<TaPlanWorksheetSend> list = new ArrayList<>();
+    	list = planWorksheetSendRepository.findByBudgetYear(form.getBudgetYear());
+    	return list;
     }
 }
