@@ -20,6 +20,7 @@ import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSideDtl;
 import th.go.excise.ims.ia.vo.Int020101NameVo;
 import th.go.excise.ims.ia.vo.Int020101Vo;
 import th.go.excise.ims.ia.vo.Int020101YearVo;
+import th.go.excise.ims.preferences.vo.ExcelHeaderNameVo;
 
 @Repository
 public class IaQuestionnaireSideJdbcRepository {
@@ -121,6 +122,25 @@ public class IaQuestionnaireSideJdbcRepository {
 			vo.setSeq(rs.getBigDecimal("SEQ"));
 			vo.setSeqDtl(rs.getBigDecimal("SEQ_DTL"));
 			vo.setSideDtl(rs.getString("SIDE_DTL"));
+			return vo;
+		}
+	};
+	
+	public List<ExcelHeaderNameVo> findNameByIdHdr(BigDecimal idHdr) {
+		StringBuilder sqlBuilder = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		sqlBuilder.append(" SELECT * FROM  IA_QUESTIONNAIRE_SIDE WHERE 1=1 AND IS_DELETED = 'N' ");
+		sqlBuilder.append(" AND ID_HEAD = ? ");
+		params.add(idHdr);
+		List<ExcelHeaderNameVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), excelHeaderNameMapper);
+		return datas;
+	}
+	
+	private RowMapper<ExcelHeaderNameVo> excelHeaderNameMapper = new RowMapper<ExcelHeaderNameVo>() {
+		@Override
+		public ExcelHeaderNameVo mapRow(ResultSet rs, int arg1) throws SQLException {
+			ExcelHeaderNameVo vo = new ExcelHeaderNameVo();
+			vo.setName(rs.getString("SIDE_NAME"));
 			return vo;
 		}
 	};

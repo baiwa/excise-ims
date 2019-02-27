@@ -69,7 +69,7 @@ public class Int020301JdbcRepository {
 		}
 	};
 	
-	public List<Int020301DataVo> findDataByIdSide(BigDecimal idSide, String budgetYear, String officeCode) {
+	public List<Int020301DataVo> findDataByIdHdr(BigDecimal idHdr, String budgetYear, String officeCode) {
 		StringBuilder sqlBuilder = new StringBuilder();
 		sqlBuilder.append(" SELECT QSR.ID AS ID, ");
 		sqlBuilder.append(" (SELECT COUNT(1) FROM IA_QUESTIONNAIRE_SIDE_DTL QDL ");
@@ -86,7 +86,7 @@ public class Int020301JdbcRepository {
 		List<Object> params = new ArrayList<>();
 		params.add(officeCode);
 		params.add(officeCode);
-		params.add(idSide);
+		params.add(idHdr);
 		params.add(budgetYear);
 		List<Int020301DataVo> data = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), dataRowMapper);
 		return data;

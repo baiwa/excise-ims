@@ -1,7 +1,12 @@
 package th.go.excise.ims.ia.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,15 +27,16 @@ import th.go.excise.ims.ia.vo.Int020301InfoVo;
 @Controller
 @RequestMapping("/api/ia/int02/03/01")
 public class Int020301Controller {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(Int020301Controller.class);
 
 	@Autowired
 	private Int020301Service int020301Service;
-	
+
 	@GetMapping("/header/{idSide}/{budgetYear}")
 	@ResponseBody
-	public ResponseData<List<Int020301HeaderVo>> findHeaderByIdHead(@PathVariable("idSide") String idSideStr, @PathVariable("budgetYear") String budgetYear) {
+	public ResponseData<List<Int020301HeaderVo>> findHeaderByIdHead(@PathVariable("idSide") String idSideStr,
+			@PathVariable("budgetYear") String budgetYear) {
 		ResponseData<List<Int020301HeaderVo>> responseData = new ResponseData<List<Int020301HeaderVo>>();
 		List<Int020301HeaderVo> data = new ArrayList<>();
 		try {
@@ -45,14 +51,15 @@ public class Int020301Controller {
 		}
 		return responseData;
 	}
-	
-	@GetMapping("/info/{idSide}/{budgetYear}")
+
+	@GetMapping("/info/{idHdr}/{budgetYear}")
 	@ResponseBody
-	public ResponseData<List<Int020301InfoVo>> findInfoByIdHead(@PathVariable("idSide") String idSideStr, @PathVariable("budgetYear") String budgetYear) {
+	public ResponseData<List<Int020301InfoVo>> findInfoByIdHead(@PathVariable("idHdr") String idHdrStr,
+			@PathVariable("budgetYear") String budgetYear) {
 		ResponseData<List<Int020301InfoVo>> responseData = new ResponseData<List<Int020301InfoVo>>();
 		List<Int020301InfoVo> data = new ArrayList<>();
 		try {
-			data = int020301Service.findInfoByIdSide(idSideStr, budgetYear);
+			data = int020301Service.findInfoByIdHdr(idHdrStr, budgetYear);
 			responseData.setData(data);
 			responseData.setMessage("SUCCESS");
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
@@ -63,5 +70,23 @@ public class Int020301Controller {
 		}
 		return responseData;
 	}
-	
+
+	@GetMapping("/export/excel/{idHdr}/{budgetYear}")
+	public void export(@PathVariable("idHdr") String idHdrStr, @PathVariable("budgetYear") String budgetYear, HttpServletResponse response) throws Exception {
+		// set fileName
+		String fileName = URLEncoder.encode("บันทึกข้อมูลเบิกจ่าย", "UTF-8");
+
+		// write it as an excel attachment
+		ByteArrayOutputStream outByteStream = int020301Service.exportInt020301(idHdrStr, budgetYear);
+		byte[] outArray = outByteStream.toByteArray();
+		response.setContentType("application/octet-stream");
+		response.setContentLength(outArray.length);
+		response.setHeader("Expires:", "0"); // eliminates browser caching
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+		OutputStream outStream = response.getOutputStream();
+		outStream.write(outArray);
+		outStream.flush();
+		outStream.close();
+	}
+
 }
