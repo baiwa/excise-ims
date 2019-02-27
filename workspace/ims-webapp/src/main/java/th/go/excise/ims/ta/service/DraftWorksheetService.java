@@ -39,6 +39,7 @@ import th.go.excise.ims.ta.util.TaxAuditUtils;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 import th.go.excise.ims.ta.vo.TaxOperatorVo;
+import th.go.excise.ims.ta.vo.YearMonthVo;
 
 @Service
 public class DraftWorksheetService {
@@ -72,7 +73,7 @@ public class DraftWorksheetService {
 		return vo;
 	}
 	
-	public List<TaxOperatorDetailVo> prepareTaxOperatorDetailVoList(TaxOperatorFormVo formVo) {
+	private List<TaxOperatorDetailVo> prepareTaxOperatorDetailVoList(TaxOperatorFormVo formVo) {
 		logger.info("prepareTaxOperatorDetailVoList startDate={}, endDate={}, dateRange={}", formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
 		
 		String ymStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateStart(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
@@ -315,6 +316,22 @@ public class DraftWorksheetService {
 		double min = StatUtils.min(taxAmounts);
 		String taxAmtMinPnt = decimalFormat.format(((min - mean) / mean) * 100);
 		detailVo.setTaxAmtMinPnt(taxAmtMinPnt);
+	}
+	
+	public YearMonthVo monthStartDraft(TaxOperatorFormVo formVo) {
+		YearMonthVo obj = taDraftWorksheetHdrRepository.findMonthStartByDraftNumber(formVo.getDraftNumber());
+
+		String ymStartStr = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(obj.getYearMonthStart(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
+		String ymEndStr = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(obj.getYearMonthEnd(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
+
+		obj.setYearMonthStart(ymStartStr);
+		obj.setYearMonthEnd(ymEndStr);
+		
+		return obj;
+	}
+	
+	public List<String> findAllDraftNumber() {
+		return taDraftWorksheetHdrRepository.findAllDraftNumber();
 	}
 	
 	public void saveDraft(TaxOperatorFormVo formVo) throws SQLException {

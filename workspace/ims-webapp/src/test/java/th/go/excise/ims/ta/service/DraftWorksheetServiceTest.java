@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
-import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
+import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 
 @RunWith(SpringRunner.class)
@@ -36,8 +36,8 @@ public class DraftWorksheetServiceTest {
 		formVo.setStart(0);
 		formVo.setLength(20);
 		
-		List<TaxOperatorDetailVo> taxOperatorDetailVoList = draftWorksheetService.prepareTaxOperatorDetailVoList(formVo);
-		taxOperatorDetailVoList.forEach(System.out::println);
+		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = draftWorksheetService.getPreviewData(formVo).getDatas();
+		taxOperatorDatatableVoList.forEach(System.out::println);
 		
 		long end = System.currentTimeMillis();
 		System.out.println("Process Success, using " + ((float) (end - start) / 1000F) + " seconds");

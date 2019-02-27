@@ -156,7 +156,7 @@ public class TaxOperatorController {
         ResponseData<YearMonthVo> response = new ResponseData<>();
 
         try {
-            response.setData(taxOperatorService.monthStartDraft(formVo));
+            response.setData(draftWorksheetService.monthStartDraft(formVo));
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
@@ -192,7 +192,7 @@ public class TaxOperatorController {
         ResponseData<List<String>> response = new ResponseData<>();
 
         try {
-            response.setData(taxOperatorService.findAllDraftNumber());
+            response.setData(draftWorksheetService.findAllDraftNumber());
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
