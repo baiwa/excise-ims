@@ -28,6 +28,8 @@ public class TaPlanWorksheetHdr extends BaseEntity {
 	private String analysisNumber;
 	@Column(name = "PLAN_NUMBER")
 	private String planNumber;
+	@Column(name = "SEND_ALL_FLAG")
+	private String sendAllFlag;
 	@Column(name = "PLAN_STATUS")
 	private String planStatus;
 	@Column(name = "AUTH_COMMENT")
@@ -65,6 +67,14 @@ public class TaPlanWorksheetHdr extends BaseEntity {
 
 	public void setPlanNumber(String planNumber) {
 		this.planNumber = planNumber;
+	}
+
+	public String getSendAllFlag() {
+		return sendAllFlag;
+	}
+
+	public void setSendAllFlag(String sendAllFlag) {
+		this.sendAllFlag = sendAllFlag;
 	}
 
 	public String getPlanStatus() {
