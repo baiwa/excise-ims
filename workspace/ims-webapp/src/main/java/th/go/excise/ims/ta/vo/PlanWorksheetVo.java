@@ -1,10 +1,12 @@
 package th.go.excise.ims.ta.vo;
 
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
+
 import java.util.List;
 
-public class PlanWorksheetVo {
-	
-    private Boolean typeCheckedAll = false;
+public class PlanWorksheetVo extends DataTableRequest {
+
+    private static final long serialVersionUID = -2970785224520638999L;
     private List<String> ids;
 
     private String budgetYear;
@@ -60,14 +62,6 @@ public class PlanWorksheetVo {
 
     public void setPlanComment(String planComment) {
         this.planComment = planComment;
-    }
-
-    public Boolean getTypeCheckedAll() {
-        return typeCheckedAll;
-    }
-
-    public void setTypeCheckedAll(Boolean typeCheckedAll) {
-        this.typeCheckedAll = typeCheckedAll;
     }
 
     public List<String> getIds() {

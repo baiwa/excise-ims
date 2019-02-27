@@ -1,15 +1,12 @@
 package th.go.excise.ims.ta.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
@@ -18,7 +15,11 @@ import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetSendRepository;
+import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PlanWorksheetService {
@@ -91,4 +92,14 @@ public class PlanWorksheetService {
 		return planWorksheetSendRepository.findByBudgetYear(ExciseUtils.getCurrentBudgetYear());
 	}
 
+	public DataTableAjax<PlanWorksheetDatatableVo> planDtlDatatable(PlanWorksheetVo formVo) {
+
+		DataTableAjax<PlanWorksheetDatatableVo> dataTableAjax = new DataTableAjax<>();
+		dataTableAjax.setData(planWorksheetDtlRepository.planDtlDatatable(formVo));
+		dataTableAjax.setDraw(formVo.getDraw() + 1);
+		dataTableAjax.setRecordsFiltered(planWorksheetDtlRepository.countPlanDtlDatatable(formVo).intValue());
+		dataTableAjax.setRecordsTotal(planWorksheetDtlRepository.countPlanDtlDatatable(formVo).intValue());
+
+		return dataTableAjax;
+	}
 }

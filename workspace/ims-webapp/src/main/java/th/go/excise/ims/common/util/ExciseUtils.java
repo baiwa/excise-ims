@@ -3,9 +3,23 @@ package th.go.excise.ims.common.util;
 import java.time.LocalDate;
 import java.time.chrono.ThaiBuddhistDate;
 import java.time.temporal.ChronoField;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
+
 public class ExciseUtils {
+	
+	private static List<ParamInfo> paramInfoList = null;
+	
+	static {
+		paramInfoList = new ArrayList<>();
+		paramInfoList.addAll(ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.EXCISE_PRODUCT_TYPE));
+		paramInfoList.addAll(ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.EXCISE_SERVICE_TYPE));
+	}
 	
 	public static boolean isCentral(String officeCode) {
 		return isValidOfficeCode(officeCode) && "00".equals(officeCode.substring(0, 2));
@@ -52,4 +66,12 @@ public class ExciseUtils {
 		return String.valueOf(budgetYear);
 	}
 	
+	public static String getDutyDesc(String dutyCode){
+		for (ParamInfo paramInfo : paramInfoList) {
+			if (paramInfo.getParamCode().equals(dutyCode)) {
+				return paramInfo.getValue1();				
+			}
+		}
+		return null;
+	}
 }

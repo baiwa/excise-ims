@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
@@ -23,11 +24,7 @@ import th.go.excise.ims.ta.service.DraftWorksheetService;
 import th.go.excise.ims.ta.service.PlanWorksheetService;
 import th.go.excise.ims.ta.service.TaWorksheetHdrService;
 import th.go.excise.ims.ta.service.TaxOperatorService;
-import th.go.excise.ims.ta.vo.CondGroupVo;
-import th.go.excise.ims.ta.vo.PlanWorksheetVo;
-import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
-import th.go.excise.ims.ta.vo.TaxOperatorVo;
-import th.go.excise.ims.ta.vo.YearMonthVo;
+import th.go.excise.ims.ta.vo.*;
 
 @Controller
 @RequestMapping("/api/ta/tax-operator")
@@ -255,7 +252,6 @@ public class TaxOperatorController {
     @ResponseBody
     public ResponseData<TaPlanWorksheetHdr> CheckBudgetPlanHeader(@RequestBody PlanWorksheetVo formVo) {
         ResponseData<TaPlanWorksheetHdr> response = new ResponseData<>();
-        
         try {
             response.setData(planWorksheetService.getPlanWorksheetHdr(formVo));
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
@@ -323,4 +319,9 @@ public class TaxOperatorController {
     	return responseData;
     }
     
+    @PostMapping("/plan-selected-dtl")
+    @ResponseBody
+    public DataTableAjax<PlanWorksheetDatatableVo> planDtlDatatable(@RequestBody PlanWorksheetVo formVo){
+    	return planWorksheetService.planDtlDatatable(formVo);
+    }
 }
