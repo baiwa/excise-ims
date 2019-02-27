@@ -55,6 +55,7 @@ public class Int030102JdbcRepository {
 		params.add(form.getBudgetYear());
 		params.add(form.getInspectionWork());	
 		params.add(form.getBudgetYear());
+		sql.append(" ORDER BY a.CREATED_DATE,a.ID ASC");
 		iaRiskFactorsMasterList = commonJdbcTemplate.query(sql.toString(), params.toArray(), listRowmapper);
 		return iaRiskFactorsMasterList;
 	}
@@ -118,7 +119,6 @@ public class Int030102JdbcRepository {
 				"  AND b.status = 'Y') ");
 		commonJdbcTemplate.update(sqlUpdateN.toString(), new Object[] { form.getBudgetYear() });
 		commonJdbcTemplate.update(sqlUpdateY.toString(), new Object[] { form.getBudgetYear(),form.getBudgetYearTo(),form.getInspectionWork()});
-
 
 	}
 

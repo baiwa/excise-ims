@@ -107,12 +107,30 @@ public class Int030102Controller {
 		return response;
 	}
 	
-	@PostMapping("/saveRFLAndUpdateStatus")
+	@PostMapping("/saveRiskFactorsLevel")
 	@ResponseBody
-	public ResponseData<String> saveRiskFactorsLevelAndUpdateStatus(@RequestBody Int030102FormVo form) {
+	public ResponseData<String> saveRiskFactorsLevel(@RequestBody Int030102FormVo form) {
 		ResponseData<String> response = new ResponseData<String>();
 		try {	
-			int030102Service.saveRiskFactorsLevelAndUpdateStatus(form);
+			int030102Service.saveRiskFactorsLevel(form);
+			response.setData("SUCCESS");
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+
+		} catch (Exception e) {
+			logger.error("Int030102Controller saveRiskFactorsLevelAndUpdateStatus : ", e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	@PostMapping("/updateStatus")
+	@ResponseBody
+	public ResponseData<String> updateStatus(@RequestBody Int030102FormVo form) {
+		ResponseData<String> response = new ResponseData<String>();
+		try {	
+			int030102Service.updateStatus(form);
 			response.setData("SUCCESS");
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
