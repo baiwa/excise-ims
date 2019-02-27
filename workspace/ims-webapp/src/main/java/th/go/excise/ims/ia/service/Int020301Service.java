@@ -73,16 +73,17 @@ public class Int020301Service {
 			data.setFailValue(new BigDecimal(failValue));
 			// Finding Sector and Area Name
 			List<ExciseDept> exciseDepts = ApplicationCache.getExciseSectorList();
-			ExciseDept exciseDepart = ApplicationCache.getExciseDept(data.getAreaName());
-			String area = exciseDepart.getDeptName();
-			data.setAreaName(area);
 			data.setStatusText(IA.qtnStatus(data.getStatusText()));
 			for (ExciseDept exciseDept : exciseDepts) {
 				if (exciseDept.getOfficeCode().substring(0, 2).equals(data.getSectorName().substring(0, 2))) {
 					data.setSectorName(exciseDept.getDeptName());
 				}
 			}
-
+			for (ExciseDept exciseDept : exciseDepts) {
+				if (exciseDept.getOfficeCode().substring(2, 4).equals(data.getAreaName().substring(2, 4))) {
+					data.setAreaName(exciseDept.getDeptName());
+				}
+			}
 		}
 		return datas;
 	}
