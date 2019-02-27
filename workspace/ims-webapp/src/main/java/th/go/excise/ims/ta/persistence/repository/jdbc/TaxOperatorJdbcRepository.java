@@ -7,16 +7,13 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
-import th.go.excise.ims.ta.vo.PlanWorkSheetVo;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 
@@ -130,76 +127,6 @@ public class TaxOperatorJdbcRepository {
         params.add(officeCode);
         String limit = OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength());
         return commonJdbcTemplate.query(limit, params.toArray(), taxOperatorrowMapper);
-    }
-
-    public List<TaxOperatorDetailVo> getTaxOperatorFromSelect(PlanWorkSheetVo formVo) {
-
-        StringBuilder sql = new StringBuilder();
-        sql.append(" SELECT R4000.CUS_FULLNAME ");
-        sql.append("   ,R4000.FAC_FULLNAME ");
-        sql.append("   ,R4000.FAC_ADDRESS ");
-        sql.append("   ,R4000.OFFICE_CODE OFFICE_CODE_R4000");
-        sql.append("   ,ED_SECTOR.OFFICE_CODE SEC_CODE ");
-        sql.append("   ,ED_SECTOR.DEPT_SHORT_NAME SEC_DESC ");
-        sql.append("   ,ED_AREA.OFFICE_CODE AREA_CODE ");
-        sql.append("   ,ED_AREA.DEPT_SHORT_NAME AREA_DESC ");
-        sql.append("   ,TA_W_DTL.COND_MAIN_GRP ");
-        sql.append("   , TA_W_HDR.ANALYSIS_NUMBER");
-        sql.append("   ,TA_DW_DTL.* ");
-        sql.append(" FROM TA_WORKSHEET_DTL TA_W_DTL ");
-        sql.append(" INNER JOIN TA_WORKSHEET_HDR TA_W_HDR ON TA_W_DTL.ANALYSIS_NUMBER = TA_W_HDR.ANALYSIS_NUMBER ");
-        sql.append("   AND TA_W_DTL.IS_DELETED = 'N' ");
-        sql.append(" INNER JOIN TA_DRAFT_WORKSHEET_DTL TA_DW_DTL ON TA_DW_DTL.DRAFT_NUMBER = TA_W_HDR.DRAFT_NUMBER ");
-        sql.append("   AND TA_DW_DTL.NEW_REG_ID = TA_W_DTL.NEW_REG_ID ");
-        sql.append("   AND TA_DW_DTL.IS_DELETED = 'N' ");
-        sql.append(" INNER JOIN TA_WS_REG4000 R4000 ON R4000.NEW_REG_ID = TA_W_DTL.NEW_REG_ID ");
-        sql.append("   AND R4000.IS_DELETED = 'N' ");
-        sql.append(" INNER JOIN ( ");
-        sql.append("   SELECT OFFICE_CODE,DEPT_NAME,DEPT_SHORT_NAME ");
-        sql.append("   FROM EXCISE_DEPARTMENT ");
-        sql.append("   WHERE IS_DELETED = 'N' ");
-        sql.append("     AND CONCAT (SUBSTR(OFFICE_CODE, 0, 2),'0000') = OFFICE_CODE ");
-        sql.append(" ) ED_SECTOR ON ED_SECTOR.OFFICE_CODE = CONCAT (SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000') ");
-        sql.append(" INNER JOIN ( ");
-        sql.append("   SELECT OFFICE_CODE,DEPT_NAME,DEPT_SHORT_NAME ");
-        sql.append("   FROM EXCISE_DEPARTMENT ");
-        sql.append("   WHERE IS_DELETED = 'N' ");
-        sql.append("     AND CONCAT (SUBSTR(OFFICE_CODE, 0, 4),'00') = OFFICE_CODE ");
-        sql.append(" ) ED_AREA ON ED_AREA.OFFICE_CODE = CONCAT (SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
-        sql.append(" WHERE TA_W_HDR.IS_DELETED = 'N' ");
-        sql.append("   AND TA_W_HDR.ANALYSIS_NUMBER = ? ");
-        // sql.append("   AND TA_W_HDR.OFFICE_CODE = '010000' ");
-
-        List<Object> params = new ArrayList<>();
-        params.add(formVo.getAnalysisNumber());
-
-        if (formVo.getTypeCheckedAll()) {
-            if (formVo.getIds().size() != 0) {
-                sql.append(" AND TA_DW_DTL.NEW_REG_ID NOT IN (");
-                for (int i = 0; i < formVo.getIds().size(); i++) {
-                    sql.append("?");
-                    params.add(formVo.getIds().get(i));
-                    if (i == formVo.getIds().size() - 1) {
-                        sql.append(")");
-                    } else {
-                        sql.append(",");
-                    }
-                }
-            }
-        } else {
-            sql.append(" AND TA_DW_DTL.NEW_REG_ID IN (");
-            for (int i = 0; i < formVo.getIds().size(); i++) {
-                sql.append("?");
-                params.add(formVo.getIds().get(i));
-                if (i == formVo.getIds().size() - 1) {
-                    sql.append(")");
-                } else {
-                    sql.append(",");
-                }
-            }
-        }
-        List<TaxOperatorDetailVo> list = commonJdbcTemplate.query(sql.toString(), params.toArray(), taxOperatorrowMapper);
-        return list;
     }
 
     protected RowMapper<TaxOperatorDetailVo> taxOperatorrowMapper = new RowMapper<TaxOperatorDetailVo>() {

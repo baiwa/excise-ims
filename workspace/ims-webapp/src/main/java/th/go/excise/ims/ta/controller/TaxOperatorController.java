@@ -247,7 +247,7 @@ public class TaxOperatorController {
         ResponseData<TaPlanWorksheetHdr> response = new ResponseData<>();
 
         try {
-            response.setData(planWorkSheetService.checkBudgetPlanHeader(formVo));
+            response.setData(planWorkSheetService.getPlanWorksheetHdr(formVo));
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
