@@ -6,35 +6,44 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.go.excise.ims.ia.controller.Int030102Controller;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
+import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsData;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsStatus;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsMasterRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsStatusRepository;
+import th.go.excise.ims.ia.persistence.repository.jdbc.int030101JdbcRepository;
+import th.go.excise.ims.ia.util.ExcalUtil;
 import th.go.excise.ims.ia.vo.Int030101FormVo;
+import th.go.excise.ims.ia.vo.Int030101Vo;
+import th.go.excise.ims.ia.vo.Int0301FormVo;
+import th.go.excise.ims.ia.vo.Int0301Vo;
 
 @Service
 public class Int030101Service {
-//	@Autowired
-//	private int030101JdbcRepository int030101JdbcRepository;
+	private Logger logger = LoggerFactory.getLogger(Int030101Service.class);
+
+	@Autowired
+	private int030101JdbcRepository int030101JdbcRepository;
 
 	@Autowired
 	private IaRiskFactorsMasterRepository iaRiskFactorsMasterRepository;
@@ -48,70 +57,13 @@ public class Int030101Service {
 	@Autowired
 	private IaRiskFactorsStatusRepository iaRiskFactorsStatusRepository;
 
-	private CellStyle thStyle;
-	private CellStyle cellCenter;
-	private CellStyle cellRight;
-	private CellStyle cellLeft;
+	@Autowired
+	private Int0301Service int0301Service;
 
-	private CellStyle topCenter;
-	private CellStyle topRight;
-	private CellStyle topLeft;
-	private Font fontHeader;
+	@Autowired
+	private ExcalUtil excalUtil;
 
-	private XSSFWorkbook setUpExcel() {
-		XSSFWorkbook workbook = new XSSFWorkbook();
-
-		thStyle = workbook.createCellStyle();
-		thStyle.setAlignment(HorizontalAlignment.CENTER);
-		thStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-		thStyle.setBorderBottom(BorderStyle.THIN);
-		thStyle.setBorderLeft(BorderStyle.THIN);
-		thStyle.setBorderRight(BorderStyle.THIN);
-		thStyle.setBorderTop(BorderStyle.THIN);
-		thStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
-		thStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-		cellCenter = workbook.createCellStyle();
-		cellCenter.setAlignment(HorizontalAlignment.CENTER);
-		cellCenter.setVerticalAlignment(VerticalAlignment.TOP);
-		cellCenter.setBorderBottom(BorderStyle.THIN);
-		cellCenter.setBorderLeft(BorderStyle.THIN);
-		cellCenter.setBorderRight(BorderStyle.THIN);
-		cellCenter.setBorderTop(BorderStyle.THIN);
-
-		cellRight = workbook.createCellStyle();
-		cellRight.setAlignment(HorizontalAlignment.RIGHT);
-		cellRight.setVerticalAlignment(VerticalAlignment.TOP);
-		cellRight.setBorderBottom(BorderStyle.THIN);
-		cellRight.setBorderLeft(BorderStyle.THIN);
-		cellRight.setBorderRight(BorderStyle.THIN);
-		cellRight.setBorderTop(BorderStyle.THIN);
-
-		cellLeft = workbook.createCellStyle();
-		cellLeft.setAlignment(HorizontalAlignment.LEFT);
-		cellLeft.setVerticalAlignment(VerticalAlignment.TOP);
-		cellLeft.setBorderBottom(BorderStyle.THIN);
-		cellLeft.setBorderLeft(BorderStyle.THIN);
-		cellLeft.setBorderRight(BorderStyle.THIN);
-		cellLeft.setBorderTop(BorderStyle.THIN);
-		cellLeft.setWrapText(true);
-
-		fontHeader = workbook.createFont();
-		fontHeader.setBold(true);
-
-		topCenter = workbook.createCellStyle();
-		topCenter.setAlignment(HorizontalAlignment.CENTER);
-		topCenter.setFont(fontHeader);
-
-		topRight = workbook.createCellStyle();
-		topRight.setAlignment(HorizontalAlignment.RIGHT);
-
-		topLeft = workbook.createCellStyle();
-		topLeft.setAlignment(HorizontalAlignment.LEFT);
-		return workbook;
-	}
-
-	public void saveFactors(Int030101FormVo form) {
+	public Int030101Vo saveFactors(Int030101FormVo form) {
 		// Save IaRiskFactorsMaster
 		IaRiskFactorsMaster dataFactorsMaster = new IaRiskFactorsMaster();
 		dataFactorsMaster.setBudgetYear(form.getBudgetYear());
@@ -146,16 +98,41 @@ public class Int030101Service {
 				.setStartDate(ConvertDateUtils.parseStringToDate(form.getDateFrom(), ConvertDateUtils.DD_MM_YYYY));// ,
 																													// ConvertDateUtils.LOCAL_TH
 		dataFactorsConfig.setEndDate(ConvertDateUtils.parseStringToDate(form.getDateTo(), ConvertDateUtils.DD_MM_YYYY));
-		dataFactorsConfig.setInfoUsedRiskDesc(form.getDataName());
+//		dataFactorsConfig.setInfoUsedRiskDesc(form.getDataName());
 		dataFactorsConfig.setInfoUsedRisk("1");
-		dataFactorsConfig.setFactorsLevel(new BigDecimal(3));
-		iaRiskFactorsConfigRepository.save(dataFactorsConfig);
+//
+		Int0301FormVo form0301 = new Int0301FormVo();
+		form0301.setBudgetYear(form.getBudgetYear());
+		form0301.setInspectionWork(form.getInspectionWork());
+		BigDecimal factorsLevels = new BigDecimal(3);
+		List<Int0301Vo> int0301VoList = int0301Service.listdynamic(form0301);
+		for (Int0301Vo int0301Vo : int0301VoList) {
+			if (int0301Vo.getIaRiskFactorsConfig().getFactorsLevel() != null) {
+				factorsLevels = int0301Vo.getIaRiskFactorsConfig().getFactorsLevel();
+				break;
+			}
+		}
+//		BigDecimal factorsLevels = int030101JdbcRepository.getFactorsLevel(form);
+		dataFactorsConfig.setFactorsLevel(factorsLevels);
+		IaRiskFactorsConfig dataFactorsFacRes = iaRiskFactorsConfigRepository.save(dataFactorsConfig);
+
+		Int030101Vo res = new Int030101Vo();
+		Int030101FormVo formVo = new Int030101FormVo();
+		res.setIdFactor(dataFactorsRes.getId());
+		formVo.setRiskFactorsMaster(form.getRiskFactorsMaster());
+		formVo.setSide(form.getSide());
+		formVo.setDateFrom(form.getDateFrom());
+		formVo.setDateTo(form.getDateTo());
+		formVo.setRiskUnit(form.getRiskUnit());
+
+		res.setInt030101FormVo(formVo);
+		return res;
 	}
 
 	public ByteArrayOutputStream exportInt030101() throws IOException {
 		/* create spreadsheet */
 		List<IaRiskFactorsMaster> dataFactorsMasterList = new ArrayList<IaRiskFactorsMaster>();
-		XSSFWorkbook workbook = setUpExcel();
+		XSSFWorkbook workbook = excalUtil.setUpExcel();
 		Sheet sheet = workbook.createSheet();
 		int rowNum = 0;
 		int cellNum = 0;
@@ -168,7 +145,7 @@ public class Int030101Service {
 		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH1[cellNum]);
-			cell.setCellStyle(thStyle);
+			cell.setCellStyle(excalUtil.thStyle);
 		}
 
 		/* set sheet */
@@ -187,11 +164,16 @@ public class Int030101Service {
 		rowNum = 1;
 		cellNum = 0;
 		int no = 1;
-		for (IaRiskFactorsMaster item : dataFactorsMasterList) {
+		List<String> dataList = getdataList();
+		for (String item : dataList) {
 			row = sheet.createRow(rowNum);
 			// No.
 			cell = row.createCell(cellNum);
 			cell.setCellValue(no);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(item);
 			cellNum++;
 
 			no++;
@@ -206,6 +188,44 @@ public class Int030101Service {
 		workbook.write(outByteStream);
 
 		return outByteStream;
+	}
+
+	public List<String> getdataList() {
+		List<String> dataList = new ArrayList<String>();
+		dataList.add("แผนหลักเกณฑ์การประเมินผลการปฏิบัติราชการ	");
+		dataList.add("โครงการตามยุทธศาตร์	");
+		dataList.add("แผนบริหารความเสี่ยง	");
+		return dataList;
+	}
+
+	public List<IaRiskFactorsData> readFileExcel(Int030101FormVo form) throws Exception {
+		List<IaRiskFactorsData> dataUploadList = new ArrayList<IaRiskFactorsData>();
+		MultipartFile file = form.getFile();
+		Workbook workbook = WorkbookFactory.create(file.getInputStream());
+		DataFormatter dataFormatter = new DataFormatter();
+
+		for (Sheet sheet : workbook) {
+			for (Row row : sheet) {
+
+				if (row.getRowNum() == 0) {
+					continue; // just skip the rows if row number is 0 (Header)
+				}
+
+				IaRiskFactorsData dataUpload = new IaRiskFactorsData();
+//				logger.info("row : " , ());
+
+				int columns = 1;
+				// dataUpload.setIdFactors(new
+				// BigDecimal(dataFormatter.formatCellValue(row.getCell(columns++))));
+				// dataUpload.setBudgetYear(dataFormatter.formatCellValue(row.getCell(columns++)));
+				dataUpload.setProject(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
+				// dataUpload.setInspectionWork(new
+				// BigDecimal(dataFormatter.formatCellValue(row.getCell(columns++))));
+
+				dataUploadList.add(dataUpload);
+			}
+		}
+		return dataUploadList;
 	}
 
 }

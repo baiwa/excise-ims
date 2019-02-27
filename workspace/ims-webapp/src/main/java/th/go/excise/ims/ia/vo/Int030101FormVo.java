@@ -2,6 +2,8 @@ package th.go.excise.ims.ia.vo;
 
 import java.math.BigDecimal;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Int030101FormVo {
 	private String budgetYear;
 	private BigDecimal inspectionWork;
@@ -11,6 +13,7 @@ public class Int030101FormVo {
 	private String dateTo;
 	private String side;
 	private String riskUnit;
+	private MultipartFile file;
 
 	public String getBudgetYear() {
 		return budgetYear;
@@ -75,5 +78,15 @@ public class Int030101FormVo {
 	public void setRiskUnit(String riskUnit) {
 		this.riskUnit = riskUnit;
 	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+	
+	
 
 }
