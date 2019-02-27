@@ -43,27 +43,27 @@ public class PlanWorksheetService {
 	private TaWorksheetDtlRepository taWorksheetDtlRepository;
 
 	@Autowired
-	private TaPlanWorksheetHdrRepository planWorksheetHdrRepository;
+	private TaPlanWorksheetHdrRepository taPlanWorksheetHdrRepository;
 	@Autowired
-	private TaPlanWorksheetDtlRepository planWorksheetDtlRepository;
+	private TaPlanWorksheetDtlRepository taPlanWorksheetDtlRepository;
 	@Autowired
-	private TaPlanWorksheetSendRepository planWorksheetSendRepository;
+	private TaPlanWorksheetSendRepository taPlanWorksheetSendRepository;
 
 	public TaPlanWorksheetHdr getPlanWorksheetHdr(PlanWorksheetVo formVo) {
 		logger.info("getPlanWorksheetHdr budgetYear={}", formVo.getBudgetYear());
-		return planWorksheetHdrRepository.findByBudgetYear(formVo.getBudgetYear());
+		return taPlanWorksheetHdrRepository.findByBudgetYear(formVo.getBudgetYear());
 	}
 
 	public void savePlanWorksheetHdr(PlanWorksheetVo formVo) {
-		logger.info("savePlanWorkSheetHdr formVo={}", ToStringBuilder.reflectionToString(formVo, ToStringStyle.JSON_STYLE));
-		
 		String planNumber = worksheetSequenceService.getPlanNumber(UserLoginUtils.getCurrentUserBean().getOfficeCode(), formVo.getBudgetYear());
+		logger.info("savePlanWorksheetHdr planNumber={}", planNumber);
 		
-		TaPlanWorksheetHdr plantHdr = new TaPlanWorksheetHdr();
-		plantHdr.setAnalysisNumber(formVo.getAnalysisNumber());
-		plantHdr.setBudgetYear(formVo.getBudgetYear());
-		plantHdr.setPlanNumber(planNumber);
-		planWorksheetHdrRepository.save(plantHdr);
+		TaPlanWorksheetHdr planHdr = new TaPlanWorksheetHdr();
+		planHdr.setAnalysisNumber(formVo.getAnalysisNumber());
+		planHdr.setBudgetYear(formVo.getBudgetYear());
+		planHdr.setPlanNumber(planNumber);
+		planHdr.setSendAllFlag(formVo.getSendAllFlag());
+		taPlanWorksheetHdrRepository.save(planHdr);
 		
 		// Add more logic for support Send All and Send Hierarchy
 		List<TaPlanWorksheetSend> planSendList = new ArrayList<>();
@@ -98,7 +98,7 @@ public class PlanWorksheetService {
 			planSend.setSendDate(LocalDate.now());
 			planSendList.add(planSend);
 		}
-		planWorksheetSendRepository.saveAll(planSendList);
+		taPlanWorksheetSendRepository.saveAll(planSendList);
 	}
 
 	@Transactional
@@ -107,7 +107,7 @@ public class PlanWorksheetService {
 
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 
-		List<String> planNewRegIdList = planWorksheetDtlRepository.findByPlanNumberAndOfficeCodeWithoutIsDeletedFlag(formVo.getPlanNumber(), officeCode);
+		List<String> planNewRegIdList = taPlanWorksheetDtlRepository.findByPlanNumberAndOfficeCodeWithoutIsDeletedFlag(formVo.getPlanNumber(), officeCode);
 		List<String> selectNewRegIdList = formVo.getIds();
 
 		// Keep New and Delete newRegId list
@@ -138,7 +138,7 @@ public class PlanWorksheetService {
 				planDtl.setAnalysisNumber(formVo.getAnalysisNumber());
 				planDtl.setOfficeCode(officeCode);
 				planDtl.setNewRegId(newRegId);
-				planWorksheetDtlRepository.save(planDtl);
+				taPlanWorksheetDtlRepository.save(planDtl);
 
 				worksheetDtl = taWorksheetDtlRepository.findByAnalysisNumberAndNewRegId(formVo.getAnalysisNumber(), newRegId);
 				if (ExciseUtils.isCentral(officeCode)) {
@@ -161,7 +161,7 @@ public class PlanWorksheetService {
 		LocalDate selDate = null;
 		if (CollectionUtils.isNotEmpty(updateNewRegIdList)) {
 			for (String newRegId : updateNewRegIdList) {
-				planDtl = planWorksheetDtlRepository.findByPlanNumberAndNewRegIdWithoutIsDeletedFlag(formVo.getPlanNumber(), newRegId);
+				planDtl = taPlanWorksheetDtlRepository.findByPlanNumberAndNewRegIdWithoutIsDeletedFlag(formVo.getPlanNumber(), newRegId);
 				if (FLAG.N_FLAG.equals(planDtl.getIsDeleted())) {
 					isDeletedPlanDtl = FLAG.Y_FLAG;
 					selFlag = null;
@@ -171,7 +171,7 @@ public class PlanWorksheetService {
 					selFlag = FLAG.Y_FLAG;
 					selDate = LocalDate.now();
 				}
-				planWorksheetDtlRepository.updateIsDeletedByPlanNumberAndNewRegId(isDeletedPlanDtl, formVo.getPlanNumber(), newRegId);
+				taPlanWorksheetDtlRepository.updateIsDeletedByPlanNumberAndNewRegId(isDeletedPlanDtl, formVo.getPlanNumber(), newRegId);
 
 				worksheetDtl = taWorksheetDtlRepository.findByAnalysisNumberAndNewRegId(formVo.getAnalysisNumber(), newRegId);
 				if (ExciseUtils.isCentral(officeCode)) {
@@ -192,17 +192,18 @@ public class PlanWorksheetService {
 	public List<TaPlanWorksheetDtl> findPlanWorksheetDtl(PlanWorksheetVo formVo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		logger.info("findPlanWorkSheetDtl planNumber={}, officeCode={}", formVo.getPlanNumber(), officeCode);
-		return planWorksheetDtlRepository.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), officeCode);
+		return taPlanWorksheetDtlRepository.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), officeCode);
 	}
 
 
 	public DataTableAjax<PlanWorksheetDatatableVo> planDtlDatatable(PlanWorksheetVo formVo) {
 
 		DataTableAjax<PlanWorksheetDatatableVo> dataTableAjax = new DataTableAjax<>();
-		dataTableAjax.setData(planWorksheetDtlRepository.planDtlDatatable(formVo));
+		dataTableAjax.setData(taPlanWorksheetDtlRepository.findByCriteria(formVo));
 		dataTableAjax.setDraw(formVo.getDraw() + 1);
-		dataTableAjax.setRecordsFiltered(planWorksheetDtlRepository.countPlanDtlDatatable(formVo).intValue());
-		dataTableAjax.setRecordsTotal(planWorksheetDtlRepository.countPlanDtlDatatable(formVo).intValue());
+		int count = taPlanWorksheetDtlRepository.countByCriteria(formVo).intValue();
+		dataTableAjax.setRecordsFiltered(count);
+		dataTableAjax.setRecordsTotal(count);
 
 		return dataTableAjax;
 	}
@@ -211,9 +212,9 @@ public class PlanWorksheetService {
 	public void deletePlanWorksheetDlt(String id) {
 		logger.info("deletePlanWorksheetDlt by ID : {}", id);
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
-		TaPlanWorksheetHdr planHdr = planWorksheetHdrRepository.findByBudgetYear(budgetYear);
+		TaPlanWorksheetHdr planHdr = taPlanWorksheetHdrRepository.findByBudgetYear(budgetYear);
 		if (planHdr != null) {
-			planWorksheetDtlRepository.deleteByPlanNumberAndNewRegId(planHdr.getPlanNumber(), id);
+			taPlanWorksheetDtlRepository.deleteByPlanNumberAndNewRegId(planHdr.getPlanNumber(), id);
 		}
 	}
 

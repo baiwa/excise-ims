@@ -8,14 +8,14 @@ public class TaxDratfVo extends TaWsReg4000 {
 
 	private static final long serialVersionUID = 6016709334408153017L;
 
-	private BigDecimal taxMonthNo;
+	private Integer taxMonthNo;
 	private BigDecimal taxAmtChnPnt;
 
-	public BigDecimal getTaxMonthNo() {
+	public Integer getTaxMonthNo() {
 		return taxMonthNo;
 	}
 
-	public void setTaxMonthNo(BigDecimal taxMonthNo) {
+	public void setTaxMonthNo(Integer taxMonthNo) {
 		this.taxMonthNo = taxMonthNo;
 	}
 

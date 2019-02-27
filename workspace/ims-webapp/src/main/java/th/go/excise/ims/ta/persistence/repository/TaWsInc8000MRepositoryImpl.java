@@ -16,7 +16,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.go.excise.ims.ta.persistence.entity.TaWsInc8000M;
 
-public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MCustom {
+public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TaWsInc8000MRepositoryImpl.class);
 	

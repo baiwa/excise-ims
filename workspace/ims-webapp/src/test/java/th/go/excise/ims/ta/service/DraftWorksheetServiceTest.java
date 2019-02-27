@@ -56,7 +56,7 @@ public class DraftWorksheetServiceTest {
 		formVo.setStart(0);
 		formVo.setLength(0);
 		try {
-			draftWorksheetService.saveDraft(formVo);
+			draftWorksheetService.saveDraftWorksheet(formVo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

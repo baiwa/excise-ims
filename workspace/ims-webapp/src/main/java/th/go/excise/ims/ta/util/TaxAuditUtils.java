@@ -1,6 +1,8 @@
 package th.go.excise.ims.ta.util;
 
 import java.lang.reflect.InvocationTargetException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
@@ -114,6 +117,51 @@ public class TaxAuditUtils {
 		}
 
 		return taxAmt;
+	}
+	
+	public static void commonSelectionWorksheetRowMapper(TaxOperatorDetailVo vo, ResultSet rs) throws SQLException {
+		vo.setNewRegId(rs.getString("NEW_REG_ID"));
+		vo.setCusFullname(rs.getString("CUS_FULLNAME"));
+		vo.setFacFullname(rs.getString("FAC_FULLNAME"));
+		vo.setFacAddress(rs.getString("FAC_ADDRESS"));
+		vo.setOfficeCode(rs.getString("OFFICE_CODE_R4000"));
+		vo.setSecCode(rs.getString("SEC_CODE"));
+		vo.setSecDesc(rs.getString("SEC_DESC"));
+		vo.setAreaCode(rs.getString("AREA_CODE"));
+		vo.setAreaDesc(rs.getString("AREA_DESC"));
+		vo.setSumTaxAmtG1(rs.getString("SUM_TAX_AMT_G1"));
+		vo.setSumTaxAmtG2(rs.getString("SUM_TAX_AMT_G2"));
+		vo.setTaxAmtChnPnt(rs.getString("TAX_AMT_CHN_PNT"));
+		vo.setTaxMonthNo(rs.getString("TAX_MONTH_NO"));
+		vo.setTaxAmtG1M1(rs.getString("TAX_AMT_G1_M1"));
+		vo.setTaxAmtG1M2(rs.getString("TAX_AMT_G1_M2"));
+		vo.setTaxAmtG1M3(rs.getString("TAX_AMT_G1_M3"));
+		vo.setTaxAmtG1M4(rs.getString("TAX_AMT_G1_M4"));
+		vo.setTaxAmtG1M5(rs.getString("TAX_AMT_G1_M5"));
+		vo.setTaxAmtG1M6(rs.getString("TAX_AMT_G1_M6"));
+		vo.setTaxAmtG1M7(rs.getString("TAX_AMT_G1_M7"));
+		vo.setTaxAmtG1M8(rs.getString("TAX_AMT_G1_M8"));
+		vo.setTaxAmtG1M9(rs.getString("TAX_AMT_G1_M9"));
+		vo.setTaxAmtG1M10(rs.getString("TAX_AMT_G1_M10"));
+		vo.setTaxAmtG1M11(rs.getString("TAX_AMT_G1_M11"));
+		vo.setTaxAmtG1M12(rs.getString("TAX_AMT_G1_M12"));
+		vo.setTaxAmtG2M1(rs.getString("TAX_AMT_G2_M1"));
+		vo.setTaxAmtG2M2(rs.getString("TAX_AMT_G2_M2"));
+		vo.setTaxAmtG2M3(rs.getString("TAX_AMT_G2_M3"));
+		vo.setTaxAmtG2M4(rs.getString("TAX_AMT_G2_M4"));
+		vo.setTaxAmtG2M5(rs.getString("TAX_AMT_G2_M5"));
+		vo.setTaxAmtG2M6(rs.getString("TAX_AMT_G2_M6"));
+		vo.setTaxAmtG2M7(rs.getString("TAX_AMT_G2_M7"));
+		vo.setTaxAmtG2M8(rs.getString("TAX_AMT_G2_M8"));
+		vo.setTaxAmtG2M9(rs.getString("TAX_AMT_G2_M9"));
+		vo.setTaxAmtG2M10(rs.getString("TAX_AMT_G2_M10"));
+		vo.setTaxAmtG2M11(rs.getString("TAX_AMT_G2_M11"));
+		vo.setTaxAmtG2M12(rs.getString("TAX_AMT_G2_M12"));
+		vo.setTaxAmtSd(rs.getString("TAX_AMT_SD"));
+		vo.setTaxAmtMean(rs.getString("TAX_AMT_MEAN"));
+		vo.setTaxAmtMaxPnt(rs.getString("TAX_AMT_MAX_PNT"));
+		vo.setTaxAmtMinPnt(rs.getString("TAX_AMT_MIN_PNT"));
+		vo.setDutyName(ExciseUtils.getDutyDesc(rs.getString("DUTY_CODE")));
 	}
 	
 }

@@ -9,7 +9,7 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRepository;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
 
-public interface TaWorksheetHdrRepository extends CommonJpaCrudRepository<TaWorksheetHdr, Long>, TaWorksheetHdrCustom {
+public interface TaWorksheetHdrRepository extends CommonJpaCrudRepository<TaWorksheetHdr, Long>, TaWorksheetHdrRepositoryCustom {
 
 	@Query("select new java.lang.String(e.analysisNumber) from #{#entityName} e " +
 			"where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode " +

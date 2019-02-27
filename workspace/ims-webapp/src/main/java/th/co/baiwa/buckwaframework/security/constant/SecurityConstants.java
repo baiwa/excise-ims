@@ -32,6 +32,7 @@ public class SecurityConstants {
 	
 	public static final class SYSTEM_USER {
 		public static final String SYSTEM = "SYSTEM";
+		public static final String BATCH = "BATCH";
 	}
 	
 }

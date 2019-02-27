@@ -2,7 +2,6 @@ package th.go.excise.ims.ta.service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -88,13 +87,8 @@ public class SyncWebServiceTaxAuditSelectFactoryService {
 					}
 					taWsReg4000List.add(taWsReg4000);
 				}
-				try {
-					taWsReg4000Repository.insertBatch(taWsReg4000List);
-					logger.info("Add to taWsReg4000 : {completed}");
-				} catch (SQLException e) {
-					logger.error(e.getMessage());
-					e.printStackTrace();
-				}
+				taWsReg4000Repository.batchInsert(taWsReg4000List);
+				logger.info("Add to taWsReg4000 : {completed}");
 			} else {
 				logger.info("ws 4000 no response data", regMaster60List.size());
 			}
@@ -139,13 +133,8 @@ public class SyncWebServiceTaxAuditSelectFactoryService {
 					taWsInc8000.setCreatedBy(SecurityConstants.SYSTEM_USER.SYSTEM);
 					taWsInc8000List.add(taWsInc8000);
 				}
-				try {
-					taWsInc8000Repository.insertBatchList(taWsInc8000List);
-					logger.info("Add to taWsInc8000 : {completed}");
-				} catch (SQLException e) {
-					logger.error(e.getMessage());
-					e.printStackTrace();
-				}
+				taWsInc8000Repository.batchInsert(taWsInc8000List);
+				logger.info("Add to taWsInc8000 : {completed}");
 			}
 		} while (incomeList.size() == Integer.parseInt(wsDataSizeWs));
 

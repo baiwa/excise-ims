@@ -24,11 +24,10 @@ import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
 import th.go.excise.ims.ta.service.DraftWorksheetService;
 import th.go.excise.ims.ta.service.PlanWorkSheetSendService;
 import th.go.excise.ims.ta.service.PlanWorksheetService;
-import th.go.excise.ims.ta.service.TaWorksheetHdrService;
-import th.go.excise.ims.ta.service.TaxOperatorService;
+import th.go.excise.ims.ta.service.WorksheetService;
 import th.go.excise.ims.ta.vo.CondGroupVo;
-import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorkSheetSendVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 import th.go.excise.ims.ta.vo.TaxOperatorVo;
@@ -41,17 +40,13 @@ public class TaxOperatorController {
     private static final Logger logger = LoggerFactory.getLogger(TaxOperatorController.class);
 
     @Autowired
-    private TaxOperatorService taxOperatorService;
-
-    @Autowired
     private DraftWorksheetService draftWorksheetService;
-
+    
     @Autowired
-    private TaWorksheetHdrService taWorksheetHdrService;
+    private WorksheetService worksheetService;
 
     @Autowired
     private PlanWorksheetService planWorksheetService;
-    
     @Autowired
     private PlanWorkSheetSendService planWorkSheetSendService;
 
@@ -62,7 +57,7 @@ public class TaxOperatorController {
         ResponseData<TaxOperatorVo> response = new ResponseData<>();
 
         try {
-            response.setData(taxOperatorService.getOperator(formVo));
+            response.setData(worksheetService.getWorksheet(formVo));
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
@@ -80,7 +75,7 @@ public class TaxOperatorController {
         ResponseData<List<String>> response = new ResponseData<>();
 
         try {
-            response.setData(taxOperatorService.findAllAnalysisNumber());
+            response.setData(worksheetService.findAllAnalysisNumber());
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
@@ -98,7 +93,7 @@ public class TaxOperatorController {
         ResponseData<List<CondGroupVo>> response = new ResponseData<>();
 
         try {
-            response.setData(taxOperatorService.findCondGroupDtl(formVo));
+            response.setData(worksheetService.findCondGroupDtl(formVo));
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
@@ -116,7 +111,7 @@ public class TaxOperatorController {
         ResponseData<YearMonthVo> response = new ResponseData<>();
 
         try {
-            response.setData(taxOperatorService.monthStart(formVo));
+            response.setData(worksheetService.getMonthStart(formVo));
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
@@ -134,7 +129,7 @@ public class TaxOperatorController {
         ResponseData<List<CondGroupVo>> response = new ResponseData<>();
 
         try {
-            taWorksheetHdrService.addTaWorksheetHdrByCondition(formVo.getDraftNumber(), formVo.getBudgetYear());
+            worksheetService.saveWorksheet(formVo.getDraftNumber(), formVo.getBudgetYear());
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
@@ -174,7 +169,7 @@ public class TaxOperatorController {
         ResponseData<YearMonthVo> response = new ResponseData<>();
 
         try {
-            response.setData(draftWorksheetService.monthStartDraft(formVo));
+            response.setData(draftWorksheetService.getMonthStart(formVo));
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
@@ -192,7 +187,7 @@ public class TaxOperatorController {
         ResponseData<TaxOperatorVo> response = new ResponseData<>();
 
         try {
-            response.setData(taxOperatorService.getOperatorDraft(formVo));
+            response.setData(draftWorksheetService.getDraftWorksheet(formVo));
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
@@ -228,7 +223,7 @@ public class TaxOperatorController {
         ResponseData<YearMonthVo> response = new ResponseData<>();
 
         try {
-            draftWorksheetService.saveDraft(formVo);
+            draftWorksheetService.saveDraftWorksheet(formVo);
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
