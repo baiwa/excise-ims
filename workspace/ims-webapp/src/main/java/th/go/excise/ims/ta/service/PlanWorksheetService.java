@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
@@ -24,82 +26,94 @@ import java.util.List;
 @Service
 public class PlanWorksheetService {
 
-	private static final Logger logger = LoggerFactory.getLogger(PlanWorksheetService.class);
+    private static final Logger logger = LoggerFactory.getLogger(PlanWorksheetService.class);
 
-	@Autowired
-	private WorksheetSequenceService worksheetSequenceService;
+    @Autowired
+    private WorksheetSequenceService worksheetSequenceService;
 
-	@Autowired
-	private TaPlanWorksheetHdrRepository planWorksheetHdrRepository;
-	@Autowired
-	private TaPlanWorksheetDtlRepository planWorksheetDtlRepository;
-	@Autowired
-	private TaPlanWorksheetSendRepository planWorksheetSendRepository;
+    @Autowired
+    private TaPlanWorksheetHdrRepository planWorksheetHdrRepository;
 
-	public TaPlanWorksheetHdr getPlanWorksheetHdr(PlanWorksheetVo formVo) {
-		logger.info("getPlanWorksheetHdr budgetYear={}", formVo.getBudgetYear());
-		return planWorksheetHdrRepository.findByBudgetYear(formVo.getBudgetYear());
-	}
+    @Autowired
+    private TaPlanWorksheetDtlRepository planWorksheetDtlRepository;
 
-	public void savePlanWorksheetHdr(PlanWorksheetVo formVo) {
-		logger.info("savePlanWorkSheetHdr formVo={}", ToStringBuilder.reflectionToString(formVo, ToStringStyle.JSON_STYLE));
-		
-		TaPlanWorksheetHdr plantHdr = new TaPlanWorksheetHdr();
-		plantHdr.setAnalysisNumber(formVo.getAnalysisNumber());
-		plantHdr.setBudgetYear(formVo.getBudgetYear());
-		plantHdr.setPlanNumber(worksheetSequenceService.getPlanNumber(UserLoginUtils.getCurrentUserBean().getOfficeCode(), formVo.getBudgetYear()));
-		
-		planWorksheetHdrRepository.save(plantHdr);
-		
-		// Add more logic for support Send All and Send Hierarchy
-	}
+    @Autowired
+    private TaPlanWorksheetSendRepository planWorksheetSendRepository;
 
-	public void savePlanWorksheetDtl(PlanWorksheetVo formVo) {
-		logger.info("savePlanWorkSheetDtl formVo={}", ToStringBuilder.reflectionToString(formVo, ToStringStyle.JSON_STYLE));
+    public TaPlanWorksheetHdr getPlanWorksheetHdr(PlanWorksheetVo formVo) {
+        logger.info("getPlanWorksheetHdr budgetYear={}", formVo.getBudgetYear());
+        return planWorksheetHdrRepository.findByBudgetYear(formVo.getBudgetYear());
+    }
 
-		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+    public void savePlanWorksheetHdr(PlanWorksheetVo formVo) {
+        logger.info("savePlanWorkSheetHdr formVo={}", ToStringBuilder.reflectionToString(formVo, ToStringStyle.JSON_STYLE));
 
-		TaPlanWorksheetHdr hdr = planWorksheetHdrRepository.findByBudgetYear(formVo.getPlanNumber());
-		// set data search all start 0 length 0
-		List<TaPlanWorksheetDtl> planWorksheetDtlList = planWorksheetDtlRepository.findByAnalysisNumberAndPlanNumberAndOfficeCode(formVo.getAnalysisNumber(), formVo.getPlanNumber(), officeCode);
+        TaPlanWorksheetHdr plantHdr = new TaPlanWorksheetHdr();
+        plantHdr.setAnalysisNumber(formVo.getAnalysisNumber());
+        plantHdr.setBudgetYear(formVo.getBudgetYear());
+        plantHdr.setPlanNumber(worksheetSequenceService.getPlanNumber(UserLoginUtils.getCurrentUserBean().getOfficeCode(), formVo.getBudgetYear()));
 
-		List<TaPlanWorksheetDtl> planWorksheetDtls = new ArrayList<>();
-		for (TaPlanWorksheetDtl planWorksheetDtl : planWorksheetDtlList) {
+        planWorksheetHdrRepository.save(plantHdr);
 
-			TaPlanWorksheetDtl planDtl = new TaPlanWorksheetDtl();
-			planDtl.setPlanNumber(hdr.getPlanNumber());
-			planDtl.setAnalysisNumber(hdr.getAnalysisNumber());
-			planDtl.setOfficeCode(officeCode);
-			planDtl.setNewRegId(planWorksheetDtl.getNewRegId());
-			planDtl.setAuditStatus(null);
-			planDtl.setAuditType(null);
-			planDtl.setAuditStartDate(null);
-			planDtl.setAuditEndDate(null);
+        // Add more logic for support Send All and Send Hierarchy
+    }
 
-			planWorksheetDtls.add(planDtl);
-		}
-		planWorksheetDtlRepository.saveAll(planWorksheetDtls);
-	}
+    public void savePlanWorksheetDtl(PlanWorksheetVo formVo) {
+        logger.info("savePlanWorkSheetDtl formVo={}", ToStringBuilder.reflectionToString(formVo, ToStringStyle.JSON_STYLE));
 
-	public List<TaPlanWorksheetDtl> findPlanWorksheetDtl(PlanWorksheetVo formVo) {
-		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		logger.info("findPlanWorkSheetDtl planNumber={}, officeCode={}", formVo.getPlanNumber(), officeCode);
-		return planWorksheetDtlRepository.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), officeCode);
-	}
+        String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 
-	public List<TaPlanWorksheetSend> getPlanWorksheetSend() {
-		logger.info("getPlanWorkSheetSend budgetYear={}", ExciseUtils.getCurrentBudgetYear());
-		return planWorksheetSendRepository.findByBudgetYear(ExciseUtils.getCurrentBudgetYear());
-	}
+        TaPlanWorksheetHdr hdr = planWorksheetHdrRepository.findByBudgetYear(formVo.getPlanNumber());
+        // set data search all start 0 length 0
+        List<TaPlanWorksheetDtl> planWorksheetDtlList = planWorksheetDtlRepository.findByAnalysisNumberAndPlanNumberAndOfficeCode(formVo.getAnalysisNumber(), formVo.getPlanNumber(), officeCode);
 
-	public DataTableAjax<PlanWorksheetDatatableVo> planDtlDatatable(PlanWorksheetVo formVo) {
+        List<TaPlanWorksheetDtl> planWorksheetDtls = new ArrayList<>();
+        for (TaPlanWorksheetDtl planWorksheetDtl : planWorksheetDtlList) {
 
-		DataTableAjax<PlanWorksheetDatatableVo> dataTableAjax = new DataTableAjax<>();
-		dataTableAjax.setData(planWorksheetDtlRepository.planDtlDatatable(formVo));
-		dataTableAjax.setDraw(formVo.getDraw() + 1);
-		dataTableAjax.setRecordsFiltered(planWorksheetDtlRepository.countPlanDtlDatatable(formVo).intValue());
-		dataTableAjax.setRecordsTotal(planWorksheetDtlRepository.countPlanDtlDatatable(formVo).intValue());
+            TaPlanWorksheetDtl planDtl = new TaPlanWorksheetDtl();
+            planDtl.setPlanNumber(hdr.getPlanNumber());
+            planDtl.setAnalysisNumber(hdr.getAnalysisNumber());
+            planDtl.setOfficeCode(officeCode);
+            planDtl.setNewRegId(planWorksheetDtl.getNewRegId());
+            planDtl.setAuditStatus(null);
+            planDtl.setAuditType(null);
+            planDtl.setAuditStartDate(null);
+            planDtl.setAuditEndDate(null);
 
-		return dataTableAjax;
-	}
+            planWorksheetDtls.add(planDtl);
+        }
+        planWorksheetDtlRepository.saveAll(planWorksheetDtls);
+    }
+
+    public List<TaPlanWorksheetDtl> findPlanWorksheetDtl(PlanWorksheetVo formVo) {
+        String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+        logger.info("findPlanWorkSheetDtl planNumber={}, officeCode={}", formVo.getPlanNumber(), officeCode);
+        return planWorksheetDtlRepository.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), officeCode);
+    }
+
+    public List<TaPlanWorksheetSend> getPlanWorksheetSend() {
+        logger.info("getPlanWorkSheetSend budgetYear={}", ExciseUtils.getCurrentBudgetYear());
+        return planWorksheetSendRepository.findByBudgetYear(ExciseUtils.getCurrentBudgetYear());
+    }
+
+    public DataTableAjax<PlanWorksheetDatatableVo> planDtlDatatable(PlanWorksheetVo formVo) {
+
+        DataTableAjax<PlanWorksheetDatatableVo> dataTableAjax = new DataTableAjax<>();
+        dataTableAjax.setData(planWorksheetDtlRepository.planDtlDatatable(formVo));
+        dataTableAjax.setDraw(formVo.getDraw() + 1);
+        dataTableAjax.setRecordsFiltered(planWorksheetDtlRepository.countPlanDtlDatatable(formVo).intValue());
+        dataTableAjax.setRecordsTotal(planWorksheetDtlRepository.countPlanDtlDatatable(formVo).intValue());
+
+        return dataTableAjax;
+    }
+
+    @Transactional
+    public void deletePlanWorksheetDlt(String id) {
+        logger.info("deletePlanWorksheetDlt by ID : {}", id);
+        String budgetYear = ExciseUtils.getCurrentBudgetYear();
+        TaPlanWorksheetHdr planHdr = planWorksheetHdrRepository.findByBudgetYear(budgetYear);
+        if (planHdr != null) {
+            planWorksheetDtlRepository.deleteByPlanNumberAndNewRegId(planHdr.getPlanNumber(), id);
+        }
+    }
 }

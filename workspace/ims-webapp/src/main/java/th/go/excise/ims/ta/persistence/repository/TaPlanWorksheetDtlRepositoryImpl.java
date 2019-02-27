@@ -63,6 +63,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		sql.append(" ON ED_AREA.OFFICE_CODE    = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
 		sql.append(" WHERE TA_W_HDR.IS_DELETED = 'N' ");
 		sql.append(" AND R4000.IS_DELETED      = 'N' ");
+		sql.append(" AND PLAN_DTL.IS_DELETED = 'N' ");
 		sql.append(" AND PLAN_DTL.OFFICE_CODE=? ");
 		sql.append(" AND PLAN_DTL.PLAN_NUMBER=? ");
 
