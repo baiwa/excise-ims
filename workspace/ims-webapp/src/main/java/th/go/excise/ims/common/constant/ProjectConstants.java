@@ -7,4 +7,8 @@ public class ProjectConstants {
 		public static final String OTHER = "O";
 	}
 	
+	public class EXCISE_OFFICE_CODE {
+		public static final String CENTRAL = "000000";
+	}
+	
 }

@@ -16,6 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
+import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_OFFICE_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
@@ -53,15 +56,49 @@ public class PlanWorksheetService {
 
 	public void savePlanWorksheetHdr(PlanWorksheetVo formVo) {
 		logger.info("savePlanWorkSheetHdr formVo={}", ToStringBuilder.reflectionToString(formVo, ToStringStyle.JSON_STYLE));
-
+		
+		String planNumber = worksheetSequenceService.getPlanNumber(UserLoginUtils.getCurrentUserBean().getOfficeCode(), formVo.getBudgetYear());
+		
 		TaPlanWorksheetHdr plantHdr = new TaPlanWorksheetHdr();
 		plantHdr.setAnalysisNumber(formVo.getAnalysisNumber());
 		plantHdr.setBudgetYear(formVo.getBudgetYear());
-		plantHdr.setPlanNumber(worksheetSequenceService.getPlanNumber(UserLoginUtils.getCurrentUserBean().getOfficeCode(), formVo.getBudgetYear()));
-
+		plantHdr.setPlanNumber(planNumber);
 		planWorksheetHdrRepository.save(plantHdr);
-
+		
 		// Add more logic for support Send All and Send Hierarchy
+		List<TaPlanWorksheetSend> planSendList = new ArrayList<>();
+		TaPlanWorksheetSend planSend = null;
+		if (FLAG.Y_FLAG.equals(formVo.getSendAllFlag())) {
+			List<ExciseDept> sectorList = ApplicationCache.getExciseSectorList();
+			List<ExciseDept> areaList = null;
+			// Sector
+			for (ExciseDept sector : sectorList) {
+				planSend = new TaPlanWorksheetSend();
+				planSend.setBudgetYear(formVo.getBudgetYear());
+				planSend.setPlanNumber(planNumber);
+				planSend.setOfficeCode(sector.getOfficeCode());
+				planSend.setSendDate(LocalDate.now());
+				planSendList.add(planSend);
+				// Area
+				areaList = ApplicationCache.getExciseAreaList(sector.getOfficeCode());
+				for (ExciseDept area : areaList) {
+					planSend = new TaPlanWorksheetSend();
+					planSend.setBudgetYear(formVo.getBudgetYear());
+					planSend.setPlanNumber(planNumber);
+					planSend.setOfficeCode(area.getOfficeCode());
+					planSend.setSendDate(LocalDate.now());
+					planSendList.add(planSend);
+				}
+			}
+		} else {
+			planSend = new TaPlanWorksheetSend();
+			planSend.setBudgetYear(formVo.getBudgetYear());
+			planSend.setPlanNumber(planNumber);
+			planSend.setOfficeCode(EXCISE_OFFICE_CODE.CENTRAL);
+			planSend.setSendDate(LocalDate.now());
+			planSendList.add(planSend);
+		}
+		planWorksheetSendRepository.saveAll(planSendList);
 	}
 
 	@Transactional
