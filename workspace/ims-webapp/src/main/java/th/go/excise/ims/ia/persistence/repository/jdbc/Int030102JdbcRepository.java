@@ -91,6 +91,28 @@ public class Int030102JdbcRepository {
 			return vo;
 		}
 	};
+	
+	public List<Int030102FormVo> budgetYearDropdown() {
+		List<Int030102FormVo> response = new ArrayList<Int030102FormVo>();
+		StringBuilder sql = new StringBuilder(" SELECT DISTINCT(A.BUDGET_YEAR) AS BUDGET_YEAR " + 
+				"FROM IA_RISK_FACTORS A  " + 
+				"WHERE A.IS_DELETED = 'N' " + 
+				"ORDER BY A.BUDGET_YEAR DESC");
+		response = commonJdbcTemplate.query(sql.toString(), budgetYearDropdownRowmapper);
+		return response;
+	}
+
+
+
+	private RowMapper<Int030102FormVo> budgetYearDropdownRowmapper = new RowMapper<Int030102FormVo>() {
+		@Override
+		public Int030102FormVo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Int030102FormVo vo = new Int030102FormVo();
+			vo.setBudgetYear(rs.getString("BUDGET_YEAR"));
+	
+			return vo;
+		}
+	};
 
 	
 	private String checkAndConvertDateToString(Date date) {

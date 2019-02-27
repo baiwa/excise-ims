@@ -46,6 +46,18 @@ public class Int030102Controller {
 		}
 		return response;
 	}
+	
+	@PostMapping("/budgetYearDropdown")
+	@ResponseBody
+	public List<Int030102FormVo> budgetYearDropdown() {
+		List<Int030102FormVo> response = new ArrayList<Int030102FormVo>();
+		try {	
+			response = int030102Service.budgetYearDropdown();
+		} catch (Exception e) {
+			logger.error("Int030102Controller BudgetYearDropdown : ", e);
+		}
+		return response;
+	}
 
 	@PostMapping("/delete")
 	@ResponseBody

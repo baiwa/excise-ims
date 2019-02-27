@@ -58,6 +58,12 @@ public class Int030102Service {
 
 		return iaRiskFactorsMasterList;
 	}
+	
+	public List<Int030102FormVo> budgetYearDropdown() {
+		List<Int030102FormVo> response = int030102JdbcRepository.budgetYearDropdown();
+		return response;
+		
+	}
 
 	public void checkAndInsertTableFactorsStatus(Int030102FormVo form) {
 		int count = int030102JdbcRepository.checkAndInsertTableFactorsStatus(form);
