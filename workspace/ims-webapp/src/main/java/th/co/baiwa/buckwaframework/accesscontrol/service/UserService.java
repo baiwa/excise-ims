@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.Operation;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.Role;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.User;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.repository.UserRepository;
@@ -35,7 +36,7 @@ private final UserRepository userRepository;
 		result.setDraw(userFormVo.getDraw() + 1);
 		result.setData(userList);
 		result.setRecordsTotal(userRepository.countByCriteria(userFormVo));
-		result.setRecordsFiltered(userList.size());
+		result.setRecordsFiltered(userRepository.countByCriteria(userFormVo));
 
 
 		
@@ -63,11 +64,14 @@ private final UserRepository userRepository;
 		return user;
 	}
 
-	public User updateUser(User user) {
+	public User updateUser(String idStr, User user) {
 		logger.info("updateUser");
-		userRepository.save(user);
-		return user;
+		User data = userRepository.findById(Long.valueOf(idStr)).get();
+		data.setEnabled(user.getEnabled());
+		data.setUserId(user.getUserId());
+		return userRepository.save(data);
 	}
+
 
 	public User deleteUser(String idStr) {
 		logger.info("deleteRole");

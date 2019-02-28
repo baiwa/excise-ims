@@ -8,7 +8,7 @@ public class UserFormVo extends DataTableRequest {
 	 */
 	private static final long serialVersionUID = 52036244727799867L;
 	private String username;
-	private String password;
+	private String enabled;
 	
 	public String getUsername() {
 		return username;
@@ -16,11 +16,11 @@ public class UserFormVo extends DataTableRequest {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getPassword() {
-		return password;
+	public String getEnabled() {
+		return enabled;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setEnabled(String enabled) {
+		this.enabled = enabled;
 	}
 
 }

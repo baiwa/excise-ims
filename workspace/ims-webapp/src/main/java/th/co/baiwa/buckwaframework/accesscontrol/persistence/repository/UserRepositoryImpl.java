@@ -27,7 +27,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 		this.commonJdbcTemplate = commonJdbcTemplate;
 	}
 	private void buildSearchQuery(StringBuilder sql, List<Object> params, UserFormVo userFormVo) {
-		sql.append(" SELECT user_id, username, password");
+		sql.append(" SELECT user_id, username, enabled");
 		sql.append(" FROM adm_user ");
 		sql.append(" WHERE is_deleted = ? ");
 
@@ -38,9 +38,9 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 			params.add("%" + StringUtils.trim(userFormVo.getUsername()) + "%");
 		}
 
-		if (StringUtils.isNotBlank(userFormVo.getPassword())) {
-			sql.append(" AND username LIKE ? ");
-			params.add("%" + StringUtils.trim(userFormVo.getPassword()) + "%");
+		if (StringUtils.isNotBlank(userFormVo.getEnabled())) {
+			sql.append(" AND enabled LIKE ? ");
+			params.add("%" + StringUtils.trim(userFormVo.getEnabled()) + "%");
 		}
 
 	}
@@ -58,7 +58,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 	}
 	@Override
 	public List<User> findByCriteria(UserFormVo userFormVo) {
-		logger.debug("findByCriteria userFormVo.username={}, userFormVo.password={}", userFormVo.getUsername(),userFormVo.getPassword());
+		logger.debug("findByCriteria userFormVo.username={}, userFormVo.enabled={}", userFormVo.getUsername(),userFormVo.getEnabled());
 
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
@@ -75,7 +75,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 				User user = new User();
 				user.setUserId(rs.getLong("user_id"));
 				user.setUsername(rs.getString("username"));
-				user.setPassword(rs.getString("password"));
+				user.setEnabled(rs.getString("enabled"));
 				return user;
 			}
 

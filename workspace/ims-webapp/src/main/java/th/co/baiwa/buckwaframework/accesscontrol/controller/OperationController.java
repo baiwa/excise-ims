@@ -70,7 +70,7 @@ public class OperationController {
 	public ResponseData<Operation> update(@PathVariable("id") String idStr, @RequestBody Operation operation) {
 		ResponseData<Operation> responseData = new ResponseData<Operation>();
 		try {
-			responseData.setData(operationService.updateRole(idStr, operation));
+			responseData.setData(operationService.updateOperation(idStr, operation));
 			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

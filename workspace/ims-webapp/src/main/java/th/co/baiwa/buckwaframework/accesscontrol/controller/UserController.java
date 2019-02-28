@@ -7,10 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.Operation;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.Role;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.User;
 import th.co.baiwa.buckwaframework.accesscontrol.service.UserService;
@@ -76,6 +78,21 @@ public class UserController {
 		} catch (Exception e) {
 			logger.error("RoleController::delete ", e);
 			responseData.setMessage(RESPONSE_MESSAGE.DELETE.FAILED);
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	@PutMapping("/update/{id}")
+	@ResponseBody
+	public ResponseData<User> update(@PathVariable("id") String idStr, @RequestBody User user) {
+		ResponseData<User> responseData = new ResponseData<User>();
+		try {
+			responseData.setData(userService.updateUser(idStr, user));
+			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("UserController::update ", e);
+			responseData.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;

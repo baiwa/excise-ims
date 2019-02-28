@@ -66,7 +66,7 @@ public class OperationService {
 	}
 
 
-	public Operation updateRole(String idStr, Operation operation) {
+	public Operation updateOperation(String idStr, Operation operation) {
 		logger.info("updateOperation");
 		Operation data = operationRepository.findById(Long.valueOf(idStr)).get();
 		data.setOperationCode(operation.getOperationCode());
