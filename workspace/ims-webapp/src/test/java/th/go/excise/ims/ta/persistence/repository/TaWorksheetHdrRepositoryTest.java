@@ -31,14 +31,14 @@ public class TaWorksheetHdrRepositoryTest {
 	@Test
 	public void testFindBySubCondition() {
 		
-		try {
-			List<TaWorksheetHdr> taWorksheetHdrList = taWorksheetHdrRepository.findSubConditionRegCapital(BigDecimal.valueOf(19000), null);
-			for (TaWorksheetHdr taWorksheetHdr : taWorksheetHdrList) {
+//		try {
+//			List<TaWorksheetHdr> taWorksheetHdrList = taWorksheetHdrRepository.findSubConditionRegCapital(BigDecimal.valueOf(19000), null);
+//			for (TaWorksheetHdr taWorksheetHdr : taWorksheetHdrList) {
 //				logger.info(taWorksheetHdr.getNewRegId());
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 }
