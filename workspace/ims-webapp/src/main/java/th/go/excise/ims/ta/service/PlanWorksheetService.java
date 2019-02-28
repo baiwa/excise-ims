@@ -225,10 +225,10 @@ public class PlanWorksheetService {
 
     public void savePlanWorksheetSend(PlanWorksheetVo formVo) {
         String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+        formVo.setOfficeCode(officeCode);
         TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), officeCode);
         Long count = taPlanWorksheetDtlRepository.countByCriteria(formVo);
-
-        planSend.setFacInNum((int) (long) count);
+        planSend.setFacInNum(new Integer(count.intValue()));
         planSend.setSubmitDate(LocalDate.now());
         taPlanWorksheetSendRepository.save(planSend);
 

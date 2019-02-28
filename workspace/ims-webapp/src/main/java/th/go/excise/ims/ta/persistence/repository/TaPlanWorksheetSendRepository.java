@@ -10,4 +10,5 @@ public interface TaPlanWorksheetSendRepository extends CommonJpaCrudRepository<T
 	public List<TaPlanWorksheetSend> findByBudgetYear(String budgetYear);
 	TaPlanWorksheetSend findByPlanNumberAndOfficeCode(String planNumber, String officeCode);
 	TaPlanWorksheetSend findByPlanNumberAndOfficeCodeAndSubmitDateIsNull(String planNumber, String officeCode);
+	TaPlanWorksheetSend findByOfficeCode(String officeCode);
 }

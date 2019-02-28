@@ -4,97 +4,106 @@ import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 
 public class TaxOperatorFormVo extends DataTableRequest {
 
-	private static final long serialVersionUID = 2104725920450722805L;
-	
-	private String dateStart;
-	private String dateEnd;
-	private int dateRange;
-	private String draftNumber;
-	private String budgetYear;
-	private String facType;
-	private String dutyCode;
-	private String officeCode;
-	private String analysisNumber;
-	private String cond;
+    private static final long serialVersionUID = 2104725920450722805L;
 
-	public String getCond() {
-		return cond;
-	}
+    private String dateStart;
+    private String dateEnd;
+    private int dateRange;
+    private String draftNumber;
+    private String budgetYear;
+    private String facType;
+    private String dutyCode;
+    private String officeCode;
+    private String analysisNumber;
+    private String cond;
+    private String seeDataSelect;
 
-	public void setCond(String cond) {
-		this.cond = cond;
-	}
+    public String getSeeDataSelect() {
+        return seeDataSelect;
+    }
 
-	public String getAnalysisNumber() {
-		return analysisNumber;
-	}
+    public void setSeeDataSelect(String seeDataSelect) {
+        this.seeDataSelect = seeDataSelect;
+    }
 
-	public void setAnalysisNumber(String analysisNumber) {
-		this.analysisNumber = analysisNumber;
-	}
+    public String getCond() {
+        return cond;
+    }
 
-	public String getOfficeCode() {
-		return officeCode;
-	}
+    public void setCond(String cond) {
+        this.cond = cond;
+    }
 
-	public void setOfficeCode(String officeCode) {
-		this.officeCode = officeCode;
-	}
+    public String getAnalysisNumber() {
+        return analysisNumber;
+    }
 
-	public String getFacType() {
-		return facType;
-	}
+    public void setAnalysisNumber(String analysisNumber) {
+        this.analysisNumber = analysisNumber;
+    }
 
-	public void setFacType(String facType) {
-		this.facType = facType;
-	}
+    public String getOfficeCode() {
+        return officeCode;
+    }
 
-	public String getDutyCode() {
-		return dutyCode;
-	}
+    public void setOfficeCode(String officeCode) {
+        this.officeCode = officeCode;
+    }
 
-	public void setDutyCode(String dutyCode) {
-		this.dutyCode = dutyCode;
-	}
+    public String getFacType() {
+        return facType;
+    }
 
-	public String getBudgetYear() {
-		return budgetYear;
-	}
+    public void setFacType(String facType) {
+        this.facType = facType;
+    }
 
-	public void setBudgetYear(String budgetYear) {
-		this.budgetYear = budgetYear;
-	}
+    public String getDutyCode() {
+        return dutyCode;
+    }
 
-	public String getDateStart() {
-		return dateStart;
-	}
+    public void setDutyCode(String dutyCode) {
+        this.dutyCode = dutyCode;
+    }
 
-	public void setDateStart(String dateStart) {
-		this.dateStart = dateStart;
-	}
+    public String getBudgetYear() {
+        return budgetYear;
+    }
 
-	public String getDateEnd() {
-		return dateEnd;
-	}
+    public void setBudgetYear(String budgetYear) {
+        this.budgetYear = budgetYear;
+    }
 
-	public void setDateEnd(String dateEnd) {
-		this.dateEnd = dateEnd;
-	}
+    public String getDateStart() {
+        return dateStart;
+    }
 
-	public int getDateRange() {
-		return dateRange;
-	}
+    public void setDateStart(String dateStart) {
+        this.dateStart = dateStart;
+    }
 
-	public void setDateRange(int dateRange) {
-		this.dateRange = dateRange;
-	}
+    public String getDateEnd() {
+        return dateEnd;
+    }
 
-	public String getDraftNumber() {
-		return draftNumber;
-	}
+    public void setDateEnd(String dateEnd) {
+        this.dateEnd = dateEnd;
+    }
 
-	public void setDraftNumber(String draftNumber) {
-		this.draftNumber = draftNumber;
-	}
+    public int getDateRange() {
+        return dateRange;
+    }
+
+    public void setDateRange(int dateRange) {
+        this.dateRange = dateRange;
+    }
+
+    public String getDraftNumber() {
+        return draftNumber;
+    }
+
+    public void setDraftNumber(String draftNumber) {
+        this.draftNumber = draftNumber;
+    }
 
 }

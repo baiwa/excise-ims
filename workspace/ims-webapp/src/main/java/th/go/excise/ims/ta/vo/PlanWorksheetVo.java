@@ -6,78 +6,87 @@ import java.util.List;
 
 public class PlanWorksheetVo extends DataTableRequest {
 
-	private static final long serialVersionUID = -2970785224520638999L;
-	private List<String> ids;
+    private static final long serialVersionUID = -2970785224520638999L;
+    private List<String> ids;
 
-	private String budgetYear;
-	private String analysisNumber;
-	private String planNumber;
-	private String planStatus;
-	private String authComment;
-	private String planComment;
-	private String sendAllFlag;
+    private String budgetYear;
+    private String analysisNumber;
+    private String planNumber;
+    private String planStatus;
+    private String authComment;
+    private String planComment;
+    private String sendAllFlag;
+    private String officeCode;
 
-	public String getSendAllFlag() {
-		return sendAllFlag;
-	}
+    public String getOfficeCode() {
+        return officeCode;
+    }
 
-	public void setSendAllFlag(String sendAllFlag) {
-		this.sendAllFlag = sendAllFlag;
-	}
+    public void setOfficeCode(String officeCode) {
+        this.officeCode = officeCode;
+    }
 
-	public String getBudgetYear() {
-		return budgetYear;
-	}
+    public String getSendAllFlag() {
+        return sendAllFlag;
+    }
 
-	public void setBudgetYear(String budgetYear) {
-		this.budgetYear = budgetYear;
-	}
+    public void setSendAllFlag(String sendAllFlag) {
+        this.sendAllFlag = sendAllFlag;
+    }
 
-	public String getAnalysisNumber() {
-		return analysisNumber;
-	}
+    public String getBudgetYear() {
+        return budgetYear;
+    }
 
-	public void setAnalysisNumber(String analysisNumber) {
-		this.analysisNumber = analysisNumber;
-	}
+    public void setBudgetYear(String budgetYear) {
+        this.budgetYear = budgetYear;
+    }
 
-	public String getPlanNumber() {
-		return planNumber;
-	}
+    public String getAnalysisNumber() {
+        return analysisNumber;
+    }
 
-	public void setPlanNumber(String planNumber) {
-		this.planNumber = planNumber;
-	}
+    public void setAnalysisNumber(String analysisNumber) {
+        this.analysisNumber = analysisNumber;
+    }
 
-	public String getPlanStatus() {
-		return planStatus;
-	}
+    public String getPlanNumber() {
+        return planNumber;
+    }
 
-	public void setPlanStatus(String planStatus) {
-		this.planStatus = planStatus;
-	}
+    public void setPlanNumber(String planNumber) {
+        this.planNumber = planNumber;
+    }
 
-	public String getAuthComment() {
-		return authComment;
-	}
+    public String getPlanStatus() {
+        return planStatus;
+    }
 
-	public void setAuthComment(String authComment) {
-		this.authComment = authComment;
-	}
+    public void setPlanStatus(String planStatus) {
+        this.planStatus = planStatus;
+    }
 
-	public String getPlanComment() {
-		return planComment;
-	}
+    public String getAuthComment() {
+        return authComment;
+    }
 
-	public void setPlanComment(String planComment) {
-		this.planComment = planComment;
-	}
+    public void setAuthComment(String authComment) {
+        this.authComment = authComment;
+    }
 
-	public List<String> getIds() {
-		return ids;
-	}
+    public String getPlanComment() {
+        return planComment;
+    }
 
-	public void setIds(List<String> ids) {
-		this.ids = ids;
-	}
+    public void setPlanComment(String planComment) {
+        this.planComment = planComment;
+    }
+
+    public List<String> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<String> ids) {
+        this.ids = ids;
+    }
 }

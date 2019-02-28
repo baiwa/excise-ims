@@ -18,6 +18,7 @@ import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
@@ -330,6 +331,7 @@ public class TaxOperatorController {
     @PostMapping("/plan-selected-dtl")
     @ResponseBody
     public DataTableAjax<PlanWorksheetDatatableVo> planDtlDatatable(@RequestBody PlanWorksheetVo formVo) {
+        formVo.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
         return planWorksheetService.planDtlDatatable(formVo);
     }
 
@@ -391,5 +393,9 @@ public class TaxOperatorController {
     }
 
     // TODO Approval
-
+    @PostMapping("/plan-selected-dtl-approve")
+    @ResponseBody
+    public DataTableAjax<PlanWorksheetDatatableVo> planDtlDatatableApprive(@RequestBody PlanWorksheetVo formVo) {
+        return planWorksheetService.planDtlDatatable(formVo);
+    }
 }

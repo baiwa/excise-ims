@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -37,11 +38,13 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFFICE_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
 		sql.append(" WHERE PLAN_DTL.IS_DELETED = 'N' ");
 		sql.append("   AND R4000.IS_DELETED = 'N' ");
-		sql.append("   AND PLAN_DTL.OFFICE_CODE = ? ");
 		sql.append("   AND PLAN_DTL.PLAN_NUMBER = ? ");
-		
-		params.add(UserLoginUtils.getCurrentUserBean().getOfficeCode());
-		params.add(formVo.getPlanNumber());
+
+        params.add(formVo.getPlanNumber());
+        if (StringUtils.isNotBlank(formVo.getOfficeCode())){
+            sql.append("   AND PLAN_DTL.OFFICE_CODE = ? ");
+            params.add(formVo.getOfficeCode());
+        }
 	}
 
 	@Override
