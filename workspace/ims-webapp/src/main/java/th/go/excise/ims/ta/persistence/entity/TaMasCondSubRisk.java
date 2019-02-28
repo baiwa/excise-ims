@@ -25,8 +25,8 @@ public class TaMasCondSubRisk extends BaseEntity {
 	private String budgetYear;
 	@Column(name = "DUTY_CODE")
 	private String dutyCode;
-	@Column(name = "RISK_GROUP")
-	private String riskGroup;
+	@Column(name = "RISK_LEVEL")
+	private String riskLevel;
 
 	public Long getMasCondSubRiskId() {
 		return masCondSubRiskId;
@@ -52,12 +52,12 @@ public class TaMasCondSubRisk extends BaseEntity {
 		this.dutyCode = dutyCode;
 	}
 
-	public String getRiskGroup() {
-		return riskGroup;
+	public String getRiskLevel() {
+		return riskLevel;
 	}
 
-	public void setRiskGroup(String riskGroup) {
-		this.riskGroup = riskGroup;
+	public void setRiskLevel(String riskLevel) {
+		this.riskLevel = riskLevel;
 	}
 
 }
