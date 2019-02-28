@@ -75,7 +75,7 @@ public class IaQuestionnaireMadeJdbcRepository {
 		sql.append(" 	AND M.QTN_LEVEL = 2 ");
 		sql.append(" 	AND SD.SEQ = ? ");
 		sql.append(" 	AND SD.ID_HEADING = ? ");
-		sql.append(" ORDER BY SD.SEQ ASC ");
+		sql.append(" ORDER BY SD.SEQ_DTL ASC ");
 
 		params.add(objLVL1.getIdMadeHdr());
 		params.add(objLVL1.getIdSide());
@@ -107,7 +107,7 @@ public class IaQuestionnaireMadeJdbcRepository {
 		params.add(objLVL2.getIdMadeHdr());
 		params.add(objLVL2.getIdSide());
 		params.add(objLVL2.getSeq());
-		params.add(objLVL2.getIdHeading());
+		params.add(objLVL2.getIdSideDtl());
 		 
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<Int020201JoinVo> data = commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper(Int020201JoinVo.class));
