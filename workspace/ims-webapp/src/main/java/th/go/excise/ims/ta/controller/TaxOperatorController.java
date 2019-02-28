@@ -21,6 +21,7 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STAT
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
+import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
 import th.go.excise.ims.ta.service.DraftWorksheetService;
 import th.go.excise.ims.ta.service.PlanWorkSheetSendService;
 import th.go.excise.ims.ta.service.PlanWorksheetService;
@@ -41,7 +42,7 @@ public class TaxOperatorController {
 
     @Autowired
     private DraftWorksheetService draftWorksheetService;
-    
+
     @Autowired
     private WorksheetService worksheetService;
 
@@ -240,7 +241,7 @@ public class TaxOperatorController {
     @ResponseBody
     public ResponseData<?> savePlanWorkSheetHdr(@RequestBody PlanWorksheetVo formVo) {
         ResponseData<?> response = new ResponseData<>();
-        
+
         try {
             planWorksheetService.savePlanWorksheetHdr(formVo);
             response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
@@ -250,7 +251,7 @@ public class TaxOperatorController {
             response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
             response.setStatus(RESPONSE_STATUS.FAILED);
         }
-        
+
         return response;
     }
 
@@ -258,7 +259,7 @@ public class TaxOperatorController {
     @ResponseBody
     public ResponseData<TaPlanWorksheetHdr> CheckBudgetPlanHeader(@RequestBody PlanWorksheetVo formVo) {
         ResponseData<TaPlanWorksheetHdr> response = new ResponseData<>();
-        
+
         try {
             response.setData(planWorksheetService.getPlanWorksheetHdr(formVo));
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
@@ -268,7 +269,7 @@ public class TaxOperatorController {
             response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
             response.setStatus(RESPONSE_STATUS.FAILED);
         }
-        
+
         return response;
     }
 
@@ -276,7 +277,7 @@ public class TaxOperatorController {
     @ResponseBody
     public ResponseData<?> savePlanWorkSheetDtl(@RequestBody PlanWorksheetVo formVo) {
         ResponseData<?> response = new ResponseData<>();
-        
+
         try {
             planWorksheetService.savePlanWorksheetDtl(formVo);
             response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
@@ -286,15 +287,15 @@ public class TaxOperatorController {
             response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
             response.setStatus(RESPONSE_STATUS.FAILED);
         }
-        
+
         return response;
     }
 
     @PostMapping("/find-plan-worksheet-dtl")
     @ResponseBody
-    public ResponseData<List<TaPlanWorksheetDtl>> findPlanWorkSheetDtl(@RequestBody PlanWorksheetVo formVo){
+    public ResponseData<List<TaPlanWorksheetDtl>> findPlanWorkSheetDtl(@RequestBody PlanWorksheetVo formVo) {
         ResponseData<List<TaPlanWorksheetDtl>> response = new ResponseData<>();
-        
+
         try {
             response.setData(planWorksheetService.findPlanWorksheetDtl(formVo));
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
@@ -304,50 +305,91 @@ public class TaxOperatorController {
             response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
             response.setStatus(RESPONSE_STATUS.FAILED);
         }
-        
+
         return response;
     }
-    
+
     @PostMapping("/get-plan-ws-send")
     @ResponseBody
     public ResponseData<List<PlanWorkSheetSendVo>> getPlanWorkSheetSend() {
-    	ResponseData<List<PlanWorkSheetSendVo>> responseData = new ResponseData<>();
-    	
-    	try {
-			responseData.setData(planWorkSheetSendService.getPlanWorkSheetSend());
-			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
-			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
-			responseData.setStatus(RESPONSE_STATUS.FAILED);
-		}
+        ResponseData<List<PlanWorkSheetSendVo>> responseData = new ResponseData<>();
 
-		return responseData;
-	}
+        try {
+            responseData.setData(planWorkSheetSendService.getPlanWorkSheetSend());
+            responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+            responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+            responseData.setStatus(RESPONSE_STATUS.FAILED);
+        }
 
-	@PostMapping("/plan-selected-dtl")
-	@ResponseBody
-	public DataTableAjax<PlanWorksheetDatatableVo> planDtlDatatable(@RequestBody PlanWorksheetVo formVo) {
-		return planWorksheetService.planDtlDatatable(formVo);
-	}
+        return responseData;
+    }
 
-	@DeleteMapping("/delete-plan-worksheet-dtl/{id}")
-	@ResponseBody
-	public ResponseData<?> deletePlanWorksheetDlt(@PathVariable("id") String id) {
-		
-		ResponseData<?> responseData = new ResponseData<>();
+    @PostMapping("/plan-selected-dtl")
+    @ResponseBody
+    public DataTableAjax<PlanWorksheetDatatableVo> planDtlDatatable(@RequestBody PlanWorksheetVo formVo) {
+        return planWorksheetService.planDtlDatatable(formVo);
+    }
 
-		try {
-			planWorksheetService.deletePlanWorksheetDlt(id);
-			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.SUCCESS_CODE).getMessageTh());
-			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
-		} catch (Exception e) {
-			e.printStackTrace();
-			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.FAILED_CODE).getMessageTh());
-			responseData.setStatus(RESPONSE_STATUS.FAILED);
-		}
+    @PostMapping("/check-submit-date-plan-worksheet-send")
+    @ResponseBody
+    public ResponseData<Boolean> checkSubmitDatePlanWorksheetSend(@RequestBody PlanWorksheetVo formVo) {
 
-		return responseData;
-	}
+        ResponseData<Boolean> responseData = new ResponseData<>();
+
+        try {
+            responseData.setData(planWorksheetService.checkSubmitDatePlanWorksheetSend(formVo));
+            responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+            responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+            responseData.setStatus(RESPONSE_STATUS.FAILED);
+        }
+
+        return responseData;
+    }
+
+    @DeleteMapping("/delete-plan-worksheet-dtl/{id}")
+    @ResponseBody
+    public ResponseData<?> deletePlanWorksheetDlt(@PathVariable("id") String id) {
+
+        ResponseData<?> responseData = new ResponseData<>();
+
+        try {
+            planWorksheetService.deletePlanWorksheetDlt(id);
+            responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.SUCCESS_CODE).getMessageTh());
+            responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.FAILED_CODE).getMessageTh());
+            responseData.setStatus(RESPONSE_STATUS.FAILED);
+        }
+
+        return responseData;
+    }
+
+    @PostMapping("/save-plan-worksheet-send")
+    @ResponseBody
+    public ResponseData<?> savePlanWorksheetSend(@RequestBody PlanWorksheetVo formVo) {
+
+        ResponseData<?> responseData = new ResponseData<>();
+
+        try {
+            planWorksheetService.savePlanWorksheetSend(formVo);
+            responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+            responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+            responseData.setStatus(RESPONSE_STATUS.FAILED);
+        }
+
+        return responseData;
+    }
+
+    // TODO Approval
+
 }

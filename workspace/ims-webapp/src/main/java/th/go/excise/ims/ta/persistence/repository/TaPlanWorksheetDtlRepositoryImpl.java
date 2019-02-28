@@ -78,7 +78,6 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 			vo.setPlanNumber(rs.getString("PLAN_NUMBER"));
 			vo.setAnalysisNumber(rs.getString("ANALYSIS_NUMBER"));
 			vo.setNewRegId(rs.getString("NEW_REG_ID"));
-			vo.setCondMainGrp(rs.getString("COND_MAIN_GRP"));
 			return vo;
 		}
 	};
