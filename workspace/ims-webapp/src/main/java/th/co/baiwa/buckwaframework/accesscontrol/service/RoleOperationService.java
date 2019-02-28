@@ -2,17 +2,54 @@ package th.co.baiwa.buckwaframework.accesscontrol.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.RoleOperation;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.repository.RoleOperationRepository;
+import th.co.baiwa.buckwaframework.accesscontrol.vo.RoleOperationFormVo;
+import th.co.baiwa.buckwaframework.accesscontrol.vo.RoleOperationVo;
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 
 @Service
 public class RoleOperationService {
 
+	private static final Logger logger = LoggerFactory.getLogger(RoleOperationService.class);
+
+	private final RoleOperationRepository roleOperationRepository;
+
 	@Autowired
-	private RoleOperationRepository roleOperationRepository;
+	public RoleOperationService(RoleOperationRepository roleOperationRepository) {
+		this.roleOperationRepository = roleOperationRepository;
+	}
+
+	public DataTableAjax<RoleOperationVo> list(RoleOperationFormVo request) {
+
+		List<RoleOperationVo> data = roleOperationRepository.findByCriteria(request);
+
+		DataTableAjax<RoleOperationVo> dataTableAjax = new DataTableAjax<RoleOperationVo>();
+		dataTableAjax.setDraw(request.getDraw() + 1);
+		dataTableAjax.setData(data);
+		dataTableAjax.setRecordsTotal(roleOperationRepository.countByCriteria(request));
+		dataTableAjax.setRecordsFiltered(roleOperationRepository.countByCriteria(request));
+		return dataTableAjax;
+	}
+
+//	public List<RoleOperationVo> listData(RoleOperationFormVo request) {
+//		List<RoleOperationVo> roleOperationVoList = new ArrayList<RoleOperationVo>();
+//		roleOperationVoList = roleOperationRepository.findById(request);
+//		return roleOperationVoList;
+//	}
+
+	public DataTableAjax<RoleOperationVo> listData(RoleOperationFormVo request) {
+		List<RoleOperationVo> data = roleOperationRepository.findById(request);
+
+		DataTableAjax<RoleOperationVo> dataTableAjax = new DataTableAjax<RoleOperationVo>();
+		dataTableAjax.setData(data);
+		return dataTableAjax;
+	}
 
 	public RoleOperation findById(Long id) {
 		return roleOperationRepository.findById(id).get();
