@@ -31,7 +31,7 @@ public class Int0301Controller {
 	private Logger logger = LoggerFactory.getLogger(Int0301Controller.class);
 	
 	@Autowired
-	private Int0301Service Int0301Service;
+	private Int0301Service int0301Service;
 
 	@PostMapping("/list")
 	@ResponseBody
@@ -39,7 +39,7 @@ public class Int0301Controller {
 		DataTableAjax<Int0301Vo> response = new DataTableAjax<Int0301Vo>();
 		List<Int0301Vo> iaRiskFactorsList = new ArrayList<Int0301Vo>();
 		try {	
-			iaRiskFactorsList = Int0301Service.list(form);
+			iaRiskFactorsList = int0301Service.list(form);
 			response.setData(iaRiskFactorsList);
 		} catch (Exception e) {
 			logger.error("Int0301Controller : " , e);
@@ -52,7 +52,7 @@ public class Int0301Controller {
 	public List<Int0301Vo> listdynamic(@RequestBody Int0301FormVo form) {
 		List<Int0301Vo> response = new ArrayList<Int0301Vo>();
 		try {	
-			response = Int0301Service.listdynamic(form);
+			response = int0301Service.listdynamic(form);
 		} catch (Exception e) {
 			logger.error("Int0301Controller : " , e);
 		}
@@ -65,7 +65,7 @@ public class Int0301Controller {
 	public ResponseData<String> saveRiskFactorsLevel(@RequestBody Int0301FormVo form) {
 		ResponseData<String> response = new ResponseData<String>();
 		try {	
-			Int0301Service.saveRiskFactorsLevel(form);
+			int0301Service.saveRiskFactorsLevel(form);
 			response.setData("SUCCESS");
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
@@ -83,7 +83,7 @@ public class Int0301Controller {
 	public ResponseData<String> saveRiskFactorsConfig(@RequestBody Int0301FormVo form) {
 		ResponseData<String> response = new ResponseData<String>();
 		try {	
-			Int0301Service.saveRiskFactorsConfig(form);
+			int0301Service.saveRiskFactorsConfig(form);
 			response.setData("SUCCESS");
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
@@ -95,28 +95,5 @@ public class Int0301Controller {
 		}
 		return response;
 	}
-	
-	@PostMapping("/updatePercent")
-	@ResponseBody
-	public ResponseData<String> updatePercent(@RequestBody Int0301FormVo form) {
-		ResponseData<String> response = new ResponseData<String>();
-		try {	
-//			int030102Service.updateStatus(form);
-			response.setData("SUCCESS");
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
-			response.setStatus(RESPONSE_STATUS.SUCCESS);
-
-		} catch (Exception e) {
-			logger.error("Int030102Controller saveRiskFactorsLevelAndUpdateStatus : ", e);
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
-			response.setStatus(RESPONSE_STATUS.FAILED);
-		}
-		return response;
-	}
-	
-	
-	
-	
-	
 
 }
