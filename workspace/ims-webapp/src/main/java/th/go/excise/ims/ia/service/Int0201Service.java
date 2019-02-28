@@ -222,55 +222,47 @@ public class Int0201Service {
 	/*
 	 * ==================== == CONFIGS `START`== ====================
 	 */
-	public List<IaRiskQtnConfig> findConfigByIdQtnHdr(String idQtnHdrStr) {
+	public IaRiskQtnConfig findConfigByIdQtnHdr(String idQtnHdrStr) {
 		BigDecimal idQtnHdr = new BigDecimal(idQtnHdrStr);
 		// Find
-		List<IaRiskQtnConfig> risks = iaRiskQtnConfigRepository.findByIdQtnHdrAndIsDeleted(idQtnHdr, "N");
-		return risks;
+		IaRiskQtnConfig risk = iaRiskQtnConfigRepository.findByIdQtnHdrAndIsDeleted(idQtnHdr, "N");
+		return risk;
 	}
-
-	public List<IaRiskQtnConfig> saveConfig(List<IaRiskQtnConfig> request) throws Exception {
+	public IaRiskQtnConfig saveConfig(IaRiskQtnConfig request) throws Exception {
 		// Save
-		List<IaRiskQtnConfig> risk = (List<IaRiskQtnConfig>) iaRiskQtnConfigRepository.saveAll(request);
+		IaRiskQtnConfig risk = iaRiskQtnConfigRepository.save(request);
 		if (risk != null) {
 			// Response here
 			return risk;
 		}
 		throw new Exception();
 	}
+	public IaRiskQtnConfig updateConfig(IaRiskQtnConfig request) throws Exception {
+		// Find
+		IaRiskQtnConfig risk = iaRiskQtnConfigRepository.findByIdQtnHdrAndIsDeleted(request.getIdQtnHdr(), "N");
+		// Update here
+		risk.setLow(request.getLow());
+		risk.setLowStart(request.getLowStart());
+		risk.setLowRating(request.getLowRating());
+		risk.setLowColor(request.getLowColor());
 
-	public List<IaRiskQtnConfig> updateConfig(List<IaRiskQtnConfig> requests) throws Exception {
-		if (requests.size() > 0) {
-			// Find
-			List<IaRiskQtnConfig> risks = iaRiskQtnConfigRepository
-					.findByIdQtnHdrAndIsDeleted(requests.get(0).getIdQtnHdr(), "N");
-			for(IaRiskQtnConfig request: requests) {
-				for(IaRiskQtnConfig risk : risks) {
-					// Update here
-					risk.setLow(request.getLow());
-					risk.setLowStart(request.getLowStart());
-					risk.setLowEnd(request.getLowEnd());
-					risk.setLowRating(request.getLowRating());
-					risk.setLowColor(request.getLowColor());
+		risk.setMedium(request.getMedium());
+		risk.setMediumStart(request.getMediumStart());
+		risk.setMediumEnd(request.getMediumEnd());
+		risk.setMediumRating(request.getMediumRating());
+		risk.setMediumColor(request.getMediumColor());
+		risk.setMediumCondition(request.getMediumCondition());
 
-					risk.setMedium(request.getMedium());
-					risk.setMediumStart(request.getMediumStart());
-					risk.setMediumEnd(request.getMediumEnd());
-					risk.setMediumRating(request.getMediumRating());
-					risk.setMediumColor(request.getMediumColor());
-					risk.setMediumCondition(request.getMediumCondition());
+		risk.setHigh(request.getHigh());
+		risk.setHighStart(request.getHighStart());
+		risk.setHighRating(request.getHighRating());
+		risk.setHighColor(request.getHighColor());
+		risk.setHighCondition(request.getHighCondition());
 
-					risk.setHigh(request.getHigh());
-					risk.setHighStart(request.getHighStart());
-					risk.setHighEnd(request.getHighEnd());
-					risk.setHighRating(request.getHighRating());
-					risk.setHighColor(request.getHighColor());
-					risk.setHighCondition(request.getHighCondition());
-
-					risk = iaRiskQtnConfigRepository.save(risk);
-				}
-			}
-			return risks;
+		risk = iaRiskQtnConfigRepository.save(risk);
+		
+		if (risk != null) {
+			return risk;
 		}
 		throw new Exception();
 	}

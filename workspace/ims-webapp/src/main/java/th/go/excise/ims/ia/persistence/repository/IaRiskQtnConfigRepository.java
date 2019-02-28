@@ -10,6 +10,6 @@ public interface IaRiskQtnConfigRepository
 extends CommonJpaCrudRepository<IaRiskQtnConfig, BigDecimal>
 {
 
-	public List<IaRiskQtnConfig> findByIdQtnHdrAndIsDeleted(BigDecimal idQtnHdr, String idDeleted);
+	public IaRiskQtnConfig findByIdQtnHdrAndIsDeleted(BigDecimal idQtnHdr, String idDeleted);
 	
 }

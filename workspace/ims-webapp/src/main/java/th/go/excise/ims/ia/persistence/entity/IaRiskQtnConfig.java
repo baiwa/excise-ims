@@ -28,9 +28,9 @@ public class IaRiskQtnConfig extends BaseEntity {
 	@Column(name = "LOW")
 	private String low;
 	@Column(name = "LOW_START")
-	private String lowStart;
+	private BigDecimal lowStart;
 	@Column(name = "LOW_END")
-	private String lowEnd;
+	private BigDecimal lowEnd;
 	@Column(name = "LOW_RATING")
 	private BigDecimal lowRating;
 	@Column(name = "LOW_COLOR")
@@ -40,9 +40,9 @@ public class IaRiskQtnConfig extends BaseEntity {
 	@Column(name = "MEDIUM")
 	private String medium;
 	@Column(name = "MEDIUM_START")
-	private String mediumStart;
+	private BigDecimal mediumStart;
 	@Column(name = "MEDIUM_END")
-	private String mediumEnd;
+	private BigDecimal mediumEnd;
 	@Column(name = "MEDIUM_RATING")
 	private BigDecimal mediumRating;
 	@Column(name = "MEDIUM_COLOR")
@@ -52,173 +52,134 @@ public class IaRiskQtnConfig extends BaseEntity {
 	@Column(name = "HIGH")
 	private String high;
 	@Column(name = "HIGH_START")
-	private String highStart;
+	private BigDecimal highStart;
 	@Column(name = "HIGH_END")
-	private String highEnd;
+	private BigDecimal highEnd;
 	@Column(name = "HIGH_RATING")
 	private BigDecimal highRating;
 	@Column(name = "HIGH_COLOR")
 	private String highColor;
 	@Column(name = "HIGH_CONDITION")
 	private String highCondition;
-
 	public BigDecimal getId() {
 		return id;
 	}
-
 	public void setId(BigDecimal id) {
 		this.id = id;
 	}
-
 	public BigDecimal getIdQtnHdr() {
 		return idQtnHdr;
 	}
-
 	public void setIdQtnHdr(BigDecimal idQtnHdr) {
 		this.idQtnHdr = idQtnHdr;
 	}
-
 	public String getLow() {
 		return low;
 	}
-
 	public void setLow(String low) {
 		this.low = low;
 	}
-
-	public String getLowStart() {
+	public BigDecimal getLowStart() {
 		return lowStart;
 	}
-
-	public void setLowStart(String lowStart) {
+	public void setLowStart(BigDecimal lowStart) {
 		this.lowStart = lowStart;
 	}
-
-	public String getLowEnd() {
+	public BigDecimal getLowEnd() {
 		return lowEnd;
 	}
-
-	public void setLowEnd(String lowEnd) {
+	public void setLowEnd(BigDecimal lowEnd) {
 		this.lowEnd = lowEnd;
 	}
-
 	public BigDecimal getLowRating() {
 		return lowRating;
 	}
-
 	public void setLowRating(BigDecimal lowRating) {
 		this.lowRating = lowRating;
 	}
-
 	public String getLowColor() {
 		return lowColor;
 	}
-
 	public void setLowColor(String lowColor) {
 		this.lowColor = lowColor;
 	}
-
 	public String getLowCondition() {
 		return lowCondition;
 	}
-
 	public void setLowCondition(String lowCondition) {
 		this.lowCondition = lowCondition;
 	}
-
 	public String getMedium() {
 		return medium;
 	}
-
 	public void setMedium(String medium) {
 		this.medium = medium;
 	}
-
-	public String getMediumStart() {
+	public BigDecimal getMediumStart() {
 		return mediumStart;
 	}
-
-	public void setMediumStart(String mediumStart) {
+	public void setMediumStart(BigDecimal mediumStart) {
 		this.mediumStart = mediumStart;
 	}
-
-	public String getMediumEnd() {
+	public BigDecimal getMediumEnd() {
 		return mediumEnd;
 	}
-
-	public void setMediumEnd(String mediumEnd) {
+	public void setMediumEnd(BigDecimal mediumEnd) {
 		this.mediumEnd = mediumEnd;
 	}
-
 	public BigDecimal getMediumRating() {
 		return mediumRating;
 	}
-
 	public void setMediumRating(BigDecimal mediumRating) {
 		this.mediumRating = mediumRating;
 	}
-
 	public String getMediumColor() {
 		return mediumColor;
 	}
-
 	public void setMediumColor(String mediumColor) {
 		this.mediumColor = mediumColor;
 	}
-
 	public String getMediumCondition() {
 		return mediumCondition;
 	}
-
 	public void setMediumCondition(String mediumCondition) {
 		this.mediumCondition = mediumCondition;
 	}
-
 	public String getHigh() {
 		return high;
 	}
-
 	public void setHigh(String high) {
 		this.high = high;
 	}
-
-	public String getHighStart() {
+	public BigDecimal getHighStart() {
 		return highStart;
 	}
-
-	public void setHighStart(String highStart) {
+	public void setHighStart(BigDecimal highStart) {
 		this.highStart = highStart;
 	}
-
-	public String getHighEnd() {
+	public BigDecimal getHighEnd() {
 		return highEnd;
 	}
-
-	public void setHighEnd(String highEnd) {
+	public void setHighEnd(BigDecimal highEnd) {
 		this.highEnd = highEnd;
 	}
-
 	public BigDecimal getHighRating() {
 		return highRating;
 	}
-
 	public void setHighRating(BigDecimal highRating) {
 		this.highRating = highRating;
 	}
-
 	public String getHighColor() {
 		return highColor;
 	}
-
 	public void setHighColor(String highColor) {
 		this.highColor = highColor;
 	}
-
 	public String getHighCondition() {
 		return highCondition;
 	}
-
 	public void setHighCondition(String highCondition) {
 		this.highCondition = highCondition;
 	}
+
 }
