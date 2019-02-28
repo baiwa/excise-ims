@@ -74,4 +74,8 @@ public class ExciseUtils {
 		}
 		return null;
 	}
+	
+	public static List<ParamInfo> getProductTypeAndServiceType() {
+		return paramInfoList;
+	}
 }
