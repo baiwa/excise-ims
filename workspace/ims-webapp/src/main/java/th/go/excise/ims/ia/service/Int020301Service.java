@@ -117,7 +117,7 @@ public class Int020301Service {
 			data.setRiskQuantity(new BigDecimal(sideDtls.size()));
 			// Sum Data
 			condition = conditionConfigs(new BigDecimal(declineValue), new BigDecimal(all), configs);
-			double avg = (declineValue/all)*100;
+			double avg = (declineValue / all) * 100;
 			// calculate Risk
 			if (">".equals(condition)) { // High
 				data.setRiskText(configs.getHigh());
@@ -305,29 +305,49 @@ public class Int020301Service {
 			cellNum++;
 			// Column 5
 			cell = row.createCell(cellNum);
-			cell.setCellValue(detail.getAvgRisk().doubleValue());
+			if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+				cell.setCellValue(detail.getAvgRisk().doubleValue());
+			} else {
+				cell.setCellValue("-");
+			}
 			cell.setCellStyle(tdStyle);
 			cellNum++;
 			// Column 6
 			cell = row.createCell(cellNum);
-			cell.setCellValue(detail.getRiskText());
+			if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+				cell.setCellValue(detail.getRiskText());
+			} else {
+				cell.setCellValue("-");
+			}
 			cell.setCellStyle(tdStyle);
 			cellNum++;
 
 			for (Int020301DataVo sideDtl : detail.getSideDtls()) {
 				// Column cellNum+1+1
 				cell = row.createCell(cellNum);
-				cell.setCellValue(sideDtl.getAcceptValue().doubleValue());
+				if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+					cell.setCellValue(sideDtl.getAcceptValue().doubleValue());
+				} else {
+					cell.setCellValue("-");
+				}
 				cell.setCellStyle(tdStyle);
 				cellNum++;
 				// Column cellNum+1+2
 				cell = row.createCell(cellNum);
-				cell.setCellValue(sideDtl.getDeclineValue().doubleValue());
+				if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+					cell.setCellValue(sideDtl.getDeclineValue().doubleValue());
+				} else {
+					cell.setCellValue("-");
+				}
 				cell.setCellStyle(tdStyle);
 				cellNum++;
 				// Column cellNum+1+3
 				cell = row.createCell(cellNum);
-				cell.setCellValue(sideDtl.getRiskName());
+				if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+					cell.setCellValue(sideDtl.getRiskName());
+				} else {
+					cell.setCellValue("-");
+				}
 				cell.setCellStyle(tdStyle);
 				cellNum++;
 			}
@@ -335,10 +355,14 @@ public class Int020301Service {
 			// Column detail.getSideDtls().size()+1
 			cell = row.createCell(cellNum);
 			if (detail.getSentDate() != null) {
-				cell.setCellValue(
-						ConvertDateUtils.formatDateToString(detail.getSentDate(), ConvertDateUtils.DD_MM_YYYY));
+				if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+					cell.setCellValue(
+							ConvertDateUtils.formatDateToString(detail.getSentDate(), ConvertDateUtils.DD_MM_YYYY));
+				} else {
+					cell.setCellValue("-");
+				}
 			} else {
-				cell.setCellValue("");
+				cell.setCellValue("-");
 			}
 			cell.setCellStyle(tdStyle);
 			cellNum++;
