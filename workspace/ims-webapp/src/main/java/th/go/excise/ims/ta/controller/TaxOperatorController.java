@@ -69,7 +69,7 @@ public class TaxOperatorController {
 		return response;
 	}
 
-	@GetMapping("/find-all-analysis-number")
+	@PostMapping("/find-all-analysis-number")
 	@ResponseBody
 	public ResponseData<List<String>> findAllAnalysisNumber(@RequestBody TaxOperatorFormVo formVo) {
 		ResponseData<List<String>> response = new ResponseData<>();
@@ -198,7 +198,7 @@ public class TaxOperatorController {
 		return response;
 	}
 
-	@GetMapping("/find-all-analysis-number-draft")
+	@PostMapping("/find-all-analysis-number-draft")
 	@ResponseBody
 	public ResponseData<List<String>> findAllDraftNumber(@RequestBody TaxOperatorFormVo formVo) {
 		ResponseData<List<String>> response = new ResponseData<>();
