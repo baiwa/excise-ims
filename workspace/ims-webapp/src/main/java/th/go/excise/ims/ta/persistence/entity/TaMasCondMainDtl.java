@@ -21,14 +21,14 @@ public class TaMasCondMainDtl extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_MAS_COND_MAIN_DTL_GEN")
 	@SequenceGenerator(name = "TA_MAS_COND_MAIN_DTL_GEN", sequenceName = "TA_MAS_COND_MAIN_DTL_SEQ", allocationSize = 1)
-	@Column(name = "COND_MAIN_DTL_ID")
-	private Long condMainDtlId;
+	@Column(name = "MAS_COND_MAIN_DTL_ID")
+	private Long masCondMainDtlId;
 	@Column(name = "BUDGET_YEAR")
 	private String budgetYear;
 	@Column(name = "COND_GROUP")
 	private String condGroup;
-	@Column(name = "PRODUCT_TYPE")
-	private String productType;
+	@Column(name = "DUTY_CODE")
+	private String dutyCode;
 	@Column(name = "TAX_MONTH_START")
 	private Integer taxMonthStart;
 	@Column(name = "TAX_MONTH_END")
@@ -42,12 +42,12 @@ public class TaMasCondMainDtl extends BaseEntity {
 	@Column(name = "COND_TYPE")
 	private String condType;
 
-	public Long getCondMainDtlId() {
-		return condMainDtlId;
+	public Long getMasCondMainDtlId() {
+		return masCondMainDtlId;
 	}
 
-	public void setCondMainDtlId(Long condMainDtlId) {
-		this.condMainDtlId = condMainDtlId;
+	public void setMasCondMainDtlId(Long masCondMainDtlId) {
+		this.masCondMainDtlId = masCondMainDtlId;
 	}
 
 	public String getBudgetYear() {
@@ -66,12 +66,12 @@ public class TaMasCondMainDtl extends BaseEntity {
 		this.condGroup = condGroup;
 	}
 
-	public String getProductType() {
-		return productType;
+	public String getDutyCode() {
+		return dutyCode;
 	}
 
-	public void setProductType(String productType) {
-		this.productType = productType;
+	public void setDutyCode(String dutyCode) {
+		this.dutyCode = dutyCode;
 	}
 
 	public Integer getTaxMonthStart() {

@@ -19,19 +19,19 @@ public class TaMasCondMainHdr extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_MAS_COND_MAIN_HDR_GEN")
 	@SequenceGenerator(name = "TA_MAS_COND_MAIN_HDR_GEN", sequenceName = "TA_MAS_COND_MAIN_HDR_SEQ", allocationSize = 1)
-	@Column(name = "COND_MAIN_HDR_ID")
-	private Long condMainHdrId;
+	@Column(name = "MAS_COND_MAIN_HDR_ID")
+	private Long masCondMainHdrId;
 	@Column(name = "BUDGET_YEAR")
 	private String budgetYear;
 	@Column(name = "MONTH_NUM")
 	private Integer monthNum;
 
-	public Long getCondMainHdrId() {
-		return condMainHdrId;
+	public Long getMasCondMainHdrId() {
+		return masCondMainHdrId;
 	}
 
-	public void setCondMainHdrId(Long condMainHdrId) {
-		this.condMainHdrId = condMainHdrId;
+	public void setMasCondMainHdrId(Long masCondMainHdrId) {
+		this.masCondMainHdrId = masCondMainHdrId;
 	}
 
 	public String getBudgetYear() {

@@ -58,7 +58,7 @@ public class MasterConditionMainService {
 	public void updateMaster(MasterConditionMainHdrDtlVo formVo) {
 		TaMasCondMainDtl dtl = null;
 		List<TaMasCondMainDtl> dtlList = new ArrayList<>();
-		TaMasCondMainHdr header = taMasCondMainHdrRepository.findById(formVo.getHeader().getCondMainHdrId()).get();
+		TaMasCondMainHdr header = taMasCondMainHdrRepository.findById(formVo.getHeader().getMasCondMainHdrId()).get();
 		header.setBudgetYear(formVo.getHeader().getBudgetYear());
 		header.setMonthNum(formVo.getHeader().getMonthNum());
 
@@ -83,13 +83,13 @@ public class MasterConditionMainService {
 				for (TaMasCondMainDtl obj : list) {
 					checkDelete = true;
 					for (TaMasCondMainDtl ob : formVo.getDetail()) {
-						if (ob.getCondMainDtlId() == obj.getCondMainDtlId()) {
+						if (ob.getMasCondMainDtlId() == obj.getMasCondMainDtlId()) {
 							checkDelete = false;
 							break;
 						}
 					}
 					if (checkDelete) {
-						dtl = taMasCondMainDtlRepository.findById(obj.getCondMainDtlId()).get();
+						dtl = taMasCondMainDtlRepository.findById(obj.getMasCondMainDtlId()).get();
 						dtl.setIsDeleted(FLAG.Y_FLAG);
 						dtlList.add(dtl);
 					}
@@ -108,7 +108,7 @@ public class MasterConditionMainService {
 			
 			dtlList = new ArrayList<>();
 			for (TaMasCondMainDtl obj : formVo.getDetail()) {
-				if (obj.getCondMainDtlId() == null) {
+				if (obj.getMasCondMainDtlId() == null) {
 					dtl = new TaMasCondMainDtl();
 					dtl.setBudgetYear(header.getBudgetYear());
 					dtl.setCondGroup(obj.getCondGroup());
@@ -120,7 +120,7 @@ public class MasterConditionMainService {
 					dtl.setCondType(TA_MAS_COND_MAIN_TYPE.TAX);
 
 				} else {
-					dtl = taMasCondMainDtlRepository.findById(obj.getCondMainDtlId()).get();
+					dtl = taMasCondMainDtlRepository.findById(obj.getMasCondMainDtlId()).get();
 					dtl.setBudgetYear(header.getBudgetYear());
 					dtl.setCondGroup(obj.getCondGroup());
 					dtl.setTaxMonthStart(obj.getTaxMonthStart());
