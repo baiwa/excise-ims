@@ -44,19 +44,19 @@ public class Int02Service {
 						ConvertDateUtils.LOCAL_TH));
 			}
 			if (obj.getUpdatedDate() != null) {
-				Date updatedDate = ConvertDateUtils.parseStringToDate(obj.getCreatedDate().format(formatter),
+				Date updatedDate = ConvertDateUtils.parseStringToDate(obj.getUpdatedDate().format(formatter),
 						ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN);
 				obj.setUpdatedDateStr(ConvertDateUtils.formatDateToString(updatedDate, ConvertDateUtils.DD_MM_YYYY,
 						ConvertDateUtils.LOCAL_TH));
 			}
 			if (obj.getStartDate() != null) {
-				Date startDate = ConvertDateUtils.parseStringToDate(obj.getCreatedDate().format(formatter),
+				Date startDate = ConvertDateUtils.parseStringToDate(obj.getStartDate().format(formatter),
 						ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN);
 				obj.setStartDateStr(ConvertDateUtils.formatDateToString(startDate, ConvertDateUtils.DD_MM_YYYY,
 						ConvertDateUtils.LOCAL_TH));
 			}
 			if (obj.getEndDate() != null) {
-				Date endDate = ConvertDateUtils.parseStringToDate(obj.getCreatedDate().format(formatter),
+				Date endDate = ConvertDateUtils.parseStringToDate(obj.getEndDate().format(formatter),
 						ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN);
 				obj.setEndDateStr(ConvertDateUtils.formatDateToString(endDate, ConvertDateUtils.DD_MM_YYYY,
 						ConvertDateUtils.LOCAL_TH));
