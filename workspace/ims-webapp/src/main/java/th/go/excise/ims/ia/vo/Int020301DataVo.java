@@ -7,6 +7,15 @@ public class Int020301DataVo {
 	BigDecimal declineValue;
 	String riskName;
 	String risk;
+	String riskColor;
+
+	public String getRiskColor() {
+		return riskColor;
+	}
+
+	public void setRiskColor(String riskColor) {
+		this.riskColor = riskColor;
+	}
 
 	public String getRisk() {
 		return risk;

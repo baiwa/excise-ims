@@ -22,6 +22,8 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ia.persistence.entity.IaRiskQtnConfig;
+import th.go.excise.ims.ia.persistence.repository.IaRiskQtnConfigRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireSideJdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int020301JdbcRepository;
 import th.go.excise.ims.ia.vo.Int020301DataVo;
@@ -38,68 +40,96 @@ public class Int020301Service {
 	@Autowired
 	private IaQuestionnaireSideJdbcRepository iaQuestionnaireSideJdbcRep;
 
+	@Autowired
+	private IaRiskQtnConfigRepository iaRiskQtnConfigRepository;
+
 	public List<Int020301HeaderVo> findHeaderByIdSide(String idSideStr, String budgetYear) {
 		BigDecimal idSide = new BigDecimal(idSideStr);
 		return int020301JdbcRepository.findHeaderByIdSide(idSide, budgetYear);
 	}
 
+	private String conditionConfigs(BigDecimal value, BigDecimal size, IaRiskQtnConfig configs) {
+		double highStart = configs.getHighStart().doubleValue();
+		double mediumStart = configs.getMediumStart().doubleValue();
+		double mediumEnd = configs.getMediumEnd().doubleValue();
+		double lowStart = configs.getHighStart().doubleValue();
+		double compareValue = (value.doubleValue() / size.doubleValue()) * 100;
+		if (compareValue > highStart) {
+			return configs.getHighCondition();
+		} else if (compareValue >= mediumStart && compareValue <= mediumEnd) {
+			return configs.getMediumCondition();
+		} else if (compareValue < lowStart) {
+			return configs.getLowCondition();
+		} else {
+			return configs.getLowCondition();
+		}
+	}
+
 	public List<Int020301InfoVo> findInfoByIdHdr(String idHdrStr, String budgetYear) {
 		BigDecimal idHdr = new BigDecimal(idHdrStr);
+		IaRiskQtnConfig configs = iaRiskQtnConfigRepository.findByIdQtnHdrAndIsDeleted(idHdr, "N");
 		List<Int020301InfoVo> datas = new ArrayList<>();
 		datas = int020301JdbcRepository.findInfoByIdSide(idHdr, budgetYear);
 		for (Int020301InfoVo data : datas) {
 			// Sides Data
-			int passValue = 0;
-			int failValue = 0;
 			List<Int020301DataVo> sideDtls = int020301JdbcRepository.findDataByIdHdr(idHdr, budgetYear,
 					data.getAreaName());
+			String condition = "";
+			double all = 0;
+			double declineValue = 0;
 			for (Int020301DataVo sideDtl : sideDtls) {
 				// Calculate RiskName
-				if (sideDtl.getAcceptValue() != null && sideDtl.getDeclineValue() != null) {
-					if (sideDtl.getAcceptValue().doubleValue() < sideDtl.getDeclineValue().doubleValue()) {
-						sideDtl.setRiskName("สูง");
-						sideDtl.setRisk("HIGH");
-						failValue++;
-					} else {
-						sideDtl.setRiskName("ต่ำ");
-						sideDtl.setRisk("LOW");
-						passValue++;
+				double sum = 0;
+				if (sideDtl.getDeclineValue() == null) {
+					sideDtl.setDeclineValue(new BigDecimal(0));
+				}
+				if (sideDtl.getAcceptValue() == null) {
+					sideDtl.setAcceptValue(new BigDecimal(0));
+				}
+				if (sideDtl.getDeclineValue() != null) {
+					sum = sideDtl.getDeclineValue().doubleValue();
+					if (sideDtl.getAcceptValue() != null) {
+						sum = sum + sideDtl.getAcceptValue().doubleValue();
 					}
-				} else if (sideDtl.getAcceptValue() != null) {
-					sideDtl.setRiskName("ต่ำ");
-					sideDtl.setRisk("LOW");
-					sideDtl.setDeclineValue(new BigDecimal(0));
-					passValue++;
-				} else if (sideDtl.getDeclineValue() != null) {
-					sideDtl.setRiskName("สูง");
-					sideDtl.setRisk("HIGH");
-					sideDtl.setAcceptValue(new BigDecimal(0));
-					failValue++;
+					all = all + sum;
+					declineValue = declineValue + sideDtl.getDeclineValue().doubleValue();
+					condition = conditionConfigs(sideDtl.getDeclineValue(), new BigDecimal(sum), configs);
 				} else {
-					sideDtl.setRiskName("สูง");
-					sideDtl.setRisk("HIGH");
-					sideDtl.setAcceptValue(new BigDecimal(0));
-					sideDtl.setDeclineValue(new BigDecimal(0));
-					failValue++;
+					if (sideDtl.getAcceptValue() != null) {
+						condition = conditionConfigs(new BigDecimal(0), sideDtl.getAcceptValue(), configs);
+					} else {
+						condition = conditionConfigs(new BigDecimal(0), new BigDecimal(0), configs);
+					}
+				}
+				if (">".equals(condition)) { // High
+					sideDtl.setRiskName(configs.getHigh());
+					sideDtl.setRiskColor(configs.getHighColor());
+				} else if ("<>".equals(condition)) { // Medium
+					sideDtl.setRiskName(configs.getMedium());
+					sideDtl.setRiskColor(configs.getMediumColor());
+				} else if ("<".equals(condition)) { // Low
+					sideDtl.setRiskName(configs.getLow());
+					sideDtl.setRiskColor(configs.getLowColor());
 				}
 			}
 			data.setSideDtls(sideDtls);
 			// RiskQuantity
 			data.setRiskQuantity(new BigDecimal(sideDtls.size()));
 			// Sum Data
-			data.setPassValue(new BigDecimal(passValue));
-			data.setFailValue(new BigDecimal(failValue));
-			double all = passValue+failValue;
-			double value = (failValue/all)*100;
-			data.setAvgRisk(new BigDecimal(Math.round(value)));
+			condition = conditionConfigs(new BigDecimal(declineValue), new BigDecimal(all), configs);
+			double avg = (declineValue/all)*100;
 			// calculate Risk
-			if (passValue > failValue) {
-				data.setRiskText("ต่ำ");
-			} else if (passValue == failValue) {
-				data.setRiskText("ปานกลาง");
-			} else {
-				data.setRiskText("สูง");
+			if (">".equals(condition)) { // High
+				data.setRiskText(configs.getHigh());
+				data.setRiskColor(configs.getHighColor());
+			} else if ("<>".equals(condition)) { // Medium
+				data.setRiskText(configs.getMedium());
+				data.setRiskColor(configs.getMediumColor());
+			} else if ("<".equals(condition)) { // Low
+				data.setRiskText(configs.getLow());
+				data.setRiskColor(configs.getLowColor());
 			}
+			data.setAvgRisk(new BigDecimal(Math.round(avg)));
 			// Finding Sector and Area Name
 			List<ExciseDept> exciseDepts = ApplicationCache.getExciseSectorList();
 			data.setStatusText(IA.qtnStatus(data.getStatusText()));

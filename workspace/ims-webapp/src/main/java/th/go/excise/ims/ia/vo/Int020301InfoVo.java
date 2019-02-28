@@ -15,7 +15,16 @@ public class Int020301InfoVo {
 	BigDecimal failValue;
 	BigDecimal avgRisk;
 	String riskText;
+	String riskColor;
 	List<Int020301DataVo> sideDtls;
+
+	public String getRiskColor() {
+		return riskColor;
+	}
+
+	public void setRiskColor(String riskColor) {
+		this.riskColor = riskColor;
+	}
 
 	public BigDecimal getAvgRisk() {
 		return avgRisk;
