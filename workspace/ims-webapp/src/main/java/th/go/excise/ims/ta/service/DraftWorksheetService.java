@@ -22,11 +22,9 @@ import org.springframework.util.CollectionUtils;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
-import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
-import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetHdr;
@@ -79,10 +77,6 @@ public class DraftWorksheetService {
 		
 		String ymStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateStart(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		String ymEnd = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateEnd(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
-		
-		List<ParamInfo> paramInfoList = new ArrayList<>();
-		paramInfoList.addAll(ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.EXCISE_PRODUCT_TYPE));
-		paramInfoList.addAll(ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.EXCISE_SERVICE_TYPE));
 		
 		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findByCriteria(formVoToWsReg4000(formVo), formVo.getStart(), formVo.getLength());
 		Map<String, List<TaWsInc8000M>> wsInc8000MMap = taWsInc8000MRepository.findByMonthRange(ymStart, ymEnd);
@@ -259,12 +253,7 @@ public class DraftWorksheetService {
 			calculateSD(detailVo, taxAmountList);
 			
 			// Find DutyCode Description
-			for (ParamInfo paramInfo : paramInfoList) {
-				if (paramInfo.getParamCode().equals(wsReg4000.getDutyCode())) {
-					detailVo.setDutyName(paramInfo.getValue1());
-					break;
-				}
-			}
+			detailVo.setDutyName(ExciseUtils.getDutyDesc(wsReg4000.getDutyCode()));
 
 			detailVoList.add(detailVo);
 		}
@@ -274,27 +263,14 @@ public class DraftWorksheetService {
 	
 	private TaWsReg4000 formVoToWsReg4000(TaxOperatorFormVo formVo) {
 		TaWsReg4000 wsReg4000 = new TaWsReg4000();
+		
 		try {
 			BeanUtils.copyProperties(wsReg4000, formVo);
-			String officeCode = wsReg4000.getOfficeCode();
-			if (StringUtils.isNotBlank(officeCode) && officeCode.length() == 6) {
-				if ("000000".equals(officeCode)) {
-					officeCode = null;
-				} else if ("00".equals(officeCode.substring(officeCode.length() - 2, officeCode.length()))) {
-					if ("00".equals(officeCode.substring(officeCode.length() - 4, officeCode.length() - 2))) {
-						officeCode = officeCode.substring(0, officeCode.length() - 4) + "____";
-					} else {
-						officeCode = officeCode.substring(0, officeCode.length() - 2) + "__";
-					}
-				}
-				wsReg4000.setOfficeCode(officeCode);
-			} else {
-				wsReg4000.setOfficeCode(null);
-			}
+			wsReg4000.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			logger.error(e.getMessage(), e);
 		}
-
+		
 		return wsReg4000;
 	}
 	
@@ -303,26 +279,43 @@ public class DraftWorksheetService {
 		
 		double[] taxAmounts = taxAmountList.stream().mapToDouble(d -> d).toArray();
 		double mean = StatUtils.mean(taxAmounts);
-		String taxAmountMean = decimalFormat.format(mean);
-		detailVo.setTaxAmtMean(taxAmountMean);
+		if (!Double.isNaN(mean)) {
+			detailVo.setTaxAmtMean(decimalFormat.format(mean));
+		} else {
+			detailVo.setTaxAmtMean(NO_TAX_AMOUNT);
+		}
 		
 		StandardDeviation standardDeviation = new StandardDeviation();
-		String taxAmountSd = decimalFormat.format(standardDeviation.evaluate(taxAmounts, mean));
-		detailVo.setTaxAmtSd(taxAmountSd);
+		double sd = standardDeviation.evaluate(taxAmounts, mean);
+		if (!Double.isNaN(sd)) {
+			detailVo.setTaxAmtSd(decimalFormat.format(sd));
+		} else {
+			detailVo.setTaxAmtSd(NO_TAX_AMOUNT);
+		}
 		
 		double max = StatUtils.max(taxAmounts);
-		String taxAmtMaxPnt = decimalFormat.format(((max - mean) / mean) * 100);
-		detailVo.setTaxAmtMaxPnt(taxAmtMaxPnt);
+		double taxAmtMaxPnt = ((max - mean) / mean) * 100;
+		if (!Double.isNaN(taxAmtMaxPnt)) {
+			detailVo.setTaxAmtMaxPnt(decimalFormat.format(taxAmtMaxPnt));
+		} else {
+			detailVo.setTaxAmtMaxPnt(NO_TAX_AMOUNT);
+		}
 		
 		double min = StatUtils.min(taxAmounts);
-		String taxAmtMinPnt = decimalFormat.format(((min - mean) / mean) * 100);
-		detailVo.setTaxAmtMinPnt(taxAmtMinPnt);
+		double taxAmtMinPnt = ((min - mean) / mean) * 100;
+		if (!Double.isNaN(taxAmtMaxPnt)) {
+			detailVo.setTaxAmtMaxPnt(decimalFormat.format(taxAmtMinPnt));
+		} else {
+			detailVo.setTaxAmtMaxPnt(NO_TAX_AMOUNT);
+		}
 	}
 	
 	@Transactional(rollbackOn = Exception.class)
 	public void saveDraftWorksheet(TaxOperatorFormVo formVo) {
-		String draftNumber = worksheetSequenceService.getDraftNumber(UserLoginUtils.getCurrentUserBean().getOfficeCode(), formVo.getBudgetYear());
-		logger.info("saveDraftWorksheet draftNumber={}", draftNumber);
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		String budgetYear = ExciseUtils.getCurrentBudgetYear();
+		logger.info("saveDraftWorksheet officeCode={}, budgetYear={}", officeCode, budgetYear);
+		String draftNumber = worksheetSequenceService.getDraftNumber(officeCode, budgetYear);
 		
 		formVo.setBudgetYear(ExciseUtils.getCurrentBudgetYear());
 		String dateStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateStart(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
@@ -331,11 +324,11 @@ public class DraftWorksheetService {
 		// Header
 		TaDraftWorksheetHdr draftHdr = new TaDraftWorksheetHdr();
 		draftHdr.setDraftNumber(draftNumber);
-		draftHdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+		draftHdr.setOfficeCode(officeCode);
 		draftHdr.setYearMonthStart(dateStart);
 		draftHdr.setYearMonthEnd(dateEnd);
 		draftHdr.setMonthNum(formVo.getDateRange());
-		draftHdr.setBudgetYear(formVo.getBudgetYear());
+		draftHdr.setBudgetYear(budgetYear);
 		taDraftWorksheetHdrRepository.save(draftHdr);
 		
 		// Detail

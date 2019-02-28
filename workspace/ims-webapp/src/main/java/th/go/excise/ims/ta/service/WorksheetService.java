@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
@@ -171,6 +172,7 @@ public class WorksheetService {
     }
 
     private BigDecimal floorAndCeilPercentage(BigDecimal amount) {
+    	amount = NumberUtils.nullToZero(amount);
         BigDecimal amountPlus100 = new BigDecimal("100");
         BigDecimal amountMinus100 = new BigDecimal("-100");
         if (amount.compareTo(amountPlus100) == 1) {
