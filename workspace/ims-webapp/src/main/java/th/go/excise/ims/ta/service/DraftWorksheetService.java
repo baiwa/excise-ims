@@ -394,8 +394,14 @@ public class DraftWorksheetService {
 		taDraftWorksheetDtlRepository.batchInsert(dratfDtlList);
 	}
 	
-	public List<String> findAllDraftNumber() {
-		return taDraftWorksheetHdrRepository.findAllDraftNumber();
+	public List<String> findAllDraftNumber(TaxOperatorFormVo formVo) {
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		String budgetYear = formVo.getBudgetYear();
+		if (StringUtils.isEmpty(budgetYear)) {
+			budgetYear = ExciseUtils.getCurrentBudgetYear();
+		}
+		logger.info("findAllDraftNumber officeCode={}, budgetYear={}", officeCode, budgetYear);
+		return taDraftWorksheetHdrRepository.findAllDraftNumberByOfficeCodeAndBudgetYear(officeCode, budgetYear);
 	}
 	
 	public YearMonthVo getMonthStart(TaxOperatorFormVo formVo) {

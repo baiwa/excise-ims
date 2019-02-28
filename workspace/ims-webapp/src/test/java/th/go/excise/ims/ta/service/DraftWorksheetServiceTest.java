@@ -2,7 +2,6 @@ package th.go.excise.ims.ta.service;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class DraftWorksheetServiceTest {
 	@Autowired
 	private DraftWorksheetService draftWorksheetService;
 	
-	@Test
+	//@Test
 	public void test_getPreviewData() {
 		long start = System.currentTimeMillis();
 		
@@ -65,22 +64,13 @@ public class DraftWorksheetServiceTest {
 		System.out.println("Process Success, using " + ((float) (end - start) / 1000F) + " seconds");
 	}
 
-	//@Test
-	public void testOffice() {
-		String officeCode = "010110";
-		if (StringUtils.isNotBlank(officeCode) && officeCode.length() == 6) {
-			if ("000000".equals(officeCode)) {
-				officeCode = null;
-			} else if ("00".equals(officeCode.substring(officeCode.length() - 2, officeCode.length()))) {
-				if ("00".equals(officeCode.substring(officeCode.length() - 4, officeCode.length() - 2))) {
-					officeCode = officeCode.substring(0, officeCode.length() - 4) + "____";
-				} else {
-					officeCode = officeCode.substring(0, officeCode.length() - 2) + "__";
-				}
-			}
-
-		}
-		System.out.println(officeCode);
+	@Test
+	public void test_findAllDraftNumber() {
+		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
+		formVo.setBudgetYear("2562");
+		
+		List<String> draftNumberList = draftWorksheetService.findAllDraftNumber(formVo);
+		draftNumberList.forEach(System.out::println);
 	}
 	
 }

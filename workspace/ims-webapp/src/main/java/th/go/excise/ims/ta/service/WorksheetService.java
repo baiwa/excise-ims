@@ -1,27 +1,49 @@
 package th.go.excise.ims.ta.service;
 
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.User;
-import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
-import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
-import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
-import th.go.excise.ims.common.util.ExciseUtils;
-import th.go.excise.ims.ta.persistence.entity.*;
-import th.go.excise.ims.ta.persistence.repository.*;
-import th.go.excise.ims.ta.util.TaxAuditUtils;
-import th.go.excise.ims.ta.vo.*;
-
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
+import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetHdr;
+import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
+import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
+import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainDtl;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainHdr;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetDtl;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
+import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetHdrRepository;
+import th.go.excise.ims.ta.persistence.repository.TaMasCondMainDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaMasCondMainHdrRepository;
+import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetSendRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondMainDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondMainHdrRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetHdrRepository;
+import th.go.excise.ims.ta.util.TaxAuditUtils;
+import th.go.excise.ims.ta.vo.CondGroupVo;
+import th.go.excise.ims.ta.vo.TaxDratfVo;
+import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
+import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
+import th.go.excise.ims.ta.vo.TaxOperatorVo;
+import th.go.excise.ims.ta.vo.YearMonthVo;
 
 @Service
 public class WorksheetService {
@@ -40,13 +62,11 @@ public class WorksheetService {
 
     @Autowired
     private TaWorksheetCondMainHdrRepository taWorksheetCondMainHdrRepository;
-
     @Autowired
     private TaWorksheetCondMainDtlRepository taWorksheetCondMainDtlRepository;
 
     @Autowired
     private TaWorksheetHdrRepository taWorksheetHdrRepository;
-
     @Autowired
     private TaWorksheetDtlRepository taWorksheetDtlRepository;
 
@@ -107,7 +127,8 @@ public class WorksheetService {
         worksheetHdr.setAnalysisNumber(analysisNumber);
         worksheetHdr.setDraftNumber(draftNumber);
         worksheetHdr.setOfficeCode(officeCode);
-        worksheetHdr.setWorksheetStatus("C");
+        worksheetHdr.setBudgetYear(budgetYear);
+        worksheetHdr.setWorksheetStatus(TA_WORKSHEET_STATUS.CONDITION);
         taWorksheetHdrRepository.save(worksheetHdr);
 
         // ==> Save WorksheetDtl
@@ -161,10 +182,14 @@ public class WorksheetService {
         }
     }
 
-    public List<String> findAllAnalysisNumber() {
+	public List<String> findAllAnalysisNumber(TaxOperatorFormVo formVo) {
         String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-        logger.info("findAllAnalysisNumber officeCode={}", officeCode);
-        return taWorksheetHdrRepository.findAllAnalysisNumberByOfficeCode(officeCode);
+		String budgetYear = formVo.getBudgetYear();
+		if (StringUtils.isEmpty(budgetYear)) {
+			budgetYear = ExciseUtils.getCurrentBudgetYear();
+		}
+		logger.info("findAllAnalysisNumber officeCode={}, budgetYear={}", officeCode, budgetYear);
+		return taWorksheetHdrRepository.findAllAnalysisNumberByOfficeCodeAndBudgetYear(officeCode, budgetYear);
     }
 
     public YearMonthVo getMonthStart(TaxOperatorFormVo formVo) {
@@ -200,34 +225,27 @@ public class WorksheetService {
                 .collect(Collectors.toList());
     }
 
-    public TaxOperatorVo getWorksheet(TaxOperatorFormVo formVo) {
-        logger.info("getWorksheet analysisNumber = {}", formVo.getAnalysisNumber());
+	public TaxOperatorVo getWorksheet(TaxOperatorFormVo formVo) {
+		logger.info("getWorksheet analysisNumber={}", formVo.getAnalysisNumber());
 
-        if (StringUtils.isBlank(formVo.getAnalysisNumber())) {
-            formVo.setAnalysisNumber("");
-        }
+		if (StringUtils.isBlank(formVo.getAnalysisNumber())) {
+			formVo.setAnalysisNumber("");
+		}
 
+		TaxOperatorVo vo = new TaxOperatorVo();
+		formVo.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
 
-        String officeCode = formVo.getOfficeCode();
+		TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository.findByOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+		if (StringUtils.isNotBlank(formVo.getSeeDataSelect()) && planSend == null) {
+			vo.setDatas(new ArrayList<>());
+			vo.setCount(0L);
+		} else {
+			List<TaxOperatorDetailVo> list = taWorksheetDtlRepository.findByCriteria(formVo);
+			vo.setDatas(TaxAuditUtils.prepareTaxOperatorDatatable(list, formVo));
+			vo.setCount(taWorksheetDtlRepository.countByCriteria(formVo));
+		}
 
-        TaxOperatorVo vo = new TaxOperatorVo();
-        formVo.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(officeCode));
-
-        TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository.findByOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
-        if (StringUtils.isNotBlank(formVo.getSeeDataSelect()) && planSend == null) {
-
-            vo.setDatas(new ArrayList<>());
-            vo.setCount(0L);
-        } else {
-            List<TaxOperatorDetailVo> list = taWorksheetDtlRepository.findByCriteria(formVo);
-
-
-            vo.setDatas(TaxAuditUtils.prepareTaxOperatorDatatable(list, formVo));
-            vo.setCount(taWorksheetDtlRepository.countByCriteria(formVo));
-        }
-
-
-        return vo;
-    }
+		return vo;
+	}
 
 }

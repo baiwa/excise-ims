@@ -1,5 +1,7 @@
 package th.go.excise.ims.ta.service;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
+import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
@@ -20,11 +23,20 @@ public class WorksheetServiceTest {
 	@Autowired
 	private WorksheetService worksheetService;
 	
-	@Test
+	//@Test
 	public void test_saveWorksheet() throws Exception {
 		String draftNumber = "000000-2562-000004";
 		String budgetYear = "2562";
 		worksheetService.saveWorksheet(draftNumber, budgetYear);
+	}
+	
+	@Test
+	public void test_findAllDraftNumber() {
+		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
+		formVo.setBudgetYear("2562");
+		
+		List<String> analysisNumberList = worksheetService.findAllAnalysisNumber(formVo);
+		analysisNumberList.forEach(System.out::println);
 	}
 	
 }

@@ -8,28 +8,31 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.vo.YearMonthVo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
-@WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
+@WithUserDetails(value = "admin", userDetailsServiceBeanName = "userDetailService")
 @ActiveProfiles(value = PROFILE.UNITTEST)
 public class TaDraftWorksheetHdrRepositoryTest {
 	
 	@Autowired
 	private TaDraftWorksheetHdrRepository taDraftWorksheetHdrRepository;
 	
-//	@Test
+	@Test
 	public void test_findAllDraftNumber() {
-		List<String> draftNumberList1 = taDraftWorksheetHdrRepository.findAllDraftNumber();
-		System.out.println();
-		draftNumberList1.forEach(System.out::print);
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		String budgetYear = "2562";
+		
+		List<String> draftNumberList1 = taDraftWorksheetHdrRepository.findAllDraftNumberByOfficeCodeAndBudgetYear(officeCode, budgetYear);
+		draftNumberList1.forEach(System.out::println);
 	}
 	
 	@Test

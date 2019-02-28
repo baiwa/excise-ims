@@ -11,6 +11,11 @@ public class ProjectConstants {
 		public static final String CENTRAL = "000000";
 	}
 	
+	public class TA_WORKSHEET_STATUS {
+		public static final String CONDITION = "C";
+		public static final String SELECTION = "S";
+	}
+	
 	public class TA_PLAN_STATUS {
 		public static final String INITIAL = "I";
 		public static final String WAIT_APPROVE = "W";
