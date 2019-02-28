@@ -89,6 +89,11 @@ public class Int0301JdbcRepository {
 //			setentityIaRiskFactorsConfig		
 
 			irfc.setId(rs.getBigDecimal("ID_CONFIG"));
+			irfc.setStartDate(rs.getDate("START_DATE"));
+			irfc.setEndDate(rs.getDate("END_DATE"));
+			
+			irfc.setInfoUsedRisk(rs.getString("INFO_USED_RISK"));
+			irfc.setInfoUsedRiskDesc(rs.getString("INFO_USED_RISK_DESC"));
 			
 			irfc.setIdFactors(rs.getBigDecimal("ID_FACTORS"));
 			irfc.setFactorsLevel(rs.getBigDecimal("FACTORS_LEVEL"));
