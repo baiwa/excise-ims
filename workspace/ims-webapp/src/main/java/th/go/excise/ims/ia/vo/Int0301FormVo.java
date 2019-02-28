@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
+import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfigAll;
 
 public class Int0301FormVo {
 
@@ -17,6 +18,7 @@ public class Int0301FormVo {
 	private String endDate;
 
 	private List<IaRiskFactorsConfig> iaRiskFactorsConfigList;
+	private IaRiskFactorsConfigAll iaRiskFactorsConfigAll;
 
 	public BigDecimal getId() {
 		return id;
@@ -89,5 +91,15 @@ public class Int0301FormVo {
 	public void setIaRiskFactorsConfigList(List<IaRiskFactorsConfig> iaRiskFactorsConfigList) {
 		this.iaRiskFactorsConfigList = iaRiskFactorsConfigList;
 	}
+
+	public IaRiskFactorsConfigAll getIaRiskFactorsConfigAll() {
+		return iaRiskFactorsConfigAll;
+	}
+
+	public void setIaRiskFactorsConfigAll(IaRiskFactorsConfigAll iaRiskFactorsConfigAll) {
+		this.iaRiskFactorsConfigAll = iaRiskFactorsConfigAll;
+	}
+	
+	
 
 }
