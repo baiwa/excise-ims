@@ -29,20 +29,19 @@ import th.go.excise.ims.ia.service.Int030101Service;
 import th.go.excise.ims.ia.vo.Int030101FormVo;
 import th.go.excise.ims.ia.vo.Int030101Vo;
 
-
 @Controller
 @RequestMapping("/api/ia/int03/01/01")
 public class Int030101Controller {
 	private Logger logger = LoggerFactory.getLogger(Int030102Controller.class);
 	@Autowired
 	private Int030101Service int030101Service;
-	
+
 	@PostMapping("/saveFactors")
 	@ResponseBody
 	public ResponseData<Int030101Vo> save(@RequestBody Int030101FormVo form) {
 		ResponseData<Int030101Vo> response = new ResponseData<Int030101Vo>();
 
-		//UserLoginUtils.getCurrentUserBean().getUserId()
+		// UserLoginUtils.getCurrentUserBean().getUserId()
 		try {
 			Int030101Vo res = int030101Service.saveFactors(form);
 			response.setData(res);
@@ -57,33 +56,66 @@ public class Int030101Controller {
 		}
 		return response;
 	}
-	
+
 	@PostMapping("/dowloadTemplate")
 	public void export(@RequestParam String dataJson, HttpServletResponse response) throws Exception {
-	//	Gson gson = new Gson();
+		try {
+			// Gson gson = new Gson();
 
 //		CheckPaymentExcelVo result = gson.fromJson(dataJson, CheckPaymentExcelVo.class);
-		//List<Int0610Vo> dataList = result.getInt0610ExcelList();
+			// List<Int0610Vo> dataList = result.getInt0610ExcelList();
 
-		// set fileName
-		String fileName = URLEncoder.encode("บันทึกข้อมูลเบิกจ่าย", "UTF-8");
+			// set fileName
+			String fileName = URLEncoder.encode("โครงการ", "UTF-8");
 
-		// write it as an excel attachment
-		ByteArrayOutputStream outByteStream = int030101Service.exportInt030101();
-		byte[] outArray = outByteStream.toByteArray();
-		response.setContentType("application/octet-stream");
-		response.setContentLength(outArray.length);
-		response.setHeader("Expires:", "0"); // eliminates browser caching
-		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-		OutputStream outStream = response.getOutputStream();
-		outStream.write(outArray);
-		outStream.flush();
-		outStream.close();
+			// write it as an excel attachment
+			ByteArrayOutputStream outByteStream = int030101Service.exportInt030101();
+			byte[] outArray = outByteStream.toByteArray();
+			response.setContentType("application/octet-stream");
+			response.setContentLength(outArray.length);
+			response.setHeader("Expires:", "0"); // eliminates browser caching
+			response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+			OutputStream outStream = response.getOutputStream();
+			outStream.write(outArray);
+			outStream.flush();
+			outStream.close();
+		} catch (Exception e) {
+			logger.error("Int030102Controller dowloadTemplate : ", e);
+		}
 	}
 	
+	@PostMapping("/dowloadTemplate2")
+	public void export2(@RequestParam String dataJson, HttpServletResponse response) throws Exception {
+		try {
+			// Gson gson = new Gson();
+
+//		CheckPaymentExcelVo result = gson.fromJson(dataJson, CheckPaymentExcelVo.class);
+			// List<Int0610Vo> dataList = result.getInt0610ExcelList();
+
+			// set fileName
+			String fileName = URLEncoder.encode("พื้นที่", "UTF-8");
+
+			// write it as an excel attachment
+			ByteArrayOutputStream outByteStream = int030101Service.exportInt0301012();
+			byte[] outArray = outByteStream.toByteArray();
+			response.setContentType("application/octet-stream");
+			response.setContentLength(outArray.length);
+			response.setHeader("Expires:", "0"); // eliminates browser caching
+			response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+			OutputStream outStream = response.getOutputStream();
+			outStream.write(outArray);
+			outStream.flush();
+			outStream.close();
+		} catch (Exception e) {
+			logger.error("Int030102Controller dowloadTemplate : ", e);
+		}
+	}
+	
+
 	@PostMapping("/upload")
 	@ResponseBody
-	public ResponseData<List<IaRiskFactorsData>> upload(@ModelAttribute Int030101FormVo form) throws EncryptedDocumentException, InvalidFormatException, IOException {		
+	public ResponseData<List<IaRiskFactorsData>> upload(@ModelAttribute Int030101FormVo form)
+			throws EncryptedDocumentException, InvalidFormatException, IOException {
 		ResponseData<List<IaRiskFactorsData>> responseData = new ResponseData<List<IaRiskFactorsData>>();
 		try {
 			List<IaRiskFactorsData> res = int030101Service.readFileExcel(form);
@@ -99,5 +131,22 @@ public class Int030101Controller {
 		}
 		return responseData;
 	}
-	
+
+	@PostMapping("/saveFactorsData")
+	@ResponseBody
+	public ResponseData<String> saveFactorsData(@RequestBody Int030101FormVo form) {
+		ResponseData<String> response = new ResponseData<String>();
+		try {
+			int030101Service.saveFactorsData(form);
+			response.setData("บันทึกสำเร็จ	  ");
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+//			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Int030102Controller saveFactorsData : ", e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
 }

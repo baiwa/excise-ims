@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class Int030101Vo {
 	private Int030101FormVo int030101FormVo;
-	private BigDecimal idFactor;
+	private BigDecimal idFactors;
 
 	public Int030101FormVo getInt030101FormVo() {
 		return int030101FormVo;
@@ -14,12 +14,12 @@ public class Int030101Vo {
 		this.int030101FormVo = int030101FormVo;
 	}
 
-	public BigDecimal getIdFactor() {
-		return idFactor;
+	public BigDecimal getIdFactors() {
+		return idFactors;
 	}
 
-	public void setIdFactor(BigDecimal idFactor) {
-		this.idFactor = idFactor;
+	public void setIdFactors(BigDecimal idFactors) {
+		this.idFactors = idFactors;
 	}
 
 }

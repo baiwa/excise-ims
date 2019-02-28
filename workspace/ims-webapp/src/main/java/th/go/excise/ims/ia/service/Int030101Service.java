@@ -21,13 +21,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
-import th.go.excise.ims.ia.controller.Int030102Controller;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsData;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsStatus;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
+import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsDataRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsMasterRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsStatusRepository;
@@ -56,6 +56,9 @@ public class Int030101Service {
 
 	@Autowired
 	private IaRiskFactorsStatusRepository iaRiskFactorsStatusRepository;
+
+	@Autowired
+	private IaRiskFactorsDataRepository iaRiskFactorsDataRepository;
 
 	@Autowired
 	private Int0301Service int0301Service;
@@ -114,11 +117,11 @@ public class Int030101Service {
 		}
 //		BigDecimal factorsLevels = int030101JdbcRepository.getFactorsLevel(form);
 		dataFactorsConfig.setFactorsLevel(factorsLevels);
-		IaRiskFactorsConfig dataFactorsFacRes = iaRiskFactorsConfigRepository.save(dataFactorsConfig);
+		IaRiskFactorsConfig dataFactorsConRes = iaRiskFactorsConfigRepository.save(dataFactorsConfig);
 
 		Int030101Vo res = new Int030101Vo();
 		Int030101FormVo formVo = new Int030101FormVo();
-		res.setIdFactor(dataFactorsRes.getId());
+		res.setIdFactors(dataFactorsRes.getId());
 		formVo.setRiskFactorsMaster(form.getRiskFactorsMaster());
 		formVo.setSide(form.getSide());
 		formVo.setDateFrom(form.getDateFrom());
@@ -152,12 +155,13 @@ public class Int030101Service {
 
 		// setColumnWidth
 		for (int i = 1; i <= 2; i++) {
-			if (i == 1 || i == 2) {
-				sheet.setColumnWidth(i, 76 * 60);
+			if (i == 1) {
+				sheet.setColumnWidth(i, 76 * 220);
+			} else if (i == 2) {
+				sheet.setColumnWidth(i, 76 * 120);
 			} else {
 				sheet.setColumnWidth(i, 76 * 100);
 			}
-
 		}
 
 		/* Detail */
@@ -190,6 +194,68 @@ public class Int030101Service {
 		return outByteStream;
 	}
 
+	public ByteArrayOutputStream exportInt0301012() throws IOException {
+		/* create spreadsheet */
+		List<IaRiskFactorsMaster> dataFactorsMasterList = new ArrayList<IaRiskFactorsMaster>();
+		XSSFWorkbook workbook = excalUtil.setUpExcel();
+		Sheet sheet = workbook.createSheet();
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+
+		/* Header */
+		String[] tbTH1 = { "	ลำดับที่		","	รหัสสรรพสามิต	","	ภาค	","	พื้นที่	","	ค่าความเสี่ยง	" };
+
+		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(tbTH1[cellNum]);
+			cell.setCellStyle(excalUtil.thStyle);
+		}
+
+		/* set sheet */
+
+		// setColumnWidth
+		for (int i = 1; i <= 4; i++) {
+			if (i == 1) {
+				sheet.setColumnWidth(i, 76 * 220);
+			} else if (i == 2) {
+				sheet.setColumnWidth(i, 76 * 120);
+			} else {
+				sheet.setColumnWidth(i, 76 * 100);
+			}
+		}
+
+		/* Detail */
+		rowNum = 1;
+		cellNum = 0;
+		int no = 1;
+		List<String> dataList = getdataList();
+		for (String item : dataList) {
+			row = sheet.createRow(rowNum);
+			// No.
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(item);
+			cellNum++;
+
+			no++;
+			rowNum++;
+			cellNum = 0;
+		}
+
+		/* EndDetail */
+
+		/* set write */
+		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		workbook.write(outByteStream);
+
+		return outByteStream;
+	}
+	
 	public List<String> getdataList() {
 		List<String> dataList = new ArrayList<String>();
 		dataList.add("แผนหลักเกณฑ์การประเมินผลการปฏิบัติราชการ	");
@@ -204,28 +270,71 @@ public class Int030101Service {
 		Workbook workbook = WorkbookFactory.create(file.getInputStream());
 		DataFormatter dataFormatter = new DataFormatter();
 
-		for (Sheet sheet : workbook) {
-			for (Row row : sheet) {
+		BigDecimal inspectionWork = form.getInspectionWork();
+		if (new BigDecimal(3).equals(inspectionWork)) {
+			for (Sheet sheet : workbook) {
+				for (Row row : sheet) {
+					if (row.getRowNum() == 0) {
+						continue; // just skip the rows if row number is 0 (Header)
+					}
+					IaRiskFactorsData dataUpload = new IaRiskFactorsData();
+					int columns = 1;
+					// dataUpload.setIdFactors(new
+					// BigDecimal(dataFormatter.formatCellValue(row.getCell(columns++))));
+					// dataUpload.setBudgetYear(dataFormatter.formatCellValue(row.getCell(columns++)));
+					dataUpload.setProject(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
+					dataUpload.setRiskCost(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
+					// dataUpload.setInspectionWork(new
+					// BigDecimal(dataFormatter.formatCellValue(row.getCell(columns++))));
 
-				if (row.getRowNum() == 0) {
-					continue; // just skip the rows if row number is 0 (Header)
+					dataUploadList.add(dataUpload);
 				}
-
-				IaRiskFactorsData dataUpload = new IaRiskFactorsData();
-//				logger.info("row : " , ());
-
-				int columns = 1;
-				// dataUpload.setIdFactors(new
-				// BigDecimal(dataFormatter.formatCellValue(row.getCell(columns++))));
-				// dataUpload.setBudgetYear(dataFormatter.formatCellValue(row.getCell(columns++)));
-				dataUpload.setProject(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
-				// dataUpload.setInspectionWork(new
-				// BigDecimal(dataFormatter.formatCellValue(row.getCell(columns++))));
-
-				dataUploadList.add(dataUpload);
 			}
+
+		} else if (new BigDecimal(4).equals(inspectionWork) || new BigDecimal(5).equals(inspectionWork)) {
+			for (Sheet sheet : workbook) {
+				for (Row row : sheet) {
+					if (row.getRowNum() == 0) {
+						continue; // just skip the rows if row number is 0 (Header)
+					}
+					IaRiskFactorsData dataUpload = new IaRiskFactorsData();
+					int columns = 1;
+					// dataUpload.setIdFactors(new
+					// BigDecimal(dataFormatter.formatCellValue(row.getCell(columns++))));
+					// dataUpload.setBudgetYear(dataFormatter.formatCellValue(row.getCell(columns++)));
+					dataUpload.setExciseCode(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
+					dataUpload.setSector(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
+					dataUpload.setArea(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
+					dataUpload.setRiskCost(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
+					// dataUpload.setInspectionWork(new
+					// BigDecimal(dataFormatter.formatCellValue(row.getCell(columns++))));
+
+					dataUploadList.add(dataUpload);
+				}
+			}
+		} else {
+			logger.info("Int030101Service : Upload No match inspectionWork");
 		}
+
 		return dataUploadList;
 	}
 
+	public void saveFactorsData(Int030101FormVo form) {
+		List<IaRiskFactorsData> dataList = form.getIaRiskFactorsDataList();
+		IaRiskFactorsData dataSet = null;
+		for (IaRiskFactorsData iaRiskFactorsData : dataList) {
+			dataSet = new IaRiskFactorsData();
+			dataSet.setBudgetYear(form.getBudgetYear());
+			dataSet.setInspectionWork(form.getInspectionWork());
+			dataSet.setIdFactors(form.getIdFactors());
+			dataSet.setProject(iaRiskFactorsData.getProject());
+			dataSet.setArea(iaRiskFactorsData.getArea());
+			dataSet.setSector(iaRiskFactorsData.getSector());
+			dataSet.setExciseCode(iaRiskFactorsData.getExciseCode());
+			dataSet.setArea(iaRiskFactorsData.getArea());
+			dataSet.setRiskCost(iaRiskFactorsData.getRiskCost());
+			
+			iaRiskFactorsDataRepository.save(dataSet);
+		}
+	}
 }

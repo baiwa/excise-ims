@@ -1,10 +1,14 @@
 package th.go.excise.ims.ia.vo;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsData;
+
 public class Int030101FormVo {
+	private BigDecimal idFactors;
 	private String budgetYear;
 	private BigDecimal inspectionWork;
 	private String riskFactorsMaster;
@@ -14,6 +18,17 @@ public class Int030101FormVo {
 	private String side;
 	private String riskUnit;
 	private MultipartFile file;
+
+	private List<IaRiskFactorsData> iaRiskFactorsDataList;
+
+	
+	public BigDecimal getIdFactors() {
+		return idFactors;
+	}
+
+	public void setIdFactors(BigDecimal idFactors) {
+		this.idFactors = idFactors;
+	}
 
 	public String getBudgetYear() {
 		return budgetYear;
@@ -86,7 +101,13 @@ public class Int030101FormVo {
 	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
-	
-	
+
+	public List<IaRiskFactorsData> getIaRiskFactorsDataList() {
+		return iaRiskFactorsDataList;
+	}
+
+	public void setIaRiskFactorsDataList(List<IaRiskFactorsData> iaRiskFactorsDataList) {
+		this.iaRiskFactorsDataList = iaRiskFactorsDataList;
+	}
 
 }
