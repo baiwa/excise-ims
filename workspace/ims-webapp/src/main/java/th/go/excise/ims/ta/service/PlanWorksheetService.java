@@ -160,7 +160,7 @@ public class PlanWorksheetService {
 		LocalDate selDate = null;
 		if (CollectionUtils.isNotEmpty(updateNewRegIdList)) {
 			for (String newRegId : updateNewRegIdList) {
-				planDtl = taPlanWorksheetDtlRepository.findByPlanNumberAndNewRegIdWithoutIsDeletedFlag(formVo.getPlanNumber(), newRegId);
+				planDtl = taPlanWorksheetDtlRepository.findByPlanNumberAndOfficeCodeAndNewRegIdWithoutIsDeletedFlag(formVo.getPlanNumber(), officeCode, newRegId);
 				if (FLAG.N_FLAG.equals(planDtl.getIsDeleted())) {
 					isDeletedPlanDtl = FLAG.Y_FLAG;
 					selFlag = null;
