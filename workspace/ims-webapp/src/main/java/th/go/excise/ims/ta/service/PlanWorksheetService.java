@@ -137,6 +137,7 @@ public class PlanWorksheetService {
 				planDtl.setAnalysisNumber(formVo.getAnalysisNumber());
 				planDtl.setOfficeCode(officeCode);
 				planDtl.setNewRegId(newRegId);
+				planDtl.setAuditStatus("I"); // FIXME
 				taPlanWorksheetDtlRepository.save(planDtl);
 
 				worksheetDtl = taWorksheetDtlRepository.findByAnalysisNumberAndNewRegId(formVo.getAnalysisNumber(), newRegId);
