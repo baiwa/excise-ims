@@ -48,9 +48,9 @@ private final UserRepository userRepository;
 		return userRepository.findAll();
 	}
 
-	public User getUserById(Long userId) {
+	public User getUserById(String idStr) {
 		logger.info("getUserById");
-		return userRepository.findById(userId).get();
+		return userRepository.findById(Long.valueOf(idStr)).get();
 	}
 
 	public long getUserCount() {

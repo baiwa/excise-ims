@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -97,4 +98,19 @@ public class UserController {
 		}
 		return responseData;
 	}
+	@GetMapping("/find-by-id/{id}")
+	@ResponseBody
+	public ResponseData<User> findById(@PathVariable("id") String idStr) {
+		ResponseData<User> responseData = new ResponseData<User>();
+		try {
+			responseData.setData(userService.getUserById(idStr));
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("UserController::findById ", e);
+			responseData.setMessage(RESPONSE_MESSAGE.ERROR500);
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+
 }
