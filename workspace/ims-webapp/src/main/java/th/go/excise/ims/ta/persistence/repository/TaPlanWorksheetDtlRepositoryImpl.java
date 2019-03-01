@@ -11,7 +11,6 @@ import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
-import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;

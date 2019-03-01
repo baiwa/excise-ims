@@ -1,5 +1,6 @@
 package th.go.excise.ims.ta.persistence.entity;
 
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,15 +8,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "TA_PLAN_WORKSHEET_HDR")
 public class TaPlanWorksheetHdr extends BaseEntity {
 
-	private static final long serialVersionUID = 2222944496322667057L;
+	private static final long serialVersionUID = 6378937104289474037L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_PLAN_WORKSHEET_HDR_GEN")
@@ -32,10 +31,26 @@ public class TaPlanWorksheetHdr extends BaseEntity {
 	private String sendAllFlag;
 	@Column(name = "PLAN_STATUS")
 	private String planStatus;
-	@Column(name = "AUTH_COMMENT")
-	private String authComment;
-	@Column(name = "PLAN_COMMENT")
-	private String planComment;
+	@Column(name = "APPROVAL_BY")
+	private String approvalBy;
+	@Column(name = "APPROVAL_DATE")
+	private LocalDate approvalDate;
+	@Column(name = "APPROVAL_COMMENT")
+	private String approvalComment;
+	@Column(name = "APPROVED_BY")
+	private String approvedBy;
+	@Column(name = "APPROVED_DATE")
+	private LocalDate approvedDate;
+	@Column(name = "APPROVED_COMMENT")
+	private String approvedComment;
+	@Column(name = "APPROVED_NUMBER")
+	private String approvedNumber;
+	@Column(name = "REJECTED_BY")
+	private String rejectedBy;
+	@Column(name = "REJECTED_DATE")
+	private LocalDate rejectedDate;
+	@Column(name = "REJECTED_COMMENT")
+	private String rejectedComment;
 
 	public Long getPlanWorksheetHdrId() {
 		return planWorksheetHdrId;
@@ -85,24 +100,84 @@ public class TaPlanWorksheetHdr extends BaseEntity {
 		this.planStatus = planStatus;
 	}
 
-	public String getAuthComment() {
-		return authComment;
+	public String getApprovalBy() {
+		return approvalBy;
 	}
 
-	public void setAuthComment(String authComment) {
-		this.authComment = authComment;
+	public void setApprovalBy(String approvalBy) {
+		this.approvalBy = approvalBy;
 	}
 
-	public String getPlanComment() {
-		return planComment;
+	public LocalDate getApprovalDate() {
+		return approvalDate;
 	}
 
-	public void setPlanComment(String planComment) {
-		this.planComment = planComment;
+	public void setApprovalDate(LocalDate approvalDate) {
+		this.approvalDate = approvalDate;
 	}
 
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	public String getApprovalComment() {
+		return approvalComment;
+	}
+
+	public void setApprovalComment(String approvalComment) {
+		this.approvalComment = approvalComment;
+	}
+
+	public String getApprovedBy() {
+		return approvedBy;
+	}
+
+	public void setApprovedBy(String approvedBy) {
+		this.approvedBy = approvedBy;
+	}
+
+	public LocalDate getApprovedDate() {
+		return approvedDate;
+	}
+
+	public void setApprovedDate(LocalDate approvedDate) {
+		this.approvedDate = approvedDate;
+	}
+
+	public String getApprovedComment() {
+		return approvedComment;
+	}
+
+	public void setApprovedComment(String approvedComment) {
+		this.approvedComment = approvedComment;
+	}
+
+	public String getApprovedNumber() {
+		return approvedNumber;
+	}
+
+	public void setApprovedNumber(String approvedNumber) {
+		this.approvedNumber = approvedNumber;
+	}
+
+	public String getRejectedBy() {
+		return rejectedBy;
+	}
+
+	public void setRejectedBy(String rejectedBy) {
+		this.rejectedBy = rejectedBy;
+	}
+
+	public LocalDate getRejectedDate() {
+		return rejectedDate;
+	}
+
+	public void setRejectedDate(LocalDate rejectedDate) {
+		this.rejectedDate = rejectedDate;
+	}
+
+	public String getRejectedComment() {
+		return rejectedComment;
+	}
+
+	public void setRejectedComment(String rejectedComment) {
+		this.rejectedComment = rejectedComment;
 	}
 
 }
