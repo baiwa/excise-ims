@@ -102,7 +102,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		List<Object> params = new ArrayList<>();
 		buildByCriteriaQuery(sql, params, wsReg4000);
 
-		sql.append(" ORDER BY DUTY_CODE, NEW_REG_ID ");
+		sql.append(" ORDER BY DUTY_CODE, OFFICE_CODE, NEW_REG_ID ");
 		
 		return this.commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), start, length), params.toArray(), wsReg4000RowMapper);
 	}

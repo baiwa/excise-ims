@@ -206,38 +206,42 @@ public class WorksheetService {
         return obj;
     }
 
-    public List<CondGroupVo> findCondGroupDtl(TaxOperatorFormVo formVo) {
-
-        TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository.findByOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
-        if (StringUtils.isNotBlank(formVo.getSeeDataSelect()) && planSend == null) {
-            return new ArrayList<>();
-        }
-        return taWorksheetCondMainDtlRepository.findByAnalysisNumber(formVo.getAnalysisNumber())
-                .stream()
-                .map(t -> {
-                    CondGroupVo vo = new CondGroupVo();
-                    vo.setAnalysisNumber(t.getAnalysisNumber());
-                    vo.setCondGroup(t.getCondGroup());
-                    vo.setTaxMonthStart(t.getTaxMonthStart());
-                    vo.setTaxMonthEnd(t.getTaxMonthEnd());
-                    vo.setRangeStart(t.getRangeStart());
-                    vo.setRangeEnd(t.getRangeEnd());
-                    return vo;
-                })
-                .collect(Collectors.toList());
-    }
+	public List<CondGroupVo> findCondGroupDtl(TaxOperatorFormVo formVo) {
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		String budgetYear = ExciseUtils.getCurrentBudgetYear();
+		logger.info("findCondGroupDtl officeCode={}, budgetYear={}", officeCode, budgetYear);
+		TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository.findByOfficeCodeAndBudgetYear(officeCode, budgetYear);
+		if (StringUtils.isNotBlank(formVo.getSeeDataSelect()) && planSend == null) {
+			return new ArrayList<>();
+		}
+		return taWorksheetCondMainDtlRepository.findByAnalysisNumber(formVo.getAnalysisNumber())
+			.stream()
+			.map(t -> {
+				CondGroupVo vo = new CondGroupVo();
+				vo.setAnalysisNumber(t.getAnalysisNumber());
+				vo.setCondGroup(t.getCondGroup());
+				vo.setTaxMonthStart(t.getTaxMonthStart());
+				vo.setTaxMonthEnd(t.getTaxMonthEnd());
+				vo.setRangeStart(t.getRangeStart());
+				vo.setRangeEnd(t.getRangeEnd());
+				return vo;
+			})
+			.collect(Collectors.toList());
+	}
 
 	public TaxOperatorVo getWorksheet(TaxOperatorFormVo formVo) {
-		logger.info("getWorksheet analysisNumber={}", formVo.getAnalysisNumber());
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		String budgetYear = ExciseUtils.getCurrentBudgetYear();
+		logger.info("getWorksheet officeCode={}, budgetYear={}, analysisNumber={}", officeCode, budgetYear, formVo.getAnalysisNumber());
 
 		if (StringUtils.isBlank(formVo.getAnalysisNumber())) {
 			formVo.setAnalysisNumber("");
 		}
 
 		TaxOperatorVo vo = new TaxOperatorVo();
-		formVo.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
+		formVo.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(officeCode));
 
-		TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository.findByOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+		TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository.findByOfficeCodeAndBudgetYear(officeCode, budgetYear);
 		if (StringUtils.isNotBlank(formVo.getSeeDataSelect()) && planSend == null) {
 			vo.setDatas(new ArrayList<>());
 			vo.setCount(0L);
