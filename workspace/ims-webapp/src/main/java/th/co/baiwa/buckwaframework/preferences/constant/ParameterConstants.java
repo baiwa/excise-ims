@@ -10,6 +10,7 @@ public class ParameterConstants {
 		public static final String EXCISE_SERVICE_TYPE = "EXCISE_SERVICE_TYPE";
 		public static final String EXCISE_FACTORY_TYPE = "EXCISE_FACTORY_TYPE";
 		public static final String TA_MAS_COND_MAIN_DESC = "TA_MAS_COND_MAIN_DESC";
+		public static final String TA_AUDIT_STATUS = "TA_AUDIT_STATUS";
 	}
 	
 	// Parameter Group: SYSTEM_CONFIG

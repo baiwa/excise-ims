@@ -11,6 +11,8 @@ import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
@@ -74,6 +76,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 			vo.setFacFullname(rs.getString("FAC_FULLNAME"));
 			vo.setFacAddress(rs.getString("FAC_ADDRESS"));
 			vo.setOfficeCodeR4000(rs.getString("OFFICE_CODE_R4000"));
+			vo.setDutyCode(rs.getString("DUTY_CODE"));
 			vo.setDutyDesc(ExciseUtils.getDutyDesc(rs.getString("DUTY_CODE")));
 			vo.setSecCode(rs.getString("SEC_CODE"));
 			vo.setSecDesc(rs.getString("SEC_DESC"));
@@ -82,6 +85,8 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 			vo.setPlanNumber(rs.getString("PLAN_NUMBER"));
 			vo.setAnalysisNumber(rs.getString("ANALYSIS_NUMBER"));
 			vo.setNewRegId(rs.getString("NEW_REG_ID"));
+			vo.setAuditStatus(rs.getString("AUDIT_STATUS"));
+			vo.setAuditStatusDesc(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_AUDIT_STATUS, rs.getString("AUDIT_STATUS")).getValue1());
 			return vo;
 		}
 	};

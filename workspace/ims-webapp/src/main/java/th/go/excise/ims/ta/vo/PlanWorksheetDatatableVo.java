@@ -6,6 +6,7 @@ public class PlanWorksheetDatatableVo {
 	private String facFullname;
 	private String facAddress;
 	private String officeCodeR4000;
+	private String dutyCode;
 	private String dutyDesc;
 	private String secCode;
 	private String secDesc;
@@ -15,6 +16,8 @@ public class PlanWorksheetDatatableVo {
 	private String analysisNumber;
 	private String newRegId;
 	private String condMainGrp;
+	private String auditStatus;
+	private String auditStatusDesc;
 
 	public String getCusFullname() {
 		return cusFullname;
@@ -46,6 +49,14 @@ public class PlanWorksheetDatatableVo {
 
 	public void setOfficeCodeR4000(String officeCodeR4000) {
 		this.officeCodeR4000 = officeCodeR4000;
+	}
+
+	public String getDutyCode() {
+		return dutyCode;
+	}
+
+	public void setDutyCode(String dutyCode) {
+		this.dutyCode = dutyCode;
 	}
 
 	public String getDutyDesc() {
@@ -118,6 +129,22 @@ public class PlanWorksheetDatatableVo {
 
 	public void setCondMainGrp(String condMainGrp) {
 		this.condMainGrp = condMainGrp;
+	}
+
+	public String getAuditStatus() {
+		return auditStatus;
+	}
+
+	public void setAuditStatus(String auditStatus) {
+		this.auditStatus = auditStatus;
+	}
+
+	public String getAuditStatusDesc() {
+		return auditStatusDesc;
+	}
+
+	public void setAuditStatusDesc(String auditStatusDesc) {
+		this.auditStatusDesc = auditStatusDesc;
 	}
 
 }
