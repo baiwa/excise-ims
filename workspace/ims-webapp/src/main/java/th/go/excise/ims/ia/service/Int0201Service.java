@@ -188,7 +188,6 @@ public class Int0201Service {
 										.findByIdSideDtl(madeDtl.getIdSideDtl());
 								if (filterQtnMadeDtl.size() > 0) {
 									for (IaQuestionnaireMade objQtnMadeDtl : filterQtnMadeDtl) {
-										objQtnMadeDtl.setCheckFlag("F");
 										objQtnMadeDtl.setUpdatedBy(UserLoginUtils.getCurrentUsername());
 										iaQuestionnaireMadeRepository.save(objQtnMadeDtl);
 									} // end loop 3
@@ -213,7 +212,6 @@ public class Int0201Service {
 				qtnMade.setStatus("CREATED");
 				qtnMade.setOfficeCode("0" + index + "0000");
 				qtnMade.setIdMadeHdr(idMadeHdr);
-				qtnMade.setCheckFlag("F");
 				iaQuestionnaireMadeRepository.save(qtnMade);
 			} // end loop 2
 		}
