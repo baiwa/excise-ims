@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -101,8 +102,8 @@ public class Int030101Service {
 				.setStartDate(ConvertDateUtils.parseStringToDate(form.getDateFrom(), ConvertDateUtils.DD_MM_YYYY));// ,
 																													// ConvertDateUtils.LOCAL_TH
 		dataFactorsConfig.setEndDate(ConvertDateUtils.parseStringToDate(form.getDateTo(), ConvertDateUtils.DD_MM_YYYY));
-//		dataFactorsConfig.setInfoUsedRiskDesc(form.getDataName());
-		dataFactorsConfig.setInfoUsedRisk("1");
+		dataFactorsConfig.setInfoUsedRiskDesc(form.getDataName());
+//		dataFactorsConfig.setInfoUsedRisk("1");
 //
 		Int0301FormVo form0301 = new Int0301FormVo();
 		form0301.setBudgetYear(form.getBudgetYear());
@@ -205,7 +206,8 @@ public class Int030101Service {
 		Cell cell = row.createCell(cellNum);
 
 		/* Header */
-		String[] tbTH1 = { "	ลำดับที่		","	รหัสสรรพสามิต	","	ภาค	","	พื้นที่	","	ค่าความเสี่ยง	" };
+		String[] tbTH1 = { "	ลำดับที่		", "	รหัสสรรพสามิต	", "	ภาค	", "	พื้นที่	",
+				"	ค่าความเสี่ยง	" };
 
 		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 			cell = row.createCell(cellNum);
@@ -255,7 +257,7 @@ public class Int030101Service {
 
 		return outByteStream;
 	}
-	
+
 	public List<String> getdataList() {
 		List<String> dataList = new ArrayList<String>();
 		dataList.add("แผนหลักเกณฑ์การประเมินผลการปฏิบัติราชการ	");
@@ -320,6 +322,13 @@ public class Int030101Service {
 	}
 
 	public void saveFactorsData(Int030101FormVo form) {
+		BigDecimal idFactor = form.getIdFactors();
+
+		IaRiskFactorsConfig dataSetConfig = iaRiskFactorsConfigRepository.findByIdFactors(idFactor);
+		dataSetConfig.setInfoUsedRiskDesc(form.getDataName());
+		logger.info("dataSetConfig", dataSetConfig);
+		iaRiskFactorsConfigRepository.save(dataSetConfig);
+
 		List<IaRiskFactorsData> dataList = form.getIaRiskFactorsDataList();
 		IaRiskFactorsData dataSet = null;
 		for (IaRiskFactorsData iaRiskFactorsData : dataList) {
@@ -333,7 +342,7 @@ public class Int030101Service {
 			dataSet.setExciseCode(iaRiskFactorsData.getExciseCode());
 			dataSet.setArea(iaRiskFactorsData.getArea());
 			dataSet.setRiskCost(iaRiskFactorsData.getRiskCost());
-			
+
 			iaRiskFactorsDataRepository.save(dataSet);
 		}
 	}
