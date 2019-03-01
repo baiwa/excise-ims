@@ -17,7 +17,7 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 public class TaWorksheetCondMainDtl extends BaseEntity {
 
 	private static final long serialVersionUID = 6018625077163491064L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_WORKSHEET_COND_MAIN_DTL_GEN")
 	@SequenceGenerator(name = "TA_WORKSHEET_COND_MAIN_DTL_GEN", sequenceName = "TA_WORKSHEET_COND_MAIN_DTL_SEQ", allocationSize = 1)
@@ -27,8 +27,8 @@ public class TaWorksheetCondMainDtl extends BaseEntity {
 	private String analysisNumber;
 	@Column(name = "COND_GROUP")
 	private String condGroup;
-	@Column(name = "PRODUCT_TYPE")
-	private String productType;
+	@Column(name = "DUTY_CODE")
+	private String dutyCode;
 	@Column(name = "TAX_MONTH_START")
 	private Integer taxMonthStart;
 	@Column(name = "TAX_MONTH_END")
@@ -66,12 +66,12 @@ public class TaWorksheetCondMainDtl extends BaseEntity {
 		this.condGroup = condGroup;
 	}
 
-	public String getProductType() {
-		return productType;
+	public String getDutyCode() {
+		return dutyCode;
 	}
 
-	public void setProductType(String productType) {
-		this.productType = productType;
+	public void setDutyCode(String dutyCode) {
+		this.dutyCode = dutyCode;
 	}
 
 	public Integer getTaxMonthStart() {
