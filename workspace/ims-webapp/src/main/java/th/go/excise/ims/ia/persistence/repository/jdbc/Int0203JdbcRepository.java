@@ -26,7 +26,7 @@ public class Int0203JdbcRepository {
 		sql.append(" SELECT DISTINCT HDR.* FROM IA_QUESTIONNAIRE_HDR HDR ");
 		sql.append(" INNER JOIN IA_QUESTIONNAIRE_MADE_HDR MDR ");
 		sql.append(" ON HDR.ID = MDR.ID_HDR ");
-		sql.append(" WHERE 1=1 AND HDR.IS_DELETED='N' AND MDR.IS_DELETED='N' ");
+		sql.append(" WHERE 1=1 AND HDR.IS_DELETED='N' AND MDR.IS_DELETED='N' AND MDR.STATUS='FINISH' ");
 		if (StringUtils.isNotBlank(request.getBudgetYear())) {
 			sql.append(" AND HDR.BUDGET_YEAR = ? ");
 			params.add(request.getBudgetYear());
@@ -61,7 +61,7 @@ public class Int0203JdbcRepository {
 		sql.append(" SELECT DISTINCT HDR.* FROM IA_QUESTIONNAIRE_HDR HDR ");
 		sql.append(" INNER JOIN IA_QUESTIONNAIRE_MADE_HDR MDR ");
 		sql.append(" ON HDR.ID = MDR.ID_HDR ");
-		sql.append(" WHERE 1=1 AND HDR.IS_DELETED='N' AND MDR.IS_DELETED='N' ");
+		sql.append(" WHERE 1=1 AND HDR.IS_DELETED='N' AND MDR.IS_DELETED='N' AND MDR.STATUS='FINISH' ");
 		if (StringUtils.isNotBlank(request.getBudgetYear())) {
 			sql.append(" AND HDR.BUDGET_YEAR = ? ");
 			params.add(request.getBudgetYear());
