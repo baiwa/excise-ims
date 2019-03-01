@@ -19,7 +19,6 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STAT
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfigAll;
 import th.go.excise.ims.ia.service.Int030103Service;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
-import th.go.excise.ims.ia.vo.Int0301Vo;
 
 @Controller
 @RequestMapping("/api/ia/int03/01/03")
@@ -57,6 +56,24 @@ public class Int030103Controller {
 
 		} catch (Exception e) {
 			logger.error("Int030103Controller updatePercent : ", e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	@PostMapping("/updataConfigAll")
+	@ResponseBody
+	public ResponseData<String> updataConfigAll(@RequestBody Int0301FormVo form) {
+		ResponseData<String> response = new ResponseData<String>();
+		try {	
+			int030103Service.updataConfigAll(form);
+			response.setData("SUCCESS");
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+
+		} catch (Exception e) {
+			logger.error("Int030103Controller updataConfigAll : ", e);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}

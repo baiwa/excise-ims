@@ -11,27 +11,23 @@ import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfigAll;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigAllRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int030103JdbcRepository;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
-import th.go.excise.ims.ia.vo.Int0301Vo;
 
 @Service
 public class Int030103Service {
 
 	@Autowired
 	private Int030103JdbcRepository int030103JdbcRepository;
-	
+
 	@Autowired
 	private IaRiskFactorsConfigAllRepository iaRiskFactorsConfigAllRepository;
-	
-	
-	
+
 	public List<IaRiskFactorsConfigAll> listConfigAll(IaRiskFactorsConfigAll form) {
 		List<IaRiskFactorsConfigAll> iaRiskFactorsConfigAllList = new ArrayList<IaRiskFactorsConfigAll>();
 		iaRiskFactorsConfigAllList = int030103JdbcRepository.listConfigAll(form);
 		return iaRiskFactorsConfigAllList;
 	}
-	
+
 	public void updatePercent(Int0301FormVo form) {
-		
 		IaRiskFactorsConfigAll configData = new IaRiskFactorsConfigAll();
 		IaRiskFactorsConfigAll formConfigAll = form.getIaRiskFactorsConfigAll();
 		configData.setBudgetYear(formConfigAll.getBudgetYear());
@@ -66,11 +62,55 @@ public class Int030103Service {
 		configData.setVeryhighCondition(formConfigAll.getVeryhighCondition());
 		configData.setVeryhighEnd(formConfigAll.getVeryhighEnd());
 		configData.setVeryhighRating(formConfigAll.getVeryhighRating());
-		configData.setVeryhighStart(formConfigAll.getVeryhighStart());			
+		configData.setVeryhighStart(formConfigAll.getVeryhighStart());
 		iaRiskFactorsConfigAllRepository.save(configData);
-		
+
 		for (IaRiskFactorsConfig irfc : form.getIaRiskFactorsConfigList()) {
-			int030103JdbcRepository.listUpdatePercent(irfc);			
+			int030103JdbcRepository.listUpdatePercent(irfc);
 		}
 	}
+
+	public void updataConfigAll(Int0301FormVo form) {
+		IaRiskFactorsConfigAll entity = new IaRiskFactorsConfigAll();
+		IaRiskFactorsConfigAll formConfigAll = form.getIaRiskFactorsConfigAll();
+		entity = iaRiskFactorsConfigAllRepository.findById(formConfigAll.getId()).get();
+		entity.setVerylow(formConfigAll.getVerylow());
+		entity.setVerylowStart(formConfigAll.getVerylowStart());
+		entity.setVerylowEnd(formConfigAll.getVerylowEnd());
+		entity.setVerylowRating(formConfigAll.getVerylowRating());
+		entity.setVerylowColor(formConfigAll.getVerylowColor());
+		entity.setVerylowCondition(formConfigAll.getVerylowCondition());
+
+		entity.setLow(formConfigAll.getLow());
+		entity.setLowStart(formConfigAll.getLowStart());
+		entity.setLowEnd(formConfigAll.getLowEnd());
+		entity.setLowRating(formConfigAll.getLowRating());
+		entity.setLowColor(formConfigAll.getLowColor());
+		entity.setLowCondition(formConfigAll.getLowCondition());
+
+		entity.setMedium(formConfigAll.getMedium());
+		entity.setMediumStart(formConfigAll.getMediumStart());
+		entity.setMediumEnd(formConfigAll.getMediumEnd());
+		entity.setMediumRating(formConfigAll.getMediumRating());
+		entity.setMediumColor(formConfigAll.getMediumColor());
+		entity.setMediumCondition(formConfigAll.getMediumCondition());
+
+		entity.setHigh(formConfigAll.getHigh());
+		entity.setHighStart(formConfigAll.getHighStart());
+		entity.setHighEnd(formConfigAll.getHighEnd());
+		entity.setHighRating(formConfigAll.getHighRating());
+		entity.setHighColor(formConfigAll.getHighColor());
+		entity.setHighCondition(formConfigAll.getHighCondition());
+
+		entity.setVeryhigh(formConfigAll.getVeryhigh());
+		entity.setVeryhighStart(formConfigAll.getVeryhighStart());
+		entity.setVeryhighEnd(formConfigAll.getVeryhighEnd());
+		entity.setVeryhighRating(formConfigAll.getVeryhighRating());
+		entity.setVeryhighColor(formConfigAll.getVeryhighColor());
+		entity.setVeryhighCondition(formConfigAll.getVeryhighCondition());
+
+		iaRiskFactorsConfigAllRepository.save(entity);
+
+	}
+
 }

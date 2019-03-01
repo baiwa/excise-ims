@@ -44,14 +44,46 @@ public class Int030103JdbcRepository {
 	private RowMapper<IaRiskFactorsConfigAll> listConfigAllRowmapper = new RowMapper<IaRiskFactorsConfigAll>() {
 		@Override
 		public IaRiskFactorsConfigAll mapRow(ResultSet rs, int arg1) throws SQLException {
-			IaRiskFactorsConfigAll vo = new IaRiskFactorsConfigAll();		
+			IaRiskFactorsConfigAll vo = new IaRiskFactorsConfigAll();	
+			vo.setId(rs.getBigDecimal("ID"));
 			vo.setBudgetYear(rs.getString("BUDGET_YEAR"));
 			vo.setInspectionWork(rs.getBigDecimal("INSPECTION_WORK"));
 			
-			vo.setHighStart(rs.getString("HIGH_START"));
+			vo.setVerylow(rs.getString("VERYLOW"));
+			vo.setVerylowColor(rs.getString("VERYLOW_COLOR"));
+			vo.setVerylowCondition(rs.getString("VERYLOW_CONDITION"));
+			vo.setVerylowRating(rs.getBigDecimal("VERYLOW_RATING"));
+			vo.setVerylowStart(rs.getString("VERYLOW_START"));
+			vo.setVerylowEnd(rs.getString("VERYLOW_END"));
 			
-
-		
+			vo.setLow(rs.getString("LOW"));
+			vo.setLowColor(rs.getString("LOW_COLOR"));
+			vo.setLowCondition(rs.getString("LOW_CONDITION"));
+			vo.setLowRating(rs.getBigDecimal("LOW_RATING"));
+			vo.setLowStart(rs.getString("LOW_START"));
+			vo.setLowEnd(rs.getString("LOW_END"));
+			
+			vo.setMedium(rs.getString("MEDIUM"));
+			vo.setMediumColor(rs.getString("MEDIUM_COLOR"));
+			vo.setMediumCondition(rs.getString("MEDIUM_CONDITION"));
+			vo.setMediumRating(rs.getBigDecimal("MEDIUM_RATING"));
+			vo.setMediumStart(rs.getString("MEDIUM_START"));
+			vo.setMediumEnd(rs.getString("MEDIUM_END"));
+			
+			vo.setHigh(rs.getString("HIGH"));
+			vo.setHighColor(rs.getString("HIGH_COLOR"));
+			vo.setHighCondition(rs.getString("HIGH_CONDITION"));
+			vo.setHighRating(rs.getBigDecimal("HIGH_RATING"));
+			vo.setHighStart(rs.getString("HIGH_START"));
+			vo.setHighEnd(rs.getString("HIGH_END"));
+			
+			vo.setVeryhigh(rs.getString("VERYHIGH"));
+			vo.setVeryhighColor(rs.getString("VERYHIGH_COLOR"));
+			vo.setVeryhighCondition(rs.getString("VERYHIGH_CONDITION"));
+			vo.setVeryhighRating(rs.getBigDecimal("VERYHIGH_RATING"));
+			vo.setVeryhighStart(rs.getString("VERYHIGH_START"));
+			vo.setVeryhighEnd(rs.getString("VERYHIGH_END"));
+				
 			return vo;
 		}
 	};

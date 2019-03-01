@@ -91,33 +91,36 @@ public class Int0301JdbcRepository {
 			irfc.setId(rs.getBigDecimal("ID_CONFIG"));
 			irfc.setStartDate(rs.getDate("START_DATE"));
 			irfc.setEndDate(rs.getDate("END_DATE"));
-			
+
 			irfc.setInfoUsedRisk(rs.getString("INFO_USED_RISK"));
 			irfc.setInfoUsedRiskDesc(rs.getString("INFO_USED_RISK_DESC"));
-			
+
 			irfc.setIdFactors(rs.getBigDecimal("ID_FACTORS"));
 			irfc.setFactorsLevel(rs.getBigDecimal("FACTORS_LEVEL"));
-			
+
 			irfc.setVerylowStart(rs.getString("VERYLOW_START"));
 			irfc.setVerylowEnd(rs.getString("VERYLOW_END"));
-			
+			irfc.setVerylowCondition(rs.getString("VERYLOW_CONDITION"));
+
 			irfc.setLowStart(rs.getString("LOW_START"));
 			irfc.setLowEnd(rs.getString("LOW_END"));
-			
+			irfc.setLowCondition(rs.getString("LOW_CONDITION"));
+
 			irfc.setMediumStart(rs.getString("MEDIUM_START"));
 			irfc.setMediumEnd(rs.getString("MEDIUM_END"));
-			
+			irfc.setMediumCondition(rs.getString("MEDIUM_CONDITION"));
+
 			irfc.setHighStart(rs.getString("HIGH_START"));
 			irfc.setHighEnd(rs.getString("HIGH_END"));
-			
+			irfc.setHighCondition(rs.getString("HIGH_CONDITION"));
+
 			irfc.setVeryhighStart(rs.getString("VERYHIGH_START"));
 			irfc.setVeryhighEnd(rs.getString("VERYHIGH_END"));
-			
+			irfc.setVeryhighCondition(rs.getString("VERYHIGH_CONDITION"));
+
 			irfc.setRiskUnit(rs.getString("RISK_UNIT"));
 			irfc.setPercent(rs.getBigDecimal("PERCENT"));
-			
-			
-			
+
 			vo.setIaRiskFactorsConfig(irfc);
 			return vo;
 		}
@@ -128,7 +131,7 @@ public class Int0301JdbcRepository {
 		sql.append("   UPDATE IA_RISK_FACTORS_CONFIG C                       ");
 		sql.append("   SET C.FACTORS_LEVEL   = ? ,                           ");
 		sql.append("   C.START_DATE          = null,                         ");
-		sql.append("   C.END_DATE            = null,                         "); 
+		sql.append("   C.END_DATE            = null,                         ");
 		sql.append("   C.VERYLOW             = null,                         ");
 		sql.append("   C.VERYLOW_START       = null,                         ");
 		sql.append("   C.VERYLOW_END         = null,                         ");
@@ -164,8 +167,20 @@ public class Int0301JdbcRepository {
 		sql.append("                 INNER JOIN IA_RISK_FACTORS_CONFIG B     ");
 		sql.append("                 ON A.ID = B.ID_FACTORS                  ");
 		sql.append("                 WHERE A.BUDGET_YEAR = ? )    ");
-
 		commonJdbcTemplate.update(sql.toString(), new Object[] { form.getFactorsLevel(), form.getBudgetYear() });
 
 	}
+	
+	public void claerDateCir(Int0301FormVo form) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("    UPDATE IA_RISK_FACTORS C                                                  ");
+		sql.append("    SET C.STATUS_SCREEN       = 'ยังไม่ได้กำหนด',                                         ");
+		sql.append("    C.DATE_CRITERIA           = null                                          ");
+		sql.append("    WHERE C.ID IN ( SELECT A.ID                                               ");
+		sql.append("                    FROM IA_RISK_FACTORS A                                    ");
+		sql.append("                    WHERE  A.BUDGET_YEAR = ? AND A.INSPECTION_WORK = ? )      ");	
+		commonJdbcTemplate.update(sql.toString(), new Object[] { form.getBudgetYear() ,form.getInspectionWork() });
+	}
+	
+	
 }

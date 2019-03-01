@@ -52,20 +52,22 @@ public class Int0301Service {
 				for (Int0301Vo int0301Vo : iaRiskFactorsList) {
 					List<String> listdynamic = new ArrayList<String>();
 
+					String lowCon = int0301Vo.getIaRiskFactorsConfig().getLowCondition();
 					String lowS = int0301Vo.getIaRiskFactorsConfig().getLowStart();
-					String low = (StringUtils.isNotBlank(lowS)) ? "น้อยกว่า" + lowS : "";
-					listdynamic.add(low);
+					String lowUnit = int0301Vo.getIaRiskFactorsConfig().getRiskUnit();
+
+					listdynamic.add(convertCondition(lowCon,lowS,"",lowUnit));
 
 					String mediumS = int0301Vo.getIaRiskFactorsConfig().getMediumStart();
 					String mediumE = int0301Vo.getIaRiskFactorsConfig().getMediumEnd();
-					String medium = (StringUtils.isNotBlank(mediumS) && StringUtils.isNotBlank(mediumE))
-							? "ระหว่าง" + mediumS + "ถึง" + mediumE
-							: "";
-					listdynamic.add(medium);
+					String mediumCon = int0301Vo.getIaRiskFactorsConfig().getMediumCondition();
+					String mediumUnit = int0301Vo.getIaRiskFactorsConfig().getRiskUnit();
+					listdynamic.add(convertCondition(mediumCon,mediumS,mediumE,mediumUnit));
 
 					String highS = int0301Vo.getIaRiskFactorsConfig().getHighStart();
-					String high = (StringUtils.isNotBlank(highS)) ? "มากกว่า" + highS : "";
-					listdynamic.add(high);
+					String highCon = int0301Vo.getIaRiskFactorsConfig().getHighCondition();
+					String highUnit = int0301Vo.getIaRiskFactorsConfig().getRiskUnit();
+					listdynamic.add(convertCondition(highCon,highS,"",highUnit));
 
 					int0301Vo.setDatalistdynamic(listdynamic);
 					iaRiskFactorsList2.add(int0301Vo);
@@ -76,33 +78,32 @@ public class Int0301Service {
 					List<String> listdynamic = new ArrayList<String>();
 
 					String veryLowS = int0301Vo2.getIaRiskFactorsConfig().getVerylowStart();
-					String veryLow = (StringUtils.isNotBlank(veryLowS)) ? "น้อยกว่า" + veryLowS : "";
-					listdynamic.add(veryLow);
+					String veryLowCon = int0301Vo2.getIaRiskFactorsConfig().getVerylowCondition();
+					String veryLowUnit = int0301Vo2.getIaRiskFactorsConfig().getRiskUnit();
+					listdynamic.add(convertCondition(veryLowS,veryLowCon,"",veryLowUnit));
 
 					String lowS = int0301Vo2.getIaRiskFactorsConfig().getLowStart();
 					String lowE = int0301Vo2.getIaRiskFactorsConfig().getLowEnd();
-					String low = (StringUtils.isNotBlank(lowS) && StringUtils.isNotBlank(lowE))
-							? "ระหว่าง" + lowS + "ถึง" + lowE
-							: "";
-					listdynamic.add(low);
+					String lowCon = int0301Vo2.getIaRiskFactorsConfig().getLowCondition();
+					String lowUnit = int0301Vo2.getIaRiskFactorsConfig().getRiskUnit();
+					listdynamic.add(convertCondition(lowCon,lowS,lowE,lowUnit));
 
 					String mediumS = int0301Vo2.getIaRiskFactorsConfig().getMediumStart();
 					String mediumE = int0301Vo2.getIaRiskFactorsConfig().getMediumEnd();
-					String medium = (StringUtils.isNotBlank(mediumS) && StringUtils.isNotBlank(mediumE))
-							? "ระหว่าง" + mediumS + "ถึง" + mediumE
-							: "";
-					listdynamic.add(medium);
+					String mediumCon = int0301Vo2.getIaRiskFactorsConfig().getMediumCondition();
+					String mediumUnit = int0301Vo2.getIaRiskFactorsConfig().getRiskUnit();
+					listdynamic.add(convertCondition(mediumCon,mediumS,mediumE,mediumUnit));
 
 					String highS = int0301Vo2.getIaRiskFactorsConfig().getHighStart();
 					String highE = int0301Vo2.getIaRiskFactorsConfig().getHighEnd();
-					String high = (StringUtils.isNotBlank(highS) && StringUtils.isNotBlank(highE))
-							? "ระหว่าง" + highS + "ถึง" + highE
-							: "";
-					listdynamic.add(high);
+					String highCon = int0301Vo2.getIaRiskFactorsConfig().getHighCondition();
+					String highUnit = int0301Vo2.getIaRiskFactorsConfig().getRiskUnit();
+					listdynamic.add(convertCondition(highCon,highS,highE,highUnit));
 
 					String veryHighS = int0301Vo2.getIaRiskFactorsConfig().getVeryhighStart();
-					String veryHigh = (StringUtils.isNotBlank(veryHighS)) ? "มากกว่า" + veryHighS : "";
-					listdynamic.add(veryHigh);
+					String veryHighCon = int0301Vo2.getIaRiskFactorsConfig().getVeryhighCondition();
+					String veryHighUnit = int0301Vo2.getIaRiskFactorsConfig().getRiskUnit();
+					listdynamic.add(convertCondition(veryHighCon,veryHighS,"",veryHighUnit));
 
 					int0301Vo2.setDatalistdynamic(listdynamic);
 					iaRiskFactorsList2.add(int0301Vo2);
@@ -114,9 +115,24 @@ public class Int0301Service {
 		return iaRiskFactorsList2;
 
 	}
+	
+	public String convertCondition(String condition,String start,String end,String unit) {
+		String res = "";
+		if(!"".equals(condition)&&condition!=null) {
+			if("<".equals(condition)) {
+				res =   " น้อยกว่า  " + start ;	
+			}else if ("<>".equals(condition)) {
+				res = " ระหว่าง  " + start + " ถึง " + end;	
+			}else if (">".equals(condition)) {
+				res = " มากกว่า  " + start ;	
+			}
+		}
+		return res;
+	}
 
 	public void saveRiskFactorsLevel(Int0301FormVo form) {
 		int0301JdbcRepository.saveRiskFactorsLevel(form);
+		int0301JdbcRepository.claerDateCir(form);
 
 	}
 
@@ -166,7 +182,6 @@ public class Int0301Service {
 
 		Date endDate = ConvertDateUtils.parseStringToDate(form.getEndDate(), ConvertDateUtils.DD_MM_YYYY);
 		entity.setEndDate(endDate);
-
 		iaRiskFactorsConfigRepository.save(entity);
 
 		IaRiskFactors entityFactors = new IaRiskFactors();

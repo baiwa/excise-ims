@@ -19,6 +19,7 @@ import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
 import th.go.excise.ims.ia.vo.Int030102FormVo;
 import th.go.excise.ims.ia.vo.Int030102Vo;
+import th.go.excise.ims.ia.vo.Int0301FormVo;
 
 @Repository
 public class Int030102JdbcRepository {
@@ -86,6 +87,9 @@ public class Int030102JdbcRepository {
 			
 			vo.setIdConfig(rs.getBigDecimal("ID_CONFIG_RES"));
 			iarfc.setId(rs.getBigDecimal("ID_CONFIG_RES"));
+			iarfc.setInfoUsedRiskDesc(rs.getString("INFO_USED_RISK_DESC"));
+			iarfc.setStartDate(rs.getDate("START_DATE"));
+			iarfc.setEndDate(rs.getDate("END_DATE"));
 			vo.setIaRiskFactorsConfig(iarfc);
 	
 			return vo;
@@ -251,6 +255,17 @@ public class Int030102JdbcRepository {
 		sql.append("                 WHERE A.BUDGET_YEAR = ? )    ");
 		
 		commonJdbcTemplate.update(sql.toString(), new Object[] { form.getFactorsLevel(), form.getBudgetYear() });
+	}
+	
+	public void claerDateCir(Int030102FormVo form) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("    UPDATE IA_RISK_FACTORS C                                                  ");
+		sql.append("    SET C.STATUS_SCREEN       = 'ยังไม่ได้กำหนด',                                         ");
+		sql.append("    C.DATE_CRITERIA           = null                                          ");
+		sql.append("    WHERE C.ID IN ( SELECT A.ID                                               ");
+		sql.append("                    FROM IA_RISK_FACTORS A                                    ");
+		sql.append("                    WHERE  A.BUDGET_YEAR = ? AND A.INSPECTION_WORK = ? )      ");	
+		commonJdbcTemplate.update(sql.toString(), new Object[] { form.getBudgetYear() ,form.getInspectionWork() });
 	}
 
 }

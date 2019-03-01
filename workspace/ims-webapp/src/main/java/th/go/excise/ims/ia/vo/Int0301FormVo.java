@@ -18,7 +18,7 @@ public class Int0301FormVo {
 	private String endDate;
 
 	private List<IaRiskFactorsConfig> iaRiskFactorsConfigList;
-	private IaRiskFactorsConfigAll iaRiskFactorsConfigAll;
+	private IaRiskFactorsConfigAll iaRiskFactorsConfigAll; 
 
 	public BigDecimal getId() {
 		return id;
