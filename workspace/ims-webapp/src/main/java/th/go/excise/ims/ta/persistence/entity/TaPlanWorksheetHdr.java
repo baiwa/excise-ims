@@ -1,6 +1,8 @@
 package th.go.excise.ims.ta.persistence.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
@@ -34,13 +37,13 @@ public class TaPlanWorksheetHdr extends BaseEntity {
 	@Column(name = "APPROVAL_BY")
 	private String approvalBy;
 	@Column(name = "APPROVAL_DATE")
-	private LocalDate approvalDate;
+	private LocalDateTime approvalDate;
 	@Column(name = "APPROVAL_COMMENT")
 	private String approvalComment;
 	@Column(name = "APPROVED_BY")
 	private String approvedBy;
 	@Column(name = "APPROVED_DATE")
-	private LocalDate approvedDate;
+	private LocalDateTime approvedDate;
 	@Column(name = "APPROVED_COMMENT")
 	private String approvedComment;
 	@Column(name = "APPROVED_NUMBER")
@@ -48,7 +51,7 @@ public class TaPlanWorksheetHdr extends BaseEntity {
 	@Column(name = "REJECTED_BY")
 	private String rejectedBy;
 	@Column(name = "REJECTED_DATE")
-	private LocalDate rejectedDate;
+	private LocalDateTime rejectedDate;
 	@Column(name = "REJECTED_COMMENT")
 	private String rejectedComment;
 
@@ -108,11 +111,11 @@ public class TaPlanWorksheetHdr extends BaseEntity {
 		this.approvalBy = approvalBy;
 	}
 
-	public LocalDate getApprovalDate() {
+	public LocalDateTime getApprovalDate() {
 		return approvalDate;
 	}
 
-	public void setApprovalDate(LocalDate approvalDate) {
+	public void setApprovalDate(LocalDateTime approvalDate) {
 		this.approvalDate = approvalDate;
 	}
 
@@ -132,11 +135,11 @@ public class TaPlanWorksheetHdr extends BaseEntity {
 		this.approvedBy = approvedBy;
 	}
 
-	public LocalDate getApprovedDate() {
+	public LocalDateTime getApprovedDate() {
 		return approvedDate;
 	}
 
-	public void setApprovedDate(LocalDate approvedDate) {
+	public void setApprovedDate(LocalDateTime approvedDate) {
 		this.approvedDate = approvedDate;
 	}
 
@@ -164,11 +167,11 @@ public class TaPlanWorksheetHdr extends BaseEntity {
 		this.rejectedBy = rejectedBy;
 	}
 
-	public LocalDate getRejectedDate() {
+	public LocalDateTime getRejectedDate() {
 		return rejectedDate;
 	}
 
-	public void setRejectedDate(LocalDate rejectedDate) {
+	public void setRejectedDate(LocalDateTime rejectedDate) {
 		this.rejectedDate = rejectedDate;
 	}
 

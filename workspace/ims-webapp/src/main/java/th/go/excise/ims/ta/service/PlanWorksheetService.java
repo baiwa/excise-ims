@@ -1,6 +1,12 @@
 package th.go.excise.ims.ta.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
@@ -8,11 +14,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
+import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_OFFICE_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
@@ -24,11 +32,8 @@ import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetSendRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetDtlRepository;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetStatus;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class PlanWorksheetService {
@@ -45,8 +50,12 @@ public class PlanWorksheetService {
 	private TaPlanWorksheetHdrRepository taPlanWorksheetHdrRepository;
 	@Autowired
 	private TaPlanWorksheetDtlRepository taPlanWorksheetDtlRepository;
+	
 	@Autowired
 	private TaPlanWorksheetSendRepository taPlanWorksheetSendRepository;
+	
+	@Autowired
+	private TaPlanWorksheetHdrRepository planWorksheetHdrRepository;
 
 	public TaPlanWorksheetHdr getPlanWorksheetHdr(PlanWorksheetVo formVo) {
 		logger.info("getPlanWorksheetHdr budgetYear={}", formVo.getBudgetYear());
@@ -268,6 +277,34 @@ public class PlanWorksheetService {
 
 		}
 
+	}
+	
+	public PlanWorksheetStatus getPlanHeaderStatus(PlanWorksheetVo formVo) {
+		PlanWorksheetStatus status = new PlanWorksheetStatus();
+		TaPlanWorksheetHdr planWsHdr = new TaPlanWorksheetHdr();
+		planWsHdr = planWorksheetHdrRepository.findByBudgetYear(formVo.getBudgetYear());
+		ParamInfo statusDesc = ApplicationCache.getParamInfoByCode("TA_PLAN_STATUS", planWsHdr.getPlanStatus());
+		status.setPlanStatus(statusDesc.getParamCode());
+		status.setApprovalComment(planWsHdr.getApprovalComment());
+		status.setApprovedComment(planWsHdr.getApprovedComment());
+		status.setPlanStatusDesc(statusDesc.getValue1());
+		return status;
+	}
+	
+	public void insertComment(TaPlanWorksheetHdr form) {
+		TaPlanWorksheetHdr comment = planWorksheetHdrRepository.findByBudgetYear(form.getBudgetYear());
+		if (StringUtils.isEmpty(form.getApprovedComment())) {
+			comment.setApprovalBy(UserLoginUtils.getCurrentUsername());
+			comment.setApprovalDate(LocalDateTime.now());
+			comment.setApprovalComment(form.getApprovalComment());
+			comment.setPlanStatus("W");
+		} else {
+			comment.setApprovedBy(UserLoginUtils.getCurrentUsername());
+			comment.setApprovedDate(LocalDateTime.now());
+			comment.setApprovedComment(form.getApprovedComment());
+			comment.setPlanStatus("P");
+		}
+		planWorksheetHdrRepository.save(comment);
 	}
 
 }

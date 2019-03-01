@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +27,7 @@ import th.go.excise.ims.ta.service.WorksheetService;
 import th.go.excise.ims.ta.vo.CondGroupVo;
 import th.go.excise.ims.ta.vo.PlanWorkSheetSendVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetStatus;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 import th.go.excise.ims.ta.vo.TaxOperatorVo;
@@ -380,7 +380,7 @@ public class TaxOperatorController {
 			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
@@ -393,5 +393,39 @@ public class TaxOperatorController {
 	@ResponseBody
 	public DataTableAjax<PlanWorksheetDatatableVo> planDtlDatatableApprive(@RequestBody PlanWorksheetVo formVo) {
 		return planWorksheetService.planDtlDatatable(formVo);
+	}
+	
+	@PostMapping("/get-plan-status")
+	@ResponseBody
+	public ResponseData<PlanWorksheetStatus> getPlanStatus(@RequestBody PlanWorksheetVo formVo) {
+		ResponseData<PlanWorksheetStatus> response = new ResponseData<>();
+
+		try {
+			response.setData(planWorksheetService.getPlanHeaderStatus(formVo));
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+
+		return response;
+	}
+	
+	@PostMapping("/update-plan-comment")
+	@ResponseBody
+	public ResponseData<?> insertComment(@RequestBody TaPlanWorksheetHdr formVo) {
+		ResponseData<?> response = new ResponseData<>();
+
+		try {
+			planWorksheetService.insertComment(formVo);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
 	}
 }

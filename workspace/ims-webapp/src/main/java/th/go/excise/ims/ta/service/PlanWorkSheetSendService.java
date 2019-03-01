@@ -1,5 +1,6 @@
 package th.go.excise.ims.ta.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +49,18 @@ public class PlanWorkSheetSendService {
                     allData.setPlanWorksheetSend(plan);
                     if (s.getOfficeCode().equals(p.getOfficeCode())) {
                         allData.setPlanWorksheetSend(p);
-                        if (p.getFacInNum() != null && p.getFacOutNum() != null) {
-                            allData.setTotalFacNum(p.getFacInNum() + p.getFacOutNum());
+                        if (p.getFacInNum() != null || p.getFacOutNum() != null) {
+                        	Integer facInNum = null;
+                        	Integer facOutNum = null;
+                        	facInNum = p.getFacInNum();
+                        	facOutNum = p.getFacOutNum();
+                        	if (null == facInNum) {
+                        		facInNum = 0;
+                        	}
+                        	if (null == facOutNum) {
+                        		facOutNum = 0;
+                        	}
+                        	allData.setTotalFacNum(facInNum+facOutNum);
                         }
                         break;
                     }
@@ -71,7 +82,17 @@ public class PlanWorkSheetSendService {
                     if (a.getOfficeCode().equals(p.getOfficeCode())) {
                         allData.setPlanWorksheetSend(p);
                         if (p.getFacInNum() != null && p.getFacOutNum() != null) {
-                            allData.setTotalFacNum(p.getFacInNum() + p.getFacOutNum());
+                        	Integer facInNum = null;
+                        	Integer facOutNum = null;
+                        	facInNum = p.getFacInNum();
+                        	facOutNum = p.getFacOutNum();
+                        	if (null == facInNum) {
+                        		facInNum = 0;
+                        	}
+                        	if (null == facOutNum) {
+                        		facOutNum = 0;
+                        	}
+                            allData.setTotalFacNum(facInNum+facOutNum);
                         }
                         break;
                     }
