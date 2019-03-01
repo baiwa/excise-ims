@@ -206,8 +206,7 @@ public class Int030101Service {
 		Cell cell = row.createCell(cellNum);
 
 		/* Header */
-		String[] tbTH1 = { "	ลำดับที่		", "	รหัสสรรพสามิต	", "	ภาค	", "	พื้นที่	",
-				"	ค่าความเสี่ยง	" };
+		String[] tbTH1 = { "ลำดับที่	", "รหัสสรรพสามิต", "ภาค", "พื้นที่", "ค่าความเสี่ยง" };
 
 		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 			cell = row.createCell(cellNum);
@@ -220,11 +219,11 @@ public class Int030101Service {
 		// setColumnWidth
 		for (int i = 1; i <= 4; i++) {
 			if (i == 1) {
-				sheet.setColumnWidth(i, 76 * 220);
+				sheet.setColumnWidth(i, 76 * 80);
 			} else if (i == 2) {
 				sheet.setColumnWidth(i, 76 * 120);
 			} else {
-				sheet.setColumnWidth(i, 76 * 100);
+				sheet.setColumnWidth(i, 76 * 150);
 			}
 		}
 
@@ -232,8 +231,23 @@ public class Int030101Service {
 		rowNum = 1;
 		cellNum = 0;
 		int no = 1;
-		List<String> dataList = getdataList();
-		for (String item : dataList) {
+
+		List<String> dataList1 = new ArrayList<String>();
+		dataList1.add("30100");
+		dataList1.add("40100");
+		dataList1.add("50100");
+
+		List<String> dataList2 = new ArrayList<String>();
+		dataList2.add("สำนักงานสรรพสามิตภาคที่ 3");
+		dataList2.add("สำนักงานสรรพสามิตภาคที่ 4");
+		dataList2.add("สำนักงานสรรพสามิตภาคที่ 5");
+
+		List<String> dataList3 = new ArrayList<String>();
+		dataList3.add("สำนักงานสรรพสามิตพื้นที่เชียงใหม่");
+		dataList3.add("สำนักงานสรรพสามิตพื้นที่นครราชสีมา");
+		dataList3.add("สำนักงานสรรพสามิตพื้นที่อุดรธานี");
+
+		for (int i = 0; i < dataList1.size(); i++) {
 			row = sheet.createRow(rowNum);
 			// No.
 			cell = row.createCell(cellNum);
@@ -241,9 +255,17 @@ public class Int030101Service {
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(item);
+			cell.setCellValue(dataList1.get(i));
 			cellNum++;
 
+			cell = row.createCell(cellNum);
+			cell.setCellValue(dataList2.get(i));
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(dataList3.get(i));
+			cellNum++;
+			
 			no++;
 			rowNum++;
 			cellNum = 0;
