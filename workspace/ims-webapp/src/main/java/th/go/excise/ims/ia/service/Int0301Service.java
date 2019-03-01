@@ -120,11 +120,11 @@ public class Int0301Service {
 		String res = "";
 		if(!"".equals(condition)&&condition!=null) {
 			if("<".equals(condition)) {
-				res =   " น้อยกว่า  " + start ;	
+				res =   " น้อยกว่า  " + start + " " + unit;	
 			}else if ("<>".equals(condition)) {
-				res = " ระหว่าง  " + start + " ถึง " + end;	
+				res = " ระหว่าง  " + start + " ถึง " + end + " " + unit;	
 			}else if (">".equals(condition)) {
-				res = " มากกว่า  " + start ;	
+				res = " มากกว่า  " + start + " " + unit;	
 			}
 		}
 		return res;
