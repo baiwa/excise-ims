@@ -73,7 +73,9 @@ public class WebSecurityConfig {
 		
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			http.authorizeRequests().antMatchers("/mobile-api/**").permitAll().and()
+			http.authorizeRequests()
+				.antMatchers("/mobile-api/**").permitAll()
+				.and()
 				.antMatcher("/api/**")
 					.authorizeRequests().anyRequest()
 					.hasAnyAuthority(ROLE.USER)

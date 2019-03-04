@@ -9,6 +9,7 @@ public class ProjectConstants {
 	
 	public class EXCISE_OFFICE_CODE {
 		public static final String CENTRAL = "000000";
+		public static final String TA_CENTRAL = "001400";
 	}
 	
 	public class TA_WORKSHEET_STATUS {
@@ -22,13 +23,6 @@ public class ProjectConstants {
 		public static final String REJECT = "R";
 		public static final String PROCESS = "P";
 		public static final String SUCCESS = "S";
-	}
-
-	public class TA_CONFIG {
-		public static final String TA_CONFIG = "TA_CONFIG";
-		public static final String SEE_FLAG = "SEE_FLAG";
-		public static final String SELECT_FLAG = "SELECT_FLAG";
-		public static final String SEND_ALL_FLAG = "SEND_ALL_FLAG";
 	}
 	
 }

@@ -4,18 +4,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
+
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
 import th.go.excise.ims.ta.service.DraftWorksheetService;
 import th.go.excise.ims.ta.service.PlanWorkSheetSendService;
 import th.go.excise.ims.ta.service.PlanWorksheetService;
 import th.go.excise.ims.ta.service.WorksheetService;
+import th.go.excise.ims.ta.util.TaxAuditUtils;
 import th.go.excise.ims.ta.vo.*;
 
 import java.util.List;
@@ -37,6 +41,25 @@ public class TaxOperatorController {
 	@Autowired
 	private PlanWorkSheetSendService planWorkSheetSendService;
 
+	// TODO Common
+	@PostMapping("/sector-list")
+	@ResponseBody
+	public ResponseData<List<ExciseDept>> getAllTaSectorList() {
+		logger.info("getAllTaSectorList");
+		
+		ResponseData<List<ExciseDept>> response = new ResponseData<>();
+		List<ExciseDept> exciseSectorList = TaxAuditUtils.getExciseSectorList();
+		if (!CollectionUtils.isEmpty(exciseSectorList)) {
+			response.setData(exciseSectorList);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} else {
+			response.setMessage("Excise Sector List Not Found");
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		
+		return response;
+	}
+	
 	// TODO worksheet header
 	@PostMapping("/")
 	@ResponseBody

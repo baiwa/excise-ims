@@ -14,8 +14,6 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -337,11 +335,6 @@ public class ApplicationCache {
 		// Sorting
 		EXCISE_AREA_MAP.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getOfficeCode().compareTo(p2.getOfficeCode())));
 		EXCISE_BRANCH_MAP.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getOfficeCode().compareTo(p2.getOfficeCode())));
-		
-		// Debug
-		EXCISE_AREA_MAP.entrySet().forEach(e -> {
-			System.out.println(e.getKey() + ":" + ToStringBuilder.reflectionToString(e.getValue(), ToStringStyle.JSON_STYLE));
-		});
 		
 		logger.info("load ExciseDepartment Sector={}, Area={}, Branch={}", EXCISE_SECTOR_MAP.size(), EXCISE_AREA_MAP.size(), EXCISE_BRANCH_MAP.size());
 	}

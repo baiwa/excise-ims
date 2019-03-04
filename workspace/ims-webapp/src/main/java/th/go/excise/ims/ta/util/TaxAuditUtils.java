@@ -11,6 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
+import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_OFFICE_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
@@ -162,6 +165,14 @@ public class TaxAuditUtils {
 		vo.setTaxAmtMaxPnt(rs.getString("TAX_AMT_MAX_PNT"));
 		vo.setTaxAmtMinPnt(rs.getString("TAX_AMT_MIN_PNT"));
 		vo.setDutyName(ExciseUtils.getDutyDesc(rs.getString("DUTY_CODE")));
+	}
+	
+	public static List<ExciseDept> getExciseSectorList() {
+		List<ExciseDept> sectorList = new ArrayList<>();
+		sectorList.add(ApplicationCache.getExciseDept(EXCISE_OFFICE_CODE.TA_CENTRAL));
+		sectorList.addAll(ApplicationCache.getExciseSectorList());
+		
+		return sectorList;
 	}
 	
 }

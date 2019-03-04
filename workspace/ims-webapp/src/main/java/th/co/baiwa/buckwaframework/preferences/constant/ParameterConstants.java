@@ -11,6 +11,7 @@ public class ParameterConstants {
 		public static final String EXCISE_FACTORY_TYPE = "EXCISE_FACTORY_TYPE";
 		public static final String TA_MAS_COND_MAIN_DESC = "TA_MAS_COND_MAIN_DESC";
 		public static final String TA_AUDIT_STATUS = "TA_AUDIT_STATUS";
+		public static final String TA_CONFIG = "TA_CONFIG";
 	}
 	
 	// Parameter Group: SYSTEM_CONFIG
@@ -23,6 +24,12 @@ public class ParameterConstants {
 		public static final String PRODUCT = "1";
 		public static final String SERVICE = "2";
 		public static final String IMPORT = "3";
+	}
+	
+	public class TA_CONFIG {
+		public static final String SEE_FLAG = "SEE_FLAG";
+		public static final String SELECT_FLAG = "SELECT_FLAG";
+		public static final String SEND_ALL_FLAG = "SEND_ALL_FLAG";
 	}
 	
 }

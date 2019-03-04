@@ -13,14 +13,14 @@ import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants;
-import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CONFIG;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
-import th.go.excise.ims.common.constant.ProjectConstants;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetDtl;
 import th.go.excise.ims.ta.util.TaxAuditUtils;
@@ -120,7 +120,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 
         String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
         if (!ExciseUtils.isCentral(officeCode)) {
-            ParamInfo paramInfo = ApplicationCache.getParamInfoByCode(ProjectConstants.TA_CONFIG.TA_CONFIG, ProjectConstants.TA_CONFIG.SEE_FLAG);
+            ParamInfo paramInfo = ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.SEE_FLAG);
             if (CommonConstants.FLAG.N_FLAG.equals(paramInfo.getValue1())) {
                 if (ExciseUtils.isSector(officeCode)) {
                     sql.append(" AND TA_W_DTL.CENTRAL_SEL_FLAG IS NULL ");
