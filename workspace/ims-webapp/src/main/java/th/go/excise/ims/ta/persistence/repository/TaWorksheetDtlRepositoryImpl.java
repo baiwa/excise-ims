@@ -12,10 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
+import th.go.excise.ims.common.constant.ProjectConstants;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetDtl;
 import th.go.excise.ims.ta.util.TaxAuditUtils;
@@ -112,7 +117,19 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
         StringBuilder sql = new StringBuilder();
         List<Object> params = new ArrayList<>();
         buildByCriteriaQuery(sql, params, formVo);
-        
+
+        String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+        if (!ExciseUtils.isCentral(officeCode)) {
+            ParamInfo paramInfo = ApplicationCache.getParamInfoByCode(ProjectConstants.TA_CONFIG.TA_CONFIG, ProjectConstants.TA_CONFIG.SEE_FLAG);
+            if (CommonConstants.FLAG.N_FLAG.equals(paramInfo.getValue1())) {
+                if (ExciseUtils.isSector(officeCode)) {
+                    sql.append(" AND TA_W_DTL.CENTRAL_SEL_FLAG IS NULL ");
+                } else {
+                    sql.append(" AND TA_W_DTL.CENTRAL_SEL_FLAG IS NULL AND SECTOR_SEL_FLAG IS NULL ");
+                }
+            }
+        }
+
         sql.append("ORDER BY R4000.DUTY_CODE , R4000.OFFICE_CODE , TA_DW_DTL.NEW_REG_ID ");
 
         return commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(), worksheetRowMapper);
