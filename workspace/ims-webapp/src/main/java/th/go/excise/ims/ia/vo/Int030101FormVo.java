@@ -12,16 +12,16 @@ public class Int030101FormVo {
 	private String budgetYear;
 	private BigDecimal inspectionWork;
 	private String riskFactorsMaster;
-	private String dataName;
+	private String infoUsedRiskDesc;
 	private String dateFrom;
 	private String dateTo;
 	private String side;
 	private String riskUnit;
+	private String riskIndicators;
 	private MultipartFile file;
 
 	private List<IaRiskFactorsData> iaRiskFactorsDataList;
 
-	
 	public BigDecimal getIdFactors() {
 		return idFactors;
 	}
@@ -54,12 +54,12 @@ public class Int030101FormVo {
 		this.riskFactorsMaster = riskFactorsMaster;
 	}
 
-	public String getDataName() {
-		return dataName;
+	public String getInfoUsedRiskDesc() {
+		return infoUsedRiskDesc;
 	}
 
-	public void setDataName(String dataName) {
-		this.dataName = dataName;
+	public void setInfoUsedRiskDesc(String dataName) {
+		this.infoUsedRiskDesc = dataName;
 	}
 
 	public String getDateFrom() {
@@ -108,6 +108,14 @@ public class Int030101FormVo {
 
 	public void setIaRiskFactorsDataList(List<IaRiskFactorsData> iaRiskFactorsDataList) {
 		this.iaRiskFactorsDataList = iaRiskFactorsDataList;
+	}
+
+	public String getRiskIndicators() {
+		return riskIndicators;
+	}
+
+	public void setRiskIndicators(String riskIndicators) {
+		this.riskIndicators = riskIndicators;
 	}
 
 }

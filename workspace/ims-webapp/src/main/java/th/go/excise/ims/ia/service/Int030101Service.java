@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
@@ -102,9 +103,9 @@ public class Int030101Service {
 				.setStartDate(ConvertDateUtils.parseStringToDate(form.getDateFrom(), ConvertDateUtils.DD_MM_YYYY));// ,
 																													// ConvertDateUtils.LOCAL_TH
 		dataFactorsConfig.setEndDate(ConvertDateUtils.parseStringToDate(form.getDateTo(), ConvertDateUtils.DD_MM_YYYY));
-		dataFactorsConfig.setInfoUsedRiskDesc(form.getDataName());
-//		dataFactorsConfig.setInfoUsedRisk("1");
-//
+		dataFactorsConfig.setInfoUsedRiskDesc(form.getInfoUsedRiskDesc());
+		dataFactorsConfig.setRiskIndicators(form.getRiskIndicators());
+		
 		Int0301FormVo form0301 = new Int0301FormVo();
 		form0301.setBudgetYear(form.getBudgetYear());
 		form0301.setInspectionWork(form.getInspectionWork());
@@ -116,10 +117,10 @@ public class Int030101Service {
 				break;
 			}
 		}
-//		BigDecimal factorsLevels = int030101JdbcRepository.getFactorsLevel(form);
 		dataFactorsConfig.setFactorsLevel(factorsLevels);
 		IaRiskFactorsConfig dataFactorsConRes = iaRiskFactorsConfigRepository.save(dataFactorsConfig);
 
+		//Set Response
 		Int030101Vo res = new Int030101Vo();
 		Int030101FormVo formVo = new Int030101FormVo();
 		res.setIdFactors(dataFactorsRes.getId());
@@ -128,7 +129,9 @@ public class Int030101Service {
 		formVo.setDateFrom(form.getDateFrom());
 		formVo.setDateTo(form.getDateTo());
 		formVo.setRiskUnit(form.getRiskUnit());
-
+		formVo.setInfoUsedRiskDesc(form.getInfoUsedRiskDesc());
+		formVo.setRiskIndicators(form.getRiskIndicators());
+		
 		res.setInt030101FormVo(formVo);
 		return res;
 	}
@@ -344,12 +347,12 @@ public class Int030101Service {
 	}
 
 	public void saveFactorsData(Int030101FormVo form) {
-		BigDecimal idFactor = form.getIdFactors();
-
-		IaRiskFactorsConfig dataSetConfig = iaRiskFactorsConfigRepository.findByIdFactors(idFactor);
-		dataSetConfig.setInfoUsedRiskDesc(form.getDataName());
-		logger.info("dataSetConfig", dataSetConfig);
-		iaRiskFactorsConfigRepository.save(dataSetConfig);
+//		BigDecimal idFactor = form.getIdFactors();
+//
+//		IaRiskFactorsConfig dataSetConfig = iaRiskFactorsConfigRepository.findByIdFactors(idFactor);
+//		dataSetConfig.setInfoUsedRiskDesc(form.getInfoUsedRiskDesc());
+//		logger.info("dataSetConfig", dataSetConfig);
+//		iaRiskFactorsConfigRepository.save(dataSetConfig);
 
 		List<IaRiskFactorsData> dataList = form.getIaRiskFactorsDataList();
 		IaRiskFactorsData dataSet = null;

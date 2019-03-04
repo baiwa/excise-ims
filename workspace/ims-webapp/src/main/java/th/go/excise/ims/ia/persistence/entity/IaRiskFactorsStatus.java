@@ -17,7 +17,8 @@ public class IaRiskFactorsStatus
     extends BaseEntity
 {
 
-    @Id
+	private static final long serialVersionUID = -4501100247978052817L;
+	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_RISK_FACTORS_STATUS_GEN")
     @SequenceGenerator(name = "IA_RISK_FACTORS_STATUS_GEN", sequenceName = "IA_RISK_FACTORS_STATUS_SEQ", allocationSize = 1)
     @Column(name = "ID")

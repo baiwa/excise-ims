@@ -97,6 +97,8 @@ public class IaRiskFactorsConfig extends BaseEntity {
 	private String riskUnit;
 	@Column(name = "PERCENT")
 	private BigDecimal percent;
+	@Column(name = "RISK_INDICATORS")
+	private String riskIndicators;
 
 	public BigDecimal getId() {
 		return id;
@@ -410,8 +412,12 @@ public class IaRiskFactorsConfig extends BaseEntity {
 		this.percent = percent;
 	}
 
+	public String getRiskIndicators() {
+		return riskIndicators;
+	}
 
-	
-	
+	public void setRiskIndicators(String riskIndicators) {
+		this.riskIndicators = riskIndicators;
+	}
 
 }

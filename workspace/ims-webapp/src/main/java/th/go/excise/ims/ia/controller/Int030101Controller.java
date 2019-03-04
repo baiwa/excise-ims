@@ -38,7 +38,7 @@ public class Int030101Controller {
 
 	@PostMapping("/saveFactors")
 	@ResponseBody
-	public ResponseData<Int030101Vo> save(@RequestBody Int030101FormVo form) {
+	public ResponseData<Int030101Vo> saveFactors(@RequestBody Int030101FormVo form) {
 		ResponseData<Int030101Vo> response = new ResponseData<Int030101Vo>();
 
 		// UserLoginUtils.getCurrentUserBean().getUserId()
