@@ -1,7 +1,6 @@
 package th.go.excise.ims.ta.persistence.entity;
 
 import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,30 +8,35 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "TA_MAS_COND_MAIN_DTL")
 public class TaMasCondMainDtl extends BaseEntity {
 
-	private static final long serialVersionUID = 7980671915299106648L;
-
+	private static final long serialVersionUID = -3675070910474302216L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_MAS_COND_MAIN_DTL_GEN")
 	@SequenceGenerator(name = "TA_MAS_COND_MAIN_DTL_GEN", sequenceName = "TA_MAS_COND_MAIN_DTL_SEQ", allocationSize = 1)
 	@Column(name = "MAS_COND_MAIN_DTL_ID")
 	private Long masCondMainDtlId;
+	@Column(name = "OFFICE_CODE")
+	private String officeCode;
 	@Column(name = "BUDGET_YEAR")
 	private String budgetYear;
 	@Column(name = "COND_GROUP")
 	private String condGroup;
-	@Column(name = "DUTY_CODE")
-	private String dutyCode;
+	@Column(name = "TAX_FREQ_TYPE")
+	private String taxFreqType;
 	@Column(name = "TAX_MONTH_START")
 	private Integer taxMonthStart;
 	@Column(name = "TAX_MONTH_END")
 	private Integer taxMonthEnd;
+	@Column(name = "RANGE_TYPE")
+	private String rangeType;
 	@Column(name = "RANGE_START")
 	private BigDecimal rangeStart;
 	@Column(name = "RANGE_END")
@@ -48,6 +52,14 @@ public class TaMasCondMainDtl extends BaseEntity {
 
 	public void setMasCondMainDtlId(Long masCondMainDtlId) {
 		this.masCondMainDtlId = masCondMainDtlId;
+	}
+
+	public String getOfficeCode() {
+		return officeCode;
+	}
+
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
 	}
 
 	public String getBudgetYear() {
@@ -66,12 +78,12 @@ public class TaMasCondMainDtl extends BaseEntity {
 		this.condGroup = condGroup;
 	}
 
-	public String getDutyCode() {
-		return dutyCode;
+	public String getTaxFreqType() {
+		return taxFreqType;
 	}
 
-	public void setDutyCode(String dutyCode) {
-		this.dutyCode = dutyCode;
+	public void setTaxFreqType(String taxFreqType) {
+		this.taxFreqType = taxFreqType;
 	}
 
 	public Integer getTaxMonthStart() {
@@ -88,6 +100,14 @@ public class TaMasCondMainDtl extends BaseEntity {
 
 	public void setTaxMonthEnd(Integer taxMonthEnd) {
 		this.taxMonthEnd = taxMonthEnd;
+	}
+
+	public String getRangeType() {
+		return rangeType;
+	}
+
+	public void setRangeType(String rangeType) {
+		this.rangeType = rangeType;
 	}
 
 	public BigDecimal getRangeStart() {
@@ -120,6 +140,10 @@ public class TaMasCondMainDtl extends BaseEntity {
 
 	public void setCondType(String condType) {
 		this.condType = condType;
+	}
+
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
 }
