@@ -1,18 +1,10 @@
 package th.go.excise.ims.ta.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.bind.annotation.*;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
@@ -24,14 +16,9 @@ import th.go.excise.ims.ta.service.DraftWorksheetService;
 import th.go.excise.ims.ta.service.PlanWorkSheetSendService;
 import th.go.excise.ims.ta.service.PlanWorksheetService;
 import th.go.excise.ims.ta.service.WorksheetService;
-import th.go.excise.ims.ta.vo.CondGroupVo;
-import th.go.excise.ims.ta.vo.PlanWorkSheetSendVo;
-import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
-import th.go.excise.ims.ta.vo.PlanWorksheetStatus;
-import th.go.excise.ims.ta.vo.PlanWorksheetVo;
-import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
-import th.go.excise.ims.ta.vo.TaxOperatorVo;
-import th.go.excise.ims.ta.vo.YearMonthVo;
+import th.go.excise.ims.ta.vo.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/api/ta/tax-operator")

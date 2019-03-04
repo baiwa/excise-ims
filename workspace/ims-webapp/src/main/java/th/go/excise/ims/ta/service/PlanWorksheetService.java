@@ -170,14 +170,23 @@ public class PlanWorksheetService {
         if (CollectionUtils.isNotEmpty(updateNewRegIdList)) {
             for (String newRegId : updateNewRegIdList) {
                 planDtl = taPlanWorksheetDtlRepository.findByPlanNumberAndOfficeCodeAndNewRegIdWithoutIsDeletedFlag(formVo.getPlanNumber(), officeCode, newRegId);
-                if (FLAG.N_FLAG.equals(planDtl.getIsDeleted())) {
-                    isDeletedPlanDtl = FLAG.Y_FLAG;
-                    selFlag = null;
-                    selDate = null;
-                } else {
+//                if (FLAG.N_FLAG.equals(planDtl.getIsDeleted())) {
+//                    isDeletedPlanDtl = FLAG.Y_FLAG;
+//                    selFlag = null;
+//                    selDate = null;
+//                } else {
+//                    isDeletedPlanDtl = FLAG.N_FLAG;
+//                    selFlag = FLAG.Y_FLAG;
+//                    selDate = LocalDate.now();
+//                }
+                if (selectNewRegIdList.contains(newRegId)){
                     isDeletedPlanDtl = FLAG.N_FLAG;
                     selFlag = FLAG.Y_FLAG;
                     selDate = LocalDate.now();
+                }else{
+                    isDeletedPlanDtl = FLAG.Y_FLAG;
+                    selFlag = null;
+                    selDate = null;
                 }
                 taPlanWorksheetDtlRepository.updateIsDeletedByPlanNumberAndNewRegId(isDeletedPlanDtl, formVo.getPlanNumber(), newRegId);
 
@@ -200,7 +209,8 @@ public class PlanWorksheetService {
     public List<TaPlanWorksheetDtl> findPlanWorksheetDtl(PlanWorksheetVo formVo) {
         String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
         logger.info("findPlanWorkSheetDtl planNumber={}, officeCode={}", formVo.getPlanNumber(), officeCode);
-        return taPlanWorksheetDtlRepository.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), officeCode);
+        List<TaPlanWorksheetDtl> list = taPlanWorksheetDtlRepository.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), officeCode);
+        return list;
     }
 
     public DataTableAjax<PlanWorksheetDatatableVo> planDtlDatatable(PlanWorksheetVo formVo) {
@@ -280,13 +290,18 @@ public class PlanWorksheetService {
 
     public PlanWorksheetStatus getPlanHeaderStatus(PlanWorksheetVo formVo) {
         PlanWorksheetStatus status = new PlanWorksheetStatus();
-        TaPlanWorksheetHdr planWsHdr = new TaPlanWorksheetHdr();
-        planWsHdr = planWorksheetHdrRepository.findByBudgetYear(formVo.getBudgetYear());
-        ParamInfo statusDesc = ApplicationCache.getParamInfoByCode("TA_PLAN_STATUS", planWsHdr.getPlanStatus());
-        status.setPlanStatus(statusDesc.getParamCode());
-        status.setApprovalComment(planWsHdr.getApprovalComment());
-        status.setApprovedComment(planWsHdr.getApprovedComment());
-        status.setPlanStatusDesc(statusDesc.getValue1());
+        TaPlanWorksheetHdr planWsHdr = planWorksheetHdrRepository.findByBudgetYear(formVo.getBudgetYear());
+
+        if (planWsHdr != null) {
+            ParamInfo statusDesc = ApplicationCache.getParamInfoByCode("TA_PLAN_STATUS", planWsHdr.getPlanStatus());
+            if (statusDesc != null) {
+                status.setPlanStatus(statusDesc.getParamCode());
+                status.setApprovalComment(planWsHdr.getApprovalComment());
+                status.setApprovedComment(planWsHdr.getApprovedComment());
+                status.setPlanStatusDesc(statusDesc.getValue1());
+            }
+        }
+
         return status;
     }
 
