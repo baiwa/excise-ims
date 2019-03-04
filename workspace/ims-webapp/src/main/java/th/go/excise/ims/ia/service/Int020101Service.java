@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSideDtl;
@@ -107,6 +108,7 @@ public class Int020101Service {
 		return newSides;
 	}
 
+	@Transactional
 	public IaQuestionnaireSide update(String idStr, IaQuestionnaireSide request) {
 		BigDecimal id = new BigDecimal(idStr);
 		IaQuestionnaireSide data = iaQtnSideJdbcRep.findOne(id);

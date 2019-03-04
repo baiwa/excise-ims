@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -19,20 +18,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsData;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsStatus;
+import th.go.excise.ims.ia.persistence.entity.IaRiskSelectCase;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsDataRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsMasterRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsStatusRepository;
+import th.go.excise.ims.ia.persistence.repository.IaRiskSelectCaseRepository;
+import th.go.excise.ims.ia.persistence.repository.jdbc.Int0401JdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.int030101JdbcRepository;
 import th.go.excise.ims.ia.util.ExcalUtil;
 import th.go.excise.ims.ia.vo.Int030101FormVo;
@@ -64,6 +66,12 @@ public class Int030101Service {
 
 	@Autowired
 	private Int0301Service int0301Service;
+
+	@Autowired
+	private Int0401JdbcRepository int0401JdbcRep;
+
+	@Autowired
+	private IaRiskSelectCaseRepository iaRiskSelectCaseRep;
 
 	@Autowired
 	private ExcalUtil excalUtil;
@@ -107,7 +115,7 @@ public class Int030101Service {
 		dataFactorsConfig.setEndDate(ConvertDateUtils.parseStringToDate(form.getDateTo(), ConvertDateUtils.DD_MM_YYYY));
 		dataFactorsConfig.setInfoUsedRiskDesc(form.getInfoUsedRiskDesc());
 		dataFactorsConfig.setRiskIndicators(form.getRiskIndicators());
-		
+
 		Int0301FormVo form0301 = new Int0301FormVo();
 		form0301.setBudgetYear(form.getBudgetYear());
 		form0301.setInspectionWork(form.getInspectionWork());
@@ -122,7 +130,7 @@ public class Int030101Service {
 		dataFactorsConfig.setFactorsLevel(factorsLevels);
 		IaRiskFactorsConfig dataFactorsConRes = iaRiskFactorsConfigRepository.save(dataFactorsConfig);
 
-		//Set Response
+		// Set Response
 		Int030101Vo res = new Int030101Vo();
 		Int030101FormVo formVo = new Int030101FormVo();
 		res.setIdFactors(dataFactorsRes.getId());
@@ -133,14 +141,13 @@ public class Int030101Service {
 		formVo.setRiskUnit(form.getRiskUnit());
 		formVo.setInfoUsedRiskDesc(form.getInfoUsedRiskDesc());
 		formVo.setRiskIndicators(form.getRiskIndicators());
-		
+
 		res.setInt030101FormVo(formVo);
 		return res;
 	}
 
 	public ByteArrayOutputStream exportInt030101() throws IOException {
 		/* create spreadsheet */
-		List<IaRiskFactorsMaster> dataFactorsMasterList = new ArrayList<IaRiskFactorsMaster>();
 		XSSFWorkbook workbook = excalUtil.setUpExcel();
 		Sheet sheet = workbook.createSheet();
 		int rowNum = 0;
@@ -149,7 +156,7 @@ public class Int030101Service {
 		Cell cell = row.createCell(cellNum);
 
 		/* Header */
-		String[] tbTH1 = { "ลำดับ", "หน่วยงาน", "ค่าความเสี่ยง " };
+		String[] tbTH1 = { "ลำดับ", "รหัส", "โครงการ", "ค่าความเสี่ยง " };
 
 		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 			cell = row.createCell(cellNum);
@@ -160,10 +167,10 @@ public class Int030101Service {
 		/* set sheet */
 
 		// setColumnWidth
-		for (int i = 1; i <= 2; i++) {
-			if (i == 1) {
+		for (int i = 1; i <= 3; i++) {
+			if (i == 2) {
 				sheet.setColumnWidth(i, 76 * 220);
-			} else if (i == 2) {
+			} else if (i == 3) {
 				sheet.setColumnWidth(i, 76 * 120);
 			} else {
 				sheet.setColumnWidth(i, 76 * 100);
@@ -174,16 +181,24 @@ public class Int030101Service {
 		rowNum = 1;
 		cellNum = 0;
 		int no = 1;
-		List<String> dataList = getdataList();
-		for (String item : dataList) {
+		List<IaRiskSelectCase> dataList = getDataList(ExciseUtils.getCurrentBudgetYear(), new BigDecimal(3));
+		if (dataList.size() == 0) {
+			dataList = saveDataList(ExciseUtils.getCurrentBudgetYear(), new BigDecimal(3));
+		}
+		for (IaRiskSelectCase item : dataList) {
 			row = sheet.createRow(rowNum);
 			// No.
 			cell = row.createCell(cellNum);
 			cell.setCellValue(no);
 			cellNum++;
 
+			// Id.
 			cell = row.createCell(cellNum);
-			cell.setCellValue(item);
+			cell.setCellValue(item.getId().toString());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(item.getProject());
 			cellNum++;
 
 			no++;
@@ -202,7 +217,84 @@ public class Int030101Service {
 
 	public ByteArrayOutputStream exportInt0301012() throws IOException {
 		/* create spreadsheet */
-		List<IaRiskFactorsMaster> dataFactorsMasterList = new ArrayList<IaRiskFactorsMaster>();
+		XSSFWorkbook workbook = excalUtil.setUpExcel();
+		Sheet sheet = workbook.createSheet();
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+
+		/* Header */
+		String[] tbTH1 = { "ลำดับที่	", "รหัส", "รหัสสรรพสามิต", "ภาค", "พื้นที่", "ค่าความเสี่ยง" };
+
+		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(tbTH1[cellNum]);
+			cell.setCellStyle(excalUtil.thStyle);
+		}
+
+		/* set sheet */
+
+		// setColumnWidth
+		for (int i = 1; i <= 5; i++) {
+			if (i == 2) {
+				sheet.setColumnWidth(i, 76 * 80);
+			} else if (i == 3) {
+				sheet.setColumnWidth(i, 76 * 120);
+			} else {
+				sheet.setColumnWidth(i, 76 * 150);
+			}
+		}
+
+		/* Detail */
+		rowNum = 1;
+		cellNum = 0;
+		int no = 1;
+
+		List<IaRiskSelectCase> dataList = getDataList(ExciseUtils.getCurrentBudgetYear(), new BigDecimal(4));
+		if (dataList.size() == 0) {
+			dataList = saveDataList(ExciseUtils.getCurrentBudgetYear(), new BigDecimal(4));
+		}
+		
+		for (IaRiskSelectCase data : dataList) {
+			row = sheet.createRow(rowNum);
+			// No.
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getId().toString());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getExciseCode());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getSector());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getArea());
+			cellNum++;
+
+			no++;
+			rowNum++;
+			cellNum = 0;
+		}
+
+		/* EndDetail */
+
+		/* set write */
+		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		workbook.write(outByteStream);
+
+		return outByteStream;
+	}
+
+	public ByteArrayOutputStream exportInt0301013() throws IOException {
+		/* create spreadsheet */
 		XSSFWorkbook workbook = excalUtil.setUpExcel();
 		Sheet sheet = workbook.createSheet();
 		int rowNum = 0;
@@ -237,22 +329,11 @@ public class Int030101Service {
 		cellNum = 0;
 		int no = 1;
 
-		List<String> dataList1 = new ArrayList<String>();
-		dataList1.add("30100");
-		dataList1.add("40100");
-		dataList1.add("50100");
-
-		List<String> dataList2 = new ArrayList<String>();
-		dataList2.add("สำนักงานสรรพสามิตภาคที่ 3");
-		dataList2.add("สำนักงานสรรพสามิตภาคที่ 4");
-		dataList2.add("สำนักงานสรรพสามิตภาคที่ 5");
-
-		List<String> dataList3 = new ArrayList<String>();
-		dataList3.add("สำนักงานสรรพสามิตพื้นที่เชียงใหม่");
-		dataList3.add("สำนักงานสรรพสามิตพื้นที่นครราชสีมา");
-		dataList3.add("สำนักงานสรรพสามิตพื้นที่อุดรธานี");
-
-		for (int i = 0; i < dataList1.size(); i++) {
+		List<IaRiskSelectCase> dataList = getDataList(ExciseUtils.getCurrentBudgetYear(), new BigDecimal(5));
+		if (dataList.size() == 0) {
+			dataList = saveDataList(ExciseUtils.getCurrentBudgetYear(), new BigDecimal(5));
+		}
+		for (IaRiskSelectCase data : dataList) {
 			row = sheet.createRow(rowNum);
 			// No.
 			cell = row.createCell(cellNum);
@@ -260,17 +341,21 @@ public class Int030101Service {
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(dataList1.get(i));
+			cell.setCellValue(data.getId().toString());
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(dataList2.get(i));
+			cell.setCellValue(data.getExciseCode());
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(dataList3.get(i));
+			cell.setCellValue(data.getSector());
 			cellNum++;
-			
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getArea());
+			cellNum++;
+
 			no++;
 			rowNum++;
 			cellNum = 0;
@@ -293,6 +378,69 @@ public class Int030101Service {
 		return dataList;
 	}
 
+	private List<IaRiskSelectCase> saveDataList(String budgetYear, BigDecimal inspectionWork) {
+		// WEB SERVICE QUERY
+		// NOW MOCKING DATA
+		List<String> dataList1 = new ArrayList<String>();
+		dataList1.add("30100");
+		dataList1.add("40100");
+		dataList1.add("50100");
+
+		List<String> dataList2 = new ArrayList<String>();
+		dataList2.add("สำนักงานสรรพสามิตภาคที่ 3");
+		dataList2.add("สำนักงานสรรพสามิตภาคที่ 4");
+		dataList2.add("สำนักงานสรรพสามิตภาคที่ 5");
+
+		List<String> dataList3 = new ArrayList<String>();
+		dataList3.add("สำนักงานสรรพสามิตพื้นที่เชียงใหม่");
+		dataList3.add("สำนักงานสรรพสามิตพื้นที่นครราชสีมา");
+		dataList3.add("สำนักงานสรรพสามิตพื้นที่อุดรธานี");
+		List<IaRiskSelectCase> selectCases = new ArrayList<>();
+		if (inspectionWork.compareTo(new BigDecimal(3)) == 0) {
+			IaRiskSelectCase selectCase = new IaRiskSelectCase();
+			for (String dataList : getdataList()) {
+				selectCase = new IaRiskSelectCase();
+				selectCase.setProject(dataList);
+				selectCase.setBudgetYear(budgetYear);
+				selectCase.setInspectionWork(inspectionWork);
+				selectCase.setStatus("C");
+				selectCases.add(selectCase);
+			}
+			selectCases = (List<IaRiskSelectCase>) iaRiskSelectCaseRep.saveAll(selectCases);
+		} else if (inspectionWork.compareTo(new BigDecimal(4)) == 0) {
+			IaRiskSelectCase selectCase = new IaRiskSelectCase();
+			for (int i = 0; i < dataList1.size(); i++) {
+				selectCase = new IaRiskSelectCase();
+				selectCase.setExciseCode(dataList1.get(i));
+				selectCase.setSector(dataList2.get(i));
+				selectCase.setArea(dataList3.get(i));
+				selectCase.setBudgetYear(budgetYear);
+				selectCase.setInspectionWork(inspectionWork);
+				selectCase.setStatus("C");
+				selectCases.add(selectCase);
+			}
+			selectCases = (List<IaRiskSelectCase>) iaRiskSelectCaseRep.saveAll(selectCases);
+		} else if (inspectionWork.compareTo(new BigDecimal(5)) == 0) {
+			IaRiskSelectCase selectCase = new IaRiskSelectCase();
+			for (int i = 0; i < dataList1.size(); i++) {
+				selectCase = new IaRiskSelectCase();
+				selectCase.setExciseCode(dataList1.get(i));
+				selectCase.setSector(dataList2.get(i));
+				selectCase.setArea(dataList3.get(i));
+				selectCase.setBudgetYear(budgetYear);
+				selectCase.setInspectionWork(inspectionWork);
+				selectCase.setStatus("C");
+				selectCases.add(selectCase);
+			}
+			selectCases = (List<IaRiskSelectCase>) iaRiskSelectCaseRep.saveAll(selectCases);
+		}
+		return selectCases;
+	}
+
+	private List<IaRiskSelectCase> getDataList(String budgetYear, BigDecimal inspectionWork) {
+		return int0401JdbcRep.findRowWithoutStatus(budgetYear, inspectionWork);
+	}
+
 	public List<IaRiskFactorsData> readFileExcel(Int030101FormVo form) throws Exception {
 		List<IaRiskFactorsData> dataUploadList = new ArrayList<IaRiskFactorsData>();
 		MultipartFile file = form.getFile();
@@ -311,6 +459,8 @@ public class Int030101Service {
 					// dataUpload.setIdFactors(new
 					// BigDecimal(dataFormatter.formatCellValue(row.getCell(columns++))));
 					// dataUpload.setBudgetYear(dataFormatter.formatCellValue(row.getCell(columns++)));
+					dataUpload.setIdSelect(
+							new BigDecimal(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++)))));
 					dataUpload.setProject(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
 					dataUpload.setRiskCost(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
 					// dataUpload.setInspectionWork(new
@@ -331,6 +481,8 @@ public class Int030101Service {
 					// dataUpload.setIdFactors(new
 					// BigDecimal(dataFormatter.formatCellValue(row.getCell(columns++))));
 					// dataUpload.setBudgetYear(dataFormatter.formatCellValue(row.getCell(columns++)));
+					dataUpload.setIdSelect(
+							new BigDecimal(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++)))));
 					dataUpload.setExciseCode(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
 					dataUpload.setSector(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
 					dataUpload.setArea(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
@@ -363,6 +515,7 @@ public class Int030101Service {
 			dataSet.setBudgetYear(form.getBudgetYear());
 			dataSet.setInspectionWork(form.getInspectionWork());
 			dataSet.setIdFactors(form.getIdFactors());
+			dataSet.setIdSelect(iaRiskFactorsData.getIdSelect());
 			dataSet.setProject(iaRiskFactorsData.getProject());
 			dataSet.setArea(iaRiskFactorsData.getArea());
 			dataSet.setSector(iaRiskFactorsData.getSector());

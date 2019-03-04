@@ -43,6 +43,16 @@ public class IaRiskFactorsData extends BaseEntity {
 	private String riskRate;
 	@Column(name = "RISK_STEP")
 	private String riskStep;
+	@Column(name = "ID_SELECT")
+	private BigDecimal idSelect;
+
+	public BigDecimal getIdSelect() {
+		return idSelect;
+	}
+
+	public void setIdSelect(BigDecimal idSelect) {
+		this.idSelect = idSelect;
+	}
 
 	public BigDecimal getId() {
 		return id;

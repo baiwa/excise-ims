@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSideDtl;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireSideDtlRepository;
@@ -48,6 +49,7 @@ public class Int02010101Service {
 		return (List<IaQuestionnaireSideDtl>) iaQuestionnaireSideDtlRepository.saveAll(request);
 	}
 
+	@Transactional
 	public Int02010101FormVo saveAll(Int02010101FormVo form) {
 		// VARIABLES
 		BigDecimal idLevel1 = null;

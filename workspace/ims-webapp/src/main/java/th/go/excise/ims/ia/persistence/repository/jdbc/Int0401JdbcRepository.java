@@ -26,6 +26,36 @@ public class Int0401JdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate jdbcTemplate;
 
+	// ROW WITHOUT STATUS
+	public List<IaRiskSelectCase> findRowWithoutStatus(String budgetYear, BigDecimal inspectionWork) {
+		StringBuilder sqlBuilder = new StringBuilder();
+		sqlBuilder.append(
+				" SELECT S.* FROM IA_RISK_SELECT_CASE S WHERE S.BUDGET_YEAR = ? AND S.INSPECTION_WORK = ? AND S.IS_DELETED = 'N' ");
+		List<Object> params = new ArrayList<>();
+		params.add(budgetYear);
+		params.add(inspectionWork);
+		List<IaRiskSelectCase> lists = jdbcTemplate.query(sqlBuilder.toString(), params.toArray(),
+				rowWithoutStatusRowMapper);
+		return lists;
+	}
+
+	// ROW WITHOUT STATUS RowMapper
+	private RowMapper<IaRiskSelectCase> rowWithoutStatusRowMapper = new RowMapper<IaRiskSelectCase>() {
+		@Override
+		public IaRiskSelectCase mapRow(ResultSet rs, int arg1) throws SQLException {
+			IaRiskSelectCase vo = new IaRiskSelectCase();
+			vo.setId(rs.getBigDecimal("ID"));
+			vo.setBudgetYear(rs.getString("BUDGET_YEAR"));
+			vo.setInspectionWork(rs.getBigDecimal("INSPECTION_WORK"));
+			vo.setProject(rs.getString("PROJECT"));
+			vo.setExciseCode(rs.getString("EXCISE_CODE"));
+			vo.setSector(rs.getString("SECTOR"));
+			vo.setArea(rs.getString("AREA"));
+			vo.setStatus(rs.getString("STATUS"));
+			return vo;
+		}
+	};
+
 	// ROW
 	public List<IaRiskSelectCase> findRow(String budgetYear, BigDecimal inspectionWork, String status) {
 		StringBuilder sqlBuilder = new StringBuilder();
@@ -38,6 +68,7 @@ public class Int0401JdbcRepository {
 		List<IaRiskSelectCase> lists = jdbcTemplate.query(sqlBuilder.toString(), params.toArray(), rowRowMapper);
 		return lists;
 	}
+
 	// ROW RowMapper
 	private RowMapper<IaRiskSelectCase> rowRowMapper = new RowMapper<IaRiskSelectCase>() {
 		@Override
@@ -66,6 +97,7 @@ public class Int0401JdbcRepository {
 		List<IaRiskFactors> lists = jdbcTemplate.query(sqlBuilder.toString(), params.toArray(), headRowMapper);
 		return lists;
 	}
+
 	// HEAD RowMapper
 	private RowMapper<IaRiskFactors> headRowMapper = new RowMapper<IaRiskFactors>() {
 		@Override
@@ -97,6 +129,7 @@ public class Int0401JdbcRepository {
 		List<Int0401CalVo> lists = jdbcTemplate.query(sqlBuilder.toString(), params.toArray(), detialsRowMapper);
 		return lists;
 	}
+
 	// HEAD RowMapper
 	private RowMapper<Int0401CalVo> detialsRowMapper = new RowMapper<Int0401CalVo>() {
 		@Override
@@ -117,18 +150,50 @@ public class Int0401JdbcRepository {
 
 			Int0401CalConfigVo config = new Int0401CalConfigVo();
 			config.setIdFactors(rs.getBigDecimal("C_ID_FACTORS"));
+			config.setFactorsLevel(rs.getBigDecimal("FACTORS_LEVEL"));
 			config.setStartDate(rs.getDate("START_DATE"));
 			config.setEndDate(rs.getDate("END_DATE"));
 			config.setInfoUsedRisk(rs.getString("INFO_USED_RISK"));
 			config.setInfoUsedRiskDesc(rs.getString("INFO_USED_RISK_DESC"));
-			
+
 			config.setVerylow(rs.getString("VERYLOW"));
 			config.setVerylowStart(rs.getString("VERYLOW_START"));
 			config.setVerylowEnd(rs.getString("VERYLOW_END"));
 			config.setVerylowRating(rs.getBigDecimal("VERYLOW_RATING"));
 			config.setVerylowColor(rs.getString("VERYLOW_COLOR"));
 			config.setVerylowCondition(rs.getString("VERYLOW_CONDITION"));
-			
+
+			config.setLow(rs.getString("LOW"));
+			config.setLowStart(rs.getString("LOW_START"));
+			config.setLowEnd(rs.getString("LOW_END"));
+			config.setLowRating(rs.getBigDecimal("LOW_RATING"));
+			config.setLowColor(rs.getString("LOW_COLOR"));
+			config.setLowCondition(rs.getString("LOW_CONDITION"));
+
+			config.setMedium(rs.getString("MEDIUM"));
+			config.setMediumStart(rs.getString("MEDIUM_START"));
+			config.setMediumEnd(rs.getString("MEDIUM_END"));
+			config.setMediumRating(rs.getBigDecimal("MEDIUM_RATING"));
+			config.setMediumColor(rs.getString("MEDIUM_COLOR"));
+			config.setMediumCondition(rs.getString("MEDIUM_CONDITION"));
+
+			config.setHigh(rs.getString("HIGH"));
+			config.setHighStart(rs.getString("HIGH_START"));
+			config.setHighEnd(rs.getString("HIGH_END"));
+			config.setHighRating(rs.getBigDecimal("HIGH_RATING"));
+			config.setHighColor(rs.getString("HIGH_COLOR"));
+			config.setHighCondition(rs.getString("HIGH_CONDITION"));
+
+			config.setVeryhigh(rs.getString("VERYHIGH"));
+			config.setVeryhighStart(rs.getString("VERYHIGH_START"));
+			config.setVeryhighEnd(rs.getString("VERYHIGH_END"));
+			config.setVeryhighRating(rs.getBigDecimal("VERYHIGH_RATING"));
+			config.setVeryhighColor(rs.getString("VERYHIGH_COLOR"));
+			config.setVeryhighCondition(rs.getString("VERYHIGH_CONDITION"));
+
+			config.setRiskUnit(rs.getString("RISK_UNIT"));
+			config.setPercent(rs.getBigDecimal("PERCENT"));
+
 			vo.setConfig(config);
 			vo.setData(data);
 			return vo;
