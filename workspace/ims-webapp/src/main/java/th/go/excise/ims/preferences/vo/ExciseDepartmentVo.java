@@ -1,5 +1,8 @@
 package th.go.excise.ims.preferences.vo;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 
 public class ExciseDepartmentVo implements ExciseDept {
@@ -7,7 +10,6 @@ public class ExciseDepartmentVo implements ExciseDept {
 	private String officeCode;
 	private String deptName;
 	private String deptShortName;
-	private String deptShortName2;
 
 	public String getOfficeCode() {
 		return officeCode;
@@ -32,13 +34,9 @@ public class ExciseDepartmentVo implements ExciseDept {
 	public void setDeptShortName(String deptShortName) {
 		this.deptShortName = deptShortName;
 	}
-
-	public String getDeptShortName2() {
-		return deptShortName2;
-	}
-
-	public void setDeptShortName2(String deptShortName2) {
-		this.deptShortName2 = deptShortName2;
+	
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
 }

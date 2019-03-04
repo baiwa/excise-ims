@@ -1,4 +1,3 @@
-
 package th.go.excise.ims.preferences.persistence.repository;
 
 import java.util.List;
@@ -11,6 +10,10 @@ import th.go.excise.ims.preferences.persistence.entity.ExciseDepartment;
 
 public interface ExciseDepartmentRepository extends CommonJpaCrudRepository<ExciseDepartment, Long> {
 	
-	@Query(" SELECT e FROM #{#entityName} e WHERE e.isDeleted = '" + FLAG.N_FLAG + "' AND e.officeCode LIKE ?1 ")
-	public List<ExciseDepartment> findExciseDepartmentListByOffice(String officeCode);
+	@Query(
+		value = "SELECT * FROM EXCISE_DEPARTMENT WHERE IS_DELETED = '" + FLAG.N_FLAG + "' AND SYSDATE <= DECODE(END_DATE, NULL, TO_DATE('31/12/9999', 'DD/MM/YYYY'), END_DATE) ORDER BY OFF_CODE",
+		nativeQuery = true
+	)
+	public List<ExciseDepartment> findAllActiveDepartment();
+	
 }

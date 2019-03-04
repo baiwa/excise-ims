@@ -14,6 +14,8 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,7 @@ import th.co.baiwa.buckwaframework.support.domain.ExciseProvice;
 import th.co.baiwa.buckwaframework.support.domain.Message;
 import th.co.baiwa.buckwaframework.support.domain.ParamGroup;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
+import th.go.excise.ims.preferences.persistence.entity.ExciseDepartment;
 import th.go.excise.ims.preferences.persistence.repository.ExciseAmphurRepository;
 import th.go.excise.ims.preferences.persistence.repository.ExciseDepartmentRepository;
 import th.go.excise.ims.preferences.persistence.repository.ExciseDistrictRepository;
@@ -288,58 +291,65 @@ public class ApplicationCache {
 		EXCISE_AREA_MAP.clear();
 		EXCISE_BRANCH_MAP.clear();
 		
-		List<th.go.excise.ims.preferences.persistence.entity.ExciseDepartment> exciseDepartmentList = exciseDepartmentRepository.findAll();
+		List<th.go.excise.ims.preferences.persistence.entity.ExciseDepartment> exciseDepartmentList = exciseDepartmentRepository.findAllActiveDepartment();
 		
 		ExciseDepartmentVo deptVo = null;
 		List<ExciseDept> areaList = null;
 		List<ExciseDept> branchList = null;
-		try {
-			for (th.go.excise.ims.preferences.persistence.entity.ExciseDepartment exciseDepartment : exciseDepartmentList) {
+		for (th.go.excise.ims.preferences.persistence.entity.ExciseDepartment exciseDepartment : exciseDepartmentList) {
+			deptVo = new ExciseDepartmentVo();
+			toDeptVo(deptVo, exciseDepartment);
+			EXCISE_DEPT_MAP.put(deptVo.getOfficeCode(), deptVo);
+			
+			if (Pattern.matches("^.{2}0{4}$", exciseDepartment.getOffCode())) {
 				deptVo = new ExciseDepartmentVo();
-				BeanUtils.copyProperties(deptVo, exciseDepartment);
-				EXCISE_DEPT_MAP.put(deptVo.getOfficeCode(), deptVo);
-				
-				if (Pattern.matches("^.{2}0{4}$", exciseDepartment.getOfficeCode())) {
-					deptVo = new ExciseDepartmentVo();
-					BeanUtils.copyProperties(deptVo, exciseDepartment);
-					EXCISE_SECTOR_MAP.put(deptVo.getOfficeCode(), deptVo);
-				} else if (Pattern.matches(exciseDepartment.getOfficeCode().substring(0, 2) + "([0-9]{1}[1-9]{1}|[1-9][0-9])00", exciseDepartment.getOfficeCode())) {
-					areaList = EXCISE_AREA_MAP.get(exciseDepartment.getOfficeCode().substring(0, 2) + "0000");
-					deptVo = new ExciseDepartmentVo();
-					BeanUtils.copyProperties(deptVo, exciseDepartment);
-					if (areaList == null) {
-						areaList = new ArrayList<>();
-						areaList.add(deptVo);
-					} else {
-						areaList.add(deptVo);
-					}
-					EXCISE_AREA_MAP.put(deptVo.getOfficeCode().substring(0, 2) + "0000", areaList);
-
-				} else if (Pattern.matches(exciseDepartment.getOfficeCode().substring(0, 4) + "([0-9]{1}[1-9]{1}|[1-9][0-9])", exciseDepartment.getOfficeCode())) {
-					branchList = EXCISE_BRANCH_MAP.get(exciseDepartment.getOfficeCode().substring(0, 4) + "00");
-					deptVo = new ExciseDepartmentVo();
-					BeanUtils.copyProperties(deptVo, exciseDepartment);
-					if (branchList == null) {
-						branchList = new ArrayList<>();
-						branchList.add(deptVo);
-					} else {
-						branchList.add(deptVo);
-					}
-					EXCISE_BRANCH_MAP.put(deptVo.getOfficeCode().substring(0, 4) + "00", branchList);
-
+				toDeptVo(deptVo, exciseDepartment);
+				EXCISE_SECTOR_MAP.put(deptVo.getOfficeCode(), deptVo);
+			} else if (Pattern.matches(exciseDepartment.getOffCode().substring(0, 2) + "([0-9]{1}[1-9]{1}|[1-9][0-9])00", exciseDepartment.getOffCode())) {
+				areaList = EXCISE_AREA_MAP.get(exciseDepartment.getOffCode().substring(0, 2) + "0000");
+				deptVo = new ExciseDepartmentVo();
+				toDeptVo(deptVo, exciseDepartment);
+				if (areaList == null) {
+					areaList = new ArrayList<>();
+					areaList.add(deptVo);
 				} else {
-					logger.warn("This officeCode is not match, [{}]", exciseDepartment.getOfficeCode());
+					areaList.add(deptVo);
 				}
+				EXCISE_AREA_MAP.put(deptVo.getOfficeCode().substring(0, 2) + "0000", areaList);
+
+			} else if (Pattern.matches(exciseDepartment.getOffCode().substring(0, 4) + "([0-9]{1}[1-9]{1}|[1-9][0-9])", exciseDepartment.getOffCode())) {
+				branchList = EXCISE_BRANCH_MAP.get(exciseDepartment.getOffCode().substring(0, 4) + "00");
+				deptVo = new ExciseDepartmentVo();
+				toDeptVo(deptVo, exciseDepartment);
+				if (branchList == null) {
+					branchList = new ArrayList<>();
+					branchList.add(deptVo);
+				} else {
+					branchList.add(deptVo);
+				}
+				EXCISE_BRANCH_MAP.put(deptVo.getOfficeCode().substring(0, 4) + "00", branchList);
+
+			} else {
+				logger.warn("This officeCode is not match, [{}]", exciseDepartment.getOffCode());
 			}
-		} catch (Exception e) {
-			logger.warn(e.getMessage());
 		}
 		
 		// Sorting
 		EXCISE_AREA_MAP.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getOfficeCode().compareTo(p2.getOfficeCode())));
 		EXCISE_BRANCH_MAP.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getOfficeCode().compareTo(p2.getOfficeCode())));
 		
+		// Debug
+		EXCISE_AREA_MAP.entrySet().forEach(e -> {
+			System.out.println(e.getKey() + ":" + ToStringBuilder.reflectionToString(e.getValue(), ToStringStyle.JSON_STYLE));
+		});
+		
 		logger.info("load ExciseDepartment Sector={}, Area={}, Branch={}", EXCISE_SECTOR_MAP.size(), EXCISE_AREA_MAP.size(), EXCISE_BRANCH_MAP.size());
+	}
+	
+	private void toDeptVo(ExciseDepartmentVo deptVo, ExciseDepartment exciseDepartment) {
+		deptVo.setOfficeCode(exciseDepartment.getOffCode());
+		deptVo.setDeptName(exciseDepartment.getOffName());
+		deptVo.setDeptShortName(exciseDepartment.getOffShortName());
 	}
 
 	private void loadGeography() {

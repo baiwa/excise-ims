@@ -7,7 +7,5 @@ public interface ExciseDept {
 	public String getDeptName();
 
 	public String getDeptShortName();
-
-	public String getDeptShortName2();
 	
 }
