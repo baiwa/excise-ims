@@ -93,9 +93,11 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			sql.append(" AND TA_W_DTL.COND_MAIN_GRP = ? ");
 			params.add(formVo.getCond());
 		}
-		
+
 		sql.append(" AND R4000.OFFICE_CODE LIKE ? ");
 		params.add(ExciseUtils.whereInLocalOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode()));
+
+		sql.append("ORDER BY R4000.DUTY_CODE , R4000.OFFICE_CODE , TA_DW_DTL.NEW_REG_ID ");
 	}
 	
 	public List<TaxOperatorDetailVo> findByCriteria(TaxOperatorFormVo formVo) {

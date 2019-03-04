@@ -123,6 +123,8 @@ public class TaDraftWorksheetDtlRepositoryImpl implements TaDraftWorksheetDtlRep
 			sql.append(" AND R4000.DUTY_CODE = ? ");
 			params.add(formVo.getDutyCode());
 		}
+
+		sql.append(" ORDER BY R4000.DUTY_CODE, R4000.OFFICE_CODE, TA_W_HDR.NEW_REG_ID");
 	}
 	
 	public List<TaxOperatorDetailVo> findByCriteria(TaxOperatorFormVo formVo) {

@@ -103,6 +103,7 @@ public class DraftWorksheetService {
 
 			detailVo = new TaxOperatorDetailVo();
 			detailVo.setDutyCode(wsReg4000.getDutyCode());
+			detailVo.setDutyName(ExciseUtils.getDutyDesc(wsReg4000.getDutyCode()));
 			detailVo.setNewRegId(wsReg4000.getNewRegId());
 			detailVo.setCusFullname(wsReg4000.getCusFullname());
 			detailVo.setFacFullname(wsReg4000.getFacFullname());
