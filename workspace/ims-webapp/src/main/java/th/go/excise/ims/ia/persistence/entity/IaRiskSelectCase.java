@@ -22,8 +22,18 @@ public class IaRiskSelectCase extends BaseEntity {
 	@SequenceGenerator(name = "IA_RISK_SELECT_CASE_GEN", sequenceName = "IA_RISK_SELECT_CASE_SEQ", allocationSize = 1)
 	@Column(name = "ID")
 	private BigDecimal id;
-	@Column(name = "ID_DATA")
-	private BigDecimal idData;
+	@Column(name = "BUDGET_YEAR")
+	private String budgetYear;
+	@Column(name = "PROJECT")
+	private String project;
+	@Column(name = "INSPECTION_WORK")
+	private BigDecimal inspectionWork;
+	@Column(name = "EXCISE_CODE")
+	private String exciseCode;
+	@Column(name = "SECTOR")
+	private String sector;
+	@Column(name = "AREA")
+	private String area;
 	@Column(name = "STATUS")
 	private String status;
 
@@ -35,12 +45,52 @@ public class IaRiskSelectCase extends BaseEntity {
 		this.id = id;
 	}
 
-	public BigDecimal getIdData() {
-		return idData;
+	public String getBudgetYear() {
+		return budgetYear;
 	}
 
-	public void setIdData(BigDecimal idData) {
-		this.idData = idData;
+	public void setBudgetYear(String budgetYear) {
+		this.budgetYear = budgetYear;
+	}
+
+	public String getProject() {
+		return project;
+	}
+
+	public void setProject(String project) {
+		this.project = project;
+	}
+
+	public BigDecimal getInspectionWork() {
+		return inspectionWork;
+	}
+
+	public void setInspectionWork(BigDecimal inspectionWork) {
+		this.inspectionWork = inspectionWork;
+	}
+
+	public String getExciseCode() {
+		return exciseCode;
+	}
+
+	public void setExciseCode(String exciseCode) {
+		this.exciseCode = exciseCode;
+	}
+
+	public String getSector() {
+		return sector;
+	}
+
+	public void setSector(String sector) {
+		this.sector = sector;
+	}
+
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
 	}
 
 	public String getStatus() {
