@@ -9,11 +9,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
-import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSideDtl;
-import th.go.excise.ims.ia.vo.Int020201DtlVo;
 import th.go.excise.ims.ia.vo.Int020201JoinVo;
 import th.go.excise.ims.ia.vo.Int020201SidesVo;
-import th.go.excise.ims.ia.vo.Int0202Vo;
 
 @Repository
 public class IaQuestionnaireMadeJdbcRepository {
@@ -41,7 +38,7 @@ public class IaQuestionnaireMadeJdbcRepository {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		sql.append(" SELECT M.ID, M.ID_MADE_HDR, SD.ID_SIDE, M.ID_SIDE_DTL, SD.SIDE_DTL, M.QTN_LEVEL, ");
-		sql.append(" 	SD.SEQ, SD.SEQ_DTL, M.CHECK_FLAG, M.OFFICE_CODE, SD.ID_HEADING, M.STATUS ");
+		sql.append(" 	M.NOTE, SD.SEQ, SD.SEQ_DTL, M.CHECK_FLAG, M.OFFICE_CODE, SD.ID_HEADING, M.STATUS ");
 		sql.append(" FROM IA_QUESTIONNAIRE_MADE M ");
 		sql.append(" INNER JOIN IA_QUESTIONNAIRE_SIDE_DTL SD ");
 		sql.append(" 	ON M.ID_SIDE_DTL = SD.ID ");
@@ -64,7 +61,7 @@ public class IaQuestionnaireMadeJdbcRepository {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		sql.append(" SELECT M.ID, M.ID_MADE_HDR, SD.ID_SIDE, M.ID_SIDE_DTL, SD.SIDE_DTL, M.QTN_LEVEL, ");
-		sql.append(" 	SD.SEQ, SD.SEQ_DTL, M.CHECK_FLAG, M.OFFICE_CODE, SD.ID_HEADING, M.STATUS ");
+		sql.append(" 	M.NOTE, SD.SEQ, SD.SEQ_DTL, M.CHECK_FLAG, M.OFFICE_CODE, SD.ID_HEADING, M.STATUS ");
 		sql.append(" FROM IA_QUESTIONNAIRE_MADE M ");
 		sql.append(" INNER JOIN IA_QUESTIONNAIRE_SIDE_DTL SD ");
 		sql.append(" 	ON M.ID_SIDE_DTL = SD.ID ");
@@ -91,7 +88,7 @@ public class IaQuestionnaireMadeJdbcRepository {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		sql.append(" SELECT M.ID, M.ID_MADE_HDR, SD.ID_SIDE, M.ID_SIDE_DTL, SD.SIDE_DTL, M.QTN_LEVEL, ");
-		sql.append(" 	SD.SEQ, SD.SEQ_DTL, M.CHECK_FLAG, M.OFFICE_CODE, SD.ID_HEADING, M.STATUS ");
+		sql.append(" 	M.NOTE, SD.SEQ, SD.SEQ_DTL, M.CHECK_FLAG, M.OFFICE_CODE, SD.ID_HEADING, M.STATUS ");
 		sql.append(" FROM IA_QUESTIONNAIRE_MADE M ");
 		sql.append(" INNER JOIN IA_QUESTIONNAIRE_SIDE_DTL SD ");
 		sql.append(" 	ON M.ID_SIDE_DTL = SD.ID ");

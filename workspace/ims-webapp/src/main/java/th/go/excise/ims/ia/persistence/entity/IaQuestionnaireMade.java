@@ -39,6 +39,8 @@ public class IaQuestionnaireMade extends BaseEntity {
 	private String status;
 	@Column(name = "ID_MADE_HDR")
 	private BigDecimal idMadeHdr;
+	@Column(name = "NOTE")
+	private String note;
 
 	public BigDecimal getId() {
 		return id;
@@ -98,6 +100,14 @@ public class IaQuestionnaireMade extends BaseEntity {
 
 	public void setIdMadeHdr(BigDecimal idMadeHdr) {
 		this.idMadeHdr = idMadeHdr;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 }
