@@ -15,6 +15,9 @@ public interface TaPlanWorksheetDtlRepository extends CommonJpaCrudRepository<Ta
 	@Query("select new java.lang.String(e.newRegId) from #{#entityName} e where e.planNumber = :planNumber and e.officeCode = :officeCode")
 	public List<String> findByPlanNumberAndOfficeCodeWithoutIsDeletedFlag(@Param("planNumber") String planNumber, @Param("officeCode") String officeCode);
 	
+	@Query("select new java.lang.String(e.newRegId) from #{#entityName} e where e.planNumber = :planNumber and e.officeCode = :officeCode and e.isDeleted = '"+ FLAG.N_FLAG + "'")
+	public List<String> findByPlanNumberAndOfficeCodeWithoutIsDeletedFlagN(@Param("planNumber") String planNumber, @Param("officeCode") String officeCode);
+	
 	@Query("select e from #{#entityName} e where e.planNumber = :planNumber and e.officeCode = :officeCode and e.newRegId = :newRegId")
 	public TaPlanWorksheetDtl findByPlanNumberAndOfficeCodeAndNewRegIdWithoutIsDeletedFlag(@Param("planNumber") String planNumber, @Param("officeCode") String officeCode, @Param("newRegId") String newRegId);
 	
