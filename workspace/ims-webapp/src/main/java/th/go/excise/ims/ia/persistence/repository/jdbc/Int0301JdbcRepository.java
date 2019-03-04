@@ -97,6 +97,7 @@ public class Int0301JdbcRepository {
 
 			irfc.setIdFactors(rs.getBigDecimal("ID_FACTORS"));
 			irfc.setFactorsLevel(rs.getBigDecimal("FACTORS_LEVEL"));
+			
 			irfc.setVerylow(rs.getString("VERYLOW"));
 			irfc.setVerylowStart(rs.getString("VERYLOW_START"));
 			irfc.setVerylowEnd(rs.getString("VERYLOW_END"));

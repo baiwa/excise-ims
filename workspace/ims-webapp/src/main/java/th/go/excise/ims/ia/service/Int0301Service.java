@@ -80,7 +80,7 @@ public class Int0301Service {
 					String veryLowS = int0301Vo2.getIaRiskFactorsConfig().getVerylowStart();
 					String veryLowCon = int0301Vo2.getIaRiskFactorsConfig().getVerylowCondition();
 					String veryLowUnit = int0301Vo2.getIaRiskFactorsConfig().getRiskUnit();
-					listdynamic.add(convertCondition(veryLowS,veryLowCon,"",veryLowUnit));
+ 					listdynamic.add(convertCondition(veryLowCon,veryLowS,"",veryLowUnit));
 
 					String lowS = int0301Vo2.getIaRiskFactorsConfig().getLowStart();
 					String lowE = int0301Vo2.getIaRiskFactorsConfig().getLowEnd();
