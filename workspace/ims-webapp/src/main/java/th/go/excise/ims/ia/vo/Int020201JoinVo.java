@@ -12,6 +12,7 @@ public class Int020201JoinVo {
 	private BigDecimal qtnLevel;
 	private BigDecimal idMadeHdr;
 	private String officeCode;
+	private String note;
 	
 	/* questionnaire side detail */
 	private BigDecimal idSide;
@@ -100,6 +101,12 @@ public class Int020201JoinVo {
 	}
 	public void setChildren(List<Int020201JoinVo> children) {
 		this.children = children;
+	}
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
 	}
 	
 }
