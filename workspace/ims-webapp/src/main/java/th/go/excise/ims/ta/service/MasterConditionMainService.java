@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.buckwaframework.support.domain.ParamGroup;
+import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
@@ -165,6 +167,11 @@ public class MasterConditionMainService {
 		msgVo.setMsgTax2(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "TAX2").getValue1());
 		msgVo.setMsgTax3(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "TAX3").getValue1());
 		return msgVo;
+	}
+	
+	public List<ParamInfo> getMainCondRange() {
+		List<ParamInfo> list = ApplicationCache.getParamInfoListByGroupCode("TA_MAIN_COND_RANGE");
+		return list;
 	}
 
 }

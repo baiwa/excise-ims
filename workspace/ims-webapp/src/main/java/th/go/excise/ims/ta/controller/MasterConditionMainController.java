@@ -16,6 +16,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.buckwaframework.support.domain.ParamGroup;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
@@ -121,6 +122,22 @@ public class MasterConditionMainController {
         ResponseData<ConditionMessageVo> response = new ResponseData<>();
         try{
             response.setData(this.masterConditionService.conditionMessage());
+            response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+            response.setStatus(RESPONSE_STATUS.SUCCESS);
+        }catch (Exception e){
+        	logger.error(e.getMessage(), e);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.FAILED);
+        }
+        return response;
+    }
+    
+    @GetMapping("/get-main-cond-range")
+    @ResponseBody
+    public ResponseData<List<ParamInfo>> getMainCondRange() {
+    	ResponseData<List<ParamInfo>> response = new ResponseData<>();
+        try{
+            response.setData(masterConditionService.getMainCondRange());
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         }catch (Exception e){
