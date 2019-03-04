@@ -54,13 +54,40 @@ public class TaxOperatorDetailVo {
     private String taxAmtG2M9;
     private String taxAmtG2M10;
     private String taxAmtG2M11;
-	private String taxAmtG2M12;
+    private String taxAmtG2M12;
     private String condTaxGrp;
     private String dutyCode;
     private String dutyName;
     private String otherDutyCode;
     private String otherDutyName;
     private String checked = "N";
+    private String centralSelFlag;
+    private String sectorSelFlag;
+    private String selectBy;
+
+    public String getSelectBy() {
+        return selectBy;
+    }
+
+    public void setSelectBy(String selectBy) {
+        this.selectBy = selectBy;
+    }
+
+    public String getCentralSelFlag() {
+        return centralSelFlag;
+    }
+
+    public void setCentralSelFlag(String centralSelFlag) {
+        this.centralSelFlag = centralSelFlag;
+    }
+
+    public String getSectorSelFlag() {
+        return sectorSelFlag;
+    }
+
+    public void setSectorSelFlag(String sectorSelFlag) {
+        this.sectorSelFlag = sectorSelFlag;
+    }
 
     public String getChecked() {
         return checked;

@@ -7,262 +7,271 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class TaxOperatorDatatableVo {
 
-	private String cusFullname;
-	private String facFullname;
-	private String facAddress;
-	private String officeCode;
-	private String secCode;
-	private String secDesc;
-	private String areaCode;
-	private String areaDesc;
-	private String worksheetHdrId;
-	private String draftNumber;
-	private String newRegId;
-	private String sumTaxAmtG1;
-	private String sumTaxAmtG2;
-	private String taxAmtChnPnt;
-	private String taxAmtSd;
-	private String taxMonthNo;
-	private String taxAuditLast3;
-	private String taxAuditLast2;
-	private String taxAuditLast1;
-	private String oldRegId;
-	private String lastedStatus;
-	private String regStatus;
-	private String taxAmtMean;
-	private String taxAmtMaxPnt;
-	private String taxAmtMinPnt;
-	private String dutyName;
-	private String otherDutyName;
-	private List<String> taxAmtList;
+    private String cusFullname;
+    private String facFullname;
+    private String facAddress;
+    private String officeCode;
+    private String secCode;
+    private String secDesc;
+    private String areaCode;
+    private String areaDesc;
+    private String worksheetHdrId;
+    private String draftNumber;
+    private String newRegId;
+    private String sumTaxAmtG1;
+    private String sumTaxAmtG2;
+    private String taxAmtChnPnt;
+    private String taxAmtSd;
+    private String taxMonthNo;
+    private String taxAuditLast3;
+    private String taxAuditLast2;
+    private String taxAuditLast1;
+    private String oldRegId;
+    private String lastedStatus;
+    private String regStatus;
+    private String taxAmtMean;
+    private String taxAmtMaxPnt;
+    private String taxAmtMinPnt;
+    private String dutyName;
+    private String otherDutyName;
+    private List<String> taxAmtList;
+    private String selectBy;
 
-	public String getCusFullname() {
-		return cusFullname;
-	}
+    public String getSelectBy() {
+        return selectBy;
+    }
 
-	public void setCusFullname(String cusFullname) {
-		this.cusFullname = cusFullname;
-	}
+    public void setSelectBy(String selectBy) {
+        this.selectBy = selectBy;
+    }
 
-	public String getFacFullname() {
-		return facFullname;
-	}
+    public String getCusFullname() {
+        return cusFullname;
+    }
 
-	public void setFacFullname(String facFullname) {
-		this.facFullname = facFullname;
-	}
+    public void setCusFullname(String cusFullname) {
+        this.cusFullname = cusFullname;
+    }
 
-	public String getFacAddress() {
-		return facAddress;
-	}
+    public String getFacFullname() {
+        return facFullname;
+    }
 
-	public void setFacAddress(String facAddress) {
-		this.facAddress = facAddress;
-	}
+    public void setFacFullname(String facFullname) {
+        this.facFullname = facFullname;
+    }
 
-	public String getOfficeCode() {
-		return officeCode;
-	}
+    public String getFacAddress() {
+        return facAddress;
+    }
 
-	public void setOfficeCode(String officeCode) {
-		this.officeCode = officeCode;
-	}
+    public void setFacAddress(String facAddress) {
+        this.facAddress = facAddress;
+    }
 
-	public String getSecCode() {
-		return secCode;
-	}
+    public String getOfficeCode() {
+        return officeCode;
+    }
 
-	public void setSecCode(String secCode) {
-		this.secCode = secCode;
-	}
+    public void setOfficeCode(String officeCode) {
+        this.officeCode = officeCode;
+    }
 
-	public String getSecDesc() {
-		return secDesc;
-	}
+    public String getSecCode() {
+        return secCode;
+    }
 
-	public void setSecDesc(String secDesc) {
-		this.secDesc = secDesc;
-	}
+    public void setSecCode(String secCode) {
+        this.secCode = secCode;
+    }
 
-	public String getAreaCode() {
-		return areaCode;
-	}
+    public String getSecDesc() {
+        return secDesc;
+    }
 
-	public void setAreaCode(String areaCode) {
-		this.areaCode = areaCode;
-	}
+    public void setSecDesc(String secDesc) {
+        this.secDesc = secDesc;
+    }
 
-	public String getAreaDesc() {
-		return areaDesc;
-	}
+    public String getAreaCode() {
+        return areaCode;
+    }
 
-	public void setAreaDesc(String areaDesc) {
-		this.areaDesc = areaDesc;
-	}
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }
 
-	public String getWorksheetHdrId() {
-		return worksheetHdrId;
-	}
+    public String getAreaDesc() {
+        return areaDesc;
+    }
 
-	public void setWorksheetHdrId(String worksheetHdrId) {
-		this.worksheetHdrId = worksheetHdrId;
-	}
+    public void setAreaDesc(String areaDesc) {
+        this.areaDesc = areaDesc;
+    }
 
-	public String getDraftNumber() {
-		return draftNumber;
-	}
+    public String getWorksheetHdrId() {
+        return worksheetHdrId;
+    }
 
-	public void setDraftNumber(String draftNumber) {
-		this.draftNumber = draftNumber;
-	}
+    public void setWorksheetHdrId(String worksheetHdrId) {
+        this.worksheetHdrId = worksheetHdrId;
+    }
 
-	public String getNewRegId() {
-		return newRegId;
-	}
+    public String getDraftNumber() {
+        return draftNumber;
+    }
 
-	public void setNewRegId(String newRegId) {
-		this.newRegId = newRegId;
-	}
+    public void setDraftNumber(String draftNumber) {
+        this.draftNumber = draftNumber;
+    }
 
-	public String getSumTaxAmtG1() {
-		return sumTaxAmtG1;
-	}
+    public String getNewRegId() {
+        return newRegId;
+    }
 
-	public void setSumTaxAmtG1(String sumTaxAmtG1) {
-		this.sumTaxAmtG1 = sumTaxAmtG1;
-	}
+    public void setNewRegId(String newRegId) {
+        this.newRegId = newRegId;
+    }
 
-	public String getSumTaxAmtG2() {
-		return sumTaxAmtG2;
-	}
+    public String getSumTaxAmtG1() {
+        return sumTaxAmtG1;
+    }
 
-	public void setSumTaxAmtG2(String sumTaxAmtG2) {
-		this.sumTaxAmtG2 = sumTaxAmtG2;
-	}
+    public void setSumTaxAmtG1(String sumTaxAmtG1) {
+        this.sumTaxAmtG1 = sumTaxAmtG1;
+    }
 
-	public String getTaxAmtChnPnt() {
-		return taxAmtChnPnt;
-	}
+    public String getSumTaxAmtG2() {
+        return sumTaxAmtG2;
+    }
 
-	public void setTaxAmtChnPnt(String taxAmtChnPnt) {
-		this.taxAmtChnPnt = taxAmtChnPnt;
-	}
+    public void setSumTaxAmtG2(String sumTaxAmtG2) {
+        this.sumTaxAmtG2 = sumTaxAmtG2;
+    }
 
-	public String getTaxAmtSd() {
-		return taxAmtSd;
-	}
+    public String getTaxAmtChnPnt() {
+        return taxAmtChnPnt;
+    }
 
-	public void setTaxAmtSd(String taxAmtSd) {
-		this.taxAmtSd = taxAmtSd;
-	}
+    public void setTaxAmtChnPnt(String taxAmtChnPnt) {
+        this.taxAmtChnPnt = taxAmtChnPnt;
+    }
 
-	public String getTaxMonthNo() {
-		return taxMonthNo;
-	}
+    public String getTaxAmtSd() {
+        return taxAmtSd;
+    }
 
-	public void setTaxMonthNo(String taxMonthNo) {
-		this.taxMonthNo = taxMonthNo;
-	}
+    public void setTaxAmtSd(String taxAmtSd) {
+        this.taxAmtSd = taxAmtSd;
+    }
 
-	public String getTaxAuditLast3() {
-		return taxAuditLast3;
-	}
+    public String getTaxMonthNo() {
+        return taxMonthNo;
+    }
 
-	public void setTaxAuditLast3(String taxAuditLast3) {
-		this.taxAuditLast3 = taxAuditLast3;
-	}
+    public void setTaxMonthNo(String taxMonthNo) {
+        this.taxMonthNo = taxMonthNo;
+    }
 
-	public String getTaxAuditLast2() {
-		return taxAuditLast2;
-	}
+    public String getTaxAuditLast3() {
+        return taxAuditLast3;
+    }
 
-	public void setTaxAuditLast2(String taxAuditLast2) {
-		this.taxAuditLast2 = taxAuditLast2;
-	}
+    public void setTaxAuditLast3(String taxAuditLast3) {
+        this.taxAuditLast3 = taxAuditLast3;
+    }
 
-	public String getTaxAuditLast1() {
-		return taxAuditLast1;
-	}
+    public String getTaxAuditLast2() {
+        return taxAuditLast2;
+    }
 
-	public void setTaxAuditLast1(String taxAuditLast1) {
-		this.taxAuditLast1 = taxAuditLast1;
-	}
+    public void setTaxAuditLast2(String taxAuditLast2) {
+        this.taxAuditLast2 = taxAuditLast2;
+    }
 
-	public String getOldRegId() {
-		return oldRegId;
-	}
+    public String getTaxAuditLast1() {
+        return taxAuditLast1;
+    }
 
-	public void setOldRegId(String oldRegId) {
-		this.oldRegId = oldRegId;
-	}
+    public void setTaxAuditLast1(String taxAuditLast1) {
+        this.taxAuditLast1 = taxAuditLast1;
+    }
 
-	public String getLastedStatus() {
-		return lastedStatus;
-	}
+    public String getOldRegId() {
+        return oldRegId;
+    }
 
-	public void setLastedStatus(String lastedStatus) {
-		this.lastedStatus = lastedStatus;
-	}
+    public void setOldRegId(String oldRegId) {
+        this.oldRegId = oldRegId;
+    }
 
-	public String getRegStatus() {
-		return regStatus;
-	}
+    public String getLastedStatus() {
+        return lastedStatus;
+    }
 
-	public void setRegStatus(String regStatus) {
-		this.regStatus = regStatus;
-	}
+    public void setLastedStatus(String lastedStatus) {
+        this.lastedStatus = lastedStatus;
+    }
 
-	public String getTaxAmtMean() {
-		return taxAmtMean;
-	}
+    public String getRegStatus() {
+        return regStatus;
+    }
 
-	public void setTaxAmtMean(String taxAmtMean) {
-		this.taxAmtMean = taxAmtMean;
-	}
+    public void setRegStatus(String regStatus) {
+        this.regStatus = regStatus;
+    }
 
-	public String getTaxAmtMaxPnt() {
-		return taxAmtMaxPnt;
-	}
+    public String getTaxAmtMean() {
+        return taxAmtMean;
+    }
 
-	public void setTaxAmtMaxPnt(String taxAmtMaxPnt) {
-		this.taxAmtMaxPnt = taxAmtMaxPnt;
-	}
+    public void setTaxAmtMean(String taxAmtMean) {
+        this.taxAmtMean = taxAmtMean;
+    }
 
-	public String getTaxAmtMinPnt() {
-		return taxAmtMinPnt;
-	}
+    public String getTaxAmtMaxPnt() {
+        return taxAmtMaxPnt;
+    }
 
-	public void setTaxAmtMinPnt(String taxAmtMinPnt) {
-		this.taxAmtMinPnt = taxAmtMinPnt;
-	}
+    public void setTaxAmtMaxPnt(String taxAmtMaxPnt) {
+        this.taxAmtMaxPnt = taxAmtMaxPnt;
+    }
 
-	public String getDutyName() {
-		return dutyName;
-	}
+    public String getTaxAmtMinPnt() {
+        return taxAmtMinPnt;
+    }
 
-	public void setDutyName(String dutyName) {
-		this.dutyName = dutyName;
-	}
+    public void setTaxAmtMinPnt(String taxAmtMinPnt) {
+        this.taxAmtMinPnt = taxAmtMinPnt;
+    }
 
-	public String getOtherDutyName() {
-		return otherDutyName;
-	}
+    public String getDutyName() {
+        return dutyName;
+    }
 
-	public void setOtherDutyName(String otherDutyName) {
-		this.otherDutyName = otherDutyName;
-	}
+    public void setDutyName(String dutyName) {
+        this.dutyName = dutyName;
+    }
 
-	public List<String> getTaxAmtList() {
-		return taxAmtList;
-	}
+    public String getOtherDutyName() {
+        return otherDutyName;
+    }
 
-	public void setTaxAmtList(List<String> taxAmtList) {
-		this.taxAmtList = taxAmtList;
-	}
+    public void setOtherDutyName(String otherDutyName) {
+        this.otherDutyName = otherDutyName;
+    }
 
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-	}
+    public List<String> getTaxAmtList() {
+        return taxAmtList;
+    }
+
+    public void setTaxAmtList(List<String> taxAmtList) {
+        this.taxAmtList = taxAmtList;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    }
 
 }
