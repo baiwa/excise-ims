@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants;
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
@@ -35,12 +36,12 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
     @Override
     public void batchInsert(List<TaWorksheetDtl> worksheetDtlList) {
         String sql = SqlGeneratorUtils.genSqlInsert(
-                "TA_WORKSHEET_DTL",
-                Arrays.asList(
-                        "WORKSHEET_DTL_ID", "ANALYSIS_NUMBER", "NEW_REG_ID", "COND_MAIN_GRP",
-                        "CREATED_BY", "CREATED_DATE"
-                ),
-                "TA_WORKSHEET_DTL_SEQ"
+            "TA_WORKSHEET_DTL",
+            Arrays.asList(
+                "WORKSHEET_DTL_ID", "ANALYSIS_NUMBER", "NEW_REG_ID", "COND_MAIN_GRP",
+                "CREATED_BY", "CREATED_DATE"
+            ),
+            "TA_WORKSHEET_DTL_SEQ"
         );
 
         commonJdbcTemplate.batchUpdate(sql, worksheetDtlList, 1000, new ParameterizedPreparedStatementSetter<TaWorksheetDtl>() {
@@ -57,51 +58,46 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
     }
 
     private void buildByCriteriaQuery(StringBuilder sql, List<Object> params, TaxOperatorFormVo formVo) {
-        sql.append(" SELECT R4000.CUS_FULLNAME , ");
-        sql.append("   R4000.FAC_FULLNAME , ");
-        sql.append("   R4000.FAC_ADDRESS , ");
-        sql.append("   R4000.DUTY_CODE , ");
-        sql.append("   R4000.OFFICE_CODE OFFICE_CODE_R4000 , ");
-        sql.append("   ED_SECTOR.OFFICE_CODE SEC_CODE , ");
-        sql.append("   ED_SECTOR.OFF_SHORT_NAME SEC_DESC , ");
-        sql.append("   ED_AREA.OFFICE_CODE AREA_CODE , ");
-        sql.append("   ED_AREA.OFF_SHORT_NAME AREA_DESC , ");
-        sql.append("   TA_W_DTL.COND_MAIN_GRP , ");
-        sql.append("   TA_W_HDR.ANALYSIS_NUMBER , ");
-        sql.append("    TA_W_DTL.CENTRAL_SEL_FLAG,");
-        sql.append("    TA_W_DTL.SECTOR_SEL_FLAG,	");
-        sql.append("   TA_DW_DTL.* ");
+        sql.append(" SELECT R4000.CUS_FULLNAME ");
+        sql.append("   ,R4000.FAC_FULLNAME ");
+        sql.append("   ,R4000.FAC_ADDRESS ");
+        sql.append("   ,R4000.DUTY_CODE ");
+        sql.append("   ,R4000.OFFICE_CODE OFFICE_CODE_R4000 ");
+        sql.append("   ,ED_SECTOR.OFFICE_CODE SEC_CODE ");
+        sql.append("   ,ED_SECTOR.OFF_SHORT_NAME SEC_DESC ");
+        sql.append("   ,ED_AREA.OFFICE_CODE AREA_CODE ");
+        sql.append("   ,ED_AREA.OFF_SHORT_NAME AREA_DESC ");
+        sql.append("   ,TA_W_DTL.COND_MAIN_GRP ");
+        sql.append("   ,TA_W_HDR.ANALYSIS_NUMBER ");
+        sql.append("   ,TA_W_DTL.CENTRAL_SEL_FLAG ");
+        sql.append("   ,TA_W_DTL.SECTOR_SEL_FLAG ");
+        sql.append("   ,TA_DW_DTL.* ");
         sql.append(" FROM TA_WORKSHEET_DTL TA_W_DTL ");
-        sql.append(" INNER JOIN TA_WORKSHEET_HDR TA_W_HDR ");
-        sql.append(" ON TA_W_DTL.ANALYSIS_NUMBER = TA_W_HDR.ANALYSIS_NUMBER ");
-        sql.append(" AND TA_W_DTL.IS_DELETED     = 'N' ");
-        sql.append(" INNER JOIN TA_DRAFT_WORKSHEET_DTL TA_DW_DTL ");
-        sql.append(" ON TA_DW_DTL.DRAFT_NUMBER = TA_W_HDR.DRAFT_NUMBER ");
-        sql.append(" AND TA_DW_DTL.NEW_REG_ID  = TA_W_DTL.NEW_REG_ID ");
-        sql.append(" AND TA_DW_DTL.IS_DELETED  = 'N' ");
-        sql.append(" INNER JOIN TA_WS_REG4000 R4000 ");
-        sql.append(" ON R4000.NEW_REG_ID  = TA_W_DTL.NEW_REG_ID ");
-        sql.append(" AND R4000.IS_DELETED = 'N' ");
-        sql.append(" INNER JOIN ");
-        sql.append("   (SELECT OFF_CODE OFFICE_CODE, ");
+        sql.append(" INNER JOIN TA_WORKSHEET_HDR TA_W_HDR ON TA_W_DTL.ANALYSIS_NUMBER = TA_W_HDR.ANALYSIS_NUMBER ");
+        sql.append("   AND TA_W_DTL.IS_DELETED = 'N' ");
+        sql.append(" INNER JOIN TA_DRAFT_WORKSHEET_DTL TA_DW_DTL ON TA_DW_DTL.DRAFT_NUMBER = TA_W_HDR.DRAFT_NUMBER ");
+        sql.append("   AND TA_DW_DTL.NEW_REG_ID = TA_W_DTL.NEW_REG_ID ");
+        sql.append("   AND TA_DW_DTL.IS_DELETED = 'N' ");
+        sql.append(" INNER JOIN TA_WS_REG4000 R4000 ON R4000.NEW_REG_ID = TA_W_DTL.NEW_REG_ID ");
+        sql.append("   AND R4000.IS_DELETED = 'N' ");
+        sql.append(" INNER JOIN ( ");
+        sql.append("   SELECT OFF_CODE OFFICE_CODE, ");
         sql.append("     OFF_NAME, ");
         sql.append("     OFF_SHORT_NAME ");
         sql.append("   FROM EXCISE_DEPARTMENT ");
-        sql.append("   WHERE IS_DELETED                              = 'N' ");
-        sql.append("   AND CONCAT (SUBSTR(OFF_CODE, 0, 2),'0000') = OFF_CODE ");
-        sql.append("   ) ED_SECTOR ");
-        sql.append(" ON ED_SECTOR.OFFICE_CODE = CONCAT (SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000') ");
-        sql.append(" INNER JOIN ");
-        sql.append("   (SELECT OFF_CODE OFFICE_CODE, ");
+        sql.append("   WHERE IS_DELETED = 'N' ");
+        sql.append("     AND CONCAT (SUBSTR(OFF_CODE, 0, 2),'0000') = OFF_CODE ");
+        sql.append("   ) ED_SECTOR ON ED_SECTOR.OFFICE_CODE = CONCAT (SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000') ");
+        sql.append(" INNER JOIN ( ");
+        sql.append("   SELECT OFF_CODE OFFICE_CODE, ");
         sql.append("     OFF_NAME, ");
         sql.append("     OFF_SHORT_NAME ");
         sql.append("   FROM EXCISE_DEPARTMENT ");
-        sql.append("   WHERE IS_DELETED                            = 'N' ");
-        sql.append("   AND CONCAT (SUBSTR(OFF_CODE, 0, 4),'00') = OFF_CODE ");
-        sql.append("   ) ED_AREA ");
-        sql.append(" ON ED_AREA.OFFICE_CODE       = CONCAT (SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
-        sql.append(" WHERE TA_W_HDR.IS_DELETED    = 'N' ");
-        sql.append(" AND TA_W_HDR.ANALYSIS_NUMBER = ? ");
+        sql.append("   WHERE IS_DELETED = 'N' ");
+        sql.append("     AND CONCAT (SUBSTR(OFF_CODE, 0, 4),'00') = OFF_CODE ");
+        sql.append("   ) ED_AREA ON ED_AREA.OFFICE_CODE = CONCAT (SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
+        sql.append(" WHERE TA_W_HDR.IS_DELETED = 'N' ");
+        sql.append("   AND TA_W_HDR.ANALYSIS_NUMBER = ? ");
         ;
 
         params.add(formVo.getAnalysisNumber());
@@ -122,7 +118,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 
         String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 
-        //TODO Check allow select by paramGroup and Info  TA_CONFIG == "Y|N"
+        //TODO Check allow see Factory that selected by other with TA_CONFIG.SEE_FLAG == "Y|N"
         if (!ExciseUtils.isCentral(officeCode)) {
             ParamInfo paramInfo = ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.SEE_FLAG);
             if (CommonConstants.FLAG.N_FLAG.equals(paramInfo.getValue1())) {
@@ -134,7 +130,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
             }
         }
 
-        sql.append("ORDER BY R4000.DUTY_CODE , R4000.OFFICE_CODE , TA_DW_DTL.NEW_REG_ID ");
+        sql.append(" ORDER BY R4000.DUTY_CODE, R4000.OFFICE_CODE, TA_DW_DTL.NEW_REG_ID ");
 
         return commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(), worksheetRowMapper);
     }
@@ -154,6 +150,26 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
             TaxAuditUtils.commonSelectionWorksheetRowMapper(vo, rs);
             vo.setDraftNumber(rs.getString("ANALYSIS_NUMBER"));
             vo.setCondTaxGrp(rs.getString("COND_MAIN_GRP"));
+            
+            vo.setCentralSelFlag(rs.getString("CENTRAL_SEL_FLAG"));
+			if (FLAG.Y_FLAG.equals(vo.getCentralSelFlag())) {
+				vo.setCentralSelDate(""); // FIXME
+				vo.setCentralSelOfficeCode(rs.getString("CENTRAL_SEL_OFFICE_CODE"));
+				vo.setSelectBy(ApplicationCache.getExciseDept(vo.getCentralSelOfficeCode()).getDeptShortName());
+			}
+			vo.setSectorSelFlag(rs.getString("SECTOR_SEL_FLAG"));
+			if (StringUtils.isNotBlank(vo.getSectorSelFlag())) {
+				vo.setSectorSelDate("");
+				vo.setSectorSelOfficeCode(rs.getString("SECTOR_SEL_OFFICE_CODE"));
+				vo.setSelectBy(ApplicationCache.getExciseDept(vo.getSectorSelOfficeCode()).getDeptShortName());
+			}
+			vo.setAreaSelFlag(rs.getString("AREA_SEL_FLAG"));
+			if (StringUtils.isNotBlank(vo.getAreaSelFlag())) {
+				vo.setAreaSelDate("");
+				vo.setAreaSelOfficeCode(rs.getString("AREA_SEL_OFFICE_CODE"));
+				vo.setSelectBy(ApplicationCache.getExciseDept(vo.getAreaSelOfficeCode()).getDeptShortName());
+			}
+    		
             return vo;
         }
     };

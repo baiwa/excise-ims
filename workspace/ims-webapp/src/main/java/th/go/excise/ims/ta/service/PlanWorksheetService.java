@@ -120,7 +120,6 @@ public class PlanWorksheetService {
 
         // Keep New and Delete newRegId list
         TaPlanWorksheetDtl planDtl = null;
-        TaWorksheetDtl worksheetDtl = null;
         List<String> insertNewRegIdList = new ArrayList<>();
         List<String> updateNewRegIdList = new ArrayList<>();
 
@@ -148,8 +147,8 @@ public class PlanWorksheetService {
                 planDtl.setNewRegId(newRegId);
                 planDtl.setAuditStatus("I"); // FIXME
                 taPlanWorksheetDtlRepository.save(planDtl);
-
-                updateFlagTaWorksheetDtl(worksheetDtl, officeCode, FLAG.Y_FLAG, newRegId, LocalDate.now(), formVo);
+                
+                updateFlagTaWorksheetDtl(officeCode, FLAG.Y_FLAG, newRegId, LocalDate.now(), formVo);
             }
         }
 
@@ -170,8 +169,8 @@ public class PlanWorksheetService {
                     selDate = null;
                 }
                 taPlanWorksheetDtlRepository.updateIsDeletedByPlanNumberAndNewRegId(isDeletedPlanDtl, formVo.getPlanNumber(), newRegId);
-
-                updateFlagTaWorksheetDtl(worksheetDtl, officeCode, selFlag, newRegId, selDate, formVo);
+                
+                updateFlagTaWorksheetDtl(officeCode, selFlag, newRegId, selDate, formVo);
             }
         } else {
 
@@ -182,23 +181,27 @@ public class PlanWorksheetService {
                     selFlag = FLAG.Y_FLAG;
                     selDate = LocalDate.now();
                     taPlanWorksheetDtlRepository.updateIsDeletedByPlanNumberAndNewRegId(isDeletedPlanDtl, formVo.getPlanNumber(), selecNewRegtId);
-                    updateFlagTaWorksheetDtl(worksheetDtl, officeCode, selFlag, selecNewRegtId, selDate, formVo);
+                    
+                    updateFlagTaWorksheetDtl(officeCode, selFlag, selecNewRegtId, selDate, formVo);
                 }
             }
         }
     }
 
-    private void updateFlagTaWorksheetDtl(TaWorksheetDtl worksheetDtl, String officeCode, String selFlag, String newRegtId, LocalDate selDate, PlanWorksheetVo formVo) {
-        worksheetDtl = taWorksheetDtlRepository.findByAnalysisNumberAndNewRegId(formVo.getAnalysisNumber(), newRegtId);
+    private void updateFlagTaWorksheetDtl(String officeCode, String selFlag, String newRegtId, LocalDate selDate, PlanWorksheetVo formVo) {
+        TaWorksheetDtl worksheetDtl = taWorksheetDtlRepository.findByAnalysisNumberAndNewRegId(formVo.getAnalysisNumber(), newRegtId);
         if (ExciseUtils.isCentral(officeCode)) {
             worksheetDtl.setCentralSelFlag(selFlag);
             worksheetDtl.setCentralSelDate(selDate);
+            worksheetDtl.setCentralSelOfficeCode(officeCode);
         } else if (ExciseUtils.isSector(officeCode)) {
             worksheetDtl.setSectorSelFlag(selFlag);
             worksheetDtl.setSectorSelDate(selDate);
+            worksheetDtl.setSectorSelOfficeCode(officeCode);
         } else if (ExciseUtils.isArea(officeCode)) {
             worksheetDtl.setAreaSelFlag(selFlag);
             worksheetDtl.setAreaSelDate(selDate);
+            worksheetDtl.setAreaSelOfficeCode(officeCode);
         }
         taWorksheetDtlRepository.save(worksheetDtl);
     }

@@ -31,6 +31,8 @@ public class TaPlanWorksheetDtl extends BaseEntity {
 	private String officeCode;
 	@Column(name = "NEW_REG_ID")
 	private String newRegId;
+	@Column(name = "SYSTEM_TYPE")
+	private String systemType;
 	@Column(name = "PLAN_TYPE")
 	private String planType;
 	@Column(name = "AUDIT_STATUS")
@@ -80,6 +82,14 @@ public class TaPlanWorksheetDtl extends BaseEntity {
 
 	public void setNewRegId(String newRegId) {
 		this.newRegId = newRegId;
+	}
+
+	public String getSystemType() {
+		return systemType;
+	}
+
+	public void setSystemType(String systemType) {
+		this.systemType = systemType;
 	}
 
 	public String getPlanType() {

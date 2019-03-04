@@ -23,16 +23,20 @@ public class TaWorksheetCondMainDtl extends BaseEntity {
 	@SequenceGenerator(name = "TA_WORKSHEET_COND_MAIN_DTL_GEN", sequenceName = "TA_WORKSHEET_COND_MAIN_DTL_SEQ", allocationSize = 1)
 	@Column(name = "WORKSHEET_COND_MAIN_DTL_ID")
 	private Long worksheetCondMainDtlId;
+	@Column(name = "DRAFT_NUMBER")
+	private String draftNumber;
 	@Column(name = "ANALYSIS_NUMBER")
 	private String analysisNumber;
 	@Column(name = "COND_GROUP")
 	private String condGroup;
-	@Column(name = "DUTY_CODE")
-	private String dutyCode;
+	@Column(name = "TAX_FREQ_TYPE")
+	private String taxFreqType;
 	@Column(name = "TAX_MONTH_START")
 	private Integer taxMonthStart;
 	@Column(name = "TAX_MONTH_END")
 	private Integer taxMonthEnd;
+	@Column(name = "RANGE_TYPE")
+	private String rangeType;
 	@Column(name = "RANGE_START")
 	private BigDecimal rangeStart;
 	@Column(name = "RANGE_END")
@@ -48,6 +52,14 @@ public class TaWorksheetCondMainDtl extends BaseEntity {
 
 	public void setWorksheetCondMainDtlId(Long worksheetCondMainDtlId) {
 		this.worksheetCondMainDtlId = worksheetCondMainDtlId;
+	}
+
+	public String getDraftNumber() {
+		return draftNumber;
+	}
+
+	public void setDraftNumber(String draftNumber) {
+		this.draftNumber = draftNumber;
 	}
 
 	public String getAnalysisNumber() {
@@ -66,12 +78,12 @@ public class TaWorksheetCondMainDtl extends BaseEntity {
 		this.condGroup = condGroup;
 	}
 
-	public String getDutyCode() {
-		return dutyCode;
+	public String getTaxFreqType() {
+		return taxFreqType;
 	}
 
-	public void setDutyCode(String dutyCode) {
-		this.dutyCode = dutyCode;
+	public void setTaxFreqType(String taxFreqType) {
+		this.taxFreqType = taxFreqType;
 	}
 
 	public Integer getTaxMonthStart() {
@@ -88,6 +100,14 @@ public class TaWorksheetCondMainDtl extends BaseEntity {
 
 	public void setTaxMonthEnd(Integer taxMonthEnd) {
 		this.taxMonthEnd = taxMonthEnd;
+	}
+
+	public String getRangeType() {
+		return rangeType;
+	}
+
+	public void setRangeType(String rangeType) {
+		this.rangeType = rangeType;
 	}
 
 	public BigDecimal getRangeStart() {
