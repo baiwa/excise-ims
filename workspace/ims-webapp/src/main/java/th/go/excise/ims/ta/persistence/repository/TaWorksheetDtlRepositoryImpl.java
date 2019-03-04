@@ -68,6 +68,8 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
         sql.append("   ED_AREA.OFF_SHORT_NAME AREA_DESC , ");
         sql.append("   TA_W_DTL.COND_MAIN_GRP , ");
         sql.append("   TA_W_HDR.ANALYSIS_NUMBER , ");
+        sql.append("    TA_W_DTL.CENTRAL_SEL_FLAG,");
+        sql.append("    TA_W_DTL.SECTOR_SEL_FLAG,	");
         sql.append("   TA_DW_DTL.* ");
         sql.append(" FROM TA_WORKSHEET_DTL TA_W_DTL ");
         sql.append(" INNER JOIN TA_WORKSHEET_HDR TA_W_HDR ");
@@ -119,6 +121,8 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
         buildByCriteriaQuery(sql, params, formVo);
 
         String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+
+        //TODO Check allow select by paramGroup and Info  TA_CONFIG == "Y|N"
         if (!ExciseUtils.isCentral(officeCode)) {
             ParamInfo paramInfo = ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.SEE_FLAG);
             if (CommonConstants.FLAG.N_FLAG.equals(paramInfo.getValue1())) {

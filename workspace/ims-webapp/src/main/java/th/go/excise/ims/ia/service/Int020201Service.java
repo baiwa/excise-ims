@@ -79,6 +79,10 @@ public class Int020201Service {
 					if ("ยังไม่ได้ทำแบบสอบถาม".equals(request.getStatus())) {
 						madeDtl.setStatus("WAIT");
 					}
+					
+					if(request.getFlagConfirm()) {
+						madeDtl.setStatus("FINISH");
+					}
 					/* update 'status' questionnaire-made-header */
 					updateStatusQtnMadeHdr(request);
 					iaQuestionnaireMadeRepository.save(madeDtl);

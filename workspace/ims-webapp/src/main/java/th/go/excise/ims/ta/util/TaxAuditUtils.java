@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -49,6 +50,7 @@ public class TaxAuditUtils {
 				taxOperatorDatatableVo.setSumTaxAmtG2(taxOperatorDetailVo.getSumTaxAmtG2());
 				taxOperatorDatatableVo.setTaxAmtChnPnt(taxOperatorDetailVo.getTaxAmtChnPnt());
 				taxOperatorDatatableVo.setTaxMonthNo(taxOperatorDetailVo.getTaxMonthNo());
+				taxOperatorDatatableVo.setSelectBy(taxOperatorDetailVo.getSelectBy());
 			}
 			
 			taxAmtList = new ArrayList<>();
@@ -165,6 +167,16 @@ public class TaxAuditUtils {
 		vo.setTaxAmtMaxPnt(rs.getString("TAX_AMT_MAX_PNT"));
 		vo.setTaxAmtMinPnt(rs.getString("TAX_AMT_MIN_PNT"));
 		vo.setDutyName(ExciseUtils.getDutyDesc(rs.getString("DUTY_CODE")));
+		vo.setCentralSelFlag(rs.getString("CENTRAL_SEL_FLAG"));
+		vo.setSectorSelFlag(rs.getString("SECTOR_SEL_FLAG"));
+
+		if (StringUtils.isNotBlank(rs.getString("CENTRAL_SEL_FLAG"))){
+			vo.setSelectBy("ส่วนกลาง");
+		}
+		if (StringUtils.isNotBlank(rs.getString("SECTOR_SEL_FLAG"))){
+			vo.setSelectBy("พื้นที่");
+		}
+
 	}
 	
 	public static List<ExciseDept> getExciseSectorList() {
