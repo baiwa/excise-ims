@@ -63,7 +63,7 @@ public class Int0301JdbcRepository {
 			irf.setInspectionWork(rs.getBigDecimal("INSPECTION_WORK"));
 			irf.setCreatedBy(rs.getString("CREATED_BY"));
 			irf.setIdMaster(rs.getBigDecimal("ID_MASTER"));
-
+			irf.setDataEvaluate(rs.getString("DATA_EVALUATE"));
 			// vo.setCreatedDateDesc(ConvertDateUtils.formatDateToString(rs
 			// .getDate("CREATED_DATE"), ConvertDateUtils.DD_MM_YYYY,
 			// ConvertDateUtils.LOCAL_TH));

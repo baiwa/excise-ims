@@ -33,7 +33,8 @@ public class IaRiskFactorsMaster extends BaseEntity {
 	private BigDecimal inspectionWork;
 	@Column(name = "NOT_DELETE")
 	private String notDelete;
-	
+	@Column(name = "DATA_EVALUATE")
+	private String dataEvaluate;
 	
 	
 	public BigDecimal getId() {
@@ -84,6 +85,15 @@ public class IaRiskFactorsMaster extends BaseEntity {
 	public void setNotDelete(String notDelete) {
 		this.notDelete = notDelete;
 	}
+
+	public String getDataEvaluate() {
+		return dataEvaluate;
+	}
+
+	public void setDataEvaluate(String dataEvaluate) {
+		this.dataEvaluate = dataEvaluate;
+	}
+	
 	
 	
 }
