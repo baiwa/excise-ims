@@ -2,7 +2,7 @@
 <configuration>
 	
 	<!-- Initial Properties -->
-	<springProperty scope="context" name="logPath" source="app.logging.path" defaultValue="/tmp/ims-webapp/logs"/>
+	<springProperty scope="context" name="logPath" source="app.logging.path" defaultValue="/tmp/excise-backend/logs"/>
 	<springProperty scope="context" name="minIndex" source="app.logging.rolling-file-appender.min-index" defaultValue="1"/>
 	<springProperty scope="context" name="maxIndex" source="app.logging.rolling-file-appender.max-index" defaultValue="5"/>
 	<springProperty scope="context" name="maxFileSize" source="app.logging.rolling-file-appender.max-file-size" defaultValue="1MB"/>
@@ -18,12 +18,12 @@
 	
 	<!-- Rolling File Appender -->
 	<appender name="ROLLINGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${logPath}/ims-webapp.log</file>
+		<file>${logPath}/excise-backend.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>${logPattern}</Pattern>
 		</encoder>
 		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-			<fileNamePattern>${logPath}/ims-webapp.%i.log</fileNamePattern>
+			<fileNamePattern>${logPath}/excise-backend.%i.log</fileNamePattern>
 			<minIndex>${minIndex}</minIndex>
 			<maxIndex>${maxIndex}</maxIndex>
 		</rollingPolicy>
@@ -53,7 +53,11 @@
 	
 	<!-- DEV Profile Log Level -->
 	<springProfile name="dev">
-		<logger name="th.co.baiwa.buckwaframework" level="WARN" additivity="false">
+		<logger name="th.co.baiwa.buckwaframework" level="INFO" additivity="false">
+			<appender-ref ref="STDOUT" />
+			<appender-ref ref="ROLLINGFILE" />
+		</logger>
+		<logger name="th.go.excise.ims" level="INFO" additivity="false">
 			<appender-ref ref="STDOUT" />
 			<appender-ref ref="ROLLINGFILE" />
 		</logger>
