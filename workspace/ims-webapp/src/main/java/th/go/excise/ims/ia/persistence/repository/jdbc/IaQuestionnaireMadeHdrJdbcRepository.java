@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMadeHdr;
 import th.go.excise.ims.ia.vo.Int0202FormVo;
 import th.go.excise.ims.ia.vo.Int0202Vo;
 
@@ -86,6 +88,23 @@ public class IaQuestionnaireMadeHdrJdbcRepository {
 		Integer count = this.commonJdbcTemplate.queryForObject(sqlCount, params.toArray(), Integer.class);
 
 		return count; 
+	}
+	
+	public List<IaQuestionnaireMadeHdr> findMadeHdrByIdHdr(IaQuestionnaireHdr request, String officeCode) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT * FROM IA_QUESTIONNAIRE_MADE_HDR WHERE 1=1 AND IS_DELETED='N' ");
+		sql.append(" AND OFFICE_CODE LIKE ? ");
+		sql.append(" AND STATUS != 'FINISH' ");
+		sql.append(" AND ID_HDR = ? ");
+		
+		params.add(officeCode.substring(0, 2) + "%");
+		params.add(request.getId());
+
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		List<IaQuestionnaireMadeHdr> data = commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper(IaQuestionnaireMadeHdr.class));
+
+		return data; 
 	}
 
 }

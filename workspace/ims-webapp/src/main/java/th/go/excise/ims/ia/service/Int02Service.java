@@ -13,9 +13,13 @@ import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.constant.MessageContants;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMadeHdr;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
+import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireHdrJdbcRepository;
+import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireMadeHdrJdbcRepository;
 import th.go.excise.ims.ia.vo.Int02FormVo;
 import th.go.excise.ims.ia.vo.Int02Vo;
 
@@ -27,7 +31,12 @@ public class Int02Service {
 
 	@Autowired
 	private IaQuestionnaireHdrRepository iaQuestionnaireHdrRepository;
-
+	
+	@Autowired
+	private IaQuestionnaireMadeHdrRepository iaQuestionnaireMadeHdrRepository;
+	
+	@Autowired
+	private IaQuestionnaireMadeHdrJdbcRepository iaQuestionnaireMadeHdrJdbcRepository;
 	public DataTableAjax<Int02Vo> filterQtnHdr(Int02FormVo request) {
 
 		List<Int02Vo> data = iaQuestionnaireHdrJdbcRepository.getDataFilter(request);
@@ -88,6 +97,23 @@ public class Int02Service {
 		data.setBudgetYear(request.getBudgetYear());
 		data.setQtnHeaderName(request.getQtnHeaderName());
 		data.setNote(request.getNote());
+		
+		/* update table Questionnaire-Made-Hdr */
+//		List<IaQuestionnaireMadeHdr> dataMadeHdr = iaQuestionnaireMadeHdrRepository.findByIdHdr(request.getId());
+//		for (IaQuestionnaireMadeHdr objMadeHdr : dataMadeHdr) {
+//			if(!"FINISH".equals(objMadeHdr.getStatus())) {
+//				objMadeHdr.setQtnHeaderName(request.getQtnHeaderName());
+//				objMadeHdr.setNote(request.getNote());
+//				iaQuestionnaireMadeHdrRepository.save(objMadeHdr);
+//			}
+//		}
+		List<IaQuestionnaireMadeHdr> madeHdrList = iaQuestionnaireMadeHdrJdbcRepository.findMadeHdrByIdHdr(request, UserLoginUtils.getCurrentUserBean().getOfficeCode());
+		for (IaQuestionnaireMadeHdr madeHdr : madeHdrList) {
+			madeHdr.setQtnHeaderName(request.getQtnHeaderName());
+			madeHdr.setNote(request.getNote());
+			iaQuestionnaireMadeHdrRepository.save(madeHdr);
+		}
+			
 		return iaQuestionnaireHdrRepository.save(data);
 	}
 
