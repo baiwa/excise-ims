@@ -76,7 +76,7 @@ public class Int02Service {
 		dataTableAjax.setDraw(request.getDraw() + 1);
 		dataTableAjax.setData(data);
 		dataTableAjax.setRecordsTotal(iaQuestionnaireHdrJdbcRepository.countDatafilter(request));
-		dataTableAjax.setRecordsFiltered(data.size());
+		dataTableAjax.setRecordsFiltered(iaQuestionnaireHdrJdbcRepository.countDatafilter(request));
 
 		return dataTableAjax;
 	}
