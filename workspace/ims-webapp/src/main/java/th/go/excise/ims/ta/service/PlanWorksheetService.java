@@ -49,12 +49,9 @@ public class PlanWorksheetService {
     private TaPlanWorksheetHdrRepository taPlanWorksheetHdrRepository;
     @Autowired
     private TaPlanWorksheetDtlRepository taPlanWorksheetDtlRepository;
-
+    
     @Autowired
     private TaPlanWorksheetSendRepository taPlanWorksheetSendRepository;
-
-    @Autowired
-    private TaPlanWorksheetHdrRepository planWorksheetHdrRepository;
 
     public TaPlanWorksheetHdr getPlanWorksheetHdr(PlanWorksheetVo formVo) {
         logger.info("getPlanWorksheetHdr budgetYear={}", formVo.getBudgetYear());
@@ -288,7 +285,7 @@ public class PlanWorksheetService {
 
     public PlanWorksheetStatus getPlanHeaderStatus(PlanWorksheetVo formVo) {
         PlanWorksheetStatus status = new PlanWorksheetStatus();
-        TaPlanWorksheetHdr planWsHdr = planWorksheetHdrRepository.findByBudgetYear(formVo.getBudgetYear());
+        TaPlanWorksheetHdr planWsHdr = taPlanWorksheetHdrRepository.findByBudgetYear(formVo.getBudgetYear());
 
         if (planWsHdr != null) {
             ParamInfo statusDesc = ApplicationCache.getParamInfoByCode("TA_PLAN_STATUS", planWsHdr.getPlanStatus());
@@ -304,7 +301,7 @@ public class PlanWorksheetService {
     }
 
     public void insertComment(TaPlanWorksheetHdr form) {
-        TaPlanWorksheetHdr comment = planWorksheetHdrRepository.findByBudgetYear(form.getBudgetYear());
+        TaPlanWorksheetHdr comment = taPlanWorksheetHdrRepository.findByBudgetYear(form.getBudgetYear());
         if (StringUtils.isEmpty(form.getApprovedComment())) {
             comment.setApprovalBy(UserLoginUtils.getCurrentUsername());
             comment.setApprovalDate(LocalDateTime.now());
@@ -316,7 +313,15 @@ public class PlanWorksheetService {
             comment.setApprovedComment(form.getApprovedComment());
             comment.setPlanStatus("P");
         }
-        planWorksheetHdrRepository.save(comment);
+        taPlanWorksheetHdrRepository.save(comment);
+    }
+    
+    @Transactional(rollbackFor = {Exception.class})
+    public void clearDataByBudgetYear(String budgetYear) {
+    	logger.info("clearDataByBudgetYear budgetYear={}", budgetYear);
+    	taPlanWorksheetDtlRepository.forceDeleteByBudgetYear(budgetYear);
+    	taPlanWorksheetHdrRepository.forceDeleteByBudgetYear(budgetYear);
+    	taPlanWorksheetSendRepository.forceDeleteByBudgetYear(budgetYear);
     }
 
 }

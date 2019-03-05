@@ -1,5 +1,6 @@
 package th.go.excise.ims.ta.persistence.repository;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -14,5 +15,9 @@ public interface TaPlanWorksheetHdrRepository extends CommonJpaCrudRepository<Ta
 	
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.planNumber = :planNumber")
 	public TaPlanWorksheetHdr findByPlanNumber(@Param("planNumber") String planNumber);
+	
+	@Modifying
+	@Query(value = "DELETE FROM TA_PLAN_WORKSHEET_HDR WHERE BUDGET_YEAR = :budgetYear", nativeQuery = true)
+	public void forceDeleteByBudgetYear(@Param("budgetYear") String budgetYear);
 	
 }
