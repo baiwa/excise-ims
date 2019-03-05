@@ -13,24 +13,26 @@ import th.go.excise.ims.ta.vo.CreatePaperProductRawMaterialReceiptVo;
 public class CreatePaperProductService {
 
 	public DataTableAjax<CreatePaperProductRawMaterialReceiptVo> listRowMaterialReceipt(CreatePaperFormVo request) {
-
+		int total = 17;
 		DataTableAjax<CreatePaperProductRawMaterialReceiptVo> dataTableAjax = new DataTableAjax<CreatePaperProductRawMaterialReceiptVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
-		dataTableAjax.setData(getDataRawMaterialReceipt());
-		dataTableAjax.setRecordsTotal(20);
-		dataTableAjax.setRecordsFiltered(20);
+		dataTableAjax.setData(getDataRawMaterialReceipt(request.getStart(), request.getLength(), total));
+		dataTableAjax.setRecordsTotal(total);
+		dataTableAjax.setRecordsFiltered(total);
 		return dataTableAjax;
 	}
 
-	public List<CreatePaperProductRawMaterialReceiptVo> getDataRawMaterialReceipt() {
-
+	public List<CreatePaperProductRawMaterialReceiptVo> getDataRawMaterialReceipt(int start, int length, int total) {
 		List<CreatePaperProductRawMaterialReceiptVo> datalist = new ArrayList<CreatePaperProductRawMaterialReceiptVo>();
-
+		String desc = "ตรวจสอบวัตถุดิบ";
 		CreatePaperProductRawMaterialReceiptVo data = null;
-		for (int i = 0; i < 10; i++) {
+		for (int i = start; i < (start + length); i++) {
+			if (i >= total) {
+				break;
+			}
 			data = new CreatePaperProductRawMaterialReceiptVo();
 			data.setId(Long.valueOf(1));
-			data.setList("ตรวจสอบการรับวัตถุดิบ"+i);
+			data.setList(desc + (i + 1));
 			data.setInvoices("13-05555-037");
 			data.setDailyAccount("1305555037");
 			data.setMonthStatement("1,500");

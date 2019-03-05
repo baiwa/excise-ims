@@ -8,7 +8,7 @@ public class CreatePaperFormVo extends DataTableRequest {
 	 */
 	private static final long serialVersionUID = 7030486177102512117L;
 	private String startDate;
-	private String stopDate;
+	private String endDate;
 
 	public String getStartDate() {
 		return startDate;
@@ -18,12 +18,14 @@ public class CreatePaperFormVo extends DataTableRequest {
 		this.startDate = startDate;
 	}
 
-	public String getStopDate() {
-		return stopDate;
+	public String getEndDate() {
+		return endDate;
 	}
 
-	public void setStopDate(String stopDate) {
-		this.stopDate = stopDate;
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
+
+	
 
 }
