@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import io.swagger.annotations.ApiOperation;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.Role;
 import th.co.baiwa.buckwaframework.accesscontrol.service.RoleService;
 import th.co.baiwa.buckwaframework.accesscontrol.vo.RoleFormVo;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.DocumentConstants.MODULE_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 
@@ -35,6 +37,10 @@ public class RoleController {
 	}
 
 	@PostMapping("/list")
+	@ApiOperation(
+			tags = MODULE_NAME.ACCESS_CONTROL,
+			value = "Get Role by Criteria"
+		)
 	@ResponseBody
 	public DataTableAjax<Role> listRole(@RequestBody RoleFormVo request) {
 		logger.info("listRole");
@@ -49,6 +55,10 @@ public class RoleController {
 	}
 
 	@PostMapping("/create")
+	@ApiOperation(
+			tags = MODULE_NAME.ACCESS_CONTROL,
+			value = "Create Role"
+		)
 	@ResponseBody
 	public ResponseData<Role> createRole(@RequestBody Role request) {
 		ResponseData<Role> responseData = new ResponseData<Role>();
@@ -65,6 +75,10 @@ public class RoleController {
 	}
 
 	@PutMapping("/update/{id}")
+	@ApiOperation(
+			tags = MODULE_NAME.ACCESS_CONTROL,
+			value = "Update Role"
+		)
 	@ResponseBody
 	public ResponseData<Role> update(@PathVariable("id") String idStr, @RequestBody Role role) {
 		ResponseData<Role> responseData = new ResponseData<Role>();
@@ -81,6 +95,10 @@ public class RoleController {
 	}
 
 	@DeleteMapping("/delete/{id}")
+	@ApiOperation(
+			tags = MODULE_NAME.ACCESS_CONTROL,
+			value = "Delete Role"
+		)
 	@ResponseBody
 	public ResponseData<Role> delete(@PathVariable("id") String idStr) {
 		ResponseData<Role> responseData = new ResponseData<Role>();
@@ -97,6 +115,10 @@ public class RoleController {
 	}
 
 	@GetMapping("/find-by-id/{id}")
+	@ApiOperation(
+			tags = MODULE_NAME.ACCESS_CONTROL,
+			value = "Get Role by Id"
+		)
 	@ResponseBody
 	public ResponseData<Role> findById(@PathVariable("id") String idStr) {
 		ResponseData<Role> responseData = new ResponseData<Role>();

@@ -12,20 +12,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import io.swagger.annotations.ApiOperation;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.Operation;
-import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.Role;
-import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.User;
 import th.co.baiwa.buckwaframework.accesscontrol.service.OperationService;
 import th.co.baiwa.buckwaframework.accesscontrol.vo.OperationFormVo;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.DocumentConstants.MODULE_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 
 @Controller
 @RequestMapping("/api/access-control/operation")
 public class OperationController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(OperationController.class);
 
 	private OperationService operationService;
@@ -34,9 +34,9 @@ public class OperationController {
 	public OperationController(OperationService operationService) {
 		this.operationService = operationService;
 	}
-	
-	
+
 	@PostMapping("/list")
+	@ApiOperation(tags = MODULE_NAME.ACCESS_CONTROL, value = "Get Operation by Criteria")
 	@ResponseBody
 	public DataTableAjax<Operation> listOperation(@RequestBody OperationFormVo operationFormVo) {
 		logger.info("listOperation");
@@ -49,7 +49,9 @@ public class OperationController {
 		}
 		return response;
 	}
+
 	@PostMapping("/create")
+	@ApiOperation(tags = MODULE_NAME.ACCESS_CONTROL, value = "Create Operation")
 	@ResponseBody
 	public ResponseData<Operation> save(@RequestBody Operation request) {
 		ResponseData<Operation> responseData = new ResponseData<Operation>();
@@ -64,8 +66,9 @@ public class OperationController {
 		}
 		return responseData;
 	}
-	
+
 	@PutMapping("/update/{id}")
+	@ApiOperation(tags = MODULE_NAME.ACCESS_CONTROL, value = "Update Operation")
 	@ResponseBody
 	public ResponseData<Operation> update(@PathVariable("id") String idStr, @RequestBody Operation operation) {
 		ResponseData<Operation> responseData = new ResponseData<Operation>();
@@ -82,6 +85,7 @@ public class OperationController {
 	}
 
 	@DeleteMapping("/delete/{id}")
+	@ApiOperation(tags = MODULE_NAME.ACCESS_CONTROL, value = "Delete Operation")
 	@ResponseBody
 	public ResponseData<Operation> delete(@PathVariable("id") String idStr) {
 		ResponseData<Operation> responseData = new ResponseData<Operation>();
