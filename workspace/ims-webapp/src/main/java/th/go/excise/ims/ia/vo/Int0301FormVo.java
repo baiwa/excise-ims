@@ -16,10 +16,12 @@ public class Int0301FormVo {
 	private IaRiskFactorsConfig iaRiskFactorsConfig;
 	private String startDate;
 	private String endDate;
-
+	
+	
 	private List<IaRiskFactorsConfig> iaRiskFactorsConfigList;
 	private IaRiskFactorsConfigAll iaRiskFactorsConfigAll; 
-
+	private BigDecimal idConfig;
+	
 	public BigDecimal getId() {
 		return id;
 	}
@@ -98,6 +100,14 @@ public class Int0301FormVo {
 
 	public void setIaRiskFactorsConfigAll(IaRiskFactorsConfigAll iaRiskFactorsConfigAll) {
 		this.iaRiskFactorsConfigAll = iaRiskFactorsConfigAll;
+	}
+
+	public BigDecimal getIdConfig() {
+		return idConfig;
+	}
+
+	public void setIdConfig(BigDecimal idConfig) {
+		this.idConfig = idConfig;
 	}
 	
 	
