@@ -2,9 +2,11 @@ package th.go.excise.ims.ia.util;
 
 import java.math.BigDecimal;
 
+import org.springframework.stereotype.Component;
+
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.vo.IntCalculateCriteriaVo;
-
+@Component
 public class IntCalculateCriteriaUtil {
 
 	public static IntCalculateCriteriaVo calculateCriteria(BigDecimal dataCal, IaRiskFactorsConfig config) {
