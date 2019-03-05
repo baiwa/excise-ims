@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -148,6 +150,7 @@ public class Int0301Service {
 
 	}
 
+	@Transactional
 	public void saveRiskFactorsConfig(Int0301FormVo form) {
 		IaRiskFactorsConfig entity = new IaRiskFactorsConfig();
 		IaRiskFactorsConfig formConfig = form.getIaRiskFactorsConfig();

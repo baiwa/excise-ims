@@ -35,7 +35,7 @@ import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsStatusRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskSelectCaseRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0401JdbcRepository;
-import th.go.excise.ims.ia.persistence.repository.jdbc.int030101JdbcRepository;
+import th.go.excise.ims.ia.persistence.repository.jdbc.Int030101JdbcRepository;
 import th.go.excise.ims.ia.util.ExcalUtil;
 import th.go.excise.ims.ia.vo.Int030101FormVo;
 import th.go.excise.ims.ia.vo.Int030101Vo;
@@ -47,7 +47,7 @@ public class Int030101Service {
 	private Logger logger = LoggerFactory.getLogger(Int030101Service.class);
 
 	@Autowired
-	private int030101JdbcRepository int030101JdbcRepository;
+	private Int030101JdbcRepository int030101JdbcRepository;
 
 	@Autowired
 	private IaRiskFactorsMasterRepository iaRiskFactorsMasterRepository;

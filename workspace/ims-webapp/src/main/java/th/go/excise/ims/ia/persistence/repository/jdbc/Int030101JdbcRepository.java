@@ -3,6 +3,6 @@ package th.go.excise.ims.ia.persistence.repository.jdbc;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class int030101JdbcRepository {
+public class Int030101JdbcRepository {
 
 }
