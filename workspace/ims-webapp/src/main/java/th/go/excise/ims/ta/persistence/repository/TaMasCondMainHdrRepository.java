@@ -12,9 +12,11 @@ import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
 public interface TaMasCondMainHdrRepository extends CommonJpaCrudRepository<TaMasCondMainHdr, Long> {
 	
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.budgetYear = :budgetYear")
-	public TaMasCondMainHdr findByBudgetYear(@Param("budgetYear") String budgetYear);
+	public List<TaMasCondMainHdr> findByBudgetYear(@Param("budgetYear") String budgetYear);
+	
+	public TaMasCondMainHdr findByBudgetYearAndCondNumber(String budgetYear, String condNumber);
 	
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.condNumber = :condNumber")
-	public List<TaMasCondMainHdr> findByCondNumber(@Param("condNumber") String condNumber);
+	public TaMasCondMainHdr findByCondNumber(@Param("condNumber") String condNumber);
 	
 }

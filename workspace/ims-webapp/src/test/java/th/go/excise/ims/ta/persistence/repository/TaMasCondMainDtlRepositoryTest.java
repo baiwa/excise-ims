@@ -28,7 +28,7 @@ public class TaMasCondMainDtlRepositoryTest {
 	
 	@Test
 	public void test_findByBudgetYear() {
-		List<TaMasCondMainDtl> masCondDtlTaxList = taMasCondDtlTaxRepository.findByBudgetYearAndCondType("2562", TA_MAS_COND_MAIN_TYPE.TAX);
+		List<TaMasCondMainDtl> masCondDtlTaxList = taMasCondDtlTaxRepository.findByBudgetYearAndCondNumberAndCondType("2562", "000000-2562-01", TA_MAS_COND_MAIN_TYPE.TAX);
 		for (TaMasCondMainDtl masCondDtlTax : masCondDtlTaxList) {
 			System.out.println(ToStringBuilder.reflectionToString(masCondDtlTax, ToStringStyle.JSON_STYLE));
 		}

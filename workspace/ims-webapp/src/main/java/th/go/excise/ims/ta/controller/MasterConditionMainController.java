@@ -16,9 +16,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.buckwaframework.support.domain.ParamGroup;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
-import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
 import th.go.excise.ims.ta.service.MasterConditionMainService;
@@ -34,12 +32,46 @@ public class MasterConditionMainController {
     @Autowired
     private MasterConditionMainService masterConditionService;
 
-    @PostMapping("/create")
+    @PostMapping("/create-hdr")
     @ResponseBody
-    public ResponseData<List<MasterConditionMainHdrDtlVo>> insertMaster(@RequestBody MasterConditionMainHdrDtlVo formVo) {
+    public ResponseData<TaMasCondMainHdr> insertCondMainHdr(@RequestBody TaMasCondMainHdr form) {
+    	ResponseData<TaMasCondMainHdr> response = new ResponseData<TaMasCondMainHdr>();
+    	try {
+            masterConditionService.insertCondMainHdr(form);
+            response.setData(null);
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+        	logger.error(e.getMessage(), e);
+        	response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+        	response.setStatus(RESPONSE_STATUS.FAILED);
+        }
+        return response;
+    }
+    
+    @PostMapping("/update-hdr")
+    @ResponseBody
+    public ResponseData<TaMasCondMainHdr> updateCondMainHdr(@RequestBody TaMasCondMainHdr form) {
+    	ResponseData<TaMasCondMainHdr> response = new ResponseData<TaMasCondMainHdr>();
+    	try {
+            masterConditionService.updateCondMainHdr(form);
+            response.setData(null);
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+        	logger.error(e.getMessage(), e);
+        	response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+        	response.setStatus(RESPONSE_STATUS.FAILED);
+        }
+        return response;
+    }
+    
+    @PostMapping("/create-dtl")
+    @ResponseBody
+    public ResponseData<List<MasterConditionMainHdrDtlVo>> insertCondMainDtl(@RequestBody MasterConditionMainHdrDtlVo formVo) {
         ResponseData<List<MasterConditionMainHdrDtlVo>> responseData = new ResponseData<List<MasterConditionMainHdrDtlVo>>();
         try {
-            masterConditionService.insertMaster(formVo);
+            masterConditionService.insertCondMainDtl(formVo);
             responseData.setData(null);
             responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
             responseData.setStatus(RESPONSE_STATUS.SUCCESS);
@@ -51,12 +83,12 @@ public class MasterConditionMainController {
         return responseData;
     }
 
-    @PostMapping("/update")
+    @PostMapping("/update-dtl")
     @ResponseBody
-    public ResponseData<List<MasterConditionMainHdrDtlVo>> updateMaster(@RequestBody MasterConditionMainHdrDtlVo formVo) {
+    public ResponseData<List<MasterConditionMainHdrDtlVo>> updateCondMainDtl(@RequestBody MasterConditionMainHdrDtlVo formVo) {
         ResponseData<List<MasterConditionMainHdrDtlVo>> responseData = new ResponseData<List<MasterConditionMainHdrDtlVo>>();
         try {
-            masterConditionService.updateMaster(formVo);
+            masterConditionService.updateCondMainDtl(formVo);
             responseData.setData(null);
             responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
             responseData.setStatus(RESPONSE_STATUS.SUCCESS);
@@ -68,12 +100,28 @@ public class MasterConditionMainController {
         return responseData;
     }
 
-    @PostMapping("/findbudgetyearhdr")
+    @PostMapping("/find-hdr")
     @ResponseBody
-    public ResponseData<TaMasCondMainHdr> findByBudgetYearHdr(@RequestBody TaMasCondMainHdr formVo) {
+    public ResponseData<TaMasCondMainHdr> findHdr(@RequestBody TaMasCondMainHdr formVo) {
         ResponseData<TaMasCondMainHdr> responseData = new ResponseData<TaMasCondMainHdr>();
         try {
-            responseData.setData(masterConditionService.findByBudgetYearHdr(formVo));
+            responseData.setData(masterConditionService.findHdr(formVo));
+            responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+            responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+        	logger.error(e.getMessage(), e);
+        	responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+        	responseData.setStatus(RESPONSE_STATUS.FAILED);
+        }
+        return responseData;
+    }
+    
+    @PostMapping("/find-hdr-all")
+    @ResponseBody
+    public ResponseData<List<TaMasCondMainHdr>> findHdrAll(@RequestBody TaMasCondMainHdr formVo) {
+        ResponseData<List<TaMasCondMainHdr>> responseData = new ResponseData<List<TaMasCondMainHdr>>();
+        try {
+            responseData.setData(masterConditionService.findHdrAll(formVo));
             responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
             responseData.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
@@ -84,12 +132,12 @@ public class MasterConditionMainController {
         return responseData;
     }
 
-    @PostMapping("/findbudgetyeardtl")
+    @PostMapping("/find-dtl")
     @ResponseBody
-    public ResponseData<List<TaMasCondMainDtl>> findByBudgetYearDtl(@RequestBody TaMasCondMainDtl formVo) {
+    public ResponseData<List<TaMasCondMainDtl>> findDtl(@RequestBody TaMasCondMainDtl formVo) {
         ResponseData<List<TaMasCondMainDtl>> responseData = new ResponseData<List<TaMasCondMainDtl>>();
         try {
-            responseData.setData(masterConditionService.findByBudgetYearDtl(formVo));
+            responseData.setData(masterConditionService.findDtl(formVo));
             responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
             responseData.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {

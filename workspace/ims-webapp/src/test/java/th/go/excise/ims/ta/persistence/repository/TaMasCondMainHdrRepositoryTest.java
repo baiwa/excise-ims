@@ -10,7 +10,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
@@ -35,7 +34,7 @@ public class TaMasCondMainHdrRepositoryTest {
 	
 	@Test
 	public void test_findByBudgetYear() {
-		TaMasCondMainHdr masCondHdr = taMasCondHdrRepository.findByBudgetYear("2570");
+		TaMasCondMainHdr masCondHdr = taMasCondHdrRepository.findByBudgetYearAndCondNumber("2570", "000000-2562-01");
 		System.out.println(ToStringBuilder.reflectionToString(masCondHdr, ToStringStyle.JSON_STYLE));
 	}
 	

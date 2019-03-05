@@ -17,8 +17,17 @@ public class TaxOperatorFormVo extends DataTableRequest {
     private String analysisNumber;
     private String cond;
     private String seeDataSelect;
+    private String condNumber;
 
-    public String getSeeDataSelect() {
+    public String getCondNumber() {
+		return condNumber;
+	}
+
+	public void setCondNumber(String condNumber) {
+		this.condNumber = condNumber;
+	}
+
+	public String getSeeDataSelect() {
         return seeDataSelect;
     }
 

@@ -27,7 +27,8 @@ public class WorksheetServiceTest {
 	public void test_saveWorksheet() throws Exception {
 		String draftNumber = "000000-2562-000004";
 		String budgetYear = "2562";
-		worksheetService.saveWorksheet(draftNumber, budgetYear);
+		String condNumber = "000000-2562-01";
+		worksheetService.saveWorksheet(draftNumber, budgetYear, condNumber);
 	}
 	
 	@Test

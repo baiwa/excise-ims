@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.buckwaframework.support.domain.ParamGroup;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
@@ -29,12 +29,37 @@ public class MasterConditionMainService {
 
 	@Autowired
 	private TaMasCondMainDtlRepository taMasCondMainDtlRepository;
+	
+	@Autowired
+	private MasterConditionSequenceService masterConditionSequenceService;
+	
+	public void insertCondMainHdr(TaMasCondMainHdr form) {
+		TaMasCondMainHdr hdr = new TaMasCondMainHdr();
+		hdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+		hdr.setBudgetYear(form.getBudgetYear());
+		hdr.setCondNumber(masterConditionSequenceService.getConditionNumber(UserLoginUtils.getCurrentUserBean().getOfficeCode(), form.getBudgetYear()));
+		hdr.setCondGroupDesc(form.getCondGroupDesc());
+		hdr.setMonthNum(form.getMonthNum());
+		hdr.setCondGroupNum(form.getCondGroupNum());
+		hdr.setNewFacFlag(form.getNewFacFlag());
+		taMasCondMainHdrRepository.save(hdr);
+	}
+	
+	public void updateCondMainHdr(TaMasCondMainHdr form) {
+		TaMasCondMainHdr hdr = taMasCondMainHdrRepository.findByCondNumber(form.getCondNumber());
+		hdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+		hdr.setBudgetYear(form.getBudgetYear());
+		hdr.setCondGroupDesc(form.getCondGroupDesc());
+		hdr.setMonthNum(form.getMonthNum());
+		hdr.setCondGroupNum(form.getCondGroupNum());
+		hdr.setNewFacFlag(form.getNewFacFlag());
+		taMasCondMainHdrRepository.save(hdr);
+	}
 
-	public void insertMaster(MasterConditionMainHdrDtlVo formVo) {
+	public void insertCondMainDtl(MasterConditionMainHdrDtlVo formVo) {
 		TaMasCondMainDtl dtl = null;
 		List<TaMasCondMainDtl> dtlList = new ArrayList<>();
-		TaMasCondMainHdr header = new TaMasCondMainHdr();
-		header = taMasCondMainHdrRepository.save(formVo.getHeader());
+		TaMasCondMainHdr header = formVo.getHeader();
 		if (header.getBudgetYear() != null) {
 			for (TaMasCondMainDtl obj : formVo.getDetail()) {
 				dtl = new TaMasCondMainDtl();
@@ -57,17 +82,12 @@ public class MasterConditionMainService {
 		}
 	}
 
-	public void updateMaster(MasterConditionMainHdrDtlVo formVo) {
+	public void updateCondMainDtl(MasterConditionMainHdrDtlVo formVo) {
 		TaMasCondMainDtl dtl = null;
 		List<TaMasCondMainDtl> dtlList = new ArrayList<>();
-		TaMasCondMainHdr header = taMasCondMainHdrRepository.findById(formVo.getHeader().getMasCondMainHdrId()).get();
-		header.setBudgetYear(formVo.getHeader().getBudgetYear());
-		header.setMonthNum(formVo.getHeader().getMonthNum());
-
-		taMasCondMainHdrRepository.save(header);
-
+		TaMasCondMainHdr header = formVo.getHeader();
 		if (header.getBudgetYear() != null) {
-			List<TaMasCondMainDtl> list = taMasCondMainDtlRepository.findByBudgetYearAndCondType(formVo.getHeader().getBudgetYear(), TA_MAS_COND_MAIN_TYPE.TAX);
+			List<TaMasCondMainDtl> list = taMasCondMainDtlRepository.findByBudgetYearAndCondNumberAndCondType(formVo.getHeader().getBudgetYear(), formVo.getHeader().getCondNumber(), TA_MAS_COND_MAIN_TYPE.TAX);
 //			List<TaMasCondDtlTax> listY = taMasCondDtlTaxRepository.findByBudgetYearAndIsDeleted(formVo.getHeader().getBudgetYear(), FLAG.Y_FLAG);
 
 			Collections.sort(list, new Comparator<TaMasCondMainDtl>() {
@@ -135,22 +155,28 @@ public class MasterConditionMainService {
 				dtlList.add(dtl);
 
 			}
-			dtl = taMasCondMainDtlRepository.findByBudgetYearAndCondType(formVo.getHeader().getBudgetYear(), TA_MAS_COND_MAIN_TYPE.OTHER).get(0);
+			dtl = taMasCondMainDtlRepository.findByBudgetYearAndCondNumberAndCondType(formVo.getHeader().getBudgetYear(), dtl.getCondNumber(), TA_MAS_COND_MAIN_TYPE.OTHER).get(0);
 			dtl.setCondGroup(String.valueOf(formVo.getDetail().size() + 1));
 			dtlList.add(dtl);
 			taMasCondMainDtlRepository.saveAll(dtlList);
 		}
 	}
 
-	public TaMasCondMainHdr findByBudgetYearHdr(TaMasCondMainHdr hdr) {
+	public TaMasCondMainHdr findHdr(TaMasCondMainHdr hdr) {
 		TaMasCondMainHdr budgetYear = new TaMasCondMainHdr();
+		budgetYear = taMasCondMainHdrRepository.findByBudgetYearAndCondNumber(hdr.getBudgetYear(), hdr.getCondNumber());
+		return budgetYear;
+	}
+	
+	public List<TaMasCondMainHdr> findHdrAll(TaMasCondMainHdr hdr) {
+		List<TaMasCondMainHdr> budgetYear = new ArrayList<>();
 		budgetYear = taMasCondMainHdrRepository.findByBudgetYear(hdr.getBudgetYear());
 		return budgetYear;
 	}
 
-	public List<TaMasCondMainDtl> findByBudgetYearDtl(TaMasCondMainDtl dtl) {
+	public List<TaMasCondMainDtl> findDtl(TaMasCondMainDtl dtl) {
 		List<TaMasCondMainDtl> budgetYear = new ArrayList<TaMasCondMainDtl>();
-		budgetYear = taMasCondMainDtlRepository.findByBudgetYearAndCondType(dtl.getBudgetYear(), TA_MAS_COND_MAIN_TYPE.TAX);
+		budgetYear = taMasCondMainDtlRepository.findByBudgetYearAndCondNumberAndCondType(dtl.getBudgetYear(), dtl.getCondNumber(), TA_MAS_COND_MAIN_TYPE.TAX);
 		return budgetYear;
 	}
 

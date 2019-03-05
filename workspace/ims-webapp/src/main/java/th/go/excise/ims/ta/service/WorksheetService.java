@@ -78,13 +78,13 @@ public class WorksheetService {
     private TaPlanWorksheetSendRepository taPlanWorksheetSendRepository;
 
     @Transactional(rollbackOn = Exception.class)
-    public void saveWorksheet(String draftNumber, String budgetYear) throws Exception {
+    public void saveWorksheet(String draftNumber, String budgetYear, String condNumber) throws Exception {
         String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
         String analysisNumber = worksheetSeqCtrlService.getAnalysisNumber(officeCode, budgetYear);
         logger.info("saveWorksheet budgetYear={}, draftNumber={}, analysisNumber={}", budgetYear, draftNumber, analysisNumber);
 
         // ==> Save WorksheetMainCondHdr
-        TaMasCondMainHdr masCondMainHdr = taMasCondMainHdrRepository.findByBudgetYear(budgetYear);
+        TaMasCondMainHdr masCondMainHdr = taMasCondMainHdrRepository.findByBudgetYearAndCondNumber(budgetYear, condNumber);
         TaDraftWorksheetHdr draftWorksheetHdr = taDraftWorksheetHdrRepository.findByDraftNumber(draftNumber);
         TaWorksheetCondMainHdr conMainHdr = new TaWorksheetCondMainHdr();
         conMainHdr.setAnalysisNumber(analysisNumber);
