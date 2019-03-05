@@ -68,7 +68,7 @@ public class TaxAuditConfigureController {
 		ResponseData<Map<String, String>> response = new ResponseData<>();
 		
 		try {
-			if (StringUtils.isBlank(paramCode) || (!FLAG.N_FLAG.equals(value1) || !FLAG.Y_FLAG.equals(value1))) {
+			if (StringUtils.isBlank(paramCode) || (!FLAG.N_FLAG.equals(value1) && !FLAG.Y_FLAG.equals(value1))) {
 				throw new Exception("Wrong Parameter paramCode=" + paramCode + ", value1=" + value1);
 			}
 			
