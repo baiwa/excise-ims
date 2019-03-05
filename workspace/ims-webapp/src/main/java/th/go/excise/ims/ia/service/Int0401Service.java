@@ -35,51 +35,53 @@ public class Int0401Service {
 		List<IaRiskFactors> factors = int0401JdbcRep.findHead(budgetYear, inspectionWork);
 		List<Int0401CalVo> cals = int0401JdbcRep.findDetails(budgetYear, inspectionWork);
 		Int0401CalConfigVo config = int0401JdbcRep.findConfigAll(budgetYear, inspectionWork);
-		for (IaRiskSelectCase selectCase : selectCases) {
-			Int0401Vo list = new Int0401Vo();
-			List<Int0401ListVo> listVos = new ArrayList<>();
-			BigDecimal riskRating = new BigDecimal(0);
-			for (IaRiskFactors factor : factors) {
-				Int0401ListVo listVo = new Int0401ListVo();
-				listVo.setRiskRate(new BigDecimal(1));
-				listVo.setRiskText("LOW");
-				listVo.setRiskCode("L");
-				for (Int0401CalVo cal : cals) {
-					// TODO `CALCULATE`
-					if (factor.getId().compareTo(cal.getConfig().getIdFactors()) == 0) {
-						if (factor.getId().compareTo(cal.getData().getIdFactors()) == 0) {
-							if (cal.getData().getIdSelect().compareTo(selectCase.getId()) == 0) {
-								if (cal.getConfig().getFactorsLevel().compareTo(new BigDecimal(5)) == 0) {
-									listVo = calculateRating5th(cal.getData(), cal.getConfig());
-								} else {
-									listVo = calculateRating3rd(cal.getData(), cal.getConfig());
+		if (config.getMedium() != null) {
+			for (IaRiskSelectCase selectCase : selectCases) {
+				Int0401Vo list = new Int0401Vo();
+				List<Int0401ListVo> listVos = new ArrayList<>();
+				BigDecimal riskRating = new BigDecimal(0);
+				for (IaRiskFactors factor : factors) {
+					Int0401ListVo listVo = new Int0401ListVo();
+					listVo.setRiskRate(new BigDecimal(1));
+					listVo.setRiskText("LOW");
+					listVo.setRiskCode("L");
+					for (Int0401CalVo cal : cals) {
+						// TODO `CALCULATE`
+						if (factor.getId().compareTo(cal.getConfig().getIdFactors()) == 0) {
+							if (factor.getId().compareTo(cal.getData().getIdFactors()) == 0) {
+								if (cal.getData().getIdSelect().compareTo(selectCase.getId()) == 0) {
+									if (cal.getConfig().getFactorsLevel().compareTo(new BigDecimal(5)) == 0) {
+										listVo = calculateRating5th(cal.getData(), cal.getConfig());
+									} else {
+										listVo = calculateRating3rd(cal.getData(), cal.getConfig());
+									}
 								}
 							}
 						}
 					}
+					riskRating.add(listVo.getRiskRate());
+					listVos.add(listVo);
 				}
-				riskRating.add(listVo.getRiskRate());
-				listVos.add(listVo);
+				list.setId(selectCase.getId());
+				list.setBudgetYear(selectCase.getBudgetYear());
+				list.setProjectName(selectCase.getProject());
+				list.setExciseCode(selectCase.getExciseCode());
+				list.setSectorName(selectCase.getSector());
+				list.setAreaName(selectCase.getArea());
+				list.setInspectionWork(selectCase.getInspectionWork());
+				list.setStatus(selectCase.getStatus());
+				list.setLists(listVos);
+				Int0401ListVo calData = new Int0401ListVo();
+				if (config.getFactorsLevel().compareTo(new BigDecimal(5)) == 0) {
+					calData = calculateRating5thAll((new BigDecimal(riskRating.intValue() / listVos.size())).toString(), config);
+				} else {
+					calData = calculateRating3rdAll((new BigDecimal(riskRating.intValue() / listVos.size())).toString(), config);
+				}
+				list.setRiskItem(new BigDecimal(listVos.size()));
+				list.setRiskRate(calData.getRiskRate());
+				list.setRiskText(calData.getRiskText());
+				lists.add(list);
 			}
-			list.setId(selectCase.getId());
-			list.setBudgetYear(selectCase.getBudgetYear());
-			list.setProjectName(selectCase.getProject());
-			list.setExciseCode(selectCase.getExciseCode());
-			list.setSectorName(selectCase.getSector());
-			list.setAreaName(selectCase.getArea());
-			list.setInspectionWork(selectCase.getInspectionWork());
-			list.setStatus(selectCase.getStatus());
-			list.setLists(listVos);
-			Int0401ListVo calData = new Int0401ListVo();
-			if (config.getFactorsLevel().compareTo(new BigDecimal(5)) == 0) {
-				calData = calculateRating5thAll((new BigDecimal(riskRating.intValue() / listVos.size())).toString(), config);
-			} else {
-				calData = calculateRating3rdAll((new BigDecimal(riskRating.intValue() / listVos.size())).toString(), config);
-			}
-			list.setRiskItem(new BigDecimal(listVos.size()));
-			list.setRiskRate(calData.getRiskRate());
-			list.setRiskText(calData.getRiskText());
-			lists.add(list);
 		}
 		return lists;
 	}
