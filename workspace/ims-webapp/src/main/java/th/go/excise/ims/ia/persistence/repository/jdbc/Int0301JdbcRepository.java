@@ -56,84 +56,89 @@ public class Int0301JdbcRepository {
 //			setentityIaRiskFactors
 
 			irf.setId(rs.getBigDecimal("ID"));
-			irf.setRiskFactors(rs.getString("RISK_FACTORS"));
-			irf.setBudgetYear(rs.getString("BUDGET_YEAR"));
-			irf.setSide(rs.getString("SIDE"));
-			irf.setStatusScreen(rs.getString("STATUS_SCREEN"));
-			irf.setDateCriteria(rs.getString("DATE_CRITERIA"));
-			irf.setInspectionWork(rs.getBigDecimal("INSPECTION_WORK"));
-			irf.setCreatedBy(rs.getString("CREATED_BY"));
-			irf.setIdMaster(rs.getBigDecimal("ID_MASTER"));
-			irf.setDataEvaluate(rs.getString("DATA_EVALUATE"));
-			// vo.setCreatedDateDesc(ConvertDateUtils.formatDateToString(rs
-			// .getDate("CREATED_DATE"), ConvertDateUtils.DD_MM_YYYY,
-			// ConvertDateUtils.LOCAL_TH));
-			LocalDateTime createdDate = LocalDateTimeConverter
-					.convertToEntityAttribute(rs.getTimestamp("CREATED_DATE"));
-			irf.setCreatedDate(createdDate);
+			   irf.setRiskFactors(rs.getString("RISK_FACTORS"));
+			   irf.setBudgetYear(rs.getString("BUDGET_YEAR"));
+			   irf.setSide(rs.getString("SIDE"));
+			   irf.setStatusScreen(rs.getString("STATUS_SCREEN"));
+			   irf.setDateCriteria(rs.getString("DATE_CRITERIA"));
+			   irf.setInspectionWork(rs.getBigDecimal("INSPECTION_WORK"));
+			   irf.setCreatedBy(rs.getString("CREATED_BY"));
+			   irf.setIdMaster(rs.getBigDecimal("ID_MASTER"));
+			   irf.setDataEvaluate(rs.getString("DATA_EVALUATE"));
+			   // vo.setCreatedDateDesc(ConvertDateUtils.formatDateToString(rs
+			   // .getDate("CREATED_DATE"), ConvertDateUtils.DD_MM_YYYY,
+			   // ConvertDateUtils.LOCAL_TH));
+			   LocalDateTime createdDate = LocalDateTimeConverter
+			     .convertToEntityAttribute(rs.getTimestamp("CREATED_DATE"));
+			   irf.setCreatedDate(createdDate);
 
-			irf.setUpdatedBy(rs.getString("UPDATED_BY"));
+			   irf.setUpdatedBy(rs.getString("UPDATED_BY"));
 
-			LocalDateTime updatedDate = LocalDateTimeConverter
-					.convertToEntityAttribute(rs.getTimestamp("UPDATED_DATE"));
-			irf.setUpdatedDate(updatedDate);
+			   LocalDateTime updatedDate = LocalDateTimeConverter
+			     .convertToEntityAttribute(rs.getTimestamp("UPDATED_DATE"));
+			   irf.setUpdatedDate(updatedDate);
 
-			vo.setCreatedDateDesc(ConvertDateUtils.formatDateToString(rs.getDate("CREATED_DATE"),
-					ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-			vo.setUpdateDateDesc(ConvertDateUtils.formatDateToString(rs.getDate("UPDATED_DATE"),
-					ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-			vo.setIaRiskFactors(irf);
+			   vo.setCreatedDateDesc(ConvertDateUtils.formatDateToString(rs.getDate("CREATED_DATE"),
+			     ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			   vo.setUpdateDateDesc(ConvertDateUtils.formatDateToString(rs.getDate("UPDATED_DATE"),
+			     ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			   vo.setIaRiskFactors(irf);
 
-			// vo.setUpdateDateDesc(ConvertDateUtils.formatDateToString(rs
-			// .getDate("UPDATED_DATE"), ConvertDateUtils.DD_MM_YYYY,
-			// ConvertDateUtils.LOCAL_TH));
-//			setentityIaRiskFactorsConfig		
+			   // vo.setUpdateDateDesc(ConvertDateUtils.formatDateToString(rs
+			   // .getDate("UPDATED_DATE"), ConvertDateUtils.DD_MM_YYYY,
+			   // ConvertDateUtils.LOCAL_TH));
+			//   setentityIaRiskFactorsConfig  
 
-			irfc.setId(rs.getBigDecimal("ID_CONFIG"));
-			irfc.setStartDate(rs.getDate("START_DATE"));
-			irfc.setEndDate(rs.getDate("END_DATE"));
+			   irfc.setId(rs.getBigDecimal("ID_CONFIG"));
+			   irfc.setStartDate(rs.getDate("START_DATE"));
+			   irfc.setEndDate(rs.getDate("END_DATE"));
 
-			irfc.setInfoUsedRisk(rs.getString("INFO_USED_RISK"));
-			irfc.setInfoUsedRiskDesc(rs.getString("INFO_USED_RISK_DESC"));
+			   irfc.setInfoUsedRisk(rs.getString("INFO_USED_RISK"));
+			   irfc.setInfoUsedRiskDesc(rs.getString("INFO_USED_RISK_DESC"));
 
-			irfc.setIdFactors(rs.getBigDecimal("ID_FACTORS"));
-			irfc.setFactorsLevel(rs.getBigDecimal("FACTORS_LEVEL"));
-			
-			irfc.setVerylow(rs.getString("VERYLOW"));
-			irfc.setVerylowStart(rs.getString("VERYLOW_START"));
-			irfc.setVerylowEnd(rs.getString("VERYLOW_END"));
-			irfc.setVerylowCondition(rs.getString("VERYLOW_CONDITION"));
-			irfc.setVerylowRating(rs.getBigDecimal("VERYLOW_RATING"));
+			   irfc.setIdFactors(rs.getBigDecimal("ID_FACTORS"));
+			   irfc.setFactorsLevel(rs.getBigDecimal("FACTORS_LEVEL"));
+			   
+			   irfc.setVerylow(rs.getString("VERYLOW"));
+			   irfc.setVerylowStart(rs.getString("VERYLOW_START"));
+			   irfc.setVerylowEnd(rs.getString("VERYLOW_END"));
+			   irfc.setVerylowCondition(rs.getString("VERYLOW_CONDITION"));
+			   irfc.setVerylowRating(rs.getBigDecimal("VERYLOW_RATING"));
+			   irfc.setVerylowColor(rs.getString("VERYLOW_COLOR"));
 
-			irfc.setLow(rs.getString("LOW"));
-			irfc.setLowStart(rs.getString("LOW_START"));
-			irfc.setLowEnd(rs.getString("LOW_END"));
-			irfc.setLowCondition(rs.getString("LOW_CONDITION"));
-			irfc.setLowRating(rs.getBigDecimal("LOW_RATING"));
+			   irfc.setLow(rs.getString("LOW"));
+			   irfc.setLowStart(rs.getString("LOW_START"));
+			   irfc.setLowEnd(rs.getString("LOW_END"));
+			   irfc.setLowCondition(rs.getString("LOW_CONDITION"));
+			   irfc.setLowRating(rs.getBigDecimal("LOW_RATING"));
+			   irfc.setLowColor(rs.getString("LOW_COLOR"));
+			   
+			   irfc.setMedium(rs.getString("MEDIUM"));
+			   irfc.setMediumStart(rs.getString("MEDIUM_START"));
+			   irfc.setMediumEnd(rs.getString("MEDIUM_END"));
+			   irfc.setMediumCondition(rs.getString("MEDIUM_CONDITION"));
+			   irfc.setMediumRating(rs.getBigDecimal("MEDIUM_RATING"));
+			   irfc.setMediumColor(rs.getString("MEDIUM_COLOR"));
+			   
+			   irfc.setHigh(rs.getString("HIGH"));
+			   irfc.setHighStart(rs.getString("HIGH_START"));
+			   irfc.setHighEnd(rs.getString("HIGH_END"));
+			   irfc.setHighCondition(rs.getString("HIGH_CONDITION"));
+			   irfc.setHighRating(rs.getBigDecimal("HIGH_RATING"));
+			   irfc.setHighColor(rs.getString("High_COLOR"));
+			   
+			   irfc.setVeryhigh(rs.getString("VERYHIGH"));
+			   irfc.setVeryhighStart(rs.getString("VERYHIGH_START"));
+			   irfc.setVeryhighEnd(rs.getString("VERYHIGH_END"));
+			   irfc.setVeryhighCondition(rs.getString("VERYHIGH_CONDITION"));
+			   irfc.setVeryhighRating(rs.getBigDecimal("VERYHIGH_RATING"));
+			   irfc.setVeryhighColor(rs.getString("VERYHIGH_COLOR"));
+			   
+			   irfc.setRiskUnit(rs.getString("RISK_UNIT"));
+			   irfc.setPercent(rs.getBigDecimal("PERCENT"));
 
-			irfc.setMedium(rs.getString("MEDIUM"));
-			irfc.setMediumStart(rs.getString("MEDIUM_START"));
-			irfc.setMediumEnd(rs.getString("MEDIUM_END"));
-			irfc.setMediumCondition(rs.getString("MEDIUM_CONDITION"));
-			irfc.setMediumRating(rs.getBigDecimal("MEDIUM_RATING"));
-
-			irfc.setHigh(rs.getString("HIGH"));
-			irfc.setHighStart(rs.getString("HIGH_START"));
-			irfc.setHighEnd(rs.getString("HIGH_END"));
-			irfc.setHighCondition(rs.getString("HIGH_CONDITION"));
-			irfc.setHighRating(rs.getBigDecimal("HIGH_RATING"));
-
-			irfc.setVeryhigh(rs.getString("VERYHIGH"));
-			irfc.setVeryhighStart(rs.getString("VERYHIGH_START"));
-			irfc.setVeryhighEnd(rs.getString("VERYHIGH_END"));
-			irfc.setVeryhighCondition(rs.getString("VERYHIGH_CONDITION"));
-			irfc.setVeryhighRating(rs.getBigDecimal("VERYHIGH_RATING"));
-
-			irfc.setRiskUnit(rs.getString("RISK_UNIT"));
-			irfc.setPercent(rs.getBigDecimal("PERCENT"));
-
-			vo.setIaRiskFactorsConfig(irfc);
-			return vo;
+			   vo.setIaRiskFactorsConfig(irfc);
+			   return vo;
 		}
 	};
 

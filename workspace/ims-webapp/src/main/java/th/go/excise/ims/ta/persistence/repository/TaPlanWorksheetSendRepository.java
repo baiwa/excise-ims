@@ -2,6 +2,7 @@ package th.go.excise.ims.ta.persistence.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -19,4 +20,9 @@ public interface TaPlanWorksheetSendRepository extends CommonJpaCrudRepository<T
 
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode and e.budgetYear = :budgetYear")
 	public TaPlanWorksheetSend findByOfficeCodeAndBudgetYear(@Param("officeCode") String officeCode, @Param("budgetYear") String budgetYear);
+	
+	@Modifying
+	@Query(value = "DELETE FROM TA_PLAN_WORKSHEET_SEND WHERE BUDGET_YEAR = :budgetYear", nativeQuery = true)
+	public void forceDeleteByBudgetYear(@Param("budgetYear") String budgetYear);
+	
 }
