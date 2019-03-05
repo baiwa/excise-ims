@@ -17,6 +17,7 @@ public class WorksheetSequenceService {
 	private static final String RUNNING_TYPE_ANALYSIS = "A";
 	private static final String RUNNING_TYPE_DRAFT = "D";
 	private static final String RUNNING_TYPE_PLAN = "P";
+	private static final int RUNNING_RANGE = 6;
 
 	@Autowired
 	private TaWorksheetSeqCtrlRepository taWorksheetSeqCtrlRepository;
@@ -40,7 +41,7 @@ public class WorksheetSequenceService {
 		StringBuilder runningNumber = new StringBuilder(officeCode).append("-").append(budgetYear).append("-");
 		TaWorksheetSeqCtrl taWorksheetSeqCtrl = taWorksheetSeqCtrlRepository.findByOfficeCodeAndBudgetYearAndRunningType(officeCode, budgetYear, runningType);
 		if (taWorksheetSeqCtrl == null) {
-			runningNumber.append(StringUtils.leftPad(String.valueOf(1), 6, "0"));
+			runningNumber.append(StringUtils.leftPad(String.valueOf(1), RUNNING_RANGE, "0"));
 			taWorksheetSeqCtrl = new TaWorksheetSeqCtrl();
 			taWorksheetSeqCtrl.setOfficeCode(officeCode);
 			taWorksheetSeqCtrl.setBudgetYear(budgetYear);
@@ -48,7 +49,7 @@ public class WorksheetSequenceService {
 			taWorksheetSeqCtrl.setRunningNumber(1);
 		} else {
 			taWorksheetSeqCtrl.setRunningNumber(taWorksheetSeqCtrl.getRunningNumber() + 1);
-			runningNumber.append(StringUtils.leftPad(String.valueOf(taWorksheetSeqCtrl.getRunningNumber()), 6, "0"));
+			runningNumber.append(StringUtils.leftPad(String.valueOf(taWorksheetSeqCtrl.getRunningNumber()), RUNNING_RANGE, "0"));
 		}
 		
 		taWorksheetSeqCtrlRepository.save(taWorksheetSeqCtrl);
