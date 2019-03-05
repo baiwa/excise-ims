@@ -17,12 +17,14 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 public class TaMasCondMainDtl extends BaseEntity {
 
 	private static final long serialVersionUID = -3675070910474302216L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_MAS_COND_MAIN_DTL_GEN")
 	@SequenceGenerator(name = "TA_MAS_COND_MAIN_DTL_GEN", sequenceName = "TA_MAS_COND_MAIN_DTL_SEQ", allocationSize = 1)
 	@Column(name = "MAS_COND_MAIN_DTL_ID")
 	private Long masCondMainDtlId;
+	@Column(name = "MAS_COND_MAIN_HDR_ID")
+	private Long masCondMainHdrId;
 	@Column(name = "OFFICE_CODE")
 	private String officeCode;
 	@Column(name = "BUDGET_YEAR")
@@ -52,6 +54,14 @@ public class TaMasCondMainDtl extends BaseEntity {
 
 	public void setMasCondMainDtlId(Long masCondMainDtlId) {
 		this.masCondMainDtlId = masCondMainDtlId;
+	}
+
+	public Long getMasCondMainHdrId() {
+		return masCondMainHdrId;
+	}
+
+	public void setMasCondMainHdrId(Long masCondMainHdrId) {
+		this.masCondMainHdrId = masCondMainHdrId;
 	}
 
 	public String getOfficeCode() {
