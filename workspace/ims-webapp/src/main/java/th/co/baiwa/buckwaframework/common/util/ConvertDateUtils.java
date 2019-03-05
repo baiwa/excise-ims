@@ -19,6 +19,7 @@ public class ConvertDateUtils {
     public static final String MM_YYYY = "MM/yyyy";
     public static final String DD_MM_YYYY = "dd/MM/yyyy";
     public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
+    public static final String DD_MM_YYYY_HHMMSS = "dd/MM/yyyy HH:mm:ss";
 
     public static final Locale LOCAL_TH = new Locale("th", "TH");
     public static final Locale LOCAL_EN = new Locale("en", "US");
