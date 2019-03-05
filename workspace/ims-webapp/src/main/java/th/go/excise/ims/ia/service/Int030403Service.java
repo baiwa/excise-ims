@@ -40,7 +40,7 @@ public class Int030403Service {
 		Float f = 0f; 
 		if(amount!="" &&amount!=null) {
 			
-			Float.valueOf(amount.replaceAll(",", ""));
+			f = Float.valueOf(amount.replaceAll(",", ""));
 			
 		}
 			    
