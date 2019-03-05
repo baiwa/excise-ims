@@ -9,14 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.ia.persistence.entity.IaInspectionPlan;
 import th.go.excise.ims.ia.service.Int0401Service;
 import th.go.excise.ims.ia.vo.Int0401HeaderVo;
 import th.go.excise.ims.ia.vo.Int0401Vo;
@@ -100,6 +104,24 @@ public class Int0401Controller {
 			e.printStackTrace();
 			logger.error("Int0401Controller::updateRowByStatus => ", e);
 			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	@PostMapping("/save/inspection-plan")
+	@ResponseBody
+	public ResponseData<IaInspectionPlan> saveInspectionPlan(@RequestBody List<IaInspectionPlan> request) {
+		logger.info("SAVE INSPECTION_PLAN");
+		
+		ResponseData<IaInspectionPlan> response = new ResponseData<IaInspectionPlan>();
+		try {
+			int0401Service.saveInspectionPlan(request);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;

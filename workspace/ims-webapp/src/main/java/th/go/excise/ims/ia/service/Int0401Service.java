@@ -7,8 +7,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.go.excise.ims.ia.persistence.entity.IaInspectionPlan;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.persistence.entity.IaRiskSelectCase;
+import th.go.excise.ims.ia.persistence.repository.IaInspectionPlanRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskSelectCaseRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0401JdbcRepository;
 import th.go.excise.ims.ia.vo.Int0401CalConfigVo;
@@ -26,6 +28,9 @@ public class Int0401Service {
 
 	@Autowired
 	private Int0401JdbcRepository int0401JdbcRep;
+	
+	@Autowired
+	private IaInspectionPlanRepository iaInspectionPlanRepository;
 
 	public List<Int0401Vo> findByBudgetYearAndInspectionWork(String budgetYear, String inspectionWorkStr,
 			String status) {
@@ -219,6 +224,10 @@ public class Int0401Service {
 
 	private double convertStr2Db(String value) {
 		return new BigDecimal(value).doubleValue();
+	}
+
+	public void saveInspectionPlan(List<IaInspectionPlan> request) {
+		iaInspectionPlanRepository.saveAll(request);
 	}
 
 }
