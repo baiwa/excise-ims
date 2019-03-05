@@ -2,7 +2,7 @@ package th.go.excise.ims.ta.vo;
 
 public class CreatePaperProductRawMaterialReceiptVo {
 
-	private Long Id;
+	private Long id;
 	private String list;
 	private String invoices;
 	private String dailyAccount;
@@ -11,11 +11,11 @@ public class CreatePaperProductRawMaterialReceiptVo {
 	private String maximumDifference;
 
 	public Long getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(Long id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public String getList() {

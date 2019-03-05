@@ -17,34 +17,27 @@ public class CreatePaperProductService {
 		DataTableAjax<CreatePaperProductRawMaterialReceiptVo> dataTableAjax = new DataTableAjax<CreatePaperProductRawMaterialReceiptVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
 		dataTableAjax.setData(getDataRawMaterialReceipt());
-		dataTableAjax.setRecordsTotal(10);
-		dataTableAjax.setRecordsFiltered(10);
+		dataTableAjax.setRecordsTotal(20);
+		dataTableAjax.setRecordsFiltered(20);
 		return dataTableAjax;
 	}
 
 	public List<CreatePaperProductRawMaterialReceiptVo> getDataRawMaterialReceipt() {
 
 		List<CreatePaperProductRawMaterialReceiptVo> datalist = new ArrayList<CreatePaperProductRawMaterialReceiptVo>();
-		CreatePaperProductRawMaterialReceiptVo data = new CreatePaperProductRawMaterialReceiptVo();
 
-		data.setId(Long.valueOf(1));
-		data.setList("test");
-		data.setInvoices("test");
-		data.setDailyAccount("test");
-		data.setMonthStatement("test");
-		data.setExternalData("sadasd");
-		data.setMaximumDifference("sdfdsf");
-		datalist.add(data);
-
-		data.setId(Long.valueOf(2));
-		data.setList("test");
-		data.setInvoices("test");
-		data.setDailyAccount("test");
-		data.setMonthStatement("test");
-		data.setExternalData("sadasd");
-		data.setMaximumDifference("sdfdsf");
-		datalist.add(data);
-
+		CreatePaperProductRawMaterialReceiptVo data = null;
+		for (int i = 0; i < 10; i++) {
+			data = new CreatePaperProductRawMaterialReceiptVo();
+			data.setId(Long.valueOf(1));
+			data.setList("ตรวจสอบการรับวัตถุดิบ"+i);
+			data.setInvoices("13-05555-037");
+			data.setDailyAccount("1305555037");
+			data.setMonthStatement("1,500");
+			data.setExternalData("500");
+			data.setMaximumDifference("1,000");
+			datalist.add(data);
+		}
 		return datalist;
 	}
 
