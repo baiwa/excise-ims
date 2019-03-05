@@ -195,6 +195,8 @@ public class WorksheetService {
     }
 
     public YearMonthVo getMonthStart(TaxOperatorFormVo formVo) {
+    	logger.info("getMonthStart analysisNumber = {}", formVo.getAnalysisNumber());
+    	
         YearMonthVo obj = taWorksheetCondMainHdrRepository.findMonthStartByAnalysisNumber(formVo.getAnalysisNumber());
 
         String ymStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(obj.getYearMonthStart(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);

@@ -399,6 +399,8 @@ public class DraftWorksheetService {
 	}
 	
 	public YearMonthVo getMonthStart(TaxOperatorFormVo formVo) {
+		logger.info("getMonthStart draftNumber = {}", formVo.getDraftNumber());
+		
 		YearMonthVo ymVo = taDraftWorksheetHdrRepository.findMonthStartByDraftNumber(formVo.getDraftNumber());
 
 		String ymStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(ymVo.getYearMonthStart(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);

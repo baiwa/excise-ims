@@ -1,6 +1,9 @@
 package th.go.excise.ims.ta.persistence.repository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
@@ -8,7 +11,9 @@ import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.go.excise.ims.ta.vo.YearMonthVo;
 
 public class TaDraftWorksheetHdrRepositoryImpl implements TaDraftWorksheetHdrRepositoryCustom {
-
+	
+	private static final Logger logger = LoggerFactory.getLogger(TaDraftWorksheetHdrRepositoryImpl.class);
+	
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
@@ -21,14 +26,20 @@ public class TaDraftWorksheetHdrRepositoryImpl implements TaDraftWorksheetHdrRep
 		sql.append(" WHERE IS_DELETED = ? ");
 		sql.append("   AND DRAFT_NUMBER = ? ");
 
-		YearMonthVo yearMonthVo = (YearMonthVo) commonJdbcTemplate.queryForObject(
-			sql.toString(),
-			new Object[] {
-				FLAG.N_FLAG,
-				draftNumber
-			},
-			new BeanPropertyRowMapper<YearMonthVo>(YearMonthVo.class)
-		);
+		YearMonthVo yearMonthVo = null;
+		try {
+			yearMonthVo = (YearMonthVo) commonJdbcTemplate.queryForObject(
+				sql.toString(),
+				new Object[] {
+					FLAG.N_FLAG,
+					draftNumber
+				},
+				new BeanPropertyRowMapper<YearMonthVo>(YearMonthVo.class)
+			);
+		} catch (DataAccessException e) {
+			logger.warn(e.getMessage());
+			yearMonthVo = new YearMonthVo();
+		}
 		
 		return yearMonthVo;
 	}

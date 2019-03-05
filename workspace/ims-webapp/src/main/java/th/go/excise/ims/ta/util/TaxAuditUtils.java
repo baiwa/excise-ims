@@ -169,11 +169,17 @@ public class TaxAuditUtils {
 	}
 	
 	public static List<ExciseDept> getExciseSectorList() {
-		List<ExciseDept> sectorList = new ArrayList<>();
-		sectorList.add(ApplicationCache.getExciseDept(EXCISE_OFFICE_CODE.TA_CENTRAL));
-		sectorList.addAll(ApplicationCache.getExciseSectorList());
+		List<ExciseDept> taSectorList = new ArrayList<>();
+		taSectorList.add(ApplicationCache.getExciseDept(EXCISE_OFFICE_CODE.TA_CENTRAL));
+		List<ExciseDept> sectorList = ApplicationCache.getExciseSectorList();
+		for (ExciseDept exciseDept : sectorList) {
+			if (EXCISE_OFFICE_CODE.CENTRAL.equals(exciseDept.getOfficeCode())) {
+				continue;
+			}
+			taSectorList.add(exciseDept);
+		}
 		
-		return sectorList;
+		return taSectorList;
 	}
 	
 }

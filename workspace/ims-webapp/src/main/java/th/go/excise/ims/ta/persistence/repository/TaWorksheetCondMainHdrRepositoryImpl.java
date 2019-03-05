@@ -1,18 +1,20 @@
 package th.go.excise.ims.ta.persistence.repository;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
-import org.springframework.util.CollectionUtils;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.go.excise.ims.ta.vo.YearMonthVo;
 
-import java.util.List;
-
 public class TaWorksheetCondMainHdrRepositoryImpl implements TaWorksheetCondMainHdrRepositoryCustom {
-
+	
+	private static final Logger logger = LoggerFactory.getLogger(TaWorksheetCondMainHdrRepositoryImpl.class);
+	
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
@@ -25,20 +27,22 @@ public class TaWorksheetCondMainHdrRepositoryImpl implements TaWorksheetCondMain
 		sql.append(" WHERE IS_DELETED = ? ");
 		sql.append("   AND ANALYSIS_NUMBER = ? ");
 		
-		List<YearMonthVo> yearMonthVo = commonJdbcTemplate.query(
-			sql.toString(),
-			new Object[] {
-				FLAG.N_FLAG,
-				StringUtils.defaultIfBlank(analysisNumber, "")
-			},
-			new BeanPropertyRowMapper<>(YearMonthVo.class)
-		);
-		
-		if (CollectionUtils.isEmpty(yearMonthVo)) {
-			return new YearMonthVo();
+		YearMonthVo yearMonthVo = null;
+		try {
+			yearMonthVo = commonJdbcTemplate.queryForObject(
+				sql.toString(),
+				new Object[] {
+					FLAG.N_FLAG,
+					StringUtils.defaultIfBlank(analysisNumber, "")
+				},
+				new BeanPropertyRowMapper<>(YearMonthVo.class)
+			);
+		} catch (DataAccessException e) {
+			logger.warn(e.getMessage());
+			yearMonthVo = new YearMonthVo();
 		}
 		
-		return yearMonthVo.get(0);
+		return yearMonthVo;
 	}
 
 }
