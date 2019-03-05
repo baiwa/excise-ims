@@ -23,18 +23,28 @@ public class Int030403Service {
 		int index = 0;
 		for (Int030403Vo int030403Vo : iaRiskBudgetProject) {
 			BigDecimal expenseBudgetAmountAll = new BigDecimal(0);
-			BigDecimal ex1 = new BigDecimal(int030403Vo.getIaRiskBudgetProject().getExpensebudgetamounta());
-			expenseBudgetAmountAll.add(ex1);
+			Float ex1 = StringToFloat(int030403Vo.getIaRiskBudgetProject().getExpensebudgetamounta());
 			
-			BigDecimal ex2 = new BigDecimal(int030403Vo.getIaRiskBudgetProject().getExpensebudgetamountm());
-			expenseBudgetAmountAll.add(ex2);
+			Float ex2 = StringToFloat(int030403Vo.getIaRiskBudgetProject().getExpensebudgetamountm());
 			
-			BigDecimal ex3 = new BigDecimal(int030403Vo.getIaRiskBudgetProject().getExpensebudgetamountx());
-			expenseBudgetAmountAll.add(ex3);
+			Float ex3 = StringToFloat(int030403Vo.getIaRiskBudgetProject().getExpensebudgetamountx());
+				    
+			expenseBudgetAmountAll = new BigDecimal(ex1+ex2+ex3);
 		
 			iaRiskBudgetProject.get(index).setExpenseBudgetAmountAll(expenseBudgetAmountAll);
 			index++;
 		}
 		return iaRiskBudgetProject;
+	}
+	public Float StringToFloat(String amount) {
+		Float f = 0f; 
+		if(amount!="" &&amount!=null) {
+			
+			Float.valueOf(amount.replaceAll(",", ""));
+			
+		}
+			    
+		return f;
+		
 	}
 }
