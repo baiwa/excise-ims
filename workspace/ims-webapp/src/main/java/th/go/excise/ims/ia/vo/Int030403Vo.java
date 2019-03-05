@@ -9,6 +9,7 @@ public class Int030403Vo extends DataTableRequest {
 	
 	private IaRiskBudgetProject iaRiskBudgetProject;
 	private BigDecimal expenseBudgetAmountAll;
+	private IntCalculateCriteriaVo intCalculateCriteriaVo;
 
 	public IaRiskBudgetProject getIaRiskBudgetProject() {
 		return iaRiskBudgetProject;
@@ -25,9 +26,13 @@ public class Int030403Vo extends DataTableRequest {
 	public void setExpenseBudgetAmountAll(BigDecimal expenseBudgetAmountAll) {
 		this.expenseBudgetAmountAll = expenseBudgetAmountAll;
 	}
-	
-	
-	
-	
+
+	public IntCalculateCriteriaVo getIntCalculateCriteriaVo() {
+		return intCalculateCriteriaVo;
+	}
+
+	public void setIntCalculateCriteriaVo(IntCalculateCriteriaVo intCalculateCriteriaVo) {
+		this.intCalculateCriteriaVo = intCalculateCriteriaVo;
+	}
 
 }
