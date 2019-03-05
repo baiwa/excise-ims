@@ -16,6 +16,7 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
+import th.go.excise.ims.ia.vo.Int030102FormVo;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
 import th.go.excise.ims.ia.vo.Int0301Vo;
 
@@ -170,14 +171,15 @@ public class Int0301JdbcRepository {
 		sql.append("   C.VERYHIGH_RATING     = null,                         ");
 		sql.append("   C.VERYHIGH_COLOR      = null,                         ");
 		sql.append("   C.VERYHIGH_CONDITION  = null                          ");
-		sql.append("   WHERE C.ID IN (SELECT B.ID                              ");
+		sql.append("   WHERE C.ID IN (SELECT B.ID                            ");
 		sql.append("                 FROM IA_RISK_FACTORS A                  ");
 		sql.append("                 INNER JOIN IA_RISK_FACTORS_CONFIG B     ");
 		sql.append("                 ON A.ID = B.ID_FACTORS                  ");
-		sql.append("                 WHERE A.BUDGET_YEAR = ? )    ");
+		sql.append("                 WHERE A.BUDGET_YEAR = ? )               ");
 		commonJdbcTemplate.update(sql.toString(), new Object[] { form.getFactorsLevel(), form.getBudgetYear() });
 
 	}
+	
 
 	public void claerDateCir(Int0301FormVo form) {
 		StringBuilder sql = new StringBuilder();
@@ -189,5 +191,7 @@ public class Int0301JdbcRepository {
 		sql.append("                    WHERE  A.BUDGET_YEAR = ? AND A.INSPECTION_WORK = ? )      ");
 		commonJdbcTemplate.update(sql.toString(), new Object[] { form.getBudgetYear(), form.getInspectionWork() });
 	}
+	
+	
 
 }

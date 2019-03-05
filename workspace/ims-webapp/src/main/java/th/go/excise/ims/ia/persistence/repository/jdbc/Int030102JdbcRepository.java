@@ -256,6 +256,50 @@ public class Int030102JdbcRepository {
 		commonJdbcTemplate.update(sql.toString(), new Object[] { form.getFactorsLevel(), form.getBudgetYear() });
 	}
 	
+	
+	public void saveRiskFactClerAll(Int030102FormVo form) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("   UPDATE IA_RISK_FACTORS_CONFIG_ALL C                  ");
+		sql.append("   SET C.FACTORS_LEVEL   = ? ,                          ");
+		sql.append("   C.VERYLOW             = null,                        ");
+		sql.append("   C.VERYLOW_START       = null,                        ");
+		sql.append("   C.VERYLOW_END         = null,                        ");
+		sql.append("   C.VERYLOW_RATING      = null,                        ");
+		sql.append("   C.VERYLOW_COLOR       = null,                        ");
+		sql.append("   C.VERYLOW_CONDITION   = null,                        ");
+		sql.append("   C.LOW                 = null,                        ");
+		sql.append("   C.LOW_START           = null,                        ");
+		sql.append("   C.LOW_END             = null,                        ");
+		sql.append("   C.LOW_RATING          = null,                        ");
+		sql.append("   C.LOW_COLOR           = null,                        ");
+		sql.append("   C.LOW_CONDITION       = null,                        ");
+		sql.append("   C.MEDIUM              = null,                        ");
+		sql.append("   C.MEDIUM_START        = null,                        ");
+		sql.append("   C.MEDIUM_END          = null,                        ");
+		sql.append("   C.MEDIUM_RATING       = null,                        ");
+		sql.append("   C.MEDIUM_COLOR        = null,                        ");
+		sql.append("   C.MEDIUM_CONDITION    = null,                        ");
+		sql.append("   C.HIGH                = null,                        ");
+		sql.append("   C.HIGH_START          = null,                        ");
+		sql.append("   C.HIGH_END            = null,                        ");
+		sql.append("   C.HIGH_RATING         = null,                        ");
+		sql.append("   C.HIGH_COLOR          = null,                        ");
+		sql.append("   C.HIGH_CONDITION      = null,                        ");
+		sql.append("   C.VERYHIGH            = null,                        ");
+		sql.append("   C.VERYHIGH_START      = null,                        ");
+		sql.append("   C.VERYHIGH_END        = null,                        ");
+		sql.append("   C.VERYHIGH_RATING     = null,                        ");
+		sql.append("   C.VERYHIGH_COLOR      = null,                        ");
+		sql.append("   C.VERYHIGH_CONDITION  = null                         ");
+		sql.append("   WHERE C.ID IN (SELECT A.ID                           ");
+		sql.append("                 FROM IA_RISK_FACTORS_CONFIG_ALL A                       ");
+		sql.append("                 WHERE A.BUDGET_YEAR = ? AND A.INSPECTION_WORK = ?  )    ");
+
+		commonJdbcTemplate.update(sql.toString(), new Object[] { form.getFactorsLevel(), form.getBudgetYear(), form.getInspectionWork() });
+	}
+	
+	
+	
 	public void claerDateCir(Int030102FormVo form) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("    UPDATE IA_RISK_FACTORS C                                                  ");

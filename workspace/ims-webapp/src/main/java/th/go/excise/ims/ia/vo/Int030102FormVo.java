@@ -2,6 +2,7 @@ package th.go.excise.ims.ia.vo;
 
 import java.math.BigDecimal;
 
+import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfigAll;
 
 public class Int030102FormVo {
 	private BigDecimal id;
@@ -12,6 +13,7 @@ public class Int030102FormVo {
 	private String factorsLevel;
 	
 	private String budgetYearTo;
+	private IaRiskFactorsConfigAll iaRiskFactorsConfigAll; 
 	
 
 	public BigDecimal getId() {
@@ -69,6 +71,15 @@ public class Int030102FormVo {
 	public void setFactorsLevel(String factorsLevel) {
 		this.factorsLevel = factorsLevel;
 	}
+
+	public IaRiskFactorsConfigAll getIaRiskFactorsConfigAll() {
+		return iaRiskFactorsConfigAll;
+	}
+
+	public void setIaRiskFactorsConfigAll(IaRiskFactorsConfigAll iaRiskFactorsConfigAll) {
+		this.iaRiskFactorsConfigAll = iaRiskFactorsConfigAll;
+	}
+	
 	
 
 	
