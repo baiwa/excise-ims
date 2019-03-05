@@ -70,7 +70,10 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
         sql.append("   ,TA_W_DTL.COND_MAIN_GRP ");
         sql.append("   ,TA_W_HDR.ANALYSIS_NUMBER ");
         sql.append("   ,TA_W_DTL.CENTRAL_SEL_FLAG ");
+        sql.append("   ,TA_W_DTL.CENTRAL_SEL_OFFICE_CODE ");
         sql.append("   ,TA_W_DTL.SECTOR_SEL_FLAG ");
+        sql.append("   ,TA_W_DTL.SECTOR_SEL_OFFICE_CODE ");
+        sql.append("   ,TA_W_DTL.AREA_SEL_FLAG ");
         sql.append("   ,TA_DW_DTL.* ");
         sql.append(" FROM TA_WORKSHEET_DTL TA_W_DTL ");
         sql.append(" INNER JOIN TA_WORKSHEET_HDR TA_W_HDR ON TA_W_DTL.ANALYSIS_NUMBER = TA_W_HDR.ANALYSIS_NUMBER ");
@@ -155,19 +158,26 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			if (FLAG.Y_FLAG.equals(vo.getCentralSelFlag())) {
 				vo.setCentralSelDate(""); // FIXME
 				vo.setCentralSelOfficeCode(rs.getString("CENTRAL_SEL_OFFICE_CODE"));
-				vo.setSelectBy(ApplicationCache.getExciseDept(vo.getCentralSelOfficeCode()).getDeptShortName());
+				if(StringUtils.isNotBlank(vo.getCentralSelOfficeCode())){
+                    vo.setSelectBy(ApplicationCache.getExciseDept(vo.getCentralSelOfficeCode()).getDeptShortName());
+                }
+
 			}
 			vo.setSectorSelFlag(rs.getString("SECTOR_SEL_FLAG"));
 			if (StringUtils.isNotBlank(vo.getSectorSelFlag())) {
 				vo.setSectorSelDate("");
 				vo.setSectorSelOfficeCode(rs.getString("SECTOR_SEL_OFFICE_CODE"));
-				vo.setSelectBy(ApplicationCache.getExciseDept(vo.getSectorSelOfficeCode()).getDeptShortName());
+				if(StringUtils.isNotBlank(vo.getSectorSelOfficeCode())){
+                    vo.setSelectBy(ApplicationCache.getExciseDept(vo.getSectorSelOfficeCode()).getDeptShortName());
+                }
 			}
 			vo.setAreaSelFlag(rs.getString("AREA_SEL_FLAG"));
 			if (StringUtils.isNotBlank(vo.getAreaSelFlag())) {
 				vo.setAreaSelDate("");
 				vo.setAreaSelOfficeCode(rs.getString("AREA_SEL_OFFICE_CODE"));
-				vo.setSelectBy(ApplicationCache.getExciseDept(vo.getAreaSelOfficeCode()).getDeptShortName());
+				if (StringUtils.isNotBlank(vo.getAreaSelOfficeCode())){
+                    vo.setSelectBy(ApplicationCache.getExciseDept(vo.getAreaSelOfficeCode()).getDeptShortName());
+                }
 			}
     		
             return vo;
