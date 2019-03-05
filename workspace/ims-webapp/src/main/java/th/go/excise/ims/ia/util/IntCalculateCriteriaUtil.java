@@ -9,11 +9,11 @@ public class IntCalculateCriteriaUtil {
 
 	public static IntCalculateCriteriaVo calculateCriteria(BigDecimal dataCal, IaRiskFactorsConfig config) {
 		IntCalculateCriteriaVo cal = new IntCalculateCriteriaVo();
-		if ((new BigDecimal(3)).compareTo(config.getFactorsLevel()) == 0) {
+		if (3==config.getFactorsLevel().intValue()) {
 
 			cal = calculateRating3Level(dataCal, config);
 
-		} else if ((new BigDecimal(5)).compareTo(config.getFactorsLevel()) == 0) {
+		} else if (5 == config.getFactorsLevel().intValue()) {
 
 			cal = calculateRating5Level(dataCal, config);
 
@@ -91,13 +91,13 @@ public class IntCalculateCriteriaUtil {
 		Float startB = (start != null) ? Float.valueOf(start) : null;
 		Float endB = (end != null) ? Float.valueOf(end) : null;
 
-		if (!"".equals(condition) && condition != null && (startB != null || endB != null)) {
+		if (!"".equals(condition) && condition != null) {
 
 			if (("<".equals(condition)) && (dataCal < startB)) {
 
 				res = true;
 
-			} else if ("<>".equals(condition) && ((dataCal >= startB) && (dataCal <= endB))) {
+			} else if ("<>".equals(condition) && ((startB <= dataCal) && (dataCal <= endB))) {
 
 				res = true;
 
