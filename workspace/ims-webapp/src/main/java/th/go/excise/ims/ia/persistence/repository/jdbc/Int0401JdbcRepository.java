@@ -123,15 +123,16 @@ public class Int0401JdbcRepository {
 		sqlBuilder.append(" INNER JOIN IA_RISK_FACTORS_CONFIG C ON F.ID = C.ID_FACTORS ");
 		sqlBuilder.append(" WHERE F.BUDGET_YEAR = ? AND F.INSPECTION_WORK = ? ");
 		sqlBuilder.append(" AND C.IS_DELETED = 'N' AND D.IS_DELETED = 'N' AND F.IS_DELETED = 'N' ");
+		sqlBuilder.append(" AND C.MEDIUM IS NOT NULL ");
 		List<Object> params = new ArrayList<>();
 		params.add(budgetYear);
 		params.add(inspectionWork);
-		List<Int0401CalVo> lists = jdbcTemplate.query(sqlBuilder.toString(), params.toArray(), detialsRowMapper);
+		List<Int0401CalVo> lists = jdbcTemplate.query(sqlBuilder.toString(), params.toArray(), detailsRowMapper);
 		return lists;
 	}
 
-	// HEAD RowMapper
-	private RowMapper<Int0401CalVo> detialsRowMapper = new RowMapper<Int0401CalVo>() {
+	// DETAILS RowMapper
+	private RowMapper<Int0401CalVo> detailsRowMapper = new RowMapper<Int0401CalVo>() {
 		@Override
 		public Int0401CalVo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Int0401CalVo vo = new Int0401CalVo();
@@ -197,6 +198,65 @@ public class Int0401JdbcRepository {
 			vo.setConfig(config);
 			vo.setData(data);
 			return vo;
+		}
+	};
+
+	// CONFIG ALL
+	public Int0401CalConfigVo findConfigAll(String budgetYear, BigDecimal inspectionWork) {
+		StringBuilder sqlBuilder = new StringBuilder();
+		sqlBuilder.append(" SELECT C.* FROM IA_RISK_FACTORS_CONFIG_ALL C ");
+		sqlBuilder.append(" WHERE C.IS_DELETED = 'N' AND C.BUDGET_YEAR = ? AND C.INSPECTION_WORK = ? ");
+		List<Object> params = new ArrayList<>();
+		params.add(budgetYear);
+		params.add(inspectionWork);
+		Int0401CalConfigVo config = jdbcTemplate.queryForObject(sqlBuilder.toString(), params.toArray(), configAllRowMapper);
+		return config;
+	}
+
+	// CONFIG ALL RowMapper
+	private RowMapper<Int0401CalConfigVo> configAllRowMapper = new RowMapper<Int0401CalConfigVo>() {
+		@Override
+		public Int0401CalConfigVo mapRow(ResultSet rs, int arg1) throws SQLException {
+
+			Int0401CalConfigVo config = new Int0401CalConfigVo();
+			config.setFactorsLevel(rs.getBigDecimal("FACTORS_LEVEL"));
+
+			config.setVerylow(rs.getString("VERYLOW"));
+			config.setVerylowStart(rs.getString("VERYLOW_START"));
+			config.setVerylowEnd(rs.getString("VERYLOW_END"));
+			config.setVerylowRating(rs.getBigDecimal("VERYLOW_RATING"));
+			config.setVerylowColor(rs.getString("VERYLOW_COLOR"));
+			config.setVerylowCondition(rs.getString("VERYLOW_CONDITION"));
+
+			config.setLow(rs.getString("LOW"));
+			config.setLowStart(rs.getString("LOW_START"));
+			config.setLowEnd(rs.getString("LOW_END"));
+			config.setLowRating(rs.getBigDecimal("LOW_RATING"));
+			config.setLowColor(rs.getString("LOW_COLOR"));
+			config.setLowCondition(rs.getString("LOW_CONDITION"));
+
+			config.setMedium(rs.getString("MEDIUM"));
+			config.setMediumStart(rs.getString("MEDIUM_START"));
+			config.setMediumEnd(rs.getString("MEDIUM_END"));
+			config.setMediumRating(rs.getBigDecimal("MEDIUM_RATING"));
+			config.setMediumColor(rs.getString("MEDIUM_COLOR"));
+			config.setMediumCondition(rs.getString("MEDIUM_CONDITION"));
+
+			config.setHigh(rs.getString("HIGH"));
+			config.setHighStart(rs.getString("HIGH_START"));
+			config.setHighEnd(rs.getString("HIGH_END"));
+			config.setHighRating(rs.getBigDecimal("HIGH_RATING"));
+			config.setHighColor(rs.getString("HIGH_COLOR"));
+			config.setHighCondition(rs.getString("HIGH_CONDITION"));
+
+			config.setVeryhigh(rs.getString("VERYHIGH"));
+			config.setVeryhighStart(rs.getString("VERYHIGH_START"));
+			config.setVeryhighEnd(rs.getString("VERYHIGH_END"));
+			config.setVeryhighRating(rs.getBigDecimal("VERYHIGH_RATING"));
+			config.setVeryhighColor(rs.getString("VERYHIGH_COLOR"));
+			config.setVeryhighCondition(rs.getString("VERYHIGH_CONDITION"));
+
+			return config;
 		}
 	};
 

@@ -34,9 +34,11 @@ public class Int0401Service {
 		List<IaRiskSelectCase> selectCases = int0401JdbcRep.findRow(budgetYear, inspectionWork, status);
 		List<IaRiskFactors> factors = int0401JdbcRep.findHead(budgetYear, inspectionWork);
 		List<Int0401CalVo> cals = int0401JdbcRep.findDetails(budgetYear, inspectionWork);
+		Int0401CalConfigVo config = int0401JdbcRep.findConfigAll(budgetYear, inspectionWork);
 		for (IaRiskSelectCase selectCase : selectCases) {
 			Int0401Vo list = new Int0401Vo();
 			List<Int0401ListVo> listVos = new ArrayList<>();
+			BigDecimal riskRating = new BigDecimal(0);
 			for (IaRiskFactors factor : factors) {
 				Int0401ListVo listVo = new Int0401ListVo();
 				listVo.setRiskRate(new BigDecimal(1));
@@ -56,6 +58,7 @@ public class Int0401Service {
 						}
 					}
 				}
+				riskRating.add(listVo.getRiskRate());
 				listVos.add(listVo);
 			}
 			list.setId(selectCase.getId());
@@ -67,9 +70,15 @@ public class Int0401Service {
 			list.setInspectionWork(selectCase.getInspectionWork());
 			list.setStatus(selectCase.getStatus());
 			list.setLists(listVos);
+			Int0401ListVo calData = new Int0401ListVo();
+			if (config.getFactorsLevel().compareTo(new BigDecimal(5)) == 0) {
+				calData = calculateRating5thAll((new BigDecimal(riskRating.intValue() / listVos.size())).toString(), config);
+			} else {
+				calData = calculateRating3rdAll((new BigDecimal(riskRating.intValue() / listVos.size())).toString(), config);
+			}
 			list.setRiskItem(new BigDecimal(listVos.size()));
-			list.setRiskRate(new BigDecimal(0));
-			list.setRiskText("LOW");
+			list.setRiskRate(calData.getRiskRate());
+			list.setRiskText(calData.getRiskText());
 			lists.add(list);
 		}
 		return lists;
@@ -151,6 +160,54 @@ public class Int0401Service {
 			value.setRiskRate(config.getMediumRating());
 			value.setRiskText(config.getMedium());
 		} else if (convertStr2Db(data.getRiskCost()) < convertStr2Db(config.getLowStart())) {
+			value.setRiskCode("L");
+			value.setRiskRate(config.getLowRating());
+			value.setRiskText(config.getLow());
+		}
+		return value;
+	}
+
+	private Int0401ListVo calculateRating5thAll(String data, Int0401CalConfigVo config) {
+		Int0401ListVo value = new Int0401ListVo();
+		if (convertStr2Db(data) > convertStr2Db(config.getVeryhighStart())) {
+			value.setRiskCode("VH");
+			value.setRiskRate(config.getVeryhighRating());
+			value.setRiskText(config.getVeryhigh());
+		} else if (convertStr2Db(data) >= convertStr2Db(config.getHighStart())
+				&& convertStr2Db(data) <= convertStr2Db(config.getHighEnd())) {
+			value.setRiskCode("H");
+			value.setRiskRate(config.getHighRating());
+			value.setRiskText(config.getHigh());
+		} else if (convertStr2Db(data) >= convertStr2Db(config.getMediumStart())
+				&& convertStr2Db(data) <= convertStr2Db(config.getMediumEnd())) {
+			value.setRiskCode("M");
+			value.setRiskRate(config.getMediumRating());
+			value.setRiskText(config.getMedium());
+		} else if (convertStr2Db(data) >= convertStr2Db(config.getLowStart())
+				&& convertStr2Db(data) <= convertStr2Db(config.getLowEnd())) {
+			value.setRiskCode("L");
+			value.setRiskRate(config.getLowRating());
+			value.setRiskText(config.getLow());
+		} else if (convertStr2Db(data) < convertStr2Db(config.getVerylowStart())) {
+			value.setRiskCode("VL");
+			value.setRiskRate(config.getVerylowRating());
+			value.setRiskText(config.getVerylow());
+		}
+		return value;
+	}
+
+	private Int0401ListVo calculateRating3rdAll(String data, Int0401CalConfigVo config) {
+		Int0401ListVo value = new Int0401ListVo();
+		if (convertStr2Db(data) > convertStr2Db(config.getHighStart())) {
+			value.setRiskCode("H");
+			value.setRiskRate(config.getHighRating());
+			value.setRiskText(config.getHigh());
+		} else if (convertStr2Db(data) >= convertStr2Db(config.getMediumStart())
+				&& convertStr2Db(data) <= convertStr2Db(config.getMediumEnd())) {
+			value.setRiskCode("M");
+			value.setRiskRate(config.getMediumRating());
+			value.setRiskText(config.getMedium());
+		} else if (convertStr2Db(data) < convertStr2Db(config.getLowStart())) {
 			value.setRiskCode("L");
 			value.setRiskRate(config.getLowRating());
 			value.setRiskText(config.getLow());
