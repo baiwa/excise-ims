@@ -27,12 +27,13 @@ public class RoleService {
 	public DataTableAjax<Role> list(RoleFormVo request) {
 
 		List<Role> data = roleRepository.findByCriteria(request);
+		Integer total = roleRepository.countByCriteria(request);
 
 		DataTableAjax<Role> dataTableAjax = new DataTableAjax<Role>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
 		dataTableAjax.setData(data);
-		dataTableAjax.setRecordsTotal(roleRepository.countByCriteria(request));
-		dataTableAjax.setRecordsFiltered(roleRepository.countByCriteria(request));
+		dataTableAjax.setRecordsTotal(total);
+		dataTableAjax.setRecordsFiltered(total);
 		return dataTableAjax;
 	}
 
