@@ -16,7 +16,7 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 public class TaMasCondMainHdr extends BaseEntity {
 
 	private static final long serialVersionUID = -8020226827680362667L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_MAS_COND_MAIN_HDR_GEN")
 	@SequenceGenerator(name = "TA_MAS_COND_MAIN_HDR_GEN", sequenceName = "TA_MAS_COND_MAIN_HDR_SEQ", allocationSize = 1)
@@ -26,6 +26,8 @@ public class TaMasCondMainHdr extends BaseEntity {
 	private String officeCode;
 	@Column(name = "BUDGET_YEAR")
 	private String budgetYear;
+	@Column(name = "COND_NUMBER")
+	private String condNumber;
 	@Column(name = "COND_GROUP_DESC")
 	private String condGroupDesc;
 	@Column(name = "MONTH_NUM")
@@ -57,6 +59,14 @@ public class TaMasCondMainHdr extends BaseEntity {
 
 	public void setBudgetYear(String budgetYear) {
 		this.budgetYear = budgetYear;
+	}
+
+	public String getCondNumber() {
+		return condNumber;
+	}
+
+	public void setCondNumber(String condNumber) {
+		this.condNumber = condNumber;
 	}
 
 	public String getCondGroupDesc() {

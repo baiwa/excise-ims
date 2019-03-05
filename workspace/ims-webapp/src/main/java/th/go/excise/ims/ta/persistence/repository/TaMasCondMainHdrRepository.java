@@ -1,5 +1,7 @@
 package th.go.excise.ims.ta.persistence.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -11,5 +13,8 @@ public interface TaMasCondMainHdrRepository extends CommonJpaCrudRepository<TaMa
 	
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.budgetYear = :budgetYear")
 	public TaMasCondMainHdr findByBudgetYear(@Param("budgetYear") String budgetYear);
+	
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.condNumber = :condNumber")
+	public List<TaMasCondMainHdr> findByCondNumber(@Param("condNumber") String condNumber);
 	
 }

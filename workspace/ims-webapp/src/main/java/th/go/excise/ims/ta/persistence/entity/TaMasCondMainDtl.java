@@ -23,12 +23,12 @@ public class TaMasCondMainDtl extends BaseEntity {
 	@SequenceGenerator(name = "TA_MAS_COND_MAIN_DTL_GEN", sequenceName = "TA_MAS_COND_MAIN_DTL_SEQ", allocationSize = 1)
 	@Column(name = "MAS_COND_MAIN_DTL_ID")
 	private Long masCondMainDtlId;
-	@Column(name = "MAS_COND_MAIN_HDR_ID")
-	private Long masCondMainHdrId;
 	@Column(name = "OFFICE_CODE")
 	private String officeCode;
 	@Column(name = "BUDGET_YEAR")
 	private String budgetYear;
+	@Column(name = "COND_NUMBER")
+	private String condNumber;
 	@Column(name = "COND_GROUP")
 	private String condGroup;
 	@Column(name = "TAX_FREQ_TYPE")
@@ -56,14 +56,6 @@ public class TaMasCondMainDtl extends BaseEntity {
 		this.masCondMainDtlId = masCondMainDtlId;
 	}
 
-	public Long getMasCondMainHdrId() {
-		return masCondMainHdrId;
-	}
-
-	public void setMasCondMainHdrId(Long masCondMainHdrId) {
-		this.masCondMainHdrId = masCondMainHdrId;
-	}
-
 	public String getOfficeCode() {
 		return officeCode;
 	}
@@ -78,6 +70,14 @@ public class TaMasCondMainDtl extends BaseEntity {
 
 	public void setBudgetYear(String budgetYear) {
 		this.budgetYear = budgetYear;
+	}
+
+	public String getCondNumber() {
+		return condNumber;
+	}
+
+	public void setCondNumber(String condNumber) {
+		this.condNumber = condNumber;
 	}
 
 	public String getCondGroup() {
