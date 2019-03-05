@@ -18,6 +18,7 @@ import th.go.excise.ims.ia.service.Int030405Service;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
 import th.go.excise.ims.ia.vo.Int0301Vo;
 import th.go.excise.ims.ia.vo.Int030405FormVo;
+import th.go.excise.ims.ia.vo.Int030405Vo;
 
 @Controller
 @RequestMapping("/api/ia/int03/04/05")
@@ -30,9 +31,9 @@ public class Int030405Controller {
 
 	@PostMapping("/systemUnworkingList")
 	@ResponseBody
-	public DataTableAjax<IaRiskSystemUnworking> systemUnworkingList(@RequestBody Int030405FormVo form) {
-		DataTableAjax<IaRiskSystemUnworking> response = new DataTableAjax<IaRiskSystemUnworking>();
-		List<IaRiskSystemUnworking> systemUnworkingList = new ArrayList<IaRiskSystemUnworking>();
+	public DataTableAjax<Int030405Vo> systemUnworkingList(@RequestBody Int030405FormVo form) {
+		DataTableAjax<Int030405Vo> response = new DataTableAjax<Int030405Vo>();
+		List<Int030405Vo> systemUnworkingList = new ArrayList<Int030405Vo>();
 
 		try {
 			systemUnworkingList = Int030405Service.systemUnworkingList(form);
