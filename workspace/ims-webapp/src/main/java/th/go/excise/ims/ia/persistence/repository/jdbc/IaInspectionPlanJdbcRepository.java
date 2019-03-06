@@ -24,7 +24,7 @@ public class IaInspectionPlanJdbcRepository {
 		sql.append(" WHERE IS_DELETED = 'N' ");
 		sql.append(" 	AND BUDGET_YEAR = ? ");
 		sql.append(" 	AND INSPECTION_WORK = ? ");
- 		sql.append(" ORDER BY CREATED_DATE ASC");
+ 		sql.append(" ORDER BY SECTOR ASC");
  		
  		params.add(budgetYear);
  		params.add(inspectionWork);
