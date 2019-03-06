@@ -63,9 +63,14 @@ public class MasterConditionMainService {
 			for (TaMasCondMainDtl obj : formVo.getDetail()) {
 				dtl = new TaMasCondMainDtl();
 				dtl.setBudgetYear(header.getBudgetYear());
+				dtl.setOfficeCode(header.getOfficeCode());
 				dtl.setCondGroup(obj.getCondGroup());
+				dtl.setCondNumber(header.getCondNumber());
+				dtl.setTaxFreqType(obj.getTaxFreqType());
 				dtl.setTaxMonthStart(obj.getTaxMonthStart());
 				dtl.setTaxMonthEnd(obj.getTaxMonthEnd());
+				dtl.setRangeTypeStart(obj.getRangeTypeStart());
+				dtl.setRangeTypeEnd(obj.getRangeTypeEnd());
 				dtl.setRangeStart(obj.getRangeStart());
 				dtl.setRangeEnd(obj.getRangeEnd());
 				dtl.setRiskLevel(obj.getRiskLevel());
@@ -74,6 +79,8 @@ public class MasterConditionMainService {
 			}
 			dtl = new TaMasCondMainDtl();
 			dtl.setBudgetYear(header.getBudgetYear());
+			dtl.setOfficeCode(header.getOfficeCode());
+			dtl.setCondNumber(header.getCondNumber());
 			dtl.setCondGroup(String.valueOf(formVo.getDetail().size() + 1));
 			dtl.setCondType(TA_MAS_COND_MAIN_TYPE.OTHER);
 			dtlList.add(dtl);
@@ -132,9 +139,14 @@ public class MasterConditionMainService {
 				if (obj.getMasCondMainDtlId() == null) {
 					dtl = new TaMasCondMainDtl();
 					dtl.setBudgetYear(header.getBudgetYear());
+					dtl.setOfficeCode(header.getOfficeCode());
 					dtl.setCondGroup(obj.getCondGroup());
+					dtl.setCondNumber(header.getCondNumber());
+					dtl.setTaxFreqType(obj.getTaxFreqType());
 					dtl.setTaxMonthStart(obj.getTaxMonthStart());
 					dtl.setTaxMonthEnd(obj.getTaxMonthEnd());
+					dtl.setRangeTypeStart(obj.getRangeTypeStart());
+					dtl.setRangeTypeEnd(obj.getRangeTypeEnd());
 					dtl.setRangeStart(obj.getRangeStart());
 					dtl.setRangeEnd(obj.getRangeEnd());
 					dtl.setRiskLevel(obj.getRiskLevel());
@@ -142,10 +154,12 @@ public class MasterConditionMainService {
 
 				} else {
 					dtl = taMasCondMainDtlRepository.findById(obj.getMasCondMainDtlId()).get();
-					dtl.setBudgetYear(header.getBudgetYear());
 					dtl.setCondGroup(obj.getCondGroup());
+					dtl.setTaxFreqType(obj.getTaxFreqType());
 					dtl.setTaxMonthStart(obj.getTaxMonthStart());
 					dtl.setTaxMonthEnd(obj.getTaxMonthEnd());
+					dtl.setRangeTypeStart(obj.getRangeTypeStart());
+					dtl.setRangeTypeEnd(obj.getRangeTypeEnd());
 					dtl.setRangeStart(obj.getRangeStart());
 					dtl.setRangeEnd(obj.getRangeEnd());
 					dtl.setRiskLevel(obj.getRiskLevel());
