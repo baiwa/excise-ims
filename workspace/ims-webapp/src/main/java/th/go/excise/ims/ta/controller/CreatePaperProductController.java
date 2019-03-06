@@ -11,9 +11,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.ta.service.CreatePaperProductService;
+import th.go.excise.ims.ta.vo.CppFinishedGoodsPaymentVo;
+import th.go.excise.ims.ta.vo.CppFinishedGoodsReceiveVo;
 import th.go.excise.ims.ta.vo.CppRawMaterialBalanceVo;
+import th.go.excise.ims.ta.vo.CppRawMaterialFinishedGoodsRelationshipVo;
 import th.go.excise.ims.ta.vo.CppRawMaterialPaymentVo;
 import th.go.excise.ims.ta.vo.CppRawMaterialReceiveVo;
+import th.go.excise.ims.ta.vo.CppRawMaterialTaxBreakVo;
 import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 
 @Controller
@@ -37,7 +41,7 @@ public class CreatePaperProductController {
 
 		DataTableAjax<CppRawMaterialReceiveVo> response = new DataTableAjax<>();
 		try {
-			response = createPaperProductService.listRowMaterialReceive(request);
+			response = createPaperProductService.listRawMaterialReceive(request);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -52,7 +56,7 @@ public class CreatePaperProductController {
 
 		DataTableAjax<CppRawMaterialPaymentVo> response = new DataTableAjax<>();
 		try {
-			response = createPaperProductService.listRowMaterialPayment(request);
+			response = createPaperProductService.listRawMaterialPayment(request);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -67,11 +71,71 @@ public class CreatePaperProductController {
 
 		DataTableAjax<CppRawMaterialBalanceVo> response = new DataTableAjax<>();
 		try {
-			response = createPaperProductService.listRowMaterialBalance(request);
+			response = createPaperProductService.listRawMaterialBalance(request);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return response;
 	}
 
+	/*------MaterialFinishedGoodsRelationship-----*/
+	@PostMapping("/list-raw-material-finished-goods-relationship")
+	@ResponseBody
+	public DataTableAjax<CppRawMaterialFinishedGoodsRelationshipVo> listRawMaterialFinishedGoodsRelationship(
+			@RequestBody CreatePaperFormVo request) {
+		logger.info("listRawMaterialFinishedGoodsRelationship");
+
+		DataTableAjax<CppRawMaterialFinishedGoodsRelationshipVo> response = new DataTableAjax<>();
+		try {
+			response = createPaperProductService.listRawMaterialFinishedGoodsRelationship(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
+	}
+
+	/*------FinishedGoodsReceive-----*/
+	@PostMapping("/list-finished-goods-receive")
+	@ResponseBody
+	public DataTableAjax<CppFinishedGoodsReceiveVo> listFinishedGoodsReceive(@RequestBody CreatePaperFormVo request) {
+		logger.info("listRawMaterialFinishedGoodsRelationship");
+
+		DataTableAjax<CppFinishedGoodsReceiveVo> response = new DataTableAjax<>();
+		try {
+			response = createPaperProductService.listFinishedGoodsReceive(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
+	}
+
+	/*------FinishedGoodsPayment-----*/
+	@PostMapping("/list-finished-goods-payment")
+	@ResponseBody
+	public DataTableAjax<CppFinishedGoodsPaymentVo> listFinishedGoodsPayment(@RequestBody CreatePaperFormVo request) {
+		logger.info("listFinishedGoodsPayment");
+
+		DataTableAjax<CppFinishedGoodsPaymentVo> response = new DataTableAjax<>();
+		try {
+			response = createPaperProductService.listFinishedGoodsPayment(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
+	}
+
+	/*------RawMaterialTaxBreak-----*/
+	@PostMapping("/list-raw-material-tax-break")
+	@ResponseBody
+	public DataTableAjax<CppRawMaterialTaxBreakVo> listRawMaterialTaxBreak(@RequestBody CreatePaperFormVo request) {
+		logger.info("listRawMaterialTaxBreak");
+
+		DataTableAjax<CppRawMaterialTaxBreakVo> response = new DataTableAjax<>();
+		try {
+			response = createPaperProductService.listRawMaterialTaxBreak(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
+	}
 }
