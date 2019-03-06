@@ -14,6 +14,7 @@ import th.co.baiwa.buckwaframework.common.constant.MessageContants;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMadeHdr;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
@@ -83,7 +84,9 @@ public class Int02Service {
 
 	public IaQuestionnaireHdr findOne(String idStr) {
 		BigDecimal id = new BigDecimal(idStr);
-		return iaQuestionnaireHdrJdbcRepository.findOne(id);
+		IaQuestionnaireHdr hdr = iaQuestionnaireHdrJdbcRepository.findOne(id);
+		hdr.setStatus(ApplicationCache.getParamInfoByCode("IA_STATUS", hdr.getStatus()).getValue1());
+		return hdr;
 	}
 
 	public IaQuestionnaireHdr save(IaQuestionnaireHdr request) {
