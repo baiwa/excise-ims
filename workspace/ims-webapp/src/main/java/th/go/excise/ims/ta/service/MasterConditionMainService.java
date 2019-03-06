@@ -14,6 +14,7 @@ import th.go.excise.ims.ta.persistence.repository.TaMasCondMainDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondMainHdrRepository;
 import th.go.excise.ims.ta.vo.ConditionMessageVo;
 import th.go.excise.ims.ta.vo.MasCondMainRequestVo;
+import th.go.excise.ims.ta.vo.MasCondMainResponseVo;
 import th.go.excise.ims.ta.vo.MasterConditionMainHdrDtlVo;
 
 import java.util.ArrayList;
@@ -24,76 +25,76 @@ import java.util.List;
 @Service
 public class MasterConditionMainService {
 
-	@Autowired
-	private TaMasCondMainHdrRepository taMasCondMainHdrRepository;
+    @Autowired
+    private TaMasCondMainHdrRepository taMasCondMainHdrRepository;
 
-	@Autowired
-	private TaMasCondMainDtlRepository taMasCondMainDtlRepository;
-	
-	@Autowired
-	private MasterConditionSequenceService masterConditionSequenceService;
-	
-	public void insertCondMainHdr(TaMasCondMainHdr form) {
-		TaMasCondMainHdr hdr = new TaMasCondMainHdr();
-		hdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
-		hdr.setBudgetYear(form.getBudgetYear());
-		hdr.setCondNumber(masterConditionSequenceService.getConditionNumber(UserLoginUtils.getCurrentUserBean().getOfficeCode(), form.getBudgetYear()));
-		hdr.setCondGroupDesc(form.getCondGroupDesc());
-		hdr.setMonthNum(form.getMonthNum());
-		hdr.setCondGroupNum(form.getCondGroupNum());
-		hdr.setNewFacFlag(form.getNewFacFlag());
-		taMasCondMainHdrRepository.save(hdr);
-	}
-	
-	public void updateCondMainHdr(TaMasCondMainHdr form) {
-		TaMasCondMainHdr hdr = taMasCondMainHdrRepository.findByCondNumber(form.getCondNumber());
-		hdr.setBudgetYear(form.getBudgetYear());
-		hdr.setCondGroupDesc(form.getCondGroupDesc());
-		hdr.setMonthNum(form.getMonthNum());
-		hdr.setCondGroupNum(form.getCondGroupNum());
-		hdr.setNewFacFlag(form.getNewFacFlag());
-		taMasCondMainHdrRepository.save(hdr);
-	}
+    @Autowired
+    private TaMasCondMainDtlRepository taMasCondMainDtlRepository;
 
-	public void insertCondMainDtl(MasterConditionMainHdrDtlVo formVo) {
-		TaMasCondMainDtl dtl = null;
-		List<TaMasCondMainDtl> dtlList = new ArrayList<>();
-		TaMasCondMainHdr header = formVo.getHeader();
-		if (header.getBudgetYear() != null) {
-			for (TaMasCondMainDtl obj : formVo.getDetail()) {
-				dtl = new TaMasCondMainDtl();
-				dtl.setBudgetYear(header.getBudgetYear());
-				dtl.setOfficeCode(header.getOfficeCode());
-				dtl.setCondGroup(obj.getCondGroup());
-				dtl.setCondNumber(header.getCondNumber());
-				dtl.setTaxFreqType(obj.getTaxFreqType());
-				dtl.setTaxMonthStart(obj.getTaxMonthStart());
-				dtl.setTaxMonthEnd(obj.getTaxMonthEnd());
-				dtl.setRangeTypeStart(obj.getRangeTypeStart());
-				dtl.setRangeTypeEnd(obj.getRangeTypeEnd());
-				dtl.setRangeStart(obj.getRangeStart());
-				dtl.setRangeEnd(obj.getRangeEnd());
-				dtl.setRiskLevel(obj.getRiskLevel());
-				dtl.setCondType("T");
-				dtlList.add(dtl);
-			}
-			dtl = new TaMasCondMainDtl();
-			dtl.setBudgetYear(header.getBudgetYear());
-			dtl.setOfficeCode(header.getOfficeCode());
-			dtl.setCondNumber(header.getCondNumber());
-			dtl.setCondGroup(String.valueOf(formVo.getDetail().size() + 1));
-			dtl.setCondType(TA_MAS_COND_MAIN_TYPE.OTHER);
-			dtlList.add(dtl);
-			taMasCondMainDtlRepository.saveAll(dtlList);
-		}
-	}
+    @Autowired
+    private MasterConditionSequenceService masterConditionSequenceService;
 
-	public void updateCondMainDtl(MasterConditionMainHdrDtlVo formVo) {
-		TaMasCondMainDtl dtl = null;
-		List<TaMasCondMainDtl> dtlList = new ArrayList<>();
-		TaMasCondMainHdr header = formVo.getHeader();
-		if (header.getBudgetYear() != null) {
-			List<TaMasCondMainDtl> list = taMasCondMainDtlRepository.findByBudgetYearAndCondNumberAndCondTypeAndOfficeCode(formVo.getHeader().getBudgetYear(), formVo.getHeader().getCondNumber(), TA_MAS_COND_MAIN_TYPE.TAX, UserLoginUtils.getCurrentUserBean().getOfficeCode());
+    public void insertCondMainHdr(TaMasCondMainHdr form) {
+        TaMasCondMainHdr hdr = new TaMasCondMainHdr();
+        hdr.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+        hdr.setBudgetYear(form.getBudgetYear());
+        hdr.setCondNumber(masterConditionSequenceService.getConditionNumber(UserLoginUtils.getCurrentUserBean().getOfficeCode(), form.getBudgetYear()));
+        hdr.setCondGroupDesc(form.getCondGroupDesc());
+        hdr.setMonthNum(form.getMonthNum());
+        hdr.setCondGroupNum(form.getCondGroupNum());
+        hdr.setNewFacFlag(form.getNewFacFlag());
+        taMasCondMainHdrRepository.save(hdr);
+    }
+
+    public void updateCondMainHdr(TaMasCondMainHdr form) {
+        TaMasCondMainHdr hdr = taMasCondMainHdrRepository.findByCondNumber(form.getCondNumber());
+        hdr.setBudgetYear(form.getBudgetYear());
+        hdr.setCondGroupDesc(form.getCondGroupDesc());
+        hdr.setMonthNum(form.getMonthNum());
+        hdr.setCondGroupNum(form.getCondGroupNum());
+        hdr.setNewFacFlag(form.getNewFacFlag());
+        taMasCondMainHdrRepository.save(hdr);
+    }
+
+    public void insertCondMainDtl(MasterConditionMainHdrDtlVo formVo) {
+        TaMasCondMainDtl dtl = null;
+        List<TaMasCondMainDtl> dtlList = new ArrayList<>();
+        TaMasCondMainHdr header = formVo.getHeader();
+        if (header.getBudgetYear() != null) {
+            for (TaMasCondMainDtl obj : formVo.getDetail()) {
+                dtl = new TaMasCondMainDtl();
+                dtl.setBudgetYear(header.getBudgetYear());
+                dtl.setOfficeCode(header.getOfficeCode());
+                dtl.setCondGroup(obj.getCondGroup());
+                dtl.setCondNumber(header.getCondNumber());
+                dtl.setTaxFreqType(obj.getTaxFreqType());
+                dtl.setTaxMonthStart(obj.getTaxMonthStart());
+                dtl.setTaxMonthEnd(obj.getTaxMonthEnd());
+                dtl.setRangeTypeStart(obj.getRangeTypeStart());
+                dtl.setRangeTypeEnd(obj.getRangeTypeEnd());
+                dtl.setRangeStart(obj.getRangeStart());
+                dtl.setRangeEnd(obj.getRangeEnd());
+                dtl.setRiskLevel(obj.getRiskLevel());
+                dtl.setCondType("T");
+                dtlList.add(dtl);
+            }
+            dtl = new TaMasCondMainDtl();
+            dtl.setBudgetYear(header.getBudgetYear());
+            dtl.setOfficeCode(header.getOfficeCode());
+            dtl.setCondNumber(header.getCondNumber());
+            dtl.setCondGroup(String.valueOf(formVo.getDetail().size() + 1));
+            dtl.setCondType(TA_MAS_COND_MAIN_TYPE.OTHER);
+            dtlList.add(dtl);
+            taMasCondMainDtlRepository.saveAll(dtlList);
+        }
+    }
+
+    public void updateCondMainDtl(MasterConditionMainHdrDtlVo formVo) {
+        TaMasCondMainDtl dtl = null;
+        List<TaMasCondMainDtl> dtlList = new ArrayList<>();
+        TaMasCondMainHdr header = formVo.getHeader();
+        if (header.getBudgetYear() != null) {
+            List<TaMasCondMainDtl> list = taMasCondMainDtlRepository.findByBudgetYearAndCondNumberAndCondTypeAndOfficeCode(formVo.getHeader().getBudgetYear(), formVo.getHeader().getCondNumber(), TA_MAS_COND_MAIN_TYPE.TAX, UserLoginUtils.getCurrentUserBean().getOfficeCode());
 //			List<TaMasCondDtlTax> listY = taMasCondDtlTaxRepository.findByBudgetYearAndIsDeleted(formVo.getHeader().getBudgetYear(), FLAG.Y_FLAG);
 
             Collections.sort(list, new Comparator<TaMasCondMainDtl>() {
@@ -133,92 +134,120 @@ public class MasterConditionMainService {
 //				}
 //				taMasCondDtlTaxRepository.saveAll(dtlList);
 //			}
-			
-			dtlList = new ArrayList<>();
-			for (TaMasCondMainDtl obj : formVo.getDetail()) {
-				if (obj.getMasCondMainDtlId() == null) {
-					dtl = new TaMasCondMainDtl();
-					dtl.setBudgetYear(header.getBudgetYear());
-					dtl.setOfficeCode(header.getOfficeCode());
-					dtl.setCondGroup(obj.getCondGroup());
-					dtl.setCondNumber(header.getCondNumber());
-					dtl.setTaxFreqType(obj.getTaxFreqType());
-					dtl.setTaxMonthStart(obj.getTaxMonthStart());
-					dtl.setTaxMonthEnd(obj.getTaxMonthEnd());
-					dtl.setRangeTypeStart(obj.getRangeTypeStart());
-					dtl.setRangeTypeEnd(obj.getRangeTypeEnd());
-					dtl.setRangeStart(obj.getRangeStart());
-					dtl.setRangeEnd(obj.getRangeEnd());
-					dtl.setRiskLevel(obj.getRiskLevel());
-					dtl.setCondType(TA_MAS_COND_MAIN_TYPE.TAX);
 
-				} else {
-					dtl = taMasCondMainDtlRepository.findById(obj.getMasCondMainDtlId()).get();
-					dtl.setCondGroup(obj.getCondGroup());
-					dtl.setTaxFreqType(obj.getTaxFreqType());
-					dtl.setTaxMonthStart(obj.getTaxMonthStart());
-					dtl.setTaxMonthEnd(obj.getTaxMonthEnd());
-					dtl.setRangeTypeStart(obj.getRangeTypeStart());
-					dtl.setRangeTypeEnd(obj.getRangeTypeEnd());
-					dtl.setRangeStart(obj.getRangeStart());
-					dtl.setRangeEnd(obj.getRangeEnd());
-					dtl.setRiskLevel(obj.getRiskLevel());
-				}
+            dtlList = new ArrayList<>();
+            for (TaMasCondMainDtl obj : formVo.getDetail()) {
+                if (obj.getMasCondMainDtlId() == null) {
+                    dtl = new TaMasCondMainDtl();
+                    dtl.setBudgetYear(header.getBudgetYear());
+                    dtl.setOfficeCode(header.getOfficeCode());
+                    dtl.setCondGroup(obj.getCondGroup());
+                    dtl.setCondNumber(header.getCondNumber());
+                    dtl.setTaxFreqType(obj.getTaxFreqType());
+                    dtl.setTaxMonthStart(obj.getTaxMonthStart());
+                    dtl.setTaxMonthEnd(obj.getTaxMonthEnd());
+                    dtl.setRangeTypeStart(obj.getRangeTypeStart());
+                    dtl.setRangeTypeEnd(obj.getRangeTypeEnd());
+                    dtl.setRangeStart(obj.getRangeStart());
+                    dtl.setRangeEnd(obj.getRangeEnd());
+                    dtl.setRiskLevel(obj.getRiskLevel());
+                    dtl.setCondType(TA_MAS_COND_MAIN_TYPE.TAX);
 
-				dtlList.add(dtl);
+                } else {
+                    dtl = taMasCondMainDtlRepository.findById(obj.getMasCondMainDtlId()).get();
+                    dtl.setCondGroup(obj.getCondGroup());
+                    dtl.setTaxFreqType(obj.getTaxFreqType());
+                    dtl.setTaxMonthStart(obj.getTaxMonthStart());
+                    dtl.setTaxMonthEnd(obj.getTaxMonthEnd());
+                    dtl.setRangeTypeStart(obj.getRangeTypeStart());
+                    dtl.setRangeTypeEnd(obj.getRangeTypeEnd());
+                    dtl.setRangeStart(obj.getRangeStart());
+                    dtl.setRangeEnd(obj.getRangeEnd());
+                    dtl.setRiskLevel(obj.getRiskLevel());
+                }
 
-			}
-			dtl = taMasCondMainDtlRepository.findByBudgetYearAndCondNumberAndCondTypeAndOfficeCode(formVo.getHeader().getBudgetYear(), dtl.getCondNumber(), TA_MAS_COND_MAIN_TYPE.OTHER, UserLoginUtils.getCurrentUserBean().getOfficeCode()).get(0);
-			dtl.setCondGroup(String.valueOf(formVo.getDetail().size() + 1));
-			dtlList.add(dtl);
-			taMasCondMainDtlRepository.saveAll(dtlList);
-		}
-	}
+                dtlList.add(dtl);
 
-	public TaMasCondMainHdr findHdr(TaMasCondMainHdr hdr) {
-		TaMasCondMainHdr budgetYear = new TaMasCondMainHdr();
-		budgetYear = taMasCondMainHdrRepository.findByBudgetYearAndCondNumberAndOfficeCode(hdr.getBudgetYear(), hdr.getCondNumber(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
-		return budgetYear;
-	}
-	
-	public List<TaMasCondMainHdr> findHdrAll(TaMasCondMainHdr hdr) {
-		List<TaMasCondMainHdr> budgetYear = new ArrayList<>();
-		budgetYear = taMasCondMainHdrRepository.findByBudgetYearAndOfficeCode(hdr.getBudgetYear(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
-		return budgetYear;
-	}
+            }
+            dtl = taMasCondMainDtlRepository.findByBudgetYearAndCondNumberAndCondTypeAndOfficeCode(formVo.getHeader().getBudgetYear(), dtl.getCondNumber(), TA_MAS_COND_MAIN_TYPE.OTHER, UserLoginUtils.getCurrentUserBean().getOfficeCode()).get(0);
+            dtl.setCondGroup(String.valueOf(formVo.getDetail().size() + 1));
+            dtlList.add(dtl);
+            taMasCondMainDtlRepository.saveAll(dtlList);
+        }
+    }
 
-	public List<TaMasCondMainDtl> findDtl(TaMasCondMainDtl dtl) {
-		List<TaMasCondMainDtl> budgetYear = new ArrayList<TaMasCondMainDtl>();
-		budgetYear = taMasCondMainDtlRepository.findByBudgetYearAndCondNumberAndCondTypeAndOfficeCode(dtl.getBudgetYear(), dtl.getCondNumber(), TA_MAS_COND_MAIN_TYPE.TAX, UserLoginUtils.getCurrentUserBean().getOfficeCode());
-		return budgetYear;
-	}
+    public TaMasCondMainHdr findHdr(TaMasCondMainHdr hdr) {
+        TaMasCondMainHdr budgetYear = new TaMasCondMainHdr();
+        budgetYear = taMasCondMainHdrRepository.findByBudgetYearAndCondNumberAndOfficeCode(hdr.getBudgetYear(), hdr.getCondNumber(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
+        return budgetYear;
+    }
 
-	public List<TaMasCondMainHdr> findAllHdr() {
-		List<TaMasCondMainHdr> list = taMasCondMainHdrRepository.findAll();
-		return list;
-	}
+    public List<TaMasCondMainHdr> findHdrAll(TaMasCondMainHdr hdr) {
+        List<TaMasCondMainHdr> budgetYear = new ArrayList<>();
+        budgetYear = taMasCondMainHdrRepository.findByBudgetYearAndOfficeCode(hdr.getBudgetYear(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
+        return budgetYear;
+    }
 
-	public ConditionMessageVo conditionMessage() {
-		ConditionMessageVo msgVo = new ConditionMessageVo();
-		msgVo.setMsgMonth1(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "MONTH1").getValue1());
-		msgVo.setMsgMonth2(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "MONTH2").getValue1());
-		msgVo.setMsgTax1(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "TAX1").getValue1());
-		msgVo.setMsgTax2(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "TAX2").getValue1());
-		msgVo.setMsgTax3(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "TAX3").getValue1());
-		return msgVo;
-	}
-	
-	public List<ParamInfo> getMainCondRange() {
-		List<ParamInfo> list = ApplicationCache.getParamInfoListByGroupCode("TA_MAIN_COND_RANGE");
-		return list;
-	}
+    public List<TaMasCondMainDtl> findDtl(TaMasCondMainDtl dtl) {
+        List<TaMasCondMainDtl> budgetYear = new ArrayList<TaMasCondMainDtl>();
+        budgetYear = taMasCondMainDtlRepository.findByBudgetYearAndCondNumberAndCondTypeAndOfficeCode(dtl.getBudgetYear(), dtl.getCondNumber(), TA_MAS_COND_MAIN_TYPE.TAX, UserLoginUtils.getCurrentUserBean().getOfficeCode());
+        return budgetYear;
+    }
 
-	public List<TaMasCondMainHdr> getMainCondHdt(MasCondMainRequestVo formVo){
-		return taMasCondMainHdrRepository.findByBudgetYearAndOfficeCode(formVo.getBudgetYear(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
-	}
+    public List<TaMasCondMainHdr> findAllHdr() {
+        List<TaMasCondMainHdr> list = taMasCondMainHdrRepository.findAll();
+        return list;
+    }
 
-    public List<TaMasCondMainDtl> getMainCondDtl(MasCondMainRequestVo formVo) {
-        return taMasCondMainDtlRepository.findByBudgetYearAndCondNumberAndOfficeCode(formVo.getBudgetYear(), formVo.getCondNumber(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
+    public ConditionMessageVo conditionMessage() {
+        ConditionMessageVo msgVo = new ConditionMessageVo();
+        msgVo.setMsgMonth1(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "MONTH1").getValue1());
+        msgVo.setMsgMonth2(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "MONTH2").getValue1());
+        msgVo.setMsgTax1(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "TAX1").getValue1());
+        msgVo.setMsgTax2(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "TAX2").getValue1());
+        msgVo.setMsgTax3(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "TAX3").getValue1());
+        return msgVo;
+    }
+
+    public List<ParamInfo> getMainCondRange() {
+        List<ParamInfo> list = ApplicationCache.getParamInfoListByGroupCode("TA_MAIN_COND_RANGE");
+        return list;
+    }
+
+    public List<TaMasCondMainHdr> getMainCondHdt(MasCondMainRequestVo formVo) {
+        return taMasCondMainHdrRepository.findByBudgetYearAndOfficeCode(formVo.getBudgetYear(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
+    }
+
+    public List<MasCondMainResponseVo> getMainCondDtl(MasCondMainRequestVo formVo) {
+        List<TaMasCondMainDtl> listDtl = taMasCondMainDtlRepository.findByBudgetYearAndCondNumberAndOfficeCode(formVo.getBudgetYear(), formVo.getCondNumber(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
+
+        List<MasCondMainResponseVo> listVo = new ArrayList<>();
+        for (TaMasCondMainDtl dtl : listDtl) {
+            MasCondMainResponseVo vo = new MasCondMainResponseVo();
+
+            vo.setMasCondMainDtlId(dtl.getMasCondMainDtlId());
+            vo.setOfficeCode(dtl.getOfficeCode());
+            vo.setBudgetYear(dtl.getBudgetYear());
+            vo.setCondNumber(dtl.getCondNumber());
+            vo.setCondGroup(dtl.getCondGroup());
+            vo.setTaxFreqType(ApplicationCache.getParamInfoByCode("TA_MAIN_COND_FREQ_TYPE", dtl.getTaxFreqType()).getValue1());
+            vo.setTaxMonthStart(dtl.getTaxMonthStart());
+            vo.setTaxMonthEnd(dtl.getTaxMonthEnd());
+            vo.setRangeTypeStart(ApplicationCache.getParamInfoByCode("TA_MAIN_COND_RANGE", dtl.getRangeTypeStart()).getValue1());
+            vo.setRangeStart(dtl.getRangeStart());
+            vo.setRangeTypeEnd(ApplicationCache.getParamInfoByCode("TA_MAIN_COND_RANGE", dtl.getRangeTypeEnd()).getValue1());
+            vo.setRangeEnd(dtl.getRangeEnd());
+            vo.setRiskLevel(dtl.getRiskLevel());
+            vo.setCondType(dtl.getCondType());
+            if ("O".equals(dtl.getCondType())){
+                vo.setCondTypeDesc(ApplicationCache.getParamInfoByCode("TA_MAS_COND_MAIN_DESC", "NEW_COMP").getValue1());
+            }
+
+            listVo.add(vo);
+
+        }
+
+        return listVo;
     }
 
 }

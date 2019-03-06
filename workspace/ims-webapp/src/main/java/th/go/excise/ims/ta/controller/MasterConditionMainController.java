@@ -15,6 +15,7 @@ import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
 import th.go.excise.ims.ta.service.MasterConditionMainService;
 import th.go.excise.ims.ta.vo.ConditionMessageVo;
 import th.go.excise.ims.ta.vo.MasCondMainRequestVo;
+import th.go.excise.ims.ta.vo.MasCondMainResponseVo;
 import th.go.excise.ims.ta.vo.MasterConditionMainHdrDtlVo;
 
 import java.util.List;
@@ -210,8 +211,8 @@ public class MasterConditionMainController {
 
     @PostMapping("/get-main-cond-dtl")
     @ResponseBody
-    public ResponseData<List<TaMasCondMainDtl>> getMainCondDtl(@RequestBody MasCondMainRequestVo formVo) {
-        ResponseData<List<TaMasCondMainDtl>> response = new ResponseData<>();
+    public ResponseData<List<MasCondMainResponseVo>> getMainCondDtl(@RequestBody MasCondMainRequestVo formVo) {
+        ResponseData<List<MasCondMainResponseVo>> response = new ResponseData<>();
         try {
             response.setData(masterConditionService.getMainCondDtl(formVo));
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
