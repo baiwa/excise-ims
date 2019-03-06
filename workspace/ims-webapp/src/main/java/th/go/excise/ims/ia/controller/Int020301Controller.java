@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.service.Int020301Service;
 import th.go.excise.ims.ia.vo.Int020301HeaderVo;
 import th.go.excise.ims.ia.vo.Int020301InfoVo;
@@ -42,11 +43,10 @@ public class Int020301Controller {
 		try {
 			data = int020301Service.findHeaderByIdSide(idSideStr, budgetYear);
 			responseData.setData(data);
-			responseData.setMessage("SUCCESS");
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("Int0203Controller::findByIdHead ", e);
-			responseData.setMessage(RESPONSE_MESSAGE.ERROR500);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -61,11 +61,10 @@ public class Int020301Controller {
 		try {
 			data = int020301Service.findInfoByIdHdr(idHdrStr, budgetYear);
 			responseData.setData(data);
-			responseData.setMessage("SUCCESS");
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("Int0203Controller::findByIdHead ", e);
-			responseData.setMessage(RESPONSE_MESSAGE.ERROR500);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;

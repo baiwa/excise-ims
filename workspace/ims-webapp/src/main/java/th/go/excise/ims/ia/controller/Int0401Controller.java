@@ -42,12 +42,11 @@ public class Int0401Controller {
 		try {
 			List<Int0401Vo> data = int0401Service.findByBudgetYearAndInspectionWork(budgetYear, inspectionWorkStr, status);
 			response.setData(data);
-			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Int0401Controller::findByBudgetYearAndInspectionWork => ", e);
-			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -61,12 +60,11 @@ public class Int0401Controller {
 		try {
 			BigDecimal data = int0401Service.findStatusByBudgetYearAndInspectionWork(budgetYear, inspectionWorkStr, status);
 			response.setData(data);
-			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Int0401Controller::findStatusByBudgetYearAndInspectionWork => ", e);
-			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -80,12 +78,11 @@ public class Int0401Controller {
 		try {
 			List<Int0401HeaderVo> data = int0401Service.findHeadByBudgetYearAndInspectionWork(budgetYear, inspectionWorkStr);
 			response.setData(data);
-			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Int0401Controller::findHeadByBudgetYearAndInspectionWork => ", e);
-			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -98,12 +95,12 @@ public class Int0401Controller {
 		try {
 			List<Int0401Vo> data = int0401Service.updateRowByStatus(ids, status);
 			response.setData(data);
-			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Int0401Controller::updateRowByStatus => ", e);
-			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;

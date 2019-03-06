@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.service.Int030407Service;
 import th.go.excise.ims.ia.vo.Int030407Vo;
 
@@ -33,12 +35,11 @@ public class Int030407Controller {
 		try {
 			List<Int030407Vo> res = int030407Service.findByBudgetYear(budgetYear, idConfig);
 			response.setData(res);
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 
 		} catch (Exception e) {
 			logger.error("Int030407Controller::findByYear => ", e);
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;

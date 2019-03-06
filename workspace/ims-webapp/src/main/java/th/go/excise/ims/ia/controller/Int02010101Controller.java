@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.service.Int02010101Service;
 import th.go.excise.ims.ia.vo.Int02010101FormVo;
 import th.go.excise.ims.ia.vo.Int02010101Vo;
@@ -42,7 +43,7 @@ public class Int02010101Controller {
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("Int02010101Controller::findByIdHead ", e);
-			responseData.setMessage(RESPONSE_MESSAGE.ERROR500);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -56,11 +57,11 @@ public class Int02010101Controller {
 		try {
 			data = int02010101Service.saveAll(form);
 			responseData.setData(data);
-			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("Int02010101Controller::saveAll ", e);
-			responseData.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;

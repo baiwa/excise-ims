@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
 import th.go.excise.ims.ia.service.Int020101Service;
 import th.go.excise.ims.ia.vo.Int020101NameVo;
@@ -46,7 +48,7 @@ public class Int020101Controller {
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("Int020101Controller::findAllQtnSide ", e);
-			responseData.setMessage("ERROR");
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -63,7 +65,7 @@ public class Int020101Controller {
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("Int020101Controller::findById ", e);
-			responseData.setMessage(RESPONSE_MESSAGE.ERROR500);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -80,7 +82,7 @@ public class Int020101Controller {
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("Int020101Controller::findByIdHead ", e);
-			responseData.setMessage(RESPONSE_MESSAGE.ERROR500);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -92,11 +94,11 @@ public class Int020101Controller {
 		ResponseData<IaQuestionnaireSide> responseData = new ResponseData<IaQuestionnaireSide>();
 		try {
 			responseData.setData(int020101Service.save(request));
-			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("Int020101Controller::save ", e);
-			responseData.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -108,11 +110,11 @@ public class Int020101Controller {
 		ResponseData<List<IaQuestionnaireSide>> responseData = new ResponseData<List<IaQuestionnaireSide>>();
 		try {
 			responseData.setData(int020101Service.saveAll(request));
-			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("Int020101Controller::saveAll ", e);
-			responseData.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -125,11 +127,11 @@ public class Int020101Controller {
 		ResponseData<IaQuestionnaireSide> responseData = new ResponseData<IaQuestionnaireSide>();
 		try {
 			responseData.setData(int020101Service.update(idStr, request));
-			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("Int020101Controller::update ", e);
-			responseData.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -141,11 +143,11 @@ public class Int020101Controller {
 		ResponseData<IaQuestionnaireSide> responseData = new ResponseData<IaQuestionnaireSide>();
 		try {
 			responseData.setData(int020101Service.delete(idStr));
-			responseData.setMessage(RESPONSE_MESSAGE.DELETE.SUCCESS);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.DELETE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("Int020101Controller::delete ", e);
-			responseData.setMessage(RESPONSE_MESSAGE.DELETE.FAILED);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.DELETE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -160,11 +162,10 @@ public class Int020101Controller {
 			String username = UserLoginUtils.getCurrentUsername();
 			data = int020101Service.findByUsername(username);
 			responseData.setData(data);
-			responseData.setMessage("SUCCESS");
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("Int020101Controller::getByUsername ", e);
-			responseData.setMessage(RESPONSE_MESSAGE.ERROR500);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -179,11 +180,10 @@ public class Int020101Controller {
 			String username = UserLoginUtils.getCurrentUsername();
 			data = int020101Service.findByYearAndUsername(year, username);
 			responseData.setData(data);
-			responseData.setMessage("SUCCESS");
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("Int020101Controller::getByYearAndUsername ", e);
-			responseData.setMessage(RESPONSE_MESSAGE.ERROR500);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
