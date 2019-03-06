@@ -28,10 +28,18 @@ import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetHdr;
+import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
+import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainDtl;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWsInc8000M;
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
 import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetHdrRepository;
+import th.go.excise.ims.ta.persistence.repository.TaMasCondMainDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaMasCondMainHdrRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondMainDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondMainHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsInc8000MRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.util.TaxAuditUtils;
@@ -51,6 +59,16 @@ public class DraftWorksheetService {
 	private TaWsReg4000Repository taWsReg4000Repository;
 	@Autowired
 	private TaWsInc8000MRepository taWsInc8000MRepository;
+	
+	@Autowired
+	private TaMasCondMainHdrRepository taMasCondMainHdrRepository;
+	@Autowired
+	private TaMasCondMainDtlRepository taMasCondMainDtlRepository;
+	
+	@Autowired
+	private TaWorksheetCondMainHdrRepository taWorksheetCondMainHdrRepository;
+	@Autowired
+	private TaWorksheetCondMainDtlRepository taWorksheetCondMainDtlRepository;
 	
 	@Autowired
 	private TaDraftWorksheetHdrRepository taDraftWorksheetHdrRepository;
@@ -315,14 +333,47 @@ public class DraftWorksheetService {
 	public void saveDraftWorksheet(TaxOperatorFormVo formVo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
-		logger.info("saveDraftWorksheet officeCode={}, budgetYear={}", officeCode, budgetYear);
 		String draftNumber = worksheetSequenceService.getDraftNumber(officeCode, budgetYear);
+		logger.info("saveDraftWorksheet officeCode={}, budgetYear={}, condNumber={}, draftNumber={}", officeCode, budgetYear, formVo.getCondNumber(), draftNumber);
 		
 		formVo.setBudgetYear(ExciseUtils.getCurrentBudgetYear());
 		String dateStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateStart(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		String dateEnd = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateEnd(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		
-		// Header
+		// ==> Save WorksheetMainCondHdr
+		TaMasCondMainHdr masCondMainHdr = taMasCondMainHdrRepository.findByCondNumber(formVo.getCondNumber());
+		TaWorksheetCondMainHdr conMainHdr = new TaWorksheetCondMainHdr();
+		conMainHdr.setDraftNumber(draftNumber);
+		conMainHdr.setCondGroupDesc(masCondMainHdr.getCondGroupDesc());
+		conMainHdr.setMonthNum(masCondMainHdr.getMonthNum());
+		conMainHdr.setYearMonthStart(dateStart);
+		conMainHdr.setYearMonthEnd(dateEnd);
+		conMainHdr.setCondGroupNum(String.valueOf(masCondMainHdr.getCondGroupNum()));
+		conMainHdr.setNewFacFlag(masCondMainHdr.getNewFacFlag());
+		taWorksheetCondMainHdrRepository.save(conMainHdr);
+
+		// ==> Save WorksheetMainCondDtl
+		List<TaMasCondMainDtl> masCondMainDtlList = taMasCondMainDtlRepository.findByCondNumber(formVo.getCondNumber());
+		List<TaWorksheetCondMainDtl> condMainDtlList = new ArrayList<>();
+		TaWorksheetCondMainDtl condMainDtl = null;
+		for (TaMasCondMainDtl masCondMainDtl : masCondMainDtlList) {
+			condMainDtl = new TaWorksheetCondMainDtl();
+			condMainDtl.setDraftNumber(draftNumber);
+			condMainDtl.setCondGroup(masCondMainDtl.getCondGroup());
+			condMainDtl.setTaxFreqType(masCondMainDtl.getTaxFreqType());
+			condMainDtl.setTaxMonthStart(masCondMainDtl.getTaxMonthStart());
+			condMainDtl.setTaxMonthEnd(masCondMainDtl.getTaxMonthEnd());
+			condMainDtl.setRangeTypeStart(masCondMainDtl.getRangeTypeStart());
+			condMainDtl.setRangeStart(masCondMainDtl.getRangeStart());
+			condMainDtl.setRangeTypeEnd(masCondMainDtl.getRangeTypeEnd());
+			condMainDtl.setRangeEnd(masCondMainDtl.getRangeEnd());
+			condMainDtl.setRiskLevel(masCondMainDtl.getRiskLevel());
+			condMainDtl.setCondType(masCondMainDtl.getCondType());
+			condMainDtlList.add(condMainDtl);
+		}
+		taWorksheetCondMainDtlRepository.saveAll(condMainDtlList);
+		
+		// ==> Save DraftWorksheetHdr
 		TaDraftWorksheetHdr draftHdr = new TaDraftWorksheetHdr();
 		draftHdr.setDraftNumber(draftNumber);
 		draftHdr.setOfficeCode(officeCode);
@@ -332,9 +383,8 @@ public class DraftWorksheetService {
 		draftHdr.setBudgetYear(budgetYear);
 		taDraftWorksheetHdrRepository.save(draftHdr);
 		
-		// Detail
+		// ==> Save DraftWorksheetDtl
 		List<TaxOperatorDetailVo> detailVoList = prepareTaxOperatorDetailVoList(formVo);
-		
 		List<TaDraftWorksheetDtl> dratfDtlList = new ArrayList<>();
 		TaDraftWorksheetDtl draftDtl = new TaDraftWorksheetDtl();
 		for (TaxOperatorDetailVo detailVo : detailVoList) {

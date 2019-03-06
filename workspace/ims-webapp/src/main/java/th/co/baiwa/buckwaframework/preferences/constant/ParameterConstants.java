@@ -12,6 +12,7 @@ public class ParameterConstants {
 		public static final String TA_MAS_COND_MAIN_DESC = "TA_MAS_COND_MAIN_DESC";
 		public static final String TA_AUDIT_STATUS = "TA_AUDIT_STATUS";
 		public static final String TA_CONFIG = "TA_CONFIG";
+		public static final String TA_MAIN_COND_RANGE = "TA_MAIN_COND_RANGE";
 		public static final String IA_RISK_COLOR = "IA_RISK_COLOR";
 	}
 	
@@ -31,6 +32,14 @@ public class ParameterConstants {
 		public static final String SEE_FLAG = "SEE_FLAG";
 		public static final String SELECT_FLAG = "SELECT_FLAG";
 		public static final String SEND_ALL_FLAG = "SEND_ALL_FLAG";
+	}
+	
+	public class TA_MAIN_COND_RANGE {
+		public static final String GREATER_THAN = "1";
+		public static final String GREATER_THAN_OR_EQUALS = "2";
+		public static final String EQUALS = "3";
+		public static final String LESS_THAN_OR_EQUALS = "4";
+		public static final String LESS_THAN = "5";
 	}
 	
 }

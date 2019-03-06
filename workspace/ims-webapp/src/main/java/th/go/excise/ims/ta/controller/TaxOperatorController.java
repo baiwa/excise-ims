@@ -139,7 +139,7 @@ public class TaxOperatorController {
 		ResponseData<List<CondGroupVo>> response = new ResponseData<>();
 
 		try {
-			worksheetService.saveWorksheet(formVo.getDraftNumber(), formVo.getBudgetYear(), formVo.getCondNumber());
+			worksheetService.saveWorksheet(formVo.getDraftNumber(), formVo.getBudgetYear());
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

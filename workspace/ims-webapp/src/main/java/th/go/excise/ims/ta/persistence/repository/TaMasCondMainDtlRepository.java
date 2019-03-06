@@ -17,8 +17,13 @@ public interface TaMasCondMainDtlRepository extends CommonJpaCrudRepository<TaMa
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.budgetYear = :budgetYear and e.condNumber = :condNumber and e.condType = :condType and e.officeCode = :officeCode order by e.condGroup")
 	public List<TaMasCondMainDtl> findByBudgetYearAndCondNumberAndCondTypeAndOfficeCode(@Param("budgetYear") String budgetYear, @Param("condNumber") String condNumber, @Param("condType") String condType, @Param("officeCode") String officeCode);
 	
-	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.condNumber = :condNumber")
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.budgetYear = :budgetYear and e.condNumber = :condNumber and e.condType = :condType order by e.condGroup")
+	public List<TaMasCondMainDtl> findByBudgetYearAndCondNumberAndCondType(@Param("budgetYear") String budgetYear, @Param("condNumber") String condNumber, @Param("condType") String condType);
+	
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.condNumber = :condNumber order by e.condGroup")
 	public List<TaMasCondMainDtl> findByCondNumber(@Param("condNumber") String condNumber);
 
-	public List<TaMasCondMainDtl> findByBudgetYearAndCondNumberAndOfficeCode(String budgetYear, String condNumber, String officeCode);
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.budgetYear = :budgetYear and e.condNumber = :condNumber and e.officeCode = :officeCode order by e.condGroup")
+	public List<TaMasCondMainDtl> findByBudgetYearAndCondNumberAndOfficeCode(@Param("budgetYear") String budgetYear, @Param("condNumber") String condNumber, @Param("officeCode") String officeCode);
+	
 }

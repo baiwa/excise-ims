@@ -35,10 +35,12 @@ public class TaWorksheetCondMainDtl extends BaseEntity {
 	private Integer taxMonthStart;
 	@Column(name = "TAX_MONTH_END")
 	private Integer taxMonthEnd;
-	@Column(name = "RANGE_TYPE")
-	private String rangeType;
+	@Column(name = "RANGE_TYPE_START")
+	private String rangeTypeStart;
 	@Column(name = "RANGE_START")
 	private BigDecimal rangeStart;
+	@Column(name = "RANGE_TYPE_END")
+	private String rangeTypeEnd;
 	@Column(name = "RANGE_END")
 	private BigDecimal rangeEnd;
 	@Column(name = "RISK_LEVEL")
@@ -102,12 +104,12 @@ public class TaWorksheetCondMainDtl extends BaseEntity {
 		this.taxMonthEnd = taxMonthEnd;
 	}
 
-	public String getRangeType() {
-		return rangeType;
+	public String getRangeTypeStart() {
+		return rangeTypeStart;
 	}
 
-	public void setRangeType(String rangeType) {
-		this.rangeType = rangeType;
+	public void setRangeTypeStart(String rangeTypeStart) {
+		this.rangeTypeStart = rangeTypeStart;
 	}
 
 	public BigDecimal getRangeStart() {
@@ -116,6 +118,14 @@ public class TaWorksheetCondMainDtl extends BaseEntity {
 
 	public void setRangeStart(BigDecimal rangeStart) {
 		this.rangeStart = rangeStart;
+	}
+
+	public String getRangeTypeEnd() {
+		return rangeTypeEnd;
+	}
+
+	public void setRangeTypeEnd(String rangeTypeEnd) {
+		this.rangeTypeEnd = rangeTypeEnd;
 	}
 
 	public BigDecimal getRangeEnd() {

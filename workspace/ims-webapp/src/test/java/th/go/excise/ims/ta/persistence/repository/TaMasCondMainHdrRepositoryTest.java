@@ -11,7 +11,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
-import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
 
@@ -35,7 +34,7 @@ public class TaMasCondMainHdrRepositoryTest {
 	
 	@Test
 	public void test_findByBudgetYear() {
-		TaMasCondMainHdr masCondHdr = taMasCondHdrRepository.findByBudgetYearAndCondNumberAndOfficeCode("2570", "000000-2562-01", UserLoginUtils.getCurrentUserBean().getOfficeCode());
+		TaMasCondMainHdr masCondHdr = taMasCondHdrRepository.findByCondNumber("000000-2562-01");
 		System.out.println(ToStringBuilder.reflectionToString(masCondHdr, ToStringStyle.JSON_STYLE));
 	}
 	
