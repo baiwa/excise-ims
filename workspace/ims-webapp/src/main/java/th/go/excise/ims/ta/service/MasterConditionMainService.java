@@ -230,18 +230,23 @@ public class MasterConditionMainService {
             vo.setBudgetYear(dtl.getBudgetYear());
             vo.setCondNumber(dtl.getCondNumber());
             vo.setCondGroup(dtl.getCondGroup());
-            vo.setTaxFreqType(ApplicationCache.getParamInfoByCode("TA_MAIN_COND_FREQ_TYPE", dtl.getTaxFreqType()).getValue1());
+            if ("O".equals(dtl.getCondType())) {
+                vo.setCondTypeDesc(ApplicationCache.getParamInfoByCode("TA_MAS_COND_MAIN_DESC", "NEW_COMP").getValue1());
+            } else {
+                vo.setTaxFreqType(dtl.getTaxFreqType());
+                vo.setTaxFreqTypeDesc(ApplicationCache.getParamInfoByCode("TA_MAIN_COND_FREQ_TYPE", dtl.getTaxFreqType()).getValue1());
+                vo.setRangeTypeStart(dtl.getRangeTypeStart());
+                vo.setRangeTypeStartDesc(ApplicationCache.getParamInfoByCode("TA_MAIN_COND_RANGE", dtl.getRangeTypeStart()).getValue1());
+                vo.setRangeTypeEnd(dtl.getRangeTypeEnd());
+                vo.setRangeTypeEndDesc(ApplicationCache.getParamInfoByCode("TA_MAIN_COND_RANGE", dtl.getRangeTypeEnd()).getValue1());
+                vo.setRiskLevelDesc(ApplicationCache.getParamInfoByCode("TA_RISK_LEVEL", dtl.getRiskLevel()).getValue1());
+            }
             vo.setTaxMonthStart(dtl.getTaxMonthStart());
             vo.setTaxMonthEnd(dtl.getTaxMonthEnd());
-            vo.setRangeTypeStart(ApplicationCache.getParamInfoByCode("TA_MAIN_COND_RANGE", dtl.getRangeTypeStart()).getValue1());
             vo.setRangeStart(dtl.getRangeStart());
-            vo.setRangeTypeEnd(ApplicationCache.getParamInfoByCode("TA_MAIN_COND_RANGE", dtl.getRangeTypeEnd()).getValue1());
             vo.setRangeEnd(dtl.getRangeEnd());
             vo.setRiskLevel(dtl.getRiskLevel());
             vo.setCondType(dtl.getCondType());
-            if ("O".equals(dtl.getCondType())){
-                vo.setCondTypeDesc(ApplicationCache.getParamInfoByCode("TA_MAS_COND_MAIN_DESC", "NEW_COMP").getValue1());
-            }
 
             listVo.add(vo);
 

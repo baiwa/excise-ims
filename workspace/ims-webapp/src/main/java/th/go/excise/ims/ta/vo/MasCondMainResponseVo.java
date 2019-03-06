@@ -11,15 +11,51 @@ public class MasCondMainResponseVo {
     private String condNumber;
     private String condGroup;
     private String taxFreqType;
+    private String taxFreqTypeDesc;
     private Integer taxMonthStart;
     private Integer taxMonthEnd;
     private String rangeTypeStart;
+    private String rangeTypeStartDesc;
     private BigDecimal rangeStart;
     private String rangeTypeEnd;
+    private String rangeTypeEndDesc;
     private BigDecimal rangeEnd;
     private String riskLevel;
+    private String riskLevelDesc;
     private String condType;
     private String condTypeDesc;
+
+    public String getRangeTypeStartDesc() {
+        return rangeTypeStartDesc;
+    }
+
+    public void setRangeTypeStartDesc(String rangeTypeStartDesc) {
+        this.rangeTypeStartDesc = rangeTypeStartDesc;
+    }
+
+    public String getRangeTypeEndDesc() {
+        return rangeTypeEndDesc;
+    }
+
+    public void setRangeTypeEndDesc(String rangeTypeEndDesc) {
+        this.rangeTypeEndDesc = rangeTypeEndDesc;
+    }
+
+    public String getTaxFreqTypeDesc() {
+        return taxFreqTypeDesc;
+    }
+
+    public void setTaxFreqTypeDesc(String taxFreqTypeDesc) {
+        this.taxFreqTypeDesc = taxFreqTypeDesc;
+    }
+
+    public String getRiskLevelDesc() {
+        return riskLevelDesc;
+    }
+
+    public void setRiskLevelDesc(String riskLevelDesc) {
+        this.riskLevelDesc = riskLevelDesc;
+    }
 
     public Long getMasCondMainDtlId() {
         return masCondMainDtlId;
