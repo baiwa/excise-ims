@@ -12,6 +12,7 @@ public class ParameterConstants {
 		public static final String TA_MAS_COND_MAIN_DESC = "TA_MAS_COND_MAIN_DESC";
 		public static final String TA_AUDIT_STATUS = "TA_AUDIT_STATUS";
 		public static final String TA_CONFIG = "TA_CONFIG";
+		public static final String IA_RISK_COLOR = "IA_RISK_COLOR";
 	}
 	
 	// Parameter Group: SYSTEM_CONFIG
