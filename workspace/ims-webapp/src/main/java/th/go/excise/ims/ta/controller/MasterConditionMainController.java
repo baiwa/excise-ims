@@ -208,4 +208,20 @@ public class MasterConditionMainController {
         return response;
     }
 
+    @PostMapping("/get-main-cond-dtl")
+    @ResponseBody
+    public ResponseData<List<TaMasCondMainDtl>> getMainCondDtl(@RequestBody MasCondMainRequestVo formVo) {
+        ResponseData<List<TaMasCondMainDtl>> response = new ResponseData<>();
+        try {
+            response.setData(masterConditionService.getMainCondDtl(formVo));
+            response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+            response.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.FAILED);
+        }
+        return response;
+    }
+
 }

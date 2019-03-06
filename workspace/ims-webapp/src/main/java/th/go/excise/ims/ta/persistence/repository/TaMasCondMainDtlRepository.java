@@ -19,5 +19,6 @@ public interface TaMasCondMainDtlRepository extends CommonJpaCrudRepository<TaMa
 	
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.condNumber = :condNumber")
 	public List<TaMasCondMainDtl> findByCondNumber(@Param("condNumber") String condNumber);
-	
+
+	public List<TaMasCondMainDtl> findByBudgetYearAndCondNumberAndOfficeCode(String budgetYear, String condNumber, String officeCode);
 }

@@ -96,34 +96,34 @@ public class MasterConditionMainService {
 			List<TaMasCondMainDtl> list = taMasCondMainDtlRepository.findByBudgetYearAndCondNumberAndCondTypeAndOfficeCode(formVo.getHeader().getBudgetYear(), formVo.getHeader().getCondNumber(), TA_MAS_COND_MAIN_TYPE.TAX, UserLoginUtils.getCurrentUserBean().getOfficeCode());
 //			List<TaMasCondDtlTax> listY = taMasCondDtlTaxRepository.findByBudgetYearAndIsDeleted(formVo.getHeader().getBudgetYear(), FLAG.Y_FLAG);
 
-			Collections.sort(list, new Comparator<TaMasCondMainDtl>() {
-				public int compare(TaMasCondMainDtl dtlTax, TaMasCondMainDtl dtlTax2) {
-					int condGroup = dtlTax.getCondGroup().compareTo(dtlTax2.getCondGroup());
-					if (condGroup == 0) {
-						return condGroup;
-					}
-					return  Long.valueOf(dtlTax.getCondGroup()) > Long.valueOf(dtlTax2.getCondGroup()) ? 1 : Long.valueOf(dtlTax.getCondGroup()) < Long.valueOf(dtlTax2.getCondGroup()) ? -1 : 0;
-				}
-			});
+            Collections.sort(list, new Comparator<TaMasCondMainDtl>() {
+                public int compare(TaMasCondMainDtl dtlTax, TaMasCondMainDtl dtlTax2) {
+                    int condGroup = dtlTax.getCondGroup().compareTo(dtlTax2.getCondGroup());
+                    if (condGroup == 0) {
+                        return condGroup;
+                    }
+                    return Long.valueOf(dtlTax.getCondGroup()) > Long.valueOf(dtlTax2.getCondGroup()) ? 1 : Long.valueOf(dtlTax.getCondGroup()) < Long.valueOf(dtlTax2.getCondGroup()) ? -1 : 0;
+                }
+            });
 
-			if (list.size() - formVo.getDetail().size() > 0) {
-				boolean checkDelete = true;
-				for (TaMasCondMainDtl obj : list) {
-					checkDelete = true;
-					for (TaMasCondMainDtl ob : formVo.getDetail()) {
-						if (ob.getMasCondMainDtlId() == obj.getMasCondMainDtlId()) {
-							checkDelete = false;
-							break;
-						}
-					}
-					if (checkDelete) {
-						dtl = taMasCondMainDtlRepository.findById(obj.getMasCondMainDtlId()).get();
-						dtl.setIsDeleted(FLAG.Y_FLAG);
-						dtlList.add(dtl);
-					}
-				}
-				taMasCondMainDtlRepository.saveAll(dtlList);
-			} 
+            if (list.size() - formVo.getDetail().size() > 0) {
+                boolean checkDelete = true;
+                for (TaMasCondMainDtl obj : list) {
+                    checkDelete = true;
+                    for (TaMasCondMainDtl ob : formVo.getDetail()) {
+                        if (ob.getMasCondMainDtlId() == obj.getMasCondMainDtlId()) {
+                            checkDelete = false;
+                            break;
+                        }
+                    }
+                    if (checkDelete) {
+                        dtl = taMasCondMainDtlRepository.findById(obj.getMasCondMainDtlId()).get();
+                        dtl.setIsDeleted(FLAG.Y_FLAG);
+                        dtlList.add(dtl);
+                    }
+                }
+                taMasCondMainDtlRepository.saveAll(dtlList);
+            }
 //			else if (list.size() - formVo.getDetail().size() < 0) {
 //				for (TaMasCondDtlTax obj : listY) {
 //					dtl = taMasCondDtlTaxRepository.findById(obj.getCondDtlTaxId()).get(); 
@@ -216,5 +216,9 @@ public class MasterConditionMainService {
 	public List<TaMasCondMainHdr> getMainCondHdt(MasCondMainRequestVo formVo){
 		return taMasCondMainHdrRepository.findByBudgetYearAndOfficeCode(formVo.getBudgetYear(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
 	}
+
+    public List<TaMasCondMainDtl> getMainCondDtl(MasCondMainRequestVo formVo) {
+        return taMasCondMainDtlRepository.findByBudgetYearAndCondNumberAndOfficeCode(formVo.getBudgetYear(), formVo.getCondNumber(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
+    }
 
 }
