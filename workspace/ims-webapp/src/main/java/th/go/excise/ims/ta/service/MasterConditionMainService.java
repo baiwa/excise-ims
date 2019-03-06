@@ -238,7 +238,9 @@ public class MasterConditionMainService {
                 vo.setRangeTypeStart(dtl.getRangeTypeStart());
                 vo.setRangeTypeStartDesc(ApplicationCache.getParamInfoByCode("TA_MAIN_COND_RANGE", dtl.getRangeTypeStart()).getValue1());
                 vo.setRangeTypeEnd(dtl.getRangeTypeEnd());
-                vo.setRangeTypeEndDesc(ApplicationCache.getParamInfoByCode("TA_MAIN_COND_RANGE", dtl.getRangeTypeEnd()).getValue1());
+                if (dtl.getRangeTypeEnd()!= null){
+                    vo.setRangeTypeEndDesc(ApplicationCache.getParamInfoByCode("TA_MAIN_COND_RANGE", dtl.getRangeTypeEnd()).getValue1());
+                }
                 vo.setRiskLevelDesc(ApplicationCache.getParamInfoByCode("TA_RISK_LEVEL", dtl.getRiskLevel()).getValue1());
             }
             vo.setTaxMonthStart(dtl.getTaxMonthStart());
