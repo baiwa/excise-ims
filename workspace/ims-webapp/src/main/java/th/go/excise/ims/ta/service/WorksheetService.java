@@ -71,9 +71,23 @@ public class WorksheetService {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String analysisNumber = worksheetSeqCtrlService.getAnalysisNumber(officeCode, budgetYear);
 		logger.info("saveWorksheet budgetYear={}, draftNumber={}, analysisNumber={}", budgetYear, draftNumber, analysisNumber);
-
+		
+		// ==> Update WorksheetCondMainHdr
 		TaWorksheetCondMainHdr condMainHdr = taWorksheetCondMainHdrRepository.findByDraftNumber(draftNumber);
-
+		condMainHdr.setAnalysisNumber(analysisNumber);
+		taWorksheetCondMainHdrRepository.save(condMainHdr);
+		
+		// ==> Update WorksheetCondMainDtl
+		List<TaWorksheetCondMainDtl> condMainDtlList = taWorksheetCondMainDtlRepository.findByDraftNumber(draftNumber);
+		String indexLastCondition = null;
+		for (TaWorksheetCondMainDtl condMainDtl : condMainDtlList) {
+			if (TA_MAS_COND_MAIN_TYPE.OTHER.equals(condMainDtl.getCondType())) {
+				indexLastCondition = condMainDtl.getCondGroup();
+			}
+			condMainDtl.setAnalysisNumber(analysisNumber);
+		}
+		taWorksheetCondMainDtlRepository.saveAll(condMainDtlList);
+		
 		// ==> Save WorksheetHdr
 		TaWorksheetHdr worksheetHdr = new TaWorksheetHdr();
 		worksheetHdr.setOfficeCode(officeCode);
@@ -84,13 +98,6 @@ public class WorksheetService {
 		taWorksheetHdrRepository.save(worksheetHdr);
 
 		// ==> Save WorksheetDtl
-		List<TaWorksheetCondMainDtl> condMainDtlList = taWorksheetCondMainDtlRepository.findByDraftNumber(draftNumber);
-		String indexLastCondition = null;
-		for (TaWorksheetCondMainDtl condMainDtl : condMainDtlList) {
-			if (TA_MAS_COND_MAIN_TYPE.OTHER.equals(condMainDtl.getCondType())) {
-				indexLastCondition = condMainDtl.getCondGroup();
-			}
-		}
 		List<TaxDratfVo> taxDratfVoList = taDraftWorksheetDtlRepository.findByDraftNumber(draftNumber);
 		List<TaWorksheetDtl> worksheetDtlList = new ArrayList<>();
 		TaWorksheetDtl worksheetDtl = null;
