@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
@@ -34,8 +35,8 @@ import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsMasterRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsStatusRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskSelectCaseRepository;
-import th.go.excise.ims.ia.persistence.repository.jdbc.Int0401JdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int030101JdbcRepository;
+import th.go.excise.ims.ia.persistence.repository.jdbc.Int0401JdbcRepository;
 import th.go.excise.ims.ia.util.ExcalUtil;
 import th.go.excise.ims.ia.vo.Int030101FormVo;
 import th.go.excise.ims.ia.vo.Int030101Vo;
@@ -75,7 +76,8 @@ public class Int030101Service {
 
 	@Autowired
 	private ExcalUtil excalUtil;
-
+	
+	@Transactional
 	public Int030101Vo saveFactors(Int030101FormVo form) {
 		// Save IaRiskFactorsMaster
 		IaRiskFactorsMaster dataFactorsMaster = new IaRiskFactorsMaster();

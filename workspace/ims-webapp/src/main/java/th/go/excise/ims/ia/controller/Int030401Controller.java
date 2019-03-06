@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
-import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsData;
 import th.go.excise.ims.ia.service.Int030401Service;
-import th.go.excise.ims.ia.vo.Int030102FormVo;
+import th.go.excise.ims.ia.vo.Int030401FormVo;
+import th.go.excise.ims.ia.vo.Int030401Vo;
 
 @Controller
 @RequestMapping("/api/ia/int03/04/01")
@@ -27,11 +27,11 @@ public class Int030401Controller {
 
 	@PostMapping("/factorsDataList")
 	@ResponseBody
-	public DataTableAjax<IaRiskFactorsData> factorsDataList(@RequestBody IaRiskFactorsData form) {
-		DataTableAjax<IaRiskFactorsData> response = new DataTableAjax<IaRiskFactorsData>();
+	public DataTableAjax<Int030401Vo> factorsDataList(@RequestBody Int030401FormVo form) {
+		DataTableAjax<Int030401Vo> response = new DataTableAjax<Int030401Vo>();
 
 		try {
-			List<IaRiskFactorsData> iaRiskFactorsMasterList = new ArrayList<IaRiskFactorsData>();
+			List<Int030401Vo> iaRiskFactorsMasterList = new ArrayList<Int030401Vo>();
 			iaRiskFactorsMasterList = int030401Service.factorsDataList(form);
 			response.setData(iaRiskFactorsMasterList);
 			
