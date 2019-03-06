@@ -13,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
@@ -28,7 +29,7 @@ public class TaMasCondMainDtlRepositoryTest {
 	
 	@Test
 	public void test_findByBudgetYear() {
-		List<TaMasCondMainDtl> masCondDtlTaxList = taMasCondDtlTaxRepository.findByBudgetYearAndCondNumberAndCondType("2562", "000000-2562-01", TA_MAS_COND_MAIN_TYPE.TAX);
+		List<TaMasCondMainDtl> masCondDtlTaxList = taMasCondDtlTaxRepository.findByBudgetYearAndCondNumberAndCondTypeAndOfficeCode("2562", "000000-2562-01", TA_MAS_COND_MAIN_TYPE.TAX, UserLoginUtils.getCurrentUserBean().getOfficeCode());
 		for (TaMasCondMainDtl masCondDtlTax : masCondDtlTaxList) {
 			System.out.println(ToStringBuilder.reflectionToString(masCondDtlTax, ToStringStyle.JSON_STYLE));
 		}

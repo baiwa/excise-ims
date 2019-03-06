@@ -84,7 +84,7 @@ public class WorksheetService {
         logger.info("saveWorksheet budgetYear={}, draftNumber={}, analysisNumber={}", budgetYear, draftNumber, analysisNumber);
 
         // ==> Save WorksheetMainCondHdr
-        TaMasCondMainHdr masCondMainHdr = taMasCondMainHdrRepository.findByBudgetYearAndCondNumber(budgetYear, condNumber);
+        TaMasCondMainHdr masCondMainHdr = taMasCondMainHdrRepository.findByBudgetYearAndCondNumberAndOfficeCode(budgetYear, condNumber, UserLoginUtils.getCurrentUserBean().getOfficeCode());
         TaDraftWorksheetHdr draftWorksheetHdr = taDraftWorksheetHdrRepository.findByDraftNumber(draftNumber);
         TaWorksheetCondMainHdr conMainHdr = new TaWorksheetCondMainHdr();
         conMainHdr.setAnalysisNumber(analysisNumber);
