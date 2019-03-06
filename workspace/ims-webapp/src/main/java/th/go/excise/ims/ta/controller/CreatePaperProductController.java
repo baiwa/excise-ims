@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.ta.service.CreatePaperProductService;
+import th.go.excise.ims.ta.vo.CppRawMaterialBalanceVo;
+import th.go.excise.ims.ta.vo.CppRawMaterialPaymentVo;
+import th.go.excise.ims.ta.vo.CppRawMaterialReceiveVo;
 import th.go.excise.ims.ta.vo.CreatePaperFormVo;
-import th.go.excise.ims.ta.vo.CreatePaperProductRawMaterialReceiptVo;
 
 @Controller
 @RequestMapping("/api/ta/create-paper-product")
@@ -27,15 +29,45 @@ public class CreatePaperProductController {
 		this.createPaperProductService = createPaperProductService;
 	}
 
-	@PostMapping("/list-raw-material-receipt")
+	/*------MaterialReceive-----*/
+	@PostMapping("/list-raw-material-receive")
 	@ResponseBody
-	public DataTableAjax<CreatePaperProductRawMaterialReceiptVo> listRawMaterialReceiptVo(
-			@RequestBody CreatePaperFormVo request) {
+	public DataTableAjax<CppRawMaterialReceiveVo> listRawMaterialReceive(@RequestBody CreatePaperFormVo request) {
 		logger.info("listRawMaterialReceipt");
 
-		DataTableAjax<CreatePaperProductRawMaterialReceiptVo> response = new DataTableAjax<>();
+		DataTableAjax<CppRawMaterialReceiveVo> response = new DataTableAjax<>();
 		try {
-			response = createPaperProductService.listRowMaterialReceipt(request);
+			response = createPaperProductService.listRowMaterialReceive(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
+	}
+
+	/*------MaterialPayment-----*/
+	@PostMapping("/list-raw-material-payment")
+	@ResponseBody
+	public DataTableAjax<CppRawMaterialPaymentVo> listRawMaterialPayment(@RequestBody CreatePaperFormVo request) {
+		logger.info("listRawMaterialPayment");
+
+		DataTableAjax<CppRawMaterialPaymentVo> response = new DataTableAjax<>();
+		try {
+			response = createPaperProductService.listRowMaterialPayment(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
+	}
+
+	/*------MaterialBalance-----*/
+	@PostMapping("/list-raw-material-balance")
+	@ResponseBody
+	public DataTableAjax<CppRawMaterialBalanceVo> listRawMaterialBalance(@RequestBody CreatePaperFormVo request) {
+		logger.info("listRawMaterialBalance");
+
+		DataTableAjax<CppRawMaterialBalanceVo> response = new DataTableAjax<>();
+		try {
+			response = createPaperProductService.listRowMaterialBalance(request);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

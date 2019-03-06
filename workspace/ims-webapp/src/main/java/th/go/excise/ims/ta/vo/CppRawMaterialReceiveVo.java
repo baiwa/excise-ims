@@ -1,6 +1,6 @@
 package th.go.excise.ims.ta.vo;
 
-public class CreatePaperProductRawMaterialReceiptVo {
+public class CppRawMaterialReceiveVo {
 
 	private Long id;
 	private String list;
@@ -8,7 +8,7 @@ public class CreatePaperProductRawMaterialReceiptVo {
 	private String dailyAccount;
 	private String monthStatement;
 	private String externalData;
-	private String maximumDifference;
+	private String maxDiff;
 
 	public Long getId() {
 		return id;
@@ -58,12 +58,12 @@ public class CreatePaperProductRawMaterialReceiptVo {
 		this.externalData = externalData;
 	}
 
-	public String getMaximumDifference() {
-		return maximumDifference;
+	public String getMaxDiff() {
+		return maxDiff;
 	}
 
-	public void setMaximumDifference(String maximumDifference) {
-		this.maximumDifference = maximumDifference;
+	public void setMaxDiff(String maxDiff) {
+		this.maxDiff = maxDiff;
 	}
 
 }
