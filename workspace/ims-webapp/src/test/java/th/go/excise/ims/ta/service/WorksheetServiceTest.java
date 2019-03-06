@@ -28,7 +28,7 @@ public class WorksheetServiceTest {
 		String draftNumber = "000000-2562-000004";
 		String budgetYear = "2562";
 		String condNumber = "000000-2562-01";
-		worksheetService.saveWorksheet(draftNumber, budgetYear, condNumber);
+		worksheetService.saveWorksheet(draftNumber, budgetYear);
 	}
 	
 	@Test
