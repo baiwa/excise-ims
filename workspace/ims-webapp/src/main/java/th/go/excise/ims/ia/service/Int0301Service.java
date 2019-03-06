@@ -26,7 +26,7 @@ import th.go.excise.ims.ia.vo.Int0301Vo;
 @Service
 public class Int0301Service {
 	private Logger logger = LoggerFactory.getLogger(Int0301Service.class);
-	
+
 	@Autowired
 	private Int0301JdbcRepository int0301JdbcRepository;
 
@@ -62,18 +62,18 @@ public class Int0301Service {
 					String lowS = int0301Vo.getIaRiskFactorsConfig().getLowStart();
 					String lowUnit = int0301Vo.getIaRiskFactorsConfig().getRiskUnit();
 
-					listdynamic.add(convertCondition(lowCon,lowS,"",lowUnit,riskUnit));
+					listdynamic.add(convertCondition(lowCon, lowS, "", lowUnit, riskUnit));
 
 					String mediumS = int0301Vo.getIaRiskFactorsConfig().getMediumStart();
 					String mediumE = int0301Vo.getIaRiskFactorsConfig().getMediumEnd();
 					String mediumCon = int0301Vo.getIaRiskFactorsConfig().getMediumCondition();
 					String mediumUnit = int0301Vo.getIaRiskFactorsConfig().getRiskUnit();
-					listdynamic.add(convertCondition(mediumCon,mediumS,mediumE,mediumUnit,riskUnit));
+					listdynamic.add(convertCondition(mediumCon, mediumS, mediumE, mediumUnit, riskUnit));
 
 					String highS = int0301Vo.getIaRiskFactorsConfig().getHighStart();
 					String highCon = int0301Vo.getIaRiskFactorsConfig().getHighCondition();
 					String highUnit = int0301Vo.getIaRiskFactorsConfig().getRiskUnit();
-					listdynamic.add(convertCondition(highCon,highS,"",highUnit,riskUnit));
+					listdynamic.add(convertCondition(highCon, highS, "", highUnit, riskUnit));
 
 					int0301Vo.setDatalistdynamic(listdynamic);
 					iaRiskFactorsList2.add(int0301Vo);
@@ -86,30 +86,30 @@ public class Int0301Service {
 					String veryLowS = int0301Vo2.getIaRiskFactorsConfig().getVerylowStart();
 					String veryLowCon = int0301Vo2.getIaRiskFactorsConfig().getVerylowCondition();
 					String veryLowUnit = int0301Vo2.getIaRiskFactorsConfig().getRiskUnit();
- 					listdynamic.add(convertCondition(veryLowCon,veryLowS,"",veryLowUnit,riskUnit));
+					listdynamic.add(convertCondition(veryLowCon, veryLowS, "", veryLowUnit, riskUnit));
 
 					String lowS = int0301Vo2.getIaRiskFactorsConfig().getLowStart();
 					String lowE = int0301Vo2.getIaRiskFactorsConfig().getLowEnd();
 					String lowCon = int0301Vo2.getIaRiskFactorsConfig().getLowCondition();
 					String lowUnit = int0301Vo2.getIaRiskFactorsConfig().getRiskUnit();
-					listdynamic.add(convertCondition(lowCon,lowS,lowE,lowUnit,riskUnit));
+					listdynamic.add(convertCondition(lowCon, lowS, lowE, lowUnit, riskUnit));
 
 					String mediumS = int0301Vo2.getIaRiskFactorsConfig().getMediumStart();
 					String mediumE = int0301Vo2.getIaRiskFactorsConfig().getMediumEnd();
 					String mediumCon = int0301Vo2.getIaRiskFactorsConfig().getMediumCondition();
 					String mediumUnit = int0301Vo2.getIaRiskFactorsConfig().getRiskUnit();
-					listdynamic.add(convertCondition(mediumCon,mediumS,mediumE,mediumUnit,riskUnit));
+					listdynamic.add(convertCondition(mediumCon, mediumS, mediumE, mediumUnit, riskUnit));
 
 					String highS = int0301Vo2.getIaRiskFactorsConfig().getHighStart();
 					String highE = int0301Vo2.getIaRiskFactorsConfig().getHighEnd();
 					String highCon = int0301Vo2.getIaRiskFactorsConfig().getHighCondition();
 					String highUnit = int0301Vo2.getIaRiskFactorsConfig().getRiskUnit();
-					listdynamic.add(convertCondition(highCon,highS,highE,highUnit,riskUnit));
+					listdynamic.add(convertCondition(highCon, highS, highE, highUnit, riskUnit));
 
 					String veryHighS = int0301Vo2.getIaRiskFactorsConfig().getVeryhighStart();
 					String veryHighCon = int0301Vo2.getIaRiskFactorsConfig().getVeryhighCondition();
 					String veryHighUnit = int0301Vo2.getIaRiskFactorsConfig().getRiskUnit();
-					listdynamic.add(convertCondition(veryHighCon,veryHighS,"",veryHighUnit,riskUnit));
+					listdynamic.add(convertCondition(veryHighCon, veryHighS, "", veryHighUnit, riskUnit));
 
 					int0301Vo2.setDatalistdynamic(listdynamic);
 					iaRiskFactorsList2.add(int0301Vo2);
@@ -121,24 +121,24 @@ public class Int0301Service {
 		return iaRiskFactorsList2;
 
 	}
-	
-	public String convertCondition(String condition,String start,String end,String unit,String riskUnit) {
-		if("บาท".equals(riskUnit)) {
-			if(StringUtils.isNotBlank(start)) {
-				start  = String.format("%,.0f", new BigDecimal(start));
-			}
-			if(StringUtils.isNotBlank(end)) {						
-				end  = String.format("%,.0f", new BigDecimal(end));
-			}
+
+	public String convertCondition(String condition, String start, String end, String unit, String riskUnit) {
+//		if("บาท".equals(riskUnit)) {
+		if (StringUtils.isNotBlank(start)) {
+			start = String.format("%,.0f", new BigDecimal(start));
 		}
+		if (StringUtils.isNotBlank(end)) {
+			end = String.format("%,.0f", new BigDecimal(end));
+		}
+//		}
 		String res = "";
-		if(StringUtils.isNotBlank(condition)) {
-			if("<".equals(condition)) {
-				res =   " น้อยกว่า  " + start + " " + unit;	
-			}else if ("<>".equals(condition)) {
-				res = " ระหว่าง  " + start + " ถึง " + end + " " + unit;	
-			}else if (">".equals(condition)) {
-				res = " มากกว่า  " + start + " " + unit;	
+		if (StringUtils.isNotBlank(condition)) {
+			if ("<".equals(condition)) {
+				res = " น้อยกว่า  " + start + " " + unit;
+			} else if ("<>".equals(condition)) {
+				res = " ระหว่าง  " + start + " ถึง " + end + " " + unit;
+			} else if (">".equals(condition)) {
+				res = " มากกว่า  " + start + " " + unit;
 			}
 		}
 		return res;
@@ -206,7 +206,7 @@ public class Int0301Service {
 			entityFactors.setDateCriteria(ConvertDateUtils.formatDateToString(new Date(), ConvertDateUtils.DD_MM_YYYY));
 			iaRiskFactorsRepository.save(entityFactors);
 		}
-		
+
 	}
 
 }
