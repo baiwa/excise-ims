@@ -11,13 +11,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.ta.service.CreatePaperProductService;
+import th.go.excise.ims.ta.vo.CppCheckPriceVo;
 import th.go.excise.ims.ta.vo.CppFinishedGoodsPaymentVo;
 import th.go.excise.ims.ta.vo.CppFinishedGoodsReceiveVo;
+import th.go.excise.ims.ta.vo.CppPayForeignFinishedGoodsVo;
 import th.go.excise.ims.ta.vo.CppRawMaterialBalanceVo;
 import th.go.excise.ims.ta.vo.CppRawMaterialFinishedGoodsRelationshipVo;
 import th.go.excise.ims.ta.vo.CppRawMaterialPaymentVo;
 import th.go.excise.ims.ta.vo.CppRawMaterialReceiveVo;
 import th.go.excise.ims.ta.vo.CppRawMaterialTaxBreakVo;
+import th.go.excise.ims.ta.vo.CppTaxVo;
+import th.go.excise.ims.ta.vo.CppUnitPriceVo;
 import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 
 @Controller
@@ -138,4 +142,66 @@ public class CreatePaperProductController {
 		}
 		return response;
 	}
+
+	/*------UnitPrice-----*/
+	@PostMapping("/list-unit-price")
+	@ResponseBody
+	public DataTableAjax<CppUnitPriceVo> listUnitPrice(@RequestBody CreatePaperFormVo request) {
+		logger.info("listUnitPrice");
+
+		DataTableAjax<CppUnitPriceVo> response = new DataTableAjax<>();
+		try {
+			response = createPaperProductService.listUnitPrice(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
+	}
+
+	/*------CheckPrice-----*/
+	@PostMapping("/list-check-price")
+	@ResponseBody
+	public DataTableAjax<CppCheckPriceVo> listCheckPrice(@RequestBody CreatePaperFormVo request) {
+		logger.info("listCheckPrice");
+
+		DataTableAjax<CppCheckPriceVo> response = new DataTableAjax<>();
+		try {
+			response = createPaperProductService.listCheckPrice(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
+	}
+
+	/*------PayForeignFinishedGoods-----*/
+	@PostMapping("/list-pay-foreign-finished-goods")
+	@ResponseBody
+	public DataTableAjax<CppPayForeignFinishedGoodsVo> listPayForeignFinishedGoods(
+			@RequestBody CreatePaperFormVo request) {
+		logger.info("listPayForeignFinishedGoods");
+
+		DataTableAjax<CppPayForeignFinishedGoodsVo> response = new DataTableAjax<>();
+		try {
+			response = createPaperProductService.listPayForeignFinishedGoods(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
+	}
+
+	/*------Tax-----*/
+	@PostMapping("/list-tax")
+	@ResponseBody
+	public DataTableAjax<CppTaxVo> listTax(@RequestBody CreatePaperFormVo request) {
+		logger.info("listTax");
+
+		DataTableAjax<CppTaxVo> response = new DataTableAjax<>();
+		try {
+			response = createPaperProductService.listTax(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
+	}
+
 }
