@@ -1,13 +1,7 @@
 package th.go.excise.ims.ta.service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
@@ -19,7 +13,13 @@ import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondMainDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondMainHdrRepository;
 import th.go.excise.ims.ta.vo.ConditionMessageVo;
+import th.go.excise.ims.ta.vo.MasCondMainRequestVo;
 import th.go.excise.ims.ta.vo.MasterConditionMainHdrDtlVo;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 @Service
 public class MasterConditionMainService {
@@ -197,6 +197,10 @@ public class MasterConditionMainService {
 	public List<ParamInfo> getMainCondRange() {
 		List<ParamInfo> list = ApplicationCache.getParamInfoListByGroupCode("TA_MAIN_COND_RANGE");
 		return list;
+	}
+
+	public List<TaMasCondMainHdr> getMainCondHdt(MasCondMainRequestVo formVo){
+		return taMasCondMainHdrRepository.findByBudgetYearAndOfficeCode(formVo.getBudgetYear(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
 	}
 
 }
