@@ -62,6 +62,23 @@ public class MasterConditionMainController {
         }
         return response;
     }
+    
+    @PostMapping("/delete")
+    @ResponseBody
+    public ResponseData<TaMasCondMainHdr> deleteCondMain(@RequestBody TaMasCondMainHdr form) {
+        ResponseData<TaMasCondMainHdr> response = new ResponseData<TaMasCondMainHdr>();
+        try {
+            masterConditionService.deleteCondMain(form);
+            response.setData(null);
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.FAILED);
+        }
+        return response;
+    }
 
     @PostMapping("/create-dtl")
     @ResponseBody
