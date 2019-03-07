@@ -9,8 +9,17 @@ public class Int020101Vo extends BaseEntity {
     private BigDecimal id;
     private BigDecimal idHead;
     private String sideName;
+    private BigDecimal quantity;
 
-    public BigDecimal getId() {
+    public BigDecimal getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(BigDecimal quantity) {
+		this.quantity = quantity;
+	}
+
+	public BigDecimal getId() {
         return id;
     }
 

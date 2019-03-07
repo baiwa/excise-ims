@@ -40,8 +40,17 @@ public class IaQuestionnaireSideJdbcRepository {
 	public List<Int020101Vo> findByIdHead(BigDecimal idHead) {
 		StringBuilder sqlBuilder = new StringBuilder();
 		List<Object> params = new ArrayList<>();
-		sqlBuilder.append(" SELECT * FROM  IA_QUESTIONNAIRE_SIDE WHERE 1=1 AND IS_DELETED = 'N' ");
-		sqlBuilder.append(" AND ID_HEAD = ? ");
+		sqlBuilder.append(" SELECT S.ID, ");
+		sqlBuilder.append("   S.ID_HEAD, ");
+		sqlBuilder.append("   S.SIDE_NAME, ");
+		sqlBuilder.append("   (SELECT COUNT(1) ");
+		sqlBuilder.append("   FROM IA_QUESTIONNAIRE_SIDE_DTL D ");
+		sqlBuilder.append("   WHERE D.IS_DELETED = 'N' ");
+		sqlBuilder.append("   AND D.ID_SIDE      = S.ID ");
+		sqlBuilder.append("   ) AS QUANTITY ");
+		sqlBuilder.append(" FROM IA_QUESTIONNAIRE_SIDE S ");
+		sqlBuilder.append(" WHERE S.ID_HEAD  = ? ");
+		sqlBuilder.append(" AND S.IS_DELETED = 'N' ");
 		params.add(idHead);
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<Int020101Vo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(),new BeanPropertyRowMapper(Int020101Vo.class));
