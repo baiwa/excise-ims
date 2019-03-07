@@ -36,16 +36,21 @@ public class IaQuestionnaireHdrJdbcRepository {
 			sql.append(" AND CREATED_BY LIKE ?");
 			params.add(request.getCreatedBy() + "%");
 		}
+
+		if(StringUtils.isNotBlank(request.getNameQtn())){
+            sql.append(" AND QTN_HEADER_NAME ?");
+            params.add(request.getNameQtn() + "%");
+        }
 		
-		if(StringUtils.isNotBlank(request.getStartDate())) {
-			sql.append(" AND TRUNC(CREATED_DATE) >= ? ");
-			params.add(ConvertDateUtils.parseStringToDate(request.getStartDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-			
-		}
-		if(StringUtils.isNotBlank(request.getEndDate())){
-			sql.append(" AND TRUNC(CREATED_DATE) <= ? ");
-			params.add(ConvertDateUtils.parseStringToDate(request.getEndDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-		}
+//		if(StringUtils.isNotBlank(request.getStartDate())) {
+//			sql.append(" AND TRUNC(CREATED_DATE) >= ? ");
+//			params.add(ConvertDateUtils.parseStringToDate(request.getStartDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+//
+//		}
+//		if(StringUtils.isNotBlank(request.getEndDate())){
+//			sql.append(" AND TRUNC(CREATED_DATE) <= ? ");
+//			params.add(ConvertDateUtils.parseStringToDate(request.getEndDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+//		}
  		sql.append(" ORDER BY CREATED_DATE DESC");
 
 		String limit = OracleUtils.limitForDatable(sql.toString(), request.getStart(), request.getLength());
@@ -70,15 +75,20 @@ public class IaQuestionnaireHdrJdbcRepository {
 			sql.append(" AND CREATED_BY LIKE ? ");
 			params.add(request.getCreatedBy() + "%");
 		}
-		
-		if(StringUtils.isNotBlank(request.getStartDate()) && StringUtils.isNotBlank(request.getEndDate())) {
-			sql.append(" AND TRUNC(CREATED_DATE) >= ? ");
-			sql.append(" AND TRUNC(CREATED_DATE) <= ? ");
-			/* convert string to date */
-			params.add(ConvertDateUtils.parseStringToDate(request.getStartDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-			params.add(ConvertDateUtils.parseStringToDate(request.getEndDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-		}
-		sql.append(" ORDER BY CREATED_DATE ASC");
+
+        if(StringUtils.isNotBlank(request.getNameQtn())){
+            sql.append(" AND QTN_HEADER_NAME ?");
+            params.add(request.getNameQtn() + "%");
+        }
+
+//		if(StringUtils.isNotBlank(request.getStartDate()) && StringUtils.isNotBlank(request.getEndDate())) {
+//			sql.append(" AND TRUNC(CREATED_DATE) >= ? ");
+//			sql.append(" AND TRUNC(CREATED_DATE) <= ? ");
+//			/* convert string to date */
+//			params.add(ConvertDateUtils.parseStringToDate(request.getStartDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+//			params.add(ConvertDateUtils.parseStringToDate(request.getEndDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+//		}
+		sql.append(" ORDER BY CREATED_DATE DESC");
 
 		String sqlCount = OracleUtils.countForDataTable(sql.toString());
 		Integer count = this.commonJdbcTemplate.queryForObject(sqlCount, params.toArray(), Integer.class);
