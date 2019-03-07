@@ -46,8 +46,16 @@ public class Int020101Service {
 		return iaQtnSideJdbcRep.findByUsername(username);
 	}
 
+	public List<Int020101YearVo> findByStatus() {
+		return iaQtnSideJdbcRep.findByStatus();
+	}
+
 	public List<Int020101NameVo> findByYearAndUsername(String year, String username) {
 		return iaQtnSideJdbcRep.findByYearAndUsername(year, username);
+	}
+	
+	public List<Int020101NameVo> findByYearAndStatus(String year) {
+		return iaQtnSideJdbcRep.findByYearAndStatus(year);
 	}
 
 	public IaQuestionnaireSide save(IaQuestionnaireSide request) {

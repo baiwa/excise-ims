@@ -170,15 +170,31 @@ public class Int020101Controller {
 		}
 		return responseData;
 	}
-
-	@GetMapping("/by/year/{year}/user")
+	
+	@GetMapping("/by/status")
 	@ResponseBody
-	public ResponseData<List<Int020101NameVo>> getByYearAndUsername(@PathVariable("year") String year) {
+	public ResponseData<List<Int020101YearVo>> getByStatus() {
+		ResponseData<List<Int020101YearVo>> responseData = new ResponseData<List<Int020101YearVo>>();
+		List<Int020101YearVo> data = new ArrayList<>();
+		try {
+			data = int020101Service.findByStatus();
+			responseData.setData(data);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Int020101Controller::getByUsername ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+
+	@GetMapping("/by/year/{year}/status")
+	@ResponseBody
+	public ResponseData<List<Int020101NameVo>> getByYearAndStatus(@PathVariable("year") String year) {
 		ResponseData<List<Int020101NameVo>> responseData = new ResponseData<List<Int020101NameVo>>();
 		List<Int020101NameVo> data = new ArrayList<>();
 		try {
-			String username = UserLoginUtils.getCurrentUsername();
-			data = int020101Service.findByYearAndUsername(year, username);
+			data = int020101Service.findByYearAndStatus(year);
 			responseData.setData(data);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

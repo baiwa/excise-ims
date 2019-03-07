@@ -54,6 +54,10 @@ public class Int0201Service {
 	public List<IaQuestionnaireSide> findQtnSideById(Int0201FormVo request) {
 		return iaQuestionnaireSideRepository.findByidHead(request.getId());
 	}
+	
+	public IaQuestionnaireHdr findQtnHdrById(BigDecimal id) {
+		return iaQuestionnaireHdrRepository.findById(id).get();
+	}
 
 	public Int0201Vo findQtnSideDtlById(Int0201FormVo2 request) {
 		List<Int02010101Vo> dataHdr = null;
@@ -91,9 +95,9 @@ public class Int0201Service {
 			Optional<IaQuestionnaireHdr> hdrRes = iaQuestionnaireHdrRepository.findById(request.getIdHead());
 			if (hdrRes.isPresent()) {
 				IaQuestionnaireHdr dataHdr = hdrRes.get();
-				dataHdr.setStartDate(ConvertDateUtils.parseStringThaiDateToLocalDate(request.getStartDateSend(),
+				dataHdr.setStartDate(ConvertDateUtils.parseStringToLocalDate(request.getStartDateSend(),
 						ProjectConstant.SHORT_DATE_FORMAT));
-				dataHdr.setEndDate(ConvertDateUtils.parseStringThaiDateToLocalDate(request.getEndDateSend(),
+				dataHdr.setEndDate(ConvertDateUtils.parseStringToLocalDate(request.getEndDateSend(),
 						ProjectConstant.SHORT_DATE_FORMAT));
 				dataHdr.setStatus("SUCCESS_HDR");
 				iaQuestionnaireHdrRepository.save(dataHdr);
@@ -101,7 +105,7 @@ public class Int0201Service {
 		}
 
 		/* check status for save or update or delete */
-		if ("ส่งแบบสอบถามเรียบร้อย".equals(request.getStatus())) {
+		if ("SUCCESS_HDR".equals(request.getStatus())) {
 			logger.info("delete QtnMade by idSideDtl");
 			/* find id made header from request */
 			List<IaQuestionnaireMade> filterQtnMade = iaQuestionnaireMadeRepository
@@ -129,7 +133,7 @@ public class Int0201Service {
 				if (hdrRes.isPresent()) {
 					IaQuestionnaireHdr dataHdr = hdrRes.get();
 					IaQuestionnaireMadeHdr dataMadeHdr = null;
-					int loopCount = 3;
+					int loopCount = 10;
 
 					for (int i = 0; i < loopCount; i++) {
 						dataMadeHdr = new IaQuestionnaireMadeHdr();
@@ -137,9 +141,9 @@ public class Int0201Service {
 						dataMadeHdr.setBudgetYear(dataHdr.getBudgetYear());
 						dataMadeHdr.setNote(dataHdr.getNote());
 						dataMadeHdr.setQtnHeaderName(dataHdr.getQtnHeaderName());
-						dataMadeHdr.setStartDate(ConvertDateUtils.parseStringThaiDateToLocalDate(
+						dataMadeHdr.setStartDate(ConvertDateUtils.parseStringToLocalDate(
 								request.getStartDateSend(), ProjectConstant.SHORT_DATE_FORMAT));
-						dataMadeHdr.setEndDate(ConvertDateUtils.parseStringThaiDateToLocalDate(request.getEndDateSend(),
+						dataMadeHdr.setEndDate(ConvertDateUtils.parseStringToLocalDate(request.getEndDateSend(),
 								ProjectConstant.SHORT_DATE_FORMAT));
 						dataMadeHdr.setStatus("CREATED");
 						dataMadeHdr.setOfficeCode("0" + i + "0000");

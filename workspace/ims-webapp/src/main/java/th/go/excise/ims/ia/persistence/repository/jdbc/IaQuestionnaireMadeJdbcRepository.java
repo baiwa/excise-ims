@@ -103,7 +103,7 @@ public class IaQuestionnaireMadeJdbcRepository {
 
 		params.add(objLVL2.getIdMadeHdr());
 		params.add(objLVL2.getIdSide());
-		params.add(objLVL2.getSeq());
+		params.add(objLVL2.getSeqDtl());
 		params.add(objLVL2.getIdSideDtl());
 		 
 		@SuppressWarnings({ "unchecked", "rawtypes" })

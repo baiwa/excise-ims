@@ -149,4 +149,22 @@ public class Int030101Controller {
 		}
 		return response;
 	}
+	
+	@PostMapping("/configFactorsDataList")
+	@ResponseBody
+	public ResponseData<Int030101Vo> configFactorsDataList(@RequestBody Int030101FormVo form) {
+		ResponseData<Int030101Vo> response = new ResponseData<Int030101Vo>();
+		try {
+			
+			response.setData(int030101Service.configFactorsDataList(form));
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+//			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Int030102Controller configFactorsDataList : ", e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
 }

@@ -40,8 +40,17 @@ public class IaQuestionnaireSideJdbcRepository {
 	public List<Int020101Vo> findByIdHead(BigDecimal idHead) {
 		StringBuilder sqlBuilder = new StringBuilder();
 		List<Object> params = new ArrayList<>();
-		sqlBuilder.append(" SELECT * FROM  IA_QUESTIONNAIRE_SIDE WHERE 1=1 AND IS_DELETED = 'N' ");
-		sqlBuilder.append(" AND ID_HEAD = ? ");
+		sqlBuilder.append(" SELECT S.ID, ");
+		sqlBuilder.append("   S.ID_HEAD, ");
+		sqlBuilder.append("   S.SIDE_NAME, ");
+		sqlBuilder.append("   (SELECT COUNT(1) ");
+		sqlBuilder.append("   FROM IA_QUESTIONNAIRE_SIDE_DTL D ");
+		sqlBuilder.append("   WHERE D.IS_DELETED = 'N' ");
+		sqlBuilder.append("   AND D.ID_SIDE      = S.ID ");
+		sqlBuilder.append("   ) AS QUANTITY ");
+		sqlBuilder.append(" FROM IA_QUESTIONNAIRE_SIDE S ");
+		sqlBuilder.append(" WHERE S.ID_HEAD  = ? ");
+		sqlBuilder.append(" AND S.IS_DELETED = 'N' ");
 		params.add(idHead);
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<Int020101Vo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(),new BeanPropertyRowMapper(Int020101Vo.class));
@@ -54,6 +63,18 @@ public class IaQuestionnaireSideJdbcRepository {
 		sqlBuilder.append(" SELECT DISTINCT BUDGET_YEAR FROM IA_QUESTIONNAIRE_HDR WHERE 1=1 AND IS_DELETED = 'N' ");
 		sqlBuilder.append(" AND CREATED_BY = ? ");
 		params.add(username);
+		List<Int020101YearVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), int020101YearRowMapper);
+		return datas;
+	}
+	
+	public List<Int020101YearVo> findByStatus() {
+		StringBuilder sqlBuilder = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		sqlBuilder.append(" SELECT H.BUDGET_YEAR FROM IA_QUESTIONNAIRE_HDR H ");
+		sqlBuilder.append(" INNER JOIN IA_QUESTIONNAIRE_MADE_HDR MH ");
+		sqlBuilder.append(" ON MH.ID_HDR = H.ID ");
+		sqlBuilder.append(" WHERE 1=1 AND H.IS_DELETED = 'N' AND MH.STATUS = 'FINISH' ");
+		sqlBuilder.append(" GROUP BY H.BUDGET_YEAR ");
 		List<Int020101YearVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), int020101YearRowMapper);
 		return datas;
 	}
@@ -75,6 +96,19 @@ public class IaQuestionnaireSideJdbcRepository {
 		sqlBuilder.append(" AND CREATED_BY = ? ");
 		params.add(year);
 		params.add(username);
+		List<Int020101NameVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), int020101NameRowMapper);
+		return datas;
+	}
+	
+	public List<Int020101NameVo> findByYearAndStatus(String year) {
+		StringBuilder sqlBuilder = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		sqlBuilder.append(" SELECT H.* FROM IA_QUESTIONNAIRE_HDR H ");
+		sqlBuilder.append(" INNER JOIN IA_QUESTIONNAIRE_MADE_HDR MH ");
+		sqlBuilder.append(" ON MH.ID_HDR = H.ID ");
+		sqlBuilder.append(" WHERE 1=1 AND H.IS_DELETED = 'N' AND MH.STATUS = 'FINISH' ");
+		sqlBuilder.append(" AND H.BUDGET_YEAR = ? ");
+		params.add(year);
 		List<Int020101NameVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), int020101NameRowMapper);
 		return datas;
 	}

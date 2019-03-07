@@ -12,6 +12,7 @@ import th.co.baiwa.buckwaframework.common.constant.MessageContants;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireMadeHdrJdbcRepository;
 import th.go.excise.ims.ia.vo.Int0202FormVo;
 import th.go.excise.ims.ia.vo.Int0202Vo;
@@ -29,7 +30,7 @@ public class Int0202Service {
 		/* convert date to string */
 		for (Int0202Vo obj : data) {
 			/* to string status */
-			obj.setStatus(MessageContants.IA.qtnStatus(obj.getStatus()));
+			obj.setStatusStr(ApplicationCache.getParamInfoByCode("IA_STATUS", obj.getStatus()).getValue1());
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ProjectConstant.SHORT_DATE_FORMAT);
 
 			if (obj.getCreatedDate() != null) {

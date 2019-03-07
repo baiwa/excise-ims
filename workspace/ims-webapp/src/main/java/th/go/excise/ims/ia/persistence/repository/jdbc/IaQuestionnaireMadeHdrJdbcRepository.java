@@ -36,19 +36,23 @@ public class IaQuestionnaireMadeHdrJdbcRepository {
 		
 		if(StringUtils.isNotBlank(request.getCreatedBy())) {
 			sql.append(" AND CREATED_BY LIKE ?");
-			params.add(request.getCreatedBy() + "%");
+			params.add("%" + request.getCreatedBy() + "%");
 		}
 		
-		if(StringUtils.isNotBlank(request.getStartDate())) {
-			sql.append(" AND TRUNC(START_DATE) >= ? ");
-			params.add(ConvertDateUtils.parseStringToDate(request.getStartDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-			
-		}
-		if(StringUtils.isNotBlank(request.getEndDate())) {
-			sql.append(" AND TRUNC(END_DATE) <= ? ");
-			params.add(ConvertDateUtils.parseStringToDate(request.getEndDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-		}
- 		sql.append(" ORDER BY CREATED_DATE ASC");
+		if(StringUtils.isNotBlank(request.getQtnName())){
+            sql.append(" AND UPPER(QTN_HEADER_NAME) LIKE ?");
+            params.add("%" + request.getQtnName().toUpperCase() + "%");
+        }
+//		if(StringUtils.isNotBlank(request.getStartDate())) {
+//			sql.append(" AND TRUNC(START_DATE) >= ? ");
+//			params.add(ConvertDateUtils.parseStringToDate(request.getStartDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+//			
+//		}
+//		if(StringUtils.isNotBlank(request.getEndDate())) {
+//			sql.append(" AND TRUNC(END_DATE) <= ? ");
+//			params.add(ConvertDateUtils.parseStringToDate(request.getEndDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+//		}
+ 		sql.append(" ORDER BY CREATED_DATE DESC");
 
 		String limit = OracleUtils.limitForDatable(sql.toString(), request.getStart(), request.getLength());
 		@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -82,7 +86,7 @@ public class IaQuestionnaireMadeHdrJdbcRepository {
 			params.add(ConvertDateUtils.parseStringToDate(request.getStartDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 			params.add(ConvertDateUtils.parseStringToDate(request.getEndDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		}
-		sql.append(" ORDER BY CREATED_DATE ASC");
+		sql.append(" ORDER BY CREATED_DATE DESC");
 
 		String sqlCount = OracleUtils.countForDataTable(sql.toString());
 		Integer count = this.commonJdbcTemplate.queryForObject(sqlCount, params.toArray(), Integer.class);
@@ -94,13 +98,17 @@ public class IaQuestionnaireMadeHdrJdbcRepository {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 		sql.append(" SELECT * FROM IA_QUESTIONNAIRE_MADE_HDR WHERE 1=1 AND IS_DELETED='N' ");
-		sql.append(" AND OFFICE_CODE LIKE ? ");
-		sql.append(" AND STATUS != 'FINISH' ");
-		sql.append(" AND ID_HDR = ? ");
 		
-		params.add(officeCode.substring(0, 2) + "%");
-		params.add(request.getId());
-
+		if(StringUtils.isNotBlank(officeCode)) {
+			sql.append(" AND OFFICE_CODE LIKE ? ");
+			params.add(officeCode.substring(0, 2) + "%");
+		}
+		if(request.getId() != null) {
+			sql.append(" AND ID_HDR = ? ");
+			params.add(request.getId());
+		}
+		sql.append(" AND STATUS != 'FINISH' ");
+		
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<IaQuestionnaireMadeHdr> data = commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper(IaQuestionnaireMadeHdr.class));
 

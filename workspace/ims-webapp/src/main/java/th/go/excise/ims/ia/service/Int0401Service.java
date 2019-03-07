@@ -48,7 +48,7 @@ public class Int0401Service {
 				for (IaRiskFactors factor : factors) {
 					Int0401ListVo listVo = new Int0401ListVo();
 					listVo.setRiskRate(new BigDecimal(1));
-					listVo.setRiskText("LOW");
+					listVo.setRiskText(config.getLow());
 					listVo.setRiskCode("L");
 					for (Int0401CalVo cal : cals) {
 						// TODO `CALCULATE`

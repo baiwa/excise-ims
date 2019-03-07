@@ -1,5 +1,6 @@
 package th.go.excise.ims.ia.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
 import th.go.excise.ims.ia.persistence.entity.IaRiskQtnConfig;
 import th.go.excise.ims.ia.service.Int0201Service;
@@ -51,6 +54,20 @@ public class Int0201Controller {
 		}
 
 		return response;
+	}
+	
+	@GetMapping("find/qtn-hdr/{id}")
+	@ResponseBody
+	public ResponseData<IaQuestionnaireHdr> findOne(@PathVariable("id") BigDecimal id) {
+		ResponseData<IaQuestionnaireHdr> responseData = new ResponseData<IaQuestionnaireHdr>();
+		try {
+			responseData.setData(int0201Service.findQtnHdrById(id));
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
 	}
 
 	@PostMapping("/find-qtnside-dtl-by-id")

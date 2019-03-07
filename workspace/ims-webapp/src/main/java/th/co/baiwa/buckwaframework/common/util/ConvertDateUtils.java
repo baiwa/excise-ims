@@ -1,15 +1,18 @@
 package th.co.baiwa.buckwaframework.common.util;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
+
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.chrono.ThaiBuddhistChronology;
 import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.commons.lang3.time.DateUtils;
 
 public class ConvertDateUtils {
 
@@ -65,15 +68,104 @@ public class ConvertDateUtils {
         }
         return dateString;
     }
-    
-    public static LocalDate parseStringThaiDateToLocalDate(String strDate, String patten) {
-    	if (StringUtils.isNotBlank(strDate)) {
-    		LocalDate localDate = LocalDate.parse(strDate, DateTimeFormatter.ofPattern(patten, LOCAL_TH));
-    		ThaiBuddhistDate thaiDate = ThaiBuddhistDate.of(localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth());
-    		return LocalDate.from(thaiDate);
-    	} else {
-    		return LocalDate.now();
-    	}
+
+    //TODO local datetime, locale date
+
+    //TODO Local data
+    public static LocalDate parseStringToLocalDate(String strDate, String patten) {
+        return parseLocalDate(strDate, patten, LOCAL_TH);
+    }
+
+    public static LocalDate parseStringToLocalDate(String strDate, String patten, Locale locale) {
+        return parseLocalDate(strDate, patten, locale);
+    }
+
+    private static LocalDate parseLocalDate(String strDate, String patten, Locale locale) {
+        if (StringUtils.isNotBlank(strDate)) {
+
+            LocalDate localDate = LocalDate.parse(strDate, DateTimeFormatter.ofPattern(patten, locale));
+            if (LOCAL_TH.equals(locale)) {
+                ThaiBuddhistDate thaiDate = ThaiBuddhistDate.of(localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth());
+                return LocalDate.from(thaiDate);
+            } else {
+                return localDate;
+            }
+        } else {
+            return LocalDate.now();
+        }
+    }
+
+    public static String formatLocalDateToString(LocalDate date, String patten) {
+        if (date != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patten).withChronology(ThaiBuddhistChronology.INSTANCE);
+            return date.format(formatter);
+        } else {
+            return "";
+        }
+    }
+
+    public static String formatLocalDateToString(LocalDate date, String patten, Locale locale) {
+        if (date != null) {
+            if (LOCAL_TH.equals(locale)) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patten).withChronology(ThaiBuddhistChronology.INSTANCE);
+                return date.format(formatter);
+            } else {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patten);
+                return date.format(formatter);
+            }
+        } else {
+            return "";
+        }
+    }
+
+
+    //TODO Local datetime
+    public static LocalDateTime parseStringToLocalDateTime(String strDate, String patten) {
+        return parseLocalDateTime(strDate, patten, LOCAL_TH);
+    }
+
+    public static LocalDateTime parseStringToLocalDateTime(String strDate, String patten, Locale locale) {
+        return parseLocalDateTime(strDate, patten, locale);
+    }
+
+    private static LocalDateTime parseLocalDateTime(String strDate, String patten, Locale locale) {
+
+        if (StringUtils.isNotBlank(strDate)) {
+
+            if (LOCAL_TH.equals(locale)) {
+                LocalDate localeEn = parseStringToLocalDate(strDate, patten);
+                LocalTime time = LocalDateTime.parse(strDate, DateTimeFormatter.ofPattern(patten)).toLocalTime();
+                return LocalDateTime.of(localeEn, time);
+            } else {
+                return LocalDateTime.parse(strDate, DateTimeFormatter.ofPattern(patten));
+            }
+        } else {
+            return LocalDateTime.now();
+        }
+    }
+
+    public static String formatLocalDateTimeToString(LocalDateTime date, String patten) {
+        if (date != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patten).withChronology(ThaiBuddhistChronology.INSTANCE);
+            return date.format(formatter);
+        } else {
+            return "";
+        }
+    }
+
+    public static String formatLocalDateTimeToString(LocalDateTime date, String patten, Locale locale) {
+        if (date != null) {
+            if (LOCAL_TH.equals(locale)) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patten).withChronology(ThaiBuddhistChronology.INSTANCE);
+                return date.format(formatter);
+            } else {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patten);
+                return date.format(formatter);
+            }
+        } else {
+            return "";
+        }
     }
 
 }
+
