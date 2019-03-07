@@ -20,7 +20,6 @@ import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsStatusRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int030102JdbcRepository;
 import th.go.excise.ims.ia.vo.Int030102FormVo;
 import th.go.excise.ims.ia.vo.Int030102Vo;
-import th.go.excise.ims.ia.vo.Int0301FormVo;
 
 @Service
 public class Int030102Service {
@@ -44,18 +43,6 @@ public class Int030102Service {
 		checkAndInsertTableFactorsStatus(form);
 		List<Int030102Vo> iaRiskFactorsMasterList = new ArrayList<Int030102Vo>();
 		iaRiskFactorsMasterList = int030102JdbcRepository.list(form);
-		int index = 0;
-		for (Int030102Vo int030102Vo : iaRiskFactorsMasterList) {
-			IaRiskFactorsConfig irfc = new IaRiskFactorsConfig();
-			if (int030102Vo.getIdConfig() != null) {
-				irfc = iaRiskFactorsConfigRepository.findById(int030102Vo.getIdConfig()).get();
-
-				iaRiskFactorsMasterList.get(index).setIaRiskFactorsConfig(irfc);
-			}
-
-			index++;
-		}
-
 		return iaRiskFactorsMasterList;
 	}
 	

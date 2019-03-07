@@ -69,7 +69,6 @@ public class Int0301Controller {
 			response.setData("SUCCESS");
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
-
 		} catch (Exception e) {
 			logger.error("Int0301Controller saveRiskFactorsLevel : ", e);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
@@ -87,7 +86,6 @@ public class Int0301Controller {
 			response.setData("SUCCESS");
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
-
 		} catch (Exception e) {
 			logger.error("Int0301Controller saveRiskFactorsConfig : ", e);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);

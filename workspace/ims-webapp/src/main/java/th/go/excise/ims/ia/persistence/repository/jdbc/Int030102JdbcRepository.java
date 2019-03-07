@@ -86,13 +86,70 @@ public class Int030102JdbcRepository {
 			String date = checkAndConvertDateToString(rs.getDate("CREATED_DATE_RES"));
 			
 			vo.setCreatedDateDesc(date);
-			vo.setIaRiskFactorsMaster(iarfm);
-			
+			vo.setIaRiskFactorsMaster(iarfm);		
 			vo.setIdConfig(rs.getBigDecimal("ID_CONFIG_RES"));
+			
 			iarfc.setId(rs.getBigDecimal("ID_CONFIG_RES"));
-			iarfc.setInfoUsedRiskDesc(rs.getString("INFO_USED_RISK_DESC"));
-			iarfc.setStartDate(rs.getDate("START_DATE"));
-			iarfc.setEndDate(rs.getDate("END_DATE"));
+//			iarfc.setInfoUsedRiskDesc(rs.getString("INFO_USED_RISK_DESC"));
+//			iarfc.setStartDate(new Date(rs.getTimestamp("START_DATE").getTime()));
+//			iarfc.setEndDate(new Date(rs.getTimestamp("END_DATE").getTime()));
+//			iarfc.setFactorsLevel(rs.getBigDecimal("FACTORS_LEVEL"));
+
+			   iarfc.setStartDate(rs.getDate("START_DATE"));
+			   iarfc.setEndDate(rs.getDate("END_DATE"));
+
+
+			   iarfc.setInfoUsedRisk(rs.getString("INFO_USED_RISK"));
+			   iarfc.setInfoUsedRiskDesc(rs.getString("INFO_USED_RISK_DESC"));
+
+
+			   iarfc.setIdFactors(rs.getBigDecimal("ID_FACTORS"));
+			   iarfc.setFactorsLevel(rs.getBigDecimal("FACTORS_LEVEL"));
+
+
+			   iarfc.setVerylow(rs.getString("VERYLOW"));
+			   iarfc.setVerylowStart(rs.getString("VERYLOW_START"));
+			   iarfc.setVerylowEnd(rs.getString("VERYLOW_END"));
+			   iarfc.setVerylowCondition(rs.getString("VERYLOW_CONDITION"));
+			   iarfc.setVerylowRating(rs.getBigDecimal("VERYLOW_RATING"));
+			   iarfc.setVerylowColor(rs.getString("VERYLOW_COLOR"));
+
+
+			   iarfc.setLow(rs.getString("LOW"));
+			   iarfc.setLowStart(rs.getString("LOW_START"));
+			   iarfc.setLowEnd(rs.getString("LOW_END"));
+			   iarfc.setLowCondition(rs.getString("LOW_CONDITION"));
+			   iarfc.setLowRating(rs.getBigDecimal("LOW_RATING"));
+			   iarfc.setLowColor(rs.getString("LOW_COLOR"));
+
+
+			   iarfc.setMedium(rs.getString("MEDIUM"));
+			   iarfc.setMediumStart(rs.getString("MEDIUM_START"));
+			   iarfc.setMediumEnd(rs.getString("MEDIUM_END"));
+			   iarfc.setMediumCondition(rs.getString("MEDIUM_CONDITION"));
+			   iarfc.setMediumRating(rs.getBigDecimal("MEDIUM_RATING"));
+			   iarfc.setMediumColor(rs.getString("MEDIUM_COLOR"));
+
+
+			   iarfc.setHigh(rs.getString("HIGH"));
+			   iarfc.setHighStart(rs.getString("HIGH_START"));
+			   iarfc.setHighEnd(rs.getString("HIGH_END"));
+			   iarfc.setHighCondition(rs.getString("HIGH_CONDITION"));
+			   iarfc.setHighRating(rs.getBigDecimal("HIGH_RATING"));
+			   iarfc.setHighColor(rs.getString("High_COLOR"));
+
+
+			   iarfc.setVeryhigh(rs.getString("VERYHIGH"));
+			   iarfc.setVeryhighStart(rs.getString("VERYHIGH_START"));
+			   iarfc.setVeryhighEnd(rs.getString("VERYHIGH_END"));
+			   iarfc.setVeryhighCondition(rs.getString("VERYHIGH_CONDITION"));
+			   iarfc.setVeryhighRating(rs.getBigDecimal("VERYHIGH_RATING"));
+			   iarfc.setVeryhighColor(rs.getString("VERYHIGH_COLOR"));
+
+
+			   iarfc.setRiskUnit(rs.getString("RISK_UNIT"));
+			   iarfc.setPercent(rs.getBigDecimal("PERCENT"));
+			
 			vo.setIaRiskFactorsConfig(iarfc);
 	
 			return vo;

@@ -21,4 +21,9 @@ public class Int10Service {
 		
 		return response;
 	}
+	
+	public List<IaInspectionPlan> findByIdParams(BigDecimal id) {
+		List<IaInspectionPlan> response = iaInspectionPlanJdbcRepository.getDataFilterIdParams(id);	
+		return response;
+	}
 }

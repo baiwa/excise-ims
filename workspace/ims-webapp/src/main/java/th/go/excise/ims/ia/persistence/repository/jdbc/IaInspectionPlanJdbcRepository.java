@@ -34,4 +34,19 @@ public class IaInspectionPlanJdbcRepository {
 
 		return response; 
 	}
+	
+	public List<IaInspectionPlan> getDataFilterIdParams(BigDecimal id) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT * FROM IA_INSPECTION_PLAN ");
+		sql.append(" WHERE IS_DELETED = 'N' ");
+		sql.append(" 	AND ID = ? ");
+	
+ 		params.add(id);
+
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		List<IaInspectionPlan> response = commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper(IaInspectionPlan.class));
+
+		return response; 
+	}
 }

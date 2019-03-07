@@ -1,5 +1,6 @@
 package th.go.excise.ims.ia.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -34,6 +35,24 @@ public class Int10Controller {
 		ResponseData<List<IaInspectionPlan>> response = new ResponseData<List<IaInspectionPlan>>();
 		try {
 			response.setData(int10Service.findByBudgetYearAndInspectionWork(budgetYear, inspectionWorkStr, status));
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	@GetMapping("/find/ins-plan-params/{id}")
+	@ResponseBody
+	public ResponseData<List<IaInspectionPlan>> saveInspectionPlanParams(@PathVariable("id") BigDecimal id) {
+		logger.info("FILTER INSPECTION_PLAN");
+		
+		ResponseData<List<IaInspectionPlan>> response = new ResponseData<List<IaInspectionPlan>>();
+		try {
+			response.setData(int10Service.findByIdParams(id));
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
