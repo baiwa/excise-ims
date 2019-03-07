@@ -1,13 +1,21 @@
 package th.go.excise.ims.ta.service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
+import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.vo.CppCheckPriceVo;
 import th.go.excise.ims.ta.vo.CppFinishedGoodsPaymentVo;
 import th.go.excise.ims.ta.vo.CppFinishedGoodsReceiveVo;
@@ -26,14 +34,17 @@ public class CreatePaperProductService {
 
 	private static final Logger logger = LoggerFactory.getLogger(CreatePaperProductService.class);
 
+	private static final Integer TOTAL = 17;
+	/*-----TOPIC------*/
+	private static final String MATERIAL_RECEIVE = "ตรวจสอบการรับวัตถุดิบ";
+
 	/*------MaterialReceive-----*/
 	public DataTableAjax<CppRawMaterialReceiveVo> listRawMaterialReceive(CreatePaperFormVo request) {
-		int total = 17;
 		DataTableAjax<CppRawMaterialReceiveVo> dataTableAjax = new DataTableAjax<CppRawMaterialReceiveVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
-		dataTableAjax.setData(getDataRawMaterialReceive(request.getStart(), request.getLength(), total));
-		dataTableAjax.setRecordsTotal(total);
-		dataTableAjax.setRecordsFiltered(total);
+		dataTableAjax.setData(getDataRawMaterialReceive(request.getStart(), request.getLength(), TOTAL));
+		dataTableAjax.setRecordsTotal(TOTAL);
+		dataTableAjax.setRecordsFiltered(TOTAL);
 		return dataTableAjax;
 	}
 
@@ -59,14 +70,107 @@ public class CreatePaperProductService {
 		return datalist;
 	}
 
+	public ByteArrayOutputStream exportRawMaterialReceive() throws IOException {
+
+		/* create spreadsheet */
+		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+		Sheet sheet = workbook.createSheet(MATERIAL_RECEIVE);
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+		System.out.println("Creating excel");
+		row = sheet.createRow(0);
+
+		/* call style from utils */
+		CellStyle thStyle = ExcelUtils.getThStyle();
+		CellStyle cellCenter = ExcelUtils.getCellCenter();
+		CellStyle cellLeft = ExcelUtils.getCellLeft();
+		CellStyle cellRight = ExcelUtils.getCellRight();
+
+		/* tbTH */
+		String[] tbTH = { "ลำดับ", "รายการ", "ใบกำกับภาษีซื้อ", "บัญชีประจำวัน ภส. ๐๗-๐๑", "งบเดือน (ภส. ๐๗-๐๔)",
+				"ข้อมูลจากภายนอก", "ผลต่างสูงสุด" };
+		for (int i = 0; i < tbTH.length; i++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(tbTH[i]);
+			cell.setCellStyle(thStyle);
+			cellNum++;
+		}
+
+		/* set sheet */
+		for (int i = 0; i <= 6; i++) {
+			if (i != 0 && i != 1) {
+				sheet.setColumnWidth(i, 76 * 76);
+			} else if (i == 1) {
+				sheet.setColumnWidth(i, 76 * 90);
+			}
+		}
+
+		/* set tbTD */
+		rowNum = 1;
+		cellNum = 0;
+		int no = 1;
+
+		/* set data */
+		List<CppRawMaterialReceiveVo> dataList = getDataRawMaterialReceive(0, TOTAL, TOTAL);
+		for (CppRawMaterialReceiveVo data : dataList) {
+			row = sheet.createRow(rowNum);
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getList());
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getInvoices());
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getDailyAccount());
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getMonthStatement());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getExternalData());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getMaxDiff());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+			
+			// set ++ and clear
+			no++;
+			rowNum++;
+			cellNum = 0;
+		}
+
+		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		workbook.write(outByteStream);
+
+		return outByteStream;
+	}
+
 	/*------MaterialPayment-----*/
 	public DataTableAjax<CppRawMaterialPaymentVo> listRawMaterialPayment(CreatePaperFormVo request) {
-		int total = 17;
 		DataTableAjax<CppRawMaterialPaymentVo> dataTableAjax = new DataTableAjax<CppRawMaterialPaymentVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
-		dataTableAjax.setData(getDataRawMaterialPayment(request.getStart(), request.getLength(), total));
-		dataTableAjax.setRecordsTotal(total);
-		dataTableAjax.setRecordsFiltered(total);
+		dataTableAjax.setData(getDataRawMaterialPayment(request.getStart(), request.getLength(), TOTAL));
+		dataTableAjax.setRecordsTotal(TOTAL);
+		dataTableAjax.setRecordsFiltered(TOTAL);
 		return dataTableAjax;
 	}
 
@@ -94,12 +198,11 @@ public class CreatePaperProductService {
 
 	/*------MaterialBalance-----*/
 	public DataTableAjax<CppRawMaterialBalanceVo> listRawMaterialBalance(CreatePaperFormVo request) {
-		int total = 17;
 		DataTableAjax<CppRawMaterialBalanceVo> dataTableAjax = new DataTableAjax<CppRawMaterialBalanceVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
-		dataTableAjax.setData(getDataRawMaterialBalance(request.getStart(), request.getLength(), total));
-		dataTableAjax.setRecordsTotal(total);
-		dataTableAjax.setRecordsFiltered(total);
+		dataTableAjax.setData(getDataRawMaterialBalance(request.getStart(), request.getLength(), TOTAL));
+		dataTableAjax.setRecordsTotal(TOTAL);
+		dataTableAjax.setRecordsFiltered(TOTAL);
 		return dataTableAjax;
 	}
 
@@ -126,13 +229,12 @@ public class CreatePaperProductService {
 	/*------MaterialFinishedGoodsRelationship-----*/
 	public DataTableAjax<CppRawMaterialFinishedGoodsRelationshipVo> listRawMaterialFinishedGoodsRelationship(
 			CreatePaperFormVo request) {
-		int total = 17;
 		DataTableAjax<CppRawMaterialFinishedGoodsRelationshipVo> dataTableAjax = new DataTableAjax<CppRawMaterialFinishedGoodsRelationshipVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
 		dataTableAjax
-				.setData(getDataRawMaterialFinishedGoodsRelationship(request.getStart(), request.getLength(), total));
-		dataTableAjax.setRecordsTotal(total);
-		dataTableAjax.setRecordsFiltered(total);
+				.setData(getDataRawMaterialFinishedGoodsRelationship(request.getStart(), request.getLength(), TOTAL));
+		dataTableAjax.setRecordsTotal(TOTAL);
+		dataTableAjax.setRecordsFiltered(TOTAL);
 		return dataTableAjax;
 	}
 
@@ -168,12 +270,11 @@ public class CreatePaperProductService {
 
 	/*------FinishedGoodsReceive-----*/
 	public DataTableAjax<CppFinishedGoodsReceiveVo> listFinishedGoodsReceive(CreatePaperFormVo request) {
-		int total = 17;
 		DataTableAjax<CppFinishedGoodsReceiveVo> dataTableAjax = new DataTableAjax<CppFinishedGoodsReceiveVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
-		dataTableAjax.setData(getDataFinishedGoodsReceive(request.getStart(), request.getLength(), total));
-		dataTableAjax.setRecordsTotal(total);
-		dataTableAjax.setRecordsFiltered(total);
+		dataTableAjax.setData(getDataFinishedGoodsReceive(request.getStart(), request.getLength(), TOTAL));
+		dataTableAjax.setRecordsTotal(TOTAL);
+		dataTableAjax.setRecordsFiltered(TOTAL);
 		return dataTableAjax;
 	}
 
@@ -200,12 +301,11 @@ public class CreatePaperProductService {
 
 	/*------FinishedGoodsPayment-----*/
 	public DataTableAjax<CppFinishedGoodsPaymentVo> listFinishedGoodsPayment(CreatePaperFormVo request) {
-		int total = 17;
 		DataTableAjax<CppFinishedGoodsPaymentVo> dataTableAjax = new DataTableAjax<CppFinishedGoodsPaymentVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
-		dataTableAjax.setData(getDataFinishedGoodsPayment(request.getStart(), request.getLength(), total));
-		dataTableAjax.setRecordsTotal(total);
-		dataTableAjax.setRecordsFiltered(total);
+		dataTableAjax.setData(getDataFinishedGoodsPayment(request.getStart(), request.getLength(), TOTAL));
+		dataTableAjax.setRecordsTotal(TOTAL);
+		dataTableAjax.setRecordsFiltered(TOTAL);
 		return dataTableAjax;
 	}
 
@@ -234,12 +334,11 @@ public class CreatePaperProductService {
 
 	/*------RawMaterialTaxBreak-----*/
 	public DataTableAjax<CppRawMaterialTaxBreakVo> listRawMaterialTaxBreak(CreatePaperFormVo request) {
-		int total = 17;
 		DataTableAjax<CppRawMaterialTaxBreakVo> dataTableAjax = new DataTableAjax<CppRawMaterialTaxBreakVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
-		dataTableAjax.setData(getDataRawMaterialTaxBreak(request.getStart(), request.getLength(), total));
-		dataTableAjax.setRecordsTotal(total);
-		dataTableAjax.setRecordsFiltered(total);
+		dataTableAjax.setData(getDataRawMaterialTaxBreak(request.getStart(), request.getLength(), TOTAL));
+		dataTableAjax.setRecordsTotal(TOTAL);
+		dataTableAjax.setRecordsFiltered(TOTAL);
 		return dataTableAjax;
 	}
 
@@ -270,12 +369,11 @@ public class CreatePaperProductService {
 
 	/*------UnitPrice-----*/
 	public DataTableAjax<CppUnitPriceVo> listUnitPrice(CreatePaperFormVo request) {
-		int total = 17;
 		DataTableAjax<CppUnitPriceVo> dataTableAjax = new DataTableAjax<CppUnitPriceVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
-		dataTableAjax.setData(getDataUnitPrice(request.getStart(), request.getLength(), total));
-		dataTableAjax.setRecordsTotal(total);
-		dataTableAjax.setRecordsFiltered(total);
+		dataTableAjax.setData(getDataUnitPrice(request.getStart(), request.getLength(), TOTAL));
+		dataTableAjax.setRecordsTotal(TOTAL);
+		dataTableAjax.setRecordsFiltered(TOTAL);
 		return dataTableAjax;
 	}
 
@@ -306,12 +404,11 @@ public class CreatePaperProductService {
 
 	/*------CheckPrice-----*/
 	public DataTableAjax<CppCheckPriceVo> listCheckPrice(CreatePaperFormVo request) {
-		int total = 17;
 		DataTableAjax<CppCheckPriceVo> dataTableAjax = new DataTableAjax<CppCheckPriceVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
-		dataTableAjax.setData(getDataCheckPrice(request.getStart(), request.getLength(), total));
-		dataTableAjax.setRecordsTotal(total);
-		dataTableAjax.setRecordsFiltered(total);
+		dataTableAjax.setData(getDataCheckPrice(request.getStart(), request.getLength(), TOTAL));
+		dataTableAjax.setRecordsTotal(TOTAL);
+		dataTableAjax.setRecordsFiltered(TOTAL);
 		return dataTableAjax;
 	}
 
@@ -340,12 +437,11 @@ public class CreatePaperProductService {
 
 	/*------PayForeignFinishedGoods-----*/
 	public DataTableAjax<CppPayForeignFinishedGoodsVo> listPayForeignFinishedGoods(CreatePaperFormVo request) {
-		int total = 17;
 		DataTableAjax<CppPayForeignFinishedGoodsVo> dataTableAjax = new DataTableAjax<CppPayForeignFinishedGoodsVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
-		dataTableAjax.setData(getDataPayForeignFinishedGoods(request.getStart(), request.getLength(), total));
-		dataTableAjax.setRecordsTotal(total);
-		dataTableAjax.setRecordsFiltered(total);
+		dataTableAjax.setData(getDataPayForeignFinishedGoods(request.getStart(), request.getLength(), TOTAL));
+		dataTableAjax.setRecordsTotal(TOTAL);
+		dataTableAjax.setRecordsFiltered(TOTAL);
 		return dataTableAjax;
 	}
 
@@ -375,12 +471,11 @@ public class CreatePaperProductService {
 
 	/*------Tax-----*/
 	public DataTableAjax<CppTaxVo> listTax(CreatePaperFormVo request) {
-		int total = 17;
 		DataTableAjax<CppTaxVo> dataTableAjax = new DataTableAjax<CppTaxVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
-		dataTableAjax.setData(getDataTax(request.getStart(), request.getLength(), total));
-		dataTableAjax.setRecordsTotal(total);
-		dataTableAjax.setRecordsFiltered(total);
+		dataTableAjax.setData(getDataTax(request.getStart(), request.getLength(), TOTAL));
+		dataTableAjax.setRecordsTotal(TOTAL);
+		dataTableAjax.setRecordsFiltered(TOTAL);
 		return dataTableAjax;
 	}
 

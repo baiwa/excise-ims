@@ -33,6 +33,18 @@ public class ExcelUtils {
 		return headerCenter;
 	}
 
+	public static CellStyle getCellCenter() {
+		return cellCenter;
+	}
+	
+	public static CellStyle getCellRight() {
+		return cellRight;
+	}
+	
+	public static CellStyle getCellLeft() {
+		return cellLeft;
+	}
+
 	public static XSSFWorkbook setUpExcel() {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 
