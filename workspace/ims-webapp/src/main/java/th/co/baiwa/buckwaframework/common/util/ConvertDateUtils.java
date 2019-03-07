@@ -7,6 +7,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.chrono.ThaiBuddhistChronology;
 import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
@@ -128,21 +129,22 @@ public class ConvertDateUtils {
     }
 
     private static LocalDateTime parseLocalDateTime(String strDate, String patten, Locale locale) {
+
         if (StringUtils.isNotBlank(strDate)) {
 
-            LocalDateTime localDate = LocalDateTime.parse(strDate, DateTimeFormatter.ofPattern(patten, locale));
             if (LOCAL_TH.equals(locale)) {
-                ThaiBuddhistDate thaiDate = ThaiBuddhistDate.of(localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth());
-                return LocalDateTime.from(thaiDate);
+                LocalDate localeEn = parseStringToLocalDate(strDate, patten);
+                LocalTime time = LocalDateTime.parse(strDate, DateTimeFormatter.ofPattern(patten)).toLocalTime();
+                return LocalDateTime.of(localeEn, time);
             } else {
-                return localDate;
+                return LocalDateTime.parse(strDate, DateTimeFormatter.ofPattern(patten));
             }
         } else {
             return LocalDateTime.now();
         }
     }
 
-    public static String formatLocalDateTimeToString(LocalDate date, String patten) {
+    public static String formatLocalDateTimeToString(LocalDateTime date, String patten) {
         if (date != null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patten).withChronology(ThaiBuddhistChronology.INSTANCE);
             return date.format(formatter);
