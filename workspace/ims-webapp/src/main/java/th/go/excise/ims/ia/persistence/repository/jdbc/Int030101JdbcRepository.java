@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
@@ -49,8 +50,10 @@ public class Int030101JdbcRepository {
 			iarfm.setInfoUsedRiskDesc(rs.getString("INFO_USED_RISK_DESC"));
 			iarfm.setRiskIndicators(rs.getString("RISK_INDICATORS"));
 			iarfm.setRiskUnit(rs.getString("RISK_UNIT"));
-			iarfm.setDateFrom(rs.getString("START_DATE"));
-			iarfm.setDateTo(rs.getString("END_DATE"));			
+			
+			
+			iarfm.setDateFrom(ConvertDateUtils.formatDateToString(rs.getDate("START_DATE"), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			iarfm.setDateTo(ConvertDateUtils.formatDateToString(rs.getDate("END_DATE"), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 			
 			vo.setInt030101FormVo(iarfm);
 			return vo;

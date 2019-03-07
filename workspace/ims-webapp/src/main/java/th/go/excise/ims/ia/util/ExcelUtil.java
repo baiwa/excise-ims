@@ -14,9 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ExcalUtil {
+public class ExcelUtil {
 
-	private static final Logger log = LoggerFactory.getLogger(ExcalUtil.class);
+	private static final Logger log = LoggerFactory.getLogger(ExcelUtil.class);
 	public CellStyle thStyle;
 	public CellStyle cellCenter;
 	public CellStyle cellRight;

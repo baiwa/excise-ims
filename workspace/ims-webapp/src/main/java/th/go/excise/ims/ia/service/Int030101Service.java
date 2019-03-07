@@ -37,7 +37,7 @@ import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsStatusRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskSelectCaseRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int030101JdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0401JdbcRepository;
-import th.go.excise.ims.ia.util.ExcalUtil;
+import th.go.excise.ims.ia.util.ExcelUtil;
 import th.go.excise.ims.ia.vo.Int030101FormVo;
 import th.go.excise.ims.ia.vo.Int030101Vo;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
@@ -75,8 +75,8 @@ public class Int030101Service {
 	private IaRiskSelectCaseRepository iaRiskSelectCaseRep;
 
 	@Autowired
-	private ExcalUtil excalUtil;
-	
+	private ExcelUtil excalUtil;
+
 	@Transactional
 	public Int030101Vo saveFactors(Int030101FormVo form) {
 		// Save IaRiskFactorsMaster
@@ -257,7 +257,7 @@ public class Int030101Service {
 		if (dataList.size() == 0) {
 			dataList = saveDataList(ExciseUtils.getCurrentBudgetYear(), new BigDecimal(4));
 		}
-		
+
 		for (IaRiskSelectCase data : dataList) {
 			row = sheet.createRow(rowNum);
 			// No.
@@ -510,11 +510,17 @@ public class Int030101Service {
 //		dataSetConfig.setInfoUsedRiskDesc(form.getInfoUsedRiskDesc());
 //		logger.info("dataSetConfig", dataSetConfig);
 //		iaRiskFactorsConfigRepository.save(dataSetConfig);
-		
-		if(!StringUtils.isEmpty(form.getDateFrom()) || !StringUtils.isEmpty(form.getDateTo())) {
+
+		if (!StringUtils.isEmpty(form.getDateFrom()) || !StringUtils.isEmpty(form.getDateTo())) {
 			int030101JdbcRepository.deleteFactosData(form.getIdFactors().toString());
+			IaRiskFactorsConfig configData = iaRiskFactorsConfigRepository.findByIdFactors(form.getIdFactors());
+			configData.setStartDate(ConvertDateUtils.parseStringToDate(form.getDateFrom(), ConvertDateUtils.DD_MM_YYYY,
+					ConvertDateUtils.LOCAL_TH));
+			configData.setEndDate(ConvertDateUtils.parseStringToDate(form.getDateTo(), ConvertDateUtils.DD_MM_YYYY,
+					ConvertDateUtils.LOCAL_TH));
+			iaRiskFactorsConfigRepository.save(configData);
 		}
-		
+
 		List<IaRiskFactorsData> dataList = form.getIaRiskFactorsDataList();
 		IaRiskFactorsData dataSet = null;
 		for (IaRiskFactorsData iaRiskFactorsData : dataList) {
@@ -533,7 +539,7 @@ public class Int030101Service {
 			iaRiskFactorsDataRepository.save(dataSet);
 		}
 	}
-	
+
 	@Transactional
 	public Int030101Vo configFactorsDataList(Int030101FormVo form) {
 		Int030101Vo res = new Int030101Vo();
@@ -549,7 +555,7 @@ public class Int030101Service {
 			formVo.setDateTo(int030101Vo.getInt030101FormVo().getDateTo());
 			res.setInt030101FormVo(formVo);
 		}
-		
+
 		return res;
 	}
 }

@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
-import th.go.excise.ims.ia.util.ExcalUtil;
+import th.go.excise.ims.ia.util.ExcelUtil;
 import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 import th.go.excise.ims.ta.vo.LeftInStockServiceVo;
 import th.go.excise.ims.ta.vo.MemberStatusServiceVo;
@@ -35,7 +35,7 @@ public class CreatePaperServiceService {
 	private static final Logger logger = LoggerFactory.getLogger(CreatePaperServiceService.class);
 	
 	@Autowired
-	private ExcalUtil excalUtil;
+	private ExcelUtil excalUtil;
 	
 	
 	public DataTableAjax<QuantityServiceVo> GetQuantityServiceVo(CreatePaperFormVo request) {
