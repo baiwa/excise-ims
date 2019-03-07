@@ -95,9 +95,9 @@ public class Int0201Service {
 			Optional<IaQuestionnaireHdr> hdrRes = iaQuestionnaireHdrRepository.findById(request.getIdHead());
 			if (hdrRes.isPresent()) {
 				IaQuestionnaireHdr dataHdr = hdrRes.get();
-				dataHdr.setStartDate(ConvertDateUtils.parseStringThaiDateToLocalDate(request.getStartDateSend(),
+				dataHdr.setStartDate(ConvertDateUtils.parseStringToLocalDate(request.getStartDateSend(),
 						ProjectConstant.SHORT_DATE_FORMAT));
-				dataHdr.setEndDate(ConvertDateUtils.parseStringThaiDateToLocalDate(request.getEndDateSend(),
+				dataHdr.setEndDate(ConvertDateUtils.parseStringToLocalDate(request.getEndDateSend(),
 						ProjectConstant.SHORT_DATE_FORMAT));
 				dataHdr.setStatus("SUCCESS_HDR");
 				iaQuestionnaireHdrRepository.save(dataHdr);
@@ -141,9 +141,9 @@ public class Int0201Service {
 						dataMadeHdr.setBudgetYear(dataHdr.getBudgetYear());
 						dataMadeHdr.setNote(dataHdr.getNote());
 						dataMadeHdr.setQtnHeaderName(dataHdr.getQtnHeaderName());
-						dataMadeHdr.setStartDate(ConvertDateUtils.parseStringThaiDateToLocalDate(
+						dataMadeHdr.setStartDate(ConvertDateUtils.parseStringToLocalDate(
 								request.getStartDateSend(), ProjectConstant.SHORT_DATE_FORMAT));
-						dataMadeHdr.setEndDate(ConvertDateUtils.parseStringThaiDateToLocalDate(request.getEndDateSend(),
+						dataMadeHdr.setEndDate(ConvertDateUtils.parseStringToLocalDate(request.getEndDateSend(),
 								ProjectConstant.SHORT_DATE_FORMAT));
 						dataMadeHdr.setStatus("CREATED");
 						dataMadeHdr.setOfficeCode("0" + i + "0000");
