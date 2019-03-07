@@ -46,7 +46,7 @@ public class IaQuestionnaireHdrJdbcRepository {
 			sql.append(" AND TRUNC(CREATED_DATE) <= ? ");
 			params.add(ConvertDateUtils.parseStringToDate(request.getEndDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		}
- 		sql.append(" ORDER BY CREATED_DATE ASC");
+ 		sql.append(" ORDER BY CREATED_DATE DESC");
 
 		String limit = OracleUtils.limitForDatable(sql.toString(), request.getStart(), request.getLength());
 		@SuppressWarnings({ "rawtypes", "unchecked" })

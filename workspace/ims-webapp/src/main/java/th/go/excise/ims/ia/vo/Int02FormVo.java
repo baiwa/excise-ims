@@ -12,6 +12,7 @@ public class Int02FormVo extends DataTableRequest {
 	private String startDate;
 	private String endDate;
 	private String createdBy;
+	private String nameQtn;
 
 	public String getBudgetYear() {
 		return budgetYear;
@@ -43,6 +44,14 @@ public class Int02FormVo extends DataTableRequest {
 
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
+	}
+
+	public String getNameQtn() {
+		return nameQtn;
+	}
+
+	public void setNameQtn(String nameQtn) {
+		this.nameQtn = nameQtn;
 	}
 
 }

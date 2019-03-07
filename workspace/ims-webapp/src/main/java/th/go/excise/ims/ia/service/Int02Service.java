@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
-import th.co.baiwa.buckwaframework.common.constant.MessageContants;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
@@ -38,13 +37,14 @@ public class Int02Service {
 	
 	@Autowired
 	private IaQuestionnaireMadeHdrJdbcRepository iaQuestionnaireMadeHdrJdbcRepository;
+	
 	public DataTableAjax<Int02Vo> filterQtnHdr(Int02FormVo request) {
 
 		List<Int02Vo> data = iaQuestionnaireHdrJdbcRepository.getDataFilter(request);
 		/* convert date to string */
 		for (Int02Vo obj : data) {
 			/* to string status */
-			obj.setStatus(MessageContants.IA.qtnStatus(obj.getStatus()));
+			obj.setStatus(ApplicationCache.getParamInfoByCode("IA_STATUS", obj.getStatus()).getValue1());
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ProjectConstant.SHORT_DATE_FORMAT);
 
 			if (obj.getCreatedDate() != null) {
@@ -126,6 +126,11 @@ public class Int02Service {
 			IaQuestionnaireHdr daraHdr = dataRes.get();
 			daraHdr.setStatus("FAIL_HDR");
 			iaQuestionnaireHdrRepository.save(daraHdr);
+			/* update status   */
+			List<IaQuestionnaireMadeHdr> dataMadeHdr = iaQuestionnaireMadeHdrJdbcRepository.findMadeHdrByIdHdr(daraHdr, UserLoginUtils.getCurrentUserBean().getOfficeCode());
+			for (IaQuestionnaireMadeHdr madeHdr : dataMadeHdr) {
+				madeHdr.setStatus("FAIL_SEND_QTN");
+			}
 		}
 	}
 

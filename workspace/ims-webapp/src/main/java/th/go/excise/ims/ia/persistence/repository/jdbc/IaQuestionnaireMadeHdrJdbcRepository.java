@@ -94,13 +94,17 @@ public class IaQuestionnaireMadeHdrJdbcRepository {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 		sql.append(" SELECT * FROM IA_QUESTIONNAIRE_MADE_HDR WHERE 1=1 AND IS_DELETED='N' ");
-		sql.append(" AND OFFICE_CODE LIKE ? ");
-		sql.append(" AND STATUS != 'FINISH' ");
-		sql.append(" AND ID_HDR = ? ");
 		
-		params.add(officeCode.substring(0, 2) + "%");
-		params.add(request.getId());
-
+		if(StringUtils.isNotBlank(officeCode)) {
+			sql.append(" AND OFFICE_CODE LIKE ? ");
+			params.add(officeCode.substring(0, 2) + "%");
+		}
+		if(request.getId() != null) {
+			sql.append(" AND ID_HDR = ? ");
+			params.add(request.getId());
+		}
+		sql.append(" AND STATUS != 'FINISH' ");
+		
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<IaQuestionnaireMadeHdr> data = commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper(IaQuestionnaireMadeHdr.class));
 

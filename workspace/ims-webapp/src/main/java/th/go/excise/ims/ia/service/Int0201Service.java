@@ -101,7 +101,7 @@ public class Int0201Service {
 		}
 
 		/* check status for save or update or delete */
-		if ("ส่งแบบสอบถามเรียบร้อย".equals(request.getStatus())) {
+		if ("ส่งแบบสอบถามสำเร็จ".equals(request.getStatus())) {
 			logger.info("delete QtnMade by idSideDtl");
 			/* find id made header from request */
 			List<IaQuestionnaireMade> filterQtnMade = iaQuestionnaireMadeRepository
@@ -129,7 +129,7 @@ public class Int0201Service {
 				if (hdrRes.isPresent()) {
 					IaQuestionnaireHdr dataHdr = hdrRes.get();
 					IaQuestionnaireMadeHdr dataMadeHdr = null;
-					int loopCount = 3;
+					int loopCount = 10;
 
 					for (int i = 0; i < loopCount; i++) {
 						dataMadeHdr = new IaQuestionnaireMadeHdr();
