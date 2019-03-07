@@ -36,12 +36,12 @@ public class IaQuestionnaireMadeHdrJdbcRepository {
 		
 		if(StringUtils.isNotBlank(request.getCreatedBy())) {
 			sql.append(" AND CREATED_BY LIKE ?");
-			params.add(request.getCreatedBy() + "%");
+			params.add("%" + request.getCreatedBy() + "%");
 		}
 		
 		if(StringUtils.isNotBlank(request.getQtnName())){
             sql.append(" AND UPPER(QTN_HEADER_NAME) LIKE ?");
-            params.add(request.getQtnName().toUpperCase() + "%");
+            params.add("%" + request.getQtnName().toUpperCase() + "%");
         }
 //		if(StringUtils.isNotBlank(request.getStartDate())) {
 //			sql.append(" AND TRUNC(START_DATE) >= ? ");
