@@ -70,7 +70,7 @@ public class CreatePaperProductService {
 		return datalist;
 	}
 
-	public ByteArrayOutputStream exportRawMaterialReceive() throws IOException {
+	public byte[] exportRawMaterialReceive() throws IOException {
 
 		/* create spreadsheet */
 		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
@@ -136,32 +136,48 @@ public class CreatePaperProductService {
 			cell.setCellValue(data.getDailyAccount());
 			cell.setCellStyle(cellCenter);
 			cellNum++;
-			
+
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getMonthStatement());
 			cell.setCellStyle(cellRight);
 			cellNum++;
-			
+
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getExternalData());
 			cell.setCellStyle(cellRight);
 			cellNum++;
-			
+
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getMaxDiff());
 			cell.setCellStyle(cellRight);
 			cellNum++;
-			
+
 			// set ++ and clear
 			no++;
 			rowNum++;
 			cellNum = 0;
 		}
 
-		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
-		workbook.write(outByteStream);
+		// set output
+		ByteArrayOutputStream outputStream = null;
+		byte[] content = null;
 
-		return outByteStream;
+		try {
+			outputStream = new ByteArrayOutputStream();
+			workbook.write(outputStream);
+			content = outputStream.toByteArray();
+		} finally {
+			try {
+				if (outputStream != null) {
+					outputStream.close();
+				}
+			} catch (IOException e) {
+				logger.error(e.getMessage(), e);
+
+			}
+		}
+
+		return content;
 	}
 
 	/*------MaterialPayment-----*/

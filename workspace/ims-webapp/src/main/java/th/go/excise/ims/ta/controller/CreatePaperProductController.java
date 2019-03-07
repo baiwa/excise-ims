@@ -1,6 +1,5 @@
 package th.go.excise.ims.ta.controller;
 
-import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 
@@ -37,7 +36,7 @@ import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 public class CreatePaperProductController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CreatePaperProductController.class);
-
+	
 	private CreatePaperProductService createPaperProductService;
 
 	@Autowired
@@ -59,7 +58,7 @@ public class CreatePaperProductController {
 		}
 		return response;
 	}
-	
+
 	@GetMapping("/list-raw-material-receive/export")
 	@ResponseBody
 	public void export(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception {
@@ -69,8 +68,7 @@ public class CreatePaperProductController {
 		/* set fileName */
 		String fileName = URLEncoder.encode("ตรวจสอบการรับวัตถุดิบ", "UTF-8");
 		/* write it as an excel attachment */
-		ByteArrayOutputStream outByteStream = createPaperProductService.exportRawMaterialReceive();
-		byte[] outArray = outByteStream.toByteArray();
+		byte[] outArray = createPaperProductService.exportRawMaterialReceive();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
