@@ -39,16 +39,20 @@ public class IaQuestionnaireMadeHdrJdbcRepository {
 			params.add(request.getCreatedBy() + "%");
 		}
 		
-		if(StringUtils.isNotBlank(request.getStartDate())) {
-			sql.append(" AND TRUNC(START_DATE) >= ? ");
-			params.add(ConvertDateUtils.parseStringToDate(request.getStartDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-			
-		}
-		if(StringUtils.isNotBlank(request.getEndDate())) {
-			sql.append(" AND TRUNC(END_DATE) <= ? ");
-			params.add(ConvertDateUtils.parseStringToDate(request.getEndDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-		}
- 		sql.append(" ORDER BY CREATED_DATE ASC");
+		if(StringUtils.isNotBlank(request.getQtnName())){
+            sql.append(" AND UPPER(QTN_HEADER_NAME) LIKE ?");
+            params.add(request.getQtnName().toUpperCase() + "%");
+        }
+//		if(StringUtils.isNotBlank(request.getStartDate())) {
+//			sql.append(" AND TRUNC(START_DATE) >= ? ");
+//			params.add(ConvertDateUtils.parseStringToDate(request.getStartDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+//			
+//		}
+//		if(StringUtils.isNotBlank(request.getEndDate())) {
+//			sql.append(" AND TRUNC(END_DATE) <= ? ");
+//			params.add(ConvertDateUtils.parseStringToDate(request.getEndDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+//		}
+ 		sql.append(" ORDER BY CREATED_DATE DESC");
 
 		String limit = OracleUtils.limitForDatable(sql.toString(), request.getStart(), request.getLength());
 		@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -82,7 +86,7 @@ public class IaQuestionnaireMadeHdrJdbcRepository {
 			params.add(ConvertDateUtils.parseStringToDate(request.getStartDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 			params.add(ConvertDateUtils.parseStringToDate(request.getEndDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		}
-		sql.append(" ORDER BY CREATED_DATE ASC");
+		sql.append(" ORDER BY CREATED_DATE DESC");
 
 		String sqlCount = OracleUtils.countForDataTable(sql.toString());
 		Integer count = this.commonJdbcTemplate.queryForObject(sqlCount, params.toArray(), Integer.class);

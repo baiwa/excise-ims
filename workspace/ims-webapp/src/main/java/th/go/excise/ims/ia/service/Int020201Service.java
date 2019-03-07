@@ -1,5 +1,6 @@
 package th.go.excise.ims.ia.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +37,10 @@ public class Int020201Service {
 
 	public List<IaQuestionnaireSide> findQtnSideById(Int020201SidesVo request) {
 		return iaQuestionnaireSideRepository.findByidHead(request.getIdSide());
+	}
+	
+	public IaQuestionnaireMadeHdr findQtnMadeHdrById(BigDecimal id) {
+		return iaQuestionnaireMadeHdrRepository.findById(id).get();
 	}
 
 	public Int020201Vo findQtnSideDtlById(Int020201SidesVo request) {
@@ -76,7 +81,7 @@ public class Int020201Service {
 					madeDtl.setNote(objMadeDtl.getNote());
 					madeDtl.setCheckFlag(objMadeDtl.getCheckFlag());
 
-					if ("ยังไม่ได้ทำแบบสอบถาม".equals(request.getStatus())) {
+					if ("CREATED".equals(request.getStatus())) {
 						madeDtl.setStatus("WAIT");
 					}
 					
@@ -95,7 +100,7 @@ public class Int020201Service {
 		Optional<IaQuestionnaireMadeHdr> resMadeHdr = iaQuestionnaireMadeHdrRepository.findById(request.getIdMadeHdr());
 		if (resMadeHdr.isPresent()) {
 			IaQuestionnaireMadeHdr madeHdr = resMadeHdr.get();
-			if ("ยังไม่ได้ทำแบบสอบถาม".equals(request.getStatus()) && !request.getFlagConfirm()) {
+			if ("CREATED".equals(request.getStatus()) && !request.getFlagConfirm()) {
 				madeHdr.setStatus("WAIT");
 			}
 			/* confirm send questionnaire form */

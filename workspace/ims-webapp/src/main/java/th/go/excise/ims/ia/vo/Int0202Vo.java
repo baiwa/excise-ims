@@ -11,6 +11,7 @@ public class Int0202Vo extends IaQuestionnaireMadeHdr {
 	private String updatedDateStr;
 	private String startDateStr;
 	private String endDateStr;
+	private String statusStr;
 
 	public String getCreatedDateStr() {
 		return createdDateStr;
@@ -42,6 +43,14 @@ public class Int0202Vo extends IaQuestionnaireMadeHdr {
 
 	public void setEndDateStr(String endDateStr) {
 		this.endDateStr = endDateStr;
+	}
+
+	public String getStatusStr() {
+		return statusStr;
+	}
+
+	public void setStatusStr(String statusStr) {
+		this.statusStr = statusStr;
 	}
 
 }

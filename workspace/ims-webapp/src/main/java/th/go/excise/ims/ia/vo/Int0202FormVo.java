@@ -12,6 +12,7 @@ public class Int0202FormVo extends DataTableRequest {
 	private String endDate;
 	private String createdBy;
 	private String officeCode;
+	private String qtnName;
 	
 	public String getBudgetYear() {
 		return budgetYear;
@@ -42,5 +43,11 @@ public class Int0202FormVo extends DataTableRequest {
 	}
 	public void setOfficeCode(String officeCode) {
 		this.officeCode = officeCode;
+	}
+	public String getQtnName() {
+		return qtnName;
+	}
+	public void setQtnName(String qtnName) {
+		this.qtnName = qtnName;
 	}
 }
