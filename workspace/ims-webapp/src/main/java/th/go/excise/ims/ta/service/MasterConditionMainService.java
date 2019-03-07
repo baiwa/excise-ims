@@ -56,7 +56,7 @@ public class MasterConditionMainService {
         hdr.setNewFacFlag(form.getNewFacFlag());
         taMasCondMainHdrRepository.save(hdr);
     }
-    
+
     public void deleteCondMain(TaMasCondMainHdr form) {
         TaMasCondMainHdr hdr = taMasCondMainHdrRepository.findByCondNumber(form.getCondNumber());
         hdr.setIsDeleted(FLAG.Y_FLAG);
@@ -64,10 +64,10 @@ public class MasterConditionMainService {
         taMasCondMainHdrRepository.save(hdr);
         List<TaMasCondMainDtl> listDtl = taMasCondMainDtlRepository.findByCondNumber(form.getCondNumber());
         for (TaMasCondMainDtl obj : listDtl) {
-        	dtl = taMasCondMainDtlRepository.findById(obj.getMasCondMainDtlId()).get();
-        	dtl.setIsDeleted(FLAG.Y_FLAG);
-        	taMasCondMainDtlRepository.save(dtl);
-		}
+            dtl = taMasCondMainDtlRepository.findById(obj.getMasCondMainDtlId()).get();
+            dtl.setIsDeleted(FLAG.Y_FLAG);
+            taMasCondMainDtlRepository.save(dtl);
+        }
     }
 
     public void insertCondMainDtl(MasterConditionMainHdrDtlVo formVo) {
@@ -252,7 +252,7 @@ public class MasterConditionMainService {
                 vo.setRangeTypeStart(dtl.getRangeTypeStart());
                 vo.setRangeTypeStartDesc(ApplicationCache.getParamInfoByCode("TA_MAIN_COND_RANGE", dtl.getRangeTypeStart()).getValue1());
                 vo.setRangeTypeEnd(dtl.getRangeTypeEnd());
-                if (dtl.getRangeTypeEnd()!= null){
+                if (dtl.getRangeTypeEnd() != null) {
                     vo.setRangeTypeEndDesc(ApplicationCache.getParamInfoByCode("TA_MAIN_COND_RANGE", dtl.getRangeTypeEnd()).getValue1());
                 }
                 vo.setRiskLevelDesc(ApplicationCache.getParamInfoByCode("TA_RISK_LEVEL", dtl.getRiskLevel()).getValue1());
@@ -263,6 +263,7 @@ public class MasterConditionMainService {
             vo.setRangeEnd(dtl.getRangeEnd());
             vo.setRiskLevel(dtl.getRiskLevel());
             vo.setCondType(dtl.getCondType());
+            vo.setCondDtlDesc(dtl.getCondDtlDesc());
 
             listVo.add(vo);
 
