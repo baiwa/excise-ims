@@ -142,7 +142,7 @@ public class CreatePaperServiceService {
 			sheet.setColumnWidth(colIndex++, 30 * 256);
 			sheet.setColumnWidth(colIndex++, 23 * 256);
 			/*set	fileName*/		
-			String fileName ="TeamMate_"+DateFormatUtils.format(new Date(),"yyyyMMdd");
+			String fileName ="บันทึกผลการตรวจสอบด้านปริมาณ"+DateFormatUtils.format(new Date(),"yyyyMMdd");
 			ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
 			workbook.write(outByteStream);
 			byte [] outArray = outByteStream.toByteArray();
@@ -261,7 +261,7 @@ public class CreatePaperServiceService {
 			sheet.setColumnWidth(colIndex++, 30 * 256);
 			sheet.setColumnWidth(colIndex++, 23 * 256);
 			/*set	fileName*/		
-			String fileName ="TeamMate_"+DateFormatUtils.format(new Date(),"yyyyMMdd");
+			String fileName ="บันทึกผลการตรวจสอบด้านราคาต่อหน่วย"+DateFormatUtils.format(new Date(),"yyyyMMdd");
 			ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
 			workbook.write(outByteStream);
 			byte [] outArray = outByteStream.toByteArray();
@@ -386,7 +386,7 @@ public class CreatePaperServiceService {
 			sheet.setColumnWidth(colIndex++, 25 * 256);
 			sheet.setColumnWidth(colIndex++, 23 * 256);
 			/*set	fileName*/		
-			String fileName ="TeamMate_"+DateFormatUtils.format(new Date(),"yyyyMMdd");
+			String fileName ="บันทึกผลการตรวจสอบสถานะสมาชิก_"+DateFormatUtils.format(new Date(),"ddMMyyyy");
 			ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
 			workbook.write(outByteStream);
 			byte [] outArray = outByteStream.toByteArray();
