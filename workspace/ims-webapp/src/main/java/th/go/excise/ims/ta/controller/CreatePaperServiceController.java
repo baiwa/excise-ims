@@ -57,17 +57,16 @@ public class CreatePaperServiceController {
 	
 	@GetMapping("/exportFileQuantityServiceVo")
 	@ResponseBody
-	public  void exportFileQuantityServiceVo(@ModelAttribute QuantityServiceVo formVo, HttpServletResponse response,HttpServletRequest request) throws Exception {
+	public  void exportFileQuantityServiceVo(@ModelAttribute  HttpServletResponse response,HttpServletRequest request) throws Exception {
 		String fileName = URLEncoder.encode("บันทึกผลการตรวจสอบด้านปริมาณ", "UTF-8");
 		// write it as an excel attachment
-		ByteArrayOutputStream outByteStream = createPaperServiceService.exportFileQuantityServiceVo(formVo, response, request);
-		byte[] outArray = outByteStream.toByteArray();
+		byte[] outByteStream = createPaperServiceService.exportFileQuantityServiceVo();
 		response.setContentType("application/octet-stream");
-		response.setContentLength(outArray.length);
+		response.setContentLength(outByteStream.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
 		OutputStream outStream = response.getOutputStream();
-		outStream.write(outArray);
+		outStream.write(outByteStream);
 		outStream.flush();
 		outStream.close();
 	}

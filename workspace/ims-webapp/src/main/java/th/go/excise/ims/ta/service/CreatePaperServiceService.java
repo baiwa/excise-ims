@@ -2,16 +2,13 @@ package th.go.excise.ims.ta.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
@@ -23,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
-import th.go.excise.ims.ia.util.ExcelUtil;
+import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 import th.go.excise.ims.ta.vo.LeftInStockServiceVo;
 import th.go.excise.ims.ta.vo.MemberStatusServiceVo;
@@ -34,8 +31,7 @@ import th.go.excise.ims.ta.vo.QuantityServiceVo;
 public class CreatePaperServiceService {
 	private static final Logger logger = LoggerFactory.getLogger(CreatePaperServiceService.class);
 	
-	@Autowired
-	private ExcelUtil excalUtil;
+
 	
 	
 	public DataTableAjax<QuantityServiceVo> GetQuantityServiceVo(CreatePaperFormVo request) {
@@ -68,17 +64,22 @@ public class CreatePaperServiceService {
 		}
 		return datalist;
 	}
-	public ByteArrayOutputStream exportFileQuantityServiceVo(QuantityServiceVo formVo,  HttpServletResponse response,HttpServletRequest request) throws IOException {
+	public byte[] exportFileQuantityServiceVo() throws IOException {
 		
 		List<QuantityServiceVo> dataListexportFile = new ArrayList<QuantityServiceVo>();
 		dataListexportFile = listQuantityServiceVo(0, 45, 45);
 		 logger.info("Data list exportFileQuantityServiceVo {} row",dataListexportFile.size());
 		 
-			XSSFWorkbook workbook = excalUtil.setUpExcel();
-			CellStyle thStyle = excalUtil.thStyle;
+			XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+	
 			CellStyle fontHeader = workbook.createCellStyle();
-			fontHeader.setFont(excalUtil.fontHeader);
-			Sheet sheet = workbook.createSheet();
+			 /* call style from utils */
+			  CellStyle thStyle = ExcelUtils.getThStyle();
+			  CellStyle cellCenter = ExcelUtils.getCellCenter();
+			  CellStyle cellLeft = ExcelUtils.getCellLeft();
+			  CellStyle cellRight = ExcelUtils.getCellRight();
+			  
+			Sheet sheet = workbook.createSheet("บันทึกผลการตรวจสอบด้านปริมาณ");
 			int rowNum = 0;
 			int cellNum = 0;
 			
@@ -92,41 +93,40 @@ public class CreatePaperServiceService {
 				cell.setCellValue(tbTH1[cellNum]);
 				cell.setCellStyle(thStyle);
 			};
+			
 			rowNum++;
 			cellNum = 0;
 			int order = 1;
 			for (QuantityServiceVo detail : dataListexportFile) {
 				row = sheet.createRow(rowNum);
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellCenter);
+				cell.setCellStyle(cellCenter);
 				cell.setCellValue(String.valueOf(order++));
 				
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellLeft);
+				cell.setCellStyle(cellLeft);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getList()))?detail.getList(): "" );
 				
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellRight);
+				cell.setCellStyle(cellRight);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getServiceSlip()))?detail.getServiceSlip(): "" );
 				
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellRight);
+				cell.setCellStyle(cellRight);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getDailyAccount()))?detail.getDailyAccount(): "" );
 				
-				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellRight);
-				cell.setCellValue((StringUtils.isNotBlank(detail.getPaymentSlip()))?detail.getDailyAccount(): "" );
+			
 				
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellRight);
+				cell.setCellStyle(cellRight);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getFromExamination()))?detail.getFromExamination(): "" );
 				
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellRight);
+				cell.setCellStyle(cellRight);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getTaxForm()))?detail.getTaxForm(): "" );
 				
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellRight);
+				cell.setCellStyle(cellRight);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getDifference()))?detail.getDifference(): "" );
 				
 				rowNum++;
@@ -143,8 +143,10 @@ public class CreatePaperServiceService {
 			sheet.setColumnWidth(colIndex++, 23 * 256);
 			/*set	fileName*/		
 			ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
-			workbook.write(outByteStream);
-			return outByteStream;
+			byte [] cont = null;
+		    workbook.write(outByteStream);
+		    cont = outByteStream.toByteArray();
+			return cont;
 		
 		}
 	
@@ -187,12 +189,16 @@ public class CreatePaperServiceService {
 		List<PriceServiceVo> dataListexportFile = new ArrayList<PriceServiceVo>();
 		dataListexportFile = listPriceServiceVo(0, 35, 35);
 		 logger.info("Data list exportFilePriceServiceVo {} row",dataListexportFile.size());
-		 
-			XSSFWorkbook workbook = excalUtil.setUpExcel();
-			CellStyle thStyle = excalUtil.thStyle;
+			XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+			
 			CellStyle fontHeader = workbook.createCellStyle();
-			fontHeader.setFont(excalUtil.fontHeader);
-			Sheet sheet = workbook.createSheet();
+			 /* call style from utils */
+			  CellStyle thStyle = ExcelUtils.getThStyle();
+			  CellStyle cellCenter = ExcelUtils.getCellCenter();
+			  CellStyle cellLeft = ExcelUtils.getCellLeft();
+			  CellStyle cellRight = ExcelUtils.getCellRight();
+			  
+			Sheet sheet = workbook.createSheet("บันทึกผลการตรวจสอบด้านราคาต่อหน่วย");
 			int rowNum = 0;
 			int cellNum = 0;
 			
@@ -212,31 +218,31 @@ public class CreatePaperServiceService {
 			for (PriceServiceVo detail : dataListexportFile) {
 				row = sheet.createRow(rowNum);
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellCenter);
+				cell.setCellStyle(cellCenter);
 				cell.setCellValue(String.valueOf(order++));
 				
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellLeft);
+				cell.setCellStyle(cellLeft);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getList()))?detail.getList(): "" );
 				
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellRight);
+				cell.setCellStyle(cellRight);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getTaxInvoicePrice()))?detail.getTaxInvoicePrice(): "" );
 			
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellRight);
+				cell.setCellStyle(cellRight);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getNotificationService()))?detail.getNotificationService(): "" );
 			
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellRight);
+				cell.setCellStyle(cellRight);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getFromExamination()))?detail.getFromExamination(): "" );
 				
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellRight);
+				cell.setCellStyle(cellRight);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getTaxFilingPrice()))?detail.getTaxFilingPrice(): "" );
 				
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellRight);
+				cell.setCellStyle(cellRight);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getDifference()))?detail.getDifference(): "" );
 				
 				rowNum++;
@@ -299,11 +305,16 @@ public class CreatePaperServiceService {
 		dataListexportFile = listMemberStatusServiceVo(0, 35, 35);
 		 logger.info("Data list exportFilePriceServiceVo {} row",dataListexportFile.size());
 		 
-			XSSFWorkbook workbook = excalUtil.setUpExcel();
-			CellStyle thStyle = excalUtil.thStyle;
+			XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+			
 			CellStyle fontHeader = workbook.createCellStyle();
-			fontHeader.setFont(excalUtil.fontHeader);
-			Sheet sheet = workbook.createSheet();
+			 /* call style from utils */
+			  CellStyle thStyle = ExcelUtils.getThStyle();
+			  CellStyle cellCenter = ExcelUtils.getCellCenter();
+			  CellStyle cellLeft = ExcelUtils.getCellLeft();
+			  CellStyle cellRight = ExcelUtils.getCellRight();
+			  
+			Sheet sheet = workbook.createSheet("บันทึกผลการตรวจสอบสถานะสมาชิก");
 			int rowNum = 0;
 			int cellNum = 0;
 			
@@ -323,36 +334,36 @@ public class CreatePaperServiceService {
 			for (MemberStatusServiceVo detail : dataListexportFile) {
 				row = sheet.createRow(rowNum);
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellCenter);
+				cell.setCellStyle(cellCenter);
 				cell.setCellValue(String.valueOf(order++));
 				
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellLeft);
+				cell.setCellStyle(cellLeft);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getMemberCode()))?detail.getMemberCode(): "" );
 				
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellLeft);
+				cell.setCellStyle(cellLeft);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getSurname()))?detail.getSurname(): "" );
 
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellCenter);
+				cell.setCellStyle(cellCenter);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getStartDate()))?detail.getStartDate(): "" );
 
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellCenter);
+				cell.setCellStyle(cellCenter);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getExpiredDate()))?detail.getExpiredDate(): "" );
 				
 
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellCenter);
+				cell.setCellStyle(cellCenter);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getCoupon()))?detail.getCoupon(): "" );
 
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellCenter);
+				cell.setCellStyle(cellCenter);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getServiceDate()))?detail.getServiceDate(): "" );
 
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellCenter);
+				cell.setCellStyle(cellCenter);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getMembershipStatus()))?detail.getMembershipStatus(): "" );
 				
 				rowNum++;
@@ -411,14 +422,20 @@ public class CreatePaperServiceService {
 		dataListexportFile = listLeftInStockServiceVo(0, 35, 35);
 		 logger.info("Data list exportFilePriceServiceVo {} row",dataListexportFile.size());
 		 
-			XSSFWorkbook workbook = excalUtil.setUpExcel();
-			CellStyle thStyle = excalUtil.thStyle;
+			XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+			
 			CellStyle fontHeader = workbook.createCellStyle();
-			fontHeader.setFont(excalUtil.fontHeader);
-			Sheet sheet = workbook.createSheet();
+			 /* call style from utils */
+			  CellStyle thStyle = ExcelUtils.getThStyle();
+			  CellStyle cellCenter = ExcelUtils.getCellCenter();
+			  CellStyle cellLeft = ExcelUtils.getCellLeft();
+			  CellStyle cellRight = ExcelUtils.getCellRight();
+			  
+			Sheet sheet = workbook.createSheet("บันทึกผลการตรวจนับสินค้าคงเหลือ");
 			int rowNum = 0;
 			int cellNum = 0;
-			
+//			int coun = "บันทึกผลการตรวจนับสินค้าคงเหลือ".length();
+//			System.out.println("555555555555555555555555555556666"+coun);
 			Row row = sheet.createRow(rowNum);
 			Cell cell = row.createCell(cellNum);
 			String[] tbTH1 = { "ลำดับ", "รายการ", "ยอดคงเหลือตามบัญชี", "ยอดสินค้าคงเหลือจากการตรวจนับ",
@@ -435,23 +452,23 @@ public class CreatePaperServiceService {
 			for (LeftInStockServiceVo detail : dataListexportFile) {
 				row = sheet.createRow(rowNum);
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellCenter);
+				cell.setCellStyle(cellCenter);
 				cell.setCellValue(String.valueOf(order++));
 				
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellLeft);
+				cell.setCellStyle(cellLeft);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getList()))?detail.getList(): "" );
 				
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellRight);
+				cell.setCellStyle(cellRight);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getAccountBalance()))?detail.getAccountBalance(): "" );
 				
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellRight);
+				cell.setCellStyle(cellRight);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getInventoryBalance()))?detail.getInventoryBalance(): "" );
 				
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(excalUtil.cellRight);
+				cell.setCellStyle(cellRight);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getDifference()))?detail.getDifference(): "" );
 				
 				rowNum++;
