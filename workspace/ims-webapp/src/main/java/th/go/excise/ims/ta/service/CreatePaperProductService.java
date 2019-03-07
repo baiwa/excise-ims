@@ -159,22 +159,12 @@ public class CreatePaperProductService {
 		}
 
 		// set output
-		ByteArrayOutputStream outputStream = null;
 		byte[] content = null;
-
-		try {
-			outputStream = new ByteArrayOutputStream();
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
 			workbook.write(outputStream);
 			content = outputStream.toByteArray();
-		} finally {
-			try {
-				if (outputStream != null) {
-					outputStream.close();
-				}
-			} catch (IOException e) {
-				logger.error(e.getMessage(), e);
-
-			}
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
 		}
 
 		return content;
