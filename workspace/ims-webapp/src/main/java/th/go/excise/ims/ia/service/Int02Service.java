@@ -43,8 +43,8 @@ public class Int02Service {
 		List<Int02Vo> data = iaQuestionnaireHdrJdbcRepository.getDataFilter(request);
 		/* convert date to string */
 		for (Int02Vo obj : data) {
-			/* to string status */
-			obj.setStatus(ApplicationCache.getParamInfoByCode("IA_STATUS", obj.getStatus()).getValue1());
+			/* to string statusStr */
+			obj.setStatusStr(ApplicationCache.getParamInfoByCode("IA_STATUS", obj.getStatus()).getValue1());
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ProjectConstant.SHORT_DATE_FORMAT);
 
 			if (obj.getCreatedDate() != null) {
@@ -124,13 +124,21 @@ public class Int02Service {
 		Optional<IaQuestionnaireHdr> dataRes = iaQuestionnaireHdrRepository.findById(new BigDecimal(idStr));
 		if (dataRes.isPresent()) {
 			IaQuestionnaireHdr daraHdr = dataRes.get();
-			daraHdr.setStatus("FAIL_HDR");
-			iaQuestionnaireHdrRepository.save(daraHdr);
-			/* update status   */
-			List<IaQuestionnaireMadeHdr> dataMadeHdr = iaQuestionnaireMadeHdrJdbcRepository.findMadeHdrByIdHdr(daraHdr, UserLoginUtils.getCurrentUserBean().getOfficeCode());
-			for (IaQuestionnaireMadeHdr madeHdr : dataMadeHdr) {
-				madeHdr.setStatus("FAIL_SEND_QTN");
+			
+			if("SUCCESS_HDR".equals(daraHdr.getStatus())) {
+				/* update status   */
+				daraHdr.setStatus("FAIL_SEND_QTN");
+				iaQuestionnaireHdrRepository.save(daraHdr);
+				
+				List<IaQuestionnaireMadeHdr> dataMadeHdr = iaQuestionnaireMadeHdrJdbcRepository.findMadeHdrByIdHdr(daraHdr, UserLoginUtils.getCurrentUserBean().getOfficeCode());
+				for (IaQuestionnaireMadeHdr madeHdr : dataMadeHdr) {
+					madeHdr.setStatus("FAIL_SEND_QTN");
+				}
+			}else {
+				iaQuestionnaireHdrRepository.deleteById(daraHdr.getId());
 			}
+//			daraHdr.setStatus("FAIL_HDR");
+//			iaQuestionnaireHdrRepository.save(daraHdr);
 		}
 	}
 

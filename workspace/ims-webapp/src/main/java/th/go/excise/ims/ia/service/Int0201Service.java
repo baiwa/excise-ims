@@ -54,6 +54,10 @@ public class Int0201Service {
 	public List<IaQuestionnaireSide> findQtnSideById(Int0201FormVo request) {
 		return iaQuestionnaireSideRepository.findByidHead(request.getId());
 	}
+	
+	public IaQuestionnaireHdr findQtnHdrById(BigDecimal id) {
+		return iaQuestionnaireHdrRepository.findById(id).get();
+	}
 
 	public Int0201Vo findQtnSideDtlById(Int0201FormVo2 request) {
 		List<Int02010101Vo> dataHdr = null;
@@ -101,7 +105,7 @@ public class Int0201Service {
 		}
 
 		/* check status for save or update or delete */
-		if ("ส่งแบบสอบถามสำเร็จ".equals(request.getStatus())) {
+		if ("SUCCESS_HDR".equals(request.getStatus())) {
 			logger.info("delete QtnMade by idSideDtl");
 			/* find id made header from request */
 			List<IaQuestionnaireMade> filterQtnMade = iaQuestionnaireMadeRepository

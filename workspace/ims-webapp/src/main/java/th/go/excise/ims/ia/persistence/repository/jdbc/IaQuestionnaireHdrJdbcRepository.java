@@ -33,13 +33,13 @@ public class IaQuestionnaireHdrJdbcRepository {
 		}
 		
 		if(StringUtils.isNotBlank(request.getCreatedBy())) {
-			sql.append(" AND CREATED_BY LIKE ?");
-			params.add(request.getCreatedBy() + "%");
+			sql.append(" AND UPPER(CREATED_BY) LIKE ?");
+			params.add(request.getCreatedBy().toUpperCase() + "%");
 		}
 
 		if(StringUtils.isNotBlank(request.getNameQtn())){
-            sql.append(" AND QTN_HEADER_NAME ?");
-            params.add(request.getNameQtn() + "%");
+            sql.append(" AND UPPER(QTN_HEADER_NAME) LIKE ?");
+            params.add(request.getNameQtn().toUpperCase() + "%");
         }
 		
 //		if(StringUtils.isNotBlank(request.getStartDate())) {
@@ -72,13 +72,13 @@ public class IaQuestionnaireHdrJdbcRepository {
 		}
 		
 		if(StringUtils.isNotBlank(request.getCreatedBy())) {
-			sql.append(" AND CREATED_BY LIKE ? ");
-			params.add(request.getCreatedBy() + "%");
+			sql.append(" AND UPPER(CREATED_BY) LIKE ? ");
+			params.add(request.getCreatedBy().toUpperCase() + "%");
 		}
 
         if(StringUtils.isNotBlank(request.getNameQtn())){
-            sql.append(" AND QTN_HEADER_NAME ?");
-            params.add(request.getNameQtn() + "%");
+            sql.append(" AND UPPER(QTN_HEADER_NAME) LIKE ?");
+            params.add(request.getNameQtn().toUpperCase() + "%");
         }
 
 //		if(StringUtils.isNotBlank(request.getStartDate()) && StringUtils.isNotBlank(request.getEndDate())) {
