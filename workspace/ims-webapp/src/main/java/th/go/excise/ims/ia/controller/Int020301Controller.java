@@ -69,6 +69,24 @@ public class Int020301Controller {
 		}
 		return responseData;
 	}
+	
+	@GetMapping("/info/config/{idHdr}/{budgetYear}/{idConfig}")
+	@ResponseBody
+	public ResponseData<List<Int020301InfoVo>> findInfoByIdHdrRisk(@PathVariable("idHdr") String idHdrStr,
+			@PathVariable("budgetYear") String budgetYear, @PathVariable("idConfig") String idConfig) {
+		ResponseData<List<Int020301InfoVo>> responseData = new ResponseData<List<Int020301InfoVo>>();
+		List<Int020301InfoVo> data = new ArrayList<>();
+		try {
+			data = int020301Service.findInfoByIdHdrRisk(idHdrStr, budgetYear, idConfig);
+			responseData.setData(data);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Int0203Controller::findByIdHead ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
 
 	@GetMapping("/export/excel/{idHdr}/{budgetYear}")
 	public void export(@PathVariable("idHdr") String idHdrStr, @PathVariable("budgetYear") String budgetYear, HttpServletResponse response) throws Exception {

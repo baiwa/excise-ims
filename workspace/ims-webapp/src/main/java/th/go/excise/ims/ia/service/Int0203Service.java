@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
-import th.co.baiwa.buckwaframework.common.constant.MessageContants;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0203JdbcRepository;
 import th.go.excise.ims.ia.vo.Int0203FormVo;
 import th.go.excise.ims.ia.vo.Int02Vo;
@@ -27,7 +27,7 @@ public class Int0203Service {
 		/* convert date to string */
 		for (Int02Vo obj : data) {
 			/* to string status */
-			obj.setStatus(MessageContants.IA.qtnStatus(obj.getStatus()));
+			obj.setStatus(ApplicationCache.getParamInfoByCode("IA_STATUS", obj.getStatus()).getValue1());
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ProjectConstant.SHORT_DATE_FORMAT);
 
 			if (obj.getCreatedDate() != null) {
