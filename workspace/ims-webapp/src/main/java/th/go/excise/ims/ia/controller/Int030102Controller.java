@@ -17,6 +17,8 @@ import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
+import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
 import th.go.excise.ims.ia.service.Int030102Service;
 import th.go.excise.ims.ia.vo.Int030102FormVo;
 import th.go.excise.ims.ia.vo.Int030102Vo;
@@ -150,6 +152,24 @@ public class Int030102Controller {
 		} catch (Exception e) {
 			logger.error("Int030102Controller saveRiskFactorsLevelAndUpdateStatus : ", e);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	@PostMapping("/factorList")
+	@ResponseBody
+	public ResponseData<IaRiskFactors> factorList(@RequestBody IaRiskFactorsMaster form) {
+		ResponseData<IaRiskFactors> response = new ResponseData<IaRiskFactors>();
+		try {	
+			
+			response.setData(int030102Service.factorList(form));
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+
+		} catch (Exception e) {
+			logger.error("Int030102Controller saveRiskFactorsLevelAndUpdateStatus : ", e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;

@@ -14,4 +14,7 @@ public interface IaRiskFactorsRepository
 {
 	@Query(value = "Select e.* from IA_RISK_FACTORS e  WHERE e.inspection_Work = ?1 And e.BUDGET_YEAR = ?2 ",nativeQuery = true)
 	public List<IaRiskFactors> findByInspectionWorkByBudgetYear(BigDecimal inspectionWork,String budgetYear );
+	
+	@Query(value = "Select e.* from IA_RISK_FACTORS e  WHERE e.ID_MASTER = ?1 ",nativeQuery = true)
+	public List<IaRiskFactors> findByIdMaster(BigDecimal idMaster );
 }

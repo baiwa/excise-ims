@@ -502,6 +502,7 @@ public class Int030101Service {
 		return dataUploadList;
 	}
 
+	@Transactional
 	public void saveFactorsData(Int030101FormVo form) {
 //		BigDecimal idFactor = form.getIdFactors();
 //
@@ -509,7 +510,11 @@ public class Int030101Service {
 //		dataSetConfig.setInfoUsedRiskDesc(form.getInfoUsedRiskDesc());
 //		logger.info("dataSetConfig", dataSetConfig);
 //		iaRiskFactorsConfigRepository.save(dataSetConfig);
-
+		
+		if(!StringUtils.isEmpty(form.getDateFrom()) || !StringUtils.isEmpty(form.getDateTo())) {
+			int030101JdbcRepository.deleteFactosData(form.getIdFactors().toString());
+		}
+		
 		List<IaRiskFactorsData> dataList = form.getIaRiskFactorsDataList();
 		IaRiskFactorsData dataSet = null;
 		for (IaRiskFactorsData iaRiskFactorsData : dataList) {
@@ -527,5 +532,24 @@ public class Int030101Service {
 
 			iaRiskFactorsDataRepository.save(dataSet);
 		}
+	}
+	
+	@Transactional
+	public Int030101Vo configFactorsDataList(Int030101FormVo form) {
+		Int030101Vo res = new Int030101Vo();
+		List<Int030101Vo> resList = int030101JdbcRepository.list(form);
+		for (Int030101Vo int030101Vo : resList) {
+			Int030101FormVo formVo = new Int030101FormVo();
+			formVo.setSide(int030101Vo.getInt030101FormVo().getSide());
+			formVo.setRiskFactorsMaster(int030101Vo.getInt030101FormVo().getRiskFactorsMaster());
+			formVo.setInfoUsedRiskDesc(int030101Vo.getInt030101FormVo().getInfoUsedRiskDesc());
+			formVo.setRiskIndicators(int030101Vo.getInt030101FormVo().getRiskIndicators());
+			formVo.setRiskUnit(int030101Vo.getInt030101FormVo().getRiskUnit());
+			formVo.setDateFrom(int030101Vo.getInt030101FormVo().getDateFrom());
+			formVo.setDateTo(int030101Vo.getInt030101FormVo().getDateTo());
+			res.setInt030101FormVo(formVo);
+		}
+		
+		return res;
 	}
 }

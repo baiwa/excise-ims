@@ -155,4 +155,14 @@ public class Int030102Service {
 		int030102JdbcRepository.listUpdateStatus(form);
 		save(form);
 	}
+	
+	public IaRiskFactors factorList(IaRiskFactorsMaster form) {
+		IaRiskFactors factor = new IaRiskFactors();
+		List<IaRiskFactors> factorsList = iaRiskFactorsRepository.findByIdMaster(form.getId());
+		for (IaRiskFactors iaRiskFactors : factorsList) {
+			factor.setId(iaRiskFactors.getId());
+			factor.setDataEvaluate(iaRiskFactors.getDataEvaluate());
+		}
+		return factor;
+	}
 }

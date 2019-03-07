@@ -13,6 +13,5 @@ public interface IaRiskFactorsDataRepository extends CommonJpaCrudRepository<IaR
 	@Query(value = "Select e.* from IA_RISK_FACTORS_DATA e   WHERE e.ID_FACTORS = ?1 AND e.INSPECTION_WORK = ?2 AND e.BUDGET_YEAR = ?3 AND e.Is_Deleted = 'N'", nativeQuery = true)
 	public  List<IaRiskFactorsData> findByIdFactorsByInspectionWorkByBudgetYear(BigDecimal idFactors, BigDecimal inspectionWork,
 			String budgetYear);
-//	ID_FACTORS, e.PROJECT, e.EXCISE_CODE, e.SECTOR, e.AREA, e.RISK_COST
 
 }
