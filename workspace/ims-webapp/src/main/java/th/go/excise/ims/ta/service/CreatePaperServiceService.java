@@ -68,7 +68,7 @@ public class CreatePaperServiceService {
 		}
 		return datalist;
 	}
-	public void exportFileQuantityServiceVo(QuantityServiceVo formVo,  HttpServletResponse response,HttpServletRequest request) throws IOException {
+	public ByteArrayOutputStream exportFileQuantityServiceVo(QuantityServiceVo formVo,  HttpServletResponse response,HttpServletRequest request) throws IOException {
 		
 		List<QuantityServiceVo> dataListexportFile = new ArrayList<QuantityServiceVo>();
 		dataListexportFile = listQuantityServiceVo(0, 45, 45);
@@ -84,8 +84,8 @@ public class CreatePaperServiceService {
 			
 			Row row = sheet.createRow(rowNum);
 			Cell cell = row.createCell(cellNum);
-			String[] tbTH1 = { "ลำดับ", "รายการ", "ใบรอบบริการ", "บัญชีประจำวัน แสดงรายรับของสถานบริการ ภส. ๐๗-๐๕",
-					"ใบนำส่งเงิน", "จากการตรวจสอบ","แบบรายการภาษี ภส. ๐๓-๐๘","ผลต่าง" };
+			String[] tbTH1 = { "ลำดับ", "รายการ", "ใบกำกับภาษีซื้อ",
+					"บัญชีประจำวัน ภส. ๐๗-๐๑", "งบเดือน (ภส. ๐๗-๐๔)","ข้อมูลจากภายนอก	","ผลต่างสูงสุด" };
 			row = sheet.createRow(rowNum);
 			for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 				cell = row.createCell(cellNum);
@@ -142,18 +142,9 @@ public class CreatePaperServiceService {
 			sheet.setColumnWidth(colIndex++, 30 * 256);
 			sheet.setColumnWidth(colIndex++, 23 * 256);
 			/*set	fileName*/		
-			String fileName ="บันทึกผลการตรวจสอบด้านปริมาณ"+DateFormatUtils.format(new Date(),"yyyyMMdd");
 			ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
 			workbook.write(outByteStream);
-			byte [] outArray = outByteStream.toByteArray();
-			response.setContentType("application/vnd.ms-excel");
-			response.setContentLength(outArray.length);
-			response.setHeader("Expires:", "0"); // eliminates browser caching
-			response.setHeader("Content-Disposition", "attachment; filename="+fileName+".xlsx");
-			OutputStream outStream = response.getOutputStream();
-			outStream.write(outArray);
-			outStream.flush();
-			outStream.close();
+			return outByteStream;
 		
 		}
 	
@@ -191,7 +182,7 @@ public class CreatePaperServiceService {
 		}
 		return datalist;
 	}
-	public void exportFilePriceServiceVo(PriceServiceVo formVo,  HttpServletResponse response,HttpServletRequest request) throws IOException {
+	public ByteArrayOutputStream exportFilePriceServiceVo(PriceServiceVo formVo,  HttpServletResponse response,HttpServletRequest request) throws IOException {
 		
 		List<PriceServiceVo> dataListexportFile = new ArrayList<PriceServiceVo>();
 		dataListexportFile = listPriceServiceVo(0, 35, 35);
@@ -261,18 +252,9 @@ public class CreatePaperServiceService {
 			sheet.setColumnWidth(colIndex++, 30 * 256);
 			sheet.setColumnWidth(colIndex++, 23 * 256);
 			/*set	fileName*/		
-			String fileName ="บันทึกผลการตรวจสอบด้านราคาต่อหน่วย"+DateFormatUtils.format(new Date(),"yyyyMMdd");
 			ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
 			workbook.write(outByteStream);
-			byte [] outArray = outByteStream.toByteArray();
-			response.setContentType("application/vnd.ms-excel");
-			response.setContentLength(outArray.length);
-			response.setHeader("Expires:", "0"); // eliminates browser caching
-			response.setHeader("Content-Disposition", "attachment; filename="+fileName+".xlsx");
-			OutputStream outStream = response.getOutputStream();
-			outStream.write(outArray);
-			outStream.flush();
-			outStream.close();
+			return outByteStream;
 		
 		}
 	//Done
@@ -311,7 +293,7 @@ public class CreatePaperServiceService {
 
 		return datalist;
 	}
-	public void exportFileMemberStatusServiceVo(MemberStatusServiceVo formVo,  HttpServletResponse response,HttpServletRequest request) throws IOException {
+	public ByteArrayOutputStream exportFileMemberStatusServiceVo(MemberStatusServiceVo formVo,  HttpServletResponse response,HttpServletRequest request) throws IOException {
 		
 		List<MemberStatusServiceVo> dataListexportFile = new ArrayList<MemberStatusServiceVo>();
 		dataListexportFile = listMemberStatusServiceVo(0, 35, 35);
@@ -386,18 +368,9 @@ public class CreatePaperServiceService {
 			sheet.setColumnWidth(colIndex++, 25 * 256);
 			sheet.setColumnWidth(colIndex++, 23 * 256);
 			/*set	fileName*/		
-			String fileName ="บันทึกผลการตรวจสอบสถานะสมาชิก_"+DateFormatUtils.format(new Date(),"ddMMyyyy");
 			ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
 			workbook.write(outByteStream);
-			byte [] outArray = outByteStream.toByteArray();
-			response.setContentType("application/vnd.ms-excel");
-			response.setContentLength(outArray.length);
-			response.setHeader("Expires:", "0"); // eliminates browser caching
-			response.setHeader("Content-Disposition", "attachment; filename="+fileName+".xlsx");
-			OutputStream outStream = response.getOutputStream();
-			outStream.write(outArray);
-			outStream.flush();
-			outStream.close();
+			return outByteStream;
 		
 		}
 	
@@ -432,7 +405,7 @@ public class CreatePaperServiceService {
 
 		return datalist;
 	}
-	public void exportFileLeftInStockServiceVo(LeftInStockServiceVo formVo,  HttpServletResponse response,HttpServletRequest request) throws IOException {
+	public ByteArrayOutputStream exportFileLeftInStockServiceVo(LeftInStockServiceVo formVo,  HttpServletResponse response,HttpServletRequest request) throws IOException {
 		
 		List<LeftInStockServiceVo> dataListexportFile = new ArrayList<LeftInStockServiceVo>();
 		dataListexportFile = listLeftInStockServiceVo(0, 35, 35);
@@ -492,19 +465,10 @@ public class CreatePaperServiceService {
 			sheet.setColumnWidth(colIndex++, 25 * 256);
 			
 			/*set	fileName*/		
-			String fileName ="TeamMate_"+DateFormatUtils.format(new Date(),"yyyyMMdd");
+		
 			ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
 			workbook.write(outByteStream);
-			byte [] outArray = outByteStream.toByteArray();
-			response.setContentType("application/vnd.ms-excel");
-			response.setContentLength(outArray.length);
-			response.setHeader("Expires:", "0"); // eliminates browser caching
-			response.setHeader("Content-Disposition", "attachment; filename="+fileName+".xlsx");
-			OutputStream outStream = response.getOutputStream();
-			outStream.write(outArray);
-			outStream.flush();
-			outStream.close();
-		
+			return outByteStream;
 		}
 	
 
