@@ -24,6 +24,15 @@ public class MasCondMainResponseVo {
     private String riskLevelDesc;
     private String condType;
     private String condTypeDesc;
+    private String condDtlDesc;
+
+    public String getCondDtlDesc() {
+        return condDtlDesc;
+    }
+
+    public void setCondDtlDesc(String condDtlDesc) {
+        this.condDtlDesc = condDtlDesc;
+    }
 
     public String getRangeTypeStartDesc() {
         return rangeTypeStartDesc;

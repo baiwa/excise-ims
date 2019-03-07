@@ -39,7 +39,6 @@ public class Int02010101Controller {
 		try {
 			data = int02010101Service.findByIdSide(idSideStr);
 			responseData.setData(data);
-			responseData.setMessage("SUCCESS");
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("Int02010101Controller::findByIdHead ", e);

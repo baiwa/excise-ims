@@ -1,7 +1,13 @@
 package th.go.excise.ims.ta.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
@@ -16,11 +22,6 @@ import th.go.excise.ims.ta.vo.ConditionMessageVo;
 import th.go.excise.ims.ta.vo.MasCondMainRequestVo;
 import th.go.excise.ims.ta.vo.MasCondMainResponseVo;
 import th.go.excise.ims.ta.vo.MasterConditionMainHdrDtlVo;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 @Service
 public class MasterConditionMainService {
@@ -56,6 +57,19 @@ public class MasterConditionMainService {
         taMasCondMainHdrRepository.save(hdr);
     }
 
+    public void deleteCondMain(TaMasCondMainHdr form) {
+        TaMasCondMainHdr hdr = taMasCondMainHdrRepository.findByCondNumber(form.getCondNumber());
+        hdr.setIsDeleted(FLAG.Y_FLAG);
+        TaMasCondMainDtl dtl = null;
+        taMasCondMainHdrRepository.save(hdr);
+        List<TaMasCondMainDtl> listDtl = taMasCondMainDtlRepository.findByCondNumber(form.getCondNumber());
+        for (TaMasCondMainDtl obj : listDtl) {
+            dtl = taMasCondMainDtlRepository.findById(obj.getMasCondMainDtlId()).get();
+            dtl.setIsDeleted(FLAG.Y_FLAG);
+            taMasCondMainDtlRepository.save(dtl);
+        }
+    }
+
     public void insertCondMainDtl(MasterConditionMainHdrDtlVo formVo) {
         TaMasCondMainDtl dtl = null;
         List<TaMasCondMainDtl> dtlList = new ArrayList<>();
@@ -75,7 +89,7 @@ public class MasterConditionMainService {
                 dtl.setRangeStart(obj.getRangeStart());
                 dtl.setRangeEnd(obj.getRangeEnd());
                 dtl.setRiskLevel(obj.getRiskLevel());
-                dtl.setCondType("T");
+                dtl.setCondType(TA_MAS_COND_MAIN_TYPE.TAX);
                 dtlList.add(dtl);
             }
             dtl = new TaMasCondMainDtl();
@@ -238,7 +252,7 @@ public class MasterConditionMainService {
                 vo.setRangeTypeStart(dtl.getRangeTypeStart());
                 vo.setRangeTypeStartDesc(ApplicationCache.getParamInfoByCode("TA_MAIN_COND_RANGE", dtl.getRangeTypeStart()).getValue1());
                 vo.setRangeTypeEnd(dtl.getRangeTypeEnd());
-                if (dtl.getRangeTypeEnd()!= null){
+                if (dtl.getRangeTypeEnd() != null) {
                     vo.setRangeTypeEndDesc(ApplicationCache.getParamInfoByCode("TA_MAIN_COND_RANGE", dtl.getRangeTypeEnd()).getValue1());
                 }
                 vo.setRiskLevelDesc(ApplicationCache.getParamInfoByCode("TA_RISK_LEVEL", dtl.getRiskLevel()).getValue1());
@@ -249,6 +263,7 @@ public class MasterConditionMainService {
             vo.setRangeEnd(dtl.getRangeEnd());
             vo.setRiskLevel(dtl.getRiskLevel());
             vo.setCondType(dtl.getCondType());
+            vo.setCondDtlDesc(dtl.getCondDtlDesc());
 
             listVo.add(vo);
 

@@ -16,9 +16,9 @@ public class ExcelUtils {
 	private static CellStyle cellRight;
 	private static CellStyle cellLeft;
 
-	private static CellStyle topCenter;
-	private static CellStyle topRight;
-	private static CellStyle topLeft;
+	private static CellStyle headerCenter;
+	private static CellStyle headerRight;
+	private static CellStyle headerLeft;
 	private static Font fontHeader;
 
 	public static CellStyle getThStyle() {
@@ -27,6 +27,10 @@ public class ExcelUtils {
 
 	public static CellStyle getTdStyle() {
 		return tdStyle;
+	}
+
+	public static CellStyle getHeaderCenter() {
+		return headerCenter;
 	}
 
 	public static XSSFWorkbook setUpExcel() {
@@ -77,15 +81,16 @@ public class ExcelUtils {
 		fontHeader = workbook.createFont();
 		fontHeader.setBold(true);
 
-		topCenter = workbook.createCellStyle();
-		topCenter.setAlignment(HorizontalAlignment.CENTER);
-		topCenter.setFont(fontHeader);
+		headerCenter = workbook.createCellStyle();
+		headerCenter.setAlignment(HorizontalAlignment.CENTER);
+		headerCenter.setFont(fontHeader);
 
-		topRight = workbook.createCellStyle();
-		topRight.setAlignment(HorizontalAlignment.RIGHT);
+		headerRight = workbook.createCellStyle();
+		headerRight.setAlignment(HorizontalAlignment.RIGHT);
 
-		topLeft = workbook.createCellStyle();
-		topLeft.setAlignment(HorizontalAlignment.LEFT);
+		headerLeft = workbook.createCellStyle();
+		headerLeft.setAlignment(HorizontalAlignment.LEFT);
+
 		return workbook;
 	}
 
