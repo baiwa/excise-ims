@@ -105,5 +105,23 @@ public class Int020301Controller {
 		outStream.flush();
 		outStream.close();
 	}
+	
+	@GetMapping("/export/excel/config/{idHdr}/{budgetYear}/{idConfig}")
+	public void export(@PathVariable("idHdr") String idHdrStr, @PathVariable("budgetYear") String budgetYear, @PathVariable("idConfig") String idConfigStr, HttpServletResponse response) throws Exception {
+		// set fileName
+		String fileName = URLEncoder.encode("สรุปผลแบบสอบถามระบบการควบคุมภายใน", "UTF-8");
+
+		// write it as an excel attachment
+		ByteArrayOutputStream outByteStream = int020301Service.exportInt020301On030402(idHdrStr, budgetYear, idConfigStr);
+		byte[] outArray = outByteStream.toByteArray();
+		response.setContentType("application/octet-stream");
+		response.setContentLength(outArray.length);
+		response.setHeader("Expires:", "0"); // eliminates browser caching
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+		OutputStream outStream = response.getOutputStream();
+		outStream.write(outArray);
+		outStream.flush();
+		outStream.close();
+	}
 
 }

@@ -145,11 +145,8 @@ public class Int020301Service {
 					data.setSectorName(exciseDept.getDeptName());
 				}
 			}
-			for (ExciseDept exciseDept : exciseDepts) {
-				if (exciseDept.getOfficeCode().substring(2, 4).equals(data.getAreaName().substring(2, 4))) {
-					data.setAreaName(exciseDept.getDeptName());
-				}
-			}
+			ExciseDept area = ApplicationCache.getExciseDept(data.getAreaName());
+			data.setAreaName(area.getDeptName());
 		}
 		return datas;
 	}
@@ -226,11 +223,8 @@ public class Int020301Service {
 						data.setSectorName(exciseDept.getDeptName());
 					}
 				}
-				for (ExciseDept exciseDept : exciseDepts) {
-					if (exciseDept.getOfficeCode().substring(2, 4).equals(data.getAreaName().substring(2, 4))) {
-						data.setAreaName(exciseDept.getDeptName());
-					}
-				}
+				ExciseDept area = ApplicationCache.getExciseDept(data.getAreaName());
+				data.setAreaName(area.getDeptName());
 			}
 		}
 		return datas;
@@ -252,7 +246,7 @@ public class Int020301Service {
 		Cell cell = row.createCell(cellNum);
 		List<ExcelHeaderNameVo> headerNames = new ArrayList<>();
 		String[] tbTH1 = { "ลำดับ", "สำนักงานสรรพสามิตภาค", "สำนักงานสรรพสามิตพื้นที่", "จำนวนด้านความเสี่ยง",
-				"อัตราความเสี่ยงเฉลี่ย", "แปลค่าความเสี่ยง" };
+				"ไม่มี/ไม่ใช่ (%)", "แปลค่าความเสี่ยง" };
 		for (int i = 0; i < tbTH1.length; i++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH1[i]);
@@ -473,4 +467,253 @@ public class Int020301Service {
 
 		return outByteStream;
 	}
+	
+	public ByteArrayOutputStream exportInt020301On030402(String idHdrStr, String budgetYear, String idConfigStr) throws IOException {
+		/* create spreadsheet */
+		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+		CellStyle thStyle = ExcelUtils.getThStyle();
+		CellStyle tdStyle = ExcelUtils.getTdStyle();
+		Sheet sheet = workbook.createSheet();
+		int rowNum = 0;
+		int cellNum = 0;
+
+		// Row [0]
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+		List<ExcelHeaderNameVo> headerNames = new ArrayList<>();
+		String[] tbTH1 = { "ลำดับ", "สำนักงานสรรพสามิตภาค", "สำนักงานสรรพสามิตพื้นที่", "จำนวนด้านความเสี่ยง" };
+		for (int i = 0; i < tbTH1.length; i++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(tbTH1[i]);
+			cell.setCellStyle(thStyle);
+			cellNum++;
+		}
+		BigDecimal idHdr = new BigDecimal(idHdrStr);
+		headerNames = iaQuestionnaireSideJdbcRep.findNameByIdHdr(idHdr);
+		for (int i = 0; i < headerNames.size() * 3; i++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue("ด้าน");
+			cell.setCellStyle(thStyle);
+			cellNum++;
+		}
+		String[] tbTH2 = { "ส่งเมื่อ", "สถานะการดำเนินการ","ไม่มี/ไม่ใช่ (%)", "อัตราความเสี่ยง", "แปลค่าความเสี่ยง" };
+		for (int i = 0; i < tbTH2.length; i++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(tbTH2[i]);
+			cell.setCellStyle(thStyle);
+			cellNum++;
+		}
+		rowNum++;
+
+		// Row [1]
+		row = sheet.createRow(rowNum);
+		int cellNumtbTH2 = 0;
+		// Empty Cell Row [1]
+		for (int i = 0; i < 4; i++) {
+			cell = row.createCell(cellNumtbTH2);
+			cell.setCellStyle(thStyle);
+			cellNumtbTH2++;
+		}
+		// Text Cell Row [1]
+		for (int i = 0; i < headerNames.size() * 3; i++) {
+			cell = row.createCell(cellNumtbTH2);
+			cell.setCellValue(headerNames.get(i / 3).getName());
+			cell.setCellStyle(thStyle);
+			cellNumtbTH2++;
+		}
+		// Empty Cell Row [1]
+		for (int i = 4 + headerNames.size() * 3; i < 4 + headerNames.size() * 3 + 5; i++) {
+			cell = row.createCell(cellNumtbTH2);
+			cell.setCellStyle(thStyle);
+			cellNumtbTH2++;
+		}
+		rowNum++;
+
+		// Row [2]
+		row = sheet.createRow(rowNum);
+		int cellNumtbTH3 = 0;
+		// Empty Cell Row [2]
+		for (int i = 0; i < 4; i++) {
+			cell = row.createCell(cellNumtbTH3);
+			cell.setCellStyle(thStyle);
+			cellNumtbTH3++;
+		}
+		// Text Cell Row [2]
+		String[] tbTH3 = { "มี/ใช่", "ไม่มี/ไม่ใช่", "ระดับความเสี่ยง" };
+		for (int i = 0; i < headerNames.size(); i++) {
+			for (int j = 0; j < tbTH3.length; j++) {
+				cell = row.createCell(cellNumtbTH3);
+				cell.setCellValue(tbTH3[j]);
+				cell.setCellStyle(thStyle);
+				cellNumtbTH3++;
+			}
+		}
+		// Empty Cell Row [2]
+		for (int i = 4 + headerNames.size() * 3; i < 4 + headerNames.size() * 3 + 5; i++) {
+			cell = row.createCell(cellNumtbTH3);
+			cell.setCellStyle(thStyle);
+			cellNumtbTH3++;
+		}
+
+		/* set sheet */
+		// merge(firstRow, lastRow, firstCol, lastCol)
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4 + headerNames.size() * 3 - 1));
+		for (int i = 1; i <= headerNames.size(); i++) {
+			sheet.addMergedRegion(new CellRangeAddress(1, 1, 4 + ((i - 1) * 3), 4 + (i * 3) - 1));
+		}
+		for (int i = 0; i < 4; i++) {
+			sheet.addMergedRegion(new CellRangeAddress(0, 2, i, i));
+		}
+		for (int i = headerNames.size() * 3 + 4; i <= headerNames.size() * 3 + 4 + 5; i++) {
+			sheet.addMergedRegion(new CellRangeAddress(0, 2, i, i));
+		}
+		/* set sheet */
+
+		// setColumnWidth
+		int width = 76;
+		sheet.setColumnWidth(0, width * 30);
+		for (int i = 1; i <= 4; i++) {
+			if (i >= 1 && i <= 2) {
+				sheet.setColumnWidth(i, width * 180);
+			} else {
+				sheet.setColumnWidth(i, width * 76);
+			}
+		}
+		for (int i = 4; i <= headerNames.size() * 3 + 4; i++) {
+			if (i % 3 == 2) {
+				sheet.setColumnWidth(i, width * 50);
+			} else {
+				sheet.setColumnWidth(i, width * 40);
+			}
+		}
+		for (int i = headerNames.size() * 3 + 4; i < headerNames.size() * 3 + 4 + 5; i++) {
+			sheet.setColumnWidth(i, width * 76);
+		}
+
+		/* start details */
+		int count = 1;
+		rowNum = 3;
+		cellNum = 0;
+		List<Int020301InfoVo> details = findInfoByIdHdrRisk(idHdrStr, budgetYear, idConfigStr);
+		for (Int020301InfoVo detail : details) {
+			// Re Initial
+			cellNum = 0;
+			row = sheet.createRow(rowNum);
+			// Column 1
+			CellStyle styleCustom = tdStyle;
+			styleCustom.setAlignment(HorizontalAlignment.CENTER);
+			cell = row.createCell(cellNum);
+			cell.setCellValue(count++);
+			cell.setCellStyle(styleCustom);
+			cellNum++;
+			// Column 2
+			cell = row.createCell(cellNum);
+			cell.setCellValue(detail.getSectorName());
+			cell.setCellStyle(tdStyle);
+			cellNum++;
+			// Column 3
+			cell = row.createCell(cellNum);
+			cell.setCellValue(detail.getAreaName());
+			cell.setCellStyle(tdStyle);
+			cellNum++;
+			// Column 4
+			cell = row.createCell(cellNum);
+			cell.setCellValue(detail.getRiskQuantity().doubleValue());
+			cell.setCellStyle(tdStyle);
+			cellNum++;
+
+			for (Int020301DataVo sideDtl : detail.getSideDtls()) {
+				// Column cellNum+1+1
+				cell = row.createCell(cellNum);
+				if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+					cell.setCellValue(sideDtl.getAcceptValue().doubleValue());
+				} else {
+					cell.setCellValue("-");
+				}
+				cell.setCellStyle(tdStyle);
+				cellNum++;
+				// Column cellNum+1+2
+				cell = row.createCell(cellNum);
+				if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+					cell.setCellValue(sideDtl.getDeclineValue().doubleValue());
+				} else {
+					cell.setCellValue("-");
+				}
+				cell.setCellStyle(tdStyle);
+				cellNum++;
+				// Column cellNum+1+3
+				cell = row.createCell(cellNum);
+				if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+					cell.setCellValue(sideDtl.getRiskName());
+				} else {
+					cell.setCellValue("-");
+				}
+				cell.setCellStyle(tdStyle);
+				cellNum++;
+			}
+
+			// Column detail.getSideDtls().size()+1
+			cell = row.createCell(cellNum);
+			if (detail.getSentDate() != null) {
+				if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+					cell.setCellValue(
+							ConvertDateUtils.formatDateToString(detail.getSentDate(), ConvertDateUtils.DD_MM_YYYY));
+				} else {
+					cell.setCellValue("-");
+				}
+			} else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(tdStyle);
+			cellNum++;
+
+			// Column detail.getSideDtls().size()+2
+			cell = row.createCell(cellNum);
+			cell.setCellValue(detail.getStatusText());
+			cell.setCellStyle(tdStyle);
+			cellNum++;
+			
+			// Column detail.getSideDtls().size()+3
+			cell = row.createCell(cellNum);
+			if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+				cell.setCellValue(detail.getAvgRisk().doubleValue());
+			} else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(tdStyle);
+			cellNum++;
+
+			// Column detail.getSideDtls().size()+4
+			DecimalFormat df2 = new DecimalFormat(".##");
+			cell = row.createCell(cellNum);
+			if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+				cell.setCellValue(df2.format(detail.getRiskNum().doubleValue()));
+			} else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(tdStyle);
+			cellNum++;
+			
+			// Column detail.getSideDtls().size()+5
+			cell = row.createCell(cellNum);
+			if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+				cell.setCellValue(detail.getRiskText());
+			} else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(tdStyle);
+			cellNum++;
+
+			// Next Row
+			rowNum++;
+		}
+		/* end details */
+
+		/* set write */
+		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		workbook.write(outByteStream);
+
+		return outByteStream;
+	}
+	
 }
