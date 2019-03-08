@@ -39,7 +39,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
             "TA_WORKSHEET_DTL",
             Arrays.asList(
                 "WORKSHEET_DTL_ID", "ANALYSIS_NUMBER", "NEW_REG_ID", "COND_MAIN_GRP",
-                "CREATED_BY", "CREATED_DATE"
+                "CREATED_BY", "CREATED_DATE", "COND_SUB_CAPITAL", "COND_SUB_RISK"
             ),
             "TA_WORKSHEET_DTL_SEQ"
         );
@@ -52,6 +52,8 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
                 paramList.add(worksheetDtl.getCondMainGrp());
                 paramList.add(worksheetDtl.getCreatedBy());
                 paramList.add(worksheetDtl.getCreatedDate());
+                paramList.add(worksheetDtl.getCondSubCapital());
+                paramList.add(worksheetDtl.getCondSubRisk());
                 commonJdbcTemplate.preparePs(ps, paramList.toArray());
             }
         });

@@ -7,6 +7,7 @@ import th.go.excise.ims.ta.persistence.entity.TaMasCondSubRisk;
 
 public interface TaMasCondSubRiskRepository extends CommonJpaCrudRepository<TaMasCondSubRisk, Long> {
 
-	public List<TaMasCondSubRisk> findByBudgetYearAndOfficeCode(String budgetYear, String officeCode);
-	public TaMasCondSubRisk findByBudgetYearAndDutyCodeAndOfficeCode(String budgetYear, String dutyCode, String officeCode);
+	public List<TaMasCondSubRisk> findByBudgetYear(String budgetYear);
+	public TaMasCondSubRisk findByBudgetYearAndDutyCode(String budgetYear, String dutyCode);
+	List<TaMasCondSubRisk> findByBudgetYearAndOfficeCode(String budgetYear, String officeCode);
 }

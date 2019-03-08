@@ -18,16 +18,43 @@ public class TaxOperatorFormVo extends DataTableRequest {
     private String cond;
     private String seeDataSelect;
     private String condNumber;
+    private String condSub1;
+    private String condSub2;
+    private String condSub3;
+
+    public String getCondSub1() {
+        return condSub1;
+    }
+
+    public void setCondSub1(String condSub1) {
+        this.condSub1 = condSub1;
+    }
+
+    public String getCondSub2() {
+        return condSub2;
+    }
+
+    public void setCondSub2(String condSub2) {
+        this.condSub2 = condSub2;
+    }
+
+    public String getCondSub3() {
+        return condSub3;
+    }
+
+    public void setCondSub3(String condSub3) {
+        this.condSub3 = condSub3;
+    }
 
     public String getCondNumber() {
-		return condNumber;
-	}
+        return condNumber;
+    }
 
-	public void setCondNumber(String condNumber) {
-		this.condNumber = condNumber;
-	}
+    public void setCondNumber(String condNumber) {
+        this.condNumber = condNumber;
+    }
 
-	public String getSeeDataSelect() {
+    public String getSeeDataSelect() {
         return seeDataSelect;
     }
 

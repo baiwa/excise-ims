@@ -178,6 +178,7 @@ public class TaDraftWorksheetDtlRepositoryImpl implements TaDraftWorksheetDtlRep
 			vo.setTaxAmtChnPnt(rs.getBigDecimal("TAX_AMT_CHN_PNT"));
 			vo.setTaxMonthNo(rs.getInt("TAX_MONTH_NO"));
 			vo.setRegCapital(rs.getString("REG_CAPITAL"));
+			vo.setDutyCode(rs.getString("DUTY_CODE"));
 			return vo;
 		}
 	};
