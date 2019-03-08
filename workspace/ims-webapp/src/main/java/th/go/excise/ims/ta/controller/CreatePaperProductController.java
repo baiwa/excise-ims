@@ -129,7 +129,7 @@ public class CreatePaperProductController {
 		}
 		return response;
 	}
-	@GetMapping("/list-raw-material-payment-export")
+	@GetMapping("/list-raw-material-balance")
 	@ResponseBody
 	public void exportCppRawMaterialBalance(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception {
 

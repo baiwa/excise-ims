@@ -206,6 +206,15 @@ public class CreatePaperServiceService {
 			Cell cell = row.createCell(cellNum);
 			String[] tbTH1 = { "ลำดับ", "รายการ", "ราคาตามใบกำกับภาษี", "ราคาบริการตามแบบแจ้ง",
 					"จากการตรวจสอบ", "ราคาที่ยื่นชำระภาษี","ผลต่าง" };
+			int colIndex = 0;
+			sheet.setColumnWidth(colIndex++, 10 * 256);
+			sheet.setColumnWidth(colIndex++, 38 * 256);
+			sheet.setColumnWidth(colIndex++, 25 * 256);
+			sheet.setColumnWidth(colIndex++, 25 * 256);
+			sheet.setColumnWidth(colIndex++, 23 * 256);
+			sheet.setColumnWidth(colIndex++,25 * 256);
+			sheet.setColumnWidth(colIndex++, 30 * 256);
+			sheet.setColumnWidth(colIndex++, 23 * 256);
 			row = sheet.createRow(rowNum);
 			for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 				cell = row.createCell(cellNum);
@@ -249,15 +258,7 @@ public class CreatePaperServiceService {
 				rowNum++;
 				cellNum = 0;
 			}
-			int colIndex = 0;
-			sheet.setColumnWidth(colIndex++, 10 * 256);
-			sheet.setColumnWidth(colIndex++, 38 * 256);
-			sheet.setColumnWidth(colIndex++, 25 * 256);
-			sheet.setColumnWidth(colIndex++, 25 * 256);
-			sheet.setColumnWidth(colIndex++, 23 * 256);
-			sheet.setColumnWidth(colIndex++,25 * 256);
-			sheet.setColumnWidth(colIndex++, 30 * 256);
-			sheet.setColumnWidth(colIndex++, 23 * 256);
+		
 			/*set	fileName*/		
 			ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
 			workbook.write(outByteStream);
@@ -445,6 +446,13 @@ public class CreatePaperServiceService {
 			Cell cell = row.createCell(cellNum);
 			String[] tbTH1 = { "ลำดับ", "รายการ", "ยอดคงเหลือตามบัญชี", "ยอดสินค้าคงเหลือจากการตรวจนับ",
 					"ผลต่าง"};
+			int colIndex = 0;
+			sheet.setColumnWidth(colIndex++, 10 * 256);
+			sheet.setColumnWidth(colIndex++, 25 * 256);
+			sheet.setColumnWidth(colIndex++, 25 * 256);
+			sheet.setColumnWidth(colIndex++, 35 * 256);
+			sheet.setColumnWidth(colIndex++, 25 * 256);
+			
 			row = sheet.createRow(rowNum);
 			for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 				cell = row.createCell(cellNum);
@@ -479,13 +487,7 @@ public class CreatePaperServiceService {
 				rowNum++;
 				cellNum = 0;
 			}
-			int colIndex = 0;
-			sheet.setColumnWidth(colIndex++, 10 * 256);
-			sheet.setColumnWidth(colIndex++, 25 * 256);
-			sheet.setColumnWidth(colIndex++, 25 * 256);
-			sheet.setColumnWidth(colIndex++, 35 * 256);
-			sheet.setColumnWidth(colIndex++, 25 * 256);
-			
+	
 			/*set	fileName*/		
 		
 			ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
