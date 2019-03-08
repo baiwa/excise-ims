@@ -7,46 +7,57 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "TA_MAS_COND_SUB_NO_AUDIT")
 public class TaMasCondSubNoAudit extends BaseEntity {
 
-	private static final long serialVersionUID = 6302647090149581141L;
+    private static final long serialVersionUID = 6302647090149581141L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_MAS_COND_SUB_NO_AUDIT_GEN")
-	@SequenceGenerator(name = "TA_MAS_COND_SUB_NO_AUDIT_GEN", sequenceName = "TA_MAS_COND_SUB_NO_AUDIT_SEQ", allocationSize = 1)
-	@Column(name = "MAS_COND_SUB_NO_AUDIT_ID")
-	private Long masCondSubNoAuditId;
-	@Column(name = "BUDGET_YEAR")
-	private String budgetYear;
-	@Column(name = "NO_TAX_AUDIT_YEAR_NUM")
-	private Integer noTaxAuditYearNum;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_MAS_COND_SUB_NO_AUDIT_GEN")
+    @SequenceGenerator(name = "TA_MAS_COND_SUB_NO_AUDIT_GEN", sequenceName = "TA_MAS_COND_SUB_NO_AUDIT_SEQ", allocationSize = 1)
+    @Column(name = "MAS_COND_SUB_NO_AUDIT_ID")
+    private Long masCondSubNoAuditId;
+    @Column(name = "BUDGET_YEAR")
+    private String budgetYear;
+    @Column(name = "NO_TAX_AUDIT_YEAR_NUM")
+    private Integer noTaxAuditYearNum;
+    @Column(name = "OFFICE_CODE")
+    private String officeCode;
 
-	public Long getMasCondSubNoAuditId() {
-		return masCondSubNoAuditId;
-	}
+    public String getOfficeCode() {
+        return officeCode;
+    }
 
-	public void setMasCondSubNoAuditId(Long masCondSubNoAuditId) {
-		this.masCondSubNoAuditId = masCondSubNoAuditId;
-	}
+    public void setOfficeCode(String officeCode) {
+        this.officeCode = officeCode;
+    }
 
-	public String getBudgetYear() {
-		return budgetYear;
-	}
+    public Long getMasCondSubNoAuditId() {
+        return masCondSubNoAuditId;
+    }
 
-	public void setBudgetYear(String budgetYear) {
-		this.budgetYear = budgetYear;
-	}
+    public void setMasCondSubNoAuditId(Long masCondSubNoAuditId) {
+        this.masCondSubNoAuditId = masCondSubNoAuditId;
+    }
 
-	public Integer getNoTaxAuditYearNum() {
-		return noTaxAuditYearNum;
-	}
+    public String getBudgetYear() {
+        return budgetYear;
+    }
 
-	public void setNoTaxAuditYearNum(Integer noTaxAuditYearNum) {
-		this.noTaxAuditYearNum = noTaxAuditYearNum;
-	}
+    public void setBudgetYear(String budgetYear) {
+        this.budgetYear = budgetYear;
+    }
+
+    public Integer getNoTaxAuditYearNum() {
+        return noTaxAuditYearNum;
+    }
+
+    public void setNoTaxAuditYearNum(Integer noTaxAuditYearNum) {
+        this.noTaxAuditYearNum = noTaxAuditYearNum;
+    }
 
 }

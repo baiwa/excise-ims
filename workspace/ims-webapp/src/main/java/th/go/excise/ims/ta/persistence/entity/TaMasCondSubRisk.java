@@ -14,50 +14,60 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 @Table(name = "TA_MAS_COND_SUB_RISK")
 public class TaMasCondSubRisk extends BaseEntity {
 
-	private static final long serialVersionUID = -1616600631095300535L;
+    private static final long serialVersionUID = -1616600631095300535L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_MAS_COND_SUB_RISK_GEN")
-	@SequenceGenerator(name = "TA_MAS_COND_SUB_RISK_GEN", sequenceName = "TA_MAS_COND_SUB_RISK_SEQ", allocationSize = 1)
-	@Column(name = "MAS_COND_SUB_RISK_ID")
-	private Long masCondSubRiskId;
-	@Column(name = "BUDGET_YEAR")
-	private String budgetYear;
-	@Column(name = "DUTY_CODE")
-	private String dutyCode;
-	@Column(name = "RISK_LEVEL")
-	private String riskLevel;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_MAS_COND_SUB_RISK_GEN")
+    @SequenceGenerator(name = "TA_MAS_COND_SUB_RISK_GEN", sequenceName = "TA_MAS_COND_SUB_RISK_SEQ", allocationSize = 1)
+    @Column(name = "MAS_COND_SUB_RISK_ID")
+    private Long masCondSubRiskId;
+    @Column(name = "BUDGET_YEAR")
+    private String budgetYear;
+    @Column(name = "DUTY_CODE")
+    private String dutyCode;
+    @Column(name = "RISK_LEVEL")
+    private String riskLevel;
+    @Column(name = "OFFICE_CODE")
+    private String officeCode;
 
-	public Long getMasCondSubRiskId() {
-		return masCondSubRiskId;
-	}
+    public String getOfficeCode() {
+        return officeCode;
+    }
 
-	public void setMasCondSubRiskId(Long masCondSubRiskId) {
-		this.masCondSubRiskId = masCondSubRiskId;
-	}
+    public void setOfficeCode(String officeCode) {
+        this.officeCode = officeCode;
+    }
 
-	public String getBudgetYear() {
-		return budgetYear;
-	}
+    public Long getMasCondSubRiskId() {
+        return masCondSubRiskId;
+    }
 
-	public void setBudgetYear(String budgetYear) {
-		this.budgetYear = budgetYear;
-	}
+    public void setMasCondSubRiskId(Long masCondSubRiskId) {
+        this.masCondSubRiskId = masCondSubRiskId;
+    }
 
-	public String getDutyCode() {
-		return dutyCode;
-	}
+    public String getBudgetYear() {
+        return budgetYear;
+    }
 
-	public void setDutyCode(String dutyCode) {
-		this.dutyCode = dutyCode;
-	}
+    public void setBudgetYear(String budgetYear) {
+        this.budgetYear = budgetYear;
+    }
 
-	public String getRiskLevel() {
-		return riskLevel;
-	}
+    public String getDutyCode() {
+        return dutyCode;
+    }
 
-	public void setRiskLevel(String riskLevel) {
-		this.riskLevel = riskLevel;
-	}
+    public void setDutyCode(String dutyCode) {
+        this.dutyCode = dutyCode;
+    }
+
+    public String getRiskLevel() {
+        return riskLevel;
+    }
+
+    public void setRiskLevel(String riskLevel) {
+        this.riskLevel = riskLevel;
+    }
 
 }
