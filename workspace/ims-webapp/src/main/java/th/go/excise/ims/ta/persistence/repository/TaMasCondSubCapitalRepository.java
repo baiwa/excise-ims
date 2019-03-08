@@ -7,7 +7,7 @@ import th.go.excise.ims.ta.persistence.entity.TaMasCondSubCapital;
 
 public interface TaMasCondSubCapitalRepository extends CommonJpaCrudRepository<TaMasCondSubCapital, Long> {
 	
-	public List<TaMasCondSubCapital> findByBudgetYear(String budgetYear);
-	public TaMasCondSubCapital findByBudgetYearAndDutyCode(String budgetYear, String dutyCode);
+	public List<TaMasCondSubCapital> findByBudgetYearAndOfficeCode(String budgetYear, String officeCode);
+	public TaMasCondSubCapital findByBudgetYearAndDutyCodeAndOfficeCode(String budgetYear, String dutyCode, String officeCode);
 
 }
