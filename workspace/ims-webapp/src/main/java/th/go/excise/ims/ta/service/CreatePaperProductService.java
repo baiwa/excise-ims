@@ -1065,7 +1065,7 @@ public class CreatePaperProductService {
 		CellStyle cellRight = ExcelUtils.getCellRight();
 
 		/* tbTH */
-		String[] tbTH = { "ลำดับ", "รายการ", "ปริมาณ","มูลค่า","อัตราภาษี (ร้อยละ)","ภาษีที่ต้องชำระเพิ่มเติม"
+		String[] tbTH = { "ลำดับ", "รายการ", "ปริมาณ","ราคาขายปลีก","มูลค่า","อัตราภาษี (ร้อยละ)","ภาษีที่ต้องชำระเพิ่มเติม"
 				,"เบี้ยปรับ","เงินเพิ่ม","ภาษีเพื่อราชการส่วนท้องถิ่น","รวม"};
 		for (int i = 0; i < tbTH.length; i++) {
 			cell = row.createCell(cellNum);
