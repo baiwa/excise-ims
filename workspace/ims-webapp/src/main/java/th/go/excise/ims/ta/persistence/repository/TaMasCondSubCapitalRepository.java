@@ -10,5 +10,6 @@ public interface TaMasCondSubCapitalRepository extends CommonJpaCrudRepository<T
 	public List<TaMasCondSubCapital> findByBudgetYear(String budgetYear);
 	public TaMasCondSubCapital findByBudgetYearAndDutyCode(String budgetYear, String dutyCode);
 	List<TaMasCondSubCapital> findByBudgetYearAndOfficeCode(String budgetYear, String officeCode);
+	TaMasCondSubCapital findByBudgetYearAndDutyCodeAndOfficeCode(String budgetYear, String dutyCode,String officeCode);
 
 }

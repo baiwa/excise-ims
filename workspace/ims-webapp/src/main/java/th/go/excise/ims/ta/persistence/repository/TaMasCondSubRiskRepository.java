@@ -10,4 +10,5 @@ public interface TaMasCondSubRiskRepository extends CommonJpaCrudRepository<TaMa
 	public List<TaMasCondSubRisk> findByBudgetYear(String budgetYear);
 	public TaMasCondSubRisk findByBudgetYearAndDutyCode(String budgetYear, String dutyCode);
 	List<TaMasCondSubRisk> findByBudgetYearAndOfficeCode(String budgetYear, String officeCode);
+	TaMasCondSubRisk findByBudgetYearAndDutyCodeAndOfficeCode(String budgetYear, String dutyCode,String officeCode);
 }
