@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -139,23 +142,18 @@ public class MasterConditionMainService {
                 }
                 taMasCondMainDtlRepository.saveAll(dtlList);
             }
-//			else if (list.size() - formVo.getDetail().size() < 0) {
-//				for (TaMasCondDtlTax obj : listY) {
-//					dtl = taMasCondDtlTaxRepository.findById(obj.getCondDtlTaxId()).get(); 
-//					dtl.setIsDeleted(FLAG.N_FLAG);
-//
-//					dtlList.add(dtl);
-//				}
-//				taMasCondDtlTaxRepository.saveAll(dtlList);
-//			}
 
             dtlList = new ArrayList<>();
+            int i = 0;
+			int condGroupNum = 0;
             for (TaMasCondMainDtl obj : formVo.getDetail()) {
                 if (obj.getMasCondMainDtlId() == null) {
+                	i++;
+					condGroupNum =  list.size()+i;
                     dtl = new TaMasCondMainDtl();
                     dtl.setBudgetYear(header.getBudgetYear());
                     dtl.setOfficeCode(header.getOfficeCode());
-                    dtl.setCondGroup(obj.getCondGroup());
+                    dtl.setCondGroup(Integer.toString(condGroupNum));
                     dtl.setCondNumber(header.getCondNumber());
                     dtl.setTaxFreqType(obj.getTaxFreqType());
                     dtl.setTaxMonthStart(obj.getTaxMonthStart());
