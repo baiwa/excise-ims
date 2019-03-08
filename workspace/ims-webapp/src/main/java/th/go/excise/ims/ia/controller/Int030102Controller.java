@@ -22,7 +22,6 @@ import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
 import th.go.excise.ims.ia.service.Int030102Service;
 import th.go.excise.ims.ia.vo.Int030102FormVo;
 import th.go.excise.ims.ia.vo.Int030102Vo;
-import th.go.excise.ims.ia.vo.Int0301FormVo;
 
 @Controller
 @RequestMapping("/api/ia/int03/01/02")
