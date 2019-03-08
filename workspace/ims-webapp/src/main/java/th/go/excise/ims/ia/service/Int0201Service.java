@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +93,7 @@ public class Int0201Service {
 		return response;
 	}
 
+	@Transactional
 	public void sendQtnForm(Int0201FormVo request) {
 		/* update Questionnaire Header */
 		if (request.getIdHead() != null) {
@@ -168,6 +171,7 @@ public class Int0201Service {
 	}
 
 	/* update Questionnaire Made Header */
+	@Transactional
 	private void updateQtnMadeHdr(Int0201FormVo request) {
 		logger.info("update QtnMadeHdr");
 
@@ -215,6 +219,7 @@ public class Int0201Service {
 	}
 
 	/* save Questionnaire Made */
+	@Transactional
 	private void saveQtnMade(Int0201FormVo request, String officeCode, BigDecimal idMadeHdr) {
 		logger.info("save QtnMadeHdr");
 		IaQuestionnaireMade qtnMade = null;
