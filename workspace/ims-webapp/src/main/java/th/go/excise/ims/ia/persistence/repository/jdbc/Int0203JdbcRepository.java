@@ -33,7 +33,7 @@ public class Int0203JdbcRepository {
 		}
 		if (StringUtils.isNotBlank(request.getCreatedBy())) {
 			sql.append(" AND HDR.CREATED_BY LIKE ? ");
-			params.add(request.getCreatedBy() + "%");
+			params.add("%" + request.getCreatedBy() + "%");
 		}
 		if (StringUtils.isNotBlank(request.getStartDate()) && StringUtils.isNotBlank(request.getEndDate())) {
 			sql.append(" AND TRUNC(HDR.CREATED_DATE) >= ? ");
@@ -44,6 +44,10 @@ public class Int0203JdbcRepository {
 			params.add(ConvertDateUtils.parseStringToDate(request.getEndDate(), ConvertDateUtils.DD_MM_YYYY,
 					ConvertDateUtils.LOCAL_TH));
 		}
+		if(StringUtils.isNotBlank(request.getNameQtn())){
+            sql.append(" AND UPPER(HDR.QTN_HEADER_NAME) LIKE ?");
+            params.add("%" + request.getNameQtn().toUpperCase() + "%");
+        }
 		sql.append(" ORDER BY HDR.CREATED_DATE ASC");
 
 		String limit = OracleUtils.limitForDatable(sql.toString(), request.getStart(), request.getLength());
@@ -79,6 +83,10 @@ public class Int0203JdbcRepository {
 			params.add(ConvertDateUtils.parseStringToDate(request.getEndDate(), ConvertDateUtils.DD_MM_YYYY,
 					ConvertDateUtils.LOCAL_TH));
 		}
+		if(StringUtils.isNotBlank(request.getNameQtn())){
+            sql.append(" AND UPPER(HDR.QTN_HEADER_NAME) LIKE ?");
+            params.add(request.getNameQtn().toUpperCase() + "%");
+        }
 		sql.append(" ORDER BY HDR.CREATED_DATE ASC");
 
 		String sqlCount = OracleUtils.countForDataTable(sql.toString());

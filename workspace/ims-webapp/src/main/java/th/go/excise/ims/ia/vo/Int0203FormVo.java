@@ -10,6 +10,15 @@ public class Int0203FormVo extends DataTableRequest {
 	private String startDate;
 	private String endDate;
 	private String createdBy;
+	private String nameQtn;
+
+	public String getNameQtn() {
+		return nameQtn;
+	}
+
+	public void setNameQtn(String nameQtn) {
+		this.nameQtn = nameQtn;
+	}
 
 	public String getBudgetYear() {
 		return budgetYear;

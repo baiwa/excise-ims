@@ -187,6 +187,24 @@ public class Int020101Controller {
 		}
 		return responseData;
 	}
+	
+	@GetMapping("/by/year/{year}/user")
+	@ResponseBody
+	public ResponseData<List<Int020101NameVo>> getByYearAndUsername(@PathVariable("year") String year) {
+		ResponseData<List<Int020101NameVo>> responseData = new ResponseData<List<Int020101NameVo>>();
+		List<Int020101NameVo> data = new ArrayList<>();
+		try {
+			String username = UserLoginUtils.getCurrentUsername();
+			data = int020101Service.findByYearAndUsername(year, username);
+			responseData.setData(data);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Int020101Controller::getByYearAndUsername ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
 
 	@GetMapping("/by/year/{year}/status")
 	@ResponseBody
