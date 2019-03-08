@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class Int020301Service {
 
 	@Autowired
 	private IaRiskQtnConfigRepository iaRiskQtnConfigRepository;
-	
+
 	@Autowired
 	private IaRiskFactorsConfigRepository iaRiskFactorsConfigRep;
 
@@ -150,7 +151,7 @@ public class Int020301Service {
 		}
 		return datas;
 	}
-	
+
 	public List<Int020301InfoVo> findInfoByIdHdrRisk(String idHdrStr, String budgetYear, String idConfigStr) {
 		BigDecimal idHdr = new BigDecimal(idHdrStr);
 		BigDecimal idConfig = new BigDecimal(idConfigStr);
@@ -211,7 +212,8 @@ public class Int020301Service {
 				} else {
 					data.setAvgRisk(new BigDecimal(0));
 				}
-				IntCalculateCriteriaVo risk = IntCalculateCriteriaUtil.calculateCriteria(data.getAvgRisk(), config.get());
+				IntCalculateCriteriaVo risk = IntCalculateCriteriaUtil.calculateCriteria(data.getAvgRisk(),
+						config.get());
 				data.setRiskColor(risk.getColor());
 				data.setRiskText(risk.getTranslatingRisk());
 				data.setRiskNum(risk.getRiskRate());
@@ -372,14 +374,18 @@ public class Int020301Service {
 			cell.setCellStyle(styleCustom);
 			cellNum++;
 			// Column 2
+			CellStyle styleCustom2 = tdStyle;
+			styleCustom2.setAlignment(HorizontalAlignment.LEFT);
 			cell = row.createCell(cellNum);
 			cell.setCellValue(detail.getSectorName());
-			cell.setCellStyle(tdStyle);
+			cell.setCellStyle(styleCustom2);
 			cellNum++;
 			// Column 3
+			CellStyle styleCustom3 = tdStyle;
+			styleCustom3.setAlignment(HorizontalAlignment.LEFT);
 			cell = row.createCell(cellNum);
 			cell.setCellValue(detail.getAreaName());
-			cell.setCellStyle(tdStyle);
+			cell.setCellStyle(styleCustom3);
 			cellNum++;
 			// Column 4
 			cell = row.createCell(cellNum);
@@ -467,8 +473,9 @@ public class Int020301Service {
 
 		return outByteStream;
 	}
-	
-	public ByteArrayOutputStream exportInt020301On030402(String idHdrStr, String budgetYear, String idConfigStr) throws IOException {
+
+	public ByteArrayOutputStream exportInt020301On030402(String idHdrStr, String budgetYear, String idConfigStr)
+			throws IOException {
 		/* create spreadsheet */
 		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
 		CellStyle thStyle = ExcelUtils.getThStyle();
@@ -496,7 +503,7 @@ public class Int020301Service {
 			cell.setCellStyle(thStyle);
 			cellNum++;
 		}
-		String[] tbTH2 = { "ส่งเมื่อ", "สถานะการดำเนินการ","ไม่มี/ไม่ใช่ (%)", "อัตราความเสี่ยง", "แปลค่าความเสี่ยง" };
+		String[] tbTH2 = { "ส่งเมื่อ", "สถานะการดำเนินการ", "ไม่มี/ไม่ใช่ (%)", "อัตราความเสี่ยง", "แปลค่าความเสี่ยง" };
 		for (int i = 0; i < tbTH2.length; i++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH2[i]);
@@ -607,14 +614,18 @@ public class Int020301Service {
 			cell.setCellStyle(styleCustom);
 			cellNum++;
 			// Column 2
+			CellStyle styleCustom2 = tdStyle;
+			styleCustom2.setAlignment(HorizontalAlignment.LEFT);
 			cell = row.createCell(cellNum);
 			cell.setCellValue(detail.getSectorName());
-			cell.setCellStyle(tdStyle);
+			cell.setCellStyle(styleCustom2);
 			cellNum++;
 			// Column 3
+			CellStyle styleCustom3 = tdStyle;
+			styleCustom3.setAlignment(HorizontalAlignment.LEFT);
 			cell = row.createCell(cellNum);
 			cell.setCellValue(detail.getAreaName());
-			cell.setCellStyle(tdStyle);
+			cell.setCellStyle(styleCustom3);
 			cellNum++;
 			// Column 4
 			cell = row.createCell(cellNum);
@@ -672,7 +683,7 @@ public class Int020301Service {
 			cell.setCellValue(detail.getStatusText());
 			cell.setCellStyle(tdStyle);
 			cellNum++;
-			
+
 			// Column detail.getSideDtls().size()+3
 			cell = row.createCell(cellNum);
 			if (detail.getStatus().equalsIgnoreCase("FINISH")) {
@@ -693,7 +704,7 @@ public class Int020301Service {
 			}
 			cell.setCellStyle(tdStyle);
 			cellNum++;
-			
+
 			// Column detail.getSideDtls().size()+5
 			cell = row.createCell(cellNum);
 			if (detail.getStatus().equalsIgnoreCase("FINISH")) {
@@ -715,5 +726,5 @@ public class Int020301Service {
 
 		return outByteStream;
 	}
-	
+
 }
