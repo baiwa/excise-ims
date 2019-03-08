@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -36,12 +37,12 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
     @Override
     public void batchInsert(List<TaWorksheetDtl> worksheetDtlList) {
         String sql = SqlGeneratorUtils.genSqlInsert(
-            "TA_WORKSHEET_DTL",
-            Arrays.asList(
-                "WORKSHEET_DTL_ID", "ANALYSIS_NUMBER", "NEW_REG_ID", "COND_MAIN_GRP",
-                "CREATED_BY", "CREATED_DATE", "COND_SUB_CAPITAL", "COND_SUB_RISK"
-            ),
-            "TA_WORKSHEET_DTL_SEQ"
+                "TA_WORKSHEET_DTL",
+                Arrays.asList(
+                        "WORKSHEET_DTL_ID", "ANALYSIS_NUMBER", "NEW_REG_ID", "COND_MAIN_GRP",
+                        "CREATED_BY", "CREATED_DATE", "COND_SUB_CAPITAL", "COND_SUB_RISK"
+                ),
+                "TA_WORKSHEET_DTL_SEQ"
         );
 
         commonJdbcTemplate.batchUpdate(sql, worksheetDtlList, 1000, new ParameterizedPreparedStatementSetter<TaWorksheetDtl>() {
@@ -155,35 +156,59 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
             TaxAuditUtils.commonSelectionWorksheetRowMapper(vo, rs);
             vo.setDraftNumber(rs.getString("ANALYSIS_NUMBER"));
             vo.setCondTaxGrp(rs.getString("COND_MAIN_GRP"));
-            
+
             vo.setCentralSelFlag(rs.getString("CENTRAL_SEL_FLAG"));
-			if (FLAG.Y_FLAG.equals(vo.getCentralSelFlag())) {
-				vo.setCentralSelDate(""); // FIXME
-				vo.setCentralSelOfficeCode(rs.getString("CENTRAL_SEL_OFFICE_CODE"));
-				if(StringUtils.isNotBlank(vo.getCentralSelOfficeCode())){
+            if (FLAG.Y_FLAG.equals(vo.getCentralSelFlag())) {
+                vo.setCentralSelDate(""); // FIXME
+                vo.setCentralSelOfficeCode(rs.getString("CENTRAL_SEL_OFFICE_CODE"));
+                if (StringUtils.isNotBlank(vo.getCentralSelOfficeCode())) {
                     vo.setSelectBy(ApplicationCache.getExciseDept(vo.getCentralSelOfficeCode()).getDeptShortName());
                 }
 
-			}
-			vo.setSectorSelFlag(rs.getString("SECTOR_SEL_FLAG"));
-			if (StringUtils.isNotBlank(vo.getSectorSelFlag())) {
-				vo.setSectorSelDate("");
-				vo.setSectorSelOfficeCode(rs.getString("SECTOR_SEL_OFFICE_CODE"));
-				if(StringUtils.isNotBlank(vo.getSectorSelOfficeCode())){
+            }
+            vo.setSectorSelFlag(rs.getString("SECTOR_SEL_FLAG"));
+            if (StringUtils.isNotBlank(vo.getSectorSelFlag())) {
+                vo.setSectorSelDate("");
+                vo.setSectorSelOfficeCode(rs.getString("SECTOR_SEL_OFFICE_CODE"));
+                if (StringUtils.isNotBlank(vo.getSectorSelOfficeCode())) {
                     vo.setSelectBy(ApplicationCache.getExciseDept(vo.getSectorSelOfficeCode()).getDeptShortName());
                 }
-			}
-			vo.setAreaSelFlag(rs.getString("AREA_SEL_FLAG"));
-			if (StringUtils.isNotBlank(vo.getAreaSelFlag())) {
-				vo.setAreaSelDate("");
-				vo.setAreaSelOfficeCode(rs.getString("AREA_SEL_OFFICE_CODE"));
-				if (StringUtils.isNotBlank(vo.getAreaSelOfficeCode())){
+            }
+            vo.setAreaSelFlag(rs.getString("AREA_SEL_FLAG"));
+            if (StringUtils.isNotBlank(vo.getAreaSelFlag())) {
+                vo.setAreaSelDate("");
+                vo.setAreaSelOfficeCode(rs.getString("AREA_SEL_OFFICE_CODE"));
+                if (StringUtils.isNotBlank(vo.getAreaSelOfficeCode())) {
                     vo.setSelectBy(ApplicationCache.getExciseDept(vo.getAreaSelOfficeCode()).getDeptShortName());
                 }
-			}
-    		
+            }
+
             return vo;
         }
     };
 
+    public List<String> groupCondSubCapital(String analysisNumber) {
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT  ");
+        sql.append("   CASE  ");
+        sql.append("     WHEN COND_SUB_CAPITAL IS NULL THEN '0' ");
+        sql.append("     ELSE COND_SUB_CAPITAL ");
+        sql.append("   END COND_SUB_CAPITAL ");
+        sql.append(" FROM TA_WORKSHEET_DTL WHERE ANALYSIS_NUMBER=? ");
+        sql.append(" GROUP BY COND_SUB_CAPITAL ");
+
+        sql.append(" ORDER BY COND_SUB_CAPITAL ");
+        return commonJdbcTemplate.queryForList(sql.toString(), new Object[]{analysisNumber}, String.class);
+    }
+
+    public List<String> groupCondSubRisk(String analysisNumber) {
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT  ");
+        sql.append(" COND_SUB_RISK ");
+        sql.append(" FROM TA_WORKSHEET_DTL WHERE ANALYSIS_NUMBER=? ");
+        sql.append(" GROUP BY COND_SUB_RISK ");
+        sql.append(" ORDER BY COND_SUB_RISK");
+
+        return commonJdbcTemplate.queryForList(sql.toString(), new Object[]{analysisNumber}, String.class);
+    }
 }

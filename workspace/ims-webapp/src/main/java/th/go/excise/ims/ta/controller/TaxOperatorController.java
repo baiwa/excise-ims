@@ -78,6 +78,42 @@ public class TaxOperatorController {
 		return response;
 	}
 
+    @PostMapping("/group-cond-sub-capital")
+    @ResponseBody
+    public ResponseData<List<String>> groupCondSubCapital(@RequestBody TaxOperatorFormVo formVo) {
+        ResponseData<List<String>> response = new ResponseData<>();
+
+        try {
+            response.setData(worksheetService.groupCondSubCapital(formVo.getAnalysisNumber()));
+            response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+            response.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
+            response.setStatus(RESPONSE_STATUS.FAILED);
+        }
+
+        return response;
+    }
+
+    @PostMapping("/group-cond-sub-risk")
+    @ResponseBody
+    public ResponseData<List<String>> groupCondSubRisk(@RequestBody TaxOperatorFormVo formVo) {
+        ResponseData<List<String>> response = new ResponseData<>();
+
+        try {
+            response.setData(worksheetService.groupCondSubRisk(formVo.getAnalysisNumber()));
+            response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+            response.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
+            response.setStatus(RESPONSE_STATUS.FAILED);
+        }
+
+        return response;
+    }
+
 	@PostMapping("/find-all-analysis-number")
 	@ResponseBody
 	public ResponseData<List<String>> findAllAnalysisNumber(@RequestBody TaxOperatorFormVo formVo) {

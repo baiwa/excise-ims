@@ -218,22 +218,22 @@ public class WorksheetService {
 
         TaWorksheetCondSubCapital ct = taWorksheetCondSubCapitalRepository.findByDraftNumberAndDutyCode(draftNumber, dutyCode);
         if (StringUtils.isBlank(capital) || ct == null) {
-           return null;
-        }else{
+            return null;
+        } else {
             BigDecimal capitalBigDecimal = new BigDecimal(capital);
 
-                int rsCompareHuge = ct.getHugeCapitalAmount().compareTo(capitalBigDecimal);
-                int rsCompareLarge = ct.getLargeCapitalAmount().compareTo(capitalBigDecimal);
-                int rsCompareMedium = ct.getMediumCapitalAmount().compareTo(capitalBigDecimal);
-                if (rsCompareHuge >= 0) {
-                    return ApplicationCache.getParamInfoByCode("TA_SUB_COND_CAPITAL","1").getParamCode();
-                } else if (rsCompareLarge >= 0) {
-                    return ApplicationCache.getParamInfoByCode("TA_SUB_COND_CAPITAL","2").getParamCode();
-                } else if (rsCompareMedium >= 0) {
-                    return ApplicationCache.getParamInfoByCode("TA_SUB_COND_CAPITAL","3").getParamCode();
-                } else {
-                    return ApplicationCache.getParamInfoByCode("TA_SUB_COND_CAPITAL","4").getParamCode();
-                }
+            int rsCompareHuge = ct.getHugeCapitalAmount().compareTo(capitalBigDecimal);
+            int rsCompareLarge = ct.getLargeCapitalAmount().compareTo(capitalBigDecimal);
+            int rsCompareMedium = ct.getMediumCapitalAmount().compareTo(capitalBigDecimal);
+            if (rsCompareHuge >= 0) {
+                return ApplicationCache.getParamInfoByCode("TA_SUB_COND_CAPITAL", "1").getParamCode();
+            } else if (rsCompareLarge >= 0) {
+                return ApplicationCache.getParamInfoByCode("TA_SUB_COND_CAPITAL", "2").getParamCode();
+            } else if (rsCompareMedium >= 0) {
+                return ApplicationCache.getParamInfoByCode("TA_SUB_COND_CAPITAL", "3").getParamCode();
+            } else {
+                return ApplicationCache.getParamInfoByCode("TA_SUB_COND_CAPITAL", "4").getParamCode();
+            }
         }
     }
 
@@ -306,6 +306,14 @@ public class WorksheetService {
         }
 
         return vo;
+    }
+
+    public List<String> groupCondSubCapital(String analysisNumber) {
+        return taWorksheetDtlRepository.groupCondSubCapital(analysisNumber);
+    }
+
+    public List<String> groupCondSubRisk(String analysisNumber) {
+        return taWorksheetDtlRepository.groupCondSubRisk(analysisNumber);
     }
 
 }
