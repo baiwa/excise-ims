@@ -82,7 +82,8 @@ public class Int020301JdbcRepository {
 		sqlBuilder.append(" AND QDL2.ID_SIDE = QSR.ID GROUP BY QME2.ID_MADE_HDR) AS DECLINE ");
 		sqlBuilder.append(" FROM IA_QUESTIONNAIRE_HDR QHR ");
 		sqlBuilder.append(" INNER JOIN IA_QUESTIONNAIRE_SIDE QSR ON QSR.ID_HEAD = QHR.ID ");
-		sqlBuilder.append(" WHERE 1=1 AND QHR.IS_DELETED = 'N' AND QHR.ID = ? AND QHR.BUDGET_YEAR = ? GROUP BY QSR.ID ");
+		sqlBuilder.append(" WHERE 1=1 AND QHR.IS_DELETED = 'N' AND QHR.ID = ? AND QHR.BUDGET_YEAR = ? ");
+		sqlBuilder.append(" GROUP BY QSR.ID ORDER BY QSR.ID ");
 		List<Object> params = new ArrayList<>();
 		params.add(officeCode);
 		params.add(officeCode);
