@@ -184,7 +184,7 @@ public class CreatePaperServiceService {
 		}
 		return datalist;
 	}
-	public ByteArrayOutputStream exportFilePriceServiceVo(PriceServiceVo formVo,  HttpServletResponse response,HttpServletRequest request) throws IOException {
+	public byte [] exportFilePriceServiceVo( ) throws IOException {
 		
 		List<PriceServiceVo> dataListexportFile = new ArrayList<PriceServiceVo>();
 		dataListexportFile = listPriceServiceVo(0, 35, 35);
@@ -259,11 +259,11 @@ public class CreatePaperServiceService {
 				cellNum = 0;
 			}
 		
-			/*set	fileName*/		
 			ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
-			workbook.write(outByteStream);
-			return outByteStream;
-		
+			byte [] cont = null;
+		    workbook.write(outByteStream);
+		    cont = outByteStream.toByteArray();
+			return cont;
 		}
 	//Done
 	
@@ -301,7 +301,7 @@ public class CreatePaperServiceService {
 
 		return datalist;
 	}
-	public ByteArrayOutputStream exportFileMemberStatusServiceVo(MemberStatusServiceVo formVo,  HttpServletResponse response,HttpServletRequest request) throws IOException {
+	public byte[] exportFileMemberStatusServiceVo() throws IOException {
 		
 		List<MemberStatusServiceVo> dataListexportFile = new ArrayList<MemberStatusServiceVo>();
 		dataListexportFile = listMemberStatusServiceVo(0, 35, 35);
@@ -309,7 +309,7 @@ public class CreatePaperServiceService {
 		 
 			XSSFWorkbook workbook = ExcelUtils.setUpExcel();
 			
-			CellStyle fontHeader = workbook.createCellStyle();
+		
 			 /* call style from utils */
 			  CellStyle thStyle = ExcelUtils.getThStyle();
 			  CellStyle cellCenter = ExcelUtils.getCellCenter();
@@ -384,11 +384,12 @@ public class CreatePaperServiceService {
 				cellNum = 0;
 			}
 			
-			/*set	fileName*/		
+
 			ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
-			workbook.write(outByteStream);
-			return outByteStream;
-		
+			byte [] cont = null;
+		    workbook.write(outByteStream);
+		    cont = outByteStream.toByteArray();
+			return cont;
 		}
 	
 
@@ -422,16 +423,14 @@ public class CreatePaperServiceService {
 
 		return datalist;
 	}
-	public ByteArrayOutputStream exportFileLeftInStockServiceVo(LeftInStockServiceVo formVo,  HttpServletResponse response,HttpServletRequest request) throws IOException {
+	public byte[] exportFileLeftInStockServiceVo() throws IOException {
 		
 		List<LeftInStockServiceVo> dataListexportFile = new ArrayList<LeftInStockServiceVo>();
 		dataListexportFile = listLeftInStockServiceVo(0, 35, 35);
 		 logger.info("Data list exportFilePriceServiceVo {} row",dataListexportFile.size());
 		 
 			XSSFWorkbook workbook = ExcelUtils.setUpExcel();
-			
-			CellStyle fontHeader = workbook.createCellStyle();
-			 /* call style from utils */
+		
 			  CellStyle thStyle = ExcelUtils.getThStyle();
 			  CellStyle cellCenter = ExcelUtils.getCellCenter();
 			  CellStyle cellLeft = ExcelUtils.getCellLeft();
@@ -440,8 +439,7 @@ public class CreatePaperServiceService {
 			Sheet sheet = workbook.createSheet("บันทึกผลการตรวจนับสินค้าคงเหลือ");
 			int rowNum = 0;
 			int cellNum = 0;
-//			int coun = "บันทึกผลการตรวจนับสินค้าคงเหลือ".length();
-//			System.out.println("555555555555555555555555555556666"+coun);
+
 			Row row = sheet.createRow(rowNum);
 			Cell cell = row.createCell(cellNum);
 			String[] tbTH1 = { "ลำดับ", "รายการ", "ยอดคงเหลือตามบัญชี", "ยอดสินค้าคงเหลือจากการตรวจนับ",
@@ -488,11 +486,11 @@ public class CreatePaperServiceService {
 				cellNum = 0;
 			}
 	
-			/*set	fileName*/		
-		
 			ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
-			workbook.write(outByteStream);
-			return outByteStream;
+			byte [] cont = null;
+		    workbook.write(outByteStream);
+		    cont = outByteStream.toByteArray();
+			return cont;
 		}
 	
 

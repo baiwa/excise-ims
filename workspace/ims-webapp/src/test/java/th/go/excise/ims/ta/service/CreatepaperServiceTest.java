@@ -34,5 +34,77 @@ public class CreatepaperServiceTest {
 	  System.out.println("Done");
 
 	 }
+	 @Test
+	 public void test_GetPriceServiceVo() throws IOException {
+
+	  String fileName = URLEncoder.encode(MATERIAL_RECEIVE, "UTF-8");
+
+	  CreatePaperServiceService createPaperProductService = new CreatePaperServiceService();
+
+	  try {
+	   byte[] outArray = createPaperProductService.exportFilePriceServiceVo();
+	   FileOutputStream Output = new FileOutputStream(PATH + fileName + TYPE);
+	   Output.write(outArray);
+	   Output.close();
+	  } catch (FileNotFoundException e) {
+	   e.printStackTrace();
+	  } catch (IOException e) {
+	   e.printStackTrace();
+	  }
+
+	  System.out.println("Done");
+
+	 }
+	 
+	 
+	 @Test
+	 public void test_MemberStatusServiceVo() throws IOException {
+
+	  String fileName = URLEncoder.encode(MATERIAL_RECEIVE, "UTF-8");
+
+	  CreatePaperServiceService createPaperProductService = new CreatePaperServiceService();
+
+	  try {
+	   byte[] outArray = createPaperProductService.exportFileMemberStatusServiceVo();
+	   FileOutputStream Output = new FileOutputStream(PATH + fileName + TYPE);
+	   Output.write(outArray);
+	   Output.close();
+	  } catch (FileNotFoundException e) {
+	   e.printStackTrace();
+	  } catch (IOException e) {
+	   e.printStackTrace();
+	  }
+
+	  System.out.println("Done");
+
+	 }
+	 
+	 @Test
+	 public void test_PriceServiceVo() throws IOException {
+
+	  String fileName = URLEncoder.encode(MATERIAL_RECEIVE, "UTF-8");
+
+	  CreatePaperServiceService createPaperProductService = new CreatePaperServiceService();
+
+	  try {
+	   byte[] outArray = createPaperProductService.exportFileLeftInStockServiceVo();
+	   FileOutputStream Output = new FileOutputStream(PATH + fileName + TYPE);
+	   Output.write(outArray);
+	   Output.close();
+	  } catch (FileNotFoundException e) {
+	   e.printStackTrace();
+	  } catch (IOException e) {
+	   e.printStackTrace();
+	  }
+
+	  System.out.println("Done");
+
+	 }
+	  
+	 
+	 
+	 
+	 
+	 
 	}
 

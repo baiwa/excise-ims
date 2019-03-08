@@ -490,54 +490,139 @@ public class CreatePaperProductService {
 		CellStyle cellRight = ExcelUtils.getCellRight();
 
 		/* tbTH1 */
-		String[] tbTH1 = { "ลำดับ", "รายการ", "ใบรับสินค้าสำเร็จรูป", "ปริมาณรับจากการผลิต", "",
-				"ผลต่างสูงสุด" };
-		for (int i = 0; i < tbTH1.length; i++) {
-			cell = row.createCell(i);
-			cell.setCellValue(tbTH1[i]);
-			if (i != 3 && i != 4) {
-				cell.setCellStyle(thStyle);
-			} else {
-				cell.setCellStyle(thCpColor);
-			}
+		  /* tbTH1 */
+		  String[] tbTH1 = { "ลำดับ", "เลขที่ใบสำคัญ", "รายการ", "จำนวนรับ" + "\n" + "(ตามบัญชี ภส. ๐๗-๐๒)",
+		    "สูตรจากการผลิต", "เบิกตามสูตร", "เบิกใช้จริง", "ผลต่างวัตถุดิบ", "ผลิตได้ตามสูตร", "",
+		    "ผลต่างสินค้าสำเร็จรูป", "หักสูญเสีย", "", "คงเหลือ" };
+		  for (int i = 0; i < tbTH1.length; i++) {
+		   cell = row.createCell(i);
+		   cell.setCellValue(tbTH1[i]);
+		   if (i != 3 && i != 4 && i != 5) {
+		    cell.setCellStyle(thStyle);
+		   } else {
+		    cell.setCellStyle(thCpColor);
+		   }
 
-		}
+		  }
 
-		/* tbTH2 */
-		String[] tbTH2 = { "", "", "", "งบเดือน (ภส. ๐๗-๐๔)", "(ภส. ๐๗-๐๒)" };
+		  /* tbTH2 */
+		  String[] tbTH2 = { "", "", "", "", "", "", "", "", "แยกตามวัตถุดิบ", "จำนวนสินค้าสำเร็จรูป", "", "เปอร์เซ็น",
+		    "จำนวน" };
+		  rowNum++;
+		  row = sheet.createRow(rowNum);
+		  for (int i = 0; i < tbTH2.length; i++) {
+		   if (i > 7 && i != 10) {
+		    cell = row.createCell(i);
+		    cell.setCellValue(tbTH2[i]);
+		    cell.setCellStyle(thStyle);
+		   }
+		  }
+
+		  /* width */
+		  for (int i = 0; i < 14; i++) {
+		   if (i > 2) {
+		    sheet.setColumnWidth(i, 76 * 70);
+		   } else if (i == 1) {
+		    sheet.setColumnWidth(i, 76 * 60);
+		   } else if (i == 2) {
+		    sheet.setColumnWidth(i, 76 * 100);
+		   }
+		  }
+
+		  /* merge(firstRow, lastRow, firstCol, lastCol) */
+		  sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 9));
+		  sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 12));
+
+		  for (int i = 0; i < 14; i++) {
+		   if (i != 8 && i != 9 && i != 11 && i != 12) {
+		    sheet.addMergedRegion(new CellRangeAddress(0, 1, i, i));
+		    cell = row.createCell(i);
+		    cell.setCellStyle(thStyle);
+		   }
+		  }
 		rowNum++;
-		row = sheet.createRow(rowNum);
-		for (int i = 0; i < tbTH2.length; i++) {
-			if (i > 2) {
-				cell = row.createCell(i);
-				cell.setCellValue(tbTH2[i]);
-				cell.setCellStyle(thCpColor);
-			}
+		/* set data */
+		int no = 1;
+		List<CppRawMaterialFinishedGoodsRelationshipVo> dataList = getDataRawMaterialFinishedGoodsRelationship(0, TOTAL, TOTAL);
+		for (CppRawMaterialFinishedGoodsRelationshipVo data : dataList) {
+			row = sheet.createRow(rowNum);
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getCertificateNum());
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+			
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getList());
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getAmountReceive());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getFormulaProduction());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getFormulaWithdraw());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getRealUseWithdraw());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getRawMaterialDiff());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getSplitRawMaterial());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getAmountFinishedGoods());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getFinishedGoodsDiff());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getPercent());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getAmount());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getBalance());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			no++;
+			rowNum++;
+			cellNum = 0;
 		}
 
-		/* width */
-		for (int i = 0; i < 6; i++) {
-			if (i > 2) {
-				sheet.setColumnWidth(i, 76 * 70);
-			} else if (i == 1) {
-				sheet.setColumnWidth(i, 76 * 150);
-			} else if (i == 2) {
-				sheet.setColumnWidth(i, 76 * 80);
-			}
-		}
-
-		/* merge(firstRow, lastRow, firstCol, lastCol) */
-		sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 4));
-
-		for (int i = 0; i < 6; i++) {
-			if (i != 3 && i != 4) {
-				sheet.addMergedRegion(new CellRangeAddress(0, 1, i, i));
-				cell = row.createCell(i);
-				cell.setCellStyle(thStyle);
-			}
-		}
-		
-		
 		
 		
 		
@@ -649,8 +734,49 @@ public class CreatePaperProductService {
 				cell.setCellStyle(thStyle);
 			}
 		}
+		rowNum++;
+		int no = 0;
+		List<CppFinishedGoodsReceiveVo> dataList = getDataFinishedGoodsReceive(0, TOTAL, TOTAL);
+		for (CppFinishedGoodsReceiveVo data : dataList) {
+			row = sheet.createRow(rowNum);
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getList());
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+			
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getFinishedGoodsReceive());
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getMonthStatement());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getPs());
+			cell.setCellStyle(cellRight);
+			cellNum++;
 		
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getMaxDiff());
+			cell.setCellStyle(cellRight);
+			cellNum++;
 		
+
+			no++;
+			rowNum++;
+			cellNum = 0;
+		}
+
 		
 		
 		

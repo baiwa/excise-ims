@@ -164,6 +164,27 @@ public class CreatePaperProductController {
 		}
 		return response;
 	}
+	@GetMapping("/list-raw-material-finished-goods-relationship-export")
+	@ResponseBody
+	public void exportCppMaterialFinishedGoodsRelationship(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception {
+
+		logger.info("listRawMaterialReceive export!!");
+
+		/* set fileName */
+		String fileName = URLEncoder.encode("ตรวจสอบการรับสินค้าสำเร็จรูป", "UTF-8");
+		/* write it as an excel attachment */
+		byte[] outArray = createPaperProductService.exportCppMaterialFinishedGoodsRelationship();
+		response.setContentType("application/octet-stream");
+		response.setContentLength(outArray.length);
+		response.setHeader("Expires:", "0"); // eliminates browser caching
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+		OutputStream outStream = response.getOutputStream();
+		outStream.write(outArray);
+		outStream.flush();
+		outStream.close();
+
+	}
+
 
 	/*------FinishedGoodsReceive-----*/
 	@PostMapping("/list-finished-goods-receive")
@@ -179,6 +200,28 @@ public class CreatePaperProductController {
 		}
 		return response;
 	}
+	
+	@GetMapping("/list-finished-goods-receive-export")
+	@ResponseBody
+	public void exportCppFinishedGoodsReceive(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception {
+
+		logger.info("listRawMaterialReceive export!!");
+
+		/* set fileName */
+		String fileName = URLEncoder.encode("ตรวจสอบการรับสินค้าสำเร็จรูป", "UTF-8");
+		/* write it as an excel attachment */
+		byte[] outArray = createPaperProductService.exportCppFinishedGoodsReceive();
+		response.setContentType("application/octet-stream");
+		response.setContentLength(outArray.length);
+		response.setHeader("Expires:", "0"); // eliminates browser caching
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+		OutputStream outStream = response.getOutputStream();
+		outStream.write(outArray);
+		outStream.flush();
+		outStream.close();
+
+	}
+
 
 	/*------FinishedGoodsPayment-----*/
 	@PostMapping("/list-finished-goods-payment")
@@ -351,6 +394,6 @@ public class CreatePaperProductController {
 		outStream.flush();
 		outStream.close();
 
-
+		
 }
 }

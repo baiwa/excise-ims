@@ -88,17 +88,17 @@ public class CreatePaperServiceController {
 	}
 	@GetMapping("/exportFilePriceServiceVo")
 	@ResponseBody
-	public  void exportFilePriceServiceVo(@ModelAttribute PriceServiceVo formVo, HttpServletResponse response,HttpServletRequest request) throws Exception {
+	public  void exportFilePriceServiceVo(@ModelAttribute  HttpServletResponse response,HttpServletRequest request) throws Exception {
 		String fileName = URLEncoder.encode("บันทึกผลการตรวจสอบด้านราคาต่อหน่วย", "UTF-8");
+	
 		// write it as an excel attachment
-		ByteArrayOutputStream outByteStream = createPaperServiceService.exportFilePriceServiceVo(formVo, response, request);
-		byte[] outArray = outByteStream.toByteArray();
+		byte[] outByteStream = createPaperServiceService.exportFilePriceServiceVo();
 		response.setContentType("application/octet-stream");
-		response.setContentLength(outArray.length);
+		response.setContentLength(outByteStream.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
 		OutputStream outStream = response.getOutputStream();
-		outStream.write(outArray);
+		outStream.write(outByteStream);
 		outStream.flush();
 		outStream.close();
 		
@@ -121,17 +121,16 @@ public class CreatePaperServiceController {
 	}
 	@GetMapping("/exportFileMemberStatusServiceVo")
 	@ResponseBody
-	public  void exportFileMemberStatusServiceVo(@ModelAttribute MemberStatusServiceVo formVo, HttpServletResponse response,HttpServletRequest request) throws Exception {
+	public  void exportFileMemberStatusServiceVo(@ModelAttribute  HttpServletResponse response,HttpServletRequest request) throws Exception {
 		String fileName = URLEncoder.encode("บันทึกผลการตรวจสอบสถานะสมาชิก", "UTF-8");
 		// write it as an excel attachment
-		ByteArrayOutputStream outByteStream = createPaperServiceService.exportFileMemberStatusServiceVo(formVo, response, request);
-		byte[] outArray = outByteStream.toByteArray();
+		byte[] outByteStream = createPaperServiceService.exportFileMemberStatusServiceVo();
 		response.setContentType("application/octet-stream");
-		response.setContentLength(outArray.length);
+		response.setContentLength(outByteStream.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
 		OutputStream outStream = response.getOutputStream();
-		outStream.write(outArray);
+		outStream.write(outByteStream);
 		outStream.flush();
 		outStream.close();
 		
@@ -155,17 +154,16 @@ public class CreatePaperServiceController {
 	}
 	@GetMapping("/exportFileLeftInStockServiceVo")
 	@ResponseBody
-	public  void exportFileLeftInStockServiceVo(@ModelAttribute LeftInStockServiceVo formVo, HttpServletResponse response,HttpServletRequest request) throws Exception {
+	public  void exportFileLeftInStockServiceVo(@ModelAttribute  HttpServletResponse response,HttpServletRequest request) throws Exception {
 		String fileName = URLEncoder.encode("บันทึกผลการตรวจนับสินค้าคงเหลือ", "UTF-8");
 		// write it as an excel attachment
-		ByteArrayOutputStream outByteStream = createPaperServiceService.exportFileLeftInStockServiceVo(formVo, response, request);
-		byte[] outArray = outByteStream.toByteArray();
+		byte[] outByteStream = createPaperServiceService.exportFileLeftInStockServiceVo();		
 		response.setContentType("application/octet-stream");
-		response.setContentLength(outArray.length);
+		response.setContentLength(outByteStream.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
 		OutputStream outStream = response.getOutputStream();
-		outStream.write(outArray);
+		outStream.write(outByteStream);
 		outStream.flush();
 		outStream.close();
 		
