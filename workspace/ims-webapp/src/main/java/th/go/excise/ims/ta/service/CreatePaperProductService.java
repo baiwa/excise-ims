@@ -809,32 +809,32 @@ public class CreatePaperProductService {
 				
 				cell = row.createCell(cellNum);
 				cell.setCellValue(data.getPriceNotiPs());
-				cell.setCellStyle(cellLeft);
+				cell.setCellStyle(cellRight);
 				cellNum++;
 
 				cell = row.createCell(cellNum);
 				cell.setCellValue(data.getPriceDataEx());
-				cell.setCellStyle(cellLeft);
+				cell.setCellStyle(cellRight);
 				cellNum++;
 				
 				cell = row.createCell(cellNum);
 				cell.setCellValue(data.getPriceUnit());
-				cell.setCellStyle(cellLeft);
+				cell.setCellStyle(cellRight);
 				cellNum++;
 				
 				cell = row.createCell(cellNum);
 				cell.setCellValue(data.getPriceUnit());
-				cell.setCellStyle(cellLeft);
+				cell.setCellStyle(cellRight);
 				cellNum++;
 				
 				cell = row.createCell(cellNum);
 				cell.setCellValue(data.getTax());
-				cell.setCellStyle(cellLeft);
+				cell.setCellStyle(cellRight);
 				cellNum++;
 				
 				cell = row.createCell(cellNum);
 				cell.setCellValue(data.getDiff());
-				cell.setCellStyle(cellLeft);
+				cell.setCellStyle(cellRight);
 				cellNum++;
 
 			
@@ -949,21 +949,13 @@ public class CreatePaperProductService {
 					cell.setCellStyle(cellLeft);
 					cellNum++;
 					
-					cell = row.createCell(cellNum);
-					cell.setCellValue(data.getList());
-					cell.setCellStyle(cellLeft);
-					cellNum++;
-					
+
 					cell = row.createCell(cellNum);
 					cell.setCellValue(data.getTransportDoc());
 					cell.setCellStyle(cellRight);
 					cellNum++;
 					
-					cell = row.createCell(cellNum);
-					cell.setCellValue(data.getTransportDoc());
-					cell.setCellStyle(cellRight);
-					cellNum++;
-					
+				
 					cell = row.createCell(cellNum);
 					cell.setCellValue(data.getInv());
 					cell.setCellStyle(cellRight);
