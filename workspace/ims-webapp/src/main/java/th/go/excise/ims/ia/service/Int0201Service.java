@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMade;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMadeHdr;
@@ -120,8 +122,8 @@ public class Int0201Service {
 
 			/* save Questionnaire Made */
 			if (filterQtnMade.size() > 0) {
-				for (int i = 0; i < filterQtnMade.size(); i++) {
-					saveQtnMade(request, i, filterQtnMade.get(i).getIdMadeHdr());
+				for (IaQuestionnaireMade filter: filterQtnMade) {
+					saveQtnMade(request, filter.getOfficeCode(), filter.getIdMadeHdr());
 				}
 			}
 		} else {
@@ -130,12 +132,20 @@ public class Int0201Service {
 			/* find id of Questionnaire Header */
 			if (request.getIdHead() != null) {
 				Optional<IaQuestionnaireHdr> hdrRes = iaQuestionnaireHdrRepository.findById(request.getIdHead());
+				List<ExciseDept> sectors = ApplicationCache.getExciseSectorList();
+				List<ExciseDept> areas = new ArrayList<>();
+				List<String> officeCodes = new ArrayList<>();
+				for(ExciseDept sector: sectors) {
+					areas = ApplicationCache.getExciseAreaList(sector.getOfficeCode());
+					officeCodes.add(sector.getOfficeCode());
+					for(ExciseDept area: areas) {
+						officeCodes.add(area.getOfficeCode());
+					}
+				}
 				if (hdrRes.isPresent()) {
 					IaQuestionnaireHdr dataHdr = hdrRes.get();
 					IaQuestionnaireMadeHdr dataMadeHdr = null;
-					int loopCount = 10;
-
-					for (int i = 0; i < loopCount; i++) {
+					for (String officeCode: officeCodes) {
 						dataMadeHdr = new IaQuestionnaireMadeHdr();
 						dataMadeHdr.setIdHdr(dataHdr.getId());
 						dataMadeHdr.setBudgetYear(dataHdr.getBudgetYear());
@@ -146,11 +156,11 @@ public class Int0201Service {
 						dataMadeHdr.setEndDate(ConvertDateUtils.parseStringToLocalDate(request.getEndDateSend(),
 								ProjectConstant.SHORT_DATE_FORMAT));
 						dataMadeHdr.setStatus("CREATED");
-						dataMadeHdr.setOfficeCode("0" + i + "0000");
+						dataMadeHdr.setOfficeCode(officeCode);
 						IaQuestionnaireMadeHdr resMadeHdr = iaQuestionnaireMadeHdrRepository.save(dataMadeHdr);
 
 						/* save Questionnaire Made */
-						saveQtnMade(request, i, resMadeHdr.getId());
+						saveQtnMade(request, officeCode, resMadeHdr.getId());
 					} // end loop 1
 				}
 			}
@@ -205,7 +215,7 @@ public class Int0201Service {
 	}
 
 	/* save Questionnaire Made */
-	private void saveQtnMade(Int0201FormVo request, int index, BigDecimal idMadeHdr) {
+	private void saveQtnMade(Int0201FormVo request, String officeCode, BigDecimal idMadeHdr) {
 		logger.info("save QtnMadeHdr");
 		IaQuestionnaireMade qtnMade = null;
 		if (request.getQtnMadeList().size() > 0) {
@@ -214,7 +224,7 @@ public class Int0201Service {
 				qtnMade.setIdSideDtl(objMade.getIdSideDtl());
 				qtnMade.setQtnLevel(objMade.getQtnLevel());
 				qtnMade.setStatus("CREATED");
-				qtnMade.setOfficeCode("0" + index + "0000");
+				qtnMade.setOfficeCode(officeCode);
 				qtnMade.setIdMadeHdr(idMadeHdr);
 				iaQuestionnaireMadeRepository.save(qtnMade);
 			} // end loop 2

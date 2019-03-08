@@ -26,8 +26,8 @@ public class IaQuestionnaireMadeHdrJdbcRepository {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 		sql.append(" SELECT * FROM IA_QUESTIONNAIRE_MADE_HDR WHERE 1=1 AND IS_DELETED='N' ");
-		sql.append(" AND OFFICE_CODE LIKE ? ");
-		params.add(request.getOfficeCode().substring(0, 2) + "%");
+		sql.append(" AND OFFICE_CODE = ? ");
+		params.add(request.getOfficeCode());
 		
 		if(StringUtils.isNotBlank(request.getBudgetYear())) {
 			sql.append(" AND BUDGET_YEAR = ? ");
@@ -66,8 +66,8 @@ public class IaQuestionnaireMadeHdrJdbcRepository {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 		sql.append(" SELECT * FROM IA_QUESTIONNAIRE_MADE_HDR WHERE IS_DELETED='N' ");
-		sql.append(" AND OFFICE_CODE LIKE ? ");
-		params.add(request.getOfficeCode().substring(0, 2) + "%");
+		sql.append(" AND OFFICE_CODE = ? ");
+		params.add(request.getOfficeCode());
 		
 		if(StringUtils.isNotBlank(request.getBudgetYear())) {
 			sql.append(" AND BUDGET_YEAR = ? ");
