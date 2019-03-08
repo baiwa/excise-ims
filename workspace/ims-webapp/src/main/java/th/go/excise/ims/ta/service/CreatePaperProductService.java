@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +38,9 @@ public class CreatePaperProductService {
 	private static final Integer TOTAL = 17;
 	/*-----TOPIC------*/
 	private static final String MATERIAL_RECEIVE = "ตรวจสอบการรับวัตถุดิบ";
-
+	private static final String FINISHED_GOODS_RECEIVE = "ตรวจสอบการรับสินค้าสำเร็จรูป";
+	private static final String MATERIAL_FINISHED_GOODS_RELATIONSHIP = "ตรวจหาความสัมพันธ์การเบิกใช้วัตถุดิบ";
+	
 	/*------MaterialReceive-----*/
 	public DataTableAjax<CppRawMaterialReceiveVo> listRawMaterialReceive(CreatePaperFormVo request) {
 		DataTableAjax<CppRawMaterialReceiveVo> dataTableAjax = new DataTableAjax<CppRawMaterialReceiveVo>();
@@ -468,6 +471,89 @@ public class CreatePaperProductService {
 		}
 		return datalist;
 	}
+	
+	
+	public byte[] exportCppMaterialFinishedGoodsRelationship() {
+
+		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+		Sheet sheet = workbook.createSheet(MATERIAL_FINISHED_GOODS_RELATIONSHIP);
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+
+		/* call style from utils */
+		CellStyle thStyle = ExcelUtils.getThStyle();
+		CellStyle thCpColor = ExcelUtils.getThCpColor();
+		CellStyle cellCenter = ExcelUtils.getCellCenter();
+		CellStyle cellLeft = ExcelUtils.getCellLeft();
+		CellStyle cellRight = ExcelUtils.getCellRight();
+
+		/* tbTH1 */
+		String[] tbTH1 = { "ลำดับ", "รายการ", "ใบรับสินค้าสำเร็จรูป", "ปริมาณรับจากการผลิต", "",
+				"ผลต่างสูงสุด" };
+		for (int i = 0; i < tbTH1.length; i++) {
+			cell = row.createCell(i);
+			cell.setCellValue(tbTH1[i]);
+			if (i != 3 && i != 4) {
+				cell.setCellStyle(thStyle);
+			} else {
+				cell.setCellStyle(thCpColor);
+			}
+
+		}
+
+		/* tbTH2 */
+		String[] tbTH2 = { "", "", "", "งบเดือน (ภส. ๐๗-๐๔)", "(ภส. ๐๗-๐๒)" };
+		rowNum++;
+		row = sheet.createRow(rowNum);
+		for (int i = 0; i < tbTH2.length; i++) {
+			if (i > 2) {
+				cell = row.createCell(i);
+				cell.setCellValue(tbTH2[i]);
+				cell.setCellStyle(thCpColor);
+			}
+		}
+
+		/* width */
+		for (int i = 0; i < 6; i++) {
+			if (i > 2) {
+				sheet.setColumnWidth(i, 76 * 70);
+			} else if (i == 1) {
+				sheet.setColumnWidth(i, 76 * 150);
+			} else if (i == 2) {
+				sheet.setColumnWidth(i, 76 * 80);
+			}
+		}
+
+		/* merge(firstRow, lastRow, firstCol, lastCol) */
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 4));
+
+		for (int i = 0; i < 6; i++) {
+			if (i != 3 && i != 4) {
+				sheet.addMergedRegion(new CellRangeAddress(0, 1, i, i));
+				cell = row.createCell(i);
+				cell.setCellStyle(thStyle);
+			}
+		}
+		
+		
+		
+		
+		
+
+		// set output
+		byte[] content = null;
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			workbook.write(outputStream);
+			content = outputStream.toByteArray();
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return content;
+	}
+
 
 	/*------FinishedGoodsReceive-----*/
 	public DataTableAjax<CppFinishedGoodsReceiveVo> listFinishedGoodsReceive(CreatePaperFormVo request) {
@@ -499,6 +585,88 @@ public class CreatePaperProductService {
 		}
 		return datalist;
 	}
+	
+	public byte[] exportCppFinishedGoodsReceive() {
+
+		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+		Sheet sheet = workbook.createSheet(FINISHED_GOODS_RECEIVE);
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+
+		/* call style from utils */
+		CellStyle thStyle = ExcelUtils.getThStyle();
+		CellStyle thCpColor = ExcelUtils.getThCpColor();
+		CellStyle cellCenter = ExcelUtils.getCellCenter();
+		CellStyle cellLeft = ExcelUtils.getCellLeft();
+		CellStyle cellRight = ExcelUtils.getCellRight();
+		
+		/* tbTH1 */
+		String[] tbTH1 = { "ลำดับ", "รายการ", "ใบรับสินค้าสำเร็จรูป", "ปริมาณรับจากการผลิต", "",
+				"ผลต่างสูงสุด" };
+		for (int i = 0; i < tbTH1.length; i++) {
+			cell = row.createCell(i);
+			cell.setCellValue(tbTH1[i]);
+			if (i != 3 && i != 4) {
+				cell.setCellStyle(thStyle);
+			} else {
+				cell.setCellStyle(thCpColor);
+			}
+
+		}
+
+		/* tbTH2 */
+		String[] tbTH2 = { "", "", "", "งบเดือน (ภส. ๐๗-๐๔)", "(ภส. ๐๗-๐๒)" };
+		rowNum++;
+		row = sheet.createRow(rowNum);
+		for (int i = 0; i < tbTH2.length; i++) {
+			if (i > 2) {
+				cell = row.createCell(i);
+				cell.setCellValue(tbTH2[i]);
+				cell.setCellStyle(thCpColor);
+			}
+		}
+
+		/* width */
+		for (int i = 0; i < 6; i++) {
+			if (i > 2) {
+				sheet.setColumnWidth(i, 76 * 70);
+			} else if (i == 1) {
+				sheet.setColumnWidth(i, 76 * 150);
+			} else if (i == 2) {
+				sheet.setColumnWidth(i, 76 * 80);
+			}
+		}
+
+		/* merge(firstRow, lastRow, firstCol, lastCol) */
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 4));
+
+		for (int i = 0; i < 6; i++) {
+			if (i != 3 && i != 4) {
+				sheet.addMergedRegion(new CellRangeAddress(0, 1, i, i));
+				cell = row.createCell(i);
+				cell.setCellStyle(thStyle);
+			}
+		}
+		
+		
+		
+		
+		
+
+		// set output
+		byte[] content = null;
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			workbook.write(outputStream);
+			content = outputStream.toByteArray();
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return content;
+	}
+
 
 	/*------FinishedGoodsPayment-----*/
 	public DataTableAjax<CppFinishedGoodsPaymentVo> listFinishedGoodsPayment(CreatePaperFormVo request) {
