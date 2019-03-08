@@ -5,5 +5,5 @@ import th.go.excise.ims.ta.persistence.entity.TaMasCondSubNoAudit;
 
 public interface TaMasCondSubNoAuditRepository extends CommonJpaCrudRepository<TaMasCondSubNoAudit, Long> {
 
-	public TaMasCondSubNoAudit findByBudgetYear(String budgetYear);
+	public TaMasCondSubNoAudit findByBudgetYearAndOfficeCode(String budgetYear, String officeCode);
 }
