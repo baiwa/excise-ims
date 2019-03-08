@@ -38,7 +38,7 @@ public class Int020201Service {
 	public List<IaQuestionnaireSide> findQtnSideById(Int020201SidesVo request) {
 		return iaQuestionnaireSideRepository.findByidHead(request.getIdSide());
 	}
-	
+
 	public IaQuestionnaireMadeHdr findQtnMadeHdrById(BigDecimal id) {
 		return iaQuestionnaireMadeHdrRepository.findById(id).get();
 	}
@@ -51,19 +51,33 @@ public class Int020201Service {
 		Int020201Vo response = new Int020201Vo();
 
 		for (Int020201SidesVo dataRequest : request.getRequest()) {
+			/* variable check status check */
+//			Boolean checkLVL1 = false;
+//			Boolean checkLVL2 = false;
+//			Boolean checkLVL3 = false;
+
 			dataLVL1 = new ArrayList<Int020201JoinVo>();
 			dataLVL1 = iaQuestionnaireMadeJdbcRepository.findLvl1ByIdMadeHdr(dataRequest);
-
-			for (Int020201JoinVo objLVL1 : dataLVL1) {
-				dataLVL2 = new ArrayList<Int020201JoinVo>();
-				dataLVL2 = iaQuestionnaireMadeJdbcRepository.findLvl2ByIdMadeHdr(objLVL1);
-				for (Int020201JoinVo objLVL2 : dataLVL2) {
-					dataLVL3 = new ArrayList<Int020201JoinVo>();
-					dataLVL3 = iaQuestionnaireMadeJdbcRepository.findLvl3ByIdMadeHdr(objLVL2);
-					objLVL2.setChildren(dataLVL3);
+//			if (dataLVL1.size() > 0) {
+				for (Int020201JoinVo objLVL1 : dataLVL1) {
+					dataLVL2 = new ArrayList<Int020201JoinVo>();
+					dataLVL2 = iaQuestionnaireMadeJdbcRepository.findLvl2ByIdMadeHdr(objLVL1);
+					for (Int020201JoinVo objLVL2 : dataLVL2) {
+						dataLVL3 = new ArrayList<Int020201JoinVo>();
+						dataLVL3 = iaQuestionnaireMadeJdbcRepository.findLvl3ByIdMadeHdr(objLVL2);
+						objLVL2.setChildren(dataLVL3);
+					}
+					objLVL1.setChildren(dataLVL2);
 				}
-				objLVL1.setChildren(dataLVL2);
-			}
+//			}else {
+//				/* count check null */
+//				Integer countNull = iaQuestionnaireMadeJdbcRepository.countCheckNull(objLVL1, new BigDecimal(1));
+//				if (countNull == 0) {
+//					checkLVL1 = true;
+//				} else {
+//					checkLVL1 = false;
+//				}
+//			}
 			dataRes.add(dataLVL1);
 		}
 		response.setHeader(dataRes);
@@ -84,8 +98,8 @@ public class Int020201Service {
 					if ("CREATED".equals(request.getStatus())) {
 						madeDtl.setStatus("WAIT");
 					}
-					
-					if(request.getFlagConfirm()) {
+
+					if (request.getFlagConfirm()) {
 						madeDtl.setStatus("FINISH");
 					}
 					/* update 'status' questionnaire-made-header */

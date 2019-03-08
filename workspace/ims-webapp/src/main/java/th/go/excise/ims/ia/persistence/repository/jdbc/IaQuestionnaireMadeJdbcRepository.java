@@ -110,5 +110,28 @@ public class IaQuestionnaireMadeJdbcRepository {
 		List<Int020201JoinVo> data = commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper(Int020201JoinVo.class));
 		return data;
 	}
+	
+	public Integer countCheckNull(Int020201JoinVo request, BigDecimal level) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		sql.append(" SELECT COUNT(*) FROM IA_QUESTIONNAIRE_MADE MD ");
+		sql.append(" INNER JOIN IA_QUESTIONNAIRE_SIDE_DTL SD ");
+		sql.append(" 	ON MD.ID_SIDE_DTL = SD.ID ");
+		sql.append(" WHERE SD.QTN_LEVEL = ? ");
+		sql.append(" 	AND MD.ID_MADE_HDR = ? ");
+		sql.append("	AND SD.SEQ = ? ");
+		sql.append(" 	AND SD.ID_SIDE = ? ");
+		sql.append(" 	AND MD.IS_DELETED = 'N' ");
+		sql.append(" 	AND SD.IS_DELETED = 'N' ");
+		sql.append(" 	AND MD.CHECK_FLAG IS NULL ");
+
+		params.add(level);
+		params.add(request.getIdMadeHdr());
+		params.add(request.getSeq());
+		params.add(request.getIdSide());
+		 
+		Integer countNull = commonJdbcTemplate.queryForObject(sql.toString(), params.toArray(), Integer.class);
+		return countNull;
+	}
 
 }
