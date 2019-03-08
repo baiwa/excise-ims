@@ -8,19 +8,23 @@ import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.vo.IntCalculateCriteriaVo;
+
 @Component
 public class IntCalculateCriteriaUtil {
 
 	public static IntCalculateCriteriaVo calculateCriteria(BigDecimal dataCal, IaRiskFactorsConfig config) {
 		IntCalculateCriteriaVo cal = new IntCalculateCriteriaVo();
-		if (3==config.getFactorsLevel().intValue()) {
+		if (config.getFactorsLevel() != null) {
 
-			cal = calculateRating3Level(dataCal, config);
+			if (3 == config.getFactorsLevel().intValue()) {
 
-		} else if (5 == config.getFactorsLevel().intValue()) {
+				cal = calculateRating3Level(dataCal, config);
 
-			cal = calculateRating5Level(dataCal, config);
+			} else if (5 == config.getFactorsLevel().intValue()) {
 
+				cal = calculateRating5Level(dataCal, config);
+
+			}
 		}
 
 		return cal;
@@ -60,7 +64,6 @@ public class IntCalculateCriteriaUtil {
 			value.setRiskRate(config.getVerylowRating());
 			value.setTranslatingRisk(config.getVerylow());
 			value.setColor(config.getVerylowColor());
-			
 
 		} else if (checkDataCal(dataCal.floatValue(), config.getLowCondition(), config.getLowStart(),
 				config.getLowEnd())) {
@@ -114,9 +117,10 @@ public class IntCalculateCriteriaUtil {
 		}
 		return res;
 	}
-	public static String colorToColorCode (String color) {
-		String colorCode="";
-		if("เขียวเข้ม".equals(color)) {
+
+	public static String colorToColorCode(String color) {
+		String colorCode = "";
+		if ("เขียวเข้ม".equals(color)) {
 			colorCode = "COLOR1";
 		} else if ("เขียว".equals(color)) {
 			colorCode = "COLOR2";
@@ -126,9 +130,9 @@ public class IntCalculateCriteriaUtil {
 			colorCode = "COLOR4";
 		} else if ("แดง".equals(color)) {
 			colorCode = "COLOR5";
-		} 
+		}
 		return colorCode;
-				
+
 	}
 
 }

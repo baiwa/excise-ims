@@ -15,7 +15,6 @@ import th.go.excise.ims.ia.vo.Int0301FormVo;
 import th.go.excise.ims.ia.vo.Int0301Vo;
 import th.go.excise.ims.ia.vo.Int030401FormVo;
 import th.go.excise.ims.ia.vo.Int030401Vo;
-import th.go.excise.ims.ia.vo.Int030405Vo;
 import th.go.excise.ims.ia.vo.IntCalculateCriteriaVo;
 
 @Service
@@ -27,8 +26,8 @@ public class Int030401Service {
 	@Autowired 
 	private Int030405Service int030405Service;
 	
-	@Autowired
-	private IntCalculateCriteriaUtil intCalculateCriteriaUtil;
+//	@Autowired
+//	private IntCalculateCriteriaUtil intCalculateCriteriaUtil;
 	
 	public List<Int030401Vo> factorsDataList(Int030401FormVo form) {
 		List<Int030401Vo>  Int030401VoList = new ArrayList<>();
@@ -59,7 +58,7 @@ public class Int030401Service {
 			
 			Int030401Vo resDataCalSet = new Int030401Vo();
 			IntCalculateCriteriaVo risk = new IntCalculateCriteriaVo();
-			if(StringUtils.isNoneBlank(iaRiskFactorsData.getRiskCost())) {
+			if(StringUtils.isNotBlank(iaRiskFactorsData.getRiskCost())) {
 				risk = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(iaRiskFactorsData.getRiskCost()) , getForm0304.getIaRiskFactorsConfig());
 			}
 			resDataCalSet.setIaRiskFactorsData(iaRiskFactorsData);

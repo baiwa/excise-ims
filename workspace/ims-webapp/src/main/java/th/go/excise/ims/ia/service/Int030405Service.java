@@ -61,20 +61,20 @@ public class Int030405Service {
 			dataSet.setErrordetailError09(iaRiskSystemUnworking.getErrordetailError09());
 			res.add(dataSet);
 		}
-		
+
 		Int0301FormVo dataForm = new Int0301FormVo();
 		dataForm.setBudgetYear(form.getBudgetYear());
 		dataForm.setIdConfig(form.getIdConfig());
 		dataForm.setInspectionWork(form.getInspectionWork());
 		Int0301Vo getForm0304 = getForm0304(dataForm);
-		
-		
-		int index=0;
+
+		int index = 0;
 		for (IaRiskSystemUnworking iaRiskSystemUnworking : res) {
 			Int030405Vo resDataCalSet = new Int030405Vo();
 			IntCalculateCriteriaVo risk = new IntCalculateCriteriaVo();
-			if(StringUtils.isNoneBlank(iaRiskSystemUnworking.getCountall())) {
-				risk = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(iaRiskSystemUnworking.getCountall()) , getForm0304.getIaRiskFactorsConfig());
+			if (StringUtils.isNoneBlank(iaRiskSystemUnworking.getCountall())) {
+				risk = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(iaRiskSystemUnworking.getCountall()),
+						getForm0304.getIaRiskFactorsConfig());
 			}
 			resDataCalSet.setIaRiskSystemUnworking(iaRiskSystemUnworking);
 			resDataCalSet.setIntCalculateCriteriaVo(risk);
@@ -91,7 +91,9 @@ public class Int030405Service {
 		Int0301Vo int0301Vo = new Int0301Vo();
 		List<Int0301Vo> listServiceRes = new ArrayList<Int0301Vo>();
 		listServiceRes = int030405JdbcRepository.getForm0304(form);
-		int0301Vo = listServiceRes.get(0);
+		if (listServiceRes.size() != 0) {
+			int0301Vo = listServiceRes.get(0);
+		}
 		return int0301Vo;
 	}
 }
