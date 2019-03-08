@@ -1,5 +1,6 @@
 package th.go.excise.ims.ta.controller;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 
@@ -36,7 +37,7 @@ import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 public class CreatePaperProductController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CreatePaperProductController.class);
-	
+
 	private CreatePaperProductService createPaperProductService;
 
 	@Autowired
@@ -44,7 +45,7 @@ public class CreatePaperProductController {
 		this.createPaperProductService = createPaperProductService;
 	}
 
-	/*------MaterialReceive-----*/
+	// TODO MaterialReceive
 	@PostMapping("/list-raw-material-receive")
 	@ResponseBody
 	public DataTableAjax<CppRawMaterialReceiveVo> listRawMaterialReceive(@RequestBody CreatePaperFormVo request) {
@@ -61,7 +62,8 @@ public class CreatePaperProductController {
 
 	@GetMapping("/list-raw-material-receive-export")
 	@ResponseBody
-	public void exportRawMaterialReceive(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception {
+	public void exportRawMaterialReceive(HttpServletRequest httpServletRequest, HttpServletResponse response)
+			throws Exception {
 
 		logger.info("listRawMaterialReceive export!!");
 
@@ -73,14 +75,16 @@ public class CreatePaperProductController {
 		response.setContentLength(outArray.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-		OutputStream outStream = response.getOutputStream();
-		outStream.write(outArray);
-		outStream.flush();
-		outStream.close();
+
+		try (OutputStream outStream = response.getOutputStream();) {
+			outStream.write(outArray);
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
 
 	}
 
-	/*------MaterialPayment-----*/
+//TODO MaterialPayment
 	@PostMapping("/list-raw-material-payment")
 	@ResponseBody
 	public DataTableAjax<CppRawMaterialPaymentVo> listRawMaterialPayment(@RequestBody CreatePaperFormVo request) {
@@ -94,28 +98,31 @@ public class CreatePaperProductController {
 		}
 		return response;
 	}
+
 	@GetMapping("/list-raw-material-payment-export")
 	@ResponseBody
-	public void export(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception {
+	public void exportRawMaterialPayment(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception {
 
 		logger.info("listRawMaterialReceive export!!");
 
 		/* set fileName */
 		String fileName = URLEncoder.encode("ตรวจสอบจ่ายวัตถุดิบ", "UTF-8");
 		/* write it as an excel attachment */
-		byte[] outArray = createPaperProductService.exportCppFinishedGoodsPayment();
+		byte[] outArray = createPaperProductService.exportRawMaterialPayment();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-		OutputStream outStream = response.getOutputStream();
-		outStream.write(outArray);
-		outStream.flush();
-		outStream.close();
+
+		try (OutputStream outStream = response.getOutputStream();) {
+			outStream.write(outArray);
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
 
 	}
-
-	/*------MaterialBalance-----*/
+	
+    //TODO MaterialBalance
 	@PostMapping("/list-raw-material-balance")
 	@ResponseBody
 	public DataTableAjax<CppRawMaterialBalanceVo> listRawMaterialBalance(@RequestBody CreatePaperFormVo request) {
@@ -129,27 +136,31 @@ public class CreatePaperProductController {
 		}
 		return response;
 	}
+
 	@GetMapping("/list-raw-material-balance")
 	@ResponseBody
-	public void exportCppRawMaterialBalance(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception {
+	public void exportRawMaterialBalance(HttpServletRequest httpServletRequest, HttpServletResponse response)
+			throws Exception {
 
 		logger.info("listRawMaterialReceive export!!");
 
 		/* set fileName */
 		String fileName = URLEncoder.encode("ตรวจนับวัตถุดิบคงเหลือ", "UTF-8");
 		/* write it as an excel attachment */
-		byte[] outArray = createPaperProductService.exportCppRawMaterialBalance();
+		byte[] outArray = createPaperProductService.exportRawMaterialBalance();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-		OutputStream outStream = response.getOutputStream();
-		outStream.write(outArray);
-		outStream.flush();
-		outStream.close();
+	
+		try (OutputStream outStream = response.getOutputStream();) {
+			outStream.write(outArray);
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
 
 	}
-	/*------MaterialFinishedGoodsRelationship-----*/
+//TODO MaterialFinishedGoodsRelationship
 	@PostMapping("/list-raw-material-finished-goods-relationship")
 	@ResponseBody
 	public DataTableAjax<CppRawMaterialFinishedGoodsRelationshipVo> listRawMaterialFinishedGoodsRelationship(
@@ -164,29 +175,31 @@ public class CreatePaperProductController {
 		}
 		return response;
 	}
+
 	@GetMapping("/list-raw-material-finished-goods-relationship-export")
 	@ResponseBody
-	public void exportCppMaterialFinishedGoodsRelationship(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception {
+	public void exportRawMaterialFinishedGoodsRelationship(HttpServletRequest httpServletRequest,
+			HttpServletResponse response) throws Exception {
 
 		logger.info("listRawMaterialReceive export!!");
 
 		/* set fileName */
-		String fileName = URLEncoder.encode("ตรวจสอบการรับสินค้าสำเร็จรูป", "UTF-8");
+		String fileName = URLEncoder.encode("ตรวจหาความสัมพันธ์การเบิกใช้วัตถุดิบกับการรับสินค้าสำเร็จรูป", "UTF-8");
 		/* write it as an excel attachment */
-		byte[] outArray = createPaperProductService.exportCppMaterialFinishedGoodsRelationship();
+		byte[] outArray = createPaperProductService.exportRawMaterialFinishedGoodsRelationship();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-		OutputStream outStream = response.getOutputStream();
-		outStream.write(outArray);
-		outStream.flush();
-		outStream.close();
 
+		try (OutputStream outStream = response.getOutputStream();) {
+			outStream.write(outArray);
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
 	}
-
-
-	/*------FinishedGoodsReceive-----*/
+	
+//TODO FinishedGoodsReceive
 	@PostMapping("/list-finished-goods-receive")
 	@ResponseBody
 	public DataTableAjax<CppFinishedGoodsReceiveVo> listFinishedGoodsReceive(@RequestBody CreatePaperFormVo request) {
@@ -200,30 +213,32 @@ public class CreatePaperProductController {
 		}
 		return response;
 	}
-	
+
 	@GetMapping("/list-finished-goods-receive-export")
 	@ResponseBody
-	public void exportCppFinishedGoodsReceive(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception {
+	public void exportRawFinishedGoodsReceive(HttpServletRequest httpServletRequest, HttpServletResponse response)
+			throws Exception {
 
 		logger.info("listRawMaterialReceive export!!");
 
 		/* set fileName */
 		String fileName = URLEncoder.encode("ตรวจสอบการรับสินค้าสำเร็จรูป", "UTF-8");
 		/* write it as an excel attachment */
-		byte[] outArray = createPaperProductService.exportCppFinishedGoodsReceive();
+		byte[] outArray = createPaperProductService.exportFinishedGoodsReceive();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-		OutputStream outStream = response.getOutputStream();
-		outStream.write(outArray);
-		outStream.flush();
-		outStream.close();
+		
+		try (OutputStream outStream = response.getOutputStream();) {
+			outStream.write(outArray);
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
 
 	}
-
-
-	/*------FinishedGoodsPayment-----*/
+	
+//TODO FinishedGoodsPayment
 	@PostMapping("/list-finished-goods-payment")
 	@ResponseBody
 	public DataTableAjax<CppFinishedGoodsPaymentVo> listFinishedGoodsPayment(@RequestBody CreatePaperFormVo request) {
@@ -237,28 +252,33 @@ public class CreatePaperProductController {
 		}
 		return response;
 	}
+
 	@GetMapping("/list-finished-goods-payment-export")
 	@ResponseBody
-	public void exportCppFinishedGoodsPayment(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception {
+	public void exportRawFinishedGoodsPayment(HttpServletRequest httpServletRequest, HttpServletResponse response)
+			throws Exception {
 
 		logger.info("listRawMaterialReceive export!!");
 
 		/* set fileName */
 		String fileName = URLEncoder.encode("ตรวจสอบการจ่ายสินค้าสำเร็จรูป", "UTF-8");
 		/* write it as an excel attachment */
-		byte[] outArray = createPaperProductService.exportCppFinishedGoodsPayment();
+		byte[] outArray = createPaperProductService.exportFinishedGoodsPayment();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-		OutputStream outStream = response.getOutputStream();
-		outStream.write(outArray);
-		outStream.flush();
-		outStream.close();
+		
+		try (OutputStream outStream = response.getOutputStream();) {
+			outStream.write(outArray);
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+
 
 	}
 
-	/*------RawMaterialTaxBreak-----*/
+	// TODO RawMaterialTaxBreak
 	@PostMapping("/list-raw-material-tax-break")
 	@ResponseBody
 	public DataTableAjax<CppRawMaterialTaxBreakVo> listRawMaterialTaxBreak(@RequestBody CreatePaperFormVo request) {
@@ -273,7 +293,31 @@ public class CreatePaperProductController {
 		return response;
 	}
 
-	/*------UnitPrice-----*/
+	@GetMapping("/list-raw-material-tax-break-export")
+	@ResponseBody
+	public void exportRawMaterialTaxBreak(HttpServletRequest httpServletRequest, HttpServletResponse response)
+			throws Exception {
+
+		logger.info("listRawMaterialTaxBreak export!!");
+
+		/* set fileName */
+		String fileName = URLEncoder.encode("ตรวจสอบรายการวัตถุดิบที่ขอลดหย่อนภาษีที่ยื่นต่อกรมสรรพสามิต (ภส. ๐๕-๐๒)",
+				"UTF-8");
+		/* write it as an excel attachment */
+		byte[] outArray = createPaperProductService.exportRawMaterialTaxBreak();
+		response.setContentType("application/octet-stream");
+		response.setContentLength(outArray.length);
+		response.setHeader("Expires:", "0"); // eliminates browser caching
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+		
+		try (OutputStream outStream = response.getOutputStream();) {
+			outStream.write(outArray);
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+	}
+
+	// TODO UnitPrice
 	@PostMapping("/list-unit-price")
 	@ResponseBody
 	public DataTableAjax<CppUnitPriceVo> listUnitPrice(@RequestBody CreatePaperFormVo request) {
@@ -288,6 +332,30 @@ public class CreatePaperProductController {
 		return response;
 	}
 
+	@GetMapping("/list-unit-price-export")
+	@ResponseBody
+	public void exportUnitPrice(HttpServletRequest httpServletRequest, HttpServletResponse response)
+			throws Exception {
+
+		logger.info("listUnitPrice export!!");
+
+		/* set fileName */
+		String fileName = URLEncoder.encode("ตรวจสอบราคาต่อหน่วยสินค้าที่ขอลดหย่อนภาษี", "UTF-8");
+		/* write it as an excel attachment */
+		byte[] outArray = createPaperProductService.exportUnitPrice();
+		response.setContentType("application/octet-stream");
+		response.setContentLength(outArray.length);
+		response.setHeader("Expires:", "0"); // eliminates browser caching
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+		
+		try (OutputStream outStream = response.getOutputStream();) {
+			outStream.write(outArray);
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+	}
+//TODO
 	/*------CheckPrice-----*/
 	@PostMapping("/list-check-price")
 	@ResponseBody
@@ -302,30 +370,31 @@ public class CreatePaperProductController {
 		}
 		return response;
 	}
-	
+
 	@GetMapping("/list-check-price-export")
 	@ResponseBody
-	public void exportCppCheckPrice(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception {
+	public void exportCheckPrice(HttpServletRequest httpServletRequest, HttpServletResponse response)
+			throws Exception {
 
 		logger.info("listRawMaterialReceive export!!");
 
 		/* set fileName */
 		String fileName = URLEncoder.encode("ตรวจสอบด้านราคา", "UTF-8");
 		/* write it as an excel attachment */
-		byte[] outArray = createPaperProductService.exportCppCheckPrice();
+		byte[] outArray = createPaperProductService.exportCheckPrice();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-		OutputStream outStream = response.getOutputStream();
-		outStream.write(outArray);
-		outStream.flush();
-		outStream.close();
+
+		try (OutputStream outStream = response.getOutputStream();) {
+			outStream.write(outArray);
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
 
 	}
-
-
-	/*------PayForeignFinishedGoods-----*/
+//TODO PayForeignFinishedGoods
 	@PostMapping("/list-pay-foreign-finished-goods")
 	@ResponseBody
 	public DataTableAjax<CppPayForeignFinishedGoodsVo> listPayForeignFinishedGoods(
@@ -340,24 +409,29 @@ public class CreatePaperProductController {
 		}
 		return response;
 	}
+
 	@GetMapping("/list-pay-foreign-finished-goods-export")
 	@ResponseBody
-	public void exportCppPayForeignFinishedGoods(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception {
+	public void exportPayForeignFinishedGoods(HttpServletRequest httpServletRequest, HttpServletResponse response)
+			throws Exception {
 
 		logger.info("listRawMaterialReceive export!!");
 
 		/* set fileName */
 		String fileName = URLEncoder.encode("จ่ายสินค้าสำเร็จรูปต่างประเทศ", "UTF-8");
 		/* write it as an excel attachment */
-		byte[] outArray = createPaperProductService.exportCppPayForeignFinishedGoods();
+		byte[] outArray = createPaperProductService.exportPayForeignFinishedGoods();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-		OutputStream outStream = response.getOutputStream();
-		outStream.write(outArray);
-		outStream.flush();
-		outStream.close();
+		
+		try (OutputStream outStream = response.getOutputStream();) {
+			outStream.write(outArray);
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+
 
 	}
 
@@ -375,25 +449,27 @@ public class CreatePaperProductController {
 		}
 		return response;
 	}
+
 	@GetMapping("/list-tax-export")
 	@ResponseBody
-	public void exportCppTax(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception {
+	public void exportTax(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception {
 
 		logger.info("listRawMaterialReceive export!!");
 
 		/* set fileName */
 		String fileName = URLEncoder.encode("คำนวณภาษีที่ต้องชำระเพิ่ม", "UTF-8");
 		/* write it as an excel attachment */
-		byte[] outArray = createPaperProductService.exportCppTax();
+		byte[] outArray = createPaperProductService.exportTax();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-		OutputStream outStream = response.getOutputStream();
-		outStream.write(outArray);
-		outStream.flush();
-		outStream.close();
-
 		
-}
+		try (OutputStream outStream = response.getOutputStream();) {
+			outStream.write(outArray);
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+	}
 }
