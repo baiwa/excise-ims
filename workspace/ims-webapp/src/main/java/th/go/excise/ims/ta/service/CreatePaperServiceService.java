@@ -87,7 +87,7 @@ public class CreatePaperServiceService {
 			Cell cell = row.createCell(cellNum);
 			String[] tbTH1 = { "ลำดับ", "รายการ", "ใบกำกับภาษีซื้อ",
 					"บัญชีประจำวัน ภส. ๐๗-๐๑", "งบเดือน (ภส. ๐๗-๐๔)","ข้อมูลจากภายนอก	","ผลต่างสูงสุด" };
-			row = sheet.createRow(rowNum);
+			
 			for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 				cell = row.createCell(cellNum);
 				cell.setCellValue(tbTH1[cellNum]);
@@ -217,6 +217,7 @@ public class CreatePaperServiceService {
 			int order = 1;
 			for (PriceServiceVo detail : dataListexportFile) {
 				row = sheet.createRow(rowNum);
+				
 				cell = row.createCell(cellNum++);
 				cell.setCellStyle(cellCenter);
 				cell.setCellValue(String.valueOf(order++));
@@ -323,6 +324,17 @@ public class CreatePaperServiceService {
 			String[] tbTH1 = { "ลำดับ", "รหัสสมาชิก", "ชื่อ-สกุล", "วันเริ่มต้น",
 					"วันหมดอายุ	", "คูปอง","วันที่ใช้บริการ","สถานะการเป็นสมาชิก" };
 			row = sheet.createRow(rowNum);
+			int colIndex = 0;
+			sheet.setColumnWidth(colIndex++, 10 * 256);
+			sheet.setColumnWidth(colIndex++, 25 * 256);
+			sheet.setColumnWidth(colIndex++, 25 * 256);
+			sheet.setColumnWidth(colIndex++, 25 * 256);
+			sheet.setColumnWidth(colIndex++, 25 * 256);
+			sheet.setColumnWidth(colIndex++,25 * 256);
+			sheet.setColumnWidth(colIndex++, 25 * 256);
+			sheet.setColumnWidth(colIndex++, 23 * 256);
+			
+			
 			for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 				cell = row.createCell(cellNum);
 				cell.setCellValue(tbTH1[cellNum]);
@@ -333,6 +345,7 @@ public class CreatePaperServiceService {
 			int order = 1;
 			for (MemberStatusServiceVo detail : dataListexportFile) {
 				row = sheet.createRow(rowNum);
+				
 				cell = row.createCell(cellNum++);
 				cell.setCellStyle(cellCenter);
 				cell.setCellValue(String.valueOf(order++));
@@ -369,15 +382,7 @@ public class CreatePaperServiceService {
 				rowNum++;
 				cellNum = 0;
 			}
-			int colIndex = 0;
-			sheet.setColumnWidth(colIndex++, 10 * 256);
-			sheet.setColumnWidth(colIndex++, 25 * 256);
-			sheet.setColumnWidth(colIndex++, 25 * 256);
-			sheet.setColumnWidth(colIndex++, 25 * 256);
-			sheet.setColumnWidth(colIndex++, 25 * 256);
-			sheet.setColumnWidth(colIndex++,25 * 256);
-			sheet.setColumnWidth(colIndex++, 25 * 256);
-			sheet.setColumnWidth(colIndex++, 23 * 256);
+			
 			/*set	fileName*/		
 			ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
 			workbook.write(outByteStream);

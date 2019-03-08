@@ -201,7 +201,109 @@ public class CreatePaperProductService {
 		}
 		return datalist;
 	}
+//เฟรมทำ1
+	public byte[] exportCppRawMaterialPayment() throws IOException {
 
+		/* create spreadsheet */
+		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+		Sheet sheet = workbook.createSheet(MATERIAL_RECEIVE);
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+		System.out.println("Creating excel");
+		row = sheet.createRow(0);
+
+		/* call style from utils */
+		CellStyle thStyle = ExcelUtils.getThStyle();
+		CellStyle cellCenter = ExcelUtils.getCellCenter();
+		CellStyle cellLeft = ExcelUtils.getCellLeft();
+		CellStyle cellRight = ExcelUtils.getCellRight();
+
+		/* tbTH */
+		String[] tbTH = { "ลำดับ", "รายการ", "ราคาตามใบกำกับภาษี", "ราคาตามแบบแจ้ง", "จากการตรวจสอบ",
+				"ราคาที่ยื่นชำระภาษี", "ผลต่าง" };
+		for (int i = 0; i < tbTH.length; i++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(tbTH[i]);
+			cell.setCellStyle(thStyle);
+			cellNum++;
+		}
+
+		int colIndex = 0;
+		sheet.setColumnWidth(colIndex++, 10 * 256);
+		sheet.setColumnWidth(colIndex++, 38 * 256);
+		sheet.setColumnWidth(colIndex++, 25 * 256);
+		sheet.setColumnWidth(colIndex++, 25 * 256);
+		sheet.setColumnWidth(colIndex++, 25 * 256);
+		sheet.setColumnWidth(colIndex++,25 * 256);
+		sheet.setColumnWidth(colIndex++, 25 * 256);
+	
+		
+		/* set tbTD */
+		rowNum = 1;
+		cellNum = 0;
+		int no = 1;
+
+		/* set data */
+		List<CppRawMaterialPaymentVo> dataList = getDataRawMaterialPayment(0, TOTAL, TOTAL);
+		for (CppRawMaterialPaymentVo data : dataList) {
+			row = sheet.createRow(rowNum);
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getList());
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getRequisition());
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getDailyAccount());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getMonthStatement());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getExternalData());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getMaxDiff());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+		
+			no++;
+			rowNum++;
+			cellNum = 0;
+		}
+
+		// set output
+		byte[] content = null;
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			workbook.write(outputStream);
+			content = outputStream.toByteArray();
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return content;
+	}
+
+	
 	/*------MaterialBalance-----*/
 	public DataTableAjax<CppRawMaterialBalanceVo> listRawMaterialBalance(CreatePaperFormVo request) {
 		DataTableAjax<CppRawMaterialBalanceVo> dataTableAjax = new DataTableAjax<CppRawMaterialBalanceVo>();
@@ -231,6 +333,99 @@ public class CreatePaperProductService {
 		}
 		return datalist;
 	}
+	//เฟรมทำ2
+	public byte[] exportCppRawMaterialBalance() throws IOException {
+
+		/* create spreadsheet */
+		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+		Sheet sheet = workbook.createSheet(MATERIAL_RECEIVE);
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+		System.out.println("Creating excel");
+		row = sheet.createRow(0);
+
+		/* call style from utils */
+		CellStyle thStyle = ExcelUtils.getThStyle();
+		CellStyle cellCenter = ExcelUtils.getCellCenter();
+		CellStyle cellLeft = ExcelUtils.getCellLeft();
+		CellStyle cellRight = ExcelUtils.getCellRight();
+
+		/* tbTH */
+		String[] tbTH = { "ลำดับ", "รายการ", "ยอดคงเหลือ (ตามแบบ ภส. ๐๗-๐๑)", "ยอดคงเหลือจากการตรวจนับ	","ผมต่างของข้อมูล" };
+		for (int i = 0; i < tbTH.length; i++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(tbTH[i]);
+			cell.setCellStyle(thStyle);
+			cellNum++;
+		}
+
+		int colIndex = 0;
+		sheet.setColumnWidth(colIndex++, 10 * 256);
+		sheet.setColumnWidth(colIndex++, 38 * 256);
+		sheet.setColumnWidth(colIndex++, 33 * 256);
+		sheet.setColumnWidth(colIndex++, 25 * 256);
+		sheet.setColumnWidth(colIndex++, 25 * 256);
+
+	
+		
+		/* set tbTD */
+		rowNum = 1;
+		cellNum = 0;
+		int no = 1;
+
+		/* set data */
+		List<CppRawMaterialBalanceVo> dataList = getDataRawMaterialBalance(0, TOTAL, TOTAL);
+		for (CppRawMaterialBalanceVo data : dataList) {
+			row = sheet.createRow(rowNum);
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getList());
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getBalance());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getBalanceCount());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getMaxDiff());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+			
+		
+
+		
+			no++;
+			rowNum++;
+			cellNum = 0;
+		}
+
+		// set output
+		byte[] content = null;
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			workbook.write(outputStream);
+			content = outputStream.toByteArray();
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return content;
+	}
+	
+	
 
 	/*------MaterialFinishedGoodsRelationship-----*/
 	public DataTableAjax<CppRawMaterialFinishedGoodsRelationshipVo> listRawMaterialFinishedGoodsRelationship(
@@ -337,6 +532,117 @@ public class CreatePaperProductService {
 		}
 		return datalist;
 	}
+	//เฟรมทำ3
+	public byte[] exportCppFinishedGoodsPayment() throws IOException {
+
+		/* create spreadsheet */
+		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+		Sheet sheet = workbook.createSheet(MATERIAL_RECEIVE);
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+		System.out.println("Creating excel");
+		row = sheet.createRow(0);
+
+		/* call style from utils */
+		CellStyle thStyle = ExcelUtils.getThStyle();
+		CellStyle cellCenter = ExcelUtils.getCellCenter();
+		CellStyle cellLeft = ExcelUtils.getCellLeft();
+		CellStyle cellRight = ExcelUtils.getCellRight();
+
+		/* tbTH */
+		String[] tbTH = { "ลำดับ", "รายการ", "ปริมาณจ่ายสินค้าสำเร็จรูป ในใบกำกับภาษีขาย", "ปริมาณจ่ายสินค้าสำเร็จรูป (ภส. ๐๗-๐๒)","ปริมาณจ่ายสินค้าสำเร็จรูป จากงบเดือน (ภส. ๐๗-๐๔) ปริมาณที่ได้จากการตรวจสอบ" 
+				, "ปริมาณที่ได้จากการตรวจสอบ(1)","ปริมาณจ่ายสินค้าสำเร็จรูป (ภส. ๐๓-๐๗ (02))","ผลต่าง (1 - 2)"};
+		for (int i = 0; i < tbTH.length; i++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(tbTH[i]);
+			cell.setCellStyle(thStyle);
+			cellNum++;
+		}
+
+		int colIndex = 0;
+		sheet.setColumnWidth(colIndex++, 10 * 256);
+		sheet.setColumnWidth(colIndex++, 38 * 256);
+		sheet.setColumnWidth(colIndex++, 25 * 256);
+		sheet.setColumnWidth(colIndex++, 25 * 256);
+		sheet.setColumnWidth(colIndex++, 25 * 256);
+		sheet.setColumnWidth(colIndex++,25 * 256);
+		sheet.setColumnWidth(colIndex++, 25 * 256);
+		sheet.setColumnWidth(colIndex++, 25 * 256);
+		
+	
+		
+		/* set tbTD */
+		rowNum = 1;
+		cellNum = 0;
+		int no = 1;
+
+		/* set data */
+		List<CppFinishedGoodsPaymentVo> dataList = getDataFinishedGoodsPayment(0, TOTAL, TOTAL);
+		for (CppFinishedGoodsPaymentVo data : dataList) {
+			row = sheet.createRow(rowNum);
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getList());
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getqFinishedGoodsTaxInvoice());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getqFinishedGoodsPayment1());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getqFinishedgoodsMonthStatement());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getqCheck());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getqFinishedGoodsPayment2());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getDiff());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+			
+			
+		
+
+		
+			no++;
+			rowNum++;
+			cellNum = 0;
+		}
+
+		// set output
+		byte[] content = null;
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			workbook.write(outputStream);
+			content = outputStream.toByteArray();
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return content;
+	}
 
 	/*------RawMaterialTaxBreak-----*/
 	public DataTableAjax<CppRawMaterialTaxBreakVo> listRawMaterialTaxBreak(CreatePaperFormVo request) {
@@ -440,6 +746,114 @@ public class CreatePaperProductService {
 		}
 		return datalist;
 	}
+	//เฟรมทำ4
+		public byte[] exportCppCheckPrice() throws IOException {
+
+			/* create spreadsheet */
+			XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+			Sheet sheet = workbook.createSheet(MATERIAL_RECEIVE);
+			int rowNum = 0;
+			int cellNum = 0;
+			Row row = sheet.createRow(rowNum);
+			Cell cell = row.createCell(cellNum);
+			System.out.println("Creating excel");
+			row = sheet.createRow(0);
+
+			/* call style from utils */
+			CellStyle thStyle = ExcelUtils.getThStyle();
+			CellStyle cellCenter = ExcelUtils.getCellCenter();
+			CellStyle cellLeft = ExcelUtils.getCellLeft();
+			CellStyle cellRight = ExcelUtils.getCellRight();
+
+			/* tbTH */
+			String[] tbTH = { "ลำดับ", "รายการ", "ราคาตามแบบแจ้ง ภส. ๐๒-๐๑","ราคาจากข้อมูลภายนอก","ราคาต่อหน่วยตามประกาศกรม","ราคาขายปลีกแนะนำจาก ภส. ๐๓-๐๗"
+					,"แบบรายการภาษี ภส. ๐๓-๐๗	","ผลต่าง"};
+			for (int i = 0; i < tbTH.length; i++) {
+				cell = row.createCell(cellNum);
+				cell.setCellValue(tbTH[i]);
+				cell.setCellStyle(thStyle);
+				cellNum++;
+			}
+
+			int colIndex = 0;
+			sheet.setColumnWidth(colIndex++, 10 * 256);
+			sheet.setColumnWidth(colIndex++, 38 * 256);
+			sheet.setColumnWidth(colIndex++, 30 * 256);
+			sheet.setColumnWidth(colIndex++, 30 * 256);
+			sheet.setColumnWidth(colIndex++, 30 * 256);
+			sheet.setColumnWidth(colIndex++,30 * 256);
+			sheet.setColumnWidth(colIndex++, 30 * 256);
+			sheet.setColumnWidth(colIndex++, 25 * 256);
+			
+		
+			
+			/* set tbTD */
+			rowNum = 1;
+			cellNum = 0;
+			int no = 1;
+
+			/* set data */
+			List<CppCheckPriceVo> dataList = getDataCheckPrice(0, TOTAL, TOTAL);
+			for (CppCheckPriceVo data : dataList) {
+				row = sheet.createRow(rowNum);
+
+				cell = row.createCell(cellNum);
+				cell.setCellValue(no);
+				cell.setCellStyle(cellCenter);
+				cellNum++;
+
+				cell = row.createCell(cellNum);
+				cell.setCellValue(data.getList());
+				cell.setCellStyle(cellLeft);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(data.getPriceNotiPs());
+				cell.setCellStyle(cellLeft);
+				cellNum++;
+
+				cell = row.createCell(cellNum);
+				cell.setCellValue(data.getPriceDataEx());
+				cell.setCellStyle(cellLeft);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(data.getPriceUnit());
+				cell.setCellStyle(cellLeft);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(data.getPriceUnit());
+				cell.setCellStyle(cellLeft);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(data.getTax());
+				cell.setCellStyle(cellLeft);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(data.getDiff());
+				cell.setCellStyle(cellLeft);
+				cellNum++;
+
+			
+				no++;
+				rowNum++;
+				cellNum = 0;
+			}
+
+			// set output
+			byte[] content = null;
+			try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+				workbook.write(outputStream);
+				content = outputStream.toByteArray();
+			} catch (IOException e) {
+				logger.error(e.getMessage(), e);
+			}
+
+			return content;
+		}
 
 	/*------PayForeignFinishedGoods-----*/
 	public DataTableAjax<CppPayForeignFinishedGoodsVo> listPayForeignFinishedGoods(CreatePaperFormVo request) {
@@ -474,6 +888,129 @@ public class CreatePaperProductService {
 		}
 		return datalist;
 	}
+	//เฟรมทำ5
+			public byte[] exportCppPayForeignFinishedGoods() throws IOException {
+
+				/* create spreadsheet */
+				XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+				Sheet sheet = workbook.createSheet(MATERIAL_RECEIVE);
+				int rowNum = 0;
+				int cellNum = 0;
+				Row row = sheet.createRow(rowNum);
+				Cell cell = row.createCell(cellNum);
+				System.out.println("Creating excel");
+				row = sheet.createRow(0);
+
+				/* call style from utils */
+				CellStyle thStyle = ExcelUtils.getThStyle();
+				CellStyle cellCenter = ExcelUtils.getCellCenter();
+				CellStyle cellLeft = ExcelUtils.getCellLeft();
+				CellStyle cellRight = ExcelUtils.getCellRight();
+
+				/* tbTH */
+				String[] tbTH = { "ลำดับ", "รายการ", "ใบขนสินค้า","INV","ภส. ๐๗-๐๒","งบเดือน ภส. ๐๗-๐๔"
+						,"จากการตรวจสอบ	","ภส. ๐๕-๐๑","ผลต่าง"};
+				for (int i = 0; i < tbTH.length; i++) {
+					cell = row.createCell(cellNum);
+					cell.setCellValue(tbTH[i]);
+					cell.setCellStyle(thStyle);
+					cellNum++;
+				}
+
+				int colIndex = 0;
+				sheet.setColumnWidth(colIndex++, 10 * 256);
+				sheet.setColumnWidth(colIndex++, 38 * 256);
+				sheet.setColumnWidth(colIndex++, 28 * 256);
+				sheet.setColumnWidth(colIndex++, 28 * 256);
+				sheet.setColumnWidth(colIndex++, 28 * 256);
+				sheet.setColumnWidth(colIndex++, 28 * 256);
+				sheet.setColumnWidth(colIndex++, 28 * 256);
+				sheet.setColumnWidth(colIndex++, 25 * 256);
+				
+			
+				
+				/* set tbTD */
+				rowNum = 1;
+				cellNum = 0;
+				int no = 1;
+
+				/* set data */
+				List<CppPayForeignFinishedGoodsVo> dataList = getDataPayForeignFinishedGoods(0, TOTAL, TOTAL);
+				for (CppPayForeignFinishedGoodsVo data : dataList) {
+					row = sheet.createRow(rowNum);
+
+					cell = row.createCell(cellNum);
+					cell.setCellValue(no);
+					cell.setCellStyle(cellCenter);
+					cellNum++;
+
+					cell = row.createCell(cellNum);
+					cell.setCellValue(data.getList());
+					cell.setCellStyle(cellLeft);
+					cellNum++;
+					
+					cell = row.createCell(cellNum);
+					cell.setCellValue(data.getList());
+					cell.setCellStyle(cellLeft);
+					cellNum++;
+					
+					cell = row.createCell(cellNum);
+					cell.setCellValue(data.getTransportDoc());
+					cell.setCellStyle(cellRight);
+					cellNum++;
+					
+					cell = row.createCell(cellNum);
+					cell.setCellValue(data.getTransportDoc());
+					cell.setCellStyle(cellRight);
+					cellNum++;
+					
+					cell = row.createCell(cellNum);
+					cell.setCellValue(data.getInv());
+					cell.setCellStyle(cellRight);
+					cellNum++;
+					
+					cell = row.createCell(cellNum);
+					cell.setCellValue(data.getPs1());
+					cell.setCellStyle(cellRight);
+					cellNum++;
+					
+					cell = row.createCell(cellNum);
+					cell.setCellValue(data.getMonthStatement());
+					cell.setCellStyle(cellRight);
+					cellNum++;
+					
+					cell = row.createCell(cellNum);
+					cell.setCellValue(data.getCheck());
+					cell.setCellStyle(cellRight);
+					cellNum++;
+					
+					cell = row.createCell(cellNum);
+					cell.setCellValue(data.getPs2());
+					cell.setCellStyle(cellRight);
+					cellNum++;
+					
+					cell = row.createCell(cellNum);
+					cell.setCellValue(data.getDiff());
+					cell.setCellStyle(cellRight);
+					cellNum++;
+	
+				
+					no++;
+					rowNum++;
+					cellNum = 0;
+				}
+
+				// set output
+				byte[] content = null;
+				try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+					workbook.write(outputStream);
+					content = outputStream.toByteArray();
+				} catch (IOException e) {
+					logger.error(e.getMessage(), e);
+				}
+
+				return content;
+			}
 
 	/*------Tax-----*/
 	public DataTableAjax<CppTaxVo> listTax(CreatePaperFormVo request) {
@@ -509,5 +1046,130 @@ public class CreatePaperProductService {
 			datalist.add(data);
 		}
 		return datalist;
+	}
+	//เฟรมทำ5
+	public byte[] exportCppTax() throws IOException {
+
+		/* create spreadsheet */
+		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+		Sheet sheet = workbook.createSheet(MATERIAL_RECEIVE);
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+
+		/* call style from utils */
+		CellStyle thStyle = ExcelUtils.getThStyle();
+		CellStyle cellCenter = ExcelUtils.getCellCenter();
+		CellStyle cellLeft = ExcelUtils.getCellLeft();
+		CellStyle cellRight = ExcelUtils.getCellRight();
+
+		/* tbTH */
+		String[] tbTH = { "ลำดับ", "รายการ", "ปริมาณ","มูลค่า","อัตราภาษี (ร้อยละ)","ภาษีที่ต้องชำระเพิ่มเติม"
+				,"เบี้ยปรับ","เงินเพิ่ม","ภาษีเพื่อราชการส่วนท้องถิ่น","รวม"};
+		for (int i = 0; i < tbTH.length; i++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(tbTH[i]);
+			cell.setCellStyle(thStyle);
+			cellNum++;
+		}
+
+		int colIndex = 0;
+		sheet.setColumnWidth(colIndex++, 10 * 256);
+		sheet.setColumnWidth(colIndex++, 38 * 256);
+		sheet.setColumnWidth(colIndex++, 28 * 256);
+		sheet.setColumnWidth(colIndex++, 28 * 256);
+		sheet.setColumnWidth(colIndex++, 28 * 256);
+		sheet.setColumnWidth(colIndex++, 28 * 256);
+		sheet.setColumnWidth(colIndex++, 28 * 256);
+		sheet.setColumnWidth(colIndex++, 28 * 256);
+		sheet.setColumnWidth(colIndex++, 28 * 256);
+		sheet.setColumnWidth(colIndex++, 28 * 256);
+		
+	
+		
+		/* set tbTD */
+		rowNum = 1;
+		cellNum = 0;
+		int no = 1;
+
+		/* set data */
+		List<CppTaxVo> dataList = getDataTax(0, TOTAL, TOTAL);
+		for (CppTaxVo data : dataList) {
+			row = sheet.createRow(rowNum);
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getList());
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getQuantity());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getPriceRetail());
+			cell.setCellStyle(cellRight);
+			cellNum++;			
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getCost());
+			cell.setCellStyle(cellRight);
+			cellNum++;			
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getTaxRate());
+			cell.setCellStyle(cellRight);
+			cellNum++;			
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getTaxAdditional());
+			cell.setCellStyle(cellRight);
+			cellNum++;			
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getFine());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getExtraMoney());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getTaxLocal());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getTotal());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+			
+			
+
+		
+			no++;
+			rowNum++;
+			cellNum = 0;
+		}
+
+		// set output
+		byte[] content = null;
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			workbook.write(outputStream);
+			content = outputStream.toByteArray();
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return content;
 	}
 }
