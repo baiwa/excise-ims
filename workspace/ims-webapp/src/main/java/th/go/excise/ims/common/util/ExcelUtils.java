@@ -7,6 +7,8 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelUtils {
@@ -20,6 +22,8 @@ public class ExcelUtils {
 	private static CellStyle headerRight;
 	private static CellStyle headerLeft;
 	private static Font fontHeader;
+
+	private static XSSFCellStyle thCpColor;
 
 	public static CellStyle getThStyle() {
 		return thStyle;
@@ -36,13 +40,17 @@ public class ExcelUtils {
 	public static CellStyle getCellCenter() {
 		return cellCenter;
 	}
-	
+
 	public static CellStyle getCellRight() {
 		return cellRight;
 	}
-	
+
 	public static CellStyle getCellLeft() {
 		return cellLeft;
+	}
+
+	public static XSSFCellStyle getThCpColor() {
+		return thCpColor;
 	}
 
 	public static XSSFWorkbook setUpExcel() {
@@ -57,6 +65,7 @@ public class ExcelUtils {
 		thStyle.setBorderTop(BorderStyle.THIN);
 		thStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
 		thStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		thStyle.setWrapText(true);
 
 		tdStyle = workbook.createCellStyle();
 		tdStyle.setVerticalAlignment(VerticalAlignment.TOP);
@@ -72,6 +81,7 @@ public class ExcelUtils {
 		cellCenter.setBorderLeft(BorderStyle.THIN);
 		cellCenter.setBorderRight(BorderStyle.THIN);
 		cellCenter.setBorderTop(BorderStyle.THIN);
+		cellCenter.setWrapText(true);
 
 		cellRight = workbook.createCellStyle();
 		cellRight.setAlignment(HorizontalAlignment.RIGHT);
@@ -80,6 +90,7 @@ public class ExcelUtils {
 		cellRight.setBorderLeft(BorderStyle.THIN);
 		cellRight.setBorderRight(BorderStyle.THIN);
 		cellRight.setBorderTop(BorderStyle.THIN);
+		cellRight.setWrapText(true);
 
 		cellLeft = workbook.createCellStyle();
 		cellLeft.setAlignment(HorizontalAlignment.LEFT);
@@ -88,6 +99,7 @@ public class ExcelUtils {
 		cellLeft.setBorderLeft(BorderStyle.THIN);
 		cellLeft.setBorderRight(BorderStyle.THIN);
 		cellLeft.setBorderTop(BorderStyle.THIN);
+		cellLeft.setWrapText(true);
 		cellLeft.setWrapText(true);
 
 		fontHeader = workbook.createFont();
@@ -102,6 +114,17 @@ public class ExcelUtils {
 
 		headerLeft = workbook.createCellStyle();
 		headerLeft.setAlignment(HorizontalAlignment.LEFT);
+
+		thCpColor = workbook.createCellStyle();
+		thCpColor.setFillForegroundColor(new XSSFColor(new java.awt.Color(24, 75, 125)));
+		thCpColor.setAlignment(HorizontalAlignment.CENTER);
+		thCpColor.setVerticalAlignment(VerticalAlignment.CENTER);
+		thCpColor.setBorderBottom(BorderStyle.THIN);
+		thCpColor.setBorderLeft(BorderStyle.THIN);
+		thCpColor.setBorderRight(BorderStyle.THIN);
+		thCpColor.setBorderTop(BorderStyle.THIN);
+		thCpColor.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		thCpColor.setWrapText(true);
 
 		return workbook;
 	}
