@@ -1,5 +1,6 @@
 package th.co.baiwa.buckwaframework.common.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -23,10 +24,14 @@ import th.co.baiwa.buckwaframework.security.rest.documentation.FormLoginOperatio
 @EnableSwagger2
 public class SwaggerConfig {
 	
+	@Value("${application.swagger.enable:true}")
+	private boolean externallyConfiguredFlag;
+	
 	@Bean
 	public Docket customImplementation(){
 		return new Docket(DocumentationType.SWAGGER_2)
 			.apiInfo(getApiInfo())
+			.enable(externallyConfiguredFlag)
 			.select()
 			.paths(PathSelectors.ant("/api/**"))
 			.build();
