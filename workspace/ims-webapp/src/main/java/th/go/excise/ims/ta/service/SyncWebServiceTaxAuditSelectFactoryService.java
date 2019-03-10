@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants;
 import th.go.excise.ims.ta.persistence.entity.TaWsInc8000;
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
@@ -95,9 +96,9 @@ public class SyncWebServiceTaxAuditSelectFactoryService {
 		} while (regMaster60List.size() == Integer.parseInt(wsDataSizeWs));
 
 		LocalDate localDateFrom = LocalDate.of(2016, 2, 14);
-		String dateFrom = localDateFrom.format(DateTimeFormatter.ofPattern("yyyyMM"));
+		String dateFrom = localDateFrom.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM));
 		LocalDate localDateTo = LocalDate.of(2019, 2, 14);
-		String dateTo = localDateTo.format(DateTimeFormatter.ofPattern("yyyyMM"));
+		String dateTo = localDateTo.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM));
 		IncFri8000Request incFri8000Request = new IncFri8000Request();
 		incFri8000Request.setYearMonthFrom(dateFrom);
 		incFri8000Request.setYearMonthTo(dateTo);

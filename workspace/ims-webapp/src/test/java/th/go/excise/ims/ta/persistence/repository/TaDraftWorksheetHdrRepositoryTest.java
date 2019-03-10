@@ -31,7 +31,7 @@ public class TaDraftWorksheetHdrRepositoryTest {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = "2562";
 		
-		List<String> draftNumberList1 = taDraftWorksheetHdrRepository.findAllDraftNumberByOfficeCodeAndBudgetYear(officeCode, budgetYear);
+		List<String> draftNumberList1 = taDraftWorksheetHdrRepository.findDraftNumberByOfficeCodeAndBudgetYear(officeCode, budgetYear);
 		draftNumberList1.forEach(System.out::println);
 	}
 	

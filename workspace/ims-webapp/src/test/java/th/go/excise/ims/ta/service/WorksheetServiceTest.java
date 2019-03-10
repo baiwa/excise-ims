@@ -23,16 +23,15 @@ public class WorksheetServiceTest {
 	@Autowired
 	private WorksheetService worksheetService;
 	
-	//@Test
+//	@Test
 	public void test_saveWorksheet() throws Exception {
-		String draftNumber = "000000-2562-000004";
+		String draftNumber = "000000-2562-000008";
 		String budgetYear = "2562";
-		String condNumber = "000000-2562-01";
 		worksheetService.saveWorksheet(draftNumber, budgetYear);
 	}
 	
 	@Test
-	public void test_findAllDraftNumber() {
+	public void test_findAllAnalysisNumber() {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
 		formVo.setBudgetYear("2562");
 		

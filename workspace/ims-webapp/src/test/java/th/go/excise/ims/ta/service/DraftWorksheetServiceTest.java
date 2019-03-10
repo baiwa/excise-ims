@@ -10,6 +10,7 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
@@ -42,7 +43,7 @@ public class DraftWorksheetServiceTest {
 		System.out.println("Process Success, using " + ((float) (end - start) / 1000F) + " seconds");
 	}
 	
-	//@Test
+//	@Test
 	public void test_saveDraft() {
 		long start = System.currentTimeMillis();
 		
@@ -54,6 +55,11 @@ public class DraftWorksheetServiceTest {
 		formVo.setDateRange(24);
 		formVo.setStart(0);
 		formVo.setLength(0);
+		formVo.setCondNumber("000000-2562-01");
+		formVo.setCondSub1(FLAG.Y_FLAG);
+		formVo.setCondSub2(FLAG.Y_FLAG);
+		formVo.setCondSub3(FLAG.Y_FLAG);
+		
 		try {
 			draftWorksheetService.saveDraftWorksheet(formVo);
 		} catch (Exception e) {

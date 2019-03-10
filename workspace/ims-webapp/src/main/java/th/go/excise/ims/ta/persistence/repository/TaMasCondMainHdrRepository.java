@@ -10,13 +10,14 @@ import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRe
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
 
 public interface TaMasCondMainHdrRepository extends CommonJpaCrudRepository<TaMasCondMainHdr, Long> {
-	
-	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.budgetYear = :budgetYear and e.officeCode = :officeCode")
-	public List<TaMasCondMainHdr> findByBudgetYearAndOfficeCode(@Param("budgetYear") String budgetYear, @Param("officeCode") String officeCode);
-	
-	public TaMasCondMainHdr findByBudgetYearAndCondNumberAndOfficeCode(String budgetYear, String condNumber, String officeCode);
-	
+
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode and e.budgetYear = :budgetYear")
+	public List<TaMasCondMainHdr> findByOfficeCodeAndBudgetYear(@Param("officeCode") String officeCode, @Param("budgetYear") String budgetYear);
+
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode and e.budgetYear = :budgetYear and e.condNumber = :condNumber")
+	public TaMasCondMainHdr findByOfficeCodeAndBudgetYearAndCondNumber(@Param("officeCode") String officeCode, @Param("budgetYear") String budgetYear, @Param("condNumber") String condNumber);
+
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.condNumber = :condNumber")
 	public TaMasCondMainHdr findByCondNumber(@Param("condNumber") String condNumber);
-	
+
 }

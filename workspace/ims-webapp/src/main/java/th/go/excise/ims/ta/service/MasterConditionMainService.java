@@ -5,9 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -189,15 +186,13 @@ public class MasterConditionMainService {
     }
 
     public TaMasCondMainHdr findHdr(TaMasCondMainHdr hdr) {
-        TaMasCondMainHdr budgetYear = new TaMasCondMainHdr();
-        budgetYear = taMasCondMainHdrRepository.findByBudgetYearAndCondNumberAndOfficeCode(hdr.getBudgetYear(), hdr.getCondNumber(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
-        return budgetYear;
+    	String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+        return taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYearAndCondNumber(officeCode, hdr.getBudgetYear(), hdr.getCondNumber());
     }
 
     public List<TaMasCondMainHdr> findHdrAll(TaMasCondMainHdr hdr) {
-        List<TaMasCondMainHdr> budgetYear = new ArrayList<>();
-        budgetYear = taMasCondMainHdrRepository.findByBudgetYearAndOfficeCode(hdr.getBudgetYear(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
-        return budgetYear;
+    	String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+        return taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYear(officeCode, hdr.getBudgetYear());
     }
 
     public List<TaMasCondMainDtl> findDtl(TaMasCondMainDtl dtl) {
@@ -226,8 +221,9 @@ public class MasterConditionMainService {
         return list;
     }
 
-    public List<TaMasCondMainHdr> getMainCondHdt(MasCondMainRequestVo formVo) {
-        return taMasCondMainHdrRepository.findByBudgetYearAndOfficeCode(formVo.getBudgetYear(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
+    public List<TaMasCondMainHdr> getMainCondHdr(MasCondMainRequestVo formVo) {
+    	String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+        return taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYear(officeCode, formVo.getBudgetYear());
     }
 
     public List<MasCondMainResponseVo> getMainCondDtl(MasCondMainRequestVo formVo) {

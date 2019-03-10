@@ -215,7 +215,7 @@ public class MasterConditionMainController {
     public ResponseData<List<TaMasCondMainHdr>> getMainCondHdt(@RequestBody MasCondMainRequestVo formVo) {
         ResponseData<List<TaMasCondMainHdr>> response = new ResponseData<>();
         try {
-            response.setData(masterConditionService.getMainCondHdt(formVo));
+            response.setData(masterConditionService.getMainCondHdr(formVo));
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {

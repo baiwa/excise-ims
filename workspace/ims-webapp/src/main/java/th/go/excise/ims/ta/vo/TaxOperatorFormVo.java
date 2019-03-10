@@ -4,142 +4,142 @@ import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 
 public class TaxOperatorFormVo extends DataTableRequest {
 
-    private static final long serialVersionUID = 2104725920450722805L;
+	private static final long serialVersionUID = 2104725920450722805L;
 
-    private String dateStart;
-    private String dateEnd;
-    private int dateRange;
-    private String draftNumber;
-    private String budgetYear;
-    private String facType;
-    private String dutyCode;
-    private String officeCode;
-    private String analysisNumber;
-    private String cond;
-    private String seeDataSelect;
-    private String condNumber;
-    private String condSub1;
-    private String condSub2;
-    private String condSub3;
+	private String dateStart;
+	private String dateEnd;
+	private int dateRange;
+	private String draftNumber;
+	private String budgetYear;
+	private String facType;
+	private String dutyCode;
+	private String officeCode;
+	private String analysisNumber;
+	private String cond;
+	private String seeDataSelect;
+	private String condNumber;
+	private String condSub1;
+	private String condSub2;
+	private String condSub3;
 
-    public String getCondSub1() {
-        return condSub1;
-    }
+	public String getDateStart() {
+		return dateStart;
+	}
 
-    public void setCondSub1(String condSub1) {
-        this.condSub1 = condSub1;
-    }
+	public void setDateStart(String dateStart) {
+		this.dateStart = dateStart;
+	}
 
-    public String getCondSub2() {
-        return condSub2;
-    }
+	public String getDateEnd() {
+		return dateEnd;
+	}
 
-    public void setCondSub2(String condSub2) {
-        this.condSub2 = condSub2;
-    }
+	public void setDateEnd(String dateEnd) {
+		this.dateEnd = dateEnd;
+	}
 
-    public String getCondSub3() {
-        return condSub3;
-    }
+	public int getDateRange() {
+		return dateRange;
+	}
 
-    public void setCondSub3(String condSub3) {
-        this.condSub3 = condSub3;
-    }
+	public void setDateRange(int dateRange) {
+		this.dateRange = dateRange;
+	}
 
-    public String getCondNumber() {
-        return condNumber;
-    }
+	public String getDraftNumber() {
+		return draftNumber;
+	}
 
-    public void setCondNumber(String condNumber) {
-        this.condNumber = condNumber;
-    }
+	public void setDraftNumber(String draftNumber) {
+		this.draftNumber = draftNumber;
+	}
 
-    public String getSeeDataSelect() {
-        return seeDataSelect;
-    }
+	public String getBudgetYear() {
+		return budgetYear;
+	}
 
-    public void setSeeDataSelect(String seeDataSelect) {
-        this.seeDataSelect = seeDataSelect;
-    }
+	public void setBudgetYear(String budgetYear) {
+		this.budgetYear = budgetYear;
+	}
 
-    public String getCond() {
-        return cond;
-    }
+	public String getFacType() {
+		return facType;
+	}
 
-    public void setCond(String cond) {
-        this.cond = cond;
-    }
+	public void setFacType(String facType) {
+		this.facType = facType;
+	}
 
-    public String getAnalysisNumber() {
-        return analysisNumber;
-    }
+	public String getDutyCode() {
+		return dutyCode;
+	}
 
-    public void setAnalysisNumber(String analysisNumber) {
-        this.analysisNumber = analysisNumber;
-    }
+	public void setDutyCode(String dutyCode) {
+		this.dutyCode = dutyCode;
+	}
 
-    public String getOfficeCode() {
-        return officeCode;
-    }
+	public String getOfficeCode() {
+		return officeCode;
+	}
 
-    public void setOfficeCode(String officeCode) {
-        this.officeCode = officeCode;
-    }
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
+	}
 
-    public String getFacType() {
-        return facType;
-    }
+	public String getAnalysisNumber() {
+		return analysisNumber;
+	}
 
-    public void setFacType(String facType) {
-        this.facType = facType;
-    }
+	public void setAnalysisNumber(String analysisNumber) {
+		this.analysisNumber = analysisNumber;
+	}
 
-    public String getDutyCode() {
-        return dutyCode;
-    }
+	public String getCond() {
+		return cond;
+	}
 
-    public void setDutyCode(String dutyCode) {
-        this.dutyCode = dutyCode;
-    }
+	public void setCond(String cond) {
+		this.cond = cond;
+	}
 
-    public String getBudgetYear() {
-        return budgetYear;
-    }
+	public String getSeeDataSelect() {
+		return seeDataSelect;
+	}
 
-    public void setBudgetYear(String budgetYear) {
-        this.budgetYear = budgetYear;
-    }
+	public void setSeeDataSelect(String seeDataSelect) {
+		this.seeDataSelect = seeDataSelect;
+	}
 
-    public String getDateStart() {
-        return dateStart;
-    }
+	public String getCondNumber() {
+		return condNumber;
+	}
 
-    public void setDateStart(String dateStart) {
-        this.dateStart = dateStart;
-    }
+	public void setCondNumber(String condNumber) {
+		this.condNumber = condNumber;
+	}
 
-    public String getDateEnd() {
-        return dateEnd;
-    }
+	public String getCondSub1() {
+		return condSub1;
+	}
 
-    public void setDateEnd(String dateEnd) {
-        this.dateEnd = dateEnd;
-    }
+	public void setCondSub1(String condSub1) {
+		this.condSub1 = condSub1;
+	}
 
-    public int getDateRange() {
-        return dateRange;
-    }
+	public String getCondSub2() {
+		return condSub2;
+	}
 
-    public void setDateRange(int dateRange) {
-        this.dateRange = dateRange;
-    }
+	public void setCondSub2(String condSub2) {
+		this.condSub2 = condSub2;
+	}
 
-    public String getDraftNumber() {
-        return draftNumber;
-    }
+	public String getCondSub3() {
+		return condSub3;
+	}
 
-    public void setDraftNumber(String draftNumber) {
-        this.draftNumber = draftNumber;
-    }
+	public void setCondSub3(String condSub3) {
+		this.condSub3 = condSub3;
+	}
 
 }

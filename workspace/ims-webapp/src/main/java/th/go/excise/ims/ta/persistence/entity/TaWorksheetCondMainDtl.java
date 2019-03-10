@@ -47,6 +47,8 @@ public class TaWorksheetCondMainDtl extends BaseEntity {
 	private String riskLevel;
 	@Column(name = "COND_TYPE")
 	private String condType;
+	@Column(name = "COND_DTL_DESC")
+	private String condDtlDesc;
 
 	public Long getWorksheetCondMainDtlId() {
 		return worksheetCondMainDtlId;
@@ -150,6 +152,14 @@ public class TaWorksheetCondMainDtl extends BaseEntity {
 
 	public void setCondType(String condType) {
 		this.condType = condType;
+	}
+
+	public String getCondDtlDesc() {
+		return condDtlDesc;
+	}
+
+	public void setCondDtlDesc(String condDtlDesc) {
+		this.condDtlDesc = condDtlDesc;
 	}
 
 }

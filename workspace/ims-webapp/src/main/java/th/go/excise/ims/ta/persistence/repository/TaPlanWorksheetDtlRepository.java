@@ -12,17 +12,14 @@ import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 
 public interface TaPlanWorksheetDtlRepository extends CommonJpaCrudRepository<TaPlanWorksheetDtl, Long>, TaPlanWorksheetDtlRepositoryCustom {
 
-	@Query("select new java.lang.String(e.newRegId) from #{#entityName} e where e.planNumber = :planNumber and e.officeCode = :officeCode")
-	public List<String> findByPlanNumberAndOfficeCodeWithoutIsDeletedFlag(@Param("planNumber") String planNumber, @Param("officeCode") String officeCode);
+	@Query("select new java.lang.String(e.newRegId) from #{#entityName} e where e.officeCode = :officeCode and e.planNumber = :planNumber")
+	public List<String> findNewRegIdByOfficeCodeAndPlanNumber(@Param("officeCode") String officeCode, @Param("planNumber") String planNumber);
 	
-	@Query("select new java.lang.String(e.newRegId) from #{#entityName} e where e.planNumber = :planNumber and e.officeCode = :officeCode and e.isDeleted = '"+ FLAG.N_FLAG + "'")
-	public List<String> findByPlanNumberAndOfficeCodeWithoutIsDeletedFlagN(@Param("planNumber") String planNumber, @Param("officeCode") String officeCode);
+	@Query("select new java.lang.String(e.newRegId) from #{#entityName} e where e.isDeleted = '"+ FLAG.N_FLAG + "' and e.officeCode = :officeCode and e.planNumber = :planNumber")
+	public List<String> findNewRegIdByOfficeCodeAndPlanNumberAndIsDeletedFlagN(@Param("officeCode") String officeCode, @Param("planNumber") String planNumber);
 	
-	@Query("select e from #{#entityName} e where e.planNumber = :planNumber and e.officeCode = :officeCode and e.newRegId = :newRegId")
-	public TaPlanWorksheetDtl findByPlanNumberAndOfficeCodeAndNewRegIdWithoutIsDeletedFlag(@Param("planNumber") String planNumber, @Param("officeCode") String officeCode, @Param("newRegId") String newRegId);
-	
-	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.planNumber = :planNumber and e.officeCode = :officeCode")
-	public List<TaPlanWorksheetDtl> findByPlanNumberAndOfficeCode(@Param("planNumber") String planNumber, @Param("officeCode") String officeCode);
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode and e.planNumber = :planNumber")
+	public List<TaPlanWorksheetDtl> findByOfficeCodeAndPlanNumber(@Param("officeCode") String officeCode, @Param("planNumber") String planNumber);
 
 	@Modifying
 	@Query(value = "update TA_PLAN_WORKSHEET_DTL set IS_DELETED ='Y' where PLAN_NUMBER	= :planNumber and NEW_REG_ID = :newRegId", nativeQuery = true)
