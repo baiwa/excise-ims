@@ -110,6 +110,11 @@ public class Int030103Service {
 		entity.setVeryhighCondition(formConfigAll.getVeryhighCondition());
 
 		iaRiskFactorsConfigAllRepository.save(entity);
+		
+		
+		for (IaRiskFactorsConfig irfc : form.getIaRiskFactorsConfigList()) {
+			int030103JdbcRepository.listUpdatePercent(irfc);
+		}
 
 	}
 
