@@ -13,7 +13,6 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -236,9 +235,9 @@ public class Int020301Service {
 
 	public ByteArrayOutputStream exportInt020301(String idHdrStr, String budgetYear) throws IOException {
 		/* create spreadsheet */
-		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
-		CellStyle thStyle = ExcelUtils.getThStyle();
-		CellStyle tdStyle = ExcelUtils.getTdStyle();
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle tdStyle = ExcelUtils.createTdCellStyle(workbook);
 		Sheet sheet = workbook.createSheet();
 		int rowNum = 0;
 		int cellNum = 0;
@@ -477,9 +476,9 @@ public class Int020301Service {
 	public ByteArrayOutputStream exportInt020301On030402(String idHdrStr, String budgetYear, String idConfigStr)
 			throws IOException {
 		/* create spreadsheet */
-		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
-		CellStyle thStyle = ExcelUtils.getThStyle();
-		CellStyle tdStyle = ExcelUtils.getTdStyle();
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle tdStyle = ExcelUtils.createTdCellStyle(workbook);
 		Sheet sheet = workbook.createSheet();
 		int rowNum = 0;
 		int cellNum = 0;

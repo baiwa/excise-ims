@@ -4,19 +4,16 @@ import java.text.SimpleDateFormat;
 
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public abstract class ExcelUtils {
-	
+
 //	private static CellStyle thStyle;
 //	private static CellStyle tdStyle;
 //	private static CellStyle cellCenter;
@@ -33,8 +30,8 @@ public abstract class ExcelUtils {
 	private static final String defaultDatePattern = "dd/MM/yyyy HH:mm:ss";
 
 	/**
-	 * This method for the type of data in the cell, extracts the data and
-	 * returns it as a string.
+	 * This method for the type of data in the cell, extracts the data and returns
+	 * it as a string.
 	 */
 	// http://www.java-connect.com/apache-poi-tutorials/read-all-type-of-excel-cell-value-as-string-using-poi/
 	public static String getCellValueAsString(Cell cell) {
@@ -107,7 +104,7 @@ public abstract class ExcelUtils {
 //	public static XSSFCellStyle getThCpColor() {
 //		return thCpColor;
 //	}
-	
+
 	public static XSSFCellStyle createThCellStyle(XSSFWorkbook workbook) {
 		XSSFCellStyle thStyle = workbook.createCellStyle();
 		thStyle.setAlignment(HorizontalAlignment.CENTER);
@@ -122,46 +119,60 @@ public abstract class ExcelUtils {
 		return thStyle;
 	}
 
+	public static XSSFCellStyle createTdCellStyle(XSSFWorkbook workbook) {
+		XSSFCellStyle tdStyle = workbook.createCellStyle();
+		tdStyle = workbook.createCellStyle();
+		tdStyle.setVerticalAlignment(VerticalAlignment.TOP);
+		tdStyle.setBorderBottom(BorderStyle.THIN);
+		tdStyle.setBorderLeft(BorderStyle.THIN);
+		tdStyle.setBorderRight(BorderStyle.THIN);
+		tdStyle.setBorderTop(BorderStyle.THIN);
+		return tdStyle;
+	}
+
+	public static XSSFCellStyle createCenterCellStyle(XSSFWorkbook workbook) {
+		XSSFCellStyle cellCenter = workbook.createCellStyle();
+		cellCenter = workbook.createCellStyle();
+		cellCenter.setAlignment(HorizontalAlignment.CENTER);
+		cellCenter.setVerticalAlignment(VerticalAlignment.TOP);
+		cellCenter.setBorderBottom(BorderStyle.THIN);
+		cellCenter.setBorderLeft(BorderStyle.THIN);
+		cellCenter.setBorderRight(BorderStyle.THIN);
+		cellCenter.setBorderTop(BorderStyle.THIN);
+		cellCenter.setWrapText(true);
+		return cellCenter;
+	}
+
+	public static XSSFCellStyle createRightCellStyle(XSSFWorkbook workbook) {
+		XSSFCellStyle cellRight = workbook.createCellStyle();
+		cellRight = workbook.createCellStyle();
+		cellRight.setAlignment(HorizontalAlignment.RIGHT);
+		cellRight.setVerticalAlignment(VerticalAlignment.TOP);
+		cellRight.setBorderBottom(BorderStyle.THIN);
+		cellRight.setBorderLeft(BorderStyle.THIN);
+		cellRight.setBorderRight(BorderStyle.THIN);
+		cellRight.setBorderTop(BorderStyle.THIN);
+		cellRight.setWrapText(true);
+		return cellRight;
+	}
+
+	public static XSSFCellStyle createLeftCellStyle(XSSFWorkbook workbook) {
+		XSSFCellStyle cellLeft = workbook.createCellStyle();
+		cellLeft = workbook.createCellStyle();
+		cellLeft.setAlignment(HorizontalAlignment.LEFT);
+		cellLeft.setVerticalAlignment(VerticalAlignment.TOP);
+		cellLeft.setBorderBottom(BorderStyle.THIN);
+		cellLeft.setBorderLeft(BorderStyle.THIN);
+		cellLeft.setBorderRight(BorderStyle.THIN);
+		cellLeft.setBorderTop(BorderStyle.THIN);
+		cellLeft.setWrapText(true);
+		cellLeft.setWrapText(true);
+		return cellLeft;
+	}
+
 //	public static XSSFWorkbook setUpExcel() {
 //		XSSFWorkbook workbook = new XSSFWorkbook();
-//
-//		
-//
-//		tdStyle = workbook.createCellStyle();
-//		tdStyle.setVerticalAlignment(VerticalAlignment.TOP);
-//		tdStyle.setBorderBottom(BorderStyle.THIN);
-//		tdStyle.setBorderLeft(BorderStyle.THIN);
-//		tdStyle.setBorderRight(BorderStyle.THIN);
-//		tdStyle.setBorderTop(BorderStyle.THIN);
-//
-//		cellCenter = workbook.createCellStyle();
-//		cellCenter.setAlignment(HorizontalAlignment.CENTER);
-//		cellCenter.setVerticalAlignment(VerticalAlignment.TOP);
-//		cellCenter.setBorderBottom(BorderStyle.THIN);
-//		cellCenter.setBorderLeft(BorderStyle.THIN);
-//		cellCenter.setBorderRight(BorderStyle.THIN);
-//		cellCenter.setBorderTop(BorderStyle.THIN);
-//		cellCenter.setWrapText(true);
-//
-//		cellRight = workbook.createCellStyle();
-//		cellRight.setAlignment(HorizontalAlignment.RIGHT);
-//		cellRight.setVerticalAlignment(VerticalAlignment.TOP);
-//		cellRight.setBorderBottom(BorderStyle.THIN);
-//		cellRight.setBorderLeft(BorderStyle.THIN);
-//		cellRight.setBorderRight(BorderStyle.THIN);
-//		cellRight.setBorderTop(BorderStyle.THIN);
-//		cellRight.setWrapText(true);
-//
-//		cellLeft = workbook.createCellStyle();
-//		cellLeft.setAlignment(HorizontalAlignment.LEFT);
-//		cellLeft.setVerticalAlignment(VerticalAlignment.TOP);
-//		cellLeft.setBorderBottom(BorderStyle.THIN);
-//		cellLeft.setBorderLeft(BorderStyle.THIN);
-//		cellLeft.setBorderRight(BorderStyle.THIN);
-//		cellLeft.setBorderTop(BorderStyle.THIN);
-//		cellLeft.setWrapText(true);
-//		cellLeft.setWrapText(true);
-//
+
 //		fontHeader = workbook.createFont();
 //		fontHeader.setBold(true);
 //
