@@ -98,7 +98,7 @@ public class Int0201Controller {
 
 		ResponseData<?> response = new ResponseData<>();
 		try {
-			int0201Service.sendQtnForm(request);
+			int0201Service.sendQtnform(request);
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

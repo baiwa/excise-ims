@@ -14,7 +14,14 @@ public class Int0201FormVo {
 	private String endDateSend;
 	private BigDecimal idHead;
 	private String status;
+	private List<String> exciseCodes;
 	
+	public List<String> getExciseCodes() {
+		return exciseCodes;
+	}
+	public void setExciseCodes(List<String> exciseCodes) {
+		this.exciseCodes = exciseCodes;
+	}
 	public BigDecimal getId() {
 		return id;
 	}

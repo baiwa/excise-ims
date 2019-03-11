@@ -62,6 +62,7 @@ public class Int020101Service {
 		return iaQtnSideRep.save(request);
 	}
 
+	@Transactional
 	public List<IaQuestionnaireSide> saveAll(List<IaQuestionnaireSide> request) {
 		// array of old id
 		List<BigDecimal> ids = new ArrayList<>();

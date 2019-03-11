@@ -21,6 +21,7 @@ import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMade;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMadeHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSideDtl;
 import th.go.excise.ims.ia.persistence.entity.IaRiskQtnConfig;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeHdrRepository;
@@ -55,10 +56,13 @@ public class Int0201Service {
 	@Autowired
 	private IaRiskQtnConfigRepository iaRiskQtnConfigRepository;
 
+	@Autowired
+	private Int02010101Service int02010101Service;
+
 	public List<IaQuestionnaireSide> findQtnSideById(Int0201FormVo request) {
 		return iaQuestionnaireSideRepository.findByidHead(request.getId());
 	}
-	
+
 	public IaQuestionnaireHdr findQtnHdrById(BigDecimal id) {
 		return iaQuestionnaireHdrRepository.findById(id).get();
 	}
@@ -94,6 +98,80 @@ public class Int0201Service {
 	}
 
 	@Transactional
+	public void sendQtnform(Int0201FormVo request) {
+		/* update Questionnaire Header */
+		if (request.getIdHead() != null) {
+			Optional<IaQuestionnaireHdr> hdrRes = iaQuestionnaireHdrRepository.findById(request.getIdHead());
+			if (hdrRes.isPresent()) {
+				IaQuestionnaireHdr dataHdr = hdrRes.get();
+				dataHdr.setStartDate(ConvertDateUtils.parseStringToLocalDate(request.getStartDateSend(),
+						ProjectConstant.SHORT_DATE_FORMAT));
+				dataHdr.setEndDate(ConvertDateUtils.parseStringToLocalDate(request.getEndDateSend(),
+						ProjectConstant.SHORT_DATE_FORMAT));
+				dataHdr.setStatus("SUCCESS_HDR");
+				dataHdr = iaQuestionnaireHdrRepository.save(dataHdr);
+				/* find id of Questionnaire Header */
+				if (request.getIdHead() != null) {
+					IaQuestionnaireMadeHdr dataMadeHdr = null;
+					for (String officeCode : request.getExciseCodes()) {
+						dataMadeHdr = new IaQuestionnaireMadeHdr();
+						dataMadeHdr.setIdHdr(dataHdr.getId());
+						dataMadeHdr.setBudgetYear(dataHdr.getBudgetYear());
+						dataMadeHdr.setNote(dataHdr.getNote());
+						dataMadeHdr.setQtnHeaderName(dataHdr.getQtnHeaderName());
+						dataMadeHdr.setStartDate(ConvertDateUtils.parseStringToLocalDate(request.getStartDateSend(),
+								ProjectConstant.SHORT_DATE_FORMAT));
+						dataMadeHdr.setEndDate(ConvertDateUtils.parseStringToLocalDate(request.getEndDateSend(),
+								ProjectConstant.SHORT_DATE_FORMAT));
+						dataMadeHdr.setStatus("CREATED");
+						dataMadeHdr.setOfficeCode(officeCode);
+						IaQuestionnaireMadeHdr resMadeHdr = iaQuestionnaireMadeHdrRepository.save(dataMadeHdr);
+						// find sides
+						List<IaQuestionnaireSide> sides = iaQuestionnaireSideRepository.findByidHead(dataHdr.getId());
+						for(IaQuestionnaireSide side: sides) {
+							// find side dtls
+							List<Int02010101Vo> dtls = int02010101Service.findByIdSide(side.getId().toString());
+							/* save Questionnaire Made */
+							IaQuestionnaireMade qtnMade = null;
+							List<IaQuestionnaireMade> qtnMades = new ArrayList<>();
+							for (Int02010101Vo dtl : dtls) {
+								qtnMade = new IaQuestionnaireMade();
+								qtnMade.setIdSideDtl(dtl.getId());
+								qtnMade.setQtnLevel(dtl.getQtnLevel());
+								qtnMade.setStatus("CREATED");
+								qtnMade.setOfficeCode(officeCode);
+								qtnMade.setIdMadeHdr(resMadeHdr.getId());
+								qtnMades.add(qtnMade);
+								for(Int02010101Vo dt : dtl.getChildren()) {
+									qtnMade = new IaQuestionnaireMade();
+									qtnMade.setIdSideDtl(dt.getId());
+									qtnMade.setQtnLevel(dt.getQtnLevel());
+									qtnMade.setStatus("CREATED");
+									qtnMade.setOfficeCode(officeCode);
+									qtnMade.setIdMadeHdr(resMadeHdr.getId());
+									qtnMades.add(qtnMade);
+									for(Int02010101Vo d : dt.getChildren()) {
+										qtnMade = new IaQuestionnaireMade();
+										qtnMade.setIdSideDtl(d.getId());
+										qtnMade.setQtnLevel(d.getQtnLevel());
+										qtnMade.setStatus("CREATED");
+										qtnMade.setOfficeCode(officeCode);
+										qtnMade.setIdMadeHdr(resMadeHdr.getId());
+										qtnMades.add(qtnMade);
+									}
+								}
+							} // end loop 2
+							if (qtnMades.size() > 0) {
+								iaQuestionnaireMadeRepository.saveAll(qtnMades);
+							}
+						}
+					} // end loop 1
+				}
+			}
+		}
+	}
+
+	@Transactional
 	public void sendQtnForm(Int0201FormVo request) {
 		/* update Questionnaire Header */
 		if (request.getIdHead() != null) {
@@ -125,7 +203,7 @@ public class Int0201Service {
 
 			/* save Questionnaire Made */
 			if (filterQtnMade.size() > 0) {
-				for (IaQuestionnaireMade filter: filterQtnMade) {
+				for (IaQuestionnaireMade filter : filterQtnMade) {
 					saveQtnMade(request, filter.getOfficeCode(), filter.getIdMadeHdr());
 				}
 			}
@@ -138,24 +216,24 @@ public class Int0201Service {
 				List<ExciseDept> sectors = ApplicationCache.getExciseSectorList();
 				List<ExciseDept> areas = new ArrayList<>();
 				List<String> officeCodes = new ArrayList<>();
-				for(ExciseDept sector: sectors) {
+				for (ExciseDept sector : sectors) {
 					areas = ApplicationCache.getExciseAreaList(sector.getOfficeCode());
 					officeCodes.add(sector.getOfficeCode());
-					for(ExciseDept area: areas) {
+					for (ExciseDept area : areas) {
 						officeCodes.add(area.getOfficeCode());
 					}
 				}
 				if (hdrRes.isPresent()) {
 					IaQuestionnaireHdr dataHdr = hdrRes.get();
 					IaQuestionnaireMadeHdr dataMadeHdr = null;
-					for (String officeCode: officeCodes) {
+					for (String officeCode : officeCodes) {
 						dataMadeHdr = new IaQuestionnaireMadeHdr();
 						dataMadeHdr.setIdHdr(dataHdr.getId());
 						dataMadeHdr.setBudgetYear(dataHdr.getBudgetYear());
 						dataMadeHdr.setNote(dataHdr.getNote());
 						dataMadeHdr.setQtnHeaderName(dataHdr.getQtnHeaderName());
-						dataMadeHdr.setStartDate(ConvertDateUtils.parseStringToLocalDate(
-								request.getStartDateSend(), ProjectConstant.SHORT_DATE_FORMAT));
+						dataMadeHdr.setStartDate(ConvertDateUtils.parseStringToLocalDate(request.getStartDateSend(),
+								ProjectConstant.SHORT_DATE_FORMAT));
 						dataMadeHdr.setEndDate(ConvertDateUtils.parseStringToLocalDate(request.getEndDateSend(),
 								ProjectConstant.SHORT_DATE_FORMAT));
 						dataMadeHdr.setStatus("CREATED");
@@ -245,6 +323,7 @@ public class Int0201Service {
 		IaRiskQtnConfig risk = iaRiskQtnConfigRepository.findByIdQtnHdrAndIsDeleted(idQtnHdr, "N");
 		return risk;
 	}
+
 	public IaRiskQtnConfig saveConfig(IaRiskQtnConfig request) throws Exception {
 		// Save
 		IaRiskQtnConfig risk = iaRiskQtnConfigRepository.save(request);
@@ -254,6 +333,7 @@ public class Int0201Service {
 		}
 		throw new Exception();
 	}
+
 	public IaRiskQtnConfig updateConfig(IaRiskQtnConfig request) throws Exception {
 		// Find
 		IaRiskQtnConfig risk = iaRiskQtnConfigRepository.findByIdQtnHdrAndIsDeleted(request.getIdQtnHdr(), "N");
@@ -277,7 +357,7 @@ public class Int0201Service {
 		risk.setHighCondition(request.getHighCondition());
 
 		risk = iaRiskQtnConfigRepository.save(risk);
-		
+
 		if (risk != null) {
 			return risk;
 		}
