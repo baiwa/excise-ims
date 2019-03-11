@@ -57,7 +57,7 @@ public class CreatePaperServiceController {
 	
 	@GetMapping("/exportFileQuantityServiceVo")
 	@ResponseBody
-	public  void exportFileQuantityServiceVo(@ModelAttribute  HttpServletResponse response,HttpServletRequest request) throws Exception {
+	public  void exportFileQuantityServiceVo(  HttpServletResponse response,HttpServletRequest request) throws Exception {
 		String fileName = URLEncoder.encode("บันทึกผลการตรวจสอบด้านปริมาณ", "UTF-8");
 		// write it as an excel attachment
 		byte[] outByteStream = createPaperServiceService.exportFileQuantityServiceVo();
@@ -88,7 +88,7 @@ public class CreatePaperServiceController {
 	}
 	@GetMapping("/exportFilePriceServiceVo")
 	@ResponseBody
-	public  void exportFilePriceServiceVo(@ModelAttribute  HttpServletResponse response,HttpServletRequest request) throws Exception {
+	public  void exportFilePriceServiceVo(HttpServletResponse response,HttpServletRequest request) throws Exception {
 		String fileName = URLEncoder.encode("บันทึกผลการตรวจสอบด้านราคาต่อหน่วย", "UTF-8");
 	
 		// write it as an excel attachment
@@ -121,7 +121,7 @@ public class CreatePaperServiceController {
 	}
 	@GetMapping("/exportFileMemberStatusServiceVo")
 	@ResponseBody
-	public  void exportFileMemberStatusServiceVo(@ModelAttribute  HttpServletResponse response,HttpServletRequest request) throws Exception {
+	public  void exportFileMemberStatusServiceVo(  HttpServletResponse response,HttpServletRequest request) throws Exception {
 		String fileName = URLEncoder.encode("บันทึกผลการตรวจสอบสถานะสมาชิก", "UTF-8");
 		// write it as an excel attachment
 		byte[] outByteStream = createPaperServiceService.exportFileMemberStatusServiceVo();
@@ -154,7 +154,7 @@ public class CreatePaperServiceController {
 	}
 	@GetMapping("/exportFileLeftInStockServiceVo")
 	@ResponseBody
-	public  void exportFileLeftInStockServiceVo(@ModelAttribute  HttpServletResponse response,HttpServletRequest request) throws Exception {
+	public  void exportFileLeftInStockServiceVo(  HttpServletResponse response,HttpServletRequest request) throws Exception {
 		String fileName = URLEncoder.encode("บันทึกผลการตรวจนับสินค้าคงเหลือ", "UTF-8");
 		// write it as an excel attachment
 		byte[] outByteStream = createPaperServiceService.exportFileLeftInStockServiceVo();		

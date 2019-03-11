@@ -1,5 +1,7 @@
 package th.go.excise.ims.ta.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 
 public class QuantityServiceVo  {
 	private Long id;
@@ -12,6 +14,14 @@ public class QuantityServiceVo  {
 	private String fromExamination;
 	private String taxForm;
 	private String difference;
+	private MultipartFile fileExel;
+	
+	public MultipartFile getFileExel() {
+		return fileExel;
+	}
+	public void setFileExel(MultipartFile fileExel) {
+		this.fileExel = fileExel;
+	}
 	public String getList() {
 		return list;
 	}
