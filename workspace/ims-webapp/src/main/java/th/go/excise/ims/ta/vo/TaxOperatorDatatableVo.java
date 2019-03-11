@@ -36,6 +36,15 @@ public class TaxOperatorDatatableVo {
     private String otherDutyName;
     private List<String> taxAmtList;
     private String selectBy;
+    private String condTaxGrp;
+
+    public String getCondTaxGrp() {
+        return condTaxGrp;
+    }
+
+    public void setCondTaxGrp(String condTaxGrp) {
+        this.condTaxGrp = condTaxGrp;
+    }
 
     public String getSelectBy() {
         return selectBy;

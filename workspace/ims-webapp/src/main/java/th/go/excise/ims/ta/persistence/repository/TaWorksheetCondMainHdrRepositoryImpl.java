@@ -48,11 +48,19 @@ public class TaWorksheetCondMainHdrRepositoryImpl implements TaWorksheetCondMain
 	@Override
 	public YearMonthVo findMonthStartByAnalysisNumber(String analysisNumber) {
 		StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT YEAR_MONTH_START, YEAR_MONTH_END, MONTH_NUM AS MONTH_TOTAL ");
-		sql.append("   ,TO_NUMBER(SUBSTR(YEAR_MONTH_START,5,2)) AS MONTH_START ");
-		sql.append(" FROM TA_WORKSHEET_COND_MAIN_HDR ");
-		sql.append(" WHERE IS_DELETED = ? ");
-		sql.append("   AND ANALYSIS_NUMBER = ? ");
+		sql.append(" SELECT  ");
+		sql.append(" C_M_HDR.YEAR_MONTH_START, ");
+		sql.append("   C_M_HDR.YEAR_MONTH_END, ");
+		sql.append("   C_M_HDR.MONTH_NUM                               AS MONTH_TOTAL , ");
+		sql.append("   TO_NUMBER(SUBSTR(C_M_HDR.YEAR_MONTH_START,5,2)) AS MONTH_START, ");
+		sql.append("   W_HDR.COND_SUB_CAPITAL_FLAG, ");
+		sql.append(" 	W_HDR.COND_SUB_RISK_FLAG	, ");
+		sql.append("   W_HDR.COND_SUB_NO_AUDIT_FLAG ");
+		sql.append(" FROM TA_WORKSHEET_COND_MAIN_HDR C_M_HDR ");
+		sql.append(" INNER JOIN TA_WORKSHEET_HDR W_HDR ");
+		sql.append(" ON W_HDR.ANALYSIS_NUMBER=C_M_HDR.ANALYSIS_NUMBER ");
+		sql.append(" WHERE C_M_HDR.IS_DELETED    = ?");
+		sql.append(" AND C_M_HDR.ANALYSIS_NUMBER = ? ");
 		
 		YearMonthVo yearMonthVo = null;
 		try {

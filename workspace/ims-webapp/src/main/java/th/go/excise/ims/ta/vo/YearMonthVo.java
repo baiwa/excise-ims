@@ -1,42 +1,70 @@
 package th.go.excise.ims.ta.vo;
 
 public class YearMonthVo {
-	
-	private String yearMonthStart;
-	private String yearMonthEnd;
-	private Integer monthTotal;
-	private Integer monthStart;
 
-	public String getYearMonthStart() {
-		return yearMonthStart;
-	}
+    private String yearMonthStart;
+    private String yearMonthEnd;
+    private Integer monthTotal;
+    private Integer monthStart;
+    private String condSubCapitalFlag;
+    private String condSubRiskFlag;
+    private String condSubNoAuditFlag;
 
-	public void setYearMonthStart(String yearMonthStart) {
-		this.yearMonthStart = yearMonthStart;
-	}
 
-	public String getYearMonthEnd() {
-		return yearMonthEnd;
-	}
+    public String getCondSubCapitalFlag() {
+        return condSubCapitalFlag;
+    }
 
-	public void setYearMonthEnd(String yearMonthEnd) {
-		this.yearMonthEnd = yearMonthEnd;
-	}
+    public void setCondSubCapitalFlag(String condSubCapitalFlag) {
+        this.condSubCapitalFlag = condSubCapitalFlag;
+    }
 
-	public Integer getMonthTotal() {
-		return monthTotal;
-	}
+    public String getCondSubRiskFlag() {
+        return condSubRiskFlag;
+    }
 
-	public void setMonthTotal(Integer monthTotal) {
-		this.monthTotal = monthTotal;
-	}
+    public void setCondSubRiskFlag(String condSubRiskFlag) {
+        this.condSubRiskFlag = condSubRiskFlag;
+    }
 
-	public Integer getMonthStart() {
-		return monthStart;
-	}
+    public String getCondSubNoAuditFlag() {
+        return condSubNoAuditFlag;
+    }
 
-	public void setMonthStart(Integer monthStart) {
-		this.monthStart = monthStart;
-	}
+    public void setCondSubNoAuditFlag(String condSubNoAuditFlag) {
+        this.condSubNoAuditFlag = condSubNoAuditFlag;
+    }
+
+    public String getYearMonthStart() {
+        return yearMonthStart;
+    }
+
+    public void setYearMonthStart(String yearMonthStart) {
+        this.yearMonthStart = yearMonthStart;
+    }
+
+    public String getYearMonthEnd() {
+        return yearMonthEnd;
+    }
+
+    public void setYearMonthEnd(String yearMonthEnd) {
+        this.yearMonthEnd = yearMonthEnd;
+    }
+
+    public Integer getMonthTotal() {
+        return monthTotal;
+    }
+
+    public void setMonthTotal(Integer monthTotal) {
+        this.monthTotal = monthTotal;
+    }
+
+    public Integer getMonthStart() {
+        return monthStart;
+    }
+
+    public void setMonthStart(Integer monthStart) {
+        this.monthStart = monthStart;
+    }
 
 }
