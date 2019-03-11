@@ -41,8 +41,8 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
         String sql = SqlGeneratorUtils.genSqlInsert(
                 "TA_WORKSHEET_DTL",
                 Arrays.asList(
-                        "WORKSHEET_DTL_ID", "ANALYSIS_NUMBER", "NEW_REG_ID", "COND_MAIN_GRP",
-                        "COND_SUB_CAPITAL", "COND_SUB_RISK", "CREATED_BY", "CREATED_DATE"
+                    "WORKSHEET_DTL_ID", "ANALYSIS_NUMBER", "NEW_REG_ID", "COND_MAIN_GRP",
+                    "COND_SUB_CAPITAL", "COND_SUB_RISK", "CREATED_BY", "CREATED_DATE"
                 ),
                 "TA_WORKSHEET_DTL_SEQ"
         );
@@ -111,7 +111,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
         sql.append("   WHERE IS_DELETED = 'N' ");
         sql.append("     AND CONCAT (SUBSTR(OFF_CODE, 0, 4),'00') = OFF_CODE ");
         sql.append("   ) ED_AREA ON ED_AREA.OFFICE_CODE = CONCAT (SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
-        sql.append(" INNER JOIN TA_PLAN_WORKSHEET_SELECT TA_PW_SEL ON TA_PW_SEL.NEW_REG_ID = TA_DW_DTL.NEW_REG_ID ");
+        sql.append(" LEFT JOIN TA_PLAN_WORKSHEET_SELECT TA_PW_SEL ON TA_PW_SEL.NEW_REG_ID = TA_DW_DTL.NEW_REG_ID ");
         sql.append("   AND TA_PW_SEL.IS_DELETED = 'N' ");
         sql.append("   AND TA_PW_SEL.BUDGET_YEAR = ? ");
         sql.append(" WHERE TA_W_HDR.IS_DELETED = 'N' ");
