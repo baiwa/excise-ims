@@ -15,6 +15,7 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainDtl;
 import th.go.excise.ims.ta.service.DraftWorksheetService;
 import th.go.excise.ims.ta.service.PlanWorkSheetSendService;
 import th.go.excise.ims.ta.service.PlanWorksheetService;
@@ -279,6 +280,26 @@ public class TaxOperatorController {
 
 		return response;
 	}
+
+	@PostMapping("/get-worksheet-cond-dtl")
+	@ResponseBody
+	public ResponseData<List<TaWorksheetCondMainDtl>> worksheetCondMainDtls(@RequestBody TaxOperatorFormVo formVo) {
+		ResponseData<List<TaWorksheetCondMainDtl>> response = new ResponseData<>();
+
+		try {
+			response.setData(worksheetService.worksheetCondMainDtls(formVo));
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+
+		return response;
+	}
+
+
 
 	// TODO PLAN
 	@PostMapping("/save-plan-work-sheet-hdr")

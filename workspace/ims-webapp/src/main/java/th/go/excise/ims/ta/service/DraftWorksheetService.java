@@ -393,6 +393,7 @@ public class DraftWorksheetService {
 			condMainDtl.setRangeEnd(masCondMainDtl.getRangeEnd());
 			condMainDtl.setRiskLevel(masCondMainDtl.getRiskLevel());
 			condMainDtl.setCondType(masCondMainDtl.getCondType());
+			condMainDtl.setCondDtlDesc(masCondMainDtl.getCondDtlDesc() );
 			condMainDtlList.add(condMainDtl);
 		}
 		taWorksheetCondMainDtlRepository.saveAll(condMainDtlList);

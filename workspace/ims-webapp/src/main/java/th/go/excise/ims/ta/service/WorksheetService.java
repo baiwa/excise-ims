@@ -365,4 +365,7 @@ public class WorksheetService {
 		return taWorksheetDtlRepository.groupCondSubRisk(analysisNumber);
 	}
 
+	public List<TaWorksheetCondMainDtl> worksheetCondMainDtls(TaxOperatorFormVo formVo){
+		return taWorksheetCondMainDtlRepository.findByDraftNumber(formVo.getDraftNumber());
+	}
 }
