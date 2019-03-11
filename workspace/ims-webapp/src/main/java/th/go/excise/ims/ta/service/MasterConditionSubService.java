@@ -45,11 +45,20 @@ public class MasterConditionSubService {
 		if (null == oldCapital) {
 			capital = new TaMasCondSubCapital();
 			capital.setBudgetYear(form.getBudgetYear());
-			capital.setDutyCode(form.getDutyCode());
-			capital.setHugeCapitalAmount(capitalTotal.getHugeCapitalAmount());
-			capital.setLargeCapitalAmount(capitalTotal.getLargeCapitalAmount());
-			capital.setMediumCapitalAmount(capitalTotal.getMediumCapitalAmount());
-			capital.setSmallCapitalAmount(capitalTotal.getSmallCapitalAmount());
+			
+			if (null == capitalTotal) {
+				capital.setDutyCode(null);
+				capital.setHugeCapitalAmount(form.getHugeCapitalAmount());
+				capital.setLargeCapitalAmount(form.getLargeCapitalAmount());
+				capital.setMediumCapitalAmount(form.getMediumCapitalAmount());
+				capital.setSmallCapitalAmount(form.getSmallCapitalAmount());
+			} else {
+				capital.setDutyCode(form.getDutyCode());
+				capital.setHugeCapitalAmount(capitalTotal.getHugeCapitalAmount());
+				capital.setLargeCapitalAmount(capitalTotal.getLargeCapitalAmount());
+				capital.setMediumCapitalAmount(capitalTotal.getMediumCapitalAmount());
+				capital.setSmallCapitalAmount(capitalTotal.getSmallCapitalAmount());
+			}
 			capital.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 			capitalRepository.save(capital);
 		} else {
@@ -92,9 +101,12 @@ public class MasterConditionSubService {
 	}
 	
 	public List<ParamInfo> getCapitalWithoutOld(TaMasCondSubCapital form) {
-		List<ParamInfo> productService = ExciseUtils.getProductTypeAndServiceType();
 		List<TaMasCondSubCapital> capitalOld = new ArrayList<>();
-		capitalOld = capitalRepository.findByOfficeCodeAndBudgetYear(UserLoginUtils.getCurrentUserBean().getOfficeCode(), form.getBudgetYear());
+		List<ParamInfo> productService = null;
+		productService = new ArrayList<>();
+		productService.addAll(ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.EXCISE_PRODUCT_TYPE));
+		productService.addAll(ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.EXCISE_SERVICE_TYPE));
+		capitalOld = capitalRepository.findByOfficeCodeAndBudgetYearNotTotal(UserLoginUtils.getCurrentUserBean().getOfficeCode(), form.getBudgetYear());
 		for (int i = 0; i < productService.size(); i++) {
 			String paramCode = productService.get(i).getParamCode();
 			for (TaMasCondSubCapital old : capitalOld) {
