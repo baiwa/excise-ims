@@ -1,26 +1,17 @@
 package th.go.excise.ims.ia.vo;
 
-import th.go.excise.ims.ia.persistence.entity.IaRiskProjectEfficiency;
+import java.util.List;
 
 public class Int030404Vo {
-	private IaRiskProjectEfficiency iaRiskProjectEfficiency;
 
-	private IntCalculateCriteriaVo intCalculateCriteriaVo;
+	private List<IaRiskProEfVo> iaRiskProEfVo;
 
-	public IaRiskProjectEfficiency getIaRiskProjectEfficiency() {
-		return iaRiskProjectEfficiency;
+	public List<IaRiskProEfVo> getIaRiskProEfVo() {
+		return iaRiskProEfVo;
 	}
 
-	public void setIaRiskProjectEfficiency(IaRiskProjectEfficiency iaRiskProjectEfficiency) {
-		this.iaRiskProjectEfficiency = iaRiskProjectEfficiency;
-	}
-
-	public IntCalculateCriteriaVo getIntCalculateCriteriaVo() {
-		return intCalculateCriteriaVo;
-	}
-
-	public void setIntCalculateCriteriaVo(IntCalculateCriteriaVo intCalculateCriteriaVo) {
-		this.intCalculateCriteriaVo = intCalculateCriteriaVo;
+	public void setIaRiskProEfVo(List<IaRiskProEfVo> iaRiskProEfVo) {
+		this.iaRiskProEfVo = iaRiskProEfVo;
 	}
 
 }
