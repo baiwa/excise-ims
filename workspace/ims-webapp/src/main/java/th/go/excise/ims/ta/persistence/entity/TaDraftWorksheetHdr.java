@@ -35,6 +35,8 @@ public class TaDraftWorksheetHdr extends BaseEntity {
 	private String yearMonthEnd;
 	@Column(name = "MONTH_NUM")
 	private Integer monthNum;
+	@Column(name = "WORKSHEET_STATUS")
+	private String worksheetStatus;
 
 	public Long getDraftWorksheetHdrId() {
 		return draftWorksheetHdrId;
@@ -90,6 +92,14 @@ public class TaDraftWorksheetHdr extends BaseEntity {
 
 	public void setMonthNum(Integer monthNum) {
 		this.monthNum = monthNum;
+	}
+
+	public String getWorksheetStatus() {
+		return worksheetStatus;
+	}
+
+	public void setWorksheetStatus(String worksheetStatus) {
+		this.worksheetStatus = worksheetStatus;
 	}
 
 	public String toString() {
