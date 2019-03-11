@@ -1,21 +1,11 @@
 package th.go.excise.ims.ta.service;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
-
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import th.co.baiwa.buckwaframework.common.bean.LabelValueBean;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
@@ -26,30 +16,18 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
 import th.go.excise.ims.common.util.ExciseUtils;
-import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
-import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainDtl;
-import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainHdr;
-import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondSubCapital;
-import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondSubNoAudit;
-import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondSubRisk;
-import th.go.excise.ims.ta.persistence.entity.TaWorksheetDtl;
-import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
-import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetDtlRepository;
-import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetSendRepository;
-import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondMainDtlRepository;
-import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondMainHdrRepository;
-import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondSubCapitalRepository;
-import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondSubNoAuditRepository;
-import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondSubRiskRepository;
-import th.go.excise.ims.ta.persistence.repository.TaWorksheetDtlRepository;
-import th.go.excise.ims.ta.persistence.repository.TaWorksheetHdrRepository;
+import th.go.excise.ims.ta.persistence.entity.*;
+import th.go.excise.ims.ta.persistence.repository.*;
 import th.go.excise.ims.ta.util.TaxAuditUtils;
-import th.go.excise.ims.ta.vo.CondGroupVo;
-import th.go.excise.ims.ta.vo.TaxDratfVo;
-import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
-import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
-import th.go.excise.ims.ta.vo.TaxOperatorVo;
-import th.go.excise.ims.ta.vo.YearMonthVo;
+import th.go.excise.ims.ta.vo.*;
+
+import javax.transaction.Transactional;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class WorksheetService {
@@ -372,5 +350,9 @@ public class WorksheetService {
 			return taWorksheetCondMainDtlRepository.findByDraftNumber(formVo.getDraftNumber());
 		}
 
+	}
+
+	public TaWorksheetHdr checkEvaluateCondition(TaxOperatorFormVo formVo){
+		return taWorksheetHdrRepository.findByDraftNumber(formVo.getDraftNumber());
 	}
 }
