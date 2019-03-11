@@ -3,6 +3,7 @@ package th.go.excise.ims.ta.controller;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,6 +86,15 @@ public class CreatePaperProductController {
 
 	}
 
+	@PostMapping("/list-raw-material-receive-upload")
+	@ResponseBody
+	public List<CppRawMaterialReceiveVo> readFileExcel(@ModelAttribute CppRawMaterialReceiveVo request){
+		logger.info("listRawMaterialReceive Upload!!");
+		List<CppRawMaterialReceiveVo> resultList = createPaperProductService.readFileRawMaterialReceive(request);
+
+		return resultList;
+	}
+
 //TODO MaterialPayment
 	@PostMapping("/list-raw-material-payment")
 	@ResponseBody
@@ -101,7 +112,8 @@ public class CreatePaperProductController {
 
 	@GetMapping("/list-raw-material-payment-export")
 	@ResponseBody
-	public void exportRawMaterialPayment(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception {
+	public void exportRawMaterialPayment(HttpServletRequest httpServletRequest, HttpServletResponse response)
+			throws Exception {
 
 		logger.info("listRawMaterialReceive export!!");
 
@@ -121,8 +133,8 @@ public class CreatePaperProductController {
 		}
 
 	}
-	
-    //TODO MaterialBalance
+
+	// TODO MaterialBalance
 	@PostMapping("/list-raw-material-balance")
 	@ResponseBody
 	public DataTableAjax<CppRawMaterialBalanceVo> listRawMaterialBalance(@RequestBody CreatePaperFormVo request) {
@@ -152,7 +164,7 @@ public class CreatePaperProductController {
 		response.setContentLength(outArray.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-	
+
 		try (OutputStream outStream = response.getOutputStream();) {
 			outStream.write(outArray);
 		} catch (IOException e) {
@@ -160,6 +172,7 @@ public class CreatePaperProductController {
 		}
 
 	}
+
 //TODO MaterialFinishedGoodsRelationship
 	@PostMapping("/list-raw-material-finished-goods-relationship")
 	@ResponseBody
@@ -198,7 +211,7 @@ public class CreatePaperProductController {
 			logger.error(e.getMessage(), e);
 		}
 	}
-	
+
 //TODO FinishedGoodsReceive
 	@PostMapping("/list-finished-goods-receive")
 	@ResponseBody
@@ -229,7 +242,7 @@ public class CreatePaperProductController {
 		response.setContentLength(outArray.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-		
+
 		try (OutputStream outStream = response.getOutputStream();) {
 			outStream.write(outArray);
 		} catch (IOException e) {
@@ -237,7 +250,7 @@ public class CreatePaperProductController {
 		}
 
 	}
-	
+
 //TODO FinishedGoodsPayment
 	@PostMapping("/list-finished-goods-payment")
 	@ResponseBody
@@ -268,13 +281,12 @@ public class CreatePaperProductController {
 		response.setContentLength(outArray.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-		
+
 		try (OutputStream outStream = response.getOutputStream();) {
 			outStream.write(outArray);
 		} catch (IOException e) {
 			logger.error(e.getMessage(), e);
 		}
-
 
 	}
 
@@ -309,7 +321,7 @@ public class CreatePaperProductController {
 		response.setContentLength(outArray.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-		
+
 		try (OutputStream outStream = response.getOutputStream();) {
 			outStream.write(outArray);
 		} catch (IOException e) {
@@ -334,8 +346,7 @@ public class CreatePaperProductController {
 
 	@GetMapping("/list-unit-price-export")
 	@ResponseBody
-	public void exportUnitPrice(HttpServletRequest httpServletRequest, HttpServletResponse response)
-			throws Exception {
+	public void exportUnitPrice(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception {
 
 		logger.info("listUnitPrice export!!");
 
@@ -347,7 +358,7 @@ public class CreatePaperProductController {
 		response.setContentLength(outArray.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-		
+
 		try (OutputStream outStream = response.getOutputStream();) {
 			outStream.write(outArray);
 		} catch (IOException e) {
@@ -355,6 +366,7 @@ public class CreatePaperProductController {
 		}
 
 	}
+
 //TODO
 	/*------CheckPrice-----*/
 	@PostMapping("/list-check-price")
@@ -373,8 +385,7 @@ public class CreatePaperProductController {
 
 	@GetMapping("/list-check-price-export")
 	@ResponseBody
-	public void exportCheckPrice(HttpServletRequest httpServletRequest, HttpServletResponse response)
-			throws Exception {
+	public void exportCheckPrice(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception {
 
 		logger.info("listRawMaterialReceive export!!");
 
@@ -394,6 +405,7 @@ public class CreatePaperProductController {
 		}
 
 	}
+
 //TODO PayForeignFinishedGoods
 	@PostMapping("/list-pay-foreign-finished-goods")
 	@ResponseBody
@@ -425,13 +437,12 @@ public class CreatePaperProductController {
 		response.setContentLength(outArray.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-		
+
 		try (OutputStream outStream = response.getOutputStream();) {
 			outStream.write(outArray);
 		} catch (IOException e) {
 			logger.error(e.getMessage(), e);
 		}
-
 
 	}
 
@@ -464,7 +475,7 @@ public class CreatePaperProductController {
 		response.setContentLength(outArray.length);
 		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-		
+
 		try (OutputStream outStream = response.getOutputStream();) {
 			outStream.write(outArray);
 		} catch (IOException e) {

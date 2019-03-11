@@ -1,5 +1,6 @@
 package th.go.excise.ims.ta.service;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -180,6 +183,61 @@ public class CreatePaperProductService {
 		}
 
 		return content;
+	}
+
+	public List<CppRawMaterialReceiveVo> readFileRawMaterialReceive(CppRawMaterialReceiveVo request) {
+		logger.info("readFileRawMaterialReceive");
+		logger.info("fileName " + request.getFile().getOriginalFilename());
+		logger.info("type " + request.getFile().getContentType());
+
+		List<CppRawMaterialReceiveVo> dataList = new ArrayList<>();
+		CppRawMaterialReceiveVo data = null;
+
+		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(request.getFile().getBytes()))) {
+			Sheet sheet = workbook.getSheetAt(0);
+
+			for (Row row : sheet) {
+				data = new CppRawMaterialReceiveVo();
+				// Skip on first row
+				if (row.getRowNum() == 0) {
+					continue;
+				}
+				for (Cell cell : row) {
+
+					if (cell.getColumnIndex() == 0) {
+						// Column No.
+						continue;
+					} else if (cell.getColumnIndex() == 1) {
+						// Column List
+						data.setList(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 2) {
+						// Invoices
+						data.setInvoices(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 3) {
+						// DailyAccount
+						data.setDailyAccount(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 4) {
+						// MonthStatement
+						data.setMonthStatement(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 5) {
+						// MonthStatement
+						data.setMonthStatement(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 6) {
+						// ExternalData
+						data.setExternalData(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 7) {
+						// MaxDiff
+						data.setMaxDiff(ExcelUtils.getCellValueAsString(cell));
+					}
+				}
+				dataList.add(data);
+			}
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return dataList;
 	}
 
 	// TODO MaterialPayment
@@ -1623,7 +1681,8 @@ public class CreatePaperProductService {
 
 		/* call style from utils */
 		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
-		//CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(24, 75, 125)));
+		// CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new
+		// java.awt.Color(24, 75, 125)));
 		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
 		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
 		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);

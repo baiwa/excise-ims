@@ -1,5 +1,7 @@
 package th.go.excise.ims.ta.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class CppRawMaterialReceiveVo {
 
 	private Long id;
@@ -9,6 +11,8 @@ public class CppRawMaterialReceiveVo {
 	private String monthStatement;
 	private String externalData;
 	private String maxDiff;
+
+	private MultipartFile file;
 
 	public Long getId() {
 		return id;
@@ -65,5 +69,15 @@ public class CppRawMaterialReceiveVo {
 	public void setMaxDiff(String maxDiff) {
 		this.maxDiff = maxDiff;
 	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+
+
 
 }
