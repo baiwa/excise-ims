@@ -7,7 +7,10 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondSubCapital;
@@ -17,8 +20,9 @@ import th.go.excise.ims.ta.persistence.repository.TaMasCondSubCapitalRepository;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondSubNoAuditRepository;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondSubRiskRepository;
 import th.go.excise.ims.ta.vo.MasCondSubCapitalFormVo;
+import th.go.excise.ims.ta.vo.MasCondSubCapitalVo;
 import th.go.excise.ims.ta.vo.MasCondSubRiskFormVo;
-import th.go.excise.ims.ta.vo.MasCondSubRiskListFormVo;
+import th.go.excise.ims.ta.vo.MasCondSubRiskVo;
 
 @Service
 public class MasterConditionSubService {
@@ -32,72 +36,90 @@ public class MasterConditionSubService {
 	@Autowired
 	private TaMasCondSubRiskRepository riskRepository;
 
-	public List<ParamInfo> getProductTypeAndServiceType() {
-		return ExciseUtils.getProductTypeAndServiceType();
-	}
-
 	public void insertCapital(MasCondSubCapitalFormVo form) {
 		TaMasCondSubCapital capital = null;
-		List<TaMasCondSubCapital> saveCapital = new ArrayList<TaMasCondSubCapital>();
-		List<TaMasCondSubCapital> oldCapital = capitalRepository.findByBudgetYearAndOfficeCode(form.getBudgetYear(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
-		List<ParamInfo> productService = ExciseUtils.getProductTypeAndServiceType();
-		if (form.getDutyCode().equals("0")) {
-			if (0 < oldCapital.size()) {
-				for (ParamInfo paramInfo : productService) {
-					capital = capitalRepository.findByBudgetYearAndDutyCodeAndOfficeCode(form.getBudgetYear(),
-							paramInfo.getParamCode(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
-					capital.setHugeCapitalAmount(form.getHugeCapitalAmount());
-					capital.setLargeCapitalAmount(form.getLargeCapitalAmount());
-					capital.setMediumCapitalAmount(form.getMediumCapitalAmount());
-					capital.setSmallCapitalAmount(form.getSmallCapitalAmount());
-					saveCapital.add(capital);
-				}
-			} else {
-				for (ParamInfo paramInfo : productService) {
-					capital = new TaMasCondSubCapital();
-					capital.setBudgetYear(form.getBudgetYear());
-					capital.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
-					capital.setDutyCode(paramInfo.getParamCode());
-					capital.setHugeCapitalAmount(form.getHugeCapitalAmount());
-					capital.setLargeCapitalAmount(form.getLargeCapitalAmount());
-					capital.setMediumCapitalAmount(form.getMediumCapitalAmount());
-					capital.setSmallCapitalAmount(form.getSmallCapitalAmount());
-					saveCapital.add(capital);
-				}
-			}
+		TaMasCondSubCapital oldCapital = null;
+		TaMasCondSubCapital capitalTotal = null;
+		oldCapital = capitalRepository.findByOfficeCodeAndBudgetYearAndDutyCode(UserLoginUtils.getCurrentUserBean().getOfficeCode(), form.getBudgetYear(), form.getDutyCode());
+		capitalTotal = capitalRepository.findByOfficeCodeAndBudgetYearTotal(UserLoginUtils.getCurrentUserBean().getOfficeCode(), form.getBudgetYear());
+		if (null == oldCapital) {
+			capital = new TaMasCondSubCapital();
+			capital.setBudgetYear(form.getBudgetYear());
+			capital.setDutyCode(form.getDutyCode());
+			capital.setHugeCapitalAmount(capitalTotal.getHugeCapitalAmount());
+			capital.setLargeCapitalAmount(capitalTotal.getLargeCapitalAmount());
+			capital.setMediumCapitalAmount(capitalTotal.getMediumCapitalAmount());
+			capital.setSmallCapitalAmount(capitalTotal.getSmallCapitalAmount());
+			capital.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+			capitalRepository.save(capital);
 		} else {
-			if (0 < oldCapital.size()) {
-				capital = capitalRepository.findByBudgetYearAndDutyCodeAndOfficeCode(form.getBudgetYear(), form.getDutyCode(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
-				capital.setHugeCapitalAmount(form.getHugeCapitalAmount());
-				capital.setLargeCapitalAmount(form.getLargeCapitalAmount());
-				capital.setMediumCapitalAmount(form.getMediumCapitalAmount());
-				capital.setSmallCapitalAmount(form.getSmallCapitalAmount());
-				saveCapital.add(capital);
-			} else {
-				capital = new TaMasCondSubCapital();
-				capital.setBudgetYear(form.getBudgetYear());
-				capital.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
-				capital.setDutyCode(form.getDutyCode());
-				capital.setHugeCapitalAmount(form.getHugeCapitalAmount());
-				capital.setLargeCapitalAmount(form.getLargeCapitalAmount());
-				capital.setMediumCapitalAmount(form.getMediumCapitalAmount());
-				capital.setSmallCapitalAmount(form.getSmallCapitalAmount());
-				saveCapital.add(capital);
-			}
+			oldCapital.setHugeCapitalAmount(form.getHugeCapitalAmount());
+			oldCapital.setLargeCapitalAmount(form.getLargeCapitalAmount());
+			oldCapital.setMediumCapitalAmount(form.getMediumCapitalAmount());
+			oldCapital.setSmallCapitalAmount(form.getSmallCapitalAmount());
+			capitalRepository.save(oldCapital);
 		}
-		capitalRepository.saveAll(saveCapital);
 	}
 
-	public List<TaMasCondSubCapital> getCapital(TaMasCondSubCapital form) {
-		List<TaMasCondSubCapital> capital = new ArrayList<>();
-		capital = capitalRepository.findByBudgetYearAndOfficeCode(form.getBudgetYear(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
-		return capital;
+	public List<MasCondSubCapitalVo> getCapital(MasCondSubCapitalVo form) {
+		List<MasCondSubCapitalVo> capitalList = new ArrayList<>();
+		List<TaMasCondSubCapital> capitalOld = new ArrayList<>();
+		List<ParamInfo> paramInfoList = null;
+		paramInfoList = new ArrayList<>();
+		paramInfoList.addAll(ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.EXCISE_PRODUCT_TYPE));
+		paramInfoList.addAll(ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.EXCISE_SERVICE_TYPE));
+		capitalOld = capitalRepository.findByOfficeCodeAndBudgetYearNotTotal(UserLoginUtils.getCurrentUserBean().getOfficeCode(), form.getCapital().getBudgetYear());
+
+		for (int i = 0; i < capitalOld.size(); i++) {
+			TaMasCondSubCapital voOld = capitalOld.get(i);
+			capitalList.add(new MasCondSubCapitalVo());
+			capitalList.get(i).setCapital(voOld);
+			MasCondSubCapitalVo vo = capitalList.get(i);
+			if (null != vo.getCapital().getDutyCode()) {
+				for (ParamInfo paramInfo : paramInfoList) {
+					if (paramInfo.getParamCode().equals(vo.getCapital().getDutyCode())) {
+						capitalList.get(i).setCapitalDesc(paramInfo.getValue1());
+						break;
+					}
+				}
+			} 
+//			else {
+//				capitalList.get(i).setCapital(capitalRepository.findByOfficeCodeAndBudgetYearTotal(UserLoginUtils.getCurrentUserBean().getOfficeCode(), form.getCapital().getBudgetYear()));
+//				capitalList.get(i).setCapitalDesc("เลือกทั้งหมด");
+//			}
+		}
+		return capitalList;
+	}
+	
+	public List<ParamInfo> getCapitalWithoutOld(TaMasCondSubCapital form) {
+		List<ParamInfo> productService = ExciseUtils.getProductTypeAndServiceType();
+		List<TaMasCondSubCapital> capitalOld = new ArrayList<>();
+		capitalOld = capitalRepository.findByOfficeCodeAndBudgetYear(UserLoginUtils.getCurrentUserBean().getOfficeCode(), form.getBudgetYear());
+		for (int i = 0; i < productService.size(); i++) {
+			String paramCode = productService.get(i).getParamCode();
+			for (TaMasCondSubCapital old : capitalOld) {
+				if (paramCode.equals(old.getDutyCode())) {
+					productService.remove(i);
+				}
+			}
+		}
+		return productService;
 	}
 
 	public TaMasCondSubCapital getCapitalByDutyCode(TaMasCondSubCapital form) {
 		TaMasCondSubCapital capital = new TaMasCondSubCapital();
-		capital = capitalRepository.findByBudgetYearAndDutyCodeAndOfficeCode(form.getBudgetYear(), form.getDutyCode(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
+		if ("null".equals(form.getDutyCode())) {
+			capital = capitalRepository.findByOfficeCodeAndBudgetYearTotal(UserLoginUtils.getCurrentUserBean().getOfficeCode(), form.getBudgetYear());
+		} else {
+			capital = capitalRepository.findByOfficeCodeAndBudgetYearAndDutyCode(UserLoginUtils.getCurrentUserBean().getOfficeCode(), form.getBudgetYear(), form.getDutyCode());			
+		}
 		return capital;
+	}
+	
+	public void deleteCapital(TaMasCondSubCapital form) {
+		TaMasCondSubCapital capital = capitalRepository.findByOfficeCodeAndBudgetYearAndDutyCode(UserLoginUtils.getCurrentUserBean().getOfficeCode(), form.getBudgetYear(), form.getDutyCode());
+		capital.setIsDeleted(FLAG.Y_FLAG);
+		capitalRepository.save(capital);
 	}
 
 	public void insertRisk(MasCondSubRiskFormVo form) {
@@ -106,28 +128,50 @@ public class MasterConditionSubService {
 		List<TaMasCondSubRisk> oldRiskList = riskRepository.findByBudgetYearAndOfficeCode(form.getBudgetYear(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
 		
 		if (CollectionUtils.isNotEmpty(oldRiskList)) {
-			for (MasCondSubRiskListFormVo riskform : form.getRiskList()) {
-				risk = riskRepository.findByBudgetYearAndDutyCodeAndOfficeCode(form.getBudgetYear(), riskform.getCode(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
-				risk.setRiskLevel(riskform.getLevel());
+			for (int i = 0; i < form.getRiskList().size(); i++) {
+				TaMasCondSubRisk riskform = form.getRiskList().get(i);
+				risk = riskRepository.findByBudgetYearAndDutyCodeAndOfficeCode(riskform.getBudgetYear(), riskform.getRiskLevel(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
+				risk.setRiskLevel(riskform.getRiskLevel());
 				riskList.add(risk);
 			}
 		} else {
-			for (MasCondSubRiskListFormVo riskform : form.getRiskList()) {
+			for (int i = 0; i < form.getRiskList().size(); i++) {
+				TaMasCondSubRisk riskform = form.getRiskList().get(i);
 				risk = new TaMasCondSubRisk();
 				risk.setBudgetYear(form.getBudgetYear());
 				risk.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
-				risk.setDutyCode(riskform.getCode());
-				risk.setRiskLevel(riskform.getLevel());
+				risk.setDutyCode(riskform.getDutyCode());
+				risk.setRiskLevel(riskform.getRiskLevel());
 				riskList.add(risk);
 			}
 		}
 		riskRepository.saveAll(riskList);
 	}
 	
-	public List<TaMasCondSubRisk> getRiskByBudgetYear(MasCondSubRiskFormVo form) {
-		List<TaMasCondSubRisk> risk = new ArrayList<>();
-		risk = riskRepository.findByBudgetYearAndOfficeCode(form.getBudgetYear(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
-		return risk;
+	public List<MasCondSubRiskVo> getRiskByBudgetYear(TaMasCondSubRisk form) {
+		List<TaMasCondSubRisk> riskList = new ArrayList<>();
+		List<ParamInfo> riskInfo= new ArrayList<>();
+		List<MasCondSubRiskVo> riskListNew = new ArrayList<>();
+		MasCondSubRiskVo risk = null;
+		riskList = riskRepository.findByBudgetYearAndOfficeCode(form.getBudgetYear(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
+		if (CollectionUtils.isNotEmpty(riskList)) {
+			for (int i = 0; i < riskList.size(); i++) {
+				risk = new MasCondSubRiskVo();
+				risk.setDutyCode(riskList.get(i).getDutyCode());
+				risk.setRiskLevel(riskList.get(i).getRiskLevel());
+				risk.setRiskDesc(ExciseUtils.getDutyDesc(risk.getDutyCode()));
+				riskListNew.add(risk);
+			}
+		} else {
+			riskInfo = ExciseUtils.getProductTypeAndServiceType();
+			for (int i = 0; i < riskInfo.size(); i++) {
+				risk = new MasCondSubRiskVo();
+				risk.setDutyCode(riskInfo.get(i).getParamCode());
+				risk.setRiskDesc(ExciseUtils.getDutyDesc(risk.getDutyCode()));
+				riskListNew.add(risk);
+			}
+		}
+		return riskListNew;
 	}
 	
 	public void insertNoAudit(TaMasCondSubNoAudit form) {

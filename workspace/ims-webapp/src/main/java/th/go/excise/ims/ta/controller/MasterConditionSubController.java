@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +21,9 @@ import th.go.excise.ims.ta.persistence.entity.TaMasCondSubNoAudit;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondSubRisk;
 import th.go.excise.ims.ta.service.MasterConditionSubService;
 import th.go.excise.ims.ta.vo.MasCondSubCapitalFormVo;
+import th.go.excise.ims.ta.vo.MasCondSubCapitalVo;
 import th.go.excise.ims.ta.vo.MasCondSubRiskFormVo;
+import th.go.excise.ims.ta.vo.MasCondSubRiskVo;
 
 @Controller
 @RequestMapping("/api/ta/master-condition-sub")
@@ -32,13 +33,29 @@ public class MasterConditionSubController {
 	
 	@Autowired
 	private MasterConditionSubService masterConditionSubService;
-
-	@GetMapping("/get-product-service-type")
+	
+	@PostMapping("/get-capital")
 	@ResponseBody
-	public ResponseData<List<ParamInfo>> getProductTypeAndServiceType() {
-		ResponseData<List<ParamInfo>> response = new ResponseData<List<ParamInfo>>();
+	public ResponseData<List<MasCondSubCapitalVo>> getCapital(@RequestBody MasCondSubCapitalVo form) {
+		ResponseData<List<MasCondSubCapitalVo>> response = new ResponseData<>();
 		try {
-			response.setData(masterConditionSubService.getProductTypeAndServiceType());
+			response.setData(masterConditionSubService.getCapital(form));
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	@PostMapping("/get-capital-without-old")
+	@ResponseBody
+	public ResponseData<List<ParamInfo>> getCapitalWithoutOld(@RequestBody TaMasCondSubCapital form) {
+		ResponseData<List<ParamInfo>> response = new ResponseData<>();
+		try {
+			response.setData(masterConditionSubService.getCapitalWithoutOld(form));
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -70,7 +87,7 @@ public class MasterConditionSubController {
 	
 	@PostMapping("/get-capital-by-dutycode")
 	@ResponseBody
-	public ResponseData<TaMasCondSubCapital> getCapital(
+	public ResponseData<TaMasCondSubCapital> getCapitalByDutyCode(
 			@RequestBody TaMasCondSubCapital form) {
 		ResponseData<TaMasCondSubCapital> response = new ResponseData<>();
 		try {
@@ -80,6 +97,23 @@ public class MasterConditionSubController {
 			logger.error(e.getMessage(), e);
 			response.setMessage(
 					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	@PostMapping("/get-capital-by-dutycode")
+	@ResponseBody
+	public ResponseData<?> deleteCapital(@RequestBody TaMasCondSubCapital form) {
+		ResponseData<?> response = new ResponseData<>();
+		try {
+			masterConditionSubService.deleteCapital(form);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.SUCCESS_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.FAILED_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -105,9 +139,9 @@ public class MasterConditionSubController {
 	
 	@PostMapping("/get-risk")
 	@ResponseBody
-	public ResponseData<List<TaMasCondSubRisk>> getRiskByBudgetYear(
-			@RequestBody MasCondSubRiskFormVo form) {
-		ResponseData<List<TaMasCondSubRisk>> response = new ResponseData<>();
+	public ResponseData<List<MasCondSubRiskVo>> getRiskByBudgetYear(
+			@RequestBody TaMasCondSubRisk form) {
+		ResponseData<List<MasCondSubRiskVo>> response = new ResponseData<>();
 		try {
 			response.setData(masterConditionSubService.getRiskByBudgetYear(form));
 			response.setStatus(RESPONSE_STATUS.SUCCESS);

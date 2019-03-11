@@ -401,7 +401,7 @@ public class DraftWorksheetService {
 		// ==> Save Condition Sub
 		// ==> Capital
 		if (StringUtils.isNotBlank(formVo.getCondSub1())) {
-			List<TaMasCondSubCapital> masCondSubCapitalList = taMasCondSubCapitalRepository.findByBudgetYearAndOfficeCode(budgetYear, officeCode);
+			List<TaMasCondSubCapital> masCondSubCapitalList = taMasCondSubCapitalRepository.findByOfficeCodeAndBudgetYear(officeCode, budgetYear);
 			for (TaMasCondSubCapital masCondSubCapital : masCondSubCapitalList) {
 				TaWorksheetCondSubCapital worksheetCondSubCapital = new TaWorksheetCondSubCapital();
 				worksheetCondSubCapital.setDraftNumber(draftNumber);
