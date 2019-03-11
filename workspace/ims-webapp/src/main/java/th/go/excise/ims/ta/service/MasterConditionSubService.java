@@ -152,6 +152,12 @@ public class MasterConditionSubService {
 		List<TaMasCondSubRisk> riskList = new ArrayList<>();
 		List<ParamInfo> riskInfo= new ArrayList<>();
 		List<MasCondSubRiskVo> riskListNew = new ArrayList<>();
+		//get EXCISE_PRODUCT_TYPE and EXCISE_SERVICE_TYPE
+		List<ParamInfo> paramInfoList = null;
+		paramInfoList = new ArrayList<>();
+		paramInfoList.addAll(ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.EXCISE_PRODUCT_TYPE));
+		paramInfoList.addAll(ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.EXCISE_SERVICE_TYPE));
+		
 		MasCondSubRiskVo risk = null;
 		riskList = riskRepository.findByBudgetYearAndOfficeCode(form.getBudgetYear(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
 		if (CollectionUtils.isNotEmpty(riskList)) {
@@ -159,7 +165,13 @@ public class MasterConditionSubService {
 				risk = new MasCondSubRiskVo();
 				risk.setDutyCode(riskList.get(i).getDutyCode());
 				risk.setRiskLevel(riskList.get(i).getRiskLevel());
-				risk.setRiskDesc(ExciseUtils.getDutyDesc(risk.getDutyCode()));
+				for (ParamInfo paramInfo : paramInfoList) {
+					if (paramInfo.getParamCode().equals(risk.getDutyCode())) {
+						risk.setRiskDesc(paramInfo.getValue1());
+						break;
+					}
+				}
+				
 				riskListNew.add(risk);
 			}
 		} else {
@@ -167,7 +179,12 @@ public class MasterConditionSubService {
 			for (int i = 0; i < riskInfo.size(); i++) {
 				risk = new MasCondSubRiskVo();
 				risk.setDutyCode(riskInfo.get(i).getParamCode());
-				risk.setRiskDesc(ExciseUtils.getDutyDesc(risk.getDutyCode()));
+				for (ParamInfo paramInfo : paramInfoList) {
+					if (paramInfo.getParamCode().equals(risk.getDutyCode())) {
+						risk.setRiskDesc(paramInfo.getValue1());
+						break;		
+					}
+				}
 				riskListNew.add(risk);
 			}
 		}
