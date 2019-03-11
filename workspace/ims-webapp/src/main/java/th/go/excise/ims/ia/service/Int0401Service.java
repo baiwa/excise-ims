@@ -28,7 +28,7 @@ public class Int0401Service {
 
 	@Autowired
 	private Int0401JdbcRepository int0401JdbcRep;
-	
+
 	@Autowired
 	private IaInspectionPlanRepository iaInspectionPlanRepository;
 
@@ -40,16 +40,13 @@ public class Int0401Service {
 		List<IaRiskFactors> factors = int0401JdbcRep.findHead(budgetYear, inspectionWork);
 		List<Int0401CalVo> cals = int0401JdbcRep.findDetails(budgetYear, inspectionWork);
 		Int0401CalConfigVo config = int0401JdbcRep.findConfigAll(budgetYear, inspectionWork);
-		if (config.getMedium() != null) {
+		if (config != null && config.getMedium() != null) {
 			for (IaRiskSelectCase selectCase : selectCases) {
 				Int0401Vo list = new Int0401Vo();
 				List<Int0401ListVo> listVos = new ArrayList<>();
 				BigDecimal riskRating = new BigDecimal(0);
 				for (IaRiskFactors factor : factors) {
 					Int0401ListVo listVo = new Int0401ListVo();
-					listVo.setRiskRate(new BigDecimal(1));
-					listVo.setRiskText(config.getLow());
-					listVo.setRiskCode("L");
 					for (Int0401CalVo cal : cals) {
 						// TODO `CALCULATE`
 						if (factor.getId().compareTo(cal.getConfig().getIdFactors()) == 0) {
@@ -64,7 +61,9 @@ public class Int0401Service {
 							}
 						}
 					}
-					riskRating.add(listVo.getRiskRate());
+					if (listVo.getRiskRate() != null) {
+						riskRating.add(listVo.getRiskRate());
+					}
 					listVos.add(listVo);
 				}
 				list.setId(selectCase.getId());
@@ -78,9 +77,11 @@ public class Int0401Service {
 				list.setLists(listVos);
 				Int0401ListVo calData = new Int0401ListVo();
 				if (config.getFactorsLevel().compareTo(new BigDecimal(5)) == 0) {
-					calData = calculateRating5thAll((new BigDecimal(riskRating.intValue() / listVos.size())).toString(), config);
+					calData = calculateRating5thAll((new BigDecimal(riskRating.intValue() / listVos.size())).toString(),
+							config);
 				} else {
-					calData = calculateRating3rdAll((new BigDecimal(riskRating.intValue() / listVos.size())).toString(), config);
+					calData = calculateRating3rdAll((new BigDecimal(riskRating.intValue() / listVos.size())).toString(),
+							config);
 				}
 				list.setRiskItem(new BigDecimal(listVos.size()));
 				list.setRiskRate(calData.getRiskRate());
