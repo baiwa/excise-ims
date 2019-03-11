@@ -366,6 +366,11 @@ public class WorksheetService {
 	}
 
 	public List<TaWorksheetCondMainDtl> worksheetCondMainDtls(TaxOperatorFormVo formVo){
-		return taWorksheetCondMainDtlRepository.findByDraftNumber(formVo.getDraftNumber());
+		if (StringUtils.isNotBlank(formVo.getAnalysisNumber())){
+			return taWorksheetCondMainDtlRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
+		}else{
+			return taWorksheetCondMainDtlRepository.findByDraftNumber(formVo.getDraftNumber());
+		}
+
 	}
 }
