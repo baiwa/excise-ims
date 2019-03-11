@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.LabelValueBean;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
@@ -80,8 +81,8 @@ public class TaxOperatorController {
 
     @PostMapping("/group-cond-sub-capital")
     @ResponseBody
-    public ResponseData<List<String>> groupCondSubCapital(@RequestBody TaxOperatorFormVo formVo) {
-        ResponseData<List<String>> response = new ResponseData<>();
+    public ResponseData<List<LabelValueBean>> groupCondSubCapital(@RequestBody TaxOperatorFormVo formVo) {
+        ResponseData<List<LabelValueBean>> response = new ResponseData<>();
 
         try {
             response.setData(worksheetService.groupCondSubCapital(formVo.getAnalysisNumber()));
@@ -98,8 +99,8 @@ public class TaxOperatorController {
 
     @PostMapping("/group-cond-sub-risk")
     @ResponseBody
-    public ResponseData<List<String>> groupCondSubRisk(@RequestBody TaxOperatorFormVo formVo) {
-        ResponseData<List<String>> response = new ResponseData<>();
+    public ResponseData<List<LabelValueBean>> groupCondSubRisk(@RequestBody TaxOperatorFormVo formVo) {
+        ResponseData<List<LabelValueBean>> response = new ResponseData<>();
 
         try {
             response.setData(worksheetService.groupCondSubRisk(formVo.getAnalysisNumber()));

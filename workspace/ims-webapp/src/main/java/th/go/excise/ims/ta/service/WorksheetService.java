@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.bean.LabelValueBean;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
@@ -356,11 +357,11 @@ public class WorksheetService {
 		return vo;
 	}
 
-	public List<String> groupCondSubCapital(String analysisNumber) {
+	public List<LabelValueBean> groupCondSubCapital(String analysisNumber) {
 		return taWorksheetDtlRepository.groupCondSubCapital(analysisNumber);
 	}
 
-	public List<String> groupCondSubRisk(String analysisNumber) {
+	public List<LabelValueBean> groupCondSubRisk(String analysisNumber) {
 		return taWorksheetDtlRepository.groupCondSubRisk(analysisNumber);
 	}
 

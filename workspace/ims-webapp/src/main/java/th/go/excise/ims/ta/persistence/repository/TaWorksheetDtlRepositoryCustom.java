@@ -2,6 +2,7 @@ package th.go.excise.ims.ta.persistence.repository;
 
 import java.util.List;
 
+import th.co.baiwa.buckwaframework.common.bean.LabelValueBean;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetDtl;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
@@ -14,8 +15,8 @@ public interface TaWorksheetDtlRepositoryCustom {
 
     public Long countByCriteria(TaxOperatorFormVo formVo);
 
-    List<String> groupCondSubCapital(String analysisNumber);
+    List<LabelValueBean> groupCondSubCapital(String analysisNumber);
 
-    List<String> groupCondSubRisk(String analysisNumber);
+    List<LabelValueBean> groupCondSubRisk(String analysisNumber);
 
 }
