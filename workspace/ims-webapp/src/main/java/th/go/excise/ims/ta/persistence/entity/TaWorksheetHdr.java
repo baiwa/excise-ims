@@ -34,6 +34,12 @@ public class TaWorksheetHdr extends BaseEntity {
 	private String analysisNumber;
 	@Column(name = "WORKSHEET_STATUS")
 	private String worksheetStatus;
+	@Column(name = "COND_SUB_CAPITAL_FLAG")
+	private String condSubCapitalFlag;
+	@Column(name = "COND_SUB_RISK_FLAG")
+	private String condSubRiskFlag;
+	@Column(name = "COND_SUB_NO_AUDIT_FLAG")
+	private String condSubNoAuditFlag;
 
 	public Long getWorksheetHdrId() {
 		return worksheetHdrId;
@@ -81,6 +87,30 @@ public class TaWorksheetHdr extends BaseEntity {
 
 	public void setWorksheetStatus(String worksheetStatus) {
 		this.worksheetStatus = worksheetStatus;
+	}
+
+	public String getCondSubCapitalFlag() {
+		return condSubCapitalFlag;
+	}
+
+	public void setCondSubCapitalFlag(String condSubCapitalFlag) {
+		this.condSubCapitalFlag = condSubCapitalFlag;
+	}
+
+	public String getCondSubRiskFlag() {
+		return condSubRiskFlag;
+	}
+
+	public void setCondSubRiskFlag(String condSubRiskFlag) {
+		this.condSubRiskFlag = condSubRiskFlag;
+	}
+
+	public String getCondSubNoAuditFlag() {
+		return condSubNoAuditFlag;
+	}
+
+	public void setCondSubNoAuditFlag(String condSubNoAuditFlag) {
+		this.condSubNoAuditFlag = condSubNoAuditFlag;
 	}
 
 	public String toString() {
