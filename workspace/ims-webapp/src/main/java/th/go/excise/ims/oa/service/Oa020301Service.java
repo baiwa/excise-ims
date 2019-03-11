@@ -1,17 +1,28 @@
 	package th.go.excise.ims.oa.service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.ia.vo.Int02FormVo;
+import th.go.excise.ims.ia.vo.Int02Vo;
 import th.go.excise.ims.oa.persistence.entity.OaCustomer;
 import th.go.excise.ims.oa.persistence.entity.OaCustomerLicen;
 import th.go.excise.ims.oa.persistence.repository.OaCustomerLicenseRepository;
 import th.go.excise.ims.oa.persistence.repository.OaCustomerRepository;
+import th.go.excise.ims.oa.persistence.repository.jdbc.Oa020301JdbcRepository;
 import th.go.excise.ims.oa.vo.Oa02030101FormVo;
 import th.go.excise.ims.oa.vo.Oa020301FormVo;
+import th.go.excise.ims.oa.vo.Oa020301Vo;
  
 @Service
 public class Oa020301Service {
@@ -20,6 +31,9 @@ public class Oa020301Service {
 	OaCustomerRepository oaCustomerRepository;  
 	@Autowired 
 	OaCustomerLicenseRepository oaCustomerLicenRepository;  
+	
+	@Autowired
+	Oa020301JdbcRepository oa020301JdbcRep;
  
 	public Oa020301FormVo saveCustomer(Oa020301FormVo form) {
 		OaCustomer  oaCustomer =  new OaCustomer();
@@ -65,5 +79,18 @@ public class Oa020301Service {
 		oaCustomerLicenRepository.save(oaCustomerLicen);
 		  
 		return new Oa02030101FormVo(); 
-	}  
+	}
+	
+	public DataTableAjax<OaCustomer> filterByCriteria(Oa020301Vo request) {
+
+		List<OaCustomer> data = oa020301JdbcRep.getDataFilter(request);
+
+		DataTableAjax<OaCustomer> dataTableAjax = new DataTableAjax<OaCustomer>();
+		dataTableAjax.setDraw(request.getDraw() + 1);
+		dataTableAjax.setData(data);
+		dataTableAjax.setRecordsTotal(oa020301JdbcRep.countDatafilter(request));
+		dataTableAjax.setRecordsFiltered(oa020301JdbcRep.countDatafilter(request));
+
+		return dataTableAjax;
+	}
 }

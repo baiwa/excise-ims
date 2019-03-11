@@ -1,5 +1,7 @@
 package th.go.excise.ims.oa.vo;
 
-public class Oa020301Vo {
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 
+public class Oa020301Vo extends DataTableRequest {
+	
 }
