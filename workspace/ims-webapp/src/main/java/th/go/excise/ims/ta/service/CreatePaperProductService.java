@@ -10,6 +10,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,7 +85,7 @@ public class CreatePaperProductService {
 	public byte[] exportRawMaterialReceive() throws IOException {
 
 		/* create spreadsheet */
-		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(RAW_MATERIAL_RECEIVE);
 		int rowNum = 0;
 		int cellNum = 0;
@@ -92,11 +93,11 @@ public class CreatePaperProductService {
 		Cell cell = row.createCell(cellNum);
 
 		/* call style from utils */
-		CellStyle thStyle = ExcelUtils.getThStyle();
-		CellStyle thCpColor = ExcelUtils.getThCpColor();
-		CellStyle cellCenter = ExcelUtils.getCellCenter();
-		CellStyle cellLeft = ExcelUtils.getCellLeft();
-		CellStyle cellRight = ExcelUtils.getCellRight();
+		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(24, 75, 125)));
+		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
+		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
+		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
 		/* tbTH */
 		String[] tbTH = { "ลำดับ", "รายการ", "ใบกำกับภาษีซื้อ", "บัญชีประจำวัน ภส. ๐๗-๐๑", "งบเดือน (ภส. ๐๗-๐๔)",
@@ -105,7 +106,7 @@ public class CreatePaperProductService {
 			cell = row.createCell(i);
 			cell.setCellValue(tbTH[i]);
 			if (i > 1 && i < 5) {
-				cell.setCellStyle(thCpColor);
+				cell.setCellStyle(thColor);
 			} else {
 				cell.setCellStyle(thStyle);
 			}
@@ -216,7 +217,7 @@ public class CreatePaperProductService {
 	public byte[] exportRawMaterialPayment() throws IOException {
 
 		/* create spreadsheet */
-		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(RAW_MATERIAL_PAYMENT);
 		int rowNum = 0;
 		int cellNum = 0;
@@ -224,11 +225,11 @@ public class CreatePaperProductService {
 		Cell cell = row.createCell(cellNum);
 
 		/* call style from utils */
-		CellStyle thStyle = ExcelUtils.getThStyle();
-		CellStyle thCpColor = ExcelUtils.getThCpColor();
-		CellStyle cellCenter = ExcelUtils.getCellCenter();
-		CellStyle cellLeft = ExcelUtils.getCellLeft();
-		CellStyle cellRight = ExcelUtils.getCellRight();
+		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(24, 75, 125)));
+		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
+		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
+		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
 		/* tbTH */
 		String[] tbTH = { "ลำดับ", "รายการ", "ใบเบิกวัตถุดิบ	", "บัญชีประจำวัน ภส. ๐๗-๐๑", "งบเดือน (ภส. ๐๗-๐๔)",
@@ -237,7 +238,7 @@ public class CreatePaperProductService {
 			cell = row.createCell(i);
 			cell.setCellValue(tbTH[i]);
 			if (i > 1 && i < 5) {
-				cell.setCellStyle(thCpColor);
+				cell.setCellStyle(thColor);
 			} else {
 				cell.setCellStyle(thStyle);
 			}
@@ -345,7 +346,7 @@ public class CreatePaperProductService {
 	public byte[] exportRawMaterialBalance() throws IOException {
 
 		/* create spreadsheet */
-		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(RAW_MATERIAL_BALANCE);
 		int rowNum = 0;
 		int cellNum = 0;
@@ -353,11 +354,11 @@ public class CreatePaperProductService {
 		Cell cell = row.createCell(cellNum);
 
 		/* call style from utils */
-		CellStyle thStyle = ExcelUtils.getThStyle();
-		CellStyle thCpColor = ExcelUtils.getThCpColor();
-		CellStyle cellCenter = ExcelUtils.getCellCenter();
-		CellStyle cellLeft = ExcelUtils.getCellLeft();
-		CellStyle cellRight = ExcelUtils.getCellRight();
+		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(24, 75, 125)));
+		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
+		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
+		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
 		/* tbTH */
 		String[] tbTH = { "ลำดับ", "รายการ", "ยอดคงเหลือ (ตามแบบ ภส. ๐๗-๐๑)", "ยอดคงเหลือจากการตรวจนับ	",
@@ -366,7 +367,7 @@ public class CreatePaperProductService {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH[i]);
 			if (i == 2) {
-				cell.setCellStyle(thCpColor);
+				cell.setCellStyle(thColor);
 			} else {
 				cell.setCellStyle(thStyle);
 			}
@@ -477,7 +478,7 @@ public class CreatePaperProductService {
 
 	public byte[] exportRawMaterialFinishedGoodsRelationship() {
 
-		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(RAW_MATERIAL_FINISHED_GOODS_RELATIONSHIP);
 		int rowNum = 0;
 		int cellNum = 0;
@@ -485,11 +486,11 @@ public class CreatePaperProductService {
 		Cell cell = row.createCell(cellNum);
 
 		/* call style from utils */
-		CellStyle thStyle = ExcelUtils.getThStyle();
-		CellStyle thCpColor = ExcelUtils.getThCpColor();
-		CellStyle cellCenter = ExcelUtils.getCellCenter();
-		CellStyle cellLeft = ExcelUtils.getCellLeft();
-		CellStyle cellRight = ExcelUtils.getCellRight();
+		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(24, 75, 125)));
+		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
+		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
+		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
 		/* tbTH1 */
 		String[] tbTH1 = { "ลำดับ", "เลขที่ใบสำคัญ", "รายการ", "จำนวนรับ" + "\n" + "(ตามบัญชี ภส. ๐๗-๐๒)",
@@ -501,7 +502,7 @@ public class CreatePaperProductService {
 			if (i != 3 && i != 4 && i != 5) {
 				cell.setCellStyle(thStyle);
 			} else {
-				cell.setCellStyle(thCpColor);
+				cell.setCellStyle(thColor);
 			}
 
 		}
@@ -671,7 +672,7 @@ public class CreatePaperProductService {
 
 	public byte[] exportFinishedGoodsReceive() {
 
-		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(FINISHED_GOODS_RECEIVE);
 		int rowNum = 0;
 		int cellNum = 0;
@@ -679,11 +680,12 @@ public class CreatePaperProductService {
 		Cell cell = row.createCell(cellNum);
 
 		/* call style from utils */
-		CellStyle thStyle = ExcelUtils.getThStyle();
-		CellStyle thCpColor = ExcelUtils.getThCpColor();
-		CellStyle cellCenter = ExcelUtils.getCellCenter();
-		CellStyle cellLeft = ExcelUtils.getCellLeft();
-		CellStyle cellRight = ExcelUtils.getCellRight();
+		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(24, 75, 125)));
+		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
+		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
+		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
+		;
 
 		/* tbTH1 */
 		String[] tbTH1 = { "ลำดับ", "รายการ", "ใบรับสินค้าสำเร็จรูป", "ปริมาณรับจากการผลิต", "", "ผลต่างสูงสุด" };
@@ -693,7 +695,7 @@ public class CreatePaperProductService {
 			if (i != 3 && i != 4) {
 				cell.setCellStyle(thStyle);
 			} else {
-				cell.setCellStyle(thCpColor);
+				cell.setCellStyle(thColor);
 			}
 
 		}
@@ -706,7 +708,7 @@ public class CreatePaperProductService {
 			if (i > 2) {
 				cell = row.createCell(i);
 				cell.setCellValue(tbTH2[i]);
-				cell.setCellStyle(thCpColor);
+				cell.setCellStyle(thColor);
 			}
 		}
 
@@ -823,7 +825,7 @@ public class CreatePaperProductService {
 	public byte[] exportFinishedGoodsPayment() throws IOException {
 
 		/* create spreadsheet */
-		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(FINISHED_GOODS_PAYMENT);
 		int rowNum = 0;
 		int cellNum = 0;
@@ -831,11 +833,11 @@ public class CreatePaperProductService {
 		Cell cell = row.createCell(cellNum);
 
 		/* call style from utils */
-		CellStyle thStyle = ExcelUtils.getThStyle();
-		CellStyle thCpColor = ExcelUtils.getThCpColor();
-		CellStyle cellCenter = ExcelUtils.getCellCenter();
-		CellStyle cellLeft = ExcelUtils.getCellLeft();
-		CellStyle cellRight = ExcelUtils.getCellRight();
+		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(24, 75, 125)));
+		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
+		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
+		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
 		/* tbTH */
 		String[] tbTH = { "ลำดับ", "รายการ", "ปริมาณจ่ายสินค้าสำเร็จรูป" + "\n" + "ในใบกำกับภาษีขาย",
@@ -849,7 +851,7 @@ public class CreatePaperProductService {
 			if (i != 2 && i != 3) {
 				cell.setCellStyle(thStyle);
 			} else {
-				cell.setCellStyle(thCpColor);
+				cell.setCellStyle(thColor);
 			}
 
 		}
@@ -966,7 +968,7 @@ public class CreatePaperProductService {
 	public byte[] exportRawMaterialTaxBreak() throws IOException {
 
 		/* create spreadsheet */
-		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(RAW_MATERIAL_TAX_BREAK);
 		int rowNum = 0;
 		int cellNum = 0;
@@ -974,11 +976,11 @@ public class CreatePaperProductService {
 		Cell cell = row.createCell(cellNum);
 
 		/* call style from utils */
-		CellStyle thStyle = ExcelUtils.getThStyle();
-		CellStyle thCpColor = ExcelUtils.getThCpColor();
-		CellStyle cellCenter = ExcelUtils.getCellCenter();
-		CellStyle cellLeft = ExcelUtils.getCellLeft();
-		CellStyle cellRight = ExcelUtils.getCellRight();
+		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(24, 75, 125)));
+		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
+		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
+		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
 		/* tbTH1 */
 		String[] tbTH1 = { "ลำดับ", "รายการวัตถุดิบ", "ขอลดหย่อนตามแบบ ภส. ๐๕-๐๓", "", "", "ใบเสร็จรับเงิน", "", "", "",
@@ -987,7 +989,7 @@ public class CreatePaperProductService {
 			cell = row.createCell(i);
 			cell.setCellValue(tbTH1[i]);
 			if (i > 4 && i < 9) {
-				cell.setCellStyle(thCpColor);
+				cell.setCellStyle(thColor);
 			} else {
 				cell.setCellStyle(thStyle);
 			}
@@ -1004,7 +1006,7 @@ public class CreatePaperProductService {
 				cell = row.createCell(i);
 				cell.setCellValue(tbTH2[i]);
 				if (i > 4 && i < 9) {
-					cell.setCellStyle(thCpColor);
+					cell.setCellStyle(thColor);
 				} else {
 					cell.setCellStyle(thStyle);
 				}
@@ -1145,7 +1147,7 @@ public class CreatePaperProductService {
 	public byte[] exportUnitPrice() throws IOException {
 
 		/* create spreadsheet */
-		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(UNIT_PRICE);
 		int rowNum = 0;
 		int cellNum = 0;
@@ -1153,11 +1155,11 @@ public class CreatePaperProductService {
 		Cell cell = row.createCell(cellNum);
 
 		/* call style from Utils */
-		CellStyle thStyle = ExcelUtils.getThStyle();
-		CellStyle thCpColor = ExcelUtils.getThCpColor();
-		CellStyle cellCenter = ExcelUtils.getCellCenter();
-		CellStyle cellLeft = ExcelUtils.getCellLeft();
-		CellStyle cellRight = ExcelUtils.getCellRight();
+		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(24, 75, 125)));
+		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
+		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
+		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
 		/* tbTH1 */
 		String[] tbTH1 = { "ลำดับ", "รายการ", "ขอลดหย่อนตามแบบ ภส. ๐๕-๐๓", "", "", "ใบเสร็จรับเงิน", "", "", "",
@@ -1166,7 +1168,7 @@ public class CreatePaperProductService {
 			cell = row.createCell(i);
 			cell.setCellValue(tbTH1[i]);
 			if (i > 4 && i < 9) {
-				cell.setCellStyle(thCpColor);
+				cell.setCellStyle(thColor);
 			} else {
 				cell.setCellStyle(thStyle);
 			}
@@ -1183,7 +1185,7 @@ public class CreatePaperProductService {
 				cell = row.createCell(i);
 				cell.setCellValue(tbTH2[i]);
 				if (i > 4 && i < 9) {
-					cell.setCellStyle(thCpColor);
+					cell.setCellStyle(thColor);
 				} else {
 					cell.setCellStyle(thStyle);
 				}
@@ -1322,7 +1324,7 @@ public class CreatePaperProductService {
 	public byte[] exportCheckPrice() {
 
 		/* create spreadsheet */
-		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(CHECK_PRICE);
 		int rowNum = 0;
 		int cellNum = 0;
@@ -1330,11 +1332,11 @@ public class CreatePaperProductService {
 		Cell cell = row.createCell(cellNum);
 
 		/* call style from utils */
-		CellStyle thStyle = ExcelUtils.getThStyle();
-		CellStyle thCpColor = ExcelUtils.getThCpColor();
-		CellStyle cellCenter = ExcelUtils.getCellCenter();
-		CellStyle cellLeft = ExcelUtils.getCellLeft();
-		CellStyle cellRight = ExcelUtils.getCellRight();
+		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(24, 75, 125)));
+		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
+		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
+		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
 		/* tbTH */
 		String[] tbTH = { "ลำดับ", "รายการ", "ราคาตามแบบแจ้ง ภส. ๐๒-๐๑", "ราคาจากข้อมูลภายนอก",
@@ -1343,7 +1345,7 @@ public class CreatePaperProductService {
 			cell = row.createCell(i);
 			cell.setCellValue(tbTH[i]);
 			if (i > 2 && i < 6) {
-				cell.setCellStyle(thCpColor);
+				cell.setCellStyle(thColor);
 			} else {
 				cell.setCellStyle(thStyle);
 			}
@@ -1462,7 +1464,7 @@ public class CreatePaperProductService {
 	public byte[] exportPayForeignFinishedGoods() throws IOException {
 
 		/* create spreadsheet */
-		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(PAY_FOREIGN_FINISHED_GOODS);
 		int rowNum = 0;
 		int cellNum = 0;
@@ -1470,11 +1472,11 @@ public class CreatePaperProductService {
 		Cell cell = row.createCell(cellNum);
 
 		/* call style from utils */
-		CellStyle thStyle = ExcelUtils.getThStyle();
-		CellStyle thCpColor = ExcelUtils.getThCpColor();
-		CellStyle cellCenter = ExcelUtils.getCellCenter();
-		CellStyle cellLeft = ExcelUtils.getCellLeft();
-		CellStyle cellRight = ExcelUtils.getCellRight();
+		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(24, 75, 125)));
+		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
+		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
+		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
 		/* tbTH */
 		String[] tbTH = { "ลำดับ", "รายการ", "ใบขนสินค้า", "INV", "ภส. ๐๗-๐๒", "งบเดือน ภส. ๐๗-๐๔", "จากการตรวจสอบ	",
@@ -1485,7 +1487,7 @@ public class CreatePaperProductService {
 			if (i != 2 && i != 3 && i != 6) {
 				cell.setCellStyle(thStyle);
 			} else {
-				cell.setCellStyle(thCpColor);
+				cell.setCellStyle(thColor);
 			}
 
 		}
@@ -1612,7 +1614,7 @@ public class CreatePaperProductService {
 	public byte[] exportTax() throws IOException {
 
 		/* create spreadsheet */
-		XSSFWorkbook workbook = ExcelUtils.setUpExcel();
+		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(TAX);
 		int rowNum = 0;
 		int cellNum = 0;
@@ -1620,10 +1622,11 @@ public class CreatePaperProductService {
 		Cell cell = row.createCell(cellNum);
 
 		/* call style from utils */
-		CellStyle thStyle = ExcelUtils.getThStyle();
-		CellStyle cellCenter = ExcelUtils.getCellCenter();
-		CellStyle cellLeft = ExcelUtils.getCellLeft();
-		CellStyle cellRight = ExcelUtils.getCellRight();
+		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		//CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(24, 75, 125)));
+		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
+		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
+		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
 		/* tbTH */
 		String[] tbTH = { "ลำดับ", "รายการ", "ปริมาณ", "ราคาขายปลีก", "มูลค่า", "อัตราภาษี (ร้อยละ)",
@@ -1646,8 +1649,6 @@ public class CreatePaperProductService {
 		sheet.setColumnWidth(colIndex++, 28 * 256);
 		sheet.setColumnWidth(colIndex++, 28 * 256);
 		sheet.setColumnWidth(colIndex++, 28 * 256);
-
-
 
 		/* set data */
 		rowNum = 1;

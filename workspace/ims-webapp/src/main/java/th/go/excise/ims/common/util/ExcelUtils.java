@@ -10,22 +10,11 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public abstract class ExcelUtils {
-
-//	private static CellStyle thStyle;
-//	private static CellStyle tdStyle;
-//	private static CellStyle cellCenter;
-//	private static CellStyle cellRight;
-//	private static CellStyle cellLeft;
-//
-//	private static CellStyle headerCenter;
-//	private static CellStyle headerRight;
-//	private static CellStyle headerLeft;
-//	private static Font fontHeader;
-//
-//	private static XSSFCellStyle thCpColor;
 
 	private static final String defaultDatePattern = "dd/MM/yyyy HH:mm:ss";
 
@@ -77,34 +66,6 @@ public abstract class ExcelUtils {
 		return strCellValue;
 	}
 
-//	public static CellStyle getThStyle() {
-//		return thStyle;
-//	}
-//
-//	public static CellStyle getTdStyle() {
-//		return tdStyle;
-//	}
-//
-//	public static CellStyle getHeaderCenter() {
-//		return headerCenter;
-//	}
-//
-//	public static CellStyle getCellCenter() {
-//		return cellCenter;
-//	}
-//
-//	public static CellStyle getCellRight() {
-//		return cellRight;
-//	}
-//
-//	public static CellStyle getCellLeft() {
-//		return cellLeft;
-//	}
-//
-//	public static XSSFCellStyle getThCpColor() {
-//		return thCpColor;
-//	}
-
 	public static XSSFCellStyle createThCellStyle(XSSFWorkbook workbook) {
 		XSSFCellStyle thStyle = workbook.createCellStyle();
 		thStyle.setAlignment(HorizontalAlignment.CENTER);
@@ -121,7 +82,6 @@ public abstract class ExcelUtils {
 
 	public static XSSFCellStyle createTdCellStyle(XSSFWorkbook workbook) {
 		XSSFCellStyle tdStyle = workbook.createCellStyle();
-		tdStyle = workbook.createCellStyle();
 		tdStyle.setVerticalAlignment(VerticalAlignment.TOP);
 		tdStyle.setBorderBottom(BorderStyle.THIN);
 		tdStyle.setBorderLeft(BorderStyle.THIN);
@@ -132,7 +92,6 @@ public abstract class ExcelUtils {
 
 	public static XSSFCellStyle createCenterCellStyle(XSSFWorkbook workbook) {
 		XSSFCellStyle cellCenter = workbook.createCellStyle();
-		cellCenter = workbook.createCellStyle();
 		cellCenter.setAlignment(HorizontalAlignment.CENTER);
 		cellCenter.setVerticalAlignment(VerticalAlignment.TOP);
 		cellCenter.setBorderBottom(BorderStyle.THIN);
@@ -145,7 +104,6 @@ public abstract class ExcelUtils {
 
 	public static XSSFCellStyle createRightCellStyle(XSSFWorkbook workbook) {
 		XSSFCellStyle cellRight = workbook.createCellStyle();
-		cellRight = workbook.createCellStyle();
 		cellRight.setAlignment(HorizontalAlignment.RIGHT);
 		cellRight.setVerticalAlignment(VerticalAlignment.TOP);
 		cellRight.setBorderBottom(BorderStyle.THIN);
@@ -158,7 +116,6 @@ public abstract class ExcelUtils {
 
 	public static XSSFCellStyle createLeftCellStyle(XSSFWorkbook workbook) {
 		XSSFCellStyle cellLeft = workbook.createCellStyle();
-		cellLeft = workbook.createCellStyle();
 		cellLeft.setAlignment(HorizontalAlignment.LEFT);
 		cellLeft.setVerticalAlignment(VerticalAlignment.TOP);
 		cellLeft.setBorderBottom(BorderStyle.THIN);
@@ -170,34 +127,50 @@ public abstract class ExcelUtils {
 		return cellLeft;
 	}
 
-//	public static XSSFWorkbook setUpExcel() {
-//		XSSFWorkbook workbook = new XSSFWorkbook();
+	public static XSSFCellStyle createThColorStyle(XSSFWorkbook workbook, XSSFColor color) {
+		XSSFCellStyle thColor = workbook.createCellStyle();
+		thColor.setFillForegroundColor(color);
+		thColor.setAlignment(HorizontalAlignment.CENTER);
+		thColor.setVerticalAlignment(VerticalAlignment.CENTER);
+		thColor.setBorderBottom(BorderStyle.THIN);
+		thColor.setBorderLeft(BorderStyle.THIN);
+		thColor.setBorderRight(BorderStyle.THIN);
+		thColor.setBorderTop(BorderStyle.THIN);
+		thColor.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		thColor.setWrapText(true);
+		return thColor;
+	}
 
-//		fontHeader = workbook.createFont();
-//		fontHeader.setBold(true);
-//
-//		headerCenter = workbook.createCellStyle();
-//		headerCenter.setAlignment(HorizontalAlignment.CENTER);
-//		headerCenter.setFont(fontHeader);
-//
-//		headerRight = workbook.createCellStyle();
-//		headerRight.setAlignment(HorizontalAlignment.RIGHT);
-//
-//		headerLeft = workbook.createCellStyle();
-//		headerLeft.setAlignment(HorizontalAlignment.LEFT);
-//
-//		thCpColor = workbook.createCellStyle();
-//		thCpColor.setFillForegroundColor(new XSSFColor(new java.awt.Color(24, 75, 125)));
-//		thCpColor.setAlignment(HorizontalAlignment.CENTER);
-//		thCpColor.setVerticalAlignment(VerticalAlignment.CENTER);
-//		thCpColor.setBorderBottom(BorderStyle.THIN);
-//		thCpColor.setBorderLeft(BorderStyle.THIN);
-//		thCpColor.setBorderRight(BorderStyle.THIN);
-//		thCpColor.setBorderTop(BorderStyle.THIN);
-//		thCpColor.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-//		thCpColor.setWrapText(true);
-//
-//		return workbook;
-//	}
+	public static XSSFCellStyle createTopicCenterStyle(XSSFWorkbook workbook) {
+		XSSFCellStyle topicCenter = workbook.createCellStyle();
+		topicCenter.setAlignment(HorizontalAlignment.CENTER);
+		topicCenter.setFont(createTopicFontBold(workbook));
+		return topicCenter;
+	}
+
+	public static XSSFCellStyle createTopicRightStyle(XSSFWorkbook workbook) {
+		XSSFCellStyle topicRight = workbook.createCellStyle();
+		topicRight.setAlignment(HorizontalAlignment.RIGHT);
+		topicRight.setFont(createTopicFontBold(workbook));
+		return topicRight;
+	}
+
+	public static XSSFCellStyle createTopicLeftStyle(XSSFWorkbook workbook) {
+		XSSFCellStyle topicLeft = workbook.createCellStyle();
+		topicLeft.setAlignment(HorizontalAlignment.LEFT);
+		topicLeft.setFont(createTopicFontBold(workbook));
+		return topicLeft;
+	}
+
+	public static XSSFFont createTopicFontBold(XSSFWorkbook workbook) {
+		return createTopicFontBold(workbook, XSSFFont.DEFAULT_FONT_NAME);
+	}
+
+	public static XSSFFont createTopicFontBold(XSSFWorkbook workbook, String fontName) {
+		XSSFFont fontBold = workbook.createFont();
+		fontBold.setFontName(fontName);
+		fontBold.setBold(true);
+		return fontBold;
+	}
 
 }
