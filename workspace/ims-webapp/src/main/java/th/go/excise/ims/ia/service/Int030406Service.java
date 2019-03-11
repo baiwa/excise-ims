@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.persistence.entity.IaRiskCheckPeriod;
 import th.go.excise.ims.ia.persistence.repository.IaRiskCheckPeriodRepository;
-import th.go.excise.ims.ia.persistence.repository.IaRiskProjectEfficiencyRepository;
 import th.go.excise.ims.ia.util.IntCalculateCriteriaUtil;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
 import th.go.excise.ims.ia.vo.Int0301Vo;
@@ -19,9 +18,7 @@ import th.go.excise.ims.ia.vo.IntCalculateCriteriaVo;
 
 @Service
 public class Int030406Service {
-	@Autowired
-	private IaRiskProjectEfficiencyRepository iaRiskProjectEfficiencyRepository;
-	
+
 	@Autowired
 	private Int030405Service int030405Service;
 	
