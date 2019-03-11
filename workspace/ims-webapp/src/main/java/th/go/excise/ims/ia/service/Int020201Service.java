@@ -17,7 +17,7 @@ import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireSideRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireMadeJdbcRepository;
 import th.go.excise.ims.ia.vo.Int020201DtlVo;
 import th.go.excise.ims.ia.vo.Int020201JoinVo;
-import th.go.excise.ims.ia.vo.Int020201SidesVo;
+import th.go.excise.ims.ia.vo.Int020201SidesFormVo;
 import th.go.excise.ims.ia.vo.Int020201Vo;
 
 @Service
@@ -35,7 +35,7 @@ public class Int020201Service {
 	@Autowired
 	private IaQuestionnaireMadeHdrRepository iaQuestionnaireMadeHdrRepository;
 
-	public List<IaQuestionnaireSide> findQtnSideById(Int020201SidesVo request) {
+	public List<IaQuestionnaireSide> findQtnSideById(Int020201SidesFormVo request) {
 		return iaQuestionnaireSideRepository.findByidHead(request.getIdSide());
 	}
 
@@ -43,49 +43,63 @@ public class Int020201Service {
 		return iaQuestionnaireMadeHdrRepository.findById(id).get();
 	}
 
-	public Int020201Vo findQtnSideDtlById(Int020201SidesVo request) {
+	public Int020201Vo findQtnSideDtlById(Int020201Vo dataQtn) {
 		List<Int020201JoinVo> dataLVL1 = null;
 		List<Int020201JoinVo> dataLVL2 = null;
 		List<Int020201JoinVo> dataLVL3 = null;
-		List<List<Int020201JoinVo>> dataRes = new ArrayList<List<Int020201JoinVo>>();
+
+		List<Int020201SidesFormVo> dataRes = new ArrayList<Int020201SidesFormVo>();
 		Int020201Vo response = new Int020201Vo();
 
-		for (Int020201SidesVo dataRequest : request.getRequest()) {
-			/* variable check status check */
-//			Boolean checkLVL1 = false;
-//			Boolean checkLVL2 = false;
-//			Boolean checkLVL3 = false;
+		for (Int020201SidesFormVo requestSide : dataQtn.getHeader()) {
+
+			/* initial variable 'checkNull' */
+			Integer checkNull = 0;
 
 			dataLVL1 = new ArrayList<Int020201JoinVo>();
-			dataLVL1 = iaQuestionnaireMadeJdbcRepository.findLvl1ByIdMadeHdr(dataRequest);
-//			if (dataLVL1.size() > 0) {
-				for (Int020201JoinVo objLVL1 : dataLVL1) {
-					dataLVL2 = new ArrayList<Int020201JoinVo>();
-					dataLVL2 = iaQuestionnaireMadeJdbcRepository.findLvl2ByIdMadeHdr(objLVL1);
+			dataLVL1 = iaQuestionnaireMadeJdbcRepository.findLvl1ByIdMadeHdr(requestSide);
+
+			for (Int020201JoinVo objLVL1 : dataLVL1) {
+				dataLVL2 = new ArrayList<Int020201JoinVo>();
+				dataLVL2 = iaQuestionnaireMadeJdbcRepository.findLvl2ByIdMadeHdr(objLVL1);
+				objLVL1.setChildren(dataLVL2);
+				/* check children level-1 */
+				if (dataLVL2.size() > 0) {
+					/* level 1 have children */
 					for (Int020201JoinVo objLVL2 : dataLVL2) {
 						dataLVL3 = new ArrayList<Int020201JoinVo>();
 						dataLVL3 = iaQuestionnaireMadeJdbcRepository.findLvl3ByIdMadeHdr(objLVL2);
 						objLVL2.setChildren(dataLVL3);
-					}
-					objLVL1.setChildren(dataLVL2);
-				}
-//			}else {
-//				/* count check null */
-//				Integer countNull = iaQuestionnaireMadeJdbcRepository.countCheckNull(objLVL1, new BigDecimal(1));
-//				if (countNull == 0) {
-//					checkLVL1 = true;
-//				} else {
-//					checkLVL1 = false;
-//				}
-//			}
-			dataRes.add(dataLVL1);
-		}
-		response.setHeader(dataRes);
 
-		return response;
+						if (dataLVL3.size() == 0) {
+							/* level-2 not have children */
+							checkNull += iaQuestionnaireMadeJdbcRepository.countCheckNull(objLVL2, 2);
+						} else {
+							/* check null level-3 */
+							for (Int020201JoinVo objLVL3 : dataLVL3) {
+								checkNull += iaQuestionnaireMadeJdbcRepository.countCheckNull(objLVL3, 3);
+							}
+						}
+					}
+				} else {
+					/* level-1 not have children */
+					checkNull += iaQuestionnaireMadeJdbcRepository.countCheckNull(objLVL1, 1);
+				}
+			}
+			requestSide.setSides(dataLVL1);
+			if (checkNull > 0) {
+				requestSide.setStatusSides(false);
+			} else {
+				requestSide.setStatusSides(true);
+			}
+//			dataRes.add(requestSide);
+		}
+//		response.setHeader(dataRes);
+
+		return dataQtn;
 	}
 
-	public void updateQtnMadeByRequest(Int020201DtlVo request) {
+	public void updateQtnMadeByRequest(Int020201DtlVo request) throws Exception {
 		if (request.getQtnMadeList().size() > 0) {
 			for (IaQuestionnaireMade objMadeDtl : request.getQtnMadeList()) {
 				/* check data */

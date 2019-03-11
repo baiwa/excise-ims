@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.go.excise.ims.ia.vo.Int020201JoinVo;
-import th.go.excise.ims.ia.vo.Int020201SidesVo;
+import th.go.excise.ims.ia.vo.Int020201SidesFormVo;
 
 @Repository
 public class IaQuestionnaireMadeJdbcRepository {
@@ -34,7 +34,7 @@ public class IaQuestionnaireMadeJdbcRepository {
 		return commonJdbcTemplate.queryForObject(sql.toString(), params.toArray(), BigDecimal.class);
 	}
 	
-	public List<Int020201JoinVo> findLvl1ByIdMadeHdr(Int020201SidesVo request) {
+	public List<Int020201JoinVo> findLvl1ByIdMadeHdr(Int020201SidesFormVo request) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		sql.append(" SELECT M.ID, M.ID_MADE_HDR, SD.ID_SIDE, M.ID_SIDE_DTL, SD.SIDE_DTL, M.QTN_LEVEL, ");
@@ -111,15 +111,15 @@ public class IaQuestionnaireMadeJdbcRepository {
 		return data;
 	}
 	
-	public Integer countCheckNull(Int020201JoinVo request, BigDecimal level) {
+	public Integer countCheckNull(Int020201JoinVo request, Integer level) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		sql.append(" SELECT COUNT(*) FROM IA_QUESTIONNAIRE_MADE MD ");
 		sql.append(" INNER JOIN IA_QUESTIONNAIRE_SIDE_DTL SD ");
 		sql.append(" 	ON MD.ID_SIDE_DTL = SD.ID ");
-		sql.append(" WHERE SD.QTN_LEVEL = ? ");
+		sql.append(" WHERE 1 = 1 ");
+		sql.append(" 	AND SD.QTN_LEVEL = ? ");
 		sql.append(" 	AND MD.ID_MADE_HDR = ? ");
-		sql.append("	AND SD.SEQ = ? ");
 		sql.append(" 	AND SD.ID_SIDE = ? ");
 		sql.append(" 	AND MD.IS_DELETED = 'N' ");
 		sql.append(" 	AND SD.IS_DELETED = 'N' ");
@@ -127,8 +127,16 @@ public class IaQuestionnaireMadeJdbcRepository {
 
 		params.add(level);
 		params.add(request.getIdMadeHdr());
-		params.add(request.getSeq());
 		params.add(request.getIdSide());
+		
+		if(level == 2) {
+			params.add(request.getSeqDtl());
+			sql.append("	AND SD.SEQ_DTL = ? ");
+		}
+		if(level != 3) {
+			params.add(request.getSeq());
+			sql.append("	AND SD.SEQ = ? ");
+		}
 		 
 		Integer countNull = commonJdbcTemplate.queryForObject(sql.toString(), params.toArray(), Integer.class);
 		return countNull;

@@ -22,7 +22,10 @@ public class Int020201JoinVo {
 	private BigDecimal idHeading;
 	
 	/* set children */
-	List<Int020201JoinVo> children = null;
+	private List<Int020201JoinVo> children = null;
+	
+	/* check null of level */
+	private String statusSides;
 	
 	public BigDecimal getId() {
 		return id;
@@ -107,6 +110,12 @@ public class Int020201JoinVo {
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}
+	public String getStatusSides() {
+		return statusSides;
+	}
+	public void setStatusSides(String statusSides) {
+		this.statusSides = statusSides;
 	}
 	
 }

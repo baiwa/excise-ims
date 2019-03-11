@@ -3,13 +3,13 @@ package th.go.excise.ims.ia.vo;
 import java.util.List;
 
 public class Int020201Vo {
-	List<List<Int020201JoinVo>> header;
+	List<Int020201SidesFormVo> header;
 
-	public List<List<Int020201JoinVo>> getHeader() {
+	public List<Int020201SidesFormVo> getHeader() {
 		return header;
 	}
 
-	public void setHeader(List<List<Int020201JoinVo>> header) {
+	public void setHeader(List<Int020201SidesFormVo> header) {
 		this.header = header;
 	}
 	

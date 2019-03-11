@@ -22,8 +22,9 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMadeHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
 import th.go.excise.ims.ia.service.Int020201Service;
+import th.go.excise.ims.ia.service.Int020201SidesVo;
 import th.go.excise.ims.ia.vo.Int020201DtlVo;
-import th.go.excise.ims.ia.vo.Int020201SidesVo;
+import th.go.excise.ims.ia.vo.Int020201SidesFormVo;
 import th.go.excise.ims.ia.vo.Int020201Vo;
 
 @Controller
@@ -36,7 +37,7 @@ public class Int020201Controller {
 
 	@PostMapping("/find-qtnside-by-id")
 	@ResponseBody
-	public ResponseData<List<IaQuestionnaireSide>> findQtnSideById(@RequestBody Int020201SidesVo request) {
+	public ResponseData<List<IaQuestionnaireSide>> findQtnSideById(@RequestBody Int020201SidesFormVo request) {
 		logger.info("find-by-id IaQuestionnaireSide");
 
 		ResponseData<List<IaQuestionnaireSide>> response = new ResponseData<List<IaQuestionnaireSide>>();
@@ -44,11 +45,11 @@ public class Int020201Controller {
 		try {
 			data = int020201Service.findQtnSideById(request);
 			response.setData(data);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 
@@ -71,7 +72,7 @@ public class Int020201Controller {
 
 	@PostMapping("/find-qtnside-dtl-by-id")
 	@ResponseBody
-	public ResponseData<Int020201Vo> findQtnSideDtlById(@RequestBody Int020201SidesVo request) {
+	public ResponseData<Int020201Vo> findQtnSideDtlById(@RequestBody Int020201Vo request) {
 		logger.info("find-by-id IaQuestionnaireSideDtl");
 
 		ResponseData<Int020201Vo> response = new ResponseData<Int020201Vo>();
@@ -79,11 +80,11 @@ public class Int020201Controller {
 		try {
 			data = int020201Service.findQtnSideDtlById(request);
 			response.setData(data);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 
