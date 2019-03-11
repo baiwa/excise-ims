@@ -1,6 +1,11 @@
 package th.go.excise.ims.ia.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +48,25 @@ public class Int030407Controller {
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
+	}
+	
+
+	@GetMapping("/year/export/{budgetYear}/{idConfig}")
+	public void exportByYear(@PathVariable("budgetYear") String budgetYear, @PathVariable("idConfig") String idConfigStr, HttpServletResponse response) throws Exception {
+		// set fileName
+		String fileName = URLEncoder.encode("สรุปผลปัจจัยเสี่ยงประสิทธิภาพของการจัดเก็บรายได้", "UTF-8");
+
+		// write it as an excel attachment
+		ByteArrayOutputStream outByteStream = int030407Service.exportInt030407(budgetYear, idConfigStr);
+		byte[] outArray = outByteStream.toByteArray();
+		response.setContentType("application/octet-stream");
+		response.setContentLength(outArray.length);
+		response.setHeader("Expires:", "0"); // eliminates browser caching
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+		OutputStream outStream = response.getOutputStream();
+		outStream.write(outArray);
+		outStream.flush();
+		outStream.close();
 	}
 	
 }
