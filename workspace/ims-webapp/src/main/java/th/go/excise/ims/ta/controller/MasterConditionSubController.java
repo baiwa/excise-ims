@@ -102,7 +102,7 @@ public class MasterConditionSubController {
 		return response;
 	}
 	
-	@PostMapping("/get-capital-by-dutycode")
+	@PostMapping("/delete-capital")
 	@ResponseBody
 	public ResponseData<?> deleteCapital(@RequestBody TaMasCondSubCapital form) {
 		ResponseData<?> response = new ResponseData<>();
