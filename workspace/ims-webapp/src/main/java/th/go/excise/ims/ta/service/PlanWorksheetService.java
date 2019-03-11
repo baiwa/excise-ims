@@ -7,8 +7,6 @@ import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +23,7 @@ import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_OFFICE_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
+import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSelect;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetSelectRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
@@ -116,10 +115,12 @@ public class PlanWorksheetService {
 
     @Transactional
     public void savePlanWorksheetDtl(PlanWorksheetVo formVo) {
-        logger.info("savePlanWorkSheetDtl formVo={}", ToStringBuilder.reflectionToString(formVo, ToStringStyle.JSON_STYLE));
-
-        String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-
+    	String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+    	String budgetYear = formVo.getBudgetYear();
+        logger.info("savePlanWorkSheetDtl officeCode={}, budgetYear={}, planNumber={}, analysisNumber={}, newRegIds={}",
+        	officeCode, budgetYear, formVo.getPlanNumber(), formVo.getAnalysisNumber(),
+        	org.springframework.util.StringUtils.collectionToCommaDelimitedString(formVo.getIds()));
+        
         List<String> planNewRegIdList = taPlanWorksheetDtlRepository.findNewRegIdByOfficeCodeAndPlanNumber(officeCode, formVo.getPlanNumber());
         List<String> planNewRegIdFlagNList = taPlanWorksheetDtlRepository.findNewRegIdByOfficeCodeAndPlanNumberAndIsDeletedFlagN(officeCode, formVo.getPlanNumber());
         List<String> selectNewRegIdList = formVo.getIds();
@@ -154,7 +155,7 @@ public class PlanWorksheetService {
                 planDtl.setAuditStatus("I"); // FIXME
                 taPlanWorksheetDtlRepository.save(planDtl);
                 
-                updateFlagTaWorksheetDtl(officeCode, FLAG.Y_FLAG, newRegId, LocalDate.now(), formVo);
+                updateFlagWorksheetSelect(budgetYear, newRegId, officeCode, FLAG.Y_FLAG, LocalDate.now());
             }
         }
 
@@ -175,38 +176,39 @@ public class PlanWorksheetService {
                     selDate = null;
                 }
                 taPlanWorksheetDtlRepository.updateIsDeletedByPlanNumberAndNewRegId(isDeletedPlanDtl, formVo.getPlanNumber(), newRegId);
-                updateFlagTaWorksheetDtl(officeCode, selFlag, newRegId, selDate, formVo);
+                updateFlagWorksheetSelect(budgetYear, newRegId, officeCode, selFlag, selDate);
             }
         } else {
-            for (String selecNewRegtId : selectNewRegIdList) {
-                if (!planNewRegIdFlagNList.contains(selecNewRegtId)) {
+            for (String selecNewRegId : selectNewRegIdList) {
+                if (!planNewRegIdFlagNList.contains(selecNewRegId)) {
                     isDeletedPlanDtl = FLAG.N_FLAG;
                     selFlag = FLAG.Y_FLAG;
                     selDate = LocalDate.now();
-                    taPlanWorksheetDtlRepository.updateIsDeletedByPlanNumberAndNewRegId(isDeletedPlanDtl, formVo.getPlanNumber(), selecNewRegtId);
-                    updateFlagTaWorksheetDtl(officeCode, selFlag, selecNewRegtId, selDate, formVo);
+                    taPlanWorksheetDtlRepository.updateIsDeletedByPlanNumberAndNewRegId(isDeletedPlanDtl, formVo.getPlanNumber(), selecNewRegId);
+                    updateFlagWorksheetSelect(budgetYear, selecNewRegId, officeCode, selFlag, selDate);
                 }
             }
         }
     }
 
-    private void updateFlagTaWorksheetDtl(String officeCode, String selFlag, String newRegtId, LocalDate selDate, PlanWorksheetVo formVo) {
-    	// FIXME
-//        TaWorksheetDtl worksheetDtl = taWorksheetDtlRepository.findByAnalysisNumberAndNewRegId(formVo.getAnalysisNumber(), newRegtId);
-//        if (ExciseUtils.isCentral(officeCode)) {
-//            worksheetDtl.setCentralSelFlag(selFlag);
-//            worksheetDtl.setCentralSelDate(selDate);
-//            worksheetDtl.setCentralSelOfficeCode(officeCode);
-//        } else if (ExciseUtils.isSector(officeCode)) {
-//            worksheetDtl.setSectorSelFlag(selFlag);
-//            worksheetDtl.setSectorSelDate(selDate);
-//            worksheetDtl.setSectorSelOfficeCode(officeCode);
-//        } else if (ExciseUtils.isArea(officeCode)) {
-//            worksheetDtl.setAreaSelFlag(selFlag);
-//            worksheetDtl.setAreaSelDate(selDate);
-//            worksheetDtl.setAreaSelOfficeCode(officeCode);
-//        }
-//        taWorksheetDtlRepository.save(worksheetDtl);
+    private void updateFlagWorksheetSelect(String budgetYear, String newRegId, String officeCode, String selFlag, LocalDate selDate) {
+    	logger.info("updateFlagWorksheetSelect budgetYear={}, newRegId={}, officeCode={}, selFlag={}, selDate={}",
+    		budgetYear, newRegId, officeCode, selFlag, selDate);
+    	TaPlanWorksheetSelect planWorksheetSel = taPlanWorksheetSelectRepository.findByBudgetYearAndNewRegId(budgetYear, newRegId);
+        if (ExciseUtils.isCentral(officeCode)) {
+        	planWorksheetSel.setCentralSelFlag(selFlag);
+        	planWorksheetSel.setCentralSelDate(selDate);
+        	planWorksheetSel.setCentralSelOfficeCode(officeCode);
+        } else if (ExciseUtils.isSector(officeCode)) {
+        	planWorksheetSel.setSectorSelFlag(selFlag);
+        	planWorksheetSel.setSectorSelDate(selDate);
+        	planWorksheetSel.setSectorSelOfficeCode(officeCode);
+        } else if (ExciseUtils.isArea(officeCode)) {
+        	planWorksheetSel.setAreaSelFlag(selFlag);
+        	planWorksheetSel.setAreaSelDate(selDate);
+        	planWorksheetSel.setAreaSelOfficeCode(officeCode);
+        }
+        taPlanWorksheetSelectRepository.save(planWorksheetSel);
     }
 
     public List<TaPlanWorksheetDtl> findPlanWorksheetDtl(PlanWorksheetVo formVo) {

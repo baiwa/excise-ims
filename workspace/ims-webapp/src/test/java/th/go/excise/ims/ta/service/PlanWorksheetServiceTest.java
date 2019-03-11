@@ -10,6 +10,7 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
@@ -23,15 +24,16 @@ public class PlanWorksheetServiceTest {
 	@Autowired
 	private PlanWorksheetService planWorksheetService;
 	
-//	@Test
+	@Test
 	public void test_savePlanWorksheetHdr() {
 		PlanWorksheetVo formVo = new PlanWorksheetVo();
 		formVo.setBudgetYear("2562");
-		formVo.setAnalysisNumber("000000-2562-000001");
+		formVo.setAnalysisNumber("000000-2562-000023");
+		formVo.setSendAllFlag(FLAG.N_FLAG);
 		planWorksheetService.savePlanWorksheetHdr(formVo);
 	}
 	
-	@Test
+//	@Test
 	public void test_savePlanWorksheetDtl() {
 		PlanWorksheetVo formVo = new PlanWorksheetVo();
 		formVo.setAnalysisNumber("000000-2562-000001");

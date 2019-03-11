@@ -3,6 +3,7 @@ package th.go.excise.ims.ta.persistence.repository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +18,8 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CONFIG;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
@@ -69,13 +72,20 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		sql.append("   ,ED_SECTOR.OFF_SHORT_NAME SEC_DESC ");
 		sql.append("   ,ED_AREA.OFFICE_CODE AREA_CODE ");
 		sql.append("   ,ED_AREA.OFF_SHORT_NAME AREA_DESC ");
-		sql.append("   ,TA_W_DTL.COND_MAIN_GRP ");
 		sql.append("   ,TA_W_HDR.ANALYSIS_NUMBER ");
-		sql.append("   ,TA_W_DTL.CENTRAL_SEL_FLAG "); // FIXME
-		sql.append("   ,TA_W_DTL.CENTRAL_SEL_OFFICE_CODE ");
-		sql.append("   ,TA_W_DTL.SECTOR_SEL_FLAG ");
-		sql.append("   ,TA_W_DTL.SECTOR_SEL_OFFICE_CODE ");
-		sql.append("   ,TA_W_DTL.AREA_SEL_FLAG ");
+		sql.append("   ,TA_W_DTL.COND_MAIN_GRP ");
+		sql.append("   ,TA_W_DTL.COND_SUB_CAPITAL ");
+		sql.append("   ,TA_W_DTL.COND_SUB_RISK ");
+		sql.append("   ,TA_W_DTL.COND_SUB_NO_AUDIT ");
+		sql.append("   ,TA_PW_SEL.CENTRAL_SEL_FLAG ");
+		sql.append("   ,TA_PW_SEL.CENTRAL_SEL_OFFICE_CODE ");
+		sql.append("   ,TA_PW_SEL.CENTRAL_SEL_DATE ");
+		sql.append("   ,TA_PW_SEL.SECTOR_SEL_FLAG ");
+		sql.append("   ,TA_PW_SEL.SECTOR_SEL_OFFICE_CODE ");
+		sql.append("   ,TA_PW_SEL.SECTOR_SEL_DATE ");
+		sql.append("   ,TA_PW_SEL.AREA_SEL_FLAG ");
+		sql.append("   ,TA_PW_SEL.AREA_SEL_OFFICE_CODE ");
+		sql.append("   ,TA_PW_SEL.AREA_SEL_DATE ");
 		sql.append("   ,TA_DW_DTL.* ");
 		sql.append(" FROM TA_WORKSHEET_DTL TA_W_DTL ");
 		sql.append(" INNER JOIN TA_WORKSHEET_HDR TA_W_HDR ON TA_W_DTL.ANALYSIS_NUMBER = TA_W_HDR.ANALYSIS_NUMBER ");
@@ -101,28 +111,22 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		sql.append("   WHERE IS_DELETED = 'N' ");
 		sql.append("     AND CONCAT (SUBSTR(OFF_CODE, 0, 4),'00') = OFF_CODE ");
 		sql.append("   ) ED_AREA ON ED_AREA.OFFICE_CODE = CONCAT (SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
+		sql.append(" INNER JOIN TA_PLAN_WORKSHEET_SELECT TA_PW_SEL ON TA_PW_SEL.NEW_REG_ID = TA_DW_DTL.NEW_REG_ID ");
+		sql.append("   AND TA_PW_SEL.IS_DELETED = 'N' ");
+		sql.append("   AND TA_PW_SEL.BUDGET_YEAR = ? ");
 		sql.append(" WHERE TA_W_HDR.IS_DELETED = 'N' ");
 		sql.append("   AND TA_W_HDR.ANALYSIS_NUMBER = ? ");
 
+		params.add(formVo.getBudgetYear());
 		params.add(formVo.getAnalysisNumber());
 
 		if (StringUtils.isNotBlank(formVo.getCond())) {
 			sql.append(" AND TA_W_DTL.COND_MAIN_GRP = ? ");
 			params.add(formVo.getCond());
 		}
-
-		sql.append(" AND R4000.OFFICE_CODE LIKE ? ");
-		params.add(ExciseUtils.whereInLocalOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode()));
-	}
-
-	public List<TaxOperatorDetailVo> findByCriteria(TaxOperatorFormVo formVo) {
-		StringBuilder sql = new StringBuilder();
-		List<Object> params = new ArrayList<>();
-		buildByCriteriaQuery(sql, params, formVo);
-
-		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-
+		
 		// TODO Check allow see Factory that selected by other with
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		// TA_CONFIG.SEE_FLAG == "Y|N"
 		if (!ExciseUtils.isCentral(officeCode)) {
 			ParamInfo paramInfo = ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.SEE_FLAG);
@@ -134,6 +138,15 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 				}
 			}
 		}
+		
+		sql.append(" AND R4000.OFFICE_CODE LIKE ? ");
+		params.add(ExciseUtils.whereInLocalOfficeCode(officeCode));
+	}
+
+	public List<TaxOperatorDetailVo> findByCriteria(TaxOperatorFormVo formVo) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		buildByCriteriaQuery(sql, params, formVo);
 
 		sql.append(" ORDER BY R4000.DUTY_CODE, R4000.OFFICE_CODE, TA_DW_DTL.NEW_REG_ID ");
 
@@ -174,8 +187,9 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 				}
 			}
 			vo.setAreaSelFlag(rs.getString("AREA_SEL_FLAG"));
-			if (StringUtils.isNotBlank(vo.getAreaSelFlag())) {
-				vo.setAreaSelDate("");
+			if (FLAG.Y_FLAG.equals(vo.getAreaSelFlag())) {
+				LocalDate localDate = LocalDateConverter.convertToEntityAttribute(rs.getDate("AREA_SEL_DATE"));
+				vo.setAreaSelDate(ConvertDateUtils.formatLocalDateToString(localDate, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 				vo.setAreaSelOfficeCode(rs.getString("AREA_SEL_OFFICE_CODE"));
 				if (StringUtils.isNotBlank(vo.getAreaSelOfficeCode())) {
 					vo.setSelectBy(ApplicationCache.getExciseDept(vo.getAreaSelOfficeCode()).getDeptShortName());
