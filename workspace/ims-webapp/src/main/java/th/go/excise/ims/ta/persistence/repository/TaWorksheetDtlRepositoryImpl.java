@@ -132,9 +132,9 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
             ParamInfo paramInfo = ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.SEE_FLAG);
             if (CommonConstants.FLAG.N_FLAG.equals(paramInfo.getValue1())) {
                 if (ExciseUtils.isSector(officeCode)) {
-                    sql.append(" AND TA_W_DTL.CENTRAL_SEL_FLAG IS NULL ");
+                    sql.append(" AND TA_PW_SEL.CENTRAL_SEL_FLAG IS NULL ");
                 } else {
-                    sql.append(" AND TA_W_DTL.CENTRAL_SEL_FLAG IS NULL AND SECTOR_SEL_FLAG IS NULL ");
+                    sql.append(" AND TA_PW_SEL.CENTRAL_SEL_FLAG IS NULL AND TA_PW_SEL.SECTOR_SEL_FLAG IS NULL ");
                 }
             }
         }
