@@ -29,11 +29,10 @@ public class Int030404Controller {
 	@ResponseBody
 	public DataTableAjax<Int030404Vo> projectEfficiencyList(@RequestBody Int030404FormVo form) {
 		DataTableAjax<Int030404Vo> response = new DataTableAjax<Int030404Vo>();
-		Int030404Vo projectEfficiency = new Int030404Vo();
+//		Int030404Vo projectEfficiency = new Int030404Vo();
 		List<Int030404Vo> projectEfficiencyList = new ArrayList<Int030404Vo>();
 		try {
-			projectEfficiency = int030404Service.projectEfficiencyList(form);
-			projectEfficiencyList.add(projectEfficiency);
+			projectEfficiencyList =  int030404Service.projectEfficiencyList(form);
 			response.setData(projectEfficiencyList);
 
 		} catch (Exception e) {

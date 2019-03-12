@@ -1,17 +1,25 @@
 package th.go.excise.ims.ia.vo;
 
-import java.util.List;
-
 public class Int030404Vo {
 
-	private List<IaRiskProEfVo> iaRiskProEfVo;
+	private IaRiskProEfVo iaRiskProEfVo;
 
-	public List<IaRiskProEfVo> getIaRiskProEfVo() {
+	private IntCalculateCriteriaVo intCalculateCriteriaVo;
+
+	public IaRiskProEfVo getIaRiskProEfVo() {
 		return iaRiskProEfVo;
 	}
 
-	public void setIaRiskProEfVo(List<IaRiskProEfVo> iaRiskProEfVo) {
+	public void setIaRiskProEfVo(IaRiskProEfVo iaRiskProEfVo) {
 		this.iaRiskProEfVo = iaRiskProEfVo;
+	}
+
+	public IntCalculateCriteriaVo getIntCalculateCriteriaVo() {
+		return intCalculateCriteriaVo;
+	}
+
+	public void setIntCalculateCriteriaVo(IntCalculateCriteriaVo intCalculateCriteriaVo) {
+		this.intCalculateCriteriaVo = intCalculateCriteriaVo;
 	}
 
 }

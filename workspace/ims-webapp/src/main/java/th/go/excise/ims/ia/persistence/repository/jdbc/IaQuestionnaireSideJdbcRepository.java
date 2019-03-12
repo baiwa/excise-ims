@@ -51,7 +51,7 @@ public class IaQuestionnaireSideJdbcRepository {
 		sqlBuilder.append(" FROM IA_QUESTIONNAIRE_SIDE S ");
 		sqlBuilder.append(" WHERE S.ID_HEAD  = ? ");
 		sqlBuilder.append(" AND S.IS_DELETED = 'N' ");
-		sqlBuilder.append(" ORDER BY S.ID DESC ");
+		sqlBuilder.append(" ORDER BY S.SEQ ASC ");
 		params.add(idHead);
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<Int020101Vo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(),new BeanPropertyRowMapper(Int020101Vo.class));
