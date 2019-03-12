@@ -108,6 +108,23 @@ public class Int0201Controller {
 		}
 		return response;
 	}
+	
+	@PostMapping("/update/status")
+	@ResponseBody
+	public ResponseData<IaQuestionnaireHdr> updateStatusQtnHdr(@RequestBody Int0201FormVo request) {
+		ResponseData<IaQuestionnaireHdr> response = new ResponseData<IaQuestionnaireHdr>();
+		try {
+			response.setData(int0201Service.updateStatus(request));
+//			response.setMessage(ApplicationCache.getParamInfoByCode("IA_QTN_MESSAGE", request.getStatus()).getValue1());
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
 
 	/*
 	 * ==================== == CONFIGS `START`== ====================

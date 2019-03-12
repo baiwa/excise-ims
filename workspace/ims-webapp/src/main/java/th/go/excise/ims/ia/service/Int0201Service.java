@@ -127,8 +127,9 @@ public class Int0201Service {
 						dataMadeHdr.setOfficeCode(officeCode);
 						IaQuestionnaireMadeHdr resMadeHdr = iaQuestionnaireMadeHdrRepository.save(dataMadeHdr);
 						// find sides
-						List<IaQuestionnaireSide> sides = iaQuestionnaireSideRepository.findByidHeadAndIsDeleted(dataHdr.getId(), "N");
-						for(IaQuestionnaireSide side: sides) {
+						List<IaQuestionnaireSide> sides = iaQuestionnaireSideRepository
+								.findByidHeadAndIsDeleted(dataHdr.getId(), "N");
+						for (IaQuestionnaireSide side : sides) {
 							// find side dtls
 							List<Int02010101Vo> dtls = int02010101Service.findByIdSide(side.getId().toString());
 							/* save Questionnaire Made */
@@ -142,7 +143,7 @@ public class Int0201Service {
 								qtnMade.setOfficeCode(officeCode);
 								qtnMade.setIdMadeHdr(resMadeHdr.getId());
 								qtnMades.add(qtnMade);
-								for(Int02010101Vo dt : dtl.getChildren()) {
+								for (Int02010101Vo dt : dtl.getChildren()) {
 									qtnMade = new IaQuestionnaireMade();
 									qtnMade.setIdSideDtl(dt.getId());
 									qtnMade.setQtnLevel(dt.getQtnLevel());
@@ -150,7 +151,7 @@ public class Int0201Service {
 									qtnMade.setOfficeCode(officeCode);
 									qtnMade.setIdMadeHdr(resMadeHdr.getId());
 									qtnMades.add(qtnMade);
-									for(Int02010101Vo d : dt.getChildren()) {
+									for (Int02010101Vo d : dt.getChildren()) {
 										qtnMade = new IaQuestionnaireMade();
 										qtnMade.setIdSideDtl(d.getId());
 										qtnMade.setQtnLevel(d.getQtnLevel());
@@ -312,6 +313,26 @@ public class Int0201Service {
 				iaQuestionnaireMadeRepository.save(qtnMade);
 			} // end loop 2
 		}
+	}
+
+	public IaQuestionnaireHdr updateStatus(Int0201FormVo request) {
+		IaQuestionnaireHdr response = new IaQuestionnaireHdr();
+
+		Optional<IaQuestionnaireHdr> resQtnHdr = iaQuestionnaireHdrRepository.findById(request.getId());
+		if (resQtnHdr.isPresent()) {
+			IaQuestionnaireHdr dataQtnHdr = resQtnHdr.get();
+			if ("1".equals(request.getStatus())) {
+				dataQtnHdr.setStatus("2");
+				response = iaQuestionnaireHdrRepository.save(dataQtnHdr);
+			}else if("2".equals(request.getStatus()) && "PASS".equals(request.getFlagStr())) {
+				dataQtnHdr.setStatus("3");
+				response = iaQuestionnaireHdrRepository.save(dataQtnHdr);
+			}else if("2".equals(request.getStatus()) && "NOT".equals(request.getFlagStr())) {
+				dataQtnHdr.setStatus("1");
+				response = iaQuestionnaireHdrRepository.save(dataQtnHdr);
+			}
+		}
+		return response;
 	}
 
 	/*

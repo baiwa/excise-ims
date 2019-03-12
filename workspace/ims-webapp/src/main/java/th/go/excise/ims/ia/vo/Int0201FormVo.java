@@ -15,6 +15,7 @@ public class Int0201FormVo {
 	private BigDecimal idHead;
 	private String status;
 	private List<String> exciseCodes;
+	private String flagStr;
 	
 	public List<String> getExciseCodes() {
 		return exciseCodes;
@@ -63,6 +64,12 @@ public class Int0201FormVo {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getFlagStr() {
+		return flagStr;
+	}
+	public void setFlagStr(String flagStr) {
+		this.flagStr = flagStr;
 	}
 	
 }

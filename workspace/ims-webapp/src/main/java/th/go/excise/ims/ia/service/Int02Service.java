@@ -90,7 +90,6 @@ public class Int02Service {
 	}
 
 	public IaQuestionnaireHdr save(IaQuestionnaireHdr request) {
-		request.setStatus("WAIT_HDR");
 		return iaQuestionnaireHdrRepository.save(request);
 	}
 
