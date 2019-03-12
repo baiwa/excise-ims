@@ -5,7 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,11 +31,28 @@ public class Oa020301Controller {
 	@Autowired
 	private Oa020301Service int030201Service;
 
+	@GetMapping("/customers/{id}")
+	@ResponseBody
+	public ResponseData<OaCustomer> findById(@PathVariable("id") String idStr) {
+		ResponseData<OaCustomer> responseData = new ResponseData<>();
+		OaCustomer data = new OaCustomer();
+		try {
+			data = int030201Service.findById(idStr);
+			responseData.setData(data);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Oa020301Controller::findById ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+
 	@PostMapping("/save/customer")
 	@ResponseBody
-	public ResponseData<Oa020301FormVo> saveAll(@RequestBody Oa020301FormVo form) {
-		ResponseData<Oa020301FormVo> responseData = new ResponseData<>();
-		Oa020301FormVo data = new Oa020301FormVo();
+	public ResponseData<OaCustomer> saveAll(@RequestBody Oa020301FormVo form) {
+		ResponseData<OaCustomer> responseData = new ResponseData<>();
+		OaCustomer data = new OaCustomer();
 		try {
 			data = int030201Service.saveCustomer(form);
 			responseData.setData(data);
@@ -44,14 +63,30 @@ public class Oa020301Controller {
 			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
+		return responseData;
+	}
 
+	@PutMapping("/update/customer/{id}")
+	@ResponseBody
+	public ResponseData<OaCustomer> updateAll(@RequestBody Oa020301FormVo form, @PathVariable("id") String idStr) {
+		ResponseData<OaCustomer> responseData = new ResponseData<>();
+		OaCustomer data = new OaCustomer();
+		try {
+			data = int030201Service.updateCustomer(form, idStr);
+			responseData.setData(data);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Oa020301Controller::updateAll ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
 		return responseData;
 	}
 
 	@PostMapping("/filter")
 	@ResponseBody
 	public DataTableAjax<OaCustomer> filterByCriteria(@RequestBody Oa020301Vo request) {
-
 		DataTableAjax<OaCustomer> response = new DataTableAjax<>();
 		try {
 			response = int030201Service.filterByCriteria(request);

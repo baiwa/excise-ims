@@ -36,8 +36,8 @@ public class Oa02030101Controller {
 		try {   
 			  
 //			form = new Oa020301FormVo();
-			data = int030201Service.saveCustomer(form);
-			responseData.setData(data);
+//			data = int030201Service.saveCustomer(form);
+//			responseData.setData(data);
 			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) { 
