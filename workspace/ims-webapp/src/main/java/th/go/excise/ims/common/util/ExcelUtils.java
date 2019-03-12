@@ -123,7 +123,6 @@ public abstract class ExcelUtils {
 		cellLeft.setBorderRight(BorderStyle.THIN);
 		cellLeft.setBorderTop(BorderStyle.THIN);
 		cellLeft.setWrapText(true);
-		cellLeft.setWrapText(true);
 		return cellLeft;
 	}
 
