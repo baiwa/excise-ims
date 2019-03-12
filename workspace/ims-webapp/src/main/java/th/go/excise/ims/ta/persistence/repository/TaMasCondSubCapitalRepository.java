@@ -14,7 +14,9 @@ public interface TaMasCondSubCapitalRepository extends CommonJpaCrudRepository<T
 	public List<TaMasCondSubCapital> findByBudgetYear(String budgetYear);
 	public TaMasCondSubCapital findByBudgetYearAndDutyCode(String budgetYear, String dutyCode);
 	public List<TaMasCondSubCapital> findByOfficeCodeAndBudgetYear(String officeCode, String budgetYear);
-	public TaMasCondSubCapital findByOfficeCodeAndBudgetYearAndDutyCode(String officeCode, String budgetYear, String dutyCode);
+	
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode and e.budgetYear = :budgetYear and e.dutyCode = :dutyCode")
+	public TaMasCondSubCapital findByOfficeCodeAndBudgetYearAndDutyCode(@Param("officeCode") String officeCode, @Param("budgetYear") String budgetYear, @Param("dutyCode") String dutyCode);
 	
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode and e.budgetYear = :budgetYear and e.dutyCode is null")
 	public TaMasCondSubCapital findByOfficeCodeAndBudgetYearTotal(@Param("officeCode") String officeCode, @Param("budgetYear") String budgetYear);

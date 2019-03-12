@@ -103,6 +103,7 @@ public class MasterConditionSubService {
 	public List<ParamInfo> getCapitalWithoutOld(TaMasCondSubCapital form) {
 		List<TaMasCondSubCapital> capitalOld = new ArrayList<>();
 		List<ParamInfo> productService = null;
+		List<ParamInfo> remove = new ArrayList<>();
 		productService = new ArrayList<>();
 		productService.addAll(ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.EXCISE_PRODUCT_TYPE));
 		productService.addAll(ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.EXCISE_SERVICE_TYPE));
@@ -111,10 +112,11 @@ public class MasterConditionSubService {
 			String paramCode = productService.get(i).getParamCode();
 			for (TaMasCondSubCapital old : capitalOld) {
 				if (paramCode.equals(old.getDutyCode())) {
-					productService.remove(i);
+					remove.add(productService.get(i));
 				}
 			}
 		}
+		productService.removeAll(remove);
 		return productService;
 	}
 
