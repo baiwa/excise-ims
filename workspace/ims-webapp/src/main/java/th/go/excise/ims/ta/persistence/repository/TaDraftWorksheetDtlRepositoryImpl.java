@@ -17,6 +17,7 @@ import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
+import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetDtl;
 import th.go.excise.ims.ta.util.TaxAuditUtils;
 import th.go.excise.ims.ta.vo.TaxDratfVo;
@@ -117,7 +118,7 @@ public class TaDraftWorksheetDtlRepositoryImpl implements TaDraftWorksheetDtlRep
 		
 		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
 			sql.append(" AND R4000.OFFICE_CODE like ? ");
-			params.add(formVo.getOfficeCode());
+			params.add(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
 		}
 		if (StringUtils.isNotBlank(formVo.getFacType())) {
 			sql.append(" AND R4000.FAC_TYPE = ? ");

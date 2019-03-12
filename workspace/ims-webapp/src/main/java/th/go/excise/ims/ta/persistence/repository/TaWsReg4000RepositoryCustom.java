@@ -3,6 +3,7 @@ package th.go.excise.ims.ta.persistence.repository;
 import java.util.List;
 
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
+import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 
 public interface TaWsReg4000RepositoryCustom {
 
@@ -10,8 +11,8 @@ public interface TaWsReg4000RepositoryCustom {
 
 	public void truncateTaWsReg4000();
 
-	public List<TaWsReg4000> findByCriteria(TaWsReg4000 wsReg4000, int start, int length);
+	public List<TaWsReg4000> findByCriteria(TaxOperatorFormVo formVo);
 
-	public Long countByCriteria(TaWsReg4000 wsReg4000);
+	public Long countByCriteria(TaxOperatorFormVo formVo);
 	
 }

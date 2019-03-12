@@ -1,6 +1,5 @@
 package th.go.excise.ims.ta.service;
 
-import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
@@ -10,7 +9,6 @@ import java.util.Map;
 
 import javax.transaction.Transactional;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.math3.stat.StatUtils;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
@@ -107,20 +105,20 @@ public class DraftWorksheetService {
 		try {
 			List<TaxOperatorDetailVo> taxOperatorDetailVoList = prepareTaxOperatorDetailVoList(formVo);
 			vo.setDatas(TaxAuditUtils.prepareTaxOperatorDatatable(taxOperatorDetailVoList, formVo));
-			vo.setCount(taWsReg4000Repository.countByCriteria(formVoToWsReg4000(formVo)));
+			vo.setCount(taWsReg4000Repository.countByCriteria(formVo));
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
 		return vo;
 	}
 
-	private List<TaxOperatorDetailVo> prepareTaxOperatorDetailVoList(TaxOperatorFormVo formVo) {
+	public List<TaxOperatorDetailVo> prepareTaxOperatorDetailVoList(TaxOperatorFormVo formVo) {
 		logger.info("prepareTaxOperatorDetailVoList startDate={}, endDate={}, dateRange={}", formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
 
 		String ymStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateStart(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		String ymEnd = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateEnd(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 
-		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findByCriteria(formVoToWsReg4000(formVo), formVo.getStart(), formVo.getLength());
+		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findByCriteria(formVo);
 		Map<String, List<TaWsInc8000M>> wsInc8000MMap = taWsInc8000MRepository.findByMonthRange(ymStart, ymEnd);
 		List<TaWsInc8000M> wsInc8000MList = null;
 		BigDecimal sumTaxAmtG1 = null;
@@ -304,19 +302,6 @@ public class DraftWorksheetService {
 		}
 
 		return detailVoList;
-	}
-
-	private TaWsReg4000 formVoToWsReg4000(TaxOperatorFormVo formVo) {
-		TaWsReg4000 wsReg4000 = new TaWsReg4000();
-
-		try {
-			BeanUtils.copyProperties(wsReg4000, formVo);
-			wsReg4000.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			logger.error(e.getMessage(), e);
-		}
-
-		return wsReg4000;
 	}
 
 	private void calculateSD(TaxOperatorDetailVo detailVo, List<Double> taxAmountList) {
@@ -527,9 +512,6 @@ public class DraftWorksheetService {
 
 	public TaxOperatorVo getDraftWorksheet(TaxOperatorFormVo formVo) {
 		logger.info("getDraftWorksheetDtl draftNumber = {}", formVo.getDraftNumber());
-
-		String officeCode = formVo.getOfficeCode();
-		formVo.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(officeCode));
 
 		List<TaxOperatorDetailVo> draftDtlList = taDraftWorksheetDtlRepository.findByCriteria(formVo);
 

@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.time.chrono.ThaiBuddhistDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,6 +15,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -19,10 +24,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
-import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.util.TaxAuditUtils;
 import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
@@ -34,24 +40,79 @@ public class WorksheetExportService {
 	private static final Logger logger = LoggerFactory.getLogger(WorksheetExportService.class);
 	
 	private static final String NO_TAX_AMOUNT = "-";
+	private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMM yyyy", ConvertDateUtils.LOCAL_TH);
 	
+	@Autowired
+	private TaWsReg4000Repository taWsReg4000Repository;
+	@Autowired
+	private DraftWorksheetService draftWorksheetService;
 	@Autowired
 	private TaDraftWorksheetDtlRepository taDraftWorksheetDtlRepository;
 	
 	public byte[] exportPreviewWorksheet(TaxOperatorFormVo formVo) {
-		logger.info("exportXlsxDraftWorksheet officeCode={}");
-		
-		return null;
-	}
-	public byte[] exportDraftWorksheet(TaxOperatorFormVo formVo) {
-		logger.info("exportXlsxDraftWorksheet officeCode={}");
+		logger.info("exportPreviewWorksheet officeCode={}, startDate={}, endDate={}, dateRange={}",
+			formVo.getOfficeCode(), formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
 		
 		// Prepare Data for Export
-		formVo.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
+		formVo.setStart(0);
+		formVo.setLength(taWsReg4000Repository.countByCriteria(formVo).intValue());
+		List<TaxOperatorDetailVo> previewVoList = draftWorksheetService.prepareTaxOperatorDetailVoList(formVo);
+		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = TaxAuditUtils.prepareTaxOperatorDatatable(previewVoList, formVo);
+		
+		// Label and Text
+		String SHEET_NAME = "รายชื่อผู้ประกอบการ";
+		
+		// Create Workbook
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		
+		/* Cell Style */
+		CellStyle cellHeader = ExcelUtils.createThColorStyle(workbook, new XSSFColor(Color.LIGHT_GRAY));
+		
+		Sheet sheet = workbook.createSheet(SHEET_NAME);
+		Row row = null;
+		Cell cell = null;
+		int rowNum = 0;
+		
+		/*
+		 * Column Header
+		 */
+		// Header Line 1
+		row = sheet.createRow(rowNum);
+		generateWorksheetHeader1(row, cell, cellHeader, formVo);
+		rowNum++;
+		// Header Line 2
+		row = sheet.createRow(rowNum);
+		generateWorksheetHeader2(row, cell, cellHeader, formVo);
+		rowNum++;
+		
+		/*
+		 * Details
+		 */
+		rowNum = generateWorksheetDetail(workbook, sheet, row, rowNum, cell, taxOperatorDatatableVoList);
+		
+		// Column Width
+		int colIndex = 0;
+		colIndex = setColumnWidthAndMergeCell(sheet, colIndex, formVo.getDateRange());
+		
+		byte[] content = null;
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			workbook.write(outputStream);
+			content = outputStream.toByteArray();
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return content;
+	}
+	
+	public byte[] exportDraftWorksheet(TaxOperatorFormVo formVo) {
+		logger.info("exportXlsxDraftWorksheet officeCode={}");
+		logger.info("exportXlsxDraftWorksheet officeCode={}, draftNumber={}, startDate={}, endDate={}, dateRange={}",
+				formVo.getOfficeCode(), formVo.getDraftNumber(), formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
+		
+		// Prepare Data for Export
 		formVo.setStart(0);
 		formVo.setLength(taDraftWorksheetDtlRepository.countByCriteria(formVo).intValue());
-		//formVo.setStart(0);
-		//formVo.setLength(5); // FIXME
 		List<TaxOperatorDetailVo> draftVoList = taDraftWorksheetDtlRepository.findByCriteria(formVo);
 		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = TaxAuditUtils.prepareTaxOperatorDatatable(draftVoList, formVo);
 		
@@ -63,49 +124,154 @@ public class WorksheetExportService {
 		
 		/* Cell Style */
 		CellStyle cellHeader = ExcelUtils.createThColorStyle(workbook, new XSSFColor(Color.LIGHT_GRAY));
-		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
-		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
-		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 		
 		Sheet sheet = workbook.createSheet(SHEET_NAME);
 		Row row = null;
 		Cell cell = null;
 		int rowNum = 0;
-		int cellNum = 0;
 		
 		/*
 		 * Column Header
 		 */
 		// Header Line 1
-		List<String> headerText1List = getHeaderText1List();
 		row = sheet.createRow(rowNum);
-		cellNum = 0;
-		for (String headerText : headerText1List) {
-			cell = row.createCell(cellNum);
-			cell.setCellValue(new XSSFRichTextString(headerText));
-			cell.setCellStyle(cellHeader);
-			cell.setCellValue(headerText);
-			cellNum++;
-		}
+		generateWorksheetHeader1(row, cell, cellHeader, formVo);
 		rowNum++;
 		// Header Line 2
-		List<String> headerText2List = getHeaderText2List();
 		row = sheet.createRow(rowNum);
-		cellNum = 0;
-		for (String headerText : headerText2List) {
-			cell = row.createCell(cellNum);
-			cell.setCellValue(new XSSFRichTextString(headerText));
-			cell.setCellStyle(cellHeader);
-			cell.setCellValue(headerText);
-			cellNum++;
-		}
+		generateWorksheetHeader2(row, cell, cellHeader, formVo);
 		rowNum++;
-		
 		
 		/*
 		 * Details
 		 */
+		rowNum = generateWorksheetDetail(workbook, sheet, row, rowNum, cell, taxOperatorDatatableVoList);
+		
+		// Column Width
+		int colIndex = 0;
+		colIndex = setColumnWidthAndMergeCell(sheet, colIndex, formVo.getDateRange());
+		
+		byte[] content = null;
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			workbook.write(outputStream);
+			content = outputStream.toByteArray();
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return content;
+	}
+	
+	public byte[] exportWorksheet(TaxOperatorFormVo formVo) {
+		return null;
+	}
+	
+	private void generateWorksheetHeader1(Row row, Cell cell, CellStyle cellStyle, TaxOperatorFormVo formVo) {
+		List<String> headerText1List = new ArrayList<>(Arrays.asList(
+			"ลำดับ",
+			"ทะเบียนสรรพสามิต เดิม/ใหม่",
+			"ชื่อผู้ประกอบการ",
+			"ชื่อโรงอุตสาหกรรม/สถานบริการ",
+			"ที่อยู่โรงอุตสาหกรรม/สถานบริการ",
+			"ภาค",
+			"พื้นที่",
+			"ทุนจดทะเบียน",
+			"การชำระภาษีในสภาวะปกติ",
+			"",
+			"เปลี่ยนแปลง (ร้อยละ)",
+			"เปอร์เซ็นต์ส่วนเบี่ยงเบนมาตรฐาน",
+			"ชำระภาษี (เดือน)",
+			"การตรวจสอบภาษีย้อนหลัง",
+			"",
+			"",
+			"พิกัด",
+			"เลขทะเบียนสรรพสามิตเก่า",
+			"สถานะ/วันที่",
+			"ค่าเฉลี่ยภาษี",
+			"ค่าร้อยละสูงสุด",
+			"ค่าร้อยละต่ำสุด"
+		));
+		int monthNum = formVo.getDateRange() / 2;
+		for (int i = 0; i < formVo.getDateRange(); i++) {
+			if (i == 0) {
+				headerText1List.add("การชำระภาษี " + String.valueOf(monthNum) + " เดือนแรก");
+			} else if (i == (monthNum)) {
+				headerText1List.add("การชำระภาษี " + String.valueOf(monthNum) + " เดือนหลัง");
+			} else {
+				headerText1List.add("");
+			}
+		}
+		headerText1List.add("พิกัดอื่นๆ");
+		
+		int cellNum = 0;
+		for (String headerText : headerText1List) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(new XSSFRichTextString(headerText));
+			cell.setCellStyle(cellStyle);
+			cell.setCellValue(headerText);
+			cellNum++;
+		}
+	}
+	
+	private void generateWorksheetHeader2(Row row, Cell cell, CellStyle cellStyle, TaxOperatorFormVo formVo) {
+		List<String> headerText2List = new ArrayList<>(Arrays.asList(
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			String.valueOf(formVo.getDateRange() / 2) + " เดือนแรก",
+			String.valueOf(formVo.getDateRange() / 2) + " เดือนหลัง",
+			"",
+			"",
+			"",
+			String.valueOf(Integer.parseInt(formVo.getBudgetYear()) - 3),
+			String.valueOf(Integer.parseInt(formVo.getBudgetYear()) - 2),
+			String.valueOf(Integer.parseInt(formVo.getBudgetYear()) - 1),
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		));
+		headerText2List.addAll(generateDateString(formVo.getDateStart(), formVo.getDateRange()));
+		headerText2List.add("");
+		
+		int cellNum = 0;
+		for (String headerText : headerText2List) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(new XSSFRichTextString(headerText));
+			cell.setCellStyle(cellStyle);
+			cell.setCellValue(headerText);
+			cellNum++;
+		}
+	}
+	
+	private List<String> generateDateString(String dateStart, int dateRange) {
+		int prolepticYear = Integer.parseInt(dateStart.substring(3, 7));
+		int month = Integer.parseInt(dateStart.substring(0, 2));
+		ThaiBuddhistDate initThaiDate = ThaiBuddhistDate.of(prolepticYear, month, 1);
+		ThaiBuddhistDate thaiDate = null;
+		
+		List<String> thaiDateList = new ArrayList<>();
+		for (int i = 0; i < dateRange; i++) {
+			thaiDate = initThaiDate.plus(i, ChronoUnit.MONTHS);
+			thaiDateList.add(thaiDate.format(dateFormatter));
+		}
+		return thaiDateList;
+	}
+	
+	private int generateWorksheetDetail(XSSFWorkbook workbook, Sheet sheet, Row row, int rowNum, Cell cell, List<TaxOperatorDatatableVo> taxOperatorDatatableVoList) {
+		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
+		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
+		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 		DecimalFormat decimalFormatTwoDigits = new DecimalFormat("#,##0.00");
+		
+		int cellNum = 0;
 		int no = 1;
 		for (TaxOperatorDatatableVo taxVo : taxOperatorDatatableVoList) {
 			row = sheet.createRow(rowNum);
@@ -140,23 +306,23 @@ public class WorksheetExportService {
 			cell.setCellStyle(cellLeft);
 			// ทุนจดทะเบียน
 			cell = row.createCell(cellNum++);
-			cell.setCellValue(taxVo.getRegCapital());
+			cell.setCellValue(taxAmtFormat(taxVo.getRegCapital(), decimalFormatTwoDigits));
 			cell.setCellStyle(cellRight);
 			// การชำระภาษีในสภาวะปกติ X เดือนแรก
 			cell = row.createCell(cellNum++);
-			cell.setCellValue(taxVo.getSumTaxAmtG1());
+			cell.setCellValue(taxAmtFormat(taxVo.getSumTaxAmtG1(), decimalFormatTwoDigits));
 			cell.setCellStyle(cellRight);
 			// การชำระภาษีในสภาวะปกติ X เดือนหลัง
 			cell = row.createCell(cellNum++);
-			cell.setCellValue(taxVo.getSumTaxAmtG2());
+			cell.setCellValue(taxAmtFormat(taxVo.getSumTaxAmtG2(), decimalFormatTwoDigits));
 			cell.setCellStyle(cellRight);
 			// เปลี่ยนแปลง (ร้อยละ)
 			cell = row.createCell(cellNum++);
-			cell.setCellValue(taxVo.getTaxAmtChnPnt());
+			cell.setCellValue(taxAmtFormat(taxVo.getTaxAmtChnPnt(), decimalFormatTwoDigits));
 			cell.setCellStyle(cellRight);
 			// เปอร์เซ็นต์ส่วนเบี่ยงเบนมาตรฐาน
 			cell = row.createCell(cellNum++);
-			cell.setCellValue(taxVo.getTaxAmtSd());
+			cell.setCellValue(taxAmtFormat(taxVo.getTaxAmtSd(), decimalFormatTwoDigits));
 			cell.setCellStyle(cellRight);
 			// ชำระภาษี (เดือน)
 			cell = row.createCell(cellNum++);
@@ -188,26 +354,20 @@ public class WorksheetExportService {
 			cell.setCellStyle(cellLeft);
 			// ค่าเฉลี่ยภาษี
 			cell = row.createCell(cellNum++);
-			cell.setCellValue(taxVo.getTaxAmtMean());
+			cell.setCellValue(taxAmtFormat(taxVo.getTaxAmtMean(), decimalFormatTwoDigits));
 			cell.setCellStyle(cellRight);
 			// ค่าร้อยละสูงสุด
 			cell = row.createCell(cellNum++);
-			cell.setCellValue(taxVo.getTaxAmtMaxPnt());
+			cell.setCellValue(taxAmtFormat(taxVo.getTaxAmtMaxPnt(), decimalFormatTwoDigits));
 			cell.setCellStyle(cellRight);
 			// ค่าร้อยละต่ำสุด
 			cell = row.createCell(cellNum++);
-			cell.setCellValue(taxVo.getTaxAmtMinPnt());
+			cell.setCellValue(taxAmtFormat(taxVo.getTaxAmtMinPnt(), decimalFormatTwoDigits));
 			cell.setCellStyle(cellRight);
-			// การชำระภาษี X เดือนแรก
-			for (int i = 0; i < formVo.getDateRange() / 2; i++) {
+			// การชำระภาษี X เดือนแรก และ X เดือนหลัง
+			for (String taxAmt : taxVo.getTaxAmtList()) {
 				cell = row.createCell(cellNum++);
-				cell.setCellValue(taxAmtFormat(taxVo.getTaxAmtList().get(i), decimalFormatTwoDigits));
-				cell.setCellStyle(cellRight);
-			}
-			// การชำระภาษี X เดือนหลัง
-			for (int i = formVo.getDateRange() / 2; i < formVo.getDateRange(); i++) {
-				cell = row.createCell(cellNum++);
-				cell.setCellValue(taxAmtFormat(taxVo.getTaxAmtList().get(i), decimalFormatTwoDigits));
+				cell.setCellValue(taxAmtFormat(taxAmt, decimalFormatTwoDigits));
 				cell.setCellStyle(cellRight);
 			}
 			// พิกัดอื่นๆ
@@ -219,111 +379,61 @@ public class WorksheetExportService {
 			rowNum++;
 		}
 		
-		// Column Width
-		int colIndex = 0;
+		return rowNum;
+	}
+	
+	private String taxAmtFormat(String taxAmt, DecimalFormat decimalFormat) {
+		return !NO_TAX_AMOUNT.equals(taxAmt) ? decimalFormat.format(NumberUtils.nullToZero(NumberUtils.toBigDecimal(taxAmt))) : taxAmt;
+	}
+	
+	private int setColumnWidthAndMergeCell(Sheet sheet, int colIndex, int dateRange) {
 		sheet.setColumnWidth(colIndex++, 7 * 256); // ลำดับ
-		sheet.setColumnWidth(colIndex++, 26 * 256); // ทะเบียนสรรพสามิต เดิม/ใหม่
+		sheet.setColumnWidth(colIndex++, 28 * 256); // ทะเบียนสรรพสามิต เดิม/ใหม่
 		sheet.setColumnWidth(colIndex++, 50 * 256); // ชื่อผู้ประกอบการ
 		sheet.setColumnWidth(colIndex++, 50 * 256); // ชื่อโรงอุตสาหกรรม/สถานบริการ
 		sheet.setColumnWidth(colIndex++, 50 * 256); // ที่อยู่โรงอุตสาหกรรม/สถานบริการ
 		sheet.setColumnWidth(colIndex++, 10 * 256); // ภาค
 		sheet.setColumnWidth(colIndex++, 15 * 256); // พื้นที่
-		sheet.setColumnWidth(colIndex++, 50 * 256); // ทุนจดทะเบียน
-		sheet.setColumnWidth(colIndex++, 50 * 256); // การชำระภาษีในสภาวะปกติ X เดือนแรก
-		sheet.setColumnWidth(colIndex++, 50 * 256); // การชำระภาษีในสภาวะปกติ X เดือนหลัง
-		sheet.setColumnWidth(colIndex++, 50 * 256); // เปลี่ยนแปลง (ร้อยละ)
-		sheet.setColumnWidth(colIndex++, 50 * 256); // เปอร์เซ็นต์ส่วนเบี่ยงเบนมาตรฐาน
-		sheet.setColumnWidth(colIndex++, 50 * 256); // ชำระภาษี (เดือน)
-		sheet.setColumnWidth(colIndex++, 50 * 256); // การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ
-		sheet.setColumnWidth(colIndex++, 50 * 256); // การตรวจสอบภาษีย้อนหลัง 2 ปีงบประมาณ
-		sheet.setColumnWidth(colIndex++, 50 * 256); // การตรวจสอบภาษีย้อนหลัง 1 ปีงบประมาณ
-		sheet.setColumnWidth(colIndex++, 50 * 256); // พิกัด
-		sheet.setColumnWidth(colIndex++, 50 * 256); // เลขทะเบียนสรรพสามิตเก่า
-		sheet.setColumnWidth(colIndex++, 50 * 256); // สถานะ/วันที่
-		sheet.setColumnWidth(colIndex++, 50 * 256); // ค่าเฉลี่ยภาษี
-		sheet.setColumnWidth(colIndex++, 50 * 256); // ค่าร้อยละสูงสุด
-		sheet.setColumnWidth(colIndex++, 50 * 256); // ค่าร้อยละต่ำสุด
-		sheet.setColumnWidth(colIndex++, 50 * 256); // การชำระภาษี X เดือนแรก
-		sheet.setColumnWidth(colIndex++, 50 * 256); // การชำระภาษี X เดือนหลัง
-		sheet.setColumnWidth(colIndex++, 50 * 256); // พิกัดอื่นๆ
-		
-		byte[] content = null;
-		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-			workbook.write(outputStream);
-			content = outputStream.toByteArray();
-		} catch (IOException e) {
-			logger.error(e.getMessage(), e);
+		sheet.setColumnWidth(colIndex++, 18 * 256); // ทุนจดทะเบียน
+		sheet.setColumnWidth(colIndex++, 15 * 256); // การชำระภาษีในสภาวะปกติ X เดือนแรก
+		sheet.setColumnWidth(colIndex++, 15 * 256); // การชำระภาษีในสภาวะปกติ X เดือนหลัง
+		sheet.setColumnWidth(colIndex++, 20 * 256); // เปลี่ยนแปลง (ร้อยละ)
+		sheet.setColumnWidth(colIndex++, 30 * 256); // เปอร์เซ็นต์ส่วนเบี่ยงเบนมาตรฐาน
+		sheet.setColumnWidth(colIndex++, 16 * 256); // ชำระภาษี (เดือน)
+		sheet.setColumnWidth(colIndex++, 15 * 256); // การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ
+		sheet.setColumnWidth(colIndex++, 15 * 256); // การตรวจสอบภาษีย้อนหลัง 2 ปีงบประมาณ
+		sheet.setColumnWidth(colIndex++, 15 * 256); // การตรวจสอบภาษีย้อนหลัง 1 ปีงบประมาณ
+		sheet.setColumnWidth(colIndex++, 40 * 256); // พิกัด
+		sheet.setColumnWidth(colIndex++, 28 * 256); // เลขทะเบียนสรรพสามิตเก่า
+		sheet.setColumnWidth(colIndex++, 15 * 256); // สถานะ/วันที่
+		sheet.setColumnWidth(colIndex++, 15 * 256); // ค่าเฉลี่ยภาษี
+		sheet.setColumnWidth(colIndex++, 15 * 256); // ค่าร้อยละสูงสุด
+		sheet.setColumnWidth(colIndex++, 15 * 256); // ค่าร้อยละต่ำสุด
+		for (int i = 0; i < dateRange; i++) {
+			sheet.setColumnWidth(colIndex++, 15 * 256); // การชำระภาษี X เดือนแรก และ X เดือนหลัง
 		}
-
-		return content;
-	}
-	
-	public byte[] exportXlsxWorksheet(TaxOperatorFormVo formVo) {
-		return null;
-	}
-	
-	private List<String> getHeaderText1List() {
-		return Arrays.asList(
-			"ลำดับ",
-			"ทะเบียนสรรพสามิต เดิม/ใหม่",
-			"ชื่อผู้ประกอบการ",
-			"ชื่อโรงอุตสาหกรรม/สถานบริการ",
-			"ที่อยู่โรงอุตสาหกรรม/สถานบริการ",
-			"ภาค",
-			"พื้นที่",
-			"ทุนจดทะเบียน",
-			"การชำระภาษีในสภาวะปกติ X เดือนแรก",
-			"การชำระภาษีในสภาวะปกติ X เดือนหลัง",
-			"เปลี่ยนแปลง (ร้อยละ)",
-			"เปอร์เซ็นต์ส่วนเบี่ยงเบนมาตรฐาน",
-			"ชำระภาษี (เดือน)",
-			"การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ",
-			"การตรวจสอบภาษีย้อนหลัง 2 ปีงบประมาณ",
-			"การตรวจสอบภาษีย้อนหลัง 1 ปีงบประมาณ",
-			"พิกัด",
-			"เลขทะเบียนสรรพสามิตเก่า",
-			"สถานะ/วันที่",
-			"ค่าเฉลี่ยภาษี",
-			"ค่าร้อยละสูงสุด",
-			"ค่าร้อยละต่ำสุด",
-			"การชำระภาษี X เดือนแรก",
-			"การชำระภาษี X เดือนหลัง",
-			"พิกัดอื่นๆ"
-		);
-	}
-	
-	private List<String> getHeaderText2List() {
-		return Arrays.asList(
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
-		);
-	}
-	
-	private String taxAmtFormat(String taxAmt, DecimalFormat decimalFormat) {
-		return !NO_TAX_AMOUNT.equals(taxAmt) ? decimalFormat.format(NumberUtils.nullToZero(NumberUtils.toBigDecimal(taxAmt))) : taxAmt;
+		sheet.setColumnWidth(colIndex++, 15 * 256); // พิกัดอื่นๆ
+		
+		// Merge Cell
+		int startTaxAmtIndex = 22;
+		List<Integer> skipRowSpanIndex = Arrays.asList(new Integer[] {
+			8, 9, 13, 14, 15
+		});
+		for (int i = 0; i < startTaxAmtIndex; i++) {
+			if (!skipRowSpanIndex.contains(i)) {
+				sheet.addMergedRegion(new CellRangeAddress(0, 1, i, i));
+			}
+		}
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 9));
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 15));
+		
+		int halfDataRange = dateRange / 2;
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, startTaxAmtIndex, startTaxAmtIndex + halfDataRange - 1));
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, startTaxAmtIndex + halfDataRange, startTaxAmtIndex + dateRange - 1));
+		int startAfterTaxAmtIndex = startTaxAmtIndex + dateRange;
+		sheet.addMergedRegion(new CellRangeAddress(0, 1, startAfterTaxAmtIndex, startAfterTaxAmtIndex));
+		
+		return colIndex;
 	}
 	
 }

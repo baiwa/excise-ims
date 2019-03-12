@@ -19,7 +19,9 @@ import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
+import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
+import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 
 public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 
@@ -70,7 +72,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
         commonJdbcTemplate.update("TRUNCATE TABLE TA_WS_REG4000");
     }
 
-    private void buildByCriteriaQuery(StringBuilder sql, List<Object> params, TaWsReg4000 taWsReg4000) {
+    private void buildByCriteriaQuery(StringBuilder sql, List<Object> params, TaxOperatorFormVo formVo) {
         sql.append(" SELECT * ");
         sql.append(" FROM TA_WS_REG4000 ");
         sql.append(" WHERE IS_DELETED = ? ");
@@ -78,52 +80,52 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
         params.add(FLAG.N_FLAG);
 
         // Factory Type
-        if (StringUtils.isNotBlank(taWsReg4000.getFacType())) {
-            params.add(taWsReg4000.getFacType());
+        if (StringUtils.isNotBlank(formVo.getFacType())) {
+            params.add(formVo.getFacType());
             sql.append(" AND FAC_TYPE = ?");
         }
 
         // Duty Code
-        if (StringUtils.isNotBlank(taWsReg4000.getDutyCode())) {
-            params.add(taWsReg4000.getDutyCode());
-            sql.append(" AND DUTY_CODE = ?");
+        if (StringUtils.isNotBlank(formVo.getDutyCode())) {
+        	sql.append(" AND DUTY_CODE = ?");
+            params.add(formVo.getDutyCode());
         }
 
         // Office Code
-        if (StringUtils.isNotBlank(taWsReg4000.getOfficeCode())) {
-            params.add(taWsReg4000.getOfficeCode());
-            sql.append(" AND OFFICE_CODE like ?");
+        if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
+        	sql.append(" AND OFFICE_CODE like ?");
+            params.add(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
         }
 
         //Fac fullname
-        if (StringUtils.isNotBlank(taWsReg4000.getFacFullname())) {
-            params.add("%" + StringUtils.trim(taWsReg4000.getFacFullname()) + "%");
+        if (StringUtils.isNotBlank(formVo.getFacFullname())) {
             sql.append(" AND FAC_FULLNAME like ?");
+            params.add("%" + StringUtils.trim(formVo.getFacFullname()) + "%");
         }
 
         //Cus fullname
-        if (StringUtils.isNotBlank(taWsReg4000.getCusFullname())) {
-            params.add("%" + StringUtils.trim(taWsReg4000.getCusFullname()) + "%");
+        if (StringUtils.isNotBlank(formVo.getCusFullname())) {
             sql.append(" AND CUS_FULLNAME like ?");
+            params.add("%" + StringUtils.trim(formVo.getCusFullname()) + "%");
         }
     }
 
     @Override
-    public List<TaWsReg4000> findByCriteria(TaWsReg4000 wsReg4000, int start, int length) {
+    public List<TaWsReg4000> findByCriteria(TaxOperatorFormVo formVo) {
         StringBuilder sql = new StringBuilder();
         List<Object> params = new ArrayList<>();
-        buildByCriteriaQuery(sql, params, wsReg4000);
+        buildByCriteriaQuery(sql, params, formVo);
 
         sql.append(" ORDER BY DUTY_CODE, OFFICE_CODE, NEW_REG_ID ");
 
-        return this.commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), start, length), params.toArray(), wsReg4000RowMapper);
+        return this.commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(), wsReg4000RowMapper);
     }
 
     @Override
-    public Long countByCriteria(TaWsReg4000 wsReg4000) {
+    public Long countByCriteria(TaxOperatorFormVo formVo) {
         StringBuilder sql = new StringBuilder();
         List<Object> params = new ArrayList<>();
-        buildByCriteriaQuery(sql, params, wsReg4000);
+        buildByCriteriaQuery(sql, params, formVo);
 
         return this.commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), params.toArray(), Long.class);
     }

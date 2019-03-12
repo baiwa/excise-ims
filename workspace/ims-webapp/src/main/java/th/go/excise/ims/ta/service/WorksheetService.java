@@ -320,7 +320,6 @@ public class WorksheetService {
 		}
 
 		TaxOperatorVo vo = new TaxOperatorVo();
-		formVo.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(officeCode));
 
 		TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository.findByOfficeCodeAndBudgetYear(officeCode, budgetYear);
 		if (StringUtils.isNotBlank(formVo.getSeeDataSelect()) && planSend == null) {
