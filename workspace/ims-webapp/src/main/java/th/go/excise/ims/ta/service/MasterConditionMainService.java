@@ -14,6 +14,7 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
+import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondMainDtlRepository;
@@ -89,6 +90,7 @@ public class MasterConditionMainService {
                 dtl.setRangeStart(obj.getRangeStart());
                 dtl.setRangeEnd(obj.getRangeEnd());
                 dtl.setRiskLevel(obj.getRiskLevel());
+                dtl.setCondDtlDesc(obj.getCondDtlDesc());
                 dtl.setCondType(TA_MAS_COND_MAIN_TYPE.TAX);
                 dtlList.add(dtl);
             }
@@ -97,6 +99,7 @@ public class MasterConditionMainService {
             dtl.setOfficeCode(header.getOfficeCode());
             dtl.setCondNumber(header.getCondNumber());
             dtl.setCondGroup(String.valueOf(formVo.getDetail().size() + 1));
+            dtl.setCondDtlDesc(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "NEW_COMP").getValue1());
             dtl.setCondType(TA_MAS_COND_MAIN_TYPE.OTHER);
             dtlList.add(dtl);
             taMasCondMainDtlRepository.saveAll(dtlList);
@@ -160,6 +163,7 @@ public class MasterConditionMainService {
                     dtl.setRangeStart(obj.getRangeStart());
                     dtl.setRangeEnd(obj.getRangeEnd());
                     dtl.setRiskLevel(obj.getRiskLevel());
+                    dtl.setCondDtlDesc(obj.getCondDtlDesc());
                     dtl.setCondType(TA_MAS_COND_MAIN_TYPE.TAX);
 
                 } else {
@@ -173,6 +177,7 @@ public class MasterConditionMainService {
                     dtl.setRangeStart(obj.getRangeStart());
                     dtl.setRangeEnd(obj.getRangeEnd());
                     dtl.setRiskLevel(obj.getRiskLevel());
+                    dtl.setCondDtlDesc(obj.getCondDtlDesc());
                 }
 
                 dtlList.add(dtl);
