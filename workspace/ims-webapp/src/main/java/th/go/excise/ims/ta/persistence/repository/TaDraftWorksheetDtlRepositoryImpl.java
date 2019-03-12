@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.RowMapper;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetDtl;
 import th.go.excise.ims.ta.util.TaxAuditUtils;
@@ -99,8 +100,11 @@ public class TaDraftWorksheetDtlRepositoryImpl implements TaDraftWorksheetDtlRep
 		sql.append("   ,ED_SECTOR.OFF_CODE SEC_CODE ");
 		sql.append("   ,ED_SECTOR.OFF_SHORT_NAME SEC_DESC ");
 		sql.append("   ,ED_AREA.OFF_CODE AREA_CODE ");
-		sql.append("   ,ED_AREA.OFF_SHORT_NAME AREA_DESC ");
-		sql.append("   ,TA_W_HDR.* ");
+		sql.append("   ,ED_AREA.OFF_SHORT_NAME AREA_DESC, ");
+		sql.append(" 	R4000.REG_CAPITAL, ");
+		sql.append(" 	R4000.REG_DATE, ");
+		sql.append(" 	R4000.REG_STATUS, ");
+		sql.append("	TA_W_HDR.* ");
 		sql.append(" FROM TA_DRAFT_WORKSHEET_DTL TA_W_HDR ");
 		sql.append(" INNER JOIN TA_WS_REG4000 R4000 ON R4000.NEW_REG_ID = TA_W_HDR.NEW_REG_ID ");
 		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_SECTOR ON ED_SECTOR.OFF_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000') ");
@@ -149,6 +153,8 @@ public class TaDraftWorksheetDtlRepositoryImpl implements TaDraftWorksheetDtlRep
 			TaxOperatorDetailVo vo = new TaxOperatorDetailVo();
 			TaxAuditUtils.commonSelectionWorksheetRowMapper(vo, rs);
 			vo.setDraftNumber(rs.getString("DRAFT_NUMBER"));
+			vo.setRegCapital(rs.getString("REG_CAPITAL"));
+			vo.setRegStatus(rs.getString("REG_STATUS")+" "+ ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_TH));
 			return vo;
 		}
 	};

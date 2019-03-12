@@ -51,6 +51,7 @@ public class TaxAuditUtils {
 				taxOperatorDatatableVo.setTaxMonthNo(taxOperatorDetailVo.getTaxMonthNo());
 				taxOperatorDatatableVo.setSelectBy(taxOperatorDetailVo.getSelectBy());
 				taxOperatorDatatableVo.setCondTaxGrp(taxOperatorDetailVo.getCondTaxGrp());
+				taxOperatorDatatableVo.setRegCapital(taxOperatorDetailVo.getRegCapital());
 			}
 			
 			taxAmtList = new ArrayList<>();

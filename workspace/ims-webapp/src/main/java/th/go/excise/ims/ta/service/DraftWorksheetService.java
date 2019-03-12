@@ -151,6 +151,7 @@ public class DraftWorksheetService {
 			detailVo.setFacFullname(wsReg4000.getFacFullname());
 			detailVo.setFacAddress(wsReg4000.getFacAddress());
 			detailVo.setOfficeCode(wsReg4000.getOfficeCode());
+			detailVo.setRegCapital(wsReg4000.getRegCapital());
 			exciseDeptSector = ApplicationCache.getExciseDept(wsReg4000.getOfficeCode().substring(0, 2) + "0000");
 
 			if (exciseDeptSector != null) {

@@ -71,6 +71,15 @@ public class TaxOperatorDetailVo {
 	private String areaSelDate;
 	private String areaSelOfficeCode;
 	private String selectBy;
+	private String regCapital;
+
+	public String getRegCapital() {
+		return regCapital;
+	}
+
+	public void setRegCapital(String regCapital) {
+		this.regCapital = regCapital;
+	}
 
 	public String getCusFullname() {
 		return cusFullname;

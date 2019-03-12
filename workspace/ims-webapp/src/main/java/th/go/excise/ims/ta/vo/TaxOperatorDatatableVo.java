@@ -37,6 +37,15 @@ public class TaxOperatorDatatableVo {
     private List<String> taxAmtList;
     private String selectBy;
     private String condTaxGrp;
+    private String regCapital;
+
+    public String getRegCapital() {
+        return regCapital;
+    }
+
+    public void setRegCapital(String regCapital) {
+        this.regCapital = regCapital;
+    }
 
     public String getCondTaxGrp() {
         return condTaxGrp;
