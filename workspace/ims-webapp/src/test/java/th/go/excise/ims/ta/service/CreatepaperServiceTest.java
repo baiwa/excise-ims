@@ -18,10 +18,10 @@ public class CreatepaperServiceTest {
 
 	  String fileName = URLEncoder.encode(MATERIAL_RECEIVE, "UTF-8");
 
-	  CreatePaperServiceService createPaperProductService = new CreatePaperServiceService();
+	  ServicePaperQtyService servicePaperQty = new ServicePaperQtyService();
 
 	  try {
-	   byte[] outArray = createPaperProductService.exportFileQuantityServiceVo();
+	   byte[] outArray = servicePaperQty.exportFileQuantityServiceVo();
 	   FileOutputStream Output = new FileOutputStream(PATH + fileName + TYPE);
 	   Output.write(outArray);
 	   Output.close();
@@ -39,10 +39,10 @@ public class CreatepaperServiceTest {
 
 	  String fileName = URLEncoder.encode(MATERIAL_RECEIVE, "UTF-8");
 
-	  CreatePaperServiceService createPaperProductService = new CreatePaperServiceService();
+	  ServicePaperPricePerUnitService servicePaperPricePerUnit = new ServicePaperPricePerUnitService();
 
 	  try {
-	   byte[] outArray = createPaperProductService.exportFilePriceServiceVo();
+	   byte[] outArray = servicePaperPricePerUnit.exportFilePriceServiceVo();
 	   FileOutputStream Output = new FileOutputStream(PATH + fileName + TYPE);
 	   Output.write(outArray);
 	   Output.close();
@@ -62,10 +62,10 @@ public class CreatepaperServiceTest {
 
 	  String fileName = URLEncoder.encode(MATERIAL_RECEIVE, "UTF-8");
 
-	  CreatePaperServiceService createPaperProductService = new CreatePaperServiceService();
+	  ServicePaperMemberService servicePaperMember = new ServicePaperMemberService();
 
 	  try {
-	   byte[] outArray = createPaperProductService.exportFileMemberStatusServiceVo();
+	   byte[] outArray = servicePaperMember.exportFileMemberStatusServiceVo();
 	   FileOutputStream Output = new FileOutputStream(PATH + fileName + TYPE);
 	   Output.write(outArray);
 	   Output.close();
@@ -84,10 +84,10 @@ public class CreatepaperServiceTest {
 
 	  String fileName = URLEncoder.encode(MATERIAL_RECEIVE, "UTF-8");
 
-	  CreatePaperServiceService createPaperProductService = new CreatePaperServiceService();
+	  ServicePaperBalanceGoodsService servicePaperBalanceGoods = new ServicePaperBalanceGoodsService();
 
 	  try {
-	   byte[] outArray = createPaperProductService.exportFileLeftInStockServiceVo();
+	   byte[] outArray = servicePaperBalanceGoods.exportFileLeftInStockServiceVo();
 	   FileOutputStream Output = new FileOutputStream(PATH + fileName + TYPE);
 	   Output.write(outArray);
 	   Output.close();
