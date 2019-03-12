@@ -94,6 +94,18 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
             params.add(taWsReg4000.getOfficeCode());
             sql.append(" AND OFFICE_CODE like ?");
         }
+
+        //Fac fullname
+        if (StringUtils.isNotBlank(taWsReg4000.getFacFullname())) {
+            params.add("%" + StringUtils.trim(taWsReg4000.getFacFullname()) + "%");
+            sql.append(" AND FAC_FULLNAME like ?");
+        }
+
+        //Cus fullname
+        if (StringUtils.isNotBlank(taWsReg4000.getCusFullname())) {
+            params.add("%" + StringUtils.trim(taWsReg4000.getCusFullname()) + "%");
+            sql.append(" AND CUS_FULLNAME like ?");
+        }
     }
 
     @Override

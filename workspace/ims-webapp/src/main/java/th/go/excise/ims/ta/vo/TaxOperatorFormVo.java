@@ -23,6 +23,25 @@ public class TaxOperatorFormVo extends DataTableRequest {
     private String condSub3;
     private String capital;
     private String risk;
+    private String cusFullname;
+    private String facFullname;
+
+
+    public String getCusFullname() {
+        return cusFullname;
+    }
+
+    public void setCusFullname(String cusFullname) {
+        this.cusFullname = cusFullname;
+    }
+
+    public String getFacFullname() {
+        return facFullname;
+    }
+
+    public void setFacFullname(String facFullname) {
+        this.facFullname = facFullname;
+    }
 
     public String getCapital() {
         return capital;
