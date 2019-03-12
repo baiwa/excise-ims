@@ -147,6 +147,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
             vo.setFacEmail(rs.getString("FAC_EMAIL"));
             vo.setFacUrl(rs.getString("FAC_URL"));
             vo.setFacType(rs.getString("FAC_TYPE"));
+            vo.setRegStatus(rs.getString("REG_STATUS"));
             vo.setRegDate(LocalDateConverter.convertToEntityAttribute(rs.getDate("REG_DATE")));
             vo.setRegCapital(rs.getString("REG_CAPITAL"));
             vo.setOfficeCode(rs.getString("OFFICE_CODE"));

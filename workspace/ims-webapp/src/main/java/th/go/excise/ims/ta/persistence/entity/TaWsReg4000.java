@@ -51,6 +51,8 @@ public class TaWsReg4000 extends BaseEntity {
     private String dutyCode;
     @Column(name = "FAC_TYPE")
     private String facType;
+    @Column(name = "REG_STATUS")
+    private String regStatus;
     @Column(name = "REG_DATE")
     private LocalDate regDate;
     @Column(name = "REG_CAPITAL")
@@ -200,7 +202,15 @@ public class TaWsReg4000 extends BaseEntity {
         this.facType = facType;
     }
 
-    public LocalDate getRegDate() {
+    public String getRegStatus() {
+		return regStatus;
+	}
+
+	public void setRegStatus(String regStatus) {
+		this.regStatus = regStatus;
+	}
+
+	public LocalDate getRegDate() {
         return regDate;
     }
 

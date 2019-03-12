@@ -321,6 +321,7 @@ public class PlanWorksheetService {
     	taPlanWorksheetDtlRepository.forceDeleteByBudgetYear(budgetYear);
     	taPlanWorksheetHdrRepository.forceDeleteByBudgetYear(budgetYear);
     	taPlanWorksheetSendRepository.forceDeleteByBudgetYear(budgetYear);
+    	taPlanWorksheetSelectRepository.forceDeleteByBudgetYear(budgetYear);
     }
 
 }
