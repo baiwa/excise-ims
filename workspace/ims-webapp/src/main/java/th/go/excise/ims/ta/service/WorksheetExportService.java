@@ -48,10 +48,10 @@ public class WorksheetExportService {
 		
 		// Prepare Data for Export
 		formVo.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
-//		formVo.setStart(0);
-//		formVo.setLength(taDraftWorksheetDtlRepository.countByCriteria(formVo).intValue());
 		formVo.setStart(0);
-		formVo.setLength(5); // FIXME
+		formVo.setLength(taDraftWorksheetDtlRepository.countByCriteria(formVo).intValue());
+		//formVo.setStart(0);
+		//formVo.setLength(5); // FIXME
 		List<TaxOperatorDetailVo> draftVoList = taDraftWorksheetDtlRepository.findByCriteria(formVo);
 		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = TaxAuditUtils.prepareTaxOperatorDatatable(draftVoList, formVo);
 		
