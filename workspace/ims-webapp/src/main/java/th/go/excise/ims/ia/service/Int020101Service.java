@@ -125,10 +125,19 @@ public class Int020101Service {
 		return iaQtnSideRep.save(data);
 	}
 
+	@Transactional
 	public IaQuestionnaireSide delete(String idStr) {
 		BigDecimal id = new BigDecimal(idStr);
 		IaQuestionnaireSide data = iaQtnSideJdbcRep.findOne(id);
+		/* delete head */
 		iaQtnSideRep.deleteById(id);
+		
+		/* delete children */
+		List<IaQuestionnaireSideDtl> sideDtlList = iaQtnSideDtlRep.findByIdSide(id);
+		for (IaQuestionnaireSideDtl sideDtl : sideDtlList) {
+			sideDtl.setIsDeleted("Y");
+			iaQtnSideDtlRep.save(sideDtl);
+		}
 		return data;
 	}
 

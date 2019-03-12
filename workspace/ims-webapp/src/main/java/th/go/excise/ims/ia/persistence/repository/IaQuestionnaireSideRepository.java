@@ -8,6 +8,6 @@ import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRe
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
 
 public interface IaQuestionnaireSideRepository extends CommonJpaCrudRepository<IaQuestionnaireSide, BigDecimal>{
-	List<IaQuestionnaireSide> findByidHead(BigDecimal idHead);
+	List<IaQuestionnaireSide> findByidHeadAndIsDeleted(BigDecimal idHead, String isDeleted);
 
 }
