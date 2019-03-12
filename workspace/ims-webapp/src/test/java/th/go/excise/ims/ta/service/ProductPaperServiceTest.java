@@ -5,17 +5,12 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-public class CreatePaperProductServiceTest {
+public class ProductPaperServiceTest {
 
 	private static final String PATH = "/tmp/";
 	private static final String TYPE = ".xlsx";
 
 	/*-----TOPIC------*/
-	private static final String RAW_MATERIAL_RECEIVE = "material_receive";
-	private static final String RAW_MATERIAL_PAYMENT = "raw_material_payment";
-	private static final String RAW_MATERIAL_BALANCE = "raw_material_balance";
-	private static final String RAW_MATERIAL_FINISHED_GOODS_RELATIONSHIP = "raw_material_finished_goods_relationship";
-	private static final String FINISHED_GOODS_RECEIVE = "finished_goods_receive";
 	private static final String FINISHED_GOODS_PAYMENT = "finished_goods_payment";
 	private static final String RAW_MATERIAL_TAX_BREAK = "raw_material_tax_break";
 	private static final String UNIT_PRICE = "unit_price";
@@ -23,74 +18,7 @@ public class CreatePaperProductServiceTest {
 	private static final String PAY_FOREIGN_FINISHED_GOODS = "pay_foreign_finished_goods";
 	private static final String TAX = "tax";
 
-	CreatePaperProductService createPaperProductService = new CreatePaperProductService();
-
-	@Test
-	public void test_rawMaterialReceive() {
-		// set output
-		try (FileOutputStream Output = new FileOutputStream(PATH + RAW_MATERIAL_RECEIVE + TYPE)) {
-			byte[] outArray = createPaperProductService.exportRawMaterialReceive();
-			Output.write(outArray);
-			System.out.println("Creating excel" + "\n" + RAW_MATERIAL_RECEIVE + "\n" + "Done" + "\n");
-		} catch (IOException e) {
-			System.out.println(RAW_MATERIAL_RECEIVE + "\n" + "false" + "\n" + e.getMessage() + "\n" + e + "\n");
-		}
-
-	}
-
-	@Test
-	public void test_rawMaterialPayment() {
-		// set output
-		try (FileOutputStream Output = new FileOutputStream(PATH + RAW_MATERIAL_PAYMENT + TYPE)) {
-			byte[] outArray = createPaperProductService.exportRawMaterialPayment();
-			Output.write(outArray);
-			System.out.println("Creating excel" + "\n" + RAW_MATERIAL_PAYMENT + "\n" + "Done" + "\n");
-		} catch (IOException e) {
-			System.out.println(RAW_MATERIAL_PAYMENT + "\n" + "false" + "\n" + e.getMessage() + "\n" + e + "\n");
-		}
-
-	}
-
-	@Test
-	public void test_rawMaterialBalance() {
-		// set output
-		try (FileOutputStream Output = new FileOutputStream(PATH + RAW_MATERIAL_BALANCE + TYPE)) {
-			byte[] outArray = createPaperProductService.exportRawMaterialBalance();
-			Output.write(outArray);
-			System.out.println("Creating excel" + "\n" + RAW_MATERIAL_BALANCE + "\n" + "Done" + "\n");
-		} catch (IOException e) {
-			System.out.println(RAW_MATERIAL_BALANCE + "\n" + "false" + "\n" + e.getMessage() + "\n" + e + "\n");
-		}
-
-	}
-
-	@Test
-	public void test_rawMaterialFinishedGoodsRelationship() {
-		// set output
-		try (FileOutputStream Output = new FileOutputStream(PATH + RAW_MATERIAL_FINISHED_GOODS_RELATIONSHIP + TYPE)) {
-			byte[] outArray = createPaperProductService.exportRawMaterialFinishedGoodsRelationship();
-			Output.write(outArray);
-			System.out
-					.println("Creating excel" + "\n" + RAW_MATERIAL_FINISHED_GOODS_RELATIONSHIP + "\n" + "Done" + "\n");
-		} catch (IOException e) {
-			System.out.println(RAW_MATERIAL_FINISHED_GOODS_RELATIONSHIP + "\n" + "false" + "\n" + e.getMessage() + "\n"
-					+ e + "\n");
-		}
-
-	}
-
-	@Test
-	public void test_finishedGoodsReceive() {
-		// set output
-		try (FileOutputStream Output = new FileOutputStream(PATH + FINISHED_GOODS_RECEIVE + TYPE)) {
-			byte[] outArray = createPaperProductService.exportFinishedGoodsReceive();
-			Output.write(outArray);
-			System.out.println("Creating excel" + "\n" + FINISHED_GOODS_RECEIVE + "\n" + "Done" + "\n");
-		} catch (IOException e) {
-			System.out.println(FINISHED_GOODS_RECEIVE + "\n" + "false" + "\n" + e.getMessage() + "\n" + e + "\n");
-		}
-
-	}
+/*	ProductPaperService createPaperProductService = new ProductPaperService();
 
 	@Test
 	public void test_finishedGoodsPayment() {
@@ -168,6 +96,6 @@ public class CreatePaperProductServiceTest {
 			System.out.println(TAX + "\n" + "false" + "\n" + e.getMessage() + "\n" + e + "\n");
 		}
 
-	}
+	}*/
 
 }
