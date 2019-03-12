@@ -3,6 +3,7 @@ package th.go.excise.ims.ia.controller;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,13 +50,13 @@ public class Int030403Controller {
 		return response;
 	}
 	
-	@GetMapping("/year/export/{projectYear}/{projecttypecode}")
-	public void exportByYear(@PathVariable("projectYear") String projectYear, @PathVariable("projecttypecode") String projecttypecode, HttpServletResponse response) throws Exception {
+	@GetMapping("/year/export/{projectYear}/{projecttypecode}/{budgetYear}/{inspectionWork}/{idConfig}")
+	public void exportByYear(@PathVariable("projectYear") String projectYear, @PathVariable("projecttypecode") String projecttypecode,@PathVariable("budgetYear") String budgetYear,@PathVariable("inspectionWork") BigDecimal inspectionWork,@PathVariable("idConfig") BigDecimal idConfig, HttpServletResponse response) throws Exception {
 		// set fileName
 		String fileName = URLEncoder.encode("สรุปผลปัจจัยเสี่ยงงบประมาณที่ใช้ดำเนินงานโครงการ", "UTF-8");
 
 		// write it as an excel attachment
-		ByteArrayOutputStream outByteStream = int030403Service.exportInt030403(projectYear, projecttypecode);
+		ByteArrayOutputStream outByteStream = int030403Service.exportInt030403(projectYear, projecttypecode,budgetYear,inspectionWork,idConfig);
 		byte[] outArray = outByteStream.toByteArray();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);

@@ -80,7 +80,7 @@ public class Int030403Service {
 		return f;
 	}
 
-	public ByteArrayOutputStream exportInt030403(String projectYear, String projecttypecode) throws IOException {
+	public ByteArrayOutputStream exportInt030403(String projectYear, String projecttypecode ,String budgetYear , BigDecimal inspectionWork , BigDecimal idConfig) throws IOException {
 		/* create spreadsheet */
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
@@ -148,7 +148,11 @@ public class Int030403Service {
 		Int030403FormVo form = new Int030403FormVo();
 		form.setProjectyear(projectYear);
 		form.setProjecttypecode(projecttypecode);
-//		datas = list(form);
+		form.setBudgetYear(budgetYear);
+		form.setInspectionWork(inspectionWork);
+		form.setIdConfig(idConfig);
+		datas = list(form);
+		
 		DecimalFormat df2 = new DecimalFormat(".##");
 		for (Int030403Vo data : datas) {
 			// Re Initial
