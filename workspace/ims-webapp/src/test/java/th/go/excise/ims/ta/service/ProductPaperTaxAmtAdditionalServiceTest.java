@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-public class ProductPaperServiceTest {
+public class ProductPaperTaxAmtAdditionalServiceTest {
 
 	private static final String PATH = "/tmp/";
 	private static final String TYPE = ".xlsx";
