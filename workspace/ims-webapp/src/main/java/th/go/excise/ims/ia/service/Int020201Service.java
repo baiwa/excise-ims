@@ -36,7 +36,7 @@ public class Int020201Service {
 	private IaQuestionnaireMadeHdrRepository iaQuestionnaireMadeHdrRepository;
 
 	public List<IaQuestionnaireSide> findQtnSideById(Int020201SidesFormVo request) {
-		return iaQuestionnaireSideRepository.findByidHead(request.getIdSide());
+		return iaQuestionnaireSideRepository.findByidHeadAndIsDeleted(request.getIdSide(), "N");
 	}
 
 	public IaQuestionnaireMadeHdr findQtnMadeHdrById(BigDecimal id) {
@@ -48,14 +48,9 @@ public class Int020201Service {
 		List<Int020201JoinVo> dataLVL2 = null;
 		List<Int020201JoinVo> dataLVL3 = null;
 
-		List<Int020201SidesFormVo> dataRes = new ArrayList<Int020201SidesFormVo>();
-		Int020201Vo response = new Int020201Vo();
-
 		for (Int020201SidesFormVo requestSide : dataQtn.getHeader()) {
-
 			/* initial variable 'checkNull' */
 			Integer checkNull = 0;
-
 			dataLVL1 = new ArrayList<Int020201JoinVo>();
 			dataLVL1 = iaQuestionnaireMadeJdbcRepository.findLvl1ByIdMadeHdr(requestSide);
 
@@ -92,10 +87,7 @@ public class Int020201Service {
 			} else {
 				requestSide.setStatusSides(true);
 			}
-//			dataRes.add(requestSide);
 		}
-//		response.setHeader(dataRes);
-
 		return dataQtn;
 	}
 

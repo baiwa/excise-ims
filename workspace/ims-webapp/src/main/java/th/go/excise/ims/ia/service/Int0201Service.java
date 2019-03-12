@@ -60,7 +60,7 @@ public class Int0201Service {
 	private Int02010101Service int02010101Service;
 
 	public List<IaQuestionnaireSide> findQtnSideById(Int0201FormVo request) {
-		return iaQuestionnaireSideRepository.findByidHead(request.getId());
+		return iaQuestionnaireSideRepository.findByidHeadAndIsDeleted(request.getId(), "N");
 	}
 
 	public IaQuestionnaireHdr findQtnHdrById(BigDecimal id) {
@@ -127,7 +127,7 @@ public class Int0201Service {
 						dataMadeHdr.setOfficeCode(officeCode);
 						IaQuestionnaireMadeHdr resMadeHdr = iaQuestionnaireMadeHdrRepository.save(dataMadeHdr);
 						// find sides
-						List<IaQuestionnaireSide> sides = iaQuestionnaireSideRepository.findByidHead(dataHdr.getId());
+						List<IaQuestionnaireSide> sides = iaQuestionnaireSideRepository.findByidHeadAndIsDeleted(dataHdr.getId(), "N");
 						for(IaQuestionnaireSide side: sides) {
 							// find side dtls
 							List<Int02010101Vo> dtls = int02010101Service.findByIdSide(side.getId().toString());
