@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
@@ -17,11 +18,14 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMade;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMadeHdr;
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireHdrJdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireMadeHdrJdbcRepository;
+import th.go.excise.ims.ia.vo.Int020101SideVo;
+import th.go.excise.ims.ia.vo.Int020101UpdateVo;
 import th.go.excise.ims.ia.vo.Int02FormVo;
 import th.go.excise.ims.ia.vo.Int02Vo;
 
@@ -98,7 +102,18 @@ public class Int02Service {
 		return iaQuestionnaireHdrRepository.save(request);
 	}
 
-	public IaQuestionnaireHdr update(String idStr, IaQuestionnaireHdr request) {
+	public IaQuestionnaireHdr update(String idStr, Int020101UpdateVo res) {
+		updateSeq(idStr, res);
+		IaQuestionnaireHdr request = new IaQuestionnaireHdr();
+
+		request.setBudgetYear(res.getBudgetYear());
+		request.setId(res.getId());
+		request.setQtnHeaderName(res.getQtnHeaderName());
+		request.setNote(res.getNote());
+		request.setStartDate(res.getStartDate());
+		request.setEndDate(res.getEndDate());
+		request.setStatus(res.getStatus());
+
 		BigDecimal id = new BigDecimal(idStr);
 		IaQuestionnaireHdr data = iaQuestionnaireHdrJdbcRepository.findOne(id);
 		data.setBudgetYear(request.getBudgetYear());
@@ -123,6 +138,18 @@ public class Int02Service {
 		}
 
 		return iaQuestionnaireHdrRepository.save(data);
+	}
+
+	@Transactional
+	public void updateSeq(String idStr, Int020101UpdateVo res) {
+		List<Int020101SideVo> side = res.getSide();
+		IaQuestionnaireSide sideData = null;
+		for (Int020101SideVo sideVo : side) {
+			sideData = new IaQuestionnaireSide();
+			sideData = iaQuestionnaireSideRepository.findById(sideVo.getId()).get();
+			sideData.setSeq(new BigDecimal(sideVo.getSeq()));
+			iaQuestionnaireSideRepository.save(sideData);
+		}
 	}
 
 	public void updateStatus(String idStr) {

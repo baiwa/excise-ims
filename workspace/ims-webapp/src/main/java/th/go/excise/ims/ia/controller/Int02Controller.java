@@ -20,6 +20,7 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STAT
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.service.Int02Service;
+import th.go.excise.ims.ia.vo.Int020101UpdateVo;
 import th.go.excise.ims.ia.vo.Int02FormVo;
 import th.go.excise.ims.ia.vo.Int02Vo;
 
@@ -77,7 +78,8 @@ public class Int02Controller {
 	
 	@PutMapping("/update/{id}")
 	@ResponseBody
-	public ResponseData<IaQuestionnaireHdr> update(@PathVariable("id") String idStr, @RequestBody IaQuestionnaireHdr request) {
+	public ResponseData<IaQuestionnaireHdr> update(@PathVariable("id") String idStr, @RequestBody Int020101UpdateVo  request) {
+//		IaQuestionnaireHdr
 		ResponseData<IaQuestionnaireHdr> responseData = new ResponseData<IaQuestionnaireHdr>();
 		try {
 			responseData.setData(int02Service.update(idStr, request));

@@ -124,6 +124,8 @@ public class Int020101Controller {
 	@ResponseBody
 	public ResponseData<IaQuestionnaireSide> update(@PathVariable("id") String idStr,
 			@RequestBody IaQuestionnaireSide request) {
+		
+		
 		ResponseData<IaQuestionnaireSide> responseData = new ResponseData<IaQuestionnaireSide>();
 		try {
 			responseData.setData(int020101Service.update(idStr, request));

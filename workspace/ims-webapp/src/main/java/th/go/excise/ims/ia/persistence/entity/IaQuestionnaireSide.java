@@ -19,7 +19,7 @@ public class IaQuestionnaireSide extends BaseEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = -6327506371102352994L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_QUESTIONNAIRE_SIDE_GEN")
 	@SequenceGenerator(name = "IA_QUESTIONNAIRE_SIDE_GEN", sequenceName = "IA_QUESTIONNAIRE_SIDE_SEQ", allocationSize = 1)
@@ -29,6 +29,8 @@ public class IaQuestionnaireSide extends BaseEntity {
 	private BigDecimal idHead;
 	@Column(name = "SIDE_NAME")
 	private String sideName;
+	@Column(name = "SEQ")
+	private BigDecimal seq;
 
 	public BigDecimal getId() {
 		return id;
@@ -52,6 +54,14 @@ public class IaQuestionnaireSide extends BaseEntity {
 
 	public void setSideName(String sideName) {
 		this.sideName = sideName;
+	}
+
+	public BigDecimal getSeq() {
+		return seq;
+	}
+
+	public void setSeq(BigDecimal seq) {
+		this.seq = seq;
 	}
 
 }
