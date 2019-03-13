@@ -144,7 +144,7 @@ public class MasterConditionSubService {
 		if (CollectionUtils.isNotEmpty(oldRiskList)) {
 			for (int i = 0; i < form.getRiskList().size(); i++) {
 				TaMasCondSubRisk riskform = form.getRiskList().get(i);
-				risk = riskRepository.findByBudgetYearAndDutyCodeAndOfficeCode(riskform.getBudgetYear(), riskform.getRiskLevel(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
+				risk = riskRepository.findByBudgetYearAndDutyCodeAndOfficeCode(form.getBudgetYear(), riskform.getDutyCode(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
 				risk.setRiskLevel(riskform.getRiskLevel());
 				riskList.add(risk);
 			}
