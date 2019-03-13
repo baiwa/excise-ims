@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -17,10 +18,10 @@ import th.go.excise.ims.ia.vo.Int020301InfoVo;
 
 @Repository
 public class Int020301JdbcRepository {
-	
+
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
-	
+
 	public List<Int020301HeaderVo> findHeaderByIdSide(BigDecimal idSide, String budgetYear) {
 		StringBuilder sqlBuilder = new StringBuilder();
 		sqlBuilder.append(" SELECT IQS.SIDE_NAME FROM IA_QUESTIONNAIRE_HDR IQH ");
@@ -31,10 +32,11 @@ public class Int020301JdbcRepository {
 		List<Object> params = new ArrayList<>();
 		params.add(idSide);
 		params.add(budgetYear);
-		List<Int020301HeaderVo> data = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), headerRowMapper);
+		List<Int020301HeaderVo> data = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(),
+				headerRowMapper);
 		return data;
 	}
-	
+
 	private RowMapper<Int020301HeaderVo> headerRowMapper = new RowMapper<Int020301HeaderVo>() {
 		@Override
 		public Int020301HeaderVo mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -43,19 +45,25 @@ public class Int020301JdbcRepository {
 			return vo;
 		}
 	};
-	
-	public List<Int020301InfoVo> findInfoByIdSide(BigDecimal idSide, String budgetYear) {
+
+	public List<Int020301InfoVo> findInfoByIdSide(BigDecimal idSide, String budgetYear, String secter) {
 		StringBuilder sqlBuilder = new StringBuilder();
-		sqlBuilder.append(" select qmh.OFFICE_CODE as OFFICE_CODE, qmh.UPDATED_DATE as UPDATED_DATE, qmh.STATUS as STATUS from IA_QUESTIONNAIRE_HDR qhr ");
+		sqlBuilder.append(
+				" select qmh.OFFICE_CODE as OFFICE_CODE, qmh.UPDATED_DATE as UPDATED_DATE, qmh.STATUS as STATUS from IA_QUESTIONNAIRE_HDR qhr ");
 		sqlBuilder.append(" inner join IA_QUESTIONNAIRE_MADE_HDR qmh on qmh.ID_HDR = qhr.ID ");
-		sqlBuilder.append(" where qhr.BUDGET_YEAR = ? and qhr.ID = ? AND qhr.IS_DELETED = 'N' AND qmh.IS_DELETED = 'N' ORDER BY qmh.OFFICE_CODE ASC ");
+		sqlBuilder.append(" where qhr.BUDGET_YEAR = ? and qhr.ID = ? AND qhr.IS_DELETED = 'N' ");
 		List<Object> params = new ArrayList<>();
 		params.add(budgetYear);
 		params.add(idSide);
+		if (!"all".equals(secter) && secter != null && !StringUtils.isEmpty(secter)) {
+			sqlBuilder.append(" AND qmh.IS_DELETED = 'N'AND qmh.OFFICE_CODE like ? ");
+			params.add(secter + "%");
+		}
+		sqlBuilder.append(" ORDER BY qmh.OFFICE_CODE ASC ");
 		List<Int020301InfoVo> data = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), infoRowMapper);
 		return data;
 	}
-	
+
 	private RowMapper<Int020301InfoVo> infoRowMapper = new RowMapper<Int020301InfoVo>() {
 		@Override
 		public Int020301InfoVo mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -68,7 +76,7 @@ public class Int020301JdbcRepository {
 			return vo;
 		}
 	};
-	
+
 	public List<Int020301DataVo> findDataByIdHdr(BigDecimal idHdr, String budgetYear, String officeCode) {
 		StringBuilder sqlBuilder = new StringBuilder();
 		sqlBuilder.append(" SELECT QSR.ID AS ID, ");
@@ -77,7 +85,8 @@ public class Int020301JdbcRepository {
 		sqlBuilder.append(" WHERE QME.IS_DELETED = 'N' AND QME.CHECK_FLAG = 'T' AND QME.STATUS = 'FINISH' ");
 		sqlBuilder.append(" AND QDL.ID_SIDE = QSR.ID GROUP BY QME.ID_MADE_HDR) AS ACCEPT, ");
 		sqlBuilder.append(" (SELECT COUNT(1) FROM IA_QUESTIONNAIRE_SIDE_DTL QDL2 ");
-		sqlBuilder.append(" INNER JOIN IA_QUESTIONNAIRE_MADE QME2 ON QME2.ID_SIDE_DTL = QDL2.ID AND QME2.OFFICE_CODE = ? ");
+		sqlBuilder.append(
+				" INNER JOIN IA_QUESTIONNAIRE_MADE QME2 ON QME2.ID_SIDE_DTL = QDL2.ID AND QME2.OFFICE_CODE = ? ");
 		sqlBuilder.append(" WHERE QME2.IS_DELETED = 'N' AND QME2.CHECK_FLAG = 'F' AND QME2.STATUS = 'FINISH' ");
 		sqlBuilder.append(" AND QDL2.ID_SIDE = QSR.ID GROUP BY QME2.ID_MADE_HDR) AS DECLINE ");
 		sqlBuilder.append(" FROM IA_QUESTIONNAIRE_HDR QHR ");
@@ -92,7 +101,7 @@ public class Int020301JdbcRepository {
 		List<Int020301DataVo> data = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), dataRowMapper);
 		return data;
 	}
-	
+
 	private RowMapper<Int020301DataVo> dataRowMapper = new RowMapper<Int020301DataVo>() {
 		@Override
 		public Int020301DataVo mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -102,5 +111,5 @@ public class Int020301JdbcRepository {
 			return vo;
 		}
 	};
-	
+
 }

@@ -52,14 +52,14 @@ public class Int020301Controller {
 		return responseData;
 	}
 
-	@GetMapping("/info/{idHdr}/{budgetYear}")
+	@GetMapping("/info/{idHdr}/{budgetYear}/{secter}")
 	@ResponseBody
 	public ResponseData<List<Int020301InfoVo>> findInfoByIdHead(@PathVariable("idHdr") String idHdrStr,
-			@PathVariable("budgetYear") String budgetYear) {
+			@PathVariable("budgetYear") String budgetYear,@PathVariable("secter") String secter) {
 		ResponseData<List<Int020301InfoVo>> responseData = new ResponseData<List<Int020301InfoVo>>();
 		List<Int020301InfoVo> data = new ArrayList<>();
 		try {
-			data = int020301Service.findInfoByIdHdr(idHdrStr, budgetYear);
+			data = int020301Service.findInfoByIdHdr(idHdrStr, budgetYear,secter);
 			responseData.setData(data);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

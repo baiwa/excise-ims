@@ -72,11 +72,11 @@ public class Int020301Service {
 		}
 	}
 
-	public List<Int020301InfoVo> findInfoByIdHdr(String idHdrStr, String budgetYear) {
+	public List<Int020301InfoVo> findInfoByIdHdr(String idHdrStr, String budgetYear, String secter) {
 		BigDecimal idHdr = new BigDecimal(idHdrStr);
 		IaRiskQtnConfig configs = iaRiskQtnConfigRepository.findByIdQtnHdrAndIsDeleted(idHdr, "N");
 		List<Int020301InfoVo> datas = new ArrayList<>();
-		datas = int020301JdbcRepository.findInfoByIdSide(idHdr, budgetYear);
+		datas = int020301JdbcRepository.findInfoByIdSide(idHdr, budgetYear, secter);
 		for (Int020301InfoVo data : datas) {
 			// Sides Data
 			List<Int020301DataVo> sideDtls = int020301JdbcRepository.findDataByIdHdr(idHdr, budgetYear,
@@ -156,7 +156,7 @@ public class Int020301Service {
 		BigDecimal idConfig = new BigDecimal(idConfigStr);
 		IaRiskQtnConfig configs = iaRiskQtnConfigRepository.findByIdQtnHdrAndIsDeleted(idHdr, "N");
 		List<Int020301InfoVo> datas = new ArrayList<>();
-		datas = int020301JdbcRepository.findInfoByIdSide(idHdr, budgetYear);
+		datas = int020301JdbcRepository.findInfoByIdSide(idHdr, budgetYear, null);
 		Optional<IaRiskFactorsConfig> config = iaRiskFactorsConfigRep.findById(idConfig);
 		if (config.isPresent()) {
 			for (Int020301InfoVo data : datas) {
@@ -360,7 +360,7 @@ public class Int020301Service {
 		int count = 1;
 		rowNum = 3;
 		cellNum = 0;
-		List<Int020301InfoVo> details = findInfoByIdHdr(idHdrStr, budgetYear);
+		List<Int020301InfoVo> details = findInfoByIdHdr(idHdrStr, budgetYear, null);
 		for (Int020301InfoVo detail : details) {
 			// Re Initial
 			cellNum = 0;
