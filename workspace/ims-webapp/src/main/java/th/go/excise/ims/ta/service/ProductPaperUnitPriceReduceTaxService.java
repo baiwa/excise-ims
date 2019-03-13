@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.common.util.ExcelUtils;
-import th.go.excise.ims.ta.vo.CppUnitPriceVo;
+import th.go.excise.ims.ta.vo.ProductPaperUnitPriceReduceTaxVo;
 import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 
 @Service
@@ -29,8 +29,8 @@ public class ProductPaperUnitPriceReduceTaxService {
 	private static final Integer TOTAL = 17;
 	private static final String PRODUCT_PAPER_UNIT_PRICE_REDUCE_TAX = "ราคาต่อหน่วยสินค้า";
 
-	public DataTableAjax<CppUnitPriceVo> listProductPaperUnitPriceReduceTax(CreatePaperFormVo request) {
-		DataTableAjax<CppUnitPriceVo> dataTableAjax = new DataTableAjax<CppUnitPriceVo>();
+	public DataTableAjax<ProductPaperUnitPriceReduceTaxVo> listProductPaperUnitPriceReduceTax(CreatePaperFormVo request) {
+		DataTableAjax<ProductPaperUnitPriceReduceTaxVo> dataTableAjax = new DataTableAjax<ProductPaperUnitPriceReduceTaxVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
 		dataTableAjax.setData(getDataProductPaperUnitPriceReduceTax(request.getStart(), request.getLength(), TOTAL));
 		dataTableAjax.setRecordsTotal(TOTAL);
@@ -38,26 +38,26 @@ public class ProductPaperUnitPriceReduceTaxService {
 		return dataTableAjax;
 	}
 
-	public List<CppUnitPriceVo> getDataProductPaperUnitPriceReduceTax(int start, int length, int total) {
+	public List<ProductPaperUnitPriceReduceTaxVo> getDataProductPaperUnitPriceReduceTax(int start, int length, int total) {
 		logger.info("getDataProductPaperUnitPriceReduceTax");
 		String desc = "ราคาต่อหน่วยสินค้าที่ขอลดหย่อนภาษี";
-		List<CppUnitPriceVo> datalist = new ArrayList<CppUnitPriceVo>();
-		CppUnitPriceVo data = null;
+		List<ProductPaperUnitPriceReduceTaxVo> datalist = new ArrayList<ProductPaperUnitPriceReduceTaxVo>();
+		ProductPaperUnitPriceReduceTaxVo data = null;
 		for (int i = start; i < (start + length); i++) {
 			if (i >= total) {
 				break;
 			}
-			data = new CppUnitPriceVo();
+			data = new ProductPaperUnitPriceReduceTaxVo();
 			data.setId(Long.valueOf(1));
-			data.setList(desc + (i + 1));
-			data.setTotalTax1("1,000.00");
-			data.setQuantity1("100.00");
-			data.setTaxPerUnit1("10.00");
-			data.setReceiptNum("001-22-70" + (i + 1));
-			data.setTotalTax2("1,000.00");
-			data.setQuantity2("100.00");
-			data.setTaxPerUnit2("10.00");
-			data.setDiff("0.00");
+			data.setGoodsDesc(desc + (i + 1));
+			data.setTaxReduceAmt("1,000.00");
+			data.setTaxReduceQty("100.00");
+			data.setTaxReducePerUnitAmt("10.00");
+			data.setBillNo("001-22-70" + (i + 1));
+			data.setBillTaxAmt("1,000.00");
+			data.setBillTaxQty("100.00");
+			data.setBillTaxPerUnit("10.00");
+			data.setDiffTaxReduceAmt("0.00");
 			datalist.add(data);
 		}
 		return datalist;
@@ -136,8 +136,8 @@ public class ProductPaperUnitPriceReduceTaxService {
 		rowNum = 2;
 		cellNum = 0;
 		int no = 1;
-		List<CppUnitPriceVo> dataList = getDataProductPaperUnitPriceReduceTax(0, TOTAL, TOTAL);
-		for (CppUnitPriceVo data : dataList) {
+		List<ProductPaperUnitPriceReduceTaxVo> dataList = getDataProductPaperUnitPriceReduceTax(0, TOTAL, TOTAL);
+		for (ProductPaperUnitPriceReduceTaxVo data : dataList) {
 			row = sheet.createRow(rowNum);
 
 			cell = row.createCell(cellNum);
@@ -146,47 +146,47 @@ public class ProductPaperUnitPriceReduceTaxService {
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getList());
+			cell.setCellValue(data.getGoodsDesc());
 			cell.setCellStyle(cellLeft);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getTotalTax1());
+			cell.setCellValue(data.getTaxReduceAmt());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getQuantity1());
+			cell.setCellValue(data.getTaxReduceQty());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getTaxPerUnit1());
+			cell.setCellValue(data.getTaxReducePerUnitAmt());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getReceiptNum());
+			cell.setCellValue(data.getBillNo());
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getTotalTax2());
+			cell.setCellValue(data.getBillTaxAmt());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getQuantity2());
+			cell.setCellValue(data.getBillTaxQty());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getTaxPerUnit2());
+			cell.setCellValue(data.getBillTaxPerUnit());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getDiff());
+			cell.setCellValue(data.getDiffTaxReduceAmt());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 

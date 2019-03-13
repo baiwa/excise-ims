@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.common.util.ExcelUtils;
-import th.go.excise.ims.ta.vo.CppCheckPriceVo;
+import th.go.excise.ims.ta.vo.ProductPaperInformPriceVo;
 import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 
 @Service
@@ -27,8 +27,8 @@ public class ProductPaperInformPriceService {
 	private static final Integer TOTAL = 17;
 	private static final String PRODUCT_PAPER_IN_FORM_PRICE = "ตรวจสอบด้านราคา";
 
-	public DataTableAjax<CppCheckPriceVo> listProductPaperInformPrice(CreatePaperFormVo request) {
-		DataTableAjax<CppCheckPriceVo> dataTableAjax = new DataTableAjax<CppCheckPriceVo>();
+	public DataTableAjax<ProductPaperInformPriceVo> listProductPaperInformPrice(CreatePaperFormVo request) {
+		DataTableAjax<ProductPaperInformPriceVo> dataTableAjax = new DataTableAjax<ProductPaperInformPriceVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
 		dataTableAjax.setData(getDataProductPaperInformPrice(request.getStart(), request.getLength(), TOTAL));
 		dataTableAjax.setRecordsTotal(TOTAL);
@@ -36,24 +36,24 @@ public class ProductPaperInformPriceService {
 		return dataTableAjax;
 	}
 
-	public List<CppCheckPriceVo> getDataProductPaperInformPrice(int start, int length, int total) {
+	public List<ProductPaperInformPriceVo> getDataProductPaperInformPrice(int start, int length, int total) {
 		logger.info("getDataProductPaperInformPrice");
 		String desc = "ตรวจสอบด้านราคา";
-		List<CppCheckPriceVo> datalist = new ArrayList<CppCheckPriceVo>();
-		CppCheckPriceVo data = null;
+		List<ProductPaperInformPriceVo> datalist = new ArrayList<ProductPaperInformPriceVo>();
+		ProductPaperInformPriceVo data = null;
 		for (int i = start; i < (start + length); i++) {
 			if (i >= total) {
 				break;
 			}
-			data = new CppCheckPriceVo();
+			data = new ProductPaperInformPriceVo();
 			data.setId(Long.valueOf(1));
-			data.setList(desc + (i + 1));
-			data.setPriceNotiPs("1,000.00");
-			data.setPriceDataEx("1,500.00");
-			data.setPriceUnit("1,400.00");
-			data.setPriceRetail("1,400.00");
-			data.setTax("1,000.00");
-			data.setDiff("100.00");
+			data.setGoodsDesc(desc + (i + 1));
+			data.setInformPrice("1,000.00");
+			data.setExternalPrice("1,500.00");
+			data.setDeclarePrice("1,400.00");
+			data.setRetailPrice("1,400.00");
+			data.setTaxPrice("1,000.00");
+			data.setDiffPrice("100.00");
 			datalist.add(data);
 		}
 		return datalist;
@@ -104,8 +104,8 @@ public class ProductPaperInformPriceService {
 		rowNum = 1;
 		cellNum = 0;
 		int no = 1;
-		List<CppCheckPriceVo> dataList = getDataProductPaperInformPrice(0, TOTAL, TOTAL);
-		for (CppCheckPriceVo data : dataList) {
+		List<ProductPaperInformPriceVo> dataList = getDataProductPaperInformPrice(0, TOTAL, TOTAL);
+		for (ProductPaperInformPriceVo data : dataList) {
 			row = sheet.createRow(rowNum);
 
 			cell = row.createCell(cellNum);
@@ -114,37 +114,37 @@ public class ProductPaperInformPriceService {
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getList());
+			cell.setCellValue(data.getGoodsDesc());
 			cell.setCellStyle(cellLeft);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getPriceNotiPs());
+			cell.setCellValue(data.getInformPrice());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getPriceDataEx());
+			cell.setCellValue(data.getExternalPrice());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getPriceUnit());
+			cell.setCellValue(data.getDeclarePrice());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getPriceUnit());
+			cell.setCellValue(data.getRetailPrice());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getTax());
+			cell.setCellValue(data.getTaxPrice());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getDiff());
+			cell.setCellValue(data.getDiffPrice());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 

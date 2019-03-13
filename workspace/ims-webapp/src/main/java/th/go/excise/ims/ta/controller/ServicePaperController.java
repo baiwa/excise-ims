@@ -79,8 +79,6 @@ public class ServicePaperController {
 		// write it as an excel attachment
 		byte[] outByteStream = servicePaperQty.exportFileQuantityServiceVo();
 		response.setContentType("application/octet-stream");
-		response.setContentLength(outByteStream.length);
-		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
 		OutputStream outStream = response.getOutputStream();
 		outStream.write(outByteStream);
@@ -121,8 +119,6 @@ public class ServicePaperController {
 		// write it as an excel attachment
 		byte[] outByteStream = servicePaperPricePerUnit.exportFilePriceServiceVo();
 		response.setContentType("application/octet-stream");
-		response.setContentLength(outByteStream.length);
-		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
 		OutputStream outStream = response.getOutputStream();
 		outStream.write(outByteStream);
@@ -163,8 +159,6 @@ public class ServicePaperController {
 		// write it as an excel attachment
 		byte[] outByteStream = servicePaperMember.exportFileMemberStatusServiceVo();
 		response.setContentType("application/octet-stream");
-		response.setContentLength(outByteStream.length);
-		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
 		OutputStream outStream = response.getOutputStream();
 		outStream.write(outByteStream);
@@ -206,8 +200,6 @@ public class ServicePaperController {
 		// write it as an excel attachment
 		byte[] outByteStream = servicePaperBalanceGoods.exportFileLeftInStockServiceVo();		
 		response.setContentType("application/octet-stream");
-		response.setContentLength(outByteStream.length);
-		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
 		OutputStream outStream = response.getOutputStream();
 		outStream.write(outByteStream);
@@ -245,8 +237,6 @@ public class ServicePaperController {
 		// write it as an excel attachment
 		byte[] outByteStream = servicePaperTaxAmtAdditional.exportFinishedGoodsReceive();		
 		response.setContentType("application/octet-stream");
-		response.setContentLength(outByteStream.length);
-		response.setHeader("Expires:", "0"); // eliminates browser caching
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
 		OutputStream outStream = response.getOutputStream();
 		outStream.write(outByteStream);

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.common.util.ExcelUtils;
-import th.go.excise.ims.ta.vo.CppTaxVo;
+import th.go.excise.ims.ta.vo.ProductPaperTaxAmtAdditionalVo;
 import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 
 @Service
@@ -27,8 +27,8 @@ public class ProductPaperTaxAmtAdditionalService {
 	private static final Integer TOTAL = 17;
 	private static final String PRODUCT_PAPER_TAX_AMT_ADDITIONAL = "คำนวณภาษีที่ต้องชำระเพิ่ม";
 
-	public DataTableAjax<CppTaxVo> listProductPaperTaxAmtAdditional(CreatePaperFormVo request) {
-		DataTableAjax<CppTaxVo> dataTableAjax = new DataTableAjax<CppTaxVo>();
+	public DataTableAjax<ProductPaperTaxAmtAdditionalVo> listProductPaperTaxAmtAdditional(CreatePaperFormVo request) {
+		DataTableAjax<ProductPaperTaxAmtAdditionalVo> dataTableAjax = new DataTableAjax<ProductPaperTaxAmtAdditionalVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
 		dataTableAjax.setData(getDataProductPaperTaxAmtAdditional(request.getStart(), request.getLength(), TOTAL));
 		dataTableAjax.setRecordsTotal(TOTAL);
@@ -36,27 +36,27 @@ public class ProductPaperTaxAmtAdditionalService {
 		return dataTableAjax;
 	}
 
-	public List<CppTaxVo> getDataProductPaperTaxAmtAdditional(int start, int length, int total) {
+	public List<ProductPaperTaxAmtAdditionalVo> getDataProductPaperTaxAmtAdditional(int start, int length, int total) {
 		logger.info("getDataTax");
 		String desc = "คำนวณภาษีที่ต้องชำระเพิ่ม";
-		List<CppTaxVo> datalist = new ArrayList<CppTaxVo>();
-		CppTaxVo data = null;
+		List<ProductPaperTaxAmtAdditionalVo> datalist = new ArrayList<ProductPaperTaxAmtAdditionalVo>();
+		ProductPaperTaxAmtAdditionalVo data = null;
 		for (int i = start; i < (start + length); i++) {
 			if (i >= total) {
 				break;
 			}
-			data = new CppTaxVo();
+			data = new ProductPaperTaxAmtAdditionalVo();
 			data.setId(Long.valueOf(1));
-			data.setList(desc + (i + 1));
-			data.setQuantity("1,000.00");
-			data.setPriceRetail("10,000.00");
-			data.setCost("10,000.00");
-			data.setTaxRate("10.00");
-			data.setTaxAdditional("1,000.00");
-			data.setFine("500.00");
-			data.setExtraMoney("100.00");
-			data.setTaxLocal("100.00");
-			data.setTotal("22,710.00");
+			data.setGoodsDesc(desc + (i + 1));
+			data.setTaxQty("1,000.00");
+			data.setInformPrice("10,000.00");
+			data.setTaxValue("10,000.00");
+			data.setTaxRateByValue("10.00");
+			data.setTaxRateByQty("1,000.00");
+			data.setPenaltyAmt("500.00");
+			data.setSurchargeAmt("100.00");
+			data.setMoiTaxAmt("100.00");
+			data.setNetTaxAmt("22,710.00");
 			datalist.add(data);
 		}
 		return datalist;
@@ -106,8 +106,8 @@ public class ProductPaperTaxAmtAdditionalService {
 		rowNum = 1;
 		cellNum = 0;
 		int no = 1;
-		List<CppTaxVo> dataList = getDataProductPaperTaxAmtAdditional(0, TOTAL, TOTAL);
-		for (CppTaxVo data : dataList) {
+		List<ProductPaperTaxAmtAdditionalVo> dataList = getDataProductPaperTaxAmtAdditional(0, TOTAL, TOTAL);
+		for (ProductPaperTaxAmtAdditionalVo data : dataList) {
 			row = sheet.createRow(rowNum);
 
 			cell = row.createCell(cellNum);
@@ -116,52 +116,52 @@ public class ProductPaperTaxAmtAdditionalService {
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getList());
+			cell.setCellValue(data.getGoodsDesc());
 			cell.setCellStyle(cellLeft);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getQuantity());
+			cell.setCellValue(data.getTaxQty());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getPriceRetail());
+			cell.setCellValue(data.getInformPrice());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getCost());
+			cell.setCellValue(data.getTaxValue());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getTaxRate());
+			cell.setCellValue(data.getTaxRateByValue());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getTaxAdditional());
+			cell.setCellValue(data.getTaxRateByQty());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getFine());
+			cell.setCellValue(data.getPenaltyAmt());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getExtraMoney());
+			cell.setCellValue(data.getSurchargeAmt());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getTaxLocal());
+			cell.setCellValue(data.getMoiTaxAmt());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getTotal());
+			cell.setCellValue(data.getNetTaxAmt());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 

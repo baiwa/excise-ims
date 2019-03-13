@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.common.util.ExcelUtils;
-import th.go.excise.ims.ta.vo.CppPayForeignFinishedGoodsVo;
+import th.go.excise.ims.ta.vo.ProductPaperOutputForeignGoodsVo;
 import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 
 @Service
@@ -27,8 +27,8 @@ public class ProductPaperOutputForeignGoodsService {
 	private static final Integer TOTAL = 17;
 	private static final String PRODUCT_PAPER_OUTPUT_FOREIGN_GOODS = "จ่ายสินค้าสำเร็จรูปต่างประเทศ";
 
-	public DataTableAjax<CppPayForeignFinishedGoodsVo> listProductPaperOutputForeignGoods(CreatePaperFormVo request) {
-		DataTableAjax<CppPayForeignFinishedGoodsVo> dataTableAjax = new DataTableAjax<CppPayForeignFinishedGoodsVo>();
+	public DataTableAjax<ProductPaperOutputForeignGoodsVo> listProductPaperOutputForeignGoods(CreatePaperFormVo request) {
+		DataTableAjax<ProductPaperOutputForeignGoodsVo> dataTableAjax = new DataTableAjax<ProductPaperOutputForeignGoodsVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
 		dataTableAjax.setData(getDataProductPaperOutputForeignGoods(request.getStart(), request.getLength(), TOTAL));
 		dataTableAjax.setRecordsTotal(TOTAL);
@@ -36,25 +36,25 @@ public class ProductPaperOutputForeignGoodsService {
 		return dataTableAjax;
 	}
 
-	public List<CppPayForeignFinishedGoodsVo> getDataProductPaperOutputForeignGoods(int start, int length, int total) {
+	public List<ProductPaperOutputForeignGoodsVo> getDataProductPaperOutputForeignGoods(int start, int length, int total) {
 		logger.info("getDataPayForeignFinishedGoods");
 		String desc = "จ่ายสินค้าสำเร็จรูปต่างประเทศ";
-		List<CppPayForeignFinishedGoodsVo> datalist = new ArrayList<CppPayForeignFinishedGoodsVo>();
-		CppPayForeignFinishedGoodsVo data = null;
+		List<ProductPaperOutputForeignGoodsVo> datalist = new ArrayList<ProductPaperOutputForeignGoodsVo>();
+		ProductPaperOutputForeignGoodsVo data = null;
 		for (int i = start; i < (start + length); i++) {
 			if (i >= total) {
 				break;
 			}
-			data = new CppPayForeignFinishedGoodsVo();
+			data = new ProductPaperOutputForeignGoodsVo();
 			data.setId(Long.valueOf(1));
-			data.setList(desc + (i + 1));
-			data.setTransportDoc("100-222-22" + (i + 1));
-			data.setInv("GT-00" + (i + 1));
-			data.setPs1("TS00" + (i + 1));
-			data.setMonthStatement("1,000.00");
-			data.setCheck("900.00");
-			data.setPs2("TS00+G" + (i + 1));
-			data.setDiff("100.00");
+			data.setGoodsDesc(desc + (i + 1));
+			data.setCargoDocNo("100-222-22" + (i + 1));
+			data.setInvoice("GT-00" + (i + 1));
+			data.setOutputDailyAccountQty("TS00" + (i + 1));
+			data.setOutputMonthStatementQty("1,000.00");
+			data.setOutputAuditQty("900.00");
+			data.setTaxReduceQty("TS00+G" + (i + 1));
+			data.setDiffOutputQty("100.00");
 			datalist.add(data);
 		}
 		return datalist;
@@ -106,8 +106,8 @@ public class ProductPaperOutputForeignGoodsService {
 		rowNum = 1;
 		cellNum = 0;
 		int no = 1;
-		List<CppPayForeignFinishedGoodsVo> dataList = getDataProductPaperOutputForeignGoods(0, TOTAL, TOTAL);
-		for (CppPayForeignFinishedGoodsVo data : dataList) {
+		List<ProductPaperOutputForeignGoodsVo> dataList = getDataProductPaperOutputForeignGoods(0, TOTAL, TOTAL);
+		for (ProductPaperOutputForeignGoodsVo data : dataList) {
 			row = sheet.createRow(rowNum);
 
 			cell = row.createCell(cellNum);
@@ -116,42 +116,42 @@ public class ProductPaperOutputForeignGoodsService {
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getList());
+			cell.setCellValue(data.getGoodsDesc());
 			cell.setCellStyle(cellLeft);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getTransportDoc());
+			cell.setCellValue(data.getCargoDocNo());
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getInv());
+			cell.setCellValue(data.getInvoice());
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getPs1());
+			cell.setCellValue(data.getOutputDailyAccountQty());
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getMonthStatement());
+			cell.setCellValue(data.getOutputMonthStatementQty());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getCheck());
+			cell.setCellValue(data.getOutputAuditQty());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getPs2());
+			cell.setCellValue(data.getTaxReduceQty());
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getDiff());
+			cell.setCellValue(data.getDiffOutputQty());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
