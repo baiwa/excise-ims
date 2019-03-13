@@ -54,7 +54,7 @@ public class ProductPaperOutputForeignGoodsService {
 			data.setId(Long.valueOf(1));
 			data.setGoodsDesc(desc + (i + 1));
 			data.setCargoDocNo("100-222-22" + (i + 1));
-			data.setInvoice("GT-00" + (i + 1));
+			data.setInvoiceNo("GT-00" + (i + 1));
 			data.setOutputDailyAccountQty("TS00" + (i + 1));
 			data.setOutputMonthStatementQty("1,000.00");
 			data.setOutputAuditQty("900.00");
@@ -131,7 +131,7 @@ public class ProductPaperOutputForeignGoodsService {
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getInvoice());
+			cell.setCellValue(data.getInvoiceNo());
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
@@ -206,8 +206,8 @@ public class ProductPaperOutputForeignGoodsService {
 						// CargoDocNo
 						data.setCargoDocNo(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 3) {
-						// Invoice
-						data.setInvoice(ExcelUtils.getCellValueAsString(cell));
+						// InvoiceNo
+						data.setInvoiceNo(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 4) {
 						// OutputDailyAccountQty
 						data.setOutputDailyAccountQty(ExcelUtils.getCellValueAsString(cell));
