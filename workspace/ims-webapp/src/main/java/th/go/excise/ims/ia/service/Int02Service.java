@@ -22,6 +22,7 @@ import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeRepository;
+import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireSideRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireHdrJdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireMadeHdrJdbcRepository;
 import th.go.excise.ims.ia.vo.Int020101SideVo;
@@ -46,6 +47,10 @@ public class Int02Service {
 
 	@Autowired
 	private IaQuestionnaireMadeRepository iaQuestionnaireMadeRepository;
+	
+	@Autowired
+	private IaQuestionnaireSideRepository iaQuestionnaireSideRepository;
+	
 
 	public DataTableAjax<Int02Vo> filterQtnHdr(Int02FormVo request) {
 
