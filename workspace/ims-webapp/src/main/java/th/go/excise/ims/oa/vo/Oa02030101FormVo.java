@@ -26,6 +26,15 @@ public class Oa02030101FormVo {
 	private String receiveNo;
 	private String approve;
 	private List<OaCustomerLicenDetail> details;
+	private List<OaCustomerLicenDetail> deletes;
+
+	public List<OaCustomerLicenDetail> getDeletes() {
+		return deletes;
+	}
+
+	public void setDeletes(List<OaCustomerLicenDetail> deletes) {
+		this.deletes = deletes;
+	}
 
 	public BigDecimal getOaCuslicenseId() {
 		return oaCuslicenseId;
