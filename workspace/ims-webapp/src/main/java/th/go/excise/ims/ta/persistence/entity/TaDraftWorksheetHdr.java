@@ -17,92 +17,122 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 @Table(name = "TA_DRAFT_WORKSHEET_HDR")
 public class TaDraftWorksheetHdr extends BaseEntity {
 
-	private static final long serialVersionUID = 9124745681603965177L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_DRAFT_WORKSHEET_HDR_GEN")
-	@SequenceGenerator(name = "TA_DRAFT_WORKSHEET_HDR_GEN", sequenceName = "TA_DRAFT_WORKSHEET_HDR_SEQ", allocationSize = 1)
-	@Column(name = "DRAFT_WORKSHEET_HDR_ID")
-	private Long draftWorksheetHdrId;
-	@Column(name = "OFFICE_CODE")
-	private String officeCode;
-	@Column(name = "BUDGET_YEAR")
-	private String budgetYear;
-	@Column(name = "DRAFT_NUMBER")
-	private String draftNumber;
-	@Column(name = "YEAR_MONTH_START")
-	private String yearMonthStart;
-	@Column(name = "YEAR_MONTH_END")
-	private String yearMonthEnd;
-	@Column(name = "MONTH_NUM")
-	private Integer monthNum;
-	@Column(name = "WORKSHEET_STATUS")
-	private String worksheetStatus;
+    private static final long serialVersionUID = 9124745681603965177L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_DRAFT_WORKSHEET_HDR_GEN")
+    @SequenceGenerator(name = "TA_DRAFT_WORKSHEET_HDR_GEN", sequenceName = "TA_DRAFT_WORKSHEET_HDR_SEQ", allocationSize = 1)
+    @Column(name = "DRAFT_WORKSHEET_HDR_ID")
+    private Long draftWorksheetHdrId;
+    @Column(name = "OFFICE_CODE")
+    private String officeCode;
+    @Column(name = "BUDGET_YEAR")
+    private String budgetYear;
+    @Column(name = "DRAFT_NUMBER")
+    private String draftNumber;
+    @Column(name = "YEAR_MONTH_START")
+    private String yearMonthStart;
+    @Column(name = "YEAR_MONTH_END")
+    private String yearMonthEnd;
+    @Column(name = "MONTH_NUM")
+    private Integer monthNum;
+    @Column(name = "WORKSHEET_STATUS")
+    private String worksheetStatus;
+    @Column(name = "COND_SUB_CAPITAL_FLAG")
+    private String condSubCapitalFlag;
+    @Column(name = "COND_SUB_RISK_FLAG")
+    private String condSubRiskFlag;
+    @Column(name = "COND_SUB_NO_AUDIT_FLAG")
+    private String condSubNoAuditFlag;
 
-	public Long getDraftWorksheetHdrId() {
-		return draftWorksheetHdrId;
-	}
+    public String getCondSubCapitalFlag() {
+        return condSubCapitalFlag;
+    }
 
-	public void setDraftWorksheetHdrId(Long draftWorksheetHdrId) {
-		this.draftWorksheetHdrId = draftWorksheetHdrId;
-	}
+    public void setCondSubCapitalFlag(String condSubCapitalFlag) {
+        this.condSubCapitalFlag = condSubCapitalFlag;
+    }
 
-	public String getOfficeCode() {
-		return officeCode;
-	}
+    public String getCondSubRiskFlag() {
+        return condSubRiskFlag;
+    }
 
-	public void setOfficeCode(String officeCode) {
-		this.officeCode = officeCode;
-	}
+    public void setCondSubRiskFlag(String condSubRiskFlag) {
+        this.condSubRiskFlag = condSubRiskFlag;
+    }
 
-	public String getBudgetYear() {
-		return budgetYear;
-	}
+    public String getCondSubNoAuditFlag() {
+        return condSubNoAuditFlag;
+    }
 
-	public void setBudgetYear(String budgetYear) {
-		this.budgetYear = budgetYear;
-	}
+    public void setCondSubNoAuditFlag(String condSubNoAuditFlag) {
+        this.condSubNoAuditFlag = condSubNoAuditFlag;
+    }
 
-	public String getDraftNumber() {
-		return draftNumber;
-	}
+    public Long getDraftWorksheetHdrId() {
+        return draftWorksheetHdrId;
+    }
 
-	public void setDraftNumber(String draftNumber) {
-		this.draftNumber = draftNumber;
-	}
+    public void setDraftWorksheetHdrId(Long draftWorksheetHdrId) {
+        this.draftWorksheetHdrId = draftWorksheetHdrId;
+    }
 
-	public String getYearMonthStart() {
-		return yearMonthStart;
-	}
+    public String getOfficeCode() {
+        return officeCode;
+    }
 
-	public void setYearMonthStart(String yearMonthStart) {
-		this.yearMonthStart = yearMonthStart;
-	}
+    public void setOfficeCode(String officeCode) {
+        this.officeCode = officeCode;
+    }
 
-	public String getYearMonthEnd() {
-		return yearMonthEnd;
-	}
+    public String getBudgetYear() {
+        return budgetYear;
+    }
 
-	public void setYearMonthEnd(String yearMonthEnd) {
-		this.yearMonthEnd = yearMonthEnd;
-	}
+    public void setBudgetYear(String budgetYear) {
+        this.budgetYear = budgetYear;
+    }
 
-	public Integer getMonthNum() {
-		return monthNum;
-	}
+    public String getDraftNumber() {
+        return draftNumber;
+    }
 
-	public void setMonthNum(Integer monthNum) {
-		this.monthNum = monthNum;
-	}
+    public void setDraftNumber(String draftNumber) {
+        this.draftNumber = draftNumber;
+    }
 
-	public String getWorksheetStatus() {
-		return worksheetStatus;
-	}
+    public String getYearMonthStart() {
+        return yearMonthStart;
+    }
 
-	public void setWorksheetStatus(String worksheetStatus) {
-		this.worksheetStatus = worksheetStatus;
-	}
+    public void setYearMonthStart(String yearMonthStart) {
+        this.yearMonthStart = yearMonthStart;
+    }
 
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-	}
+    public String getYearMonthEnd() {
+        return yearMonthEnd;
+    }
+
+    public void setYearMonthEnd(String yearMonthEnd) {
+        this.yearMonthEnd = yearMonthEnd;
+    }
+
+    public Integer getMonthNum() {
+        return monthNum;
+    }
+
+    public void setMonthNum(Integer monthNum) {
+        this.monthNum = monthNum;
+    }
+
+    public String getWorksheetStatus() {
+        return worksheetStatus;
+    }
+
+    public void setWorksheetStatus(String worksheetStatus) {
+        this.worksheetStatus = worksheetStatus;
+    }
+
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    }
 }

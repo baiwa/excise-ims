@@ -21,7 +21,10 @@ public class TaDraftWorksheetHdrRepositoryImpl implements TaDraftWorksheetHdrRep
 	public YearMonthVo findMonthStartByDraftNumber(String draftNumber) {
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT YEAR_MONTH_START, YEAR_MONTH_END, MONTH_NUM AS MONTH_TOTAL ");
-		sql.append("   ,TO_NUMBER(SUBSTR(YEAR_MONTH_START,5,2)) AS MONTH_START ");
+		sql.append("   ,TO_NUMBER(SUBSTR(YEAR_MONTH_START,5,2)) AS MONTH_START, ");
+		sql.append(" COND_SUB_CAPITAL_FLAG, ");
+		sql.append(" COND_SUB_RISK_FLAG, ");
+		sql.append(" COND_SUB_NO_AUDIT_FLAG ");
 		sql.append(" FROM TA_DRAFT_WORKSHEET_HDR ");
 		sql.append(" WHERE IS_DELETED = ? ");
 		sql.append("   AND DRAFT_NUMBER = ? ");
