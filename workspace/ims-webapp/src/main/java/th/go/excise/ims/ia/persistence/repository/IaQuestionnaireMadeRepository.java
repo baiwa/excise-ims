@@ -16,4 +16,6 @@ public interface IaQuestionnaireMadeRepository extends CommonJpaCrudRepository<I
 	@Transactional
 	void deleteByIdSideDtl(BigDecimal idSideDtl);
 
+	List<IaQuestionnaireMade> findByIdMadeHdrAndIsDeleted(BigDecimal id, String isDeleted);
+
 }

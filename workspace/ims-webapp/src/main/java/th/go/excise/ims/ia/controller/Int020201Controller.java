@@ -22,7 +22,6 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMadeHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
 import th.go.excise.ims.ia.service.Int020201Service;
-import th.go.excise.ims.ia.service.Int020201SidesVo;
 import th.go.excise.ims.ia.vo.Int020201DtlVo;
 import th.go.excise.ims.ia.vo.Int020201SidesFormVo;
 import th.go.excise.ims.ia.vo.Int020201Vo;

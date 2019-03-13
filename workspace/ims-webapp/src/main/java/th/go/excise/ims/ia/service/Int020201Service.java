@@ -8,9 +8,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMade;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMadeHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
+import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireSideRepository;
@@ -34,6 +36,9 @@ public class Int020201Service {
 
 	@Autowired
 	private IaQuestionnaireMadeHdrRepository iaQuestionnaireMadeHdrRepository;
+	
+	@Autowired
+	private IaQuestionnaireHdrRepository iaQuestionnaireHdrRepository;
 
 	public List<IaQuestionnaireSide> findQtnSideById(Int020201SidesFormVo request) {
 		return iaQuestionnaireSideRepository.findByidHeadAndIsDeleted(request.getIdSide(), "N");
@@ -125,7 +130,16 @@ public class Int020201Service {
 			}
 			/* confirm send questionnaire form */
 			if (request.getFlagConfirm()) {
+				/* update status questionnaire made hdr */
 				madeHdr.setStatus("FINISH");
+				
+				/* update status questionnaire hdr */
+				Optional<IaQuestionnaireHdr> resHdr = iaQuestionnaireHdrRepository.findById(madeHdr.getIdHdr());
+				if(resHdr.isPresent()) {
+					IaQuestionnaireHdr dataHdr = resHdr.get();
+					dataHdr.setStatus("FINISH");
+					iaQuestionnaireHdrRepository.save(dataHdr);
+				}
 			}
 			iaQuestionnaireMadeHdrRepository.save(madeHdr);
 		}

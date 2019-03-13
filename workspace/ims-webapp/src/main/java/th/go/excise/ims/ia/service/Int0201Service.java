@@ -257,7 +257,7 @@ public class Int0201Service {
 		/* find id of Questionnaire Made Header */
 		if (request.getIdHead() != null) {
 			List<IaQuestionnaireMadeHdr> filterQtnMadeHdr = iaQuestionnaireMadeHdrRepository
-					.findByIdHdr(request.getIdHead());
+					.findByIdHdrAndIsDeleted(request.getIdHead(), "N");
 			if (filterQtnMadeHdr.size() > 0) {
 				/* find id of Questionnaire Header */
 				Optional<IaQuestionnaireHdr> filterQtnHdr = iaQuestionnaireHdrRepository.findById(request.getIdHead());

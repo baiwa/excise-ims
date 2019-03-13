@@ -15,9 +15,11 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMade;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMadeHdr;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeHdrRepository;
+import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireHdrJdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireMadeHdrJdbcRepository;
 import th.go.excise.ims.ia.vo.Int02FormVo;
@@ -31,13 +33,16 @@ public class Int02Service {
 
 	@Autowired
 	private IaQuestionnaireHdrRepository iaQuestionnaireHdrRepository;
-	
+
 	@Autowired
 	private IaQuestionnaireMadeHdrRepository iaQuestionnaireMadeHdrRepository;
-	
+
 	@Autowired
 	private IaQuestionnaireMadeHdrJdbcRepository iaQuestionnaireMadeHdrJdbcRepository;
-	
+
+	@Autowired
+	private IaQuestionnaireMadeRepository iaQuestionnaireMadeRepository;
+
 	public DataTableAjax<Int02Vo> filterQtnHdr(Int02FormVo request) {
 
 		List<Int02Vo> data = iaQuestionnaireHdrJdbcRepository.getDataFilter(request);
@@ -99,7 +104,7 @@ public class Int02Service {
 		data.setBudgetYear(request.getBudgetYear());
 		data.setQtnHeaderName(request.getQtnHeaderName());
 		data.setNote(request.getNote());
-		
+
 		/* update table Questionnaire-Made-Hdr */
 //		List<IaQuestionnaireMadeHdr> dataMadeHdr = iaQuestionnaireMadeHdrRepository.findByIdHdr(request.getId());
 //		for (IaQuestionnaireMadeHdr objMadeHdr : dataMadeHdr) {
@@ -109,13 +114,14 @@ public class Int02Service {
 //				iaQuestionnaireMadeHdrRepository.save(objMadeHdr);
 //			}
 //		}
-		List<IaQuestionnaireMadeHdr> madeHdrList = iaQuestionnaireMadeHdrJdbcRepository.findMadeHdrByIdHdr(request, UserLoginUtils.getCurrentUserBean().getOfficeCode());
+		List<IaQuestionnaireMadeHdr> madeHdrList = iaQuestionnaireMadeHdrJdbcRepository.findMadeHdrByIdHdr(request,
+				UserLoginUtils.getCurrentUserBean().getOfficeCode());
 		for (IaQuestionnaireMadeHdr madeHdr : madeHdrList) {
 			madeHdr.setQtnHeaderName(request.getQtnHeaderName());
 			madeHdr.setNote(request.getNote());
 			iaQuestionnaireMadeHdrRepository.save(madeHdr);
 		}
-			
+
 		return iaQuestionnaireHdrRepository.save(data);
 	}
 
@@ -123,17 +129,24 @@ public class Int02Service {
 		Optional<IaQuestionnaireHdr> dataRes = iaQuestionnaireHdrRepository.findById(new BigDecimal(idStr));
 		if (dataRes.isPresent()) {
 			IaQuestionnaireHdr daraHdr = dataRes.get();
-			
-			if("SUCCESS_HDR".equals(daraHdr.getStatus())) {
-				/* update status   */
+
+			if ("SUCCESS_HDR".equals(daraHdr.getStatus())) {
+				/* update status */
 				daraHdr.setStatus("FAIL_SEND_QTN");
 				iaQuestionnaireHdrRepository.save(daraHdr);
-				
-				List<IaQuestionnaireMadeHdr> dataMadeHdr = iaQuestionnaireMadeHdrJdbcRepository.findMadeHdrByIdHdr(daraHdr, UserLoginUtils.getCurrentUserBean().getOfficeCode());
+
+				List<IaQuestionnaireMadeHdr> dataMadeHdr = iaQuestionnaireMadeHdrRepository.findByIdHdrAndIsDeleted(daraHdr.getId(), "N");
 				for (IaQuestionnaireMadeHdr madeHdr : dataMadeHdr) {
 					madeHdr.setStatus("FAIL_SEND_QTN");
+					iaQuestionnaireMadeHdrRepository.save(madeHdr);
+					/* update status questionnaire made dtl */
+					List<IaQuestionnaireMade> madeDtlList = iaQuestionnaireMadeRepository.findByIdMadeHdrAndIsDeleted(madeHdr.getId(), "N");
+					for (IaQuestionnaireMade madeDtl : madeDtlList) {
+						madeDtl.setStatus("FAIL_SEND_QTN");
+						iaQuestionnaireMadeRepository.save(madeDtl);
+					}
 				}
-			}else {
+			} else {
 				iaQuestionnaireHdrRepository.deleteById(daraHdr.getId());
 			}
 //			daraHdr.setStatus("FAIL_HDR");

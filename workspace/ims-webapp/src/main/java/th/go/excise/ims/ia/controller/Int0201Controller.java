@@ -115,8 +115,11 @@ public class Int0201Controller {
 		ResponseData<IaQuestionnaireHdr> response = new ResponseData<IaQuestionnaireHdr>();
 		try {
 			response.setData(int0201Service.updateStatus(request));
-//			response.setMessage(ApplicationCache.getParamInfoByCode("IA_QTN_MESSAGE", request.getStatus()).getValue1());
-			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			if("1".equals(request.getStatus())) {
+				response.setMessage(ApplicationCache.getParamInfoByCode("IA_QTN_MESSAGE", request.getStatus()).getValue1());
+			}else {
+				response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			}
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
