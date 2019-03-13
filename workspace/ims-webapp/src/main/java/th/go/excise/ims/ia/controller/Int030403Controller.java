@@ -44,7 +44,7 @@ public class Int030403Controller {
 		try {	
 			iaRiskBudgetProject = int030403Service.list(form);
 			response.setData(iaRiskBudgetProject);
-		} catch (Exception e) {
+		} catch (Exception e) {	
 			logger.error("Int0301Controller : " , e);
 		}
 		return response;

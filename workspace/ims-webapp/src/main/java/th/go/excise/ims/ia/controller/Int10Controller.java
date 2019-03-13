@@ -48,7 +48,6 @@ public class Int10Controller {
 	@GetMapping("/find/ins-plan-params/{id}")
 	@ResponseBody
 	public ResponseData<List<IaInspectionPlan>> saveInspectionPlanParams(@PathVariable("id") BigDecimal id) {
-		logger.info("FILTER INSPECTION_PLAN");
 		
 		ResponseData<List<IaInspectionPlan>> response = new ResponseData<List<IaInspectionPlan>>();
 		try {
