@@ -1,10 +1,8 @@
 package th.go.excise.ims.oa.service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,10 +14,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
+import th.go.excise.ims.oa.persistence.entity.OaCustomerLicenDetail;
+import th.go.excise.ims.oa.persistence.repository.OaCustomerLicenDetailRepository;
 import th.go.excise.ims.oa.vo.Oa02030101FormVo;
 import th.go.excise.ims.oa.vo.Oa020301FormVo;
-import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
-import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
@@ -29,6 +27,12 @@ public class Oa02030101ServiceTest {
 	
 	@Autowired
 	private Oa020301Service  oa020301Service;
+	
+	@Autowired
+	private Oa02030101Service oa02030101Service;
+	
+	@Autowired
+	private OaCustomerLicenDetailRepository oaCustomerLicenDetailRep;
 	
 	
 //	@Test
@@ -57,25 +61,34 @@ public class Oa02030101ServiceTest {
 		Date date = new Date();
 		
 		form.setOaCustomerId(new BigDecimal(0));
-		form.setLicenType("P"); 
-		form.setLicenNo("A001");
-		form.setLicenDate(date); 
-		form.setOldLicenYear("2011"); 
-		form.setBankGuarantee("Y");
-		form.setBankGuaranteeNo("Y0101");
-		form.setBankGuaranteeDate(date);
-		form.setOperrateName("Jeng");
-		form.setOperrateRemark("Joon");
-		form.setApproveName("Joonjae");
+		form.setLicenseType("P"); 
+		form.setLicenseNo("A001");
+		form.setLicenseDate(date); 
+		form.setOldLicenseYear("2011"); 
+		form.setBankGuarantee("N");
+		form.setOperateName("Jeng");
+		form.setOperateRemark("Joon");
 		form.setStartDate(date); 
 		form.setEndDate(date);
 		form.setOffCode("001");
-		form.setReciveDate(date);
-		form.setReciveNo("0001");
-		form.setApprove("Y");
  		
-		oa020301Service.saveCustomerLicen(form);
-		
+		oa02030101Service.saveCustomerLicenAll(form);
+	}
+	
+	@Test
+	public void test_InsertLicenDtl() {
+		OaCustomerLicenDetail detail = new OaCustomerLicenDetail();
+		detail.setOaCuslicenseId(new BigDecimal(1));
+		detail.setAmount(new BigDecimal(0));
+		detail.setType("TYPE");
+		detail.setSeq(new BigDecimal(0));
+		detail.setName("NAME");
+		detail.setIsDeleted("N");
+		detail.setVersion(1);
+		detail.setCreatedBy("TEST");
+		detail.setCreatedDate(LocalDateTime.now());
+		detail.setLicenseNo("RANDOM_NUMBER");
+		oaCustomerLicenDetailRep.save(detail);
 	}
 	
 }

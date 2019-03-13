@@ -13,36 +13,38 @@ import javax.persistence.Table;
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
-@Table(name = "OA_CUSTOMER_LICENSE")
+@Table(name = "OA_CUSTOMER_LICEN")
 public class OaCustomerLicen
     extends BaseEntity
 {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OA_CUSTOMER_LICENSE_GEN")
-    @SequenceGenerator(name = "OA_CUSTOMER_LICENSE_GEN", sequenceName = "OA_CUSTOMER_LICESE_SEQ", allocationSize = 1)
-    @Column(name = "OA_CUSLICEN_ID")
-    private BigDecimal oaCuslicenId;
+	private static final long serialVersionUID = 706197298310853638L;
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OA_CUSTOMER_LICEN_GEN")
+    @SequenceGenerator(name = "OA_CUSTOMER_LICEN_GEN", sequenceName = "OA_CUSTOMER_LICEN_SEQ", allocationSize = 1)
+    @Column(name = "OA_CUSLICENSE_ID")
+    private BigDecimal oaCuslicenseId;
     @Column(name = "OA_CUSTOMER_ID")
     private BigDecimal oaCustomerId;
-    @Column(name = "LICEN_TYPE")
-    private String licenType;
-    @Column(name = "LICEN_NO")
-    private String licenNo;
-    @Column(name = "LICEN_DATE")
-    private Date licenDate;
-    @Column(name = "OLD_LICEN_YEAR")
-    private String oldLicenYear;
+    @Column(name = "LICENSE_TYPE")
+    private String licenseType;
+    @Column(name = "LICENSE_NO")
+    private String licenseNo;
+    @Column(name = "LICENSE_DATE")
+    private Date licenseDate;
+    @Column(name = "OLD_LICENSE_YEAR")
+    private String oldLicenseYear;
     @Column(name = "BANK_GUARANTEE")
     private String bankGuarantee;
     @Column(name = "BANK_GUARANTEE_NO")
     private String bankGuaranteeNo;
     @Column(name = "BANK_GUARANTEE_DATE")
     private Date bankGuaranteeDate;
-    @Column(name = "OPERRATE_NAME")
-    private String operrateName;
-    @Column(name = "OPERRATE_REMARK")
-    private String operrateRemark;
+    @Column(name = "OPERATE_NAME")
+    private String operateName;
+    @Column(name = "OPERATE_REMARK")
+    private String operateRemark;
     @Column(name = "APPROVE_NAME")
     private String approveName;
     @Column(name = "START_DATE")
@@ -51,19 +53,19 @@ public class OaCustomerLicen
     private Date endDate;
     @Column(name = "OFF_CODE")
     private String offCode;
-    @Column(name = "RECIVE_DATE")
-    private Date reciveDate;
-    @Column(name = "RECIVE_NO")
-    private String reciveNo;
+    @Column(name = "RECEIVE_DATE")
+    private Date receiveDate;
+    @Column(name = "RECEIVE_NO")
+    private String receiveNo;
     @Column(name = "APPROVE")
     private String approve;
 
-    public BigDecimal getOaCuslicenId() {
-        return oaCuslicenId;
+    public BigDecimal getOaCuslicenseId() {
+        return oaCuslicenseId;
     }
 
-    public void setOaCuslicenId(BigDecimal oaCuslicenId) {
-        this.oaCuslicenId = oaCuslicenId;
+    public void setOaCuslicenseId(BigDecimal oaCuslicenseId) {
+        this.oaCuslicenseId = oaCuslicenseId;
     }
 
     public BigDecimal getOaCustomerId() {
@@ -74,36 +76,36 @@ public class OaCustomerLicen
         this.oaCustomerId = oaCustomerId;
     }
 
-    public String getLicenType() {
-        return licenType;
+    public String getLicenseType() {
+        return licenseType;
     }
 
-    public void setLicenType(String licenType) {
-        this.licenType = licenType;
+    public void setLicenseType(String licenseType) {
+        this.licenseType = licenseType;
     }
 
-    public String getLicenNo() {
-        return licenNo;
+    public String getLicenseNo() {
+        return licenseNo;
     }
 
-    public void setLicenNo(String licenNo) {
-        this.licenNo = licenNo;
+    public void setLicenseNo(String licenseNo) {
+        this.licenseNo = licenseNo;
     }
 
-    public Date getLicenDate() {
-        return licenDate;
+    public Date getLicenseDate() {
+        return licenseDate;
     }
 
-    public void setLicenDate(Date licenDate) {
-        this.licenDate = licenDate;
+    public void setLicenseDate(Date licenseDate) {
+        this.licenseDate = licenseDate;
     }
 
-    public String getOldLicenYear() {
-        return oldLicenYear;
+    public String getOldLicenseYear() {
+        return oldLicenseYear;
     }
 
-    public void setOldLicenYear(String oldLicenYear) {
-        this.oldLicenYear = oldLicenYear;
+    public void setOldLicenseYear(String oldLicenseYear) {
+        this.oldLicenseYear = oldLicenseYear;
     }
 
     public String getBankGuarantee() {
@@ -130,20 +132,20 @@ public class OaCustomerLicen
         this.bankGuaranteeDate = bankGuaranteeDate;
     }
 
-    public String getOperrateName() {
-        return operrateName;
+    public String getOperateName() {
+        return operateName;
     }
 
-    public void setOperrateName(String operrateName) {
-        this.operrateName = operrateName;
+    public void setOperateName(String operateName) {
+        this.operateName = operateName;
     }
 
-    public String getOperrateRemark() {
-        return operrateRemark;
+    public String getOperateRemark() {
+        return operateRemark;
     }
 
-    public void setOperrateRemark(String operrateRemark) {
-        this.operrateRemark = operrateRemark;
+    public void setOperateRemark(String operateRemark) {
+        this.operateRemark = operateRemark;
     }
 
     public String getApproveName() {
@@ -178,20 +180,20 @@ public class OaCustomerLicen
         this.offCode = offCode;
     }
 
-    public Date getReciveDate() {
-        return reciveDate;
+    public Date getReceiveDate() {
+        return receiveDate;
     }
 
-    public void setReciveDate(Date reciveDate) {
-        this.reciveDate = reciveDate;
+    public void setReceiveDate(Date receiveDate) {
+        this.receiveDate = receiveDate;
     }
 
-    public String getReciveNo() {
-        return reciveNo;
+    public String getReceiveNo() {
+        return receiveNo;
     }
 
-    public void setReciveNo(String reciveNo) {
-        this.reciveNo = reciveNo;
+    public void setReceiveNo(String receiveNo) {
+        this.receiveNo = receiveNo;
     }
 
     public String getApprove() {

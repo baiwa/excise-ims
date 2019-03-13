@@ -23,7 +23,7 @@ import th.go.excise.ims.oa.vo.Oa020301FormVo;
 import th.go.excise.ims.oa.vo.Oa020301Vo;
 
 @Controller
-@RequestMapping("/api/oa/03/01")
+@RequestMapping("/api/oa/02/03/01")
 public class Oa020301Controller {
 
 	private static final Logger logger = LoggerFactory.getLogger(Oa020301Controller.class);

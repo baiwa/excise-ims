@@ -12,7 +12,7 @@ import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.oa.persistence.entity.OaCustomer;
 import th.go.excise.ims.oa.persistence.entity.OaCustomerLicen;
-import th.go.excise.ims.oa.persistence.repository.OaCustomerLicenseRepository;
+import th.go.excise.ims.oa.persistence.repository.OaCustomerLicenRepository;
 import th.go.excise.ims.oa.persistence.repository.OaCustomerRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa020301JdbcRepository;
 import th.go.excise.ims.oa.vo.Oa02030101FormVo;
@@ -25,7 +25,7 @@ public class Oa020301Service {
 	@Autowired 
 	OaCustomerRepository oaCustomerRepository;  
 	@Autowired 
-	OaCustomerLicenseRepository oaCustomerLicenRepository;  
+	OaCustomerLicenRepository oaCustomerLicenRep;  
 	
 	@Autowired
 	Oa020301JdbcRepository oa020301JdbcRep;
@@ -83,24 +83,24 @@ public class Oa020301Service {
 		OaCustomerLicen  oaCustomerLicen =  new OaCustomerLicen();
 		   
 		oaCustomerLicen.setOaCustomerId(form.getOaCustomerId());
-		oaCustomerLicen.setLicenType(form.getLicenType());
-		oaCustomerLicen.setLicenNo(form.getLicenNo());
-		oaCustomerLicen.setLicenDate(form.getLicenDate()); 
-		oaCustomerLicen.setOldLicenYear(form.getOldLicenYear()); 
+		oaCustomerLicen.setLicenseType(form.getLicenseType());
+		oaCustomerLicen.setLicenseNo(form.getLicenseNo());
+		oaCustomerLicen.setLicenseDate(form.getLicenseDate()); 
+		oaCustomerLicen.setOldLicenseYear(form.getOldLicenseYear()); 
 		oaCustomerLicen.setBankGuarantee(form.getBankGuarantee());
 		oaCustomerLicen.setBankGuaranteeNo(form.getBankGuaranteeNo());
 		oaCustomerLicen.setBankGuaranteeDate(form.getBankGuaranteeDate());
-		oaCustomerLicen.setOperrateName(form.getOperrateName());
-		oaCustomerLicen.setOperrateRemark(form.getOperrateRemark());
+		oaCustomerLicen.setOperateName(form.getOperateName());
+		oaCustomerLicen.setOperateRemark(form.getOperateRemark());
 		oaCustomerLicen.setApproveName(form.getApproveName());
 		oaCustomerLicen.setStartDate(form.getStartDate());
 		oaCustomerLicen.setEndDate(form.getEndDate());
 		oaCustomerLicen.setOffCode(form.getOffCode());
-		oaCustomerLicen.setReciveDate(form.getReciveDate());
-		oaCustomerLicen.setReciveNo(form.getReciveNo());
+		oaCustomerLicen.setReceiveDate(form.getReceiveDate());
+		oaCustomerLicen.setReceiveNo(form.getReceiveNo());
 	    oaCustomerLicen.setApprove(form.getApprove());
 		
-		oaCustomerLicenRepository.save(oaCustomerLicen);
+	    oaCustomerLicenRep.save(oaCustomerLicen);
 		  
 		return new Oa02030101FormVo(); 
 	}

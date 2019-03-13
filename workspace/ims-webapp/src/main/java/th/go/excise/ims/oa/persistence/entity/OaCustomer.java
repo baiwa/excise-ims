@@ -13,102 +13,100 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "OA_CUSTOMER")
-public class OaCustomer
-    extends BaseEntity
-{
+public class OaCustomer extends BaseEntity {
+	private static final long serialVersionUID = 7951617557609268472L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OA_CUSTOMER_GEN")
+	@SequenceGenerator(name = "OA_CUSTOMER_GEN", sequenceName = "OA_CUSTOMER_SEQ", allocationSize = 1)
+	@Column(name = "OA_CUSTOMER_ID")
+	private BigDecimal oaCustomerId;
+	@Column(name = "IDENTIFY_NO")
+	private String identifyNo;
+	@Column(name = "IDENTIFY_TYPE")
+	private String identifyType;
+	@Column(name = "NAME")
+	private String name;
+	@Column(name = "COMPANY_NAME")
+	private String companyName;
+	@Column(name = "MOBILE")
+	private String mobile;
+	@Column(name = "OLD_CUSTOMER")
+	private String oldCustomer;
+	@Column(name = "ADDRESS")
+	private String address;
+	@Column(name = "WAREHOUSE_ADDRESS")
+	private String warehouseAddress;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OA_CUSTOMER_GEN")
-    @SequenceGenerator(name = "OA_CUSTOMER_GEN", sequenceName = "OA_CUSTOMER_SEQ", allocationSize = 1)
-    @Column(name = "OA_CUSTOMER_ID")
-    private BigDecimal oaCustomerId;
-    @Column(name = "IDENTIFY_NO")
-    private String identifyNo;
-    @Column(name = "IDENTIFY_TYPE")
-    private String identifyType;
-    @Column(name = "NAME")
-    private String name;
-    @Column(name = "COMPANY_NAME")
-    private String companyName;
-    @Column(name = "MOBILE")
-    private String mobile;
-    @Column(name = "OLD_CUSTOMER")
-    private String oldCustomer;
-    @Column(name = "ADDRESS")
-    private String address;
-    @Column(name = "WAREHOUSE_ADDRESS")
-    private String warehouseAddress;
+	public BigDecimal getOaCustomerId() {
+		return oaCustomerId;
+	}
 
-    public BigDecimal getOaCustomerId() {
-        return oaCustomerId;
-    }
+	public void setOaCustomerId(BigDecimal oaCustomerId) {
+		this.oaCustomerId = oaCustomerId;
+	}
 
-    public void setOaCustomerId(BigDecimal oaCustomerId) {
-        this.oaCustomerId = oaCustomerId;
-    }
+	public String getIdentifyNo() {
+		return identifyNo;
+	}
 
-    public String getIdentifyNo() {
-        return identifyNo;
-    }
+	public void setIdentifyNo(String identifyNo) {
+		this.identifyNo = identifyNo;
+	}
 
-    public void setIdentifyNo(String identifyNo) {
-        this.identifyNo = identifyNo;
-    }
+	public String getIdentifyType() {
+		return identifyType;
+	}
 
-    public String getIdentifyType() {
-        return identifyType;
-    }
+	public void setIdentifyType(String identifyType) {
+		this.identifyType = identifyType;
+	}
 
-    public void setIdentifyType(String identifyType) {
-        this.identifyType = identifyType;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getCompanyName() {
+		return companyName;
+	}
 
-    public String getCompanyName() {
-        return companyName;
-    }
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
+	public String getMobile() {
+		return mobile;
+	}
 
-    public String getMobile() {
-        return mobile;
-    }
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
+	public String getOldCustomer() {
+		return oldCustomer;
+	}
 
-    public String getOldCustomer() {
-        return oldCustomer;
-    }
+	public void setOldCustomer(String oldCustomer) {
+		this.oldCustomer = oldCustomer;
+	}
 
-    public void setOldCustomer(String oldCustomer) {
-        this.oldCustomer = oldCustomer;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+	public String getWarehouseAddress() {
+		return warehouseAddress;
+	}
 
-    public String getWarehouseAddress() {
-        return warehouseAddress;
-    }
-
-    public void setWarehouseAddress(String warehouseAddress) {
-        this.warehouseAddress = warehouseAddress;
-    }
+	public void setWarehouseAddress(String warehouseAddress) {
+		this.warehouseAddress = warehouseAddress;
+	}
 
 }

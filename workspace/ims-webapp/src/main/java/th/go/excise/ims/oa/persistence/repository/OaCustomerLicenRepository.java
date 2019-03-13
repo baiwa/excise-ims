@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRepository;
 import th.go.excise.ims.oa.persistence.entity.OaCustomerLicen;
 
-public interface OaCustomerLicenseRepository
+public interface OaCustomerLicenRepository
     extends CommonJpaCrudRepository<OaCustomerLicen, BigDecimal>
 {
 

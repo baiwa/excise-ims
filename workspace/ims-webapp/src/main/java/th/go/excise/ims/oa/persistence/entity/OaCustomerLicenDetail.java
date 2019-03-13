@@ -12,18 +12,20 @@ import javax.persistence.Table;
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
-@Table(name = "OA_CUSTOMER_LICENSE_DETAIL")
+@Table(name = "OA_CUSTOMER_LICEN_DETAIL")
 public class OaCustomerLicenDetail
     extends BaseEntity
 {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OA_CUSTOMER_LICENSE_DETAIL_GEN")
-    @SequenceGenerator(name = "OA_CUSTOMER_LICENSE_DETAIL_GEN", sequenceName = "OA_CUSTOMER_LICENSE_DETAIL_SEQ", allocationSize = 1)
-    @Column(name = "OA_CUSLICEN_DTL_ID")
-    private BigDecimal oaCuslicenDtlId;
-    @Column(name = "OA_CUSLICEN_ID")
-    private BigDecimal oaCuslicenId;
+	private static final long serialVersionUID = 2600712454481292324L;
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OA_CUSTOMER_LICEN_DETAIL_GEN")
+    @SequenceGenerator(name = "OA_CUSTOMER_LICEN_DETAIL_GEN", sequenceName = "OA_CUSTOMER_LICEN_DETAIL_SEQ", allocationSize = 1)
+    @Column(name = "OA_CUSLICENSE_DTL_ID")
+    private BigDecimal oaCuslicenseDtlId;
+    @Column(name = "OA_CUSLICENSE_ID")
+    private BigDecimal oaCuslicenseId;
     @Column(name = "SEQ")
     private BigDecimal seq;
     @Column(name = "NAME")
@@ -32,23 +34,23 @@ public class OaCustomerLicenDetail
     private String type;
     @Column(name = "AMOUNT")
     private BigDecimal amount;
-    @Column(name = "LICEN_NO")
-    private String licenNo;
+    @Column(name = "LICENSE_NO")
+    private String licenseNo;
 
-    public BigDecimal getOaCuslicenDtlId() {
-        return oaCuslicenDtlId;
+    public BigDecimal getOaCuslicenseDtlId() {
+        return oaCuslicenseDtlId;
     }
 
-    public void setOaCuslicenDtlId(BigDecimal oaCuslicenDtlId) {
-        this.oaCuslicenDtlId = oaCuslicenDtlId;
+    public void setOaCuslicenseDtlId(BigDecimal oaCuslicenseDtlId) {
+        this.oaCuslicenseDtlId = oaCuslicenseDtlId;
     }
 
-    public BigDecimal getOaCuslicenId() {
-        return oaCuslicenId;
+    public BigDecimal getOaCuslicenseId() {
+        return oaCuslicenseId;
     }
 
-    public void setOaCuslicenId(BigDecimal oaCuslicenId) {
-        this.oaCuslicenId = oaCuslicenId;
+    public void setOaCuslicenseId(BigDecimal oaCuslicenseId) {
+        this.oaCuslicenseId = oaCuslicenseId;
     }
 
     public BigDecimal getSeq() {
@@ -83,12 +85,12 @@ public class OaCustomerLicenDetail
         this.amount = amount;
     }
 
-    public String getLicenNo() {
-        return licenNo;
+    public String getLicenseNo() {
+        return licenseNo;
     }
 
-    public void setLicenNo(String licenNo) {
-        this.licenNo = licenNo;
+    public void setLicenseNo(String licenseNo) {
+        this.licenseNo = licenseNo;
     }
 
 }
