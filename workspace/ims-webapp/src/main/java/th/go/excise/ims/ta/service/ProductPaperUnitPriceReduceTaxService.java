@@ -1,5 +1,6 @@
 package th.go.excise.ims.ta.service;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -18,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ta.vo.ProductPaperReduceTaxVo;
 import th.go.excise.ims.ta.vo.ProductPaperUnitPriceReduceTaxVo;
 import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 
@@ -206,5 +210,53 @@ public class ProductPaperUnitPriceReduceTaxService {
 
 		return content;
 	}
-
+	 public List<ProductPaperUnitPriceReduceTaxVo> readFileProductPaperUnitPriceReduceTax(ProductPaperUnitPriceReduceTaxVo request) {
+		  logger.info("readFileProductPaperUnitPriceReduceTax");
+		  logger.info("fileName "+request.getFile().getOriginalFilename());
+		  logger.info("type "+request.getFile().getContentType());
+		  List<ProductPaperUnitPriceReduceTaxVo> dataList = new ArrayList<>();
+		  
+		  try(Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(request.getFile().getBytes()));){
+				Sheet sheet = workbook.getSheetAt(0);
+				
+				   for (Row row : sheet) {
+					   ProductPaperUnitPriceReduceTaxVo pushdata = new ProductPaperUnitPriceReduceTaxVo();
+					    // Skip on first row
+					    if (row.getRowNum() == 0) {
+					     continue;
+					    } 
+					    for (Cell cell : row) {
+					     if (cell.getColumnIndex() == 0) {
+					      // Column No.
+					    	 continue;
+					     } else if (cell.getColumnIndex() == 1) {
+					    	 pushdata.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
+					     } else if (cell.getColumnIndex()== 2){
+					    	 pushdata.setTaxReduceAmt(ExcelUtils.getCellValueAsString(cell));
+					     } else if (cell.getColumnIndex()== 3){
+					    	 pushdata.setTaxReduceQty(ExcelUtils.getCellValueAsString(cell));
+					     } else if (cell.getColumnIndex() == 4 ){
+					    	 pushdata.setTaxReducePerUnitAmt(ExcelUtils.getCellValueAsString(cell));
+					     } else if (cell.getColumnIndex() == 5){
+					    	 pushdata.setBillNo(ExcelUtils.getCellValueAsString(cell));
+					     } else if (cell.getColumnIndex() == 6){
+					    	 pushdata.setBillTaxAmt(ExcelUtils.getCellValueAsString(cell));
+					     }else if (cell.getColumnIndex() == 7){
+					    	 pushdata.setBillTaxQty(ExcelUtils.getCellValueAsString(cell));
+					     }else if (cell.getColumnIndex() == 8){
+					    	 pushdata.setBillTaxPerUnit(ExcelUtils.getCellValueAsString(cell));
+					     }else if (cell.getColumnIndex() == 9){
+					    	 pushdata.setDiffTaxReduceAmt(ExcelUtils.getCellValueAsString(cell));
+					     }
+					     
+					    }
+						   dataList.add(pushdata);
+					   }
+			
+				 
+		  }catch(Exception e){
+			  logger.error(e.getMessage(),e);
+		  }
+		  return dataList;
+		 }
 }

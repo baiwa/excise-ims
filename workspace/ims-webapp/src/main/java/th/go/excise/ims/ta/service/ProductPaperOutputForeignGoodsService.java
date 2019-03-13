@@ -1,5 +1,6 @@
 package th.go.excise.ims.ta.service;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
@@ -19,6 +22,7 @@ import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.vo.ProductPaperOutputForeignGoodsVo;
 import th.go.excise.ims.ta.vo.CreatePaperFormVo;
+import th.go.excise.ims.ta.vo.ProductPaperUnitPriceReduceTaxVo;
 
 @Service
 public class ProductPaperOutputForeignGoodsService {
@@ -171,4 +175,51 @@ public class ProductPaperOutputForeignGoodsService {
 
 		return content;
 	}
+	 public List<ProductPaperOutputForeignGoodsVo> readFileProductPaperOutputForeignGoods(ProductPaperOutputForeignGoodsVo request) {
+		  logger.info("readFileProductPaperUnitPriceReduceTax");
+		  logger.info("fileName "+request.getFile().getOriginalFilename());
+		  logger.info("type "+request.getFile().getContentType());
+		  List<ProductPaperOutputForeignGoodsVo> dataList = new ArrayList<>();
+		  
+		  try(Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(request.getFile().getBytes()));){
+				Sheet sheet = workbook.getSheetAt(0);
+				
+				   for (Row row : sheet) {
+					   ProductPaperOutputForeignGoodsVo pushdata = new ProductPaperOutputForeignGoodsVo();
+					    // Skip on first row
+					    if (row.getRowNum() == 0) {
+					     continue;
+					    } 
+					    for (Cell cell : row) {
+					     if (cell.getColumnIndex() == 0) {
+					      // Column No.
+					    	 continue;
+					     } else if (cell.getColumnIndex() == 1) {
+					    	 pushdata.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
+					     } else if (cell.getColumnIndex()== 2){
+					    	 pushdata.setCargoDocNo(ExcelUtils.getCellValueAsString(cell));
+					     } else if (cell.getColumnIndex()== 3){
+					    	 pushdata.setInvoice(ExcelUtils.getCellValueAsString(cell));
+					     } else if (cell.getColumnIndex() == 4 ){
+					    	 pushdata.setOutputDailyAccountQty(ExcelUtils.getCellValueAsString(cell));
+					     } else if (cell.getColumnIndex() == 5){
+					    	 pushdata.setOutputMonthStatementQty(ExcelUtils.getCellValueAsString(cell));
+					     } else if (cell.getColumnIndex() == 6){
+					    	 pushdata.setOutputAuditQty(ExcelUtils.getCellValueAsString(cell));
+					     }else if (cell.getColumnIndex() == 7){
+					    	 pushdata.setTaxReduceQty(ExcelUtils.getCellValueAsString(cell));
+					     }else if (cell.getColumnIndex() == 8){
+					    	 pushdata.setDiffOutputQty(ExcelUtils.getCellValueAsString(cell));
+					     }
+					     
+					    }
+						   dataList.add(pushdata);
+					   }
+			
+				 
+		  }catch(Exception e){
+			  logger.error(e.getMessage(),e);
+		  }
+		  return dataList;
+		 }
 }

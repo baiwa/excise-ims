@@ -1,5 +1,7 @@
 package th.go.excise.ims.ta.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ProductPaperTaxAmtAdditionalVo {
 	private Long id;
 	private String goodsDesc;
@@ -12,6 +14,8 @@ public class ProductPaperTaxAmtAdditionalVo {
 	private String surchargeAmt;
 	private String moiTaxAmt;
 	private String netTaxAmt;
+	private MultipartFile file;
+	
 	public Long getId() {
 		return id;
 	}
@@ -77,6 +81,12 @@ public class ProductPaperTaxAmtAdditionalVo {
 	}
 	public void setNetTaxAmt(String netTaxAmt) {
 		this.netTaxAmt = netTaxAmt;
+	}
+	public MultipartFile getFile() {
+		return file;
+	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
 
 }
