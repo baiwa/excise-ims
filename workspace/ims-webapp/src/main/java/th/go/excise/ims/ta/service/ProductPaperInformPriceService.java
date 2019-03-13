@@ -20,9 +20,8 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.common.util.ExcelUtils;
-import th.go.excise.ims.ta.vo.ProductPaperInformPriceVo;
 import th.go.excise.ims.ta.vo.CreatePaperFormVo;
-import th.go.excise.ims.ta.vo.ProductPaperUnitPriceReduceTaxVo;
+import th.go.excise.ims.ta.vo.ProductPaperInformPriceVo;
 
 @Service
 public class ProductPaperInformPriceService {
@@ -168,50 +167,59 @@ public class ProductPaperInformPriceService {
 
 		return content;
 	}
-	 public List<ProductPaperInformPriceVo> readFileProductPaperInformPrice(ProductPaperInformPriceVo request) {
-		  logger.info("readFileProductPaperInformPrice");
-		  logger.info("fileName "+request.getFile().getOriginalFilename());
-		  logger.info("type "+request.getFile().getContentType());
-		  List<ProductPaperInformPriceVo> dataList = new ArrayList<>();
-		  
-		  try(Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(request.getFile().getBytes()));){
-				Sheet sheet = workbook.getSheetAt(0);
-				
-				   for (Row row : sheet) {
-					   ProductPaperInformPriceVo pushdata = new ProductPaperInformPriceVo();
-					    // Skip on first row
-					    if (row.getRowNum() == 0) {
-					     continue;
-					    } 
-					    for (Cell cell : row) {
-					     if (cell.getColumnIndex() == 0) {
-					      // Column No.
-					    	 continue;
-					     } else if (cell.getColumnIndex() == 1) {
-					    	 pushdata.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
-					     } else if (cell.getColumnIndex()== 2){
-					    	 pushdata.setInformPrice(ExcelUtils.getCellValueAsString(cell));
-					     } else if (cell.getColumnIndex()== 3){
-					    	 pushdata.setExternalPrice(ExcelUtils.getCellValueAsString(cell));
-					     } else if (cell.getColumnIndex() == 4 ){
-					    	 pushdata.setDeclarePrice(ExcelUtils.getCellValueAsString(cell));
-					     } else if (cell.getColumnIndex() == 5){
-					    	 pushdata.setRetailPrice(ExcelUtils.getCellValueAsString(cell));
-					     } else if (cell.getColumnIndex() == 6){
-					    	 pushdata.setTaxPrice(ExcelUtils.getCellValueAsString(cell));
-					     }else if (cell.getColumnIndex() == 7){
-					    	 pushdata.setDiffPrice(ExcelUtils.getCellValueAsString(cell));
-					     }
-					     
-					    }
-						   dataList.add(pushdata);
-					   }
-			
-				 
-		  }catch(Exception e){
-			  logger.error(e.getMessage(),e);
-		  }
-		  return dataList;
-		 }
+
+	public List<ProductPaperInformPriceVo> readFileProductPaperInformPrice(ProductPaperInformPriceVo request) {
+		logger.info("readFileProductPaperInformPrice");
+		logger.info("fileName " + request.getFile().getOriginalFilename());
+		logger.info("type " + request.getFile().getContentType());
+
+		List<ProductPaperInformPriceVo> dataList = new ArrayList<>();
+		ProductPaperInformPriceVo data = null;
+
+		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(request.getFile().getBytes()));) {
+			Sheet sheet = workbook.getSheetAt(0);
+
+			for (Row row : sheet) {
+				data = new ProductPaperInformPriceVo();
+				// Skip on first row
+				if (row.getRowNum() == 0) {
+					continue;
+				}
+				for (Cell cell : row) {
+					if (cell.getColumnIndex() == 0) {
+						// Column No.
+						continue;
+					} else if (cell.getColumnIndex() == 1) {
+						// GoodsDesc
+						data.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 2) {
+						// InformPrice
+						data.setInformPrice(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 3) {
+						// ExternalPrice
+						data.setExternalPrice(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 4) {
+						// DeclarePrice
+						data.setDeclarePrice(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 5) {
+						// RetailPrice
+						data.setRetailPrice(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 6) {
+						// TaxPrice
+						data.setTaxPrice(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 7) {
+						// DiffPrice
+						data.setDiffPrice(ExcelUtils.getCellValueAsString(cell));
+					}
+
+				}
+				dataList.add(data);
+			}
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+		return dataList;
+	}
 
 }

@@ -1,5 +1,7 @@
 package th.go.excise.ims.ta.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ProductPaperOutputMaterialVo {
 
 	private Long id;
@@ -10,6 +12,8 @@ public class ProductPaperOutputMaterialVo {
 	private String externalDataQty;
 	private String maxDiffQty;
 
+	private MultipartFile file;
+	
 	public Long getId() {
 		return id;
 	}
@@ -65,5 +69,15 @@ public class ProductPaperOutputMaterialVo {
 	public void setMaxDiffQty(String maxDiffQty) {
 		this.maxDiffQty = maxDiffQty;
 	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+	
+	
 
 }

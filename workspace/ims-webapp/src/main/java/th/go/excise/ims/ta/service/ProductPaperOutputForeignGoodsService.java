@@ -20,9 +20,8 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.common.util.ExcelUtils;
-import th.go.excise.ims.ta.vo.ProductPaperOutputForeignGoodsVo;
 import th.go.excise.ims.ta.vo.CreatePaperFormVo;
-import th.go.excise.ims.ta.vo.ProductPaperUnitPriceReduceTaxVo;
+import th.go.excise.ims.ta.vo.ProductPaperOutputForeignGoodsVo;
 
 @Service
 public class ProductPaperOutputForeignGoodsService {
@@ -31,7 +30,8 @@ public class ProductPaperOutputForeignGoodsService {
 	private static final Integer TOTAL = 17;
 	private static final String PRODUCT_PAPER_OUTPUT_FOREIGN_GOODS = "จ่ายสินค้าสำเร็จรูปต่างประเทศ";
 
-	public DataTableAjax<ProductPaperOutputForeignGoodsVo> listProductPaperOutputForeignGoods(CreatePaperFormVo request) {
+	public DataTableAjax<ProductPaperOutputForeignGoodsVo> listProductPaperOutputForeignGoods(
+			CreatePaperFormVo request) {
 		DataTableAjax<ProductPaperOutputForeignGoodsVo> dataTableAjax = new DataTableAjax<ProductPaperOutputForeignGoodsVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
 		dataTableAjax.setData(getDataProductPaperOutputForeignGoods(request.getStart(), request.getLength(), TOTAL));
@@ -40,7 +40,8 @@ public class ProductPaperOutputForeignGoodsService {
 		return dataTableAjax;
 	}
 
-	public List<ProductPaperOutputForeignGoodsVo> getDataProductPaperOutputForeignGoods(int start, int length, int total) {
+	public List<ProductPaperOutputForeignGoodsVo> getDataProductPaperOutputForeignGoods(int start, int length,
+			int total) {
 		logger.info("getDataPayForeignFinishedGoods");
 		String desc = "จ่ายสินค้าสำเร็จรูปต่างประเทศ";
 		List<ProductPaperOutputForeignGoodsVo> datalist = new ArrayList<ProductPaperOutputForeignGoodsVo>();
@@ -175,51 +176,62 @@ public class ProductPaperOutputForeignGoodsService {
 
 		return content;
 	}
-	 public List<ProductPaperOutputForeignGoodsVo> readFileProductPaperOutputForeignGoods(ProductPaperOutputForeignGoodsVo request) {
-		  logger.info("readFileProductPaperUnitPriceReduceTax");
-		  logger.info("fileName "+request.getFile().getOriginalFilename());
-		  logger.info("type "+request.getFile().getContentType());
-		  List<ProductPaperOutputForeignGoodsVo> dataList = new ArrayList<>();
-		  
-		  try(Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(request.getFile().getBytes()));){
-				Sheet sheet = workbook.getSheetAt(0);
-				
-				   for (Row row : sheet) {
-					   ProductPaperOutputForeignGoodsVo pushdata = new ProductPaperOutputForeignGoodsVo();
-					    // Skip on first row
-					    if (row.getRowNum() == 0) {
-					     continue;
-					    } 
-					    for (Cell cell : row) {
-					     if (cell.getColumnIndex() == 0) {
-					      // Column No.
-					    	 continue;
-					     } else if (cell.getColumnIndex() == 1) {
-					    	 pushdata.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
-					     } else if (cell.getColumnIndex()== 2){
-					    	 pushdata.setCargoDocNo(ExcelUtils.getCellValueAsString(cell));
-					     } else if (cell.getColumnIndex()== 3){
-					    	 pushdata.setInvoice(ExcelUtils.getCellValueAsString(cell));
-					     } else if (cell.getColumnIndex() == 4 ){
-					    	 pushdata.setOutputDailyAccountQty(ExcelUtils.getCellValueAsString(cell));
-					     } else if (cell.getColumnIndex() == 5){
-					    	 pushdata.setOutputMonthStatementQty(ExcelUtils.getCellValueAsString(cell));
-					     } else if (cell.getColumnIndex() == 6){
-					    	 pushdata.setOutputAuditQty(ExcelUtils.getCellValueAsString(cell));
-					     }else if (cell.getColumnIndex() == 7){
-					    	 pushdata.setTaxReduceQty(ExcelUtils.getCellValueAsString(cell));
-					     }else if (cell.getColumnIndex() == 8){
-					    	 pushdata.setDiffOutputQty(ExcelUtils.getCellValueAsString(cell));
-					     }
-					     
-					    }
-						   dataList.add(pushdata);
-					   }
-			
-				 
-		  }catch(Exception e){
-			  logger.error(e.getMessage(),e);
-		  }
-		  return dataList;
-		 }
+
+	public List<ProductPaperOutputForeignGoodsVo> readFileProductPaperOutputForeignGoods(
+			ProductPaperOutputForeignGoodsVo request) {
+		logger.info("readFileProductPaperUnitPriceReduceTax");
+		logger.info("fileName " + request.getFile().getOriginalFilename());
+		logger.info("type " + request.getFile().getContentType());
+
+		List<ProductPaperOutputForeignGoodsVo> dataList = new ArrayList<>();
+		ProductPaperOutputForeignGoodsVo data = null;
+
+		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(request.getFile().getBytes()));) {
+			Sheet sheet = workbook.getSheetAt(0);
+
+			for (Row row : sheet) {
+				data = new ProductPaperOutputForeignGoodsVo();
+				// Skip on first row
+				if (row.getRowNum() == 0) {
+					continue;
+				}
+				for (Cell cell : row) {
+					if (cell.getColumnIndex() == 0) {
+						// Column No.
+						continue;
+					} else if (cell.getColumnIndex() == 1) {
+						// GoodsDesc
+						data.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 2) {
+						// CargoDocNo
+						data.setCargoDocNo(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 3) {
+						// Invoice
+						data.setInvoice(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 4) {
+						// OutputDailyAccountQty
+						data.setOutputDailyAccountQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 5) {
+						// OutputMonthStatementQty
+						data.setOutputMonthStatementQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 6) {
+						// OutputAuditQty
+						data.setOutputAuditQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 7) {
+						// TaxReduceQty
+						data.setTaxReduceQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 8) {
+						// DiffOutputQty
+						data.setDiffOutputQty(ExcelUtils.getCellValueAsString(cell));
+					}
+
+				}
+				dataList.add(data);
+			}
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+		return dataList;
+	}
 }

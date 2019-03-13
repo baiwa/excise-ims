@@ -1,5 +1,7 @@
 package th.go.excise.ims.ta.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ProductPaperRelationProducedGoodsVo {
 	private Long id;
 	private String docNo;
@@ -15,6 +17,8 @@ public class ProductPaperRelationProducedGoodsVo {
 	private String wasteGoodsPnt;
 	private String wasteGoodsQty;
 	private String balanceGoodsQty;
+
+	private MultipartFile file;
 
 	public Long getId() {
 		return id;
@@ -126,6 +130,14 @@ public class ProductPaperRelationProducedGoodsVo {
 
 	public void setBalanceGoodsQty(String balanceGoodsQty) {
 		this.balanceGoodsQty = balanceGoodsQty;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
 
 }

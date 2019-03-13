@@ -1,5 +1,6 @@
 package th.go.excise.ims.ta.service;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -229,4 +232,79 @@ public class ProductPaperRelationProducedGoodsService {
 
 		return content;
 	}
+
+	public List<ProductPaperRelationProducedGoodsVo> readFileProductPaperRelationProducedGoods(
+			ProductPaperRelationProducedGoodsVo request) {
+		logger.info("readFileProductPaperRelationProducedGoods");
+		logger.info("fileName " + request.getFile().getOriginalFilename());
+		logger.info("type " + request.getFile().getContentType());
+
+		List<ProductPaperRelationProducedGoodsVo> dataList = new ArrayList<>();
+		ProductPaperRelationProducedGoodsVo data = null;
+
+		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(request.getFile().getBytes()))) {
+			Sheet sheet = workbook.getSheetAt(0);
+
+			for (Row row : sheet) {
+				data = new ProductPaperRelationProducedGoodsVo();
+				// Skip on first row
+				if (row.getRowNum() == 0) {
+					continue;
+				}
+				for (Cell cell : row) {
+
+					if (cell.getColumnIndex() == 0) {
+						// Column No.
+						continue;
+					} else if (cell.getColumnIndex() == 1) {
+						// DocNo
+						data.setDocNo(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 2) {
+						// MaterialDesc
+						data.setMaterialDesc(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 3) {
+						// InputMaterialQty
+						data.setInputMaterialQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 4) {
+						// FormulaMaterialQty
+						data.setFormulaMaterialQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 5) {
+						// UsedMaterialQty
+						data.setUsedMaterialQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 6) {
+						// RealUsedMaterialQty
+						data.setRealUsedMaterialQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 7) {
+						// DiffMaterialQty
+						data.setDiffMaterialQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 8) {
+						// MaterialQty
+						data.setMaterialQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 9) {
+						// GoodsQty
+						data.setGoodsQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 9) {
+						// DiffGoodsQty
+						data.setDiffGoodsQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 10) {
+						// WasteGoodsPnt
+						data.setWasteGoodsPnt(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 11) {
+						// WasteGoodsQty
+						data.setWasteGoodsQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 12) {
+						// BalanceGoodsQty
+						data.setBalanceGoodsQty(ExcelUtils.getCellValueAsString(cell));
+					}
+				}
+				dataList.add(data);
+			}
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return dataList;
+	}
+
 }
