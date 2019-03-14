@@ -29,6 +29,9 @@ public class Int020101Service {
 
 	@Autowired
 	private IaQuestionnaireSideJdbcRepository iaQtnSideJdbcRep;
+	
+	@Autowired
+	private QuestionnaireService questionnaireService;
 
 	@Autowired
 	private IaQuestionnaireSideRepository iaQtnSideRep;
@@ -38,7 +41,7 @@ public class Int020101Service {
 
 	@Autowired
 	private IaQuestionnaireHdrRepository iaQuestionnaireHdrRepository;
-
+	
 	public List<Int020101Vo> findAll() {
 		return iaQtnSideJdbcRep.findAll();
 	}
@@ -65,7 +68,9 @@ public class Int020101Service {
 	}
 
 	public IaQuestionnaireSide save(IaQuestionnaireSide request) {
-		return iaQtnSideRep.save(request);
+		IaQuestionnaireSide req = iaQtnSideRep.save(request);
+		questionnaireService.updateStatusIaQuestionnaireAutomatic(req.getIdHead());
+		return req;
 	}
 
 	@Transactional
@@ -144,6 +149,8 @@ public class Int020101Service {
 			sideDtl.setIsDeleted("Y");
 			iaQtnSideDtlRep.save(sideDtl);
 		}
+
+		
 		return data;
 	}
 
@@ -167,6 +174,10 @@ public class Int020101Service {
 			iaQuestionnaireHdrRepository.deleteByIdAndIsDeleted(id, "N");
 		}
 		return response;
+	}
+	
+	public void updateStatusIaQuestionnaireAutomatic(BigDecimal idHead) {
+		questionnaireService.updateStatusIaQuestionnaireAutomatic(idHead);
 	}
 
 }

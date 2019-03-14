@@ -55,6 +55,8 @@ public class Int02010101Controller {
 		Int02010101FormVo data = new Int02010101FormVo();
 		try {
 			data = int02010101Service.saveAll(form);
+			int02010101Service.updateStatusIaQuestionnaireAutomatic(data.getIdHead());
+			
 			responseData.setData(data);
 			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);

@@ -186,7 +186,7 @@ public class IaQuestionnaireSideJdbcRepository {
 		
 		sql.append(" SELECT COUNT(*) ");
 		sql.append(" FROM  IA_QUESTIONNAIRE_SIDE S ");
-		sql.append(" WHERE S.ID_HEAD  = 179 ");
+		sql.append(" WHERE S.ID_HEAD  = ? ");
 		sql.append(" AND S.IS_DELETED ='N' ");
 		
 		params.add(idHdr);

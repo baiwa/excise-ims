@@ -147,6 +147,7 @@ public class Int020101Controller {
 		ResponseData<IaQuestionnaireSide> responseData = new ResponseData<IaQuestionnaireSide>();
 		try {
 			responseData.setData(int020101Service.delete(idStr));
+			int020101Service.updateStatusIaQuestionnaireAutomatic(responseData.getData().getIdHead());
 			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.DELETE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

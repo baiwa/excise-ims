@@ -94,7 +94,7 @@ public class QuestionnaireService {
 		Integer countSideDtl = iaQuestionnaireSideJdbcRepository.checkCountSideDtl(idHdr);
 		
 //		*********** ID_HDR Check Table Side !=0 And Table SideDTL Count != 0 *********** 
-		if(countSideDtl==0&&countSide!=0) {
+		if(countSideDtl==0&&countSide>0) {
 			String status = IaConstants.QUESTIONNAIRE_STATUS.STATUS_2_CODE;
 			updateStatusIaQuestionnaire(idHdr, status);
 		}else {

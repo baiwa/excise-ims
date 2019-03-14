@@ -26,6 +26,9 @@ public class Int02010101Service {
 
 	@Autowired
 	private IaQuestionnaireSideDtlRepository iaQuestionnaireSideDtlRepository;
+	
+	@Autowired
+	private QuestionnaireService questionnaireService;
 
 	public List<Int02010101Vo> findByIdSide(String idSideStr) {
 		BigDecimal idSide = new BigDecimal(idSideStr);
@@ -54,6 +57,7 @@ public class Int02010101Service {
 		// VARIABLES
 		BigDecimal idLevel1 = null;
 		BigDecimal idLevel2 = null;
+		
 		// DELETE
 		if (form.getDelete().toArray().length > 0) {
 			List<IaQuestionnaireSideDtl> delete = form.getDelete();
@@ -61,6 +65,7 @@ public class Int02010101Service {
 				iaQuestionnaireSideDtlRepository.deleteById(iaQuestionnaireSideDtl.getId());
 			}
 		}
+		
 		// SAVE
 		if (form.getSave().toArray().length > 0) {
 			for (IaQuestionnaireSideDtl save : form.getSave()) {
@@ -92,5 +97,10 @@ public class Int02010101Service {
 			}
 		}
 		return form;
+	}
+	
+	//UPDATE STATUS
+	public void updateStatusIaQuestionnaireAutomatic(BigDecimal idHead) {
+		questionnaireService.updateStatusIaQuestionnaireAutomatic(idHead);
 	}
 }
