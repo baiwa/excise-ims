@@ -26,7 +26,7 @@ public class TaPaperPrUnpriRedTax extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_PAPER_PR_UNPRI_RED_TAX_GEN")
 	@SequenceGenerator(name = "TA_PAPER_PR_UNPRI_RED_TAX_GEN", sequenceName = "TA_PAPER_PR_UNPRI_RED_TAX_SEQ", allocationSize = 1)
 	@Column(name = "PAPER_PR_UNPRI_RED_TAX_ID")
-	private BigDecimal paperPrUnpriRedTaxId;
+	private Long paperPrUnpriRedTaxId;
 	@Column(name = "PLAN_NUMBER")
 	private String planNumber;
 	@Column(name = "PAPER_NUMBER")
@@ -64,11 +64,11 @@ public class TaPaperPrUnpriRedTax extends BaseEntity {
 	@Column(name = "DIFF_TAX_REDUCE_AMT")
 	private BigDecimal diffTaxReduceAmt;
 
-	public BigDecimal getPaperPrUnpriRedTaxId() {
+	public Long getPaperPrUnpriRedTaxId() {
 		return paperPrUnpriRedTaxId;
 	}
 
-	public void setPaperPrUnpriRedTaxId(BigDecimal paperPrUnpriRedTaxId) {
+	public void setPaperPrUnpriRedTaxId(Long paperPrUnpriRedTaxId) {
 		this.paperPrUnpriRedTaxId = paperPrUnpriRedTaxId;
 	}
 

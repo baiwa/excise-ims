@@ -26,7 +26,7 @@ public class TaPaperPrBalMat extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_PAPER_PR_BAL_MAT_GEN")
 	@SequenceGenerator(name = "TA_PAPER_PR_BAL_MAT_GEN", sequenceName = "TA_PAPER_PR_BAL_MAT_SEQ", allocationSize = 1)
 	@Column(name = "PAPER_PR_BAL_MAT_ID")
-	private BigDecimal paperPrBalMatId;
+	private Long paperPrBalMatId;
 	@Column(name = "PLAN_NUMBER")
 	private String planNumber;
 	@Column(name = "PAPER_NUMBER")
@@ -54,11 +54,11 @@ public class TaPaperPrBalMat extends BaseEntity {
 	@Column(name = "MAX_DIFF_QTY")
 	private BigDecimal maxDiffQty;
 
-	public BigDecimal getPaperPrBalMatId() {
+	public Long getPaperPrBalMatId() {
 		return paperPrBalMatId;
 	}
 
-	public void setPaperPrBalMatId(BigDecimal paperPrBalMatId) {
+	public void setPaperPrBalMatId(Long paperPrBalMatId) {
 		this.paperPrBalMatId = paperPrBalMatId;
 	}
 

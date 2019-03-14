@@ -26,7 +26,7 @@ public class TaPaperPrInformPrice extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_PAPER_PR_INFORM_PRICE_GEN")
 	@SequenceGenerator(name = "TA_PAPER_PR_INFORM_PRICE_GEN", sequenceName = "TA_PAPER_PR_INFORM_PRICE_SEQ", allocationSize = 1)
 	@Column(name = "PAPER_PR_INFORM_PRICE_ID")
-	private BigDecimal paperPrInformPriceId;
+	private Long paperPrInformPriceId;
 	@Column(name = "PLAN_NUMBER")
 	private String planNumber;
 	@Column(name = "PAPER_NUMBER")
@@ -60,11 +60,11 @@ public class TaPaperPrInformPrice extends BaseEntity {
 	@Column(name = "DIFF_PRICE")
 	private BigDecimal diffPrice;
 
-	public BigDecimal getPaperPrInformPriceId() {
+	public Long getPaperPrInformPriceId() {
 		return paperPrInformPriceId;
 	}
 
-	public void setPaperPrInformPriceId(BigDecimal paperPrInformPriceId) {
+	public void setPaperPrInformPriceId(Long paperPrInformPriceId) {
 		this.paperPrInformPriceId = paperPrInformPriceId;
 	}
 

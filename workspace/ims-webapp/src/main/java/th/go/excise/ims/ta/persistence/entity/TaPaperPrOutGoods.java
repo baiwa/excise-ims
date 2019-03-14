@@ -26,7 +26,7 @@ public class TaPaperPrOutGoods extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_PAPER_PR_OUT_GOODS_GEN")
 	@SequenceGenerator(name = "TA_PAPER_PR_OUT_GOODS_GEN", sequenceName = "TA_PAPER_PR_OUT_GOODS_SEQ", allocationSize = 1)
 	@Column(name = "PAPER_PR_OUT_GOODS_ID")
-	private BigDecimal paperPrOutGoodsId;
+	private Long paperPrOutGoodsId;
 	@Column(name = "PLAN_NUMBER")
 	private String planNumber;
 	@Column(name = "PAPER_NUMBER")
@@ -60,11 +60,11 @@ public class TaPaperPrOutGoods extends BaseEntity {
 	@Column(name = "DIFF_QTY")
 	private BigDecimal diffQty;
 
-	public BigDecimal getPaperPrOutGoodsId() {
+	public Long getPaperPrOutGoodsId() {
 		return paperPrOutGoodsId;
 	}
 
-	public void setPaperPrOutGoodsId(BigDecimal paperPrOutGoodsId) {
+	public void setPaperPrOutGoodsId(Long paperPrOutGoodsId) {
 		this.paperPrOutGoodsId = paperPrOutGoodsId;
 	}
 

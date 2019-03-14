@@ -26,7 +26,7 @@ public class TaPaperPrTaxAmtAdd extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_PAPER_PR_TAX_AMT_ADD_GEN")
 	@SequenceGenerator(name = "TA_PAPER_PR_TAX_AMT_ADD_GEN", sequenceName = "TA_PAPER_PR_TAX_AMT_ADD_SEQ", allocationSize = 1)
 	@Column(name = "PAPER_PR_TAX_AMT_ADD_ID")
-	private BigDecimal paperPrTaxAmtAddId;
+	private Long paperPrTaxAmtAddId;
 	@Column(name = "PLAN_NUMBER")
 	private String planNumber;
 	@Column(name = "PAPER_NUMBER")
@@ -68,11 +68,11 @@ public class TaPaperPrTaxAmtAdd extends BaseEntity {
 	@Column(name = "NET_TAX_AMT")
 	private BigDecimal netTaxAmt;
 
-	public BigDecimal getPaperPrTaxAmtAddId() {
+	public Long getPaperPrTaxAmtAddId() {
 		return paperPrTaxAmtAddId;
 	}
 
-	public void setPaperPrTaxAmtAddId(BigDecimal paperPrTaxAmtAddId) {
+	public void setPaperPrTaxAmtAddId(Long paperPrTaxAmtAddId) {
 		this.paperPrTaxAmtAddId = paperPrTaxAmtAddId;
 	}
 
