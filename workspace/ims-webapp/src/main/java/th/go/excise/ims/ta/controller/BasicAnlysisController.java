@@ -37,23 +37,24 @@ public class BasicAnlysisController {
 	private AnalysisTaxFilingService analysisTaxFilingService;
 	private AnalysisIncomeCompareLastMonthService analysisIncomeCompareLastMonthService;
 	private AnalysisIncomeCompareLastYearService analysisIncomeCompareLastYearService;
+
 	@Autowired
-	public BasicAnlysisController( AnalysisTaxQtyService analysisTaxQtyService
-								  ,AnalysisTaxQuRetailPriceService analysisTaxQuRetailPriceService
-								  ,AnalysisTaxRateService analysisTaxRateService,
-								   AnalysisTaxAmtsService analysisTaxAmtsService,
-								   AnalysisTaxFilingService analysisTaxFilingService,
-								   AnalysisIncomeCompareLastMonthService analysisIncomeCompareLastMonthService,
-								   AnalysisIncomeCompareLastYearService analysisIncomeCompareLastYearService) {
-		   this.analysisTaxQtyService = analysisTaxQtyService;
-		   this.analysisTaxQuRetailPriceService = analysisTaxQuRetailPriceService;
-		   this.analysisTaxRateService = analysisTaxRateService;
-		   this.analysisTaxAmtsService = analysisTaxAmtsService;
-		   this.analysisTaxFilingService = analysisTaxFilingService;
-		   this.analysisIncomeCompareLastMonthService = analysisIncomeCompareLastMonthService;
-		   this.analysisIncomeCompareLastYearService = analysisIncomeCompareLastYearService;
+	public BasicAnlysisController(AnalysisTaxQtyService analysisTaxQtyService,
+			AnalysisTaxQuRetailPriceService analysisTaxQuRetailPriceService,
+			AnalysisTaxRateService analysisTaxRateService, AnalysisTaxAmtsService analysisTaxAmtsService,
+			AnalysisTaxFilingService analysisTaxFilingService,
+			AnalysisIncomeCompareLastMonthService analysisIncomeCompareLastMonthService,
+			AnalysisIncomeCompareLastYearService analysisIncomeCompareLastYearService) {
+		this.analysisTaxQtyService = analysisTaxQtyService;
+		this.analysisTaxQuRetailPriceService = analysisTaxQuRetailPriceService;
+		this.analysisTaxRateService = analysisTaxRateService;
+		this.analysisTaxAmtsService = analysisTaxAmtsService;
+		this.analysisTaxFilingService = analysisTaxFilingService;
+		this.analysisIncomeCompareLastMonthService = analysisIncomeCompareLastMonthService;
+		this.analysisIncomeCompareLastYearService = analysisIncomeCompareLastYearService;
 	}
-	//TODO 1
+
+	// TODO 1
 	@PostMapping("/analysis-tax-qty-data")
 	@ResponseBody
 	public DataTableAjax<AnalysisTaxQtyVo> listAnalysisTaxQty(@RequestBody AnalysisFormVo request) {
@@ -67,7 +68,8 @@ public class BasicAnlysisController {
 		}
 		return response;
 	}
-	//TODO 2
+
+	// TODO 2
 	@PostMapping("/analysis-taxQuRetail-price-data")
 	@ResponseBody
 	public DataTableAjax<AnalysisTaxQuRetailPriceVo> listAnalysisTaxQuRetailPrice(@RequestBody AnalysisFormVo request) {
@@ -81,12 +83,9 @@ public class BasicAnlysisController {
 		}
 		return response;
 	}
-	//TODO 3
-	
-	
-	
-	
-	//TODO 4
+	// TODO 3
+
+	// TODO 4
 	@PostMapping("/analysis-taxRate-service-data")
 	@ResponseBody
 	public DataTableAjax<AnalysisTaxRateVo> listAnalysisTaxRateService(@RequestBody AnalysisFormVo request) {
@@ -100,7 +99,8 @@ public class BasicAnlysisController {
 		}
 		return response;
 	}
-	//TODO 5
+
+	// TODO 5
 	@PostMapping("/list-analysis-taxAmts-service-data")
 	@ResponseBody
 	public DataTableAjax<AnalysisTaxAmtVo> listAnalysisTaxAmtsService(@RequestBody AnalysisFormVo request) {
@@ -114,49 +114,52 @@ public class BasicAnlysisController {
 		}
 		return response;
 	}
-	
-	//TODO 6
-		@PostMapping("/analysis-tax-filing-data")
-		@ResponseBody
-		public DataTableAjax<AnalysisTaxFilingVo> listAnalysisTaxFilingService(@RequestBody AnalysisFormVo request) {
-			logger.info("listAnalysisTaxFilingService");
 
-			DataTableAjax<AnalysisTaxFilingVo> response = new DataTableAjax<>();
-			try {
-				response = analysisTaxFilingService.GetAnalysisTaxFiling(request);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return response;
+	// TODO 6
+	@PostMapping("/analysis-tax-filing-data")
+	@ResponseBody
+	public DataTableAjax<AnalysisTaxFilingVo> listAnalysisTaxFilingService(@RequestBody AnalysisFormVo request) {
+		logger.info("listAnalysisTaxFilingService");
+
+		DataTableAjax<AnalysisTaxFilingVo> response = new DataTableAjax<>();
+		try {
+			response = analysisTaxFilingService.GetAnalysisTaxFiling(request);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return response;
+	}
 
-		//TODO 7
-		@PostMapping("/analysis-Income-compareLast-month-data")
-		@ResponseBody
-		public DataTableAjax<AnalysisIncomeCompareLastMonthVo> listAnalysisIncomeCompareLastMonthService(@RequestBody AnalysisFormVo request) {
-			logger.info("listAnalysisIncomeCompareLastMonthService");
+	// TODO 7
+	@PostMapping("/analysis-Income-compareLast-month-data")
+	@ResponseBody
+	public DataTableAjax<AnalysisIncomeCompareLastMonthVo> listAnalysisIncomeCompareLastMonthService(
+			@RequestBody AnalysisFormVo request) {
+		logger.info("listAnalysisIncomeCompareLastMonthService");
 
-			DataTableAjax<AnalysisIncomeCompareLastMonthVo> response = new DataTableAjax<>();
-			try {
-				response = analysisIncomeCompareLastMonthService.GetAnalysisIncomeCompareLastMonth(request);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return response;
+		DataTableAjax<AnalysisIncomeCompareLastMonthVo> response = new DataTableAjax<>();
+		try {
+			response = analysisIncomeCompareLastMonthService.GetAnalysisIncomeCompareLastMonth(request);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return response;
+	}
 
-		//TODO 8
-		@PostMapping("/analysis-income-compareLast-year-data")
-		@ResponseBody
-		public DataTableAjax<AnalysisIncomeCompareLastYearVo> listAnalysisIncomeCompareLastYearService(@RequestBody AnalysisFormVo request) {
-			logger.info("listAnalysisIncomeCompareLastYearService");
+	// TODO 8
+	@PostMapping("/analysis-income-compareLast-year-data")
+	@ResponseBody
+	public DataTableAjax<AnalysisIncomeCompareLastYearVo> listAnalysisIncomeCompareLastYearService(
+			@RequestBody AnalysisFormVo request) {
+		logger.info("listAnalysisIncomeCompareLastYearService");
 
-			DataTableAjax<AnalysisIncomeCompareLastYearVo> response = new DataTableAjax<>();
-			try {
-				response = analysisIncomeCompareLastYearService.GetAnalysisIncomeCompareLastYear(request);			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return response;
+		DataTableAjax<AnalysisIncomeCompareLastYearVo> response = new DataTableAjax<>();
+		try {
+			response = analysisIncomeCompareLastYearService.GetAnalysisIncomeCompareLastYear(request);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-	
+		return response;
+	}
+
 }
