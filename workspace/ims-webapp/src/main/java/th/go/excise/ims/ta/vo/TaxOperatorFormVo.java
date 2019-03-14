@@ -25,7 +25,34 @@ public class TaxOperatorFormVo extends DataTableRequest {
     private String risk;
     private String cusFullname;
     private String facFullname;
+    private String mainCondFreqType;
+    private Integer taxMonthStart;
+    private Integer taxMonthEnd;
 
+
+    public String getMainCondFreqType() {
+        return mainCondFreqType;
+    }
+
+    public void setMainCondFreqType(String mainCondFreqType) {
+        this.mainCondFreqType = mainCondFreqType;
+    }
+
+    public Integer getTaxMonthStart() {
+        return taxMonthStart;
+    }
+
+    public void setTaxMonthStart(Integer taxMonthStart) {
+        this.taxMonthStart = taxMonthStart;
+    }
+
+    public Integer getTaxMonthEnd() {
+        return taxMonthEnd;
+    }
+
+    public void setTaxMonthEnd(Integer taxMonthEnd) {
+        this.taxMonthEnd = taxMonthEnd;
+    }
 
     public String getCusFullname() {
         return cusFullname;
