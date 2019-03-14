@@ -6,5 +6,7 @@ import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRe
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 
 public interface IaQuestionnaireHdrRepository extends CommonJpaCrudRepository<IaQuestionnaireHdr, BigDecimal> {
+
+	void deleteByIdAndIsDeleted(BigDecimal id, String isDeleted);
 	
 }

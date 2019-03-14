@@ -99,7 +99,7 @@ public class Int02Service {
 	public IaQuestionnaireHdr findOne(String idStr) {
 		BigDecimal id = new BigDecimal(idStr);
 		IaQuestionnaireHdr hdr = iaQuestionnaireHdrJdbcRepository.findOne(id);
-		hdr.setStatus(ApplicationCache.getParamInfoByCode("IA_STATUS", hdr.getStatus()).getValue1());
+//		hdr.setStatus(ApplicationCache.getParamInfoByCode("IA_STATUS", hdr.getStatus()).getValue1());
 		return hdr;
 	}
 
@@ -164,17 +164,17 @@ public class Int02Service {
 
 			if ("SUCCESS_HDR".equals(daraHdr.getStatus())) {
 				/* update status */
-				daraHdr.setStatus("FAIL_SEND_QTN");
+//				daraHdr.setStatus("FAIL_SEND_QTN");
 				iaQuestionnaireHdrRepository.save(daraHdr);
 
 				List<IaQuestionnaireMadeHdr> dataMadeHdr = iaQuestionnaireMadeHdrRepository.findByIdHdrAndIsDeleted(daraHdr.getId(), "N");
 				for (IaQuestionnaireMadeHdr madeHdr : dataMadeHdr) {
-					madeHdr.setStatus("FAIL_SEND_QTN");
+//					madeHdr.setStatus("FAIL_SEND_QTN");
 					iaQuestionnaireMadeHdrRepository.save(madeHdr);
 					/* update status questionnaire made dtl */
 					List<IaQuestionnaireMade> madeDtlList = iaQuestionnaireMadeRepository.findByIdMadeHdrAndIsDeleted(madeHdr.getId(), "N");
 					for (IaQuestionnaireMade madeDtl : madeDtlList) {
-						madeDtl.setStatus("FAIL_SEND_QTN");
+//						madeDtl.setStatus("FAIL_SEND_QTN");
 						iaQuestionnaireMadeRepository.save(madeDtl);
 					}
 				}

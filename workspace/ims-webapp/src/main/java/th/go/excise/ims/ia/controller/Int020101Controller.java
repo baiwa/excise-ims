@@ -1,5 +1,6 @@
 package th.go.excise.ims.ia.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESS
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
 import th.go.excise.ims.ia.service.Int020101Service;
 import th.go.excise.ims.ia.vo.Int020101NameVo;
@@ -220,6 +222,26 @@ public class Int020101Controller {
 		} catch (Exception e) {
 			logger.error("Int020101Controller::getByYearAndUsername ", e);
 			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
+	@DeleteMapping("/delete/choices/{id}/{choiceStr}")
+	@ResponseBody
+	public ResponseData<IaQuestionnaireHdr> deleteQtn(@PathVariable("id") BigDecimal id, @PathVariable("choiceStr") String choiceStr) {
+		ResponseData<IaQuestionnaireHdr> responseData = new ResponseData<IaQuestionnaireHdr>();
+		try {
+			responseData.setData(int020101Service.deleteQtn(id, choiceStr));
+			if("CANCEL".equals(choiceStr)) {
+				responseData.setMessage(ApplicationCache.getParamInfoByCode("IA_QTN_MESSAGE", "2").getValue1());
+			}else {
+				responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.SUCCESS_CODE).getMessageTh());
+			}
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
