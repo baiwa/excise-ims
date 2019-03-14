@@ -1,20 +1,17 @@
 package th.go.excise.ims.oa.service;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.oa.persistence.entity.OaLubricantsDtl;
 import th.go.excise.ims.oa.persistence.repository.OaLubricantsDtlRepository;
 import th.go.excise.ims.oa.vo.Oa020106DtlVo;
 
 @Service
-public class Oa02010607Service {
-	
+public class Oa02010608Service {
 	@Autowired
 	private OaLubricantsDtlRepository oaLubricantsDtlRep;
 	
@@ -35,29 +32,13 @@ public class Oa02010607Service {
 		if (oaLubricantsDtlOpt.isPresent()) {
 			lubricantsDtl = oaLubricantsDtlOpt.get();
 			// TODO SET SOMETHING
-			lubricantsDtl.setAgentStartDate(request.getAgentStartDate());
-			lubricantsDtl.setAgentEndDate(request.getAgentEndDate());
-			lubricantsDtl.setAgentOverlimit(request.getAgentOverlimit());
-			
-			// Buy
-			lubricantsDtl.setABuyFromIndust(request.getABuyFromIndust());
-			lubricantsDtl.setABuyIndustLicense(request.getABuyIndustLicense());
-			lubricantsDtl.setABuyFromAgent(request.getABuyFromAgent());
-			lubricantsDtl.setABuyAgentLicense(request.getABuyAgentLicense());
-			// Sell
-			lubricantsDtl.setASaleToAgent(request.getASaleToAgent());
-			lubricantsDtl.setASaleAgentLicense(request.getASaleAgentLicense());
-			lubricantsDtl.setASaleToUser(request.getASaleToUser());
-			lubricantsDtl.setASaleUserLicense(request.getASaleUserLicense());
-			// Sell Method
-			lubricantsDtl.setSentToAgent(request.getSentToAgent());
-			lubricantsDtl.setSentToUser(request.getSentToUser());
-			lubricantsDtl.setAImporterLicense(request.getAImporterLicense());
-			
+			lubricantsDtl.setMaterail(request.getMaterail());
+			lubricantsDtl.setDocument(request.getDocument());
+			lubricantsDtl.setProductProcess(request.getProductProcess());
+			lubricantsDtl.setProductNextime(request.getProductNextime());
 			// TODO SAVE
 			lubricantsDtl = oaLubricantsDtlRep.save(lubricantsDtl);
 		}
 		return lubricantsDtl;
 	}
-	
 }

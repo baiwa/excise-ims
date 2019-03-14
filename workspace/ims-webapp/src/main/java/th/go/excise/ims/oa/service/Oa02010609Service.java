@@ -1,31 +1,41 @@
 package th.go.excise.ims.oa.service;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.oa.persistence.entity.OaLubricantsDtl;
+import th.go.excise.ims.oa.persistence.repository.OaCustomerLicenRepository;
 import th.go.excise.ims.oa.persistence.repository.OaLubricantsDtlRepository;
 import th.go.excise.ims.oa.vo.Oa020106DtlVo;
 
 @Service
-public class Oa02010607Service {
+public class Oa02010609Service {
 	
 	@Autowired
 	private OaLubricantsDtlRepository oaLubricantsDtlRep;
 	
-	public OaLubricantsDtl findDetailById(String idStr) {
+	@Autowired
+	private OaCustomerLicenRepository oaCustomerLicenRep;
+	
+	public Oa020106DtlVo findDetailById(String idStr) {
 		BigDecimal id = new BigDecimal(idStr);
 		Optional<OaLubricantsDtl> oaLubricantsDtlOpt = oaLubricantsDtlRep.findById(id);
-		OaLubricantsDtl lubricantsDtl = new OaLubricantsDtl();
+		OaLubricantsDtl dtl = new OaLubricantsDtl();
+		Oa020106DtlVo vo = new Oa020106DtlVo();
 		if (oaLubricantsDtlOpt.isPresent()) {
-			lubricantsDtl = oaLubricantsDtlOpt.get();
+			dtl = oaLubricantsDtlOpt.get();
+			vo.setBuyAgentLicense(dtl.getBuyAgentLicense());
+			vo.setBuyFromAgent(dtl.getBuyFromAgent());
+			vo.setBuyFromImporter(dtl.getBuyFromImporter());
+			vo.setBuyFromIndust(dtl.getBuyFromIndust());
+			vo.setBuyIndustLicense(dtl.getBuyIndustLicense());
+			vo.setBuyOverlimit(dtl.getBuyOverlimit());
+			vo.setCustomers(null);
 		}
-		return lubricantsDtl;
+		return vo;
 	}
 	
 	public OaLubricantsDtl updateById(Oa020106DtlVo request, String idStr) {
