@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.Application;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
 import th.go.excise.ims.ta.vo.YearMonthVo;
 
 @RunWith(SpringRunner.class)
@@ -31,7 +32,7 @@ public class TaDraftWorksheetHdrRepositoryTest {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = "2562";
 		
-		List<String> draftNumberList1 = taDraftWorksheetHdrRepository.findDraftNumberByOfficeCodeAndBudgetYear(officeCode, budgetYear);
+		List<String> draftNumberList1 = taDraftWorksheetHdrRepository.findDraftNumberByOfficeCodeAndBudgetYearAndWorksheetStatus(officeCode, budgetYear, TA_WORKSHEET_STATUS.DRAFT);
 		draftNumberList1.forEach(System.out::println);
 	}
 	

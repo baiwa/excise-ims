@@ -13,6 +13,7 @@ public class ProjectConstants {
 	}
 	
 	public class TA_WORKSHEET_STATUS {
+		public static final String DRAFT = "D";
 		public static final String CONDITION = "C";
 		public static final String SELECTION = "S";
 	}

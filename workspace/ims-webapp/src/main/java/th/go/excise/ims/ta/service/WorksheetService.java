@@ -37,6 +37,8 @@ public class WorksheetService {
 	private static final String MAX_DATE = "999912";
 	
 	@Autowired
+	private TaDraftWorksheetHdrRepository taDraftWorksheetHdrRepository;
+	@Autowired
 	private TaDraftWorksheetDtlRepository taDraftWorksheetDtlRepository;
 
 	@Autowired
@@ -107,6 +109,11 @@ public class WorksheetService {
 			worksheetCondSubNoAudit.setAnalysisNumber(analysisNumber);
 			taWorksheetCondSubNoAuditRepository.save(worksheetCondSubNoAudit);
 		}
+		
+		// ==> Update DraftWorksheetHdr
+		TaDraftWorksheetHdr draftWorksheetHdr = taDraftWorksheetHdrRepository.findByDraftNumber(draftNumber);
+		draftWorksheetHdr.setWorksheetStatus(TA_WORKSHEET_STATUS.CONDITION);
+		taDraftWorksheetHdrRepository.save(draftWorksheetHdr);
 
 		// ==> Save WorksheetHdr
 		TaWorksheetHdr worksheetHdr = new TaWorksheetHdr();
@@ -115,6 +122,9 @@ public class WorksheetService {
 		worksheetHdr.setDraftNumber(draftNumber);
 		worksheetHdr.setAnalysisNumber(analysisNumber);
 		worksheetHdr.setWorksheetStatus(TA_WORKSHEET_STATUS.CONDITION);
+		worksheetHdr.setCondSubCapitalFlag(draftWorksheetHdr.getCondSubCapitalFlag());
+		worksheetHdr.setCondSubRiskFlag(draftWorksheetHdr.getCondSubRiskFlag());
+		worksheetHdr.setCondSubNoAuditFlag(draftWorksheetHdr.getCondSubNoAuditFlag());
 		taWorksheetHdrRepository.save(worksheetHdr);
 
 		// ==> Save WorksheetDtl
@@ -272,7 +282,7 @@ public class WorksheetService {
 			budgetYear = ExciseUtils.getCurrentBudgetYear();
 		}
 		logger.info("findAllAnalysisNumber officeCode={}, budgetYear={}", officeCode, budgetYear);
-		return taWorksheetHdrRepository.findAllAnalysisNumberByOfficeCodeAndBudgetYear(officeCode, budgetYear);
+		return taWorksheetHdrRepository.findAllAnalysisNumberByOfficeCodeAndBudgetYearAndWorksheetStatus(officeCode, budgetYear, TA_WORKSHEET_STATUS.CONDITION);
 	}
 
 	public YearMonthVo getMonthStart(TaxOperatorFormVo formVo) {

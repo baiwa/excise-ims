@@ -14,11 +14,13 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_OFFICE_CODE;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSelect;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
 import th.go.excise.ims.ta.persistence.repository.*;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetStatus;
@@ -37,6 +39,8 @@ public class PlanWorksheetService {
     @Autowired
     private WorksheetSequenceService worksheetSequenceService;
     
+    @Autowired
+    private TaWorksheetHdrRepository taWorksheetHdrRepository;
     @Autowired
     private TaWorksheetDtlRepository taWorksheetDtlRepository;
     
@@ -60,7 +64,13 @@ public class PlanWorksheetService {
     	String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
         String planNumber = worksheetSequenceService.getPlanNumber(officeCode, formVo.getBudgetYear());
         logger.info("savePlanWorksheetHdr officeCode={}, budgetYear={}, analysisNumber={}, planNumber={}", officeCode, formVo.getBudgetYear(), formVo.getAnalysisNumber(), planNumber);
-
+        
+        // ==> Update WorksheetHdr
+        TaWorksheetHdr worksheetHdr = taWorksheetHdrRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
+        worksheetHdr.setWorksheetStatus(TA_WORKSHEET_STATUS.SELECTION);
+        taWorksheetHdrRepository.save(worksheetHdr);
+        
+        // ==> Save PlanWorksheetHdr
         TaPlanWorksheetHdr planHdr = new TaPlanWorksheetHdr();
         planHdr.setAnalysisNumber(formVo.getAnalysisNumber());
         planHdr.setBudgetYear(formVo.getBudgetYear());
@@ -322,6 +332,7 @@ public class PlanWorksheetService {
     	taPlanWorksheetHdrRepository.forceDeleteByBudgetYear(budgetYear);
     	taPlanWorksheetSendRepository.forceDeleteByBudgetYear(budgetYear);
     	taPlanWorksheetSelectRepository.forceDeleteByBudgetYear(budgetYear);
+    	taWorksheetHdrRepository.updateWorksheetStatusByBudgetYear(TA_WORKSHEET_STATUS.CONDITION, budgetYear);
     }
 
 }

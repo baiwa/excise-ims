@@ -24,6 +24,7 @@ import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetHdr;
@@ -430,6 +431,7 @@ public class DraftWorksheetService {
         draftHdr.setYearMonthEnd(dateEnd);
         draftHdr.setMonthNum(formVo.getDateRange());
         draftHdr.setBudgetYear(budgetYear);
+        draftHdr.setWorksheetStatus(TA_WORKSHEET_STATUS.DRAFT);
         if (StringUtils.isNotBlank(formVo.getCondSub1())) {
             draftHdr.setCondSubCapitalFlag(CommonConstants.FLAG.Y_FLAG);
         }
@@ -503,7 +505,7 @@ public class DraftWorksheetService {
             budgetYear = ExciseUtils.getCurrentBudgetYear();
         }
         logger.info("findAllDraftNumber officeCode={}, budgetYear={}", officeCode, budgetYear);
-        return taDraftWorksheetHdrRepository.findDraftNumberByOfficeCodeAndBudgetYear(officeCode, budgetYear);
+        return taDraftWorksheetHdrRepository.findDraftNumberByOfficeCodeAndBudgetYearAndWorksheetStatus(officeCode, budgetYear, TA_WORKSHEET_STATUS.DRAFT);
     }
 
     public YearMonthVo getMonthStart(TaxOperatorFormVo formVo) {

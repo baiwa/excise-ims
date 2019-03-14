@@ -14,7 +14,7 @@ public interface TaDraftWorksheetHdrRepository extends CommonJpaCrudRepository<T
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.draftNumber = :draftNumber")
 	public TaDraftWorksheetHdr findByDraftNumber(@Param("draftNumber") String draftNumber);
 	
-	@Query("select new java.lang.String(e.draftNumber) from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode and e.budgetYear = :budgetYear order by e.draftNumber desc")
-	public List<String> findDraftNumberByOfficeCodeAndBudgetYear(@Param("officeCode") String officeCode, @Param("budgetYear") String budgetYear);
+	@Query("select new java.lang.String(e.draftNumber) from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode and e.budgetYear = :budgetYear and e.worksheetStatus = :worksheetStatus order by e.draftNumber desc")
+	public List<String> findDraftNumberByOfficeCodeAndBudgetYearAndWorksheetStatus(@Param("officeCode") String officeCode, @Param("budgetYear") String budgetYear, @Param("worksheetStatus") String worksheetStatus);
 	
 }

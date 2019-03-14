@@ -105,15 +105,15 @@ public class TaDraftWorksheetDtlRepositoryImpl implements TaDraftWorksheetDtlRep
 		sql.append(" 	R4000.REG_CAPITAL, ");
 		sql.append(" 	R4000.REG_DATE, ");
 		sql.append(" 	R4000.REG_STATUS, ");
-		sql.append("	TA_W_HDR.* ");
-		sql.append(" FROM TA_DRAFT_WORKSHEET_DTL TA_W_HDR ");
-		sql.append(" INNER JOIN TA_WS_REG4000 R4000 ON R4000.NEW_REG_ID = TA_W_HDR.NEW_REG_ID ");
+		sql.append("	TA_DW_DTL.* ");
+		sql.append(" FROM TA_DRAFT_WORKSHEET_DTL TA_DW_DTL ");
+		sql.append(" INNER JOIN TA_WS_REG4000 R4000 ON R4000.NEW_REG_ID = TA_DW_DTL.NEW_REG_ID ");
 		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_SECTOR ON ED_SECTOR.OFF_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000') ");
-		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE    = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
-		sql.append(" WHERE TA_W_HDR.IS_DELETED = 'N' ");
+		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
+		sql.append(" WHERE TA_DW_DTL.IS_DELETED = 'N' ");
 		sql.append("   AND R4000.IS_DELETED = 'N' ");
-		sql.append("   AND TA_W_HDR.DRAFT_NUMBER = ? ");
 		
+		sql.append("   AND TA_DW_DTL.DRAFT_NUMBER = ? ");
 		params.add(formVo.getDraftNumber());
 		
 		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
