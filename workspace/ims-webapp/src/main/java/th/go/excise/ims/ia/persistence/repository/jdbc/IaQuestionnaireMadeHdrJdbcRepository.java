@@ -128,4 +128,14 @@ public class IaQuestionnaireMadeHdrJdbcRepository {
 		return idHdr;
 	}
 
+	public BigDecimal deleteByIdHdr(BigDecimal idHdr) {
+		StringBuilder sql = new StringBuilder(" DELETE FROM IA_QUESTIONNAIRE_MADE_HDR WHERE ID IN(SELECT ID FROM IA_QUESTIONNAIRE_MADE_HDR WHERE ID_HDR = ? ) ");
+		List<Object> params = new ArrayList<Object>();
+		
+		params.add(idHdr);
+		commonJdbcTemplate.update(sql.toString(), params.toArray());
+
+		return idHdr;
+	}
+	
 }

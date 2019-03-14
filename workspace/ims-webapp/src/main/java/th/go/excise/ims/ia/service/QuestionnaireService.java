@@ -73,11 +73,12 @@ public class QuestionnaireService {
 					if(paramInfo.getSortingOrder()-1 == paramInfo2.getSortingOrder()) {
 						
 						iaQuestionnaireHdrJdbcRepository.updateStatus(idHdr, paramInfo2.getParamCode());
-						if(IaConstants.QUESTIONNAIRE_STATUS.STATUS_4_CODE.equals(paramInfo.getSortingOrder().toString())) {
-//							iaQuestionnaireMadeJdbcRepository
+
+							if(IaConstants.QUESTIONNAIRE_STATUS.STATUS_4_CODE.equals(paramInfo.getSortingOrder().toString())) {
+								iaQuestionnaireMadeJdbcRepository.deleteByIdHdr(idHdr);
+								iaQuestionnaireMadeHdrJdbcRepository.deleteByIdHdr(idHdr);
+							}
 							
-						}
-//						iaQuestionnaireMadeHdrJdbcRepository.updateStatus(idHdr, paramInfo2.getParamCode());
 					}
 				}
 			}

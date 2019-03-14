@@ -154,16 +154,20 @@ public class IaQuestionnaireMadeJdbcRepository {
 		return idHdr;
 	}
 	
-	public BigDecimal deleteByIdHdr(BigDecimal idHdr,String status) {
-		StringBuilder sql = new StringBuilder(" UPDATE IA_QUESTIONNAIRE_MADE_HDR SET STATUS = ? WHERE ID_HDR = ? ");
+	public BigDecimal deleteByIdHdr(BigDecimal idHdr) {
+		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 		
-		params.add(status);
-		params.add(idHdr);
+		sql.append(" DELETE FROM IA_QUESTIONNAIRE_MADE WHERE ID IN( ");
+		sql.append("        SELECT md.ID AS ID FROM IA_QUESTIONNAIRE_MADE_HDR mh  ");
+		sql.append("        INNER JOIN IA_QUESTIONNAIRE_MADE md  ");
+		sql.append("        ON mh.id=md.ID_MADE_HDR  ");
+		sql.append("        WHERE mh.ID_HDR = ? ) ");
 		
+		params.add(idHdr);		
 		commonJdbcTemplate.update(sql.toString(), params.toArray());
 
 		return idHdr;
 	}
-
+	
 }

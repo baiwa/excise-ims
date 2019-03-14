@@ -40,5 +40,25 @@ public class IaConstants {
 
 	}
 	
+	public class IA_STATUS_REPLY_QTN {
+		public static final String PARAM_GROUP_CODE = "IA_STATUS_REPLY_QTN";
+		
+		public static final String STATUS_1_CODE = "1";
+		public static final String STATUS_1_DESC = "รอผลตอบแบบสอบถาม";
+		
+		public static final String STATUS_2_CODE = "2";
+		public static final String STATUS_2_DESC = "กำลังดำเนินการตอบแบบสอบถาม";
+		
+		public static final String STATUS_3_CODE = "3";
+		public static final String STATUS_3_DESC = "ตอบแบบสอบถามเรียบร้อยและส่งกลับ";
+		
+		public static final String STATUS_4_CODE = "4";
+		public static final String STATUS_4_DESC = "ยกเลิกแบบสอบถาม";
+		
+		
+	}
+	
+	
+	
 }
 
