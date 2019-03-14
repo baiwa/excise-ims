@@ -1,5 +1,6 @@
 package th.go.excise.ims.ia.persistence.repository.jdbc;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,6 +114,18 @@ public class IaQuestionnaireMadeHdrJdbcRepository {
 		List<IaQuestionnaireMadeHdr> data = commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper(IaQuestionnaireMadeHdr.class));
 
 		return data; 
+	}
+	
+	public BigDecimal updateStatus(BigDecimal idHdr,String status) {
+		StringBuilder sql = new StringBuilder(" UPDATE IA_QUESTIONNAIRE_MADE_HDR SET STATUS = ? WHERE ID_HDR = ? ");
+		List<Object> params = new ArrayList<Object>();
+		
+		params.add(status);
+		params.add(idHdr);
+		
+		commonJdbcTemplate.update(sql.toString(), params.toArray());
+
+		return idHdr;
 	}
 
 }

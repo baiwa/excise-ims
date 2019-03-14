@@ -196,7 +196,7 @@ public class Int030101Service {
 
 			// Id.
 			cell = row.createCell(cellNum);
-			cell.setCellValue(item.getId().toString());
+			cell.setCellValue(item.getId().toString()+"-"+item.getProjectCode());
 			cellNum++;
 
 			cell = row.createCell(cellNum);
@@ -305,7 +305,7 @@ public class Int030101Service {
 		Cell cell = row.createCell(cellNum);
 
 		/* Header */
-		String[] tbTH1 = { "ลำดับที่	", "รหัสสรรพสามิต", "ภาค", "พื้นที่", "ค่าความเสี่ยง" };
+		String[] tbTH1 = { "ลำดับที่	", "รหัส", "รหัสสรรพสามิต", "ภาค", "พื้นที่", "ค่าความเสี่ยง" };
 
 		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 			cell = row.createCell(cellNum);
@@ -372,17 +372,13 @@ public class Int030101Service {
 		return outByteStream;
 	}
 
-	public List<String> getdataList() {
-		List<String> dataList = new ArrayList<String>();
-		dataList.add("แผนหลักเกณฑ์การประเมินผลการปฏิบัติราชการ	");
-		dataList.add("โครงการตามยุทธศาตร์	");
-		dataList.add("แผนบริหารความเสี่ยง	");
-		return dataList;
-	}
 
 	private List<IaRiskSelectCase> saveDataList(String budgetYear, BigDecimal inspectionWork) {
 		// WEB SERVICE QUERY
 		// NOW MOCKING DATA
+		
+//		Data mock inspectionWork 4 5
+		
 		List<String> dataList1 = new ArrayList<String>();
 		dataList1.add("30100");
 		dataList1.add("40100");
@@ -397,12 +393,27 @@ public class Int030101Service {
 		dataList3.add("สำนักงานสรรพสามิตพื้นที่เชียงใหม่");
 		dataList3.add("สำนักงานสรรพสามิตพื้นที่นครราชสีมา");
 		dataList3.add("สำนักงานสรรพสามิตพื้นที่อุดรธานี");
+		
+		
+//		Data mock inspectionWork 3
+		
+		List<String> dataList4 = new ArrayList<String>();
+		dataList4.add("10");
+		dataList4.add("20");
+		dataList4.add("30");
+		
+		List<String> dataList5 = new ArrayList<String>();
+		dataList5.add("แผนหลักเกณฑ์การประเมินผลการปฏิบัติราชการ");
+		dataList5.add("โครงการตามยุทธศาตร์");
+		dataList5.add("แผนบริหารความเสี่ยง");
+		
 		List<IaRiskSelectCase> selectCases = new ArrayList<>();
 		if (inspectionWork.compareTo(new BigDecimal(3)) == 0) {
 			IaRiskSelectCase selectCase = new IaRiskSelectCase();
-			for (String dataList : getdataList()) {
+			for (int i = 0; i < dataList4.size(); i++) {
 				selectCase = new IaRiskSelectCase();
-				selectCase.setProject(dataList);
+				selectCase.setProjectCode(dataList4.get(i));
+				selectCase.setProject(dataList5.get(i));
 				selectCase.setBudgetYear(budgetYear);
 				selectCase.setInspectionWork(inspectionWork);
 				selectCase.setStatus("C");
@@ -461,9 +472,17 @@ public class Int030101Service {
 					// dataUpload.setIdFactors(new
 					// BigDecimal(dataFormatter.formatCellValue(row.getCell(columns++))));
 					// dataUpload.setBudgetYear(dataFormatter.formatCellValue(row.getCell(columns++)));
-					dataUpload.setIdSelect(
-							new BigDecimal(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++)))));
+					String idSelectAndprojectCode = dataFormatter.formatCellValue(row.getCell(columns++));
+					BigDecimal idSelect = null;
+					String idSelectString = StringUtils.trim(idSelectAndprojectCode).split("-")[0];
+					idSelect = (StringUtils.isNotBlank(idSelectString))?new BigDecimal(idSelectString):idSelect;
+					dataUpload.setIdSelect(idSelect);
+					
+					String projectCode = StringUtils.trim(idSelectAndprojectCode).split("-")[1];
+					projectCode = (StringUtils.isNotBlank(projectCode))?projectCode:"";
+					dataUpload.setProjectCode(projectCode);
 					dataUpload.setProject(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
+					
 					dataUpload.setRiskCost(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
 					// dataUpload.setInspectionWork(new
 					// BigDecimal(dataFormatter.formatCellValue(row.getCell(columns++))));
@@ -529,6 +548,7 @@ public class Int030101Service {
 			dataSet.setInspectionWork(form.getInspectionWork());
 			dataSet.setIdFactors(form.getIdFactors());
 			dataSet.setIdSelect(iaRiskFactorsData.getIdSelect());
+			dataSet.setProjectCode(iaRiskFactorsData.getProjectCode());
 			dataSet.setProject(iaRiskFactorsData.getProject());
 			dataSet.setArea(iaRiskFactorsData.getArea());
 			dataSet.setSector(iaRiskFactorsData.getSector());

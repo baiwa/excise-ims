@@ -47,10 +47,14 @@ public class Int0401JdbcRepository {
 			vo.setId(rs.getBigDecimal("ID"));
 			vo.setBudgetYear(rs.getString("BUDGET_YEAR"));
 			vo.setInspectionWork(rs.getBigDecimal("INSPECTION_WORK"));
+			
 			vo.setProject(rs.getString("PROJECT"));
+			vo.setProjectCode(rs.getString("PROJECT_CODE"));
+			
 			vo.setExciseCode(rs.getString("EXCISE_CODE"));
 			vo.setSector(rs.getString("SECTOR"));
 			vo.setArea(rs.getString("AREA"));
+			
 			vo.setStatus(rs.getString("STATUS"));
 			return vo;
 		}
@@ -77,11 +81,16 @@ public class Int0401JdbcRepository {
 			vo.setId(rs.getBigDecimal("ID"));
 			vo.setBudgetYear(rs.getString("BUDGET_YEAR"));
 			vo.setInspectionWork(rs.getBigDecimal("INSPECTION_WORK"));
+			
+			vo.setProjectCode(rs.getString("PROJECT_CODE"));
 			vo.setProject(rs.getString("PROJECT"));
+			
 			vo.setExciseCode(rs.getString("EXCISE_CODE"));
 			vo.setSector(rs.getString("SECTOR"));
 			vo.setArea(rs.getString("AREA"));
+			
 			vo.setStatus(rs.getString("STATUS"));
+			
 			return vo;
 		}
 	};
@@ -110,6 +119,7 @@ public class Int0401JdbcRepository {
 			vo.setRiskFactors(rs.getString("RISK_FACTORS"));
 			vo.setSide(rs.getString("SIDE"));
 			vo.setStatusScreen(rs.getString("STATUS_SCREEN"));
+			vo.setDataEvaluate(rs.getString("DATA_EVALUATE"));
 			return vo;
 		}
 	};
@@ -117,7 +127,7 @@ public class Int0401JdbcRepository {
 	// DETAILS
 	public List<Int0401CalVo> findDetails(String budgetYear, BigDecimal inspectionWork) {
 		StringBuilder sqlBuilder = new StringBuilder();
-		sqlBuilder.append(" SELECT C.ID_FACTORS AS C_ID_FACTORS,  C.*, D.*, ");
+		sqlBuilder.append(" SELECT C.ID_FACTORS AS C_ID_FACTORS,C.ID AS C_ID_CONFIG,  C.*, D.*, ");
 		sqlBuilder.append(" D.ID_FACTORS AS D_ID_FACTORS FROM IA_RISK_FACTORS F ");
 		sqlBuilder.append(" INNER JOIN IA_RISK_FACTORS_DATA D ON D.ID_FACTORS = F.ID ");
 		sqlBuilder.append(" INNER JOIN IA_RISK_FACTORS_CONFIG C ON F.ID = C.ID_FACTORS ");
@@ -150,6 +160,7 @@ public class Int0401JdbcRepository {
 			data.setRiskStep(rs.getString("RISK_STEP"));
 
 			Int0401CalConfigVo config = new Int0401CalConfigVo();
+			config.setId(rs.getBigDecimal("C_ID_CONFIG"));
 			config.setIdFactors(rs.getBigDecimal("C_ID_FACTORS"));
 			config.setFactorsLevel(rs.getBigDecimal("FACTORS_LEVEL"));
 			config.setStartDate(rs.getDate("START_DATE"));

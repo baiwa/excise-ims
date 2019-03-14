@@ -27,6 +27,8 @@ public class IaRiskFactorsData extends BaseEntity {
 	private BigDecimal idFactors;
 	@Column(name = "BUDGET_YEAR")
 	private String budgetYear;
+	@Column(name = "PROJECT_CODE")
+	private String projectCode;
 	@Column(name = "PROJECT")
 	private String project;
 	@Column(name = "INSPECTION_WORK")
@@ -45,14 +47,6 @@ public class IaRiskFactorsData extends BaseEntity {
 	private String riskStep;
 	@Column(name = "ID_SELECT")
 	private BigDecimal idSelect;
-
-	public BigDecimal getIdSelect() {
-		return idSelect;
-	}
-
-	public void setIdSelect(BigDecimal idSelect) {
-		this.idSelect = idSelect;
-	}
 
 	public BigDecimal getId() {
 		return id;
@@ -76,6 +70,14 @@ public class IaRiskFactorsData extends BaseEntity {
 
 	public void setBudgetYear(String budgetYear) {
 		this.budgetYear = budgetYear;
+	}
+
+	public String getProjectCode() {
+		return projectCode;
+	}
+
+	public void setProjectCode(String projectCode) {
+		this.projectCode = projectCode;
 	}
 
 	public String getProject() {
@@ -140,6 +142,18 @@ public class IaRiskFactorsData extends BaseEntity {
 
 	public void setRiskStep(String riskStep) {
 		this.riskStep = riskStep;
+	}
+
+	public BigDecimal getIdSelect() {
+		return idSelect;
+	}
+
+	public void setIdSelect(BigDecimal idSelect) {
+		this.idSelect = idSelect;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

@@ -180,4 +180,40 @@ public class IaQuestionnaireSideJdbcRepository {
 		}
 	};
 	
+	public Integer checkCountSide(BigDecimal idHdr) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		
+		sql.append(" SELECT COUNT(*) ");
+		sql.append(" FROM  IA_QUESTIONNAIRE_SIDE S ");
+		sql.append(" WHERE S.ID_HEAD  = 179 ");
+		sql.append(" AND S.IS_DELETED ='N' ");
+		
+		params.add(idHdr);
+		
+		Integer count = commonJdbcTemplate.queryForObject(sql.toString(), params.toArray(),Integer.class);
+
+		return count;
+	}
+	
+	public Integer checkCountSideDtl(BigDecimal idHdr) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT COUNT(*) AS COUNT FROM ( ");
+		sql.append(" SELECT  S.ID ");
+		sql.append("         ,COUNT(SD.ID_SIDE) AS COUNT ");
+		sql.append(" FROM IA_QUESTIONNAIRE_SIDE S ");
+		sql.append(" Full JOIN (SELECT * FROM IA_QUESTIONNAIRE_SIDE_DTL WHERE IS_DELETED='N') SD ");
+		sql.append(" ON S.ID = SD.ID_SIDE ");
+		sql.append(" WHERE S.ID_HEAD  = ? ");
+		sql.append(" AND S.IS_DELETED ='N' ");
+		sql.append(" GROUP BY S.ID) WHERE COUNT  = 0 ");
+		
+		params.add(idHdr);
+		
+		Integer count = commonJdbcTemplate.queryForObject(sql.toString(), params.toArray(),Integer.class);
+
+		return count;
+	}
+	
 }

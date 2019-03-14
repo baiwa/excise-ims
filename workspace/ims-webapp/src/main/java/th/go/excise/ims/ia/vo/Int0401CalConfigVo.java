@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Int0401CalConfigVo {
+	private BigDecimal id;
 	private BigDecimal idFactors;
 	private BigDecimal factorsLevel;
 	private Date startDate;
@@ -42,6 +43,16 @@ public class Int0401CalConfigVo {
 	private String veryhighCondition;
 	private String riskUnit;
 	private BigDecimal percent;
+	
+	
+
+	public BigDecimal getId() {
+		return id;
+	}
+
+	public void setId(BigDecimal id) {
+		this.id = id;
+	}
 
 	public BigDecimal getIdFactors() {
 		return idFactors;

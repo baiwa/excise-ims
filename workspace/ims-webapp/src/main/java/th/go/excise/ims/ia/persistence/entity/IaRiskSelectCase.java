@@ -36,6 +36,9 @@ public class IaRiskSelectCase extends BaseEntity {
 	private String area;
 	@Column(name = "STATUS")
 	private String status;
+	@Column(name = "PROJECT_CODE")
+	private String projectCode;
+
 
 	public BigDecimal getId() {
 		return id;
@@ -100,5 +103,19 @@ public class IaRiskSelectCase extends BaseEntity {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public String getProjectCode() {
+		return projectCode;
+	}
+
+	public void setProjectCode(String projectCode) {
+		this.projectCode = projectCode;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
 
 }

@@ -2,15 +2,19 @@ package th.go.excise.ims.ia.util;
 
 import java.math.BigDecimal;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
-import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
+import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
 import th.go.excise.ims.ia.vo.IntCalculateCriteriaVo;
 
 @Component
 public class IntCalculateCriteriaUtil {
+	
+	@Autowired
+	public static IaRiskFactorsConfigRepository iaRiskFactorsConfigRepository;
+	
 
 	public static IntCalculateCriteriaVo calculateCriteria(BigDecimal dataCal, IaRiskFactorsConfig config) {
 		IntCalculateCriteriaVo cal = new IntCalculateCriteriaVo();
@@ -26,6 +30,32 @@ public class IntCalculateCriteriaUtil {
 
 			}
 		}
+
+		return cal;
+
+	}
+	
+	public static IntCalculateCriteriaVo calculateCriteriaAndGetConfigById(BigDecimal dataCal,BigDecimal idConfig) {
+		IntCalculateCriteriaVo cal = new IntCalculateCriteriaVo();
+		IaRiskFactorsConfig config = new IaRiskFactorsConfig();
+			if(idConfig!=null) {
+				iaRiskFactorsConfigRepository.findById(idConfig).get();
+				cal = calculateCriteria(dataCal, config);
+			}
+
+		return cal;
+
+	}
+	
+	public static IntCalculateCriteriaVo calculateCriteriaAndGetConfigByIdFactors(BigDecimal dataCal,BigDecimal idFactors) {
+		IntCalculateCriteriaVo cal = new IntCalculateCriteriaVo();
+		IaRiskFactorsConfig config = new IaRiskFactorsConfig();
+		
+			if(idFactors!=null) {
+				config = iaRiskFactorsConfigRepository.findByIdFactors(idFactors);
+				cal = calculateCriteria(dataCal, config);
+			}
+			
 
 		return cal;
 

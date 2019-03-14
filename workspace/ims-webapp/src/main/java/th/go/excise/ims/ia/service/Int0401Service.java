@@ -7,18 +7,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaInspectionPlan;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.persistence.entity.IaRiskSelectCase;
 import th.go.excise.ims.ia.persistence.repository.IaInspectionPlanRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskSelectCaseRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0401JdbcRepository;
+import th.go.excise.ims.ia.util.IntCalculateCriteriaUtil;
 import th.go.excise.ims.ia.vo.Int0401CalConfigVo;
 import th.go.excise.ims.ia.vo.Int0401CalDataVo;
 import th.go.excise.ims.ia.vo.Int0401CalVo;
 import th.go.excise.ims.ia.vo.Int0401HeaderVo;
 import th.go.excise.ims.ia.vo.Int0401ListVo;
 import th.go.excise.ims.ia.vo.Int0401Vo;
+import th.go.excise.ims.ia.vo.IntCalculateCriteriaVo;
 
 @Service
 public class Int0401Service {
@@ -31,6 +34,7 @@ public class Int0401Service {
 
 	@Autowired
 	private IaInspectionPlanRepository iaInspectionPlanRepository;
+	
 
 	public List<Int0401Vo> findByBudgetYearAndInspectionWork(String budgetYear, String inspectionWorkStr,
 			String status) {
@@ -38,33 +42,29 @@ public class Int0401Service {
 		List<Int0401Vo> lists = new ArrayList<>();
 		List<IaRiskSelectCase> selectCases = int0401JdbcRep.findRow(budgetYear, inspectionWork, status);
 		List<IaRiskFactors> factors = int0401JdbcRep.findHead(budgetYear, inspectionWork);
-		List<Int0401CalVo> cals = int0401JdbcRep.findDetails(budgetYear, inspectionWork);
 		Int0401CalConfigVo config = int0401JdbcRep.findConfigAll(budgetYear, inspectionWork);
 		if (config != null && config.getMedium() != null) {
 			for (IaRiskSelectCase selectCase : selectCases) {
 				Int0401Vo list = new Int0401Vo();
 				List<Int0401ListVo> listVos = new ArrayList<>();
+				
+// ******************** CalculateCriteria **********************
+				List<IntCalculateCriteriaVo> listsCal = new ArrayList<IntCalculateCriteriaVo>();
+				
 				BigDecimal riskRating = new BigDecimal(0);
 				for (IaRiskFactors factor : factors) {
 					Int0401ListVo listVo = new Int0401ListVo();
-					for (Int0401CalVo cal : cals) {
-						// TODO `CALCULATE`
-						if (factor.getId().compareTo(cal.getConfig().getIdFactors()) == 0) {
-							if (factor.getId().compareTo(cal.getData().getIdFactors()) == 0) {
-								if (cal.getData().getIdSelect().compareTo(selectCase.getId()) == 0) {
-									if (cal.getConfig().getFactorsLevel().compareTo(new BigDecimal(5)) == 0) {
-										listVo = calculateRating5th(cal.getData(), cal.getConfig());
-									} else {
-										listVo = calculateRating3rd(cal.getData(), cal.getConfig());
-									}
-								}
-							}
-						}
-					}
+					
+// ******************** CalculateCriteria **********************
+					IntCalculateCriteriaVo calVo = new IntCalculateCriteriaVo();
+//					calVo = IntCalculateCriteriaUtil.calculateCriteriaAndGetConfigByIdFactors(new BigDecimal(5), factor.getId());
+				
 					if (listVo.getRiskRate() != null) {
 						riskRating.add(listVo.getRiskRate());
 					}
 					listVos.add(listVo);
+// ******************** CalculateCriteria **********************
+					listsCal.add(calVo);
 				}
 				list.setId(selectCase.getId());
 				list.setBudgetYear(selectCase.getBudgetYear());
@@ -74,23 +74,36 @@ public class Int0401Service {
 				list.setAreaName(selectCase.getArea());
 				list.setInspectionWork(selectCase.getInspectionWork());
 				list.setStatus(selectCase.getStatus());
+				
 				list.setLists(listVos);
-				Int0401ListVo calData = new Int0401ListVo();
-				if (config.getFactorsLevel().compareTo(new BigDecimal(5)) == 0) {
-					calData = calculateRating5thAll((new BigDecimal(riskRating.intValue() / listVos.size())).toString(),
-							config);
-				} else {
-					calData = calculateRating3rdAll((new BigDecimal(riskRating.intValue() / listVos.size())).toString(),
-							config);
-				}
+// ******************** CalculateCriteria **********************			
+				list.setListsCal(listsCal);
+				
 				list.setRiskItem(new BigDecimal(listVos.size()));
-				list.setRiskRate(calData.getRiskRate());
-				list.setRiskText(calData.getRiskText());
+				
+// ******************** CalculateCriteria All **********************				
+				list.setRiskRate(new BigDecimal(10));
+				list.setRiskText("สูง");
+				
+				
 				lists.add(list);
 			}
 		}
 		return lists;
 	}
+	
+	public IntCalculateCriteriaVo calculateCriteriaInt0401(String dataEvaluate,String budgetYear, String inspectionWork) {
+		IntCalculateCriteriaVo calVo = new IntCalculateCriteriaVo();
+		
+//		Data Evaluate = NEW
+		if(IaConstants.IA_DATA_EVALUATE.NEW.equals(dataEvaluate)) {
+			List<Int0401CalVo> cals = int0401JdbcRep.findDetails(budgetYear, new BigDecimal(inspectionWork));
+		}
+		
+		return calVo;
+		
+	}
+	
 
 	public BigDecimal findStatusByBudgetYearAndInspectionWork(String budgetYear, String inspectionWorkStr,
 			String status) {
@@ -127,105 +140,7 @@ public class Int0401Service {
 		return currentLists;
 	}
 
-	private Int0401ListVo calculateRating5th(Int0401CalDataVo data, Int0401CalConfigVo config) {
-		Int0401ListVo value = new Int0401ListVo();
-		if (convertStr2Db(data.getRiskCost()) > convertStr2Db(config.getVeryhighStart())) {
-			value.setRiskCode("VH");
-			value.setRiskRate(config.getVeryhighRating());
-			value.setRiskText(config.getVeryhigh());
-		} else if (convertStr2Db(data.getRiskCost()) >= convertStr2Db(config.getHighStart())
-				&& convertStr2Db(data.getRiskCost()) <= convertStr2Db(config.getHighEnd())) {
-			value.setRiskCode("H");
-			value.setRiskRate(config.getHighRating());
-			value.setRiskText(config.getHigh());
-		} else if (convertStr2Db(data.getRiskCost()) >= convertStr2Db(config.getMediumStart())
-				&& convertStr2Db(data.getRiskCost()) <= convertStr2Db(config.getMediumEnd())) {
-			value.setRiskCode("M");
-			value.setRiskRate(config.getMediumRating());
-			value.setRiskText(config.getMedium());
-		} else if (convertStr2Db(data.getRiskCost()) >= convertStr2Db(config.getLowStart())
-				&& convertStr2Db(data.getRiskCost()) <= convertStr2Db(config.getLowEnd())) {
-			value.setRiskCode("L");
-			value.setRiskRate(config.getLowRating());
-			value.setRiskText(config.getLow());
-		} else if (convertStr2Db(data.getRiskCost()) < convertStr2Db(config.getVerylowStart())) {
-			value.setRiskCode("VL");
-			value.setRiskRate(config.getVerylowRating());
-			value.setRiskText(config.getVerylow());
-		}
-		return value;
-	}
-
-	private Int0401ListVo calculateRating3rd(Int0401CalDataVo data, Int0401CalConfigVo config) {
-		Int0401ListVo value = new Int0401ListVo();
-		if (convertStr2Db(data.getRiskCost()) > convertStr2Db(config.getHighStart())) {
-			value.setRiskCode("H");
-			value.setRiskRate(config.getHighRating());
-			value.setRiskText(config.getHigh());
-		} else if (convertStr2Db(data.getRiskCost()) >= convertStr2Db(config.getMediumStart())
-				&& convertStr2Db(data.getRiskCost()) <= convertStr2Db(config.getMediumEnd())) {
-			value.setRiskCode("M");
-			value.setRiskRate(config.getMediumRating());
-			value.setRiskText(config.getMedium());
-		} else if (convertStr2Db(data.getRiskCost()) < convertStr2Db(config.getLowStart())) {
-			value.setRiskCode("L");
-			value.setRiskRate(config.getLowRating());
-			value.setRiskText(config.getLow());
-		}
-		return value;
-	}
-
-	private Int0401ListVo calculateRating5thAll(String data, Int0401CalConfigVo config) {
-		Int0401ListVo value = new Int0401ListVo();
-		if (convertStr2Db(data) > convertStr2Db(config.getVeryhighStart())) {
-			value.setRiskCode("VH");
-			value.setRiskRate(config.getVeryhighRating());
-			value.setRiskText(config.getVeryhigh());
-		} else if (convertStr2Db(data) >= convertStr2Db(config.getHighStart())
-				&& convertStr2Db(data) <= convertStr2Db(config.getHighEnd())) {
-			value.setRiskCode("H");
-			value.setRiskRate(config.getHighRating());
-			value.setRiskText(config.getHigh());
-		} else if (convertStr2Db(data) >= convertStr2Db(config.getMediumStart())
-				&& convertStr2Db(data) <= convertStr2Db(config.getMediumEnd())) {
-			value.setRiskCode("M");
-			value.setRiskRate(config.getMediumRating());
-			value.setRiskText(config.getMedium());
-		} else if (convertStr2Db(data) >= convertStr2Db(config.getLowStart())
-				&& convertStr2Db(data) <= convertStr2Db(config.getLowEnd())) {
-			value.setRiskCode("L");
-			value.setRiskRate(config.getLowRating());
-			value.setRiskText(config.getLow());
-		} else if (convertStr2Db(data) < convertStr2Db(config.getVerylowStart())) {
-			value.setRiskCode("VL");
-			value.setRiskRate(config.getVerylowRating());
-			value.setRiskText(config.getVerylow());
-		}
-		return value;
-	}
-
-	private Int0401ListVo calculateRating3rdAll(String data, Int0401CalConfigVo config) {
-		Int0401ListVo value = new Int0401ListVo();
-		if (convertStr2Db(data) > convertStr2Db(config.getHighStart())) {
-			value.setRiskCode("H");
-			value.setRiskRate(config.getHighRating());
-			value.setRiskText(config.getHigh());
-		} else if (convertStr2Db(data) >= convertStr2Db(config.getMediumStart())
-				&& convertStr2Db(data) <= convertStr2Db(config.getMediumEnd())) {
-			value.setRiskCode("M");
-			value.setRiskRate(config.getMediumRating());
-			value.setRiskText(config.getMedium());
-		} else if (convertStr2Db(data) < convertStr2Db(config.getLowStart())) {
-			value.setRiskCode("L");
-			value.setRiskRate(config.getLowRating());
-			value.setRiskText(config.getLow());
-		}
-		return value;
-	}
-
-	private double convertStr2Db(String value) {
-		return new BigDecimal(value).doubleValue();
-	}
+	
 
 	public void saveInspectionPlan(List<IaInspectionPlan> request) {
 		iaInspectionPlanRepository.saveAll(request);

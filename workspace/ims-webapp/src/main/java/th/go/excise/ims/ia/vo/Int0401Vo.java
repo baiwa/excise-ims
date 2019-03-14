@@ -13,33 +13,10 @@ public class Int0401Vo {
 	private BigDecimal inspectionWork;
 	private String status;
 	private List<Int0401ListVo> lists;
+	private List<IntCalculateCriteriaVo> listsCal;
 	private BigDecimal riskItem;
 	private BigDecimal riskRate;
 	private String riskText;
-
-	public BigDecimal getRiskItem() {
-		return riskItem;
-	}
-
-	public void setRiskItem(BigDecimal riskItem) {
-		this.riskItem = riskItem;
-	}
-
-	public BigDecimal getRiskRate() {
-		return riskRate;
-	}
-
-	public void setRiskRate(BigDecimal riskRate) {
-		this.riskRate = riskRate;
-	}
-
-	public String getRiskText() {
-		return riskText;
-	}
-
-	public void setRiskText(String riskText) {
-		this.riskText = riskText;
-	}
 
 	public BigDecimal getId() {
 		return id;
@@ -111,6 +88,38 @@ public class Int0401Vo {
 
 	public void setLists(List<Int0401ListVo> lists) {
 		this.lists = lists;
+	}
+
+	public List<IntCalculateCriteriaVo> getListsCal() {
+		return listsCal;
+	}
+
+	public void setListsCal(List<IntCalculateCriteriaVo> listsCal) {
+		this.listsCal = listsCal;
+	}
+
+	public BigDecimal getRiskItem() {
+		return riskItem;
+	}
+
+	public void setRiskItem(BigDecimal riskItem) {
+		this.riskItem = riskItem;
+	}
+
+	public BigDecimal getRiskRate() {
+		return riskRate;
+	}
+
+	public void setRiskRate(BigDecimal riskRate) {
+		this.riskRate = riskRate;
+	}
+
+	public String getRiskText() {
+		return riskText;
+	}
+
+	public void setRiskText(String riskText) {
+		this.riskText = riskText;
 	}
 
 }
