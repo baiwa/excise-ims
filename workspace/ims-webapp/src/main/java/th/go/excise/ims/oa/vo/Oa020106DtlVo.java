@@ -2,6 +2,9 @@ package th.go.excise.ims.oa.vo;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+
+import th.go.excise.ims.oa.persistence.entity.OaLubricantsCust;
 
 public class Oa020106DtlVo {
 	private BigDecimal oaLubricantsDtlId;
@@ -62,6 +65,15 @@ public class Oa020106DtlVo {
 	private String ASaleUserLicense;
 	private String sentToAgent;
 	private String sentToUser;
+	private List<OaLubricantsCust> customers;
+
+	public List<OaLubricantsCust> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(List<OaLubricantsCust> customers) {
+		this.customers = customers;
+	}
 
 	public BigDecimal getOaLubricantsDtlId() {
 		return oaLubricantsDtlId;
