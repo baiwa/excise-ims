@@ -3,6 +3,7 @@ package th.go.excise.ims.ia.service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSideDtl;
+import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireSideDtlRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireSideRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireSideJdbcRepository;
@@ -33,6 +36,9 @@ public class Int020101Service {
 	@Autowired
 	private IaQuestionnaireSideDtlRepository iaQtnSideDtlRep;
 
+	@Autowired
+	private IaQuestionnaireHdrRepository iaQuestionnaireHdrRepository;
+
 	public List<Int020101Vo> findAll() {
 		return iaQtnSideJdbcRep.findAll();
 	}
@@ -53,7 +59,7 @@ public class Int020101Service {
 	public List<Int020101NameVo> findByYearAndUsername(String year, String username) {
 		return iaQtnSideJdbcRep.findByYearAndUsername(year, username);
 	}
-	
+
 	public List<Int020101NameVo> findByYearAndStatus(String year) {
 		return iaQtnSideJdbcRep.findByYearAndStatus(year);
 	}
@@ -74,7 +80,7 @@ public class Int020101Service {
 		// Saved
 		List<IaQuestionnaireSide> newSides = (List<IaQuestionnaireSide>) iaQtnSideRep.saveAll(request);
 		logger.debug("Int020101Service::saveAll => SAVED");
-		
+
 		// array of new id
 		List<BigDecimal> idsNew = new ArrayList<>();
 		for (IaQuestionnaireSide newSide : newSides) {
@@ -88,14 +94,14 @@ public class Int020101Service {
 				}
 			}
 		}
-		
+
 		// On Saved Details
 		qtnDtls = (List<IaQuestionnaireSideDtl>) iaQtnSideDtlRep.saveAll(qtnDtls);
-		
+
 		// VARIABLES
 		BigDecimal idLevel1 = null;
 		BigDecimal idLevel2 = null;
-		for (IaQuestionnaireSideDtl qtnDtl: qtnDtls) {
+		for (IaQuestionnaireSideDtl qtnDtl : qtnDtls) {
 			// On Level 1
 			if (qtnDtl.getQtnLevel().compareTo(new BigDecimal(1)) == 0) {
 				idLevel1 = qtnDtl.getId();
@@ -110,10 +116,10 @@ public class Int020101Service {
 				qtnDtl.setIdHeading(idLevel2);
 			}
 		}
-		
+
 		// On Saved Details after add id heading
 		iaQtnSideDtlRep.saveAll(qtnDtls);
-		
+
 		return newSides;
 	}
 
@@ -131,7 +137,7 @@ public class Int020101Service {
 		IaQuestionnaireSide data = iaQtnSideJdbcRep.findOne(id);
 		/* delete head */
 		iaQtnSideRep.deleteById(id);
-		
+
 		/* delete children */
 		List<IaQuestionnaireSideDtl> sideDtlList = iaQtnSideDtlRep.findByIdSide(id);
 		for (IaQuestionnaireSideDtl sideDtl : sideDtlList) {
@@ -144,6 +150,23 @@ public class Int020101Service {
 	public IaQuestionnaireSide findOne(String idStr) {
 		BigDecimal id = new BigDecimal(idStr);
 		return iaQtnSideJdbcRep.findOne(id);
+	}
+
+	@Transactional
+	public IaQuestionnaireHdr deleteQtn(BigDecimal id, String choiceStr) {
+		IaQuestionnaireHdr response = null;
+		if ("CANCEL".equals(choiceStr)) {
+			Optional<IaQuestionnaireHdr> resHdr = iaQuestionnaireHdrRepository.findById(id);
+			if (resHdr.isPresent()) {
+				IaQuestionnaireHdr dataHdr = resHdr.get();
+				dataHdr.setStatus("7");
+				response = iaQuestionnaireHdrRepository.save(dataHdr);
+			}
+		} else {
+			/* delete from DB ignore isDeleted */
+			iaQuestionnaireHdrRepository.deleteByIdAndIsDeleted(id, "N");
+		}
+		return response;
 	}
 
 }
