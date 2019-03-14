@@ -18,22 +18,31 @@ public class AnalysisTaxQtyService {
 	public DataTableAjax<AnalysisTaxQtyVo> GetAnalysisTaxQty( AnalysisFormVo request) {
 		int total = 35;
 		DataTableAjax<AnalysisTaxQtyVo> dataTableAjax = new DataTableAjax<AnalysisTaxQtyVo>();
-		dataTableAjax.setDraw(request.getDraw() + 1);
+	
 		dataTableAjax.setData(listAnalysisTaxQty(request.getStart(),request.getLength(),total));
 		dataTableAjax.setRecordsTotal(total);
 		dataTableAjax.setRecordsFiltered(total);
 		return dataTableAjax;
 	}
 
-	public List<AnalysisTaxQtyVo> listAnalysisTaxQty(int start,int length,int total) {
+	public List<AnalysisTaxQtyVo> listAnalysisTaxQty(Integer start,Integer length,int total) {
 		String excise = "C16M DOM-1.5T CVT ZA7";
 		
 		List<AnalysisTaxQtyVo> datalist = new ArrayList<AnalysisTaxQtyVo>();
 		AnalysisTaxQtyVo data = null;
-		for(int i = start;i<(start+length);i++){
-			if(i >= total){
-				break;
-			}
+//		for(int i = start;i<(start+length);i++){
+//			if(i >= total){
+//				break;
+//			}
+//			data = new AnalysisTaxQtyVo();
+//			data.setGoodsDesc(excise+i);
+//			data.setTaxQty("100.00");
+//			data.setMonthStatementTaxQty("200.00");
+//			data.setDiffTaxQty("300.00");
+//			datalist.add(data);
+//		}
+		
+		for(int i=0;i<35;i++){
 			data = new AnalysisTaxQtyVo();
 			data.setGoodsDesc(excise+i);
 			data.setTaxQty("100.00");
@@ -41,7 +50,6 @@ public class AnalysisTaxQtyService {
 			data.setDiffTaxQty("300.00");
 			datalist.add(data);
 		}
-		
 
 		return datalist;
 	}
