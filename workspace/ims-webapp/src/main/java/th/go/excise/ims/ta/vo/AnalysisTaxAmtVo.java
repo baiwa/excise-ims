@@ -11,6 +11,7 @@ public class AnalysisTaxAmtVo {
 	private String diffNetTaxByValue;
 	private String diffNetTaxByQty;
 	private String diffNetTaxByValueAndQty;
+	
 	public String getGoodsDesc() {
 		return goodsDesc;
 	}

@@ -12,13 +12,11 @@ import th.go.excise.ims.ta.vo.AnalysisFormVo;
 import th.go.excise.ims.ta.vo.AnalysisTaxQtyVo;
 @Service
 public class AnalysisTaxQtyService {
-	private static final Logger logger = LoggerFactory.getLogger(AnalysisTaxQtyService
-			.class);
+	private static final Logger logger = LoggerFactory.getLogger(AnalysisTaxQtyService.class);
 	
 	public DataTableAjax<AnalysisTaxQtyVo> GetAnalysisTaxQty( AnalysisFormVo request) {
 		int total = 35;
 		DataTableAjax<AnalysisTaxQtyVo> dataTableAjax = new DataTableAjax<AnalysisTaxQtyVo>();
-	
 		dataTableAjax.setData(listAnalysisTaxQty(request.getStart(),request.getLength(),total));
 		dataTableAjax.setRecordsTotal(total);
 		dataTableAjax.setRecordsFiltered(total);
