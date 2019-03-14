@@ -1,6 +1,12 @@
 package th.go.excise.ims.ta.vo;
 
-public class AnalysisTaxQtyVo {
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
+
+public class AnalysisTaxQtyVo extends DataTableRequest {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3817127640195693832L;
 	private String goodsDesc;
 	private String taxQty;
 	private String monthStatementTaxQty;
