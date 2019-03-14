@@ -14,6 +14,7 @@ public class ParameterConstants {
 		public static final String TA_CONFIG = "TA_CONFIG";
 		public static final String TA_MAIN_COND_RANGE = "TA_MAIN_COND_RANGE";
 		public static final String IA_RISK_COLOR = "IA_RISK_COLOR";
+		public static final String TA_AUDIT_TYPE = "TA_AUDIT_TYPE";
 	}
 	
 	// Parameter Group: SYSTEM_CONFIG
