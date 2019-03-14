@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -18,9 +19,15 @@ import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
+import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
+import th.go.excise.ims.ta.vo.OutsidePlanVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 
 public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
@@ -87,13 +94,13 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 
         // Duty Code
         if (StringUtils.isNotBlank(formVo.getDutyCode())) {
-        	sql.append(" AND DUTY_CODE = ?");
+            sql.append(" AND DUTY_CODE = ?");
             params.add(formVo.getDutyCode());
         }
 
         // Office Code
         if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
-        	sql.append(" AND OFFICE_CODE like ?");
+            sql.append(" AND OFFICE_CODE like ?");
             params.add(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
         }
 
@@ -159,4 +166,62 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
         }
     };
 
+    private void sqlSidePlan(StringBuilder sql, List<Object> params, OutsidePlanFormVo formVo) {
+        sql.append(" SELECT R4000.CUS_FULLNAME , ");
+        sql.append("   R4000.NEW_REG_ID , ");
+        sql.append("   R4000.FAC_FULLNAME , ");
+        sql.append("   R4000.FAC_ADDRESS , ");
+        sql.append("   R4000.OFFICE_CODE OFFICE_CODE_R4000 , ");
+        sql.append("   R4000.DUTY_CODE , ");
+        sql.append("   ED_SECTOR.OFF_CODE SEC_CODE , ");
+        sql.append("   ED_SECTOR.OFF_SHORT_NAME SEC_DESC , ");
+        sql.append("   ED_AREA.OFF_CODE AREA_CODE , ");
+        sql.append("   ED_AREA.OFF_SHORT_NAME AREA_DESC  ");
+        sql.append(" FROM TA_WS_REG4000 R4000  ");
+        sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_SECTOR ");
+        sql.append(" ON ED_SECTOR.OFF_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000') ");
+        sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_AREA ");
+        sql.append(" ON ED_AREA.OFF_CODE       = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
+        sql.append(" AND R4000.IS_DELETED      = 'N' ");
+        sql.append(" AND R4000.OFFICE_CODE  like ? ");
+
+        params.add(formVo.getOfficeCode());
+    }
+
+    @Override
+    public List<OutsidePlanVo> outsidePlan(OutsidePlanFormVo formVo) {
+        StringBuilder sql = new StringBuilder();
+        List<Object> params = new ArrayList<>();
+        sqlSidePlan(sql, params, formVo);
+        return commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(), outsidePlanRowMapper);
+
+    }
+
+    @Override
+    public Long countOutsidePlan(OutsidePlanFormVo formVo) {
+        StringBuilder sql = new StringBuilder();
+        List<Object> params = new ArrayList<>();
+        sqlSidePlan(sql, params, formVo);
+        return this.commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), params.toArray(), Long.class);
+    }
+
+    protected RowMapper<OutsidePlanVo> outsidePlanRowMapper = new RowMapper<OutsidePlanVo>() {
+        @Override
+        public OutsidePlanVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+            OutsidePlanVo vo = new OutsidePlanVo();
+
+            vo.setNewRegId(rs.getString("NEW_REG_ID"));
+            vo.setCusFullname(rs.getString("CUS_FULLNAME"));
+            vo.setFacFullname(rs.getString("FAC_FULLNAME"));
+            vo.setFacAddress(rs.getString("FAC_ADDRESS"));
+            vo.setOfficeCodeR4000(rs.getString("OFFICE_CODE_R4000"));
+            vo.setDutyCode(rs.getString("DUTY_CODE"));
+            vo.setSecCode(rs.getString("SEC_CODE"));
+            vo.setSecDesc(rs.getString("SEC_DESC"));
+            vo.setAreaCode(rs.getString("AREA_CODE"));
+            vo.setAreaDesc(rs.getString("AREA_DESC"));
+            vo.setDutyDesc(ExciseUtils.getDutyDesc(rs.getString("DUTY_CODE")));
+            return vo;
+        }
+    };
 }
