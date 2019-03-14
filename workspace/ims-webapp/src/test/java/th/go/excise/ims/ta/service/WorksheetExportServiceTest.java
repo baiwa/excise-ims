@@ -28,7 +28,7 @@ public class WorksheetExportServiceTest {
 	@Autowired
 	private WorksheetExportService worksheetExportService;
 	
-	@Test
+//	@Test
 	public void test_exportPreviewWorksheet() {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
 		formVo.setOfficeCode("000000");
@@ -48,7 +48,7 @@ public class WorksheetExportServiceTest {
 		}
 	}
 	
-	@Test
+//	@Test
 	public void test_exportDraftWorksheet() {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
 		formVo.setOfficeCode("000000");
@@ -62,6 +62,27 @@ public class WorksheetExportServiceTest {
 		
 		try (FileOutputStream Output = new FileOutputStream(OUTPUT_PATH + "/" + fileName)) {
 			byte[] outArray = worksheetExportService.exportDraftWorksheet(formVo);
+			Output.write(outArray);
+			System.out.println("Creating excel " + fileName + " Done");
+		} catch (IOException e) {
+			e.printStackTrace(System.out);
+		}
+	}
+	
+	@Test
+	public void test_exportWorksheet() {
+		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
+		formVo.setOfficeCode("000000");
+		formVo.setBudgetYear("2562");
+		formVo.setAnalysisNumber("000000-2562-000028");
+		formVo.setDateStart("05/2558");
+		formVo.setDateEnd("04/2559");
+		formVo.setDateRange(12);
+		
+		String fileName = "worksheet" + LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE) + ".xlsx";
+		
+		try (FileOutputStream Output = new FileOutputStream(OUTPUT_PATH + "/" + fileName)) {
+			byte[] outArray = worksheetExportService.exportWorksheet(formVo);
 			Output.write(outArray);
 			System.out.println("Creating excel " + fileName + " Done");
 		} catch (IOException e) {

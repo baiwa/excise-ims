@@ -9,7 +9,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -27,7 +29,10 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainDtl;
 import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondMainDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.util.TaxAuditUtils;
 import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
@@ -48,6 +53,11 @@ public class WorksheetExportService {
 	private DraftWorksheetService draftWorksheetService;
 	@Autowired
 	private TaDraftWorksheetDtlRepository taDraftWorksheetDtlRepository;
+	
+	@Autowired
+	private TaWorksheetCondMainDtlRepository taWorksheetCondMainDtlRepository;
+	@Autowired
+	private TaWorksheetDtlRepository taWorksheetDtlRepository;
 	
 	public byte[] exportPreviewWorksheet(TaxOperatorFormVo formVo) {
 		logger.info("exportPreviewWorksheet officeCode={}, startDate={}, endDate={}, dateRange={}",
@@ -106,7 +116,6 @@ public class WorksheetExportService {
 	}
 	
 	public byte[] exportDraftWorksheet(TaxOperatorFormVo formVo) {
-		logger.info("exportXlsxDraftWorksheet officeCode={}");
 		logger.info("exportXlsxDraftWorksheet officeCode={}, draftNumber={}, startDate={}, endDate={}, dateRange={}",
 				formVo.getOfficeCode(), formVo.getDraftNumber(), formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
 		
@@ -163,7 +172,87 @@ public class WorksheetExportService {
 	}
 	
 	public byte[] exportWorksheet(TaxOperatorFormVo formVo) {
-		return null;
+		logger.info("exportWorksheet officeCode={}, analysisNumber={}, startDate={}, endDate={}, dateRange={}",
+			formVo.getOfficeCode(), formVo.getAnalysisNumber(), formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
+		
+		final String COND_GROUP = "COND_GROUP";
+		final String COND_GROUP_DESC = "COND_GROUP_DESC";
+		String SHEET_NAME = "เงื่อนไขที่ ";
+		String NON_MAIN_COND_GROUP = "0";
+		String NON_MAIN_COND_DESC = "รายที่ไม่อยู่ในเงื่อนไข";
+		
+		List<Map<String, String>> condMainList = new ArrayList<>();
+		Map<String, String> condMainMap = null;
+		List<TaWorksheetCondMainDtl> condMainDtlList = taWorksheetCondMainDtlRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
+		for (TaWorksheetCondMainDtl condMainDtl : condMainDtlList) {
+			condMainMap = new HashMap<>();
+			condMainMap.put(COND_GROUP, condMainDtl.getCondGroup());
+			condMainMap.put(COND_GROUP_DESC, SHEET_NAME + condMainDtl.getCondGroup());
+			condMainList.add(condMainMap);
+		}
+		condMainMap = new HashMap<>();
+		condMainMap.put(COND_GROUP, NON_MAIN_COND_GROUP);
+		condMainMap.put(COND_GROUP_DESC, NON_MAIN_COND_DESC);
+		condMainList.add(condMainMap);
+		
+		// Create Workbook
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		Sheet sheet = null;
+		Row row = null;
+		Cell cell = null;
+		int rowNum = 0;
+		
+		/* Cell Style */
+		CellStyle cellHeader = ExcelUtils.createThColorStyle(workbook, new XSSFColor(Color.LIGHT_GRAY));
+		
+		List<TaxOperatorDetailVo> worksheetVoList = null;
+		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = null;
+		for (Map<String, String> map : condMainList) {
+			// Prepare Data for Export
+			formVo.setStart(0);
+			formVo.setLength(taWorksheetDtlRepository.countByCriteria(formVo).intValue());
+			formVo.setCond(map.get(COND_GROUP));
+			
+			worksheetVoList = taWorksheetDtlRepository.findByCriteria(formVo);
+			taxOperatorDatatableVoList = TaxAuditUtils.prepareTaxOperatorDatatable(worksheetVoList, formVo);
+			
+			/*
+			 * Sheet
+			 */
+			sheet = workbook.createSheet(map.get(COND_GROUP_DESC));
+			rowNum = 0;
+			
+			/*
+			 * Column Header
+			 */
+			// Header Line 1
+			row = sheet.createRow(rowNum);
+			generateWorksheetHeader1(row, cell, cellHeader, formVo);
+			rowNum++;
+			// Header Line 2
+			row = sheet.createRow(rowNum);
+			generateWorksheetHeader2(row, cell, cellHeader, formVo);
+			rowNum++;
+			
+			/*
+			 * Details
+			 */
+			rowNum = generateWorksheetDetail(workbook, sheet, row, rowNum, cell, taxOperatorDatatableVoList);
+			
+			// Column Width
+			int colIndex = 0;
+			colIndex = setColumnWidthAndMergeCell(sheet, colIndex, formVo.getDateRange());
+		}
+		
+		byte[] content = null;
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			workbook.write(outputStream);
+			content = outputStream.toByteArray();
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return content;
 	}
 	
 	private void generateWorksheetHeader1(Row row, Cell cell, CellStyle cellStyle, TaxOperatorFormVo formVo) {
