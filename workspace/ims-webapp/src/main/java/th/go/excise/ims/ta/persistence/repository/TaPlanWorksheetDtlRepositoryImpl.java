@@ -9,11 +9,17 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
+import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
+import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
+import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 
@@ -90,5 +96,98 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 			return vo;
 		}
 	};
+	
+	private void buildByCalendarCriteriaQuery(StringBuilder sql, List<Object> params, AuditCalendarCriteriaFormVo formVo) {
+        sql.append(" SELECT * ");
+        sql.append(" FROM TA_PLAN_WORKSHEET_DTL ");
+        sql.append(" WHERE IS_DELETED = ? ");
+        sql.append(" AND OFFICE_CODE = ? ");
+        
+        params.add(FLAG.N_FLAG);
+        params.add(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+
+        // AUDIT_TYPE
+        int n = 0;
+        sql.append(" AND AUDIT_TYPE IN (");
+        for (int i = 0; i < formVo.getAuditType().size(); i++) {
+        	AuditCalendarCheckboxVo vo = formVo.getAuditType().get(i);
+        	if (vo.getCheckbox()) {
+        		if (i == formVo.getAuditType().size()-1) {
+        			params.add(vo.getParamCode());
+        			sql.append(" ?");
+				} else {
+					params.add(vo.getParamCode());
+					sql.append(" ?,");
+				}
+        		n++;
+        	}
+		}
+        if (n == 0) {
+			params.add("S");
+			sql.append(" ?, ");
+			params.add("F");
+			sql.append(" ?, ");
+			params.add("C");
+			sql.append(" ?, ");
+			params.add("I");
+			sql.append(" ? ");
+		}
+        sql.append(" )");
+
+     // AUDIT_STATUS
+        int m = 0;
+        sql.append(" AND AUDIT_STATUS IN (");
+        for (int i = 0; i < formVo.getAuditStatus().size(); i++) {
+        	AuditCalendarCheckboxVo vo = formVo.getAuditStatus().get(i);
+        	if (vo.getCheckbox()) {
+        		if (i == formVo.getAuditStatus().size()-1) {
+        			params.add(vo.getParamCode());
+        			sql.append(" ?");
+				} else {
+					params.add(vo.getParamCode());
+					sql.append(" ?,");
+				}
+        		m++;
+        	}
+		}
+        if (m == 0) {
+        	params.add("T");
+			sql.append(" ?, ");
+			params.add("I");
+			sql.append(" ?, ");
+			params.add("W");
+			sql.append(" ?, ");
+			params.add("P");
+			sql.append(" ? ");
+		}
+        sql.append(" )");
+    }
+	
+	public List<TaPlanWorksheetDtl> findByCriteria(AuditCalendarCriteriaFormVo formVo) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		
+		buildByCalendarCriteriaQuery(sql, params, formVo);
+		
+		return this.commonJdbcTemplate.query(sql.toString(), params.toArray(), taPlanWorksheetDtlRowMapper);
+	}
+	
+	private static final RowMapper<TaPlanWorksheetDtl> taPlanWorksheetDtlRowMapper = new RowMapper<TaPlanWorksheetDtl>() {
+        public TaPlanWorksheetDtl mapRow(ResultSet rs, int rowNum) throws SQLException {
+        	TaPlanWorksheetDtl vo = new TaPlanWorksheetDtl();
+            vo.setPlanWorksheetDtlId(rs.getLong("PLAN_WORKSHEET_DTL_ID"));
+            vo.setPlanNumber(rs.getString("PLAN_NUMBER"));
+            vo.setAnalysisNumber(rs.getString("ANALYSIS_NUMBER"));
+            vo.setOfficeCode(rs.getString("OFFICE_CODE"));
+            vo.setNewRegId(rs.getString("NEW_REG_ID"));
+            vo.setSystemType(rs.getString("SYSTEM_TYPE"));
+            vo.setPlanType(rs.getString("PLAN_TYPE"));
+            vo.setAuditStatus(rs.getString("AUDIT_STATUS"));
+            vo.setAuditType(rs.getString("AUDIT_TYPE"));
+            vo.setAuditStartDate(LocalDateConverter.convertToEntityAttribute(rs.getDate("AUDIT_START_DATE")));
+            vo.setAuditEndDate(LocalDateConverter.convertToEntityAttribute(rs.getDate("AUDIT_END_DATE")));
+            return vo;
+        }
+    };
 
 }

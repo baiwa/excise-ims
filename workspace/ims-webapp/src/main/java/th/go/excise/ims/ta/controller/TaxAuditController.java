@@ -16,8 +16,10 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.service.TaxAuditService;
-import th.go.excise.ims.ta.vo.AuditCalendarVo;
+import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
+import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
@@ -41,7 +43,7 @@ public class TaxAuditController {
 
     @PostMapping("/get-audit-type")
     @ResponseBody
-    public ResponseData<List<?>> getAuditType(@RequestBody AuditCalendarVo form) {
+    public ResponseData<List<?>> getAuditType(@RequestBody AuditCalendarCheckboxVo form) {
         ResponseData<List<?>> res = new ResponseData<>();
         try {
             res.setData(taxAuditService.getAuditType(form));
@@ -57,7 +59,7 @@ public class TaxAuditController {
 
     @PostMapping("/get-audit-status")
     @ResponseBody
-    public ResponseData<List<?>> getAuditStatus(@RequestBody AuditCalendarVo form) {
+    public ResponseData<List<?>> getAuditStatus(@RequestBody AuditCalendarCheckboxVo form) {
         ResponseData<List<?>> res = new ResponseData<>();
         try {
             res.setData(taxAuditService.getAuditStatus(form));
@@ -76,6 +78,22 @@ public class TaxAuditController {
     @ResponseBody
     public DataTableAjax<OutsidePlanVo> outsidePlan(@RequestBody OutsidePlanFormVo formVo) {
         return taxAuditService.outsidePlan(formVo);
+    }
+    
+    @PostMapping("/get-plan-ws-dtl")
+    @ResponseBody
+    public ResponseData<List<TaPlanWorksheetDtl>> getPlanWsDtl(@RequestBody AuditCalendarCriteriaFormVo formVo) {
+    	ResponseData<List<TaPlanWorksheetDtl>> res = new ResponseData<>();
+        try {
+            res.setData(taxAuditService.getPlanWsDtl(formVo));
+            res.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+            res.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            res.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+            res.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
+        }
+        return res;
     }
 
 }
