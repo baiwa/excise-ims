@@ -1,6 +1,6 @@
 package th.go.excise.ims.ta.vo;
 
-public class AnalysisTaxQuRetailPriceVo {
+public class AnalysisTaxRetailPriceVo {
 	private String goodsDesc;
 	private String taxInformPrice;
 	private String informPrice;
