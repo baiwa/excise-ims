@@ -148,7 +148,7 @@ public class Int020301Service {
 			data.setAvgRisk(new BigDecimal(Math.round(avg)));
 			// Finding Sector and Area Name
 			List<ExciseDept> exciseDepts = ApplicationCache.getExciseSectorList();
-			data.setStatusText(ApplicationCache.getParamInfoByCode("IA_STATUS", data.getStatusText()).getValue1());
+			data.setStatusText(ApplicationCache.getParamInfoByCode(IaConstants.IA_STATUS_REPLY_QTN.PARAM_GROUP_CODE, data.getStatusText()).getValue1());
 			for (ExciseDept exciseDept : exciseDepts) {
 				if (exciseDept.getOfficeCode().substring(0, 2).equals(data.getSectorName().substring(0, 2))) {
 					data.setSectorName(exciseDept.getDeptName());

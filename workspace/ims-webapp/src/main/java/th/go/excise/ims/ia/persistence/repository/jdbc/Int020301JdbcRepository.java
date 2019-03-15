@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.vo.Int020301DataVo;
 import th.go.excise.ims.ia.vo.Int020301HeaderVo;
 import th.go.excise.ims.ia.vo.Int020301InfoVo;
@@ -83,12 +84,12 @@ public class Int020301JdbcRepository {
 		sqlBuilder.append(" SELECT QSR.ID AS ID, ");
 		sqlBuilder.append(" (SELECT COUNT(1) FROM IA_QUESTIONNAIRE_SIDE_DTL QDL ");
 		sqlBuilder.append(" INNER JOIN IA_QUESTIONNAIRE_MADE QME ON QME.ID_SIDE_DTL = QDL.ID AND QME.OFFICE_CODE = ? ");
-		sqlBuilder.append(" WHERE QME.IS_DELETED = 'N' AND QME.CHECK_FLAG = 'T' AND QME.STATUS = 'FINISH' ");
+		sqlBuilder.append(" WHERE QME.IS_DELETED = 'N' AND QME.CHECK_FLAG = 'T' AND QME.STATUS = ? ");
 		sqlBuilder.append(" AND QDL.ID_SIDE = QSR.ID GROUP BY QME.ID_MADE_HDR) AS ACCEPT, ");
 		sqlBuilder.append(" (SELECT COUNT(1) FROM IA_QUESTIONNAIRE_SIDE_DTL QDL2 ");
 		sqlBuilder.append(
 				" INNER JOIN IA_QUESTIONNAIRE_MADE QME2 ON QME2.ID_SIDE_DTL = QDL2.ID AND QME2.OFFICE_CODE = ? ");
-		sqlBuilder.append(" WHERE QME2.IS_DELETED = 'N' AND QME2.CHECK_FLAG = 'F' AND QME2.STATUS = 'FINISH' ");
+		sqlBuilder.append(" WHERE QME2.IS_DELETED = 'N' AND QME2.CHECK_FLAG = 'F' AND QME2.STATUS = ? ");
 		sqlBuilder.append(" AND QDL2.ID_SIDE = QSR.ID GROUP BY QME2.ID_MADE_HDR) AS DECLINE ");
 		sqlBuilder.append(" FROM IA_QUESTIONNAIRE_HDR QHR ");
 		sqlBuilder.append(" INNER JOIN IA_QUESTIONNAIRE_SIDE QSR ON QSR.ID_HEAD = QHR.ID ");
@@ -96,7 +97,9 @@ public class Int020301JdbcRepository {
 		sqlBuilder.append(" GROUP BY QSR.ID ORDER BY QSR.ID ");
 		List<Object> params = new ArrayList<>();
 		params.add(officeCode);
+		params.add(IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE);
 		params.add(officeCode);
+		params.add(IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE);
 		params.add(idHdr);
 		params.add(budgetYear);
 		List<Int020301DataVo> data = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), dataRowMapper);
