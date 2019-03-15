@@ -53,7 +53,7 @@ public class QuestionnaireService {
 	public BigDecimal updateStatusIaQuestionnaire(BigDecimal idHdr,String status) {
 		
 		
-		if(IaConstants.IA_STATUS.STATUS_5_CODE.equals(status)) {
+		if(IaConstants.IA_STATUS.STATUS_5_CODE.equals(status)||IaConstants.IA_STATUS.STATUS_6_CODE.equals(status)) {
 			Integer count = iaQuestionnaireMadeHdrJdbcRepository.checkCountMadeHdrStatus3(idHdr);
 			Integer countAll = iaQuestionnaireMadeHdrJdbcRepository.checkCountMadeHdrAll(idHdr);
 			if(count==countAll) {
@@ -81,12 +81,16 @@ public class QuestionnaireService {
 					
 					if(paramInfo.getSortingOrder()-1 == paramInfo2.getSortingOrder()) {
 						
-						iaQuestionnaireHdrJdbcRepository.updateStatus(idHdr, paramInfo2.getParamCode());
+						
 
 							if(IaConstants.IA_STATUS.STATUS_4_CODE.equals(paramInfo.getSortingOrder().toString())) {
 //								Check Table MadeHdr Count Finish == 0 Up
-								iaQuestionnaireMadeJdbcRepository.deleteByIdHdr(idHdr);
-								iaQuestionnaireMadeHdrJdbcRepository.deleteByIdHdr(idHdr);
+								Integer count = iaQuestionnaireMadeHdrJdbcRepository.checkCountMadeHdrStatus3(idHdr);
+								if(count==0) {
+									iaQuestionnaireHdrJdbcRepository.updateStatus(idHdr, paramInfo2.getParamCode());
+									iaQuestionnaireMadeJdbcRepository.deleteByIdHdr(idHdr);
+									iaQuestionnaireMadeHdrJdbcRepository.deleteByIdHdr(idHdr);
+								}
 							}
 							
 					}
