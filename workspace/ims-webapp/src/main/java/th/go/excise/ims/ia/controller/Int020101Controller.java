@@ -25,7 +25,9 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
+import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
 import th.go.excise.ims.ia.service.Int020101Service;
+import th.go.excise.ims.ia.service.QuestionnaireService;
 import th.go.excise.ims.ia.vo.Int020101NameVo;
 import th.go.excise.ims.ia.vo.Int020101Vo;
 import th.go.excise.ims.ia.vo.Int020101YearVo;
@@ -38,6 +40,9 @@ public class Int020101Controller {
 
 	@Autowired
 	private Int020101Service int020101Service;
+	
+	@Autowired
+	private QuestionnaireService questionnaireService;
 
 	@GetMapping("/all")
 	@ResponseBody
@@ -243,6 +248,23 @@ public class Int020101Controller {
 		} catch (Exception e) {
 			e.printStackTrace();
 			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.FAILED_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
+	@GetMapping("/update/status/{idHdr}/{status}")
+	@ResponseBody
+	public ResponseData<IaQuestionnaireHdr> updateQtnStatus(@PathVariable("idHdr") BigDecimal idHdr, @PathVariable("status") String status) {
+		ResponseData<IaQuestionnaireHdr> responseData = new ResponseData<IaQuestionnaireHdr>();
+		try {
+			/* update status */
+			questionnaireService.updateStatusIaQuestionnaire(idHdr, status);
+			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
