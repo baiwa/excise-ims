@@ -14,6 +14,32 @@ public class IaConstants {
 		public static final String FINANCE_ACCOUNTING = "finance_accounting";
 	}
 	
+	public class IA_RISK_COLOR {
+		public static final String COLOR1 = "เขียวเข้ม";
+		public static final String COLOR1_CODE = "#22911ef5";
+				
+		public static final String COLOR2 = "เขียว";
+		public static final String COLOR2_CODE = "#66d13cf5";
+		
+		public static final String COLOR3 = "เหลือง";
+		public static final String COLOR3_CODE = "#f5f114";
+		
+		public static final String COLOR4 = "ส้ม";
+		public static final String COLOR4_CODE = "#f58941";
+		
+		public static final String COLOR5 = "แดง";
+		public static final String COLOR5_CODE = "#ff231fe3";
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
 	public class QUESTIONNAIRE_STATUS {
 		public static final String PARAM_GROUP_CODE = "IA_STATUS";
 		

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
 import th.go.excise.ims.ia.vo.IntCalculateCriteriaVo;
@@ -61,6 +62,7 @@ public class IntCalculateCriteriaUtil {
 
 	}
 
+
 	private static IntCalculateCriteriaVo calculateRating3Level(BigDecimal dataCal, IaRiskFactorsConfig config) {
 		IntCalculateCriteriaVo value = new IntCalculateCriteriaVo();
 		if (checkDataCal(dataCal.floatValue(), config.getLowCondition(), config.getLowStart(), null)) {
@@ -68,20 +70,22 @@ public class IntCalculateCriteriaUtil {
 			value.setRiskRate(config.getLowRating());
 			value.setTranslatingRisk(config.getLow());
 			value.setColor(config.getLowColor());
-//			ApplicationCache.getParamInfoByCode(PARAM_GROUP.IA_RISK_COLOR, paramCode);
-//			value.setC
+			value.setCodeColor(colorToColorCode(config.getLowColor()));
+			
 		} else if (checkDataCal(dataCal.floatValue(), config.getMediumCondition(), config.getMediumStart(),
 				config.getMediumEnd())) {
 
 			value.setRiskRate(config.getMediumRating());
 			value.setTranslatingRisk(config.getMedium());
 			value.setColor(config.getMediumColor());
+			value.setCodeColor(colorToColorCode(config.getMediumColor()));
 
 		} else if (checkDataCal(dataCal.floatValue(), config.getHighCondition(), config.getHighStart(), null)) {
 
 			value.setRiskRate(config.getHighRating());
 			value.setTranslatingRisk(config.getHigh());
 			value.setColor(config.getHighColor());
+			value.setCodeColor(colorToColorCode(config.getHighColor()));
 
 		}
 		return value;
@@ -94,6 +98,7 @@ public class IntCalculateCriteriaUtil {
 			value.setRiskRate(config.getVerylowRating());
 			value.setTranslatingRisk(config.getVerylow());
 			value.setColor(config.getVerylowColor());
+			value.setCodeColor(colorToColorCode(config.getVerylowColor()));
 
 		} else if (checkDataCal(dataCal.floatValue(), config.getLowCondition(), config.getLowStart(),
 				config.getLowEnd())) {
@@ -101,6 +106,7 @@ public class IntCalculateCriteriaUtil {
 			value.setRiskRate(config.getLowRating());
 			value.setTranslatingRisk(config.getLow());
 			value.setColor(config.getLowColor());
+			value.setCodeColor(colorToColorCode(config.getLowColor()));
 
 		} else if (checkDataCal(dataCal.floatValue(), config.getMediumCondition(), config.getMediumStart(),
 				config.getMediumEnd())) {
@@ -108,6 +114,7 @@ public class IntCalculateCriteriaUtil {
 			value.setRiskRate(config.getMediumRating());
 			value.setTranslatingRisk(config.getMedium());
 			value.setColor(config.getMediumColor());
+			value.setCodeColor(colorToColorCode(config.getMediumColor()));
 
 		} else if (checkDataCal(dataCal.floatValue(), config.getHighCondition(), config.getHighStart(),
 				config.getHighEnd())) {
@@ -115,12 +122,14 @@ public class IntCalculateCriteriaUtil {
 			value.setRiskRate(config.getHighRating());
 			value.setTranslatingRisk(config.getHigh());
 			value.setColor(config.getHighColor());
+			value.setCodeColor(colorToColorCode(config.getHighColor()));
 
 		} else if (checkDataCal(dataCal.floatValue(), config.getVeryhighCondition(), config.getVeryhighStart(), null)) {
 
 			value.setRiskRate(config.getVeryhighRating());
 			value.setTranslatingRisk(config.getVeryhigh());
 			value.setColor(config.getVeryhighColor());
+			value.setCodeColor(colorToColorCode(config.getVeryhighColor()));
 		}
 		return value;
 	}
@@ -150,16 +159,21 @@ public class IntCalculateCriteriaUtil {
 
 	public static String colorToColorCode(String color) {
 		String colorCode = "";
-		if ("เขียวเข้ม".equals(color)) {
-			colorCode = "COLOR1";
-		} else if ("เขียว".equals(color)) {
-			colorCode = "COLOR2";
-		} else if ("เหลือง".equals(color)) {
-			colorCode = "COLOR3";
-		} else if ("ส้ม".equals(color)) {
-			colorCode = "COLOR4";
-		} else if ("แดง".equals(color)) {
-			colorCode = "COLOR5";
+		if (IaConstants.IA_RISK_COLOR.COLOR1.equals(color)) {
+			colorCode = IaConstants.IA_RISK_COLOR.COLOR1_CODE;
+			
+		} else if (IaConstants.IA_RISK_COLOR.COLOR2.equals(color)) {
+			colorCode = IaConstants.IA_RISK_COLOR.COLOR2_CODE;
+			
+		} else if (IaConstants.IA_RISK_COLOR.COLOR3.equals(color)) {
+			colorCode = IaConstants.IA_RISK_COLOR.COLOR3_CODE;
+			
+		} else if (IaConstants.IA_RISK_COLOR.COLOR4.equals(color)) {
+			colorCode = IaConstants.IA_RISK_COLOR.COLOR4_CODE;
+			
+		} else if (IaConstants.IA_RISK_COLOR.COLOR5.equals(color)) {
+			colorCode = IaConstants.IA_RISK_COLOR.COLOR5_CODE;
+			
 		}
 		return colorCode;
 
