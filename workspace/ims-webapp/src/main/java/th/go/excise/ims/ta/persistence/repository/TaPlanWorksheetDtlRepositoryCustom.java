@@ -1,12 +1,12 @@
 package th.go.excise.ims.ta.persistence.repository;
 
-import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
+import java.util.List;
+
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
 import th.go.excise.ims.ta.vo.PlanMapVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
-
-import java.util.List;
 
 public interface TaPlanWorksheetDtlRepositoryCustom {
 
@@ -14,7 +14,7 @@ public interface TaPlanWorksheetDtlRepositoryCustom {
 
 	public Long countByCriteria(PlanWorksheetVo formVo);
 	
-	public List<TaPlanWorksheetDtl> findByCriteria(AuditCalendarCriteriaFormVo formVo);
+	public List<PlanWorksheetDtlVo> findByCriteria(AuditCalendarCriteriaFormVo formVo);
 
 	public List<PlanMapVo> findByInBudgetYearPlanDtl(List<String> budgetYears);
 }

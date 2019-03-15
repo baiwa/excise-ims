@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +13,16 @@ import org.springframework.jdbc.core.RowMapper;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
-import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExciseUtils;
-import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
 import th.go.excise.ims.ta.vo.PlanMapVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 
 public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepositoryCustom {
@@ -99,31 +100,46 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 	};
 	
 	private void buildByCalendarCriteriaQuery(StringBuilder sql, List<Object> params, AuditCalendarCriteriaFormVo formVo) {
-        sql.append(" SELECT * ");
-        sql.append(" FROM TA_PLAN_WORKSHEET_DTL ");
-        sql.append(" WHERE IS_DELETED = ? ");
-        sql.append(" AND OFFICE_CODE = ? ");
+		sql.append(" SELECT PLAN_DTL.*, "); 
+		sql.append("     R4000.NEW_REG_ID, ");
+		sql.append("     R4000.CUS_FULLNAME, ");
+		sql.append("     R4000.FAC_FULLNAME, ");
+		sql.append("     R4000.OFFICE_CODE OFFICE_CODE_R4000, ");
+		sql.append("     R4000.DUTY_CODE, ");
+		sql.append("     ED_SECTOR.OFF_CODE SEC_CODE, ");
+		sql.append("     ED_SECTOR.OFF_SHORT_NAME SEC_DESC, ");
+		sql.append("     ED_AREA.OFF_CODE AREA_CODE, ");
+		sql.append("     ED_AREA.OFF_SHORT_NAME AREA_DESC ");
+		sql.append(" FROM TA_PLAN_WORKSHEET_DTL PLAN_DTL ");
+		sql.append(" INNER JOIN TA_WS_REG4000 R4000 ");
+		sql.append(" ON R4000.NEW_REG_ID = PLAN_DTL.NEW_REG_ID ");
+		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_SECTOR "); 
+		sql.append(" ON ED_SECTOR.OFF_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000') ");
+		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_AREA "); 
+		sql.append(" ON ED_AREA.OFF_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
+		sql.append(" WHERE PLAN_DTL.IS_DELETED = ? ");  
+		sql.append(" AND PLAN_DTL.OFFICE_CODE = ? ");
         
         params.add(FLAG.N_FLAG);
         params.add(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 
         // AUDIT_TYPE
-        int n = 0;
         sql.append(" AND AUDIT_TYPE IN (");
-        for (int i = 0; i < formVo.getAuditType().size(); i++) {
-        	AuditCalendarCheckboxVo vo = formVo.getAuditType().get(i);
-        	if (vo.getCheckbox()) {
-        		if (i == formVo.getAuditType().size()-1) {
-        			params.add(vo.getParamCode());
-        			sql.append(" ?");
-				} else {
-					params.add(vo.getParamCode());
-					sql.append(" ?,");
-				}
-        		n++;
-        	}
+        List<AuditCalendarCheckboxVo> auditType = formVo.getAuditType().stream()
+        		.filter(e -> e.getCheckbox().equals(false))
+        		.collect(Collectors.toList());
+        
+        for (int i = 0; i < auditType.size(); i++) {
+        	AuditCalendarCheckboxVo vo = auditType.get(i);
+    		if (i == auditType.size()-1) {
+    			params.add(vo.getParamCode());
+    			sql.append(" ?");
+			} else {
+				params.add(vo.getParamCode());
+				sql.append(" ?,");
+			}
 		}
-        if (n == 0) {
+        if (0 == auditType.size()) {
 			params.add("S");
 			sql.append(" ?, ");
 			params.add("F");
@@ -136,22 +152,22 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
         sql.append(" )");
 
      // AUDIT_STATUS
-        int m = 0;
         sql.append(" AND AUDIT_STATUS IN (");
-        for (int i = 0; i < formVo.getAuditStatus().size(); i++) {
-        	AuditCalendarCheckboxVo vo = formVo.getAuditStatus().get(i);
-        	if (vo.getCheckbox()) {
-        		if (i == formVo.getAuditStatus().size()-1) {
-        			params.add(vo.getParamCode());
-        			sql.append(" ?");
-				} else {
-					params.add(vo.getParamCode());
-					sql.append(" ?,");
-				}
-        		m++;
-        	}
+        List<AuditCalendarCheckboxVo> auditStatus = formVo.getAuditStatus().stream()
+        		.filter(e -> e.getCheckbox().equals(false))
+        		.collect(Collectors.toList());
+        
+        for (int i = 0; i < auditStatus.size(); i++) {
+        	AuditCalendarCheckboxVo vo = auditStatus.get(i);
+    		if (i == auditStatus.size()-1) {
+    			params.add(vo.getParamCode());
+    			sql.append(" ?");
+			} else {
+				params.add(vo.getParamCode());
+				sql.append(" ?,");
+			}
 		}
-        if (m == 0) {
+        if (0 == auditStatus.size()) {
         	params.add("T");
 			sql.append(" ?, ");
 			params.add("I");
@@ -164,7 +180,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
         sql.append(" )");
     }
 	
-	public List<TaPlanWorksheetDtl> findByCriteria(AuditCalendarCriteriaFormVo formVo) {
+	public List<PlanWorksheetDtlVo> findByCriteria(AuditCalendarCriteriaFormVo formVo) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		
@@ -173,9 +189,9 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		return this.commonJdbcTemplate.query(sql.toString(), params.toArray(), taPlanWorksheetDtlRowMapper);
 	}
 	
-	private static final RowMapper<TaPlanWorksheetDtl> taPlanWorksheetDtlRowMapper = new RowMapper<TaPlanWorksheetDtl>() {
-        public TaPlanWorksheetDtl mapRow(ResultSet rs, int rowNum) throws SQLException {
-        	TaPlanWorksheetDtl vo = new TaPlanWorksheetDtl();
+	private static final RowMapper<PlanWorksheetDtlVo> taPlanWorksheetDtlRowMapper = new RowMapper<PlanWorksheetDtlVo>() {
+        public PlanWorksheetDtlVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+        	PlanWorksheetDtlVo vo = new PlanWorksheetDtlVo();
             vo.setPlanWorksheetDtlId(rs.getLong("PLAN_WORKSHEET_DTL_ID"));
             vo.setPlanNumber(rs.getString("PLAN_NUMBER"));
             vo.setAnalysisNumber(rs.getString("ANALYSIS_NUMBER"));
@@ -185,8 +201,17 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
             vo.setPlanType(rs.getString("PLAN_TYPE"));
             vo.setAuditStatus(rs.getString("AUDIT_STATUS"));
             vo.setAuditType(rs.getString("AUDIT_TYPE"));
-            vo.setAuditStartDate(LocalDateConverter.convertToEntityAttribute(rs.getDate("AUDIT_START_DATE")));
-            vo.setAuditEndDate(LocalDateConverter.convertToEntityAttribute(rs.getDate("AUDIT_END_DATE")));
+            vo.setStart(ConvertDateUtils.formatDateToString(rs.getDate("AUDIT_START_DATE"), "yyyy-MM-dd", ConvertDateUtils.LOCAL_TH));
+            vo.setEnd(ConvertDateUtils.formatDateToString(rs.getDate("AUDIT_END_DATE"), "yyyy-MM-dd", ConvertDateUtils.LOCAL_TH));
+            vo.setCusFullName(rs.getString("CUS_FULLNAME"));
+            vo.setFacFullName(rs.getString("FAC_FULLNAME"));
+            vo.setOfficeCodeR4000(rs.getString("OFFICE_CODE_R4000"));
+            vo.setDutyCode(rs.getString("DUTY_CODE"));
+            vo.setSecCode(rs.getString("SEC_CODE"));
+            vo.setSecDesc(rs.getString("SEC_DESC"));
+            vo.setAreaCode(rs.getString("AREA_CODE"));
+            vo.setAreaDesc(rs.getString("AREA_DESC"));
+            vo.setTitle(rs.getString("AREA_DESC"));
             return vo;
         }
     };

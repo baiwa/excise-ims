@@ -12,7 +12,6 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.util.ExciseUtils;
-import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
@@ -20,6 +19,7 @@ import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 
 @Service
@@ -72,8 +72,8 @@ public class TaxAuditService {
 		return auditStatus;
 	}
 	
-	public List<TaPlanWorksheetDtl> getPlanWsDtl(AuditCalendarCriteriaFormVo formVo) {
-		List<TaPlanWorksheetDtl> planWsDtl = new ArrayList<>();
+	public List<PlanWorksheetDtlVo> getPlanWsDtl(AuditCalendarCriteriaFormVo formVo) {
+		List<PlanWorksheetDtlVo> planWsDtl = new ArrayList<>();
 		planWsDtl = taPlanWorksheetDtlRepository.findByCriteria(formVo);
 		return planWsDtl;
 	}

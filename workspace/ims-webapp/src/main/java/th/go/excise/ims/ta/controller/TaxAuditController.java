@@ -16,13 +16,13 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.service.TaxAuditService;
 import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 
 @Controller
@@ -82,8 +82,8 @@ public class TaxAuditController {
     
     @PostMapping("/get-plan-ws-dtl")
     @ResponseBody
-    public ResponseData<List<TaPlanWorksheetDtl>> getPlanWsDtl(@RequestBody AuditCalendarCriteriaFormVo formVo) {
-    	ResponseData<List<TaPlanWorksheetDtl>> res = new ResponseData<>();
+    public ResponseData<List<PlanWorksheetDtlVo>> getPlanWsDtl(@RequestBody AuditCalendarCriteriaFormVo formVo) {
+    	ResponseData<List<PlanWorksheetDtlVo>> res = new ResponseData<>();
         try {
             res.setData(taxAuditService.getPlanWsDtl(formVo));
             res.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
