@@ -43,7 +43,9 @@ public class IaQuestionnaireHdr extends BaseEntity
     private LocalDate endDate;
     @Column(name = "STATUS")
     private String status;
-
+    @Column(name = "CONCLUDE")
+    private String conclude;
+    
     public BigDecimal getId() {
         return id;
     }
@@ -104,5 +106,13 @@ public class IaQuestionnaireHdr extends BaseEntity
 		this.status = status;
 	}
 
+	public String getConclude() {
+		return conclude;
+	}
+
+	public void setConclude(String conclude) {
+		this.conclude = conclude;
+	}
+	
 
 }

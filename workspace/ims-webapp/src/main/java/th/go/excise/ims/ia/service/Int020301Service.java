@@ -17,13 +17,17 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ia.constant.IaConstants;
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.entity.IaRiskQtnConfig;
+import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskQtnConfigRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireSideJdbcRepository;
@@ -49,6 +53,11 @@ public class Int020301Service {
 
 	@Autowired
 	private IaRiskFactorsConfigRepository iaRiskFactorsConfigRep;
+
+	@Autowired
+	private IaQuestionnaireHdrRepository iaQuestionnaireHdrRepository;
+	@Autowired
+	private QuestionnaireService questionnaireService;
 
 	public List<Int020301HeaderVo> findHeaderByIdSide(String idSideStr, String budgetYear) {
 		BigDecimal idSide = new BigDecimal(idSideStr);
@@ -724,6 +733,13 @@ public class Int020301Service {
 		workbook.write(outByteStream);
 
 		return outByteStream;
+	}
+
+	public void saveConclude(BigDecimal id, IaQuestionnaireHdr form) {
+		IaQuestionnaireHdr res = iaQuestionnaireHdrRepository.findById(id).get();
+		res.setConclude(form.getConclude());
+		iaQuestionnaireHdrRepository.save(res);
+		questionnaireService.updateStatusIaQuestionnaire(id, IaConstants.QUESTIONNAIRE_STATUS.STATUS_6_CODE);
 	}
 
 }

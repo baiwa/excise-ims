@@ -24,7 +24,7 @@ public class Int020301JdbcRepository {
 
 	public List<Int020301HeaderVo> findHeaderByIdSide(BigDecimal idSide, String budgetYear) {
 		StringBuilder sqlBuilder = new StringBuilder();
-		sqlBuilder.append(" SELECT IQS.SIDE_NAME FROM IA_QUESTIONNAIRE_HDR IQH ");
+		sqlBuilder.append(" SELECT IQS.SIDE_NAME ,IQH.CONCLUDE FROM IA_QUESTIONNAIRE_HDR IQH ");
 		sqlBuilder.append(" INNER JOIN IA_QUESTIONNAIRE_SIDE IQS ");
 		sqlBuilder.append(" ON IQH.ID = IQS.ID_HEAD WHERE 1=1 AND IQH.IS_DELETED = 'N' AND IQS.IS_DELETED = 'N' ");
 		sqlBuilder.append(" AND IQH.ID = ? ");
@@ -42,6 +42,7 @@ public class Int020301JdbcRepository {
 		public Int020301HeaderVo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Int020301HeaderVo vo = new Int020301HeaderVo();
 			vo.setName(rs.getString("SIDE_NAME"));
+			vo.setConclude(rs.getString("CONCLUDE"));
 			return vo;
 		}
 	};
