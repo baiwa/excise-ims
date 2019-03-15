@@ -20,6 +20,7 @@ import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
+import th.go.excise.ims.ta.vo.PlanMapVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 
@@ -47,11 +48,11 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		sql.append("   AND R4000.IS_DELETED = 'N' ");
 		sql.append("   AND PLAN_DTL.PLAN_NUMBER = ? ");
 
-        params.add(formVo.getPlanNumber());
-        if (StringUtils.isNotBlank(formVo.getOfficeCode())){
-            sql.append("   AND PLAN_DTL.OFFICE_CODE = ? ");
-            params.add(formVo.getOfficeCode());
-        }
+		params.add(formVo.getPlanNumber());
+		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
+			sql.append("   AND PLAN_DTL.OFFICE_CODE = ? ");
+			params.add(formVo.getOfficeCode());
+		}
 	}
 
 	@Override
@@ -59,9 +60,9 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		buildByCriteriaQuery(sql, params, formVo);
-		
+
 		sql.append(" ORDER BY R4000.DUTY_CODE, R4000.OFFICE_CODE, R4000.NEW_REG_ID ");
-		
+
 		return commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(), planDtlDatatableRowMapper);
 	}
 
@@ -70,7 +71,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		buildByCriteriaQuery(sql, params, formVo);
-		
+
 		return commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), params.toArray(), Long.class);
 	}
 
@@ -190,4 +191,45 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
         }
     };
 
+	@Override
+	public List<PlanMapVo> findByInBudgetYearPlanDtl(List<String> budgetYears) {
+		StringBuilder sql = new StringBuilder();
+
+		sql.append(" SELECT  ");
+		sql.append("   PLAN_HDR.BUDGET_YEAR, ");
+		sql.append("   PLAN_HDR.ANALYSIS_NUMBER,	 ");
+		sql.append("   PLAN_HDR.PLAN_NUMBER, ");
+		sql.append("   PLAN_DTL.NEW_REG_ID, ");
+		sql.append("   PLAN_DTL.OFFICE_CODE, ");
+		sql.append("   PLAN_DTL.AUDIT_PLAN_CODE ");
+		sql.append("  FROM TA_PLAN_WORKSHEET_HDR PLAN_HDR ");
+		sql.append(" LEFT JOIN TA_PLAN_WORKSHEET_DTL PLAN_DTL ");
+		sql.append(" ON PLAN_HDR.PLAN_NUMBER=PLAN_DTL.PLAN_NUMBER ");
+		// sql.append(" WHERE PLAN_DTL.OFFICE_CODE=? ");
+		// sql.append(" AND BUDGET_YEAR IN (?,?,?) ");
+		sql.append(" WHERE PLAN_HDR.BUDGET_YEAR IN (?,?,?) ");
+
+		List<Object> params = new ArrayList<>();
+		// params.add(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+
+		for (String budgetYear : budgetYears) {
+			params.add(budgetYear);
+		}
+
+		return commonJdbcTemplate.query(sql.toString(), params.toArray(), findByInBudgetYearPlanDtlRowMapper);
+	}
+
+	protected RowMapper<PlanMapVo> findByInBudgetYearPlanDtlRowMapper = new RowMapper<PlanMapVo>() {
+		@Override
+		public PlanMapVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+			PlanMapVo vo = new PlanMapVo();
+			vo.setBudgetYear(rs.getString("BUDGET_YEAR"));
+			vo.setAnalysisNumber(rs.getString("ANALYSIS_NUMBER"));
+			vo.setPlanNumber(rs.getString("PLAN_NUMBER"));
+			vo.setNewRegId(rs.getString("NEW_REG_ID"));
+			vo.setOfficeCode(rs.getString("OFFICE_CODE"));
+			vo.setAuditPlanCode(rs.getString("AUDIT_PLAN_CODE"));
+			return vo;
+		}
+	};
 }

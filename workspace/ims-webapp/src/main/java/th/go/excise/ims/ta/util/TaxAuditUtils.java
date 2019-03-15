@@ -135,6 +135,11 @@ public class TaxAuditUtils {
 		vo.setSecDesc(rs.getString("SEC_DESC"));
 		vo.setAreaCode(rs.getString("AREA_CODE"));
 		vo.setAreaDesc(rs.getString("AREA_DESC"));
+		
+		vo.setTaxAuditLast1(rs.getString("TAX_AUDIT_LAST1"));
+		vo.setTaxAuditLast2(rs.getString("TAX_AUDIT_LAST2"));
+		vo.setTaxAuditLast3(rs.getString("TAX_AUDIT_LAST3"));
+		
 		vo.setSumTaxAmtG1(rs.getString("SUM_TAX_AMT_G1"));
 		vo.setSumTaxAmtG2(rs.getString("SUM_TAX_AMT_G2"));
 		vo.setTaxAmtChnPnt(rs.getString("TAX_AMT_CHN_PNT"));
