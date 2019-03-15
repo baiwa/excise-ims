@@ -55,7 +55,7 @@ public class Int0201Controller {
 
 		return response;
 	}
-	
+
 	@GetMapping("find/qtn-hdr/{id}")
 	@ResponseBody
 	public ResponseData<IaQuestionnaireHdr> findOne(@PathVariable("id") BigDecimal id) {
@@ -108,16 +108,17 @@ public class Int0201Controller {
 		}
 		return response;
 	}
-	
+
 	@PostMapping("/update/status")
 	@ResponseBody
 	public ResponseData<IaQuestionnaireHdr> updateStatusQtnHdr(@RequestBody Int0201FormVo request) {
 		ResponseData<IaQuestionnaireHdr> response = new ResponseData<IaQuestionnaireHdr>();
 		try {
 			response.setData(int0201Service.updateStatus(request));
-			if("1".equals(request.getStatus())) {
-				response.setMessage(ApplicationCache.getParamInfoByCode("IA_QTN_MESSAGE", request.getStatus()).getValue1());
-			}else {
+			if ("1".equals(request.getStatus())) {
+				response.setMessage(
+						ApplicationCache.getParamInfoByCode("IA_QTN_MESSAGE", request.getStatus()).getValue1());
+			} else {
 				response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			}
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
@@ -152,7 +153,8 @@ public class Int0201Controller {
 
 	@PutMapping("/config/{idHdr}")
 	@ResponseBody
-	public ResponseData<IaRiskQtnConfig> updateConfig(@PathVariable("idHdr") String idHdrStr, @RequestBody IaRiskQtnConfig request) {
+	public ResponseData<IaRiskQtnConfig> updateConfig(@PathVariable("idHdr") String idHdrStr,
+			@RequestBody IaRiskQtnConfig request) {
 		ResponseData<IaRiskQtnConfig> response = new ResponseData<IaRiskQtnConfig>();
 		try {
 			IaRiskQtnConfig data = int0201Service.updateConfig(request);
@@ -185,8 +187,26 @@ public class Int0201Controller {
 		}
 		return response;
 	}
+
 	/*
 	 * ==================== == CONFIGS `END`== ====================
 	 */
-
+	@PutMapping("/canceled-qtn/{idHdr}")
+	@ResponseBody
+	public ResponseData<String> canceledQtn(@PathVariable("idHdr") BigDecimal idHdrStr) {
+		ResponseData<String> response = new ResponseData<String>();
+		try {
+			BigDecimal idDown = int0201Service.canceledQtn(idHdrStr);
+//			idDown.toString() + 
+			response.setData("ยกเลิกแบบสอบถามสำเร็จ");
+			response.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Int0201Controller::canceledQtn => ", e);
+			response.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
 }

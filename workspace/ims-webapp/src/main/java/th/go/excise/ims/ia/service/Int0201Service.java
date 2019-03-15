@@ -17,11 +17,11 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
+import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMade;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMadeHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
-import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSideDtl;
 import th.go.excise.ims.ia.persistence.entity.IaRiskQtnConfig;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeHdrRepository;
@@ -58,6 +58,9 @@ public class Int0201Service {
 
 	@Autowired
 	private Int02010101Service int02010101Service;
+	
+	@Autowired
+	QuestionnaireService questionnaireService;
 
 	public List<IaQuestionnaireSide> findQtnSideById(Int0201FormVo request) {
 		return iaQuestionnaireSideRepository.findByidHeadAndIsDeleted(request.getId(), "N");
@@ -108,7 +111,7 @@ public class Int0201Service {
 						ProjectConstant.SHORT_DATE_FORMAT));
 				dataHdr.setEndDate(ConvertDateUtils.parseStringToLocalDate(request.getEndDateSend(),
 						ProjectConstant.SHORT_DATE_FORMAT));
-				dataHdr.setStatus("SUCCESS_HDR");
+				dataHdr.setStatus(IaConstants.QUESTIONNAIRE_STATUS.STATUS_4_CODE);
 				dataHdr = iaQuestionnaireHdrRepository.save(dataHdr);
 				/* find id of Questionnaire Header */
 				if (request.getIdHead() != null) {
@@ -183,13 +186,13 @@ public class Int0201Service {
 						ProjectConstant.SHORT_DATE_FORMAT));
 				dataHdr.setEndDate(ConvertDateUtils.parseStringToLocalDate(request.getEndDateSend(),
 						ProjectConstant.SHORT_DATE_FORMAT));
-				dataHdr.setStatus("SUCCESS_HDR");
+				dataHdr.setStatus(IaConstants.QUESTIONNAIRE_STATUS.STATUS_4_CODE);
 				iaQuestionnaireHdrRepository.save(dataHdr);
 			}
 		}
 
 		/* check status for save or update or delete */
-		if ("SUCCESS_HDR".equals(request.getStatus())) {
+		if (IaConstants.QUESTIONNAIRE_STATUS.STATUS_4_CODE.equals(request.getStatus())) {
 			logger.info("delete QtnMade by idSideDtl");
 			/* find id made header from request */
 			List<IaQuestionnaireMade> filterQtnMade = iaQuestionnaireMadeRepository
@@ -384,6 +387,17 @@ public class Int0201Service {
 		}
 		throw new Exception();
 	}
+	
+	public BigDecimal canceledQtn(BigDecimal idHdrStr) throws Exception {
+		
+		// Update here
+		BigDecimal downStatus =  questionnaireService.downStatusIaQuestionnaire(idHdrStr);
+		if (downStatus != null) {
+			return downStatus;
+		}
+		throw new Exception();
+	}
+	
 	/*
 	 * ==================== == CONFIGS `END`== ====================
 	 */

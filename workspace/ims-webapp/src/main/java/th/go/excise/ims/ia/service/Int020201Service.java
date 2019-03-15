@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMade;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMadeHdr;
@@ -106,16 +107,16 @@ public class Int020201Service {
 					madeDtl.setNote(objMadeDtl.getNote());
 					madeDtl.setCheckFlag(objMadeDtl.getCheckFlag());
 
-					if ("CREATED".equals(request.getStatus())) {
+					if (IaConstants.QUESTIONNAIRE_STATUS.STATUS_4_CODE.equals(request.getStatus())) {
 						madeDtl.setStatus("WAIT");
 					}
 
 					if (request.getFlagConfirm()) {
-						madeDtl.setStatus("FINISH");
+						madeDtl.setStatus(IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE);
 					}
 					/* update 'status' questionnaire-made-header */
 					updateStatusQtnMadeHdr(request);
-					iaQuestionnaireMadeRepository.save(madeDtl);
+//					iaQuestionnaireMadeRepository.save(madeDtl);
 				}
 			}
 		}
@@ -126,19 +127,19 @@ public class Int020201Service {
 		if (resMadeHdr.isPresent()) {
 			IaQuestionnaireMadeHdr madeHdr = resMadeHdr.get();
 			if ("CREATED".equals(request.getStatus()) && !request.getFlagConfirm()) {
-				madeHdr.setStatus("WAIT");
+//				madeHdr.setStatus("WAIT");
 			}
 			/* confirm send questionnaire form */
 			if (request.getFlagConfirm()) {
 				/* update status questionnaire made hdr */
-				madeHdr.setStatus("FINISH");
+//				madeHdr.setStatus("FINISH");
 				
 				/* update status questionnaire hdr */
 				Optional<IaQuestionnaireHdr> resHdr = iaQuestionnaireHdrRepository.findById(madeHdr.getIdHdr());
 				if(resHdr.isPresent()) {
 					IaQuestionnaireHdr dataHdr = resHdr.get();
-					dataHdr.setStatus("FINISH");
-					iaQuestionnaireHdrRepository.save(dataHdr);
+//					dataHdr.setStatus("FINISH");
+//					iaQuestionnaireHdrRepository.save(dataHdr);
 				}
 			}
 			iaQuestionnaireMadeHdrRepository.save(madeHdr);

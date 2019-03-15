@@ -15,6 +15,7 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMade;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMadeHdr;
@@ -162,7 +163,7 @@ public class Int02Service {
 		if (dataRes.isPresent()) {
 			IaQuestionnaireHdr daraHdr = dataRes.get();
 
-			if ("SUCCESS_HDR".equals(daraHdr.getStatus())) {
+			if (IaConstants.QUESTIONNAIRE_STATUS.STATUS_4_CODE.equals(daraHdr.getStatus())) {
 				/* update status */
 //				daraHdr.setStatus("FAIL_SEND_QTN");
 				iaQuestionnaireHdrRepository.save(daraHdr);
