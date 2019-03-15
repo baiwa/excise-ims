@@ -52,7 +52,15 @@ public class QuestionnaireService {
 	
 	public BigDecimal updateStatusIaQuestionnaire(BigDecimal idHdr,String status) {
 		
-		iaQuestionnaireHdrJdbcRepository.updateStatus(idHdr, status);
+		
+		if(IaConstants.QUESTIONNAIRE_STATUS.STATUS_5_CODE.equals(status)) {
+			Integer count = iaQuestionnaireMadeHdrJdbcRepository.checkCountMadeHdrStatus3(idHdr);
+			if(count==0) {
+				iaQuestionnaireHdrJdbcRepository.updateStatus(idHdr, status);
+			}
+		}else {
+			iaQuestionnaireHdrJdbcRepository.updateStatus(idHdr, status);
+		}
 //		iaQuestionnaireMadeHdrJdbcRepository.updateStatus(idHdr, status);
 		
 		
@@ -75,6 +83,7 @@ public class QuestionnaireService {
 						iaQuestionnaireHdrJdbcRepository.updateStatus(idHdr, paramInfo2.getParamCode());
 
 							if(IaConstants.QUESTIONNAIRE_STATUS.STATUS_4_CODE.equals(paramInfo.getSortingOrder().toString())) {
+//								Check Table MadeHdr Count Finish == 0 Up
 								iaQuestionnaireMadeJdbcRepository.deleteByIdHdr(idHdr);
 								iaQuestionnaireMadeHdrJdbcRepository.deleteByIdHdr(idHdr);
 							}
@@ -83,7 +92,7 @@ public class QuestionnaireService {
 				}
 			}
 		}
-		
+
 		
 		return idHdr;
 	}
@@ -93,7 +102,7 @@ public class QuestionnaireService {
 		Integer countSide = iaQuestionnaireSideJdbcRepository.checkCountSide(idHdr);
 		Integer countSideDtl = iaQuestionnaireSideJdbcRepository.checkCountSideDtl(idHdr);
 		
-//		*********** ID_HDR Check Table Side !=0 And Table SideDTL Count != 0 *********** 
+//		*********** ID_HDR Check Table Side !=0 And Table ID Side => SideDTL Count != 0 *********** 
 		if(countSideDtl==0&&countSide>0) {
 			String status = IaConstants.QUESTIONNAIRE_STATUS.STATUS_2_CODE;
 			updateStatusIaQuestionnaire(idHdr, status);

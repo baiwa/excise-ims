@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMadeHdr;
 import th.go.excise.ims.ia.vo.Int0202FormVo;
@@ -138,4 +139,15 @@ public class IaQuestionnaireMadeHdrJdbcRepository {
 		return idHdr;
 	}
 	
+	public Integer checkCountMadeHdrStatus3(BigDecimal idHdr) {
+		StringBuilder sql = new StringBuilder(" select COUNT(*) AS COUNT from IA_QUESTIONNAIRE_MADE_HDR mh WHERE mh.ID_HDR = ? AND mh.STATUS = ? ");
+		List<Object> params = new ArrayList<Object>();
+		
+		params.add(idHdr);
+		params.add(IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE);
+		
+		Integer count = commonJdbcTemplate.queryForObject(sql.toString(), params.toArray(),Integer.class);
+
+		return count;
+	}
 }
