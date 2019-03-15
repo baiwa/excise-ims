@@ -1,103 +1,112 @@
 package th.go.excise.ims.ta.vo;
 
 public class OutsidePlanVo {
-    private String newRegId;
-    private String cusFullname;
-    private String facFullname;
-    private String facAddress;
-    private String officeCodeR4000;
-    private String dutyCode;
-    private String dutyDesc;
-    private String secCode;
-    private String secDesc;
-    private String areaCode;
-    private String areaDesc;
+	private String newRegId;
+	private String cusFullname;
+	private String facFullname;
+	private String facAddress;
+	private String officeCodeR4000;
+	private String dutyCode;
+	private String dutyDesc;
+	private String secCode;
+	private String secDesc;
+	private String areaCode;
+	private String areaDesc;
+	private String regStatus;
 
-    public String getDutyDesc() {
-        return dutyDesc;
-    }
+	public String getRegStatus() {
+		return regStatus;
+	}
 
-    public void setDutyDesc(String dutyDesc) {
-        this.dutyDesc = dutyDesc;
-    }
+	public void setRegStatus(String regStatus) {
+		this.regStatus = regStatus;
+	}
 
-    public String getNewRegId() {
-        return newRegId;
-    }
+	public String getDutyDesc() {
+		return dutyDesc;
+	}
 
-    public void setNewRegId(String newRegId) {
-        this.newRegId = newRegId;
-    }
+	public void setDutyDesc(String dutyDesc) {
+		this.dutyDesc = dutyDesc;
+	}
 
-    public String getCusFullname() {
-        return cusFullname;
-    }
+	public String getNewRegId() {
+		return newRegId;
+	}
 
-    public void setCusFullname(String cusFullname) {
-        this.cusFullname = cusFullname;
-    }
+	public void setNewRegId(String newRegId) {
+		this.newRegId = newRegId;
+	}
 
-    public String getFacFullname() {
-        return facFullname;
-    }
+	public String getCusFullname() {
+		return cusFullname;
+	}
 
-    public void setFacFullname(String facFullname) {
-        this.facFullname = facFullname;
-    }
+	public void setCusFullname(String cusFullname) {
+		this.cusFullname = cusFullname;
+	}
 
-    public String getFacAddress() {
-        return facAddress;
-    }
+	public String getFacFullname() {
+		return facFullname;
+	}
 
-    public void setFacAddress(String facAddress) {
-        this.facAddress = facAddress;
-    }
+	public void setFacFullname(String facFullname) {
+		this.facFullname = facFullname;
+	}
 
-    public String getOfficeCodeR4000() {
-        return officeCodeR4000;
-    }
+	public String getFacAddress() {
+		return facAddress;
+	}
 
-    public void setOfficeCodeR4000(String officeCodeR4000) {
-        this.officeCodeR4000 = officeCodeR4000;
-    }
+	public void setFacAddress(String facAddress) {
+		this.facAddress = facAddress;
+	}
 
-    public String getDutyCode() {
-        return dutyCode;
-    }
+	public String getOfficeCodeR4000() {
+		return officeCodeR4000;
+	}
 
-    public void setDutyCode(String dutyCode) {
-        this.dutyCode = dutyCode;
-    }
+	public void setOfficeCodeR4000(String officeCodeR4000) {
+		this.officeCodeR4000 = officeCodeR4000;
+	}
 
-    public String getSecCode() {
-        return secCode;
-    }
+	public String getDutyCode() {
+		return dutyCode;
+	}
 
-    public void setSecCode(String secCode) {
-        this.secCode = secCode;
-    }
+	public void setDutyCode(String dutyCode) {
+		this.dutyCode = dutyCode;
+	}
 
-    public String getSecDesc() {
-        return secDesc;
-    }
+	public String getSecCode() {
+		return secCode;
+	}
 
-    public void setSecDesc(String secDesc) {
-        this.secDesc = secDesc;
-    }
+	public void setSecCode(String secCode) {
+		this.secCode = secCode;
+	}
 
-    public String getAreaCode() {
-        return areaCode;
-    }
+	public String getSecDesc() {
+		return secDesc;
+	}
 
-    public void setAreaCode(String areaCode) {
-        this.areaCode = areaCode;
-    }
+	public void setSecDesc(String secDesc) {
+		this.secDesc = secDesc;
+	}
 
-    public String getAreaDesc() {
-        return areaDesc;
-    }
+	public String getAreaCode() {
+		return areaCode;
+	}
 
-    public void setAreaDesc(String areaDesc) {
-        this.areaDesc = areaDesc;
-    }
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
+	}
+
+	public String getAreaDesc() {
+		return areaDesc;
+	}
+
+	public void setAreaDesc(String areaDesc) {
+		this.areaDesc = areaDesc;
+	}
 }
