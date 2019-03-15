@@ -10,30 +10,30 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.ta.vo.AnalysisFormVo;
 import th.go.excise.ims.ta.vo.AnalysisTaxQtyVo;
-import th.go.excise.ims.ta.vo.AnalysisTaxQuRetailPriceVo;
+import th.go.excise.ims.ta.vo.AnalysisTaxRetailPriceVo;
 @Service
-public class AnalysisTaxQuRetailPriceService {
-	private static final Logger logger = LoggerFactory.getLogger(AnalysisTaxQuRetailPriceService.class);
+public class AnalysisTaxRetailPriceService {
+	private static final Logger logger = LoggerFactory.getLogger(AnalysisTaxRetailPriceService.class);
 	
-	public DataTableAjax<AnalysisTaxQuRetailPriceVo> GetAnalysisTaxQuRetailPrice( AnalysisFormVo request) {
+	public DataTableAjax<AnalysisTaxRetailPriceVo> GetAnalysisTaxQuRetailPrice( AnalysisFormVo request) {
 		int total = 35;
-		DataTableAjax<AnalysisTaxQuRetailPriceVo> dataTableAjax = new DataTableAjax<AnalysisTaxQuRetailPriceVo>();
+		DataTableAjax<AnalysisTaxRetailPriceVo> dataTableAjax = new DataTableAjax<AnalysisTaxRetailPriceVo>();
 		dataTableAjax.setData(listAnalysisTaxQuRetailPrice(request.getStart(),request.getLength(),total));
 		dataTableAjax.setRecordsTotal(total);
 		dataTableAjax.setRecordsFiltered(total);
 		return dataTableAjax;
 	}
 
-	public List<AnalysisTaxQuRetailPriceVo> listAnalysisTaxQuRetailPrice(int start,int length,int total) {
+	public List<AnalysisTaxRetailPriceVo> listAnalysisTaxQuRetailPrice(int start,int length,int total) {
 		String excise = "C16M DOM-1.5T CVT ZA7";
 		
-		List<AnalysisTaxQuRetailPriceVo> datalist = new ArrayList<AnalysisTaxQuRetailPriceVo>();
-		AnalysisTaxQuRetailPriceVo data = null;
+		List<AnalysisTaxRetailPriceVo> datalist = new ArrayList<AnalysisTaxRetailPriceVo>();
+		AnalysisTaxRetailPriceVo data = null;
 		for(int i = start;i<(start+length);i++){
 			if(i >= total){
 				break;
 			}
-			data = new AnalysisTaxQuRetailPriceVo();
+			data = new AnalysisTaxRetailPriceVo();
 			data.setGoodsDesc(excise+i);
 			data.setTaxInformPrice("100.00");
 			data.setInformPrice("200.00");

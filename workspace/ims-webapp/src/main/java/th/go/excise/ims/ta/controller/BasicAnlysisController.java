@@ -15,7 +15,7 @@ import th.go.excise.ims.ta.service.AnalysisIncomeCompareLastYearService;
 import th.go.excise.ims.ta.service.AnalysisTaxAmtsService;
 import th.go.excise.ims.ta.service.AnalysisTaxFilingService;
 import th.go.excise.ims.ta.service.AnalysisTaxQtyService;
-import th.go.excise.ims.ta.service.AnalysisTaxQuRetailPriceService;
+import th.go.excise.ims.ta.service.AnalysisTaxRetailPriceService;
 import th.go.excise.ims.ta.service.AnalysisTaxRateService;
 import th.go.excise.ims.ta.vo.AnalysisFormVo;
 import th.go.excise.ims.ta.vo.AnalysisIncomeCompareLastMonthVo;
@@ -23,7 +23,7 @@ import th.go.excise.ims.ta.vo.AnalysisIncomeCompareLastYearVo;
 import th.go.excise.ims.ta.vo.AnalysisTaxAmtVo;
 import th.go.excise.ims.ta.vo.AnalysisTaxFilingVo;
 import th.go.excise.ims.ta.vo.AnalysisTaxQtyVo;
-import th.go.excise.ims.ta.vo.AnalysisTaxQuRetailPriceVo;
+import th.go.excise.ims.ta.vo.AnalysisTaxRetailPriceVo;
 import th.go.excise.ims.ta.vo.AnalysisTaxRateVo;
 
 @Controller
@@ -31,7 +31,7 @@ import th.go.excise.ims.ta.vo.AnalysisTaxRateVo;
 public class BasicAnlysisController {
 	private static final Logger logger = LoggerFactory.getLogger(BasicAnlysisController.class);
 	private AnalysisTaxQtyService analysisTaxQtyService;
-	private AnalysisTaxQuRetailPriceService analysisTaxQuRetailPriceService;
+	private AnalysisTaxRetailPriceService analysisTaxQuRetailPriceService;
 	private AnalysisTaxRateService analysisTaxRateService;
 	private AnalysisTaxAmtsService analysisTaxAmtsService;
 	private AnalysisTaxFilingService analysisTaxFilingService;
@@ -40,7 +40,7 @@ public class BasicAnlysisController {
 
 	@Autowired
 	public BasicAnlysisController(AnalysisTaxQtyService analysisTaxQtyService,
-			AnalysisTaxQuRetailPriceService analysisTaxQuRetailPriceService,
+			AnalysisTaxRetailPriceService analysisTaxQuRetailPriceService,
 			AnalysisTaxRateService analysisTaxRateService, AnalysisTaxAmtsService analysisTaxAmtsService,
 			AnalysisTaxFilingService analysisTaxFilingService,
 			AnalysisIncomeCompareLastMonthService analysisIncomeCompareLastMonthService,
@@ -72,10 +72,10 @@ public class BasicAnlysisController {
 	// TODO 2
 	@PostMapping("/analysis-taxQuRetail-price-data")
 	@ResponseBody
-	public DataTableAjax<AnalysisTaxQuRetailPriceVo> listAnalysisTaxQuRetailPrice(@RequestBody AnalysisFormVo request) {
+	public DataTableAjax<AnalysisTaxRetailPriceVo> listAnalysisTaxQuRetailPrice(@RequestBody AnalysisFormVo request) {
 		logger.info("analysisTaxQuRetailPriceService");
 
-		DataTableAjax<AnalysisTaxQuRetailPriceVo> response = new DataTableAjax<>();
+		DataTableAjax<AnalysisTaxRetailPriceVo> response = new DataTableAjax<>();
 		try {
 			response = analysisTaxQuRetailPriceService.GetAnalysisTaxQuRetailPrice(request);
 		} catch (Exception e) {

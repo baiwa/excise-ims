@@ -22,6 +22,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.DocumentConstants.MODULE_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 
 @Controller
 @RequestMapping("/api/access-control/role")
@@ -64,11 +65,11 @@ public class RoleController {
 		ResponseData<Role> responseData = new ResponseData<Role>();
 		try {
 			responseData.setData(roleService.createRole(request));
-			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("RoleController::create ", e);
-			responseData.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -84,11 +85,11 @@ public class RoleController {
 		ResponseData<Role> responseData = new ResponseData<Role>();
 		try {
 			responseData.setData(roleService.updateRole(idStr, role));
-			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("RoleController::update ", e);
-			responseData.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -104,11 +105,11 @@ public class RoleController {
 		ResponseData<Role> responseData = new ResponseData<Role>();
 		try {
 			responseData.setData(roleService.deleteRole(idStr));
-			responseData.setMessage(RESPONSE_MESSAGE.DELETE.SUCCESS);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.DELETE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("RoleController::delete ", e);
-			responseData.setMessage(RESPONSE_MESSAGE.DELETE.FAILED);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.DELETE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -127,7 +128,7 @@ public class RoleController {
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("RoleController::findById ", e);
-			responseData.setMessage(RESPONSE_MESSAGE.ERROR500);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
