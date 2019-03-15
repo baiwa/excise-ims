@@ -30,7 +30,7 @@ public class Int0202Service {
 		/* convert date to string */
 		for (Int0202Vo obj : data) {
 			/* to string status */
-			obj.setStatusStr(ApplicationCache.getParamInfoByCode("IA_STATUS", obj.getStatus()).getValue1());
+			obj.setStatusStr(ApplicationCache.getParamInfoByCode("IA_STATUS_REPLY_QTN", obj.getStatus()).getValue1());
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ProjectConstant.SHORT_DATE_FORMAT);
 
 			if (obj.getCreatedDate() != null) {
