@@ -53,6 +53,7 @@ public class Oa02010607Service {
 			lubricantsDtl.setSentToAgent(request.getSentToAgent());
 			lubricantsDtl.setSentToUser(request.getSentToUser());
 			lubricantsDtl.setAImporterLicense(request.getAImporterLicense());
+			lubricantsDtl.setAgentRemark(request.getAgentRemark());
 			
 			// TODO SAVE
 			lubricantsDtl = oaLubricantsDtlRep.save(lubricantsDtl);

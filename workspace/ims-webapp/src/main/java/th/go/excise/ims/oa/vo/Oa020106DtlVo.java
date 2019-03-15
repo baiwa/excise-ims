@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+
 import th.go.excise.ims.oa.persistence.entity.OaLubricantsCust;
 
 public class Oa020106DtlVo {
@@ -16,7 +18,7 @@ public class Oa020106DtlVo {
 	private BigDecimal workdayPermonth;
 	private BigDecimal numberOfTank;
 	private String tankCapacity;
-	private BigDecimal numberUtility;
+	private String numberUtility;
 	private String orderType;
 	private String orderPayMethod;
 	private BigDecimal employeePermanent;
@@ -41,13 +43,13 @@ public class Oa020106DtlVo {
 	private String buyFromIndust;
 	private String buyIndustLicense;
 	private String buyFromImporter;
-	private String importerLicense;
+	private String buyImporterLicense;
 	private String buyFromAgent;
 	private String buyAgentLicense;
-	private String salerType;
-	private String salerLicense;
 	private String usedType;
 	private String usedRemark;
+	private String salerType;
+	private String salerCapacity;
 	private BigDecimal numOfCust;
 	private String goodQuality;
 	private Date agentStartDate;
@@ -64,8 +66,11 @@ public class Oa020106DtlVo {
 	private String ASaleToUser;
 	private String ASaleUserLicense;
 	private String sentToAgent;
+	private String agentRemark;
 	private String sentToUser;
+	private String otherRemark;
 	private List<OaLubricantsCust> customers;
+	private List<OaLubricantsCust> custdeles;
 
 	public List<OaLubricantsCust> getCustomers() {
 		return customers;
@@ -73,6 +78,14 @@ public class Oa020106DtlVo {
 
 	public void setCustomers(List<OaLubricantsCust> customers) {
 		this.customers = customers;
+	}
+
+	public List<OaLubricantsCust> getCustdeles() {
+		return custdeles;
+	}
+
+	public void setCustdeles(List<OaLubricantsCust> custdeles) {
+		this.custdeles = custdeles;
 	}
 
 	public BigDecimal getOaLubricantsDtlId() {
@@ -147,11 +160,11 @@ public class Oa020106DtlVo {
 		this.tankCapacity = tankCapacity;
 	}
 
-	public BigDecimal getNumberUtility() {
+	public String getNumberUtility() {
 		return numberUtility;
 	}
 
-	public void setNumberUtility(BigDecimal numberUtility) {
+	public void setNumberUtility(String numberUtility) {
 		this.numberUtility = numberUtility;
 	}
 
@@ -347,12 +360,12 @@ public class Oa020106DtlVo {
 		this.buyFromImporter = buyFromImporter;
 	}
 
-	public String getImporterLicense() {
-		return importerLicense;
+	public String getBuyImporterLicense() {
+		return buyImporterLicense;
 	}
 
-	public void setImporterLicense(String importerLicense) {
-		this.importerLicense = importerLicense;
+	public void setBuyImporterLicense(String buyImporterLicense) {
+		this.buyImporterLicense = buyImporterLicense;
 	}
 
 	public String getBuyFromAgent() {
@@ -371,22 +384,6 @@ public class Oa020106DtlVo {
 		this.buyAgentLicense = buyAgentLicense;
 	}
 
-	public String getSalerType() {
-		return salerType;
-	}
-
-	public void setSalerType(String salerType) {
-		this.salerType = salerType;
-	}
-
-	public String getSalerLicense() {
-		return salerLicense;
-	}
-
-	public void setSalerLicense(String salerLicense) {
-		this.salerLicense = salerLicense;
-	}
-
 	public String getUsedType() {
 		return usedType;
 	}
@@ -401,6 +398,22 @@ public class Oa020106DtlVo {
 
 	public void setUsedRemark(String usedRemark) {
 		this.usedRemark = usedRemark;
+	}
+
+	public String getSalerType() {
+		return salerType;
+	}
+
+	public void setSalerType(String salerType) {
+		this.salerType = salerType;
+	}
+
+	public String getSalerCapacity() {
+		return salerCapacity;
+	}
+
+	public void setSalerCapacity(String salerCapacity) {
+		this.salerCapacity = salerCapacity;
 	}
 
 	public BigDecimal getNumOfCust() {
@@ -531,11 +544,27 @@ public class Oa020106DtlVo {
 		this.sentToAgent = sentToAgent;
 	}
 
+	public String getAgentRemark() {
+		return agentRemark;
+	}
+
+	public void setAgentRemark(String agentRemark) {
+		this.agentRemark = agentRemark;
+	}
+
 	public String getSentToUser() {
 		return sentToUser;
 	}
 
 	public void setSentToUser(String sentToUser) {
 		this.sentToUser = sentToUser;
+	}
+
+	public String getOtherRemark() {
+		return otherRemark;
+	}
+
+	public void setOtherRemark(String otherRemark) {
+		this.otherRemark = otherRemark;
 	}
 }
