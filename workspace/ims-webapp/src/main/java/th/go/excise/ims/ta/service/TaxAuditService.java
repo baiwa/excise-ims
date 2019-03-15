@@ -12,9 +12,11 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
-import th.go.excise.ims.ta.vo.AuditCalendarVo;
+import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
+import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
@@ -58,15 +60,21 @@ public class TaxAuditService {
 		return dataTableAjax;
 	}
 
-	public List<ParamInfo> getAuditType(AuditCalendarVo form) {
+	public List<ParamInfo> getAuditType(AuditCalendarCheckboxVo form) {
 		List<ParamInfo> auditType = new ArrayList<>();
 		auditType = ApplicationCache.getParamInfoListByGroupCode(ParameterConstants.PARAM_GROUP.TA_AUDIT_TYPE);
 		return auditType;
 	}
 
-	public List<ParamInfo> getAuditStatus(AuditCalendarVo form) {
+	public List<ParamInfo> getAuditStatus(AuditCalendarCheckboxVo form) {
 		List<ParamInfo> auditStatus = new ArrayList<>();
 		auditStatus = ApplicationCache.getParamInfoListByGroupCode(ParameterConstants.PARAM_GROUP.TA_AUDIT_STATUS);
 		return auditStatus;
+	}
+	
+	public List<TaPlanWorksheetDtl> getPlanWsDtl(AuditCalendarCriteriaFormVo formVo) {
+		List<TaPlanWorksheetDtl> planWsDtl = new ArrayList<>();
+		planWsDtl = taPlanWorksheetDtlRepository.findByCriteria(formVo);
+		return planWsDtl;
 	}
 }

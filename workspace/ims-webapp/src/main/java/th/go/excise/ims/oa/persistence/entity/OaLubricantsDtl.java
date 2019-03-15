@@ -40,7 +40,7 @@ public class OaLubricantsDtl
     @Column(name = "TANK_CAPACITY")
     private String tankCapacity;
     @Column(name = "NUMBER_UTILITY")
-    private BigDecimal numberUtility;
+    private String numberUtility;
     @Column(name = "ORDER_TYPE")
     private String orderType;
     @Column(name = "ORDER_PAY_METHOD")
@@ -89,20 +89,20 @@ public class OaLubricantsDtl
     private String buyIndustLicense;
     @Column(name = "BUY_FROM_IMPORTER")
     private String buyFromImporter;
-    @Column(name = "IMPORTER_LICENSE")
-    private String importerLicense;
+    @Column(name = "BUY_IMPORTER_LICENSE")
+    private String buyImporterLicense;
     @Column(name = "BUY_FROM_AGENT")
     private String buyFromAgent;
     @Column(name = "BUY_AGENT_LICENSE")
     private String buyAgentLicense;
-    @Column(name = "SALER_TYPE")
-    private String salerType;
-    @Column(name = "SALER_LICENSE")
-    private String salerLicense;
     @Column(name = "USED_TYPE")
     private String usedType;
     @Column(name = "USED_REMARK")
     private String usedRemark;
+    @Column(name = "SALER_TYPE")
+    private String salerType;
+    @Column(name = "SALER_CAPACITY")
+    private String salerCapacity;
     @Column(name = "NUM_OF_CUST")
     private BigDecimal numOfCust;
     @Column(name = "GOOD_QUALITY")
@@ -135,8 +135,12 @@ public class OaLubricantsDtl
     private String ASaleUserLicense;
     @Column(name = "SENT_TO_AGENT")
     private String sentToAgent;
+    @Column(name = "AGENT_REMARK")
+    private String agentRemark;
     @Column(name = "SENT_TO_USER")
     private String sentToUser;
+    @Column(name = "OTHER_REMARK")
+    private String otherRemark;
 
     public BigDecimal getOaLubricantsDtlId() {
         return oaLubricantsDtlId;
@@ -210,11 +214,11 @@ public class OaLubricantsDtl
         this.tankCapacity = tankCapacity;
     }
 
-    public BigDecimal getNumberUtility() {
+    public String getNumberUtility() {
         return numberUtility;
     }
 
-    public void setNumberUtility(BigDecimal numberUtility) {
+    public void setNumberUtility(String numberUtility) {
         this.numberUtility = numberUtility;
     }
 
@@ -410,12 +414,12 @@ public class OaLubricantsDtl
         this.buyFromImporter = buyFromImporter;
     }
 
-    public String getImporterLicense() {
-        return importerLicense;
+    public String getBuyImporterLicense() {
+        return buyImporterLicense;
     }
 
-    public void setImporterLicense(String importerLicense) {
-        this.importerLicense = importerLicense;
+    public void setBuyImporterLicense(String buyImporterLicense) {
+        this.buyImporterLicense = buyImporterLicense;
     }
 
     public String getBuyFromAgent() {
@@ -434,22 +438,6 @@ public class OaLubricantsDtl
         this.buyAgentLicense = buyAgentLicense;
     }
 
-    public String getSalerType() {
-        return salerType;
-    }
-
-    public void setSalerType(String salerType) {
-        this.salerType = salerType;
-    }
-
-    public String getSalerLicense() {
-        return salerLicense;
-    }
-
-    public void setSalerLicense(String salerLicense) {
-        this.salerLicense = salerLicense;
-    }
-
     public String getUsedType() {
         return usedType;
     }
@@ -464,6 +452,22 @@ public class OaLubricantsDtl
 
     public void setUsedRemark(String usedRemark) {
         this.usedRemark = usedRemark;
+    }
+
+    public String getSalerType() {
+        return salerType;
+    }
+
+    public void setSalerType(String salerType) {
+        this.salerType = salerType;
+    }
+
+    public String getSalerCapacity() {
+        return salerCapacity;
+    }
+
+    public void setSalerCapacity(String salerCapacity) {
+        this.salerCapacity = salerCapacity;
     }
 
     public BigDecimal getNumOfCust() {
@@ -594,12 +598,28 @@ public class OaLubricantsDtl
         this.sentToAgent = sentToAgent;
     }
 
+    public String getAgentRemark() {
+        return agentRemark;
+    }
+
+    public void setAgentRemark(String agentRemark) {
+        this.agentRemark = agentRemark;
+    }
+
     public String getSentToUser() {
         return sentToUser;
     }
 
     public void setSentToUser(String sentToUser) {
         this.sentToUser = sentToUser;
+    }
+
+    public String getOtherRemark() {
+        return otherRemark;
+    }
+
+    public void setOtherRemark(String otherRemark) {
+        this.otherRemark = otherRemark;
     }
 
 }

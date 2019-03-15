@@ -126,7 +126,7 @@ public class Int0201Service {
 								ProjectConstant.SHORT_DATE_FORMAT));
 						dataMadeHdr.setEndDate(ConvertDateUtils.parseStringToLocalDate(request.getEndDateSend(),
 								ProjectConstant.SHORT_DATE_FORMAT));
-						dataMadeHdr.setStatus("CREATED");
+						dataMadeHdr.setStatus(IaConstants.IA_STATUS_REPLY_QTN.STATUS_1_CODE);
 						dataMadeHdr.setOfficeCode(officeCode);
 						IaQuestionnaireMadeHdr resMadeHdr = iaQuestionnaireMadeHdrRepository.save(dataMadeHdr);
 						// find sides
