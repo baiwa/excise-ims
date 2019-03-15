@@ -28,11 +28,16 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainDtl;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
 import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondMainDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.util.TaxAuditUtils;
 import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
@@ -51,17 +56,22 @@ public class WorksheetExportService {
 	private TaWsReg4000Repository taWsReg4000Repository;
 	@Autowired
 	private DraftWorksheetService draftWorksheetService;
+	
+	@Autowired
+	private TaDraftWorksheetHdrRepository taDraftWorksheetHdrRepository;
 	@Autowired
 	private TaDraftWorksheetDtlRepository taDraftWorksheetDtlRepository;
 	
 	@Autowired
 	private TaWorksheetCondMainDtlRepository taWorksheetCondMainDtlRepository;
 	@Autowired
+	private TaWorksheetHdrRepository taWorksheetHdrRepository;
+	@Autowired
 	private TaWorksheetDtlRepository taWorksheetDtlRepository;
 	
 	public byte[] exportPreviewWorksheet(TaxOperatorFormVo formVo) {
-		logger.info("exportPreviewWorksheet officeCode={}, startDate={}, endDate={}, dateRange={}",
-			formVo.getOfficeCode(), formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
+		logger.info("exportPreviewWorksheet officeCode={}, budgetYear={}, startDate={}, endDate={}, dateRange={}",
+			formVo.getOfficeCode(), formVo.getBudgetYear(), formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
 		
 		// Prepare Data for Export
 		formVo.setStart(0);
@@ -116,10 +126,15 @@ public class WorksheetExportService {
 	}
 	
 	public byte[] exportDraftWorksheet(TaxOperatorFormVo formVo) {
-		logger.info("exportXlsxDraftWorksheet officeCode={}, draftNumber={}, startDate={}, endDate={}, dateRange={}",
-				formVo.getOfficeCode(), formVo.getDraftNumber(), formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		logger.info("exportXlsxDraftWorksheet officeCode={}, budgetYear={}, draftNumber={}", officeCode, formVo.getBudgetYear(), formVo.getDraftNumber());
 		
 		// Prepare Data for Export
+		TaDraftWorksheetHdr draftWorksheetHdr = taDraftWorksheetHdrRepository.findByDraftNumber(formVo.getDraftNumber());
+		formVo.setDateStart(convertToThaiDate(draftWorksheetHdr.getYearMonthStart()));
+		formVo.setDateEnd(convertToThaiDate(draftWorksheetHdr.getYearMonthEnd()));
+		formVo.setDateRange(draftWorksheetHdr.getMonthNum());
+		
 		formVo.setStart(0);
 		formVo.setLength(taDraftWorksheetDtlRepository.countByCriteria(formVo).intValue());
 		List<TaxOperatorDetailVo> draftVoList = taDraftWorksheetDtlRepository.findByCriteria(formVo);
@@ -172,8 +187,16 @@ public class WorksheetExportService {
 	}
 	
 	public byte[] exportWorksheet(TaxOperatorFormVo formVo) {
-		logger.info("exportWorksheet officeCode={}, analysisNumber={}, startDate={}, endDate={}, dateRange={}",
-			formVo.getOfficeCode(), formVo.getAnalysisNumber(), formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		logger.info("exportWorksheet officeCode={}, analysisNumber={}",
+				officeCode, formVo.getAnalysisNumber());
+		
+		// Prepare for Export
+		TaWorksheetHdr worksheetHdr = taWorksheetHdrRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
+		TaDraftWorksheetHdr draftWorksheetHdr = taDraftWorksheetHdrRepository.findByDraftNumber(worksheetHdr.getDraftNumber());
+		formVo.setDateStart(convertToThaiDate(draftWorksheetHdr.getYearMonthStart()));
+		formVo.setDateEnd(convertToThaiDate(draftWorksheetHdr.getYearMonthEnd()));
+		formVo.setDateRange(draftWorksheetHdr.getMonthNum());
 		
 		final String COND_GROUP = "COND_GROUP";
 		final String COND_GROUP_DESC = "COND_GROUP_DESC";
@@ -253,6 +276,10 @@ public class WorksheetExportService {
 		}
 
 		return content;
+	}
+	
+	private String convertToThaiDate(String date) {
+		return ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(date, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
 	}
 	
 	private void generateWorksheetHeader1(Row row, Cell cell, CellStyle cellStyle, TaxOperatorFormVo formVo) {
