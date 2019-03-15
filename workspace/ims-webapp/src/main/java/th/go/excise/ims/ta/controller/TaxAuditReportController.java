@@ -1,6 +1,5 @@
 package th.go.excise.ims.ta.controller;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 
@@ -11,7 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.go.excise.ims.ta.service.WorksheetExportService;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
@@ -25,18 +27,58 @@ public class TaxAuditReportController {
     @Autowired
     private WorksheetExportService exportService;
 
-    // TODO Draft
-    @GetMapping("/export-draft-worksheet")
+ // TODO preview worksheet
+    @GetMapping("/export-preview-worksheet")
     @ResponseBody
-    public void exportRawMaterialReceive(@ModelAttribute TaxOperatorFormVo formVo, HttpServletRequest httpServletRequest, HttpServletResponse response)
+    public void exportPreviewWorksheet(@ModelAttribute TaxOperatorFormVo formVo, HttpServletRequest httpServletRequest, HttpServletResponse response)
             throws Exception {
 
         logger.info("listRawMaterialReceive export!!");
 
         /* set fileName */
-        String fileName = URLEncoder.encode("Tax", "UTF-8");
+        String fileName = URLEncoder.encode("Worksheet", "UTF-8");
+        /* write it as an excel attachment */
+        byte[] outArray = exportService.exportPreviewWorksheet(formVo);
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+
+        OutputStream outStream = response.getOutputStream();
+        outStream.write(outArray);
+
+    }
+    
+    // TODO Draft
+    @GetMapping("/export-draft-worksheet")
+    @ResponseBody
+    public void exportDraftWorksheet(@ModelAttribute TaxOperatorFormVo formVo, HttpServletRequest httpServletRequest, HttpServletResponse response)
+            throws Exception {
+
+        logger.info("listRawMaterialReceive export!!");
+
+        /* set fileName */
+        String fileName = URLEncoder.encode("DraftWorksheet", "UTF-8");
         /* write it as an excel attachment */
         byte[] outArray = exportService.exportDraftWorksheet(formVo);
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+
+        OutputStream outStream = response.getOutputStream();
+        outStream.write(outArray);
+
+    }
+    
+ // TODO Worksheet
+    @GetMapping("/export-worksheet")
+    @ResponseBody
+    public void exportWorksheet(@ModelAttribute TaxOperatorFormVo formVo, HttpServletRequest httpServletRequest, HttpServletResponse response)
+            throws Exception {
+
+        logger.info("listRawMaterialReceive export!!");
+
+        /* set fileName */
+        String fileName = URLEncoder.encode("Worksheet", "UTF-8");
+        /* write it as an excel attachment */
+        byte[] outArray = exportService.exportWorksheet(formVo);
         response.setContentType("application/octet-stream");
         response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
 
