@@ -70,10 +70,12 @@ public class WorksheetExportService {
 	private TaWorksheetDtlRepository taWorksheetDtlRepository;
 	
 	public byte[] exportPreviewWorksheet(TaxOperatorFormVo formVo) {
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		logger.info("exportPreviewWorksheet officeCode={}, budgetYear={}, startDate={}, endDate={}, dateRange={}",
 			formVo.getOfficeCode(), formVo.getBudgetYear(), formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
 		
 		// Prepare Data for Export
+		formVo.setOfficeCode(officeCode);
 		formVo.setStart(0);
 		formVo.setLength(taWsReg4000Repository.countByCriteria(formVo).intValue());
 		List<TaxOperatorDetailVo> previewVoList = draftWorksheetService.prepareTaxOperatorDetailVoList(formVo);
@@ -134,6 +136,7 @@ public class WorksheetExportService {
 		formVo.setDateStart(convertToThaiDate(draftWorksheetHdr.getYearMonthStart()));
 		formVo.setDateEnd(convertToThaiDate(draftWorksheetHdr.getYearMonthEnd()));
 		formVo.setDateRange(draftWorksheetHdr.getMonthNum());
+		formVo.setOfficeCode(officeCode);
 		
 		formVo.setStart(0);
 		formVo.setLength(taDraftWorksheetDtlRepository.countByCriteria(formVo).intValue());
@@ -188,8 +191,7 @@ public class WorksheetExportService {
 	
 	public byte[] exportWorksheet(TaxOperatorFormVo formVo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		logger.info("exportWorksheet officeCode={}, analysisNumber={}",
-				officeCode, formVo.getAnalysisNumber());
+		logger.info("exportWorksheet officeCode={}, budgetYear={}, analysisNumber={}", officeCode, formVo.getBudgetYear(), formVo.getAnalysisNumber());
 		
 		// Prepare for Export
 		TaWorksheetHdr worksheetHdr = taWorksheetHdrRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
@@ -197,6 +199,7 @@ public class WorksheetExportService {
 		formVo.setDateStart(convertToThaiDate(draftWorksheetHdr.getYearMonthStart()));
 		formVo.setDateEnd(convertToThaiDate(draftWorksheetHdr.getYearMonthEnd()));
 		formVo.setDateRange(draftWorksheetHdr.getMonthNum());
+		formVo.setOfficeCode(officeCode);
 		
 		final String COND_GROUP = "COND_GROUP";
 		final String COND_GROUP_DESC = "COND_GROUP_DESC";

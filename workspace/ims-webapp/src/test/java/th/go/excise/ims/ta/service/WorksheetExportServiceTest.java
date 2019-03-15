@@ -31,7 +31,6 @@ public class WorksheetExportServiceTest {
 	@Test
 	public void test_exportPreviewWorksheet() {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
-		formVo.setOfficeCode("000000");
 		formVo.setBudgetYear("2562");
 		formVo.setDateStart("05/2558");
 		formVo.setDateEnd("04/2560");
@@ -51,7 +50,6 @@ public class WorksheetExportServiceTest {
 	@Test
 	public void test_exportDraftWorksheet() {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
-		formVo.setOfficeCode("000000");
 		formVo.setBudgetYear("2562");
 		formVo.setDraftNumber("000000-2562-000020");
 		
@@ -69,7 +67,6 @@ public class WorksheetExportServiceTest {
 	@Test
 	public void test_exportWorksheet() {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
-		formVo.setOfficeCode("000000");
 		formVo.setBudgetYear("2562");
 		formVo.setAnalysisNumber("000000-2562-000028");
 		
