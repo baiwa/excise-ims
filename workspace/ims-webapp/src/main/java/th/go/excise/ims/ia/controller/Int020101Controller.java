@@ -253,15 +253,22 @@ public class Int020101Controller {
 		return responseData;
 	}
 	
-	@GetMapping("/update/status/{idHdr}/{status}")
+	@GetMapping("/update/status/{idHdr}/{status}/{flag}")
 	@ResponseBody
-	public ResponseData<IaQuestionnaireHdr> updateQtnStatus(@PathVariable("idHdr") BigDecimal idHdr, @PathVariable("status") String status) {
+	public ResponseData<IaQuestionnaireHdr> updateQtnStatus(@PathVariable("idHdr") BigDecimal idHdr, @PathVariable("status") String status, @PathVariable("flag") String flag) {
 		ResponseData<IaQuestionnaireHdr> responseData = new ResponseData<IaQuestionnaireHdr>();
 		try {
-			/* update status */
-			questionnaireService.updateStatusIaQuestionnaire(idHdr, status);
-			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
-			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+			if("C".equals(flag)) {
+				/* update status */
+				questionnaireService.updateStatusIaQuestionnaire(idHdr, status);
+				responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+				responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+			}else {
+				/* reuse status */
+				questionnaireService.updateStatusIaQuestionnaire(idHdr, status);
+				responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+				responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
