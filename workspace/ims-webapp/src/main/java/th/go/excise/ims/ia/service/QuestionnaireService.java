@@ -53,9 +53,10 @@ public class QuestionnaireService {
 	public BigDecimal updateStatusIaQuestionnaire(BigDecimal idHdr,String status) {
 		
 		
-		if(IaConstants.QUESTIONNAIRE_STATUS.STATUS_5_CODE.equals(status)) {
+		if(IaConstants.IA_STATUS.STATUS_5_CODE.equals(status)) {
 			Integer count = iaQuestionnaireMadeHdrJdbcRepository.checkCountMadeHdrStatus3(idHdr);
-			if(count==0) {
+			Integer countAll = iaQuestionnaireMadeHdrJdbcRepository.checkCountMadeHdrAll(idHdr);
+			if(count==countAll) {
 				iaQuestionnaireHdrJdbcRepository.updateStatus(idHdr, status);
 			}
 		}else {
@@ -69,7 +70,7 @@ public class QuestionnaireService {
 	
 	public BigDecimal downStatusIaQuestionnaire(BigDecimal idHdr) {
 		
-		List<ParamInfo> paramInfoList = ApplicationCache.getParamInfoListByGroupCode(IaConstants.QUESTIONNAIRE_STATUS.PARAM_GROUP_CODE);
+		List<ParamInfo> paramInfoList = ApplicationCache.getParamInfoListByGroupCode(IaConstants.IA_STATUS.PARAM_GROUP_CODE);
 		IaQuestionnaireHdr iaQuestionnaireHdr = iaQuestionnaireHdrRepository.findById(idHdr).get();
 	
 		for (ParamInfo paramInfo : paramInfoList) {
@@ -82,7 +83,7 @@ public class QuestionnaireService {
 						
 						iaQuestionnaireHdrJdbcRepository.updateStatus(idHdr, paramInfo2.getParamCode());
 
-							if(IaConstants.QUESTIONNAIRE_STATUS.STATUS_4_CODE.equals(paramInfo.getSortingOrder().toString())) {
+							if(IaConstants.IA_STATUS.STATUS_4_CODE.equals(paramInfo.getSortingOrder().toString())) {
 //								Check Table MadeHdr Count Finish == 0 Up
 								iaQuestionnaireMadeJdbcRepository.deleteByIdHdr(idHdr);
 								iaQuestionnaireMadeHdrJdbcRepository.deleteByIdHdr(idHdr);
@@ -104,10 +105,10 @@ public class QuestionnaireService {
 		
 //		*********** ID_HDR Check Table Side !=0 And Table ID Side => SideDTL Count != 0 *********** 
 		if(countSideDtl==0&&countSide>0) {
-			String status = IaConstants.QUESTIONNAIRE_STATUS.STATUS_2_CODE;
+			String status = IaConstants.IA_STATUS.STATUS_2_CODE;
 			updateStatusIaQuestionnaire(idHdr, status);
 		}else {
-			String status = IaConstants.QUESTIONNAIRE_STATUS.STATUS_1_CODE;
+			String status = IaConstants.IA_STATUS.STATUS_1_CODE;
 			updateStatusIaQuestionnaire(idHdr, status);
 		}
 		

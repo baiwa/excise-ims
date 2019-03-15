@@ -60,7 +60,7 @@ public class Int0201Service {
 	private Int02010101Service int02010101Service;
 	
 	@Autowired
-	QuestionnaireService questionnaireService;
+	private QuestionnaireService questionnaireService;
 
 	public List<IaQuestionnaireSide> findQtnSideById(Int0201FormVo request) {
 		return iaQuestionnaireSideRepository.findByidHeadAndIsDeleted(request.getId(), "N");
@@ -111,7 +111,7 @@ public class Int0201Service {
 						ProjectConstant.SHORT_DATE_FORMAT));
 				dataHdr.setEndDate(ConvertDateUtils.parseStringToLocalDate(request.getEndDateSend(),
 						ProjectConstant.SHORT_DATE_FORMAT));
-				dataHdr.setStatus(IaConstants.QUESTIONNAIRE_STATUS.STATUS_4_CODE);
+				dataHdr.setStatus(IaConstants.IA_STATUS.STATUS_4_CODE);
 				dataHdr = iaQuestionnaireHdrRepository.save(dataHdr);
 				/* find id of Questionnaire Header */
 				if (request.getIdHead() != null) {
@@ -142,7 +142,7 @@ public class Int0201Service {
 								qtnMade = new IaQuestionnaireMade();
 								qtnMade.setIdSideDtl(dtl.getId());
 								qtnMade.setQtnLevel(dtl.getQtnLevel());
-								qtnMade.setStatus("CREATED");
+								qtnMade.setStatus(IaConstants.IA_STATUS_REPLY_QTN.STATUS_1_CODE);
 								qtnMade.setOfficeCode(officeCode);
 								qtnMade.setIdMadeHdr(resMadeHdr.getId());
 								qtnMades.add(qtnMade);
@@ -150,7 +150,7 @@ public class Int0201Service {
 									qtnMade = new IaQuestionnaireMade();
 									qtnMade.setIdSideDtl(dt.getId());
 									qtnMade.setQtnLevel(dt.getQtnLevel());
-									qtnMade.setStatus("CREATED");
+									qtnMade.setStatus(IaConstants.IA_STATUS_REPLY_QTN.STATUS_1_CODE);
 									qtnMade.setOfficeCode(officeCode);
 									qtnMade.setIdMadeHdr(resMadeHdr.getId());
 									qtnMades.add(qtnMade);
@@ -158,7 +158,7 @@ public class Int0201Service {
 										qtnMade = new IaQuestionnaireMade();
 										qtnMade.setIdSideDtl(d.getId());
 										qtnMade.setQtnLevel(d.getQtnLevel());
-										qtnMade.setStatus("CREATED");
+										qtnMade.setStatus(IaConstants.IA_STATUS_REPLY_QTN.STATUS_1_CODE);
 										qtnMade.setOfficeCode(officeCode);
 										qtnMade.setIdMadeHdr(resMadeHdr.getId());
 										qtnMades.add(qtnMade);
@@ -186,13 +186,13 @@ public class Int0201Service {
 						ProjectConstant.SHORT_DATE_FORMAT));
 				dataHdr.setEndDate(ConvertDateUtils.parseStringToLocalDate(request.getEndDateSend(),
 						ProjectConstant.SHORT_DATE_FORMAT));
-				dataHdr.setStatus(IaConstants.QUESTIONNAIRE_STATUS.STATUS_4_CODE);
+				dataHdr.setStatus(IaConstants.IA_STATUS.STATUS_4_CODE);
 				iaQuestionnaireHdrRepository.save(dataHdr);
 			}
 		}
 
 		/* check status for save or update or delete */
-		if (IaConstants.QUESTIONNAIRE_STATUS.STATUS_4_CODE.equals(request.getStatus())) {
+		if (IaConstants.IA_STATUS.STATUS_4_CODE.equals(request.getStatus())) {
 			logger.info("delete QtnMade by idSideDtl");
 			/* find id made header from request */
 			List<IaQuestionnaireMade> filterQtnMade = iaQuestionnaireMadeRepository
@@ -240,7 +240,7 @@ public class Int0201Service {
 								ProjectConstant.SHORT_DATE_FORMAT));
 						dataMadeHdr.setEndDate(ConvertDateUtils.parseStringToLocalDate(request.getEndDateSend(),
 								ProjectConstant.SHORT_DATE_FORMAT));
-						dataMadeHdr.setStatus("CREATED");
+						dataMadeHdr.setStatus(IaConstants.IA_STATUS_REPLY_QTN.STATUS_1_CODE);
 						dataMadeHdr.setOfficeCode(officeCode);
 						IaQuestionnaireMadeHdr resMadeHdr = iaQuestionnaireMadeHdrRepository.save(dataMadeHdr);
 
@@ -310,7 +310,7 @@ public class Int0201Service {
 				qtnMade = new IaQuestionnaireMade();
 				qtnMade.setIdSideDtl(objMade.getIdSideDtl());
 				qtnMade.setQtnLevel(objMade.getQtnLevel());
-				qtnMade.setStatus("CREATED");
+				qtnMade.setStatus(IaConstants.IA_STATUS_REPLY_QTN.STATUS_1_CODE);
 				qtnMade.setOfficeCode(officeCode);
 				qtnMade.setIdMadeHdr(idMadeHdr);
 				iaQuestionnaireMadeRepository.save(qtnMade);

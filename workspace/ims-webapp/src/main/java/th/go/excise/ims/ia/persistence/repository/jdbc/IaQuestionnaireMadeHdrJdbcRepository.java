@@ -150,4 +150,14 @@ public class IaQuestionnaireMadeHdrJdbcRepository {
 
 		return count;
 	}
+	public Integer checkCountMadeHdrAll(BigDecimal idHdr) {
+		StringBuilder sql = new StringBuilder(" select COUNT(*) AS COUNT from IA_QUESTIONNAIRE_MADE_HDR mh WHERE mh.ID_HDR = ?");
+		List<Object> params = new ArrayList<Object>();
+		
+		params.add(idHdr);
+		
+		Integer count = commonJdbcTemplate.queryForObject(sql.toString(), params.toArray(),Integer.class);
+
+		return count;
+	}
 }

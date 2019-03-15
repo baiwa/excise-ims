@@ -31,9 +31,9 @@ public class Int0203JdbcRepository {
 		sql.append(" AND (HDR.STATUS= ? ");
 		sql.append(" OR HDR.STATUS= ? ");
 		sql.append(" OR HDR.STATUS= ? ) ");
-		params.add(IaConstants.QUESTIONNAIRE_STATUS.STATUS_4_CODE);
-		params.add(IaConstants.QUESTIONNAIRE_STATUS.STATUS_5_CODE);
-		params.add(IaConstants.QUESTIONNAIRE_STATUS.STATUS_6_CODE);
+		params.add(IaConstants.IA_STATUS.STATUS_4_CODE);
+		params.add(IaConstants.IA_STATUS.STATUS_5_CODE);
+		params.add(IaConstants.IA_STATUS.STATUS_6_CODE);
 		if (StringUtils.isNotBlank(request.getBudgetYear())) {
 			sql.append(" AND HDR.BUDGET_YEAR = ? ");
 			params.add(request.getBudgetYear());

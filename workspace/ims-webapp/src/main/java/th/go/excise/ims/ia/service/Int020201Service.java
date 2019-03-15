@@ -37,9 +37,12 @@ public class Int020201Service {
 
 	@Autowired
 	private IaQuestionnaireMadeHdrRepository iaQuestionnaireMadeHdrRepository;
-	
+
 	@Autowired
 	private IaQuestionnaireHdrRepository iaQuestionnaireHdrRepository;
+
+	@Autowired
+	private QuestionnaireService questionnaireService;
 
 	public List<IaQuestionnaireSide> findQtnSideById(Int020201SidesFormVo request) {
 		return iaQuestionnaireSideRepository.findByidHeadAndIsDeleted(request.getIdSide(), "N");
@@ -106,43 +109,35 @@ public class Int020201Service {
 					IaQuestionnaireMade madeDtl = resMadeDtl.get();
 					madeDtl.setNote(objMadeDtl.getNote());
 					madeDtl.setCheckFlag(objMadeDtl.getCheckFlag());
-
-					if (IaConstants.QUESTIONNAIRE_STATUS.STATUS_4_CODE.equals(request.getStatus())) {
-						madeDtl.setStatus("WAIT");
-					}
-
-					if (request.getFlagConfirm()) {
-						madeDtl.setStatus(IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE);
-					}
-					/* update 'status' questionnaire-made-header */
-					updateStatusQtnMadeHdr(request);
-//					iaQuestionnaireMadeRepository.save(madeDtl);
+					iaQuestionnaireMadeRepository.save(madeDtl);
 				}
 			}
+			updateStatusQtnMadeHdr(request);
 		}
 	}
 
 	private void updateStatusQtnMadeHdr(Int020201DtlVo request) {
-		Optional<IaQuestionnaireMadeHdr> resMadeHdr = iaQuestionnaireMadeHdrRepository.findById(request.getIdMadeHdr());
-		if (resMadeHdr.isPresent()) {
-			IaQuestionnaireMadeHdr madeHdr = resMadeHdr.get();
-			if ("CREATED".equals(request.getStatus()) && !request.getFlagConfirm()) {
-//				madeHdr.setStatus("WAIT");
-			}
-			/* confirm send questionnaire form */
-			if (request.getFlagConfirm()) {
-				/* update status questionnaire made hdr */
-//				madeHdr.setStatus("FINISH");
-				
-				/* update status questionnaire hdr */
+		if (IaConstants.IA_STATUS_REPLY_QTN.STATUS_1_CODE.equals(request.getStatus()) && !request.getFlagConfirm()) {
+			/* update status madeHdr */
+			questionnaireService.updateStatusIaQuestionnaireMadeHdrAndDTL(request.getIdMadeHdr(), Integer.toString(Integer.parseInt(request.getStatus()) + 1));
+		}
+
+		/* confirm send questionnaire form */
+		if (request.getFlagConfirm()) {
+			/* find id Hdr */
+			Optional<IaQuestionnaireMadeHdr> resMadeHdr = iaQuestionnaireMadeHdrRepository.findById(request.getIdMadeHdr());
+			if (resMadeHdr.isPresent()) {
+				IaQuestionnaireMadeHdr madeHdr = resMadeHdr.get();
+				/* find status Hdr */
 				Optional<IaQuestionnaireHdr> resHdr = iaQuestionnaireHdrRepository.findById(madeHdr.getIdHdr());
-				if(resHdr.isPresent()) {
-					IaQuestionnaireHdr dataHdr = resHdr.get();
-//					dataHdr.setStatus("FINISH");
-//					iaQuestionnaireHdrRepository.save(dataHdr);
+				if (resHdr.isPresent()) {
+					IaQuestionnaireHdr hdr = resHdr.get();
+					/* update status madeHdr */
+					questionnaireService.updateStatusIaQuestionnaireMadeHdrAndDTL(request.getIdMadeHdr(), Integer.toString(Integer.parseInt(request.getStatus()) + 1));
+					/* update status Hdr */
+					questionnaireService.updateStatusIaQuestionnaire(hdr.getId(), Integer.toString(Integer.parseInt(hdr.getStatus()) + 1));
 				}
 			}
-			iaQuestionnaireMadeHdrRepository.save(madeHdr);
 		}
 	}
 

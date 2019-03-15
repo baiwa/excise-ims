@@ -51,7 +51,6 @@ public class Int02Service {
 	
 	@Autowired
 	private IaQuestionnaireSideRepository iaQuestionnaireSideRepository;
-	
 
 	public DataTableAjax<Int02Vo> filterQtnHdr(Int02FormVo request) {
 
@@ -163,7 +162,7 @@ public class Int02Service {
 		if (dataRes.isPresent()) {
 			IaQuestionnaireHdr daraHdr = dataRes.get();
 
-			if (IaConstants.QUESTIONNAIRE_STATUS.STATUS_4_CODE.equals(daraHdr.getStatus())) {
+			if (IaConstants.IA_STATUS.STATUS_4_CODE.equals(daraHdr.getStatus())) {
 				/* update status */
 //				daraHdr.setStatus("FAIL_SEND_QTN");
 				iaQuestionnaireHdrRepository.save(daraHdr);
@@ -182,8 +181,6 @@ public class Int02Service {
 			} else {
 				iaQuestionnaireHdrRepository.deleteById(daraHdr.getId());
 			}
-//			daraHdr.setStatus("FAIL_HDR");
-//			iaQuestionnaireHdrRepository.save(daraHdr);
 		}
 	}
 
