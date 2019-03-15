@@ -28,19 +28,10 @@ public class AnalysisTaxQtyService {
 		
 		List<AnalysisTaxQtyVo> datalist = new ArrayList<AnalysisTaxQtyVo>();
 		AnalysisTaxQtyVo data = null;
-//		for(int i = start;i<(start+length);i++){
-//			if(i >= total){
-//				break;
-//			}
-//			data = new AnalysisTaxQtyVo();
-//			data.setGoodsDesc(excise+i);
-//			data.setTaxQty("100.00");
-//			data.setMonthStatementTaxQty("200.00");
-//			data.setDiffTaxQty("300.00");
-//			datalist.add(data);
-//		}
-		
-		for(int i=0;i<35;i++){
+		for(int i = start;i<(start+length);i++){
+			if(i >= total){
+				break;
+			}
 			data = new AnalysisTaxQtyVo();
 			data.setGoodsDesc(excise+i);
 			data.setTaxQty("100.00");
@@ -48,6 +39,8 @@ public class AnalysisTaxQtyService {
 			data.setDiffTaxQty("300.00");
 			datalist.add(data);
 		}
+		
+
 
 		return datalist;
 	}

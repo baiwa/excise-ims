@@ -59,6 +59,7 @@ public class ServicePaperBalanceGoodsService {
 
 		return datalist;
 	}
+	
 	public byte[] exportFileLeftInStockServiceVo() throws IOException {
 		
 		List<ServicePaperBalanceGoodsVo> dataListexportFile = new ArrayList<ServicePaperBalanceGoodsVo>();

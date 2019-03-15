@@ -40,6 +40,7 @@ public class AnalysisTaxAmtsService {
 			data.setDiffNetTaxByValue("800.00");
 			data.setDiffNetTaxByQty("900.00");
 			data.setDiffNetTaxByValueAndQty("4560.00");
+			datalist.add(data);
 		
 		}
 		

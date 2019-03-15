@@ -34,7 +34,7 @@ public class AnalysisIncomeCompareLastMonthService {
 			data.setIncomeAmt("24000.00");
 			data.setDiffIncomeAmt("-480");
 			data.setDiffIncomePnt("-4.35");
-		
+			datalist.add(data);
 		}
 		
 

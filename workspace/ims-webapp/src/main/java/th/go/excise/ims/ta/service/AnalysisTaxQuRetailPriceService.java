@@ -29,18 +29,10 @@ public class AnalysisTaxQuRetailPriceService {
 		
 		List<AnalysisTaxQuRetailPriceVo> datalist = new ArrayList<AnalysisTaxQuRetailPriceVo>();
 		AnalysisTaxQuRetailPriceVo data = null;
-//		for(int i = start;i<(start+length);i++){
-//			if(i >= total){
-//				break;
-//			}
-//			data = new AnalysisTaxQuRetailPriceVo();
-//			data.setGoodsDesc(excise+i);
-//			data.setTaxInformPrice("100.00");
-//			data.setInformPrice("200.00");
-//			data.setDiffTaxInformPrice("300.000");
-//			datalist.add(data);
-//		}
-		for(int i=0;i<35;i++){
+		for(int i = start;i<(start+length);i++){
+			if(i >= total){
+				break;
+			}
 			data = new AnalysisTaxQuRetailPriceVo();
 			data.setGoodsDesc(excise+i);
 			data.setTaxInformPrice("100.00");
@@ -48,8 +40,7 @@ public class AnalysisTaxQuRetailPriceService {
 			data.setDiffTaxInformPrice("300.000");
 			datalist.add(data);
 		}
-
-
+		
 		return datalist;
 	}
 }
