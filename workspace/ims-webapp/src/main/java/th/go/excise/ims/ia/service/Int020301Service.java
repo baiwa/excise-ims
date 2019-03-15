@@ -739,7 +739,7 @@ public class Int020301Service {
 		IaQuestionnaireHdr res = iaQuestionnaireHdrRepository.findById(id).get();
 		res.setConclude(form.getConclude());
 		iaQuestionnaireHdrRepository.save(res);
-		questionnaireService.updateStatusIaQuestionnaire(id, IaConstants.QUESTIONNAIRE_STATUS.STATUS_6_CODE);
+		questionnaireService.updateStatusIaQuestionnaire(id, IaConstants.IA_STATUS.STATUS_6_CODE);
 	}
 
 }
