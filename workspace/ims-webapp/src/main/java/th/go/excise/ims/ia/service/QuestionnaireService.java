@@ -115,5 +115,15 @@ public class QuestionnaireService {
 	}
 	
 	
+	public BigDecimal updateStatusIaQuestionnaireMadeHdrAndDTL(BigDecimal idMadeHdr,String status) {
+		
+		iaQuestionnaireMadeHdrJdbcRepository.updateStatus(idMadeHdr, status);
+		iaQuestionnaireMadeJdbcRepository.updateStatus(idMadeHdr, status);
+		
+		
+		return idMadeHdr;
+	}
+	
+	
 
 }

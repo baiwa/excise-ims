@@ -117,16 +117,16 @@ public class IaQuestionnaireMadeHdrJdbcRepository {
 		return data; 
 	}
 	
-	public BigDecimal updateStatus(BigDecimal idHdr,String status) {
-		StringBuilder sql = new StringBuilder(" UPDATE IA_QUESTIONNAIRE_MADE_HDR SET STATUS = ? WHERE ID_HDR = ? ");
+	public BigDecimal updateStatus(BigDecimal idMadeHdr,String status) {
+		StringBuilder sql = new StringBuilder(" UPDATE IA_QUESTIONNAIRE_MADE_HDR SET STATUS = ? WHERE ID = ? ");
 		List<Object> params = new ArrayList<Object>();
 		
 		params.add(status);
-		params.add(idHdr);
+		params.add(idMadeHdr);
 		
 		commonJdbcTemplate.update(sql.toString(), params.toArray());
 
-		return idHdr;
+		return idMadeHdr;
 	}
 
 	public BigDecimal deleteByIdHdr(BigDecimal idHdr) {
