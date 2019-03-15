@@ -127,20 +127,27 @@ public class DraftWorksheetService {
 		String ymStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateStart(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		String ymEnd = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateEnd(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 
+		// ==> Map TaxAuditLast 1 2 3
 		List<String> budgetYears = new ArrayList<>();
-		int lastYear1 = Integer.valueOf(formVo.getBudgetYear()) - 1;
-		int lastYear2 = Integer.valueOf(formVo.getBudgetYear()) - 2;
-		int lastYear3 = Integer.valueOf(formVo.getBudgetYear()) - 3;
-		budgetYears.add(String.valueOf(lastYear1));
-		budgetYears.add(String.valueOf(lastYear2));
-		budgetYears.add(String.valueOf(lastYear3));
-		List<PlanMapVo> TaxAmLasts = planWorksheetDtlRepository.findByInBudgetYearPlanDtl(budgetYears);
-
+		int lastYear1 = 0; 
+		int lastYear2 = 0; 
+		int lastYear3 = 0; 
 		Map<String, String> mapTaxAmLast = new HashMap<String, String>();
-		for (PlanMapVo taxAmLast : TaxAmLasts) {
-			mapTaxAmLast.put(taxAmLast.getBudgetYear() + taxAmLast.getNewRegId(), taxAmLast.getAuditPlanCode());
-		}
+		if (StringUtils.isNotBlank(formVo.getBudgetYear())) {
+			lastYear1 = Integer.valueOf(formVo.getBudgetYear()) - 1;
+			lastYear2 = Integer.valueOf(formVo.getBudgetYear()) - 2;
+			lastYear3 = Integer.valueOf(formVo.getBudgetYear()) - 3;
+			
+			budgetYears.add(String.valueOf(lastYear1));
+			budgetYears.add(String.valueOf(lastYear2));
+			budgetYears.add(String.valueOf(lastYear3));
+			List<PlanMapVo> TaxAmLasts = planWorksheetDtlRepository.findByInBudgetYearPlanDtl(budgetYears);
 
+			
+			for (PlanMapVo taxAmLast : TaxAmLasts) {
+				mapTaxAmLast.put(taxAmLast.getBudgetYear() + taxAmLast.getNewRegId(), taxAmLast.getAuditPlanCode());
+			}
+		}		
 		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findByCriteria(formVo);
 		Map<String, List<TaWsInc8000M>> wsInc8000MMap = taWsInc8000MRepository.findByMonthRange(ymStart, ymEnd);
 		List<TaWsInc8000M> wsInc8000MList = null;
