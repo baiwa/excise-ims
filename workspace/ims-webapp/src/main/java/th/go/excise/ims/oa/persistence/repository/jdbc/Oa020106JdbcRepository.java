@@ -22,7 +22,7 @@ public class Oa020106JdbcRepository {
 	public Oa020106ButtonVo findButtonIdById(BigDecimal id) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" select L.OA_LUBRICANTS_ID as OA_LUBRICANTS_ID, L.OA_PLAN_ID as OA_PLAN_ID, ");
+		sql.append(" select LI.LICENSE_TYPE as LICENSE_TYPE, L.OA_LUBRICANTS_ID as OA_LUBRICANTS_ID, L.OA_PLAN_ID as OA_PLAN_ID, ");
 		sql.append(" L.LICENSE_NO as LICENSE_NO, D.OA_LUBRICANTS_DTL_ID as OA_LUBRICANTS_DTL_ID, ");
 		sql.append(" LI.OA_CUSLICENSE_ID as OA_CUSLICENSE_ID, LI.OA_CUSTOMER_ID as OA_CUSTOMER_ID from OA_LUBRICANTS L ");
 		sql.append(" inner join OA_CUSTOMER_LICEN LI on L.LICENSE_NO = LI.LICENSE_NO ");
@@ -38,6 +38,7 @@ public class Oa020106JdbcRepository {
 		public Oa020106ButtonVo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Oa020106ButtonVo vo = new Oa020106ButtonVo();
 			vo.setLicenseNo(rs.getString("LICENSE_NO"));
+			vo.setLicenseType(rs.getString("LICENSE_TYPE"));
 			vo.setOaPlanId(rs.getBigDecimal("OA_PLAN_ID"));
 			vo.setOaCuslicenseId(rs.getBigDecimal("OA_CUSLICENSE_ID"));
 			vo.setOaCustomerId(rs.getBigDecimal("OA_CUSTOMER_ID"));
