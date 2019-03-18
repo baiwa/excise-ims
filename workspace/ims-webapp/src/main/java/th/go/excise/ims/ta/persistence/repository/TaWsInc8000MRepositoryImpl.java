@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.go.excise.ims.ta.persistence.entity.TaWsInc8000M;
+import th.go.excise.ims.ta.vo.AnalyzeCompareOldYearVo;
 
 public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom {
 	
@@ -63,6 +64,17 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 		});
 		
 		return wsInc8000MMap;
+	}
+	
+	private void buildByAnalyzeCompareOldYearQuery(StringBuilder sql, List<Object> params, AnalyzeCompareOldYearVo formVo) {
+		sql.append(" SELECT * ");
+		sql.append(" FROM TA_WS_INC8000_M ");
+		sql.append(" WHERE IS_DELETED = 'N' ");
+		sql.append(" AND NEW_REG_ID = ? ");
+		sql.append(" AND TAX_YEAR || LPAD(TAX_MONTH, 2, 0) ");
+		sql.append(" BETWEEN ? AND ? ");
+		params.add(formVo.getNewRegId());
+//		params.add(formVo.get)
 	}
 
 }

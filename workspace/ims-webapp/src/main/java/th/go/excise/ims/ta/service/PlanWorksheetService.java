@@ -1,5 +1,10 @@
 package th.go.excise.ims.ta.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -7,8 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
@@ -21,15 +28,18 @@ import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSelect;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
-import th.go.excise.ims.ta.persistence.repository.*;
+import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
+import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetHdrRepository;
+import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetSelectRepository;
+import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetSendRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetHdrRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetDtlCusVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetStatus;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class PlanWorksheetService {
@@ -53,6 +63,9 @@ public class PlanWorksheetService {
     private TaPlanWorksheetSendRepository taPlanWorksheetSendRepository;
     @Autowired
     private TaPlanWorksheetSelectRepository taPlanWorksheetSelectRepository;
+    
+    @Autowired
+    private TaWsReg4000Repository reg4000Repository;
 
     public TaPlanWorksheetHdr getPlanWorksheetHdr(PlanWorksheetVo formVo) {
         logger.info("getPlanWorksheetHdr budgetYear={}", formVo.getBudgetYear());
@@ -334,5 +347,35 @@ public class PlanWorksheetService {
     	taPlanWorksheetSelectRepository.forceDeleteByBudgetYear(budgetYear);
     	taWorksheetHdrRepository.updateWorksheetStatusByBudgetYear(TA_WORKSHEET_STATUS.CONDITION, budgetYear);
     }
+    
+    //TODO Get WS_REG4000 findBy NEW_REG_ID
+  	public PlanWorksheetDtlCusVo findByNewRegId(PlanWorksheetDtlCusVo formVo) {
+  		PlanWorksheetDtlCusVo dtlCus = new PlanWorksheetDtlCusVo();
+  		TaWsReg4000 reg4000 = new TaWsReg4000();
+  		reg4000 = reg4000Repository.getByNewRegId(formVo.getNewRegId());
+  		dtlCus.setWsReg4000Id(reg4000.getWsReg4000Id());
+  		dtlCus.setNewRegId(reg4000.getNewRegId());
+  		dtlCus.setCusId(reg4000.getCusId());
+  		dtlCus.setCusFullname(reg4000.getCusFullname());
+  		dtlCus.setCusAddress(reg4000.getCusAddress());
+  		dtlCus.setCusTelno(reg4000.getCusTelno());
+  		dtlCus.setCusEmail(reg4000.getCusEmail());
+  		dtlCus.setCusUrl(reg4000.getCusUrl());
+  		dtlCus.setFacId(reg4000.getFacId());
+  		dtlCus.setFacFullname(reg4000.getFacFullname());
+  		dtlCus.setFacAddress(reg4000.getFacAddress());
+  		dtlCus.setFacTelno(reg4000.getFacTelno());
+  		dtlCus.setFacEmail(reg4000.getFacEmail());
+  		dtlCus.setFacUrl(reg4000.getFacUrl());
+  		dtlCus.setOfficeCode(reg4000.getOfficeCode());
+  		dtlCus.setActiveFlag(reg4000.getActiveFlag());
+  		dtlCus.setDutyCode(reg4000.getDutyCode());
+  		dtlCus.setFacType(reg4000.getFacType());
+  		dtlCus.setRegStatus(reg4000.getRegStatus());
+  		dtlCus.setRegDate(reg4000.getRegDate().toString());
+  		dtlCus.setRegCapital(reg4000.getRegCapital());
+  		dtlCus.setDutyCodeDesc(ApplicationCache.getParamInfoByCode(PARAM_GROUP.EXCISE_PRODUCT_TYPE, reg4000.getDutyCode()).getValue1());
+  		return dtlCus;
+  	}
 
 }

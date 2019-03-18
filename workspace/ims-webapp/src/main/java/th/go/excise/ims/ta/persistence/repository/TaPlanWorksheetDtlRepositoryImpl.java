@@ -126,7 +126,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
         // AUDIT_TYPE
         sql.append(" AND AUDIT_TYPE IN (");
         List<AuditCalendarCheckboxVo> auditType = formVo.getAuditType().stream()
-        		.filter(e -> e.getCheckbox().equals(false))
+        		.filter(e -> e.getCheckbox().equals(true))
         		.collect(Collectors.toList());
         
         for (int i = 0; i < auditType.size(); i++) {
@@ -154,7 +154,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
      // AUDIT_STATUS
         sql.append(" AND AUDIT_STATUS IN (");
         List<AuditCalendarCheckboxVo> auditStatus = formVo.getAuditStatus().stream()
-        		.filter(e -> e.getCheckbox().equals(false))
+        		.filter(e -> e.getCheckbox().equals(true))
         		.collect(Collectors.toList());
         
         for (int i = 0; i < auditStatus.size(); i++) {

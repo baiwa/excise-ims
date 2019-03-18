@@ -1,11 +1,19 @@
 package th.go.excise.ims.ta.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.LabelValueBean;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
@@ -17,14 +25,21 @@ import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainDtl;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
+import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
 import th.go.excise.ims.ta.service.DraftWorksheetService;
 import th.go.excise.ims.ta.service.PlanWorkSheetSendService;
 import th.go.excise.ims.ta.service.PlanWorksheetService;
 import th.go.excise.ims.ta.service.WorksheetService;
 import th.go.excise.ims.ta.util.TaxAuditUtils;
-import th.go.excise.ims.ta.vo.*;
-
-import java.util.List;
+import th.go.excise.ims.ta.vo.CondGroupVo;
+import th.go.excise.ims.ta.vo.PlanWorkSheetSendVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetDtlCusVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetStatus;
+import th.go.excise.ims.ta.vo.PlanWorksheetVo;
+import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
+import th.go.excise.ims.ta.vo.TaxOperatorVo;
+import th.go.excise.ims.ta.vo.YearMonthVo;
 
 @Controller
 @RequestMapping("/api/ta/tax-operator")
@@ -507,6 +522,23 @@ public class TaxOperatorController {
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.FAILED);
+        }
+        return response;
+    }
+    
+    //TODO Get WS_REG4000 findBy NEW_REG_ID
+    @PostMapping("/find-by-newRegId")
+    @ResponseBody
+    public ResponseData<PlanWorksheetDtlCusVo> findByNewRegId(@RequestBody PlanWorksheetDtlCusVo formVo) {
+        ResponseData<PlanWorksheetDtlCusVo> response = new ResponseData<>();
+        
+        try {
+            response.setData(planWorksheetService.findByNewRegId(formVo));
+            response.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
             response.setStatus(RESPONSE_STATUS.FAILED);
         }
         return response;
