@@ -47,7 +47,7 @@ public class Int020201Service {
 	private QuestionnaireService questionnaireService;
 
 	public List<IaQuestionnaireSide> findQtnSideById(Int020201SidesFormVo request) {
-		return iaQuestionnaireSideRepository.findByidHeadAndIsDeleted(request.getIdSide(), "N");
+		return iaQuestionnaireSideRepository.findByidHeadAndIsDeletedOrderBySeqAsc(request.getIdSide(), "N");
 	}
 
 	public IaQuestionnaireMadeHdr findQtnMadeHdrById(BigDecimal id) {
