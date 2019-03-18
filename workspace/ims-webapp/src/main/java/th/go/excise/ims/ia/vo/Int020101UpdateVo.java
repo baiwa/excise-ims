@@ -13,6 +13,7 @@ public class Int020101UpdateVo {
 	private LocalDate endDate;
 	private String status;
 	private String qtnYear;
+	private String toDepartment;
 
 	private List<Int020101SideVo> side;
 
@@ -86,6 +87,14 @@ public class Int020101UpdateVo {
 
 	public void setSide(List<Int020101SideVo> side) {
 		this.side = side;
+	}
+
+	public String getToDepartment() {
+		return toDepartment;
+	}
+
+	public void setToDepartment(String toDepartment) {
+		this.toDepartment = toDepartment;
 	}
 
 }

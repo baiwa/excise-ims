@@ -124,6 +124,7 @@ public class Int02Service {
 		data.setBudgetYear(request.getBudgetYear());
 		data.setQtnHeaderName(request.getQtnHeaderName());
 		data.setNote(request.getNote());
+		data.setToDepartment(res.getToDepartment());
 
 		/* update table Questionnaire-Made-Hdr */
 //		List<IaQuestionnaireMadeHdr> dataMadeHdr = iaQuestionnaireMadeHdrRepository.findByIdHdr(request.getId());
