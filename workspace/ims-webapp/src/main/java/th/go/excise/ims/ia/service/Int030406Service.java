@@ -22,8 +22,6 @@ public class Int030406Service {
 	@Autowired
 	private Int030405Service int030405Service;
 	
-	@Autowired
-	private IntCalculateCriteriaUtil intCalculateCriteriaUtil;
 	
 	@Autowired
 	private IaRiskCheckPeriodRepository iaRiskCheckPeriodRepository;
@@ -36,10 +34,10 @@ public class Int030406Service {
 
 		for (IaRiskCheckPeriod systemList : systemUnworkingList) {
 			IaRiskCheckPeriod dataSet = new IaRiskCheckPeriod();
-			dataSet.setDateFrom(systemList.getDateFrom());
 			dataSet.setDateStart(systemList.getDateStart());
-			dataSet.setProjectName(systemList.getProjectName());
-			dataSet.setDepartment(systemList.getDepartment());
+			dataSet.setDateEnd(systemList.getDateEnd());
+			dataSet.setSectorName(systemList.getSectorName());
+			dataSet.setAreaName(systemList.getAreaName());
 			dataSet.setLongTime(systemList.getLongTime());
 			res.add(dataSet);
 		}
@@ -60,8 +58,8 @@ public class Int030406Service {
 //			}
 			resDataCalSet.setIaRiskCheckPeriod(list);
 			
-			resDataCalSet.setDateFrom(ConvertDateUtils.formatDateToString(list.getDateFrom(), ConvertDateUtils.DD_MM_YYYY));
-			resDataCalSet.setDateTo(ConvertDateUtils.formatDateToString(list.getDateStart(), ConvertDateUtils.DD_MM_YYYY));
+			resDataCalSet.setDateFrom(ConvertDateUtils.formatDateToString(list.getDateStart(), ConvertDateUtils.DD_MM_YYYY));
+			resDataCalSet.setDateTo(ConvertDateUtils.formatDateToString(list.getDateEnd(), ConvertDateUtils.DD_MM_YYYY));
 			resDataCalSet.setIntCalculateCriteriaVo(risk);
 			resDataCal.add(index, resDataCalSet);
 			
