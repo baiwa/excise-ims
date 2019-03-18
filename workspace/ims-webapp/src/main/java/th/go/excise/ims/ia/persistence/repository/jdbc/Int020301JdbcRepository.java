@@ -51,7 +51,7 @@ public class Int020301JdbcRepository {
 	public List<Int020301InfoVo> findInfoByIdSide(BigDecimal idSide, String budgetYear, String secter) {
 		StringBuilder sqlBuilder = new StringBuilder();
 		sqlBuilder.append(
-				" select qmh.OFFICE_CODE as OFFICE_CODE, qmh.UPDATED_DATE as UPDATED_DATE, qmh.STATUS as STATUS from IA_QUESTIONNAIRE_HDR qhr ");
+				" select qmh.OFFICE_CODE as OFFICE_CODE, qmh.UPDATED_DATE as UPDATED_DATE, qmh.STATUS as STATUS,qmh.ID AS ID_MADE_HDR,qmh.UPDATED_BY AS UPDATED_BY from IA_QUESTIONNAIRE_HDR qhr ");
 		sqlBuilder.append(" inner join IA_QUESTIONNAIRE_MADE_HDR qmh on qmh.ID_HDR = qhr.ID ");
 		sqlBuilder.append(" where qhr.BUDGET_YEAR = ? and qhr.ID = ? AND qhr.IS_DELETED = 'N' ");
 		List<Object> params = new ArrayList<>();
@@ -70,9 +70,11 @@ public class Int020301JdbcRepository {
 		@Override
 		public Int020301InfoVo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Int020301InfoVo vo = new Int020301InfoVo();
+			vo.setIdMadeHdr(rs.getBigDecimal("ID_MADE_HDR"));
 			vo.setSectorName(rs.getString("OFFICE_CODE"));
 			vo.setAreaName(rs.getString("OFFICE_CODE"));
 			vo.setSentDate(rs.getDate("UPDATED_DATE"));
+			vo.setSentBy(rs.getString("UPDATED_BY"));
 			vo.setStatusText(rs.getString("STATUS"));
 			vo.setStatus(rs.getString("STATUS"));
 			return vo;

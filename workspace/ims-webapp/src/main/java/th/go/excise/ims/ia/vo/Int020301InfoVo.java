@@ -5,11 +5,13 @@ import java.util.Date;
 import java.util.List;
 
 public class Int020301InfoVo {
+	BigDecimal idMadeHdr;
 	String sectorName;
 	String areaName;
 	String status;
 	String statusText;
 	Date sentDate;
+	String sentBy;
 	BigDecimal riskQuantity;
 	BigDecimal passValue;
 	BigDecimal failValue;
@@ -19,44 +21,12 @@ public class Int020301InfoVo {
 	List<Int020301DataVo> sideDtls;
 	BigDecimal riskNum;
 
-	public BigDecimal getRiskNum() {
-		return riskNum;
+	public BigDecimal getIdMadeHdr() {
+		return idMadeHdr;
 	}
 
-	public void setRiskNum(BigDecimal riskNum) {
-		this.riskNum = riskNum;
-	}
-
-	public String getRiskColor() {
-		return riskColor;
-	}
-
-	public void setRiskColor(String riskColor) {
-		this.riskColor = riskColor;
-	}
-
-	public BigDecimal getAvgRisk() {
-		return avgRisk;
-	}
-
-	public void setAvgRisk(BigDecimal avgRisk) {
-		this.avgRisk = avgRisk;
-	}
-
-	public String getRiskText() {
-		return riskText;
-	}
-
-	public void setRiskText(String riskText) {
-		this.riskText = riskText;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
+	public void setIdMadeHdr(BigDecimal idMadeHdr) {
+		this.idMadeHdr = idMadeHdr;
 	}
 
 	public String getSectorName() {
@@ -75,6 +45,14 @@ public class Int020301InfoVo {
 		this.areaName = areaName;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public String getStatusText() {
 		return statusText;
 	}
@@ -89,6 +67,14 @@ public class Int020301InfoVo {
 
 	public void setSentDate(Date sentDate) {
 		this.sentDate = sentDate;
+	}
+
+	public String getSentBy() {
+		return sentBy;
+	}
+
+	public void setSentBy(String sentBy) {
+		this.sentBy = sentBy;
 	}
 
 	public BigDecimal getRiskQuantity() {
@@ -115,6 +101,30 @@ public class Int020301InfoVo {
 		this.failValue = failValue;
 	}
 
+	public BigDecimal getAvgRisk() {
+		return avgRisk;
+	}
+
+	public void setAvgRisk(BigDecimal avgRisk) {
+		this.avgRisk = avgRisk;
+	}
+
+	public String getRiskText() {
+		return riskText;
+	}
+
+	public void setRiskText(String riskText) {
+		this.riskText = riskText;
+	}
+
+	public String getRiskColor() {
+		return riskColor;
+	}
+
+	public void setRiskColor(String riskColor) {
+		this.riskColor = riskColor;
+	}
+
 	public List<Int020301DataVo> getSideDtls() {
 		return sideDtls;
 	}
@@ -122,4 +132,13 @@ public class Int020301InfoVo {
 	public void setSideDtls(List<Int020301DataVo> sideDtls) {
 		this.sideDtls = sideDtls;
 	}
+
+	public BigDecimal getRiskNum() {
+		return riskNum;
+	}
+
+	public void setRiskNum(BigDecimal riskNum) {
+		this.riskNum = riskNum;
+	}
+
 }

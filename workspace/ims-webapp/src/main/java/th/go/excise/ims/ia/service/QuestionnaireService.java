@@ -7,9 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.LoggingUtils;
 
+import ch.qos.logback.core.net.LoginAuthenticator;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
+import th.co.baiwa.ims.ws.userldap.Login;
 import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
@@ -123,9 +127,9 @@ public class QuestionnaireService {
 	
 	
 	public BigDecimal updateStatusIaQuestionnaireMadeHdrAndDTL(BigDecimal idMadeHdr,String status) {
-		
-		iaQuestionnaireMadeHdrJdbcRepository.updateStatus(idMadeHdr, status);
-		iaQuestionnaireMadeJdbcRepository.updateStatus(idMadeHdr, status);
+		String username = UserLoginUtils.getCurrentUserBean().getUserThaiName();
+		iaQuestionnaireMadeHdrJdbcRepository.updateStatus(idMadeHdr, status,username);
+		iaQuestionnaireMadeJdbcRepository.updateStatus(idMadeHdr, status,username);
 		
 		
 		return idMadeHdr;

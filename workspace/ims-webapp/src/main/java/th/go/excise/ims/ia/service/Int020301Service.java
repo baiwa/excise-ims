@@ -155,7 +155,11 @@ public class Int020301Service {
 				}
 			}
 			ExciseDept area = ApplicationCache.getExciseDept(data.getAreaName());
-			data.setAreaName(area.getDeptName());
+			if(!"0000".equals(area.getOfficeCode().substring(2,6))) {
+				data.setAreaName(area.getDeptName());
+			}else {
+				data.setAreaName("");
+			}
 		}
 		return datas;
 	}
@@ -227,7 +231,7 @@ public class Int020301Service {
 				data.setRiskNum(risk.getRiskRate());
 				// Finding Sector and Area Name
 				List<ExciseDept> exciseDepts = ApplicationCache.getExciseSectorList();
-				data.setStatusText(ApplicationCache.getParamInfoByCode("IA_STATUS", data.getStatusText()).getValue1());
+				data.setStatusText(ApplicationCache.getParamInfoByCode(IaConstants.IA_STATUS.PARAM_GROUP_CODE, data.getStatusText()).getValue1());
 				for (ExciseDept exciseDept : exciseDepts) {
 					if (exciseDept.getOfficeCode().substring(0, 2).equals(data.getSectorName().substring(0, 2))) {
 						data.setSectorName(exciseDept.getDeptName());
@@ -255,7 +259,7 @@ public class Int020301Service {
 		Row row = sheet.createRow(rowNum);
 		Cell cell = row.createCell(cellNum);
 		List<ExcelHeaderNameVo> headerNames = new ArrayList<>();
-		String[] tbTH1 = { "ลำดับ", "สำนักงานสรรพสามิตภาค", "สำนักงานสรรพสามิตพื้นที่", "จำนวนด้านความเสี่ยง",
+		String[] tbTH1 = { "ลำดับ", "หน่ายงาน", "จำนวนด้านความเสี่ยง",
 				"ไม่มี/ไม่ใช่ (%)", "แปลค่าความเสี่ยง" };
 		for (int i = 0; i < tbTH1.length; i++) {
 			cell = row.createCell(cellNum);
@@ -271,7 +275,7 @@ public class Int020301Service {
 			cell.setCellStyle(thStyle);
 			cellNum++;
 		}
-		String[] tbTH2 = { "ส่งเมื่อ", "สถานะการดำเนินการ" };
+		String[] tbTH2 = { "ส่งเมื่อ" };
 		for (int i = 0; i < tbTH2.length; i++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH2[i]);
@@ -284,7 +288,7 @@ public class Int020301Service {
 		row = sheet.createRow(rowNum);
 		int cellNumtbTH2 = 0;
 		// Empty Cell Row [1]
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 5; i++) {
 			cell = row.createCell(cellNumtbTH2);
 			cell.setCellStyle(thStyle);
 			cellNumtbTH2++;
@@ -297,7 +301,7 @@ public class Int020301Service {
 			cellNumtbTH2++;
 		}
 		// Empty Cell Row [1]
-		for (int i = 6 + headerNames.size() * 3; i < 6 + headerNames.size() * 3 + 2; i++) {
+		for (int i = 5 + headerNames.size() * 3; i < 5 + headerNames.size() * 3 ; i++) {
 			cell = row.createCell(cellNumtbTH2);
 			cell.setCellStyle(thStyle);
 			cellNumtbTH2++;
@@ -308,7 +312,7 @@ public class Int020301Service {
 		row = sheet.createRow(rowNum);
 		int cellNumtbTH3 = 0;
 		// Empty Cell Row [2]
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 5; i++) {
 			cell = row.createCell(cellNumtbTH3);
 			cell.setCellStyle(thStyle);
 			cellNumtbTH3++;
@@ -324,7 +328,7 @@ public class Int020301Service {
 			}
 		}
 		// Empty Cell Row [2]
-		for (int i = 6 + headerNames.size() * 3; i < 6 + headerNames.size() * 3 + 2; i++) {
+		for (int i = 5 + headerNames.size() * 3; i < 5 + headerNames.size() * 3 ; i++) {
 			cell = row.createCell(cellNumtbTH3);
 			cell.setCellStyle(thStyle);
 			cellNumtbTH3++;
@@ -332,14 +336,16 @@ public class Int020301Service {
 
 		/* set sheet */
 		// merge(firstRow, lastRow, firstCol, lastCol)
-		sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6 + headerNames.size() * 3 - 1));
+		
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5 + headerNames.size() * 3 - 1));
 		for (int i = 1; i <= headerNames.size(); i++) {
-			sheet.addMergedRegion(new CellRangeAddress(1, 1, 6 + ((i - 1) * 3), 6 + (i * 3) - 1));
+			sheet.addMergedRegion(new CellRangeAddress(1, 1, 5 + ((i - 1) * 3), 5+ (i * 3) - 1));
 		}
-		for (int i = 0; i < 6; i++) {
+		
+		for (int i = 0; i < 5; i++) {
 			sheet.addMergedRegion(new CellRangeAddress(0, 2, i, i));
 		}
-		for (int i = headerNames.size() * 3 + 6; i <= headerNames.size() * 3 + 6 + 2; i++) {
+		for (int i = headerNames.size() * 3 + 5; i <= headerNames.size() * 3 + 5 ; i++) {
 			sheet.addMergedRegion(new CellRangeAddress(0, 2, i, i));
 		}
 		/* set sheet */
@@ -347,21 +353,21 @@ public class Int020301Service {
 		// setColumnWidth
 		int width = 76;
 		sheet.setColumnWidth(0, width * 30);
-		for (int i = 1; i <= 6; i++) {
+		for (int i = 1; i <= 5; i++) {
 			if (i >= 1 && i <= 2) {
 				sheet.setColumnWidth(i, width * 180);
 			} else {
 				sheet.setColumnWidth(i, width * 76);
 			}
 		}
-		for (int i = 6; i <= headerNames.size() * 3 + 6; i++) {
+		for (int i = 5; i <= headerNames.size() * 3 + 5; i++) {
 			if (i % 3 == 2) {
 				sheet.setColumnWidth(i, width * 50);
 			} else {
 				sheet.setColumnWidth(i, width * 40);
 			}
 		}
-		for (int i = headerNames.size() * 3 + 6; i < headerNames.size() * 3 + 6 + 2; i++) {
+		for (int i = headerNames.size() * 3 + 5; i < headerNames.size() * 3 + 5 ; i++) {
 			sheet.setColumnWidth(i, width * 76);
 		}
 
@@ -381,20 +387,14 @@ public class Int020301Service {
 			cell.setCellValue(count++);
 			cell.setCellStyle(styleCustom);
 			cellNum++;
-			// Column 2
+			// Column 2 - 3
 			CellStyle styleCustom2 = tdStyle;
 			styleCustom2.setAlignment(HorizontalAlignment.LEFT);
 			cell = row.createCell(cellNum);
-			cell.setCellValue(detail.getSectorName());
+			cell.setCellValue(detail.getSectorName()+"  "+detail.getAreaName());
 			cell.setCellStyle(styleCustom2);
 			cellNum++;
-			// Column 3
-			CellStyle styleCustom3 = tdStyle;
-			styleCustom3.setAlignment(HorizontalAlignment.LEFT);
-			cell = row.createCell(cellNum);
-			cell.setCellValue(detail.getAreaName());
-			cell.setCellStyle(styleCustom3);
-			cellNum++;
+		
 			// Column 4
 			cell = row.createCell(cellNum);
 			cell.setCellValue(detail.getRiskQuantity().doubleValue());
@@ -402,7 +402,7 @@ public class Int020301Service {
 			cellNum++;
 			// Column 5
 			cell = row.createCell(cellNum);
-			if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+			if (detail.getStatus().equalsIgnoreCase(IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE)) {
 				cell.setCellValue(detail.getAvgRisk().doubleValue());
 			} else {
 				cell.setCellValue("-");
@@ -411,7 +411,7 @@ public class Int020301Service {
 			cellNum++;
 			// Column 6
 			cell = row.createCell(cellNum);
-			if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+			if (detail.getStatus().equalsIgnoreCase(IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE)) {
 				cell.setCellValue(detail.getRiskText());
 			} else {
 				cell.setCellValue("-");
@@ -422,7 +422,7 @@ public class Int020301Service {
 			for (Int020301DataVo sideDtl : detail.getSideDtls()) {
 				// Column cellNum+1+1
 				cell = row.createCell(cellNum);
-				if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+				if (detail.getStatus().equalsIgnoreCase(IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE)) {
 					cell.setCellValue(sideDtl.getAcceptValue().doubleValue());
 				} else {
 					cell.setCellValue("-");
@@ -431,7 +431,7 @@ public class Int020301Service {
 				cellNum++;
 				// Column cellNum+1+2
 				cell = row.createCell(cellNum);
-				if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+				if (detail.getStatus().equalsIgnoreCase(IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE)) {
 					cell.setCellValue(sideDtl.getDeclineValue().doubleValue());
 				} else {
 					cell.setCellValue("-");
@@ -440,7 +440,7 @@ public class Int020301Service {
 				cellNum++;
 				// Column cellNum+1+3
 				cell = row.createCell(cellNum);
-				if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+				if (detail.getStatus().equalsIgnoreCase(IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE)) {
 					cell.setCellValue(sideDtl.getRiskName());
 				} else {
 					cell.setCellValue("-");
@@ -452,7 +452,7 @@ public class Int020301Service {
 			// Column detail.getSideDtls().size()+1
 			cell = row.createCell(cellNum);
 			if (detail.getSentDate() != null) {
-				if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+				if (detail.getStatus().equalsIgnoreCase(IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE)) {
 					cell.setCellValue(
 							ConvertDateUtils.formatDateToString(detail.getSentDate(), ConvertDateUtils.DD_MM_YYYY));
 				} else {
@@ -464,12 +464,7 @@ public class Int020301Service {
 			cell.setCellStyle(tdStyle);
 			cellNum++;
 
-			// Column detail.getSideDtls().size()+2
-			cell = row.createCell(cellNum);
-			cell.setCellValue(detail.getStatusText());
-			cell.setCellStyle(tdStyle);
-			cellNum++;
-
+		
 			// Next Row
 			rowNum++;
 		}
@@ -644,7 +639,7 @@ public class Int020301Service {
 			for (Int020301DataVo sideDtl : detail.getSideDtls()) {
 				// Column cellNum+1+1
 				cell = row.createCell(cellNum);
-				if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+				if (detail.getStatus().equalsIgnoreCase(IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE)) {
 					cell.setCellValue(sideDtl.getAcceptValue().doubleValue());
 				} else {
 					cell.setCellValue("-");
@@ -653,7 +648,7 @@ public class Int020301Service {
 				cellNum++;
 				// Column cellNum+1+2
 				cell = row.createCell(cellNum);
-				if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+				if (detail.getStatus().equalsIgnoreCase(IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE)) {
 					cell.setCellValue(sideDtl.getDeclineValue().doubleValue());
 				} else {
 					cell.setCellValue("-");
@@ -662,7 +657,7 @@ public class Int020301Service {
 				cellNum++;
 				// Column cellNum+1+3
 				cell = row.createCell(cellNum);
-				if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+				if (detail.getStatus().equalsIgnoreCase(IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE)) {
 					cell.setCellValue(sideDtl.getRiskName());
 				} else {
 					cell.setCellValue("-");
@@ -674,7 +669,7 @@ public class Int020301Service {
 			// Column detail.getSideDtls().size()+1
 			cell = row.createCell(cellNum);
 			if (detail.getSentDate() != null) {
-				if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+				if (detail.getStatus().equalsIgnoreCase(IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE)) {
 					cell.setCellValue(
 							ConvertDateUtils.formatDateToString(detail.getSentDate(), ConvertDateUtils.DD_MM_YYYY));
 				} else {
@@ -694,7 +689,7 @@ public class Int020301Service {
 
 			// Column detail.getSideDtls().size()+3
 			cell = row.createCell(cellNum);
-			if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+			if (detail.getStatus().equalsIgnoreCase(IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE)) {
 				cell.setCellValue(detail.getAvgRisk().doubleValue());
 			} else {
 				cell.setCellValue("-");
@@ -705,7 +700,7 @@ public class Int020301Service {
 			// Column detail.getSideDtls().size()+4
 			DecimalFormat df2 = new DecimalFormat(".##");
 			cell = row.createCell(cellNum);
-			if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+			if (detail.getStatus().equalsIgnoreCase(IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE)) {
 				cell.setCellValue(df2.format(detail.getRiskNum().doubleValue()));
 			} else {
 				cell.setCellValue("-");
@@ -715,7 +710,7 @@ public class Int020301Service {
 
 			// Column detail.getSideDtls().size()+5
 			cell = row.createCell(cellNum);
-			if (detail.getStatus().equalsIgnoreCase("FINISH")) {
+			if (detail.getStatus().equalsIgnoreCase(IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE)) {
 				cell.setCellValue(detail.getRiskText());
 			} else {
 				cell.setCellValue("-");

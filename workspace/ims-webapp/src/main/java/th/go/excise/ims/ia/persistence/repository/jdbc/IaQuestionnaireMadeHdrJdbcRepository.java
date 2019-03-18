@@ -117,11 +117,12 @@ public class IaQuestionnaireMadeHdrJdbcRepository {
 		return data; 
 	}
 	
-	public BigDecimal updateStatus(BigDecimal idMadeHdr,String status) {
-		StringBuilder sql = new StringBuilder(" UPDATE IA_QUESTIONNAIRE_MADE_HDR SET STATUS = ? WHERE ID = ? ");
+	public BigDecimal updateStatus(BigDecimal idMadeHdr,String status,String username) {
+		StringBuilder sql = new StringBuilder(" UPDATE IA_QUESTIONNAIRE_MADE_HDR SET STATUS = ?,UPDATED_BY = ?,UPDATED_DATE = sysdate WHERE ID = ? ");
 		List<Object> params = new ArrayList<Object>();
 		
 		params.add(status);
+		params.add(username);
 		params.add(idMadeHdr);
 		
 		commonJdbcTemplate.update(sql.toString(), params.toArray());
