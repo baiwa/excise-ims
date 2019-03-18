@@ -63,14 +63,9 @@ public class Int090303JdbcRepository {
 			vo.setRefPayment(rs.getString("REF_PAYMENT"));
 			vo.setBankName(rs.getString("BANK_NAME"));
 			vo.setAmount(rs.getBigDecimal("AMOUNT"));
-//			vo.setRefPayment(rs.getString("REF_PAYMENT"));
-//			vo.setBankName(rs.getString(rs.getString("BANK_NAME")));
-//			vo.setAmount(rs.getBigDecimal("AMOUNT"));
 			vo.setBudgetType(rs.getString("BUDGET_TYPE"));
 			vo.setItemDesc(rs.getString("ITEM_DESC"));
 			vo.setPayee(rs.getString("PAYEE"));
-//			vo.setItemDesc(rs.getString("ITEM_DESC"));
-//			vo.setPayee(rs.getString("PAYEE"));	
 			vo.setOffcode(rs.getString("OFFCODE"));
 			return vo;
 		}
