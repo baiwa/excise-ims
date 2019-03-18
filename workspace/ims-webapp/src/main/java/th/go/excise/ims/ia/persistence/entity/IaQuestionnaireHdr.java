@@ -45,6 +45,8 @@ public class IaQuestionnaireHdr extends BaseEntity
     private String status;
     @Column(name = "CONCLUDE")
     private String conclude;
+    @Column(name = "SEND_QTN")
+    private String sendQtn;
     
     public BigDecimal getId() {
         return id;
@@ -112,6 +114,14 @@ public class IaQuestionnaireHdr extends BaseEntity
 
 	public void setConclude(String conclude) {
 		this.conclude = conclude;
+	}
+
+	public String getSendQtn() {
+		return sendQtn;
+	}
+
+	public void setSendQtn(String sendQtn) {
+		this.sendQtn = sendQtn;
 	}
 	
 
