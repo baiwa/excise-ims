@@ -76,8 +76,8 @@ public class Int0204Service {
 		DataTableAjax<Int02Vo> dataTableAjax = new DataTableAjax<Int02Vo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
 		dataTableAjax.setData(data);
-		dataTableAjax.setRecordsTotal(iaQuestionnaireHdrJdbcRepository.countDatafilter(request));
-		dataTableAjax.setRecordsFiltered(iaQuestionnaireHdrJdbcRepository.countDatafilter(request));
+		dataTableAjax.setRecordsTotal(iaQuestionnaireHdrJdbcRepository.countDatafilterStatusTreeFour(request));
+		dataTableAjax.setRecordsFiltered(iaQuestionnaireHdrJdbcRepository.countDatafilterStatusTreeFour(request));
 
 		return dataTableAjax;
 	}
