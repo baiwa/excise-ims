@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +23,7 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMadeHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
 import th.go.excise.ims.ia.service.Int020201Service;
+import th.go.excise.ims.ia.vo.Int020201ConcludeVo;
 import th.go.excise.ims.ia.vo.Int020201DtlVo;
 import th.go.excise.ims.ia.vo.Int020201SidesFormVo;
 import th.go.excise.ims.ia.vo.Int020201Vo;
@@ -108,4 +110,21 @@ public class Int020201Controller {
 		return response;
 	}
 
+	@PutMapping("/update-conclude")
+	@ResponseBody
+	public ResponseData<String> updateConclude(@RequestBody Int020201ConcludeVo request) {
+		logger.info("Int020201 Update-Conclude");
+		ResponseData<String> response = new ResponseData<String>();
+
+		try {
+			int020201Service.updateConclude(request);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
 }

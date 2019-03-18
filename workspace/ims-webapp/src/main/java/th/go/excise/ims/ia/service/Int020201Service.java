@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
@@ -18,6 +19,7 @@ import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeHdrReposito
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireSideRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireMadeJdbcRepository;
+import th.go.excise.ims.ia.vo.Int020201ConcludeVo;
 import th.go.excise.ims.ia.vo.Int020201DtlVo;
 import th.go.excise.ims.ia.vo.Int020201JoinVo;
 import th.go.excise.ims.ia.vo.Int020201SidesFormVo;
@@ -115,7 +117,14 @@ public class Int020201Service {
 			updateStatusQtnMadeHdr(request);
 		}
 	}
-
+	
+	@Transactional
+	public void updateConclude(Int020201ConcludeVo request) throws Exception {
+		IaQuestionnaireMadeHdr iaMadeHdrData = iaQuestionnaireMadeHdrRepository.findById(request.getIdMadeHdr()).get();
+		iaMadeHdrData.setConclude(request.getConclude());
+		iaQuestionnaireMadeHdrRepository.save(iaMadeHdrData);
+	}
+	
 	private void updateStatusQtnMadeHdr(Int020201DtlVo request) {
 		if (IaConstants.IA_STATUS_REPLY_QTN.STATUS_1_CODE.equals(request.getStatus()) && !request.getFlagConfirm()) {
 			/* update status madeHdr */

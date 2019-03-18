@@ -25,7 +25,7 @@ public class IaQuestionnaireMadeHdr extends BaseEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = -6345094567230756316L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_QUESTIONNAIRE_MADE_HDR_GEN")
 	@SequenceGenerator(name = "IA_QUESTIONNAIRE_MADE_HDR_GEN", sequenceName = "IA_QUESTIONNAIRE_MADE_HDR_SEQ", allocationSize = 1)
@@ -47,6 +47,8 @@ public class IaQuestionnaireMadeHdr extends BaseEntity {
 	private String officeCode;
 	@Column(name = "ID_HDR")
 	private BigDecimal idHdr;
+	@Column(name = "CONCLUDE")
+	private String conclude;
 
 	public BigDecimal getId() {
 		return id;
@@ -87,7 +89,6 @@ public class IaQuestionnaireMadeHdr extends BaseEntity {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
 
 	public LocalDate getStartDate() {
 		return startDate;
@@ -104,7 +105,7 @@ public class IaQuestionnaireMadeHdr extends BaseEntity {
 	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
-	
+
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
@@ -124,5 +125,15 @@ public class IaQuestionnaireMadeHdr extends BaseEntity {
 	public void setIdHdr(BigDecimal idHdr) {
 		this.idHdr = idHdr;
 	}
+
+	public String getConclude() {
+		return conclude;
+	}
+
+	public void setConclude(String conclude) {
+		this.conclude = conclude;
+	}
+
+
 
 }
