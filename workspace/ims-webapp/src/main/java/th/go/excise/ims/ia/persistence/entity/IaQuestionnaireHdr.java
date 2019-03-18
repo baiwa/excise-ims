@@ -45,8 +45,8 @@ public class IaQuestionnaireHdr extends BaseEntity
     private String status;
     @Column(name = "CONCLUDE")
     private String conclude;
-    @Column(name = "SEND_QTN")
-    private String sendQtn;
+    @Column(name = "TO_DEPARTMENT")
+    private String toDepartment;
     
     public BigDecimal getId() {
         return id;
@@ -116,13 +116,12 @@ public class IaQuestionnaireHdr extends BaseEntity
 		this.conclude = conclude;
 	}
 
-	public String getSendQtn() {
-		return sendQtn;
+	public String getToDepartment() {
+		return toDepartment;
 	}
 
-	public void setSendQtn(String sendQtn) {
-		this.sendQtn = sendQtn;
+	public void setToDepartment(String toDepartment) {
+		this.toDepartment = toDepartment;
 	}
-	
 
 }
