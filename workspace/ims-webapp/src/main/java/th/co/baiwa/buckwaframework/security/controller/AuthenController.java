@@ -27,6 +27,7 @@ import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.URL;
 import th.co.baiwa.buckwaframework.security.domain.UserBean;
 import th.co.baiwa.buckwaframework.security.domain.UserProfileVo;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 
 @Controller
 public class AuthenController {
@@ -103,6 +104,7 @@ public class AuthenController {
 			UserProfileVo userProfileVo = new UserProfileVo();
 			BeanUtils.copyProperties(userProfileVo, userBean);
 			userProfileVo.setAuthorityList(UserLoginUtils.getGrantedAuthorityList());
+			userProfileVo.setDepartmentName(ApplicationCache.getExciseDept(userProfileVo.getOfficeCode()).getDeptName());
 			respData.setData(userProfileVo);
 			respData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (IllegalAccessException | InvocationTargetException e) {

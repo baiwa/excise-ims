@@ -9,7 +9,16 @@ public class UserProfileVo {
 	private String userThaiSurname;
 	private String title;
 	private String officeCode;
+	private String departmentName;
 	private List<String> authorityList;
+
+	public String getDepartmentName() {
+		return departmentName;
+	}
+
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
+	}
 
 	public String getUsername() {
 		return username;
