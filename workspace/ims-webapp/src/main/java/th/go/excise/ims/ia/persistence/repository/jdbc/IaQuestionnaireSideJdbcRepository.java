@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSideDtl;
 import th.go.excise.ims.ia.vo.Int020101NameVo;
@@ -74,7 +75,7 @@ public class IaQuestionnaireSideJdbcRepository {
 		sqlBuilder.append(" SELECT H.BUDGET_YEAR FROM IA_QUESTIONNAIRE_HDR H ");
 		sqlBuilder.append(" INNER JOIN IA_QUESTIONNAIRE_MADE_HDR MH ");
 		sqlBuilder.append(" ON MH.ID_HDR = H.ID ");
-		sqlBuilder.append(" WHERE 1=1 AND H.IS_DELETED = 'N' AND MH.STATUS = 'FINISH' ");
+		sqlBuilder.append(" WHERE 1=1 AND H.IS_DELETED = 'N' AND MH.STATUS = " + IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE +" " );
 		sqlBuilder.append(" GROUP BY H.BUDGET_YEAR ");
 		List<Int020101YearVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), int020101YearRowMapper);
 		return datas;
@@ -107,7 +108,7 @@ public class IaQuestionnaireSideJdbcRepository {
 		sqlBuilder.append(" SELECT H.* FROM IA_QUESTIONNAIRE_HDR H ");
 		sqlBuilder.append(" INNER JOIN IA_QUESTIONNAIRE_MADE_HDR MH ");
 		sqlBuilder.append(" ON MH.ID_HDR = H.ID ");
-		sqlBuilder.append(" WHERE 1=1 AND H.IS_DELETED = 'N' AND MH.STATUS = 'FINISH' ");
+		sqlBuilder.append(" WHERE 1=1 AND H.IS_DELETED = 'N' AND MH.STATUS = " + IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE +" " );
 		sqlBuilder.append(" AND H.BUDGET_YEAR = ? ");
 		params.add(year);
 		List<Int020101NameVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), int020101NameRowMapper);

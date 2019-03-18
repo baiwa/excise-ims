@@ -109,7 +109,7 @@ public class IaQuestionnaireMadeHdrJdbcRepository {
 			sql.append(" AND ID_HDR = ? ");
 			params.add(request.getId());
 		}
-		sql.append(" AND STATUS != 'FINISH' ");
+		sql.append(" AND STATUS != " + IaConstants.IA_STATUS_REPLY_QTN.STATUS_3_CODE +" " );
 		
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<IaQuestionnaireMadeHdr> data = commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper(IaQuestionnaireMadeHdr.class));

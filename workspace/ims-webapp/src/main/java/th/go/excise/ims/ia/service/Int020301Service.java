@@ -491,7 +491,7 @@ public class Int020301Service {
 		Row row = sheet.createRow(rowNum);
 		Cell cell = row.createCell(cellNum);
 		List<ExcelHeaderNameVo> headerNames = new ArrayList<>();
-		String[] tbTH1 = { "ลำดับ", "สำนักงานสรรพสามิตภาค", "สำนักงานสรรพสามิตพื้นที่", "จำนวนด้านความเสี่ยง" };
+		String[] tbTH1 = { "ลำดับ", "หน่วยงาน", "จำนวนด้านความเสี่ยง" };
 		for (int i = 0; i < tbTH1.length; i++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH1[i]);
@@ -506,7 +506,7 @@ public class Int020301Service {
 			cell.setCellStyle(thStyle);
 			cellNum++;
 		}
-		String[] tbTH2 = { "ส่งเมื่อ", "สถานะการดำเนินการ", "ไม่มี/ไม่ใช่ (%)", "อัตราความเสี่ยง", "แปลค่าความเสี่ยง" };
+		String[] tbTH2 = { "ส่งเมื่อ", "ไม่มี/ไม่ใช่ (%)", "อัตราความเสี่ยง", "แปลค่าความเสี่ยง" };
 		for (int i = 0; i < tbTH2.length; i++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH2[i]);
@@ -519,7 +519,7 @@ public class Int020301Service {
 		row = sheet.createRow(rowNum);
 		int cellNumtbTH2 = 0;
 		// Empty Cell Row [1]
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 3; i++) {
 			cell = row.createCell(cellNumtbTH2);
 			cell.setCellStyle(thStyle);
 			cellNumtbTH2++;
@@ -532,7 +532,7 @@ public class Int020301Service {
 			cellNumtbTH2++;
 		}
 		// Empty Cell Row [1]
-		for (int i = 4 + headerNames.size() * 3; i < 4 + headerNames.size() * 3 + 5; i++) {
+		for (int i = 3 + headerNames.size() * 3; i < 3 + headerNames.size() * 3 + 3; i++) {
 			cell = row.createCell(cellNumtbTH2);
 			cell.setCellStyle(thStyle);
 			cellNumtbTH2++;
@@ -543,7 +543,7 @@ public class Int020301Service {
 		row = sheet.createRow(rowNum);
 		int cellNumtbTH3 = 0;
 		// Empty Cell Row [2]
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 3; i++) {
 			cell = row.createCell(cellNumtbTH3);
 			cell.setCellStyle(thStyle);
 			cellNumtbTH3++;
@@ -559,7 +559,7 @@ public class Int020301Service {
 			}
 		}
 		// Empty Cell Row [2]
-		for (int i = 4 + headerNames.size() * 3; i < 4 + headerNames.size() * 3 + 5; i++) {
+		for (int i = 3 + headerNames.size() * 3; i < 3 + headerNames.size() * 3 + 3; i++) {
 			cell = row.createCell(cellNumtbTH3);
 			cell.setCellStyle(thStyle);
 			cellNumtbTH3++;
@@ -567,14 +567,14 @@ public class Int020301Service {
 
 		/* set sheet */
 		// merge(firstRow, lastRow, firstCol, lastCol)
-		sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4 + headerNames.size() * 3 - 1));
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3 + headerNames.size() * 3 - 1));
 		for (int i = 1; i <= headerNames.size(); i++) {
-			sheet.addMergedRegion(new CellRangeAddress(1, 1, 4 + ((i - 1) * 3), 4 + (i * 3) - 1));
+			sheet.addMergedRegion(new CellRangeAddress(1, 1, 3 + ((i - 1) * 3), 3 + (i * 3) - 1));
 		}
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 3; i++) {
 			sheet.addMergedRegion(new CellRangeAddress(0, 2, i, i));
 		}
-		for (int i = headerNames.size() * 3 + 4; i <= headerNames.size() * 3 + 4 + 5; i++) {
+		for (int i = headerNames.size() * 3 + 3; i <= headerNames.size() * 3 + 3 + 3; i++) {
 			sheet.addMergedRegion(new CellRangeAddress(0, 2, i, i));
 		}
 		/* set sheet */
@@ -582,21 +582,21 @@ public class Int020301Service {
 		// setColumnWidth
 		int width = 76;
 		sheet.setColumnWidth(0, width * 30);
-		for (int i = 1; i <= 4; i++) {
+		for (int i = 1; i <= 3; i++) {
 			if (i >= 1 && i <= 2) {
 				sheet.setColumnWidth(i, width * 180);
 			} else {
 				sheet.setColumnWidth(i, width * 76);
 			}
 		}
-		for (int i = 4; i <= headerNames.size() * 3 + 4; i++) {
+		for (int i = 3; i <= headerNames.size() * 3 + 3; i++) {
 			if (i % 3 == 2) {
 				sheet.setColumnWidth(i, width * 50);
 			} else {
 				sheet.setColumnWidth(i, width * 40);
 			}
 		}
-		for (int i = headerNames.size() * 3 + 4; i < headerNames.size() * 3 + 4 + 5; i++) {
+		for (int i = headerNames.size() * 3 + 3; i < headerNames.size() * 3 + 3 + 3; i++) {
 			sheet.setColumnWidth(i, width * 76);
 		}
 
@@ -616,19 +616,12 @@ public class Int020301Service {
 			cell.setCellValue(count++);
 			cell.setCellStyle(styleCustom);
 			cellNum++;
-			// Column 2
+			// Column 2 - 3
 			CellStyle styleCustom2 = tdStyle;
 			styleCustom2.setAlignment(HorizontalAlignment.LEFT);
 			cell = row.createCell(cellNum);
-			cell.setCellValue(detail.getSectorName());
+			cell.setCellValue(detail.getSectorName() + " " + detail.getAreaName());
 			cell.setCellStyle(styleCustom2);
-			cellNum++;
-			// Column 3
-			CellStyle styleCustom3 = tdStyle;
-			styleCustom3.setAlignment(HorizontalAlignment.LEFT);
-			cell = row.createCell(cellNum);
-			cell.setCellValue(detail.getAreaName());
-			cell.setCellStyle(styleCustom3);
 			cellNum++;
 			// Column 4
 			cell = row.createCell(cellNum);
@@ -681,11 +674,7 @@ public class Int020301Service {
 			cell.setCellStyle(tdStyle);
 			cellNum++;
 
-			// Column detail.getSideDtls().size()+2
-			cell = row.createCell(cellNum);
-			cell.setCellValue(detail.getStatusText());
-			cell.setCellStyle(tdStyle);
-			cellNum++;
+		
 
 			// Column detail.getSideDtls().size()+3
 			cell = row.createCell(cellNum);
