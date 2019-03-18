@@ -3,6 +3,8 @@ package th.go.excise.ims.ta.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
+import th.go.excise.ims.ta.vo.FactoryVo;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
@@ -24,6 +27,8 @@ import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 
 @Service
 public class TaxAuditService {
+
+	private static final Logger logger = LoggerFactory.getLogger(TaxAuditService.class);
 
 	@Autowired
 	private TaPlanWorksheetDtlRepository taPlanWorksheetDtlRepository;
@@ -47,7 +52,8 @@ public class TaxAuditService {
 	public DataTableAjax<OutsidePlanVo> outsidePlan(OutsidePlanFormVo formVo) {
 
 		formVo.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
-		String whereOfficeCode = ExciseUtils.whereInLocalOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+		String whereOfficeCode = ExciseUtils
+				.whereInLocalOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 		formVo.setOfficeCode(whereOfficeCode);
 
 		DataTableAjax<OutsidePlanVo> dataTableAjax = new DataTableAjax<>();
@@ -71,10 +77,15 @@ public class TaxAuditService {
 		auditStatus = ApplicationCache.getParamInfoListByGroupCode(ParameterConstants.PARAM_GROUP.TA_AUDIT_STATUS);
 		return auditStatus;
 	}
-	
+
 	public List<PlanWorksheetDtlVo> getPlanWsDtl(AuditCalendarCriteriaFormVo formVo) {
 		List<PlanWorksheetDtlVo> planWsDtl = new ArrayList<>();
 		planWsDtl = taPlanWorksheetDtlRepository.findByCriteria(formVo);
 		return planWsDtl;
+	}
+
+	public FactoryVo getFactoryByNewRegId(String idStr) {
+		logger.info("getFactoryByNewRegId");
+		return taWsReg4000Repository.findByNewRegId(idStr);
 	}
 }

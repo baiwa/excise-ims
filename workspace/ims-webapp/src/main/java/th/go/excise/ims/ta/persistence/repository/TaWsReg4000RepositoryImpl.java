@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
@@ -22,11 +24,14 @@ import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
+import th.go.excise.ims.ta.vo.FactoryVo;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 
 public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
+
+	private static final Logger logger = LoggerFactory.getLogger(TaWsReg4000RepositoryImpl.class);
 
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
@@ -34,33 +39,36 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 	@Override
 	public void batchInsert(List<TaWsReg4000> wsReg4000List) {
 		String sql = SqlGeneratorUtils.genSqlInsert("TA_WS_REG4000",
-				Arrays.asList("WS_REG4000_ID", "NEW_REG_ID", "CUS_ID", "CUS_FULLNAME", "CUS_ADDRESS", "CUS_TELNO", "CUS_EMAIL", "CUS_URL", "FAC_ID", "FAC_FULLNAME", "FAC_ADDRESS", "FAC_TELNO", "FAC_EMAIL", "FAC_URL", "OFFICE_CODE", "ACTIVE_FLAG", "DUTY_CODE", "CREATED_BY", "CREATED_DATE"),
+				Arrays.asList("WS_REG4000_ID", "NEW_REG_ID", "CUS_ID", "CUS_FULLNAME", "CUS_ADDRESS", "CUS_TELNO",
+						"CUS_EMAIL", "CUS_URL", "FAC_ID", "FAC_FULLNAME", "FAC_ADDRESS", "FAC_TELNO", "FAC_EMAIL",
+						"FAC_URL", "OFFICE_CODE", "ACTIVE_FLAG", "DUTY_CODE", "CREATED_BY", "CREATED_DATE"),
 				"TA_WS_REG4000_SEQ");
 
-		commonJdbcTemplate.batchUpdate(sql, wsReg4000List, 1000, new ParameterizedPreparedStatementSetter<TaWsReg4000>() {
-			public void setValues(PreparedStatement ps, TaWsReg4000 wsReg4000) throws SQLException {
-				List<Object> paramList = new ArrayList<Object>();
-				paramList.add(wsReg4000.getNewRegId());
-				paramList.add(wsReg4000.getCusId());
-				paramList.add(wsReg4000.getCusFullname());
-				paramList.add(wsReg4000.getCusAddress());
-				paramList.add(wsReg4000.getCusTelno());
-				paramList.add(wsReg4000.getCusEmail());
-				paramList.add(wsReg4000.getCusUrl());
-				paramList.add(wsReg4000.getFacId());
-				paramList.add(wsReg4000.getFacFullname());
-				paramList.add(wsReg4000.getFacAddress());
-				paramList.add(wsReg4000.getFacTelno());
-				paramList.add(wsReg4000.getFacEmail());
-				paramList.add(wsReg4000.getFacUrl());
-				paramList.add(wsReg4000.getOfficeCode());
-				paramList.add(wsReg4000.getActiveFlag());
-				paramList.add(wsReg4000.getDutyCode());
-				paramList.add(SYSTEM_USER.BATCH);
-				paramList.add(LocalDateTime.now());
-				commonJdbcTemplate.preparePs(ps, paramList.toArray());
-			}
-		});
+		commonJdbcTemplate.batchUpdate(sql, wsReg4000List, 1000,
+				new ParameterizedPreparedStatementSetter<TaWsReg4000>() {
+					public void setValues(PreparedStatement ps, TaWsReg4000 wsReg4000) throws SQLException {
+						List<Object> paramList = new ArrayList<Object>();
+						paramList.add(wsReg4000.getNewRegId());
+						paramList.add(wsReg4000.getCusId());
+						paramList.add(wsReg4000.getCusFullname());
+						paramList.add(wsReg4000.getCusAddress());
+						paramList.add(wsReg4000.getCusTelno());
+						paramList.add(wsReg4000.getCusEmail());
+						paramList.add(wsReg4000.getCusUrl());
+						paramList.add(wsReg4000.getFacId());
+						paramList.add(wsReg4000.getFacFullname());
+						paramList.add(wsReg4000.getFacAddress());
+						paramList.add(wsReg4000.getFacTelno());
+						paramList.add(wsReg4000.getFacEmail());
+						paramList.add(wsReg4000.getFacUrl());
+						paramList.add(wsReg4000.getOfficeCode());
+						paramList.add(wsReg4000.getActiveFlag());
+						paramList.add(wsReg4000.getDutyCode());
+						paramList.add(SYSTEM_USER.BATCH);
+						paramList.add(LocalDateTime.now());
+						commonJdbcTemplate.preparePs(ps, paramList.toArray());
+					}
+				});
 	}
 
 	@Override
@@ -119,7 +127,9 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 
 		} else {
 
-			return this.commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(), wsReg4000RowMapper);
+			return this.commonJdbcTemplate.query(
+					OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()),
+					params.toArray(), wsReg4000RowMapper);
 		}
 	}
 
@@ -129,7 +139,8 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		List<Object> params = new ArrayList<>();
 		buildByCriteriaQuery(sql, params, formVo);
 
-		return this.commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), params.toArray(), Long.class);
+		return this.commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), params.toArray(),
+				Long.class);
 	}
 
 	private static final RowMapper<TaWsReg4000> wsReg4000RowMapper = new RowMapper<TaWsReg4000>() {
@@ -210,7 +221,9 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		sqlOutsidePlan(sql, params, formVo);
-		return commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(), outsidePlanRowMapper);
+		return commonJdbcTemplate.query(
+				OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(),
+				outsidePlanRowMapper);
 
 	}
 
@@ -219,7 +232,8 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		sqlOutsidePlan(sql, params, formVo);
-		return this.commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), params.toArray(), Long.class);
+		return this.commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), params.toArray(),
+				Long.class);
 	}
 
 	protected RowMapper<OutsidePlanVo> outsidePlanRowMapper = new RowMapper<OutsidePlanVo>() {
@@ -238,8 +252,55 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 			vo.setAreaCode(rs.getString("AREA_CODE"));
 			vo.setAreaDesc(rs.getString("AREA_DESC"));
 			vo.setDutyDesc(ExciseUtils.getDutyDesc(rs.getString("DUTY_CODE")));
-			vo.setRegStatus(rs.getString("REG_STATUS") + " " + ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY));
+			vo.setRegStatus(rs.getString("REG_STATUS") + " "
+					+ ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY));
 			return vo;
 		}
 	};
+
+	private void buildFactoryQuery(StringBuilder sql, List<Object> params, String newRegId) {
+		sql.append(
+				" SELECT r.new_reg_id,r.cus_fullname,r.fac_fullname,r.fac_address,r.office_code,r.duty_code,ed_sector.off_short_name AS sec_desc ,ed_area.off_short_name AS area_desc ");
+		sql.append(" FROM ta_ws_reg4000  r ");
+		sql.append(" INNER JOIN excise_department  ed_sector ");
+		sql.append(" ON ed_sector.off_code = CONCAT(SUBSTR(r.office_code, 0, 2),'0000') ");
+		sql.append(" INNER JOIN excise_department  ed_area ");
+		sql.append(" ON ed_area.off_code  = CONCAT(SUBSTR(r.office_code, 0, 4),'00') ");
+		sql.append(" WHERE r.is_deleted = ? ");
+
+		params.add(FLAG.N_FLAG);
+
+		if (StringUtils.isNotBlank(newRegId)) {
+			sql.append(" AND r.new_reg_id = ? ");
+			params.add(StringUtils.trim(newRegId));
+		}
+
+	}
+
+	@Override
+	public FactoryVo findByNewRegId(String newRegId) {
+		logger.debug("findByNewRegId newRegId={}", newRegId);
+
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		buildFactoryQuery(sql, params, newRegId);
+
+		FactoryVo datas = this.commonJdbcTemplate.queryForObject(sql.toString(), params.toArray(),
+				new RowMapper<FactoryVo>() {
+					@Override
+					public FactoryVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+						FactoryVo factoryVo = new FactoryVo();
+						factoryVo.setNewRegId(rs.getString("new_reg_id"));
+						factoryVo.setCusFullname(rs.getString("cus_fullname"));
+						factoryVo.setFacFullname(rs.getString("fac_fullname"));
+						factoryVo.setFacAddress(rs.getString("fac_address"));
+						factoryVo.setSecDesc(rs.getString("sec_desc"));
+						factoryVo.setAreaDesc(rs.getString("area_desc"));
+						factoryVo.setDutyDesc(ExciseUtils.getDutyDesc(rs.getString("duty_code")));
+						return factoryVo;
+					}
+
+				});
+		return datas;
+	}
 }
