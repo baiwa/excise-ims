@@ -91,6 +91,8 @@ public class QuestionnaireService {
 									iaQuestionnaireMadeJdbcRepository.deleteByIdHdr(idHdr);
 									iaQuestionnaireMadeHdrJdbcRepository.deleteByIdHdr(idHdr);
 								}
+							}else {
+								iaQuestionnaireHdrJdbcRepository.updateStatus(idHdr, paramInfo2.getParamCode());
 							}
 							
 					}
