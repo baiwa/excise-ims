@@ -57,7 +57,6 @@ import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondSubRiskReposito
 import th.go.excise.ims.ta.persistence.repository.TaWsInc8000MRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.util.TaxAuditUtils;
-import th.go.excise.ims.ta.vo.PlanMapVo;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 import th.go.excise.ims.ta.vo.TaxOperatorVo;
@@ -123,31 +122,26 @@ public class DraftWorksheetService {
 
 	public List<TaxOperatorDetailVo> prepareTaxOperatorDetailVoList(TaxOperatorFormVo formVo) {
 		logger.info("prepareTaxOperatorDetailVoList startDate={}, endDate={}, dateRange={}", formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
-
+		
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String ymStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateStart(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		String ymEnd = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateEnd(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 
-		// ==> Map TaxAuditLast 1 2 3
-		List<String> budgetYears = new ArrayList<>();
-		int lastYear1 = 0; 
-		int lastYear2 = 0; 
-		int lastYear3 = 0; 
-		Map<String, String> mapTaxAmLast = new HashMap<String, String>();
+		Map<String, String> mapTaxAmLast = new HashMap<>();
+		int lastYear1 = 0;
+		int lastYear2 = 0;
+		int lastYear3 = 0;
 		if (StringUtils.isNotBlank(formVo.getBudgetYear())) {
+			List<String> budgetYearList = new ArrayList<>();
 			lastYear1 = Integer.valueOf(formVo.getBudgetYear()) - 1;
 			lastYear2 = Integer.valueOf(formVo.getBudgetYear()) - 2;
 			lastYear3 = Integer.valueOf(formVo.getBudgetYear()) - 3;
+			budgetYearList.add(String.valueOf(lastYear1));
+			budgetYearList.add(String.valueOf(lastYear2));
+			budgetYearList.add(String.valueOf(lastYear3));
+			mapTaxAmLast = planWorksheetDtlRepository.findAuditPlanCodeByOfficeCodeAndBudgetYearList(officeCode, budgetYearList);
+		}
 			
-			budgetYears.add(String.valueOf(lastYear1));
-			budgetYears.add(String.valueOf(lastYear2));
-			budgetYears.add(String.valueOf(lastYear3));
-			List<PlanMapVo> TaxAmLasts = planWorksheetDtlRepository.findByInBudgetYearPlanDtl(budgetYears);
-
-			
-			for (PlanMapVo taxAmLast : TaxAmLasts) {
-				mapTaxAmLast.put(taxAmLast.getBudgetYear() + taxAmLast.getNewRegId(), taxAmLast.getAuditPlanCode());
-			}
-		}		
 		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findByCriteria(formVo);
 		Map<String, List<TaWsInc8000M>> wsInc8000MMap = taWsInc8000MRepository.findByMonthRange(ymStart, ymEnd);
 		List<TaWsInc8000M> wsInc8000MList = null;
@@ -181,9 +175,9 @@ public class DraftWorksheetService {
 			detailVo.setOfficeCode(wsReg4000.getOfficeCode());
 			detailVo.setRegStatus(wsReg4000.getRegStatus() + " " + ConvertDateUtils.formatLocalDateToString(wsReg4000.getRegDate(), "dd/MM/yy", ConvertDateUtils.LOCAL_TH));
 			detailVo.setRegCapital(wsReg4000.getRegCapital());
-			detailVo.setTaxAuditLast1(mapTaxAmLast.get(lastYear1 + wsReg4000.getNewRegId()));
-			detailVo.setTaxAuditLast2(mapTaxAmLast.get(lastYear2 + wsReg4000.getNewRegId()));
-			detailVo.setTaxAuditLast3(mapTaxAmLast.get(lastYear3 + wsReg4000.getNewRegId()));
+			detailVo.setTaxAuditLast1(mapTaxAmLast.get(String.valueOf(lastYear1) + wsReg4000.getNewRegId()));
+			detailVo.setTaxAuditLast2(mapTaxAmLast.get(String.valueOf(lastYear2) + wsReg4000.getNewRegId()));
+			detailVo.setTaxAuditLast3(mapTaxAmLast.get(String.valueOf(lastYear3) + wsReg4000.getNewRegId()));
 			exciseDeptSector = ApplicationCache.getExciseDept(wsReg4000.getOfficeCode().substring(0, 2) + "0000");
 
 			if (exciseDeptSector != null) {

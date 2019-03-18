@@ -3,11 +3,15 @@ package th.go.excise.ims.ta.persistence.repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
@@ -20,7 +24,6 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
-import th.go.excise.ims.ta.vo.PlanMapVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
@@ -216,45 +219,39 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
         }
     };
 
-	@Override
-	public List<PlanMapVo> findByInBudgetYearPlanDtl(List<String> budgetYears) {
+    @Override
+	public Map<String, String> findAuditPlanCodeByOfficeCodeAndBudgetYearList(String officeCode, List<String> budgetYearList) {
 		StringBuilder sql = new StringBuilder();
-
-		sql.append(" SELECT  ");
-		sql.append("   PLAN_HDR.BUDGET_YEAR, ");
-		sql.append("   PLAN_HDR.ANALYSIS_NUMBER,	 ");
-		sql.append("   PLAN_HDR.PLAN_NUMBER, ");
-		sql.append("   PLAN_DTL.NEW_REG_ID, ");
-		sql.append("   PLAN_DTL.OFFICE_CODE, ");
-		sql.append("   PLAN_DTL.AUDIT_PLAN_CODE ");
-		sql.append("  FROM TA_PLAN_WORKSHEET_HDR PLAN_HDR ");
-		sql.append(" LEFT JOIN TA_PLAN_WORKSHEET_DTL PLAN_DTL ");
-		sql.append(" ON PLAN_HDR.PLAN_NUMBER=PLAN_DTL.PLAN_NUMBER ");
-		// sql.append(" WHERE PLAN_DTL.OFFICE_CODE=? ");
-		// sql.append(" AND BUDGET_YEAR IN (?,?,?) ");
-		sql.append(" WHERE PLAN_HDR.BUDGET_YEAR IN (?,?,?) ");
-
 		List<Object> params = new ArrayList<>();
-		// params.add(UserLoginUtils.getCurrentUserBean().getOfficeCode());
-
-		for (String budgetYear : budgetYears) {
+		
+		sql.append(" SELECT PLAN_HIS.BUDGET_YEAR ");
+		sql.append("   ,PLAN_HIS.NEW_REG_ID ");
+		sql.append("   ,PLAN_HIS.OFFICE_CODE ");
+		sql.append("   ,PLAN_HIS.AUDIT_PLAN_CODE ");
+		sql.append(" FROM TA_PLAN_WORKSHEET_HIS PLAN_HIS ");
+		sql.append(" WHERE PLAN_HIS.OFFICE_CODE LIKE ? ");
+		params.add(ExciseUtils.whereInLocalOfficeCode(officeCode));
+		
+		sql.append("   AND PLAN_HIS.BUDGET_YEAR IN (");
+		for (String budgetYear : budgetYearList) {
+			sql.append("?,");
 			params.add(budgetYear);
 		}
-
-		return commonJdbcTemplate.query(sql.toString(), params.toArray(), findByInBudgetYearPlanDtlRowMapper);
+		sql.deleteCharAt(sql.length() - 1);
+		sql.append(") ");
+		
+		Map<String, String> resultMap = commonJdbcTemplate.query(sql.toString(), params.toArray(), new ResultSetExtractor<Map<String, String>>() {
+			@Override
+			public Map<String, String> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				Map<String, String> resultMap = new HashMap<>();
+				while(rs.next()) {
+					resultMap.put(rs.getString("BUDGET_YEAR") + rs.getString("NEW_REG_ID"), rs.getString("AUDIT_PLAN_CODE"));
+				}
+				return resultMap;
+			}
+		});
+		
+		return resultMap;
 	}
-
-	protected RowMapper<PlanMapVo> findByInBudgetYearPlanDtlRowMapper = new RowMapper<PlanMapVo>() {
-		@Override
-		public PlanMapVo mapRow(ResultSet rs, int rowNum) throws SQLException {
-			PlanMapVo vo = new PlanMapVo();
-			vo.setBudgetYear(rs.getString("BUDGET_YEAR"));
-			vo.setAnalysisNumber(rs.getString("ANALYSIS_NUMBER"));
-			vo.setPlanNumber(rs.getString("PLAN_NUMBER"));
-			vo.setNewRegId(rs.getString("NEW_REG_ID"));
-			vo.setOfficeCode(rs.getString("OFFICE_CODE"));
-			vo.setAuditPlanCode(rs.getString("AUDIT_PLAN_CODE"));
-			return vo;
-		}
-	};
+    
 }
