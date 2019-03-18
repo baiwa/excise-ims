@@ -114,7 +114,13 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 
 		sql.append(" ORDER BY DUTY_CODE, OFFICE_CODE, NEW_REG_ID ");
 
-		return this.commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(), wsReg4000RowMapper);
+		if (StringUtils.isNotBlank(formVo.getFlagPage())) {
+			return this.commonJdbcTemplate.query(sql.toString(), params.toArray(), wsReg4000RowMapper);
+
+		} else {
+
+			return this.commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(), wsReg4000RowMapper);
+		}
 	}
 
 	@Override
