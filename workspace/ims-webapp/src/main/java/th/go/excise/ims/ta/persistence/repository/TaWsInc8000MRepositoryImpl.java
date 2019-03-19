@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.go.excise.ims.ta.persistence.entity.TaWsInc8000M;
@@ -74,7 +75,32 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 		sql.append(" AND TAX_YEAR || LPAD(TAX_MONTH, 2, 0) ");
 		sql.append(" BETWEEN ? AND ? ");
 		params.add(formVo.getNewRegId());
-//		params.add(formVo.get)
+		params.add(formVo.getTaxMonth());
+		params.add(formVo.getTaxYear());
 	}
+	
+	public List<TaWsInc8000M> findByAnalyzeCompareOldYear(AnalyzeCompareOldYearVo formVo) {
+		
+		StringBuilder sql1 = new StringBuilder();
+		List<Object> params1 = new ArrayList<>();
+		
+		buildByAnalyzeCompareOldYearQuery(sql1, params1, formVo);
+		
+		List<TaWsInc8000M> data = commonJdbcTemplate.query(sql1.toString(), params1.toArray(), taWsInc8000MRowMapper);
+		return data;
+		
+	}
+	
+	private static final RowMapper<TaWsInc8000M> taWsInc8000MRowMapper = new RowMapper<TaWsInc8000M>() {
+        public TaWsInc8000M mapRow(ResultSet rs, int rowNum) throws SQLException {
+        	TaWsInc8000M vo = new TaWsInc8000M();
+            vo.setNewRegId(rs.getString("NEW_REG_ID"));
+            vo.setTaxAmount(rs.getBigDecimal("TAX_AMOUNT"));
+            vo.setTaxMonth(rs.getString("TAX_MONTH"));
+            vo.setTaxYear(rs.getString("TAX_YEAR"));
+            vo.setWsInc8000MId(rs.getLong("WS_INC8000_M_ID"));
+            return vo;
+        }
+    };
 
 }

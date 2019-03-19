@@ -25,12 +25,12 @@ import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainDtl;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
-import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
 import th.go.excise.ims.ta.service.DraftWorksheetService;
 import th.go.excise.ims.ta.service.PlanWorkSheetSendService;
 import th.go.excise.ims.ta.service.PlanWorksheetService;
 import th.go.excise.ims.ta.service.WorksheetService;
 import th.go.excise.ims.ta.util.TaxAuditUtils;
+import th.go.excise.ims.ta.vo.AnalyzeCompareOldYearVo;
 import th.go.excise.ims.ta.vo.CondGroupVo;
 import th.go.excise.ims.ta.vo.PlanWorkSheetSendVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
@@ -543,4 +543,11 @@ public class TaxOperatorController {
         }
         return response;
     }
+    
+    //TODO AnalyzeCompareOldYear
+    @PostMapping("/find-by-analyze-compare-year")
+	@ResponseBody
+	public DataTableAjax<AnalyzeCompareOldYearVo> findByAnalyzeCompareOldYear(@RequestBody AnalyzeCompareOldYearVo formVo) {
+		return planWorksheetService.findByAnalyzeCompareOldYear(formVo);
+	}
 }
