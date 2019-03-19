@@ -141,6 +141,8 @@ public class OaLubricantsDtl
     private String sentToUser;
     @Column(name = "OTHER_REMARK")
     private String otherRemark;
+    @Column(name = "AUDIT_RESULT")
+    private String auditResult;
 
     public BigDecimal getOaLubricantsDtlId() {
         return oaLubricantsDtlId;
@@ -621,5 +623,14 @@ public class OaLubricantsDtl
     public void setOtherRemark(String otherRemark) {
         this.otherRemark = otherRemark;
     }
+
+	public String getAuditResult() {
+		return auditResult;
+	}
+
+	public void setAuditResult(String auditResult) {
+		this.auditResult = auditResult;
+	}
+    
 
 }

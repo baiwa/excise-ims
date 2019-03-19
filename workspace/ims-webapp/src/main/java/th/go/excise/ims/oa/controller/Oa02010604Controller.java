@@ -53,6 +53,7 @@ private static final Logger logger = LoggerFactory.getLogger(Oa02010602Controlle
 		ResponseData<OaLubricantsDtl> responseData = new ResponseData<OaLubricantsDtl>();
 		OaLubricantsDtl data = new OaLubricantsDtl();
 		try {
+			data = oa02010604Service.updateLubircantsDtlById(request, idStr);
 			data = oa02010604Service.updateById(request, idStr);
 			responseData.setData(data);
 			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
@@ -64,6 +65,25 @@ private static final Logger logger = LoggerFactory.getLogger(Oa02010602Controlle
 		}
 		return responseData;
 	}
+	
+//	@PutMapping("/saveLubircantsDtl/{id}")
+//	@ResponseBody
+//	public ResponseData<OaLubricantsDtl> updateLubircantsDtlById(@RequestBody Oa02010604FormVo request, @PathVariable("id") String idStr) {
+//		ResponseData<OaLubricantsDtl> responseData = new ResponseData<OaLubricantsDtl>();
+//		OaLubricantsDtl data = new OaLubricantsDtl();
+//		try {
+//			data = oa02010604Service.updateLubircantsDtlById(request, idStr);
+//			responseData.setData(data);
+//			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+//			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+//		} catch (Exception e) { 
+//			logger.error("Oa02010608Controller::updateById ", e);
+//			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+//			responseData.setStatus(RESPONSE_STATUS.FAILED);
+//		}
+//		return responseData;
+//	}
+//	
 
 
 }
