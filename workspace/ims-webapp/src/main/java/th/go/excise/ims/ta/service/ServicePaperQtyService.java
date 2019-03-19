@@ -39,7 +39,7 @@ public class ServicePaperQtyService {
 	public List<ServicePaperQtyVo> listQuantityServiceVo(int start,int length,int total) {
 
 		List<ServicePaperQtyVo> datalist = new ArrayList<ServicePaperQtyVo>();
-		String excise = "กรมสรรพสามิตภาคที่";
+		String excise = " รายการบริการ";
 		ServicePaperQtyVo data = null;
 		for (int i = start; i<(start+length); i++) {
 			if(i >= total){
@@ -47,12 +47,12 @@ public class ServicePaperQtyService {
 			}
 			data = new ServicePaperQtyVo();
 			data.setGoodsDesc(excise+i);
-			data.setServiceDocNo("1500.00");
-			data.setIncomeDailyAccountAmt("3000.00");
-			data.setPaymentDocNo("4000.00");
-			data.setAuditAmt("5000.00");
-			data.setTaxAmt("6000.00");
-			data.setDiffAmt("7000.00");
+			data.setServiceDocNo("");
+			data.setIncomeDailyAccountAmt("");
+			data.setPaymentDocNo("");
+			data.setAuditAmt("");
+			data.setTaxAmt("");
+			data.setDiffAmt("");
 			datalist.add(data);
 		}
 		return datalist;
