@@ -19,6 +19,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
 import th.go.excise.ims.ia.persistence.entity.IaRiskQtnConfig;
@@ -115,7 +116,7 @@ public class Int0201Controller {
 		ResponseData<IaQuestionnaireHdr> response = new ResponseData<IaQuestionnaireHdr>();
 		try {
 			response.setData(int0201Service.updateStatus(request));
-			if ("1".equals(request.getStatus())) {
+			if (IaConstants.IA_STATUS.STATUS_1_CODE.equals(request.getStatus())) {
 				response.setMessage(
 						ApplicationCache.getParamInfoByCode("IA_QTN_MESSAGE", request.getStatus()).getValue1());
 			} else {
