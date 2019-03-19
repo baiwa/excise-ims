@@ -139,7 +139,22 @@ public abstract class ExcelUtils {
 		thColor.setWrapText(true);
 		return thColor;
 	}
+	
 
+	public static XSSFCellStyle createCellColorStyle(XSSFWorkbook workbook, XSSFColor color,HorizontalAlignment horAl,VerticalAlignment verAl) {
+		XSSFCellStyle thColor = workbook.createCellStyle();
+		thColor.setFillForegroundColor(color);
+		thColor.setAlignment(horAl);
+		thColor.setVerticalAlignment(verAl);
+		thColor.setBorderBottom(BorderStyle.THIN);
+		thColor.setBorderLeft(BorderStyle.THIN);
+		thColor.setBorderRight(BorderStyle.THIN);
+		thColor.setBorderTop(BorderStyle.THIN);
+		thColor.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		thColor.setWrapText(true);
+		return thColor;
+	}
+	
 	public static XSSFCellStyle createTopicCenterStyle(XSSFWorkbook workbook) {
 		XSSFCellStyle topicCenter = workbook.createCellStyle();
 		topicCenter.setAlignment(HorizontalAlignment.CENTER);
