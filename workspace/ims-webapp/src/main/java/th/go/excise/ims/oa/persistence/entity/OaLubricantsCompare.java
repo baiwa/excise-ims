@@ -18,7 +18,11 @@ public class OaLubricantsCompare
     extends BaseEntity
 {
 
-    @Id
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7031685076343201916L;
+	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OA_LUBRICANTS_COMPARE_GEN")
     @SequenceGenerator(name = "OA_LUBRICANTS_COMPARE_GEN", sequenceName = "OA_LUBRICANTS_COMPARE_SEQ", allocationSize = 1)
     @Column(name = "OA_LUB_COMPARE_ID")
@@ -33,6 +37,10 @@ public class OaLubricantsCompare
     private Date sumaryDate;
     @Column(name = "AUDIT_DATE")
     private Date auditDate;
+    @Column(name = "SUMARY_STOCK")
+    private BigDecimal sumaryStock;
+    @Column(name = "AUDIT_STOCK")
+    private BigDecimal auditStock;
     @Column(name = "REMARK")
     private String remark;
     @Column(name = "OVER_RATE")
@@ -101,5 +109,22 @@ public class OaLubricantsCompare
     public void setOverRate(BigDecimal overRate) {
         this.overRate = overRate;
     }
+
+	public BigDecimal getSumaryStock() {
+		return sumaryStock;
+	}
+
+	public BigDecimal getAuditStock() {
+		return auditStock;
+	}
+
+	public void setSumaryStock(BigDecimal sumaryStock) {
+		this.sumaryStock = sumaryStock;
+	}
+
+	public void setAuditStock(BigDecimal auditStock) {
+		this.auditStock = auditStock;
+	}
+    
 
 }

@@ -17,7 +17,11 @@ public class OaLubricantsSummary
     extends BaseEntity
 {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2347398988499751402L;
+	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OA_LUBRICANTS_SUMMARY_GEN")
     @SequenceGenerator(name = "OA_LUBRICANTS_SUMMARY_GEN", sequenceName = "OA_LUBRICANTS_SUMMARY_SEQ", allocationSize = 1)
     @Column(name = "OA_LUB_SUMARY_ID")
