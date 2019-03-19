@@ -13,8 +13,10 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.oa.persistence.entity.OaCustomer;
 import th.go.excise.ims.oa.service.Oa020106Service;
 import th.go.excise.ims.oa.vo.Oa020106ButtonVo;
+import th.go.excise.ims.oa.vo.Oa020106FormVo;
 
 @Controller
 @RequestMapping("api/oa/02/01/06")
@@ -36,6 +38,40 @@ public class Oa020106Controller {
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("Oa020106Controller::findButtonById ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
+	@GetMapping("/customers/{id}")
+	@ResponseBody
+	public ResponseData<OaCustomer> findById(@PathVariable("id") String idStr) {
+		ResponseData<OaCustomer> responseData = new ResponseData<>();
+		OaCustomer data = new OaCustomer();
+		try {
+			data = oa020106Service.findById(idStr);
+			responseData.setData(data);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Oa020106Controller::findById ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
+	@GetMapping("/find/customerLicense/{licenseId}")
+	@ResponseBody 
+	public ResponseData<Oa020106FormVo> findAll(@PathVariable("licenseId") String licenseIdStr) {
+		ResponseData<Oa020106FormVo> responseData = new ResponseData<>();
+		Oa020106FormVo data = new Oa020106FormVo();
+		try {
+			data = oa020106Service.findCustomerLicenAll(licenseIdStr);
+			responseData.setData(data);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) { 
+			logger.error("Oa020106Controller::findAll ", e);
 			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}

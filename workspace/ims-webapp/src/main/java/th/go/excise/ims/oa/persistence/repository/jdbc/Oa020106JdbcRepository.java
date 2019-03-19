@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.go.excise.ims.oa.persistence.entity.OaCustomerLicenDetail;
 import th.go.excise.ims.oa.vo.Oa020106ButtonVo;
 
 @Repository
@@ -47,4 +49,15 @@ public class Oa020106JdbcRepository {
 			return vo;
 		}
 	};
+	
+	public List<OaCustomerLicenDetail> findByLicenseId(BigDecimal licenseId) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT * FROM OA_CUSTOMER_LICEN_DETAIL WHERE IS_DELETED='N' ");
+		sql.append(" AND OA_CUSLICENSE_ID = ? AND IS_DELETED = 'N' ");
+		params.add(licenseId);
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		List<OaCustomerLicenDetail> lists = commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper(OaCustomerLicenDetail.class));
+		return lists;
+	}
 }

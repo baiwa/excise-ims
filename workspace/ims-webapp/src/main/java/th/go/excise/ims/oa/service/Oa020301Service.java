@@ -54,6 +54,7 @@ public class Oa020301Service {
 		oaCustomer.setCreatedBy(UserLoginUtils.getCurrentUsername());
 		oaCustomer.setCreatedDate(LocalDateTime.now());
 		oaCustomer.setWarehouseAddress(form.getWarehouseAddress());
+		oaCustomer.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 		oaCustomer = oaCustomerRepository.save(oaCustomer);
 		return oaCustomer; 
 	} 

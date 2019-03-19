@@ -13,8 +13,15 @@ public class Oa020301FormVo {
     private String oldCustomer;
     private String address;
     private String warehouseAddress;
+    private String officeCode;
 
-    public BigDecimal getOaCustomerId() {
+    public String getOfficeCode() {
+		return officeCode;
+	}
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
+	}
+	public BigDecimal getOaCustomerId() {
 		return oaCustomerId;
 	}
 	public void setOaCustomerId(BigDecimal oaCustomerId) {

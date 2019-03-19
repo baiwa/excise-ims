@@ -2,6 +2,7 @@
 package th.go.excise.ims.oa.persistence.entity;
 
 import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,15 +10,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
-@Table(name = "OA_CUSTOMER")
-public class OaCustomer extends BaseEntity {
-	private static final long serialVersionUID = 7951617557609268472L;
+@Table(name = "OA_HYD_CUSTOMER")
+public class OaHydCustomer extends BaseEntity {
+
+	private static final long serialVersionUID = -6154999047742469856L;
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OA_CUSTOMER_GEN")
-	@SequenceGenerator(name = "OA_CUSTOMER_GEN", sequenceName = "OA_CUSTOMER_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OA_HYD_CUSTOMER_GEN")
+	@SequenceGenerator(name = "OA_HYD_CUSTOMER_GEN", sequenceName = "OA_HYD_CUSTOMER_SEQ", allocationSize = 1)
 	@Column(name = "OA_CUSTOMER_ID")
 	private BigDecimal oaCustomerId;
 	@Column(name = "IDENTIFY_NO")

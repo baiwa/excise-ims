@@ -13,26 +13,20 @@ import javax.persistence.Table;
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
-@Table(name = "OA_CUSTOMER_LICEN")
-public class OaCustomerLicen
+@Table(name = "OA_HYD_CUSTOMER_LICEN")
+public class OaHydCustomerLicen
     extends BaseEntity
 {
 
-	private static final long serialVersionUID = 706197298310853638L;
-	
-	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OA_CUSTOMER_LICEN_GEN")
-    @SequenceGenerator(name = "OA_CUSTOMER_LICEN_GEN", sequenceName = "OA_CUSTOMER_LICEN_SEQ", allocationSize = 1)
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OA_HYD_CUSTOMER_LICEN_GEN")
+    @SequenceGenerator(name = "OA_HYD_CUSTOMER_LICEN_GEN", sequenceName = "OA_HYD_CUSTOMER_LICEN_SEQ", allocationSize = 1)
     @Column(name = "OA_CUSLICENSE_ID")
     private BigDecimal oaCuslicenseId;
     @Column(name = "OA_CUSTOMER_ID")
     private BigDecimal oaCustomerId;
     @Column(name = "LICENSE_TYPE")
     private String licenseType;
-    @Column(name = "LICENSE_TYPE_FOR")
-    private String licenseTypeFor;
-    @Column(name = "LICENSE_TYPE_DESP")
-    private String licenseTypeDesp;
     @Column(name = "LICENSE_NO")
     private String licenseNo;
     @Column(name = "LICENSE_DATE")
@@ -63,24 +57,12 @@ public class OaCustomerLicen
     private String receiveNo;
     @Column(name = "APPROVE")
     private String approve;
+    @Column(name = "LICENSE_TYPE_FOR")
+    private String licenseTypeFor;
+    @Column(name = "LICENSE_TYPE_DESP")
+    private String licenseTypeDesp;
 
-    public String getLicenseTypeFor() {
-		return licenseTypeFor;
-	}
-
-	public void setLicenseTypeFor(String licenseTypeFor) {
-		this.licenseTypeFor = licenseTypeFor;
-	}
-
-	public String getLicenseTypeDesp() {
-		return licenseTypeDesp;
-	}
-
-	public void setLicenseTypeDesp(String licenseTypeDesp) {
-		this.licenseTypeDesp = licenseTypeDesp;
-	}
-
-	public BigDecimal getOaCuslicenseId() {
+    public BigDecimal getOaCuslicenseId() {
         return oaCuslicenseId;
     }
 
@@ -222,6 +204,22 @@ public class OaCustomerLicen
 
     public void setApprove(String approve) {
         this.approve = approve;
+    }
+
+    public String getLicenseTypeFor() {
+        return licenseTypeFor;
+    }
+
+    public void setLicenseTypeFor(String licenseTypeFor) {
+        this.licenseTypeFor = licenseTypeFor;
+    }
+
+    public String getLicenseTypeDesp() {
+        return licenseTypeDesp;
+    }
+
+    public void setLicenseTypeDesp(String licenseTypeDesp) {
+        this.licenseTypeDesp = licenseTypeDesp;
     }
 
 }
