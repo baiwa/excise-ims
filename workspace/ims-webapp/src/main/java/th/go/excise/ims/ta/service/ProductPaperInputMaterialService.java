@@ -8,8 +8,10 @@ import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFColor;
@@ -51,11 +53,11 @@ public class ProductPaperInputMaterialService {
 			data = new ProductPaperInputMaterialVo();
 			data.setId(Long.valueOf(1));
 			data.setMaterialDesc(desc + (i + 1));
-			data.setInputMaterialQty("13-05555-037" + (i + 1));
-			data.setDailyAccountQty("130555503" + (i + 1));
-			data.setMonthStatementQty("1,500.00");
-			data.setExternalDataQty("500.00");
-			data.setMaxDiffQty("1,000.00");
+			data.setInputMaterialQty("");
+			data.setDailyAccountQty("" );
+			data.setMonthStatementQty("");
+			data.setExternalDataQty("");
+			data.setMaxDiffQty("");
 			datalist.add(data);
 		}
 		return datalist;
@@ -76,11 +78,12 @@ public class ProductPaperInputMaterialService {
 		CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(24, 75, 125)));
 		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
 		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
+		  CellStyle cellRightBgStyle = ExcelUtils.createCellColorStyle(workbook, new XSSFColor(new java.awt.Color(192, 192, 192)), HorizontalAlignment.RIGHT, VerticalAlignment.TOP);
 		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
 		/* tbTH */
 		String[] tbTH = { "ลำดับ", "รายการ", "ใบกำกับภาษีซื้อ", "บัญชีประจำวัน ภส. ๐๗-๐๑", "งบเดือน (ภส. ๐๗-๐๔)",
-				"ข้อมูลจากภายนอก", "ผลต่างสูงสุด" };
+				"ข้อมูลจากภายนอก",  };
 		for (int i = 0; i < tbTH.length; i++) {
 			cell = row.createCell(i);
 			cell.setCellValue(tbTH[i]);
@@ -130,7 +133,7 @@ public class ProductPaperInputMaterialService {
 
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getMonthStatementQty());
-			cell.setCellStyle(cellRight);
+			cell.setCellStyle(cellRightBgStyle);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
@@ -138,10 +141,7 @@ public class ProductPaperInputMaterialService {
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getMaxDiffQty());
-			cell.setCellStyle(cellRight);
-			cellNum++;
+		
 
 			no++;
 			rowNum++;

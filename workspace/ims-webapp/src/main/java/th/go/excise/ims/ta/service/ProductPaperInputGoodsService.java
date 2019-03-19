@@ -8,8 +8,10 @@ import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -53,10 +55,11 @@ public class ProductPaperInputGoodsService {
 			data = new ProductPaperInputGoodsVo();
 			data.setId(Long.valueOf(1));
 			data.setGoodsDesc(desc + (i + 1));
-			data.setInputGoodsQty("02-00-0" + (i + 1));
-			data.setInputMonthStatementQty("1,000.00");
-			data.setInputDailyAccountQty("500.00");
-			data.setMaxDiffQty("500.00");
+			data.setInputGoodsQty("");
+			data.setInputMonthStatementQty("");
+			data.setInputDailyAccountQty("");
+			data.setMaxDiffQty1("");
+			data.setMaxDiffQty2("");
 			datalist.add(data);
 		}
 		return datalist;
@@ -77,10 +80,11 @@ public class ProductPaperInputGoodsService {
 		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
 		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
 		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
+		  CellStyle cellRightBgStyle = ExcelUtils.createCellColorStyle(workbook, new XSSFColor(new java.awt.Color(192, 192, 192)), HorizontalAlignment.RIGHT, VerticalAlignment.TOP);
 		;
 
 		/* tbTH1 */
-		String[] tbTH1 = { "ลำดับ", "รายการ", "ใบรับสินค้าสำเร็จรูป", "ปริมาณรับจากการผลิต", "", "ผลต่างสูงสุด" };
+		String[] tbTH1 = { "ลำดับ", "รายการ", "ใบรับสินค้าสำเร็จรูป (1)", "ปริมาณรับจากการผลิต"};
 		for (int i = 0; i < tbTH1.length; i++) {
 			cell = row.createCell(i);
 			cell.setCellValue(tbTH1[i]);
@@ -93,7 +97,7 @@ public class ProductPaperInputGoodsService {
 		}
 
 		/* tbTH2 */
-		String[] tbTH2 = { "", "", "", "งบเดือน (ภส. ๐๗-๐๔)", "(ภส. ๐๗-๐๒)" };
+		String[] tbTH2 = { "", "", "", "งบเดือน (ภส. ๐๗-๐๔) (2)", "บัญชีประจำวัน (ภส. ๐๗-๐๒) (3)" };
 		rowNum++;
 		row = sheet.createRow(rowNum);
 		for (int i = 0; i < tbTH2.length; i++) {
@@ -118,7 +122,7 @@ public class ProductPaperInputGoodsService {
 		/* merge(firstRow, lastRow, firstCol, lastCol) */
 		sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 4));
 
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 5; i++) {
 			if (i != 3 && i != 4) {
 				sheet.addMergedRegion(new CellRangeAddress(0, 1, i, i));
 				cell = row.createCell(i);
@@ -151,7 +155,7 @@ public class ProductPaperInputGoodsService {
 
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getInputMonthStatementQty());
-			cell.setCellStyle(cellRight);
+			cell.setCellStyle(cellRightBgStyle);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
@@ -159,11 +163,7 @@ public class ProductPaperInputGoodsService {
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getMaxDiffQty());
-			cell.setCellStyle(cellRight);
-			cellNum++;
-
+		
 			no++;
 			rowNum++;
 			cellNum = 0;
@@ -217,7 +217,10 @@ public class ProductPaperInputGoodsService {
 						data.setInputDailyAccountQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 5) {
 						// MaxDiffQty
-						data.setMaxDiffQty(ExcelUtils.getCellValueAsString(cell));
+						data.setMaxDiffQty1(ExcelUtils.getCellValueAsString(cell));
+					}else if (cell.getColumnIndex() == 6) {
+						// MaxDiffQty
+						data.setMaxDiffQty2(ExcelUtils.getCellValueAsString(cell));
 					}
 				}
 				dataList.add(data);

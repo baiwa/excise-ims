@@ -79,14 +79,13 @@ public class ServicePaperBalanceGoodsService {
 
 			Row row = sheet.createRow(rowNum);
 			Cell cell = row.createCell(cellNum);
-			String[] tbTH1 = { "ลำดับ", "รายการ", "ยอดคงเหลือตามบัญชี", "ยอดสินค้าคงเหลือจากการตรวจนับ",
-					"ผลต่าง"};
+			String[] tbTH1 = { "ลำดับ", "รายการ", "ยอดคงเหลือตามบัญชี", "ยอดสินค้าคงเหลือจากการตรวจนับ"};
 			int colIndex = 0;
 			sheet.setColumnWidth(colIndex++, 10 * 256);
 			sheet.setColumnWidth(colIndex++, 25 * 256);
 			sheet.setColumnWidth(colIndex++, 25 * 256);
 			sheet.setColumnWidth(colIndex++, 35 * 256);
-			sheet.setColumnWidth(colIndex++, 25 * 256);
+		
 			
 			row = sheet.createRow(rowNum);
 			for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
@@ -115,10 +114,7 @@ public class ServicePaperBalanceGoodsService {
 				cell.setCellStyle(cellRight);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getAuditBalanceGoodsQty()))?detail.getAuditBalanceGoodsQty(): "" );
 				
-				cell = row.createCell(cellNum++);
-				cell.setCellStyle(cellRight);
-				cell.setCellValue((StringUtils.isNotBlank(detail.getDiffBalanceGoodsQty()))?detail.getDiffBalanceGoodsQty(): "" );
-				
+			
 				rowNum++;
 				cellNum = 0;
 			}

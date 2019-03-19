@@ -8,8 +8,10 @@ import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFColor;
@@ -53,13 +55,13 @@ public class ProductPaperOutputForeignGoodsService {
 			data = new ProductPaperOutputForeignGoodsVo();
 			data.setId(Long.valueOf(1));
 			data.setGoodsDesc(desc + (i + 1));
-			data.setCargoDocNo("100-222-22" + (i + 1));
-			data.setInvoiceNo("GT-00" + (i + 1));
-			data.setOutputDailyAccountQty("TS00" + (i + 1));
-			data.setOutputMonthStatementQty("1,000.00");
-			data.setOutputAuditQty("900.00");
-			data.setTaxReduceQty("TS00+G" + (i + 1));
-			data.setDiffOutputQty("100.00");
+			data.setCargoDocNo("");
+			data.setInvoiceNo("");
+			data.setOutputDailyAccountQty("");
+			data.setOutputMonthStatementQty("");
+			data.setOutputAuditQty("");
+			data.setTaxReduceQty("");
+			data.setDiffOutputQty("");
 			datalist.add(data);
 		}
 		return datalist;
@@ -81,10 +83,9 @@ public class ProductPaperOutputForeignGoodsService {
 		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
 		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
 		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
-
+		  CellStyle cellRightBgStyle = ExcelUtils.createCellColorStyle(workbook, new XSSFColor(new java.awt.Color(192, 192, 192)), HorizontalAlignment.RIGHT, VerticalAlignment.TOP);
 		/* tbTH */
-		String[] tbTH = { "ลำดับ", "รายการ", "ใบขนสินค้า", "INV", "ภส. ๐๗-๐๒", "งบเดือน ภส. ๐๗-๐๔", "จากการตรวจสอบ	",
-				"ภส. ๐๕-๐๑", "ผลต่าง" };
+		String[] tbTH = { "ลำดับ", "รายการ", "ใบขนสินค้า", "INV", "บัญชีประจำวัน (ภส.๐๗-๐๒)", "งบเดือน (ภส.๐๗-๐๔)", "จากการตรวจสอบ","จำนวนขอยกเว้นหรือคืนภาษี(ภส.๐๕-๐๑)"};
 		for (int i = 0; i < tbTH.length; i++) {
 			cell = row.createCell(i);
 			cell.setCellValue(tbTH[i]);
@@ -137,28 +138,24 @@ public class ProductPaperOutputForeignGoodsService {
 
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getOutputDailyAccountQty());
-			cell.setCellStyle(cellCenter);
+			cell.setCellStyle(cellRightBgStyle);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getOutputMonthStatementQty());
-			cell.setCellStyle(cellRight);
+			cell.setCellStyle(cellRightBgStyle);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getOutputAuditQty());
-			cell.setCellStyle(cellRight);
+			cell.setCellStyle(cellRightBgStyle);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getTaxReduceQty());
-			cell.setCellStyle(cellCenter);
+			cell.setCellStyle(cellRightBgStyle);
 			cellNum++;
 
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getDiffOutputQty());
-			cell.setCellStyle(cellRight);
-			cellNum++;
 
 			no++;
 			rowNum++;

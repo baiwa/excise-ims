@@ -53,9 +53,10 @@ public class ProductPaperBalanceMaterialService {
 			data = new ProductPaperBalanceMaterialVo();
 			data.setId(Long.valueOf(1));
 			data.setMaterialDesc(desc + (i + 1));
-			data.setBalanceByAccountQty("1,000.00");
-			data.setBalanceByCountQty("700.00");
-			data.setMaxDiffQty("300.00");
+			data.setBalanceByAccountQty("");
+			data.setBalanceByStock("");
+			data.setBalanceByCountQty("");
+			data.setMaxDiffQty1("");
 			datalist.add(data);
 		}
 		return datalist;
@@ -79,8 +80,8 @@ public class ProductPaperBalanceMaterialService {
 		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
 		/* tbTH */
-		String[] tbTH = { "ลำดับ", "รายการ", "ยอดคงเหลือ (ตามแบบ ภส. ๐๗-๐๑)", "ยอดคงเหลือจากการตรวจนับ	",
-				"ผมต่างของข้อมูล" };
+		String[] tbTH = { "ลำดับ", "รายการ", "ยอดคงเหลือ (ภส.๐๗-๐๑)", "คลังสินค้า",
+				"ยอดคงเหลือจากการตรวจนับ" };
 		for (int i = 0; i < tbTH.length; i++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH[i]);
@@ -126,15 +127,17 @@ public class ProductPaperBalanceMaterialService {
 			cellNum++;
 
 			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getBalanceByStock());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getBalanceByCountQty());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getMaxDiffQty());
-			cell.setCellStyle(cellRight);
-			cellNum++;
 
+			
 			no++;
 			rowNum++;
 			cellNum = 0;
@@ -183,10 +186,16 @@ public class ProductPaperBalanceMaterialService {
 						data.setBalanceByAccountQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 3) {
 						// BalanceByCountQty
-						data.setBalanceByCountQty(ExcelUtils.getCellValueAsString(cell));
+						data.setBalanceByStock(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 4) {
+						// BalanceByCountQty
+						data.setBalanceByCountQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 5) {
 						// MaxDiffQty
-						data.setMaxDiffQty(ExcelUtils.getCellValueAsString(cell));
+						data.setMaxDiffQty1(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 5) {
+						// MaxDiffQty
+						data.setMaxDiffQty2(ExcelUtils.getCellValueAsString(cell));
 					}
 				}
 				dataList.add(data);

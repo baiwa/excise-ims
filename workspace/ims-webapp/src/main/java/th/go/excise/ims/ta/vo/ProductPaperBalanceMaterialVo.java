@@ -6,8 +6,10 @@ public class ProductPaperBalanceMaterialVo {
 	private Long id;
 	private String materialDesc;
 	private String balanceByAccountQty;
+	private String balanceByStock;
 	private String balanceByCountQty;
-	private String maxDiffQty;
+	private String maxDiffQty1;
+	private String maxDiffQty2;
 
 	private MultipartFile file;
 
@@ -35,6 +37,14 @@ public class ProductPaperBalanceMaterialVo {
 		this.balanceByAccountQty = balanceByAccountQty;
 	}
 
+	public String getBalanceByStock() {
+		return balanceByStock;
+	}
+
+	public void setBalanceByStock(String balanceByStock) {
+		this.balanceByStock = balanceByStock;
+	}
+
 	public String getBalanceByCountQty() {
 		return balanceByCountQty;
 	}
@@ -43,12 +53,20 @@ public class ProductPaperBalanceMaterialVo {
 		this.balanceByCountQty = balanceByCountQty;
 	}
 
-	public String getMaxDiffQty() {
-		return maxDiffQty;
+	public String getMaxDiffQty1() {
+		return maxDiffQty1;
 	}
 
-	public void setMaxDiffQty(String maxDiffQty) {
-		this.maxDiffQty = maxDiffQty;
+	public void setMaxDiffQty1(String maxDiffQty1) {
+		this.maxDiffQty1 = maxDiffQty1;
+	}
+
+	public String getMaxDiffQty2() {
+		return maxDiffQty2;
+	}
+
+	public void setMaxDiffQty2(String maxDiffQty2) {
+		this.maxDiffQty2 = maxDiffQty2;
 	}
 
 	public MultipartFile getFile() {
@@ -58,5 +76,7 @@ public class ProductPaperBalanceMaterialVo {
 	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
+
+	
 
 }

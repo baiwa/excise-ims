@@ -9,10 +9,13 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,6 +72,7 @@ public class ServicePaperPricePerUnitService {
 			 /* call style from utils */
 			  CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
 			  CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
+			  CellStyle cellRightBgStyle = ExcelUtils.createCellColorStyle(workbook, new XSSFColor(new java.awt.Color(192, 192, 192)), HorizontalAlignment.RIGHT, VerticalAlignment.TOP);
 			  CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
 			  CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 			  
@@ -79,7 +83,7 @@ public class ServicePaperPricePerUnitService {
 			Row row = sheet.createRow(rowNum);
 			Cell cell = row.createCell(cellNum);
 			String[] tbTH1 = { "ลำดับ", "รายการ", "ราคาตามใบกำกับภาษี", "ราคาบริการตามแบบแจ้ง",
-					"จากการตรวจสอบ", "ราคาที่ยื่นชำระภาษี","" };
+					"จากการตรวจสอบ", "ราคาที่ยื่นชำระภาษี"};
 			int colIndex = 0;
 			sheet.setColumnWidth(colIndex++, 10 * 256);
 			sheet.setColumnWidth(colIndex++, 38 * 256);
@@ -87,7 +91,7 @@ public class ServicePaperPricePerUnitService {
 			sheet.setColumnWidth(colIndex++, 25 * 256);
 			sheet.setColumnWidth(colIndex++, 23 * 256);
 			sheet.setColumnWidth(colIndex++,25 * 256);
-			sheet.setColumnWidth(colIndex++, 30 * 256);
+		
 			
 			row = sheet.createRow(rowNum);
 			for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
@@ -114,20 +118,18 @@ public class ServicePaperPricePerUnitService {
 				cell.setCellValue((StringUtils.isNotBlank(detail.getInvoicePrice()))?detail.getInvoicePrice(): "" );
 			
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(cellRight);
+				cell.setCellStyle(cellRightBgStyle);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getInformPrice()))?detail.getInformPrice(): "" );
 			
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(cellRight);
+				cell.setCellStyle(cellRightBgStyle);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getAuditPrice()))?detail.getAuditPrice(): "" );
 				
 				cell = row.createCell(cellNum++);
-				cell.setCellStyle(cellRight);
+				cell.setCellStyle(cellRightBgStyle);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getTaxPrice()))?detail.getTaxPrice(): "" );
 				
-//				cell = row.createCell(cellNum++);
-//				cell.setCellStyle(cellRight);
-//				cell.setCellValue((StringUtils.isNotBlank(detail.getDiffPrice()))?detail.getDiffPrice(): "" );
+
 				
 				rowNum++;
 				cellNum = 0;

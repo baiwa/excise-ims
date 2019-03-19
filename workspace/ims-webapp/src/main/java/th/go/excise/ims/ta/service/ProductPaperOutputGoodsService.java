@@ -8,8 +8,10 @@ import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFColor;
@@ -52,12 +54,12 @@ public class ProductPaperOutputGoodsService {
 			data = new ProductPaperOutputGoodsVo();
 			data.setId(Long.valueOf(1));
 			data.setGoodsDesc(desc + (i + 1));
-			data.setOutputGoodsQty("1,000.00");
-			data.setOutputDailyAccountQty("1,000.00");
-			data.setOutputMonthStatementQty("1,000.00");
-			data.setAuditQty("900.00");
-			data.setTaxGoodsQty("800.00");
-			data.setDiffQty("100.00");
+			data.setOutputGoodsQty("");
+			data.setOutputDailyAccountQty("");
+			data.setOutputMonthStatementQty("");
+			data.setAuditQty("");
+			data.setTaxGoodsQty("");
+			data.setDiffQty("");
 			datalist.add(data);
 		}
 		return datalist;
@@ -77,6 +79,7 @@ public class ProductPaperOutputGoodsService {
 		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
 		CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(24, 75, 125)));
 		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
+		  CellStyle cellRightBgStyle = ExcelUtils.createCellColorStyle(workbook, new XSSFColor(new java.awt.Color(192, 192, 192)), HorizontalAlignment.RIGHT, VerticalAlignment.TOP);
 		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
 		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
@@ -84,8 +87,7 @@ public class ProductPaperOutputGoodsService {
 		String[] tbTH = { "ลำดับ", "รายการ", "ปริมาณจ่ายสินค้าสำเร็จรูป" + "\n" + "ในใบกำกับภาษีขาย",
 				"ปริมาณจ่ายสินค้าสำเร็จรูป" + "\n" + " (ภส. ๐๗-๐๒)",
 				"ปริมาณจ่ายสินค้าสำเร็จรูป " + "\n" + "จากงบเดือน(ภส. ๐๗-๐๔)",
-				"ปริมาณที่ได้จากการตรวจสอบ" + "\n" + "(1)", "ปริมาณจ่ายสินค้าสำเร็จรูป " + "\n" + "(ภส. ๐๓-๐๗ (2))",
-				"ผลต่าง" + "\n" + " (1 - 2)" };
+				"ปริมาณที่ได้จากการตรวจสอบ" + "\n" + "(1)", "ปริมาณจ่ายสินค้าสำเร็จรูป " + "\n" + "(ภส. ๐๓-๐๗ (2))"};
 		for (int i = 0; i < tbTH.length; i++) {
 			cell = row.createCell(i);
 			cell.setCellValue(tbTH[i]);
@@ -136,23 +138,20 @@ public class ProductPaperOutputGoodsService {
 
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getOutputMonthStatementQty());
-			cell.setCellStyle(cellRight);
+			cell.setCellStyle(cellRightBgStyle);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getAuditQty());
-			cell.setCellStyle(cellRight);
+			cell.setCellStyle(cellRightBgStyle);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getTaxGoodsQty());
-			cell.setCellStyle(cellRight);
+			cell.setCellStyle(cellRightBgStyle);
 			cellNum++;
 
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getDiffQty());
-			cell.setCellStyle(cellRight);
-			cellNum++;
+		
 
 			no++;
 			rowNum++;
