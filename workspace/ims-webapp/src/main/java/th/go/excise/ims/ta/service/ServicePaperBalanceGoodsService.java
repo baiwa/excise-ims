@@ -40,7 +40,7 @@ public class ServicePaperBalanceGoodsService {
 	}
 
 	public List<ServicePaperBalanceGoodsVo> listLeftInStockServiceVo(int start,int length,int total) {
-		String excise = "กรมสรรพสามิตภาคที่";
+		String excise = "รายการสินค้า";
 		
 		List<ServicePaperBalanceGoodsVo> datalist = new ArrayList<ServicePaperBalanceGoodsVo>();
 		ServicePaperBalanceGoodsVo data = null;
@@ -50,9 +50,9 @@ public class ServicePaperBalanceGoodsService {
 			}
 			data = new ServicePaperBalanceGoodsVo();
 			data.setGoodsDesc(excise+i);
-			data.setBalanceGoodsQty("30000.00");
-			data.setAuditBalanceGoodsQty("25000.00");
-			data.setDiffBalanceGoodsQty("3000.00");
+			data.setBalanceGoodsQty("");
+			data.setAuditBalanceGoodsQty("");
+			data.setDiffBalanceGoodsQty("");
 			datalist.add(data);
 		}
 		

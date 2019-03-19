@@ -7,7 +7,7 @@ import java.net.URLEncoder;
 
 import org.junit.Test;
 
-public class ServicePaperPricePerUnitSeeviceTest {
+public class ServicePaperPricePerUnitServiceTest {
 	 private static final String PATH = "/tmp/";
 	 private static final String TYPE = ".xlsx";
 	 private static final String MATERIAL_RECEIVE = "service";

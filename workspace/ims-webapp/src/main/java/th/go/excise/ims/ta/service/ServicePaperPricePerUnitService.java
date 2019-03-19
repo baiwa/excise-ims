@@ -40,7 +40,7 @@ public class ServicePaperPricePerUnitService {
 	}
 
 	public List<ServicePaperPricePerUnitVo> listPriceServiceVo(int start,int length, int total) {
-		String excise = "กรมสรรพสามิตภาคที่";
+		String excise = "รายการบริการ";
 		List<ServicePaperPricePerUnitVo> datalist = new ArrayList<ServicePaperPricePerUnitVo>();
 
 		ServicePaperPricePerUnitVo data = null;
@@ -50,11 +50,11 @@ public class ServicePaperPricePerUnitService {
 			}
 			data = new ServicePaperPricePerUnitVo();
 			data.setGoodsDesc(excise+i);
-			data.setInvoicePrice("3000.00");
-			data.setInformPrice("2300.00");
-			data.setAuditPrice("6500.00");
-			data.setTaxPrice("7500.00");
-			data.setDiffPrice("8500.00");
+			data.setInvoicePrice("");
+			data.setInformPrice("");
+			data.setAuditPrice("");
+			data.setTaxPrice("");
+			data.setDiffPrice("");
 			datalist.add(data);
 
 		}
@@ -79,7 +79,7 @@ public class ServicePaperPricePerUnitService {
 			Row row = sheet.createRow(rowNum);
 			Cell cell = row.createCell(cellNum);
 			String[] tbTH1 = { "ลำดับ", "รายการ", "ราคาตามใบกำกับภาษี", "ราคาบริการตามแบบแจ้ง",
-					"จากการตรวจสอบ", "ราคาที่ยื่นชำระภาษี","ผลต่าง" };
+					"จากการตรวจสอบ", "ราคาที่ยื่นชำระภาษี","" };
 			int colIndex = 0;
 			sheet.setColumnWidth(colIndex++, 10 * 256);
 			sheet.setColumnWidth(colIndex++, 38 * 256);
@@ -88,7 +88,7 @@ public class ServicePaperPricePerUnitService {
 			sheet.setColumnWidth(colIndex++, 23 * 256);
 			sheet.setColumnWidth(colIndex++,25 * 256);
 			sheet.setColumnWidth(colIndex++, 30 * 256);
-			sheet.setColumnWidth(colIndex++, 23 * 256);
+			
 			row = sheet.createRow(rowNum);
 			for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 				cell = row.createCell(cellNum);
@@ -125,9 +125,9 @@ public class ServicePaperPricePerUnitService {
 				cell.setCellStyle(cellRight);
 				cell.setCellValue((StringUtils.isNotBlank(detail.getTaxPrice()))?detail.getTaxPrice(): "" );
 				
-				cell = row.createCell(cellNum++);
-				cell.setCellStyle(cellRight);
-				cell.setCellValue((StringUtils.isNotBlank(detail.getDiffPrice()))?detail.getDiffPrice(): "" );
+//				cell = row.createCell(cellNum++);
+//				cell.setCellStyle(cellRight);
+//				cell.setCellValue((StringUtils.isNotBlank(detail.getDiffPrice()))?detail.getDiffPrice(): "" );
 				
 				rowNum++;
 				cellNum = 0;
