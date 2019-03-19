@@ -75,7 +75,7 @@ public class Int030101Service {
 	private IaRiskSelectCaseRepository iaRiskSelectCaseRep;
 
 	@Autowired
-	private ExcelUtil excalUtil;
+	private ExcelUtil excelUtil;
 
 	@Transactional
 	public Int030101Vo saveFactors(Int030101FormVo form) {
@@ -150,7 +150,7 @@ public class Int030101Service {
 
 	public ByteArrayOutputStream exportInt030101() throws IOException {
 		/* create spreadsheet */
-		XSSFWorkbook workbook = excalUtil.setUpExcel();
+		XSSFWorkbook workbook = excelUtil.setUpExcel();
 		Sheet sheet = workbook.createSheet();
 		int rowNum = 0;
 		int cellNum = 0;
@@ -163,7 +163,7 @@ public class Int030101Service {
 		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH1[cellNum]);
-			cell.setCellStyle(excalUtil.thStyle);
+			cell.setCellStyle(excelUtil.thStyle);
 		}
 
 		/* set sheet */
@@ -219,7 +219,7 @@ public class Int030101Service {
 
 	public ByteArrayOutputStream exportInt0301012() throws IOException {
 		/* create spreadsheet */
-		XSSFWorkbook workbook = excalUtil.setUpExcel();
+		XSSFWorkbook workbook = excelUtil.setUpExcel();
 		Sheet sheet = workbook.createSheet();
 		int rowNum = 0;
 		int cellNum = 0;
@@ -232,7 +232,7 @@ public class Int030101Service {
 		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH1[cellNum]);
-			cell.setCellStyle(excalUtil.thStyle);
+			cell.setCellStyle(excelUtil.thStyle);
 		}
 
 		/* set sheet */
@@ -297,7 +297,7 @@ public class Int030101Service {
 
 	public ByteArrayOutputStream exportInt0301013() throws IOException {
 		/* create spreadsheet */
-		XSSFWorkbook workbook = excalUtil.setUpExcel();
+		XSSFWorkbook workbook = excelUtil.setUpExcel();
 		Sheet sheet = workbook.createSheet();
 		int rowNum = 0;
 		int cellNum = 0;
@@ -310,7 +310,7 @@ public class Int030101Service {
 		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH1[cellNum]);
-			cell.setCellStyle(excalUtil.thStyle);
+			cell.setCellStyle(excelUtil.thStyle);
 		}
 
 		/* set sheet */
