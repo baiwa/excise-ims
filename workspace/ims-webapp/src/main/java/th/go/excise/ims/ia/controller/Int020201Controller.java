@@ -3,6 +3,7 @@ package th.go.excise.ims.ia.controller;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.apache.poi.ss.formula.functions.T;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,6 +120,38 @@ public class Int020201Controller {
 		try {
 			int020201Service.updateConclude(request);
 			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	@GetMapping("find/count-check-qtn/{id}")
+	@ResponseBody
+	public ResponseData<Boolean> countCheckQtn(@PathVariable("id") BigDecimal id) {
+		ResponseData<Boolean> responseData = new ResponseData<Boolean>();
+		try {
+			responseData.setData(int020201Service.countCheckQtn(id));
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
+	@PutMapping("/update/status/{idMadeHdr}")
+	@ResponseBody
+	public ResponseData<IaQuestionnaireMadeHdr> updateStatusReplyQtn(@PathVariable("idMadeHdr") BigDecimal idMadeHdr, @RequestBody String status) {
+		logger.info("Int020201 Update-Conclude");
+		ResponseData<IaQuestionnaireMadeHdr> response = new ResponseData<IaQuestionnaireMadeHdr>();
+
+		try {
+			int020201Service.updateStatusReplyQtn(idMadeHdr, status);
+//			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();

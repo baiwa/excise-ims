@@ -18,6 +18,7 @@ import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireSideRepository;
+import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireMadeHdrJdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireMadeJdbcRepository;
 import th.go.excise.ims.ia.vo.Int020201ConcludeVo;
 import th.go.excise.ims.ia.vo.Int020201DtlVo;
@@ -45,6 +46,9 @@ public class Int020201Service {
 
 	@Autowired
 	private QuestionnaireService questionnaireService;
+	
+	@Autowired
+	private IaQuestionnaireMadeHdrJdbcRepository iaQuestionnaireMadeHdrJdbcRepository;
 
 	public List<IaQuestionnaireSide> findQtnSideById(Int020201SidesFormVo request) {
 		return iaQuestionnaireSideRepository.findByidHeadAndIsDeletedOrderBySeqAsc(request.getIdSide(), "N");
@@ -148,6 +152,21 @@ public class Int020201Service {
 				}
 			}
 		}
+	}
+
+	public Boolean countCheckQtn(BigDecimal idHdr) {
+		Boolean checkQtn = false;
+		Integer count = iaQuestionnaireMadeHdrJdbcRepository.checkCountMadeHdrStatus3(idHdr);
+		Integer countAll = iaQuestionnaireMadeHdrJdbcRepository.checkCountMadeHdrAll(idHdr);
+		if(count==countAll) {
+			checkQtn = true;
+		}
+		
+		return checkQtn;
+	}
+
+	public void updateStatusReplyQtn(BigDecimal idMadeHdr, String status) {
+		questionnaireService.updateStatusIaQuestionnaireMadeHdrAndDTL(idMadeHdr, IaConstants.IA_STATUS_REPLY_QTN.STATUS_2_CODE);
 	}
 
 }
