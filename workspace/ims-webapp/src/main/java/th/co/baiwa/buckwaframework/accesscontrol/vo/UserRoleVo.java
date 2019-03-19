@@ -7,6 +7,7 @@ public class UserRoleVo {
 	private String roleCode;
 	private String roleDesc;
 	private String isDeleted;
+	
 	public String getRoleCode() {
 		return roleCode;
 	}

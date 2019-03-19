@@ -35,6 +35,7 @@ public class UserRoleController {
 		)
 	@ResponseBody
 	public DataTableAjax<UserRoleVo> listUserRole(@RequestBody UserRoleFormVo request) {
+		logger.info("listUser5555555555555555555555555",request.getUserId());
 		DataTableAjax<UserRoleVo> response = new DataTableAjax<>();
 		try {
 			response = userRoleService.list(request);

@@ -29,7 +29,10 @@ private final UserRepository userRepository;
 	}
 	public DataTableAjax<User> list(UserFormVo userFormVo) {
 		logger.info("searchByCriteria criteria={}", ToStringBuilder.reflectionToString(userFormVo, ToStringStyle.JSON_STYLE));
-		
+	
+		if("A".equals(userFormVo.getEnabled())) {
+			userFormVo.setEnabled("");
+		}
 	
 		List<User> userList = userRepository.findByCriteria(userFormVo);
 		DataTableAjax<User> result = new DataTableAjax<User>();

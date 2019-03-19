@@ -22,6 +22,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.DocumentConstants.MODULE_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 
 @Controller
 @RequestMapping("/api/access-control/user")
@@ -40,7 +41,7 @@ public class UserController {
 	@ApiOperation(tags = MODULE_NAME.ACCESS_CONTROL, value = "Get User by Criteria")
 	@ResponseBody
 	public DataTableAjax<User> listUser(@RequestBody UserFormVo userFormVo) {
-		logger.info("listUser");
+		logger.info("listUser",userFormVo);
 
 		DataTableAjax<User> response = new DataTableAjax<>();
 		try {
@@ -58,11 +59,11 @@ public class UserController {
 		ResponseData<User> responseData = new ResponseData<User>();
 		try {
 			responseData.setData(userService.createUser(request));
-			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("RoleController::create ", e);
-			responseData.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;

@@ -18,7 +18,7 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 
-public class UserRoleRepositoryImpl implements UserRoleRepositoryCustom{
+public class UserRoleRepositoryImpl implements UserRoleRepositoryCustom {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserRoleRepositoryImpl.class);
 
@@ -30,16 +30,14 @@ public class UserRoleRepositoryImpl implements UserRoleRepositoryCustom{
 	}
 
 	private void buildSearchQuery(StringBuilder sql, List<Object> params, UserRoleFormVo request) {
-		sql.append(
-				" SELECT u.user_role_id,u.user_id,u.role_id,r.role_code,r.role_desc,u.is_deleted ");
+		sql.append(" SELECT u.user_role_id,u.user_id,u.role_id,r.role_code,r.role_desc,u.is_deleted ");
 		sql.append(" FROM adm_role r ");
 		sql.append(" LEFT JOIN adm_user_role u ");
 		sql.append(" ON u.role_id = r.role_id  ");
-		
 
-		if (request.getRoleId() != null) {
+		if (request.getUserId() != null) {
 			sql.append(" AND u.user_id = ? ");
-			params.add(request.getRoleId());
+			params.add(request.getUserId());
 		}
 		sql.append(" WHERE r.is_deleted = ? ");
 		params.add(FLAG.N_FLAG);
@@ -62,7 +60,7 @@ public class UserRoleRepositoryImpl implements UserRoleRepositoryCustom{
 
 	@Override
 	public List<UserRoleVo> findByCriteria(UserRoleFormVo request) {
-		logger.debug("findByCriteria userRole.roleId={}", request.getRoleId());
+		logger.debug("findByCriteria userRole.roleId={}", request.getUserId());
 
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
@@ -93,7 +91,7 @@ public class UserRoleRepositoryImpl implements UserRoleRepositoryCustom{
 
 	@Override
 	public List<UserRoleVo> findById(UserRoleFormVo request) {
-		logger.debug("findById roleoperation.roleId={}", request.getRoleId());
+		logger.debug("findById roleoperation.roleId={}", request.getUserId());
 
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
@@ -121,5 +119,3 @@ public class UserRoleRepositoryImpl implements UserRoleRepositoryCustom{
 		return datas;
 	}
 }
-
-

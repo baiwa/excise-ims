@@ -8,14 +8,14 @@ public class UserRoleFormVo extends DataTableRequest {
 	 * 
 	 */
 	private static final long serialVersionUID = -4365919420782028056L;
-	private Long roleId;
+	private Long userId;
 
-	public Long getRoleId() {
-		return roleId;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setRoleId(Long roleId) {
-		this.roleId = roleId;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public static long getSerialversionuid() {
