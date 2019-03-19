@@ -29,11 +29,13 @@ public class RoleOperationService {
 
 		List<RoleOperationVo> data = roleOperationRepository.findByCriteria(request);
 
+		Integer total = roleOperationRepository.countByCriteria(request);
+
 		DataTableAjax<RoleOperationVo> dataTableAjax = new DataTableAjax<RoleOperationVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
 		dataTableAjax.setData(data);
-		dataTableAjax.setRecordsTotal(roleOperationRepository.countByCriteria(request));
-		dataTableAjax.setRecordsFiltered(roleOperationRepository.countByCriteria(request));
+		dataTableAjax.setRecordsTotal(total);
+		dataTableAjax.setRecordsFiltered(total);
 		return dataTableAjax;
 	}
 
