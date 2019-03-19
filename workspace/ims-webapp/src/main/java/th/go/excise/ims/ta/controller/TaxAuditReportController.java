@@ -28,7 +28,7 @@ public class TaxAuditReportController {
     private WorksheetExportService exportService;
 
  // TODO preview worksheet
-    @GetMapping("/export-preview-worksheet")
+    @GetMapping("/ta-rpt0001")
     @ResponseBody
     public void exportPreviewWorksheet(@ModelAttribute TaxOperatorFormVo formVo, HttpServletRequest httpServletRequest, HttpServletResponse response)
             throws Exception {
@@ -48,7 +48,7 @@ public class TaxAuditReportController {
     }
     
     // TODO Draft
-    @GetMapping("/export-draft-worksheet")
+    @GetMapping("/ta-rpt0002")
     @ResponseBody
     public void exportDraftWorksheet(@ModelAttribute TaxOperatorFormVo formVo, HttpServletRequest httpServletRequest, HttpServletResponse response)
             throws Exception {
@@ -68,7 +68,7 @@ public class TaxAuditReportController {
     }
     
  // TODO Worksheet
-    @GetMapping("/export-worksheet")
+    @GetMapping("/ta-rpt0003")
     @ResponseBody
     public void exportWorksheet(@ModelAttribute TaxOperatorFormVo formVo, HttpServletRequest httpServletRequest, HttpServletResponse response)
             throws Exception {
