@@ -11,6 +11,7 @@ import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0203JdbcRepository;
 import th.go.excise.ims.ia.vo.Int0203FormVo;
 import th.go.excise.ims.ia.vo.Int02Vo;
@@ -27,7 +28,7 @@ public class Int0203Service {
 		/* convert date to string */
 		for (Int02Vo obj : data) {
 			/* to string status */
-			obj.setStatus(ApplicationCache.getParamInfoByCode("IA_STATUS", obj.getStatus()).getValue1());
+			obj.setStatus(ApplicationCache.getParamInfoByCode(IaConstants.IA_STATUS.PARAM_GROUP_CODE, obj.getStatus()).getValue1());
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ProjectConstant.SHORT_DATE_FORMAT);
 
 			if (obj.getCreatedDate() != null) {
@@ -57,11 +58,10 @@ public class Int0203Service {
 		}
 
 		DataTableAjax<Int02Vo> dataTableAjax = new DataTableAjax<Int02Vo>();
-		dataTableAjax.setDraw(request.getDraw() + 1);
+//		dataTableAjax.setDraw(request.getDraw() + 1);
 		dataTableAjax.setData(data);
-		dataTableAjax.setRecordsTotal(int0203JdbcRepository.countDatafilter(request));
+		dataTableAjax.setRecordsTotal(data.size());
 		dataTableAjax.setRecordsFiltered(data.size());
-
 		return dataTableAjax;
 	}
 }
