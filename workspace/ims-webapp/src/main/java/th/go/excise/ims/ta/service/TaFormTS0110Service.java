@@ -25,9 +25,9 @@ public class TaFormTS0110Service {
 		params.put("testimonyOf", request.getTestimonyOf());
 		params.put("testimonyTopic", request.getTestimonyTopic());
 		params.put("docDate", request.getDocDate());
-		request.setDay(ConvertDateUtils.formatLocalDateToString(request.getDocDate(), "dd", ConvertDateUtils.LOCAL_TH));
-		request.setMonth(ConvertDateUtils.formatLocalDateToString(request.getDocDate(), "MMMM", ConvertDateUtils.LOCAL_TH));
-		request.setYear(ConvertDateUtils.formatLocalDateToString(request.getDocDate(), "yyyy", ConvertDateUtils.LOCAL_TH));
+		request.setDay(ConvertDateUtils.formatLocalDateToString(request.getDocDate(), ConvertDateUtils.DD, ConvertDateUtils.LOCAL_TH));
+		request.setMonth(ConvertDateUtils.formatLocalDateToString(request.getDocDate(), ConvertDateUtils.MMMM, ConvertDateUtils.LOCAL_TH));
+		request.setYear(ConvertDateUtils.formatLocalDateToString(request.getDocDate(), ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_TH));
 		params.put("day", request.getDay());
 		params.put("month", request.getMonth());
 		params.put("year", request.getYear());
