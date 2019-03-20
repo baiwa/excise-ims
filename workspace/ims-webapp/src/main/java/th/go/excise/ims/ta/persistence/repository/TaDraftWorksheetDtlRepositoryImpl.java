@@ -106,14 +106,14 @@ public class TaDraftWorksheetDtlRepositoryImpl implements TaDraftWorksheetDtlRep
 		sql.append(" 	R4000.REG_DATE, ");
 		sql.append(" 	R4000.REG_STATUS, ");
 		sql.append("	TA_DW_DTL.* ");
-		sql.append(" FROM TA_DRAFT_WORKSHEET_DTL TA_DW_DTL ");
+		sql.append(" FROM TA_WORKSHEET_DTL TA_DW_DTL ");
 		sql.append(" INNER JOIN TA_WS_REG4000 R4000 ON R4000.NEW_REG_ID = TA_DW_DTL.NEW_REG_ID ");
 		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_SECTOR ON ED_SECTOR.OFF_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000') ");
 		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
 		sql.append(" WHERE TA_DW_DTL.IS_DELETED = 'N' ");
 		sql.append("   AND R4000.IS_DELETED = 'N' ");
 		
-		sql.append("   AND TA_DW_DTL.DRAFT_NUMBER = ? ");
+		sql.append("   AND TA_DW_DTL.ANALYSIS_NUMBER = ? ");
 		params.add(formVo.getDraftNumber());
 		
 		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
@@ -153,7 +153,7 @@ public class TaDraftWorksheetDtlRepositoryImpl implements TaDraftWorksheetDtlRep
 		public TaxOperatorDetailVo mapRow(ResultSet rs, int rowNum) throws SQLException {
 			TaxOperatorDetailVo vo = new TaxOperatorDetailVo();
 			TaxAuditUtils.commonSelectionWorksheetRowMapper(vo, rs);
-			vo.setDraftNumber(rs.getString("DRAFT_NUMBER"));
+			//vo.setDraftNumber(rs.getString("DRAFT_NUMBER"));
 			vo.setRegCapital(rs.getString("REG_CAPITAL"));
 			vo.setRegStatus(rs.getString("REG_STATUS")+" "+ ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_TH));
 			return vo;
@@ -161,16 +161,16 @@ public class TaDraftWorksheetDtlRepositoryImpl implements TaDraftWorksheetDtlRep
 	};
 	
 	@Override
-	public List<TaxDratfVo> findByDraftNumber(String draftNumber) {
+	public List<TaxDratfVo> findByDraftNumber(String analysisNumber) {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT T.*, D.TAX_AMT_CHN_PNT, D.TAX_MONTH_NO ");
-		sql.append(" FROM TA_DRAFT_WORKSHEET_DTL D ");
+		sql.append(" FROM TA_WORKSHEET_DTL D ");
 		sql.append(" INNER JOIN TA_WS_REG4000 T ON T.NEW_REG_ID = D.NEW_REG_ID ");
 		sql.append(" WHERE T.IS_DELETED = 'N' ");
 		sql.append("   AND D.IS_DELETED = 'N' ");
-		sql.append("   AND D.DRAFT_NUMBER = ? ");
-		paramList.add(draftNumber);
+		sql.append("   AND D.ANALYSIS_NUMBER = ? ");
+		paramList.add(analysisNumber);
 		return this.commonJdbcTemplate.query(sql.toString(), paramList.toArray(), taxDraftVoRowMapper);
 	}
 	

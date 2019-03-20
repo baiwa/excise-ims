@@ -4,6 +4,6 @@ import th.go.excise.ims.ta.vo.YearMonthVo;
 
 public interface TaDraftWorksheetHdrRepositoryCustom {
 	
-	public YearMonthVo findMonthStartByDraftNumber(String draftNumber);
+	public YearMonthVo findMonthStartByAnalysisNumber(String draftNumber);
 	
 }

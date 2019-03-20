@@ -38,7 +38,7 @@ public class TaDraftWorksheetHdrRepositoryTest {
 	
 	@Test
 	public void test_findMonthStart() {
-		YearMonthVo yearMonthVo1 = taDraftWorksheetHdrRepository.findMonthStartByDraftNumber("000000-2562-000001");
+		YearMonthVo yearMonthVo1 = taDraftWorksheetHdrRepository.findMonthStartByAnalysisNumber("000000-2562-000001");
 		System.out.println(ToStringBuilder.reflectionToString(yearMonthVo1, ToStringStyle.JSON_STYLE));
 	}
 	

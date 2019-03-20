@@ -17,5 +17,5 @@ public interface TaWorksheetDtlRepository extends CommonJpaCrudRepository<TaWork
 	
 	@Query("select new java.lang.String(e.newRegId) from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.analysisNumber = :analysisNumber")
 	public List<String> findNewRegIdByAnalysisNumber(@Param("analysisNumber") String analysisNumber);
-	
+
 }

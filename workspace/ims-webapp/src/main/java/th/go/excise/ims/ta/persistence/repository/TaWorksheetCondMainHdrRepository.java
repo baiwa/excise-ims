@@ -9,7 +9,7 @@ import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainHdr;
 
 public interface TaWorksheetCondMainHdrRepository extends CommonJpaCrudRepository<TaWorksheetCondMainHdr, Long>, TaWorksheetCondMainHdrRepositoryCustom {
 	
-	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.draftNumber = :draftNumber")
-	public TaWorksheetCondMainHdr findByDraftNumber(@Param("draftNumber") String draftNumber);
-	
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.analysisNumber = :analysisNumber")
+	public TaWorksheetCondMainHdr findByAnalysisNumber(@Param("analysisNumber") String analysisNumber);
+
 }

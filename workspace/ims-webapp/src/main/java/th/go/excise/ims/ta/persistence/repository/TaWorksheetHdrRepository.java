@@ -14,7 +14,10 @@ public interface TaWorksheetHdrRepository extends CommonJpaCrudRepository<TaWork
 
 	@Query("select new java.lang.String(e.analysisNumber) from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode and e.budgetYear = :budgetYear and e.worksheetStatus = :worksheetStatus order by e.analysisNumber desc")
 	public List<String> findAllAnalysisNumberByOfficeCodeAndBudgetYearAndWorksheetStatus(@Param("officeCode") String officeCode, @Param("budgetYear") String budgetYear, @Param("worksheetStatus") String worksheetStatus);
-	
+
+	@Query("select new java.lang.String(e.analysisNumber) from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode and e.budgetYear = :budgetYear order by e.analysisNumber desc")
+	public List<String> findAllAnalysisNumberByOfficeCodeAndBudgetYear(@Param("officeCode") String officeCode, @Param("budgetYear") String budgetYear);
+
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.analysisNumber = :analysisNumber")
 	public TaWorksheetHdr findByAnalysisNumber(@Param("analysisNumber") String analysisNumber);
 

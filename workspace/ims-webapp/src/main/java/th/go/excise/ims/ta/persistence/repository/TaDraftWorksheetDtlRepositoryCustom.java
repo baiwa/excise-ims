@@ -15,6 +15,6 @@ public interface TaDraftWorksheetDtlRepositoryCustom {
 	
 	public Long countByCriteria(TaxOperatorFormVo formVo);
 	
-	public List<TaxDratfVo> findByDraftNumber(String draftNumber);
+	public List<TaxDratfVo> findByDraftNumber(String analysisNumber);
 	
 }

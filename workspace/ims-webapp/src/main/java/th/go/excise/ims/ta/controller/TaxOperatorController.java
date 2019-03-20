@@ -200,7 +200,6 @@ public class TaxOperatorController {
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
             response.setStatus(RESPONSE_STATUS.FAILED);
         }
-
         return response;
     }
 

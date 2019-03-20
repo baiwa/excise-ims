@@ -9,7 +9,15 @@ public class YearMonthVo {
     private String condSubCapitalFlag;
     private String condSubRiskFlag;
     private String condSubNoAuditFlag;
+    private String worksheetStatus;
 
+    public String getWorksheetStatus() {
+        return worksheetStatus;
+    }
+
+    public void setWorksheetStatus(String worksheetStatus) {
+        this.worksheetStatus = worksheetStatus;
+    }
 
     public String getCondSubCapitalFlag() {
         return condSubCapitalFlag;
