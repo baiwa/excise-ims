@@ -60,9 +60,15 @@ public class TaFormTS0107Service {
 		params.put("facZipCode", request.getFacZipCode());
 		
 		//Convert LocalDate to String
+		String[] docDate = ConvertDateUtils.formatLocalDateToString(request.getDocDate(), ConvertDateUtils.DD_MMMM_YYYY).split(" ");
+		params.put("day", docDate[0]);
+		params.put("month", docDate[1]);
+		params.put("year", docDate[2]);
+		
 		params.put("auditDate", ConvertDateUtils.formatLocalDateToString(request.getAuditDate(), ConvertDateUtils.DD_MMMM_YYYY));
 		
 		params.put("lawSection", request.getLawSection());
+		params.put("headOfficerPhone", request.getHeadOfficerPhone());
 		params.put("signFullName", request.getSignFullName());
 		params.put("signPosition", request.getSignPosition());
 		params.put("otherText", request.getOtherText());

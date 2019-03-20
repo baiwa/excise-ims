@@ -22,45 +22,45 @@ public class TaFormTS0107ServiceTest {
 
 		TaFormTS0107Vo data = new TaFormTS0107Vo();
 		// set data
-		data.setBookNumber1("ทดสอบ");
-		data.setBookNumber2("ทดสอบ");
-		data.setOfficeName1("ทดสอบ");
+		data.setBookNumber1("กข02001");
+		data.setBookNumber2("200");
+		data.setOfficeName1("กรมสรรพสามิต");
 
-		data.setOfficeName2("ทดสอบ");
-		data.setHeadOfficerFullName("ทดสอบ");
-		data.setHeadOfficerPosition("ทดสอบ");
-		data.setOfficerFullName1("ทดสอบ");
-		data.setOfficerPosition1("ทดสอบ");
-		data.setOfficerFullName2("ทดสอบ");
-		data.setOfficerPosition2("ทดสอบ");
-		data.setOfficerFullName3("ทดสอบ");
-		data.setOfficerPosition3("ทดสอบ");
-		data.setOfficerFullName4("ทดสอบ");
-		data.setOfficerPosition4("ทดสอบ");
-		data.setOfficerFullName5("ทดสอบ");
-		data.setOfficerPosition5("ทดสอบ");
+		data.setOfficeName2("กรมสรรพสามิต");
+		data.setHeadOfficerFullName("นายธนาวุธ สุทธิสาร");
+		data.setHeadOfficerPosition("เจ้าหน้าที่ออกตรวจภาษี ระดับภาค");
+		data.setOfficerFullName1("นายอนุชา จันทร์แก้ว");
+		data.setOfficerPosition1("เจ้าหน้าที่ออกตรวจภาษี ระดับพื้นที่");
+		data.setOfficerFullName2("นายชัยชนะ ใจดี");
+		data.setOfficerPosition2("เจ้าหน้าที่ออกตรวจภาษีระดับเขต");
+		data.setOfficerFullName3("");
+		data.setOfficerPosition3("");
+		data.setOfficerFullName4("");
+		data.setOfficerPosition4("");
+		data.setOfficerFullName5("");
+		data.setOfficerPosition5("");
 
-		data.setCompanyName("ทดสอบ");
+		data.setCompanyName("บริษัท โฮมโปรดักส์ เซ็นเตอร์ จำกัด (มหาชน)");
 		// type 1 =โรงอุตสาหกรรม || 2=สถานบริการ || 3 =สถานประกอบการผู้นำเข้า
-		data.setFactoryType("1");
+		data.setFactoryType("3");
 
 		data.setFactoryName("ทดสอบ");
 		data.setNewRegId("ทดสอบ");
-		data.setFacAddrNo("ทดสอย");
-		data.setFacMooNo("ทดสอบ");
-		data.setFacSoiName("ทดสอบ");
-		data.setFacThnName("ทดสอบ");
-		data.setFacTambolName("ทดสอบ");
-		data.setFacAmphurName("ทดสอบ");
-		data.setFacProvinceName("ทดสอบ");
-		data.setFacZipCode("ทกสอบ");
+		data.setFacAddrNo("96/27");
+		data.setFacMooNo("9");
+		data.setFacSoiName("-");
+		data.setFacThnName("ประชาชื่น  ");
+		data.setFacTambolName("บางเขน  ");
+		data.setFacAmphurName("เมือง");
+		data.setFacProvinceName("นนทบุรี ");
+		data.setFacZipCode("11000");
 
-		data.setLawSection("ทดสอบ");
-		data.setHeadOfficerPhone("ทดสอบ");
-		data.setSignFullName("ทดสอบ");
-		data.setSignPosition("ทดสอบ");
-		data.setOtherText("ทดสอบ");
-		data.setOtherPhone("ทดสอบ");
+		data.setLawSection("");
+		data.setHeadOfficerPhone("");
+		data.setSignFullName("");
+		data.setSignPosition("");
+		data.setOtherText("");
+		data.setOtherPhone("");
 		
 		// Convert String to LocalDate
 		LocalDate date1 = ConvertDateUtils.parseStringToLocalDate("12/03/2562", ConvertDateUtils.DD_MM_YYYY);
