@@ -37,13 +37,13 @@ public class IntCalculateCriteriaUtil {
 
 	}
 	private static boolean checkNullConfig(IaRiskFactorsConfig config) {
-		boolean check = true;
+		boolean check = false;
 		if (3 == config.getFactorsLevel().intValue()) {
 			if (StringUtils.isNotBlank(config.getLowStart()) 
 					|| StringUtils.isNotBlank(config.getMediumStart())
 					|| StringUtils.isNotBlank(config.getMediumEnd()) 
 					|| StringUtils.isNotBlank(config.getHighStart())) {
-				check = false;
+				check = true;
 			}
 		} else if (5 == config.getFactorsLevel().intValue()) {
 			if (StringUtils.isNotBlank(config.getVerylowStart()) 
@@ -54,7 +54,7 @@ public class IntCalculateCriteriaUtil {
 					|| StringUtils.isNotBlank(config.getHighStart())
 					|| StringUtils.isNotBlank(config.getHighEnd())
 					|| StringUtils.isNotBlank(config.getVeryhighStart())) {
-				check = false;
+				check = true;
 			}
 		}
 		return check;

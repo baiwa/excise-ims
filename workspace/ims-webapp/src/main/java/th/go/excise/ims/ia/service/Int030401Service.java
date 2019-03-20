@@ -256,7 +256,7 @@ public class Int030401Service {
 		// Row [0]
 		Row row = sheet.createRow(rowNum);
 		Cell cell = row.createCell(cellNum);
-		String[] tbTH1 = { "ลำดับ", "รหัสระบบสารสนเทศฯ", "ระบบสารสนเทศฯ ของกรมสรรพสามิต", "ประเมินความเสี่ยง", "" };
+		String[] tbTH1= { "ลำดับ", "รหัสระบบสารสนเทศฯ", "ระบบสารสนเทศฯ ของกรมสรรพสามิต","ค่าความเสี่ยง", "ประเมินความเสี่ยง", "" };
 		for (int i = 0; i < tbTH1.length; i++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH1[i]);
@@ -270,7 +270,7 @@ public class Int030401Service {
 		cellNum = 0;
 		cell = row.createCell(cellNum);
 
-		String[] tbTH2 = { "", "", "", "อัตราความเสี่ยง", "แปลค่าความเสี่ยง" };
+		String[] tbTH2= { "","", "", "", "อัตราความเสี่ยง", "แปลค่าความเสี่ยง" };
 		for (int i = 0; i < tbTH2.length; i++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH2[i]);
