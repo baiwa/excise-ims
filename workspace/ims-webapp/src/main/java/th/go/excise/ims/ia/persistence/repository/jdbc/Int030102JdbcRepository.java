@@ -149,7 +149,7 @@ public class Int030102JdbcRepository {
 
 			   iarfc.setRiskUnit(rs.getString("RISK_UNIT"));
 			   iarfc.setPercent(rs.getBigDecimal("PERCENT"));
-			
+			   iarfc.setRiskIndicators(rs.getString("RISK_INDICATORS"));
 			vo.setIaRiskFactorsConfig(iarfc);
 	
 			return vo;

@@ -2,6 +2,7 @@ package th.go.excise.ims.ia.util;
 
 import java.math.BigDecimal;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,12 +21,12 @@ public class IntCalculateCriteriaUtil {
 	public static IntCalculateCriteriaVo calculateCriteria(BigDecimal dataCal, IaRiskFactorsConfig config) {
 		IntCalculateCriteriaVo cal = new IntCalculateCriteriaVo();
 		if (config.getFactorsLevel() != null) {
-
-			if (3 == config.getFactorsLevel().intValue()) {
+			boolean checkNullConfig = checkNullConfig(config);
+			if (3 == config.getFactorsLevel().intValue() && checkNullConfig) {
 
 				cal = calculateRating3Level(dataCal, config);
 
-			} else if (5 == config.getFactorsLevel().intValue()) {
+			} else if (5 == config.getFactorsLevel().intValue() && checkNullConfig) {
 
 				cal = calculateRating5Level(dataCal, config);
 
@@ -35,7 +36,29 @@ public class IntCalculateCriteriaUtil {
 		return cal;
 
 	}
-	
+	private static boolean checkNullConfig(IaRiskFactorsConfig config) {
+		boolean check = true;
+		if (3 == config.getFactorsLevel().intValue()) {
+			if (StringUtils.isNotBlank(config.getLowStart()) 
+					|| StringUtils.isNotBlank(config.getMediumStart())
+					|| StringUtils.isNotBlank(config.getMediumEnd()) 
+					|| StringUtils.isNotBlank(config.getHighStart())) {
+				check = false;
+			}
+		} else if (5 == config.getFactorsLevel().intValue()) {
+			if (StringUtils.isNotBlank(config.getVerylowStart()) 
+					|| StringUtils.isNotBlank(config.getLowStart())
+					|| StringUtils.isNotBlank(config.getVerylowEnd()) 
+					|| StringUtils.isNotBlank(config.getMediumStart())
+					|| StringUtils.isNotBlank(config.getMediumEnd()) 
+					|| StringUtils.isNotBlank(config.getHighStart())
+					|| StringUtils.isNotBlank(config.getHighEnd())
+					|| StringUtils.isNotBlank(config.getVeryhighStart())) {
+				check = false;
+			}
+		}
+		return check;
+	}
 	public static IntCalculateCriteriaVo calculateCriteriaAndGetConfigById(BigDecimal dataCal,BigDecimal idConfig) {
 		IntCalculateCriteriaVo cal = new IntCalculateCriteriaVo();
 		IaRiskFactorsConfig config = new IaRiskFactorsConfig();
