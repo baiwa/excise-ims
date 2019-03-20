@@ -1,16 +1,24 @@
 package th.go.excise.ims.ia.persistence.repository.jdbc;
 
 import java.math.BigDecimal;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMade;
 import th.go.excise.ims.ia.vo.Int020201JoinVo;
 import th.go.excise.ims.ia.vo.Int020201SidesFormVo;
+import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
 
 @Repository
 public class IaQuestionnaireMadeJdbcRepository {
@@ -169,6 +177,32 @@ public class IaQuestionnaireMadeJdbcRepository {
 		commonJdbcTemplate.update(sql.toString(), params.toArray());
 
 		return idHdr;
+	}
+
+	public void saveQtnMadeList(List<IaQuestionnaireMade> qtnMadeList) {
+		StringBuilder sql = new StringBuilder();
+		sql.append(" INSERT INTO IA_QUESTIONNAIRE_MADE ");
+		sql.append(" ( ID, ID_SIDE_DTL, CHECK_FLAG, OFFICE_CODE, QTN_LEVEL, STATUS, NOTE, ID_MADE_HDR, CREATED_BY, CREATED_DATE ) ");
+		sql.append(" VALUES( IA_QUESTIONNAIRE_MADE_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ? ) ");
+		
+		// for to set Object
+		commonJdbcTemplate.batchUpdate(sql.toString(),qtnMadeList, 1000,
+				new ParameterizedPreparedStatementSetter<IaQuestionnaireMade>() {
+			public void setValues(PreparedStatement ps, IaQuestionnaireMade qtnMade) throws SQLException {
+				List<Object> paramList = new ArrayList<Object>();
+				paramList.add(qtnMade.getIdSideDtl());
+				paramList.add(qtnMade.getCheckFlag());
+				paramList.add(qtnMade.getOfficeCode());
+				paramList.add(qtnMade.getQtnLevel());
+				paramList.add(qtnMade.getStatus());
+				paramList.add(qtnMade.getNote());
+				paramList.add(qtnMade.getIdMadeHdr());
+				/* field default */
+				paramList.add(SYSTEM_USER.BATCH);
+				paramList.add(LocalDateTime.now());
+				commonJdbcTemplate.preparePs(ps, paramList.toArray());
+			}
+		});
 	}
 	
 }

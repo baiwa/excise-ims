@@ -28,6 +28,7 @@ import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeHdrReposito
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireSideRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskQtnConfigRepository;
+import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireMadeJdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireSideDtlJdbcRepository;
 import th.go.excise.ims.ia.vo.Int02010101Vo;
 import th.go.excise.ims.ia.vo.Int0201FormVo;
@@ -61,6 +62,9 @@ public class Int0201Service {
 	
 	@Autowired
 	private QuestionnaireService questionnaireService;
+	
+	@Autowired
+	private IaQuestionnaireMadeJdbcRepository iaQuestionnaireMadeJdbcRepository;
 
 	public List<IaQuestionnaireSide> findQtnSideById(Int0201FormVo request) {
 		return iaQuestionnaireSideRepository.findByidHeadAndIsDeletedOrderBySeqAsc(request.getId(), "N");
@@ -113,7 +117,8 @@ public class Int0201Service {
 						ProjectConstant.SHORT_DATE_FORMAT));
 				dataHdr.setStatus(IaConstants.IA_STATUS.STATUS_4_CODE);
 				dataHdr = iaQuestionnaireHdrRepository.save(dataHdr);
-				/* find id of Questionnaire Header */
+				
+				/* save Questionnaire Made HDR from office code */
 				if (request.getIdHead() != null) {
 					IaQuestionnaireMadeHdr dataMadeHdr = null;
 					for (String officeCode : request.getExciseCodes()) {
@@ -129,13 +134,17 @@ public class Int0201Service {
 						dataMadeHdr.setStatus(IaConstants.IA_STATUS_REPLY_QTN.STATUS_1_CODE);
 						dataMadeHdr.setOfficeCode(officeCode);
 						IaQuestionnaireMadeHdr resMadeHdr = iaQuestionnaireMadeHdrRepository.save(dataMadeHdr);
+						
 						// find sides
 						List<IaQuestionnaireSide> sides = iaQuestionnaireSideRepository
 								.findByidHeadAndIsDeletedOrderBySeqAsc(dataHdr.getId(), "N");
+						
 						for (IaQuestionnaireSide side : sides) {
+							
 							// find side dtls
 							List<Int02010101Vo> dtls = int02010101Service.findByIdSide(side.getId().toString());
-							/* save Questionnaire Made */
+							
+							/* save Questionnaire Made DTL */
 							IaQuestionnaireMade qtnMade = null;
 							List<IaQuestionnaireMade> qtnMades = new ArrayList<>();
 							for (Int02010101Vo dtl : dtls) {
@@ -162,13 +171,14 @@ public class Int0201Service {
 										qtnMade.setOfficeCode(officeCode);
 										qtnMade.setIdMadeHdr(resMadeHdr.getId());
 										qtnMades.add(qtnMade);
-									}
-								}
-							} // end loop 2
+									} // end loop 5
+								} // end loop 4
+							} // end loop 3
 							if (qtnMades.size() > 0) {
-								iaQuestionnaireMadeRepository.saveAll(qtnMades);
+//								iaQuestionnaireMadeRepository.saveAll(qtnMades);
+								iaQuestionnaireMadeJdbcRepository.saveQtnMadeList(qtnMades);
 							}
-						}
+						} // end loop 2
 					} // end loop 1
 				}
 			}
