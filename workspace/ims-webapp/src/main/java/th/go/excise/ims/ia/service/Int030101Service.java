@@ -227,7 +227,7 @@ public class Int030101Service {
 		Cell cell = row.createCell(cellNum);
 
 		/* Header */
-		String[] tbTH1 = { "ลำดับที่	", "รหัส", "รหัสสรรพสามิต", "ภาค", "พื้นที่", "ค่าความเสี่ยง" };
+		String[] tbTH1 = { "ลำดับที่	", "รหัสระบบสารสนเทศฯ", "ระบบสารสนเทศฯ ของกรมสรรพสามิต", "ค่าความเสี่ยง" };
 
 		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 			cell = row.createCell(cellNum);
@@ -239,13 +239,13 @@ public class Int030101Service {
 
 		// setColumnWidth
 		for (int i = 1; i <= 5; i++) {
-			if (i == 2) {
+			if (i == 1) {
 				sheet.setColumnWidth(i, 76 * 80);
+			} else if (i == 2) {
+				sheet.setColumnWidth(i, 76 * 200);
 			} else if (i == 3) {
-				sheet.setColumnWidth(i, 76 * 120);
-			} else {
-				sheet.setColumnWidth(i, 76 * 150);
-			}
+				sheet.setColumnWidth(i, 76 * 80);
+			} 
 		}
 
 		/* Detail */
@@ -266,19 +266,11 @@ public class Int030101Service {
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getId().toString());
+			cell.setCellValue(data.getId().toString()+"-"+data.getSystemCode());
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getExciseCode());
-			cellNum++;
-
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getSector());
-			cellNum++;
-
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getArea());
+			cell.setCellValue(data.getSystemName());
 			cellNum++;
 
 			no++;
@@ -377,7 +369,7 @@ public class Int030101Service {
 		// WEB SERVICE QUERY
 		// NOW MOCKING DATA
 		
-//		Data mock inspectionWork 4 5
+//		Data mock inspectionWork 5
 		
 		List<String> dataList1 = new ArrayList<String>();
 		dataList1.add("30100");
@@ -394,6 +386,18 @@ public class Int030101Service {
 		dataList3.add("สำนักงานสรรพสามิตพื้นที่นครราชสีมา");
 		dataList3.add("สำนักงานสรรพสามิตพื้นที่อุดรธานี");
 		
+//		Data mock inspectionWork 4 
+		
+		List<String> dataList6 = new ArrayList<String>();
+		dataList6.add("2");
+		dataList6.add("3");
+		dataList6.add("4");
+
+		List<String> dataList7 = new ArrayList<String>();
+		dataList7.add("ระบบงานสารสนเทศหลัก http://Web.excise.go.th/EDINTRAWeb");
+		dataList7.add("ระบบความปลอดภัยกลาง (SSO) http://authen.excise.go.th/oiddas");
+		dataList7.add("ระบบงานอีเมล์กรมสรรพสามิต http://mail.excise.go.th");
+
 		
 //		Data mock inspectionWork 3
 		
@@ -422,11 +426,10 @@ public class Int030101Service {
 			selectCases = (List<IaRiskSelectCase>) iaRiskSelectCaseRep.saveAll(selectCases);
 		} else if (inspectionWork.compareTo(new BigDecimal(4)) == 0) {
 			IaRiskSelectCase selectCase = new IaRiskSelectCase();
-			for (int i = 0; i < dataList1.size(); i++) {
+			for (int i = 0; i < dataList6.size(); i++) {
 				selectCase = new IaRiskSelectCase();
-				selectCase.setExciseCode(dataList1.get(i));
-				selectCase.setSector(dataList2.get(i));
-				selectCase.setArea(dataList3.get(i));
+				selectCase.setSystemCode(dataList6.get(i));
+				selectCase.setSystemName(dataList7.get(i));
 				selectCase.setBudgetYear(budgetYear);
 				selectCase.setInspectionWork(inspectionWork);
 				selectCase.setStatus("C");
@@ -491,7 +494,33 @@ public class Int030101Service {
 				}
 			}
 
-		} else if (new BigDecimal(4).equals(inspectionWork) || new BigDecimal(5).equals(inspectionWork)) {
+		} else if (new BigDecimal(4).equals(inspectionWork)) {
+			for (Sheet sheet : workbook) {
+				for (Row row : sheet) {
+					if (row.getRowNum() == 0) {
+						continue; // just skip the rows if row number is 0 (Header)
+					}
+					IaRiskFactorsData dataUpload = new IaRiskFactorsData();
+					int columns = 1;
+					String idSelectAndSystemCode = dataFormatter.formatCellValue(row.getCell(columns++));
+					BigDecimal idSelect = null;
+					String idSelectString = StringUtils.trim(idSelectAndSystemCode).split("-")[0];
+					idSelect = (StringUtils.isNotBlank(idSelectString))?new BigDecimal(idSelectString):idSelect;
+					dataUpload.setIdSelect(idSelect);
+					
+					String systemCode = StringUtils.trim(idSelectAndSystemCode).split("-")[1];
+					systemCode = (StringUtils.isNotBlank(systemCode))?systemCode:"";
+					dataUpload.setSystemCode(systemCode);
+					
+					dataUpload.setSystemName(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
+					dataUpload.setRiskCost(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
+					// dataUpload.setInspectionWork(new
+					// BigDecimal(dataFormatter.formatCellValue(row.getCell(columns++))));
+
+					dataUploadList.add(dataUpload);
+				}
+			}
+		} else if (new BigDecimal(5).equals(inspectionWork)) {
 			for (Sheet sheet : workbook) {
 				for (Row row : sheet) {
 					if (row.getRowNum() == 0) {
@@ -548,12 +577,17 @@ public class Int030101Service {
 			dataSet.setInspectionWork(form.getInspectionWork());
 			dataSet.setIdFactors(form.getIdFactors());
 			dataSet.setIdSelect(iaRiskFactorsData.getIdSelect());
+			
 			dataSet.setProjectCode(iaRiskFactorsData.getProjectCode());
 			dataSet.setProject(iaRiskFactorsData.getProject());
-			dataSet.setArea(iaRiskFactorsData.getArea());
-			dataSet.setSector(iaRiskFactorsData.getSector());
+			
 			dataSet.setExciseCode(iaRiskFactorsData.getExciseCode());
+			dataSet.setSector(iaRiskFactorsData.getSector());
 			dataSet.setArea(iaRiskFactorsData.getArea());
+			
+			dataSet.setSystemCode(iaRiskFactorsData.getSystemCode());
+			dataSet.setSystemName(iaRiskFactorsData.getSystemName());
+			
 			dataSet.setRiskCost(iaRiskFactorsData.getRiskCost());
 
 			iaRiskFactorsDataRepository.save(dataSet);

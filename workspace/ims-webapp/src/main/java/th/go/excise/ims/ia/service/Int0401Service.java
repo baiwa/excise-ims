@@ -67,7 +67,10 @@ public class Int0401Service {
 					
 // ******************** CalculateCriteria **********************
 					IntCalculateCriteriaVo calVo = new IntCalculateCriteriaVo();
-					calVo = calculateCriteriaInt0401(factor.getDataEvaluate(),factor.getId(), budgetYear, inspectionWork,selectCase.getProjectCode(),selectCase.getExciseCode());
+					if(IaConstants.IA_DATA_EVALUATE.NEW.equals(factor.getDataEvaluate())) {
+						calVo = calculateCriteriaInt0401(factor.getDataEvaluate(),factor.getId(), budgetYear, inspectionWork,selectCase.getProjectCode(),selectCase.getExciseCode());
+					}
+					
 //					calVo = IntCalculateCriteriaUtil.calculateCriteriaAndGetConfigByIdFactors(new BigDecimal(5), factor.getId());
 				
 					if (listVo.getRiskRate() != null) {

@@ -47,6 +47,11 @@ public class IaRiskFactorsData extends BaseEntity {
 	private String riskStep;
 	@Column(name = "ID_SELECT")
 	private BigDecimal idSelect;
+	@Column(name = "SYSTEM_CODE")
+	private String systemCode;
+	@Column(name = "SYSTEM_NAME")
+	private String systemName;
+
 
 	public BigDecimal getId() {
 		return id;
@@ -154,6 +159,22 @@ public class IaRiskFactorsData extends BaseEntity {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getSystemCode() {
+		return systemCode;
+	}
+
+	public void setSystemCode(String systemCode) {
+		this.systemCode = systemCode;
+	}
+
+	public String getSystemName() {
+		return systemName;
+	}
+
+	public void setSystemName(String systemName) {
+		this.systemName = systemName;
 	}
 
 }

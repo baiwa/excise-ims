@@ -83,7 +83,7 @@ public class Int030101Controller {
 	public void export2(@RequestParam String dataJson, HttpServletResponse response) throws Exception {
 		try {
 			// set fileName
-			String fileName = URLEncoder.encode("พื้นที่", "UTF-8");
+			String fileName = URLEncoder.encode("ระบบสารสนเทศฯ", "UTF-8");
 
 			// write it as an excel attachment
 			ByteArrayOutputStream outByteStream = int030101Service.exportInt0301012();

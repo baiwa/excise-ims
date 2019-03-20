@@ -51,11 +51,17 @@ public class Int030401Service {
 		for (IaRiskFactorsData iaRiskFactorsData : iaRiskFactorsDataList) {
 			IaRiskFactorsData datanew = new IaRiskFactorsData();
 			datanew.setIdFactors(iaRiskFactorsData.getIdFactors());
+			
 			datanew.setProjectCode(iaRiskFactorsData.getProjectCode());
 			datanew.setProject(iaRiskFactorsData.getProject());
+			
 			datanew.setExciseCode(iaRiskFactorsData.getExciseCode());
 			datanew.setSector(iaRiskFactorsData.getSector());
 			datanew.setArea(iaRiskFactorsData.getArea());
+			
+			datanew.setSystemCode(iaRiskFactorsData.getSystemCode());
+			datanew.setSystemName(iaRiskFactorsData.getSystemName());
+			
 			datanew.setRiskCost(iaRiskFactorsData.getRiskCost());
 			datanew.setCreatedDate(iaRiskFactorsData.getCreatedDate());
 			iaRiskFactorsDataListRes.add(datanew);
