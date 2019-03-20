@@ -92,6 +92,9 @@ public class Int0401JdbcRepository {
 			vo.setSector(rs.getString("SECTOR"));
 			vo.setArea(rs.getString("AREA"));
 			
+			vo.setSystemCode(rs.getString("SYSTEM_CODE"));
+			vo.setSystemName(rs.getString("SYSTEM_NAME"));
+			
 			vo.setStatus(rs.getString("STATUS"));
 			
 			return vo;

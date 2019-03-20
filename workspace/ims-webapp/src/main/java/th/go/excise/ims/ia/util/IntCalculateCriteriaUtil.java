@@ -178,5 +178,6 @@ public class IntCalculateCriteriaUtil {
 		return colorCode;
 
 	}
+	
 
 }

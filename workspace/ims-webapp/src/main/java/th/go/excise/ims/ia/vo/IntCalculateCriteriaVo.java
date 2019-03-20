@@ -10,6 +10,7 @@ public class IntCalculateCriteriaVo {
 	private String translatingRisk;
 	private String color;
 	private String codeColor;
+	private BigDecimal percent;
 
 	public BigDecimal getRiskRate() {
 		return riskRate;
@@ -42,5 +43,15 @@ public class IntCalculateCriteriaVo {
 	public void setCodeColor(String codeColor) {
 		this.codeColor = codeColor;
 	}
+
+	public BigDecimal getPercent() {
+		return percent;
+	}
+
+	public void setPercent(BigDecimal percent) {
+		this.percent = percent;
+	}
+	
+	
 
 }

@@ -5,10 +5,17 @@ import java.util.List;
 
 public class Int0401Vo {
 	private BigDecimal id;
+
+	private String projectCode;
 	private String projectName;
+
 	private String exciseCode;
 	private String sectorName;
 	private String areaName;
+
+	private String systemCode;
+	private String systemName;
+
 	private String budgetYear;
 	private BigDecimal inspectionWork;
 	private String status;
@@ -17,6 +24,7 @@ public class Int0401Vo {
 	private BigDecimal riskItem;
 	private BigDecimal riskRate;
 	private String riskText;
+	private String riskColor;
 
 	public BigDecimal getId() {
 		return id;
@@ -24,6 +32,14 @@ public class Int0401Vo {
 
 	public void setId(BigDecimal id) {
 		this.id = id;
+	}
+
+	public String getProjectCode() {
+		return projectCode;
+	}
+
+	public void setProjectCode(String projectCode) {
+		this.projectCode = projectCode;
 	}
 
 	public String getProjectName() {
@@ -56,6 +72,22 @@ public class Int0401Vo {
 
 	public void setAreaName(String areaName) {
 		this.areaName = areaName;
+	}
+
+	public String getSystemCode() {
+		return systemCode;
+	}
+
+	public void setSystemCode(String systemCode) {
+		this.systemCode = systemCode;
+	}
+
+	public String getSystemName() {
+		return systemName;
+	}
+
+	public void setSystemName(String systemName) {
+		this.systemName = systemName;
 	}
 
 	public String getBudgetYear() {
@@ -121,5 +153,19 @@ public class Int0401Vo {
 	public void setRiskText(String riskText) {
 		this.riskText = riskText;
 	}
+
+	public String getRiskColor() {
+		return riskColor;
+	}
+
+	public void setRiskColor(String riskColor) {
+		this.riskColor = riskColor;
+	}
+
+	
+
+	
+	
+	
 
 }
