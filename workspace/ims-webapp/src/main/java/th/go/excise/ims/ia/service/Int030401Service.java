@@ -51,17 +51,17 @@ public class Int030401Service {
 		for (IaRiskFactorsData iaRiskFactorsData : iaRiskFactorsDataList) {
 			IaRiskFactorsData datanew = new IaRiskFactorsData();
 			datanew.setIdFactors(iaRiskFactorsData.getIdFactors());
-			
+
 			datanew.setProjectCode(iaRiskFactorsData.getProjectCode());
 			datanew.setProject(iaRiskFactorsData.getProject());
-			
+
 			datanew.setExciseCode(iaRiskFactorsData.getExciseCode());
 			datanew.setSector(iaRiskFactorsData.getSector());
 			datanew.setArea(iaRiskFactorsData.getArea());
-			
+
 			datanew.setSystemCode(iaRiskFactorsData.getSystemCode());
 			datanew.setSystemName(iaRiskFactorsData.getSystemName());
-			
+
 			datanew.setRiskCost(iaRiskFactorsData.getRiskCost());
 			datanew.setCreatedDate(iaRiskFactorsData.getCreatedDate());
 			iaRiskFactorsDataListRes.add(datanew);
@@ -90,23 +90,23 @@ public class Int030401Service {
 
 		return Int030401VoList;
 	}
-	
+
 	public ByteArrayOutputStream chooseExport(BigDecimal idFactors, BigDecimal idConfig, String budgetYear,
 			BigDecimal inspectionWork) throws IOException {
 		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
-		
-		if("3".equals(inspectionWork.toString())) {
-			outByteStream = exportInspecWork3(idFactors,idConfig,budgetYear,inspectionWork);
-		}else if("4".equals(inspectionWork.toString())||"5".equals(inspectionWork.toString())) {
-			outByteStream = exportInspecWork45(idFactors,idConfig,budgetYear,inspectionWork);
+
+		if ("3".equals(inspectionWork.toString())) {
+			outByteStream = exportInspecWork3(idFactors, idConfig, budgetYear, inspectionWork);
+		} else if ("4".equals(inspectionWork.toString())) {
+			outByteStream = exportInspecWork4(idFactors, idConfig, budgetYear, inspectionWork);
+		} else if ("5".equals(inspectionWork.toString())) {
+			outByteStream = exportInspecWork5(idFactors, idConfig, budgetYear, inspectionWork);
 		}
-		
-		
-		
+
 		return outByteStream;
 	}
-	
-	public ByteArrayOutputStream exportInspecWork45(BigDecimal idFactors, BigDecimal idConfig, String budgetYear,
+
+	public ByteArrayOutputStream exportInspecWork5(BigDecimal idFactors, BigDecimal idConfig, String budgetYear,
 			BigDecimal inspectionWork) throws IOException {
 
 		XSSFWorkbook workbook = new XSSFWorkbook();
@@ -240,11 +240,139 @@ public class Int030401Service {
 
 		return outByteStream;
 	}
-	
+
+	public ByteArrayOutputStream exportInspecWork4(BigDecimal idFactors, BigDecimal idConfig, String budgetYear,
+			BigDecimal inspectionWork) throws IOException {
+
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle tdStyle = ExcelUtils.createTdCellStyle(workbook);
+		CellStyle tdLeft = ExcelUtils.createLeftCellStyle(workbook);
+		CellStyle tdRight = ExcelUtils.createRightCellStyle(workbook);
+		Sheet sheet = workbook.createSheet();
+		int rowNum = 0;
+		int cellNum = 0;
+
+		// Row [0]
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+		String[] tbTH1 = { "ลำดับ", "รหัสระบบสารสนเทศฯ", "ระบบสารสนเทศฯ ของกรมสรรพสามิต", "ประเมินความเสี่ยง", "" };
+		for (int i = 0; i < tbTH1.length; i++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(tbTH1[i]);
+			cell.setCellStyle(thStyle);
+			cellNum++;
+		}
+		rowNum++;
+
+		// Row [1]
+		row = sheet.createRow(rowNum);
+		cellNum = 0;
+		cell = row.createCell(cellNum);
+
+		String[] tbTH2 = { "", "", "", "อัตราความเสี่ยง", "แปลค่าความเสี่ยง" };
+		for (int i = 0; i < tbTH2.length; i++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(tbTH2[i]);
+			cell.setCellStyle(thStyle);
+			cellNum++;
+		}
+		rowNum++;
+
+		/* set sheet */
+		// merge(firstRow, lastRow, firstCol, lastCol)
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 2, rowNum - 1, 0, 0));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 2, rowNum - 1, 1, 1));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 2, rowNum - 1, 2, 2));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 2, rowNum - 1, 3, 3));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 2, rowNum - 2, 4, 5));
+		/* set sheet */
+
+		// setColumnWidth
+		int width = 76;
+		sheet.setColumnWidth(0, width * 30);
+		for (int i = 1; i <= 5; i++) {
+			if (i == 1) {
+				sheet.setColumnWidth(i, width * 100);
+			} else if (i == 2) {
+				sheet.setColumnWidth(i, width * 300);
+			} else if (i == 3) {
+				sheet.setColumnWidth(i, width * 200);
+			} else {
+				sheet.setColumnWidth(i, width * 76);
+			}
+		}
+
+		/* start details */
+		int count = 1;
+		rowNum = 2;
+		cellNum = 0;
+
+		Int030401FormVo form = new Int030401FormVo();
+		form.setBudgetYear(budgetYear);
+		form.setIdFactors(idFactors);
+		form.setIdConfig(idConfig);
+		form.setInspectionWork(inspectionWork);
+
+		List<Int030401Vo> iaRiskFactorsMasterList = factorsDataList(form);
+
+		for (Int030401Vo data : iaRiskFactorsMasterList) {
+			// Re Initial
+			cellNum = 0;
+			row = sheet.createRow(rowNum);
+			// Column 1
+			CellStyle styleCustom = tdStyle;
+			styleCustom.setAlignment(HorizontalAlignment.CENTER);
+			cell = row.createCell(cellNum);
+			cell.setCellValue(count++);
+			cell.setCellStyle(styleCustom);
+			cellNum++;
+			// Column 2
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getIaRiskFactorsData().getSystemCode());
+			cell.setCellStyle(tdLeft);
+			cellNum++;
+
+			// Column 3
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getIaRiskFactorsData().getSystemName());
+			cell.setCellStyle(tdLeft);
+			cellNum++;
+
+			// Column 4
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getIaRiskFactorsData().getRiskCost());
+			cell.setCellStyle(styleCustom);
+			cellNum++;
+
+			// Column 5
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getIntCalculateCriteriaVo().getRiskRate().doubleValue());
+			cell.setCellStyle(tdStyle);
+			cellNum++;
+
+			// Column 6
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getIntCalculateCriteriaVo().getTranslatingRisk());
+			cell.setCellStyle(tdStyle);
+			cellNum++;
+
+			// Next Row
+			rowNum++;
+		}
+		/* end details */
+
+		/* set write */
+		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		workbook.write(outByteStream);
+
+		return outByteStream;
+	}
+
 	public ByteArrayOutputStream exportInspecWork3(BigDecimal idFactors, BigDecimal idConfig, String budgetYear,
 			BigDecimal inspectionWork) throws IOException {
 
-		ExportRiskVo exportRiskData = excelUtil.exportConfig(idFactors);
+//		ExportRiskVo exportRiskData = excelUtil.exportConfig(idFactors);
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
 		CellStyle tdStyle = ExcelUtils.createTdCellStyle(workbook);
@@ -292,7 +420,7 @@ public class Int030401Service {
 		int width = 76;
 		sheet.setColumnWidth(0, width * 30);
 		for (int i = 1; i <= 4; i++) {
-			if (i == 1 ) {
+			if (i == 1) {
 				sheet.setColumnWidth(i, width * 150);
 			} else if (i == 2) {
 				sheet.setColumnWidth(i, width * 100);
@@ -325,7 +453,6 @@ public class Int030401Service {
 			cell.setCellValue(count++);
 			cell.setCellStyle(styleCustom);
 			cellNum++;
-			
 
 			// Column 2
 			cell = row.createCell(cellNum);
