@@ -19,5 +19,8 @@ public interface TaWorksheetCondSubRiskRepository extends CommonJpaCrudRepositor
 	
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.analysisNumber = :analysisNumber and e.dutyCode = :dutyCode")
 	public TaWorksheetCondSubRisk findByAnalysisNumberAndDutyCode(@Param("analysisNumber") String analysisNumber, @Param("dutyCode") String dutyCode);
+
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.analysisNumber = :analysisNumber")
+	public List<TaWorksheetCondSubRisk> findByAnalysisNumber(@Param("analysisNumber") String analysisNumber);
 	
 }

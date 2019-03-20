@@ -11,6 +11,8 @@ public interface TaWorksheetDtlRepositoryCustom {
 
     public void batchInsert(List<TaWorksheetDtl> taWorksheetHdrList);
 
+    public void batchUpdate(List<TaWorksheetDtl> taWorksheetDtlList);
+
     public List<TaxOperatorDetailVo> findByCriteria(TaxOperatorFormVo formVo);
 
     public Long countByCriteria(TaxOperatorFormVo formVo);

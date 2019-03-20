@@ -1,6 +1,5 @@
 package th.go.excise.ims.ta.service;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +25,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -132,11 +133,20 @@ public class WorksheetService {
         //List<TaxDratfVo> taxDratfVoList = taDraftWorksheetDtlRepository.findByDraftNumber(draftNumber);
         List<TaxDratfVo> taxDratfVoList = taDraftWorksheetDtlRepository.findByDraftNumber(analysisNumber);
 
+        List<TaWorksheetCondSubRisk> riskLisr = taWorksheetCondSubRiskRepository.findByAnalysisNumber(analysisNumber);
+
+        Map<String, TaWorksheetCondSubRisk> mapRisk = new HashMap<>();
+        for (TaWorksheetCondSubRisk r : riskLisr) {
+            mapRisk.put(r.getAnalysisNumber() + r.getDutyCode(), r);
+        }
+
+
         List<TaWorksheetDtl> worksheetDtlList = new ArrayList<>();
         TaWorksheetDtl worksheetDtl = null;
         String regDate = null;
         for (TaxDratfVo taxDratfVo : taxDratfVoList) {
-            worksheetDtl = taWorksheetDtlRepository.findByAnalysisNumberAndNewRegId(analysisNumber, taxDratfVo.getNewRegId());
+            worksheetDtl = new TaWorksheetDtl();
+            //worksheetDtl = taWorksheetDtlRepository.findByAnalysisNumberAndNewRegId(analysisNumber, taxDratfVo.getNewRegId());
             worksheetDtl.setNewRegId(taxDratfVo.getNewRegId());
             worksheetDtl.setAnalysisNumber(analysisNumber);
             worksheetDtl.setCondMainGrp("0"); // Default Group
@@ -176,12 +186,13 @@ public class WorksheetService {
             worksheetDtl.setCreatedDate(LocalDateTime.now());
 
             worksheetDtl.setCondSubCapital(checkCapital(taxDratfVo.getRegCapital(), analysisNumber, taxDratfVo.getDutyCode()));
-            TaWorksheetCondSubRisk risk = taWorksheetCondSubRiskRepository.findByAnalysisNumberAndDutyCode(analysisNumber, taxDratfVo.getDutyCode());
+            //TaWorksheetCondSubRisk risk = taWorksheetCondSubRiskRepository.findByAnalysisNumberAndDutyCode(analysisNumber, taxDratfVo.getDutyCode());
+            TaWorksheetCondSubRisk risk = mapRisk.get(analysisNumber + taxDratfVo.getDutyCode());
             worksheetDtl.setCondSubRisk(risk != null ? risk.getRiskLevel() : null);
             worksheetDtlList.add(worksheetDtl);
         }
-        taWorksheetDtlRepository.saveAll(worksheetDtlList);
-        //taWorksheetDtlRepository.batchInsert(worksheetDtlList);
+        //taWorksheetDtlRepository.saveAll(worksheetDtlList);
+        taWorksheetDtlRepository.batchUpdate(worksheetDtlList);
     }
 
     private boolean isConditionGroup(TaWorksheetCondMainDtl worksheetCondMainDtl, TaxDratfVo taxDratfVo) {

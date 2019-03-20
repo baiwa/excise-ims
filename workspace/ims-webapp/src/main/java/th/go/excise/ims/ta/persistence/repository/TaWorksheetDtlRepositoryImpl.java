@@ -104,6 +104,35 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
         });
     }
 
+    @Override
+    public void batchUpdate(List<TaWorksheetDtl> taWorksheetDtlList) {
+        String sql = SqlGeneratorUtils.genSqlUpdate(
+                "TA_WORKSHEET_DTL",
+                Arrays.asList(
+                        "COND_MAIN_GRP",
+                        "COND_SUB_CAPITAL",
+                        "COND_SUB_RISK",
+                        "COND_SUB_NO_AUDIT"
+                ),
+                Arrays.asList("ANALYSIS_NUMBER", "NEW_REG_ID")
+        );
+
+        commonJdbcTemplate.batchUpdate(sql, taWorksheetDtlList, 1000, new ParameterizedPreparedStatementSetter<TaWorksheetDtl>() {
+            public void setValues(PreparedStatement ps, TaWorksheetDtl worksheetDtl) throws SQLException {
+                List<Object> paramList = new ArrayList<>();
+
+                paramList.add(worksheetDtl.getCondMainGrp());
+                paramList.add(worksheetDtl.getCondSubCapital());
+                paramList.add(worksheetDtl.getCondSubRisk());
+                paramList.add(worksheetDtl.getCondSubNoAudit());
+
+                paramList.add(worksheetDtl.getAnalysisNumber());
+                paramList.add(worksheetDtl.getNewRegId());
+                commonJdbcTemplate.preparePs(ps, paramList.toArray());
+            }
+        });
+    }
+
     private void buildByCriteriaQuery(StringBuilder sql, List<Object> params, TaxOperatorFormVo formVo) {
         sql.append(" SELECT R4000.CUS_FULLNAME , ");
         sql.append("   R4000.FAC_FULLNAME , ");
