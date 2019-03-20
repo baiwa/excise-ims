@@ -1,10 +1,10 @@
 package th.go.excise.ims.ta.vo;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class TaFormTS0108DtlVo {
 	private Integer recNo;
-	private LocalDate auditDate;
+	private Date auditDate;
 	private String officerFullName;
 	private String officerPosition;
 	private String auditTime;
@@ -13,19 +13,18 @@ public class TaFormTS0108DtlVo {
 	private String approvedAck;
 	private String officerAck;
 	private String auditResultDocNo;
-	private LocalDate auditResultDate;
+	private Date auditResultDate;
 	private String auditComment;
-	
 	public Integer getRecNo() {
 		return recNo;
 	}
 	public void setRecNo(Integer recNo) {
 		this.recNo = recNo;
 	}
-	public LocalDate getAuditDate() {
+	public Date getAuditDate() {
 		return auditDate;
 	}
-	public void setAuditDate(LocalDate auditDate) {
+	public void setAuditDate(Date auditDate) {
 		this.auditDate = auditDate;
 	}
 	public String getOfficerFullName() {
@@ -76,10 +75,10 @@ public class TaFormTS0108DtlVo {
 	public void setAuditResultDocNo(String auditResultDocNo) {
 		this.auditResultDocNo = auditResultDocNo;
 	}
-	public LocalDate getAuditResultDate() {
+	public Date getAuditResultDate() {
 		return auditResultDate;
 	}
-	public void setAuditResultDate(LocalDate auditResultDate) {
+	public void setAuditResultDate(Date auditResultDate) {
 		this.auditResultDate = auditResultDate;
 	}
 	public String getAuditComment() {
@@ -88,5 +87,6 @@ public class TaFormTS0108DtlVo {
 	public void setAuditComment(String auditComment) {
 		this.auditComment = auditComment;
 	}
+	
 	
 }
