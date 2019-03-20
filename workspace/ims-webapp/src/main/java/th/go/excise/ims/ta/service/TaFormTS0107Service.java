@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.go.excise.ims.ta.vo.TaFormTS0107Vo;
 
@@ -57,7 +58,10 @@ public class TaFormTS0107Service {
 		params.put("facAmphurName", request.getFacAmphurName());
 		params.put("facProvinceName", request.getFacProvinceName());
 		params.put("facZipCode", request.getFacZipCode());
-
+		
+		//Convert LocalDate to String
+		params.put("auditDate", ConvertDateUtils.formatLocalDateToString(request.getAuditDate(), ConvertDateUtils.DD_MMMM_YYYY));
+		
 		params.put("lawSection", request.getLawSection());
 		params.put("signFullName", request.getSignFullName());
 		params.put("signPosition", request.getSignPosition());
