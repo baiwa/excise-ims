@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.IMG_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.go.excise.ims.ta.vo.TaFormTS0107Vo;
@@ -23,11 +26,11 @@ public class TaFormTS0107Service {
 	public byte[] exportTaFormTS0107(TaFormTS0107Vo request) throws Exception, IOException {
 		logger.info("exportTaFormTS0107");
 
-		String reportName = "TA_FORM_TS01_07.jasper";
 		Map<String, Object> params = new HashMap<>();
 
 		// get data to report
-		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, "logo-garuda.jpg"));
+		params.put("logo",
+				ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
 		params.put("bookNumber1", request.getBookNumber1());
 		params.put("bookNumber2", request.getBookNumber2());
 		params.put("officeName1", request.getOfficeName1());
@@ -58,15 +61,17 @@ public class TaFormTS0107Service {
 		params.put("facAmphurName", request.getFacAmphurName());
 		params.put("facProvinceName", request.getFacProvinceName());
 		params.put("facZipCode", request.getFacZipCode());
-		
-		//Convert LocalDate to String
-		String[] docDate = ConvertDateUtils.formatLocalDateToString(request.getDocDate(), ConvertDateUtils.DD_MMMM_YYYY).split(" ");
+
+		// Convert LocalDate to String
+		String[] docDate = ConvertDateUtils.formatLocalDateToString(request.getDocDate(), ConvertDateUtils.DD_MMMM_YYYY)
+				.split(" ");
 		params.put("day", docDate[0]);
 		params.put("month", docDate[1]);
 		params.put("year", docDate[2]);
-		
-		params.put("auditDate", ConvertDateUtils.formatLocalDateToString(request.getAuditDate(), ConvertDateUtils.DD_MMMM_YYYY));
-		
+
+		params.put("auditDate",
+				ConvertDateUtils.formatLocalDateToString(request.getAuditDate(), ConvertDateUtils.DD_MMMM_YYYY));
+
 		params.put("lawSection", request.getLawSection());
 		params.put("headOfficerPhone", request.getHeadOfficerPhone());
 		params.put("signFullName", request.getSignFullName());
@@ -74,7 +79,8 @@ public class TaFormTS0107Service {
 		params.put("otherText", request.getOtherText());
 		params.put("otherPhone", request.getOtherPhone());
 		// set output
-		JasperPrint jasperPrint = ReportUtils.getJasperPrint(reportName, params);
+		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_07 + "." + FILE_EXTENSION.JASPER,
+				params);
 		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
 		ReportUtils.closeResourceFileInputStream(params);
 

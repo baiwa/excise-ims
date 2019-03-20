@@ -8,14 +8,15 @@ import java.time.LocalDate;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ta.vo.TaFormTS0107Vo;
 
 public class TaFormTS0107ServiceTest {
 
 	private TaFormTS0107Service taFormTS0107Service = new TaFormTS0107Service();
-	private static final String PATH = "/tmp/";
-	private static final String NAME = "TaFormTS01_07.pdf";
 
 	@Test
 	public void test_exportTaFormTS0107() throws Throwable, IOException {
@@ -61,7 +62,7 @@ public class TaFormTS0107ServiceTest {
 		data.setSignPosition("");
 		data.setOtherText("");
 		data.setOtherPhone("");
-		
+
 		// Convert String to LocalDate
 		LocalDate date1 = ConvertDateUtils.parseStringToLocalDate("12/03/2562", ConvertDateUtils.DD_MM_YYYY);
 		data.setDocDate(date1);
@@ -69,7 +70,8 @@ public class TaFormTS0107ServiceTest {
 		data.setAuditDate(date2);
 
 		byte[] reportFile = taFormTS0107Service.exportTaFormTS0107(data);
-		IOUtils.write(reportFile, new FileOutputStream(new File(PATH + NAME)));
+		IOUtils.write(reportFile, new FileOutputStream(
+				new File(PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_07 + "." + FILE_EXTENSION.PDF)));
 
 	}
 }
