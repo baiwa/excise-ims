@@ -11,7 +11,6 @@ public class IaConstants {
 		public static final String CHECK_PERIOD = "check_period";
 		public static final String INCOME_PERFORM = "income_perform";
 		public static final String SUPPRESSION = "suppression";
-		public static final String FINANCE_ACCOUNTING = "finance_accounting";
 	}
 
 	public class IA_RISK_COLOR {
