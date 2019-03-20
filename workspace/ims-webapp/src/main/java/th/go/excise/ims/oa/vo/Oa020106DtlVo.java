@@ -71,6 +71,15 @@ public class Oa020106DtlVo {
 	private String otherRemark;
 	private List<OaLubricantsCust> customers;
 	private List<OaLubricantsCust> custdeles;
+	private String auditResult;
+
+	public String getAuditResult() {
+		return auditResult;
+	}
+
+	public void setAuditResult(String auditResult) {
+		this.auditResult = auditResult;
+	}
 
 	public List<OaLubricantsCust> getCustomers() {
 		return customers;
