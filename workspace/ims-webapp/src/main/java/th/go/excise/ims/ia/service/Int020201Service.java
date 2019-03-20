@@ -108,15 +108,15 @@ public class Int020201Service {
 
 	public void updateQtnMadeByRequest(Int020201DtlVo request) throws Exception {
 		if (request.getQtnMadeList().size() > 0) {
+			IaQuestionnaireMade resMadeDtl = null;
 			for (IaQuestionnaireMade objMadeDtl : request.getQtnMadeList()) {
 				/* check data */
-				Optional<IaQuestionnaireMade> resMadeDtl = iaQuestionnaireMadeRepository.findById(objMadeDtl.getId());
-				if (resMadeDtl.isPresent()) {
-					IaQuestionnaireMade madeDtl = resMadeDtl.get();
-					madeDtl.setNote(objMadeDtl.getNote());
-					madeDtl.setCheckFlag(objMadeDtl.getCheckFlag());
-					iaQuestionnaireMadeRepository.save(madeDtl);
-				}
+				resMadeDtl = iaQuestionnaireMadeRepository.findById(objMadeDtl.getId()).get();
+				resMadeDtl.setNote(objMadeDtl.getNote());
+				resMadeDtl.setCheckFlag(objMadeDtl.getCheckFlag());
+				iaQuestionnaireMadeRepository.save(resMadeDtl);
+					
+//					iaQuestionnaireMadeJdbcRepository.updateStatusMade(objMadeDtl);
 			}
 			updateStatusQtnMadeHdr(request);
 		}

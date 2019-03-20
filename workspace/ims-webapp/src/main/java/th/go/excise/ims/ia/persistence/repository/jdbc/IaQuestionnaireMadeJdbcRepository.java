@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMade;
+import th.go.excise.ims.ia.vo.Int020201DtlVo;
 import th.go.excise.ims.ia.vo.Int020201JoinVo;
 import th.go.excise.ims.ia.vo.Int020201SidesFormVo;
 
@@ -201,6 +202,18 @@ public class IaQuestionnaireMadeJdbcRepository {
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
 			}
 		});
+	}
+	
+	public void updateStatusMade(IaQuestionnaireMade objMadeDtl) {
+		StringBuilder sql = new StringBuilder(" UPDATE IA_QUESTIONNAIRE_MADE SET CHECK_FLAG = ?, NOTE= ?, UPDATED_BY = ?, UPDATED_DATE = sysdate WHERE ID = ? ");
+		List<Object> params = new ArrayList<Object>();
+		
+		params.add(objMadeDtl.getCheckFlag());
+		params.add(objMadeDtl.getNote());
+		params.add(UserLoginUtils.getCurrentUsername());
+		params.add(objMadeDtl.getId());
+		
+		commonJdbcTemplate.update(sql.toString(), params.toArray());
 	}
 	
 }
