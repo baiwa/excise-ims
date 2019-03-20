@@ -55,7 +55,7 @@ public class Int030401Controller {
 		String fileName = URLEncoder.encode("int030401", "UTF-8");
 
 		// write it as an excel attachment
-		ByteArrayOutputStream outByteStream = int030401Service.exportInt030401(idFactors, idConfig,budgetYear,inspectionWork);
+		ByteArrayOutputStream outByteStream = int030401Service.chooseExport(idFactors, idConfig,budgetYear,inspectionWork);
 		byte[] outArray = outByteStream.toByteArray();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);
