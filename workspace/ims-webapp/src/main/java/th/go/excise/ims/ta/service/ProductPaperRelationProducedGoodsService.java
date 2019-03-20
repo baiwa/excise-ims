@@ -44,7 +44,7 @@ public class ProductPaperRelationProducedGoodsService {
 	public List<ProductPaperRelationProducedGoodsVo> getDataProductPaperRelationProducedGoods(int start, int length,
 			int total) {
 		logger.info("getDataProductPaperRelationProducedGoods");
-		String desc = "การเบิกใช้วัตถุดิบกับการรับสินค้าสำเร็จรูป";
+//		String desc = "การเบิกใช้วัตถุดิบกับการรับสินค้าสำเร็จรูป";
 		List<ProductPaperRelationProducedGoodsVo> datalist = new ArrayList<ProductPaperRelationProducedGoodsVo>();
 		ProductPaperRelationProducedGoodsVo data = null;
 		for (int i = start; i < (start + length); i++) {
@@ -53,19 +53,19 @@ public class ProductPaperRelationProducedGoodsService {
 			}
 			data = new ProductPaperRelationProducedGoodsVo();
 			data.setId(Long.valueOf(1));
-			data.setDocNo("1001" + (i + 1));
-			data.setMaterialDesc(desc + (i + 1));
-			data.setInputMaterialQty("1,000.00");
-			data.setFormulaMaterialQty("E25+E15+E15");
-			data.setUsedMaterialQty("700.00");
-			data.setRealUsedMaterialQty("500.00");
-			data.setDiffMaterialQty("200.00");
-			data.setMaterialQty("400.00");
-			data.setGoodsQty("300.00");
-			data.setDiffGoodsQty("100.00");
-			data.setWasteGoodsPnt("5%");
-			data.setWasteGoodsQty("100.00");
-			data.setBalanceGoodsQty("600.00");
+			data.setDocNo("");
+			data.setMaterialDesc("");
+			data.setInputMaterialQty("");
+			data.setFormulaMaterialQty("");
+			data.setUsedMaterialQty("");
+			data.setRealUsedMaterialQty("");
+			data.setDiffMaterialQty("");
+			data.setMaterialQty("");
+			data.setGoodsQty("");
+			data.setDiffGoodsQty("");
+			data.setWasteGoodsPnt("");
+			data.setWasteGoodsQty("");
+			data.setBalanceGoodsQty("");
 			datalist.add(data);
 		}
 		return datalist;

@@ -69,6 +69,15 @@ public class Oa010106DtlVo {
 	private String otherRemark;
 	private List<OaHydrocarbCust> customers;
 	private List<OaHydrocarbCust> custdeles;
+	private String auditResult;
+
+	public String getAuditResult() {
+		return auditResult;
+	}
+
+	public void setAuditResult(String auditResult) {
+		this.auditResult = auditResult;
+	}
 
 	public BigDecimal getOaHydrocarbDtlId() {
 		return oaHydrocarbDtlId;
