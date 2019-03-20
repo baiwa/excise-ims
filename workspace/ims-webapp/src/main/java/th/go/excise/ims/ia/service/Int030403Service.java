@@ -18,9 +18,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int030403JdbcRepository;
+import th.go.excise.ims.ia.util.ExcelUtil;
 import th.go.excise.ims.ia.util.IntCalculateCriteriaUtil;
+import th.go.excise.ims.ia.vo.ExportRiskVo;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
 import th.go.excise.ims.ia.vo.Int0301Vo;
 import th.go.excise.ims.ia.vo.Int030403FormVo;
@@ -36,6 +39,9 @@ public class Int030403Service {
 
 	@Autowired
 	Int030405Service int030405Service;
+	
+	@Autowired
+	private ExcelUtil excelUtil;
 
 	public List<Int030403Vo> list(Int030403FormVo form) {
 		List<Int030403Vo> iaRiskBudgetProject = new ArrayList<Int030403Vo>();
@@ -80,8 +86,20 @@ public class Int030403Service {
 		return f;
 	}
 
-	public ByteArrayOutputStream exportInt030403(String projectYear, String projecttypecode ,String budgetYear , BigDecimal inspectionWork , BigDecimal idConfig) throws IOException {
+	public ByteArrayOutputStream exportInt030403(String projectYear, 
+												String projecttypecode ,
+												String budgetYear , 
+												BigDecimal inspectionWork , 
+												BigDecimal idConfig,
+												String riskHrdPaperName,
+												String createUserName,
+												String createLastName,
+												String createPosition,
+												String checkUserName,
+												String checkLastName,
+												String checkPosition) throws IOException {
 		/* create spreadsheet */
+		ExportRiskVo exportRiskData = excelUtil.exportConfig(idConfig);
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
 		CellStyle tdStyle = ExcelUtils.createTdCellStyle(workbook);
@@ -90,7 +108,97 @@ public class Int030403Service {
 		Sheet sheet = workbook.createSheet();
 		int rowNum = 0;
 		int cellNum = 0;
+	
+		
+		// Row [0]
+		Row row1 = sheet.createRow(rowNum);
+		Cell cell1 = row1.createCell(cellNum);
+		cell1 = row1.createCell(cellNum);
+		cell1.setCellValue(riskHrdPaperName);
+		cell1.setCellStyle(tdStyle);
+		rowNum++;
+		
+		// Row [0]
+		Row row2 = sheet.createRow(rowNum);
+		Cell cell2 = row2.createCell(cellNum);
+		cell2 = row2.createCell(cellNum);
+		cell2.setCellValue("เพื่อพิจารณาคัดเลือกหน่วยงานรับตรวจสำนักงานสรรพสามิตภาค พื้นที่ และสาขา");
+		cell2.setCellStyle(tdStyle);
+		rowNum++;
+		
+		// Row [0]
+		Row row3 = sheet.createRow(rowNum);
+		Cell cell3 = row3.createCell(cellNum);
+		cell3 = row3.createCell(cellNum);
+		cell3.setCellValue("กลุ่มตรวจสอบภายใน  กรมสรรพสามิต");
+		cell3.setCellStyle(tdStyle);
+		rowNum++;
+		
+		// Row [0]
+		Row row4 = sheet.createRow(rowNum);
+		Cell cell4 = row4.createCell(cellNum);
+		cell4 = row4.createCell(cellNum);
+		if (StringUtils.isNotBlank(exportRiskData.getIaRiskFactorsConfig().getRiskIndicators())) {
+			cell4.setCellValue("เกณฑ์ความเสี่ยง : " +  exportRiskData.getIaRiskFactorsConfig().getRiskIndicators());
+		}
+		cell4.setCellStyle(tdStyle);
+		rowNum++;
 
+		// Row [0]
+		Row row5 = sheet.createRow(rowNum);
+		Cell cell5 = row5.createCell(cellNum);
+		cell5 = row5.createCell(cellNum);
+		if (StringUtils.isNotBlank(exportRiskData.getIaRiskFactorsConfig().getRiskIndicators())) {
+			cell5.setCellValue(exportRiskData.getIaRiskFactorsConfig().getRiskIndicators() + "(" + exportRiskData.getIaRiskFactorsConfig().getRiskUnit() + ")" );
+		}
+		cell5.setCellStyle(tdStyle);
+		rowNum++;
+		
+		// Row [0]
+		Row row6 = sheet.createRow(rowNum);
+		Cell cell6 = row6.createCell(cellNum);
+		cell6 = row6.createCell(cellNum);
+		cell6.setCellValue("ffff");
+		cell6.setCellStyle(tdStyle);
+		rowNum++;
+		
+		// Row [0]
+		Row row7 = sheet.createRow(rowNum);
+		Cell cell7 = row7.createCell(cellNum);
+		cell7 = row7.createCell(cellNum);
+		cell7.setCellValue("ffff");
+		cell7.setCellStyle(tdStyle);
+		rowNum++;
+		
+		// Row [0]
+		Row row8 = sheet.createRow(rowNum);
+		Cell cell8 = row8.createCell(cellNum);
+		cell8 = row8.createCell(cellNum);
+		cell8.setCellValue("ffff");
+		cell8.setCellStyle(tdStyle);
+		rowNum++;
+		
+		// Row [0]
+		Row row9 = sheet.createRow(rowNum);
+		Cell cell9 = row9.createCell(cellNum);
+		cell9 = row9.createCell(cellNum);
+		String dateStart = ConvertDateUtils.formatDateToString(exportRiskData.getIaRiskFactorsConfig().getStartDate(),
+			     ConvertDateUtils.DD_MMMM_YYYY_SPAC, ConvertDateUtils.LOCAL_TH);
+		String dateEnd = ConvertDateUtils.formatDateToString(exportRiskData.getIaRiskFactorsConfig().getEndDate(),
+			     ConvertDateUtils.DD_MMMM_YYYY_SPAC, ConvertDateUtils.LOCAL_TH);		
+		cell9.setCellValue("แหล่งข้อมูล : " + exportRiskData.getIaRiskFactorsConfig().getInfoUsedRiskDesc() + " " + "ปีงบประมาณ " + "" + budgetYear + " ( " + dateStart + " - " + dateEnd + " )"  );
+		cell9.setCellStyle(tdStyle);
+		rowNum++;
+		
+		// Row [0]
+		Row row11 = sheet.createRow(rowNum);
+		Cell cell11 = row11.createCell(cellNum);
+		cell11 = row11.createCell(cellNum);
+		cell11.setCellValue("หน่วย : " + exportRiskData.getIaRiskFactorsConfig().getRiskUnit());
+		cell11.setCellStyle(tdRight);
+		rowNum++;
+		
+		
 		// Row [0]
 		Row row = sheet.createRow(rowNum);
 		Cell cell = row.createCell(cellNum);
@@ -103,6 +211,7 @@ public class Int030403Service {
 			cellNum++;
 		}
 		rowNum++;
+
 
 		// Row [1]
 		row = sheet.createRow(rowNum);
@@ -121,6 +230,16 @@ public class Int030403Service {
 
 		/* set sheet */
 		// merge(firstRow, lastRow, firstCol, lastCol)
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 12, rowNum - 12, 0, 8));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 11, rowNum - 11, 0, 8));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 10, rowNum - 10, 0, 8));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 9, rowNum - 9, 0, 8));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 8, rowNum - 8, 0, 8));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 7, rowNum - 7, 0, 8));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 6, rowNum - 6, 0, 8));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 5, rowNum - 5, 0, 8));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 4, rowNum - 4, 0, 8));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 3, rowNum - 3, 0, 8));
 		sheet.addMergedRegion(new CellRangeAddress(rowNum - 2, rowNum - 1, 0, 0));
 		sheet.addMergedRegion(new CellRangeAddress(rowNum - 2, rowNum - 1, 1, 1));
 		sheet.addMergedRegion(new CellRangeAddress(rowNum - 2, rowNum - 1, 6, 6));
@@ -132,7 +251,7 @@ public class Int030403Service {
 		int width = 76;
 		sheet.setColumnWidth(0, width * 30);
 		for (int i = 1; i <= 9; i++) {
-			if (i >= 1 && i <= 2) {
+			if (i == 1 ) {
 				sheet.setColumnWidth(i, width * 180);
 			} else {
 				sheet.setColumnWidth(i, width * 76);
@@ -141,7 +260,7 @@ public class Int030403Service {
 
 		/* start details */
 		int count = 1;
-		rowNum = 2;
+		rowNum = 12;
 		cellNum = 0;	
 		
 		List<Int030403Vo> datas = new ArrayList<Int030403Vo>();

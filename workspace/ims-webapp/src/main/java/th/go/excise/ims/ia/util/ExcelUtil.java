@@ -146,7 +146,7 @@ public class ExcelUtil {
 
 	public ExportRiskVo exportConfig(BigDecimal idConfig) throws IOException {
 		ExportRiskVo exportRiskData = new ExportRiskVo();
-		IaRiskFactorsConfig configData = iaRiskFactorsConfigRepository.findByIdFactors(idConfig);
+		IaRiskFactorsConfig configData = iaRiskFactorsConfigRepository.findById(idConfig).get();
 		exportRiskData.setIaRiskFactorsConfig(configData);
 		return exportRiskData;
 	}

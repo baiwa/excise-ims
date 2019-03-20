@@ -50,13 +50,25 @@ public class Int030403Controller {
 		return response;
 	}
 	
-	@GetMapping("/year/export/{projectYear}/{projecttypecode}/{budgetYear}/{inspectionWork}/{idConfig}")
-	public void exportByYear(@PathVariable("projectYear") String projectYear, @PathVariable("projecttypecode") String projecttypecode,@PathVariable("budgetYear") String budgetYear,@PathVariable("inspectionWork") BigDecimal inspectionWork,@PathVariable("idConfig") BigDecimal idConfig, HttpServletResponse response) throws Exception {
+	
+	@GetMapping("/year/export/{projectYear}/{projecttypecode}/{budgetYear}/{inspectionWork}/{idConfig}/{riskHrdPaperName}/{createUserName}/{createLastName}/{createPosition}/{checkUserName}/{checkLastName}/{checkPosition}")
+	public void exportByYear(@PathVariable("projectYear") String projectYear, 
+							 @PathVariable("projecttypecode") String projecttypecode,
+							 @PathVariable("budgetYear") String budgetYear,
+							 @PathVariable("inspectionWork") BigDecimal inspectionWork,
+							 @PathVariable("idConfig") BigDecimal idConfig,
+							 @PathVariable("riskHrdPaperName") String riskHrdPaperName,
+							 @PathVariable("createUserName") String createUserName,
+							 @PathVariable("createLastName") String createLastName,
+							 @PathVariable("createPosition") String createPosition,
+							 @PathVariable("checkUserName") String checkUserName,
+							 @PathVariable("checkLastName") String checkLastName,
+							 @PathVariable("checkPosition") String checkPosition, HttpServletResponse response) throws Exception {
 		// set fileName
 		String fileName = URLEncoder.encode("สรุปผลปัจจัยเสี่ยงงบประมาณที่ใช้ดำเนินงานโครงการ", "UTF-8");
 
 		// write it as an excel attachment
-		ByteArrayOutputStream outByteStream = int030403Service.exportInt030403(projectYear, projecttypecode,budgetYear,inspectionWork,idConfig);
+		ByteArrayOutputStream outByteStream = int030403Service.exportInt030403(projectYear, projecttypecode,budgetYear,inspectionWork,idConfig,riskHrdPaperName,createUserName,createLastName,createPosition,checkUserName,checkLastName,checkPosition);
 		byte[] outArray = outByteStream.toByteArray();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);
