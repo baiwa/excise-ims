@@ -1,19 +1,19 @@
 package th.go.excise.ims.ta.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.preferences.vo.ExciseDepartmentVo;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetSendRepository;
+import th.go.excise.ims.ta.util.TaxAuditUtils;
 import th.go.excise.ims.ta.vo.PlanWorkSheetSendVo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PlanWorkSheetSendService {
@@ -31,22 +31,34 @@ public class PlanWorkSheetSendService {
         TaPlanWorksheetSend plan = null;
         ExciseDept dataListNull = new ExciseDepartmentVo();
 
-        listSector = ApplicationCache.getExciseSectorList();
+        listSector = TaxAuditUtils.getExciseSectorList();
         for (ExciseDept list : listSector) {
+            String officeCode = "";
+            if ("001400".equals(list.getOfficeCode())){
+                officeCode = "000000";
+            }else{
+                officeCode = list.getOfficeCode();
+            }
             areaList = new ArrayList<>();
-            areaList = ApplicationCache.getExciseAreaList(list.getOfficeCode());
+            areaList = ApplicationCache.getExciseAreaList(officeCode);
             listArea.addAll(areaList);
         }
         listPlan = planWorksheetSendRepository.findByBudgetYear(ExciseUtils.getCurrentBudgetYear());
         if (CollectionUtils.isNotEmpty(listPlan)) {
 
             for (ExciseDept s : listSector) {
+                String officeCode = "";
+                if ("001400".equals(s.getOfficeCode())){
+                    officeCode = "000000";
+                }else{
+                    officeCode = s.getOfficeCode();
+                }
                 allData = new PlanWorkSheetSendVo();
                 plan = new TaPlanWorksheetSend();
                 for (int i = 0; i < listPlan.size(); i++) {
                     TaPlanWorksheetSend p = listPlan.get(i);
                     allData.setPlanWorksheetSend(plan);
-                    if (s.getOfficeCode().equals(p.getOfficeCode())) {
+                    if (officeCode.equals(p.getOfficeCode())) {
                         allData.setPlanWorksheetSend(p);
                         if (p.getFacInNum() != null || p.getFacOutNum() != null) {
                         	Integer facInNum = null;
@@ -65,7 +77,7 @@ public class PlanWorkSheetSendService {
                     }
                 }
                 if (allData.getPlanWorksheetSend().getOfficeCode() == null) {
-                    plan.setOfficeCode(s.getOfficeCode());
+                    plan.setOfficeCode(officeCode);
                     allData.setPlanWorksheetSend(plan);
                 }
                 allData.setSector(s);
@@ -102,7 +114,9 @@ public class PlanWorkSheetSendService {
                 }
                 allData.setSector(dataListNull);
                 allData.setArea(a);
-                listAll.add(allData);
+                if(!a.getOfficeCode().substring(0,2).equals("00")){
+                    listAll.add(allData);
+                }
             }
         }
         return listAll;
