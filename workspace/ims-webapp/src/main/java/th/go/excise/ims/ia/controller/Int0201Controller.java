@@ -94,10 +94,10 @@ public class Int0201Controller {
 
 	@PostMapping("/send-qtn-form")
 	@ResponseBody
-	public ResponseData<?> sendQtnForm(@RequestBody Int0201FormVo request) {
+	public ResponseData<IaQuestionnaireHdr> sendQtnForm(@RequestBody Int0201FormVo request) {
 		logger.info("send questionaire form");
 
-		ResponseData<?> response = new ResponseData<>();
+		ResponseData<IaQuestionnaireHdr> response = new ResponseData<IaQuestionnaireHdr>();
 		try {
 			int0201Service.sendQtnform(request);
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
