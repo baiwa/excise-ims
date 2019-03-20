@@ -99,6 +99,7 @@ public class Int030403Service {
 												String checkLastName,
 												String checkPosition) throws IOException {
 		/* create spreadsheet */
+	
 		ExportRiskVo exportRiskData = excelUtil.exportConfig(idConfig);
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
@@ -106,6 +107,8 @@ public class Int030403Service {
 		CellStyle tdLeft = ExcelUtils.createLeftCellStyle(workbook);
 		CellStyle tdRight = ExcelUtils.createRightCellStyle(workbook);
 		Sheet sheet = workbook.createSheet();
+		
+		
 		int rowNum = 0;
 		int cellNum = 0;
 	
@@ -154,6 +157,12 @@ public class Int030403Service {
 		cell5.setCellStyle(tdStyle);
 		rowNum++;
 		
+//		int test = exportRiskData.getIaRiskFactorsConfig().getFactorsLevel().intValue();
+//		
+//		for(int j = 0 ; j <= test ; j++ ) {
+//			
+//		}
+	
 		// Row [0]
 		Row row6 = sheet.createRow(rowNum);
 		Cell cell6 = row6.createCell(cellNum);
