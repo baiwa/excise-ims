@@ -20,10 +20,12 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESS
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.ta.service.RecordMessageService;
 import th.go.excise.ims.ta.service.TaxAuditService;
 import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
 import th.go.excise.ims.ta.vo.FactoryVo;
+import th.go.excise.ims.ta.vo.FormDocTypeVo;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
@@ -38,6 +40,9 @@ public class TaxAuditController {
 
 	@Autowired
 	private TaxAuditService taxAuditService;
+	
+	@Autowired
+	private RecordMessageService recordMessageService;
 
 	@PostMapping("/get-plan-dtl")
 	@ResponseBody
@@ -107,6 +112,21 @@ public class TaxAuditController {
 		ResponseData<FactoryVo> responseData = new ResponseData<FactoryVo>();
 		try {
 			responseData.setData(taxAuditService.getFactoryByNewRegId(idStr));
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("TaxAuditController::getFactoryByNewRegId ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
+	@GetMapping("/get-doc-type")
+	@ResponseBody
+	public ResponseData<List<FormDocTypeVo>> getTypeDoc() {
+		ResponseData<List<FormDocTypeVo>> responseData = new ResponseData<List<FormDocTypeVo>>();
+		try {
+			responseData.setData(recordMessageService.getTypeDoc());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("TaxAuditController::getFactoryByNewRegId ", e);
