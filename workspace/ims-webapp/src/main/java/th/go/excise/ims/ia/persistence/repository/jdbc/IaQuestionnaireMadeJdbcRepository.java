@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +13,10 @@ import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
-import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMade;
 import th.go.excise.ims.ia.vo.Int020201JoinVo;
 import th.go.excise.ims.ia.vo.Int020201SidesFormVo;
-import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
 
 @Repository
 public class IaQuestionnaireMadeJdbcRepository {
@@ -198,7 +196,7 @@ public class IaQuestionnaireMadeJdbcRepository {
 				paramList.add(qtnMade.getNote());
 				paramList.add(qtnMade.getIdMadeHdr());
 				/* field default */
-				paramList.add(SYSTEM_USER.BATCH);
+				paramList.add(UserLoginUtils.getCurrentUsername());
 				paramList.add(LocalDateTime.now());
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
 			}
