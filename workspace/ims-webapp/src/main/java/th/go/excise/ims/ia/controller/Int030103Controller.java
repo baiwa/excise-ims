@@ -18,6 +18,7 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfigAll;
 import th.go.excise.ims.ia.service.Int030103Service;
+import th.go.excise.ims.ia.vo.Int030103IdFactorsVo;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
 
 @Controller
@@ -79,8 +80,23 @@ public class Int030103Controller {
 		}
 		return response;
 	}
-	
 
-	
+	@PostMapping("/updataStatusRiskFactors")
+	@ResponseBody
+	public ResponseData<String> updataStatusRiskFactors(@RequestBody Int030103IdFactorsVo form) {
+		ResponseData<String> response = new ResponseData<String>();
+		try {	
+			int030103Service.updataStatusRiskFactors(form);
+			response.setData("SUCCESS");
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+
+		} catch (Exception e) {
+			logger.error("Int030103Controller updataStatusRiskFactors : ", e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
 	
 }

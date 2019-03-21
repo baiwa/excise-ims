@@ -1,15 +1,18 @@
 package th.go.excise.ims.ia.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfigAll;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigAllRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int030103JdbcRepository;
+import th.go.excise.ims.ia.vo.Int030103IdFactorsVo;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
 
 @Service
@@ -20,6 +23,9 @@ public class Int030103Service {
 
 	@Autowired
 	private IaRiskFactorsConfigAllRepository iaRiskFactorsConfigAllRepository;
+
+	@Autowired
+	private UpdateStatusRiskFactorsService updateStatusRiskFactorsService;
 
 	public List<IaRiskFactorsConfigAll> listConfigAll(IaRiskFactorsConfigAll form) {
 		List<IaRiskFactorsConfigAll> iaRiskFactorsConfigAllList = new ArrayList<IaRiskFactorsConfigAll>();
@@ -110,12 +116,20 @@ public class Int030103Service {
 		entity.setVeryhighCondition(formConfigAll.getVeryhighCondition());
 
 		iaRiskFactorsConfigAllRepository.save(entity);
-		
-		
+
 		for (IaRiskFactorsConfig irfc : form.getIaRiskFactorsConfigList()) {
 			int030103JdbcRepository.listUpdatePercent(irfc);
 		}
 
+	}
+
+//	private Logger logger = LoggerFactory.getLogger(Int030103Controller.class);
+	public void updataStatusRiskFactors(Int030103IdFactorsVo form) {
+		List<String> ids = form.getIds();
+		for (String id : ids) {
+//			logger.info(id);
+			updateStatusRiskFactorsService.updateStatusIaRiskFactors(new BigDecimal(id),IaConstants.IA_STATUS_RISK_FACTORS.STATUS_3_CODE);
+		}
 	}
 
 }
