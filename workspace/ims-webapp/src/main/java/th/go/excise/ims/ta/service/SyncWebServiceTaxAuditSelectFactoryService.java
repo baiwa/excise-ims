@@ -21,24 +21,23 @@ import th.go.excise.ims.ta.persistence.repository.TaWsInc8000Repository;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ws.client.pcc.incfri8000.oxm.IncFri8000Request;
 import th.go.excise.ims.ws.client.pcc.incfri8000.oxm.IncomeList;
-import th.go.excise.ims.ws.client.pcc.incfri8000.service.IncFri8000RequestService;
+import th.go.excise.ims.ws.client.pcc.incfri8000.service.IncFri8000Service;
 import th.go.excise.ims.ws.client.pcc.regfri4000.oxm.RegFri4000Request;
 import th.go.excise.ims.ws.client.pcc.regfri4000.oxm.RegMaster60List;
-import th.go.excise.ims.ws.client.pcc.regfri4000.service.RegFri4000RequestService;
+import th.go.excise.ims.ws.client.pcc.regfri4000.service.RegFri4000Service;
 
 @Service
 public class SyncWebServiceTaxAuditSelectFactoryService {
 
 	private static final Logger logger = LoggerFactory.getLogger(SyncWebServiceTaxAuditSelectFactoryService.class);
+	
 	@Autowired
-	private IncFri8000RequestService incFri8000RequestService;
-
+	private RegFri4000Service regFri4000Service;
 	@Autowired
-	private RegFri4000RequestService regFri4000RequestService;
+	private IncFri8000Service incFri8000Service;
 
 	@Autowired
 	private TaWsReg4000Repository taWsReg4000Repository;
-
 	@Autowired
 	private TaWsInc8000Repository taWsInc8000Repository;
 	
@@ -62,7 +61,7 @@ public class SyncWebServiceTaxAuditSelectFactoryService {
 			regMaster60List = new ArrayList<>();
 			indexPage++;
 			regFri4000Request.setPageNo(String.valueOf(indexPage));
-			regMaster60List = regFri4000RequestService.postRestFul(regFri4000Request);
+			regMaster60List = regFri4000Service.postRestFul(regFri4000Request);
 			if (regMaster60List != null && regMaster60List.size() > 0) {
 				logger.info("Resule Post to ws 4000 Response size : {}", regMaster60List.size());
 				taWsReg4000List = new ArrayList<>();
@@ -110,7 +109,7 @@ public class SyncWebServiceTaxAuditSelectFactoryService {
 			incomeList = new ArrayList<>();
 			indexPage++;
 			incFri8000Request.setPageNo(String.valueOf(indexPage));
-			incomeList = incFri8000RequestService.postRestFul(incFri8000Request);
+			incomeList = incFri8000Service.postRestFul(incFri8000Request);
 			TaWsInc8000 taWsInc8000;
 			List<TaWsInc8000> taWsInc8000List = new ArrayList<>();
 			if (incomeList != null && incomeList.size() > 0) {
