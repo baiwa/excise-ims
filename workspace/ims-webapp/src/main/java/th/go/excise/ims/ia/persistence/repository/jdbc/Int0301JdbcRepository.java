@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
+import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.vo.Int030102FormVo;
@@ -59,7 +60,9 @@ public class Int0301JdbcRepository {
 			   irf.setRiskFactors(rs.getString("RISK_FACTORS"));
 			   irf.setBudgetYear(rs.getString("BUDGET_YEAR"));
 			   irf.setSide(rs.getString("SIDE"));
+			   
 			   irf.setStatusScreen(rs.getString("STATUS_SCREEN"));
+			   
 			   irf.setDateCriteria(rs.getString("DATE_CRITERIA"));
 			   irf.setInspectionWork(rs.getBigDecimal("INSPECTION_WORK"));
 			   irf.setCreatedBy(rs.getString("CREATED_BY"));
@@ -83,11 +86,15 @@ public class Int0301JdbcRepository {
 			   vo.setUpdateDateDesc(ConvertDateUtils.formatDateToString(rs.getDate("UPDATED_DATE"),
 			     ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 			   vo.setIaRiskFactors(irf);
-
-			   // vo.setUpdateDateDesc(ConvertDateUtils.formatDateToString(rs
-			   // .getDate("UPDATED_DATE"), ConvertDateUtils.DD_MM_YYYY,
-			   // ConvertDateUtils.LOCAL_TH));
-			//   setentityIaRiskFactorsConfig  
+			   
+			   
+			  if(IaConstants.IA_STATUS_RISK_FACTORS.STATUS_1_CODE.equals(irf.getStatusScreen())) {
+				  vo.setStatusScreenDesc(IaConstants.IA_STATUS_RISK_FACTORS.STATUS_1_DESC);
+			  }	else if(IaConstants.IA_STATUS_RISK_FACTORS.STATUS_2_CODE.equals(irf.getStatusScreen())) {
+				  vo.setStatusScreenDesc(IaConstants.IA_STATUS_RISK_FACTORS.STATUS_2_DESC);
+			  }	else if(IaConstants.IA_STATUS_RISK_FACTORS.STATUS_3_CODE.equals(irf.getStatusScreen())) {
+				  vo.setStatusScreenDesc(IaConstants.IA_STATUS_RISK_FACTORS.STATUS_3_DESC);
+			  }			   
 
 			   irfc.setId(rs.getBigDecimal("ID_CONFIG"));
 			   irfc.setStartDate(rs.getDate("START_DATE"));

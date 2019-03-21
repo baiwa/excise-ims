@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
+import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
 import th.go.excise.ims.ia.vo.Int030102FormVo;
@@ -224,6 +225,7 @@ public class Int030102JdbcRepository {
 				"b.STATUS,  " + 
 				"a.CREATED_BY, " + 
 				"a.CREATED_DATE, " + 
+				"a.SIDE, " + 
 				"a.NOT_DELETE " + 
 				"FROM IA_RISK_FACTORS_MASTER a " + 
 				"RIGHT JOIN IA_RISK_FACTORS_STATUS b " + 
@@ -251,6 +253,7 @@ public class Int030102JdbcRepository {
 			vo.setRiskFactorsMaster(rs.getString("RISK_FACTORS_MASTER"));
 			vo.setBudgetYear(rs.getString("BUDGET_YEAR"));
 			vo.setInspectionWork(rs.getBigDecimal("INSPECTION_WORK"));
+			vo.setSide(rs.getString("SIDE"));
 			return vo;
 		}
 
@@ -360,12 +363,13 @@ public class Int030102JdbcRepository {
 	public void claerDateCir(Int030102FormVo form) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("    UPDATE IA_RISK_FACTORS C                                                  ");
-		sql.append("    SET C.STATUS_SCREEN       = 'ยังไม่ได้กำหนด',                                         ");
+		sql.append("    SET C.STATUS_SCREEN       = ? ,                                         ");
 		sql.append("    C.DATE_CRITERIA           = null                                          ");
 		sql.append("    WHERE C.ID IN ( SELECT A.ID                                               ");
 		sql.append("                    FROM IA_RISK_FACTORS A                                    ");
-		sql.append("                    WHERE  A.BUDGET_YEAR = ? AND A.INSPECTION_WORK = ? )      ");	
-		commonJdbcTemplate.update(sql.toString(), new Object[] { form.getBudgetYear() ,form.getInspectionWork() });
+		sql.append("                    WHERE  A.BUDGET_YEAR = ? AND A.INSPECTION_WORK = ? )      ");
+		
+		commonJdbcTemplate.update(sql.toString(), new Object[] { IaConstants.IA_STATUS_RISK_FACTORS.STATUS_1_CODE,form.getBudgetYear() ,form.getInspectionWork() });
 	}
 
 }

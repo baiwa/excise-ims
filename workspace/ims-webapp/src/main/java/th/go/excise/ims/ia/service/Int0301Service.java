@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
-import th.go.excise.ims.ia.controller.Int0301Controller;
+import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
@@ -35,6 +35,9 @@ public class Int0301Service {
 
 	@Autowired
 	private IaRiskFactorsRepository iaRiskFactorsRepository;
+	
+	@Autowired
+	private UpdateStatusRiskFactorsService updateStatusRiskFactorsService;
 
 	public List<Int0301Vo> list(Int0301FormVo form) {
 		List<Int0301Vo> iaRiskFactorsList = new ArrayList<Int0301Vo>();
@@ -199,14 +202,9 @@ public class Int0301Service {
 		Date endDate = ConvertDateUtils.parseStringToDate(form.getEndDate(), ConvertDateUtils.DD_MM_YYYY);
 		entity.setEndDate(endDate);
 		iaRiskFactorsConfigRepository.save(entity);
-
-		IaRiskFactors entityFactors = new IaRiskFactors();
-		if (formConfig.getIdFactors() != null) {
-			entityFactors = iaRiskFactorsRepository.findById(formConfig.getIdFactors()).get();
-			entityFactors.setStatusScreen("กำหนดแล้ว");
-			entityFactors.setDateCriteria(ConvertDateUtils.formatDateToString(new Date(), ConvertDateUtils.DD_MM_YYYY));
-			iaRiskFactorsRepository.save(entityFactors);
-		}
+		
+		updateStatusRiskFactorsService.updateStatusIaRiskFactors(formConfig.getIdFactors(), IaConstants.IA_STATUS_RISK_FACTORS.STATUS_2_CODE);
+		
 
 	}
 

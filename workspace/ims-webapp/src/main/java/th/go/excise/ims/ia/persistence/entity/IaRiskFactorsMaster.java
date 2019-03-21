@@ -35,6 +35,9 @@ public class IaRiskFactorsMaster extends BaseEntity {
 	private String notDelete;
 	@Column(name = "DATA_EVALUATE")
 	private String dataEvaluate;
+	@Column(name = "SIDE")
+	private String side;
+	
 	
 	
 	public BigDecimal getId() {
@@ -93,6 +96,19 @@ public class IaRiskFactorsMaster extends BaseEntity {
 	public void setDataEvaluate(String dataEvaluate) {
 		this.dataEvaluate = dataEvaluate;
 	}
+
+	public String getSide() {
+		return side;
+	}
+
+	public void setSide(String side) {
+		this.side = side;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
 	
 	
 	

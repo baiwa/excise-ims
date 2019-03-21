@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
@@ -109,9 +110,8 @@ public class Int030102Service {
 				data.setBudgetYear(iaRiskFactorsMaster.getBudgetYear());
 				data.setRiskFactors(iaRiskFactorsMaster.getRiskFactorsMaster());
 				data.setInspectionWork(iaRiskFactorsMaster.getInspectionWork());
-
-				data.setSide("S");
-				data.setStatusScreen("ยังไม่ได้กำหนด");
+				data.setSide(iaRiskFactorsMaster.getSide());
+				data.setStatusScreen(IaConstants.IA_STATUS_RISK_FACTORS.STATUS_1_CODE);
 				data.setCreatedBy(UserLoginUtils.getCurrentUsername());
 				data.setCreatedDate(LocalDateTime.now());
 				IaRiskFactors resultIdFactors = iaRiskFactorsRepository.save(data);

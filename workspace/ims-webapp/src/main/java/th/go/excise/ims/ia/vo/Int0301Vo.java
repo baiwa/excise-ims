@@ -12,6 +12,7 @@ public class Int0301Vo extends DataTableRequest {
 	private IaRiskFactorsConfig iaRiskFactorsConfig;
 	private String createdDateDesc;
 	private String updateDateDesc;
+	private String statusScreenDesc;
 	private List<String> datalistdynamic;
 
 	public IaRiskFactors getIaRiskFactors() {
@@ -44,6 +45,14 @@ public class Int0301Vo extends DataTableRequest {
 
 	public void setUpdateDateDesc(String updateDateDesc) {
 		this.updateDateDesc = updateDateDesc;
+	}
+
+	public String getStatusScreenDesc() {
+		return statusScreenDesc;
+	}
+
+	public void setStatusScreenDesc(String statusScreenDesc) {
+		this.statusScreenDesc = statusScreenDesc;
 	}
 
 	public List<String> getDatalistdynamic() {
