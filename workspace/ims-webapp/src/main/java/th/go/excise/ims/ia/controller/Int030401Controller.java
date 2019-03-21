@@ -49,13 +49,22 @@ public class Int030401Controller {
 		return response;
 	}
 	
-	@GetMapping("/export/{idFactors}/{idConfig}/{budgetYear}/{inspectionWork}")
-	public void exportByYear(@PathVariable("idFactors") BigDecimal idFactors, @PathVariable("idConfig") BigDecimal idConfig,@PathVariable("budgetYear") String budgetYear,@PathVariable("inspectionWork") BigDecimal inspectionWork, HttpServletResponse response) throws Exception {
+	@GetMapping("/export/{idFactors}/{idConfig}/{budgetYear}/{inspectionWork}/{riskHrdPaperName}/{createUserName}/{createLastName}/{createPosition}/{checkUserName}/{checkLastName}/{checkPosition}")
+	public void exportByYear(@PathVariable("idFactors") BigDecimal idFactors,
+			@PathVariable("idConfig") BigDecimal idConfig,
+			@PathVariable("budgetYear") String budgetYear,
+			@PathVariable("inspectionWork") BigDecimal inspectionWork, 
+			@PathVariable("riskHrdPaperName") String riskHrdPaperName,
+			@PathVariable("createUserName") String createUserName,
+			@PathVariable("createLastName") String createLastName,
+			@PathVariable("createPosition") String createPosition, @PathVariable("checkUserName") String checkUserName,
+			@PathVariable("checkLastName") String checkLastName, @PathVariable("checkPosition") String checkPosition,
+			HttpServletResponse response) throws Exception {
 		// set fileName
 		String fileName = URLEncoder.encode("int030401", "UTF-8");
 
 		// write it as an excel attachment
-		ByteArrayOutputStream outByteStream = int030401Service.chooseExport(idFactors, idConfig,budgetYear,inspectionWork);
+		ByteArrayOutputStream outByteStream = int030401Service.chooseExport(idFactors, idConfig,budgetYear,inspectionWork,riskHrdPaperName,createUserName,createLastName,createPosition,checkUserName,checkLastName,checkPosition);
 		byte[] outArray = outByteStream.toByteArray();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);
