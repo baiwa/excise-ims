@@ -2,6 +2,7 @@
 package th.go.excise.ims.ws.client.pcc.regfri4000.oxm;
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -157,6 +158,28 @@ public class RegMaster60List {
     @SerializedName("RegDutyList")
     @Expose
     private List<RegDutyList> regDutyList = null;
+    @SerializedName("CustomerAddress")
+    @Expose
+    private String customerAddress;
+    @SerializedName("FacAddress")
+    @Expose
+    private String facAddress;
+
+    public String getFacAddress() {
+        return facAddress;
+    }
+
+    public void setFacAddress(String facAddress) {
+        this.facAddress = facAddress;
+    }
+
+    public String getCustomerAddress() {
+        return customerAddress;
+    }
+
+    public void setCustomerAddress(String customerAddress) {
+        this.customerAddress = customerAddress;
+    }
 
     public String getNewregId() {
         return newregId;
