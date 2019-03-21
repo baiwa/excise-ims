@@ -225,6 +225,7 @@ public class Int030102JdbcRepository {
 				"b.STATUS,  " + 
 				"a.CREATED_BY, " + 
 				"a.CREATED_DATE, " + 
+				"a.DATA_EVALUATE, " + 
 				"a.SIDE, " + 
 				"a.NOT_DELETE " + 
 				"FROM IA_RISK_FACTORS_MASTER a " + 
@@ -254,6 +255,7 @@ public class Int030102JdbcRepository {
 			vo.setBudgetYear(rs.getString("BUDGET_YEAR"));
 			vo.setInspectionWork(rs.getBigDecimal("INSPECTION_WORK"));
 			vo.setSide(rs.getString("SIDE"));
+			vo.setDataEvaluate(rs.getString("DATA_EVALUATE"));
 			return vo;
 		}
 

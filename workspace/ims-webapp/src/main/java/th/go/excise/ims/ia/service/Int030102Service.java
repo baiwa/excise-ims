@@ -111,6 +111,7 @@ public class Int030102Service {
 				data.setRiskFactors(iaRiskFactorsMaster.getRiskFactorsMaster());
 				data.setInspectionWork(iaRiskFactorsMaster.getInspectionWork());
 				data.setSide(iaRiskFactorsMaster.getSide());
+				data.setDataEvaluate(iaRiskFactorsMaster.getDataEvaluate());
 				data.setStatusScreen(IaConstants.IA_STATUS_RISK_FACTORS.STATUS_1_CODE);
 				data.setCreatedBy(UserLoginUtils.getCurrentUsername());
 				data.setCreatedDate(LocalDateTime.now());

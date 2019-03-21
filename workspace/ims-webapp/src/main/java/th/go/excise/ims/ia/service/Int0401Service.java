@@ -290,6 +290,8 @@ public class Int0401Service {
 		for (IaRiskFactors factor : factors) {
 			Int0401HeaderVo header = new Int0401HeaderVo();
 			header.setName(factor.getRiskFactors());
+			IaRiskFactorsConfig config = iaRiskFactorsConfigRepository.findByIdFactors(factor.getId());
+			header.setPercent(config.getPercent());
 			lists.add(header);
 		}
 		return lists;
