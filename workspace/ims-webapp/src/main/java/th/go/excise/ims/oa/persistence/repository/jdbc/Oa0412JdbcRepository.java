@@ -67,15 +67,14 @@ public class Oa0412JdbcRepository {
 		return count;
 	}
 
-	public List<Oa040106FormVo> findByCustomerIdAndLicenseType(BigDecimal customerId, String licenseType) {
+	public List<Oa040106FormVo> findByCustomerIdAndLicenseType(BigDecimal customerId) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 		sql.append(" SELECT * FROM OA_ACH_CUSTOMER_LICEN WHERE IS_DELETED='N' ");
 		sql.append(" AND OA_CUSTOMER_ID = ? AND IS_DELETED = 'N' ");
-		sql.append(" AND LICENSE_TYPE = ? AND IS_DELETED = 'N' ");
+		sql.append(" AND IS_DELETED = 'N' ");
 		sql.append(" ORDER BY OA_CUSLICENSE_ID DESC ");
 		params.add(customerId);
-		params.add(licenseType);
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<Oa040106FormVo> lists = commonJdbcTemplate.query(sql.toString(), params.toArray(),
 				new BeanPropertyRowMapper(Oa040106FormVo.class));

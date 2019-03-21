@@ -42,10 +42,10 @@ public class Oa0412Service {
 		return dataTableAjax;
 	}
 
-	public List<Oa040106FormVo> findCustomerLicenList(String customerIdStr, String licenseType) {
+	public List<Oa040106FormVo> findCustomerLicenList(String customerIdStr) {
 		List<Oa040106FormVo> response = new ArrayList<Oa040106FormVo>();
 		BigDecimal customerId = new BigDecimal(customerIdStr);
-		response = oa0412JdbcRep.findByCustomerIdAndLicenseType(customerId, licenseType);
+		response = oa0412JdbcRep.findByCustomerIdAndLicenseType(customerId);
 		return response;
 	}
 
@@ -57,22 +57,21 @@ public class Oa0412Service {
 			OaAchCustomerLicen licen = licenOpt.get();
 			response.setApprove(licen.getApprove());
 			response.setApproveName(licen.getApproveName());
-			response.setBankGuarantee(licen.getBankGuarantee());
-			response.setBankGuaranteeDate(licen.getBankGuaranteeDate());
-			response.setBankGuaranteeNo(licen.getBankGuaranteeNo());
 			response.setEndDate(licen.getEndDate());
 			response.setLicenseDate(licen.getLicenseDate());
 			response.setLicenseNo(licen.getLicenseNo());
-			response.setLicenseType(licen.getLicenseType());
 			response.setOaCuslicenseId(licen.getOaCuslicenseId());
 			response.setOaCustomerId(licen.getOaCustomerId());
 			response.setOffCode(licen.getOffCode());
-			response.setOldLicenseYear(licen.getOldLicenseYear());
 			response.setOperateName(licen.getOperateName());
 			response.setOperateRemark(licen.getOperateRemark());
 			response.setReceiveDate(licen.getReceiveDate());
 			response.setReceiveNo(licen.getReceiveNo());
 			response.setStartDate(licen.getStartDate());
+			response.setCreatedFactTime(licen.getCreatedFactTime());
+			response.setUsedDate(licen.getUsedDate());
+			response.setLicenseAddress(licen.getLicenseAddress());
+			response.setMoney(licen.getMoney());
 			List<OaAchCustomerLicenDtl> details = oa0412JdbcRep.findByLicenseId(response.getOaCuslicenseId());
 			response.setDetails(details);
 		}
@@ -84,21 +83,20 @@ public class Oa0412Service {
 		OaAchCustomerLicen licen = new OaAchCustomerLicen();
 		licen.setApprove(request.getApprove());
 		licen.setApproveName(request.getApproveName());
-		licen.setBankGuarantee(request.getBankGuarantee());
-		licen.setBankGuaranteeDate(request.getBankGuaranteeDate());
-		licen.setBankGuaranteeNo(request.getBankGuaranteeNo());
 		licen.setEndDate(request.getEndDate());
 		licen.setLicenseDate(request.getLicenseDate());
 		licen.setLicenseNo(request.getLicenseNo());
-		licen.setLicenseType(request.getLicenseType());
 		licen.setOaCustomerId(request.getOaCustomerId());
 		licen.setOffCode(request.getOffCode());
-		licen.setOldLicenseYear(request.getOldLicenseYear());
 		licen.setOperateName(request.getOperateName());
 		licen.setOperateRemark(request.getOperateRemark());
 		licen.setReceiveDate(request.getReceiveDate());
 		licen.setReceiveNo(request.getReceiveNo());
 		licen.setStartDate(request.getStartDate());
+		licen.setCreatedFactTime(request.getCreatedFactTime());
+		licen.setUsedDate(request.getUsedDate());
+		licen.setLicenseAddress(request.getLicenseAddress());
+		licen.setMoney(request.getMoney());
 		licen = oaAchCustomerLicenRep.save(licen);
 		List<OaAchCustomerLicenDtl> details = request.getDetails();
 		if (details != null) {
@@ -122,21 +120,20 @@ public class Oa0412Service {
 			OaAchCustomerLicen licen = licenOpt.get();
 			licen.setApprove(request.getApprove());
 			licen.setApproveName(request.getApproveName());
-			licen.setBankGuarantee(request.getBankGuarantee());
-			licen.setBankGuaranteeDate(request.getBankGuaranteeDate());
-			licen.setBankGuaranteeNo(request.getBankGuaranteeNo());
 			licen.setEndDate(request.getEndDate());
 			licen.setLicenseDate(request.getLicenseDate());
 			licen.setLicenseNo(request.getLicenseNo());
-			licen.setLicenseType(request.getLicenseType());
 			licen.setOaCustomerId(request.getOaCustomerId());
 			licen.setOffCode(request.getOffCode());
-			licen.setOldLicenseYear(request.getOldLicenseYear());
 			licen.setOperateName(request.getOperateName());
 			licen.setOperateRemark(request.getOperateRemark());
 			licen.setReceiveDate(request.getReceiveDate());
 			licen.setReceiveNo(request.getReceiveNo());
 			licen.setStartDate(request.getStartDate());
+			licen.setCreatedFactTime(request.getCreatedFactTime());
+			licen.setUsedDate(request.getUsedDate());
+			licen.setLicenseAddress(request.getLicenseAddress());
+			licen.setMoney(request.getMoney());
 			licen = oaAchCustomerLicenRep.save(licen);
 			List<OaAchCustomerLicenDtl> details = request.getDetails();
 			List<OaAchCustomerLicenDtl> detailsOld = new ArrayList<>();

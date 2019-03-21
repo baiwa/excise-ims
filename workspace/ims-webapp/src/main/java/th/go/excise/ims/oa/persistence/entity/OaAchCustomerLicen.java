@@ -25,20 +25,10 @@ public class OaAchCustomerLicen
     private BigDecimal oaCuslicenseId;
     @Column(name = "OA_CUSTOMER_ID")
     private BigDecimal oaCustomerId;
-    @Column(name = "LICENSE_TYPE")
-    private String licenseType;
     @Column(name = "LICENSE_NO")
     private String licenseNo;
     @Column(name = "LICENSE_DATE")
     private Date licenseDate;
-    @Column(name = "OLD_LICENSE_YEAR")
-    private String oldLicenseYear;
-    @Column(name = "BANK_GUARANTEE")
-    private String bankGuarantee;
-    @Column(name = "BANK_GUARANTEE_NO")
-    private String bankGuaranteeNo;
-    @Column(name = "BANK_GUARANTEE_DATE")
-    private Date bankGuaranteeDate;
     @Column(name = "OPERATE_NAME")
     private String operateName;
     @Column(name = "OPERATE_REMARK")
@@ -61,8 +51,24 @@ public class OaAchCustomerLicen
     private String licenseTypeFor;
     @Column(name = "LICENSE_TYPE_DESP")
     private String licenseTypeDesp;
+    @Column(name = "LICENSE_ADDRESS")
+    private String licenseAddress;
+    @Column(name = "CREATED_FACT_TIME")
+    private String createdFactTime;
+    @Column(name = "USED_DATE")
+    private Date usedDate;
+    @Column(name = "MONEY")
+	private BigDecimal money;
 
-    public BigDecimal getOaCuslicenseId() {
+    public BigDecimal getMoney() {
+		return money;
+	}
+
+	public void setMoney(BigDecimal money) {
+		this.money = money;
+	}
+
+	public BigDecimal getOaCuslicenseId() {
         return oaCuslicenseId;
     }
 
@@ -76,14 +82,6 @@ public class OaAchCustomerLicen
 
     public void setOaCustomerId(BigDecimal oaCustomerId) {
         this.oaCustomerId = oaCustomerId;
-    }
-
-    public String getLicenseType() {
-        return licenseType;
-    }
-
-    public void setLicenseType(String licenseType) {
-        this.licenseType = licenseType;
     }
 
     public String getLicenseNo() {
@@ -100,38 +98,6 @@ public class OaAchCustomerLicen
 
     public void setLicenseDate(Date licenseDate) {
         this.licenseDate = licenseDate;
-    }
-
-    public String getOldLicenseYear() {
-        return oldLicenseYear;
-    }
-
-    public void setOldLicenseYear(String oldLicenseYear) {
-        this.oldLicenseYear = oldLicenseYear;
-    }
-
-    public String getBankGuarantee() {
-        return bankGuarantee;
-    }
-
-    public void setBankGuarantee(String bankGuarantee) {
-        this.bankGuarantee = bankGuarantee;
-    }
-
-    public String getBankGuaranteeNo() {
-        return bankGuaranteeNo;
-    }
-
-    public void setBankGuaranteeNo(String bankGuaranteeNo) {
-        this.bankGuaranteeNo = bankGuaranteeNo;
-    }
-
-    public Date getBankGuaranteeDate() {
-        return bankGuaranteeDate;
-    }
-
-    public void setBankGuaranteeDate(Date bankGuaranteeDate) {
-        this.bankGuaranteeDate = bankGuaranteeDate;
     }
 
     public String getOperateName() {
@@ -220,6 +186,30 @@ public class OaAchCustomerLicen
 
     public void setLicenseTypeDesp(String licenseTypeDesp) {
         this.licenseTypeDesp = licenseTypeDesp;
+    }
+
+    public String getLicenseAddress() {
+        return licenseAddress;
+    }
+
+    public void setLicenseAddress(String licenseAddress) {
+        this.licenseAddress = licenseAddress;
+    }
+
+    public String getCreatedFactTime() {
+        return createdFactTime;
+    }
+
+    public void setCreatedFactTime(String createdFactTime) {
+        this.createdFactTime = createdFactTime;
+    }
+
+    public Date getUsedDate() {
+        return usedDate;
+    }
+
+    public void setUsedDate(Date usedDate) {
+        this.usedDate = usedDate;
     }
 
 }

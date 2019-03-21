@@ -48,14 +48,13 @@ public class Oa0412Controller {
 		return response;
 	}
 
-	@GetMapping("/find/customerLicenses/{customerId}/{licenseType}")
+	@GetMapping("/find/customerLicenses/{customerId}")
 	@ResponseBody
-	public ResponseData<List<Oa040106FormVo>> findAllName(@PathVariable("customerId") String customerIdStr,
-			@PathVariable("licenseType") String licenseType) {
+	public ResponseData<List<Oa040106FormVo>> findAllName(@PathVariable("customerId") String customerIdStr) {
 		ResponseData<List<Oa040106FormVo>> responseData = new ResponseData<List<Oa040106FormVo>>();
 		List<Oa040106FormVo> data = new ArrayList<Oa040106FormVo>();
 		try {
-			data = oa0412Service.findCustomerLicenList(customerIdStr, licenseType);
+			data = oa0412Service.findCustomerLicenList(customerIdStr);
 			responseData.setData(data);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

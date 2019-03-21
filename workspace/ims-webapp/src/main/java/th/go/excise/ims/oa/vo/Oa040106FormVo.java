@@ -9,13 +9,8 @@ import th.go.excise.ims.oa.persistence.entity.OaAchCustomerLicenDtl;
 public class Oa040106FormVo {
 	private BigDecimal oaCuslicenseId;
 	private BigDecimal oaCustomerId;
-	private String licenseType;
 	private String licenseNo;
 	private Date licenseDate;
-	private String oldLicenseYear;
-	private String bankGuarantee;
-	private String bankGuaranteeNo;
-	private Date bankGuaranteeDate;
 	private String operateName;
 	private String operateRemark;
 	private String approveName;
@@ -25,8 +20,22 @@ public class Oa040106FormVo {
 	private Date receiveDate;
 	private String receiveNo;
 	private String approve;
+	private String licenseTypeFor;
+	private String licenseTypeDesp;
+	private String licenseAddress;
+	private String createdFactTime;
+	private Date usedDate;
+	private BigDecimal money;
 	private List<OaAchCustomerLicenDtl> details;
 	private List<OaAchCustomerLicenDtl> deletes;
+
+	public BigDecimal getMoney() {
+		return money;
+	}
+
+	public void setMoney(BigDecimal money) {
+		this.money = money;
+	}
 
 	public BigDecimal getOaCuslicenseId() {
 		return oaCuslicenseId;
@@ -44,14 +53,6 @@ public class Oa040106FormVo {
 		this.oaCustomerId = oaCustomerId;
 	}
 
-	public String getLicenseType() {
-		return licenseType;
-	}
-
-	public void setLicenseType(String licenseType) {
-		this.licenseType = licenseType;
-	}
-
 	public String getLicenseNo() {
 		return licenseNo;
 	}
@@ -66,38 +67,6 @@ public class Oa040106FormVo {
 
 	public void setLicenseDate(Date licenseDate) {
 		this.licenseDate = licenseDate;
-	}
-
-	public String getOldLicenseYear() {
-		return oldLicenseYear;
-	}
-
-	public void setOldLicenseYear(String oldLicenseYear) {
-		this.oldLicenseYear = oldLicenseYear;
-	}
-
-	public String getBankGuarantee() {
-		return bankGuarantee;
-	}
-
-	public void setBankGuarantee(String bankGuarantee) {
-		this.bankGuarantee = bankGuarantee;
-	}
-
-	public String getBankGuaranteeNo() {
-		return bankGuaranteeNo;
-	}
-
-	public void setBankGuaranteeNo(String bankGuaranteeNo) {
-		this.bankGuaranteeNo = bankGuaranteeNo;
-	}
-
-	public Date getBankGuaranteeDate() {
-		return bankGuaranteeDate;
-	}
-
-	public void setBankGuaranteeDate(Date bankGuaranteeDate) {
-		this.bankGuaranteeDate = bankGuaranteeDate;
 	}
 
 	public String getOperateName() {
@@ -170,6 +139,46 @@ public class Oa040106FormVo {
 
 	public void setApprove(String approve) {
 		this.approve = approve;
+	}
+
+	public String getLicenseTypeFor() {
+		return licenseTypeFor;
+	}
+
+	public void setLicenseTypeFor(String licenseTypeFor) {
+		this.licenseTypeFor = licenseTypeFor;
+	}
+
+	public String getLicenseTypeDesp() {
+		return licenseTypeDesp;
+	}
+
+	public void setLicenseTypeDesp(String licenseTypeDesp) {
+		this.licenseTypeDesp = licenseTypeDesp;
+	}
+
+	public String getLicenseAddress() {
+		return licenseAddress;
+	}
+
+	public void setLicenseAddress(String licenseAddress) {
+		this.licenseAddress = licenseAddress;
+	}
+
+	public String getCreatedFactTime() {
+		return createdFactTime;
+	}
+
+	public void setCreatedFactTime(String createdFactTime) {
+		this.createdFactTime = createdFactTime;
+	}
+
+	public Date getUsedDate() {
+		return usedDate;
+	}
+
+	public void setUsedDate(Date usedDate) {
+		this.usedDate = usedDate;
 	}
 
 	public List<OaAchCustomerLicenDtl> getDetails() {
