@@ -107,6 +107,7 @@ public class Int030403Service {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
 		CellStyle tdStyle = ExcelUtils.createTdCellStyle(workbook);
+		CellStyle TopicCenterlite = ExcelUtils.createTopicCenterliteStyle(workbook);
 		CellStyle tdLeft = ExcelUtils.createLeftCellStyle(workbook);
 		CellStyle TopicRight = ExcelUtils.createTopicRightStyle(workbook);
 		CellStyle TopicCenter = ExcelUtils.createTopicCenterStyle(workbook);
@@ -158,7 +159,7 @@ public class Int030403Service {
 		if (StringUtils.isNotBlank(exportRiskData.getIaRiskFactorsConfig().getRiskIndicators())) {
 			cell5.setCellValue(exportRiskData.getIaRiskFactorsConfig().getRiskIndicators() + "(" + exportRiskData.getIaRiskFactorsConfig().getRiskUnit() + ")" );
 		}
-		cell5.setCellStyle(tdStyle);
+		cell5.setCellStyle(TopicCenterlite);
 		rowNum++;
 		
 		
@@ -208,7 +209,7 @@ public class Int030403Service {
 			}if(test == 5) {
 				cell6.setCellValue( tbTHCondition5[j] + " : " +  exportRiskData.getIaRiskFactorsConfig().getRiskIndicators() + " " + tbTHConvert5[j] );
 			}
-			cell6.setCellStyle(tdStyle);
+			cell6.setCellStyle(TopicCenterlite);
 			rowNum++;	
 		}
 
@@ -221,7 +222,7 @@ public class Int030403Service {
 		String dateEnd = ConvertDateUtils.formatDateToString(exportRiskData.getIaRiskFactorsConfig().getEndDate(),
 			     ConvertDateUtils.DD_MMMM_YYYY_SPAC, ConvertDateUtils.LOCAL_TH);		
 		cell9.setCellValue("แหล่งข้อมูล : " + exportRiskData.getIaRiskFactorsConfig().getInfoUsedRiskDesc() + " " + "ปีงบประมาณ " + "" + budgetYear + " ( " + dateStart + " - " + dateEnd + " )"  );
-		cell9.setCellStyle(tdStyle);
+		cell9.setCellStyle(TopicCenterlite);
 		rowNum++;
 		
 		// Row [0]

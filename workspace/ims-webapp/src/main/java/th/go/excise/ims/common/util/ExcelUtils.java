@@ -155,6 +155,12 @@ public abstract class ExcelUtils {
 		return thColor;
 	}
 	
+	public static XSSFCellStyle createTopicCenterliteStyle(XSSFWorkbook workbook) {
+		XSSFCellStyle topicCenterlite = workbook.createCellStyle();
+		topicCenterlite.setAlignment(HorizontalAlignment.CENTER);
+		return topicCenterlite;
+	}
+	
 	public static XSSFCellStyle createTopicCenterStyle(XSSFWorkbook workbook) {
 		XSSFCellStyle topicCenter = workbook.createCellStyle();
 		topicCenter.setAlignment(HorizontalAlignment.CENTER);

@@ -30,9 +30,9 @@ import th.go.excise.ims.ia.vo.Int030404Vo;
 public class Int030404Controller {
 	@Autowired
 	private Int030404Service int030404Service;
-	
+
 	private Logger logger = LoggerFactory.getLogger(Int030404Controller.class);
-	
+
 	@PostMapping("/projectEfficiencyList")
 	@ResponseBody
 	public DataTableAjax<Int030404Vo> projectEfficiencyList(@RequestBody Int030404FormVo form) {
@@ -40,7 +40,7 @@ public class Int030404Controller {
 //		Int030404Vo projectEfficiency = new Int030404Vo();
 		List<Int030404Vo> projectEfficiencyList = new ArrayList<Int030404Vo>();
 		try {
-			projectEfficiencyList =  int030404Service.projectEfficiencyList(form);
+			projectEfficiencyList = int030404Service.projectEfficiencyList(form);
 			response.setData(projectEfficiencyList);
 
 		} catch (Exception e) {
@@ -48,14 +48,21 @@ public class Int030404Controller {
 		}
 		return response;
 	}
-	
-	@GetMapping("/year/export/{budgetYear}/{inspectionWork}/{idConfig}")
-	public void exportByYear(@PathVariable("budgetYear") String budgetYear,@PathVariable("inspectionWork") BigDecimal inspectionWork,@PathVariable("idConfig") BigDecimal idConfig, HttpServletResponse response) throws Exception {
+
+	@GetMapping("/year/export/{budgetYear}/{inspectionWork}/{idConfig}/{riskHrdPaperName}/{createUserName}/{createLastName}/{createPosition}/{checkUserName}/{checkLastName}/{checkPosition}")
+	public void exportByYear(@PathVariable("budgetYear") String budgetYear,
+			@PathVariable("inspectionWork") BigDecimal inspectionWork, @PathVariable("idConfig") BigDecimal idConfig,
+			@PathVariable("riskHrdPaperName") String riskHrdPaperName,
+			@PathVariable("createUserName") String createUserName,
+			@PathVariable("createLastName") String createLastName,
+			@PathVariable("createPosition") String createPosition, @PathVariable("checkUserName") String checkUserName,
+			@PathVariable("checkLastName") String checkLastName, @PathVariable("checkPosition") String checkPosition,
+			HttpServletResponse response) throws Exception {
 		// set fileName
 		String fileName = URLEncoder.encode("สรุปผลปัจจัยเสี่ยงประสิทธิภาพในการดำเนินงานโครงการ", "UTF-8");
 
 		// write it as an excel attachment
-		ByteArrayOutputStream outByteStream = int030404Service.exportInt030404(budgetYear,inspectionWork,idConfig);
+		ByteArrayOutputStream outByteStream = int030404Service.exportInt030404(budgetYear, inspectionWork, idConfig,riskHrdPaperName,createUserName,createLastName,createPosition,checkUserName,checkLastName,checkPosition);
 		byte[] outArray = outByteStream.toByteArray();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);
@@ -66,5 +73,5 @@ public class Int030404Controller {
 		outStream.flush();
 		outStream.close();
 	}
-	
+
 }
