@@ -45,7 +45,7 @@ public class Int020201Service {
 	private IaQuestionnaireHdrRepository iaQuestionnaireHdrRepository;
 
 	@Autowired
-	private QuestionnaireService questionnaireService;
+	private UpdateStatusQuestionnaireService questionnaireService;
 	
 	@Autowired
 	private IaQuestionnaireMadeHdrJdbcRepository iaQuestionnaireMadeHdrJdbcRepository;

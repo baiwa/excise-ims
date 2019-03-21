@@ -27,7 +27,7 @@ import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
 import th.go.excise.ims.ia.service.Int020101Service;
-import th.go.excise.ims.ia.service.QuestionnaireService;
+import th.go.excise.ims.ia.service.UpdateStatusQuestionnaireService;
 import th.go.excise.ims.ia.vo.Int020101NameVo;
 import th.go.excise.ims.ia.vo.Int020101Vo;
 import th.go.excise.ims.ia.vo.Int020101YearVo;
@@ -42,7 +42,7 @@ public class Int020101Controller {
 	private Int020101Service int020101Service;
 	
 	@Autowired
-	private QuestionnaireService questionnaireService;
+	private UpdateStatusQuestionnaireService questionnaireService;
 
 	@GetMapping("/all")
 	@ResponseBody

@@ -28,7 +28,7 @@ public class Int02010101Service {
 	private IaQuestionnaireSideDtlRepository iaQuestionnaireSideDtlRepository;
 	
 	@Autowired
-	private QuestionnaireService questionnaireService;
+	private UpdateStatusQuestionnaireService questionnaireService;
 
 	public List<Int02010101Vo> findByIdSide(String idSideStr) {
 		BigDecimal idSide = new BigDecimal(idSideStr);

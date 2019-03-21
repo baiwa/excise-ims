@@ -31,7 +31,7 @@ public class Int020101Service {
 	private IaQuestionnaireSideJdbcRepository iaQtnSideJdbcRep;
 	
 	@Autowired
-	private QuestionnaireService questionnaireService;
+	private UpdateStatusQuestionnaireService questionnaireService;
 
 	@Autowired
 	private IaQuestionnaireSideRepository iaQtnSideRep;
