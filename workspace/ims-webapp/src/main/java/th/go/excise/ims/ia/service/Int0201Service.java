@@ -61,7 +61,7 @@ public class Int0201Service {
 	private Int02010101Service int02010101Service;
 	
 	@Autowired
-	private QuestionnaireService questionnaireService;
+	private UpdateStatusQuestionnaireService questionnaireService;
 	
 	@Autowired
 	private IaQuestionnaireMadeJdbcRepository iaQuestionnaireMadeJdbcRepository;

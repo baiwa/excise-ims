@@ -57,7 +57,7 @@ public class Int020301Service {
 	@Autowired
 	private IaQuestionnaireHdrRepository iaQuestionnaireHdrRepository;
 	@Autowired
-	private QuestionnaireService questionnaireService;
+	private UpdateStatusQuestionnaireService questionnaireService;
 
 	public List<Int020301HeaderVo> findHeaderByIdSide(String idSideStr, String budgetYear) {
 		BigDecimal idSide = new BigDecimal(idSideStr);

@@ -7,13 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.util.LoggingUtils;
 
-import ch.qos.logback.core.net.LoginAuthenticator;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
-import th.co.baiwa.ims.ws.userldap.Login;
 import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
@@ -25,9 +22,9 @@ import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireMadeJdbcRe
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireSideJdbcRepository;
 
 @Service
-public class QuestionnaireService {
+public class UpdateStatusQuestionnaireService {
 
-	private static final Logger logger = LoggerFactory.getLogger(QuestionnaireService.class);
+	private static final Logger logger = LoggerFactory.getLogger(UpdateStatusQuestionnaireService.class);
 
 //	****************** JDBC ****************** 
 	@Autowired
@@ -66,7 +63,6 @@ public class QuestionnaireService {
 		}else {
 			iaQuestionnaireHdrJdbcRepository.updateStatus(idHdr, status);
 		}
-//		iaQuestionnaireMadeHdrJdbcRepository.updateStatus(idHdr, status);
 		
 		
 		return idHdr;
@@ -103,7 +99,7 @@ public class QuestionnaireService {
 				}
 			}
 		}
-
+		
 		
 		return idHdr;
 	}
