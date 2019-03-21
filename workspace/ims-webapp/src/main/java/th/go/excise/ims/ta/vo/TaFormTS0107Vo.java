@@ -1,6 +1,6 @@
 package th.go.excise.ims.ta.vo;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class TaFormTS0107Vo {
 
@@ -8,7 +8,8 @@ public class TaFormTS0107Vo {
 	private String bookNumber1;
 	private String bookNumber2;
 	private String officeName1;
-	private LocalDate docDate;
+	private Date docDate;
+	private String docDateStr;
 	private String officeName2;
 	private String headOfficerFullName;
 	private String headOfficerPosition;
@@ -34,11 +35,12 @@ public class TaFormTS0107Vo {
 	private String facAmphurName;
 	private String facProvinceName;
 	private String facZipCode;
-	private LocalDate auditDate;
+	private Date auditDate;
+	private String auditDateStr;
 	private String lawSection;
 	private String headOfficerPhone;
-	private String signFullName;
-	private String signPosition;
+	private String signOfficerFullName;
+	private String signOfficerPosition;
 	private String otherText;
 	private String otherPhone;
 
@@ -74,12 +76,20 @@ public class TaFormTS0107Vo {
 		this.officeName1 = officeName1;
 	}
 
-	public LocalDate getDocDate() {
+	public Date getDocDate() {
 		return docDate;
 	}
 
-	public void setDocDate(LocalDate docDate) {
+	public void setDocDate(Date docDate) {
 		this.docDate = docDate;
+	}
+
+	public String getDocDateStr() {
+		return docDateStr;
+	}
+
+	public void setDocDateStr(String docDateStr) {
+		this.docDateStr = docDateStr;
 	}
 
 	public String getOfficeName2() {
@@ -282,12 +292,20 @@ public class TaFormTS0107Vo {
 		this.facZipCode = facZipCode;
 	}
 
-	public LocalDate getAuditDate() {
+	public Date getAuditDate() {
 		return auditDate;
 	}
 
-	public void setAuditDate(LocalDate auditDate) {
+	public void setAuditDate(Date auditDate) {
 		this.auditDate = auditDate;
+	}
+
+	public String getAuditDateStr() {
+		return auditDateStr;
+	}
+
+	public void setAuditDateStr(String auditDateStr) {
+		this.auditDateStr = auditDateStr;
 	}
 
 	public String getLawSection() {
@@ -306,20 +324,20 @@ public class TaFormTS0107Vo {
 		this.headOfficerPhone = headOfficerPhone;
 	}
 
-	public String getSignFullName() {
-		return signFullName;
+	public String getSignOfficerFullName() {
+		return signOfficerFullName;
 	}
 
-	public void setSignFullName(String signFullName) {
-		this.signFullName = signFullName;
+	public void setSignOfficerFullName(String signOfficerFullName) {
+		this.signOfficerFullName = signOfficerFullName;
 	}
 
-	public String getSignPosition() {
-		return signPosition;
+	public String getSignOfficerPosition() {
+		return signOfficerPosition;
 	}
 
-	public void setSignPosition(String signPosition) {
-		this.signPosition = signPosition;
+	public void setSignOfficerPosition(String signOfficerPosition) {
+		this.signOfficerPosition = signOfficerPosition;
 	}
 
 	public String getOtherText() {

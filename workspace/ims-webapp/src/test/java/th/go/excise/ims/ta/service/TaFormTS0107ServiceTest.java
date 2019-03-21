@@ -3,7 +3,6 @@ package th.go.excise.ims.ta.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalDate;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
@@ -11,7 +10,6 @@ import org.junit.Test;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
-import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ta.vo.TaFormTS0107Vo;
 
 public class TaFormTS0107ServiceTest {
@@ -26,7 +24,7 @@ public class TaFormTS0107ServiceTest {
 		data.setBookNumber1("กข02001");
 		data.setBookNumber2("200");
 		data.setOfficeName1("กรมสรรพสามิต");
-
+		data.setDocDateStr("15/03/2562");
 		data.setOfficeName2("กรมสรรพสามิต");
 		data.setHeadOfficerFullName("นายธนาวุธ สุทธิสาร");
 		data.setHeadOfficerPosition("เจ้าหน้าที่ออกตรวจภาษี ระดับภาค");
@@ -45,8 +43,8 @@ public class TaFormTS0107ServiceTest {
 		// type 1 =โรงอุตสาหกรรม || 2=สถานบริการ || 3 =สถานประกอบการผู้นำเข้า
 		data.setFactoryType("3");
 
-		data.setFactoryName("ทดสอบ");
-		data.setNewRegId("ทดสอบ");
+		data.setFactoryName("มาเวล จำกัด ");
+		data.setNewRegId("1002223344");
 		data.setFacAddrNo("96/27");
 		data.setFacMooNo("9");
 		data.setFacSoiName("-");
@@ -55,23 +53,16 @@ public class TaFormTS0107ServiceTest {
 		data.setFacAmphurName("เมือง");
 		data.setFacProvinceName("นนทบุรี ");
 		data.setFacZipCode("11000");
-
+		data.setAuditDateStr("17/03/2562");
 		data.setLawSection("");
-		data.setHeadOfficerPhone("");
-		data.setSignFullName("");
-		data.setSignPosition("");
+		data.setHeadOfficerPhone("092-2344545");
+		data.setSignOfficerFullName("นายมงคล อาสว่าง");
+		data.setSignOfficerPosition("ผู้อำนวยการเขต");
 		data.setOtherText("");
 		data.setOtherPhone("");
 
-		// Convert String to LocalDate
-		LocalDate date1 = ConvertDateUtils.parseStringToLocalDate("12/03/2562", ConvertDateUtils.DD_MM_YYYY);
-		data.setDocDate(date1);
-		LocalDate date2 = ConvertDateUtils.parseStringToLocalDate("15/03/2562", ConvertDateUtils.DD_MM_YYYY);
-		data.setAuditDate(date2);
-
 		byte[] reportFile = taFormTS0107Service.exportTaFormTS0107(data);
-		IOUtils.write(reportFile, new FileOutputStream(
-				new File(PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_07 + "." + FILE_EXTENSION.PDF)));
+		IOUtils.write(reportFile, new FileOutputStream(new File(PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_07 + "." + FILE_EXTENSION.PDF)));
 
 	}
 }

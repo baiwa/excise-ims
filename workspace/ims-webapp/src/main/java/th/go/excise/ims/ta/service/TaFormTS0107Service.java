@@ -29,8 +29,7 @@ public class TaFormTS0107Service {
 		Map<String, Object> params = new HashMap<>();
 
 		// get data to report
-		params.put("logo",
-				ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
+		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
 		params.put("bookNumber1", request.getBookNumber1());
 		params.put("bookNumber2", request.getBookNumber2());
 		params.put("officeName1", request.getOfficeName1());
@@ -62,25 +61,22 @@ public class TaFormTS0107Service {
 		params.put("facProvinceName", request.getFacProvinceName());
 		params.put("facZipCode", request.getFacZipCode());
 
-		// Convert LocalDate to String
-		String[] docDate = ConvertDateUtils.formatLocalDateToString(request.getDocDate(), ConvertDateUtils.DD_MMMM_YYYY)
-				.split(" ");
-		params.put("day", docDate[0]);
-		params.put("month", docDate[1]);
-		params.put("year", docDate[2]);
-
-		params.put("auditDate",
-				ConvertDateUtils.formatLocalDateToString(request.getAuditDate(), ConvertDateUtils.DD_MMMM_YYYY));
+		// Date
+		request.setDocDate(ConvertDateUtils.parseStringToDate(request.getDocDateStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+		params.put("docDate", request.getDocDate());
+		
+		request.setAuditDate(ConvertDateUtils.parseStringToDate(request.getAuditDateStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+		params.put("auditDate", request.getAuditDate());
 
 		params.put("lawSection", request.getLawSection());
 		params.put("headOfficerPhone", request.getHeadOfficerPhone());
-		params.put("signFullName", request.getSignFullName());
-		params.put("signPosition", request.getSignPosition());
+		params.put("signOfficerFullName", request.getSignOfficerFullName());
+		params.put("signOfficerPosition", request.getSignOfficerPosition());
 		params.put("otherText", request.getOtherText());
 		params.put("otherPhone", request.getOtherPhone());
+
 		// set output
-		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_07 + "." + FILE_EXTENSION.JASPER,
-				params);
+		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_07 + "." + FILE_EXTENSION.JASPER, params);
 		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
 		ReportUtils.closeResourceFileInputStream(params);
 
