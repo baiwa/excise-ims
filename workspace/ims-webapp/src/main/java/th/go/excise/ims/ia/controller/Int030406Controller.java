@@ -49,13 +49,20 @@ public class Int030406Controller {
 		return response;
 	}
 	
-	@GetMapping("/year/export/{budgetYear}/{inspectionWork}/{idConfig}")
-	public void exportByYear(@PathVariable("budgetYear") String budgetYear,@PathVariable("inspectionWork") BigDecimal inspectionWork,@PathVariable("idConfig") BigDecimal idConfig, HttpServletResponse response) throws Exception {
+	@GetMapping("/year/export/{budgetYear}/{inspectionWork}/{idConfig}/{riskHrdPaperName}/{createUserName}/{createLastName}/{createPosition}/{checkUserName}/{checkLastName}/{checkPosition}")
+	public void exportByYear(@PathVariable("budgetYear") String budgetYear,
+			@PathVariable("inspectionWork") BigDecimal inspectionWork, @PathVariable("idConfig") BigDecimal idConfig,
+			@PathVariable("riskHrdPaperName") String riskHrdPaperName,
+			@PathVariable("createUserName") String createUserName,
+			@PathVariable("createLastName") String createLastName,
+			@PathVariable("createPosition") String createPosition, @PathVariable("checkUserName") String checkUserName,
+			@PathVariable("checkLastName") String checkLastName, @PathVariable("checkPosition") String checkPosition,
+			HttpServletResponse response) throws Exception {
 		// set fileName
 		String fileName = URLEncoder.encode("สรุปผลปัจจัยเสี่ยงความถี่การเข้าตรวจสอบของผู้ตวรจสอบภายใน", "UTF-8");
 
 		// write it as an excel attachment
-		ByteArrayOutputStream outByteStream = int030406Service.exportInt030405(budgetYear,inspectionWork,idConfig);
+		ByteArrayOutputStream outByteStream = int030406Service.exportInt030405(budgetYear,inspectionWork,idConfig,riskHrdPaperName,createUserName,createLastName,createPosition,checkUserName,checkLastName,checkPosition);
 		byte[] outArray = outByteStream.toByteArray();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);
