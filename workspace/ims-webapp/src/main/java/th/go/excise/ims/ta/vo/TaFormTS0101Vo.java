@@ -6,10 +6,12 @@ public class TaFormTS0101Vo {
 	private String formTsNumber;
 	private String newRegId;
 	private String factoryName;
-	private String factoryType;
+	private String factoryTypeText;
 	private String factoryAddress;
 	private Date analysisDateStart;
+	private String analysisDateStartStr;
 	private Date analysisDateEnd;
+	private String analysisDateEndStr;
 	private String analysisData1;
 	private String analysisData2;
 	private String analysisData3;
@@ -20,12 +22,14 @@ public class TaFormTS0101Vo {
 	private String callAuditFlag;
 	private String otherText;
 	private String signOfficerFullName;
-	private String signSupOfficer;
-	private Date signDate;
+	private String signSupOfficerFullName;
+	private Date signOfficerDate;
+	private String signOfficerDateStr;
 	private String approvedFlag;
-	private String approvedOfficerFullName;
-	private String approvedOfficerPosition;
-	private Date approvedDate;
+	private String signApprOfficerFullName;
+	private String signApprOfficerPosition;
+	private Date signApprDate;
+	private String signApprDateStr;
 
 	public String getFormTsNumber() {
 		return formTsNumber;
@@ -51,12 +55,12 @@ public class TaFormTS0101Vo {
 		this.factoryName = factoryName;
 	}
 
-	public String getFactoryType() {
-		return factoryType;
+	public String getFactoryTypeText() {
+		return factoryTypeText;
 	}
 
-	public void setFactoryType(String factoryType) {
-		this.factoryType = factoryType;
+	public void setFactoryTypeText(String factoryTypeText) {
+		this.factoryTypeText = factoryTypeText;
 	}
 
 	public String getFactoryAddress() {
@@ -75,12 +79,28 @@ public class TaFormTS0101Vo {
 		this.analysisDateStart = analysisDateStart;
 	}
 
+	public String getAnalysisDateStartStr() {
+		return analysisDateStartStr;
+	}
+
+	public void setAnalysisDateStartStr(String analysisDateStartStr) {
+		this.analysisDateStartStr = analysisDateStartStr;
+	}
+
 	public Date getAnalysisDateEnd() {
 		return analysisDateEnd;
 	}
 
 	public void setAnalysisDateEnd(Date analysisDateEnd) {
 		this.analysisDateEnd = analysisDateEnd;
+	}
+
+	public String getAnalysisDateEndStr() {
+		return analysisDateEndStr;
+	}
+
+	public void setAnalysisDateEndStr(String analysisDateEndStr) {
+		this.analysisDateEndStr = analysisDateEndStr;
 	}
 
 	public String getAnalysisData1() {
@@ -163,20 +183,28 @@ public class TaFormTS0101Vo {
 		this.signOfficerFullName = signOfficerFullName;
 	}
 
-	public String getSignSupOfficer() {
-		return signSupOfficer;
+	public String getSignSupOfficerFullName() {
+		return signSupOfficerFullName;
 	}
 
-	public void setSignSupOfficer(String signSupOfficer) {
-		this.signSupOfficer = signSupOfficer;
+	public void setSignSupOfficerFullName(String signSupOfficerFullName) {
+		this.signSupOfficerFullName = signSupOfficerFullName;
 	}
 
-	public Date getSignDate() {
-		return signDate;
+	public Date getSignOfficerDate() {
+		return signOfficerDate;
 	}
 
-	public void setSignDate(Date signDate) {
-		this.signDate = signDate;
+	public void setSignOfficerDate(Date signOfficerDate) {
+		this.signOfficerDate = signOfficerDate;
+	}
+
+	public String getSignOfficerDateStr() {
+		return signOfficerDateStr;
+	}
+
+	public void setSignOfficerDateStr(String signOfficerDateStr) {
+		this.signOfficerDateStr = signOfficerDateStr;
 	}
 
 	public String getApprovedFlag() {
@@ -187,28 +215,36 @@ public class TaFormTS0101Vo {
 		this.approvedFlag = approvedFlag;
 	}
 
-	public String getApprovedOfficerFullName() {
-		return approvedOfficerFullName;
+	public String getSignApprOfficerFullName() {
+		return signApprOfficerFullName;
 	}
 
-	public void setApprovedOfficerFullName(String approvedOfficerFullName) {
-		this.approvedOfficerFullName = approvedOfficerFullName;
+	public void setSignApprOfficerFullName(String signApprOfficerFullName) {
+		this.signApprOfficerFullName = signApprOfficerFullName;
 	}
 
-	public String getApprovedOfficerPosition() {
-		return approvedOfficerPosition;
+	public String getSignApprOfficerPosition() {
+		return signApprOfficerPosition;
 	}
 
-	public void setApprovedOfficerPosition(String approvedOfficerPosition) {
-		this.approvedOfficerPosition = approvedOfficerPosition;
+	public void setSignApprOfficerPosition(String signApprOfficerPosition) {
+		this.signApprOfficerPosition = signApprOfficerPosition;
 	}
 
-	public Date getApprovedDate() {
-		return approvedDate;
+	public Date getSignApprDate() {
+		return signApprDate;
 	}
 
-	public void setApprovedDate(Date approvedDate) {
-		this.approvedDate = approvedDate;
+	public void setSignApprDate(Date signApprDate) {
+		this.signApprDate = signApprDate;
+	}
+
+	public String getSignApprDateStr() {
+		return signApprDateStr;
+	}
+
+	public void setSignApprDateStr(String signApprDateStr) {
+		this.signApprDateStr = signApprDateStr;
 	}
 
 }

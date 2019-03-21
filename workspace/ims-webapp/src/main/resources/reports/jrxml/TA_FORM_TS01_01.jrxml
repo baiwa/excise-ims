@@ -17,25 +17,29 @@
 			<bottomPen lineWidth="3.0" lineStyle="Dotted"/>
 		</box>
 	</style>
-	<scriptlet name="Scriptlet_1" class="net.sf.jasperreports.engine.JRDefaultScriptlet"/>
-	<parameter name="item" class="java.lang.String"/>
-	<parameter name="workType" class="java.lang.String"/>
-	<parameter name="exciseId" class="java.lang.String"/>
-	<parameter name="address" class="java.lang.String"/>
-	<parameter name="dateFrom" class="java.lang.String"/>
-	<parameter name="analys1" class="java.lang.String"/>
-	<parameter name="analys2" class="java.lang.String"/>
-	<parameter name="analys3" class="java.lang.String"/>
-	<parameter name="analys4" class="java.lang.String"/>
-	<parameter name="analys5" class="java.lang.String"/>
-	<parameter name="sendTo" class="java.lang.String"/>
-	<parameter name="reasonTxt" class="java.lang.String"/>
-	<parameter name="accept" class="java.lang.Boolean"/>
-	<parameter name="otherTxt" class="java.lang.String"/>
-	<parameter name="analysName" class="java.lang.String"/>
-	<parameter name="analysControl" class="java.lang.String"/>
-	<parameter name="other" class="java.lang.Boolean"/>
 	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="newRegId" class="java.lang.String"/>
+	<parameter name="factoryName" class="java.lang.String"/>
+	<parameter name="factoryTypeText" class="java.lang.String"/>
+	<parameter name="factoryAddress" class="java.lang.String"/>
+	<parameter name="analysisDateStart" class="java.util.Date"/>
+	<parameter name="analysisDateEnd" class="java.util.Date"/>
+	<parameter name="analysisData1" class="java.lang.String"/>
+	<parameter name="analysisData2" class="java.lang.String"/>
+	<parameter name="analysisData3" class="java.lang.String"/>
+	<parameter name="analysisData4" class="java.lang.String"/>
+	<parameter name="analysisData5" class="java.lang.String"/>
+	<parameter name="analysisResultDear" class="java.lang.String"/>
+	<parameter name="analysisResultText" class="java.lang.String"/>
+	<parameter name="callAuditFlag" class="java.lang.String"/>
+	<parameter name="otherText" class="java.lang.String"/>
+	<parameter name="signOfficerFullName" class="java.lang.String"/>
+	<parameter name="signSupOfficerFullName" class="java.lang.String"/>
+	<parameter name="signOfficerDate" class="java.util.Date"/>
+	<parameter name="approvedFlag" class="java.lang.String"/>
+	<parameter name="signApprOfficerFullName" class="java.lang.String"/>
+	<parameter name="signApprOfficerPosition" class="java.lang.String"/>
+	<parameter name="signApprDate" class="java.util.Date"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -70,14 +74,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$P{item}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{factoryName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="123" width="109" height="22" uuid="5a466d6f-40b0-4dd6-a21b-47c8822c47be"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ทะเบียนสรรพสามิตเลขที่"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="109" y="123" width="351" height="22" uuid="5f69a886-39c0-4836-9ecc-01463e8c08ef"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -87,14 +91,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$P{exciseId}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{newRegId}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="145" width="23" height="22" uuid="16d3018e-70cf-4fbc-9469-4843601d07e7"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ที่อยู่"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="23" y="145" width="437" height="22" uuid="accbba75-3070-44ac-a9c6-97fa0ae55b2b"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -106,15 +110,15 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom">
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{factoryAddress}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="167" width="160" height="22" uuid="219b9b45-9c33-48e1-9fc6-29ee67c1ad84"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["รอบระยะเวลาที่ทำการวิเคราะห์ตั้งแต่"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="160" y="167" width="300" height="22" uuid="96c6a242-5b28-46bb-9d92-a0946cd6b64a"/>
+			<textField isBlankWhenNull="true">
+				<reportElement style="data" x="160" y="167" width="118" height="22" uuid="96c6a242-5b28-46bb-9d92-a0946cd6b64a"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -123,7 +127,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$P{dateFrom}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMMM yyyy",new Locale("th", "TH")).format($P{analysisDateStart})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="321" width="25" height="22" uuid="ebb92fc5-4fe0-4064-bbd9-c2f09491f9e3"/>
@@ -135,14 +139,14 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["1".equals( $P{callAuditFlag} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement x="139" y="447" width="30" height="22" uuid="74c7e816-1599-4b15-bcfa-fa62ae36b086"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["2".equals( $P{callAuditFlag} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="169" y="425" width="117" height="22" uuid="a127d463-e909-406d-a573-d8bc3580efe5"/>
@@ -159,7 +163,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ประเภทกิจการ"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="278" y="101" width="182" height="22" uuid="83d07c38-4f52-4630-ba94-22e694e2bf39"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -169,7 +173,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$P{workType}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{factoryTypeText}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="189" width="114" height="22" uuid="de7160cc-a9b3-4176-8509-7a1c685321e7"/>
@@ -211,7 +215,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$P{analys2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{analysisData1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="48" y="233" width="318" height="22" uuid="9f3f2f76-f94b-4eba-93d4-932231097575"/>
@@ -223,7 +227,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$P{analys3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{analysisData2}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="48" y="255" width="318" height="22" uuid="0dd6ae32-4980-4068-ba8c-e11d5518b740"/>
@@ -235,7 +239,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$P{analys4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{analysisData3}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="48" y="277" width="318" height="22" uuid="3d9d7d90-8c45-445d-8eda-b48dd0798766"/>
@@ -247,7 +251,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$P{analys5}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{analysisData4}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="48" y="299" width="318" height="22" uuid="8c8f3b39-e28d-4775-b050-c00b25941753"/>
@@ -259,7 +263,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$P{sendTo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{analysisData5}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="31" y="343" width="266" height="22" uuid="afee14af-c60a-458b-b708-8af1bd74e6f0"/>
@@ -329,7 +333,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$P{otherTxt} == null ? "" : $P{otherTxt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{otherText}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="320" y="469" width="100" height="22" uuid="2fb54762-c421-41d2-b58f-7dfb33e8b7f6"/>
@@ -377,7 +381,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="TH Sarabun New" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{reasonTxt}   ]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{analysisResultText}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="20" y="116" width="191" height="1" uuid="a63e4ebb-3e86-4a79-8d9d-d6b81e0ee7a9"/>
@@ -404,7 +408,7 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="160" y="182" width="300" height="1" uuid="c09d6c8a-0f44-4b15-b8f6-5cce79aed8f6"/>
+				<reportElement x="160" y="182" width="118" height="1" uuid="c09d6c8a-0f44-4b15-b8f6-5cce79aed8f6"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
@@ -449,7 +453,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$P{sendTo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{analysisResultDear}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="25" y="336" width="194" height="1" uuid="2b543d49-a6df-4fbb-868b-81692668796a"/>
@@ -491,6 +495,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{signOfficerFullName}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="204" y="506" width="116" height="1" uuid="07945afb-7fb4-4a49-a699-4b6fac62312a"/>
@@ -526,6 +531,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{signSupOfficerFullName}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="204" y="550" width="116" height="1" uuid="4d293607-28de-46bc-ad57-8b5ed121285c"/>
@@ -545,6 +551,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd",new Locale("th", "TH")).format($P{signOfficerDate})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="230" y="557" width="5" height="22" uuid="6bb5f52a-108d-464d-9efe-b43e0e6882d6"/>
@@ -563,6 +570,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("MMMM",new Locale("th", "TH")).format($P{signOfficerDate})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="297" y="557" width="5" height="22" uuid="38464855-df26-4542-8512-abdb8d1c5ec6"/>
@@ -581,6 +589,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy",new Locale("th", "TH")).format($P{signOfficerDate})]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="199" y="572" width="31" height="1" uuid="2b83244e-43b7-4e28-9ed0-1d07d390771c"/>
@@ -605,14 +614,14 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["1".equals( $P{approvedFlag} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement x="120" y="602" width="30" height="22" uuid="02fc4a63-fbbd-466f-990d-e6ad876449f7"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["0".equals( $P{approvedFlag} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="197" y="664" width="5" height="22" uuid="08226784-46f8-4c40-b3fc-8a29955f3e94"/>
@@ -636,6 +645,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{signApprOfficerFullName}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="202" y="679" width="116" height="1" uuid="0dc34381-a8d1-4449-a6e7-94f0b94a1b67"/>
@@ -658,9 +668,10 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{signApprOfficerPosition}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="239" y="701" width="81" height="1" uuid="6d0598f2-63cc-4c74-880a-d8459d8c067f"/>
@@ -677,12 +688,36 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMMM yyyy",new Locale("th", "TH")).format($P{signApprDate})]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="243" y="723" width="83" height="1" uuid="c342b947-a9d6-4715-9243-dc901bd36b7b"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement style="data" x="313" y="167" width="118" height="22" uuid="1bf6bed6-f716-47f7-9d3a-c6aa7c85b3e7"/>
+				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
+					<pen lineWidth="1.5" lineStyle="Dotted"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMMM yyyy",new Locale("th", "TH")).format($P{analysisDateEnd})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="TextDetail" x="278" y="167" width="35" height="22" uuid="45b75af8-7f56-4f79-918a-b062bac53152"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["ถึงวันที่"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="313" y="182" width="118" height="1" uuid="ebd3df66-f2eb-4287-811d-42653b8f2939"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
