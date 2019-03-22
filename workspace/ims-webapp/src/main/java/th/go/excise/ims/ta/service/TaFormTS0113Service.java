@@ -71,6 +71,10 @@ public class TaFormTS0113Service {
         params.put("ownerPosition", ts0113Vo.getOwnerPosition());
         params.put("factoryName2", ts0113Vo.getFactoryName2());
         params.put("auditFinishTime", ts0113Vo.getAuditFinishTime());
+        params.put("signOwnerFullName", ts0113Vo.getSignOwnerFullName());
+        params.put("signOfficerFullName", ts0113Vo.getSignOfficerFullName());
+        params.put("signWitnessFullName1", ts0113Vo.getSignWitnessFullName1());
+        params.put("signWitnessFullName2", ts0113Vo.getSignWitnessFullName2());
 
 
 
