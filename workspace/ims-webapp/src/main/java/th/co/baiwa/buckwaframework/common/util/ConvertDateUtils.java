@@ -3,6 +3,8 @@ package th.co.baiwa.buckwaframework.common.util;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -15,6 +17,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class ConvertDateUtils {
+
+	private static final Logger logger = LoggerFactory.getLogger(ConvertDateUtils.class);
 
 	public static final String YYYYMMDD = "yyyyMMdd";
 	public static final String YYYYMM = "yyyyMM";
@@ -36,10 +40,8 @@ public class ConvertDateUtils {
 	public static final String FULL_MONTH = "FULL_MONTH";
 	public static final String SHORT_MONTH = "SHORT_MONTH";
 
-	private static final String[] fullMonth = { "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
-			"กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" };
-	private static final String[] shortMonth = { "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.",
-			"ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค." };
+	private static final String[] fullMonth = { "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" };
+	private static final String[] shortMonth = { "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค." };
 
 	public static String getMonthThai(int month, String typeMonth) {
 		if (FULL_MONTH.equals(typeMonth)) {
@@ -52,7 +54,6 @@ public class ConvertDateUtils {
 	}
 
 	public static String formatDateToString(Date date, String patten, Locale locale) {
-
 		String dateString = "";
 		if (date != null) {
 			dateString = DateFormatUtils.format(date, patten, locale);
@@ -61,7 +62,6 @@ public class ConvertDateUtils {
 	}
 
 	public static String formatDateToString(Date date, String patten) {
-
 		String dateString = "";
 		if (date != null) {
 			dateString = DateFormatUtils.format(date, patten, LOCAL_TH);
@@ -76,7 +76,7 @@ public class ConvertDateUtils {
 				dateString = DateUtils.parseDate(strDate, locale, patten);
 			}
 		} catch (ParseException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		return dateString;
 	}
@@ -88,7 +88,7 @@ public class ConvertDateUtils {
 				dateString = DateUtils.parseDate(strDate, LOCAL_TH, patten);
 			}
 		} catch (ParseException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		return dateString;
 	}
@@ -106,11 +106,9 @@ public class ConvertDateUtils {
 
 	private static LocalDate parseLocalDate(String strDate, String patten, Locale locale) {
 		if (StringUtils.isNotBlank(strDate)) {
-
 			LocalDate localDate = LocalDate.parse(strDate, DateTimeFormatter.ofPattern(patten));
 			if (LOCAL_TH.equals(locale)) {
-				ThaiBuddhistDate thaiDate = ThaiBuddhistDate.of(localDate.getYear(), localDate.getMonthValue(),
-						localDate.getDayOfMonth());
+				ThaiBuddhistDate thaiDate = ThaiBuddhistDate.of(localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth());
 				return LocalDate.from(thaiDate);
 			} else {
 				return localDate;
@@ -122,8 +120,7 @@ public class ConvertDateUtils {
 
 	public static String formatLocalDateToString(LocalDate date, String patten) {
 		if (date != null) {
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patten)
-					.withChronology(ThaiBuddhistChronology.INSTANCE);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patten).withChronology(ThaiBuddhistChronology.INSTANCE);
 			return date.format(formatter);
 		} else {
 			return "";
@@ -133,8 +130,7 @@ public class ConvertDateUtils {
 	public static String formatLocalDateToString(LocalDate date, String patten, Locale locale) {
 		if (date != null) {
 			if (LOCAL_TH.equals(locale)) {
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patten)
-						.withChronology(ThaiBuddhistChronology.INSTANCE);
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patten).withChronology(ThaiBuddhistChronology.INSTANCE);
 				return date.format(formatter);
 			} else {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patten);
@@ -145,7 +141,7 @@ public class ConvertDateUtils {
 		}
 	}
 
-	// TODO Local datetime
+	// TODO LocalDateTime
 	public static LocalDateTime parseStringToLocalDateTime(String strDate, String patten) {
 		return parseLocalDateTime(strDate, patten, LOCAL_TH);
 	}
@@ -155,9 +151,7 @@ public class ConvertDateUtils {
 	}
 
 	private static LocalDateTime parseLocalDateTime(String strDate, String patten, Locale locale) {
-
 		if (StringUtils.isNotBlank(strDate)) {
-
 			if (LOCAL_TH.equals(locale)) {
 				LocalDate localeEn = parseStringToLocalDate(strDate, patten);
 				LocalTime time = LocalDateTime.parse(strDate, DateTimeFormatter.ofPattern(patten)).toLocalTime();
@@ -172,8 +166,7 @@ public class ConvertDateUtils {
 
 	public static String formatLocalDateTimeToString(LocalDateTime date, String patten) {
 		if (date != null) {
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patten)
-					.withChronology(ThaiBuddhistChronology.INSTANCE);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patten).withChronology(ThaiBuddhistChronology.INSTANCE);
 			return date.format(formatter);
 		} else {
 			return "";
@@ -183,8 +176,7 @@ public class ConvertDateUtils {
 	public static String formatLocalDateTimeToString(LocalDateTime date, String patten, Locale locale) {
 		if (date != null) {
 			if (LOCAL_TH.equals(locale)) {
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patten)
-						.withChronology(ThaiBuddhistChronology.INSTANCE);
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patten).withChronology(ThaiBuddhistChronology.INSTANCE);
 				return date.format(formatter);
 			} else {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patten);
