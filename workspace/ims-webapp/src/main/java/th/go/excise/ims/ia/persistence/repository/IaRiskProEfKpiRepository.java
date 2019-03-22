@@ -13,6 +13,6 @@ public interface IaRiskProEfKpiRepository
     extends CommonJpaCrudRepository<IaRiskProEfKpi, BigDecimal>
 {
 
-	@Query(value = " Select e.* from IA_RISK_PRO_EF_KPI e  WHERE e.TASK_ID = ?1 AND Is_Deleted = 'N' ", nativeQuery = true)
-	public List<IaRiskProEfKpi> findByTaskId(BigDecimal taskId);
+	@Query(value = " Select e.* from IA_RISK_PRO_EF_KPI e  WHERE e.TS_ID = ?1 AND Is_Deleted = 'N' ", nativeQuery = true)
+	public List<IaRiskProEfKpi> findByTsId(BigDecimal tsId);
 }

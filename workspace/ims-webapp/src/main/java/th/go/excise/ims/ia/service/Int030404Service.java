@@ -120,7 +120,7 @@ public class Int030404Service {
 
 			for (IaRiskProEfTask tastData : tastList) {
 				tastSet = new IaRiskProEfTaskVo();
-				List<IaRiskProEfKpi> kpiList = iaRiskProEfKpiRepository.findByTaskId(tastData.getId());
+				List<IaRiskProEfKpi> kpiList = iaRiskProEfKpiRepository.findByTsId(tastData.getId());
 
 				List<IaRiskProEfKpiVo> kpiSetList = new ArrayList<IaRiskProEfKpiVo>();
 				IaRiskProEfKpiVo kpiSet = null;
@@ -178,12 +178,14 @@ public class Int030404Service {
 	private double calRuleOfThree(double kpiExpenseActualAmount, double kpiTargetAmount) {
 		double ruleOfThree = 0d;
 
-		if (kpiExpenseActualAmount > kpiTargetAmount) {
-			ruleOfThree = (((kpiExpenseActualAmount / kpiTargetAmount) * 100) - 100) * -1;
-		} else {
-			ruleOfThree = (kpiExpenseActualAmount / kpiTargetAmount) * 100;
-		}
-
+//		if (kpiExpenseActualAmount > kpiTargetAmount) {
+//			ruleOfThree = 100 - ((kpiExpenseActualAmount / kpiTargetAmount) * 100) ;
+//		} else {
+//			ruleOfThree = 100 - ((kpiExpenseActualAmount / kpiTargetAmount) * 100);
+//		}
+//		logger.info(Double.toString(ruleOfThree));
+		
+		ruleOfThree = 100 - ((kpiExpenseActualAmount / kpiTargetAmount) * 100);
 		return ruleOfThree;
 	}
 
@@ -356,8 +358,8 @@ public class Int030404Service {
 
 		/* set sheet */
 		// merge(firstRow, lastRow, firstCol, lastCol)
-		for (int i = 0	; i < test ; i++) {
-			sheet.addMergedRegion(new CellRangeAddress(rowNum - (i + 10) , rowNum - (i + 10), 0 , 8));
+		for (int i = 0; i < test; i++) {
+			sheet.addMergedRegion(new CellRangeAddress(rowNum - (i + 10), rowNum - (i + 10), 0, 8));
 		}
 		sheet.addMergedRegion(new CellRangeAddress(rowNum - 9, rowNum - 9, 0, 8));
 		sheet.addMergedRegion(new CellRangeAddress(rowNum - 8, rowNum - 8, 0, 8));
