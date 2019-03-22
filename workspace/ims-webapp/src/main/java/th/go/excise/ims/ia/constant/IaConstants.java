@@ -2,7 +2,6 @@ package th.go.excise.ims.ia.constant;
 
 public class IaConstants {
 
-
 //	************************* QUESTIONNAIRE *************************
 	public class IA_STATUS {
 		public static final String PARAM_GROUP_CODE = "IA_STATUS";
@@ -46,9 +45,9 @@ public class IaConstants {
 		public static final String STATUS_4_DESC = "ยกเลิกแบบสอบถาม";
 
 	}
-	
+
 //	************************* Risk Factors *************************
-	
+
 	public class IA_DATA_EVALUATE {
 		public static final String NEW = "NEW";
 		public static final String QUESTIONNAIRE = "questionnaire";
@@ -59,7 +58,7 @@ public class IaConstants {
 		public static final String INCOME_PERFORM = "income_perform";
 		public static final String SUPPRESSION = "suppression";
 	}
-	
+
 	public class IA_RISK_COLOR {
 		public static final String COLOR1 = "เขียวเข้ม";
 		public static final String COLOR1_CODE = "#22911ef5";
@@ -77,9 +76,9 @@ public class IaConstants {
 		public static final String COLOR5_CODE = "#ff231fe3";
 
 	}
-	
+
 	public class IA_STATUS_RISK_FACTORS {
-		
+
 		public static final String PARAM_GROUP_CODE = "IA_STATUS_RISK_FACTORS";
 
 		public static final String STATUS_1_CODE = "1";
@@ -93,4 +92,17 @@ public class IaConstants {
 
 	}
 
+//	************************* PLAN HDR *************************
+	
+	public class PLAN_HDR_STATUS {
+
+		public static final String PARAM_GROUP_CODE = "IA_PLAN_HDR_STATUS";
+
+		public static final String STATUS_1_CODE = "1";
+		public static final String STATUS_1_DESC = "อนุมัติ";
+
+		public static final String STATUS_2_CODE = "2";
+		public static final String STATUS_2_DESC = "ไม่อนุมัติ";
+
+	}
 }
