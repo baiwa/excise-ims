@@ -373,5 +373,21 @@ public class Int030102JdbcRepository {
 		
 		commonJdbcTemplate.update(sql.toString(), new Object[] { IaConstants.IA_STATUS_RISK_FACTORS.STATUS_1_CODE,form.getBudgetYear() ,form.getInspectionWork() });
 	}
+	
+	
+	public int updateStatusAddIaRiskFactorsMaster(String budgetYear,BigDecimal inspectionWork) {
+		StringBuilder sql = new StringBuilder(" UPDATE IA_RISK_FACTORS  SET STATUS_SCREEN = ? WHERE BUDGET_YEAR = ? AND INSPECTION_WORK = ? AND IS_DELETED = 'N'  AND STATUS_SCREEN = ? ");
+		List<Object> params = new ArrayList<Object>();
+		
+		params.add(IaConstants.IA_STATUS_RISK_FACTORS.STATUS_2_CODE);
+		params.add(budgetYear);
+		params.add(inspectionWork);
+		params.add(IaConstants.IA_STATUS_RISK_FACTORS.STATUS_3_CODE);
+		
+		int count = commonJdbcTemplate.update(sql.toString(),params.toArray());
+		return count;
+	}
+	
+	
 
 }

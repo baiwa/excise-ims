@@ -67,6 +67,7 @@ public class Int030407Service {
 				list.setColorRisk(risk.getColor());
 				list.setRateRisk(risk.getRiskRate());
 				list.setTextRisk(risk.getTranslatingRisk());
+				list.setIntCalculateCriteriaVo(risk);
 			}
 			lists.add(list);
 		}

@@ -16,6 +16,9 @@ public class Int030407Vo {
 	private BigDecimal rateRisk;
 	private String textRisk;
 	private String colorRisk;
+	
+	private IntCalculateCriteriaVo intCalculateCriteriaVo;
+	
 	public BigDecimal getId() {
 		return id;
 	}
@@ -94,4 +97,12 @@ public class Int030407Vo {
 	public void setColorRisk(String colorRisk) {
 		this.colorRisk = colorRisk;
 	}
+	public IntCalculateCriteriaVo getIntCalculateCriteriaVo() {
+		return intCalculateCriteriaVo;
+	}
+	public void setIntCalculateCriteriaVo(IntCalculateCriteriaVo intCalculateCriteriaVo) {
+		this.intCalculateCriteriaVo = intCalculateCriteriaVo;
+	}
+	
+	
 }

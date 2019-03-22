@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsRepository;
+import th.go.excise.ims.ia.persistence.repository.jdbc.Int030102JdbcRepository;
 
 @Service
 public class UpdateStatusRiskFactorsService {
@@ -18,6 +19,8 @@ public class UpdateStatusRiskFactorsService {
 	private static final Logger logger = LoggerFactory.getLogger(UpdateStatusRiskFactorsService.class);
 
 //	****************** JDBC ****************** 
+	@Autowired
+	private Int030102JdbcRepository int030102JdbcRepository;
 
 
 //	****************** JPA ****************** 
@@ -49,6 +52,14 @@ public class UpdateStatusRiskFactorsService {
 	
 
 		return idHdr;
+	}
+	
+	public String updateStatusAddIaRiskFactorsMaster(String budgetYear,BigDecimal inspectionWork) {
+		if (budgetYear != null && inspectionWork != null ) {
+			int030102JdbcRepository.updateStatusAddIaRiskFactorsMaster(budgetYear, inspectionWork);	
+		}
+		
+		return budgetYear;
 	}
 	
 
