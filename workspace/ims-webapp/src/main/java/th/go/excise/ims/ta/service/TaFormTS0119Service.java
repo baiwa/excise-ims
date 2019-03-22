@@ -21,6 +21,7 @@ import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.IMG_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 
@@ -28,15 +29,8 @@ import th.go.excise.ims.ta.vo.TaFormTS0119Vo;
 
 @Service
 public class TaFormTS0119Service {
-	@SuppressWarnings("unchecked")
 	public byte[] exportTaFormTS019(TaFormTS0119Vo request) throws Exception, IOException {
-	
-
-		String reportName = "TA_FORM_TS01_19.jasper";
-		Gson gson = new Gson();
-		Map<String, Object> params = new HashMap<String, Object>();
-		params = (Map<String, Object>) gson.fromJson(request.getJson(), params.getClass());
-		
+	Map<String, Object> params = new HashMap<String, Object>();
 
 		// get data to report
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
@@ -72,19 +66,10 @@ public class TaFormTS0119Service {
 		request.setRefBookDate(ConvertDateUtils.parseStringToDate(request.getRefBookDateStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		params.put("refBookDate", request.getRefBookDate());
 		// set output
-		JasperPrint jasperPrint = ReportUtils.getJasperPrint(reportName, params);
-		List<ExporterInputItem> items = new ArrayList<ExporterInputItem>();
-		items.add(new SimpleExporterInputItem(jasperPrint));
-
-		JRPdfExporter exporter = new JRPdfExporter();
-		exporter.setExporterInput(new SimpleExporterInput(items));
-
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
-		exporter.exportReport();
-		byte[] content = outputStream.toByteArray();
-
+		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_019 + "." + FILE_EXTENSION.JASPER, params);
+		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
 		ReportUtils.closeResourceFileInputStream(params);
+
 
 		return content;
 	}

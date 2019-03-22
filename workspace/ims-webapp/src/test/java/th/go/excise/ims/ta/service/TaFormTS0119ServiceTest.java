@@ -6,13 +6,14 @@ import java.io.IOException;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.go.excise.ims.ta.vo.TaFormTS0119Vo;
 
 public class TaFormTS0119ServiceTest {
 	private TaFormTS0119Service taFormTS0119Service = new TaFormTS0119Service();
-	private static final String PATH = "/tmp/";
-	private static final String NAME = "TaFormTS01_19.pdf";
-
+	
 	@Test
 	public void test_exportTaFormTS0107() throws Throwable, IOException {
 
@@ -44,7 +45,7 @@ public class TaFormTS0119ServiceTest {
 		
 
 	byte[] reportFile = taFormTS0119Service.exportTaFormTS019(data);
-	IOUtils.write(reportFile, new FileOutputStream(new File(PATH + NAME)));
+	IOUtils.write(reportFile, new FileOutputStream(new File(PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_019 + "." + FILE_EXTENSION.PDF)));
 
 	}
 }

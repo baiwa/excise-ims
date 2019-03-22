@@ -27,8 +27,10 @@ import th.co.baiwa.buckwaframework.common.rest.adapter.DateThaiJsonDeserializer;
 import th.go.excise.ims.ta.service.TaFormTS0107Service;
 import th.go.excise.ims.ta.service.TaFormTS0110Service;
 import th.go.excise.ims.ta.service.TaFormTS0113Service;
+import th.go.excise.ims.ta.service.TaFormTS0119Service;
 import th.go.excise.ims.ta.vo.TaFormTS0107Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0113Vo;
+import th.go.excise.ims.ta.vo.TaFormTS0119Vo;
 
 @Controller
 @RequestMapping("/api/ta/report")
@@ -41,12 +43,14 @@ public class TaFormTSController {
 	private TaFormTS0107Service formTS0107Service;
 	private TaFormTS0110Service formTS0110Service;
 	private TaFormTS0113Service taFormTS0113Service;
-
+	private TaFormTS0119Service taFormTS0119Service;
+	
 	@Autowired
-	public TaFormTSController(TaFormTS0107Service formTS0107Service, TaFormTS0110Service formTS0110Service, TaFormTS0113Service taFormTS0113Service) {
+	public TaFormTSController(TaFormTS0119Service taFormTS0119Service,TaFormTS0107Service formTS0107Service, TaFormTS0110Service formTS0110Service, TaFormTS0113Service taFormTS0113Service) {
 		this.formTS0107Service = formTS0107Service;
 		this.formTS0110Service = formTS0110Service;
 		this.taFormTS0113Service = taFormTS0113Service;
+		this.taFormTS0119Service = taFormTS0119Service;
 	}
 
 	// TODO TaFormTS0110
@@ -95,4 +99,19 @@ public class TaFormTSController {
 
 		FileCopyUtils.copy(bytes, response.getOutputStream());
 	}
+	
+	@PostMapping("/pdf/ta-form-ts0119")
+	public void pdfTs0119(@ModelAttribute ReportJsonBean reportJsonBean, HttpServletResponse response) throws Exception {
+		logger.info("export TaFormTS01_19.pdf");
+		TaFormTS0119Vo ts0119Vo = gson.fromJson(reportJsonBean.getJson(), TaFormTS0119Vo.class);
+		byte[] bytes = taFormTS0119Service.exportTaFormTS019(ts0119Vo);
+
+		String filename = String.format("TaFormTS01_19.pdf", DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now()));
+
+		response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", filename));
+		response.setContentType("application/octet-stream");
+
+		FileCopyUtils.copy(bytes, response.getOutputStream());
+	}
+
 }
