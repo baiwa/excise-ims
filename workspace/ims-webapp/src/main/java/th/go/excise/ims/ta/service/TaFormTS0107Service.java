@@ -14,7 +14,6 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSIO
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.IMG_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
-import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.go.excise.ims.ta.vo.TaFormTS0107Vo;
 
@@ -33,7 +32,7 @@ public class TaFormTS0107Service {
 		params.put("bookNumber1", formTs.getBookNumber1());
 		params.put("bookNumber2", formTs.getBookNumber2());
 		params.put("officeName1", formTs.getOfficeName1());
-
+		params.put("docDate", formTs.getDocDate());
 		params.put("officeName2", formTs.getOfficeName2());
 		params.put("headOfficerFullName", formTs.getHeadOfficerFullName());
 		params.put("headOfficerPosition", formTs.getHeadOfficerPosition());
@@ -47,7 +46,7 @@ public class TaFormTS0107Service {
 		params.put("officerPosition4", formTs.getOfficerPosition4());
 		params.put("officerFullName5", formTs.getOfficerFullName5());
 		params.put("officerPosition5", formTs.getOfficerPosition5());
-
+		params.put("companyName", formTs.getCompanyName());
 		params.put("factoryType", formTs.getFactoryType());
 		params.put("factoryName", formTs.getFactoryName());
 
@@ -60,14 +59,7 @@ public class TaFormTS0107Service {
 		params.put("facAmphurName", formTs.getFacAmphurName());
 		params.put("facProvinceName", formTs.getFacProvinceName());
 		params.put("facZipCode", formTs.getFacZipCode());
-
-		// Date
-		formTs.setDocDate(ConvertDateUtils.parseStringToDate(formTs.getDocDateStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-		params.put("docDate", formTs.getDocDate());
-
-		formTs.setAuditDate(ConvertDateUtils.parseStringToDate(formTs.getAuditDateStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		params.put("auditDate", formTs.getAuditDate());
-
 		params.put("lawSection", formTs.getLawSection());
 		params.put("headOfficerPhone", formTs.getHeadOfficerPhone());
 		params.put("signOfficerFullName", formTs.getSignOfficerFullName());

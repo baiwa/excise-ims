@@ -9,7 +9,6 @@ public class TaFormTS0107Vo {
 	private String bookNumber2;
 	private String officeName1;
 	private Date docDate;
-	private String docDateStr;
 	private String officeName2;
 	private String headOfficerFullName;
 	private String headOfficerPosition;
@@ -36,7 +35,6 @@ public class TaFormTS0107Vo {
 	private String facProvinceName;
 	private String facZipCode;
 	private Date auditDate;
-	private String auditDateStr;
 	private String lawSection;
 	private String headOfficerPhone;
 	private String signOfficerFullName;
@@ -82,14 +80,6 @@ public class TaFormTS0107Vo {
 
 	public void setDocDate(Date docDate) {
 		this.docDate = docDate;
-	}
-
-	public String getDocDateStr() {
-		return docDateStr;
-	}
-
-	public void setDocDateStr(String docDateStr) {
-		this.docDateStr = docDateStr;
 	}
 
 	public String getOfficeName2() {
@@ -298,14 +288,6 @@ public class TaFormTS0107Vo {
 
 	public void setAuditDate(Date auditDate) {
 		this.auditDate = auditDate;
-	}
-
-	public String getAuditDateStr() {
-		return auditDateStr;
-	}
-
-	public void setAuditDateStr(String auditDateStr) {
-		this.auditDateStr = auditDateStr;
 	}
 
 	public String getLawSection() {

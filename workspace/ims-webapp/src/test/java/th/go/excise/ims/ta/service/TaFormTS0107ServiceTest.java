@@ -10,6 +10,7 @@ import org.junit.Test;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ta.vo.TaFormTS0107Vo;
 
 public class TaFormTS0107ServiceTest {
@@ -24,9 +25,9 @@ public class TaFormTS0107ServiceTest {
 		data.setBookNumber1("กข02001");
 		data.setBookNumber2("200");
 		data.setOfficeName1("กรมสรรพสามิต");
-		data.setDocDateStr("15/03/2562");
+		data.setDocDate(ConvertDateUtils.parseStringToDate("15/03/2562", ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		data.setOfficeName2("กรมสรรพสามิต");
-		data.setHeadOfficerFullName("นายธนาวุธ สุทธิสาร");
+		data.setHeadOfficerFullName("กรมสรรพสามิต");
 		data.setHeadOfficerPosition("เจ้าหน้าที่ออกตรวจภาษี ระดับภาค");
 		data.setOfficerFullName1("นายอนุชา จันทร์แก้ว");
 		data.setOfficerPosition1("เจ้าหน้าที่ออกตรวจภาษี ระดับพื้นที่");
@@ -43,7 +44,7 @@ public class TaFormTS0107ServiceTest {
 		// type 1 =โรงอุตสาหกรรม || 2=สถานบริการ || 3 =สถานประกอบการผู้นำเข้า
 		data.setFactoryType("3");
 
-		data.setFactoryName("มาเวล จำกัด ");
+		data.setFactoryName("โฮมโปรดักส์ เซ็นเตอร์ จำกัด (มหาชน) ");
 		data.setNewRegId("1002223344");
 		data.setFacAddrNo("96/27");
 		data.setFacMooNo("9");
@@ -53,7 +54,7 @@ public class TaFormTS0107ServiceTest {
 		data.setFacAmphurName("เมือง");
 		data.setFacProvinceName("นนทบุรี ");
 		data.setFacZipCode("11000");
-		data.setAuditDateStr("17/03/2562");
+		data.setAuditDate(ConvertDateUtils.parseStringToDate("17/03/2562", ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		data.setLawSection("");
 		data.setHeadOfficerPhone("092-2344545");
 		data.setSignOfficerFullName("นายมงคล อาสว่าง");
