@@ -49,7 +49,7 @@ public class TaFormTS0111ServiceTest {
 		data.setAuthDate("22/03/2019");
 		data.setAuthPosition("1");
 		
-		byte[] reportFile = formTS0111Service.exportTaFormTS01112(data);
+		byte[] reportFile = taFormTS0111Service.exportTaFormTS01112(data);
 		IOUtils.write(reportFile, new FileOutputStream(new File(PATH + NAME2)));
 	}
 }
