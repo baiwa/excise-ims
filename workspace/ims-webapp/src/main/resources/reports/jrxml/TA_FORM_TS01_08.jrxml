@@ -3,6 +3,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="N_mis01-08" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="800" leftMargin="20" rightMargin="22" topMargin="40" bottomMargin="40" uuid="45923c6b-eab4-4e67-bf37-fcb8a4d113d2">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="21" isBold="true"/>
 	<style name="TextDetail" hTextAlign="Left" vTextAlign="Middle" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="16">
 		<paragraph lineSpacing="1_1_2"/>
@@ -260,7 +261,7 @@
 	<detail>
 		<band height="26" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="0" y="0" width="48" height="26" uuid="c0f2329a-912b-455b-8847-ea33008e0605"/>
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="0" y="0" width="48" height="22" uuid="c0f2329a-912b-455b-8847-ea33008e0605"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -270,7 +271,7 @@
 				<textFieldExpression><![CDATA[$F{recNo}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="48" y="0" width="71" height="26" uuid="11a39111-1578-4623-a6ad-683c34f5ef6d"/>
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="48" y="0" width="71" height="22" uuid="11a39111-1578-4623-a6ad-683c34f5ef6d"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -280,7 +281,7 @@
 				<textFieldExpression><![CDATA[$F{auditDate}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="119" y="0" width="70" height="26" uuid="2c228c65-2a95-41bf-9136-22dce7fa0f75"/>
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="119" y="0" width="70" height="22" uuid="2c228c65-2a95-41bf-9136-22dce7fa0f75"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -290,7 +291,7 @@
 				<textFieldExpression><![CDATA[$F{officerFullName}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="189" y="0" width="61" height="26" uuid="6049ec45-a411-421b-93b2-c7c3e1d7d65a"/>
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="189" y="0" width="61" height="22" uuid="6049ec45-a411-421b-93b2-c7c3e1d7d65a"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -300,7 +301,7 @@
 				<textFieldExpression><![CDATA[$F{officerPosition}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="250" y="0" width="70" height="26" uuid="71d0f559-8213-414a-9b4c-037a6c97d9b6"/>
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="250" y="0" width="70" height="22" uuid="71d0f559-8213-414a-9b4c-037a6c97d9b6"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -310,7 +311,7 @@
 				<textFieldExpression><![CDATA[$F{auditTime}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="320" y="0" width="70" height="26" uuid="56954d45-91a7-4dcb-bff5-48ee7a31ea0d"/>
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="320" y="0" width="70" height="22" uuid="56954d45-91a7-4dcb-bff5-48ee7a31ea0d"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -320,7 +321,7 @@
 				<textFieldExpression><![CDATA[$F{auditDest}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="390" y="0" width="70" height="26" uuid="4a909bb5-f103-411c-ac66-a4952d92c052"/>
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="390" y="0" width="70" height="22" uuid="4a909bb5-f103-411c-ac66-a4952d92c052"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -330,7 +331,7 @@
 				<textFieldExpression><![CDATA[$F{auditTopic}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="460" y="0" width="70" height="26" uuid="75824da9-b938-4238-888d-24e91c4785f8"/>
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="460" y="0" width="70" height="22" uuid="75824da9-b938-4238-888d-24e91c4785f8"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -340,7 +341,7 @@
 				<textFieldExpression><![CDATA[$F{approvedAck}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="530" y="0" width="70" height="26" uuid="9fc6ef27-ec65-4c02-a21b-57cccaa9993e"/>
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="530" y="0" width="70" height="22" uuid="9fc6ef27-ec65-4c02-a21b-57cccaa9993e"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -350,7 +351,7 @@
 				<textFieldExpression><![CDATA[$F{officerAck}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="600" y="0" width="125" height="26" uuid="65f17b85-621e-4960-b97e-7495535b5a59"/>
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="600" y="0" width="125" height="22" uuid="65f17b85-621e-4960-b97e-7495535b5a59"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -360,7 +361,7 @@
 				<textFieldExpression><![CDATA[$F{auditResultDate}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="725" y="0" width="69" height="26" uuid="a85f7769-a9f7-4dcf-96f9-2510f4bee09b"/>
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="725" y="0" width="69" height="22" uuid="a85f7769-a9f7-4dcf-96f9-2510f4bee09b"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="0" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
