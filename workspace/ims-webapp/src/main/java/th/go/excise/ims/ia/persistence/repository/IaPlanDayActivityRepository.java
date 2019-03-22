@@ -5,9 +5,6 @@ import java.math.BigDecimal;
 import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRepository;
 import th.go.excise.ims.ia.persistence.entity.IaPlanDayActivity;
 
-public interface IaPlanDayActivityRepository
-    extends CommonJpaCrudRepository<IaPlanDayActivity, BigDecimal>
-{
-
+public interface IaPlanDayActivityRepository extends CommonJpaCrudRepository<IaPlanDayActivity, BigDecimal> {
 
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaPlanDtl;
 import th.go.excise.ims.ia.persistence.entity.IaPlanHdr;
 import th.go.excise.ims.ia.persistence.repository.IaPlanDtlRepository;
@@ -39,7 +40,7 @@ public class Int01Service {
 
 		/* header */
 		Int01HdrVo header = iaPlanHdrJdbcRepository.getDataFilter(budgetYear);
-		header.setStatusStr(ApplicationCache.getParamInfoByCode("IA_PLAN_HDR_STATUS",header.getStatus()).getValue1());
+		header.setStatusStr(ApplicationCache.getParamInfoByCode("IA_PLAN_HDR_STATUS", header.getStatus()).getValue1());
 		response.setHeader(header);
 
 		/* group by inspectionWork */
@@ -53,7 +54,7 @@ public class Int01Service {
 				iaPlanDtl.setBudgetYear(budgetYear);
 				iaPlanDtl.setInspectionWork(inspectionWork.getInspectionWork());
 				List<Int01DtlVo> dataFilter = iaPlanDtlJdbcRepository.findByIaPlanDtl(iaPlanDtl);
-				
+
 				/* deetail */
 				detail = new Int01TableVo();
 				if (dataFilter.size() > 0) {
@@ -66,6 +67,22 @@ public class Int01Service {
 				detailList.add(detail);
 			}
 			response.setTableVo(detailList);
+		}
+		return response;
+	}
+
+	public IaPlanHdr updateChoice(BigDecimal planHdrId, String flag) {
+		IaPlanHdr dataHdr = null;
+		IaPlanHdr response = null;
+		
+		if (planHdrId != null) {
+			dataHdr = iaPlanHdrRepository.findById(planHdrId).get();
+			if ("APPROVE".equals(flag)) {
+				dataHdr.setStatus(IaConstants.PLAN_HDR_STATUS.STATUS_1_CODE);
+			} else {
+				dataHdr.setStatus(IaConstants.PLAN_HDR_STATUS.STATUS_2_CODE);
+			}
+			response = iaPlanHdrRepository.save(dataHdr);
 		}
 		return response;
 	}
