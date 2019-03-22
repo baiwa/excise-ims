@@ -1,7 +1,6 @@
 package th.go.excise.ims.ta.vo;
 
 public class TaFormTS0110Vo {
-	private String json;
 	private String testimonyOf;
 	private String testimonyTopic;
 	private String docDate;
@@ -32,13 +31,7 @@ public class TaFormTS0110Vo {
 	private String newRegId;
 	private String testimonyTe;
 
-	public String getJson() {
-		return json;
-	}
 
-	public void setJson(String json) {
-		this.json = json;
-	}
 
 	public String getTestimonyOf() {
 		return testimonyOf;
