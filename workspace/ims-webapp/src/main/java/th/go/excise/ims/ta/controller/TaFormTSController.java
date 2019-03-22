@@ -1,6 +1,7 @@
 package th.go.excise.ims.ta.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -15,10 +16,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import net.sf.jasperreports.engine.JRException;
 import th.co.baiwa.buckwaframework.common.bean.ReportJsonBean;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
+import th.co.baiwa.buckwaframework.common.rest.adapter.DateThaiJsonDeserializer;
 import th.go.excise.ims.ta.service.TaFormTS0107Service;
 import th.go.excise.ims.ta.service.TaFormTS0110Service;
 
@@ -27,7 +32,11 @@ import th.go.excise.ims.ta.service.TaFormTS0110Service;
 public class TaFormTSController {
 
 	private static final Logger logger = LoggerFactory.getLogger(TaFormTSController.class);
-
+	
+	private Gson gson = new GsonBuilder()
+		.registerTypeAdapter(Date.class, DateThaiJsonDeserializer.getInstance())
+		.create();
+	
 	private TaFormTS0110Service formTS0110Service;
 	private TaFormTS0107Service formTS0107Service;
 
