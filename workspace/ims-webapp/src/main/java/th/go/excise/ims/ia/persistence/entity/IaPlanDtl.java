@@ -38,7 +38,7 @@ public class IaPlanDtl extends BaseEntity {
 	@Column(name = "FREQUENCY")
 	private BigDecimal frequency;
 	@Column(name = "UNIT")
-	private BigDecimal unit;
+	private String unit;
 	@Column(name = "ACTIVITY_STATUS")
 	private String activityStatus;
 	@Column(name = "RESPONSIBLE_PERSON")
@@ -96,14 +96,6 @@ public class IaPlanDtl extends BaseEntity {
 		this.frequency = frequency;
 	}
 
-	public BigDecimal getUnit() {
-		return unit;
-	}
-
-	public void setUnit(BigDecimal unit) {
-		this.unit = unit;
-	}
-
 	public String getActivityStatus() {
 		return activityStatus;
 	}
@@ -136,6 +128,14 @@ public class IaPlanDtl extends BaseEntity {
 		this.officer = officer;
 	}
 
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+	
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
