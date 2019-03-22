@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
@@ -39,11 +40,13 @@ public class Application extends SpringBootServletInitializer {
 	}
 	
 	@Bean
-	CharacterEncodingFilter characterEncodingFilter() {
-		CharacterEncodingFilter filter = new CharacterEncodingFilter();
-		filter.setEncoding(StandardCharsets.UTF_8.name());
-		filter.setForceEncoding(true);
-		return filter;
+	public FilterRegistrationBean<CharacterEncodingFilter> filterRegistrationBean() {
+		FilterRegistrationBean<CharacterEncodingFilter> registrationBean = new FilterRegistrationBean<>();
+		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+		characterEncodingFilter.setForceEncoding(true);
+		characterEncodingFilter.setEncoding(StandardCharsets.UTF_8.name());
+		registrationBean.setFilter(characterEncodingFilter);
+		return registrationBean;
 	}
 	
 }
