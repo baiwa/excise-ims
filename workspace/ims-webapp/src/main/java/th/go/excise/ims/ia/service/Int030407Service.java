@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -24,7 +25,9 @@ import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.entity.IaRiskIncomePerform;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskIncomePerformRepository;
+import th.go.excise.ims.ia.util.ExcelUtil;
 import th.go.excise.ims.ia.util.IntCalculateCriteriaUtil;
+import th.go.excise.ims.ia.vo.ExportRiskVo;
 import th.go.excise.ims.ia.vo.Int020301DataVo;
 import th.go.excise.ims.ia.vo.Int020301InfoVo;
 import th.go.excise.ims.ia.vo.Int030407Vo;
@@ -39,6 +42,12 @@ public class Int030407Service {
 
 	@Autowired
 	private IaRiskIncomePerformRepository iaRiskIncomePerformRep;
+
+	@Autowired
+	private ExcelUtil excelUtil;
+
+	@Autowired
+	private Int0301Service int0301Service;
 
 	public List<Int030407Vo> findByBudgetYear(String budgetYear, String idConfigStr) {
 		BigDecimal idConfig = new BigDecimal(idConfigStr);
@@ -74,16 +83,146 @@ public class Int030407Service {
 		return lists;
 	}
 
-	public ByteArrayOutputStream exportInt030407(String budgetYear, String idConfigStr) throws IOException {
+	public ByteArrayOutputStream exportInt030407(String budgetYear, String idConfigStr, String riskHrdPaperName,
+			String createUserName, String createLastName, String createPosition, String checkUserName,
+			String checkLastName, String checkPosition) throws IOException {
 		/* create spreadsheet */
+		BigDecimal idConfig = new BigDecimal(idConfigStr);
+		ExportRiskVo exportRiskData = excelUtil.exportConfig(idConfig);
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
 		CellStyle tdStyle = ExcelUtils.createTdCellStyle(workbook);
+		CellStyle TopicCenterlite = ExcelUtils.createTopicCenterliteStyle(workbook);
 		CellStyle tdLeft = ExcelUtils.createLeftCellStyle(workbook);
-		CellStyle tdRight = ExcelUtils.createRightCellStyle(workbook);
+		CellStyle TopicRight = ExcelUtils.createTopicRightStyle(workbook);
+		CellStyle TopicCenter = ExcelUtils.createTopicCenterStyle(workbook);
 		Sheet sheet = workbook.createSheet();
 		int rowNum = 0;
 		int cellNum = 0;
+
+		// Row [0]
+		Row row1 = sheet.createRow(rowNum);
+		Cell cell1 = row1.createCell(cellNum);
+		cell1 = row1.createCell(cellNum);
+		cell1.setCellValue(riskHrdPaperName);
+		cell1.setCellStyle(TopicCenter);
+		rowNum++;
+
+		// Row [0]
+		Row row2 = sheet.createRow(rowNum);
+		Cell cell2 = row2.createCell(cellNum);
+		cell2 = row2.createCell(cellNum);
+		cell2.setCellValue("เพื่อพิจารณาคัดเลือกหน่วยงานรับตรวจสำนักงานสรรพสามิตภาค พื้นที่ และสาขา");
+		cell2.setCellStyle(TopicCenter);
+		rowNum++;
+
+		// Row [0]
+		Row row3 = sheet.createRow(rowNum);
+		Cell cell3 = row3.createCell(cellNum);
+		cell3 = row3.createCell(cellNum);
+		cell3.setCellValue("กลุ่มตรวจสอบภายใน  กรมสรรพสามิต");
+		cell3.setCellStyle(TopicCenter);
+		rowNum++;
+
+		// Row [0]
+		Row row4 = sheet.createRow(rowNum);
+		Cell cell4 = row4.createCell(cellNum);
+		cell4 = row4.createCell(cellNum);
+		if (StringUtils.isNotBlank(exportRiskData.getIaRiskFactorsConfig().getRiskIndicators())) {
+			cell4.setCellValue("เกณฑ์ความเสี่ยง : " + exportRiskData.getIaRiskFactorsConfig().getRiskIndicators());
+		}
+		cell4.setCellStyle(TopicCenter);
+		rowNum++;
+
+		// Row [0]
+		Row row5 = sheet.createRow(rowNum);
+		Cell cell5 = row5.createCell(cellNum);
+		cell5 = row5.createCell(cellNum);
+		if (StringUtils.isNotBlank(exportRiskData.getIaRiskFactorsConfig().getRiskIndicators())) {
+			cell5.setCellValue(exportRiskData.getIaRiskFactorsConfig().getRiskIndicators() + "("
+					+ exportRiskData.getIaRiskFactorsConfig().getRiskUnit() + ")");
+		}
+		cell5.setCellStyle(TopicCenterlite);
+		rowNum++;
+
+		int test = exportRiskData.getIaRiskFactorsConfig().getFactorsLevel().intValue();
+
+		String veryhigh = int0301Service.convertCondition(
+				exportRiskData.getIaRiskFactorsConfig().getVeryhighCondition(),
+				exportRiskData.getIaRiskFactorsConfig().getVeryhighStart(),
+				exportRiskData.getIaRiskFactorsConfig().getVeryhighEnd(),
+				exportRiskData.getIaRiskFactorsConfig().getRiskUnit(),
+				exportRiskData.getIaRiskFactorsConfig().getRiskUnit());
+
+		String high = int0301Service.convertCondition(exportRiskData.getIaRiskFactorsConfig().getHighCondition(),
+				exportRiskData.getIaRiskFactorsConfig().getHighStart(),
+				exportRiskData.getIaRiskFactorsConfig().getHighEnd(),
+				exportRiskData.getIaRiskFactorsConfig().getRiskUnit(),
+				exportRiskData.getIaRiskFactorsConfig().getRiskUnit());
+
+		String medium = int0301Service.convertCondition(exportRiskData.getIaRiskFactorsConfig().getMediumCondition(),
+				exportRiskData.getIaRiskFactorsConfig().getMediumStart(),
+				exportRiskData.getIaRiskFactorsConfig().getMediumEnd(),
+				exportRiskData.getIaRiskFactorsConfig().getRiskUnit(),
+				exportRiskData.getIaRiskFactorsConfig().getRiskUnit());
+
+		String low = int0301Service.convertCondition(exportRiskData.getIaRiskFactorsConfig().getLowCondition(),
+				exportRiskData.getIaRiskFactorsConfig().getLowStart(),
+				exportRiskData.getIaRiskFactorsConfig().getLowEnd(),
+				exportRiskData.getIaRiskFactorsConfig().getRiskUnit(),
+				exportRiskData.getIaRiskFactorsConfig().getRiskUnit());
+
+		String verylow = int0301Service.convertCondition(exportRiskData.getIaRiskFactorsConfig().getVerylowCondition(),
+				exportRiskData.getIaRiskFactorsConfig().getVerylowStart(),
+				exportRiskData.getIaRiskFactorsConfig().getVerylowStart(),
+				exportRiskData.getIaRiskFactorsConfig().getRiskUnit(),
+				exportRiskData.getIaRiskFactorsConfig().getRiskUnit());
+
+		String[] tbTHCondition3 = { exportRiskData.getIaRiskFactorsConfig().getHigh(),
+				exportRiskData.getIaRiskFactorsConfig().getMedium(), exportRiskData.getIaRiskFactorsConfig().getLow() };
+		String[] tbTHCondition5 = { exportRiskData.getIaRiskFactorsConfig().getVeryhigh(),
+				exportRiskData.getIaRiskFactorsConfig().getHigh(), exportRiskData.getIaRiskFactorsConfig().getMedium(),
+				exportRiskData.getIaRiskFactorsConfig().getLow(),
+				exportRiskData.getIaRiskFactorsConfig().getVerylow() };
+		String[] tbTHConvert3 = { high, medium, low };
+		String[] tbTHConvert5 = { veryhigh, high, medium, low, verylow };
+		for (int j = 0; j < test; j++) {
+			// Row [0]
+			Row row6 = sheet.createRow(rowNum);
+			Cell cell6 = row6.createCell(cellNum);
+			cell6 = row6.createCell(cellNum);
+			if (test == 3) {
+				cell6.setCellValue(tbTHCondition3[j] + " : "
+						+ exportRiskData.getIaRiskFactorsConfig().getRiskIndicators() + " " + tbTHConvert3[j]);
+			}
+			if (test == 5) {
+				cell6.setCellValue(tbTHCondition5[j] + " : "
+						+ exportRiskData.getIaRiskFactorsConfig().getRiskIndicators() + " " + tbTHConvert5[j]);
+			}
+			cell6.setCellStyle(TopicCenterlite);
+			rowNum++;
+		}
+
+		// Row [0]
+		Row row9 = sheet.createRow(rowNum);
+		Cell cell9 = row9.createCell(cellNum);
+		cell9 = row9.createCell(cellNum);
+		String dateStart = ConvertDateUtils.formatDateToString(exportRiskData.getIaRiskFactorsConfig().getStartDate(),
+				ConvertDateUtils.DD_MMMM_YYYY_SPAC, ConvertDateUtils.LOCAL_TH);
+		String dateEnd = ConvertDateUtils.formatDateToString(exportRiskData.getIaRiskFactorsConfig().getEndDate(),
+				ConvertDateUtils.DD_MMMM_YYYY_SPAC, ConvertDateUtils.LOCAL_TH);
+		cell9.setCellValue("แหล่งข้อมูล : " + exportRiskData.getIaRiskFactorsConfig().getInfoUsedRiskDesc() + " "
+				+ "ปีงบประมาณ " + "" + budgetYear + " ( " + dateStart + " - " + dateEnd + " )");
+		cell9.setCellStyle(TopicCenterlite);
+		rowNum++;
+
+		// Row [0]
+		Row row11 = sheet.createRow(rowNum);
+		Cell cell11 = row11.createCell(cellNum);
+		cell11 = row11.createCell(cellNum);
+		cell11.setCellValue("หน่วย : " + exportRiskData.getIaRiskFactorsConfig().getRiskUnit());
+		cell11.setCellStyle(TopicRight);
+		rowNum++;
 
 		// Row [0]
 		Row row = sheet.createRow(rowNum);
@@ -133,14 +272,24 @@ public class Int030407Service {
 
 		/* set sheet */
 		// merge(firstRow, lastRow, firstCol, lastCol)
-		sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 2));
-		sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 8));
+		for (int i = 0	; i < test ; i++) {
+			sheet.addMergedRegion(new CellRangeAddress(rowNum - (i + 10) , rowNum - (i + 10), 0 , 8));
+		}
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 9, rowNum - 9, 0, 8));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 8, rowNum - 8, 0, 8));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 7, rowNum - 7, 0, 8));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 6, rowNum - 6, 0, 8));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 5, rowNum - 5, 0, 8));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 4, rowNum - 4, 0, 8));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 3, rowNum - 3, 0, 8));
 		for (int i = 0; i < 1; i++) {
-			sheet.addMergedRegion(new CellRangeAddress(0, 1, i, i));
+			sheet.addMergedRegion(new CellRangeAddress(test + 7, test + 8, i, i));
 		}
 		for (int i = 3; i < 7; i++) {
-			sheet.addMergedRegion(new CellRangeAddress(0, 1, i, i));
+			sheet.addMergedRegion(new CellRangeAddress(test + 7, test + 8, i, i));
 		}
+		sheet.addMergedRegion(new CellRangeAddress(test + 7, test + 7, 1, 2));
+		sheet.addMergedRegion(new CellRangeAddress(test + 8, test + 8, 7, 8));
 		/* set sheet */
 
 		// setColumnWidth
@@ -156,7 +305,7 @@ public class Int030407Service {
 
 		/* start details */
 		int count = 1;
-		rowNum = 2;
+		rowNum = 9 + test;
 		cellNum = 0;
 		List<Int030407Vo> datas = findByBudgetYear(budgetYear, idConfigStr);
 		DecimalFormat df2 = new DecimalFormat(".##");
@@ -184,22 +333,22 @@ public class Int030407Service {
 			// Column 4
 			cell = row.createCell(cellNum);
 			cell.setCellValue(df2.format(data.getSumAmount().doubleValue()));
-			cell.setCellStyle(tdRight);
+			cell.setCellStyle(tdStyle);
 			cellNum++;
 			// Column 5
 			cell = row.createCell(cellNum);
 			cell.setCellValue(df2.format(data.getForecaseAmount().doubleValue()));
-			cell.setCellStyle(tdRight);
+			cell.setCellStyle(tdStyle);
 			cellNum++;
 			// Column 6
 			cell = row.createCell(cellNum);
 			cell.setCellValue(df2.format(data.getDiffAmount().doubleValue()));
-			cell.setCellStyle(tdRight);
+			cell.setCellStyle(tdStyle);
 			cellNum++;
 			// Column 7
 			cell = row.createCell(cellNum);
 			cell.setCellValue(df2.format(data.getRateAmount().doubleValue()));
-			cell.setCellStyle(tdRight);
+			cell.setCellStyle(tdStyle);
 			cellNum++;
 			// Column 8
 			cell = row.createCell(cellNum);

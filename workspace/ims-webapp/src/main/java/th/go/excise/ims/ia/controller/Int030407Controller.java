@@ -27,15 +27,16 @@ import th.go.excise.ims.ia.vo.Int030407Vo;
 @Controller
 @RequestMapping("/api/ia/int03/04/07")
 public class Int030407Controller {
-	
+
 	private Logger logger = LoggerFactory.getLogger(Int030407Controller.class);
 
 	@Autowired
 	private Int030407Service int030407Service;
-	
+
 	@GetMapping("/year/{budgetYear}/{idConfig}")
 	@ResponseBody
-	public ResponseData<List<Int030407Vo>> findByYear(@PathVariable("budgetYear") String budgetYear, @PathVariable("idConfig") String idConfig) {
+	public ResponseData<List<Int030407Vo>> findByYear(@PathVariable("budgetYear") String budgetYear,
+			@PathVariable("idConfig") String idConfig) {
 		ResponseData<List<Int030407Vo>> response = new ResponseData<List<Int030407Vo>>();
 		try {
 			List<Int030407Vo> res = int030407Service.findByBudgetYear(budgetYear, idConfig);
@@ -49,15 +50,22 @@ public class Int030407Controller {
 		}
 		return response;
 	}
-	
 
-	@GetMapping("/year/export/{budgetYear}/{idConfig}")
-	public void exportByYear(@PathVariable("budgetYear") String budgetYear, @PathVariable("idConfig") String idConfigStr, HttpServletResponse response) throws Exception {
+	@GetMapping("/year/export/{budgetYear}/{idConfig}/{riskHrdPaperName}/{createUserName}/{createLastName}/{createPosition}/{checkUserName}/{checkLastName}/{checkPosition}")
+	public void exportByYear(@PathVariable("budgetYear") String budgetYear,
+			@PathVariable("idConfig") String idConfigStr, @PathVariable("riskHrdPaperName") String riskHrdPaperName,
+			@PathVariable("createUserName") String createUserName,
+			@PathVariable("createLastName") String createLastName,
+			@PathVariable("createPosition") String createPosition, 
+			@PathVariable("checkUserName") String checkUserName,
+			@PathVariable("checkLastName") String checkLastName, 
+			@PathVariable("checkPosition") String checkPosition,
+			HttpServletResponse response) throws Exception {
 		// set fileName
 		String fileName = URLEncoder.encode("สรุปผลปัจจัยเสี่ยงประสิทธิภาพของการจัดเก็บรายได้", "UTF-8");
 
 		// write it as an excel attachment
-		ByteArrayOutputStream outByteStream = int030407Service.exportInt030407(budgetYear, idConfigStr);
+		ByteArrayOutputStream outByteStream = int030407Service.exportInt030407(budgetYear, idConfigStr,riskHrdPaperName,createUserName,createLastName,createPosition,checkUserName,checkLastName,checkPosition);
 		byte[] outArray = outByteStream.toByteArray();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);
@@ -68,5 +76,5 @@ public class Int030407Controller {
 		outStream.flush();
 		outStream.close();
 	}
-	
+
 }
