@@ -34,7 +34,9 @@ public class IaRiskCheckPeriod extends BaseEntity {
 	private Date dateEnd;
 	@Column(name = "LONG_TIME")
 	private BigDecimal longTime;
-
+	@Column(name = "BUDGET_YEAR")
+	private String budgetYear;
+	
 	public BigDecimal getId() {
 		return id;
 	}
@@ -89,6 +91,14 @@ public class IaRiskCheckPeriod extends BaseEntity {
 
 	public void setLongTime(BigDecimal longTime) {
 		this.longTime = longTime;
+	}
+
+	public String getBudgetYear() {
+		return budgetYear;
+	}
+
+	public void setBudgetYear(String budgetYear) {
+		this.budgetYear = budgetYear;
 	}
 
 }

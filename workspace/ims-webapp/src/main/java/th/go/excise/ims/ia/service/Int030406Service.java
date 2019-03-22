@@ -4,7 +4,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -21,14 +24,12 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ia.persistence.entity.IaRiskCheckPeriod;
-import th.go.excise.ims.ia.persistence.repository.IaRiskCheckPeriodRepository;
+import th.go.excise.ims.ia.persistence.repository.jdbc.IaRiskCheckPeriodJdbcRepository;
 import th.go.excise.ims.ia.util.ExcelUtil;
 import th.go.excise.ims.ia.util.IntCalculateCriteriaUtil;
 import th.go.excise.ims.ia.vo.ExportRiskVo;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
 import th.go.excise.ims.ia.vo.Int0301Vo;
-import th.go.excise.ims.ia.vo.Int030405FormVo;
-import th.go.excise.ims.ia.vo.Int030405Vo;
 import th.go.excise.ims.ia.vo.Int030406FormVo;
 import th.go.excise.ims.ia.vo.Int030406Vo;
 import th.go.excise.ims.ia.vo.IntCalculateCriteriaVo;
@@ -40,56 +41,13 @@ public class Int030406Service {
 	private Int030405Service int030405Service;
 
 	@Autowired
-	private IaRiskCheckPeriodRepository iaRiskCheckPeriodRepository;
-
-	@Autowired
 	private ExcelUtil excelUtil;
 
 	@Autowired
 	private Int0301Service int0301Service;
 
-	public List<Int030406Vo> checkPeriodList(Int030406FormVo form) {
-		List<Int030406Vo> resDataCal = new ArrayList<Int030406Vo>();
-		List<IaRiskCheckPeriod> systemUnworkingList = new ArrayList<IaRiskCheckPeriod>();
-		systemUnworkingList = iaRiskCheckPeriodRepository.findAllOderLongTimeDesc();
-		List<IaRiskCheckPeriod> res = new ArrayList<IaRiskCheckPeriod>();
-
-		for (IaRiskCheckPeriod systemList : systemUnworkingList) {
-			IaRiskCheckPeriod dataSet = new IaRiskCheckPeriod();
-			dataSet.setDateStart(systemList.getDateStart());
-			dataSet.setDateEnd(systemList.getDateEnd());
-			dataSet.setSectorName(systemList.getSectorName());
-			dataSet.setAreaName(systemList.getAreaName());
-			dataSet.setLongTime(systemList.getLongTime());
-			res.add(dataSet);
-		}
-
-		Int0301FormVo dataForm = new Int0301FormVo();
-		dataForm.setBudgetYear(form.getBudgetYear());
-		dataForm.setIdConfig(form.getIdConfig());
-		dataForm.setInspectionWork(form.getInspectionWork());
-		Int0301Vo getForm0304 = int030405Service.getForm0304(dataForm);
-
-		int index = 0;
-		for (IaRiskCheckPeriod list : res) {
-			Int030406Vo resDataCalSet = new Int030406Vo();
-			IntCalculateCriteriaVo risk = new IntCalculateCriteriaVo();
-//			if(StringUtils.isNotBlank(list.getKpiExpenseActualAmount())) {
-			risk = IntCalculateCriteriaUtil.calculateCriteria(list.getLongTime(), getForm0304.getIaRiskFactorsConfig());
-//			}
-			resDataCalSet.setIaRiskCheckPeriod(list);
-
-			resDataCalSet
-					.setDateFrom(ConvertDateUtils.formatDateToString(list.getDateStart(), ConvertDateUtils.DD_MM_YYYY));
-			resDataCalSet
-					.setDateTo(ConvertDateUtils.formatDateToString(list.getDateEnd(), ConvertDateUtils.DD_MM_YYYY));
-			resDataCalSet.setIntCalculateCriteriaVo(risk);
-			resDataCal.add(index, resDataCalSet);
-
-		}
-
-		return resDataCal;
-	}
+	@Autowired
+	private IaRiskCheckPeriodJdbcRepository iaRiskCheckPeriodJdbcRepository;
 
 	public ByteArrayOutputStream exportInt030405(String budgetYear, BigDecimal inspectionWork, BigDecimal idConfig,
 			String riskHrdPaperName, String createUserName, String createLastName, String createPosition,
@@ -262,8 +220,8 @@ public class Int030406Service {
 
 		/* set sheet */
 		// merge(firstRow, lastRow, firstCol, lastCol)
-		for (int i = 0	; i < test ; i++) {
-			sheet.addMergedRegion(new CellRangeAddress(rowNum - (i + 10) , rowNum - (i + 10), 0 , 6));
+		for (int i = 0; i < test; i++) {
+			sheet.addMergedRegion(new CellRangeAddress(rowNum - (i + 10), rowNum - (i + 10), 0, 6));
 		}
 		sheet.addMergedRegion(new CellRangeAddress(rowNum - 9, rowNum - 9, 0, 6));
 		sheet.addMergedRegion(new CellRangeAddress(rowNum - 8, rowNum - 8, 0, 6));
@@ -375,5 +333,60 @@ public class Int030406Service {
 		workbook.write(outByteStream);
 
 		return outByteStream;
+	}
+
+	public List<Int030406Vo> checkPeriodList(Int030406FormVo form) {
+		List<Int030406Vo> resDataCal = new ArrayList<Int030406Vo>();
+		List<IaRiskCheckPeriod> systemUnworkingList = new ArrayList<IaRiskCheckPeriod>();
+//		systemUnworkingList = iaRiskCheckPeriodRepository.findAllOderLongTimeDesc();
+		systemUnworkingList = iaRiskCheckPeriodJdbcRepository.getDataFilter();
+		List<IaRiskCheckPeriod> res = new ArrayList<IaRiskCheckPeriod>();
+		for (IaRiskCheckPeriod systemList : systemUnworkingList) {
+			IaRiskCheckPeriod dataSet = new IaRiskCheckPeriod();
+
+			int year = calYearCheckPeriod(systemList.getDateEnd());
+
+			dataSet.setDateStart(systemList.getDateStart());
+			dataSet.setDateEnd(systemList.getDateEnd());
+			dataSet.setSectorName(systemList.getSectorName());
+			dataSet.setAreaName(systemList.getAreaName());
+			dataSet.setLongTime(new BigDecimal(year));
+//			systemList.getLongTime()
+			res.add(dataSet);
+		}
+
+		Int0301FormVo dataForm = new Int0301FormVo();
+		dataForm.setBudgetYear(form.getBudgetYear());
+		dataForm.setIdConfig(form.getIdConfig());
+		dataForm.setInspectionWork(form.getInspectionWork());
+		Int0301Vo getForm0304 = int030405Service.getForm0304(dataForm);
+
+		int index = 0;
+		for (IaRiskCheckPeriod list : res) {
+			Int030406Vo resDataCalSet = new Int030406Vo();
+			IntCalculateCriteriaVo risk = new IntCalculateCriteriaVo();
+//			if(StringUtils.isNotBlank(list.getKpiExpenseActualAmount())) {
+			risk = IntCalculateCriteriaUtil.calculateCriteria(list.getLongTime(), getForm0304.getIaRiskFactorsConfig());
+//			}
+			resDataCalSet.setIaRiskCheckPeriod(list);
+
+			resDataCalSet
+					.setDateFrom(ConvertDateUtils.formatDateToString(list.getDateStart(), ConvertDateUtils.DD_MM_YYYY));
+			resDataCalSet
+					.setDateTo(ConvertDateUtils.formatDateToString(list.getDateEnd(), ConvertDateUtils.DD_MM_YYYY));
+			resDataCalSet.setIntCalculateCriteriaVo(risk);
+			resDataCal.add(index, resDataCalSet);
+
+		}
+
+		return resDataCal;
+	}
+
+	public int calYearCheckPeriod( Date endDate) {
+		String dateStringEnd = ConvertDateUtils.formatDateToString(endDate, ConvertDateUtils.DD_MM_YYYY);
+		LocalDate dateLocalCerent = LocalDate.now();
+		LocalDate dateLocalEnd = ConvertDateUtils.parseStringToLocalDate(dateStringEnd, ConvertDateUtils.DD_MM_YYYY);
+
+		return Period.between(dateLocalEnd, dateLocalCerent).getYears();
 	}
 }
