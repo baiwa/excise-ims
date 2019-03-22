@@ -60,7 +60,6 @@ public class Oa02030101ServiceTest {
 		Oa02030101FormVo form = new Oa02030101FormVo();
 		Date date = new Date();
 		
-		form.setOaCustomerId(new BigDecimal(0));
 		form.setLicenseType("P"); 
 		form.setLicenseNo("A001");
 		form.setLicenseDate(date); 

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.go.excise.ims.oa.persistence.entity.OaCustomer;
+import th.go.excise.ims.oa.persistence.entity.OaCustomerLicen;
 import th.go.excise.ims.oa.persistence.entity.OaCustomerLicenDetail;
 import th.go.excise.ims.oa.vo.Oa020106FormVo;
 import th.go.excise.ims.oa.vo.Oa0207Vo;
@@ -22,10 +23,10 @@ public class Oa0207JdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
-	public List<OaCustomer> getDataFilter(Oa0207Vo request) {
+	public List<OaCustomerLicen> getDataFilter(Oa0207Vo request) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" SELECT * FROM OA_CUSTOMER WHERE 1=1 AND IS_DELETED='N' ");
+		sql.append(" SELECT * FROM OA_CUSTOMER_LICEN WHERE 1=1 AND IS_DELETED='N' ");
 
 		if (StringUtils.isNotBlank(request.getArea())) {
 			sql.append(" AND OFFICE_CODE = ? ");
@@ -39,8 +40,8 @@ public class Oa0207JdbcRepository {
 
 		String limit = OracleUtils.limitForDatable(sql.toString(), request.getStart(), request.getLength());
 		@SuppressWarnings({ "rawtypes", "unchecked" })
-		List<OaCustomer> datas = this.commonJdbcTemplate.query(limit, params.toArray(),
-				new BeanPropertyRowMapper(OaCustomer.class));
+		List<OaCustomerLicen> datas = this.commonJdbcTemplate.query(limit, params.toArray(),
+				new BeanPropertyRowMapper(OaCustomerLicen.class));
 
 		return datas;
 	}
@@ -49,7 +50,7 @@ public class Oa0207JdbcRepository {
 	public Integer countDatafilter(Oa0207Vo request) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" SELECT * FROM OA_CUSTOMER WHERE IS_DELETED='N' ");
+		sql.append(" SELECT * FROM OA_CUSTOMER_LICEN WHERE IS_DELETED='N' ");
 
 		if (StringUtils.isNotBlank(request.getArea())) {
 			sql.append(" AND OFFICE_CODE = ? ");

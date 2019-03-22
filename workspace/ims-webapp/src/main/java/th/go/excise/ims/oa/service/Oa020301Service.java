@@ -82,8 +82,7 @@ public class Oa020301Service {
 	
 	public Oa02030101FormVo saveCustomerLicen(Oa02030101FormVo form) {
 		OaCustomerLicen  oaCustomerLicen =  new OaCustomerLicen();
-		   
-		oaCustomerLicen.setOaCustomerId(form.getOaCustomerId());
+
 		oaCustomerLicen.setLicenseType(form.getLicenseType());
 		oaCustomerLicen.setLicenseNo(form.getLicenseNo());
 		oaCustomerLicen.setLicenseDate(form.getLicenseDate()); 

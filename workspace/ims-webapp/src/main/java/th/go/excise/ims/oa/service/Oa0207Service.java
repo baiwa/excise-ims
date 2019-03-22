@@ -32,9 +32,9 @@ public class Oa0207Service {
 	@Autowired
 	OaCustomerLicenDetailRepository oaCustomerLicenDetailRep;
 
-	public DataTableAjax<OaCustomer> filterByCriteria(Oa0207Vo request) {
-		List<OaCustomer> data = oa0207JdbcRep.getDataFilter(request);
-		DataTableAjax<OaCustomer> dataTableAjax = new DataTableAjax<OaCustomer>();
+	public DataTableAjax<OaCustomerLicen> filterByCriteria(Oa0207Vo request) {
+		List<OaCustomerLicen> data = oa0207JdbcRep.getDataFilter(request);
+		DataTableAjax<OaCustomerLicen> dataTableAjax = new DataTableAjax<OaCustomerLicen>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
 		dataTableAjax.setData(data);
 		dataTableAjax.setRecordsTotal(oa0207JdbcRep.countDatafilter(request));
@@ -55,24 +55,33 @@ public class Oa0207Service {
 		Optional<OaCustomerLicen> licenOpt = oaCustomerLicenRep.findById(id);
 		if (licenOpt.isPresent()) {
 			OaCustomerLicen licen = licenOpt.get();
+			response.setAddress(licen.getAddress());
 			response.setApprove(licen.getApprove());
 			response.setApproveName(licen.getApproveName());
 			response.setBankGuarantee(licen.getBankGuarantee());
 			response.setBankGuaranteeDate(licen.getBankGuaranteeDate());
 			response.setBankGuaranteeNo(licen.getBankGuaranteeNo());
+			response.setCompanyName(licen.getCompanyName());
 			response.setEndDate(licen.getEndDate());
+			response.setIdentifyNo(licen.getIdentifyNo());
+			response.setIdentifyType(licen.getIdentifyType());
 			response.setLicenseDate(licen.getLicenseDate());
 			response.setLicenseNo(licen.getLicenseNo());
 			response.setLicenseType(licen.getLicenseType());
+			response.setLicenseTypeDesp(licen.getLicenseTypeDesp());
+			response.setLicenseTypeFor(licen.getLicenseTypeFor());
+			response.setMobile(licen.getMobile());
+			response.setName(licen.getName());
 			response.setOaCuslicenseId(licen.getOaCuslicenseId());
-			response.setOaCustomerId(licen.getOaCustomerId());
 			response.setOffCode(licen.getOffCode());
+			response.setOldCustomer(licen.getOldCustomer());
 			response.setOldLicenseYear(licen.getOldLicenseYear());
 			response.setOperateName(licen.getOperateName());
 			response.setOperateRemark(licen.getOperateRemark());
 			response.setReceiveDate(licen.getReceiveDate());
 			response.setReceiveNo(licen.getReceiveNo());
 			response.setStartDate(licen.getStartDate());
+			response.setWarehouseAddress(licen.getWarehouseAddress());
 			List<OaCustomerLicenDetail> details = oa0207JdbcRep.findByLicenseId(response.getOaCuslicenseId());
 			response.setDetails(details);
 		}
@@ -82,23 +91,32 @@ public class Oa0207Service {
 	@Transactional
 	public Oa020106FormVo saveCustomerLicenAll(Oa020106FormVo request) {
 		OaCustomerLicen licen = new OaCustomerLicen();
+		licen.setAddress(request.getAddress());
 		licen.setApprove(request.getApprove());
 		licen.setApproveName(request.getApproveName());
 		licen.setBankGuarantee(request.getBankGuarantee());
 		licen.setBankGuaranteeDate(request.getBankGuaranteeDate());
 		licen.setBankGuaranteeNo(request.getBankGuaranteeNo());
+		licen.setCompanyName(request.getCompanyName());
 		licen.setEndDate(request.getEndDate());
+		licen.setIdentifyNo(request.getIdentifyNo());
+		licen.setIdentifyType(request.getIdentifyType());
 		licen.setLicenseDate(request.getLicenseDate());
 		licen.setLicenseNo(request.getLicenseNo());
 		licen.setLicenseType(request.getLicenseType());
-		licen.setOaCustomerId(request.getOaCustomerId());
+		licen.setLicenseTypeDesp(request.getLicenseTypeDesp());
+		licen.setLicenseTypeFor(request.getLicenseTypeFor());
+		licen.setMobile(request.getMobile());
+		licen.setName(request.getName());
 		licen.setOffCode(request.getOffCode());
+		licen.setOldCustomer(request.getOldCustomer());
 		licen.setOldLicenseYear(request.getOldLicenseYear());
 		licen.setOperateName(request.getOperateName());
 		licen.setOperateRemark(request.getOperateRemark());
 		licen.setReceiveDate(request.getReceiveDate());
 		licen.setReceiveNo(request.getReceiveNo());
 		licen.setStartDate(request.getStartDate());
+		licen.setWarehouseAddress(request.getWarehouseAddress());
 		licen = oaCustomerLicenRep.save(licen);
 		List<OaCustomerLicenDetail> details = request.getDetails();
 		if (details != null) {
@@ -120,23 +138,32 @@ public class Oa0207Service {
 		Optional<OaCustomerLicen> licenOpt = oaCustomerLicenRep.findById(request.getOaCuslicenseId());
 		if (licenOpt.isPresent()) {
 			OaCustomerLicen licen = licenOpt.get();
+			licen.setAddress(request.getAddress());
 			licen.setApprove(request.getApprove());
 			licen.setApproveName(request.getApproveName());
 			licen.setBankGuarantee(request.getBankGuarantee());
 			licen.setBankGuaranteeDate(request.getBankGuaranteeDate());
 			licen.setBankGuaranteeNo(request.getBankGuaranteeNo());
+			licen.setCompanyName(request.getCompanyName());
 			licen.setEndDate(request.getEndDate());
+			licen.setIdentifyNo(request.getIdentifyNo());
+			licen.setIdentifyType(request.getIdentifyType());
 			licen.setLicenseDate(request.getLicenseDate());
 			licen.setLicenseNo(request.getLicenseNo());
 			licen.setLicenseType(request.getLicenseType());
-			licen.setOaCustomerId(request.getOaCustomerId());
+			licen.setLicenseTypeDesp(request.getLicenseTypeDesp());
+			licen.setLicenseTypeFor(request.getLicenseTypeFor());
+			licen.setMobile(request.getMobile());
+			licen.setName(request.getName());
 			licen.setOffCode(request.getOffCode());
+			licen.setOldCustomer(request.getOldCustomer());
 			licen.setOldLicenseYear(request.getOldLicenseYear());
 			licen.setOperateName(request.getOperateName());
 			licen.setOperateRemark(request.getOperateRemark());
 			licen.setReceiveDate(request.getReceiveDate());
 			licen.setReceiveNo(request.getReceiveNo());
 			licen.setStartDate(request.getStartDate());
+			licen.setWarehouseAddress(request.getWarehouseAddress());
 			licen = oaCustomerLicenRep.save(licen);
 			List<OaCustomerLicenDetail> details = request.getDetails();
 			List<OaCustomerLicenDetail> detailsOld = new ArrayList<>();

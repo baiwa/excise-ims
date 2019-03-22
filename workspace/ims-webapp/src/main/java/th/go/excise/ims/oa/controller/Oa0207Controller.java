@@ -21,7 +21,7 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESS
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.oa.persistence.entity.OaCustomer;
+import th.go.excise.ims.oa.persistence.entity.OaCustomerLicen;
 import th.go.excise.ims.oa.service.Oa0207Service;
 import th.go.excise.ims.oa.vo.Oa020106FormVo;
 import th.go.excise.ims.oa.vo.Oa0207Vo;
@@ -37,8 +37,8 @@ public class Oa0207Controller {
 
 	@PostMapping("/filter")
 	@ResponseBody
-	public DataTableAjax<OaCustomer> filterByCriteria(@RequestBody Oa0207Vo request) {
-		DataTableAjax<OaCustomer> response = new DataTableAjax<>();
+	public DataTableAjax<OaCustomerLicen> filterByCriteria(@RequestBody Oa0207Vo request) {
+		DataTableAjax<OaCustomerLicen> response = new DataTableAjax<>();
 		try {
 			response = oa0207Service.filterByCriteria(request);
 		} catch (Exception e) {
