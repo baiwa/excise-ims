@@ -105,4 +105,23 @@ public class IaConstants {
 		public static final String STATUS_2_DESC = "ไม่อนุมัติ";
 
 	}
+	
+//	************************* PLAN HDR *************************
+	
+	public class PLAN_DAY_WORDING {
+		public static final String ENGAGEMENT_FULL = "ENGAGEMENT";
+		public static final String ENGAGEMENT_ABBREVIATION = "EN";
+		
+		public static final String AUDIT_FULL = "AUDIT";
+		public static final String AUDIT_ABBREVIATION = "AU";
+		
+		public static final String REPORT_FULL = "REPORT";
+		public static final String REPORT_ABBREVIATION = "RE";
+		
+		public static final String MONITORING_FULL = "MONITORING";
+		public static final String MONITORING_ABBREVIATION = "MO";
+
+	}
+	
+	
 }
