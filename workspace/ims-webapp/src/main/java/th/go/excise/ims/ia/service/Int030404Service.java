@@ -126,6 +126,12 @@ public class Int030404Service {
 				IaRiskProEfKpiVo kpiSet = null;
 
 				if (kpiList.size() == 0) {
+					kpiSet = new IaRiskProEfKpiVo();
+					kpiSetList.add(kpiSet);
+					tastSet.setTaskId(null);
+					tastSet.setTaskDescriptionText(null);
+					tastSet.setIaRiskProEfKpiVo(kpiSetList);
+					tastSetList.add(tastSet);
 					continue;
 				}
 
@@ -154,10 +160,12 @@ public class Int030404Service {
 			peSet.setProjectTypeName(peData.getProjectTypeName());
 			peSet.setOwnerOfficeId(peData.getOwnerOfficeId());
 			peSet.setOwnerOfficeName(peData.getOwnerOfficeName());
-
+			double average = 0.0d;
 			peSet.setCountKpi(new BigDecimal(kpiCount));
-			double average = ruleOfThreeSum / kpiCount;
-			logger.info(new BigDecimal(average).toString());
+			if(!(ruleOfThreeSum == 0.0 && kpiCount == 0)) {				
+				average = ruleOfThreeSum / kpiCount;
+			}
+//			logger.info(new BigDecimal(average).toString());
 			peSet.setAverageData(new BigDecimal(average));
 			peSet.setIaRiskProEfTaskVo(tastSetList);
 			IntCalculateCriteriaVo risk = new IntCalculateCriteriaVo();
