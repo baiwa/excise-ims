@@ -250,7 +250,11 @@ public class Int020301Service {
 					}
 				}
 				ExciseDept area = ApplicationCache.getExciseDept(data.getAreaName());
-				data.setAreaName(area.getDeptName());
+				if (!"0000".equals(area.getOfficeCode().substring(2, 6))) {
+					data.setAreaName(area.getDeptName());
+				} else {
+					data.setAreaName("");
+				}
 			}
 		}
 		return datas;

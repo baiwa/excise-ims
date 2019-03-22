@@ -348,6 +348,8 @@ public class Int030406Service {
 
 			dataSet.setDateStart(systemList.getDateStart());
 			dataSet.setDateEnd(systemList.getDateEnd());
+			
+			dataSet.setExciseCode(systemList.getExciseCode());
 			dataSet.setSectorName(systemList.getSectorName());
 			dataSet.setAreaName(systemList.getAreaName());
 			dataSet.setLongTime(new BigDecimal(year));

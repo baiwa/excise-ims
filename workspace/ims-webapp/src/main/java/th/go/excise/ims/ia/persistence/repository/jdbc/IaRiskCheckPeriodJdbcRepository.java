@@ -19,7 +19,7 @@ public class IaRiskCheckPeriodJdbcRepository {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 		sql.append(" SELECT  EXCISE_CODE, AREA_NAME, Max(DATE_END) AS DATE_END, DATE_START, SECTOR_NAME, BUDGET_YEAR "); 
-		sql.append(" FROM IA_RISK_CHECK_PERIOD GROUP by EXCISE_CODE, AREA_NAME,SECTOR_NAME,BUDGET_YEAR, DATE_START ");
+		sql.append(" FROM IA_RISK_CHECK_PERIOD GROUP by EXCISE_CODE, AREA_NAME,SECTOR_NAME,BUDGET_YEAR, DATE_START ORDER BY EXCISE_CODE DESC ");
 		
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<IaRiskCheckPeriod> datas = commonJdbcTemplate.query(sql.toString(), params.toArray(),new BeanPropertyRowMapper(IaRiskCheckPeriod.class));
