@@ -26,6 +26,7 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsData;
 import th.go.excise.ims.ia.service.Int030101Service;
+import th.go.excise.ims.ia.service.UpdateStatusRiskFactorsService;
 import th.go.excise.ims.ia.vo.Int030101FormVo;
 import th.go.excise.ims.ia.vo.Int030101Vo;
 
@@ -35,6 +36,9 @@ public class Int030101Controller {
 	private Logger logger = LoggerFactory.getLogger(Int030102Controller.class);
 	@Autowired
 	private Int030101Service int030101Service;
+	
+	@Autowired
+	private UpdateStatusRiskFactorsService updateStatusRiskFactorsService;
 
 	@PostMapping("/saveFactors")
 	@ResponseBody
@@ -44,6 +48,7 @@ public class Int030101Controller {
 		// UserLoginUtils.getCurrentUserBean().getUserId()
 		try {
 			Int030101Vo res = int030101Service.saveFactors(form);
+			updateStatusRiskFactorsService.updateStatusAddIaRiskFactorsMaster(form.getBudgetYear(), form.getInspectionWork());
 			response.setData(res);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
 //			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());

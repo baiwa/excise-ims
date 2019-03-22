@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsData;
@@ -76,6 +77,9 @@ public class Int030101Service {
 
 	@Autowired
 	private ExcelUtil excelUtil;
+	
+	@Autowired
+	private UpdateStatusRiskFactorsService updateStatusRiskFactorsService;
 
 	@Transactional
 	public Int030101Vo saveFactors(Int030101FormVo form) {
@@ -86,6 +90,7 @@ public class Int030101Service {
 		dataFactorsMaster.setInspectionWork(form.getInspectionWork());
 		dataFactorsMaster.setNotDelete("N");
 		dataFactorsMaster.setDataEvaluate("NEW");
+		dataFactorsMaster.setSide(form.getSide());
 		IaRiskFactorsMaster dataFactorsMasterRes = iaRiskFactorsMasterRepository.save(dataFactorsMaster);
 
 		// Save IaRiskFactorsStatus
@@ -103,7 +108,7 @@ public class Int030101Service {
 		dataFactors.setBudgetYear(form.getBudgetYear());
 		dataFactors.setInspectionWork(form.getInspectionWork());
 		dataFactors.setSide(form.getSide());
-		dataFactors.setStatusScreen("ยังไม่ได้กำหนด");
+		dataFactors.setStatusScreen(IaConstants.IA_STATUS_RISK_FACTORS.STATUS_1_CODE);
 		dataFactors.setDataEvaluate("NEW");
 		IaRiskFactors dataFactorsRes = iaRiskFactorsRepository.save(dataFactors);
 
@@ -145,6 +150,8 @@ public class Int030101Service {
 		formVo.setRiskIndicators(form.getRiskIndicators());
 
 		res.setInt030101FormVo(formVo);
+		
+		
 		return res;
 	}
 

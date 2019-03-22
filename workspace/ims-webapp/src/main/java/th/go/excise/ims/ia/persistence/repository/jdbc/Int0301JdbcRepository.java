@@ -46,6 +46,24 @@ public class Int0301JdbcRepository {
 		int0301VoList = commonJdbcTemplate.query(sql.toString(), params.toArray(), listRowmapper);
 		return int0301VoList;
 	}
+	
+	public List<Int0301Vo> listInt0304(Int0301FormVo form) {
+		List<Int0301Vo> int0301VoList = new ArrayList<Int0301Vo>();
+
+		StringBuilder sql = new StringBuilder(SQL_IA_RISK_FACTORS);
+		List<Object> params = new ArrayList<Object>();
+
+		params.add(form.getInspectionWork());
+
+		if (StringUtils.isNotBlank(form.getBudgetYear())) {
+			sql.append(" AND BUDGET_YEAR = ? ");
+			params.add(form.getBudgetYear());
+		}
+		sql.append(" AND STATUS_SCREEN = ? ");
+		params.add(IaConstants.IA_STATUS_RISK_FACTORS.STATUS_3_CODE);
+		int0301VoList = commonJdbcTemplate.query(sql.toString(), params.toArray(), listRowmapper);
+		return int0301VoList;
+	}
 
 	private RowMapper<Int0301Vo> listRowmapper = new RowMapper<Int0301Vo>() {
 		@Override

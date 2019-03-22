@@ -27,7 +27,7 @@ public class Int0304Service {
 
 	public List<Int0301Vo> list(Int0301FormVo form) {
 		List<Int0301Vo> iaRiskFactorsList = new ArrayList<Int0301Vo>();
-		iaRiskFactorsList = int0301JdbcRepository.list(form);
+		iaRiskFactorsList = int0301JdbcRepository.listInt0304(form);
 		return iaRiskFactorsList;
 	}
 

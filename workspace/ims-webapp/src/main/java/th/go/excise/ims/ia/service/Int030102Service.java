@@ -27,6 +27,9 @@ public class Int030102Service {
 
 	@Autowired
 	private Int030102JdbcRepository int030102JdbcRepository;
+	
+	@Autowired
+	private UpdateStatusRiskFactorsService updateStatusRiskFactorsService;
 
 	@Autowired
 	private IaRiskFactorsMasterRepository iaRiskFactorsMasterRepository;
@@ -82,6 +85,7 @@ public class Int030102Service {
 	public void editStatus(Int030102FormVo form) {
 //		iaRiskFactorsMasterRepository.deleteById(form.getId());
 		int030102JdbcRepository.editStatus(form);
+		updateStatusRiskFactorsService.updateStatusAddIaRiskFactorsMaster(form.getBudgetYear(), form.getInspectionWork());
 	}
 
 	public void save(Int030102FormVo form) {

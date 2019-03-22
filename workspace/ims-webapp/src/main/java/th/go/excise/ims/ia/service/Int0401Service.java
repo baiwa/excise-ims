@@ -74,21 +74,28 @@ public class Int0401Service {
 				BigDecimal riskRating = new BigDecimal(0);
 				BigDecimal calRiskRatePercent = new BigDecimal(0);
 				BigDecimal percentAll = new BigDecimal(0);
+				String checkStatusScreen = "T";
 				
 				for (IaRiskFactors factor : factors) {
 					Int0401ListVo listVo = new Int0401ListVo();
 					
 // ******************** CalculateCriteria **********************
 					IntCalculateCriteriaVo calVo = new IntCalculateCriteriaVo();
-					if(IaConstants.IA_DATA_EVALUATE.NEW.equals(factor.getDataEvaluate())) {
+					if(IaConstants.IA_STATUS_RISK_FACTORS.STATUS_3_CODE.equals(factor.getStatusScreen())) {
+						if(IaConstants.IA_DATA_EVALUATE.NEW.equals(factor.getDataEvaluate())) {
+							
+							calVo = calNew(factor.getId(),budgetYear,inspectionWork,selectCase.getProjectCode(),selectCase.getExciseCode(),selectCase.getSystemCode());
 						
-						calVo = calNew(factor.getId(),budgetYear,inspectionWork,selectCase.getProjectCode(),selectCase.getExciseCode(),selectCase.getSystemCode());
-					
-					}else if(IaConstants.IA_DATA_EVALUATE.SYSTEM_UNWORKING.equals(factor.getDataEvaluate())) {
-						
-						calVo = calSystemUnworking(factor.getId(),budgetYear,inspectionWork,selectCase.getSystemCode());
-						
+						}else if(IaConstants.IA_DATA_EVALUATE.SYSTEM_UNWORKING.equals(factor.getDataEvaluate())) {
+							
+							calVo = calSystemUnworking(factor.getId(),budgetYear,inspectionWork,selectCase.getSystemCode());
+							
+						}
+					}else {
+						checkStatusScreen = "F";
 					}
+					
+					
 					
 					
 //					calVo = IntCalculateCriteriaUtil.calculateCriteriaAndGetConfigByIdFactors(new BigDecimal(5), factor.getId());
@@ -133,13 +140,16 @@ public class Int0401Service {
 				
 				
 				
+				if("T".equals(checkStatusScreen)) {
+					list.setRiskRate(calRiskRatePercent.divide(percentAll));
+					IaRiskFactorsConfig calVo = matchConfigAllWithConfig(budgetYear, inspectionWork);
+					IntCalculateCriteriaVo calVoRes = IntCalculateCriteriaUtil.calculateCriteria(list.getRiskRate(),calVo);
+					
+					list.setRiskText(calVoRes.getTranslatingRisk());
+					list.setRiskColor(calVoRes.getCodeColor());
+				}
 				
-				list.setRiskRate(calRiskRatePercent.divide(percentAll));
-				IaRiskFactorsConfig calVo = matchConfigAllWithConfig(budgetYear, inspectionWork);
-				IntCalculateCriteriaVo calVoRes = IntCalculateCriteriaUtil.calculateCriteria(list.getRiskRate(),calVo);
 				
-				list.setRiskText(calVoRes.getTranslatingRisk());
-				list.setRiskColor(calVoRes.getCodeColor());
 				
 				
 				lists.add(list);

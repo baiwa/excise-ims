@@ -39,6 +39,7 @@ public class Int030102JdbcRepository {
 				"				a.CREATED_DATE  AS CREATED_DATE_RES,  " + 
 				"				a.DATA_EVALUATE , " + 
 				"				a.NOT_DELETE , " + 
+				"				a.SIDE , " + 
 				"        c.* " + 
 				"				FROM IA_RISK_FACTORS_MASTER a  " + 
 				"				LEFT JOIN IA_RISK_FACTORS_STATUS b  " + 
@@ -83,6 +84,7 @@ public class Int030102JdbcRepository {
 			iarfm.setCreatedBy(rs.getString("CREATED_BY_RES"));
 			iarfm.setNotDelete(rs.getString("NOT_DELETE"));
 			iarfm.setDataEvaluate(rs.getString("DATA_EVALUATE"));
+			iarfm.setSide(rs.getString("SIDE"));
 			
 			String date = checkAndConvertDateToString(rs.getDate("CREATED_DATE_RES"));
 			
