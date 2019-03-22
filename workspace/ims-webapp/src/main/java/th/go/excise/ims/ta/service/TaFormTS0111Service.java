@@ -9,13 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import th.co.baiwa.buckwaframework.common.bean.ReportJsonBean;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.IMG_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
@@ -29,43 +25,39 @@ public class TaFormTS0111Service {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TaFormTS0107Service.class);
 
-	public byte[] exportTaFormTS0111(ReportJsonBean reportJsonBean) throws IOException, JRException {
+	public byte[] exportTaFormTS0111(TaFormTS0111Vo ts0111Vo) throws IOException, JRException {
 		logger.info("export TA_FORM_TS01_11");
-
-		GsonBuilder builder = new GsonBuilder();
-		Gson gson = builder.create();
-		TaFormTS0111Vo formTs = gson.fromJson(reportJsonBean.getJson(), TaFormTS0111Vo.class);
 
 		Map<String, Object> params = new HashMap<>();
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE+"."+FILE_EXTENSION.JPG));
-		params.put("docPlace", formTs.getDocPlace());
-		params.put("docDate", formTs.getDocDate());
-		params.put("docTime", formTs.getDocTime());
-		params.put("officerFullName", formTs.getOfficerFullName());
-		params.put("officerPosition", formTs.getOfficerPosition());
-		params.put("factoryName", formTs.getFactoryName());
-		params.put("newRegId", formTs.getNewRegId());
-		params.put("factoryType", formTs.getFactoryType());
-		params.put("facAddrNo", formTs.getFacAddrNo());
-		params.put("facMooNo", formTs.getFacMooNo());
-		params.put("facSoiName", formTs.getFacSoiName());
-		params.put("facThnName", formTs.getFacThnName());
-		params.put("facTambolName", formTs.getFacTambolName());
-		params.put("facAmphurName", formTs.getFacAmphurName());
-		params.put("facProvinceName", formTs.getFacProvinceName());
-		params.put("facZipCode", formTs.getFacZipCode());
-		params.put("deliverFullName", formTs.getDeliverFullName());
-		params.put("deliverPosition", formTs.getDeliverPosition());
-		params.put("deliverOther", formTs.getDeliverOther());
-		params.put("refBookNumber1", formTs.getRefBookNumber1());
-		params.put("refBookNumber2", formTs.getRefBookNumber2());
-		params.put("refDocDate", formTs.getRefDocDate());
-		params.put("taFormTS0111DtlVoList", formTs.getTaFormTS0111DtlVoList());
-		params.put("signAuthFullName1", formTs.getSignAuthFullName1());
-		params.put("signWitnessFullName1", formTs.getSignWitnessFullName1());
-		params.put("signWitnessFullName2", formTs.getSignWitnessFullName2());
+		params.put("docPlace", ts0111Vo.getDocPlace());
+		params.put("docDate", ts0111Vo.getDocDate());
+		params.put("docTime", ts0111Vo.getDocTime());
+		params.put("officerFullName", ts0111Vo.getOfficerFullName());
+		params.put("officerPosition", ts0111Vo.getOfficerPosition());
+		params.put("factoryName", ts0111Vo.getFactoryName());
+		params.put("newRegId", ts0111Vo.getNewRegId());
+		params.put("factoryType", ts0111Vo.getFactoryType());
+		params.put("facAddrNo", ts0111Vo.getFacAddrNo());
+		params.put("facMooNo", ts0111Vo.getFacMooNo());
+		params.put("facSoiName", ts0111Vo.getFacSoiName());
+		params.put("facThnName", ts0111Vo.getFacThnName());
+		params.put("facTambolName", ts0111Vo.getFacTambolName());
+		params.put("facAmphurName", ts0111Vo.getFacAmphurName());
+		params.put("facProvinceName", ts0111Vo.getFacProvinceName());
+		params.put("facZipCode", ts0111Vo.getFacZipCode());
+		params.put("deliverFullName", ts0111Vo.getDeliverFullName());
+		params.put("deliverPosition", ts0111Vo.getDeliverPosition());
+		params.put("deliverOther", ts0111Vo.getDeliverOther());
+		params.put("refBookNumber1", ts0111Vo.getRefBookNumber1());
+		params.put("refBookNumber2", ts0111Vo.getRefBookNumber2());
+		params.put("refDocDate", ts0111Vo.getRefDocDate());
+		params.put("taFormTS0111DtlVoList", ts0111Vo.getTaFormTS0111DtlVoList());
+		params.put("signAuthFullName1", ts0111Vo.getSignAuthFullName1());
+		params.put("signWitnessFullName1", ts0111Vo.getSignWitnessFullName1());
+		params.put("signWitnessFullName2", ts0111Vo.getSignWitnessFullName2());
 		// format string to LocalDate
-		Date localDate = ConvertDateUtils.parseStringToDate(formTs.getDocDate(), ConvertDateUtils.YYYYMMDD,
+		Date localDate = ConvertDateUtils.parseStringToDate(ts0111Vo.getDocDate(), ConvertDateUtils.DD_MM_YYYY,
 				ConvertDateUtils.LOCAL_EN);
 		params.put("day",
 				ConvertDateUtils.formatDateToString(localDate, ConvertDateUtils.DD, ConvertDateUtils.LOCAL_TH));
@@ -83,28 +75,24 @@ public class TaFormTS0111Service {
 		return content;
 	}
 	
-	public byte[] exportTaFormTS01112(ReportJsonBean reportJsonBean) throws IOException, JRException {
+	public byte[] exportTaFormTS01112(TaFormTS0111Vo ts0111Vo) throws IOException, JRException {
 		logger.info("export TA_FORM_TS01_11-2");
 
-		GsonBuilder builder = new GsonBuilder();
-		Gson gson = builder.create();
-		TaFormTS0111Vo formTs = gson.fromJson(reportJsonBean.getJson(), TaFormTS0111Vo.class);
-
 		Map<String, Object> params = new HashMap<>();
-		params.put("authFullName1", formTs.getAuthFullName1());
-		params.put("signAuthFullName2", formTs.getSignAuthFullName2());
-		params.put("signWitnessFullName3", formTs.getSignWitnessFullName3());
-		params.put("signWitnessFullName4", formTs.getSignWitnessFullName4());
-		params.put("authFullName2", formTs.getAuthFullName2());
-		params.put("authPosition", formTs.getAuthPosition());
-		params.put("authPositionOther", formTs.getAuthPositionOther());
-		params.put("authFrom", formTs.getAuthFrom());
-		params.put("signAuthFullName3", formTs.getSignAuthFullName3());
-		params.put("signAuthFullName4", formTs.getSignAuthFullName4());
-		params.put("signWitnessFullName5", formTs.getSignWitnessFullName5());
-		params.put("signWitnessFullName6", formTs.getSignWitnessFullName6());
+		params.put("authFullName1", ts0111Vo.getAuthFullName1());
+		params.put("signAuthFullName2", ts0111Vo.getSignAuthFullName2());
+		params.put("signWitnessFullName3", ts0111Vo.getSignWitnessFullName3());
+		params.put("signWitnessFullName4", ts0111Vo.getSignWitnessFullName4());
+		params.put("authFullName2", ts0111Vo.getAuthFullName2());
+		params.put("authPosition", ts0111Vo.getAuthPosition());
+		params.put("authPositionOther", ts0111Vo.getAuthPositionOther());
+		params.put("authFrom", ts0111Vo.getAuthFrom());
+		params.put("signAuthFullName3", ts0111Vo.getSignAuthFullName3());
+		params.put("signAuthFullName4", ts0111Vo.getSignAuthFullName4());
+		params.put("signWitnessFullName5", ts0111Vo.getSignWitnessFullName5());
+		params.put("signWitnessFullName6", ts0111Vo.getSignWitnessFullName6());
 		// format string to LocalDate
-		Date localDate = ConvertDateUtils.parseStringToDate(formTs.getAuthDate(), ConvertDateUtils.YYYYMMDD,
+		Date localDate = ConvertDateUtils.parseStringToDate(ts0111Vo.getAuthDate(), ConvertDateUtils.DD_MM_YYYY,
 				ConvertDateUtils.LOCAL_EN);
 		params.put("day",
 				ConvertDateUtils.formatDateToString(localDate, ConvertDateUtils.DD, ConvertDateUtils.LOCAL_TH));

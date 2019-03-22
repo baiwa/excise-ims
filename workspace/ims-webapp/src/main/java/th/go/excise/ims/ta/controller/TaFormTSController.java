@@ -26,10 +26,12 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.rest.adapter.DateThaiJsonDeserializer;
 import th.go.excise.ims.ta.service.TaFormTS0107Service;
 import th.go.excise.ims.ta.service.TaFormTS0110Service;
+import th.go.excise.ims.ta.service.TaFormTS0111Service;
 import th.go.excise.ims.ta.service.TaFormTS0113Service;
 import th.go.excise.ims.ta.service.TaFormTS0119Service;
 import th.go.excise.ims.ta.vo.TaFormTS0107Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0110Vo;
+import th.go.excise.ims.ta.vo.TaFormTS0111Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0113Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0119Vo;
 
@@ -45,6 +47,7 @@ public class TaFormTSController {
 
 	private TaFormTS0107Service taFormTS0107Service;
 	private TaFormTS0110Service taFormTS0110Service;
+	private TaFormTS0111Service taFormTS0111Service;
 	private TaFormTS0113Service taFormTS0113Service;
 	private TaFormTS0119Service taFormTS0119Service;
 
@@ -53,9 +56,11 @@ public class TaFormTSController {
 			TaFormTS0107Service taFormTS0107Service,
 			TaFormTS0110Service taFormTS0110Service,
 			TaFormTS0113Service taFormTS0113Service,
+			TaFormTS0111Service taFormTS0111Service,
 			TaFormTS0119Service taFormTS0119Service) {
 		this.taFormTS0107Service = taFormTS0107Service;
 		this.taFormTS0110Service = taFormTS0110Service;
+		this.taFormTS0111Service = taFormTS0111Service;
 		this.taFormTS0113Service = taFormTS0113Service;
 		this.taFormTS0119Service = taFormTS0119Service;
 	}
@@ -89,6 +94,32 @@ public class TaFormTSController {
 		response.setContentType("application/octet-stream");
 
 		FileCopyUtils.copy(bytes, response.getOutputStream());
+	}
+
+	// TODO TaFormTS0111
+	@PostMapping("/pdf/ta-form-ts0111")
+	public void pdfTs0111(@ModelAttribute ReportJsonBean reportJsonBean, HttpServletResponse response) throws Exception {
+		logger.info("export TaFormTS01_11.pdf");
+		TaFormTS0111Vo ts0111Vo = gson.fromJson(reportJsonBean.getJson(), TaFormTS0111Vo.class);
+		byte[] bytes = taFormTS0111Service.exportTaFormTS0111(ts0111Vo);
+
+		String filename = String.format("TaFormTS01_11.pdf", DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now()));
+
+		response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", filename));
+		response.setContentType("application/octet-stream");
+
+		FileCopyUtils.copy(bytes, response.getOutputStream());
+		
+		logger.info("export TaFormTS01_11-2.pdf");
+		TaFormTS0111Vo ts01112Vo = gson.fromJson(reportJsonBean.getJson(), TaFormTS0111Vo.class);
+		byte[] bytes2 = taFormTS0111Service.exportTaFormTS01112(ts01112Vo);
+
+		String filename2 = String.format("TaFormTS01_11.pdf", DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now()));
+
+		response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", filename2));
+		response.setContentType("application/octet-stream");
+
+		FileCopyUtils.copy(bytes2, response.getOutputStream());
 	}
 	
 	@PostMapping("/pdf/ta-form-ts0113")

@@ -13,9 +13,9 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import th.co.baiwa.buckwaframework.common.bean.ReportJsonBean;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
+import th.go.excise.ims.ta.vo.TaFormTS0111Vo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
@@ -33,21 +33,23 @@ public class TaFormTS0111ServiceTest {
 	@Test
 	public void test_exportTaFormTS0111() throws Throwable, IOException {
 		
-		ReportJsonBean data = new ReportJsonBean();
+		TaFormTS0111Vo data = new TaFormTS0111Vo();
 		
-		data.setJson("{\"docPlace\": \"สำนักงาน\", \"docDate\":\"20190322\"}");
+		data.setDocPlace("สำนักงาน");
+		data.setDocDate("22/03/2019");
 		
 		byte[] reportFile = taFormTS0111Service.exportTaFormTS0111(data);
 		IOUtils.write(reportFile, new FileOutputStream(new File(PATH + NAME)));
 	}
-//	@Test
-//	public void test_exportTaFormTS01112() throws Throwable, IOException {
-//		
-//		ReportJsonBean data = new ReportJsonBean();
-//		
-//		data.setJson("{\"authPosition\": \"1\", \"authDate\":\"20190322\"}");
-//		
-//		byte[] reportFile = formTS0111Service.exportTaFormTS01112(data);
-//		IOUtils.write(reportFile, new FileOutputStream(new File(PATH + NAME2)));
-//	}
+	@Test
+	public void test_exportTaFormTS01112() throws Throwable, IOException {
+		
+		TaFormTS0111Vo data = new TaFormTS0111Vo();
+	
+		data.setAuthDate("22/03/2019");
+		data.setAuthPosition("1");
+		
+		byte[] reportFile = formTS0111Service.exportTaFormTS01112(data);
+		IOUtils.write(reportFile, new FileOutputStream(new File(PATH + NAME2)));
+	}
 }
