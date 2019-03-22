@@ -7,10 +7,6 @@ import java.io.IOException;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-
-import th.co.baiwa.buckwaframework.common.bean.ReportJsonBean;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
@@ -65,14 +61,7 @@ public class TaFormTS0107ServiceTest {
 		data.setOtherText("");
 		data.setOtherPhone("");
 
-		// convert object to json
-		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-		String json = ow.writeValueAsString(data);
-		// set String json to datajson
-		ReportJsonBean datajson = new ReportJsonBean();
-		datajson.setJson(json);
-
-		byte[] reportFile = taFormTS0107Service.exportTaFormTS0107(datajson);
+		byte[] reportFile = taFormTS0107Service.exportTaFormTS0107(data);
 		IOUtils.write(reportFile, new FileOutputStream(new File(PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_07 + "." + FILE_EXTENSION.PDF)));
 
 	}

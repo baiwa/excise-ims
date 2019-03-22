@@ -8,12 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import th.co.baiwa.buckwaframework.common.bean.ReportJsonBean;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.IMG_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
@@ -27,12 +23,8 @@ public class TaFormTS0107Service {
 
 	private static final Logger logger = LoggerFactory.getLogger(TaFormTS0107Service.class);
 
-	public byte[] exportTaFormTS0107(ReportJsonBean reportJsonBean) throws Exception, IOException {
+	public byte[] exportTaFormTS0107(TaFormTS0107Vo formTs) throws Exception, IOException {
 		logger.info("exportTaFormTS0107");
-
-		GsonBuilder builder = new GsonBuilder();
-		Gson gson = builder.create();
-		TaFormTS0107Vo formTs = gson.fromJson(reportJsonBean.getJson(), TaFormTS0107Vo.class);
 
 		Map<String, Object> params = new HashMap<>();
 
