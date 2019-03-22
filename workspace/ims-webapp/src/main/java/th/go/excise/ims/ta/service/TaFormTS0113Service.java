@@ -64,7 +64,7 @@ public class TaFormTS0113Service {
         String audDay = ConvertDateUtils.formatDateToString(audDate, ConvertDateUtils.DD);
         String audMonth = ConvertDateUtils.formatDateToString(audDate, ConvertDateUtils.MMMM);
         String audYear = ConvertDateUtils.formatDateToString(audDate, ConvertDateUtils.YYYY);
-        String auditDate = StringUtils.toString(Integer.parseInt(audDay)) + " " + audMonth + " " + audYear;
+        String auditDate = audDay + " " + audMonth + " " + audYear;
         params.put("auditDate", auditDate);
 
         params.put("ownerFullName", ts0113Vo.getOwnerFullName());

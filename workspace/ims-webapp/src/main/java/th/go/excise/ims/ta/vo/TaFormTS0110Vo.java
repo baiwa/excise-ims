@@ -1,9 +1,11 @@
 package th.go.excise.ims.ta.vo;
 
+import java.util.Date;
+
 public class TaFormTS0110Vo {
 	private String testimonyOf;
 	private String testimonyTopic;
-	private String docDate;
+	private Date docDate;
 	private String officerFullName;
 	private String officerPosition;
 	private String testimonyFullName;
@@ -47,11 +49,11 @@ public class TaFormTS0110Vo {
 		this.testimonyTopic = testimonyTopic;
 	}
 
-	public String getDocDate() {
+	public Date getDocDate() {
 		return docDate;
 	}
 
-	public void setDocDate(String docDate) {
+	public void setDocDate(Date docDate) {
 		this.docDate = docDate;
 	}
 

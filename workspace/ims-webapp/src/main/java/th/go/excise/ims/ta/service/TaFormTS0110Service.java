@@ -1,7 +1,6 @@
 package th.go.excise.ims.ta.service;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,18 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import th.co.baiwa.buckwaframework.common.bean.ReportJsonBean;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.IMG_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
-import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.go.excise.ims.ta.vo.TaFormTS0110Vo;
 
@@ -29,15 +23,11 @@ public class TaFormTS0110Service {
 
 	private static final Logger logger = LoggerFactory.getLogger(TaFormTS0107Service.class);
 
-	public byte[] exportTaFormTS0110(ReportJsonBean reportJsonBean) throws IOException, JRException {
-		logger.info("export TA_FORM_TS01_10");
-
-		GsonBuilder builder = new GsonBuilder();
-		Gson gson = builder.create();
-		TaFormTS0110Vo formTs = gson.fromJson(reportJsonBean.getJson(), TaFormTS0110Vo.class);
-
+	public byte[] exportTaFormTS0110(TaFormTS0110Vo formTs) throws IOException, JRException {
+		logger.info("export exportTaFormTS0110");
+		
 		Map<String, Object> params = new HashMap<>();
-		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA+"."+FILE_EXTENSION.JPG));
+		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
 		params.put("testimonyOf", formTs.getTestimonyOf());
 		params.put("testimonyTopic", formTs.getTestimonyTopic());
 		params.put("docDate", formTs.getDocDate());
@@ -67,36 +57,9 @@ public class TaFormTS0110Service {
 		params.put("testimonyFactoryFullName", formTs.getTestimonyFactoryFullName());
 		params.put("newRegId", formTs.getNewRegId());
 		params.put("testimonyText", formTs.getTestimonyText());
-		// format string to LocalDate
-		Date localDate = ConvertDateUtils.parseStringToDate(formTs.getDocDate(), ConvertDateUtils.YYYYMMDD,
-				ConvertDateUtils.LOCAL_EN);
-		params.put("day",
-				ConvertDateUtils.formatDateToString(localDate, ConvertDateUtils.DD, ConvertDateUtils.LOCAL_TH));
-		params.put("month",
-				ConvertDateUtils.formatDateToString(localDate, ConvertDateUtils.MMMM, ConvertDateUtils.LOCAL_TH));
-		params.put("year",
-				ConvertDateUtils.formatDateToString(localDate, ConvertDateUtils.YYYY));
-
-//		JasperPrint jasperPrint = ReportUtils.getJasperPrint(reportName, params, new JREmptyDataSource());
-//
-//		List<ExporterInputItem> items = new ArrayList<ExporterInputItem>();
-//		items.add(new SimpleExporterInputItem(jasperPrint));
-//
-//		JRPdfExporter exporter = new JRPdfExporter();
-//		exporter.setExporterInput(new SimpleExporterInput(items));
-//
-//		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
-//		exporter.exportReport();
-//		byte[] content = outputStream.toByteArray();
-//
-//		ReportUtils.closeResourceFileInputStream(params);
-//
-//		return content;
 
 		// set output
-		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_010 + "." + FILE_EXTENSION.JASPER,
-				params);
+		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_010 + "." + FILE_EXTENSION.JASPER, params);
 		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
 		ReportUtils.closeResourceFileInputStream(params);
 

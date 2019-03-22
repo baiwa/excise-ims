@@ -22,9 +22,7 @@
 	<parameter name="logo" class="java.io.InputStream"/>
 	<parameter name="testimonyOf" class="java.lang.String"/>
 	<parameter name="testimonyTopic" class="java.lang.String"/>
-	<parameter name="day" class="java.lang.String"/>
-	<parameter name="month" class="java.lang.String"/>
-	<parameter name="year" class="java.lang.String"/>
+	<parameter name="docDate" class="java.util.Date"/>
 	<parameter name="officerFullName" class="java.lang.String"/>
 	<parameter name="officerPosition" class="java.lang.String"/>
 	<parameter name="testimonyFullName" class="java.lang.String"/>
@@ -89,7 +87,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$P{day}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd",new Locale("th", "TH")).format($P{docDate})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="279" y="59" width="26" height="23" uuid="8fe2a634-eae6-4263-9a7d-11cfa4cf1baf"/>
@@ -106,7 +104,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$P{month}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("MMMM",new Locale("th", "TH")).format($P{docDate})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="368" y="59" width="26" height="23" uuid="7116c8cd-e2e0-4ad9-a058-b053251b6b7b"/>
@@ -123,7 +121,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$P{year}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy",new Locale("th", "TH")).format($P{docDate})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="55" y="97" width="197" height="23" uuid="739453cd-5041-4f0e-9031-44f439538b45"/>

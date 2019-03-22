@@ -24,7 +24,7 @@ import th.go.excise.ims.Application;
 public class TaFormTS0111ServiceTest {
 	
 	@Autowired
-	private TaFormTS0111Service formTS0111Service;
+	private TaFormTS0111Service taFormTS0111Service;
 
 	private static final String PATH = "/tmp/";
 	private static final String NAME = "TaFormTS01_11.pdf";
@@ -37,7 +37,7 @@ public class TaFormTS0111ServiceTest {
 		
 		data.setJson("{\"docPlace\": \"สำนักงาน\", \"docDate\":\"20190322\"}");
 		
-		byte[] reportFile = formTS0111Service.exportTaFormTS0111(data);
+		byte[] reportFile = taFormTS0111Service.exportTaFormTS0111(data);
 		IOUtils.write(reportFile, new FileOutputStream(new File(PATH + NAME)));
 	}
 //	@Test
