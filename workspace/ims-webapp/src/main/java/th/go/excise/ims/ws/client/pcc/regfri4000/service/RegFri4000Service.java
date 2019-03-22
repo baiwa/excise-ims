@@ -41,7 +41,7 @@ public class RegFri4000Service {
         RegFri4000Request regFri4000Request = new RegFri4000Request();
         regFri4000Request.setType("1");
         regFri4000Request.setNid("");
-        regFri4000Request.setNewregId(wsReg4000FormVo.getNewregId());
+        regFri4000Request.setNewregId(wsReg4000FormVo.getNewRegId());
         regFri4000Request.setActive("1");
         regFri4000Request.setPageNo("1");
         regFri4000Request.setDataPerPage("10");

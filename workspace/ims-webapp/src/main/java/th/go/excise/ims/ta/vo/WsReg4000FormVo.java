@@ -1,13 +1,13 @@
 package th.go.excise.ims.ta.vo;
 
 public class WsReg4000FormVo {
-    private String newregId;
+    private String newRegId;
 
-    public String getNewregId() {
-        return newregId;
+    public String getNewRegId() {
+        return newRegId;
     }
 
-    public void setNewregId(String newregId) {
-        this.newregId = newregId;
+    public void setNewRegId(String newRegId) {
+        this.newRegId = newRegId;
     }
 }

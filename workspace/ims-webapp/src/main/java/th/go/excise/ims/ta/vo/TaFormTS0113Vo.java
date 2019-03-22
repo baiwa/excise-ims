@@ -1,7 +1,5 @@
 package th.go.excise.ims.ta.vo;
 
-import java.util.Date;
-
 public class TaFormTS0113Vo {
 
     private String formTsNumber;
@@ -22,7 +20,7 @@ public class TaFormTS0113Vo {
     private String facAmphurName;
     private String facProvinceName;
     private String facZipCode;
-    private Date auditDate;
+    private String auditDate;
     private String ownerFullName;
     private String ownerPosition;
     private String factoryName2;
@@ -176,11 +174,11 @@ public class TaFormTS0113Vo {
         this.facZipCode = facZipCode;
     }
 
-    public Date getAuditDate() {
+    public String getAuditDate() {
         return auditDate;
     }
 
-    public void setAuditDate(Date auditDate) {
+    public void setAuditDate(String auditDate) {
         this.auditDate = auditDate;
     }
 
