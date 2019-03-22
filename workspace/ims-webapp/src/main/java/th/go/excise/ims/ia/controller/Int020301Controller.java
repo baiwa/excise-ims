@@ -96,8 +96,7 @@ public class Int020301Controller {
 	}
 
 	@GetMapping("/export/excel/{idHdr}/{budgetYear}")
-	public void export(@PathVariable("idHdr") String idHdrStr, @PathVariable("budgetYear") String budgetYear,
-			HttpServletResponse response) throws Exception {
+	public void export(@PathVariable("idHdr") String idHdrStr, @PathVariable("budgetYear") String budgetYear,HttpServletResponse response) throws Exception  {
 		// set fileName
 		String fileName = URLEncoder.encode("สรุปผลแบบสอบถามระบบการควบคุมภายใน", "UTF-8");
 
@@ -114,15 +113,22 @@ public class Int020301Controller {
 		outStream.close();
 	}
 
-	@GetMapping("/export/excel/config/{idHdr}/{budgetYear}/{idConfig}")
+	@GetMapping("/export/excel/config/{idHdr}/{budgetYear}/{idConfig}/{riskHrdPaperName}/{createUserName}/{createLastName}/{createPosition}/{checkUserName}/{checkLastName}/{checkPosition}")
 	public void export(@PathVariable("idHdr") String idHdrStr, @PathVariable("budgetYear") String budgetYear,
-			@PathVariable("idConfig") String idConfigStr, HttpServletResponse response) throws Exception {
+			 @PathVariable("idConfig") BigDecimal idConfig, 
+			 @PathVariable("riskHrdPaperName") String riskHrdPaperName,
+			 @PathVariable("createUserName") String createUserName,
+			 @PathVariable("createLastName") String createLastName,
+			 @PathVariable("createPosition") String createPosition,
+			 @PathVariable("checkUserName") String checkUserName,
+			 @PathVariable("checkLastName") String checkLastName,
+			 @PathVariable("checkPosition") String checkPosition , HttpServletResponse response) throws Exception {
 		// set fileName
 		String fileName = URLEncoder.encode("สรุปผลแบบสอบถามระบบการควบคุมภายใน", "UTF-8");
 
 		// write it as an excel attachment
 		ByteArrayOutputStream outByteStream = int020301Service.exportInt020301On030402(idHdrStr, budgetYear,
-				idConfigStr);
+				idConfig,riskHrdPaperName,createUserName,createLastName,createPosition,checkUserName,checkLastName,checkPosition);
 		byte[] outArray = outByteStream.toByteArray();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);
