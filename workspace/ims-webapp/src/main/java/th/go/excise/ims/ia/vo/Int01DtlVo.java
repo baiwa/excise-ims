@@ -17,6 +17,7 @@ public class Int01DtlVo {
 	private String responsiblePerson;
 	private String inspector;
 	private String officer;
+	private String position;
 
 	public BigDecimal getPlanDtlId() {
 		return planDtlId;
@@ -104,6 +105,14 @@ public class Int01DtlVo {
 
 	public void setOfficer(String officer) {
 		this.officer = officer;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
 	}
 
 }

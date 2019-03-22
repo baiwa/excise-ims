@@ -40,7 +40,9 @@ public class IaPlanDayActivity extends BaseEntity {
 	private Date dateEndActivity;
 	@Column(name = "ACTIVITY_STATUS")
 	private String activityStatus;
-
+	@Column(name = "ACTIVITY_SHORT")
+	private String activityShort;
+	
 	public BigDecimal getPlanDayActivityId() {
 		return planDayActivityId;
 	}
@@ -99,6 +101,14 @@ public class IaPlanDayActivity extends BaseEntity {
 
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+	public String getActivityShort() {
+		return activityShort;
+	}
+
+	public void setActivityShort(String activityShort) {
+		this.activityShort = activityShort;
 	}
 
 }

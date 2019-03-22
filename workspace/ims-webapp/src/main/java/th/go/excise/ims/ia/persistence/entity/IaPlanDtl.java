@@ -47,6 +47,9 @@ public class IaPlanDtl extends BaseEntity {
 	private String inspector;
 	@Column(name = "OFFICER")
 	private String officer;
+	@Column(name = "POSITION")
+	private String position;
+	
 
 	public BigDecimal getPlanDtlId() {
 		return planDtlId;
@@ -138,6 +141,14 @@ public class IaPlanDtl extends BaseEntity {
 	
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
 	}
 
 }
