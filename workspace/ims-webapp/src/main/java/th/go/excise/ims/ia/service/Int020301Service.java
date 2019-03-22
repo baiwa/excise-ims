@@ -27,6 +27,7 @@ import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
+import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfigAll;
 import th.go.excise.ims.ia.persistence.entity.IaRiskQtnConfig;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
@@ -89,7 +90,7 @@ public class Int020301Service {
 			return configs.getLowCondition();
 		}
 	}
-
+	IntCalculateCriteriaVo cal =  new IntCalculateCriteriaVo();
 	public List<Int020301InfoVo> findInfoByIdHdr(String idHdrStr, String budgetYear, String secter) {
 		BigDecimal idHdr = new BigDecimal(idHdrStr);
 		IaRiskQtnConfig configs = iaRiskQtnConfigRepository.findByIdQtnHdrAndIsDeleted(idHdr, "N");
@@ -97,12 +98,15 @@ public class Int020301Service {
 		datas = int020301JdbcRepository.findInfoByIdSide(idHdr, budgetYear, secter);
 		for (Int020301InfoVo data : datas) {
 			// Sides Data
-			List<Int020301DataVo> sideDtls = int020301JdbcRepository.findDataByIdHdr(idHdr, budgetYear,
-					data.getAreaName());
+			List<Int020301DataVo> sideDtls = int020301JdbcRepository.findDataByIdHdr(idHdr, budgetYear,data.getAreaName());
+			
 			String condition = "";
 			double all = 0;
 			double declineValue = 0;
 			for (Int020301DataVo sideDtl : sideDtls) {
+				
+				IntCalculateCriteriaVo cal = new IntCalculateCriteriaVo();
+				IaRiskFactorsConfig configFactor = matchConfigQtnWithConfig(configs);
 				// Calculate RiskName
 				double sum = 0;
 				if (sideDtl.getDeclineValue() == null) {
@@ -119,13 +123,22 @@ public class Int020301Service {
 					all = all + sum;
 					declineValue = declineValue + sideDtl.getDeclineValue().doubleValue();
 					condition = conditionConfigs(sideDtl.getDeclineValue(), new BigDecimal(sum), configs);
+					
+					cal = IntCalculateCriteriaUtil.calculateCriteria(sideDtl.getDeclineValue(), configFactor);
 				} else {
 					if (sideDtl.getAcceptValue() != null) {
+						
 						condition = conditionConfigs(new BigDecimal(0), sideDtl.getAcceptValue(), configs);
+						cal = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(0), configFactor);
+						
 					} else {
+						
 						condition = conditionConfigs(new BigDecimal(0), new BigDecimal(0), configs);
+						cal = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(0), configFactor);
+						
 					}
 				}
+				
 				if (">".equals(condition)) { // High
 					sideDtl.setRiskName(configs.getHigh());
 					sideDtl.setRiskColor(configs.getHighColor());
@@ -136,6 +149,8 @@ public class Int020301Service {
 					sideDtl.setRiskName(configs.getLow());
 					sideDtl.setRiskColor(configs.getLowColor());
 				}
+				
+				sideDtl.setIntCalculateCriteriaVo(cal);
 			}
 			data.setSideDtls(sideDtls);
 			// RiskQuantity
@@ -185,8 +200,7 @@ public class Int020301Service {
 		if (config.isPresent()) {
 			for (Int020301InfoVo data : datas) {
 				// Sides Data
-				List<Int020301DataVo> sideDtls = int020301JdbcRepository.findDataByIdHdr(idHdr, budgetYear,
-						data.getAreaName());
+				List<Int020301DataVo> sideDtls = int020301JdbcRepository.findDataByIdHdr(idHdr, budgetYear,data.getAreaName());
 				String condition = "";
 				double all = 0;
 				double declineValue = 0;
@@ -259,6 +273,55 @@ public class Int020301Service {
 		}
 		return datas;
 	}
+	
+	public IaRiskFactorsConfig matchConfigQtnWithConfig(IaRiskQtnConfig configQtn) {
+		IaRiskFactorsConfig con = new IaRiskFactorsConfig();
+
+			con.setFactorsLevel(new BigDecimal(3));
+	
+			con.setVerylow("");
+			con.setVerylowStart("");
+			con.setVerylowEnd("");
+			con.setVerylowCondition("");
+			con.setVerylowRating(new BigDecimal(0));
+			con.setVerylowColor("");
+	
+	
+			con.setLow(configQtn.getLow());
+			con.setLowStart((configQtn.getLowStart()!=null)?configQtn.getLowStart().toString():"");
+			con.setLowEnd((configQtn.getLowEnd()!=null)?configQtn.getLowEnd().toString():"");
+			con.setLowCondition(configQtn.getLowCondition());
+			con.setLowRating(configQtn.getLowRating());
+			con.setLowColor(configQtn.getLowColor());
+	
+	
+			con.setMedium(configQtn.getMedium());
+			con.setMediumStart((configQtn.getMediumStart()!=null)?configQtn.getMediumStart().toString():"");
+			con.setMediumEnd((configQtn.getMediumEnd()!=null)?configQtn.getMediumEnd().toString():"");
+			con.setMediumCondition(configQtn.getMediumCondition());
+			con.setMediumRating(configQtn.getMediumRating());
+			con.setMediumColor(configQtn.getMediumColor());
+	
+	
+			con.setHigh(configQtn.getHigh());
+			con.setHighStart((configQtn.getHighStart()!=null)?configQtn.getHighStart().toString():"");
+			con.setHighEnd((configQtn.getHighEnd()!=null)?configQtn.getHighEnd().toString():"");
+			con.setHighCondition(configQtn.getHighCondition());
+			con.setHighRating(configQtn.getHighRating());
+			con.setHighColor(configQtn.getHighColor());
+	
+	
+			con.setVeryhigh("");
+			con.setVeryhighStart("");
+			con.setVeryhighEnd("");
+			con.setVeryhighCondition("");
+			con.setVeryhighRating(new BigDecimal(0));
+			con.setVeryhighColor("");
+
+		
+		return con;
+	}
+	
 
 	DecimalFormat formatter = new DecimalFormat("#,##0.00");
 

@@ -9,6 +9,8 @@ public class Int020301DataVo {
 	String risk;
 	String riskColor;
 
+	IntCalculateCriteriaVo intCalculateCriteriaVo;
+
 	public String getRiskColor() {
 		return riskColor;
 	}
@@ -48,4 +50,14 @@ public class Int020301DataVo {
 	public void setRiskName(String riskName) {
 		this.riskName = riskName;
 	}
+
+	public IntCalculateCriteriaVo getIntCalculateCriteriaVo() {
+		return intCalculateCriteriaVo;
+	}
+
+	public void setIntCalculateCriteriaVo(IntCalculateCriteriaVo intCalculateCriteriaVo) {
+		this.intCalculateCriteriaVo = intCalculateCriteriaVo;
+	}
+	
+	
 }
