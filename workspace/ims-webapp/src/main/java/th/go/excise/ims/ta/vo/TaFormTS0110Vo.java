@@ -29,9 +29,7 @@ public class TaFormTS0110Vo {
 	private String testimonyPosition;
 	private String testimonyFactoryFullName;
 	private String newRegId;
-	private String testimonyTe;
-
-
+	private String testimonyText;
 
 	public String getTestimonyOf() {
 		return testimonyOf;
@@ -257,12 +255,12 @@ public class TaFormTS0110Vo {
 		this.newRegId = newRegId;
 	}
 
-	public String getTestimonyTe() {
-		return testimonyTe;
+	public String getTestimonyText() {
+		return testimonyText;
 	}
 
-	public void setTestimonyTe(String testimonyTe) {
-		this.testimonyTe = testimonyTe;
+	public void setTestimonyText(String testimonyText) {
+		this.testimonyText = testimonyText;
 	}
 	
 }

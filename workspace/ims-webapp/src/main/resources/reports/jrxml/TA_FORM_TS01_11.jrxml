@@ -1,60 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="N_mis01-2" pageWidth="595" pageHeight="842" columnWidth="440" leftMargin="85" rightMargin="70" topMargin="42" bottomMargin="42" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_11" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="55" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-	<property name="com.jaspersoft.studio.unit." value="cm"/>
-	<property name="com.jaspersoft.studio.unit.pageHeight" value="cm"/>
-	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
-	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
-	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
-	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
-	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
-	<property name="com.jaspersoft.studio.unit.columnWidth" value="cm"/>
-	<property name="com.jaspersoft.studio.unit.columnSpacing" value="cm"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="19" isBold="true"/>
 	<style name="data" hTextAlign="Left" hImageAlign="Center" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="16"/>
 	<parameter name="logo" class="java.io.InputStream"/>
-	<parameter name="office" class="java.lang.String"/>
+	<parameter name="docPlace" class="java.lang.String"/>
 	<parameter name="day" class="java.lang.String"/>
 	<parameter name="month" class="java.lang.String"/>
 	<parameter name="year" class="java.lang.String"/>
-	<parameter name="time" class="java.lang.String"/>
-	<parameter name="name1" class="java.lang.String"/>
-	<parameter name="position" class="java.lang.String"/>
-	<parameter name="tax" class="java.lang.String"/>
-	<parameter name="exciseId" class="java.lang.String"/>
-	<parameter name="factory" class="java.lang.Boolean"/>
-	<parameter name="service" class="java.lang.Boolean"/>
-	<parameter name="company" class="java.lang.Boolean"/>
-	<parameter name="homeNumber" class="java.lang.String"/>
-	<parameter name="moo" class="java.lang.String"/>
-	<parameter name="byWay" class="java.lang.String"/>
-	<parameter name="street" class="java.lang.String"/>
-	<parameter name="tambol" class="java.lang.String"/>
-	<parameter name="district" class="java.lang.String"/>
-	<parameter name="province" class="java.lang.String"/>
-	<parameter name="zipCode" class="java.lang.String"/>
-	<parameter name="name2" class="java.lang.String"/>
-	<parameter name="owner" class="java.lang.Boolean"/>
-	<parameter name="director" class="java.lang.Boolean"/>
-	<parameter name="partner" class="java.lang.Boolean"/>
-	<parameter name="attorney" class="java.lang.Boolean"/>
-	<parameter name="other" class="java.lang.Boolean"/>
-	<parameter name="otherTxt" class="java.lang.String"/>
-	<parameter name="book" class="java.lang.String"/>
-	<parameter name="atNumber1" class="java.lang.String"/>
-	<parameter name="atNumber2" class="java.lang.String"/>
-	<parameter name="date" class="java.lang.String"/>
-	<parameter name="donor" class="java.lang.String"/>
-	<parameter name="witness1" class="java.lang.String"/>
-	<parameter name="witness2" class="java.lang.String"/>
+	<parameter name="docTime" class="java.lang.String"/>
+	<parameter name="officerFullName" class="java.lang.String"/>
+	<parameter name="officerPosition" class="java.lang.String"/>
+	<parameter name="factoryName" class="java.lang.String"/>
+	<parameter name="newRegId" class="java.lang.String"/>
+	<parameter name="factoryType" class="java.lang.Boolean"/>
+	<parameter name="facAddrNo" class="java.lang.String"/>
+	<parameter name="facMooNo" class="java.lang.String"/>
+	<parameter name="facSoiName" class="java.lang.String"/>
+	<parameter name="facThnName" class="java.lang.String"/>
+	<parameter name="facTambolName" class="java.lang.String"/>
+	<parameter name="facAmphurName" class="java.lang.String"/>
+	<parameter name="facProvinceName" class="java.lang.String"/>
+	<parameter name="facZipCode" class="java.lang.String"/>
+	<parameter name="deliverFullName" class="java.lang.String"/>
+	<parameter name="deliverPosition" class="java.lang.Boolean"/>
+	<parameter name="deliverOther" class="java.lang.String"/>
+	<parameter name="refBookNumber1" class="java.lang.String"/>
+	<parameter name="refBookNumber2" class="java.lang.String"/>
+	<parameter name="refDocDate" class="java.lang.String"/>
+	<parameter name="signAuthFullName1" class="java.lang.String"/>
+	<parameter name="signWitnessFullName1" class="java.lang.String"/>
+	<parameter name="signWitnessFullName2" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="list" class="java.lang.String"/>
-	<field name="qty" class="java.lang.String"/>
-	<field name="note" class="java.lang.String"/>
-	<field name="no" class="java.lang.String"/>
+	<field name="docName" class="java.lang.String"/>
+	<field name="docQty" class="java.lang.String"/>
+	<field name="docComment" class="java.lang.String"/>
+	<field name="recNo" class="java.lang.String"/>
 	<title>
 		<band height="358">
 			<image scaleImage="RealHeight" isUsingCache="false">
@@ -67,7 +52,7 @@
 				<textFieldExpression><![CDATA["ตส. ๐๑-๑๑"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Topic" isPrintRepeatedValues="false" x="0" y="70" width="440" height="24" uuid="ff6c4e91-edf3-482d-896d-41fe9bc84a27"/>
+				<reportElement style="Topic" isPrintRepeatedValues="false" x="0" y="70" width="440" height="26" uuid="ff6c4e91-edf3-482d-896d-41fe9bc84a27"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA["ใบรับมอบและส่งมอบบัญชี และเอกสาร"]]></textFieldExpression>
 			</textField>
@@ -104,7 +89,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{office}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{docPlace}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="data" x="230" y="121" width="23" height="22" uuid="c69aa1a6-13fb-4b93-94f1-e63dbbce678c"/>
@@ -256,7 +241,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{time}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{docTime}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="data" x="124" y="143" width="52" height="22" uuid="e9bfe8c1-00ec-4589-9926-848b3e36a5a0"/>
@@ -314,7 +299,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{name1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{officerFullName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="320" y="143" width="118" height="22" uuid="1aa1f26c-b495-4c42-a68c-b33ab4f56b09"/>
@@ -326,7 +311,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{position}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{officerPosition}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="data" x="216" y="165" width="224" height="15" uuid="fb77a651-7d4f-44bc-b17f-8c0e56e9b37b"/>
@@ -349,7 +334,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{tax}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{factoryName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="data" x="0" y="187" width="110" height="22" uuid="8a054338-04f6-4d88-ad6f-942ef590959e"/>
@@ -384,14 +369,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{exciseId}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{newRegId}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement style="data" x="0" y="209" width="20" height="22" uuid="ba28b92b-16e9-4555-b13d-5083abc3e473"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{factory} && $P{factory} != null)? "\u2611" : "\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["1".equals( $P{factoryType} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="data" x="20" y="209" width="77" height="22" uuid="37f62f8d-b640-4efa-bfe6-6045bef5e408"/>
@@ -403,7 +388,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{service} && $P{service} != null)? "\u2611" : "\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["2".equals( $P{factoryType} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="data" x="117" y="209" width="56" height="22" uuid="e6189908-c0af-4a80-b943-f8a1f65d4356"/>
@@ -415,7 +400,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{company} && $P{company} != null)? "\u2611" : "\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["3".equals( $P{factoryType} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="data" x="193" y="209" width="115" height="22" uuid="1335a0a6-e01b-426c-b235-c42d55789cf1"/>
@@ -524,7 +509,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{homeNumber}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{facAddrNo}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="122" y="231" width="45" height="22" uuid="c93f79dc-0f81-47b9-9115-70a2538aafdc"/>
@@ -536,7 +521,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{moo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{facMooNo}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="216" y="231" width="103" height="22" uuid="0b8bc14d-e968-4b8d-baa1-46e52d0e8fc9"/>
@@ -548,7 +533,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{byWay}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{facSoiName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="343" y="231" width="95" height="22" uuid="634383ae-7c9d-4921-a77f-8fca9dd0d9fb"/>
@@ -560,7 +545,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{street}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{facThnName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="data" x="0" y="253" width="56" height="22" uuid="4ff18288-3f8d-4f46-8cd1-92f4d11b7b0b"/>
@@ -664,7 +649,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{tambol}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{facTambolName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="170" y="253" width="70" height="22" uuid="6b76bcc6-f3bd-4d6a-9b3a-71b9aa40c8f6"/>
@@ -676,7 +661,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{district}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{facAmphurName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="278" y="253" width="70" height="22" uuid="17afd70e-fff7-45c1-b099-3694167992a3"/>
@@ -688,7 +673,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{province}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{facProvinceName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="409" y="253" width="29" height="22" uuid="ceba6b33-f32f-424e-81b0-5efedbada3e5"/>
@@ -700,7 +685,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{zipCode}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{facZipCode}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="data" x="0" y="275" width="26" height="22" uuid="0383c5c2-4aac-44d9-a5cf-428a8b611297"/>
@@ -747,14 +732,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{name2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{deliverFullName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement style="data" x="0" y="297" width="20" height="22" uuid="8cf625c1-99c9-45cf-a1e6-dd61bc864f35"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{owner} && $P{owner} != null)? "\u2611" : "\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["1".equals( $P{deliverPosition} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="data" x="20" y="297" width="36" height="22" uuid="7718f90d-12b6-4975-8a25-030141d488f5"/>
@@ -766,7 +751,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{director} && $P{director} != null)? "\u2611" : "\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["2".equals( $P{deliverPosition} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="data" x="76" y="297" width="80" height="22" uuid="0917c88e-e05d-463a-971e-09f7299dea55"/>
@@ -778,7 +763,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{partner} && $P{partner} != null)? "\u2611" : "\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["3".equals( $P{deliverPosition} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="data" x="176" y="297" width="70" height="22" uuid="d40199ef-6a15-494b-b6e6-7ce6b3358d2f"/>
@@ -790,7 +775,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{attorney} && $P{attorney}!= null)? "\u2611" : "\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["4".equals( $P{deliverPosition} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="data" x="266" y="297" width="70" height="22" uuid="e8cbe381-d91a-4b96-8a0c-c563b1fa1e0e"/>
@@ -802,7 +787,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{other} && $P{other}!= null)? "\u2611" : "\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["5".equals( $P{deliverPosition} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="data" x="356" y="297" width="84" height="15" uuid="bf0a9d34-366a-4eea-a10f-b4c8ff0e9c92"/>
@@ -825,7 +810,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{otherTxt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{deliverOther}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="data" x="0" y="319" width="50" height="22" uuid="e4c3a4fc-ab1c-4618-ad6c-e13be50c4d12"/>
@@ -918,10 +903,10 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{book}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{refBookNumber1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="134" y="319" width="36" height="22" uuid="2dab0758-a362-4738-a94e-9a1d39b6bf1b"/>
+				<reportElement style="data" x="134" y="319" width="82" height="22" uuid="2dab0758-a362-4738-a94e-9a1d39b6bf1b"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -930,7 +915,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{atNumber1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{refBookNumber2}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="253" y="319" width="90" height="22" uuid="868c16ff-efa0-4d67-88c8-41f3f8a7a732"/>
@@ -942,31 +927,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="data" x="170" y="319" width="12" height="22" uuid="311df4fb-d305-4081-b5dc-5c0f00bc1d3b"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA["/"]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="181" y="319" width="36" height="22" uuid="8dd40c9e-028e-49c1-a642-75ad99580d61"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{atNumber2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{refDocDate}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -1014,7 +975,7 @@
 					<pen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{recNo}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="40" y="0" width="250" height="22" uuid="3fcf1579-c034-437e-8c09-3ee888fb3017"/>
@@ -1022,7 +983,7 @@
 					<pen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$F{list}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{docName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="290" y="0" width="60" height="22" uuid="8f7e4004-fb08-4aa6-8aab-66a8ce4450f5"/>
@@ -1030,7 +991,7 @@
 					<pen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{qty}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{docQty}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="350" y="0" width="90" height="22" uuid="cf8df183-5869-4c2a-b800-cc9043291502"/>
@@ -1038,7 +999,7 @@
 					<pen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$F{note}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{docComment}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -1124,7 +1085,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$P{donor}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{signAuthFullName1}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="data" x="220" y="64" width="34" height="22" uuid="e1853cae-b5b9-4ad6-a72d-e7afbb3145e4"/>
@@ -1206,7 +1167,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$P{witness1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{signWitnessFullName1}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="data" x="220" y="108" width="34" height="22" uuid="113d9c65-228f-4de4-9942-f2c1d3770c44"/>
@@ -1288,7 +1249,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$P{witness2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{signWitnessFullName2}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

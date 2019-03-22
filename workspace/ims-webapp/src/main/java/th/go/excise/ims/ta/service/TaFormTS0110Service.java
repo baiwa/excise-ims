@@ -17,6 +17,7 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import th.co.baiwa.buckwaframework.common.bean.ReportJsonBean;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.IMG_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
@@ -36,7 +37,7 @@ public class TaFormTS0110Service {
 		TaFormTS0110Vo formTs = gson.fromJson(reportJsonBean.getJson(), TaFormTS0110Vo.class);
 
 		Map<String, Object> params = new HashMap<>();
-		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, "logo-garuda.jpg"));
+		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA+"."+FILE_EXTENSION.JPG));
 		params.put("testimonyOf", formTs.getTestimonyOf());
 		params.put("testimonyTopic", formTs.getTestimonyTopic());
 		params.put("docDate", formTs.getDocDate());
@@ -65,7 +66,7 @@ public class TaFormTS0110Service {
 		params.put("testimonyPosition", formTs.getTestimonyPosition());
 		params.put("testimonyFactoryFullName", formTs.getTestimonyFactoryFullName());
 		params.put("newRegId", formTs.getNewRegId());
-		params.put("testimonyTe", formTs.getTestimonyTe());
+		params.put("testimonyText", formTs.getTestimonyText());
 		// format string to LocalDate
 		Date localDate = ConvertDateUtils.parseStringToDate(formTs.getDocDate(), ConvertDateUtils.YYYYMMDD,
 				ConvertDateUtils.LOCAL_EN);
