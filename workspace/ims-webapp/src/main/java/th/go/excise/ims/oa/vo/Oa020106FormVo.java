@@ -34,8 +34,26 @@ public class Oa020106FormVo {
 	private String mobile;
 	private String address;
 	private String warehouseAddress;
+	private String sectorName;
+	private String areaName;
 	private List<OaCustomerLicenDetail> details;
 	private List<OaCustomerLicenDetail> deletes;
+
+	public String getSectorName() {
+		return sectorName;
+	}
+
+	public void setSectorName(String sectorName) {
+		this.sectorName = sectorName;
+	}
+
+	public String getAreaName() {
+		return areaName;
+	}
+
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
+	}
 
 	public BigDecimal getOaCuslicenseId() {
 		return oaCuslicenseId;

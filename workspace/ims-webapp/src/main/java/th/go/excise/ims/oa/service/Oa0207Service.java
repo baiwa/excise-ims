@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
-import th.go.excise.ims.oa.persistence.entity.OaCustomer;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.oa.persistence.entity.OaCustomerLicen;
 import th.go.excise.ims.oa.persistence.entity.OaCustomerLicenDetail;
 import th.go.excise.ims.oa.persistence.repository.OaCustomerLicenDetailRepository;
@@ -19,6 +19,7 @@ import th.go.excise.ims.oa.persistence.repository.OaCustomerLicenRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0207JdbcRepository;
 import th.go.excise.ims.oa.vo.Oa020106FormVo;
 import th.go.excise.ims.oa.vo.Oa0207Vo;
+import th.go.excise.ims.oa.vo.Oa207CodeVo;
 
 @Service
 public class Oa0207Service {
@@ -32,11 +33,34 @@ public class Oa0207Service {
 	@Autowired
 	OaCustomerLicenDetailRepository oaCustomerLicenDetailRep;
 
-	public DataTableAjax<OaCustomerLicen> filterByCriteria(Oa0207Vo request) {
-		List<OaCustomerLicen> data = oa0207JdbcRep.getDataFilter(request);
-		DataTableAjax<OaCustomerLicen> dataTableAjax = new DataTableAjax<OaCustomerLicen>();
+	public DataTableAjax<Oa020106FormVo> filterByCriteria(Oa0207Vo request) {
+		List<Oa207CodeVo> data = oa0207JdbcRep.getDataFilter(request);
+		List<OaCustomerLicen> oldData = oaCustomerLicenRep.findAll();
+		List<OaCustomerLicen> realData = new ArrayList<OaCustomerLicen>();
+		for (OaCustomerLicen old : oldData) {
+			for (Oa207CodeVo da : data) {
+				if (da.getOffCode().equals(old.getOffCode()) && da.getIdentifyNo().equals(old.getIdentifyNo())
+						&& da.getLicenseType().equals(old.getLicenseType())) {
+					realData.add(old);
+				}
+			}
+		}
+		List<Oa020106FormVo> realDataAgain = new ArrayList<Oa020106FormVo>();
+		for (OaCustomerLicen real : realData) {
+			Oa020106FormVo realD = new Oa020106FormVo();
+			realD.setAddress(real.getAddress());
+			realD.setOaCuslicenseId(real.getOaCuslicenseId());
+			realD.setCompanyName(real.getCompanyName());
+			realD.setIdentifyNo(real.getIdentifyNo());
+			realD.setIdentifyType(real.getIdentifyType());
+			realD.setOffCode(real.getOffCode());
+			realD.setSectorName(ApplicationCache.getExciseDept(real.getOffCode()).getDeptName());
+			realD.setAreaName(ApplicationCache.getExciseDept(real.getOffCode()).getDeptName());
+			realDataAgain.add(realD);
+		}
+		DataTableAjax<Oa020106FormVo> dataTableAjax = new DataTableAjax<Oa020106FormVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
-		dataTableAjax.setData(data);
+		dataTableAjax.setData(realDataAgain);
 		dataTableAjax.setRecordsTotal(oa0207JdbcRep.countDatafilter(request));
 		dataTableAjax.setRecordsFiltered(oa0207JdbcRep.countDatafilter(request));
 		return dataTableAjax;

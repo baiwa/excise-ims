@@ -11,11 +11,10 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
-import th.go.excise.ims.oa.persistence.entity.OaCustomer;
-import th.go.excise.ims.oa.persistence.entity.OaCustomerLicen;
 import th.go.excise.ims.oa.persistence.entity.OaCustomerLicenDetail;
 import th.go.excise.ims.oa.vo.Oa020106FormVo;
 import th.go.excise.ims.oa.vo.Oa0207Vo;
+import th.go.excise.ims.oa.vo.Oa207CodeVo;
 
 @Repository
 public class Oa0207JdbcRepository {
@@ -23,25 +22,33 @@ public class Oa0207JdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
-	public List<OaCustomerLicen> getDataFilter(Oa0207Vo request) {
+	public List<Oa207CodeVo> getDataFilter(Oa0207Vo request) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" SELECT * FROM OA_CUSTOMER_LICEN WHERE 1=1 AND IS_DELETED='N' ");
+		sql.append(" SELECT L.IDENTIFY_NO AS IDENTIFY_NO, ");
+		sql.append("   L.OFF_CODE         AS OFF_CODE, ");
+		sql.append("   L.LICENSE_TYPE     AS LICENSE_TYPE ");
+		sql.append(" FROM OA_CUSTOMER_LICEN L ");
+		sql.append(" WHERE L.IS_DELETED='N' ");
 
 		if (StringUtils.isNotBlank(request.getArea())) {
-			sql.append(" AND OFFICE_CODE = ? ");
+			sql.append(" AND L.OFF_CODE = ? ");
 			params.add(request.getArea());
 		} else if (StringUtils.isNotBlank(request.getSector())) {
-			sql.append(" AND OFFICE_CODE = ? ");
+			sql.append(" AND L.OFF_CODE = ? ");
 			params.add(request.getSector());
 		}
+		
+		sql.append(" GROUP BY L.IDENTIFY_NO, ");
+		sql.append("   L.OFF_CODE, ");
+		sql.append("   L.LICENSE_TYPE ");
 
-		sql.append(" ORDER BY CREATED_DATE DESC");
+//		sql.append(" ORDER BY L.CREATED_DATE DESC");
 
 		String limit = OracleUtils.limitForDatable(sql.toString(), request.getStart(), request.getLength());
 		@SuppressWarnings({ "rawtypes", "unchecked" })
-		List<OaCustomerLicen> datas = this.commonJdbcTemplate.query(limit, params.toArray(),
-				new BeanPropertyRowMapper(OaCustomerLicen.class));
+		List<Oa207CodeVo> datas = this.commonJdbcTemplate.query(limit, params.toArray(),
+				new BeanPropertyRowMapper(Oa207CodeVo.class));
 
 		return datas;
 	}
@@ -50,17 +57,25 @@ public class Oa0207JdbcRepository {
 	public Integer countDatafilter(Oa0207Vo request) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" SELECT * FROM OA_CUSTOMER_LICEN WHERE IS_DELETED='N' ");
+		sql.append(" SELECT L.IDENTIFY_NO AS IDENTIFY_NO, ");
+		sql.append("   L.OFF_CODE         AS OFF_CODE, ");
+		sql.append("   L.LICENSE_TYPE     AS LICENSE_TYPE ");
+		sql.append(" FROM OA_CUSTOMER_LICEN L ");
+		sql.append(" WHERE L.IS_DELETED='N' ");
 
 		if (StringUtils.isNotBlank(request.getArea())) {
-			sql.append(" AND OFFICE_CODE = ? ");
+			sql.append(" AND L.OFF_CODE = ? ");
 			params.add(request.getArea());
 		} else if (StringUtils.isNotBlank(request.getSector())) {
-			sql.append(" AND OFFICE_CODE = ? ");
+			sql.append(" AND L.OFF_CODE = ? ");
 			params.add(request.getSector());
 		}
+		
+		sql.append(" GROUP BY L.IDENTIFY_NO, ");
+		sql.append("   L.OFF_CODE, ");
+		sql.append("   L.LICENSE_TYPE ");
 
-		sql.append(" ORDER BY CREATED_DATE DESC");
+//		sql.append(" ORDER BY L.CREATED_DATE DESC");
 
 		String sqlCount = OracleUtils.countForDataTable(sql.toString());
 		Integer count = this.commonJdbcTemplate.queryForObject(sqlCount, params.toArray(), Integer.class);

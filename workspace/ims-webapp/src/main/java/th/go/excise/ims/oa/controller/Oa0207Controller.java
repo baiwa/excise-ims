@@ -37,8 +37,8 @@ public class Oa0207Controller {
 
 	@PostMapping("/filter")
 	@ResponseBody
-	public DataTableAjax<OaCustomerLicen> filterByCriteria(@RequestBody Oa0207Vo request) {
-		DataTableAjax<OaCustomerLicen> response = new DataTableAjax<>();
+	public DataTableAjax<Oa020106FormVo> filterByCriteria(@RequestBody Oa0207Vo request) {
+		DataTableAjax<Oa020106FormVo> response = new DataTableAjax<>();
 		try {
 			response = oa0207Service.filterByCriteria(request);
 		} catch (Exception e) {
