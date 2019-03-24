@@ -1,4 +1,3 @@
-
 package th.go.excise.ims.ta.persistence.repository;
 
 import java.util.List;

@@ -71,11 +71,11 @@ public class DraftWorksheetServiceTest {
 	}
 
 	@Test
-	public void test_findAllDraftNumber() {
+	public void test_findAllAnalysisNumber() {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
 		formVo.setBudgetYear("2562");
 		
-		List<String> draftNumberList = draftWorksheetService.findAllDraftNumber(formVo);
+		List<String> draftNumberList = draftWorksheetService.findAllAnalysisNumber(formVo);
 		draftNumberList.forEach(System.out::println);
 	}
 	

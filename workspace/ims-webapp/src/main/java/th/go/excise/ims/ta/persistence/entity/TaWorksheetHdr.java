@@ -28,8 +28,6 @@ public class TaWorksheetHdr extends BaseEntity {
 	private String officeCode;
 	@Column(name = "BUDGET_YEAR")
 	private String budgetYear;
-	@Column(name = "DRAFT_NUMBER")
-	private String draftNumber;
 	@Column(name = "ANALYSIS_NUMBER")
 	private String analysisNumber;
 	@Column(name = "WORKSHEET_STATUS")
@@ -63,14 +61,6 @@ public class TaWorksheetHdr extends BaseEntity {
 
 	public void setBudgetYear(String budgetYear) {
 		this.budgetYear = budgetYear;
-	}
-
-	public String getDraftNumber() {
-		return draftNumber;
-	}
-
-	public void setDraftNumber(String draftNumber) {
-		this.draftNumber = draftNumber;
 	}
 
 	public String getAnalysisNumber() {

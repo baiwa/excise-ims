@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
 
-public class TaxDratfVo extends TaWsReg4000 {
+public class TaxDraftVo extends TaWsReg4000 {
 
 	private static final long serialVersionUID = 6016709334408153017L;
 

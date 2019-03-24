@@ -38,9 +38,14 @@ public class DraftWorksheetService {
     private static final String NO_TAX_AMOUNT = "-";
 
     @Autowired
+    private WorksheetSequenceService worksheetSequenceService;
+    
+    @Autowired
     private TaWsReg4000Repository taWsReg4000Repository;
     @Autowired
     private TaWsInc8000MRepository taWsInc8000MRepository;
+    @Autowired
+    private TaPlanWorksheetHisRepository taPlanWorksheetHisRepository;
 
     @Autowired
     private TaMasCondMainHdrRepository taMasCondMainHdrRepository;
@@ -61,24 +66,11 @@ public class DraftWorksheetService {
     private TaWorksheetCondSubCapitalRepository taWorksheetCondSubCapitalRepository;
     @Autowired
     private TaWorksheetCondSubRiskRepository taWorksheetCondSubRiskRepository;
-
-    @Autowired
-    private TaPlanWorksheetDtlRepository planWorksheetDtlRepository;
-
     @Autowired
     private TaWorksheetCondSubNoAuditRepository taWorksheetCondSubNoAuditRepository;
 
     @Autowired
-    private TaDraftWorksheetHdrRepository taDraftWorksheetHdrRepository;
-    @Autowired
-    private TaDraftWorksheetDtlRepository taDraftWorksheetDtlRepository;
-
-    @Autowired
-    private WorksheetSequenceService worksheetSequenceService;
-
-    @Autowired
     private TaWorksheetHdrRepository taWorksheetHdrRepository;
-
     @Autowired
     private TaWorksheetDtlRepository taWorksheetDtlRepository;
 
@@ -101,7 +93,7 @@ public class DraftWorksheetService {
         String ymStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateStart(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
         String ymEnd = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateEnd(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 
-        Map<String, String> mapTaxAmLast = new HashMap<>();
+        Map<String, String> auditPlanMap = new HashMap<>();
         int lastYear1 = 0;
         int lastYear2 = 0;
         int lastYear3 = 0;
@@ -113,7 +105,7 @@ public class DraftWorksheetService {
             budgetYearList.add(String.valueOf(lastYear1));
             budgetYearList.add(String.valueOf(lastYear2));
             budgetYearList.add(String.valueOf(lastYear3));
-            mapTaxAmLast = planWorksheetDtlRepository.findAuditPlanCodeByOfficeCodeAndBudgetYearList(officeCode, budgetYearList);
+            auditPlanMap = taPlanWorksheetHisRepository.findAuditPlanCodeByOfficeCodeAndBudgetYearList(officeCode, budgetYearList);
         }
 
         List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findByCriteria(formVo);
@@ -149,9 +141,9 @@ public class DraftWorksheetService {
             detailVo.setOfficeCode(wsReg4000.getOfficeCode());
             detailVo.setRegStatus(wsReg4000.getRegStatus() + " " + ConvertDateUtils.formatLocalDateToString(wsReg4000.getRegDate(), "dd/MM/yy", ConvertDateUtils.LOCAL_TH));
             detailVo.setRegCapital(wsReg4000.getRegCapital());
-            detailVo.setTaxAuditLast1(mapTaxAmLast.get(String.valueOf(lastYear1) + wsReg4000.getNewRegId()));
-            detailVo.setTaxAuditLast2(mapTaxAmLast.get(String.valueOf(lastYear2) + wsReg4000.getNewRegId()));
-            detailVo.setTaxAuditLast3(mapTaxAmLast.get(String.valueOf(lastYear3) + wsReg4000.getNewRegId()));
+            detailVo.setTaxAuditLast1(auditPlanMap.get(String.valueOf(lastYear1) + wsReg4000.getNewRegId()));
+            detailVo.setTaxAuditLast2(auditPlanMap.get(String.valueOf(lastYear2) + wsReg4000.getNewRegId()));
+            detailVo.setTaxAuditLast3(auditPlanMap.get(String.valueOf(lastYear3) + wsReg4000.getNewRegId()));
             exciseDeptSector = ApplicationCache.getExciseDept(wsReg4000.getOfficeCode().substring(0, 2) + "0000");
 
             if (exciseDeptSector != null) {
@@ -345,8 +337,8 @@ public class DraftWorksheetService {
     public void saveDraftWorksheet(TaxOperatorFormVo formVo) {
         String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
         String budgetYear = ExciseUtils.getCurrentBudgetYear();
-        String draftNumber = worksheetSequenceService.getDraftNumber(officeCode, budgetYear);
-        logger.info("saveDraftWorksheet officeCode={}, budgetYear={}, condNumber={}, draftNumber={}", officeCode, budgetYear, formVo.getCondNumber(), draftNumber);
+        String analysisNumber = worksheetSequenceService.getAnalysisNumber(officeCode, budgetYear);
+        logger.info("saveDraftWorksheet officeCode={}, budgetYear={}, condNumber={}, analysisNumber={}", officeCode, budgetYear, formVo.getCondNumber(), analysisNumber);
 
         formVo.setBudgetYear(ExciseUtils.getCurrentBudgetYear());
         String dateStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateStart(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
@@ -355,7 +347,7 @@ public class DraftWorksheetService {
         // ==> Save WorksheetMainCondHdr
         TaMasCondMainHdr masCondMainHdr = taMasCondMainHdrRepository.findByCondNumber(formVo.getCondNumber());
         TaWorksheetCondMainHdr conMainHdr = new TaWorksheetCondMainHdr();
-        conMainHdr.setAnalysisNumber(draftNumber);
+        conMainHdr.setAnalysisNumber(analysisNumber);
         conMainHdr.setCondGroupDesc(masCondMainHdr.getCondGroupDesc());
         conMainHdr.setMonthNum(masCondMainHdr.getMonthNum());
         conMainHdr.setYearMonthStart(dateStart);
@@ -370,7 +362,7 @@ public class DraftWorksheetService {
         TaWorksheetCondMainDtl condMainDtl = null;
         for (TaMasCondMainDtl masCondMainDtl : masCondMainDtlList) {
             condMainDtl = new TaWorksheetCondMainDtl();
-            condMainDtl.setAnalysisNumber(draftNumber);
+            condMainDtl.setAnalysisNumber(analysisNumber);
             condMainDtl.setCondGroup(masCondMainDtl.getCondGroup());
             condMainDtl.setTaxFreqType(masCondMainDtl.getTaxFreqType());
             condMainDtl.setTaxMonthStart(masCondMainDtl.getTaxMonthStart());
@@ -386,13 +378,12 @@ public class DraftWorksheetService {
         }
         taWorksheetCondMainDtlRepository.saveAll(condMainDtlList);
 
-        // ==> Save Condition Sub
-        // ==> Capital
+        // ==> Save WorksheetCondSubCapital
         if (StringUtils.isNotBlank(formVo.getCondSub1())) {
             List<TaMasCondSubCapital> masCondSubCapitalList = taMasCondSubCapitalRepository.findByOfficeCodeAndBudgetYear(officeCode, budgetYear);
             for (TaMasCondSubCapital masCondSubCapital : masCondSubCapitalList) {
                 TaWorksheetCondSubCapital worksheetCondSubCapital = new TaWorksheetCondSubCapital();
-                worksheetCondSubCapital.setAnalysisNumber(draftNumber);
+                worksheetCondSubCapital.setAnalysisNumber(analysisNumber);
                 worksheetCondSubCapital.setDutyCode(masCondSubCapital.getDutyCode());
                 worksheetCondSubCapital.setHugeCapitalAmount(masCondSubCapital.getHugeCapitalAmount());
                 worksheetCondSubCapital.setLargeCapitalAmount(masCondSubCapital.getLargeCapitalAmount());
@@ -401,131 +392,120 @@ public class DraftWorksheetService {
                 taWorksheetCondSubCapitalRepository.save(worksheetCondSubCapital);
             }
         }
-        // ==> Risk
+        
+        // ==> Save WorksheetCondSubRisk
         if (StringUtils.isNotBlank(formVo.getCondSub2())) {
             List<TaMasCondSubRisk> masCondSubRiskList = taMasCondSubRiskRepository.findByBudgetYearAndOfficeCode(budgetYear, officeCode);
             TaWorksheetCondSubRisk worksheetCondSubRisk = null;
             for (TaMasCondSubRisk masCondSubRisk : masCondSubRiskList) {
                 worksheetCondSubRisk = new TaWorksheetCondSubRisk();
-//                worksheetCondSubRisk.setDraftNumber(draftNumber);
-                worksheetCondSubRisk.setAnalysisNumber(draftNumber);
+                worksheetCondSubRisk.setAnalysisNumber(analysisNumber);
                 worksheetCondSubRisk.setDutyCode(masCondSubRisk.getDutyCode());
                 worksheetCondSubRisk.setRiskLevel(masCondSubRisk.getRiskLevel());
                 taWorksheetCondSubRiskRepository.save(worksheetCondSubRisk);
             }
         }
-        // ==> No Audit
+        
+        // ==> Save WorksheetCondSubNoAudit
         if (StringUtils.isNotBlank(formVo.getCondSub3())) {
             TaMasCondSubNoAudit masCondSubNoAudit = taMasCondSubNoAuditRepository.findByBudgetYearAndOfficeCode(budgetYear, officeCode);
             TaWorksheetCondSubNoAudit worksheetCondSubNoAudit = new TaWorksheetCondSubNoAudit();
-//            worksheetCondSubNoAudit.setDraftNumber(draftNumber);
-            worksheetCondSubNoAudit.setAnalysisNumber(draftNumber);
+            worksheetCondSubNoAudit.setAnalysisNumber(analysisNumber);
             worksheetCondSubNoAudit.setNoTaxAuditYearNum(masCondSubNoAudit.getNoTaxAuditYearNum());
             taWorksheetCondSubNoAuditRepository.save(worksheetCondSubNoAudit);
         }
 
-        // ==> Save DraftWorksheetHdr
-
-        TaWorksheetHdr draftHdr = new TaWorksheetHdr();
-        //TaDraftWorksheetHdr draftHdr = new TaDraftWorksheetHdr();
-        //draftHdr.setDraftNumber(draftNumber);
-        draftHdr.setOfficeCode(officeCode);
-//		draftHdr.setYearMonthStart(dateStart);
-//		draftHdr.setYearMonthEnd(dateEnd);
-//		draftHdr.setMonthNum(formVo.getDateRange());
-        draftHdr.setAnalysisNumber(draftNumber);
-        draftHdr.setBudgetYear(budgetYear);
-        draftHdr.setWorksheetStatus(TA_WORKSHEET_STATUS.DRAFT);
+        // ==> Save WorksheetHdr
+        TaWorksheetHdr worksheetHdr = new TaWorksheetHdr();
+        worksheetHdr.setOfficeCode(officeCode);
+        worksheetHdr.setAnalysisNumber(analysisNumber);
+        worksheetHdr.setBudgetYear(budgetYear);
+        worksheetHdr.setWorksheetStatus(TA_WORKSHEET_STATUS.DRAFT);
         if (StringUtils.isNotBlank(formVo.getCondSub1())) {
-            draftHdr.setCondSubCapitalFlag(CommonConstants.FLAG.Y_FLAG);
+            worksheetHdr.setCondSubCapitalFlag(CommonConstants.FLAG.Y_FLAG);
         }
         if (StringUtils.isNotBlank(formVo.getCondSub2())) {
-            draftHdr.setCondSubRiskFlag(CommonConstants.FLAG.Y_FLAG);
+            worksheetHdr.setCondSubRiskFlag(CommonConstants.FLAG.Y_FLAG);
         }
         if (StringUtils.isNotBlank(formVo.getCondSub3())) {
-            draftHdr.setCondSubNoAuditFlag(CommonConstants.FLAG.Y_FLAG);
+            worksheetHdr.setCondSubNoAuditFlag(CommonConstants.FLAG.Y_FLAG);
         }
-        taWorksheetHdrRepository.save(draftHdr);
+        taWorksheetHdrRepository.save(worksheetHdr);
 
-        // ==> Save DraftWorksheetDtl
+        // ==> Save WorksheetDtl
         List<TaxOperatorDetailVo> detailVoList = prepareTaxOperatorDetailVoList(formVo);
-//        List<TaDraftWorksheetDtl> dratfDtlList = new ArrayList<>();
-//        TaDraftWorksheetDtl draftDtl = new TaDraftWorksheetDtl();
-        List<TaWorksheetDtl> dratfDtlList = new ArrayList<>();
-        TaWorksheetDtl draftDtl = new TaWorksheetDtl();
+        List<TaWorksheetDtl> worksheetfDtlList = new ArrayList<>();
+        TaWorksheetDtl worksheetDtl = new TaWorksheetDtl();
 
         for (TaxOperatorDetailVo detailVo : detailVoList) {
-            draftDtl = new TaWorksheetDtl();
+            worksheetDtl = new TaWorksheetDtl();
+            worksheetDtl.setAnalysisNumber(analysisNumber);
+            worksheetDtl.setNewRegId(detailVo.getNewRegId());
 
-//            draftDtl.setDraftNumber(draftNumber);
-            draftDtl.setAnalysisNumber(draftNumber);
-            draftDtl.setNewRegId(detailVo.getNewRegId());
+            worksheetDtl.setSumTaxAmtG1(NO_TAX_AMOUNT.equals(detailVo.getSumTaxAmtG1()) ? null : detailVo.getSumTaxAmtG1());
+            worksheetDtl.setSumTaxAmtG2(NO_TAX_AMOUNT.equals(detailVo.getSumTaxAmtG2()) ? null : detailVo.getSumTaxAmtG2());
+            worksheetDtl.setTaxAmtChnPnt(NO_TAX_AMOUNT.equals(detailVo.getTaxAmtChnPnt()) ? null : detailVo.getTaxAmtChnPnt());
+            worksheetDtl.setTaxMonthNo(detailVo.getTaxMonthNo());
 
-            draftDtl.setSumTaxAmtG1(NO_TAX_AMOUNT.equals(detailVo.getSumTaxAmtG1()) ? null : NumberUtils.toBigDecimal(detailVo.getSumTaxAmtG1()));
-            draftDtl.setSumTaxAmtG2(NO_TAX_AMOUNT.equals(detailVo.getSumTaxAmtG2()) ? null : NumberUtils.toBigDecimal(detailVo.getSumTaxAmtG2()));
-            draftDtl.setTaxAmtChnPnt(NO_TAX_AMOUNT.equals(detailVo.getTaxAmtChnPnt()) ? null : NumberUtils.toBigDecimal(detailVo.getTaxAmtChnPnt()));
-            //draftDtl.setTaxMonthNo(Integer.parseInt(detailVo.getTaxMonthNo()));
-            draftDtl.setTaxMonthNo(detailVo.getTaxMonthNo());
+            worksheetDtl.setTaxAuditLast1(detailVo.getTaxAuditLast1());
+            worksheetDtl.setTaxAuditLast2(detailVo.getTaxAuditLast2());
+            worksheetDtl.setTaxAuditLast3(detailVo.getTaxAuditLast3());
 
-            draftDtl.setTaxAuditLast1(detailVo.getTaxAuditLast1());
-            draftDtl.setTaxAuditLast2(detailVo.getTaxAuditLast2());
-            draftDtl.setTaxAuditLast3(detailVo.getTaxAuditLast3());
+            worksheetDtl.setTaxAmtG1M1(detailVo.getTaxAmtG1M1());
+            worksheetDtl.setTaxAmtG1M2(detailVo.getTaxAmtG1M2());
+            worksheetDtl.setTaxAmtG1M3(detailVo.getTaxAmtG1M3());
+            worksheetDtl.setTaxAmtG1M4(detailVo.getTaxAmtG1M4());
+            worksheetDtl.setTaxAmtG1M5(detailVo.getTaxAmtG1M5());
+            worksheetDtl.setTaxAmtG1M6(detailVo.getTaxAmtG1M6());
+            worksheetDtl.setTaxAmtG1M7(detailVo.getTaxAmtG1M7());
+            worksheetDtl.setTaxAmtG1M8(detailVo.getTaxAmtG1M8());
+            worksheetDtl.setTaxAmtG1M9(detailVo.getTaxAmtG1M9());
+            worksheetDtl.setTaxAmtG1M10(detailVo.getTaxAmtG1M10());
+            worksheetDtl.setTaxAmtG1M11(detailVo.getTaxAmtG1M11());
+            worksheetDtl.setTaxAmtG1M12(detailVo.getTaxAmtG1M12());
 
-            draftDtl.setTaxAmtG1M1(detailVo.getTaxAmtG1M1());
-            draftDtl.setTaxAmtG1M2(detailVo.getTaxAmtG1M2());
-            draftDtl.setTaxAmtG1M3(detailVo.getTaxAmtG1M3());
-            draftDtl.setTaxAmtG1M4(detailVo.getTaxAmtG1M4());
-            draftDtl.setTaxAmtG1M5(detailVo.getTaxAmtG1M5());
-            draftDtl.setTaxAmtG1M6(detailVo.getTaxAmtG1M6());
-            draftDtl.setTaxAmtG1M7(detailVo.getTaxAmtG1M7());
-            draftDtl.setTaxAmtG1M8(detailVo.getTaxAmtG1M8());
-            draftDtl.setTaxAmtG1M9(detailVo.getTaxAmtG1M9());
-            draftDtl.setTaxAmtG1M10(detailVo.getTaxAmtG1M10());
-            draftDtl.setTaxAmtG1M11(detailVo.getTaxAmtG1M11());
-            draftDtl.setTaxAmtG1M12(detailVo.getTaxAmtG1M12());
+            worksheetDtl.setTaxAmtG2M1(detailVo.getTaxAmtG2M1());
+            worksheetDtl.setTaxAmtG2M2(detailVo.getTaxAmtG2M2());
+            worksheetDtl.setTaxAmtG2M3(detailVo.getTaxAmtG2M3());
+            worksheetDtl.setTaxAmtG2M4(detailVo.getTaxAmtG2M4());
+            worksheetDtl.setTaxAmtG2M5(detailVo.getTaxAmtG2M5());
+            worksheetDtl.setTaxAmtG2M6(detailVo.getTaxAmtG2M6());
+            worksheetDtl.setTaxAmtG2M7(detailVo.getTaxAmtG2M7());
+            worksheetDtl.setTaxAmtG2M8(detailVo.getTaxAmtG2M8());
+            worksheetDtl.setTaxAmtG2M9(detailVo.getTaxAmtG2M9());
+            worksheetDtl.setTaxAmtG2M10(detailVo.getTaxAmtG2M10());
+            worksheetDtl.setTaxAmtG2M11(detailVo.getTaxAmtG2M11());
+            worksheetDtl.setTaxAmtG2M12(detailVo.getTaxAmtG2M12());
 
-            draftDtl.setTaxAmtG2M1(detailVo.getTaxAmtG2M1());
-            draftDtl.setTaxAmtG2M2(detailVo.getTaxAmtG2M2());
-            draftDtl.setTaxAmtG2M3(detailVo.getTaxAmtG2M3());
-            draftDtl.setTaxAmtG2M4(detailVo.getTaxAmtG2M4());
-            draftDtl.setTaxAmtG2M5(detailVo.getTaxAmtG2M5());
-            draftDtl.setTaxAmtG2M6(detailVo.getTaxAmtG2M6());
-            draftDtl.setTaxAmtG2M7(detailVo.getTaxAmtG2M7());
-            draftDtl.setTaxAmtG2M8(detailVo.getTaxAmtG2M8());
-            draftDtl.setTaxAmtG2M9(detailVo.getTaxAmtG2M9());
-            draftDtl.setTaxAmtG2M10(detailVo.getTaxAmtG2M10());
-            draftDtl.setTaxAmtG2M11(detailVo.getTaxAmtG2M11());
-            draftDtl.setTaxAmtG2M12(detailVo.getTaxAmtG2M12());
+            worksheetDtl.setTaxAmtSd(NO_TAX_AMOUNT.equals(detailVo.getTaxAmtSd()) ? null : detailVo.getTaxAmtSd());
+            worksheetDtl.setTaxAmtMean(NO_TAX_AMOUNT.equals(detailVo.getTaxAmtMean()) ? null : detailVo.getTaxAmtMean());
+            worksheetDtl.setTaxAmtMaxPnt(NO_TAX_AMOUNT.equals(detailVo.getTaxAmtMaxPnt()) ? null : detailVo.getTaxAmtMaxPnt());
+            worksheetDtl.setTaxAmtMinPnt(NO_TAX_AMOUNT.equals(detailVo.getTaxAmtMinPnt()) ? null : detailVo.getTaxAmtMinPnt());
 
-            draftDtl.setTaxAmtSd(NO_TAX_AMOUNT.equals(detailVo.getTaxAmtSd()) ? null : NumberUtils.toBigDecimal(detailVo.getTaxAmtSd()));
-            draftDtl.setTaxAmtMean(NO_TAX_AMOUNT.equals(detailVo.getTaxAmtMean()) ? null : NumberUtils.toBigDecimal(detailVo.getTaxAmtMean()));
-            draftDtl.setTaxAmtMaxPnt(NO_TAX_AMOUNT.equals(detailVo.getTaxAmtMaxPnt()) ? null : NumberUtils.toBigDecimal(detailVo.getTaxAmtMaxPnt()));
-            draftDtl.setTaxAmtMinPnt(NO_TAX_AMOUNT.equals(detailVo.getTaxAmtMinPnt()) ? null : NumberUtils.toBigDecimal(detailVo.getTaxAmtMinPnt()));
+            worksheetDtl.setCreatedBy(UserLoginUtils.getCurrentUsername());
+            worksheetDtl.setCreatedDate(LocalDateTime.now());
 
-            draftDtl.setCreatedBy(UserLoginUtils.getCurrentUsername());
-            draftDtl.setCreatedDate(LocalDateTime.now());
-
-            dratfDtlList.add(draftDtl);
+            worksheetfDtlList.add(worksheetDtl);
         }
 
-        taWorksheetDtlRepository.batchInsert(dratfDtlList);
+        taWorksheetDtlRepository.batchInsert(worksheetfDtlList);
     }
 
-    public List<String> findAllDraftNumber(TaxOperatorFormVo formVo) {
+    public List<String> findAllAnalysisNumber(TaxOperatorFormVo formVo) {
         String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
         String budgetYear = formVo.getBudgetYear();
         if (StringUtils.isEmpty(budgetYear)) {
             budgetYear = ExciseUtils.getCurrentBudgetYear();
         }
         logger.info("findAllDraftNumber officeCode={}, budgetYear={}", officeCode, budgetYear);
+        
         return taWorksheetHdrRepository.findAllAnalysisNumberByOfficeCodeAndBudgetYear(officeCode, budgetYear);
-        // return taDraftWorksheetHdrRepository.findDraftNumberByOfficeCodeAndBudgetYearAndWorksheetStatus(officeCode, budgetYear, TA_WORKSHEET_STATUS.DRAFT);
     }
 
     public YearMonthVo getMonthStart(TaxOperatorFormVo formVo) {
         logger.info("getMonthStart draftNumber = {}", formVo.getDraftNumber());
 
-        YearMonthVo ymVo = taDraftWorksheetHdrRepository.findMonthStartByAnalysisNumber(formVo.getDraftNumber());
+        YearMonthVo ymVo = taWorksheetCondMainHdrRepository.findMonthStartByAnalysisNumber(formVo.getDraftNumber());
 
         String ymStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(ymVo.getYearMonthStart(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
         String ymEnd = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(ymVo.getYearMonthEnd(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
@@ -537,21 +517,19 @@ public class DraftWorksheetService {
     }
 
     public TaxOperatorVo getDraftWorksheet(TaxOperatorFormVo formVo) {
-        logger.info("getDraftWorksheetDtl draftNumber = {}", formVo.getDraftNumber());
-
-        List<TaxOperatorDetailVo> draftDtlList = taDraftWorksheetDtlRepository.findByCriteria(formVo);
-
+    	formVo.setAnalysisNumber(formVo.getDraftNumber());
+        logger.info("getDraftWorksheet analysisNumber = {}", formVo.getAnalysisNumber());
+        
         TaxOperatorVo vo = new TaxOperatorVo();
-        if (StringUtils.isNotBlank(formVo.getDraftNumber())) {
+        if (StringUtils.isNotEmpty(formVo.getDraftNumber())) {
+        	List<TaxOperatorDetailVo> draftDtlList = taWorksheetDtlRepository.findByCriteria(formVo);
             vo.setDatas(TaxAuditUtils.prepareTaxOperatorDatatable(draftDtlList, formVo));
-            vo.setCount(taDraftWorksheetDtlRepository.countByCriteria(formVo));
+            vo.setCount(taWorksheetDtlRepository.countByCriteria(formVo));
         } else {
-            List<TaxOperatorDatatableVo> arr = new ArrayList<>();
-            vo.setDatas(arr);
+            vo.setDatas(new ArrayList<>());
             vo.setCount(0L);
         }
-
-
+        
         return vo;
     }
 

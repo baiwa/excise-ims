@@ -9,9 +9,6 @@ import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondSubNoAudit;
 
 public interface TaWorksheetCondSubNoAuditRepository extends CommonJpaCrudRepository<TaWorksheetCondSubNoAudit, Long> {
 	
-	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.draftNumber = :draftNumber")
-	public TaWorksheetCondSubNoAudit findByDraftNumber(@Param("draftNumber") String draftNumber);
-	
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.analysisNumber = :analysisNumber")
 	public TaWorksheetCondSubNoAudit findByAnalysisNumber(@Param("analysisNumber") String analysisNumber);
 	

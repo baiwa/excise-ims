@@ -22,8 +22,6 @@ public class TaWorksheetCondSubCapital extends BaseEntity {
 	@SequenceGenerator(name = "TA_WORKSHEET_COND_SUB_CAP_GEN", sequenceName = "TA_WORKSHEET_COND_SUB_CAP_SEQ", allocationSize = 1)
 	@Column(name = "WORKSHEET_COND_SUB_CAP_ID")
 	private Long worksheetCondSubCapId;
-	@Column(name = "DRAFT_NUMBER")
-	private String draftNumber;
 	@Column(name = "ANALYSIS_NUMBER")
 	private String analysisNumber;
 	@Column(name = "DUTY_CODE")
@@ -43,14 +41,6 @@ public class TaWorksheetCondSubCapital extends BaseEntity {
 
 	public void setWorksheetCondSubCapId(Long worksheetCondSubCapId) {
 		this.worksheetCondSubCapId = worksheetCondSubCapId;
-	}
-
-	public String getDraftNumber() {
-		return draftNumber;
-	}
-
-	public void setDraftNumber(String draftNumber) {
-		this.draftNumber = draftNumber;
 	}
 
 	public String getAnalysisNumber() {

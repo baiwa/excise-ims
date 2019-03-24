@@ -21,8 +21,6 @@ public class TaWorksheetCondSubNoAudit extends BaseEntity {
 	@SequenceGenerator(name = "TA_WORKSHEET_COND_SUB_NOAT_GEN", sequenceName = "TA_WORKSHEET_COND_SUB_NOAT_SEQ", allocationSize = 1)
 	@Column(name = "WORKSHEET_COND_SUB_NOAT_ID")
 	private Long worksheetCondSubNoatId;
-	@Column(name = "DRAFT_NUMBER")
-	private String draftNumber;
 	@Column(name = "ANALYSIS_NUMBER")
 	private String analysisNumber;
 	@Column(name = "NO_TAX_AUDIT_YEAR_NUM")
@@ -34,14 +32,6 @@ public class TaWorksheetCondSubNoAudit extends BaseEntity {
 
 	public void setWorksheetCondSubNoatId(Long worksheetCondSubNoatId) {
 		this.worksheetCondSubNoatId = worksheetCondSubNoatId;
-	}
-
-	public String getDraftNumber() {
-		return draftNumber;
-	}
-
-	public void setDraftNumber(String draftNumber) {
-		this.draftNumber = draftNumber;
 	}
 
 	public String getAnalysisNumber() {

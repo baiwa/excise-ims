@@ -30,11 +30,8 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
-import th.go.excise.ims.ta.persistence.entity.TaDraftWorksheetHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainDtl;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
-import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetDtlRepository;
-import th.go.excise.ims.ta.persistence.repository.TaDraftWorksheetHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondMainDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetHdrRepository;
@@ -56,11 +53,6 @@ public class WorksheetExportService {
 	private TaWsReg4000Repository taWsReg4000Repository;
 	@Autowired
 	private DraftWorksheetService draftWorksheetService;
-	
-	@Autowired
-	private TaDraftWorksheetHdrRepository taDraftWorksheetHdrRepository;
-	@Autowired
-	private TaDraftWorksheetDtlRepository taDraftWorksheetDtlRepository;
 	
 	@Autowired
 	private TaWorksheetCondMainDtlRepository taWorksheetCondMainDtlRepository;
@@ -132,16 +124,16 @@ public class WorksheetExportService {
 		logger.info("exportXlsxDraftWorksheet officeCode={}, budgetYear={}, draftNumber={}", officeCode, formVo.getBudgetYear(), formVo.getDraftNumber());
 		
 		// Prepare Data for Export
-		TaDraftWorksheetHdr draftWorksheetHdr = taDraftWorksheetHdrRepository.findByDraftNumber(formVo.getDraftNumber());
-		formVo.setDateStart(convertToThaiDate(draftWorksheetHdr.getYearMonthStart()));
-		formVo.setDateEnd(convertToThaiDate(draftWorksheetHdr.getYearMonthEnd()));
-		formVo.setDateRange(draftWorksheetHdr.getMonthNum());
-		formVo.setOfficeCode(officeCode);
-		
-		formVo.setStart(0);
-		formVo.setLength(taDraftWorksheetDtlRepository.countByCriteria(formVo).intValue());
-		List<TaxOperatorDetailVo> draftVoList = taDraftWorksheetDtlRepository.findByCriteria(formVo);
-		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = TaxAuditUtils.prepareTaxOperatorDatatable(draftVoList, formVo);
+//		TaDraftWorksheetHdr draftWorksheetHdr = taDraftWorksheetHdrRepository.findByDraftNumber(formVo.getDraftNumber());
+//		formVo.setDateStart(convertToThaiDate(draftWorksheetHdr.getYearMonthStart()));
+//		formVo.setDateEnd(convertToThaiDate(draftWorksheetHdr.getYearMonthEnd()));
+//		formVo.setDateRange(draftWorksheetHdr.getMonthNum());
+//		formVo.setOfficeCode(officeCode);
+//		
+//		formVo.setStart(0);
+//		formVo.setLength(taDraftWorksheetDtlRepository.countByCriteria(formVo).intValue());
+//		List<TaxOperatorDetailVo> draftVoList = taDraftWorksheetDtlRepository.findByCriteria(formVo);
+//		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = TaxAuditUtils.prepareTaxOperatorDatatable(draftVoList, formVo);
 		
 		// Label and Text
 		String SHEET_NAME = "รายชื่อผู้ประกอบการ";
@@ -172,7 +164,7 @@ public class WorksheetExportService {
 		/*
 		 * Details
 		 */
-		rowNum = generateWorksheetDetail(workbook, sheet, row, rowNum, cell, taxOperatorDatatableVoList);
+//		rowNum = generateWorksheetDetail(workbook, sheet, row, rowNum, cell, taxOperatorDatatableVoList);
 		
 		// Column Width
 		int colIndex = 0;
@@ -194,32 +186,32 @@ public class WorksheetExportService {
 		logger.info("exportWorksheet officeCode={}, budgetYear={}, analysisNumber={}", officeCode, formVo.getBudgetYear(), formVo.getAnalysisNumber());
 		
 		// Prepare for Export
-		TaWorksheetHdr worksheetHdr = taWorksheetHdrRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
-		TaDraftWorksheetHdr draftWorksheetHdr = taDraftWorksheetHdrRepository.findByDraftNumber(worksheetHdr.getDraftNumber());
-		formVo.setDateStart(convertToThaiDate(draftWorksheetHdr.getYearMonthStart()));
-		formVo.setDateEnd(convertToThaiDate(draftWorksheetHdr.getYearMonthEnd()));
-		formVo.setDateRange(draftWorksheetHdr.getMonthNum());
-		formVo.setOfficeCode(officeCode);
-		
-		final String COND_GROUP = "COND_GROUP";
-		final String COND_GROUP_DESC = "COND_GROUP_DESC";
-		String SHEET_NAME = "เงื่อนไขที่ ";
-		String NON_MAIN_COND_GROUP = "0";
-		String NON_MAIN_COND_DESC = "รายที่ไม่อยู่ในเงื่อนไข";
-		
-		List<Map<String, String>> condMainList = new ArrayList<>();
-		Map<String, String> condMainMap = null;
-		List<TaWorksheetCondMainDtl> condMainDtlList = taWorksheetCondMainDtlRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
-		for (TaWorksheetCondMainDtl condMainDtl : condMainDtlList) {
-			condMainMap = new HashMap<>();
-			condMainMap.put(COND_GROUP, condMainDtl.getCondGroup());
-			condMainMap.put(COND_GROUP_DESC, SHEET_NAME + condMainDtl.getCondGroup());
-			condMainList.add(condMainMap);
-		}
-		condMainMap = new HashMap<>();
-		condMainMap.put(COND_GROUP, NON_MAIN_COND_GROUP);
-		condMainMap.put(COND_GROUP_DESC, NON_MAIN_COND_DESC);
-		condMainList.add(condMainMap);
+//		TaWorksheetHdr worksheetHdr = taWorksheetHdrRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
+//		TaDraftWorksheetHdr draftWorksheetHdr = taDraftWorksheetHdrRepository.findByDraftNumber(worksheetHdr.getDraftNumber());
+//		formVo.setDateStart(convertToThaiDate(draftWorksheetHdr.getYearMonthStart()));
+//		formVo.setDateEnd(convertToThaiDate(draftWorksheetHdr.getYearMonthEnd()));
+//		formVo.setDateRange(draftWorksheetHdr.getMonthNum());
+//		formVo.setOfficeCode(officeCode);
+//		
+//		final String COND_GROUP = "COND_GROUP";
+//		final String COND_GROUP_DESC = "COND_GROUP_DESC";
+//		String SHEET_NAME = "เงื่อนไขที่ ";
+//		String NON_MAIN_COND_GROUP = "0";
+//		String NON_MAIN_COND_DESC = "รายที่ไม่อยู่ในเงื่อนไข";
+//		
+//		List<Map<String, String>> condMainList = new ArrayList<>();
+//		Map<String, String> condMainMap = null;
+//		List<TaWorksheetCondMainDtl> condMainDtlList = taWorksheetCondMainDtlRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
+//		for (TaWorksheetCondMainDtl condMainDtl : condMainDtlList) {
+//			condMainMap = new HashMap<>();
+//			condMainMap.put(COND_GROUP, condMainDtl.getCondGroup());
+//			condMainMap.put(COND_GROUP_DESC, SHEET_NAME + condMainDtl.getCondGroup());
+//			condMainList.add(condMainMap);
+//		}
+//		condMainMap = new HashMap<>();
+//		condMainMap.put(COND_GROUP, NON_MAIN_COND_GROUP);
+//		condMainMap.put(COND_GROUP_DESC, NON_MAIN_COND_DESC);
+//		condMainList.add(condMainMap);
 		
 		// Create Workbook
 		XSSFWorkbook workbook = new XSSFWorkbook();
@@ -231,44 +223,44 @@ public class WorksheetExportService {
 		/* Cell Style */
 		CellStyle cellHeader = ExcelUtils.createThColorStyle(workbook, new XSSFColor(Color.LIGHT_GRAY));
 		
-		List<TaxOperatorDetailVo> worksheetVoList = null;
-		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = null;
-		for (Map<String, String> map : condMainList) {
-			// Prepare Data for Export
-			formVo.setStart(0);
-			formVo.setLength(taWorksheetDtlRepository.countByCriteria(formVo).intValue());
-			formVo.setCond(map.get(COND_GROUP));
-			
-			worksheetVoList = taWorksheetDtlRepository.findByCriteria(formVo);
-			taxOperatorDatatableVoList = TaxAuditUtils.prepareTaxOperatorDatatable(worksheetVoList, formVo);
-			
-			/*
-			 * Sheet
-			 */
-			sheet = workbook.createSheet(map.get(COND_GROUP_DESC));
-			rowNum = 0;
-			
-			/*
-			 * Column Header
-			 */
-			// Header Line 1
-			row = sheet.createRow(rowNum);
-			generateWorksheetHeader1(row, cell, cellHeader, formVo);
-			rowNum++;
-			// Header Line 2
-			row = sheet.createRow(rowNum);
-			generateWorksheetHeader2(row, cell, cellHeader, formVo);
-			rowNum++;
-			
-			/*
-			 * Details
-			 */
-			rowNum = generateWorksheetDetail(workbook, sheet, row, rowNum, cell, taxOperatorDatatableVoList);
-			
-			// Column Width
-			int colIndex = 0;
-			colIndex = setColumnWidthAndMergeCell(sheet, colIndex, formVo.getDateRange());
-		}
+//		List<TaxOperatorDetailVo> worksheetVoList = null;
+//		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = null;
+//		for (Map<String, String> map : condMainList) {
+//			// Prepare Data for Export
+//			formVo.setStart(0);
+//			formVo.setLength(taWorksheetDtlRepository.countByCriteria(formVo).intValue());
+//			formVo.setCond(map.get(COND_GROUP));
+//			
+//			worksheetVoList = taWorksheetDtlRepository.findByCriteria(formVo);
+//			taxOperatorDatatableVoList = TaxAuditUtils.prepareTaxOperatorDatatable(worksheetVoList, formVo);
+//			
+//			/*
+//			 * Sheet
+//			 */
+//			sheet = workbook.createSheet(map.get(COND_GROUP_DESC));
+//			rowNum = 0;
+//			
+//			/*
+//			 * Column Header
+//			 */
+//			// Header Line 1
+//			row = sheet.createRow(rowNum);
+//			generateWorksheetHeader1(row, cell, cellHeader, formVo);
+//			rowNum++;
+//			// Header Line 2
+//			row = sheet.createRow(rowNum);
+//			generateWorksheetHeader2(row, cell, cellHeader, formVo);
+//			rowNum++;
+//			
+//			/*
+//			 * Details
+//			 */
+//			rowNum = generateWorksheetDetail(workbook, sheet, row, rowNum, cell, taxOperatorDatatableVoList);
+//			
+//			// Column Width
+//			int colIndex = 0;
+//			colIndex = setColumnWidthAndMergeCell(sheet, colIndex, formVo.getDateRange());
+//		}
 		
 		byte[] content = null;
 		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {

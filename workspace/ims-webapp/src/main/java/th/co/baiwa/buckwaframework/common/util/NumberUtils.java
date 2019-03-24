@@ -22,4 +22,24 @@ public class NumberUtils {
 		return (val.compareTo(BigDecimal.ZERO) == 0) ? BigDecimal.ONE : val;
 	}
 	
+	public static boolean isGreaterThan(BigDecimal compareBase, BigDecimal compareValue) {
+        return compareValue.compareTo(compareBase) > 0;
+    }
+
+	public static boolean isGreaterThanOrEquals(BigDecimal compareBase, BigDecimal compareValue) {
+        return compareValue.compareTo(compareBase) >= 0;
+    }
+
+	public static boolean isEquals(BigDecimal compareBase, BigDecimal compareValue) {
+        return compareValue.compareTo(compareBase) == 0;
+    }
+
+	public static boolean isLessThanOrEquals(BigDecimal compareBase, BigDecimal compareValue) {
+        return compareValue.compareTo(compareBase) <= 0;
+    }
+
+	public static boolean isLessThan(BigDecimal compareBase, BigDecimal compareValue) {
+        return compareValue.compareTo(compareBase) < 0;
+    }
+	
 }

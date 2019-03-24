@@ -23,8 +23,6 @@ public class TaWorksheetCondMainDtl extends BaseEntity {
 	@SequenceGenerator(name = "TA_WORKSHEET_COND_MAIN_DTL_GEN", sequenceName = "TA_WORKSHEET_COND_MAIN_DTL_SEQ", allocationSize = 1)
 	@Column(name = "WORKSHEET_COND_MAIN_DTL_ID")
 	private Long worksheetCondMainDtlId;
-	@Column(name = "DRAFT_NUMBER")
-	private String draftNumber;
 	@Column(name = "ANALYSIS_NUMBER")
 	private String analysisNumber;
 	@Column(name = "COND_GROUP")
@@ -56,14 +54,6 @@ public class TaWorksheetCondMainDtl extends BaseEntity {
 
 	public void setWorksheetCondMainDtlId(Long worksheetCondMainDtlId) {
 		this.worksheetCondMainDtlId = worksheetCondMainDtlId;
-	}
-
-	public String getDraftNumber() {
-		return draftNumber;
-	}
-
-	public void setDraftNumber(String draftNumber) {
-		this.draftNumber = draftNumber;
 	}
 
 	public String getAnalysisNumber() {

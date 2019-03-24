@@ -21,8 +21,6 @@ public class TaWorksheetCondMainHdr extends BaseEntity {
 	@SequenceGenerator(name = "TA_WORKSHEET_COND_MAIN_HDR_GEN", sequenceName = "TA_WORKSHEET_COND_MAIN_HDR_SEQ", allocationSize = 1)
 	@Column(name = "WORKSHEET_COND_MAIN_HDR_ID")
 	private Long worksheetCondMainHdrId;
-	@Column(name = "DRAFT_NUMBER")
-	private String draftNumber;
 	@Column(name = "ANALYSIS_NUMBER")
 	private String analysisNumber;
 	@Column(name = "COND_GROUP_DESC")
@@ -44,14 +42,6 @@ public class TaWorksheetCondMainHdr extends BaseEntity {
 
 	public void setWorksheetCondMainHdrId(Long worksheetCondMainHdrId) {
 		this.worksheetCondMainHdrId = worksheetCondMainHdrId;
-	}
-
-	public String getDraftNumber() {
-		return draftNumber;
-	}
-
-	public void setDraftNumber(String draftNumber) {
-		this.draftNumber = draftNumber;
 	}
 
 	public String getAnalysisNumber() {

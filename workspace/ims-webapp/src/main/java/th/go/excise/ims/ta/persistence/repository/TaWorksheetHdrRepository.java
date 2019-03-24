@@ -20,8 +20,6 @@ public interface TaWorksheetHdrRepository extends CommonJpaCrudRepository<TaWork
 
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.analysisNumber = :analysisNumber")
 	public TaWorksheetHdr findByAnalysisNumber(@Param("analysisNumber") String analysisNumber);
-
-	TaWorksheetHdr findByDraftNumber(String draftNumber);
 	
 	// This method for Clear Data
 	@Modifying

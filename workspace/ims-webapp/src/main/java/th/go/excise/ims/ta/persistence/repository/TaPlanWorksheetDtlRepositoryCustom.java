@@ -1,7 +1,6 @@
 package th.go.excise.ims.ta.persistence.repository;
 
 import java.util.List;
-import java.util.Map;
 
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
@@ -16,6 +15,4 @@ public interface TaPlanWorksheetDtlRepositoryCustom {
 	
 	public List<PlanWorksheetDtlVo> findByCriteria(AuditCalendarCriteriaFormVo formVo);
 
-	public Map<String, String> findAuditPlanCodeByOfficeCodeAndBudgetYearList(String officeCode, List<String> budgetYearList);
-	
 }

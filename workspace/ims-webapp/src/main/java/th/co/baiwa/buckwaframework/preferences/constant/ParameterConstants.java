@@ -29,18 +29,29 @@ public class ParameterConstants {
 		public static final String IMPORT = "3";
 	}
 	
+	// Parameter Group: 
 	public class TA_CONFIG {
 		public static final String SEE_FLAG = "SEE_FLAG";
 		public static final String SELECT_FLAG = "SELECT_FLAG";
 		public static final String SEND_ALL_FLAG = "SEND_ALL_FLAG";
 	}
 	
+	// Parameter Group: 
 	public class TA_MAIN_COND_RANGE {
 		public static final String GREATER_THAN = "1";
 		public static final String GREATER_THAN_OR_EQUALS = "2";
 		public static final String EQUALS = "3";
 		public static final String LESS_THAN_OR_EQUALS = "4";
 		public static final String LESS_THAN = "5";
+	}
+	
+	// Parameter Group: 
+	public class TA_SUB_COND_CAPITAL {
+		public static final String HUGE_CAPITAL = "1";
+		public static final String LARGE_CAPITAL = "2";
+		public static final String MEDIUM_CAPITAL = "3";
+		public static final String SMALL_CAPITAL = "4";
+		public static final String OTHER = "0";
 	}
 	
 }

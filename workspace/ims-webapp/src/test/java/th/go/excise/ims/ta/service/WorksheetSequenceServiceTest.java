@@ -52,18 +52,4 @@ public class WorksheetSequenceServiceTest {
 		logger.info(worksheetSequenceService.getAnalysisNumber("010000", "2562"));
 	}
 	
-	
-	@Test
-	public void getDraftNumber() {
-		logger.info(worksheetSequenceService.getDraftNumber("010000", "2561"));
-		logger.info(worksheetSequenceService.getDraftNumber("010000", "2561"));
-		logger.info(worksheetSequenceService.getDraftNumber("010000", "2562"));
-		logger.info(worksheetSequenceService.getDraftNumber("020000", "2562"));
-		logger.info(worksheetSequenceService.getDraftNumber("010000", "2569"));
-		logger.info(worksheetSequenceService.getDraftNumber("020000", "2569"));
-		logger.info(worksheetSequenceService.getDraftNumber("010000", "2562"));
-		logger.info(worksheetSequenceService.getDraftNumber("010000", "2562"));
-		
-	}
-	
 }

@@ -20,6 +20,7 @@ import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetDtl;
 import th.go.excise.ims.ta.util.TaxAuditUtils;
+import th.go.excise.ims.ta.vo.TaxDraftVo;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 
@@ -39,17 +40,17 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
     @Override
     public void batchInsert(List<TaWorksheetDtl> worksheetDtlList) {
         String sql = SqlGeneratorUtils.genSqlInsert(
-                "TA_WORKSHEET_DTL",
-                Arrays.asList(
-                        "WORKSHEET_DTL_ID", "ANALYSIS_NUMBER", "NEW_REG_ID", "SUM_TAX_AMT_G1", "SUM_TAX_AMT_G2", "TAX_AMT_CHN_PNT", "TAX_MONTH_NO",
-                        "TAX_AUDIT_LAST3", "TAX_AUDIT_LAST2", "TAX_AUDIT_LAST1", "TAX_AMT_SD", "TAX_AMT_MEAN", "TAX_AMT_MAX_PNT", "TAX_AMT_MIN_PNT",
-                        "TAX_AMT_G1_M1", "TAX_AMT_G1_M2", "TAX_AMT_G1_M3", "TAX_AMT_G1_M4", "TAX_AMT_G1_M5", "TAX_AMT_G1_M6",
-                        "TAX_AMT_G1_M7", "TAX_AMT_G1_M8", "TAX_AMT_G1_M9", "TAX_AMT_G1_M10", "TAX_AMT_G1_M11", "TAX_AMT_G1_M12",
-                        "TAX_AMT_G2_M1", "TAX_AMT_G2_M2", "TAX_AMT_G2_M3", "TAX_AMT_G2_M4", "TAX_AMT_G2_M5", "TAX_AMT_G2_M6",
-                        "TAX_AMT_G2_M7", "TAX_AMT_G2_M8", "TAX_AMT_G2_M9", "TAX_AMT_G2_M10", "TAX_AMT_G2_M11", "TAX_AMT_G2_M12", "COND_MAIN_GRP",
-                        "COND_SUB_CAPITAL", "COND_SUB_RISK", "CREATED_BY", "CREATED_DATE"
-                ),
-                "TA_WORKSHEET_DTL_SEQ"
+            "TA_WORKSHEET_DTL",
+            Arrays.asList(
+                "WORKSHEET_DTL_ID", "ANALYSIS_NUMBER", "NEW_REG_ID", "SUM_TAX_AMT_G1", "SUM_TAX_AMT_G2", "TAX_AMT_CHN_PNT", "TAX_MONTH_NO",
+                "TAX_AUDIT_LAST3", "TAX_AUDIT_LAST2", "TAX_AUDIT_LAST1", "TAX_AMT_SD", "TAX_AMT_MEAN", "TAX_AMT_MAX_PNT", "TAX_AMT_MIN_PNT",
+                "TAX_AMT_G1_M1", "TAX_AMT_G1_M2", "TAX_AMT_G1_M3", "TAX_AMT_G1_M4", "TAX_AMT_G1_M5", "TAX_AMT_G1_M6",
+                "TAX_AMT_G1_M7", "TAX_AMT_G1_M8", "TAX_AMT_G1_M9", "TAX_AMT_G1_M10", "TAX_AMT_G1_M11", "TAX_AMT_G1_M12",
+                "TAX_AMT_G2_M1", "TAX_AMT_G2_M2", "TAX_AMT_G2_M3", "TAX_AMT_G2_M4", "TAX_AMT_G2_M5", "TAX_AMT_G2_M6",
+                "TAX_AMT_G2_M7", "TAX_AMT_G2_M8", "TAX_AMT_G2_M9", "TAX_AMT_G2_M10", "TAX_AMT_G2_M11", "TAX_AMT_G2_M12", "COND_MAIN_GRP",
+                "COND_SUB_CAPITAL", "COND_SUB_RISK", "CREATED_BY", "CREATED_DATE"
+            ),
+            "TA_WORKSHEET_DTL_SEQ"
         );
 
         commonJdbcTemplate.batchUpdate(sql, worksheetDtlList, 1000, new ParameterizedPreparedStatementSetter<TaWorksheetDtl>() {
@@ -107,14 +108,14 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
     @Override
     public void batchUpdate(List<TaWorksheetDtl> taWorksheetDtlList) {
         String sql = SqlGeneratorUtils.genSqlUpdate(
-                "TA_WORKSHEET_DTL",
-                Arrays.asList(
-                        "COND_MAIN_GRP",
-                        "COND_SUB_CAPITAL",
-                        "COND_SUB_RISK",
-                        "COND_SUB_NO_AUDIT"
-                ),
-                Arrays.asList("ANALYSIS_NUMBER", "NEW_REG_ID")
+            "TA_WORKSHEET_DTL",
+            Arrays.asList(
+                "COND_MAIN_GRP",
+                "COND_SUB_CAPITAL",
+                "COND_SUB_RISK",
+                "COND_SUB_NO_AUDIT"
+            ),
+            Arrays.asList("ANALYSIS_NUMBER", "NEW_REG_ID")
         );
 
         commonJdbcTemplate.batchUpdate(sql, taWorksheetDtlList, 1000, new ParameterizedPreparedStatementSetter<TaWorksheetDtl>() {
@@ -157,35 +158,30 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
         sql.append("   R4000.REG_CAPITAL , ");
         sql.append("   TA_W_DTL.* ");
         sql.append(" FROM TA_WORKSHEET_DTL TA_W_DTL ");
-        sql.append(" INNER JOIN TA_WORKSHEET_HDR TA_W_HDR ");
-        sql.append(" ON TA_W_DTL.ANALYSIS_NUMBER = TA_W_HDR.ANALYSIS_NUMBER ");
-        sql.append(" AND TA_W_DTL.IS_DELETED     = 'N' ");
-        sql.append(" INNER JOIN TA_WS_REG4000 R4000 ");
-        sql.append(" ON R4000.NEW_REG_ID  = TA_W_DTL.NEW_REG_ID ");
-        sql.append(" AND R4000.IS_DELETED = 'N' ");
-        sql.append(" INNER JOIN ");
-        sql.append("   (SELECT OFF_CODE OFFICE_CODE, ");
+        sql.append(" INNER JOIN TA_WORKSHEET_HDR TA_W_HDR ON TA_W_DTL.ANALYSIS_NUMBER = TA_W_HDR.ANALYSIS_NUMBER ");
+        sql.append("   AND TA_W_DTL.IS_DELETED = 'N' ");
+        sql.append(" INNER JOIN TA_WS_REG4000 R4000 ON R4000.NEW_REG_ID = TA_W_DTL.NEW_REG_ID ");
+        sql.append("   AND R4000.IS_DELETED = 'N' ");
+        sql.append(" INNER JOIN ( ");
+        sql.append("   SELECT OFF_CODE OFFICE_CODE, ");
         sql.append("     OFF_NAME, ");
         sql.append("     OFF_SHORT_NAME ");
         sql.append("   FROM EXCISE_DEPARTMENT ");
-        sql.append("   WHERE IS_DELETED                           = 'N' ");
-        sql.append("   AND CONCAT (SUBSTR(OFF_CODE, 0, 2),'0000') = OFF_CODE ");
-        sql.append("   ) ED_SECTOR ");
-        sql.append(" ON ED_SECTOR.OFFICE_CODE = CONCAT (SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000') ");
-        sql.append(" INNER JOIN ");
-        sql.append("   (SELECT OFF_CODE OFFICE_CODE, ");
+        sql.append("   WHERE IS_DELETED = 'N' ");
+        sql.append("     AND CONCAT (SUBSTR(OFF_CODE, 0, 2),'0000') = OFF_CODE ");
+        sql.append(" ) ED_SECTOR ON ED_SECTOR.OFFICE_CODE = CONCAT (SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000') ");
+        sql.append(" INNER JOIN ( ");
+        sql.append("   SELECT OFF_CODE OFFICE_CODE, ");
         sql.append("     OFF_NAME, ");
         sql.append("     OFF_SHORT_NAME ");
         sql.append("   FROM EXCISE_DEPARTMENT ");
-        sql.append("   WHERE IS_DELETED                         = 'N' ");
-        sql.append("   AND CONCAT (SUBSTR(OFF_CODE, 0, 4),'00') = OFF_CODE ");
-        sql.append("   ) ED_AREA ");
-        sql.append(" ON ED_AREA.OFFICE_CODE = CONCAT (SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
-        sql.append(" LEFT JOIN TA_PLAN_WORKSHEET_SELECT TA_PW_SEL ");
-        sql.append(" ON TA_PW_SEL.NEW_REG_ID      = TA_W_DTL.NEW_REG_ID ");
-        sql.append(" AND TA_PW_SEL.IS_DELETED     = 'N' ");
-        sql.append(" AND TA_PW_SEL.BUDGET_YEAR    = ? ");
-        sql.append(" WHERE TA_W_HDR.IS_DELETED    = 'N' ");
+        sql.append("   WHERE IS_DELETED = 'N' ");
+        sql.append("     AND CONCAT (SUBSTR(OFF_CODE, 0, 4),'00') = OFF_CODE ");
+        sql.append(" ) ED_AREA ON ED_AREA.OFFICE_CODE = CONCAT (SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
+        sql.append(" LEFT JOIN TA_PLAN_WORKSHEET_SELECT TA_PW_SEL ON TA_PW_SEL.NEW_REG_ID = TA_W_DTL.NEW_REG_ID ");
+        sql.append("   AND TA_PW_SEL.IS_DELETED = 'N' ");
+        sql.append("   AND TA_PW_SEL.BUDGET_YEAR = ? ");
+        sql.append(" WHERE TA_W_HDR.IS_DELETED = 'N' ");
         sql.append(" AND TA_W_HDR.ANALYSIS_NUMBER = ? ");
 
         params.add(formVo.getBudgetYear());
@@ -282,6 +278,36 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
             return vo;
         }
     };
+    
+	@Override
+	public List<TaxDraftVo> findByAnalysisNumber(String analysisNumber) {
+		List<Object> paramList = new ArrayList<>();
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT T.*, D.TAX_AMT_CHN_PNT, D.TAX_MONTH_NO ");
+		sql.append(" FROM TA_WORKSHEET_DTL D ");
+		sql.append(" INNER JOIN TA_WS_REG4000 T ON T.NEW_REG_ID = D.NEW_REG_ID ");
+		sql.append(" WHERE T.IS_DELETED = 'N' ");
+		sql.append("   AND D.IS_DELETED = 'N' ");
+		sql.append("   AND D.ANALYSIS_NUMBER = ? ");
+		paramList.add(analysisNumber);
+		return this.commonJdbcTemplate.query(sql.toString(), paramList.toArray(), taxDraftVoRowMapper);
+	}
+
+	private RowMapper<TaxDraftVo> taxDraftVoRowMapper = new RowMapper<TaxDraftVo>() {
+		@Override
+		public TaxDraftVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+			TaxDraftVo vo = new TaxDraftVo();
+			vo.setNewRegId(rs.getString("NEW_REG_ID"));
+			vo.setFacType(rs.getString("FAC_TYPE"));
+			vo.setRegDate(LocalDateConverter.convertToEntityAttribute(rs.getDate("REG_DATE")));
+			vo.setOfficeCode(rs.getString("OFFICE_CODE"));
+			vo.setTaxAmtChnPnt(rs.getBigDecimal("TAX_AMT_CHN_PNT"));
+			vo.setTaxMonthNo(rs.getInt("TAX_MONTH_NO"));
+			vo.setRegCapital(rs.getString("REG_CAPITAL"));
+			vo.setDutyCode(rs.getString("DUTY_CODE"));
+			return vo;
+		}
+	};
 
     public List<LabelValueBean> groupCondSubCapital(String analysisNumber) {
         StringBuilder sql = new StringBuilder();
@@ -337,4 +363,5 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
             return new LabelValueBean(rs.getString("CON_SUB_RISK_DESC"), rs.getString("COND_SUB_RISK"));
         }
     };
+    
 }

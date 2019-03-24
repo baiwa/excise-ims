@@ -20,8 +20,6 @@ public class TaWorksheetCondSubRisk extends BaseEntity {
 	@SequenceGenerator(name = "TA_WORKSHEET_COND_SUB_RISK_GEN", sequenceName = "TA_WORKSHEET_COND_SUB_RISK_SEQ", allocationSize = 1)
 	@Column(name = "WORKSHEET_COND_SUB_RISK_ID")
 	private Long worksheetCondSubRiskId;
-	@Column(name = "DRAFT_NUMBER")
-	private String draftNumber;
 	@Column(name = "ANALYSIS_NUMBER")
 	private String analysisNumber;
 	@Column(name = "DUTY_CODE")
@@ -35,14 +33,6 @@ public class TaWorksheetCondSubRisk extends BaseEntity {
 
 	public void setWorksheetCondSubRiskId(Long worksheetCondSubRiskId) {
 		this.worksheetCondSubRiskId = worksheetCondSubRiskId;
-	}
-
-	public String getDraftNumber() {
-		return draftNumber;
-	}
-
-	public void setDraftNumber(String draftNumber) {
-		this.draftNumber = draftNumber;
 	}
 
 	public String getAnalysisNumber() {

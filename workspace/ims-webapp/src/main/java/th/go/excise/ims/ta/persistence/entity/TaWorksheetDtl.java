@@ -1,7 +1,5 @@
 package th.go.excise.ims.ta.persistence.entity;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,29 +19,20 @@ public class TaWorksheetDtl extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_WORKSHEET_DTL_GEN")
 	@SequenceGenerator(name = "TA_WORKSHEET_DTL_GEN", sequenceName = "TA_WORKSHEET_DTL_SEQ", allocationSize = 1)
-
 	@Column(name = "WORKSHEET_DTL_ID")
 	private Long worksheetDtlId;
 	@Column(name = "ANALYSIS_NUMBER")
 	private String analysisNumber;
 	@Column(name = "NEW_REG_ID")
 	private String newRegId;
-	@Column(name = "COND_MAIN_GRP")
-	private String condMainGrp;
-	@Column(name = "COND_SUB_CAPITAL")
-	private String condSubCapital;
-	@Column(name = "COND_SUB_RISK")
-	private String condSubRisk;
-	@Column(name = "COND_SUB_NO_AUDIT")
-	private String condSubNoAudit;
 	@Column(name = "SUM_TAX_AMT_G1")
-	private BigDecimal sumTaxAmtG1;
+	private String sumTaxAmtG1;
 	@Column(name = "SUM_TAX_AMT_G2")
-	private BigDecimal sumTaxAmtG2;
+	private String sumTaxAmtG2;
 	@Column(name = "TAX_AMT_CHN_PNT")
-	private BigDecimal taxAmtChnPnt;
+	private String taxAmtChnPnt;
 	@Column(name = "TAX_AMT_SD")
-	private BigDecimal taxAmtSd;
+	private String taxAmtSd;
 	@Column(name = "TAX_MONTH_NO")
 	private String taxMonthNo;
 	@Column(name = "TAX_AUDIT_LAST3")
@@ -53,11 +42,11 @@ public class TaWorksheetDtl extends BaseEntity {
 	@Column(name = "TAX_AUDIT_LAST1")
 	private String taxAuditLast1;
 	@Column(name = "TAX_AMT_MEAN")
-	private BigDecimal taxAmtMean;
+	private String taxAmtMean;
 	@Column(name = "TAX_AMT_MAX_PNT")
-	private BigDecimal taxAmtMaxPnt;
+	private String taxAmtMaxPnt;
 	@Column(name = "TAX_AMT_MIN_PNT")
-	private BigDecimal taxAmtMinPnt;
+	private String taxAmtMinPnt;
 	@Column(name = "TAX_AMT_G1_M1")
 	private String taxAmtG1M1;
 	@Column(name = "TAX_AMT_G1_M2")
@@ -106,6 +95,14 @@ public class TaWorksheetDtl extends BaseEntity {
 	private String taxAmtG2M11;
 	@Column(name = "TAX_AMT_G2_M12")
 	private String taxAmtG2M12;
+	@Column(name = "COND_MAIN_GRP")
+	private String condMainGrp;
+	@Column(name = "COND_SUB_CAPITAL")
+	private String condSubCapital;
+	@Column(name = "COND_SUB_RISK")
+	private String condSubRisk;
+	@Column(name = "COND_SUB_NO_AUDIT")
+	private String condSubNoAudit;
 
 	public Long getWorksheetDtlId() {
 		return worksheetDtlId;
@@ -131,67 +128,35 @@ public class TaWorksheetDtl extends BaseEntity {
 		this.newRegId = newRegId;
 	}
 
-	public String getCondMainGrp() {
-		return condMainGrp;
-	}
-
-	public void setCondMainGrp(String condMainGrp) {
-		this.condMainGrp = condMainGrp;
-	}
-
-	public String getCondSubCapital() {
-		return condSubCapital;
-	}
-
-	public void setCondSubCapital(String condSubCapital) {
-		this.condSubCapital = condSubCapital;
-	}
-
-	public String getCondSubRisk() {
-		return condSubRisk;
-	}
-
-	public void setCondSubRisk(String condSubRisk) {
-		this.condSubRisk = condSubRisk;
-	}
-
-	public String getCondSubNoAudit() {
-		return condSubNoAudit;
-	}
-
-	public void setCondSubNoAudit(String condSubNoAudit) {
-		this.condSubNoAudit = condSubNoAudit;
-	}
-
-	public BigDecimal getSumTaxAmtG1() {
+	public String getSumTaxAmtG1() {
 		return sumTaxAmtG1;
 	}
 
-	public void setSumTaxAmtG1(BigDecimal sumTaxAmtG1) {
+	public void setSumTaxAmtG1(String sumTaxAmtG1) {
 		this.sumTaxAmtG1 = sumTaxAmtG1;
 	}
 
-	public BigDecimal getSumTaxAmtG2() {
+	public String getSumTaxAmtG2() {
 		return sumTaxAmtG2;
 	}
 
-	public void setSumTaxAmtG2(BigDecimal sumTaxAmtG2) {
+	public void setSumTaxAmtG2(String sumTaxAmtG2) {
 		this.sumTaxAmtG2 = sumTaxAmtG2;
 	}
 
-	public BigDecimal getTaxAmtChnPnt() {
+	public String getTaxAmtChnPnt() {
 		return taxAmtChnPnt;
 	}
 
-	public void setTaxAmtChnPnt(BigDecimal taxAmtChnPnt) {
+	public void setTaxAmtChnPnt(String taxAmtChnPnt) {
 		this.taxAmtChnPnt = taxAmtChnPnt;
 	}
 
-	public BigDecimal getTaxAmtSd() {
+	public String getTaxAmtSd() {
 		return taxAmtSd;
 	}
 
-	public void setTaxAmtSd(BigDecimal taxAmtSd) {
+	public void setTaxAmtSd(String taxAmtSd) {
 		this.taxAmtSd = taxAmtSd;
 	}
 
@@ -227,27 +192,27 @@ public class TaWorksheetDtl extends BaseEntity {
 		this.taxAuditLast1 = taxAuditLast1;
 	}
 
-	public BigDecimal getTaxAmtMean() {
+	public String getTaxAmtMean() {
 		return taxAmtMean;
 	}
 
-	public void setTaxAmtMean(BigDecimal taxAmtMean) {
+	public void setTaxAmtMean(String taxAmtMean) {
 		this.taxAmtMean = taxAmtMean;
 	}
 
-	public BigDecimal getTaxAmtMaxPnt() {
+	public String getTaxAmtMaxPnt() {
 		return taxAmtMaxPnt;
 	}
 
-	public void setTaxAmtMaxPnt(BigDecimal taxAmtMaxPnt) {
+	public void setTaxAmtMaxPnt(String taxAmtMaxPnt) {
 		this.taxAmtMaxPnt = taxAmtMaxPnt;
 	}
 
-	public BigDecimal getTaxAmtMinPnt() {
+	public String getTaxAmtMinPnt() {
 		return taxAmtMinPnt;
 	}
 
-	public void setTaxAmtMinPnt(BigDecimal taxAmtMinPnt) {
+	public void setTaxAmtMinPnt(String taxAmtMinPnt) {
 		this.taxAmtMinPnt = taxAmtMinPnt;
 	}
 
@@ -441,6 +406,38 @@ public class TaWorksheetDtl extends BaseEntity {
 
 	public void setTaxAmtG2M12(String taxAmtG2M12) {
 		this.taxAmtG2M12 = taxAmtG2M12;
+	}
+
+	public String getCondMainGrp() {
+		return condMainGrp;
+	}
+
+	public void setCondMainGrp(String condMainGrp) {
+		this.condMainGrp = condMainGrp;
+	}
+
+	public String getCondSubCapital() {
+		return condSubCapital;
+	}
+
+	public void setCondSubCapital(String condSubCapital) {
+		this.condSubCapital = condSubCapital;
+	}
+
+	public String getCondSubRisk() {
+		return condSubRisk;
+	}
+
+	public void setCondSubRisk(String condSubRisk) {
+		this.condSubRisk = condSubRisk;
+	}
+
+	public String getCondSubNoAudit() {
+		return condSubNoAudit;
+	}
+
+	public void setCondSubNoAudit(String condSubNoAudit) {
+		this.condSubNoAudit = condSubNoAudit;
 	}
 
 }

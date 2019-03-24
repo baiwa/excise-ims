@@ -1,6 +1,5 @@
 package th.go.excise.ims.ta.vo;
 
-import javax.persistence.Column;
 import java.math.BigDecimal;
 
 public class MasCondMainResponseVo {

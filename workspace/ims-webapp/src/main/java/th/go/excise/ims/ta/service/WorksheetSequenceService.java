@@ -15,7 +15,6 @@ public class WorksheetSequenceService {
 	private static final Logger logger = LoggerFactory.getLogger(WorksheetSequenceService.class);
 	
 	private static final String RUNNING_TYPE_ANALYSIS = "A";
-	private static final String RUNNING_TYPE_DRAFT = "D";
 	private static final String RUNNING_TYPE_PLAN = "P";
 	private static final int RUNNING_RANGE = 6;
 
@@ -25,11 +24,6 @@ public class WorksheetSequenceService {
 	public String getAnalysisNumber(String officeCode, String budgetYear) {
 		logger.info("getAnalysisNumber of officeCode : {} || budgetYear : {}", officeCode, budgetYear);
 		return genarateRunningNumber(officeCode, budgetYear, RUNNING_TYPE_ANALYSIS);
-	}
-
-	public String getDraftNumber(String officeCode, String budgetYear) {
-		logger.info("getDraftNumber of officeCode : {} || budgetYear : {}", officeCode, budgetYear);
-		return genarateRunningNumber(officeCode, budgetYear, RUNNING_TYPE_DRAFT);
 	}
 
 	public String getPlanNumber(String officeCode, String budgetYear) {
