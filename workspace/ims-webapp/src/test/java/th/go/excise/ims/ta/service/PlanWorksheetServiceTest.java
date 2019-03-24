@@ -17,7 +17,7 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.Application;
-import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetHisRepository;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 
 @RunWith(SpringRunner.class)
@@ -30,7 +30,7 @@ public class PlanWorksheetServiceTest {
 	private PlanWorksheetService planWorksheetService;
 
 	@Autowired
-	private TaPlanWorksheetDtlRepository planWorksheetDtlRepository;
+	private TaPlanWorksheetHisRepository planWorksheetHisRepository;
 
 	@Test
 	public void test_savePlanWorksheetHdr() {
@@ -58,7 +58,7 @@ public class PlanWorksheetServiceTest {
 		budgetYearList.add("2562");
 		budgetYearList.add("2561");
 		budgetYearList.add("2560");
-		Map<String, String> map = planWorksheetDtlRepository.findAuditPlanCodeByOfficeCodeAndBudgetYearList(officeCode, budgetYearList);
+		Map<String, String> map = planWorksheetHisRepository.findAuditPlanCodeByOfficeCodeAndBudgetYearList(officeCode, budgetYearList);
 
 		System.out.println(map);
 		System.out.println(map.get("2538005578"));
