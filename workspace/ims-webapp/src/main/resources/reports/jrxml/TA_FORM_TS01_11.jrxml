@@ -7,9 +7,7 @@
 	<style name="data" hTextAlign="Left" hImageAlign="Center" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="16"/>
 	<parameter name="logo" class="java.io.InputStream"/>
 	<parameter name="docPlace" class="java.lang.String"/>
-	<parameter name="day" class="java.lang.String"/>
-	<parameter name="month" class="java.lang.String"/>
-	<parameter name="year" class="java.lang.String"/>
+	<parameter name="docDate" class="java.util.Date"/>
 	<parameter name="docTime" class="java.lang.String"/>
 	<parameter name="officerFullName" class="java.lang.String"/>
 	<parameter name="officerPosition" class="java.lang.String"/>
@@ -170,7 +168,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$P{day}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("d",new Locale("th", "TH")).format($P{docDate})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="306" y="121" width="62" height="22" uuid="572d5da0-349c-4a4c-8d1d-dd0d7dad84c8"/>
@@ -182,7 +180,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{month}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("MMMM",new Locale("th", "TH")).format($P{docDate})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="396" y="121" width="42" height="22" uuid="390486bf-dfb1-43ad-ab18-0fd9aa6c82a5"/>
@@ -194,7 +192,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{year}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy",new Locale("th", "TH")).format($P{docDate})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="data" x="40" y="143" width="49" height="22" uuid="9ca9e792-6b53-4719-a77b-23c5de2a38d1"/>

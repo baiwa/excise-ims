@@ -96,11 +96,6 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 		params.put("signAuthFullName1", formTS0111Vo.getSignAuthFullName1());
 		params.put("signWitnessFullName1", formTS0111Vo.getSignWitnessFullName1());
 		params.put("signWitnessFullName2", formTS0111Vo.getSignWitnessFullName2());
-		// format string to LocalDate
-		Date localDate = ConvertDateUtils.parseStringToDate(formTS0111Vo.getDocDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN);
-		params.put("day", ConvertDateUtils.formatDateToString(localDate, ConvertDateUtils.DD, ConvertDateUtils.LOCAL_TH));
-		params.put("month", ConvertDateUtils.formatDateToString(localDate, ConvertDateUtils.MMMM, ConvertDateUtils.LOCAL_TH));
-		params.put("year", ConvertDateUtils.formatDateToString(localDate, ConvertDateUtils.YYYY));
 		
 		JRDataSource dataSource = new JRBeanCollectionDataSource(formTS0111Vo.getTaFormTS0111DtlVoList());
 		
