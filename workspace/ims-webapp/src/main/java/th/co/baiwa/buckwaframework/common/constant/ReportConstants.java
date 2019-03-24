@@ -5,10 +5,11 @@ public class ReportConstants {
 	// Path of JasperReports
 	public static final class PATH {
 		public static final String ROOT_PATH = "/reports";
-		public static final String TEST_PATH = "/tmp/";
 		public static final String FONT_PATH = ROOT_PATH + "/fonts";
 		public static final String IMAGE_PATH = ROOT_PATH + "/images";
 		public static final String JRXML_PATH = ROOT_PATH + "/jrxml";
+		// For Test
+		public static final String TEST_PATH = "/tmp/";
 	}
 
 	// File Extension in JasperReports
@@ -39,12 +40,25 @@ public class ReportConstants {
 		public static final String TA_FORM_TS01_07 = "TA_FORM_TS01_07";
 		public static final String TA_FORM_TS01_08 = "TA_FORM_TS01_08";
 		public static final String TA_FORM_TS01_09 = "TA_FORM_TS01_09";
-		public static final String TA_FORM_TS01_010 = "TA_FORM_TS01_10";
-		public static final String TA_FORM_TS01_010_1 = "TA_FORM_TS01_10_1";
+		public static final String TA_FORM_TS01_10 = "TA_FORM_TS01_10";
+		public static final String TA_FORM_TS01_10_1 = "TA_FORM_TS01_10_1";
+		public static final String TA_FORM_TS01_11 = "TA_FORM_TS01_11";
+		public static final String TA_FORM_TS01_11P2 = "TA_FORM_TS01_11P2";
+		public static final String TA_FORM_TS01_12 = "TA_FORM_TS01_12";
 		public static final String TA_FORM_TS01_13 = "TA_FORM_TS01_13";
-		public static final String TA_FORM_TS01_011 = "TA_FORM_TS01_11";
-		public static final String TA_FORM_TS01_011_2 = "TA_FORM_TS01_11-2";
-		public static final String TA_FORM_TS01_019 = "TA_FORM_TS01_11";
+		public static final String TA_FORM_TS01_14 = "TA_FORM_TS01_14";
+		public static final String TA_FORM_TS01_14_1 = "TA_FORM_TS01_14_1";
+		public static final String TA_FORM_TS01_14_1P2 = "TA_FORM_TS01_14_1P2";
+		public static final String TA_FORM_TS01_14_2 = "TA_FORM_TS01_14_2";
+		public static final String TA_FORM_TS01_15 = "TA_FORM_TS01_15";
+		public static final String TA_FORM_TS01_16 = "TA_FORM_TS01_16";
+		public static final String TA_FORM_TS01_17 = "TA_FORM_TS01_17";
+		public static final String TA_FORM_TS01_17P2 = "TA_FORM_TS01_17P2";
+		public static final String TA_FORM_TS01_17_1 = "TA_FORM_TS01_17_1";
+		public static final String TA_FORM_TS01_18 = "TA_FORM_TS01_18";
+		public static final String TA_FORM_TS01_19 = "TA_FORM_TS01_19";
+		public static final String TA_FORM_TS01_20 = "TA_FORM_TS01_20";
+		public static final String TA_FORM_TS01_21 = "TA_FORM_TS01_21";
 	}
 
 }

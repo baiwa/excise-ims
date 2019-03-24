@@ -1,20 +1,17 @@
 package th.go.excise.ims.ta.vo;
 
 import java.util.Date;
+import java.util.List;
 
-public class TaFormTS0113Vo {
+public class TaFormTS0115Vo {
 
 	private String formTsNumber;
-	private String docPlace;
+	private String officeName;
 	private Date docDate;
-	private String docTime;
-	private String headOfficerFullName;
-	private String headOfficerPosition;
-	private String refBookNumber1;
-	private Date refBookDate;
+	private String ownerFullName;
 	private String factoryType;
-	private String newRegId;
 	private String factoryName;
+	private String newRegId;
 	private String facAddrNo;
 	private String facSoiName;
 	private String facThnName;
@@ -22,11 +19,7 @@ public class TaFormTS0113Vo {
 	private String facAmphurName;
 	private String facProvinceName;
 	private String facZipCode;
-	private Date auditDate;
-	private String ownerFullName;
-	private String ownerPosition;
-	private String factoryName2;
-	private String auditFinishTime;
+	private List<TaFormTS0115DtlVo> taFormTS0115DtlVoList;
 	private String signOwnerFullName;
 	private String signOfficerFullName;
 	private String signWitnessFullName1;
@@ -40,12 +33,12 @@ public class TaFormTS0113Vo {
 		this.formTsNumber = formTsNumber;
 	}
 
-	public String getDocPlace() {
-		return docPlace;
+	public String getOfficeName() {
+		return officeName;
 	}
 
-	public void setDocPlace(String docPlace) {
-		this.docPlace = docPlace;
+	public void setOfficeName(String officeName) {
+		this.officeName = officeName;
 	}
 
 	public Date getDocDate() {
@@ -56,44 +49,12 @@ public class TaFormTS0113Vo {
 		this.docDate = docDate;
 	}
 
-	public String getDocTime() {
-		return docTime;
+	public String getOwnerFullName() {
+		return ownerFullName;
 	}
 
-	public void setDocTime(String docTime) {
-		this.docTime = docTime;
-	}
-
-	public String getHeadOfficerFullName() {
-		return headOfficerFullName;
-	}
-
-	public void setHeadOfficerFullName(String headOfficerFullName) {
-		this.headOfficerFullName = headOfficerFullName;
-	}
-
-	public String getHeadOfficerPosition() {
-		return headOfficerPosition;
-	}
-
-	public void setHeadOfficerPosition(String headOfficerPosition) {
-		this.headOfficerPosition = headOfficerPosition;
-	}
-
-	public String getRefBookNumber1() {
-		return refBookNumber1;
-	}
-
-	public void setRefBookNumber1(String refBookNumber1) {
-		this.refBookNumber1 = refBookNumber1;
-	}
-
-	public Date getRefBookDate() {
-		return refBookDate;
-	}
-
-	public void setRefBookDate(Date refBookDate) {
-		this.refBookDate = refBookDate;
+	public void setOwnerFullName(String ownerFullName) {
+		this.ownerFullName = ownerFullName;
 	}
 
 	public String getFactoryType() {
@@ -104,20 +65,20 @@ public class TaFormTS0113Vo {
 		this.factoryType = factoryType;
 	}
 
-	public String getNewRegId() {
-		return newRegId;
-	}
-
-	public void setNewRegId(String newRegId) {
-		this.newRegId = newRegId;
-	}
-
 	public String getFactoryName() {
 		return factoryName;
 	}
 
 	public void setFactoryName(String factoryName) {
 		this.factoryName = factoryName;
+	}
+
+	public String getNewRegId() {
+		return newRegId;
+	}
+
+	public void setNewRegId(String newRegId) {
+		this.newRegId = newRegId;
 	}
 
 	public String getFacAddrNo() {
@@ -176,44 +137,12 @@ public class TaFormTS0113Vo {
 		this.facZipCode = facZipCode;
 	}
 
-	public Date getAuditDate() {
-		return auditDate;
+	public List<TaFormTS0115DtlVo> getTaFormTS0115DtlVoList() {
+		return taFormTS0115DtlVoList;
 	}
 
-	public void setAuditDate(Date auditDate) {
-		this.auditDate = auditDate;
-	}
-
-	public String getOwnerFullName() {
-		return ownerFullName;
-	}
-
-	public void setOwnerFullName(String ownerFullName) {
-		this.ownerFullName = ownerFullName;
-	}
-
-	public String getOwnerPosition() {
-		return ownerPosition;
-	}
-
-	public void setOwnerPosition(String ownerPosition) {
-		this.ownerPosition = ownerPosition;
-	}
-
-	public String getFactoryName2() {
-		return factoryName2;
-	}
-
-	public void setFactoryName2(String factoryName2) {
-		this.factoryName2 = factoryName2;
-	}
-
-	public String getAuditFinishTime() {
-		return auditFinishTime;
-	}
-
-	public void setAuditFinishTime(String auditFinishTime) {
-		this.auditFinishTime = auditFinishTime;
+	public void setTaFormTS0115DtlVoList(List<TaFormTS0115DtlVo> taFormTS0115DtlVoList) {
+		this.taFormTS0115DtlVoList = taFormTS0115DtlVoList;
 	}
 
 	public String getSignOwnerFullName() {

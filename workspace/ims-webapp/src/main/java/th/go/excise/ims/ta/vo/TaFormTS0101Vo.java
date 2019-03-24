@@ -3,15 +3,14 @@ package th.go.excise.ims.ta.vo;
 import java.util.Date;
 
 public class TaFormTS0101Vo {
+
 	private String formTsNumber;
 	private String newRegId;
 	private String factoryName;
 	private String factoryTypeText;
 	private String factoryAddress;
 	private Date analysisDateStart;
-	private String analysisDateStartStr;
 	private Date analysisDateEnd;
-	private String analysisDateEndStr;
 	private String analysisData1;
 	private String analysisData2;
 	private String analysisData3;
@@ -24,12 +23,10 @@ public class TaFormTS0101Vo {
 	private String signOfficerFullName;
 	private String signSupOfficerFullName;
 	private Date signOfficerDate;
-	private String signOfficerDateStr;
 	private String approvedFlag;
 	private String signApprOfficerFullName;
 	private String signApprOfficerPosition;
 	private Date signApprDate;
-	private String signApprDateStr;
 
 	public String getFormTsNumber() {
 		return formTsNumber;
@@ -79,28 +76,12 @@ public class TaFormTS0101Vo {
 		this.analysisDateStart = analysisDateStart;
 	}
 
-	public String getAnalysisDateStartStr() {
-		return analysisDateStartStr;
-	}
-
-	public void setAnalysisDateStartStr(String analysisDateStartStr) {
-		this.analysisDateStartStr = analysisDateStartStr;
-	}
-
 	public Date getAnalysisDateEnd() {
 		return analysisDateEnd;
 	}
 
 	public void setAnalysisDateEnd(Date analysisDateEnd) {
 		this.analysisDateEnd = analysisDateEnd;
-	}
-
-	public String getAnalysisDateEndStr() {
-		return analysisDateEndStr;
-	}
-
-	public void setAnalysisDateEndStr(String analysisDateEndStr) {
-		this.analysisDateEndStr = analysisDateEndStr;
 	}
 
 	public String getAnalysisData1() {
@@ -199,14 +180,6 @@ public class TaFormTS0101Vo {
 		this.signOfficerDate = signOfficerDate;
 	}
 
-	public String getSignOfficerDateStr() {
-		return signOfficerDateStr;
-	}
-
-	public void setSignOfficerDateStr(String signOfficerDateStr) {
-		this.signOfficerDateStr = signOfficerDateStr;
-	}
-
 	public String getApprovedFlag() {
 		return approvedFlag;
 	}
@@ -237,14 +210,6 @@ public class TaFormTS0101Vo {
 
 	public void setSignApprDate(Date signApprDate) {
 		this.signApprDate = signApprDate;
-	}
-
-	public String getSignApprDateStr() {
-		return signApprDateStr;
-	}
-
-	public void setSignApprDateStr(String signApprDateStr) {
-		this.signApprDateStr = signApprDateStr;
 	}
 
 }

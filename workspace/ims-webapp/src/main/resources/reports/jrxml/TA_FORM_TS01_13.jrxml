@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="N_mis01-2" pageWidth="595" pageHeight="842" columnWidth="441" leftMargin="89" rightMargin="65" topMargin="56" bottomMargin="56" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_13" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="55" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
-	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
-	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
-	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
 	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="16" isBold="false"/>
 	<style name="data" fill="Solid" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" isBlankWhenNull="false" fontName="TH Sarabun New" fontSize="16">
@@ -21,14 +21,12 @@
 	</style>
 	<parameter name="logo" class="java.io.InputStream"/>
 	<parameter name="docPlace" class="java.lang.String"/>
-	<parameter name="day" class="java.lang.String"/>
-	<parameter name="month" class="java.lang.String"/>
-	<parameter name="year" class="java.lang.String"/>
+	<parameter name="docDate" class="java.util.Date"/>
 	<parameter name="docTime" class="java.lang.String"/>
 	<parameter name="headOfficerFullName" class="java.lang.String"/>
 	<parameter name="headOfficerPosition" class="java.lang.String"/>
 	<parameter name="refBookNumber1" class="java.lang.String"/>
-	<parameter name="refBookDate" class="java.lang.String"/>
+	<parameter name="refBookDate" class="java.util.Date"/>
 	<parameter name="factoryName" class="java.lang.String"/>
 	<parameter name="newRegId" class="java.lang.String"/>
 	<parameter name="facAddrNo" class="java.lang.String"/>
@@ -39,7 +37,7 @@
 	<parameter name="facProvinceName" class="java.lang.String"/>
 	<parameter name="facZipCode" class="java.lang.String"/>
 	<parameter name="factoryType" class="java.lang.String"/>
-	<parameter name="auditDate" class="java.lang.String"/>
+	<parameter name="auditDate" class="java.util.Date"/>
 	<parameter name="ownerFullName" class="java.lang.String"/>
 	<parameter name="ownerPosition" class="java.lang.String"/>
 	<parameter name="auditFinishTime" class="java.lang.String"/>
@@ -437,15 +435,15 @@
 			</line>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="247" y="117" width="33" height="22" uuid="1eb9fc12-246f-4497-9616-2d5bd25945dd"/>
-				<textFieldExpression><![CDATA[$P{day}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("d",new Locale("th", "TH")).format($P{docDate})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="296" y="117" width="100" height="22" uuid="7a30d245-5412-40e4-b85e-0913df17f530"/>
-				<textFieldExpression><![CDATA[$P{month}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("MMMM",new Locale("th", "TH")).format($P{docDate})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement key="" style="data" x="374" y="117" width="67" height="22" uuid="a0e8d78a-bb19-413f-8d7f-fb6d9440c13f"/>
-				<textFieldExpression><![CDATA[$P{year}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy",new Locale("th", "TH")).format($P{docDate})]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="238" y="132" width="27" height="1" uuid="0d3b6ae6-7209-43eb-8975-e800e76d4e96"/>
@@ -483,7 +481,7 @@
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="344" y="168" width="97" height="22" uuid="9d144f30-10b6-4f74-b23e-39ddce1a0047"/>
-				<textFieldExpression><![CDATA[$P{refBookDate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("d MMM yyyy",new Locale("th", "TH")).format($P{refBookDate})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="9" y="213" width="100" height="22" uuid="a458d518-db4d-482a-986e-a8c39b176d8e"/>
@@ -628,7 +626,7 @@
 			</line>
 			<textField>
 				<reportElement style="data" x="21" y="279" width="85" height="22" uuid="f4758261-c4b5-4b1a-bc8b-471e810dda90"/>
-				<textFieldExpression><![CDATA[$P{auditDate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("d MMM yyyy",new Locale("th", "TH")).format($P{auditDate})]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="16" y="294" width="89" height="1" uuid="4f964acd-8943-4500-915d-9757aa706ebc"/>

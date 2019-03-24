@@ -3,6 +3,9 @@ package th.go.excise.ims.ta.vo;
 import java.util.Date;
 
 public class TaFormTS0110Vo {
+
+	private String formTsNumber;
+	private String testimonyPageNo;
 	private String testimonyOf;
 	private String testimonyTopic;
 	private Date docDate;
@@ -32,6 +35,22 @@ public class TaFormTS0110Vo {
 	private String testimonyFactoryFullName;
 	private String newRegId;
 	private String testimonyText;
+
+	public String getFormTsNumber() {
+		return formTsNumber;
+	}
+
+	public void setFormTsNumber(String formTsNumber) {
+		this.formTsNumber = formTsNumber;
+	}
+
+	public String getTestimonyPageNo() {
+		return testimonyPageNo;
+	}
+
+	public void setTestimonyPageNo(String testimonyPageNo) {
+		this.testimonyPageNo = testimonyPageNo;
+	}
 
 	public String getTestimonyOf() {
 		return testimonyOf;
@@ -264,5 +283,5 @@ public class TaFormTS0110Vo {
 	public void setTestimonyText(String testimonyText) {
 		this.testimonyText = testimonyText;
 	}
-	
+
 }

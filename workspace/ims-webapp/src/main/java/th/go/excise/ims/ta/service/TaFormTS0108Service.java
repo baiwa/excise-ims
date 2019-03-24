@@ -1,55 +1,85 @@
 package th.go.excise.ims.ta.service;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
-import th.go.excise.ims.ta.vo.TaFormTS0108DtlVo;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.ta.persistence.entity.TaFormTs0108Hdr;
+import th.go.excise.ims.ta.persistence.repository.TaFormTs0108DtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaFormTs0108HdrRepository;
+import th.go.excise.ims.ta.vo.TaFormTS0108Vo;
 
-@Service	
-public class TaFormTS0108Service {
-	public byte[] export(TaFormTS0108DtlVo request) throws JRException, IOException {
-		String reportName = "TA_FORM_TS0108.jasper";
-		Map<String, Object> params = new HashMap<>();
+@Service
+public class TaFormTS0108Service extends AbstractTaFormTSService<TaFormTS0108Vo, TaFormTs0108Hdr> {
 
-		List<TaFormTS0108DtlVo> ts0108DtlList = new ArrayList<>();
-		TaFormTS0108DtlVo ts0108DtlVo = null;
-			for (int i = 0;i<10;i++) {
-			
-				ts0108DtlVo = new TaFormTS0108DtlVo();
-				ts0108DtlVo.setRecNo(request.getRecNo());
-				ts0108DtlVo.setAuditDate(request.getAuditDate());
-				ts0108DtlVo.setOfficerFullName(request.getOfficerFullName());
-				ts0108DtlVo.setOfficerPosition(request.getOfficerPosition());
-				ts0108DtlVo.setAuditTime(request.getAuditTime());
-				ts0108DtlVo.setAuditDest(request.getAuditDest());
-				ts0108DtlVo.setAuditTopic(request.getAuditTopic());
-				ts0108DtlVo.setApprovedAck(request.getApprovedAck());
-				ts0108DtlVo.setAuditResultDate(request.getAuditResultDate());
-				ts0108DtlVo.setAuditComment(request.getAuditComment());
-				ts0108DtlList.add(ts0108DtlVo);
-				
+	private static final Logger logger = LoggerFactory.getLogger(TaFormTS0107Service.class);
+	
+	@Autowired
+	private TaFormTSSequenceService taFormTSSequenceService;
+	@Autowired
+	private TaFormTs0108HdrRepository taFormTs0108HdrRepository;
+	@Autowired
+	private TaFormTs0108DtlRepository taFormTs0108DtlRepository;
+	
+	@Transactional(rollbackOn = { Exception.class })
+	public byte[] processFormTS(TaFormTS0108Vo formTS0108Vo) throws Exception {
+		logger.info("processFormTS");
+
+		saveFormTS(formTS0108Vo);
+		byte[] reportFile = generateReport(formTS0108Vo);
+
+		return reportFile;
+	}
+	
+	protected void saveFormTS(TaFormTS0108Vo formTS0108Vo) {
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		String budgetYear = ExciseUtils.getCurrentBudgetYear();
+		logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS0108Vo.getFormTsNumber());
 		
-			}
-
-			JasperPrint jasperPrint = ReportUtils.getJasperPrint(reportName, params,
-					new JRBeanCollectionDataSource(ts0108DtlList));
-
-			byte[] reportFile = JasperExportManager.exportReportToPdf(jasperPrint);
-			ReportUtils.closeResourceFileInputStream(params);
-
-			return reportFile;
-		}
-
-
+		TaFormTs0108Hdr formTs0108Hdr = null;
 	}
 
+	public byte[] generateReport(TaFormTS0108Vo formTS0108Vo) throws JRException, IOException {
+		logger.info("generateReport");
+		
+		Map<String, Object> params = new HashMap<>();
+		JRDataSource dataSource = new JRBeanCollectionDataSource(formTS0108Vo.getTaFormTS0108DtlVoList());
+		
+		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_08 + "." + FILE_EXTENSION.JASPER, params, dataSource);
+		byte[] reportFile = JasperExportManager.exportReportToPdf(jasperPrint);
+		ReportUtils.closeResourceFileInputStream(params);
+		
+		return reportFile;
+	}
+
+	@Override
+	public List<String> getFormTsNumberList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TaFormTS0108Vo getFormTS(String formTsNumber) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
