@@ -48,11 +48,12 @@ public class Oa0207Service {
 		List<Oa020106FormVo> realDataAgain = new ArrayList<Oa020106FormVo>();
 		for (OaCustomerLicen real : realData) {
 			Oa020106FormVo realD = new Oa020106FormVo();
-			realD.setAddress(real.getAddress());
 			realD.setOaCuslicenseId(real.getOaCuslicenseId());
+			realD.setAddress(real.getAddress());
 			realD.setCompanyName(real.getCompanyName());
 			realD.setIdentifyNo(real.getIdentifyNo());
 			realD.setIdentifyType(real.getIdentifyType());
+			realD.setName(real.getName());
 			realD.setOffCode(real.getOffCode());
 			realD.setSectorName(ApplicationCache.getExciseDept(real.getOffCode()).getDeptName());
 			realD.setAreaName(ApplicationCache.getExciseDept(real.getOffCode()).getDeptName());
