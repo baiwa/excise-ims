@@ -21,9 +21,9 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESS
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.oa.persistence.entity.OaCustomerLicen;
 import th.go.excise.ims.oa.service.Oa0207Service;
 import th.go.excise.ims.oa.vo.Oa020106FormVo;
+import th.go.excise.ims.oa.vo.Oa0207CustomerVo;
 import th.go.excise.ims.oa.vo.Oa0207Vo;
 
 @Controller
@@ -77,6 +77,42 @@ public class Oa0207Controller {
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("Oa0207Controller::findAll ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
+	@GetMapping("/find/customers")
+	@ResponseBody
+	public ResponseData<List<Oa0207CustomerVo>> findCustomers() {
+		ResponseData<List<Oa0207CustomerVo>> responseData = new ResponseData<>();
+		List<Oa0207CustomerVo> data = new ArrayList<Oa0207CustomerVo>();
+		try {
+			String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+			data = oa0207Service.findCustomers(offCode);
+			responseData.setData(data);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Oa0207Controller::findCustomers ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
+	@GetMapping("/find/customer/{customerNo}")
+	@ResponseBody
+	public ResponseData<Oa020106FormVo> findCustomer(@PathVariable("customerNo") String customerNo) {
+		ResponseData<Oa020106FormVo> responseData = new ResponseData<>();
+		Oa020106FormVo data = new Oa020106FormVo();
+		try {
+			String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+			data = oa0207Service.findCustomer(customerNo, offCode);
+			responseData.setData(data);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Oa0207Controller::findCustomer ", e);
 			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}

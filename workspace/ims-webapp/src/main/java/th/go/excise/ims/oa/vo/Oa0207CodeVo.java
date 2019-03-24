@@ -1,6 +1,6 @@
 package th.go.excise.ims.oa.vo;
 
-public class Oa207CodeVo {
+public class Oa0207CodeVo {
 	private String identifyNo;
 	private String offCode;
 	private String licenseType;

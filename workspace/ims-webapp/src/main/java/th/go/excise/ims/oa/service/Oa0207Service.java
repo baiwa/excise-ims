@@ -3,7 +3,12 @@ package th.go.excise.ims.oa.service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -12,14 +17,16 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.oa.persistence.entity.OaCustomerLicen;
 import th.go.excise.ims.oa.persistence.entity.OaCustomerLicenDetail;
 import th.go.excise.ims.oa.persistence.repository.OaCustomerLicenDetailRepository;
 import th.go.excise.ims.oa.persistence.repository.OaCustomerLicenRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0207JdbcRepository;
 import th.go.excise.ims.oa.vo.Oa020106FormVo;
+import th.go.excise.ims.oa.vo.Oa0207CodeVo;
+import th.go.excise.ims.oa.vo.Oa0207CustomerVo;
 import th.go.excise.ims.oa.vo.Oa0207Vo;
-import th.go.excise.ims.oa.vo.Oa207CodeVo;
 
 @Service
 public class Oa0207Service {
@@ -34,17 +41,21 @@ public class Oa0207Service {
 	OaCustomerLicenDetailRepository oaCustomerLicenDetailRep;
 
 	public DataTableAjax<Oa020106FormVo> filterByCriteria(Oa0207Vo request) {
-		List<Oa207CodeVo> data = oa0207JdbcRep.getDataFilter(request);
+		List<Oa0207CodeVo> data = oa0207JdbcRep.getDataFilter(request);
 		List<OaCustomerLicen> oldData = oaCustomerLicenRep.findAll();
 		List<OaCustomerLicen> realData = new ArrayList<OaCustomerLicen>();
+		oldData = oldData.stream()
+				.filter(distinctByKey(b -> b.getIdentifyNo()))
+				.collect(Collectors.toList());
 		for (OaCustomerLicen old : oldData) {
-			for (Oa207CodeVo da : data) {
+			for (Oa0207CodeVo da : data) {
 				if (da.getOffCode().equals(old.getOffCode()) && da.getIdentifyNo().equals(old.getIdentifyNo())
 						&& da.getLicenseType().equals(old.getLicenseType())) {
 					realData.add(old);
 				}
 			}
 		}
+		List<ExciseDept> exciseDepts = ApplicationCache.getExciseSectorList();
 		List<Oa020106FormVo> realDataAgain = new ArrayList<Oa020106FormVo>();
 		for (OaCustomerLicen real : realData) {
 			Oa020106FormVo realD = new Oa020106FormVo();
@@ -55,8 +66,17 @@ public class Oa0207Service {
 			realD.setIdentifyType(real.getIdentifyType());
 			realD.setName(real.getName());
 			realD.setOffCode(real.getOffCode());
-			realD.setSectorName(ApplicationCache.getExciseDept(real.getOffCode()).getDeptName());
-			realD.setAreaName(ApplicationCache.getExciseDept(real.getOffCode()).getDeptName());
+			for (ExciseDept exciseDept : exciseDepts) {
+				if (exciseDept.getOfficeCode().substring(0, 2).equals(real.getOffCode().substring(0, 2))) {
+					realD.setSectorName(exciseDept.getDeptName());
+				}
+			}
+			ExciseDept area = ApplicationCache.getExciseDept(real.getOffCode());
+			if (!"0000".equals(area.getOfficeCode().substring(2, 6))) {
+				realD.setAreaName(area.getDeptName());
+			} else {
+				realD.setAreaName("");
+			}
 			realDataAgain.add(realD);
 		}
 		DataTableAjax<Oa020106FormVo> dataTableAjax = new DataTableAjax<Oa020106FormVo>();
@@ -227,6 +247,20 @@ public class Oa0207Service {
 			request.setDetails(details);
 		}
 		return request;
+	}
+
+	public List<Oa0207CustomerVo> findCustomers(String offCode) {
+		return oa0207JdbcRep.findCustomers(offCode);
+	}
+
+	public Oa020106FormVo findCustomer(String customerNo, String offCode) {
+		return oa0207JdbcRep.findCustomer(offCode, customerNo);
+	}
+	
+
+	private static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+	        Map<Object,Boolean> seen = new ConcurrentHashMap<>();
+	        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
 	}
 
 }

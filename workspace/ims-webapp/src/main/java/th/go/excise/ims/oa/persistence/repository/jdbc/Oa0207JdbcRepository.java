@@ -13,8 +13,9 @@ import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.go.excise.ims.oa.persistence.entity.OaCustomerLicenDetail;
 import th.go.excise.ims.oa.vo.Oa020106FormVo;
+import th.go.excise.ims.oa.vo.Oa0207CodeVo;
+import th.go.excise.ims.oa.vo.Oa0207CustomerVo;
 import th.go.excise.ims.oa.vo.Oa0207Vo;
-import th.go.excise.ims.oa.vo.Oa207CodeVo;
 
 @Repository
 public class Oa0207JdbcRepository {
@@ -22,7 +23,7 @@ public class Oa0207JdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
-	public List<Oa207CodeVo> getDataFilter(Oa0207Vo request) {
+	public List<Oa0207CodeVo> getDataFilter(Oa0207Vo request) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 		sql.append(" SELECT L.IDENTIFY_NO AS IDENTIFY_NO, ");
@@ -47,8 +48,8 @@ public class Oa0207JdbcRepository {
 
 		String limit = OracleUtils.limitForDatable(sql.toString(), request.getStart(), request.getLength());
 		@SuppressWarnings({ "rawtypes", "unchecked" })
-		List<Oa207CodeVo> datas = this.commonJdbcTemplate.query(limit, params.toArray(),
-				new BeanPropertyRowMapper(Oa207CodeVo.class));
+		List<Oa0207CodeVo> datas = this.commonJdbcTemplate.query(limit, params.toArray(),
+				new BeanPropertyRowMapper(Oa0207CodeVo.class));
 
 		return datas;
 	}
@@ -107,6 +108,37 @@ public class Oa0207JdbcRepository {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<OaCustomerLicenDetail> lists = commonJdbcTemplate.query(sql.toString(), params.toArray(),
 				new BeanPropertyRowMapper(OaCustomerLicenDetail.class));
+		return lists;
+	}
+	
+	public List<Oa0207CustomerVo> findCustomers(String offCode) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT DISTINCT IDENTIFY_NO, ");
+		sql.append("   NAME ");
+		sql.append(" FROM OA_CUSTOMER_LICEN ");
+		sql.append(" WHERE IS_DELETED = 'N' ");
+		sql.append(" AND OFF_CODE     = ? ");
+		params.add(offCode);
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		List<Oa0207CustomerVo> lists = commonJdbcTemplate.query(sql.toString(), params.toArray(),
+				new BeanPropertyRowMapper(Oa0207CustomerVo.class));
+		return lists;
+	}
+	
+	public Oa020106FormVo findCustomer(String offCode, String customerNo) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT * ");
+		sql.append(" FROM OA_CUSTOMER_LICEN ");
+		sql.append(" WHERE IS_DELETED = 'N' ");
+		sql.append(" AND OFF_CODE     = ? ");
+		sql.append(" AND IDENTIFY_NO  = ? ");
+		params.add(offCode);
+		params.add(customerNo);
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		Oa020106FormVo lists = (Oa020106FormVo) commonJdbcTemplate.queryForObject(OracleUtils.limit(sql.toString(), 0, 1).toString(), params.toArray(),
+				new BeanPropertyRowMapper(Oa020106FormVo.class));
 		return lists;
 	}
 
