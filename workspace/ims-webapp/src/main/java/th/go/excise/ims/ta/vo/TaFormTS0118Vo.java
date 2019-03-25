@@ -31,6 +31,7 @@ public class TaFormTS0118Vo {
 	private Date signOfficerDate1;
 	private String signOfficerFullName2;
 	private Date signOfficerDate2;
+	private Date extraMoneyDate;
 
 	public String getFormTsNumber() {
 		return formTsNumber;
@@ -230,6 +231,14 @@ public class TaFormTS0118Vo {
 
 	public void setSignOfficerDate2(Date signOfficerDate2) {
 		this.signOfficerDate2 = signOfficerDate2;
+	}
+
+	public Date getExtraMoneyDate() {
+		return extraMoneyDate;
+	}
+
+	public void setExtraMoneyDate(Date extraMoneyDate) {
+		this.extraMoneyDate = extraMoneyDate;
 	}
 
 }
