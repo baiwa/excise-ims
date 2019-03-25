@@ -40,7 +40,7 @@ private static final Logger logger = LoggerFactory.getLogger(TaFormTS01171Servic
 	public byte[] processFormTS(TaFormTS01171Vo formTS01171Vo) throws Exception {
 		logger.info("processFormTS");
 
-		saveFormTS(formTS01171Vo);
+//		saveFormTS(formTS01171Vo);
 		byte[] reportFile = generateReport(formTS01171Vo);
 
 		return reportFile;

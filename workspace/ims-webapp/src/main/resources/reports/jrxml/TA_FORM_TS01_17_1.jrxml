@@ -670,7 +670,7 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 				<textElement textAlignment="Left" verticalAlignment="Bottom">
 					<font fontName="TH Sarabun New"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{extraDate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{extraDate})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" x="96" y="168" width="97" height="19" uuid="02d57763-5a56-4463-aa2a-1df915356083"/>
@@ -1074,7 +1074,7 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 				</textElement>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="-1" y="282" width="454" height="15" uuid="54a80a00-d163-4dbf-a6e9-c5d0621ee97c"/>
+				<reportElement style="data" x="-1" y="278" width="454" height="15" uuid="54a80a00-d163-4dbf-a6e9-c5d0621ee97c"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1087,7 +1087,7 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 				</textElement>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="-1" y="265" width="451" height="36" uuid="90f7dc37-26f0-4d00-86fe-d2f24bc42dd3"/>
+				<reportElement x="-1" y="267" width="451" height="28" uuid="90f7dc37-26f0-4d00-86fe-d2f24bc42dd3"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="14"/>
 				</textElement>
@@ -1102,12 +1102,12 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 					<bottomPen lineWidth="0.5" lineStyle="Dotted" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Bottom">
+				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="TH Sarabun New"/>
 				</textElement>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="data" x="-1" y="320" width="454" height="15" uuid="3d441ff1-f207-4ea4-b245-801dc5a14b40"/>
+				<reportElement style="data" x="-1" y="316" width="454" height="15" uuid="3d441ff1-f207-4ea4-b245-801dc5a14b40"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1120,7 +1120,7 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 				</textElement>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="-1" y="303" width="451" height="36" uuid="9edbded8-3ac8-4196-9f25-11e07dced4ed"/>
+				<reportElement x="-1" y="303" width="451" height="28" uuid="9edbded8-3ac8-4196-9f25-11e07dced4ed"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="14"/>
 				</textElement>
