@@ -11,7 +11,9 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
+import th.go.excise.ims.oa.persistence.entity.OaCustomerLicen;
 import th.go.excise.ims.oa.persistence.entity.OaCustomerLicenDetail;
+import th.go.excise.ims.oa.utils.OaOfficeCode;
 import th.go.excise.ims.oa.vo.Oa020106FormVo;
 import th.go.excise.ims.oa.vo.Oa0207CodeVo;
 import th.go.excise.ims.oa.vo.Oa0207CustomerVo;
@@ -23,7 +25,7 @@ public class Oa0207JdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
-	public List<Oa0207CodeVo> getDataFilter(Oa0207Vo request) {
+	public List<Oa0207CodeVo> getDataFilter(Oa0207Vo request, String offCode) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 		sql.append(" SELECT L.IDENTIFY_NO AS IDENTIFY_NO, ");
@@ -33,11 +35,16 @@ public class Oa0207JdbcRepository {
 		sql.append(" WHERE L.IS_DELETED='N' ");
 
 		if (StringUtils.isNotBlank(request.getArea())) {
-			sql.append(" AND L.OFF_CODE = ? ");
-			params.add(request.getArea());
+			sql.append(" AND L.OFF_CODE LIKE ? ");
+			params.add(OaOfficeCode.officeCodeLike(request.getArea()) + '%');
 		} else if (StringUtils.isNotBlank(request.getSector())) {
-			sql.append(" AND L.OFF_CODE = ? ");
-			params.add(request.getSector());
+			sql.append(" AND L.OFF_CODE LIKE ? ");
+			params.add(OaOfficeCode.officeCodeLike(request.getSector()) + '%');
+		} else if (StringUtils.isNotBlank(offCode)) {
+			if (StringUtils.isNotBlank(OaOfficeCode.officeCodeLike(offCode))) {
+				params.add(OaOfficeCode.officeCodeLike(offCode) + '%');
+				sql.append(" AND L.OFF_CODE LIKE ? ");
+			}
 		}
 		
 		sql.append(" GROUP BY L.IDENTIFY_NO, ");
@@ -55,7 +62,7 @@ public class Oa0207JdbcRepository {
 	}
 
 	/* count datatable */
-	public Integer countDatafilter(Oa0207Vo request) {
+	public Integer countDatafilter(Oa0207Vo request, String offCode) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 		sql.append(" SELECT L.IDENTIFY_NO AS IDENTIFY_NO, ");
@@ -65,11 +72,16 @@ public class Oa0207JdbcRepository {
 		sql.append(" WHERE L.IS_DELETED='N' ");
 
 		if (StringUtils.isNotBlank(request.getArea())) {
-			sql.append(" AND L.OFF_CODE = ? ");
-			params.add(request.getArea());
+			sql.append(" AND L.OFF_CODE LIKE ? ");
+			params.add(OaOfficeCode.officeCodeLike(request.getArea()) + '%');
 		} else if (StringUtils.isNotBlank(request.getSector())) {
-			sql.append(" AND L.OFF_CODE = ? ");
-			params.add(request.getSector());
+			sql.append(" AND L.OFF_CODE LIKE ? ");
+			params.add(OaOfficeCode.officeCodeLike(request.getSector()) + '%');
+		} else if (StringUtils.isNotBlank(offCode)) {
+			if (StringUtils.isNotBlank(OaOfficeCode.officeCodeLike(offCode))) {
+				params.add(OaOfficeCode.officeCodeLike(offCode) + '%');
+				sql.append(" AND L.OFF_CODE LIKE ? ");
+			}
 		}
 		
 		sql.append(" GROUP BY L.IDENTIFY_NO, ");
@@ -118,8 +130,10 @@ public class Oa0207JdbcRepository {
 		sql.append("   NAME ");
 		sql.append(" FROM OA_CUSTOMER_LICEN ");
 		sql.append(" WHERE IS_DELETED = 'N' ");
-		sql.append(" AND OFF_CODE     = ? ");
-		params.add(offCode);
+		if (StringUtils.isNotBlank(OaOfficeCode.officeCodeLike(offCode))) {
+			params.add(OaOfficeCode.officeCodeLike(offCode) + '%');
+			sql.append(" AND OFF_CODE LIKE ? ");
+		}
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<Oa0207CustomerVo> lists = commonJdbcTemplate.query(sql.toString(), params.toArray(),
 				new BeanPropertyRowMapper(Oa0207CustomerVo.class));
@@ -132,13 +146,39 @@ public class Oa0207JdbcRepository {
 		sql.append(" SELECT * ");
 		sql.append(" FROM OA_CUSTOMER_LICEN ");
 		sql.append(" WHERE IS_DELETED = 'N' ");
-		sql.append(" AND OFF_CODE     = ? ");
+		if (StringUtils.isNotBlank(OaOfficeCode.officeCodeLike(offCode))) {
+			params.add(OaOfficeCode.officeCodeLike(offCode) + '%');
+			sql.append(" AND OFF_CODE LIKE ? ");
+		}
 		sql.append(" AND IDENTIFY_NO  = ? ");
-		params.add(offCode);
 		params.add(customerNo);
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		Oa020106FormVo lists = (Oa020106FormVo) commonJdbcTemplate.queryForObject(OracleUtils.limit(sql.toString(), 0, 1).toString(), params.toArray(),
 				new BeanPropertyRowMapper(Oa020106FormVo.class));
+		return lists;
+	}
+	
+	public List<OaCustomerLicen> licenseAll(Oa0207Vo request, String offCode) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT * ");
+		sql.append(" FROM OA_CUSTOMER_LICEN ");
+		sql.append(" WHERE IS_DELETED = 'N' ");
+		if (StringUtils.isNotBlank(request.getArea())) {
+			sql.append(" AND OFF_CODE LIKE ? ");
+			params.add(OaOfficeCode.officeCodeLike(request.getArea()) + '%');
+		} else if (StringUtils.isNotBlank(request.getSector())) {
+			sql.append(" AND OFF_CODE LIKE ? ");
+			params.add(OaOfficeCode.officeCodeLike(request.getSector()) + '%');
+		} else if (StringUtils.isNotBlank(offCode)) {
+			if (StringUtils.isNotBlank(OaOfficeCode.officeCodeLike(offCode))) {
+				params.add(OaOfficeCode.officeCodeLike(offCode) + '%');
+				sql.append(" AND OFF_CODE LIKE ? ");
+			}
+		}
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		List<OaCustomerLicen> lists = commonJdbcTemplate.query(sql.toString(), params.toArray(),
+				new BeanPropertyRowMapper(OaCustomerLicen.class));
 		return lists;
 	}
 

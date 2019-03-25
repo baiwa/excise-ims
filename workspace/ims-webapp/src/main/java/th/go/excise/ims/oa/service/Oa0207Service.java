@@ -23,6 +23,7 @@ import th.go.excise.ims.oa.persistence.entity.OaCustomerLicenDetail;
 import th.go.excise.ims.oa.persistence.repository.OaCustomerLicenDetailRepository;
 import th.go.excise.ims.oa.persistence.repository.OaCustomerLicenRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0207JdbcRepository;
+import th.go.excise.ims.oa.utils.OaOfficeCode;
 import th.go.excise.ims.oa.vo.Oa020106FormVo;
 import th.go.excise.ims.oa.vo.Oa0207CodeVo;
 import th.go.excise.ims.oa.vo.Oa0207CustomerVo;
@@ -40,13 +41,10 @@ public class Oa0207Service {
 	@Autowired
 	OaCustomerLicenDetailRepository oaCustomerLicenDetailRep;
 
-	public DataTableAjax<Oa020106FormVo> filterByCriteria(Oa0207Vo request) {
-		List<Oa0207CodeVo> data = oa0207JdbcRep.getDataFilter(request);
-		List<OaCustomerLicen> oldData = oaCustomerLicenRep.findAll();
+	public DataTableAjax<Oa020106FormVo> filterByCriteria(Oa0207Vo request, String offCode) {
+		List<Oa0207CodeVo> data = oa0207JdbcRep.getDataFilter(request, offCode);
+		List<OaCustomerLicen> oldData = oa0207JdbcRep.licenseAll(request, offCode);
 		List<OaCustomerLicen> realData = new ArrayList<OaCustomerLicen>();
-		oldData = oldData.stream()
-				.filter(distinctByKey(b -> b.getIdentifyNo()))
-				.collect(Collectors.toList());
 		for (OaCustomerLicen old : oldData) {
 			for (Oa0207CodeVo da : data) {
 				if (da.getOffCode().equals(old.getOffCode()) && da.getIdentifyNo().equals(old.getIdentifyNo())
@@ -82,8 +80,8 @@ public class Oa0207Service {
 		DataTableAjax<Oa020106FormVo> dataTableAjax = new DataTableAjax<Oa020106FormVo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
 		dataTableAjax.setData(realDataAgain);
-		dataTableAjax.setRecordsTotal(oa0207JdbcRep.countDatafilter(request));
-		dataTableAjax.setRecordsFiltered(oa0207JdbcRep.countDatafilter(request));
+		dataTableAjax.setRecordsTotal(oa0207JdbcRep.countDatafilter(request, offCode));
+		dataTableAjax.setRecordsFiltered(oa0207JdbcRep.countDatafilter(request, offCode));
 		return dataTableAjax;
 	}
 

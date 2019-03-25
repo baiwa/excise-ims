@@ -40,7 +40,8 @@ public class Oa0207Controller {
 	public DataTableAjax<Oa020106FormVo> filterByCriteria(@RequestBody Oa0207Vo request) {
 		DataTableAjax<Oa020106FormVo> response = new DataTableAjax<>();
 		try {
-			response = oa0207Service.filterByCriteria(request);
+			String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+			response = oa0207Service.filterByCriteria(request, offCode);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Oa0207Controller::filterByCriteria => ", e);
