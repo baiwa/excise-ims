@@ -386,61 +386,61 @@
 			<line>
 				<reportElement x="20" y="116" width="191" height="1" uuid="a63e4ebb-3e86-4a79-8d9d-d6b81e0ee7a9"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="278" y="116" width="182" height="1" uuid="42e66a20-444c-4c53-abfb-a0a37f7d26bc"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="108" y="138" width="351" height="1" uuid="fb6c8bbf-b9f1-41bd-8772-41630ca4fd33"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="23" y="160" width="437" height="1" uuid="dbca83c3-d1e2-40c2-ba03-80bb94950af2"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="160" y="182" width="118" height="1" uuid="c09d6c8a-0f44-4b15-b8f6-5cce79aed8f6"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="48" y="227" width="318" height="1" uuid="4783777b-d700-4e5b-a60c-aff37a4091ef"/>
+				<reportElement x="48" y="226" width="318" height="1" uuid="4783777b-d700-4e5b-a60c-aff37a4091ef"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="48" y="248" width="318" height="1" uuid="38b28747-3fd8-443e-9cd0-92de5135ac5f"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="48" y="270" width="318" height="1" uuid="21ffc039-a7cc-43c6-8d11-4193629455d7"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="48" y="292" width="318" height="1" uuid="cd0a65e5-cc44-44f9-b1cc-0393e70f6f18"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="48" y="314" width="318" height="1" uuid="dd436122-d61b-4969-b889-849836e4a63b"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="true">
@@ -458,19 +458,19 @@
 			<line>
 				<reportElement x="25" y="336" width="194" height="1" uuid="2b543d49-a6df-4fbb-868b-81692668796a"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="199" y="462" width="139" height="1" uuid="7590d31a-b56e-46a3-a982-235863d181b9"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="204" y="484" width="116" height="1" uuid="ab7c77bc-7ac1-4119-a631-0cb06371f463"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<textField>
@@ -500,13 +500,13 @@
 			<line>
 				<reportElement x="204" y="506" width="116" height="1" uuid="07945afb-7fb4-4a49-a699-4b6fac62312a"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="204" y="528" width="116" height="1" uuid="2b5ff16c-87b0-4f0b-85dc-d553e591dca1"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<textField>
@@ -536,7 +536,7 @@
 			<line>
 				<reportElement x="204" y="550" width="116" height="1" uuid="4d293607-28de-46bc-ad57-8b5ed121285c"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="true">
@@ -594,19 +594,19 @@
 			<line>
 				<reportElement x="199" y="572" width="31" height="1" uuid="2b83244e-43b7-4e28-9ed0-1d07d390771c"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="302" y="572" width="31" height="1" uuid="81ebf0cd-2260-469b-801d-c5ce793f4163"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="235" y="572" width="62" height="1" uuid="b61eb3e8-d5d2-4c5c-af4f-1c979901b676"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="false">
@@ -650,13 +650,13 @@
 			<line>
 				<reportElement x="202" y="679" width="116" height="1" uuid="0dc34381-a8d1-4449-a6e7-94f0b94a1b67"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="202" y="659" width="116" height="1" uuid="c590a9f5-a5ef-4725-b4ff-8bed0c141f39"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="true">
@@ -676,7 +676,7 @@
 			<line>
 				<reportElement x="239" y="701" width="81" height="1" uuid="6d0598f2-63cc-4c74-880a-d8459d8c067f"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="true">
@@ -696,7 +696,7 @@
 			<line>
 				<reportElement x="243" y="723" width="83" height="1" uuid="c342b947-a9d6-4715-9243-dc901bd36b7b"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="true">
@@ -719,7 +719,7 @@
 			<line>
 				<reportElement x="313" y="182" width="118" height="1" uuid="ebd3df66-f2eb-4287-811d-42653b8f2939"/>
 				<graphicElement>
-					<pen lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 		</band>
