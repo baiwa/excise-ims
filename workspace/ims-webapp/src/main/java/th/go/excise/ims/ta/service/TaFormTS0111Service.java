@@ -119,7 +119,7 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 		
 		// set output
 		JasperPrint jasperPrint1 = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_11 + "." + FILE_EXTENSION.JASPER, params, dataSource);
-		JasperPrint jasperPrint2 = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_11P2 + "." + FILE_EXTENSION.JASPER, params, dataSource);
+		JasperPrint jasperPrint2 = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_11P2 + "." + FILE_EXTENSION.JASPER, params);
 		
 		List<ExporterInputItem> items = new ArrayList<ExporterInputItem>();
 		items.add(new SimpleExporterInputItem(jasperPrint1));

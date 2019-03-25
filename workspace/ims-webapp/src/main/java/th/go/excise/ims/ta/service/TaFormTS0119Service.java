@@ -19,7 +19,6 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSIO
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.IMG_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
-import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
@@ -66,41 +65,35 @@ public class TaFormTS0119Service extends AbstractTaFormTSService<TaFormTS0119Vo,
 		taFormTs0119Repository.save(formTS0119);
 	}
 	
-	public byte[] generateReport(TaFormTS0119Vo request) throws Exception, IOException {
+	public byte[] generateReport(TaFormTS0119Vo formTS0119Vo) throws Exception, IOException {
 		Map<String, Object> params = new HashMap<String, Object>();
 
 		// get data to report
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
-
-		params.put("bookNumber1", request.getBookNumber1());
-		params.put("bookNumber2", request.getBookNumber2());
-		params.put("docText1", request.getDocText1());
-		params.put("docText2", request.getDocText2());
-		params.put("docText3", request.getDocText3());
-		params.put("docDear", request.getDocDear());
-		params.put("companyName", request.getCompanyName());
-		params.put("factoryType", request.getFactoryType());
-		params.put("factoryName", request.getFactoryName());
-		params.put("newRegId", request.getNewRegId());
-		params.put("facAddrNo", request.getFacAddrNo());
-		params.put("facMooNo", request.getFacMooNo());
-		params.put("facSoiName", request.getFacSoiName());
-		params.put("facThnName", request.getFacThnName());
-		params.put("facTambolName", request.getFacTambolName());
-		params.put("facAmphurName", request.getFacAmphurName());
-		params.put("facProvinceName", request.getFacProvinceName());
-		params.put("facZipCode", request.getFacZipCode());
-		params.put("signOfficerFullName", request.getSignOfficerFullName());
-		params.put("followTypeFlag1", request.getFollowTypeFlag1());
-		params.put("followTypeFlag2", request.getFollowTypeFlag2());
-		// params.put("docText3", request.getDocText3());
-		// params.put("docText3", request.getDocText3());
-		// params.put("docText3", request.getDocText3());
-		// params.put("docText3", request.getDocText3());
-		params.put("docDate", request.getDocDate());
-
-		request.setRefBookDate(ConvertDateUtils.parseStringToDate(request.getRefBookDateStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-		params.put("refBookDate", request.getRefBookDate());
+		params.put("bookNumber1", formTS0119Vo.getBookNumber1());
+		params.put("bookNumber2", formTS0119Vo.getBookNumber2());
+		params.put("docText1", formTS0119Vo.getDocText1());
+		params.put("docText2", formTS0119Vo.getDocText2());
+		params.put("docText3", formTS0119Vo.getDocText3());
+		params.put("docDear", formTS0119Vo.getDocDear());
+		params.put("companyName", formTS0119Vo.getCompanyName());
+		params.put("factoryType", formTS0119Vo.getFactoryType());
+		params.put("factoryName", formTS0119Vo.getFactoryName());
+		params.put("newRegId", formTS0119Vo.getNewRegId());
+		params.put("facAddrNo", formTS0119Vo.getFacAddrNo());
+		params.put("facMooNo", formTS0119Vo.getFacMooNo());
+		params.put("facSoiName", formTS0119Vo.getFacSoiName());
+		params.put("facThnName", formTS0119Vo.getFacThnName());
+		params.put("facTambolName", formTS0119Vo.getFacTambolName());
+		params.put("facAmphurName", formTS0119Vo.getFacAmphurName());
+		params.put("facProvinceName", formTS0119Vo.getFacProvinceName());
+		params.put("facZipCode", formTS0119Vo.getFacZipCode());
+		params.put("signOfficerFullName", formTS0119Vo.getSignOfficerFullName());
+		params.put("followTypeFlag1", formTS0119Vo.getFollowTypeFlag1());
+		params.put("followTypeFlag2", formTS0119Vo.getFollowTypeFlag2());
+		params.put("docDate", formTS0119Vo.getDocDate());
+		params.put("refBookDate", formTS0119Vo.getRefBookDate());
+		
 		// set output
 		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_19 + "." + FILE_EXTENSION.JASPER, params);
 		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
