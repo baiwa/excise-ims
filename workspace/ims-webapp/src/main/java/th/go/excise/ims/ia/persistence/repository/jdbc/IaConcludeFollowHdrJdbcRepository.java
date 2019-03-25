@@ -26,7 +26,7 @@ public class IaConcludeFollowHdrJdbcRepository {
 		sql.append(" Select * from IA_CONCLUDE_FOLLOW_HDR   WHERE INSPECTION_WORK = ? AND BUDGET_YEAR = ? AND Is_Deleted = 'N' ");
 
 		params.add(request.getInspecWork());
-		params.add(request.getButgetYear());
+		params.add(request.getBudgetYear());
 
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<Int11Vo> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(),

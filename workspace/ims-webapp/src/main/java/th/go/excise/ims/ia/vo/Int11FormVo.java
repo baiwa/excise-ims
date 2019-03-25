@@ -1,22 +1,22 @@
 package th.go.excise.ims.ia.vo;
 
 public class Int11FormVo {
-	private String inspecWork;
-	private String butgetYear;
+	private String inspectionWork;
+	private String budgetYear;
 
 	public String getInspecWork() {
-		return inspecWork;
+		return inspectionWork;
 	}
 
-	public void setInspecWork(String inspecWork) {
-		this.inspecWork = inspecWork;
+	public void setInspectionWork(String inspectionWork) {
+		this.inspectionWork = inspectionWork;
 	}
 
-	public String getButgetYear() {
-		return butgetYear;
+	public String getBudgetYear() {
+		return budgetYear;
 	}
 
-	public void setButgetYear(String butgretYear) {
-		this.butgetYear = butgretYear;
+	public void setBudgetYear(String budgetYear) {
+		this.budgetYear = budgetYear;
 	}
 }
