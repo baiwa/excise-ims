@@ -7,7 +7,6 @@ public class Oa020106ButtonVo {
 	private BigDecimal oaPlanId;
 	private BigDecimal oaLubricantsDtlId;
 	private BigDecimal oaCuslicenseId;
-	private BigDecimal oaCustomerId;
 	private String licenseNo;
 	private String licenseType;
 
@@ -49,14 +48,6 @@ public class Oa020106ButtonVo {
 
 	public void setOaCuslicenseId(BigDecimal oaCuslicenseId) {
 		this.oaCuslicenseId = oaCuslicenseId;
-	}
-
-	public BigDecimal getOaCustomerId() {
-		return oaCustomerId;
-	}
-
-	public void setOaCustomerId(BigDecimal oaCustomerId) {
-		this.oaCustomerId = oaCustomerId;
 	}
 
 	public String getLicenseNo() {

@@ -14,6 +14,7 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESS
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.oa.persistence.entity.OaCustomer;
+import th.go.excise.ims.oa.persistence.entity.OaCustomerLicen;
 import th.go.excise.ims.oa.service.Oa020106Service;
 import th.go.excise.ims.oa.vo.Oa020106ButtonVo;
 import th.go.excise.ims.oa.vo.Oa020106FormVo;
@@ -46,9 +47,9 @@ public class Oa020106Controller {
 	
 	@GetMapping("/customers/{id}")
 	@ResponseBody
-	public ResponseData<OaCustomer> findById(@PathVariable("id") String idStr) {
-		ResponseData<OaCustomer> responseData = new ResponseData<>();
-		OaCustomer data = new OaCustomer();
+	public ResponseData<OaCustomerLicen> findById(@PathVariable("id") String idStr) {
+		ResponseData<OaCustomerLicen> responseData = new ResponseData<>();
+		OaCustomerLicen data = new OaCustomerLicen();
 		try {
 			data = oa020106Service.findById(idStr);
 			responseData.setData(data);

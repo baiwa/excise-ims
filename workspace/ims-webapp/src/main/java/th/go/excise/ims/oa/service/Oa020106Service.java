@@ -33,10 +33,10 @@ public class Oa020106Service {
 		return oa020106JdbcRep.findButtonIdById(id);
 	}
 	
-	public OaCustomer findById(String idStr) {
+	public OaCustomerLicen findById(String idStr) {
 		BigDecimal id = new BigDecimal(idStr);
-		Optional<OaCustomer> optOaCustomer = oaCustomerRep.findById(id);
-		OaCustomer  oaCustomer =  new OaCustomer();
+		Optional<OaCustomerLicen> optOaCustomer = oaCustomerLicenRep.findById(id);
+		OaCustomerLicen  oaCustomer =  new OaCustomerLicen();
 		if (optOaCustomer.isPresent()) {
 			oaCustomer = optOaCustomer.get();
 		}
