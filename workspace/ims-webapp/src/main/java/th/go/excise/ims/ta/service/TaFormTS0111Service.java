@@ -1,8 +1,8 @@
 package th.go.excise.ims.ta.service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,14 +16,17 @@ import org.springframework.stereotype.Service;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.export.ExporterInputItem;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleExporterInputItem;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.IMG_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
-import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
@@ -97,11 +100,40 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 		params.put("signWitnessFullName1", formTS0111Vo.getSignWitnessFullName1());
 		params.put("signWitnessFullName2", formTS0111Vo.getSignWitnessFullName2());
 		
+		logger.info("export TA_FORM_TS01_11-2");
+		params.put("authFullName1", formTS0111Vo.getAuthFullName1());
+		params.put("signAuthFullName2", formTS0111Vo.getSignAuthFullName2());
+		params.put("signWitnessFullName3", formTS0111Vo.getSignWitnessFullName3());
+		params.put("signWitnessFullName4", formTS0111Vo.getSignWitnessFullName4());
+		params.put("authFullName2", formTS0111Vo.getAuthFullName2());
+		params.put("authPosition", formTS0111Vo.getAuthPosition());
+		params.put("authPositionOther", formTS0111Vo.getAuthPositionOther());
+		params.put("authFrom", formTS0111Vo.getAuthFrom());
+		params.put("authDate", formTS0111Vo.getAuthDate());
+		params.put("signAuthFullName3", formTS0111Vo.getSignAuthFullName3());
+		params.put("signAuthFullName4", formTS0111Vo.getSignAuthFullName4());
+		params.put("signWitnessFullName5", formTS0111Vo.getSignWitnessFullName5());
+		params.put("signWitnessFullName6", formTS0111Vo.getSignWitnessFullName6());
+		
 		JRDataSource dataSource = new JRBeanCollectionDataSource(formTS0111Vo.getTaFormTS0111DtlVoList());
 		
 		// set output
-		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_11 + "." + FILE_EXTENSION.JASPER, params, dataSource);
-		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
+		JasperPrint jasperPrint1 = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_11 + "." + FILE_EXTENSION.JASPER, params, dataSource);
+		JasperPrint jasperPrint2 = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_11P2 + "." + FILE_EXTENSION.JASPER, params, dataSource);
+		
+		List<ExporterInputItem> items = new ArrayList<ExporterInputItem>();
+		items.add(new SimpleExporterInputItem(jasperPrint1));
+		items.add(new SimpleExporterInputItem(jasperPrint2));
+		
+		JRPdfExporter exporter = new JRPdfExporter();
+		exporter.setExporterInput(new SimpleExporterInput(items));
+		
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
+		exporter.exportReport();
+		byte[] content = outputStream.toByteArray();
+		
+//		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
 		ReportUtils.closeResourceFileInputStream(params);
 
 		return content;

@@ -13,7 +13,7 @@
 	<parameter name="officerPosition" class="java.lang.String"/>
 	<parameter name="factoryName" class="java.lang.String"/>
 	<parameter name="newRegId" class="java.lang.String"/>
-	<parameter name="factoryType" class="java.lang.Boolean"/>
+	<parameter name="factoryType" class="java.lang.String"/>
 	<parameter name="facAddrNo" class="java.lang.String"/>
 	<parameter name="facMooNo" class="java.lang.String"/>
 	<parameter name="facSoiName" class="java.lang.String"/>
@@ -23,11 +23,11 @@
 	<parameter name="facProvinceName" class="java.lang.String"/>
 	<parameter name="facZipCode" class="java.lang.String"/>
 	<parameter name="deliverFullName" class="java.lang.String"/>
-	<parameter name="deliverPosition" class="java.lang.Boolean"/>
+	<parameter name="deliverPosition" class="java.lang.String"/>
 	<parameter name="deliverOther" class="java.lang.String"/>
 	<parameter name="refBookNumber1" class="java.lang.String"/>
 	<parameter name="refBookNumber2" class="java.lang.String"/>
-	<parameter name="refDocDate" class="java.lang.String"/>
+	<parameter name="refDocDate" class="java.util.Date"/>
 	<parameter name="signAuthFullName1" class="java.lang.String"/>
 	<parameter name="signWitnessFullName1" class="java.lang.String"/>
 	<parameter name="signWitnessFullName2" class="java.lang.String"/>
@@ -37,7 +37,7 @@
 	<field name="docName" class="java.lang.String"/>
 	<field name="docQty" class="java.lang.String"/>
 	<field name="docComment" class="java.lang.String"/>
-	<field name="recNo" class="java.lang.String"/>
+	<field name="recNo" class="java.lang.Integer"/>
 	<title>
 		<band height="358">
 			<image scaleImage="RealHeight" isUsingCache="false">
@@ -925,7 +925,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{refDocDate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{refDocDate})]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

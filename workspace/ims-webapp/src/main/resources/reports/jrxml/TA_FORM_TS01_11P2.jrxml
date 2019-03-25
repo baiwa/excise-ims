@@ -19,9 +19,7 @@
 	<parameter name="authPosition" class="java.lang.String"/>
 	<parameter name="authPositionOther" class="java.lang.String"/>
 	<parameter name="authFrom" class="java.lang.String"/>
-	<parameter name="day" class="java.lang.String"/>
-	<parameter name="month" class="java.lang.String"/>
-	<parameter name="year" class="java.lang.String"/>
+	<parameter name="authDate" class="java.util.Date"/>
 	<parameter name="signAuthFullName3" class="java.lang.String"/>
 	<parameter name="signAuthFullName4" class="java.lang.String"/>
 	<parameter name="signWitnessFullName5" class="java.lang.String"/>
@@ -453,21 +451,21 @@
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="271" y="200" width="117" height="22" uuid="4edca31a-0352-44ef-b140-0d24047218af"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{signAuthFullName2}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="271" y="235" width="117" height="22" uuid="0353b3e5-ca4e-4ad6-bd9a-b70052ee0fee"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{signWitnessFullName3}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="270" y="272" width="117" height="22" uuid="0c080e62-c553-4561-bfdb-baa0fc99a1e0"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{signWitnessFullName4}]]></textFieldExpression>
@@ -570,21 +568,21 @@
 				<textElement>
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{day}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("d",new Locale("th", "TH")).format($P{authDate})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="145" y="403" width="95" height="22" uuid="ea079875-0f5e-42f5-a585-88e90b630b27"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{month}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("MMMM",new Locale("th", "TH")).format($P{authDate})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="271" y="403" width="54" height="22" uuid="7e8c8257-2e61-4330-8085-f0752b43f23e"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{year}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy",new Locale("th", "TH")).format($P{authDate})]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="319" y="400" width="133" height="1" uuid="a095400e-8590-446d-a1ff-b79dfccfefb2"/>
@@ -612,28 +610,28 @@
 			</line>
 			<textField isBlankWhenNull="true">
 				<reportElement x="271" y="463" width="119" height="22" uuid="44e23f4f-06be-4e13-bcf5-ea31fcb00930"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{signAuthFullName3}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="274" y="499" width="117" height="22" uuid="bf00fe39-51ed-42d5-9b7b-ab493c644cb0"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{signAuthFullName4}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="271" y="536" width="118" height="22" uuid="6af896dc-37d0-4625-9c59-d970c6e2adfd"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{signWitnessFullName5}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="271" y="573" width="117" height="22" uuid="13f30728-3067-475c-b97a-04cd5e88c1df"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{signWitnessFullName6}]]></textFieldExpression>

@@ -28,6 +28,7 @@ import th.go.excise.ims.ta.service.TaFormTS01101Service;
 import th.go.excise.ims.ta.service.TaFormTS0110Service;
 import th.go.excise.ims.ta.service.TaFormTS0111Service;
 import th.go.excise.ims.ta.service.TaFormTS0113Service;
+import th.go.excise.ims.ta.service.TaFormTS01171Service;
 import th.go.excise.ims.ta.service.TaFormTS0119Service;
 import th.go.excise.ims.ta.vo.TaFormTS0107Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0108Vo;
@@ -35,6 +36,7 @@ import th.go.excise.ims.ta.vo.TaFormTS01101Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0110Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0111Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0113Vo;
+import th.go.excise.ims.ta.vo.TaFormTS01171Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0119Vo;
 
 @Controller
@@ -53,6 +55,7 @@ public class TaFormTSController {
 	private TaFormTS01101Service taFormTS01101Service;
 	private TaFormTS0111Service taFormTS0111Service;
 	private TaFormTS0113Service taFormTS0113Service;
+	private TaFormTS01171Service taFormTS01171Service;
 	private TaFormTS0119Service taFormTS0119Service;
 
 	@Autowired
@@ -63,6 +66,7 @@ public class TaFormTSController {
 			TaFormTS01101Service taFormTS01101Service,
 			TaFormTS0113Service taFormTS0113Service,
 			TaFormTS0111Service taFormTS0111Service,
+			TaFormTS01171Service taFormTS01171Service,
 			TaFormTS0119Service taFormTS0119Service) {
 		this.taFormTS0107Service = taFormTS0107Service;
 		this.taFormTS0108Service = taFormTS0108Service;
@@ -70,6 +74,7 @@ public class TaFormTSController {
 		this.taFormTS01101Service = taFormTS01101Service;
 		this.taFormTS0111Service = taFormTS0111Service;
 		this.taFormTS0113Service = taFormTS0113Service;
+		this.taFormTS01171Service = taFormTS01171Service;
 		this.taFormTS0119Service = taFormTS0119Service;
 	}
 
@@ -159,6 +164,21 @@ public class TaFormTSController {
 		byte[] reportFile = taFormTS0113Service.processFormTS(formTS0113Vo);
 
 		String filename = String.format(REPORT_NAME.TA_FORM_TS01_13 + "_%s." + FILE_EXTENSION.PDF, DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now()));
+		response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", filename));
+		response.setContentType("application/octet-stream");
+
+		FileCopyUtils.copy(reportFile, response.getOutputStream());
+	}
+	
+	// TODO TaFormTS01171
+	@PostMapping("/pdf/ta-form-ts01171")
+	public void processFormTS01171(@ModelAttribute ReportJsonBean reportJsonBean, HttpServletResponse response) throws Exception {
+		logger.info("processFormTS01171");
+		
+		TaFormTS01171Vo formTS01171Vo = gson.fromJson(reportJsonBean.getJson(), TaFormTS01171Vo.class);
+		byte[] reportFile = taFormTS01171Service.processFormTS(formTS01171Vo);
+
+		String filename = String.format(REPORT_NAME.TA_FORM_TS01_17_1 + "_%s." + FILE_EXTENSION.PDF, DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now()));
 		response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", filename));
 		response.setContentType("application/octet-stream");
 
