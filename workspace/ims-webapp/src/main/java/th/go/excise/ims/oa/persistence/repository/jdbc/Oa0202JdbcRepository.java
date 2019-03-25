@@ -34,8 +34,8 @@ public class Oa0202JdbcRepository {
 		params.add(addDate);
 		params.add(addDate);
 		if (StringUtils.isNotBlank(offCode)) {
-			sql.append(" AND P.OFFICE_CODE LIKE ? ");
-			params.add(offCode);
+			sql.append(" AND LP.OFFICE_CODE LIKE ? ");
+			params.add(offCode + "%");
 		}
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<Oa0202Vo> lists = commonJdbcTemplate.query(sql.toString(), params.toArray(),
