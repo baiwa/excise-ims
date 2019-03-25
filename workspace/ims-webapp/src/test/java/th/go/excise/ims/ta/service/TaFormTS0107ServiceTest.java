@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.time.chrono.ThaiBuddhistDate;
-import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
@@ -15,13 +14,13 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.go.excise.ims.ta.vo.TaFormTS0107Vo;
 
 public class TaFormTS0107ServiceTest {
-	
+
 	private static final String REPORT_FILE = PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_07 + "." + FILE_EXTENSION.PDF;
-	
+
 	@Test
 	public void test_generateReport() throws Exception {
 		TaFormTS0107Service taFormTS0107Service = new TaFormTS0107Service();
-		
+
 		// set data
 		TaFormTS0107Vo formTS0107Vo = new TaFormTS0107Vo();
 		formTS0107Vo.setBookNumber1("กข02001");
@@ -57,7 +56,7 @@ public class TaFormTS0107ServiceTest {
 		formTS0107Vo.setFacProvinceName("นนทบุรี ");
 		formTS0107Vo.setFacZipCode("11000");
 		formTS0107Vo.setAuditDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 3, 17))));
-		formTS0107Vo.setLawSection("");
+		formTS0107Vo.setLawSection("7");
 		formTS0107Vo.setHeadOfficerPhone("092-2344545");
 		formTS0107Vo.setSignOfficerFullName("นายมงคล อาสว่าง");
 		formTS0107Vo.setSignOfficerPosition("ผู้อำนวยการเขต");
@@ -67,5 +66,5 @@ public class TaFormTS0107ServiceTest {
 		byte[] reportFile = taFormTS0107Service.generateReport(formTS0107Vo);
 		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
 	}
-	
+
 }
