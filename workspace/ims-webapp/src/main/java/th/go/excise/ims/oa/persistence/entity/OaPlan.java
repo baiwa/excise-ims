@@ -41,8 +41,18 @@ public class OaPlan
     private String status;
     @Column(name = "FISCOL_YEAR")
     private String fiscolYear;
+    @Column(name = "REMARK")
+    private String remark;
 
-    public BigDecimal getOaPlanId() {
+    public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public BigDecimal getOaPlanId() {
         return oaPlanId;
     }
 
