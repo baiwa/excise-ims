@@ -2,16 +2,16 @@ package th.go.excise.ims.ta.vo;
 
 public class TaFormTS0111DtlVo {
 
-	private Integer recNo;
+	private String recNo;
 	private String docName;
 	private String docQty;
 	private String docComment;
 
-	public Integer getRecNo() {
+	public String getRecNo() {
 		return recNo;
 	}
 
-	public void setRecNo(Integer recNo) {
+	public void setRecNo(String recNo) {
 		this.recNo = recNo;
 	}
 
