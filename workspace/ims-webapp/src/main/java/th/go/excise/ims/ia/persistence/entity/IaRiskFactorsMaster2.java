@@ -13,72 +13,70 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "IA_RISK_FACTORS_MASTER_2")
-public class IaRiskFactorsMaster2
-    extends BaseEntity
-{
+public class IaRiskFactorsMaster2 extends BaseEntity {
+	private static final long serialVersionUID = 8653535067328094607L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_RISK_FACTORS_MASTER_2_GEN")
+	@SequenceGenerator(name = "IA_RISK_FACTORS_MASTER_2_GEN", sequenceName = "IA_RISK_FACTORS_MASTER_2_SEQ", allocationSize = 1)
+	@Column(name = "ID")
+	private BigDecimal id;
+	@Column(name = "RISK_FACTORS_MASTER")
+	private String riskFactorsMaster;
+	@Column(name = "INSPECTION_WORK")
+	private BigDecimal inspectionWork;
+	@Column(name = "NOT_DELETE")
+	private String notDelete;
+	@Column(name = "DATA_EVALUATE")
+	private String dataEvaluate;
+	@Column(name = "SIDE")
+	private String side;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_RISK_FACTORS_MASTER_2_GEN")
-    @SequenceGenerator(name = "IA_RISK_FACTORS_MASTER_2_GEN", sequenceName = "IA_RISK_FACTORS_MASTER_2_SEQ", allocationSize = 1)
-    @Column(name = "ID")
-    private BigDecimal id;
-    @Column(name = "RISK_FACTORS_MASTER")
-    private String riskFactorsMaster;
-    @Column(name = "STATUS_CHICKING")
-    private BigDecimal statusChicking;
-    @Column(name = "NOT_DELETE")
-    private String notDelete;
-    @Column(name = "DATA_EVALUATE")
-    private String dataEvaluate;
-    @Column(name = "SIDE")
-    private String side;
+	public BigDecimal getId() {
+		return id;
+	}
 
-    public BigDecimal getId() {
-        return id;
-    }
+	public void setId(BigDecimal id) {
+		this.id = id;
+	}
 
-    public void setId(BigDecimal id) {
-        this.id = id;
-    }
+	public String getRiskFactorsMaster() {
+		return riskFactorsMaster;
+	}
 
-    public String getRiskFactorsMaster() {
-        return riskFactorsMaster;
-    }
+	public void setRiskFactorsMaster(String riskFactorsMaster) {
+		this.riskFactorsMaster = riskFactorsMaster;
+	}
 
-    public void setRiskFactorsMaster(String riskFactorsMaster) {
-        this.riskFactorsMaster = riskFactorsMaster;
-    }
+	public BigDecimal getInspectionWork() {
+		return inspectionWork;
+	}
 
-    public BigDecimal getStatusChicking() {
-        return statusChicking;
-    }
+	public void setInspectionWork(BigDecimal inspectionWork) {
+		this.inspectionWork = inspectionWork;
+	}
 
-    public void setStatusChicking(BigDecimal statusChicking) {
-        this.statusChicking = statusChicking;
-    }
+	public String getNotDelete() {
+		return notDelete;
+	}
 
-    public String getNotDelete() {
-        return notDelete;
-    }
+	public void setNotDelete(String notDelete) {
+		this.notDelete = notDelete;
+	}
 
-    public void setNotDelete(String notDelete) {
-        this.notDelete = notDelete;
-    }
+	public String getDataEvaluate() {
+		return dataEvaluate;
+	}
 
-    public String getDataEvaluate() {
-        return dataEvaluate;
-    }
+	public void setDataEvaluate(String dataEvaluate) {
+		this.dataEvaluate = dataEvaluate;
+	}
 
-    public void setDataEvaluate(String dataEvaluate) {
-        this.dataEvaluate = dataEvaluate;
-    }
+	public String getSide() {
+		return side;
+	}
 
-    public String getSide() {
-        return side;
-    }
-
-    public void setSide(String side) {
-        this.side = side;
-    }
+	public void setSide(String side) {
+		this.side = side;
+	}
 
 }
