@@ -15,12 +15,9 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.go.excise.ims.oa.persistence.entity.OaCustomerLicen;
-import th.go.excise.ims.oa.persistence.entity.OaCustomerLicenDetail;
-import th.go.excise.ims.oa.vo.Oa010106ButtonVo;
 import th.go.excise.ims.oa.vo.Oa0201001Vo;
 import th.go.excise.ims.oa.vo.Oa020103Vo;
 import th.go.excise.ims.oa.vo.Oa0206FormVo;
-import th.go.excise.ims.oa.vo.Oa0206Vo;
 
 @Repository
 public class Oa0201JdbcRepository {
@@ -100,6 +97,9 @@ public class Oa0201JdbcRepository {
 		sql.append(" SELECT CL.* FROM OA_LICENSE_PLAN LP INNER JOIN OA_CUSTOMER_LICEN CL ");
 		sql.append("  ON LP.LICENSE_ID = CL.OA_CUSLICENSE_ID  ");
 		sql.append("  WHERE LP.IS_DELETED = 'N'  ");
+		if (id != null ) {
+			sql.append(" AND LP.OA_PLAN_ID = ? ");
+		}
 //		params.add(id);
 		List<OaCustomerLicen> data = commonJdbcTemplate.query(sql.toString(), new BeanPropertyRowMapper(OaCustomerLicen.class));
 		return data;
@@ -113,6 +113,7 @@ public class Oa0201JdbcRepository {
 		sql.append(" WHERE USE_ROL.ROLE_CODE = 'ROLE_OA_AUDITOR' ");
 		if (StringUtils.isNotBlank(officeCode)) {
 			sql.append(" AND OFFICE_CODE LIKE ?  ");
+			params.add(officeCode+"%");
 		}
 		
 		if (request.getListID().size() > 0) {
@@ -140,6 +141,7 @@ public class Oa0201JdbcRepository {
 		sql.append(" WHERE USE_ROL.ROLE_CODE = 'ROLE_OA_AUDITOR' ");
 		if (StringUtils.isNotBlank(officeCode)) {
 			sql.append(" AND OFFICE_CODE LIKE ?  ");
+			params.add(officeCode+"%");
 		}
 		if (request.getListID().size() > 0) {
 			List<String> list = new ArrayList<>();
@@ -154,6 +156,54 @@ public class Oa0201JdbcRepository {
 		String sqlCount = OracleUtils.countForDataTable(sql.toString());
 		Integer count = this.commonJdbcTemplate.queryForObject(sqlCount, params.toArray(), Integer.class);
 		return count;
+	}
+	
+	public List<Oa020103Vo> findUserAuditerByPlanId(String officeCode,BigDecimal planId){
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT WS.* FROM WS_USER WS ");
+		sql.append(" INNER JOIN WS_USER_ROLE USE_ROL ON USE_ROL.USER_ID = WS.USER_ID " );
+		sql.append(" INNER JOIN OA_PERSON_AUDIT_PLAN AU ON AU.OA_PERSON_ID = WS.WS_USER_ID  ");
+		sql.append( "  WHERE AU.OA_PLAN_ID = ? " );
+		params.add(planId);
+//		if (StringUtils.isNotBlank(officeCode)) {
+//			sql.append(" AND OFFICE_CODE LIKE ?  ");
+//			params.add(officeCode+"%");
+//		}
+
+		sql.append(" ORDER BY WS.WS_USER_ID ");
+		
+
+		List<Oa020103Vo> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(),userRowmapper);
+		return datas;
+	}
+	
+	public List<Oa0201001Vo> findLicenseByPlanId(BigDecimal planId) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT ED_SECTOR.OFF_NAME OFFICE_NAME_MIAN ,ED_AREA.OFF_NAME OFFICE_NAME_SUB , LIC.* FROM OA_CUSTOMER_LICEN LIC ");
+		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_SECTOR ON ED_SECTOR.OFF_CODE = CONCAT(SUBSTR(LIC.OFF_CODE, 0, 2),'0000')");
+		sql.append("  INNER JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE = CONCAT(SUBSTR(LIC.OFF_CODE, 0, 4),'00')   ");
+		sql.append("  INNER JOIN OA_LICENSE_PLAN LP ON LP.LICENSE_ID = LIC.OA_CUSLICENSE_ID ");
+		sql.append("   WHERE LP.OA_PLAN_ID = ? ");
+		params.add(planId);
+		List<Oa0201001Vo> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(),dataRowmapper);
+
+		return datas;
+	}
+	public List<Oa020103Vo> findUserApprover(String officeCode){
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT WS.* FROM WS_USER WS ");
+		sql.append(" INNER JOIN WS_USER_ROLE USE_ROL ON USE_ROL.USER_ID = WS.USER_ID " );
+		sql.append(" WHERE USE_ROL.ROLE_CODE = 'ROLE_OA_HEAD' ");
+		if (StringUtils.isNotBlank(officeCode)) {
+			sql.append(" AND OFFICE_CODE LIKE ?  ");
+			params.add(officeCode+"%");
+		}
+		
+		List<Oa020103Vo> data = this.commonJdbcTemplate.query(sql.toString(), params.toArray(),userRowmapper);
+		return data;
 	}
 	
 	
