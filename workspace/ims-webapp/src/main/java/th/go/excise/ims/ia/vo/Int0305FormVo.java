@@ -13,7 +13,6 @@ public class Int0305FormVo {
 	private String factorsLevel;
 	
 	private String budgetYearTo;
-	private IaRiskFactorsConfigAll iaRiskFactorsConfigAll; 
 	
 
 	public BigDecimal getId() {
@@ -71,15 +70,6 @@ public class Int0305FormVo {
 	public void setFactorsLevel(String factorsLevel) {
 		this.factorsLevel = factorsLevel;
 	}
-
-	public IaRiskFactorsConfigAll getIaRiskFactorsConfigAll() {
-		return iaRiskFactorsConfigAll;
-	}
-
-	public void setIaRiskFactorsConfigAll(IaRiskFactorsConfigAll iaRiskFactorsConfigAll) {
-		this.iaRiskFactorsConfigAll = iaRiskFactorsConfigAll;
-	}
-	
 	
 
 	
