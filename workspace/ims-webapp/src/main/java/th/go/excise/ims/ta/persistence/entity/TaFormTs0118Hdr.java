@@ -76,6 +76,8 @@ public class TaFormTs0118Hdr extends BaseEntity {
 	private String signOfficerFullName2;
 	@Column(name = "SIGN_OFFICER_DATE2")
 	private Date signOfficerDate2;
+	@Column(name = "EXTRA_MONEY_DATE")
+	private Date extraMoneyDate;
 
 	public Long getFormTs0118HdrId() {
 		return formTs0118HdrId;
@@ -291,6 +293,14 @@ public class TaFormTs0118Hdr extends BaseEntity {
 
 	public void setSignOfficerDate2(Date signOfficerDate2) {
 		this.signOfficerDate2 = signOfficerDate2;
+	}
+
+	public Date getExtraMoneyDate() {
+		return extraMoneyDate;
+	}
+
+	public void setExtraMoneyDate(Date extraMoneyDate) {
+		this.extraMoneyDate = extraMoneyDate;
 	}
 
 	public String toString() {
