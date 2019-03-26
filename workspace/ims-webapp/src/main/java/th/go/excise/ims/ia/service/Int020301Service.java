@@ -60,6 +60,10 @@ public class Int020301Service {
 
 	@Autowired
 	private IaQuestionnaireHdrRepository iaQuestionnaireHdrRepository;
+	
+	@Autowired
+	private IaRiskFactorsConfigRepository iaRiskFactorsConfigRepository;
+	
 	@Autowired
 	private UpdateStatusQuestionnaireService questionnaireService;
 
@@ -100,14 +104,16 @@ public class Int020301Service {
 			// Sides Data
 			List<Int020301DataVo> sideDtls = int020301JdbcRepository.findDataByIdHdr(idHdr, budgetYear,data.getAreaName());
 			
+			IaRiskFactorsConfig configFactor = matchConfigQtnWithConfig(configs);
+			IntCalculateCriteriaVo cal = new IntCalculateCriteriaVo();
 			String condition = "";
 			double all = 0;
 			double declineValue = 0;
 			for (Int020301DataVo sideDtl : sideDtls) {
-				
-				IntCalculateCriteriaVo cal = new IntCalculateCriteriaVo();
-				IaRiskFactorsConfig configFactor = matchConfigQtnWithConfig(configs);
+//				vo.setAcceptValue(rs.getBigDecimal("ACCEPT"));
+//				vo.setDeclineValue(rs.getBigDecimal("DECLINE"));
 				// Calculate RiskName
+				cal = new IntCalculateCriteriaVo();
 				double sum = 0;
 				if (sideDtl.getDeclineValue() == null) {
 					sideDtl.setDeclineValue(new BigDecimal(0));
@@ -123,8 +129,8 @@ public class Int020301Service {
 					all = all + sum;
 					declineValue = declineValue + sideDtl.getDeclineValue().doubleValue();
 					condition = conditionConfigs(sideDtl.getDeclineValue(), new BigDecimal(sum), configs);
-					
-					cal = IntCalculateCriteriaUtil.calculateCriteria(sideDtl.getDeclineValue(), configFactor);
+					double sumPercent = sideDtl.getDeclineValue().doubleValue()/(sideDtl.getDeclineValue().doubleValue()+sideDtl.getAcceptValue().doubleValue())*100;
+					cal = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(sumPercent), configFactor);
 				} else {
 					if (sideDtl.getAcceptValue() != null) {
 						
@@ -158,6 +164,11 @@ public class Int020301Service {
 			// Sum Data
 			condition = conditionConfigs(new BigDecimal(declineValue), new BigDecimal(all), configs);
 			double avg = (declineValue / all) * 100;
+			cal = new IntCalculateCriteriaVo();
+			cal = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(avg), configFactor);
+			data.setIntCalculateCriteriaVo(cal);
+			
+			
 			// calculate Risk
 			if (">".equals(condition)) { // High
 				data.setRiskText(configs.getHigh());
@@ -189,6 +200,9 @@ public class Int020301Service {
 		}
 		return datas;
 	}
+	
+	
+	
 
 	public List<Int020301InfoVo> findInfoByIdHdrRisk(String idHdrStr, String budgetYear, String idConfigStr) {
 		BigDecimal idHdr = new BigDecimal(idHdrStr);
@@ -197,6 +211,8 @@ public class Int020301Service {
 		List<Int020301InfoVo> datas = new ArrayList<>();
 		datas = int020301JdbcRepository.findInfoByIdSide(idHdr, budgetYear, null);
 		Optional<IaRiskFactorsConfig> config = iaRiskFactorsConfigRep.findById(idConfig);
+		IaRiskFactorsConfig configFactor = iaRiskFactorsConfigRepository.findById(idConfig).get();
+		IntCalculateCriteriaVo cal = new IntCalculateCriteriaVo();
 		if (config.isPresent()) {
 			for (Int020301InfoVo data : datas) {
 				// Sides Data
@@ -207,6 +223,7 @@ public class Int020301Service {
 				for (Int020301DataVo sideDtl : sideDtls) {
 					// Calculate RiskName
 					double sum = 0;
+					cal = new IntCalculateCriteriaVo();
 					if (sideDtl.getDeclineValue() == null) {
 						sideDtl.setDeclineValue(new BigDecimal(0));
 					}
@@ -221,11 +238,16 @@ public class Int020301Service {
 						all = all + sum;
 						declineValue = declineValue + sideDtl.getDeclineValue().doubleValue();
 						condition = conditionConfigs(sideDtl.getDeclineValue(), new BigDecimal(sum), configs);
+						
+						double sumPercent = sideDtl.getDeclineValue().doubleValue()/(sideDtl.getDeclineValue().doubleValue()+sideDtl.getAcceptValue().doubleValue())*100;
+						cal = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(sumPercent), configFactor);
 					} else {
 						if (sideDtl.getAcceptValue() != null) {
 							condition = conditionConfigs(new BigDecimal(0), sideDtl.getAcceptValue(), configs);
+							cal = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(0), configFactor);
 						} else {
 							condition = conditionConfigs(new BigDecimal(0), new BigDecimal(0), configs);
+							cal = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(0), configFactor);
 						}
 					}
 					if (">".equals(condition)) { // High
@@ -238,19 +260,25 @@ public class Int020301Service {
 						sideDtl.setRiskName(configs.getLow());
 						sideDtl.setRiskColor(configs.getLowColor());
 					}
+					sideDtl.setIntCalculateCriteriaVo(cal);
 				}
 				data.setSideDtls(sideDtls);
 				// RiskQuantity
 				data.setRiskQuantity(new BigDecimal(sideDtls.size()));
 				// Sum Data
 				double avg = (declineValue / all) * 100;
+				
 				if (avg >= 0) {
 					data.setAvgRisk(new BigDecimal(avg));
 				} else {
 					data.setAvgRisk(new BigDecimal(0));
 				}
-				IntCalculateCriteriaVo risk = IntCalculateCriteriaUtil.calculateCriteria(data.getAvgRisk(),
-						config.get());
+				IntCalculateCriteriaVo risk = IntCalculateCriteriaUtil.calculateCriteria(data.getAvgRisk(),config.get());
+				
+				cal = new IntCalculateCriteriaVo();
+				cal = IntCalculateCriteriaUtil.calculateCriteria(data.getAvgRisk(), configFactor);
+				data.setIntCalculateCriteriaVo(cal);
+				
 				data.setRiskColor(risk.getColor());
 				data.setRiskText(risk.getTranslatingRisk());
 				data.setRiskNum(risk.getRiskRate());
@@ -292,7 +320,9 @@ public class Int020301Service {
 			con.setLowEnd((configQtn.getLowEnd()!=null)?configQtn.getLowEnd().toString():"");
 			con.setLowCondition(configQtn.getLowCondition());
 			con.setLowRating(configQtn.getLowRating());
-			con.setLowColor(configQtn.getLowColor());
+			
+		    String colorLow = colorConfigQtnToColorConfig(configQtn.getLowColor());
+			con.setLowColor(colorLow);
 	
 	
 			con.setMedium(configQtn.getMedium());
@@ -300,7 +330,9 @@ public class Int020301Service {
 			con.setMediumEnd((configQtn.getMediumEnd()!=null)?configQtn.getMediumEnd().toString():"");
 			con.setMediumCondition(configQtn.getMediumCondition());
 			con.setMediumRating(configQtn.getMediumRating());
-			con.setMediumColor(configQtn.getMediumColor());
+			
+			String colorMedium = colorConfigQtnToColorConfig(configQtn.getMediumColor());
+			con.setMediumColor(colorMedium);
 	
 	
 			con.setHigh(configQtn.getHigh());
@@ -308,7 +340,9 @@ public class Int020301Service {
 			con.setHighEnd((configQtn.getHighEnd()!=null)?configQtn.getHighEnd().toString():"");
 			con.setHighCondition(configQtn.getHighCondition());
 			con.setHighRating(configQtn.getHighRating());
-			con.setHighColor(configQtn.getHighColor());
+			
+			String colorHigh = colorConfigQtnToColorConfig(configQtn.getHighColor());
+			con.setHighColor(colorHigh);
 	
 	
 			con.setVeryhigh("");
@@ -320,6 +354,22 @@ public class Int020301Service {
 
 		
 		return con;
+	}
+	
+	public static String colorConfigQtnToColorConfig(String color) {
+		String colorConfig = "";
+		if ("red".equals(color)) {
+			colorConfig = IaConstants.IA_RISK_COLOR.COLOR5;
+			
+		} else if ("yellow".equals(color)) {
+			colorConfig = IaConstants.IA_RISK_COLOR.COLOR3;
+			
+		} else if ("green".equals(color)) {
+			colorConfig = IaConstants.IA_RISK_COLOR.COLOR2;
+			
+		}
+		return colorConfig;
+
 	}
 	
 

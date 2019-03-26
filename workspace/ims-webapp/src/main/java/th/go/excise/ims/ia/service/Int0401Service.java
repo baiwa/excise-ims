@@ -19,6 +19,7 @@ import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskSelectCaseRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0401JdbcRepository;
 import th.go.excise.ims.ia.util.IntCalculateCriteriaUtil;
+import th.go.excise.ims.ia.vo.Int020301InfoVo;
 import th.go.excise.ims.ia.vo.Int030401FormVo;
 import th.go.excise.ims.ia.vo.Int030401Vo;
 import th.go.excise.ims.ia.vo.Int030403FormVo;
@@ -72,6 +73,9 @@ public class Int0401Service {
 	@Autowired
 	private Int030404Service int030404Service;
 	
+	@Autowired
+	private Int020301Service int020301Service;
+	
 
 	public List<Int0401Vo> findByBudgetYearAndInspectionWork(String budgetYear, String inspectionWorkStr,
 			String status) {
@@ -110,6 +114,12 @@ public class Int0401Service {
 						}
 						
 						// Risk Factors 2 questionnaire";
+						else if(IaConstants.IA_DATA_EVALUATE.QUESTIONNAIRE.equals(factor.getDataEvaluate())) {
+							
+							calVo = calQuestionnaire(factor.getId(),budgetYear,inspectionWork,selectCase.getExciseCode());
+							
+						}
+						
 						// Risk Factors 3 budget_project";
 						else if(IaConstants.IA_DATA_EVALUATE.BUDGET_PROJECT.equals(factor.getDataEvaluate())) {
 							
@@ -318,7 +328,30 @@ public class Int0401Service {
 		
 	}
 	
-	// *****************  Set IntCalculateCriteriaVo Data_Evaluate 2 = questionnaire  *****************  
+	// *****************  Set IntCalculateCriteriaVo Data_Evaluate 2 = questionnaire  *****************
+	public IntCalculateCriteriaVo calQuestionnaire(BigDecimal idFactors,String budgetYear, BigDecimal inspectionWork,String exciseCode) {
+			IntCalculateCriteriaVo calVo = new IntCalculateCriteriaVo();
+
+				IaRiskFactorsConfig config = iaRiskFactorsConfigRepository.findByIdFactors(idFactors);
+				
+				 List<Int020301InfoVo> list = int020301Service.findInfoByIdHdrRisk(config.getInfoUsedRisk(),budgetYear,config.getId().toString());
+				for (Int020301InfoVo vo : list) {
+					
+					if(vo.getOfficeCode().equals(exciseCode)) {
+						
+						calVo.setCodeColor(vo.getIntCalculateCriteriaVo().getCodeColor());
+						calVo.setColor(vo.getIntCalculateCriteriaVo().getColor());
+						calVo.setRiskRate(vo.getIntCalculateCriteriaVo().getRiskRate());
+						calVo.setTranslatingRisk(vo.getIntCalculateCriteriaVo().getTranslatingRisk());
+						calVo.setPercent(config.getPercent());
+						
+					}
+		
+				}
+			
+			return calVo;
+			
+		}	
 	// *****************  Set IntCalculateCriteriaVo Data_Evaluate 3 = budget_project  *****************  
 	public IntCalculateCriteriaVo calBudgetProject(BigDecimal idFactors,String budgetYear, BigDecimal inspectionWork,String projectCode) {
 		IntCalculateCriteriaVo calVo = new IntCalculateCriteriaVo();

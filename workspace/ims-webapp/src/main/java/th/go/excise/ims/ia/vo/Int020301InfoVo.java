@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Int020301InfoVo {
 	BigDecimal idMadeHdr;
+	String officeCode;
 	String sectorName;
 	String areaName;
 	String status;
@@ -21,12 +22,22 @@ public class Int020301InfoVo {
 	List<Int020301DataVo> sideDtls;
 	BigDecimal riskNum;
 
+	IntCalculateCriteriaVo intCalculateCriteriaVo;
+
 	public BigDecimal getIdMadeHdr() {
 		return idMadeHdr;
 	}
 
 	public void setIdMadeHdr(BigDecimal idMadeHdr) {
 		this.idMadeHdr = idMadeHdr;
+	}
+
+	public String getOfficeCode() {
+		return officeCode;
+	}
+
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
 	}
 
 	public String getSectorName() {
@@ -139,6 +150,14 @@ public class Int020301InfoVo {
 
 	public void setRiskNum(BigDecimal riskNum) {
 		this.riskNum = riskNum;
+	}
+
+	public IntCalculateCriteriaVo getIntCalculateCriteriaVo() {
+		return intCalculateCriteriaVo;
+	}
+
+	public void setIntCalculateCriteriaVo(IntCalculateCriteriaVo intCalculateCriteriaVo) {
+		this.intCalculateCriteriaVo = intCalculateCriteriaVo;
 	}
 
 }

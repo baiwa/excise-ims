@@ -367,7 +367,7 @@ public class Int030102JdbcRepository {
 	public void claerDateCir(Int030102FormVo form) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("    UPDATE IA_RISK_FACTORS C                                                  ");
-		sql.append("    SET C.STATUS_SCREEN       = ? ,                                         ");
+		sql.append("    SET C.STATUS_SCREEN       = ? ,                                           ");
 		sql.append("    C.DATE_CRITERIA           = null                                          ");
 		sql.append("    WHERE C.ID IN ( SELECT A.ID                                               ");
 		sql.append("                    FROM IA_RISK_FACTORS A                                    ");

@@ -63,7 +63,7 @@ public class IntCalculateCriteriaUtil {
 		IntCalculateCriteriaVo cal = new IntCalculateCriteriaVo();
 		IaRiskFactorsConfig config = new IaRiskFactorsConfig();
 			if(idConfig!=null) {
-				iaRiskFactorsConfigRepository.findById(idConfig).get();
+				config = iaRiskFactorsConfigRepository.findById(idConfig).get();
 				cal = calculateCriteria(dataCal, config);
 			}
 
@@ -168,7 +168,7 @@ public class IntCalculateCriteriaUtil {
 
 				res = true;
 
-			} else if ("<>".equals(condition) && ((startB <= dataCal) && (dataCal <= endB))) {
+			} else if ("<>".equals(condition) && ((startB <= dataCal) && (dataCal <= endB))) {;
 
 				res = true;
 

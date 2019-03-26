@@ -38,6 +38,17 @@ public class Int0401JdbcRepository {
 				rowWithoutStatusRowMapper);
 		return lists;
 	}
+	
+	public long findCountRowWithoutStatus(String budgetYear, BigDecimal inspectionWork) {
+		StringBuilder sqlBuilder = new StringBuilder();
+		sqlBuilder.append(
+				" SELECT COUNT(*) FROM IA_RISK_SELECT_CASE S WHERE S.BUDGET_YEAR = ? AND S.INSPECTION_WORK = ? AND S.IS_DELETED = 'N' ");
+		List<Object> params = new ArrayList<>();
+		params.add(budgetYear);
+		params.add(inspectionWork);
+		long lists = jdbcTemplate.queryForObject(sqlBuilder.toString(), params.toArray(),long.class);
+		return lists;
+	}
 
 	// ROW WITHOUT STATUS RowMapper
 	private RowMapper<IaRiskSelectCase> rowWithoutStatusRowMapper = new RowMapper<IaRiskSelectCase>() {

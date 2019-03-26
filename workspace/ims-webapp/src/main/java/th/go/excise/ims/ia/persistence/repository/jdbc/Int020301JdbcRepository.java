@@ -75,6 +75,7 @@ public class Int020301JdbcRepository {
 		public Int020301InfoVo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Int020301InfoVo vo = new Int020301InfoVo();
 			vo.setIdMadeHdr(rs.getBigDecimal("ID_MADE_HDR"));
+			vo.setOfficeCode(rs.getString("OFFICE_CODE"));
 			vo.setSectorName(rs.getString("OFFICE_CODE"));
 			vo.setAreaName(rs.getString("OFFICE_CODE"));
 			vo.setSentDate(rs.getDate("UPDATED_DATE"));
