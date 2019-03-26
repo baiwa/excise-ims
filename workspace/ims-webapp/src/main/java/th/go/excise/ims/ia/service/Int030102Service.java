@@ -291,6 +291,7 @@ public class Int030102Service {
 		int030102JdbcRepository.saveRiskFactorsLevel(form);
 		int030102JdbcRepository.claerDateCir(form);
 		int030102JdbcRepository.saveRiskFactClerAll(form);
+		updateStatusRiskFactorsService.updateStatusSaveRiskFactorsLevel(form.getBudgetYear(),form.getInspectionWork());
 	}
 	
 	public void updateStatus(Int030102FormVo form) {

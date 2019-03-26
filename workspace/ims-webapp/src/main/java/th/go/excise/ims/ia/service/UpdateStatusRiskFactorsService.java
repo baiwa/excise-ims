@@ -62,5 +62,13 @@ public class UpdateStatusRiskFactorsService {
 		return budgetYear;
 	}
 	
+	public String updateStatusSaveRiskFactorsLevel(String budgetYear,BigDecimal inspectionWork) {
+		if (budgetYear != null && inspectionWork != null ) {
+			int030102JdbcRepository.updateStatusSaveRiskFactorsLevel(budgetYear, inspectionWork);	
+		}
+		
+		return budgetYear;
+	}
+	
 
 }

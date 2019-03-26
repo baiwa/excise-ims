@@ -390,6 +390,18 @@ public class Int030102JdbcRepository {
 		return count;
 	}
 	
+	public int updateStatusSaveRiskFactorsLevel(String budgetYear,BigDecimal inspectionWork) {
+		StringBuilder sql = new StringBuilder(" UPDATE IA_RISK_FACTORS  SET STATUS_SCREEN = ? WHERE BUDGET_YEAR = ? AND INSPECTION_WORK = ? AND IS_DELETED = 'N' ");
+		List<Object> params = new ArrayList<Object>();
+		
+		params.add(IaConstants.IA_STATUS_RISK_FACTORS.STATUS_1_CODE);
+		params.add(budgetYear);
+		params.add(inspectionWork);
+		
+		int count = commonJdbcTemplate.update(sql.toString(),params.toArray());
+		return count;
+	}
+	
 	
 
 }
