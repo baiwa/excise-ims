@@ -5,23 +5,17 @@ import java.math.BigDecimal;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfigAll;
 
 public class Int0305FormVo {
-	private BigDecimal id;
 	private BigDecimal idHead;
 	private String budgetYear;
 	private BigDecimal inspectionWork;
 	private String status;
 	private String factorsLevel;
-	
 	private String budgetYearTo;
-	
 
-	public BigDecimal getId() {
-		return id;
-	}
-
-	public void setId(BigDecimal id) {
-		this.id = id;
-	}
+//	Form Edit
+	private BigDecimal id;
+	private String riskFactorsMaster;
+	private String side;
 
 	public BigDecimal getIdHead() {
 		return idHead;
@@ -55,6 +49,14 @@ public class Int0305FormVo {
 		this.status = status;
 	}
 
+	public String getFactorsLevel() {
+		return factorsLevel;
+	}
+
+	public void setFactorsLevel(String factorsLevel) {
+		this.factorsLevel = factorsLevel;
+	}
+
 	public String getBudgetYearTo() {
 		return budgetYearTo;
 	}
@@ -63,14 +65,28 @@ public class Int0305FormVo {
 		this.budgetYearTo = budgetYearTo;
 	}
 
-	public String getFactorsLevel() {
-		return factorsLevel;
+	public BigDecimal getId() {
+		return id;
 	}
 
-	public void setFactorsLevel(String factorsLevel) {
-		this.factorsLevel = factorsLevel;
+	public void setId(BigDecimal id) {
+		this.id = id;
 	}
-	
 
-	
+	public String getRiskFactorsMaster() {
+		return riskFactorsMaster;
+	}
+
+	public void setRiskFactorsMaster(String riskFactorsMaster) {
+		this.riskFactorsMaster = riskFactorsMaster;
+	}
+
+	public String getSide() {
+		return side;
+	}
+
+	public void setSide(String side) {
+		this.side = side;
+	}
+
 }

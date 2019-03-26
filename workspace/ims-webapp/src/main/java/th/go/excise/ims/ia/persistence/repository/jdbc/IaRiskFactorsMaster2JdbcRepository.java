@@ -92,5 +92,6 @@ public class IaRiskFactorsMaster2JdbcRepository {
 		commonJdbcTemplate.update(sql.toString(), new Object[] { form.getId() });
 
 	}
+	
 
 }
