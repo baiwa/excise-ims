@@ -1,20 +1,34 @@
 package th.go.excise.ims.ia.vo;
 
-import java.util.List;
-
 import th.go.excise.ims.ia.persistence.entity.IaConcludeFollowHdr;
 
 public class Int11Vo extends IaConcludeFollowHdr {
-	private List<IaConcludeFollowHdr> IaConcludeFollowHdr;
+	private String dateToString;
+	private String dateFromString;
+	private String approveDateString;
 
-	public List<IaConcludeFollowHdr> getIaConcludeFollowHdr() {
-		return IaConcludeFollowHdr;
+	public String getDateToString() {
+		return dateToString;
 	}
 
-	public void setIaConcludeFollowHdr(List<IaConcludeFollowHdr> iaConcludeFollowHdr) {
-		IaConcludeFollowHdr = iaConcludeFollowHdr;
+	public void setDateToString(String dateToString) {
+		this.dateToString = dateToString;
 	}
 
-	
+	public String getDateFromString() {
+		return dateFromString;
+	}
+
+	public void setDateFromString(String dateFromString) {
+		this.dateFromString = dateFromString;
+	}
+
+	public String getApproveDateString() {
+		return approveDateString;
+	}
+
+	public void setApproveDateString(String approveDateString) {
+		this.approveDateString = approveDateString;
+	}
 
 }

@@ -8,25 +8,23 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
-import th.go.excise.ims.ia.vo.Int11FormVo;
-import th.go.excise.ims.ia.vo.Int11Vo;
+import th.go.excise.ims.ia.vo.Int1101Vo;
 
 @Repository
-public class IaConcludeFollowHdrJdbcRepository {
+public class IaConcludeFollowDetailJdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
-	public List<Int11Vo> getData(Int11FormVo request) {
+	public List<Int1101Vo> getDataDetailList(String id) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" Select * from IA_CONCLUDE_FOLLOW_HDR   WHERE INSPECTION_WORK = ? AND BUDGET_YEAR = ? AND Is_Deleted = 'N' ");
+		sql.append(" SELECT * FROM IA_CONCLUDE_FOLLOW_DETAIL WHERE ID_HDR = ? AND Is_Deleted = 'N' ORDER by SEQ ASC ");
 
-		params.add(request.getInspecWork());
-		params.add(request.getBudgetYear());
+		params.add(id);
 
 		@SuppressWarnings({ "rawtypes", "unchecked" })
-		List<Int11Vo> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(),
-				new BeanPropertyRowMapper(Int11Vo.class));
+		List<Int1101Vo> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(),
+				new BeanPropertyRowMapper(Int1101Vo.class));
 
 		return datas;
 	}

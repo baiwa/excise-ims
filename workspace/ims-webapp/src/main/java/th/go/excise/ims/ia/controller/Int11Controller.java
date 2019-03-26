@@ -1,8 +1,5 @@
 package th.go.excise.ims.ia.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
-import th.go.excise.ims.ia.persistence.entity.IaConcludeFollowHdr;
 import th.go.excise.ims.ia.service.Int11Service;
 import th.go.excise.ims.ia.vo.Int11FormVo;
 import th.go.excise.ims.ia.vo.Int11Vo;
