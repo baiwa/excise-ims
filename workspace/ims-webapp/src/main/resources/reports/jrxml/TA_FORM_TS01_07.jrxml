@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="N_mis01-2" pageWidth="595" pageHeight="842" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="55" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_07" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="55" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
@@ -328,7 +328,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("d",new Locale("th", "TH")).format($P{docDate})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{docDate} != null ? new SimpleDateFormat("d",new Locale("th", "TH")).format($P{docDate}) : ""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="303" y="123" width="62" height="22" uuid="b8a1382b-88ab-49a4-bcc1-f5270670fb77"/>
@@ -342,7 +342,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("MMMM",new Locale("th", "TH")).format($P{docDate})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{docDate} != null ? new SimpleDateFormat("MMMM",new Locale("th", "TH")).format($P{docDate}) : ""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="391" y="123" width="69" height="22" uuid="c47dbc8b-1145-4891-8cb1-9ac658491e21"/>
@@ -356,7 +356,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy",new Locale("th", "TH")).format($P{docDate})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{docDate} != null ? new SimpleDateFormat("yyyy",new Locale("th", "TH")).format($P{docDate}) : ""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" x="234" y="145" width="226" height="22" uuid="8626510b-fc7e-4add-9a80-a684c53049a6"/>
