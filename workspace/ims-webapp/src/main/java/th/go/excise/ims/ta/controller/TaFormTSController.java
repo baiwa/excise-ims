@@ -27,6 +27,7 @@ import th.co.baiwa.buckwaframework.common.rest.adapter.DateThaiTypeAdapter;
 import th.go.excise.ims.ta.service.TaFormTS0101Service;
 import th.go.excise.ims.ta.service.TaFormTS0107Service;
 import th.go.excise.ims.ta.service.TaFormTS0108Service;
+import th.go.excise.ims.ta.service.TaFormTS0109Service;
 import th.go.excise.ims.ta.service.TaFormTS01101Service;
 import th.go.excise.ims.ta.service.TaFormTS0110Service;
 import th.go.excise.ims.ta.service.TaFormTS0111Service;
@@ -42,6 +43,7 @@ import th.go.excise.ims.ta.service.TaFormTS0121Service;
 import th.go.excise.ims.ta.vo.TaFormTS0101Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0107Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0108Vo;
+import th.go.excise.ims.ta.vo.TaFormTS0109Vo;
 import th.go.excise.ims.ta.vo.TaFormTS01101Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0110Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0111Vo;
@@ -70,6 +72,7 @@ public class TaFormTSController {
     private TaFormTS0101Service taFormTS0101Service;
     private TaFormTS0107Service taFormTS0107Service;
     private TaFormTS0108Service taFormTS0108Service;
+    private TaFormTS0109Service taFormTS0109Service;
     private TaFormTS0110Service taFormTS0110Service;
     private TaFormTS01101Service taFormTS01101Service;
     private TaFormTS0111Service taFormTS0111Service;
@@ -84,12 +87,13 @@ public class TaFormTSController {
     private TaFormTS0121Service taFormTS0121Service;
     
     @Autowired
-    public TaFormTSController(TaFormTS0101Service taFormTS0101Service, TaFormTS0107Service taFormTS0107Service, TaFormTS0108Service taFormTS0108Service, TaFormTS0110Service taFormTS0110Service, TaFormTS01101Service taFormTS01101Service, TaFormTS0112Service taFormTS0112Service, TaFormTS0113Service taFormTS0113Service, TaFormTS0114Service taFormTS0114Service,
+    public TaFormTSController(TaFormTS0101Service taFormTS0101Service, TaFormTS0107Service taFormTS0107Service, TaFormTS0108Service taFormTS0108Service, TaFormTS0109Service taFormTS0109Service, TaFormTS0110Service taFormTS0110Service, TaFormTS01101Service taFormTS01101Service, TaFormTS0112Service taFormTS0112Service, TaFormTS0113Service taFormTS0113Service, TaFormTS0114Service taFormTS0114Service,
                               TaFormTS0111Service taFormTS0111Service, TaFormTS01171Service taFormTS01171Service,TaFormTS0118Service taFormTS0118Service, TaFormTS0119Service taFormTS0119Service , TaFormTS01142Service taFormTS01142Service, TaFormTS0120Service taFormTS0120Service, TaFormTS0121Service taFormTS0121Service) {
 
         this.taFormTS0101Service = taFormTS0101Service;
         this.taFormTS0107Service = taFormTS0107Service;
         this.taFormTS0108Service = taFormTS0108Service;
+        this.taFormTS0109Service = taFormTS0109Service;
         this.taFormTS0110Service = taFormTS0110Service;
         this.taFormTS01101Service = taFormTS01101Service;
         this.taFormTS0111Service = taFormTS0111Service;
@@ -148,6 +152,21 @@ public class TaFormTSController {
         FileCopyUtils.copy(reportFile, response.getOutputStream());
     }
 
+	// TODO TaFormTS0110
+	@PostMapping("/pdf/ta-form-ts0109")
+	public void processFormTS0109(@ModelAttribute ReportJsonBean reportJsonBean, HttpServletResponse response) throws Exception {
+		logger.info("processFormTS0110");
+
+		TaFormTS0109Vo formTS0109Vo = gson.fromJson(reportJsonBean.getJson(), TaFormTS0109Vo.class);
+		byte[] reportFile = taFormTS0109Service.processFormTS(formTS0109Vo);
+
+		String filename = String.format(REPORT_NAME.TA_FORM_TS01_09 + "_%s." + FILE_EXTENSION.PDF, DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now()));
+		response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", filename));
+		response.setContentType("application/octet-stream");
+
+		FileCopyUtils.copy(reportFile, response.getOutputStream());
+	}
+    
     // TODO TaFormTS0110
     @PostMapping("/pdf/ta-form-ts0110")
     public void processFormTS0110(@ModelAttribute ReportJsonBean reportJsonBean, HttpServletResponse response) throws Exception {
