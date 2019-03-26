@@ -89,7 +89,7 @@ public class Int030101Service {
 		dataFactorsMaster.setRiskFactorsMaster(form.getRiskFactorsMaster());
 		dataFactorsMaster.setInspectionWork(form.getInspectionWork());
 		dataFactorsMaster.setNotDelete("N");
-		dataFactorsMaster.setDataEvaluate("NEW");
+		dataFactorsMaster.setDataEvaluate(IaConstants.IA_DATA_EVALUATE.NEW);
 		dataFactorsMaster.setSide(form.getSide());
 		IaRiskFactorsMaster dataFactorsMasterRes = iaRiskFactorsMasterRepository.save(dataFactorsMaster);
 
@@ -109,7 +109,7 @@ public class Int030101Service {
 		dataFactors.setInspectionWork(form.getInspectionWork());
 		dataFactors.setSide(form.getSide());
 		dataFactors.setStatusScreen(IaConstants.IA_STATUS_RISK_FACTORS.STATUS_1_CODE);
-		dataFactors.setDataEvaluate("NEW");
+		dataFactors.setDataEvaluate(IaConstants.IA_DATA_EVALUATE.NEW);
 		IaRiskFactors dataFactorsRes = iaRiskFactorsRepository.save(dataFactors);
 
 		// Save IaRiskFactorsConfig

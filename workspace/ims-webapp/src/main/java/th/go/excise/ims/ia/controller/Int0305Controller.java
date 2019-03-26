@@ -18,6 +18,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ia.service.Int0305Service;
+import th.go.excise.ims.ia.vo.Int030102Vo;
 import th.go.excise.ims.ia.vo.Int0305FormVo;
 import th.go.excise.ims.ia.vo.Int0305Vo;
 
@@ -32,9 +33,9 @@ public class Int0305Controller {
 
 	@PostMapping("/list")
 	@ResponseBody
-	public DataTableAjax<Int0305Vo> list(@RequestBody Int0305FormVo form) {
-		DataTableAjax<Int0305Vo> response = new DataTableAjax<Int0305Vo>();
-		List<Int0305Vo> iaRiskFactorsMasterList = new ArrayList<Int0305Vo>();
+	public DataTableAjax<Int030102Vo> list(@RequestBody Int0305FormVo form) {
+		DataTableAjax<Int030102Vo> response = new DataTableAjax<Int030102Vo>();
+		List<Int030102Vo> iaRiskFactorsMasterList = new ArrayList<Int030102Vo>();
 
 		try {
 			iaRiskFactorsMasterList = int0305Service.list(form);
