@@ -240,12 +240,12 @@ public class TaFormTSController {
     // TODO TaFormTS01142
     @PostMapping("/pdf/ta-form-ts01142")
     public void processFormTS01142(@ModelAttribute ReportJsonBean reportJsonBean, HttpServletResponse response) throws Exception {
-        logger.info("processFormTS0114");
+        logger.info("processFormTS01142");
 
         TaFormTS01142Vo formTS01142Vo = gson.fromJson(reportJsonBean.getJson(), TaFormTS01142Vo.class);
         byte[] reportFile = taFormTS01142Service.processFormTS(formTS01142Vo);
 
-        String filename = String.format(REPORT_NAME.TA_FORM_TS01_14 + "_%s." + FILE_EXTENSION.PDF, DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now()));
+        String filename = String.format(REPORT_NAME.TA_FORM_TS01_14_2 + "_%s." + FILE_EXTENSION.PDF, DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now()));
         response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", filename));
         response.setContentType("application/octet-stream");
 
