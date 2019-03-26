@@ -3,10 +3,11 @@ package th.co.baiwa.buckwaframework.common.rest.adapter;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 public class BigDecimalTypeAdapter extends TypeAdapter<BigDecimal> {
@@ -29,7 +30,12 @@ public class BigDecimalTypeAdapter extends TypeAdapter<BigDecimal> {
 
 	@Override
 	public BigDecimal read(JsonReader reader) throws IOException {
-		return StringUtils.isNumeric(reader.nextString()) ? new BigDecimal(reader.nextString()) : null;
+		if (reader.peek() == JsonToken.NULL) {
+			reader.nextNull();
+			return null;
+		}
+		String value = reader.nextString();
+		return NumberUtils.isParsable(value) ? new BigDecimal(value) : null;
 	}
 
 }
