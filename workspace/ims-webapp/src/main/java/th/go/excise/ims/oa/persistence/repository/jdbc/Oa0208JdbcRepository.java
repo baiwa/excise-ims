@@ -79,7 +79,7 @@ public class Oa0208JdbcRepository {
 		List<Object> params = new ArrayList<Object>();
 		sql.append(" SELECT * ");
 		sql.append(" FROM OA_PLAN ");
-		sql.append(" WHERE IS_DELETED = 'N' AND STATUS = 5 "); // APPROVED
+		sql.append(" WHERE IS_DELETED = 'N' AND STATUS = 3 "); // APPROVED
 		if (StringUtils.isNotBlank(budgetYear)) {
 			params.add(budgetYear);
 			sql.append(" AND FISCOL_YEAR = ? ");
