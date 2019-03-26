@@ -39,7 +39,7 @@ public class TaFormTS0118ServiceTest {
 		formTS0118Vo.setLawSection("1234");
 		formTS0118Vo.setLawGroup("5");
 		formTS0118Vo.setAuditDateStart(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 3, 15))));
-		formTS0118Vo.setAuditDateEnd(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 3, 15))));
+		formTS0118Vo.setAuditDateEnd(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 3, 18))));
 		formTS0118Vo.setSumAllTaxAmt(new BigDecimal("100000000"));
 		formTS0118Vo.setSumAllTaxText("หนึ่งร้อยล้านบาท");
 		formTS0118Vo.setOfficeName("สำนักงานสรรพสามิตภาคที่ 5");
