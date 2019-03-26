@@ -1,7 +1,12 @@
 package th.go.excise.ims.ta.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,17 +15,35 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import th.co.baiwa.buckwaframework.common.bean.ReportJsonBean;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
-import th.co.baiwa.buckwaframework.common.rest.adapter.DateThaiJsonDeserializer;
-import th.go.excise.ims.ta.service.*;
-import th.go.excise.ims.ta.vo.*;
-
-import javax.servlet.http.HttpServletResponse;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import th.co.baiwa.buckwaframework.common.rest.adapter.BigDecimalTypeAdapter;
+import th.co.baiwa.buckwaframework.common.rest.adapter.DateThaiTypeAdapter;
+import th.go.excise.ims.ta.service.TaFormTS0101Service;
+import th.go.excise.ims.ta.service.TaFormTS0107Service;
+import th.go.excise.ims.ta.service.TaFormTS0108Service;
+import th.go.excise.ims.ta.service.TaFormTS01101Service;
+import th.go.excise.ims.ta.service.TaFormTS0110Service;
+import th.go.excise.ims.ta.service.TaFormTS0111Service;
+import th.go.excise.ims.ta.service.TaFormTS0113Service;
+import th.go.excise.ims.ta.service.TaFormTS0114Service;
+import th.go.excise.ims.ta.service.TaFormTS01171Service;
+import th.go.excise.ims.ta.service.TaFormTS0119Service;
+import th.go.excise.ims.ta.vo.TaFormTS0101Vo;
+import th.go.excise.ims.ta.vo.TaFormTS0107Vo;
+import th.go.excise.ims.ta.vo.TaFormTS0108Vo;
+import th.go.excise.ims.ta.vo.TaFormTS01101Vo;
+import th.go.excise.ims.ta.vo.TaFormTS0110Vo;
+import th.go.excise.ims.ta.vo.TaFormTS0111Vo;
+import th.go.excise.ims.ta.vo.TaFormTS0113Vo;
+import th.go.excise.ims.ta.vo.TaFormTS0114Vo;
+import th.go.excise.ims.ta.vo.TaFormTS01171Vo;
+import th.go.excise.ims.ta.vo.TaFormTS0119Vo;
 
 @Controller
 @RequestMapping("/api/ta/report")
@@ -29,9 +52,10 @@ public class TaFormTSController {
     private static final Logger logger = LoggerFactory.getLogger(TaFormTSController.class);
 
     private Gson gson = new GsonBuilder()
-		.serializeNulls()
-    	.registerTypeAdapter(Date.class, DateThaiJsonDeserializer.getInstance())
-    	.create();
+        .serializeNulls()
+        .registerTypeAdapter(Date.class, DateThaiTypeAdapter.getInstance())
+        .registerTypeAdapter(BigDecimal.class, BigDecimalTypeAdapter.getInstance())
+        .create();
     
     private TaFormTS0101Service taFormTS0101Service;
     private TaFormTS0107Service taFormTS0107Service;
