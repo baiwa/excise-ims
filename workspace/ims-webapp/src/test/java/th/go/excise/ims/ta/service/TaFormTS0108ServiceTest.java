@@ -28,7 +28,7 @@ public class TaFormTS0108ServiceTest {
 		TaFormTS0108DtlVo formTS0108DtlVo = null;
 		for (int i = 0; i < 10; i++) {
 			formTS0108DtlVo = new TaFormTS0108DtlVo();
-			formTS0108DtlVo.setRecNo(i + 1);
+			formTS0108DtlVo.setRecNo("1");
 			formTS0108DtlVo.setAuditDate(new Date());
 			formTS0108DtlVo.setOfficerFullName("ธนพล ชัยภูมิ");
 			formTS0108DtlVo.setOfficerPosition("ตรวจสอบภาษี");
@@ -36,7 +36,6 @@ public class TaFormTS0108ServiceTest {
 			formTS0108DtlVo.setAuditDest("โรงผลิตเหล้า");
 			formTS0108DtlVo.setAuditTopic("การหมักเหล้า");
 			formTS0108DtlVo.setApprovedAck("สุรศักดิ์ ");
-			formTS0108DtlVo.setAuditResultDate(new Date());
 			formTS0108DtlVo.setAuditComment("");
 			formTS0108DtlVoList.add(formTS0108DtlVo);
 		}

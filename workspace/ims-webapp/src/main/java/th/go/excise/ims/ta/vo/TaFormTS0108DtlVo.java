@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class TaFormTS0108DtlVo {
 
-	private Integer recNo;
+	private String recNo;
 	private Date auditDate;
 	private String officerFullName;
 	private String officerPosition;
@@ -17,11 +17,11 @@ public class TaFormTS0108DtlVo {
 	private Date auditResultDate;
 	private String auditComment;
 
-	public Integer getRecNo() {
+	public String getRecNo() {
 		return recNo;
 	}
 
-	public void setRecNo(Integer recNo) {
+	public void setRecNo(String recNo) {
 		this.recNo = recNo;
 	}
 

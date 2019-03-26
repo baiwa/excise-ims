@@ -41,11 +41,12 @@ public class TaFormTS0119ServiceTest {
 		formTS0119Vo.setFacAmphurName("นาบักเหลี่ยม");
 		formTS0119Vo.setFacProvinceName("หนองบัวลำภู");
 		formTS0119Vo.setFacZipCode("39000");
-		formTS0119Vo.setFollowTypeFlag1("1");
-		formTS0119Vo.setFollowTypeFlag2("2");
+		formTS0119Vo.setFollowTypeFlag1("");
+		formTS0119Vo.setFollowTypeFlag2("");
 		formTS0119Vo.setRefBookDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2561, 6, 15))));
 		formTS0119Vo.setOfficeName1("");
-		
+		formTS0119Vo.setOfficeName2("");
+		formTS0119Vo.setOfficePhone("");
 		byte[] reportFile = taFormTS0119Service.generateReport(formTS0119Vo);
 		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
 	}

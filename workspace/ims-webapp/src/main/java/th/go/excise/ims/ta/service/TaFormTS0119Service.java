@@ -28,14 +28,14 @@ import th.go.excise.ims.ta.vo.TaFormTS0119Vo;
 
 @Service
 public class TaFormTS0119Service extends AbstractTaFormTSService<TaFormTS0119Vo, TaFormTs0119> {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(TaFormTS0119Service.class);
-	
+
 	@Autowired
 	private TaFormTSSequenceService taFormTSSequenceService;
 	@Autowired
 	private TaFormTs0119Repository taFormTs0119Repository;
-	
+
 	@Transactional(rollbackOn = { Exception.class })
 	public byte[] processFormTS(TaFormTS0119Vo formTS0119Vo) throws Exception {
 		logger.info("processFormTS");
@@ -45,7 +45,7 @@ public class TaFormTS0119Service extends AbstractTaFormTSService<TaFormTS0119Vo,
 
 		return reportFile;
 	}
-	
+
 	protected void saveFormTS(TaFormTS0119Vo formTS0119Vo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
@@ -64,12 +64,13 @@ public class TaFormTS0119Service extends AbstractTaFormTSService<TaFormTS0119Vo,
 		}
 		taFormTs0119Repository.save(formTS0119);
 	}
-	
+
 	public byte[] generateReport(TaFormTS0119Vo formTS0119Vo) throws Exception, IOException {
 		Map<String, Object> params = new HashMap<String, Object>();
 
 		// get data to report
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
+
 		params.put("bookNumber1", formTS0119Vo.getBookNumber1());
 		params.put("bookNumber2", formTS0119Vo.getBookNumber2());
 		params.put("docText1", formTS0119Vo.getDocText1());
@@ -91,9 +92,15 @@ public class TaFormTS0119Service extends AbstractTaFormTSService<TaFormTS0119Vo,
 		params.put("signOfficerFullName", formTS0119Vo.getSignOfficerFullName());
 		params.put("followTypeFlag1", formTS0119Vo.getFollowTypeFlag1());
 		params.put("followTypeFlag2", formTS0119Vo.getFollowTypeFlag2());
+		params.put("signOfficerFullName", formTS0119Vo.getSignOfficerFullName());
+		params.put("signOfficerPosition", formTS0119Vo.getSignOfficerPosition());
+		params.put("officeName2", formTS0119Vo.getOfficeName2());
+		params.put("officePhone", formTS0119Vo.getOfficePhone());
 		params.put("docDate", formTS0119Vo.getDocDate());
 		params.put("refBookDate", formTS0119Vo.getRefBookDate());
-		
+		params.put("officeName1", formTS0119Vo.getOfficeName1());
+		params.put("refBookNumber", formTS0119Vo.getRefBookNumber());
+
 		// set output
 		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_19 + "." + FILE_EXTENSION.JASPER, params);
 		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);

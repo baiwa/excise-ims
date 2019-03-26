@@ -76,7 +76,7 @@
 				<textFieldExpression><![CDATA["ที่ กค"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="51" y="101" width="10" height="22" uuid="febaaa54-9584-4056-9473-219f02448e88"/>
+				<reportElement style="TextDetail" x="54" y="101" width="10" height="22" uuid="febaaa54-9584-4056-9473-219f02448e88"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["/"]]></textFieldExpression>
 			</textField>
@@ -91,7 +91,7 @@
 					<pen lineWidth="0.0" lineStyle="Dotted"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("dd ",new Locale("th", "TH")).format($P{docDate})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("d ",new Locale("th", "TH")).format($P{docDate})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="195" width="27" height="22" uuid="17b21979-121c-4d0d-a216-bc079f6837b2"/>
@@ -243,7 +243,7 @@
 				<textFieldExpression><![CDATA["หนังสือเชิญ"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="0" y="373" width="40" height="22" uuid="e4fadfee-294f-4c3f-9dd5-e4c54c336160"/>
+				<reportElement style="TextDetail" x="0" y="373" width="36" height="22" uuid="e4fadfee-294f-4c3f-9dd5-e4c54c336160"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ลงวันที่"]]></textFieldExpression>
 			</textField>
@@ -520,12 +520,12 @@
 				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="40" y="373" width="87" height="22" uuid="4155b07c-1148-46dc-af00-e2ee4f6fe5ce"/>
+				<reportElement style="TextDetail" x="36" y="373" width="90" height="22" uuid="4155b07c-1148-46dc-af00-e2ee4f6fe5ce"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("dd ",new Locale("th", "TH")).format($P{refBookDate})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("d ",new Locale("th", "TH")).format($P{refBookDate})]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="40" y="389" width="87" height="1" uuid="9d9605a5-c180-49a3-9ebb-baf9520cf484"/>
+				<reportElement x="36" y="389" width="91" height="1" uuid="9d9605a5-c180-49a3-9ebb-baf9520cf484"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
@@ -593,11 +593,12 @@
 				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="159" y="518" width="182" height="22" uuid="75c475fb-0b75-4d80-8d2f-74bb79f82e51"/>
+				<reportElement style="TextDetail" x="159" y="522" width="182" height="22" uuid="75c475fb-0b75-4d80-8d2f-74bb79f82e51"/>
 				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{signOfficerFullName}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="153" y="537" width="184" height="1" uuid="f37af840-1d9f-419b-a082-f86200685261"/>
+				<reportElement x="153" y="538" width="184" height="1" uuid="f37af840-1d9f-419b-a082-f86200685261"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
