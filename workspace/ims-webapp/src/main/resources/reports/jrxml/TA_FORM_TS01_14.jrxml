@@ -63,13 +63,14 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="date" class="java.lang.String"/>
-	<field name="type" class="java.lang.String"/>
-	<field name="money" class="java.lang.String"/>
-	<field name="chip" class="java.lang.String"/>
-	<field name="extra" class="java.lang.String"/>
-	<field name="local" class="java.lang.String"/>
-	<field name="sum" class="java.lang.String"/>
+	<field name="recNo" class="java.lang.Integer"/>
+	<field name="taxDate" class="java.util.Date"/>
+	<field name="dutyTypeText" class="java.lang.String"/>
+	<field name="taxAmt" class="java.math.BigDecimal"/>
+	<field name="fineAmt" class="java.math.BigDecimal"/>
+	<field name="extraAmt" class="java.math.BigDecimal"/>
+	<field name="moiAmt" class="java.math.BigDecimal"/>
+	<field name="sumAmt" class="java.math.BigDecimal"/>
 	<pageHeader>
 		<band height="550" splitType="Stretch">
 			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
@@ -1187,7 +1188,7 @@
 	<columnHeader>
 		<band height="22">
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" positionType="FixRelativeToBottom" x="0" y="0" width="44" height="18" uuid="d2dd618c-d0b7-4ead-831c-125ad7c18d60"/>
+				<reportElement style="data" positionType="FixRelativeToBottom" x="0" y="4" width="52" height="18" uuid="d2dd618c-d0b7-4ead-831c-125ad7c18d60"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1198,7 +1199,7 @@
 				<textFieldExpression><![CDATA["วันเดือนปี"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" positionType="FixRelativeToBottom" x="53" y="0" width="64" height="18" uuid="c15c2a0f-cfbf-448e-b1e9-383e348d3fc9"/>
+				<reportElement style="data" positionType="FixRelativeToBottom" x="58" y="4" width="64" height="18" uuid="c15c2a0f-cfbf-448e-b1e9-383e348d3fc9"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1209,7 +1210,7 @@
 				<textFieldExpression><![CDATA["ประเภทสินค้า"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" positionType="FixRelativeToBottom" x="125" y="0" width="53" height="18" uuid="c484c86d-c44b-4a4d-b922-ac555791e56f"/>
+				<reportElement style="data" positionType="FixRelativeToBottom" x="125" y="4" width="53" height="18" uuid="c484c86d-c44b-4a4d-b922-ac555791e56f"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1220,7 +1221,7 @@
 				<textFieldExpression><![CDATA["จำนวนเงิน"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" positionType="FixRelativeToBottom" x="187" y="0" width="53" height="18" uuid="ac6b2d1a-ed82-4a50-a149-4ee748d9d104"/>
+				<reportElement style="data" positionType="FixRelativeToBottom" x="187" y="4" width="53" height="18" uuid="ac6b2d1a-ed82-4a50-a149-4ee748d9d104"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1231,7 +1232,7 @@
 				<textFieldExpression><![CDATA["เบี้ยปรับ"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" positionType="FixRelativeToBottom" x="249" y="0" width="53" height="18" uuid="f83f6ee9-74c9-4ebb-a30d-f10fb9f51d96"/>
+				<reportElement style="data" positionType="FixRelativeToBottom" x="249" y="4" width="53" height="18" uuid="f83f6ee9-74c9-4ebb-a30d-f10fb9f51d96"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1242,7 +1243,7 @@
 				<textFieldExpression><![CDATA["เงินเพิ่ม"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" positionType="FixRelativeToBottom" x="311" y="0" width="64" height="18" uuid="777bbe4c-2cdc-4cbf-8c20-032ebd7185fe"/>
+				<reportElement style="data" positionType="FixRelativeToBottom" x="314" y="4" width="62" height="18" uuid="777bbe4c-2cdc-4cbf-8c20-032ebd7185fe"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1253,7 +1254,7 @@
 				<textFieldExpression><![CDATA["ส่วนท้องถิ่น"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" positionType="FixRelativeToBottom" x="383" y="0" width="58" height="18" uuid="c19536a1-90ac-43a3-b071-f947e7ee3feb"/>
+				<reportElement style="data" positionType="FixRelativeToBottom" x="387" y="4" width="36" height="18" uuid="c19536a1-90ac-43a3-b071-f947e7ee3feb"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1264,7 +1265,7 @@
 				<textFieldExpression><![CDATA["รวม"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" positionType="FixRelativeToBottom" isPrintRepeatedValues="false" x="249" y="-11" width="192" height="18" uuid="8b1d2974-7cec-4b80-892f-e81a616aee2d"/>
+				<reportElement style="data" positionType="FixRelativeToBottom" isPrintRepeatedValues="false" x="249" y="-7" width="192" height="18" uuid="8b1d2974-7cec-4b80-892f-e81a616aee2d"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1277,7 +1278,92 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="19"/>
+		<band height="45">
+			<textField>
+				<reportElement style="data" x="58" y="4" width="64" height="18" uuid="defe04bc-2dec-42bb-9098-e182f8db667a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="005a36d7-ce0a-435e-8ea2-5420cc2407f1"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{dutyTypeText}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="data" x="125" y="4" width="52" height="18" uuid="8d21e84b-2a8d-4ff4-a544-33da509907a7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fe2fc395-d8f1-4cb9-ab9f-e6eb10d2e15a"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{taxAmt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="data" x="187" y="4" width="52" height="18" uuid="68882cb8-d31e-4147-b4aa-87c75c02bb6c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0c0892e1-3207-4451-bb53-c56514c5f914"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{fineAmt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="data" x="249" y="4" width="52" height="18" uuid="046881a0-a7c8-4f9f-b6a4-6675f98682e3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7decbad2-d63b-4fa6-bc53-708ec084299e"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{extraAmt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="data" x="314" y="4" width="62" height="18" uuid="a9923add-a667-42a3-b561-4b9acf28a6c2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7d84e723-41c8-4f51-977a-92e0a2deb944"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{moiAmt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="data" x="387" y="4" width="54" height="18" uuid="4432e1c4-5f8d-4139-80e3-c33142af6f6c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9621d9aa-60bf-4fed-9755-c437b699b303"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{sumAmt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="data" x="1" y="4" width="52" height="18" uuid="53bb786f-6034-4132-b4d8-b766001435d6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e45b87e1-fb81-40b7-abac-0aaadc44f1de"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("d MMM yyyy",new Locale("th", "TH")).format($F{taxDate})]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 	<summary>
 		<band height="58">

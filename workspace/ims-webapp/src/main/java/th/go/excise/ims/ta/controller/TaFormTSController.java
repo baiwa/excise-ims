@@ -28,7 +28,11 @@ public class TaFormTSController {
 
     private static final Logger logger = LoggerFactory.getLogger(TaFormTSController.class);
 
-    private Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, DateThaiJsonDeserializer.getInstance()).create();
+    private Gson gson = new GsonBuilder()
+		.serializeNulls()
+    	.registerTypeAdapter(Date.class, DateThaiJsonDeserializer.getInstance())
+    	.create();
+    
     private TaFormTS0101Service taFormTS0101Service;
     private TaFormTS0107Service taFormTS0107Service;
     private TaFormTS0108Service taFormTS0108Service;
@@ -167,7 +171,7 @@ public class TaFormTSController {
         TaFormTS0114Vo formTS0114Vo = gson.fromJson(reportJsonBean.getJson(), TaFormTS0114Vo.class);
         byte[] reportFile = taFormTS0114Service.processFormTS(formTS0114Vo);
 
-        String filename = String.format(REPORT_NAME.TA_FORM_TS01_13 + "_%s." + FILE_EXTENSION.PDF, DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now()));
+        String filename = String.format(REPORT_NAME.TA_FORM_TS01_14 + "_%s." + FILE_EXTENSION.PDF, DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now()));
         response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", filename));
         response.setContentType("application/octet-stream");
 
