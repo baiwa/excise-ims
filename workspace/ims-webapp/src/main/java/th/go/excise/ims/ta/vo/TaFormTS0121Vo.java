@@ -6,291 +6,186 @@ public class TaFormTS0121Vo {
 
 	private String formTsNumber;
 	private String factoryName;
-	private String docDear;
-	private String bookNumber1;
-	private Date bookDate;
+	private String officerSendFullName1;
+	private String officerSendPosition1;
+	private String officerReceiveFullName1;
+	private String officerReceivePosition1;
+	private String officeName;
+	private Date docDate;
+	private String comdDesc;
+	private Date comdDate;
+	private String officerSendFullName2;
 	private String factoryName2;
-	private String newRegId;
-	private Date auditDateStart;
-	private Date auditDateEnd;
-	private String facAddrNo;
-	private String facMooNo;
-	private String facSoiName;
-	private String facThnName;
-	private String facTambolName;
-	private String facAmphurName;
-	private String facProvinceName;
-	private String facZipCode;
-	private String expandReason;
-	private String expandFlag1;
-	private String expandFlag2;
-	private String expandNo;
-	private Date expandDateOld;
-	private Date expandDateNew;
-	private String signOfficerFullName;
-	private Date signOfficerDate;
-	private String headOfficerComment;
-	private String signHeadOfficerFullName;
-	private Date signHeadOfficerDate;
-	private String approverComment;
-	private String approveFlag;
-	private String signApproverFullName;
-	private Date signApproverDate;
-
+	private String officerReceiveFullName2;
+	private String officerSendFullName3;
+	private String officerReceiveFullName3;
+	private String factoryName3;
+	private String doc1Num;
+	private String docAcct1Num;
+	private String docAcct1No;
+	private String docAcct2Num;
+	private String docAcct2No;
+	private String docOther;
+	private String signOfficerFullName1;
+	private String signOfficerFullName2;
+	private String signWitnessFullName1;
+	private String signWitnessFullName2;
+	
 	public String getFormTsNumber() {
 		return formTsNumber;
 	}
-
 	public void setFormTsNumber(String formTsNumber) {
 		this.formTsNumber = formTsNumber;
 	}
-
 	public String getFactoryName() {
 		return factoryName;
 	}
-
 	public void setFactoryName(String factoryName) {
 		this.factoryName = factoryName;
 	}
-
-	public String getDocDear() {
-		return docDear;
+	public String getOfficerSendFullName1() {
+		return officerSendFullName1;
 	}
-
-	public void setDocDear(String docDear) {
-		this.docDear = docDear;
+	public void setOfficerSendFullName1(String officerSendFullName1) {
+		this.officerSendFullName1 = officerSendFullName1;
 	}
-
-	public String getBookNumber1() {
-		return bookNumber1;
+	public String getOfficerSendPosition1() {
+		return officerSendPosition1;
 	}
-
-	public void setBookNumber1(String bookNumber1) {
-		this.bookNumber1 = bookNumber1;
+	public void setOfficerSendPosition1(String officerSendPosition1) {
+		this.officerSendPosition1 = officerSendPosition1;
 	}
-
-	public Date getBookDate() {
-		return bookDate;
+	public String getOfficerReceiveFullName1() {
+		return officerReceiveFullName1;
 	}
-
-	public void setBookDate(Date bookDate) {
-		this.bookDate = bookDate;
+	public void setOfficerReceiveFullName1(String officerReceiveFullName1) {
+		this.officerReceiveFullName1 = officerReceiveFullName1;
 	}
-
+	public String getOfficerReceivePosition1() {
+		return officerReceivePosition1;
+	}
+	public void setOfficerReceivePosition1(String officerReceivePosition1) {
+		this.officerReceivePosition1 = officerReceivePosition1;
+	}
+	public String getOfficeName() {
+		return officeName;
+	}
+	public void setOfficeName(String officeName) {
+		this.officeName = officeName;
+	}
+	public Date getDocDate() {
+		return docDate;
+	}
+	public void setDocDate(Date docDate) {
+		this.docDate = docDate;
+	}
+	public String getComdDesc() {
+		return comdDesc;
+	}
+	public void setComdDesc(String comdDesc) {
+		this.comdDesc = comdDesc;
+	}
+	public Date getComdDate() {
+		return comdDate;
+	}
+	public void setComdDate(Date comdDate) {
+		this.comdDate = comdDate;
+	}
+	public String getOfficerSendFullName2() {
+		return officerSendFullName2;
+	}
+	public void setOfficerSendFullName2(String officerSendFullName2) {
+		this.officerSendFullName2 = officerSendFullName2;
+	}
 	public String getFactoryName2() {
 		return factoryName2;
 	}
-
 	public void setFactoryName2(String factoryName2) {
 		this.factoryName2 = factoryName2;
 	}
-
-	public String getNewRegId() {
-		return newRegId;
+	public String getOfficerReceiveFullName2() {
+		return officerReceiveFullName2;
 	}
-
-	public void setNewRegId(String newRegId) {
-		this.newRegId = newRegId;
+	public void setOfficerReceiveFullName2(String officerReceiveFullName2) {
+		this.officerReceiveFullName2 = officerReceiveFullName2;
 	}
-
-	public Date getAuditDateStart() {
-		return auditDateStart;
+	public String getOfficerSendFullName3() {
+		return officerSendFullName3;
 	}
-
-	public void setAuditDateStart(Date auditDateStart) {
-		this.auditDateStart = auditDateStart;
+	public void setOfficerSendFullName3(String officerSendFullName3) {
+		this.officerSendFullName3 = officerSendFullName3;
 	}
-
-	public Date getAuditDateEnd() {
-		return auditDateEnd;
+	public String getOfficerReceiveFullName3() {
+		return officerReceiveFullName3;
 	}
-
-	public void setAuditDateEnd(Date auditDateEnd) {
-		this.auditDateEnd = auditDateEnd;
+	public void setOfficerReceiveFullName3(String officerReceiveFullName3) {
+		this.officerReceiveFullName3 = officerReceiveFullName3;
 	}
-
-	public String getFacAddrNo() {
-		return facAddrNo;
+	public String getFactoryName3() {
+		return factoryName3;
 	}
-
-	public void setFacAddrNo(String facAddrNo) {
-		this.facAddrNo = facAddrNo;
+	public void setFactoryName3(String factoryName3) {
+		this.factoryName3 = factoryName3;
 	}
-
-	public String getFacMooNo() {
-		return facMooNo;
+	public String getDoc1Num() {
+		return doc1Num;
 	}
-
-	public void setFacMooNo(String facMooNo) {
-		this.facMooNo = facMooNo;
+	public void setDoc1Num(String doc1Num) {
+		this.doc1Num = doc1Num;
 	}
-
-	public String getFacSoiName() {
-		return facSoiName;
+	public String getDocAcct1Num() {
+		return docAcct1Num;
 	}
-
-	public void setFacSoiName(String facSoiName) {
-		this.facSoiName = facSoiName;
+	public void setDocAcct1Num(String docAcct1Num) {
+		this.docAcct1Num = docAcct1Num;
 	}
-
-	public String getFacThnName() {
-		return facThnName;
+	public String getDocAcct1No() {
+		return docAcct1No;
 	}
-
-	public void setFacThnName(String facThnName) {
-		this.facThnName = facThnName;
+	public void setDocAcct1No(String docAcct1No) {
+		this.docAcct1No = docAcct1No;
 	}
-
-	public String getFacTambolName() {
-		return facTambolName;
+	public String getDocAcct2Num() {
+		return docAcct2Num;
 	}
-
-	public void setFacTambolName(String facTambolName) {
-		this.facTambolName = facTambolName;
+	public void setDocAcct2Num(String docAcct2Num) {
+		this.docAcct2Num = docAcct2Num;
 	}
-
-	public String getFacAmphurName() {
-		return facAmphurName;
+	public String getDocAcct2No() {
+		return docAcct2No;
 	}
-
-	public void setFacAmphurName(String facAmphurName) {
-		this.facAmphurName = facAmphurName;
+	public void setDocAcct2No(String docAcct2No) {
+		this.docAcct2No = docAcct2No;
 	}
-
-	public String getFacProvinceName() {
-		return facProvinceName;
+	public String getDocOther() {
+		return docOther;
 	}
-
-	public void setFacProvinceName(String facProvinceName) {
-		this.facProvinceName = facProvinceName;
+	public void setDocOther(String docOther) {
+		this.docOther = docOther;
 	}
-
-	public String getFacZipCode() {
-		return facZipCode;
+	public String getSignOfficerFullName1() {
+		return signOfficerFullName1;
 	}
-
-	public void setFacZipCode(String facZipCode) {
-		this.facZipCode = facZipCode;
+	public void setSignOfficerFullName1(String signOfficerFullName1) {
+		this.signOfficerFullName1 = signOfficerFullName1;
 	}
-
-	public String getExpandReason() {
-		return expandReason;
+	public String getSignOfficerFullName2() {
+		return signOfficerFullName2;
 	}
-
-	public void setExpandReason(String expandReason) {
-		this.expandReason = expandReason;
+	public void setSignOfficerFullName2(String signOfficerFullName2) {
+		this.signOfficerFullName2 = signOfficerFullName2;
 	}
-
-	public String getExpandFlag1() {
-		return expandFlag1;
+	public String getSignWitnessFullName1() {
+		return signWitnessFullName1;
 	}
-
-	public void setExpandFlag1(String expandFlag1) {
-		this.expandFlag1 = expandFlag1;
+	public void setSignWitnessFullName1(String signWitnessFullName1) {
+		this.signWitnessFullName1 = signWitnessFullName1;
 	}
-
-	public String getExpandFlag2() {
-		return expandFlag2;
+	public String getSignWitnessFullName2() {
+		return signWitnessFullName2;
 	}
-
-	public void setExpandFlag2(String expandFlag2) {
-		this.expandFlag2 = expandFlag2;
+	public void setSignWitnessFullName2(String signWitnessFullName2) {
+		this.signWitnessFullName2 = signWitnessFullName2;
 	}
-
-	public String getExpandNo() {
-		return expandNo;
-	}
-
-	public void setExpandNo(String expandNo) {
-		this.expandNo = expandNo;
-	}
-
-	public Date getExpandDateOld() {
-		return expandDateOld;
-	}
-
-	public void setExpandDateOld(Date expandDateOld) {
-		this.expandDateOld = expandDateOld;
-	}
-
-	public Date getExpandDateNew() {
-		return expandDateNew;
-	}
-
-	public void setExpandDateNew(Date expandDateNew) {
-		this.expandDateNew = expandDateNew;
-	}
-
-	public String getSignOfficerFullName() {
-		return signOfficerFullName;
-	}
-
-	public void setSignOfficerFullName(String signOfficerFullName) {
-		this.signOfficerFullName = signOfficerFullName;
-	}
-
-	public Date getSignOfficerDate() {
-		return signOfficerDate;
-	}
-
-	public void setSignOfficerDate(Date signOfficerDate) {
-		this.signOfficerDate = signOfficerDate;
-	}
-
-	public String getHeadOfficerComment() {
-		return headOfficerComment;
-	}
-
-	public void setHeadOfficerComment(String headOfficerComment) {
-		this.headOfficerComment = headOfficerComment;
-	}
-
-	public String getSignHeadOfficerFullName() {
-		return signHeadOfficerFullName;
-	}
-
-	public void setSignHeadOfficerFullName(String signHeadOfficerFullName) {
-		this.signHeadOfficerFullName = signHeadOfficerFullName;
-	}
-
-	public Date getSignHeadOfficerDate() {
-		return signHeadOfficerDate;
-	}
-
-	public void setSignHeadOfficerDate(Date signHeadOfficerDate) {
-		this.signHeadOfficerDate = signHeadOfficerDate;
-	}
-
-	public String getApproverComment() {
-		return approverComment;
-	}
-
-	public void setApproverComment(String approverComment) {
-		this.approverComment = approverComment;
-	}
-
-	public String getApproveFlag() {
-		return approveFlag;
-	}
-
-	public void setApproveFlag(String approveFlag) {
-		this.approveFlag = approveFlag;
-	}
-
-	public String getSignApproverFullName() {
-		return signApproverFullName;
-	}
-
-	public void setSignApproverFullName(String signApproverFullName) {
-		this.signApproverFullName = signApproverFullName;
-	}
-
-	public Date getSignApproverDate() {
-		return signApproverDate;
-	}
-
-	public void setSignApproverDate(Date signApproverDate) {
-		this.signApproverDate = signApproverDate;
-	}
-
+	
 }

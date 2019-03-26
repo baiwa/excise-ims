@@ -5,17 +5,14 @@ import java.util.Date;
 public class TaFormTS0120Vo {
 
 	private String formTsNumber;
-	private String bookNumber1;
-	private String bookNumber2;
-	private String docText1;
-	private String docText2;
-	private String docText3;
-	private Date docDate;
-	private String docDear;
-	private String companyName;
-	private String factoryType;
 	private String factoryName;
+	private String docDear;
+	private String bookNumber1;
+	private Date bookDate;
+	private String factoryName2;
 	private String newRegId;
+	private Date auditDateStart;
+	private Date auditDateEnd;
 	private String facAddrNo;
 	private String facMooNo;
 	private String facSoiName;
@@ -24,246 +21,213 @@ public class TaFormTS0120Vo {
 	private String facAmphurName;
 	private String facProvinceName;
 	private String facZipCode;
-	private String followTypeFlag1;
-	private String refBookNumber;
-	private Date refBookDate;
-	private String officeName1;
-	private String followTypeFlag2;
+	private String expandReason;
+	private String expandFlag1;
+	private String expandFlag2;
+	private String expandNo;
+	private Date expandDateOld;
+	private Date expandDateNew;
 	private String signOfficerFullName;
-	private String signOfficerPosition;
-	private String officeName2;
-	private String officePhone;
-
+	private Date signOfficerDate;
+	private String headOfficerComment;
+	private String signHeadOfficerFullName;
+	private Date signHeadOfficerDate;
+	private String approverComment;
+	private String approveFlag;
+	private String signApproverFullName;
+	private Date signApproverDate;
+	
 	public String getFormTsNumber() {
 		return formTsNumber;
 	}
-
 	public void setFormTsNumber(String formTsNumber) {
 		this.formTsNumber = formTsNumber;
 	}
-
-	public String getBookNumber1() {
-		return bookNumber1;
-	}
-
-	public void setBookNumber1(String bookNumber1) {
-		this.bookNumber1 = bookNumber1;
-	}
-
-	public String getBookNumber2() {
-		return bookNumber2;
-	}
-
-	public void setBookNumber2(String bookNumber2) {
-		this.bookNumber2 = bookNumber2;
-	}
-
-	public String getDocText1() {
-		return docText1;
-	}
-
-	public void setDocText1(String docText1) {
-		this.docText1 = docText1;
-	}
-
-	public String getDocText2() {
-		return docText2;
-	}
-
-	public void setDocText2(String docText2) {
-		this.docText2 = docText2;
-	}
-
-	public String getDocText3() {
-		return docText3;
-	}
-
-	public void setDocText3(String docText3) {
-		this.docText3 = docText3;
-	}
-
-	public Date getDocDate() {
-		return docDate;
-	}
-
-	public void setDocDate(Date docDate) {
-		this.docDate = docDate;
-	}
-
-	public String getDocDear() {
-		return docDear;
-	}
-
-	public void setDocDear(String docDear) {
-		this.docDear = docDear;
-	}
-
-	public String getCompanyName() {
-		return companyName;
-	}
-
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
-
-	public String getFactoryType() {
-		return factoryType;
-	}
-
-	public void setFactoryType(String factoryType) {
-		this.factoryType = factoryType;
-	}
-
 	public String getFactoryName() {
 		return factoryName;
 	}
-
 	public void setFactoryName(String factoryName) {
 		this.factoryName = factoryName;
 	}
-
+	public String getDocDear() {
+		return docDear;
+	}
+	public void setDocDear(String docDear) {
+		this.docDear = docDear;
+	}
+	public String getBookNumber1() {
+		return bookNumber1;
+	}
+	public void setBookNumber1(String bookNumber1) {
+		this.bookNumber1 = bookNumber1;
+	}
+	public Date getBookDate() {
+		return bookDate;
+	}
+	public void setBookDate(Date bookDate) {
+		this.bookDate = bookDate;
+	}
+	public String getFactoryName2() {
+		return factoryName2;
+	}
+	public void setFactoryName2(String factoryName2) {
+		this.factoryName2 = factoryName2;
+	}
 	public String getNewRegId() {
 		return newRegId;
 	}
-
 	public void setNewRegId(String newRegId) {
 		this.newRegId = newRegId;
 	}
-
+	public Date getAuditDateStart() {
+		return auditDateStart;
+	}
+	public void setAuditDateStart(Date auditDateStart) {
+		this.auditDateStart = auditDateStart;
+	}
+	public Date getAuditDateEnd() {
+		return auditDateEnd;
+	}
+	public void setAuditDateEnd(Date auditDateEnd) {
+		this.auditDateEnd = auditDateEnd;
+	}
 	public String getFacAddrNo() {
 		return facAddrNo;
 	}
-
 	public void setFacAddrNo(String facAddrNo) {
 		this.facAddrNo = facAddrNo;
 	}
-
 	public String getFacMooNo() {
 		return facMooNo;
 	}
-
 	public void setFacMooNo(String facMooNo) {
 		this.facMooNo = facMooNo;
 	}
-
 	public String getFacSoiName() {
 		return facSoiName;
 	}
-
 	public void setFacSoiName(String facSoiName) {
 		this.facSoiName = facSoiName;
 	}
-
 	public String getFacThnName() {
 		return facThnName;
 	}
-
 	public void setFacThnName(String facThnName) {
 		this.facThnName = facThnName;
 	}
-
 	public String getFacTambolName() {
 		return facTambolName;
 	}
-
 	public void setFacTambolName(String facTambolName) {
 		this.facTambolName = facTambolName;
 	}
-
 	public String getFacAmphurName() {
 		return facAmphurName;
 	}
-
 	public void setFacAmphurName(String facAmphurName) {
 		this.facAmphurName = facAmphurName;
 	}
-
 	public String getFacProvinceName() {
 		return facProvinceName;
 	}
-
 	public void setFacProvinceName(String facProvinceName) {
 		this.facProvinceName = facProvinceName;
 	}
-
 	public String getFacZipCode() {
 		return facZipCode;
 	}
-
 	public void setFacZipCode(String facZipCode) {
 		this.facZipCode = facZipCode;
 	}
-
-	public String getFollowTypeFlag1() {
-		return followTypeFlag1;
+	public String getExpandReason() {
+		return expandReason;
 	}
-
-	public void setFollowTypeFlag1(String followTypeFlag1) {
-		this.followTypeFlag1 = followTypeFlag1;
+	public void setExpandReason(String expandReason) {
+		this.expandReason = expandReason;
 	}
-
-	public String getRefBookNumber() {
-		return refBookNumber;
+	public String getExpandFlag1() {
+		return expandFlag1;
 	}
-
-	public void setRefBookNumber(String refBookNumber) {
-		this.refBookNumber = refBookNumber;
+	public void setExpandFlag1(String expandFlag1) {
+		this.expandFlag1 = expandFlag1;
 	}
-
-	public Date getRefBookDate() {
-		return refBookDate;
+	public String getExpandFlag2() {
+		return expandFlag2;
 	}
-
-	public void setRefBookDate(Date refBookDate) {
-		this.refBookDate = refBookDate;
+	public void setExpandFlag2(String expandFlag2) {
+		this.expandFlag2 = expandFlag2;
 	}
-
-	public String getOfficeName1() {
-		return officeName1;
+	public String getExpandNo() {
+		return expandNo;
 	}
-
-	public void setOfficeName1(String officeName1) {
-		this.officeName1 = officeName1;
+	public void setExpandNo(String expandNo) {
+		this.expandNo = expandNo;
 	}
-
-	public String getFollowTypeFlag2() {
-		return followTypeFlag2;
+	public Date getExpandDateOld() {
+		return expandDateOld;
 	}
-
-	public void setFollowTypeFlag2(String followTypeFlag2) {
-		this.followTypeFlag2 = followTypeFlag2;
+	public void setExpandDateOld(Date expandDateOld) {
+		this.expandDateOld = expandDateOld;
 	}
-
+	public Date getExpandDateNew() {
+		return expandDateNew;
+	}
+	public void setExpandDateNew(Date expandDateNew) {
+		this.expandDateNew = expandDateNew;
+	}
 	public String getSignOfficerFullName() {
 		return signOfficerFullName;
 	}
-
 	public void setSignOfficerFullName(String signOfficerFullName) {
 		this.signOfficerFullName = signOfficerFullName;
 	}
-
-	public String getSignOfficerPosition() {
-		return signOfficerPosition;
+	public Date getSignOfficerDate() {
+		return signOfficerDate;
 	}
-
-	public void setSignOfficerPosition(String signOfficerPosition) {
-		this.signOfficerPosition = signOfficerPosition;
+	public void setSignOfficerDate(Date signOfficerDate) {
+		this.signOfficerDate = signOfficerDate;
 	}
-
-	public String getOfficeName2() {
-		return officeName2;
+	public String getHeadOfficerComment() {
+		return headOfficerComment;
 	}
-
-	public void setOfficeName2(String officeName2) {
-		this.officeName2 = officeName2;
+	public void setHeadOfficerComment(String headOfficerComment) {
+		this.headOfficerComment = headOfficerComment;
 	}
-
-	public String getOfficePhone() {
-		return officePhone;
+	public String getSignHeadOfficerFullName() {
+		return signHeadOfficerFullName;
 	}
-
-	public void setOfficePhone(String officePhone) {
-		this.officePhone = officePhone;
+	public void setSignHeadOfficerFullName(String signHeadOfficerFullName) {
+		this.signHeadOfficerFullName = signHeadOfficerFullName;
+	}
+	public Date getSignHeadOfficerDate() {
+		return signHeadOfficerDate;
+	}
+	public void setSignHeadOfficerDate(Date signHeadOfficerDate) {
+		this.signHeadOfficerDate = signHeadOfficerDate;
+	}
+	public String getApproverComment() {
+		return approverComment;
+	}
+	public void setApproverComment(String approverComment) {
+		this.approverComment = approverComment;
+	}
+	public String getApproveFlag() {
+		return approveFlag;
+	}
+	public void setApproveFlag(String approveFlag) {
+		this.approveFlag = approveFlag;
+	}
+	public String getSignApproverFullName() {
+		return signApproverFullName;
+	}
+	public void setSignApproverFullName(String signApproverFullName) {
+		this.signApproverFullName = signApproverFullName;
+	}
+	public Date getSignApproverDate() {
+		return signApproverDate;
+	}
+	public void setSignApproverDate(Date signApproverDate) {
+		this.signApproverDate = signApproverDate;
 	}
 
 }
