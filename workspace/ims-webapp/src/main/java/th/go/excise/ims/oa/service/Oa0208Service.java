@@ -95,14 +95,17 @@ public class Oa0208Service {
 			oaPlanRep.save(plan.get());
 			List<OaLicensePlan> datas = oaLicensePlanRep.findByoaPlanIdAndIsDeleted(plan.get().getOaPlanId(), FLAG.N_FLAG);
 			for (OaLicensePlan data : datas) {
-				OaLubricants lubri = new OaLubricants();
+				if ("3".equalsIgnoreCase(status.trim())) { // IF STATUS == '3'
+					// TODO
+					OaLubricants lubri = new OaLubricants();
+					lubri.setOaPlanId(data.getOaPlanId());
+					lubri.setLicenseId(data.getLicenseId());
+					lubri = oaLubricantsRep.save(lubri);
+					OaLubricantsDtl lubriDtl = new OaLubricantsDtl();
+					lubriDtl.setOaLubricantsId(lubri.getOaLubricantsId());
+					lubriDtl = oaLubricantsDtlRep.save(lubriDtl);
+				}
 				data.setStatus(status);
-				lubri.setOaPlanId(data.getOaPlanId());
-				lubri.setLicenseId(data.getLicenseId());
-				lubri = oaLubricantsRep.save(lubri);
-				OaLubricantsDtl lubriDtl = new OaLubricantsDtl();
-				lubriDtl.setOaLubricantsId(lubri.getOaLubricantsId());
-				lubriDtl = oaLubricantsDtlRep.save(lubriDtl);
 			}
 			oaLicensePlanRep.saveAll(datas);
 		}
