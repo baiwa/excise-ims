@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster2;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsMaster2Repository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaRiskFactorsMaster2JdbcRepository;
@@ -37,6 +38,20 @@ public class Int0305Service {
 		 IaRiskFactorsMaster2 entity = iaRiskFactorsMaster2Repository.findById(form.getId()).get();
 		 entity.setRiskFactorsMaster(form.getRiskFactorsMaster());
 		 entity.setSide(form.getSide());
+		 iaRiskFactorsMaster2Repository.save(entity);
+	}
+	
+	
+	public void add(Int0305FormVo form) {
+//		iaRiskFactorsMasterRepository.deleteById(form.getId());
+		 IaRiskFactorsMaster2 entity = new IaRiskFactorsMaster2();
+		 
+		 entity.setRiskFactorsMaster(form.getRiskFactorsMaster());
+		 entity.setSide(form.getSide());
+		 entity.setInspectionWork(form.getInspectionWork());
+		 entity.setNotDelete("N");
+		 entity.setDataEvaluate(IaConstants.IA_DATA_EVALUATE.NEW);
+		 
 		 iaRiskFactorsMaster2Repository.save(entity);
 	}
 }

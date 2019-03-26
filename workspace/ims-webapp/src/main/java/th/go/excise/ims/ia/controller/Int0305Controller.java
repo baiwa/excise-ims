@@ -76,12 +76,32 @@ public class Int0305Controller {
 		try {
 			int0305Service.edit(form);
 			response.setData(id);
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.SUCCESS);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 
 		} catch (Exception e) {
 			logger.error("Int0305Controller Edit : ", e);
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.FAILED);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	@PostMapping("/add")
+	@ResponseBody
+	public ResponseData<BigDecimal> add(@RequestBody Int0305FormVo form) {
+		ResponseData<BigDecimal> response = new ResponseData<BigDecimal>();
+		BigDecimal id = form.getId();
+
+		try {
+			int0305Service.add(form);
+			response.setData(id);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+
+		} catch (Exception e) {
+			logger.error("Int0305Controller Edit : ", e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
