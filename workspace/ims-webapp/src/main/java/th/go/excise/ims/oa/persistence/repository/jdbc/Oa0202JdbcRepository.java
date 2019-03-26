@@ -31,6 +31,7 @@ public class Oa0202JdbcRepository {
 		sql.append(" WHERE LP.IS_DELETED     = 'N' ");
 		sql.append(" AND (TRUNC(SYSDATE + ?)) <= LP.AUDIT_START ");
 		sql.append(" AND (TRUNC(SYSDATE + 1 + ?)- 1/(24*60*60)) >= LP.AUDIT_START ");
+		sql.append(" AND LP.STATUS = '5' ");
 		params.add(addDate);
 		params.add(addDate);
 		if (StringUtils.isNotBlank(offCode)) {

@@ -13,8 +13,12 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.oa.persistence.entity.OaLicensePlan;
+import th.go.excise.ims.oa.persistence.entity.OaLubricants;
+import th.go.excise.ims.oa.persistence.entity.OaLubricantsDtl;
 import th.go.excise.ims.oa.persistence.entity.OaPlan;
 import th.go.excise.ims.oa.persistence.repository.OaLicensePlanRepository;
+import th.go.excise.ims.oa.persistence.repository.OaLubricantsDtlRepository;
+import th.go.excise.ims.oa.persistence.repository.OaLubricantsRepository;
 import th.go.excise.ims.oa.persistence.repository.OaPlanRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0208JdbcRepository;
 import th.go.excise.ims.oa.vo.Oa020801ApproveVo;
@@ -35,6 +39,12 @@ public class Oa0208Service {
 	
 	@Autowired
 	private OaLicensePlanRepository oaLicensePlanRep;
+	
+	@Autowired
+	private OaLubricantsRepository oaLubricantsRep;
+	
+	@Autowired
+	private OaLubricantsDtlRepository oaLubricantsDtlRep;
 	
 	public List<Oa0208Vo> findByBudgetYear(String budgetYear, String offCode) {
 		List<Oa0208Vo> datas = oa0208JdbcRep.findByBudgetYear(budgetYear, offCode);
@@ -85,7 +95,14 @@ public class Oa0208Service {
 			oaPlanRep.save(plan.get());
 			List<OaLicensePlan> datas = oaLicensePlanRep.findByoaPlanIdAndIsDeleted(plan.get().getOaPlanId(), FLAG.N_FLAG);
 			for (OaLicensePlan data : datas) {
+				OaLubricants lubri = new OaLubricants();
 				data.setStatus(status);
+				lubri.setOaPlanId(data.getOaPlanId());
+				lubri.setLicenseId(data.getLicenseId());
+				lubri = oaLubricantsRep.save(lubri);
+				OaLubricantsDtl lubriDtl = new OaLubricantsDtl();
+				lubriDtl.setOaLubricantsId(lubri.getOaLubricantsId());
+				lubriDtl = oaLubricantsDtlRep.save(lubriDtl);
 			}
 			oaLicensePlanRep.saveAll(datas);
 		}

@@ -26,8 +26,18 @@ public class OaLubricants
     private BigDecimal oaPlanId;
     @Column(name = "LICENSE_NO")
     private String licenseNo;
+    @Column(name = "LICENSE_ID")
+    private BigDecimal licenseId;
 
-    public BigDecimal getOaLubricantsId() {
+    public BigDecimal getLicenseId() {
+		return licenseId;
+	}
+
+	public void setLicenseId(BigDecimal licenseId) {
+		this.licenseId = licenseId;
+	}
+
+	public BigDecimal getOaLubricantsId() {
         return oaLubricantsId;
     }
 
