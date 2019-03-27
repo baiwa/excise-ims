@@ -1,8 +1,7 @@
 package th.go.excise.ims.ia.vo;
 
 import java.math.BigDecimal;
-
-import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfigAll;
+import java.util.List;
 
 public class Int0305FormVo {
 	private BigDecimal idHead;
@@ -16,6 +15,8 @@ public class Int0305FormVo {
 	private BigDecimal id;
 	private String riskFactorsMaster;
 	private String side;
+	
+	private List<Int0305FormVo> int0305FormVoList;
 
 	public BigDecimal getIdHead() {
 		return idHead;
@@ -88,5 +89,15 @@ public class Int0305FormVo {
 	public void setSide(String side) {
 		this.side = side;
 	}
+
+	public List<Int0305FormVo> getInt0305FormVoList() {
+		return int0305FormVoList;
+	}
+
+	public void setInt0305FormVoList(List<Int0305FormVo> int0305FormVoList) {
+		this.int0305FormVoList = int0305FormVoList;
+	}
+	
+	
 
 }

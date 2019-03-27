@@ -82,7 +82,7 @@ public class Int030102Controller {
 	
 	@PostMapping("/editStatus")
 	@ResponseBody
-	public ResponseData<BigDecimal> status(@RequestBody Int030102FormVo form) {
+	public ResponseData<BigDecimal> editStatus(@RequestBody Int030102FormVo form) {
 		ResponseData<BigDecimal> response = new ResponseData<BigDecimal>();
 		BigDecimal id = form.getId();
 

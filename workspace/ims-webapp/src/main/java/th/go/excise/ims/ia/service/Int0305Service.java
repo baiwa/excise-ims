@@ -74,4 +74,22 @@ public class Int0305Service {
 		 form030101.setSide(form.getSide());
 		 int030101Service.saveFactors(form030101);
 	}
+	
+	
+	public void addRiskFactors(Int0305FormVo form) {
+		Int030102FormVo form030102 = new Int030102FormVo();
+		
+		for (Int0305FormVo element : form.getInt0305FormVoList()) {
+			
+			form030102 = new Int030102FormVo();
+			form030102.setId(element.getId());
+			form030102.setBudgetYear(element.getBudgetYear());
+			form030102.setInspectionWork(element.getInspectionWork());
+			
+			int030102Service.editStatus(form030102);
+			int030102Service.save(form030102);
+		}
+		
+	}
+	
 }

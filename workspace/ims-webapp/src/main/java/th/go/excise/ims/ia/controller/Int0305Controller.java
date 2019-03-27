@@ -108,5 +108,27 @@ public class Int0305Controller {
 		return response;
 	}
 	
+	
+	@PostMapping("/addRiskFactors")
+	@ResponseBody
+	public ResponseData<BigDecimal> addRiskFactors(@RequestBody Int0305FormVo form) {
+		ResponseData<BigDecimal> response = new ResponseData<BigDecimal>();
+		BigDecimal id = form.getId();
+
+		try {
+			int0305Service.addRiskFactors(form);
+			response.setData(id);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+
+		} catch (Exception e) {
+			logger.error("Int0305Controller add RiskFactors : ", e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	
 
 }
