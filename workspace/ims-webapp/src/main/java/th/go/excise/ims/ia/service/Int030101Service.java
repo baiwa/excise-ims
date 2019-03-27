@@ -573,6 +573,9 @@ public class Int030101Service {
 					ConvertDateUtils.LOCAL_TH));
 			configData.setEndDate(ConvertDateUtils.parseStringToDate(form.getDateTo(), ConvertDateUtils.DD_MM_YYYY,
 					ConvertDateUtils.LOCAL_TH));
+			configData.setInfoUsedRiskDesc(form.getInfoUsedRiskDesc());
+			configData.setRiskIndicators(form.getRiskIndicators());
+			configData.setRiskUnit(form.getRiskUnit());
 			iaRiskFactorsConfigRepository.save(configData);
 		}
 
@@ -596,7 +599,6 @@ public class Int030101Service {
 			dataSet.setSystemName(iaRiskFactorsData.getSystemName());
 			
 			dataSet.setRiskCost(iaRiskFactorsData.getRiskCost());
-
 			iaRiskFactorsDataRepository.save(dataSet);
 		}
 	}
