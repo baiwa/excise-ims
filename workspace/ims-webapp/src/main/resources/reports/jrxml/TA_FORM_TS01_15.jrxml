@@ -449,7 +449,7 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="44">
+		<band height="44" splitType="Stretch">
 			<textField>
 				<reportElement style="TextDetail" positionType="FixRelativeToBottom" x="0" y="22" width="65" height="22" uuid="c6e64c0c-f40a-4932-99f9-a3d809a811ab"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
@@ -503,7 +503,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="22">
+		<band height="22" splitType="Stretch">
 			<textField>
 				<reportElement style="data" positionType="FixRelativeToBottom" x="0" y="0" width="67" height="22" uuid="f0fe3d7b-ce31-4612-96f1-0fcc03353f6e"/>
 				<box leftPadding="0" rightPadding="0"/>
@@ -529,7 +529,7 @@
 			</line>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" positionType="FixRelativeToBottom" x="138" y="0" width="63" height="22" uuid="1345329b-8ea3-40ad-a2ec-d89f816d6362"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{taxAmt} != null ? new DecimalFormat("#,##0.00").format($F{taxAmt}) : ""]]></textFieldExpression>
 			</textField>
 			<line>
@@ -540,12 +540,12 @@
 			</line>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" positionType="FixRelativeToBottom" x="210" y="0" width="50" height="22" uuid="2c7fb106-77bb-4ca4-a564-5585e132b91a"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{fineAmt} != null ? new DecimalFormat("#,##0.00").format($F{fineAmt}) : ""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" positionType="FixRelativeToBottom" x="269" y="0" width="52" height="22" uuid="0962c6bd-23eb-48e2-8ef4-c0322ebac7ec"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{extraAmt} != null ? new DecimalFormat("#,##0.00").format($F{extraAmt}) : ""]]></textFieldExpression>
 			</textField>
 			<line>
@@ -562,7 +562,7 @@
 			</line>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" positionType="FixRelativeToBottom" x="325" y="0" width="73" height="22" uuid="08f3b61d-6a97-49b6-8afc-edb9d7d764d5"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{moiAmt} != null ? new DecimalFormat("#,##0.00").format($F{moiAmt}) : ""]]></textFieldExpression>
 			</textField>
 			<line>
@@ -573,7 +573,7 @@
 			</line>
 			<textField isBlankWhenNull="true">
 				<reportElement style="data" positionType="FixRelativeToBottom" x="403" y="0" width="53" height="22" uuid="07fef1e6-c1a3-40e5-a685-d58736800cff"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{sumTaxAmt} != null ? new DecimalFormat("#,##0.00").format($F{sumTaxAmt}) : ""]]></textFieldExpression>
 			</textField>
 			<line>
@@ -585,7 +585,7 @@
 		</band>
 	</detail>
 	<summary>
-		<band height="291">
+		<band height="291" splitType="Stretch">
 			<textField>
 				<reportElement style="TextDetail" positionType="FixRelativeToBottom" x="251" y="115" width="29" height="22" uuid="2a8764b2-a916-4a63-b581-c05a0326f675"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
