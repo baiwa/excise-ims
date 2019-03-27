@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.transaction.Transactional;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +23,6 @@ import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0115Hdr;
-import th.go.excise.ims.ta.persistence.entity.TaFormTs0118Hdr;
-import th.go.excise.ims.ta.persistence.repository.TaFormTs0107Repository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0115DtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0115HdrRepository;
 import th.go.excise.ims.ta.vo.TaFormTS0115Vo;
@@ -47,7 +44,7 @@ public class TaFormTS0115Service extends AbstractTaFormTSService<TaFormTS0115Vo,
 	@Transactional(rollbackOn = { Exception.class })
 	public byte[] processFormTS(TaFormTS0115Vo formTS0115Vo) throws Exception {
 		logger.info("processFormTS");
-		saveFormTS(formTS0115Vo);
+		// saveFormTS(formTS0115Vo);
 		byte[] reportFile = generateReport(formTS0115Vo);
 		return reportFile;
 	}
@@ -56,17 +53,6 @@ public class TaFormTS0115Service extends AbstractTaFormTSService<TaFormTS0115Vo,
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
 		logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS0115Vo.getFormTsNumber());
-
-		TaFormTs0115Hdr formTS0115 = null;
-		/*
-		 * if (StringUtils.isNotEmpty(formTS0115Vo.getFormTsNumber())) { formTS0115 =
-		 * taFormTs0115HdrRepository.findByFormTsNumber(formTS0115Vo.getFormTsNumber());
-		 * toEntity(formTS0115, formTS0115Vo); } else { formTS0115 = new
-		 * TaFormTs0115Hdr(); toEntity(formTS0115, formTS0115Vo);
-		 * formTS0115.setOfficeCode(officeCode); formTS0115.setBudgetYear(budgetYear);
-		 * formTS0115.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(
-		 * officeCode, budgetYear)); } taFormTs0115HdrRepository.save(formTS0115);
-		 */
 	}
 
 	@Override
