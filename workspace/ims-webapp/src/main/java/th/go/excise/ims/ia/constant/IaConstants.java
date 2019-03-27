@@ -106,7 +106,7 @@ public class IaConstants {
 
 	}
 	
-//	************************* PLAN HDR *************************
+//	************************* PLAN DAY ACTIVITY *************************
 	
 	public class PLAN_DAY_WORDING {
 		public static final String ENGAGEMENT_FULL = "ENGAGEMENT";
@@ -120,8 +120,21 @@ public class IaConstants {
 		
 		public static final String MONITORING_FULL = "MONITORING";
 		public static final String MONITORING_ABBREVIATION = "MO";
-
 	}
 	
-	
+	public class PLAN_DAY_ACTIVITY_STATUS {
+		public static final String PARAM_GROUP_CODE = "IA_PLAN_DAY_ACTIVITY_STATUS";
+
+		public static final String PARAM_CODE_I = "1";
+		public static final String VALUE_1_DESC_I = "ยังไม่ได้ดำเนินการ";
+		public static final String VALUE_2_COLOR_I = "#646464";
+
+		public static final String PARAM_CODE_II = "2";
+		public static final String VALUE_1_DESC_II ="กำลังดำเนินการ";
+		public static final String VALUE_2_COLOR_II = "#3880df";
+				
+		public static final String PARAM_CODE_III = "3";
+		public static final String VALUE_1_DESC_III = "ดำเนินการเสร็จสิ้น";
+		public static final String VALUE_2_COLOR_III = "#5ef35e";
+	}
 }
