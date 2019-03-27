@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.sf.jasperreports.engine.JRException;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.oa.service.Oa0206Service;
 import th.go.excise.ims.oa.vo.Oa0206FormVo;
 import th.go.excise.ims.oa.vo.Oa0206Vo;
@@ -37,7 +38,8 @@ public class Oa0206Controller {
 	public DataTableAjax<Oa0206Vo> filterByCriteria(@RequestBody Oa0206FormVo request) {
 		DataTableAjax<Oa0206Vo> response = new DataTableAjax<>();
 		try {
-			response = oa0206Service.filterByCriteria(request);
+			String offcode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+			response = oa0206Service.filterByCriteria(request,offcode);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Oa0207Controller::filterByCriteria => ", e);

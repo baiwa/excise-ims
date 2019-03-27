@@ -72,6 +72,25 @@ public class Oa0201Controller {
 		return responseData;
 	}
 	
+	@GetMapping("/findOaPlanHyd/{planID}")
+	@ResponseBody
+	public ResponseData<Oa0201FromVo> findOaplanHyd(@PathVariable("planID") String planID) {
+		ResponseData<Oa0201FromVo> responseData = new ResponseData<Oa0201FromVo>();
+		Oa0201FromVo data = new Oa0201FromVo();
+		try {
+			String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+			data = oa0201Service.findOaplanHydro(planID, offCode);
+			responseData.setData(data);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) { 
+			logger.error("Oa02010608Controller::updateById ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
 	
 	@GetMapping("/findApprover")
 	@ResponseBody

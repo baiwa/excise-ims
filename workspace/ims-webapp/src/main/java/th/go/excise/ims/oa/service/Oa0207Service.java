@@ -58,6 +58,7 @@ public class Oa0207Service {
 			realD.setIdentifyType(real.getIdentifyType());
 			realD.setName(real.getName());
 			realD.setOffCode(real.getOffCode());
+			realD.setLicenseType(real.getLicenseType());
 			for (ExciseDept exciseDept : exciseDepts) {
 				if (exciseDept.getOfficeCode().substring(0, 2).equals(real.getOffCode().substring(0, 2))) {
 					realD.setSectorName(exciseDept.getDeptName());

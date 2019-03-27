@@ -20,29 +20,30 @@ public class Oa0206JdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
-	public List<Oa0206Vo> getData(Oa0206FormVo request) {
+	public List<Oa0206Vo> getData(Oa0206FormVo request,String officeCode) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-//		sql.append(" SELECT C.OA_CUSTOMER_ID , C.COMPANY_NAME , C.ADDRESS ,C.IDENTIFY_TYPE, CL.OA_CUSLICENSE_ID,CL.LICENSE_TYPE,CL.START_DATE,CL.END_DATE,CL.APPROVE  ");
-//		sql.append(" ,CL.LICENSE_NO,C.IDENTIFY_NO ,C.WAREHOUSE_ADDRESS FROM OA_CUSTOMER C INNER JOIN OA_CUSTOMER_LICEN CL ON C.OA_CUSTOMER_ID = CL.OA_CUSTOMER_ID  ");
-		sql.append(" SELECT * FROM OA_CUSTOMER_LICEN ");
-		sql.append(" WHERE IS_DELETED = 'N' ");
+		sql.append(" SELECT CL.* FROM OA_CUSTOMER_LICEN CL ");
+		sql.append(" INNER JOIN OA_LICENSE_PLAN LP ON LP.LICENSE_ID = CL.OA_CUSLICENSE_ID ");
+		sql.append(" WHERE LP.STATUS = '5' AND LP.OFFICE_CODE LIKE  ?  ");
 		sql.append(" ORDER BY START_DATE DESC");
-
+		params.add(officeCode+"%");
+		
 		String limit = OracleUtils.limitForDatable(sql.toString(), request.getStart(), request.getLength());
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<Oa0206Vo> datas = this.commonJdbcTemplate.query(limit, params.toArray(),dataRowmapper);
 		
 		return datas;
 	}
 	
-	public Integer countData(Oa0206FormVo request) {
+	public Integer countData(Oa0206FormVo request,String officeCode) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-//		sql.append(" SELECT C.OA_CUSTOMER_ID , C.COMPANY_NAME , C.ADDRESS ,C.IDENTIFY_TYPE, CL.OA_CUSLICENSE_ID,CL.LICENSE_TYPE,CL.START_DATE,CL.END_DATE,CL.APPROVE  ");
-//		sql.append(" ,CL.LICENSE_NO,C.IDENTIFY_NO ,C.WAREHOUSE_ADDRESS FROM OA_CUSTOMER C INNER JOIN OA_CUSTOMER_LICEN CL ON C.OA_CUSTOMER_ID = CL.OA_CUSTOMER_ID  ");
-		sql.append(" SELECT * FROM OA_CUSTOMER_LICEN ");
-		sql.append(" WHERE IS_DELETED = 'N' ");
+		sql.append(" SELECT CL.* FROM OA_CUSTOMER_LICEN CL ");
+		sql.append(" INNER JOIN OA_LICENSE_PLAN LP ON LP.LICENSE_ID = CL.OA_CUSLICENSE_ID ");
+		sql.append(" WHERE LP.STATUS = '5' AND LP.OFFICE_CODE LIKE  ?  ");
 		sql.append(" ORDER BY START_DATE DESC");
+		params.add(officeCode);
 		String sqlCount = OracleUtils.countForDataTable(sql.toString());
 		Integer count = this.commonJdbcTemplate.queryForObject(sqlCount, params.toArray(), Integer.class);
 

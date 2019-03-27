@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0201JdbcRepository;
+import th.go.excise.ims.oa.utils.OaOfficeCode;
 import th.go.excise.ims.oa.vo.Oa020103Vo;
 import th.go.excise.ims.oa.vo.Oa0206FormVo;
 
@@ -20,22 +21,7 @@ public class Oa020103Service {
 	
 	public DataTableAjax<Oa020103Vo> getUserAuditer(String officeCode , Oa0206FormVo request) {
 
-		String strSeg = officeCode.substring(0, 2);
-		String strAra = officeCode.substring(2,4);
-		String officeCon = "";
-		
-		if ("00".equals(strAra)&& "00".equals(strSeg)) {
-			officeCon = "";
-		}else {
-			if ("00".equals(strAra) && !"00".equals(strSeg)) {
-				officeCon = strSeg;
-				
-			}else if (!"00".equals(strAra) && "00".equals(strSeg)){
-				officeCon = strAra;
-			}else {
-				officeCon = strSeg;
-			}
-		}
+		String officeCon = OaOfficeCode.officeCodeLike(officeCode);
 		
 		List<Oa020103Vo> data = oa0201jdbc.findUserAuditer(officeCon ,request);
 		int count = oa0201jdbc.countUserAuditer(officeCon, request);

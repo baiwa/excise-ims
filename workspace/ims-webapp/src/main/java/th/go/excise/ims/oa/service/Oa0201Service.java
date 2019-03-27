@@ -12,6 +12,7 @@ import th.go.excise.ims.oa.persistence.entity.OaLicensePlan;
 import th.go.excise.ims.oa.persistence.entity.OaPersonApprovePlan;
 import th.go.excise.ims.oa.persistence.entity.OaPersonAuditPlan;
 import th.go.excise.ims.oa.persistence.entity.OaPlan;
+import th.go.excise.ims.oa.persistence.repository.OaHydCustomerLicenRepository;
 import th.go.excise.ims.oa.persistence.repository.OaLicensePlanRepository;
 import th.go.excise.ims.oa.persistence.repository.OaPersonApprovePlanRepository;
 import th.go.excise.ims.oa.persistence.repository.OaPersonAuditPlanRepository;
@@ -39,6 +40,9 @@ public class Oa0201Service {
 	
 	@Autowired
 	private Oa0201JdbcRepository oa0201jdbcRepo;
+	
+	@Autowired
+	private OaHydCustomerLicenRepository oaHydCustomerLicenRepo;
 	
 	public Oa0201FromVo saveOAPlan(Oa0201FromVo request,String officeCode) {
 //		BigDecimal id = new BigDecimal();
@@ -111,6 +115,32 @@ public class Oa0201Service {
 			List<OaPersonAuditPlan> listAudit = oaPersonAuditPlanRepo.findByoaPlanIdAndIsDeleted(id, "N");
 			
 			List<Oa0201001Vo> listLicense = oa0201jdbcRepo.findLicenseByPlanId(id);
+			List<Oa020103Vo> userAuditer=  oa0201jdbcRepo.findUserAuditerByPlanId(plan.getOfficeCode(),id);
+		
+			resp.setListAuditer(userAuditer);
+			resp.setListCompany(listLicense);
+//			String officeCodeStr = OaOfficeCode.officeCodeLike(plan.getOfficeCode());
+		}
+		return resp;
+	}
+	
+	public Oa0201FromVo findOaplanHydro(String  planId,String officeCode) {
+		BigDecimal id = new BigDecimal(planId);
+		Oa0201FromVo resp = new Oa0201FromVo();
+		OaPlan plan = new OaPlan();
+		Optional<OaPlan> planOpt = oaplanRepo.findById(id);
+		if (planOpt.isPresent()) {
+			plan = planOpt.get();
+			
+			resp.setDateFrom(plan.getAuditStart());
+			resp.setDateTo(plan.getAuditEnd());
+			resp.setFiscolYear(plan.getFiscolYear());
+			resp.setPlanId(planId);
+			
+			List<OaPersonAuditPlan> listAudit = oaPersonAuditPlanRepo.findByoaPlanIdAndIsDeleted(id, "N");
+			
+//			List<Oa0201001Vo> listLicense = oa0201jdbcRepo.findLicenseByPlanId(id);
+			List<Oa0201001Vo> listLicense = oa0201jdbcRepo.findLicenseHydroByPlanId(id);
 			List<Oa020103Vo> userAuditer=  oa0201jdbcRepo.findUserAuditerByPlanId(plan.getOfficeCode(),id);
 		
 			resp.setListAuditer(userAuditer);

@@ -26,6 +26,7 @@ import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.go.excise.ims.oa.persistence.entity.OaHydrocarbDtl;
 import th.go.excise.ims.oa.persistence.repository.OaHydrocarbDtlRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0206JdbcRepository;
+import th.go.excise.ims.oa.utils.OaOfficeCode;
 import th.go.excise.ims.oa.vo.Oa0206FormVo;
 import th.go.excise.ims.oa.vo.Oa0206Vo;
 
@@ -38,9 +39,10 @@ public class Oa0206Service {
 	@Autowired
 	private OaHydrocarbDtlRepository oaHydrocarbDtlRepo;
 	
-	public DataTableAjax<Oa0206Vo> filterByCriteria(Oa0206FormVo request) {
-		List<Oa0206Vo> data = oa0206JdbcRepo.getData(request);
-		int count = oa0206JdbcRepo.countData(request);
+	public DataTableAjax<Oa0206Vo> filterByCriteria(Oa0206FormVo request,String officeCode) {
+		String offCode = OaOfficeCode.officeCodeLike(officeCode);
+		List<Oa0206Vo> data = oa0206JdbcRepo.getData(request,offCode);
+		int count = oa0206JdbcRepo.countData(request,offCode);
 		DataTableAjax<Oa0206Vo> dataTableAjax = new DataTableAjax<Oa0206Vo>();
 		dataTableAjax.setDraw(request.getDraw() + 1);
 		dataTableAjax.setData(data);

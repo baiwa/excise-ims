@@ -191,6 +191,21 @@ public class Oa0201JdbcRepository {
 
 		return datas;
 	}
+	
+	public List<Oa0201001Vo> findLicenseHydroByPlanId(BigDecimal planId) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT ED_SECTOR.OFF_NAME OFFICE_NAME_MIAN ,ED_AREA.OFF_NAME OFFICE_NAME_SUB , LIC.* FROM OA_HYD_CUSTOMER_LICEN LIC ");
+		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_SECTOR ON ED_SECTOR.OFF_CODE = CONCAT(SUBSTR(LIC.OFF_CODE, 0, 2),'0000')");
+		sql.append("  INNER JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE = CONCAT(SUBSTR(LIC.OFF_CODE, 0, 4),'00')   ");
+		sql.append("  INNER JOIN OA_LICENSE_PLAN LP ON LP.LICENSE_ID = LIC.OA_CUSLICENSE_ID ");
+		sql.append("   WHERE LP.OA_PLAN_ID = ? ");
+		params.add(planId);
+		List<Oa0201001Vo> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(),dataRowmapper);
+
+		return datas;
+	}
+	
 	public List<Oa020103Vo> findUserApprover(String officeCode){
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();

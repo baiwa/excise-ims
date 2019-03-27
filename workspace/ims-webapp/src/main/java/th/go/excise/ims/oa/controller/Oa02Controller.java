@@ -28,12 +28,31 @@ public class Oa02Controller {
 	
 	@GetMapping("/findPlan/{year}")
 	@ResponseBody
-	public ResponseData<Oa02Vo> updateById(@PathVariable("year") String year) {
+	public ResponseData<Oa02Vo> findOaplanLubbyYear(@PathVariable("year") String year) {
 		ResponseData<Oa02Vo> responseData = new ResponseData<Oa02Vo>();
 		Oa02Vo data = new Oa02Vo();
 		try {
 //			String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 			data = oa02Service.findOaPlanByYear(year);
+			responseData.setData(data);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) { 
+//			logger.error("Oa02010608Controller::updateById ", e)
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
+	@GetMapping("/findPlanHydro/{year}")
+	@ResponseBody
+	public ResponseData<Oa02Vo> findOaplanHydrobyYear(@PathVariable("year") String year) {
+		ResponseData<Oa02Vo> responseData = new ResponseData<Oa02Vo>();
+		Oa02Vo data = new Oa02Vo();
+		try {
+//			String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+			data = oa02Service.findOaPlanHydroByYear(year);
 			responseData.setData(data);
 			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
