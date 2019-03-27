@@ -3,9 +3,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_20" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="55" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="Angsana New" fontSize="18" isBold="true"/>
-	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="Angsana New" fontSize="16"/>
-	<style name="data" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="Angsana New" fontSize="16">
+	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
+	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="16"/>
+	<style name="data" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="16">
 		<box>
 			<pen lineWidth="0.0" lineStyle="Dotted"/>
 			<bottomPen lineWidth="3.0" lineStyle="Dotted"/>
@@ -55,283 +55,199 @@
 			</image>
 			<textField>
 				<reportElement style="Topic" x="384" y="35" width="76" height="25" uuid="6d1514d6-b255-44a7-b908-8165137638d3"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตส. ๐๑-๒๐"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Topic" x="0" y="60" width="460" height="25" uuid="861f16b3-f966-4bff-b95f-486a25fe61c6"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA["ขอขยายเวลาการตรวจสอบภาษีสรรพสามิต"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="85" width="30" height="22" uuid="9e272ac3-3690-449f-8d4c-e1cdab5941fa"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["เรื่อง"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="30" y="85" width="210" height="22" uuid="5664cdfd-bf92-46b3-bdfd-b569a8e34b9a"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ขอขยายเวลาการตรวจสอบภาษีสรรพสามิต ราย"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="240" y="85" width="220" height="22" uuid="8184e054-a66f-4fe0-875c-443d80a33e81"/>
-				<textElement>
-					<font fontName="TH Sarabun New"/>
-				</textElement>
 				<textFieldExpression><![CDATA[$P{factoryName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="107" width="30" height="22" uuid="c714eb8e-af21-458e-804d-3fdd46896d15"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["เรียน"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="30" y="107" width="190" height="22" uuid="30e58abc-1016-4116-b528-3c86180b5c81"/>
-				<textElement>
-					<font fontName="TH Sarabun New"/>
-				</textElement>
 				<textFieldExpression><![CDATA[$P{docDear}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="40" y="129" width="125" height="22" uuid="98676932-cdf4-4a24-8bc8-e9085ba236c9"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตามที่ได้ออกหนังสือเรียก ที่"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="165" y="129" width="75" height="22" uuid="db496488-63ca-4cca-abf4-de6c1a2a24c0"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{bookNumber1}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="240" y="129" width="35" height="22" uuid="6243755b-a27f-4410-a712-62a64897d5f2"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ลงวันที่"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="275" y="129" width="20" height="22" uuid="85c83397-a815-4746-8c00-66f29481f935"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("d",new Locale("th", "TH")).format($P{bookDate})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="295" y="129" width="30" height="22" uuid="a6ceee5e-7cb7-4851-9324-8918eabc1071"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["เดือน"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="325" y="129" width="60" height="22" uuid="71d40b96-ffe1-4c32-b5fb-5a3d6725e366"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("MMMM",new Locale("th", "TH")).format($P{bookDate})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="385" y="129" width="30" height="22" uuid="52a66146-028d-4220-9e6c-565b02829f2f"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["พ.ศ."]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="415" y="129" width="45" height="22" uuid="b05e8522-1317-460e-b706-ccdfd63d528f"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy",new Locale("th", "TH")).format($P{bookDate})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="151" width="135" height="22" uuid="5319aaf0-1d81-462f-98f7-af070e0574c4"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["เพื่อตรวจสอบภาษีสรรพสามิต ราย"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="135" y="151" width="325" height="22" uuid="db8fb26e-5fb2-49ca-966c-e5f7b051a9cc"/>
-				<textElement>
-					<font fontName="TH Sarabun New"/>
-				</textElement>
 				<textFieldExpression><![CDATA[$P{factoryName2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="173" width="115" height="22" uuid="a0f68f79-c717-4cf8-a4a0-38fb9f2bd550"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ทะเบียนสรรพสามิตเลขที่"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="115" y="173" width="345" height="22" uuid="c848cbfe-b867-4744-a266-dde13fe993fe"/>
-				<textElement>
-					<font fontName="TH Sarabun New"/>
-				</textElement>
 				<textFieldExpression><![CDATA[$P{newRegId}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="195" width="160" height="22" uuid="7a6afc59-ddb5-48ac-910c-13032c95b291"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["สำหรับรอบระยะเวลาการตรวจสอบ"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="160" y="195" width="300" height="22" uuid="6485c566-3b00-46fc-9baf-ef5024bf4099"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateStart}) + " - " + 
 new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="217" width="50" height="22" uuid="09fd06dd-c953-4167-8ebb-1a0fd6143a27"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ที่อยู่เลขที่"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="50" y="217" width="40" height="22" uuid="2b902cf8-5944-4f23-8605-f6d0331c4e33"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{facAddrNo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="90" y="217" width="25" height="22" uuid="b55f957d-745b-4f10-96a8-34e415d774ca"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["หมู่ที่"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="115" y="217" width="30" height="22" uuid="dd1060e1-732c-4098-bd5e-aa8d3f9ba17d"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{facMooNo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="145" y="217" width="55" height="22" uuid="c079d048-0411-4cab-89a3-fa1651dd43b1"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตรอก/ซอย"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="200" y="217" width="95" height="22" uuid="f47a8e50-ff52-4b73-a67f-5d85bfc0a109"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{facSoiName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="295" y="217" width="25" height="22" uuid="6d311736-963a-4bde-b183-98a2b19c4037"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ถนน "]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="320" y="217" width="140" height="22" uuid="c8c80170-d10c-4e1e-a67b-e262a911a870"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{facThnName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="239" width="60" height="22" uuid="cabaa2bb-1869-487e-bdb2-164965656c4c"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตำบล/แขวง"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="60" y="239" width="170" height="22" uuid="5b4f5427-4c8c-4b70-a91f-dd1a588c8af2"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{facTambolName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="230" y="239" width="60" height="22" uuid="835554be-4564-4144-986a-15c5869ca2fc"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["อำเภอ/เขต"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="290" y="239" width="170" height="22" uuid="c0fb1925-138e-4363-a22a-ffb3f4bb6eea"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{facAmphurName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="261" width="40" height="22" uuid="09703819-dd39-4ff6-8533-31260c17947c"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["จังหวัด"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="40" y="261" width="150" height="22" uuid="fd33162c-110c-42c1-a91a-f6bbe2ac7bc6"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{facProvinceName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="190" y="261" width="60" height="22" uuid="401fae87-be02-4fce-9fab-5a6cdeb4e1c4"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["รหัสไปรษณีย์"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="250" y="261" width="70" height="22" uuid="5c1596c1-4e87-4f19-8fc1-edfb6b6d06cb"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{facZipCode}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="40" y="283" width="420" height="22" uuid="176eee6b-72f3-4770-b226-09e7458c2e46"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ขณะนี้การตรวจสอบภาษีสรรพสามิตรายดังกล่าว ยังไม่อาจดำเนินการให้แล้วเสร็จภายใน"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="305" width="460" height="22" uuid="d4a83142-74d7-4de6-810e-552929c0e951"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["หนึ่งปี นับแต่วันที่ออกหนังสือเรียกได้เนื่องจาก"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="327" width="460" height="44" uuid="91a2f3ea-a8a0-43b9-a9bb-c7dbd77e7690"/>
-				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA["            "+$P{expandReason}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -343,9 +259,7 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="25" y="371" width="290" height="22" uuid="275cb904-078e-4640-bcc2-80919887c228"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["การตรวจสอบภาษีรายนี้ยังไม่เคยขออนุมัติขยายเวลาการตรวจสอบ"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -357,163 +271,117 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="25" y="393" width="290" height="22" uuid="b72bf21f-0367-43d8-8c54-a0bc507b3c03"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["การตรวจสอบภาษีรายนี้เคยขออนุมัติขยายเวลาการตรวจสอบ ครั้งที่"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="315" y="393" width="40" height="22" uuid="c459ca50-b7c6-47ff-abc6-4016a02576bc"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{expandNo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="355" y="393" width="36" height="22" uuid="4768c671-fcae-4e77-a95f-9972efe61ec5"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ถึงวันที่"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="391" y="393" width="20" height="22" uuid="ed19506a-55da-46ed-ab51-9534b6ea0174"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("d",new Locale("th", "TH")).format($P{expandDateOld})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="25" y="415" width="30" height="22" uuid="95c99729-f90d-426f-9619-342855666f38"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["เดือน"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="55" y="415" width="60" height="22" uuid="283fa5b9-bcee-4d85-a344-0d469ea021ea"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("MMMM",new Locale("th", "TH")).format($P{expandDateOld})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="115" y="415" width="30" height="22" uuid="e0e4f6bf-e83e-4edb-bb01-45afb1c251d8"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["พ.ศ."]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="145" y="415" width="52" height="22" uuid="e0c5af80-ec7b-44bf-bbea-cac735f939ee"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy",new Locale("th", "TH")).format($P{expandDateOld})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="25" y="437" width="255" height="22" uuid="af441182-fcb5-430b-a40e-1bb59e896c19"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["จึงขอขยายเวลาการตรวจสอบภาษีรายนี้ออกไปอีกจนถึงวันที่"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="280" y="437" width="20" height="22" uuid="61569390-0298-455b-a449-eceb4252400a"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("d",new Locale("th", "TH")).format($P{expandDateNew})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="300" y="437" width="30" height="22" uuid="5dcf1d80-247c-4be5-b949-aa42d5111083"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["เดือน"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="330" y="437" width="60" height="22" uuid="40f2c599-2343-4f37-b919-1127227cc107"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("MMMM",new Locale("th", "TH")).format($P{expandDateNew})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="390" y="437" width="27" height="22" uuid="9fb5ca07-bd32-4fa7-98bf-c4550048914f"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["พ.ศ."]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="417" y="437" width="43" height="22" uuid="62608ba1-7721-4b1f-912f-ea28c10d23ac"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy",new Locale("th", "TH")).format($P{expandDateNew})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="25" y="459" width="130" height="22" uuid="68b75f82-4ead-442d-affa-8ca40c0d56b5"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["จึงเรียนมาเพื่อโปรดพิจารณา"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="190" y="480" width="30" height="22" uuid="7161eda2-f441-4dfa-8f7a-f8a3d3bde91d"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ลงชื่อ"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="340" y="480" width="60" height="22" uuid="22b822e7-92c2-4893-a289-b04b1f090f64"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ผู้ตรวจสอบ"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="213" y="502" width="7" height="22" uuid="5da68c86-3dbf-4e61-b527-a8c0ca23d711"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="220" y="502" width="120" height="22" uuid="4aa42d98-2b98-4ae4-897d-d07d7b4a0bc1"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{signOfficerFullName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="340" y="502" width="7" height="22" uuid="d35bcc7c-c045-445b-994f-3b0334fb024e"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[")"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="220" y="524" width="120" height="22" uuid="6208b9ca-5707-448d-9a83-259f2782e35e"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("d / MMM / yyyy",new Locale("th", "TH")).format($P{signOfficerDate})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="550" width="170" height="22" uuid="0d94c7e8-cb4b-4651-b87a-48e38a0c3196"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New" isBold="true"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ความเห็นผู้บังคับบัญชาตามลำดับขั้น"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="290" y="550" width="170" height="22" uuid="ab3bd9bc-3873-46c2-b19d-5fd5b4f7aaff"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New" isBold="true"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["คำสั่งผู้บังคับบัญชาผู้มีอำนาจอนุมัติ"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -525,9 +393,7 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="332" y="577" width="35" height="22" uuid="bb6aa445-7496-40ac-a529-e03cb582773e"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["อนุมัติ"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -539,51 +405,37 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="402" y="577" width="45" height="22" uuid="0ffcbd39-8ae7-4e39-8302-6395170fc5de"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ไม่อนุมัติ"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="600" width="170" height="44" uuid="de028fab-4582-4322-b18a-151b8057963a"/>
-				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="TH Sarabun New" size="16"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$P{headOfficerComment}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="290" y="600" width="170" height="44" uuid="de58253d-8389-4ff0-86a3-4912e7b38d83"/>
-				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="TH Sarabun New" size="16"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$P{approverComment}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="50" y="660" width="120" height="22" uuid="790a46dc-b21a-4ff0-936e-215498bbfde4"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{signHeadOfficerFullName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="50" y="682" width="120" height="22" uuid="87ddee66-c5d7-40a0-afcd-00e9a19b8dfa"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("d / MMM / yyyy",new Locale("th", "TH")).format($P{signHeadOfficerDate})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="340" y="660" width="120" height="22" uuid="a142787a-c4a1-4d48-83f6-d6dc880770c9"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{signApproverFullName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="340" y="682" width="120" height="22" uuid="56c1a805-3a45-4c67-8c67-77b00e246f36"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("d / MMM / yyyy",new Locale("th", "TH")).format($P{signApproverDate})]]></textFieldExpression>
 			</textField>
 			<line>
