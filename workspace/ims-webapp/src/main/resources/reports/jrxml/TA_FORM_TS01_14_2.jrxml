@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="N_mis01-14-2_test" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="800" leftMargin="22" rightMargin="20" topMargin="40" bottomMargin="40" uuid="5e1b95b0-8d12-422e-9432-dad4f5809b33">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="N_mis01-14-2_test" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="800" leftMargin="22" rightMargin="20" topMargin="40" bottomMargin="40" uuid="5e1b95b0-8d12-422e-9432-dad4f5809b33">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
@@ -19,24 +19,24 @@
 	<parameter name="auditDateEnd" class="java.util.Date"/>
 	<parameter name="dutyTypeText" class="java.lang.String"/>
 	<parameter name="newRegId" class="java.lang.String"/>
-	<parameter name="extraAmtDate" class="java.lang.String"/>
+	<parameter name="extraAmtDate" class="java.util.Date"/>
 	<parameter name="signOwnerFullName" class="java.lang.String"/>
 	<parameter name="signOfficerFullName" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="recDate" class="java.lang.String"/>
+	<field name="recDate" class="java.util.Date"/>
 	<field name="dutyTypeText" class="java.lang.String"/>
-	<field name="valueFromAudit" class="java.lang.String"/>
-	<field name="taxRate" class="java.lang.String"/>
-	<field name="auditTaxAmt" class="java.lang.String"/>
-	<field name="paidTaxAmt" class="java.lang.String"/>
-	<field name="addTaxAmt" class="java.lang.String"/>
-	<field name="addFineAmt" class="java.lang.String"/>
-	<field name="addExtraAmt" class="java.lang.String"/>
-	<field name="addSumTaxAmt" class="java.lang.String"/>
-	<field name="addMoiAmt" class="java.lang.String"/>
-	<field name="addSumAllTaxAmt" class="java.lang.String"/>
+	<field name="valueFromAudit" class="java.math.BigDecimal"/>
+	<field name="taxRate" class="java.math.BigDecimal"/>
+	<field name="auditTaxAmt" class="java.math.BigDecimal"/>
+	<field name="paidTaxAmt" class="java.math.BigDecimal"/>
+	<field name="addTaxAmt" class="java.math.BigDecimal"/>
+	<field name="addFineAmt" class="java.math.BigDecimal"/>
+	<field name="addExtraAmt" class="java.math.BigDecimal"/>
+	<field name="addSumTaxAmt" class="java.math.BigDecimal"/>
+	<field name="addMoiAmt" class="java.math.BigDecimal"/>
+	<field name="addSumAllTaxAmt" class="java.math.BigDecimal"/>
 	<field name="addMonthNum" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -478,9 +478,9 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="19" splitType="Stretch">
+		<band height="18" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="0" y="0" width="50" height="19" uuid="462418cc-2cd8-4a32-80f1-5a0367c2b61c"/>
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="0" y="0" width="50" height="18" uuid="462418cc-2cd8-4a32-80f1-5a0367c2b61c"/>
 				<box leftPadding="3" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -490,7 +490,7 @@
 				<textFieldExpression><![CDATA[$F{recDate}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="740" y="0" width="54" height="19" uuid="695fbe97-b755-47db-9de4-bcb1a8af657a"/>
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="740" y="0" width="54" height="18" uuid="695fbe97-b755-47db-9de4-bcb1a8af657a"/>
 				<box leftPadding="3" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -499,108 +499,98 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{addMonthNum}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="680" y="0" width="60" height="19" uuid="a4758853-64d8-4bb5-a614-36235c40cb31"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="680" y="0" width="60" height="18" uuid="a4758853-64d8-4bb5-a614-36235c40cb31"/>
 				<box leftPadding="3" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="13"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{addSumAllTaxAmt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{addSumAllTaxAmt} != null ? new DecimalFormat("#,##0.00").format($F{addSumAllTaxAmt}) : ""]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerBottom" x="600" y="0" width="80" height="19" uuid="c360a90a-eace-449f-9ed0-8a50db0fd584"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="TextDetail" stretchType="ContainerBottom" x="600" y="0" width="80" height="18" uuid="c360a90a-eace-449f-9ed0-8a50db0fd584"/>
 				<box leftPadding="3" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="13"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{addMoiAmt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{addMoiAmt} != null ? new DecimalFormat("#,##0.00").format($F{addMoiAmt}) : ""]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="550" y="0" width="50" height="19" uuid="7831ac3b-14f2-4a74-8c3e-b3a8b5290699"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="550" y="0" width="50" height="18" uuid="7831ac3b-14f2-4a74-8c3e-b3a8b5290699"/>
 				<box leftPadding="3" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="13"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{addSumTaxAmt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{addSumTaxAmt} != null ? new DecimalFormat("#,##0.00").format($F{addSumTaxAmt}) : ""]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="500" y="0" width="50" height="19" uuid="20b32900-63c8-4e56-bf8f-c7d6d2775fd3"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="500" y="0" width="50" height="18" uuid="20b32900-63c8-4e56-bf8f-c7d6d2775fd3"/>
 				<box leftPadding="3" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="13"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{addExtraAmt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{addExtraAmt} != null ? new DecimalFormat("#,##0.00").format($F{addExtraAmt}) : ""]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="440" y="0" width="60" height="19" uuid="706fc530-bb18-4726-b3b6-60ba9f5cc680"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="440" y="0" width="60" height="18" uuid="706fc530-bb18-4726-b3b6-60ba9f5cc680"/>
 				<box leftPadding="3" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="13"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{addFineAmt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{addFineAmt} != null ? new DecimalFormat("#,##0.00").format($F{addFineAmt}) : ""]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="380" y="0" width="60" height="19" uuid="f7987b9a-2df9-414b-9772-de2c70b0a1d5"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="300" y="0" width="80" height="18" uuid="7be6a443-60b1-4d29-9615-411717fafce9"/>
 				<box leftPadding="3" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="13"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{addTaxAmt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{paidTaxAmt} != null ? new DecimalFormat("#,##0.00").format($F{paidTaxAmt}) : ""]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="300" y="0" width="80" height="19" uuid="7be6a443-60b1-4d29-9615-411717fafce9"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="200" y="0" width="100" height="18" uuid="08500f51-a8ab-477e-9a79-77fa1cdf073b"/>
 				<box leftPadding="3" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="13"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{paidTaxAmt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{auditTaxAmt} != null ? new DecimalFormat("#,##0.00").format($F{auditTaxAmt}) : ""]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="200" y="0" width="100" height="19" uuid="08500f51-a8ab-477e-9a79-77fa1cdf073b"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="150" y="0" width="50" height="18" uuid="38fbcd9d-2574-4b9f-a503-190a38e0f94b"/>
 				<box leftPadding="3" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="13"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{auditTaxAmt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{taxRate} != null ? new DecimalFormat("#,##0.00").format($F{taxRate}) : ""]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="150" y="0" width="50" height="19" uuid="38fbcd9d-2574-4b9f-a503-190a38e0f94b"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="90" y="0" width="60" height="18" uuid="032ffd3d-c775-4e8e-9f1e-f8974b21cf22"/>
 				<box leftPadding="3" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="13"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{taxRate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{valueFromAudit} != null ? new DecimalFormat("#,##0.00").format($F{valueFromAudit}) : ""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="90" y="0" width="60" height="19" uuid="032ffd3d-c775-4e8e-9f1e-f8974b21cf22"/>
-				<box leftPadding="3" rightPadding="3">
-					<pen lineWidth="0.25"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font size="13"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{valueFromAudit}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" stretchType="ContainerHeight" x="50" y="0" width="40" height="19" uuid="814789b8-dba7-4972-a330-682f9c78b906"/>
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="50" y="0" width="40" height="18" uuid="814789b8-dba7-4972-a330-682f9c78b906"/>
 				<box leftPadding="3" rightPadding="3">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -609,11 +599,18 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dutyTypeText}]]></textFieldExpression>
 			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="TextDetail" stretchType="ContainerHeight" x="380" y="0" width="60" height="18" uuid="26091c4d-6302-4566-ac10-d57314864a69"/>
+				<box leftPadding="3" rightPadding="3">
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{addTaxAmt} != null ? new DecimalFormat("#,##0.00").format($F{addTaxAmt}) : ""]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
-	<lastPageFooter>
-		<band height="50"/>
-	</lastPageFooter>
 	<summary>
 		<band height="143">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">

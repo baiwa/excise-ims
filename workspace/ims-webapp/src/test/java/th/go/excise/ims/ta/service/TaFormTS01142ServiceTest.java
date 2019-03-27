@@ -1,9 +1,12 @@
 package th.go.excise.ims.ta.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
@@ -18,7 +21,7 @@ public class TaFormTS01142ServiceTest {
 
 	@Test
 	public void test_generateReport() throws Exception {
-		TaFormTS0114Service formTS0114Service = new TaFormTS0114Service();
+		TaFormTS01142Service formTS01142Service = new TaFormTS01142Service();
 
 		TaFormTS01142Vo vo = new TaFormTS01142Vo();
 		vo.setOwnerFullName("ธนพล ชัยภูมิ");
@@ -49,5 +52,11 @@ public class TaFormTS01142ServiceTest {
 		itemVo.setAddSumAllTaxAmt(new BigDecimal(253));
 		itemVo.setAddMonthNum("");
 		listItem.add(itemVo);
+		
+		
+		vo.setTaFormTS01142DtlVoList(listItem);
+		
+		byte[] reportFile = formTS01142Service.generateReport(vo);
+		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
 	}
 }
