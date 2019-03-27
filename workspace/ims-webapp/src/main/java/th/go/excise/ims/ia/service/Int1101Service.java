@@ -9,7 +9,10 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.persistence.entity.IaConcludeFollowHdr;
 import th.go.excise.ims.ia.persistence.repository.IaConcludeFollowHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaConcludeFollowDetailJdbcRepository;
+import th.go.excise.ims.ia.persistence.repository.jdbc.IaConcludeFollowHdrJdbcRepository;
+import th.go.excise.ims.ia.vo.Int1101FormVo;
 import th.go.excise.ims.ia.vo.Int1101Vo;
+import th.go.excise.ims.ia.vo.Int1102FormVo;
 import th.go.excise.ims.ia.vo.Int11Vo;
 
 @Service
@@ -19,7 +22,9 @@ public class Int1101Service {
 
 	@Autowired
 	private IaConcludeFollowDetailJdbcRepository iaConcludeFollowDetailJdbcRepository;
-
+	
+	@Autowired
+	IaConcludeFollowHdrJdbcRepository iaConcludeFollowHdrJdbcRepository;
 	
 	public Int11Vo list(String id) {
 		IaConcludeFollowHdr dataList = iaConcludeFollowHdrRepository.findById(Long.parseLong(id)).get();
@@ -51,4 +56,10 @@ public class Int1101Service {
 
 		return dataList;
 	}
+	
+	public void updateSentStatus(Int1101FormVo form) {
+		iaConcludeFollowHdrJdbcRepository.updateSentStatus(form);
+	}
+	
+	
 }

@@ -19,7 +19,7 @@ public class Int1107JdbcRepository {
 	public List<Int11Vo> getData(Int11FormVo request) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" Select * from IA_CONCLUDE_FOLLOW_HDR   WHERE INSPECTION_WORK = ? AND BUDGET_YEAR = ? AND Is_Deleted = 'N' ");
+		sql.append(" Select * from IA_CONCLUDE_FOLLOW_HDR   WHERE INSPECTION_WORK = ? AND BUDGET_YEAR = ? AND  SEND_STATUS = 'Sent' AND Is_Deleted = 'N' ");
 		params.add(request.getInspecWork());
 		params.add(request.getBudgetYear());
 

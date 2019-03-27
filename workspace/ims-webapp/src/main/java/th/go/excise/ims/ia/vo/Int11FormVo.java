@@ -4,6 +4,7 @@ public class Int11FormVo {
 	private String inspectionWork;
 	private String budgetYear;
 
+
 	public String getInspecWork() {
 		return inspectionWork;
 	}
@@ -19,4 +20,8 @@ public class Int11FormVo {
 	public void setBudgetYear(String budgetYear) {
 		this.budgetYear = budgetYear;
 	}
+
+
+	
+	
 }

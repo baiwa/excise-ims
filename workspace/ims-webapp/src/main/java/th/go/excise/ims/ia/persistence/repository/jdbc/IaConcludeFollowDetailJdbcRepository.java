@@ -28,4 +28,5 @@ public class IaConcludeFollowDetailJdbcRepository {
 
 		return datas;
 	}
+	
 }

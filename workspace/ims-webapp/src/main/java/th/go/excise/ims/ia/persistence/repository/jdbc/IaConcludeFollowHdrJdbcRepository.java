@@ -8,6 +8,9 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.go.excise.ims.ia.vo.Int1101FormVo;
+import th.go.excise.ims.ia.vo.Int1102FormVo;
 import th.go.excise.ims.ia.vo.Int11FormVo;
 import th.go.excise.ims.ia.vo.Int11Vo;
 
@@ -30,4 +33,14 @@ public class IaConcludeFollowHdrJdbcRepository {
 
 		return datas;
 	}
+	
+	public void updateSentStatus(Int1101FormVo form) {	
+		StringBuilder sql = new StringBuilder();
+		sql.append("UPDATE IA_CONCLUDE_FOLLOW_HDR C ");
+		sql.append("SET C.SEND_STATUS = ? ");
+		sql.append("WHERE C.ID = ? ");
+		commonJdbcTemplate.update(sql.toString(), new Object[] { form.getSendStatus(),form.getId()});
+	}
+	
+	
 }

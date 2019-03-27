@@ -20,7 +20,7 @@ public class Int11Service {
 	public DataTableAjax<Int11Vo> list(Int11FormVo form) {
 		List<Int11Vo> dataList = iaConcludeFollowHdrJdbcRepository.getData(form);
 		for (Int11Vo int11Vo : dataList) {
-			int11Vo.setApproveDateString(ConvertDateUtils.formatDateToString(int11Vo.getApproveDate(), ConvertDateUtils.DD_MM_YYYY));
+			int11Vo.setApproveDateString(ConvertDateUtils.formatDateToString(int11Vo.getApproveDate(),ConvertDateUtils.DD_MM_YYYY));
 			int11Vo.setDateFromString(ConvertDateUtils.formatDateToString(int11Vo.getDateFrom(), ConvertDateUtils.DD_MM_YYYY));
 			int11Vo.setDateToString(ConvertDateUtils.formatDateToString(int11Vo.getDateTo(), ConvertDateUtils.DD_MM_YYYY));
 			int11Vo.setCreatedBy(null);
