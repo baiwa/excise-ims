@@ -9,6 +9,15 @@ public class Oa020106ButtonVo {
 	private BigDecimal oaCuslicenseId;
 	private String licenseNo;
 	private String licenseType;
+	private String identifyType;
+
+	public String getIdentifyType() {
+		return identifyType;
+	}
+
+	public void setIdentifyType(String identifyType) {
+		this.identifyType = identifyType;
+	}
 
 	public String getLicenseType() {
 		return licenseType;

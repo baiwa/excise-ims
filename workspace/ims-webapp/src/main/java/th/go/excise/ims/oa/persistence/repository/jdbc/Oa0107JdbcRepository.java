@@ -11,9 +11,12 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
-import th.go.excise.ims.oa.persistence.entity.OaCustomer;
+import th.go.excise.ims.oa.persistence.entity.OaHydCustomerLicen;
 import th.go.excise.ims.oa.persistence.entity.OaHydCustomerLicenDtl;
+import th.go.excise.ims.oa.utils.OaOfficeCode;
 import th.go.excise.ims.oa.vo.Oa010106FormVo;
+import th.go.excise.ims.oa.vo.Oa0107CodeVo;
+import th.go.excise.ims.oa.vo.Oa0107CustomerVo;
 import th.go.excise.ims.oa.vo.Oa0107Vo;
 
 @Repository
@@ -22,44 +25,66 @@ public class Oa0107JdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
-	public List<OaCustomer> getDataFilter(Oa0107Vo request) {
+	public List<Oa0107CodeVo> getDataFilter(Oa0107Vo request, String offCode) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" SELECT * FROM OA_HYD_CUSTOMER WHERE 1=1 AND IS_DELETED='N' ");
+		sql.append(" SELECT L.IDENTIFY_NO AS IDENTIFY_NO, ");
+		sql.append("   L.OFF_CODE         AS OFF_CODE, ");
+		sql.append("   L.LICENSE_TYPE     AS LICENSE_TYPE ");
+		sql.append(" FROM OA_HYD_CUSTOMER_LICEN L ");
+		sql.append(" WHERE L.IS_DELETED='N' ");
 
 		if (StringUtils.isNotBlank(request.getArea())) {
-			sql.append(" AND OFFICE_CODE = ? ");
-			params.add(request.getArea());
+			sql.append(" AND L.OFF_CODE LIKE ? ");
+			params.add(OaOfficeCode.officeCodeLike(request.getArea()) + '%');
 		} else if (StringUtils.isNotBlank(request.getSector())) {
-			sql.append(" AND OFFICE_CODE = ? ");
-			params.add(request.getSector());
+			sql.append(" AND L.OFF_CODE LIKE ? ");
+			params.add(OaOfficeCode.officeCodeLike(request.getSector()) + '%');
+		} else if (StringUtils.isNotBlank(offCode)) {
+			if (StringUtils.isNotBlank(OaOfficeCode.officeCodeLike(offCode))) {
+				params.add(OaOfficeCode.officeCodeLike(offCode) + '%');
+				sql.append(" AND L.OFF_CODE LIKE ? ");
+			}
 		}
-
-		sql.append(" ORDER BY CREATED_DATE DESC");
+		
+		sql.append(" GROUP BY L.IDENTIFY_NO, ");
+		sql.append("   L.OFF_CODE, ");
+		sql.append("   L.LICENSE_TYPE ");
 
 		String limit = OracleUtils.limitForDatable(sql.toString(), request.getStart(), request.getLength());
 		@SuppressWarnings({ "rawtypes", "unchecked" })
-		List<OaCustomer> datas = this.commonJdbcTemplate.query(limit, params.toArray(),
-				new BeanPropertyRowMapper(OaCustomer.class));
+		List<Oa0107CodeVo> datas = this.commonJdbcTemplate.query(limit, params.toArray(),
+				new BeanPropertyRowMapper(Oa0107CodeVo.class));
 
 		return datas;
 	}
 
 	/* count datatable */
-	public Integer countDatafilter(Oa0107Vo request) {
+	public Integer countDatafilter(Oa0107Vo request, String offCode) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" SELECT * FROM OA_HYD_CUSTOMER WHERE IS_DELETED='N' ");
+		sql.append(" SELECT L.IDENTIFY_NO AS IDENTIFY_NO, ");
+		sql.append("   L.OFF_CODE         AS OFF_CODE, ");
+		sql.append("   L.LICENSE_TYPE     AS LICENSE_TYPE ");
+		sql.append(" FROM OA_HYD_CUSTOMER_LICEN L ");
+		sql.append(" WHERE L.IS_DELETED='N' ");
 
 		if (StringUtils.isNotBlank(request.getArea())) {
-			sql.append(" AND OFFICE_CODE = ? ");
-			params.add(request.getArea());
+			sql.append(" AND L.OFF_CODE LIKE ? ");
+			params.add(OaOfficeCode.officeCodeLike(request.getArea()) + '%');
 		} else if (StringUtils.isNotBlank(request.getSector())) {
-			sql.append(" AND OFFICE_CODE = ? ");
-			params.add(request.getSector());
+			sql.append(" AND L.OFF_CODE LIKE ? ");
+			params.add(OaOfficeCode.officeCodeLike(request.getSector()) + '%');
+		} else if (StringUtils.isNotBlank(offCode)) {
+			if (StringUtils.isNotBlank(OaOfficeCode.officeCodeLike(offCode))) {
+				params.add(OaOfficeCode.officeCodeLike(offCode) + '%');
+				sql.append(" AND L.OFF_CODE LIKE ? ");
+			}
 		}
-
-		sql.append(" ORDER BY CREATED_DATE DESC");
+		
+		sql.append(" GROUP BY L.IDENTIFY_NO, ");
+		sql.append("   L.OFF_CODE, ");
+		sql.append("   L.LICENSE_TYPE ");
 
 		String sqlCount = OracleUtils.countForDataTable(sql.toString());
 		Integer count = this.commonJdbcTemplate.queryForObject(sqlCount, params.toArray(), Integer.class);
@@ -91,6 +116,65 @@ public class Oa0107JdbcRepository {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<OaHydCustomerLicenDtl> lists = commonJdbcTemplate.query(sql.toString(), params.toArray(),
 				new BeanPropertyRowMapper(OaHydCustomerLicenDtl.class));
+		return lists;
+	}
+	
+	public List<Oa0107CustomerVo> findCustomers(String offCode) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT DISTINCT IDENTIFY_NO, ");
+		sql.append("   NAME ");
+		sql.append(" FROM OA_HYD_CUSTOMER_LICEN ");
+		sql.append(" WHERE IS_DELETED = 'N' ");
+		if (StringUtils.isNotBlank(OaOfficeCode.officeCodeLike(offCode))) {
+			params.add(OaOfficeCode.officeCodeLike(offCode) + '%');
+			sql.append(" AND OFF_CODE LIKE ? ");
+		}
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		List<Oa0107CustomerVo> lists = commonJdbcTemplate.query(sql.toString(), params.toArray(),
+				new BeanPropertyRowMapper(Oa0107CustomerVo.class));
+		return lists;
+	}
+	
+	public Oa010106FormVo findCustomer(String offCode, String customerNo) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT * ");
+		sql.append(" FROM OA_HYD_CUSTOMER_LICEN ");
+		sql.append(" WHERE IS_DELETED = 'N' ");
+		if (StringUtils.isNotBlank(OaOfficeCode.officeCodeLike(offCode))) {
+			params.add(OaOfficeCode.officeCodeLike(offCode) + '%');
+			sql.append(" AND OFF_CODE LIKE ? ");
+		}
+		sql.append(" AND IDENTIFY_NO  = ? ");
+		params.add(customerNo);
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		Oa010106FormVo lists = (Oa010106FormVo) commonJdbcTemplate.queryForObject(OracleUtils.limit(sql.toString(), 0, 1).toString(), params.toArray(),
+				new BeanPropertyRowMapper(Oa010106FormVo.class));
+		return lists;
+	}
+	
+	public List<OaHydCustomerLicen> licenseAll(Oa0107Vo request, String offCode) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT * ");
+		sql.append(" FROM OA_HYD_CUSTOMER_LICEN ");
+		sql.append(" WHERE IS_DELETED = 'N' ");
+		if (StringUtils.isNotBlank(request.getArea())) {
+			sql.append(" AND OFF_CODE LIKE ? ");
+			params.add(OaOfficeCode.officeCodeLike(request.getArea()) + '%');
+		} else if (StringUtils.isNotBlank(request.getSector())) {
+			sql.append(" AND OFF_CODE LIKE ? ");
+			params.add(OaOfficeCode.officeCodeLike(request.getSector()) + '%');
+		} else if (StringUtils.isNotBlank(offCode)) {
+			if (StringUtils.isNotBlank(OaOfficeCode.officeCodeLike(offCode))) {
+				params.add(OaOfficeCode.officeCodeLike(offCode) + '%');
+				sql.append(" AND OFF_CODE LIKE ? ");
+			}
+		}
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		List<OaHydCustomerLicen> lists = commonJdbcTemplate.query(sql.toString(), params.toArray(),
+				new BeanPropertyRowMapper(OaHydCustomerLicen.class));
 		return lists;
 	}
 }

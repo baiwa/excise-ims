@@ -21,9 +21,9 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESS
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.oa.persistence.entity.OaCustomer;
 import th.go.excise.ims.oa.service.Oa0107Service;
 import th.go.excise.ims.oa.vo.Oa010106FormVo;
+import th.go.excise.ims.oa.vo.Oa0107CustomerVo;
 import th.go.excise.ims.oa.vo.Oa0107Vo;
 
 @Controller
@@ -37,17 +37,18 @@ public class Oa0107Controller {
 
 	@PostMapping("/filter")
 	@ResponseBody
-	public DataTableAjax<OaCustomer> filterByCriteria(@RequestBody Oa0107Vo request) {
-		DataTableAjax<OaCustomer> response = new DataTableAjax<>();
+	public DataTableAjax<Oa010106FormVo> filterByCriteria(@RequestBody Oa0107Vo request) {
+		DataTableAjax<Oa010106FormVo> response = new DataTableAjax<>();
 		try {
-			response = oa0107Service.filterByCriteria(request);
+			String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+			response = oa0107Service.filterByCriteria(request, offCode);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Oa0107Controller::filterByCriteria => ", e);
 		}
 		return response;
 	}
-	
+
 	@GetMapping("/find/customerLicenses/{customerId}/{licenseType}")
 	@ResponseBody
 	public ResponseData<List<Oa010106FormVo>> findAllName(@PathVariable("customerId") String customerIdStr,
@@ -83,6 +84,42 @@ public class Oa0107Controller {
 		return responseData;
 	}
 
+	@GetMapping("/find/customers")
+	@ResponseBody
+	public ResponseData<List<Oa0107CustomerVo>> findCustomers() {
+		ResponseData<List<Oa0107CustomerVo>> responseData = new ResponseData<>();
+		List<Oa0107CustomerVo> data = new ArrayList<Oa0107CustomerVo>();
+		try {
+			String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+			data = oa0107Service.findCustomers(offCode);
+			responseData.setData(data);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Oa0107Controller::findCustomers ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+
+	@GetMapping("/find/customer/{customerNo}")
+	@ResponseBody
+	public ResponseData<Oa010106FormVo> findCustomer(@PathVariable("customerNo") String customerNo) {
+		ResponseData<Oa010106FormVo> responseData = new ResponseData<>();
+		Oa010106FormVo data = new Oa010106FormVo();
+		try {
+			String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+			data = oa0107Service.findCustomer(customerNo, offCode);
+			responseData.setData(data);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Oa0107Controller::findCustomer ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+
 	@PostMapping("/save/customerLicense")
 	@ResponseBody
 	public ResponseData<Oa010106FormVo> saveAll(@RequestBody Oa010106FormVo form) {
@@ -96,7 +133,7 @@ public class Oa0107Controller {
 			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			logger.error("Oa0207Controller::saveAll ", e);
+			logger.error("Oa0107Controller::saveAll ", e);
 			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
@@ -116,11 +153,11 @@ public class Oa0107Controller {
 			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			logger.error("Oa0207Controller::updateAll ", e);
+			logger.error("Oa0107Controller::updateAll ", e);
 			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
 	}
-	
+
 }

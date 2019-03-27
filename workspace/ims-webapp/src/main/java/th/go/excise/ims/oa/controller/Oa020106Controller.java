@@ -13,7 +13,6 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.oa.persistence.entity.OaCustomer;
 import th.go.excise.ims.oa.persistence.entity.OaCustomerLicen;
 import th.go.excise.ims.oa.service.Oa020106Service;
 import th.go.excise.ims.oa.vo.Oa020106ButtonVo;

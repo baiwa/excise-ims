@@ -7,11 +7,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.go.excise.ims.oa.persistence.entity.OaCustomer;
 import th.go.excise.ims.oa.persistence.entity.OaCustomerLicen;
 import th.go.excise.ims.oa.persistence.entity.OaCustomerLicenDetail;
 import th.go.excise.ims.oa.persistence.repository.OaCustomerLicenRepository;
-import th.go.excise.ims.oa.persistence.repository.OaCustomerRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa020106JdbcRepository;
 import th.go.excise.ims.oa.vo.Oa020106ButtonVo;
 import th.go.excise.ims.oa.vo.Oa020106FormVo;
@@ -21,9 +19,6 @@ public class Oa020106Service {
 	
 	@Autowired
 	private Oa020106JdbcRepository oa020106JdbcRep;
-	
-	@Autowired
-	private OaCustomerRepository oaCustomerRep;
 	
 	@Autowired
 	OaCustomerLicenRepository oaCustomerLicenRep;

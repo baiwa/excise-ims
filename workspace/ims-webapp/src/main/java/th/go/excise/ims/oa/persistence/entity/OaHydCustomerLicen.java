@@ -23,28 +23,36 @@ public class OaHydCustomerLicen
     @SequenceGenerator(name = "OA_HYD_CUSTOMER_LICEN_GEN", sequenceName = "OA_HYD_CUSTOMER_LICEN_SEQ", allocationSize = 1)
     @Column(name = "OA_CUSLICENSE_ID")
     private BigDecimal oaCuslicenseId;
-    @Column(name = "OA_CUSTOMER_ID")
-    private BigDecimal oaCustomerId;
+    @Column(name = "NAME")
+    private String name;
+    @Column(name = "COMPANY_NAME")
+    private String companyName;
+    @Column(name = "IDENTIFY_NO")
+    private String identifyNo;
+    @Column(name = "IDENTIFY_TYPE")
+    private String identifyType;
     @Column(name = "LICENSE_TYPE")
     private String licenseType;
     @Column(name = "LICENSE_NO")
     private String licenseNo;
     @Column(name = "LICENSE_DATE")
     private Date licenseDate;
-    @Column(name = "OLD_LICENSE_YEAR")
-    private String oldLicenseYear;
+    @Column(name = "LICENSE_TYPE_FOR")
+    private String licenseTypeFor;
+    @Column(name = "LICENSE_TYPE_DESP")
+    private String licenseTypeDesp;
     @Column(name = "BANK_GUARANTEE")
     private String bankGuarantee;
     @Column(name = "BANK_GUARANTEE_NO")
     private String bankGuaranteeNo;
     @Column(name = "BANK_GUARANTEE_DATE")
     private Date bankGuaranteeDate;
+    @Column(name = "OLD_LICENSE_YEAR")
+    private String oldLicenseYear;
     @Column(name = "OPERATE_NAME")
     private String operateName;
     @Column(name = "OPERATE_REMARK")
     private String operateRemark;
-    @Column(name = "APPROVE_NAME")
-    private String approveName;
     @Column(name = "START_DATE")
     private Date startDate;
     @Column(name = "END_DATE")
@@ -55,12 +63,18 @@ public class OaHydCustomerLicen
     private Date receiveDate;
     @Column(name = "RECEIVE_NO")
     private String receiveNo;
+    @Column(name = "APPROVE_NAME")
+    private String approveName;
     @Column(name = "APPROVE")
     private String approve;
-    @Column(name = "LICENSE_TYPE_FOR")
-    private String licenseTypeFor;
-    @Column(name = "LICENSE_TYPE_DESP")
-    private String licenseTypeDesp;
+    @Column(name = "OLD_CUSTOMER")
+    private String oldCustomer;
+    @Column(name = "MOBILE")
+    private String mobile;
+    @Column(name = "ADDRESS")
+    private String address;
+    @Column(name = "WAREHOUSE_ADDRESS")
+    private String warehouseAddress;
 
     public BigDecimal getOaCuslicenseId() {
         return oaCuslicenseId;
@@ -70,12 +84,36 @@ public class OaHydCustomerLicen
         this.oaCuslicenseId = oaCuslicenseId;
     }
 
-    public BigDecimal getOaCustomerId() {
-        return oaCustomerId;
+    public String getName() {
+        return name;
     }
 
-    public void setOaCustomerId(BigDecimal oaCustomerId) {
-        this.oaCustomerId = oaCustomerId;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getIdentifyNo() {
+        return identifyNo;
+    }
+
+    public void setIdentifyNo(String identifyNo) {
+        this.identifyNo = identifyNo;
+    }
+
+    public String getIdentifyType() {
+        return identifyType;
+    }
+
+    public void setIdentifyType(String identifyType) {
+        this.identifyType = identifyType;
     }
 
     public String getLicenseType() {
@@ -102,12 +140,20 @@ public class OaHydCustomerLicen
         this.licenseDate = licenseDate;
     }
 
-    public String getOldLicenseYear() {
-        return oldLicenseYear;
+    public String getLicenseTypeFor() {
+        return licenseTypeFor;
     }
 
-    public void setOldLicenseYear(String oldLicenseYear) {
-        this.oldLicenseYear = oldLicenseYear;
+    public void setLicenseTypeFor(String licenseTypeFor) {
+        this.licenseTypeFor = licenseTypeFor;
+    }
+
+    public String getLicenseTypeDesp() {
+        return licenseTypeDesp;
+    }
+
+    public void setLicenseTypeDesp(String licenseTypeDesp) {
+        this.licenseTypeDesp = licenseTypeDesp;
     }
 
     public String getBankGuarantee() {
@@ -134,6 +180,14 @@ public class OaHydCustomerLicen
         this.bankGuaranteeDate = bankGuaranteeDate;
     }
 
+    public String getOldLicenseYear() {
+        return oldLicenseYear;
+    }
+
+    public void setOldLicenseYear(String oldLicenseYear) {
+        this.oldLicenseYear = oldLicenseYear;
+    }
+
     public String getOperateName() {
         return operateName;
     }
@@ -148,14 +202,6 @@ public class OaHydCustomerLicen
 
     public void setOperateRemark(String operateRemark) {
         this.operateRemark = operateRemark;
-    }
-
-    public String getApproveName() {
-        return approveName;
-    }
-
-    public void setApproveName(String approveName) {
-        this.approveName = approveName;
     }
 
     public Date getStartDate() {
@@ -198,6 +244,14 @@ public class OaHydCustomerLicen
         this.receiveNo = receiveNo;
     }
 
+    public String getApproveName() {
+        return approveName;
+    }
+
+    public void setApproveName(String approveName) {
+        this.approveName = approveName;
+    }
+
     public String getApprove() {
         return approve;
     }
@@ -206,20 +260,36 @@ public class OaHydCustomerLicen
         this.approve = approve;
     }
 
-    public String getLicenseTypeFor() {
-        return licenseTypeFor;
+    public String getOldCustomer() {
+        return oldCustomer;
     }
 
-    public void setLicenseTypeFor(String licenseTypeFor) {
-        this.licenseTypeFor = licenseTypeFor;
+    public void setOldCustomer(String oldCustomer) {
+        this.oldCustomer = oldCustomer;
     }
 
-    public String getLicenseTypeDesp() {
-        return licenseTypeDesp;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setLicenseTypeDesp(String licenseTypeDesp) {
-        this.licenseTypeDesp = licenseTypeDesp;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getWarehouseAddress() {
+        return warehouseAddress;
+    }
+
+    public void setWarehouseAddress(String warehouseAddress) {
+        this.warehouseAddress = warehouseAddress;
     }
 
 }

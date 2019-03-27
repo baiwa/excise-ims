@@ -8,23 +8,34 @@ import th.go.excise.ims.oa.persistence.entity.OaHydCustomerLicenDtl;
 
 public class Oa010106FormVo {
 	private BigDecimal oaCuslicenseId;
-	private BigDecimal oaCustomerId;
+	private String name;
+	private String companyName;
+	private String identifyNo;
+	private String identifyType;
 	private String licenseType;
 	private String licenseNo;
 	private Date licenseDate;
-	private String oldLicenseYear;
+	private String licenseTypeFor;
+	private String licenseTypeDesp;
 	private String bankGuarantee;
 	private String bankGuaranteeNo;
 	private Date bankGuaranteeDate;
+	private String oldLicenseYear;
 	private String operateName;
 	private String operateRemark;
-	private String approveName;
 	private Date startDate;
 	private Date endDate;
 	private String offCode;
 	private Date receiveDate;
 	private String receiveNo;
+	private String approveName;
 	private String approve;
+	private String oldCustomer;
+	private String mobile;
+	private String address;
+	private String warehouseAddress;
+	private String sectorName;
+	private String areaName;
 	private List<OaHydCustomerLicenDtl> details;
 	private List<OaHydCustomerLicenDtl> deletes;
 
@@ -36,12 +47,36 @@ public class Oa010106FormVo {
 		this.oaCuslicenseId = oaCuslicenseId;
 	}
 
-	public BigDecimal getOaCustomerId() {
-		return oaCustomerId;
+	public String getName() {
+		return name;
 	}
 
-	public void setOaCustomerId(BigDecimal oaCustomerId) {
-		this.oaCustomerId = oaCustomerId;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getIdentifyNo() {
+		return identifyNo;
+	}
+
+	public void setIdentifyNo(String identifyNo) {
+		this.identifyNo = identifyNo;
+	}
+
+	public String getIdentifyType() {
+		return identifyType;
+	}
+
+	public void setIdentifyType(String identifyType) {
+		this.identifyType = identifyType;
 	}
 
 	public String getLicenseType() {
@@ -68,12 +103,20 @@ public class Oa010106FormVo {
 		this.licenseDate = licenseDate;
 	}
 
-	public String getOldLicenseYear() {
-		return oldLicenseYear;
+	public String getLicenseTypeFor() {
+		return licenseTypeFor;
 	}
 
-	public void setOldLicenseYear(String oldLicenseYear) {
-		this.oldLicenseYear = oldLicenseYear;
+	public void setLicenseTypeFor(String licenseTypeFor) {
+		this.licenseTypeFor = licenseTypeFor;
+	}
+
+	public String getLicenseTypeDesp() {
+		return licenseTypeDesp;
+	}
+
+	public void setLicenseTypeDesp(String licenseTypeDesp) {
+		this.licenseTypeDesp = licenseTypeDesp;
 	}
 
 	public String getBankGuarantee() {
@@ -100,6 +143,14 @@ public class Oa010106FormVo {
 		this.bankGuaranteeDate = bankGuaranteeDate;
 	}
 
+	public String getOldLicenseYear() {
+		return oldLicenseYear;
+	}
+
+	public void setOldLicenseYear(String oldLicenseYear) {
+		this.oldLicenseYear = oldLicenseYear;
+	}
+
 	public String getOperateName() {
 		return operateName;
 	}
@@ -114,14 +165,6 @@ public class Oa010106FormVo {
 
 	public void setOperateRemark(String operateRemark) {
 		this.operateRemark = operateRemark;
-	}
-
-	public String getApproveName() {
-		return approveName;
-	}
-
-	public void setApproveName(String approveName) {
-		this.approveName = approveName;
 	}
 
 	public Date getStartDate() {
@@ -164,12 +207,68 @@ public class Oa010106FormVo {
 		this.receiveNo = receiveNo;
 	}
 
+	public String getApproveName() {
+		return approveName;
+	}
+
+	public void setApproveName(String approveName) {
+		this.approveName = approveName;
+	}
+
 	public String getApprove() {
 		return approve;
 	}
 
 	public void setApprove(String approve) {
 		this.approve = approve;
+	}
+
+	public String getOldCustomer() {
+		return oldCustomer;
+	}
+
+	public void setOldCustomer(String oldCustomer) {
+		this.oldCustomer = oldCustomer;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getWarehouseAddress() {
+		return warehouseAddress;
+	}
+
+	public void setWarehouseAddress(String warehouseAddress) {
+		this.warehouseAddress = warehouseAddress;
+	}
+
+	public String getSectorName() {
+		return sectorName;
+	}
+
+	public void setSectorName(String sectorName) {
+		this.sectorName = sectorName;
+	}
+
+	public String getAreaName() {
+		return areaName;
+	}
+
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
 	}
 
 	public List<OaHydCustomerLicenDtl> getDetails() {

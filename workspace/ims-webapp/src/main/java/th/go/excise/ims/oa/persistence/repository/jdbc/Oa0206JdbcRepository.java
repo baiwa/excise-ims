@@ -30,7 +30,6 @@ public class Oa0206JdbcRepository {
 		sql.append(" ORDER BY START_DATE DESC");
 
 		String limit = OracleUtils.limitForDatable(sql.toString(), request.getStart(), request.getLength());
-		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<Oa0206Vo> datas = this.commonJdbcTemplate.query(limit, params.toArray(),dataRowmapper);
 		
 		return datas;

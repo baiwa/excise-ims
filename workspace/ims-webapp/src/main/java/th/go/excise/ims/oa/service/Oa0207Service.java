@@ -3,12 +3,7 @@ package th.go.excise.ims.oa.service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -23,7 +18,6 @@ import th.go.excise.ims.oa.persistence.entity.OaCustomerLicenDetail;
 import th.go.excise.ims.oa.persistence.repository.OaCustomerLicenDetailRepository;
 import th.go.excise.ims.oa.persistence.repository.OaCustomerLicenRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0207JdbcRepository;
-import th.go.excise.ims.oa.utils.OaOfficeCode;
 import th.go.excise.ims.oa.vo.Oa020106FormVo;
 import th.go.excise.ims.oa.vo.Oa0207CodeVo;
 import th.go.excise.ims.oa.vo.Oa0207CustomerVo;
@@ -253,12 +247,6 @@ public class Oa0207Service {
 
 	public Oa020106FormVo findCustomer(String customerNo, String offCode) {
 		return oa0207JdbcRep.findCustomer(offCode, customerNo);
-	}
-	
-
-	private static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
-	        Map<Object,Boolean> seen = new ConcurrentHashMap<>();
-	        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
 	}
 
 }

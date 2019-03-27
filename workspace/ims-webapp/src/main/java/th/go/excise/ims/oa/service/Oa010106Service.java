@@ -59,7 +59,6 @@ public class Oa010106Service {
 			response.setLicenseNo(licen.getLicenseNo());
 			response.setLicenseType(licen.getLicenseType());
 			response.setOaCuslicenseId(licen.getOaCuslicenseId());
-			response.setOaCustomerId(licen.getOaCustomerId());
 			response.setOffCode(licen.getOffCode());
 			response.setOldLicenseYear(licen.getOldLicenseYear());
 			response.setOperateName(licen.getOperateName());

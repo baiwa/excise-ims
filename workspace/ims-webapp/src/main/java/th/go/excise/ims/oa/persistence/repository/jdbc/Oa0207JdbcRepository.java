@@ -51,8 +51,6 @@ public class Oa0207JdbcRepository {
 		sql.append("   L.OFF_CODE, ");
 		sql.append("   L.LICENSE_TYPE ");
 
-//		sql.append(" ORDER BY L.CREATED_DATE DESC");
-
 		String limit = OracleUtils.limitForDatable(sql.toString(), request.getStart(), request.getLength());
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<Oa0207CodeVo> datas = this.commonJdbcTemplate.query(limit, params.toArray(),
@@ -87,8 +85,6 @@ public class Oa0207JdbcRepository {
 		sql.append(" GROUP BY L.IDENTIFY_NO, ");
 		sql.append("   L.OFF_CODE, ");
 		sql.append("   L.LICENSE_TYPE ");
-
-//		sql.append(" ORDER BY L.CREATED_DATE DESC");
 
 		String sqlCount = OracleUtils.countForDataTable(sql.toString());
 		Integer count = this.commonJdbcTemplate.queryForObject(sqlCount, params.toArray(), Integer.class);
