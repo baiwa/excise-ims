@@ -47,6 +47,20 @@ public class Oa0206Controller {
 		return response;
 	}
 	
+	@PostMapping("/getDataHyd")
+	@ResponseBody
+	public DataTableAjax<Oa0206Vo> filteHydByCriteria(@RequestBody Oa0206FormVo request) {
+		DataTableAjax<Oa0206Vo> response = new DataTableAjax<>();
+		try {
+			String offcode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+			response = oa0206Service.filterHydByCriteria(request,offcode);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Oa0207Controller::filterByCriteria => ", e);
+		}
+		return response;
+	}
+	
 	@PostMapping("/pdf/{id}")
 	public void pdfTs(@PathVariable("id") String idStr, HttpServletResponse response)throws IOException, JRException{
 		byte[] reportFile = oa0206Service.objectToPDF();

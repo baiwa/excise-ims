@@ -51,6 +51,18 @@ public class Oa0206Service {
 		return dataTableAjax;
 	}
 	
+	public DataTableAjax<Oa0206Vo> filterHydByCriteria(Oa0206FormVo request,String officeCode) {
+		String offCode = OaOfficeCode.officeCodeLike(officeCode);
+		List<Oa0206Vo> data = oa0206JdbcRepo.getDataHyd(request,offCode);
+		int count = oa0206JdbcRepo.countDataHyd(request,offCode);
+		DataTableAjax<Oa0206Vo> dataTableAjax = new DataTableAjax<Oa0206Vo>();
+		dataTableAjax.setDraw(request.getDraw() + 1);
+		dataTableAjax.setData(data);
+		dataTableAjax.setRecordsTotal(count);
+		dataTableAjax.setRecordsFiltered(count);
+		return dataTableAjax;
+	}
+	
 	
 	@SuppressWarnings("finally")
 	public byte[] objectToPDF() {
