@@ -6,14 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.go.excise.ims.ia.constant.IaConstants;
+import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster2;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsMaster2Repository;
+import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsMasterRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaRiskFactorsMaster2JdbcRepository;
+import th.go.excise.ims.ia.persistence.repository.jdbc.Int030102JdbcRepository;
 import th.go.excise.ims.ia.vo.Int030101FormVo;
 import th.go.excise.ims.ia.vo.Int030102FormVo;
 import th.go.excise.ims.ia.vo.Int030102Vo;
 import th.go.excise.ims.ia.vo.Int0305FormVo;
-import th.go.excise.ims.ia.vo.Int0305Vo;
 
 @Service
 public class Int0305Service {
@@ -25,11 +27,16 @@ public class Int0305Service {
 	private IaRiskFactorsMaster2Repository iaRiskFactorsMaster2Repository;
 	
 	@Autowired
+	private IaRiskFactorsMasterRepository iaRiskFactorsMasterRepository;
+	
+	@Autowired
 	private Int030101Service int030101Service;
 	
 	@Autowired
 	private Int030102Service int030102Service;
-
+	
+	@Autowired
+	private Int030102JdbcRepository int030102JdbcRepository;
 
 	public List<Int030102Vo> list(Int0305FormVo form) {
 //		List<Int0305Vo> iaRiskFactorsMasterList = iaRiskFactorsMaster2JdbcRepository.list(form);
@@ -43,15 +50,20 @@ public class Int0305Service {
 
 	public void delete(Int0305FormVo form) {
 //		iaRiskFactorsMasterRepository.deleteById(form.getId());
-		iaRiskFactorsMaster2JdbcRepository.delete(form);
+		int030102JdbcRepository.delete(form);
 	}
 	
 	public void edit(Int0305FormVo form) {
 //		iaRiskFactorsMasterRepository.deleteById(form.getId());
-		 IaRiskFactorsMaster2 entity = iaRiskFactorsMaster2Repository.findById(form.getId()).get();
-		 entity.setRiskFactorsMaster(form.getRiskFactorsMaster());
-		 entity.setSide(form.getSide());
-		 iaRiskFactorsMaster2Repository.save(entity);
+//		 IaRiskFactorsMaster2 entity = iaRiskFactorsMaster2Repository.findById(form.getId()).get();
+//		 entity.setRiskFactorsMaster(form.getRiskFactorsMaster());
+//		 entity.setSide(form.getSide());
+//		 iaRiskFactorsMaster2Repository.save(entity);
+		 
+		 IaRiskFactorsMaster entity1 = iaRiskFactorsMasterRepository.findById(form.getId()).get();
+		 entity1.setRiskFactorsMaster(form.getRiskFactorsMaster());
+		 entity1.setSide(form.getSide());
+		 iaRiskFactorsMasterRepository.save(entity1);
 	}
 	
 	
@@ -85,7 +97,7 @@ public class Int0305Service {
 			form030102.setId(element.getId());
 			form030102.setBudgetYear(element.getBudgetYear());
 			form030102.setInspectionWork(element.getInspectionWork());
-			
+			form030102.setStatus(element.getStatus());
 			int030102Service.editStatus(form030102);
 			int030102Service.save(form030102);
 		}

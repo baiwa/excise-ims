@@ -21,6 +21,7 @@ import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
 import th.go.excise.ims.ia.vo.Int030102FormVo;
 import th.go.excise.ims.ia.vo.Int030102Vo;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
+import th.go.excise.ims.ia.vo.Int0305FormVo;
 
 @Repository
 public class Int030102JdbcRepository {
@@ -85,7 +86,8 @@ public class Int030102JdbcRepository {
 			iarfm.setNotDelete(rs.getString("NOT_DELETE"));
 			iarfm.setDataEvaluate(rs.getString("DATA_EVALUATE"));
 			iarfm.setSide(rs.getString("SIDE"));
-			
+			iarfm.setInspectionWork(new BigDecimal(rs.getString("INSPECTION_WORK")));
+					
 			String date = checkAndConvertDateToString(rs.getDate("CREATED_DATE_RES"));
 			
 			vo.setCreatedDateDesc(date);
@@ -402,6 +404,9 @@ public class Int030102JdbcRepository {
 		return count;
 	}
 	
-	
+	public void delete(Int0305FormVo form) {
+		StringBuilder sql = new StringBuilder(" UPDATE IA_RISK_FACTORS_MASTER SET IS_DELETED = 'Y' WHERE ID = ? ");
+		commonJdbcTemplate.update(sql.toString(), new Object[] { form.getId() });
+	}
 
 }
