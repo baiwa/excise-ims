@@ -24,7 +24,7 @@ public class Int1101Service {
 	private IaConcludeFollowDetailJdbcRepository iaConcludeFollowDetailJdbcRepository;
 	
 	@Autowired
-	IaConcludeFollowHdrJdbcRepository iaConcludeFollowHdrJdbcRepository;
+	private IaConcludeFollowHdrJdbcRepository iaConcludeFollowHdrJdbcRepository;
 	
 	public Int11Vo list(String id) {
 		IaConcludeFollowHdr dataList = iaConcludeFollowHdrRepository.findById(Long.parseLong(id)).get();

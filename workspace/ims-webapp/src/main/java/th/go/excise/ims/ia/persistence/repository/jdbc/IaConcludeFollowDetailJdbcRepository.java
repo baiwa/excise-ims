@@ -8,6 +8,9 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.go.excise.ims.ia.vo.Int110101FormVo;
+import th.go.excise.ims.ia.vo.Int110101Vo;
+import th.go.excise.ims.ia.vo.Int1101FormVo;
 import th.go.excise.ims.ia.vo.Int1101Vo;
 
 @Repository
@@ -28,5 +31,31 @@ public class IaConcludeFollowDetailJdbcRepository {
 
 		return datas;
 	}
+
+	public void editDetails(Int110101FormVo form) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("UPDATE IA_CONCLUDE_FOLLOW_DETAIL C ");
+		sql.append("SET C.ISSUES = ? , ");
+		sql.append("C.DETECTED_OBSERVED = ? , ");
+		sql.append("C.WHAT_SHOULD_BE = ? , ");
+		sql.append("C.RISK_EFFECT = ? , ");
+		sql.append("C.CAUSE = ? , ");
+		sql.append("C.RECOMMEND = ? ");
+		sql.append("WHERE C.ID = ? ");
+		commonJdbcTemplate.update(sql.toString(), new Object[] {form.getIssues(),form.getDetectedObserved(),form.getWhatShouldBe(),form.getRiskEffect(),form.getCause(),form.getRecommend(),form.getId()});
+	}
 	
+	public List<Int110101Vo> findConcludeFollowEdit(String id) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT * FROM IA_CONCLUDE_FOLLOW_DETAIL WHERE ID = ? AND Is_Deleted = 'N'");
+		params.add(id);
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		List<Int110101Vo> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(),
+				new BeanPropertyRowMapper(Int110101Vo.class));
+		return datas;
+	}
+	
+	
+
 }

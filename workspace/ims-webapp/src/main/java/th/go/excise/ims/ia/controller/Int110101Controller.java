@@ -19,72 +19,52 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.ia.service.Int1101Service;
-import th.go.excise.ims.ia.vo.Int1101FormVo;
-import th.go.excise.ims.ia.vo.Int1101Vo;
-import th.go.excise.ims.ia.vo.Int1102FormVo;
-import th.go.excise.ims.ia.vo.Int11Vo;
+import th.go.excise.ims.ia.service.Int110101Service;
+import th.go.excise.ims.ia.vo.Int110101FormVo;
+import th.go.excise.ims.ia.vo.Int110101Vo;
 
 @Controller
-@RequestMapping("/api/ia/int11/01")
-public class Int1101Controller {
+@RequestMapping("/api/ia/int11/01/01")
+public class Int110101Controller {
 	
 	@Autowired
-	private Int1101Service int1101Service;
+	private Int110101Service int110101Service;
 	
-	private Logger logger = LoggerFactory.getLogger(Int11Controller.class);
-	
-	@GetMapping("/findConcludeFollowHdr/{id}")
+	private Logger logger = LoggerFactory.getLogger(Int110101Controller.class);
+		
+	@GetMapping("/findConcludeFollowEdit/{id}")
 	@ResponseBody
-	public ResponseData<Int11Vo> findConcludeFollowHdr(@PathVariable("id") String id) {
-		ResponseData<Int11Vo> responseData = new ResponseData<Int11Vo>();
-		Int11Vo data = new Int11Vo();
+	public ResponseData<List<Int110101Vo>> findConcludeFollowEdit(@PathVariable("id") String id) {
+		ResponseData<List<Int110101Vo>> responseData = new ResponseData<List<Int110101Vo>>();
+		List<Int110101Vo> data = new ArrayList<Int110101Vo>();
 		try {
-			data = int1101Service.list(id);
+			data = int110101Service.findConcludeFollowEdit(id);
 			responseData.setData(data);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 			responseData.setMessage(RESPONSE_MESSAGE.SUCCESS);
 		} catch (Exception e) {
-			logger.error("Int1101Controller findConcludeFollowHdr : ", e);
+			logger.error("Int110101Controller findConcludeFollowEdit : ", e);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 		}
 		return responseData;
 	}
 	
-	@GetMapping("/findConcludeFollowHdrDetailList/{id}")
+	@PostMapping("/editDetails")
 	@ResponseBody
-	public ResponseData<List<Int1101Vo>> findConcludeFollowHdrDetailList(@PathVariable("id") String id) {
-		ResponseData<List<Int1101Vo>> responseData = new ResponseData<List<Int1101Vo>>();
-		List<Int1101Vo> data = new ArrayList<Int1101Vo>();
-		try {
-			data = int1101Service.findConcludeFollowHdrDetailList(id);
-			responseData.setData(data);
-			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
-			responseData.setMessage(RESPONSE_MESSAGE.SUCCESS);
-		} catch (Exception e) {
-			logger.error("Int1101Controller findConcludeFollowHdrDetailList : ", e);
-			responseData.setStatus(RESPONSE_STATUS.FAILED);
-			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
-		}
-		return responseData;
-	}
-	
-	@PostMapping("/updateSentStatus")
-	@ResponseBody
-	public ResponseData<String> updateSentStatus(@RequestBody Int1101FormVo form) {
+	public ResponseData<String> editDetails(@RequestBody Int110101FormVo form) {
 		ResponseData<String> response = new ResponseData<String>();
 		try {	
-			int1101Service.updateSentStatus(form);
+			int110101Service.editDetails(form);
 			response.setData("SUCCESS");
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			logger.error("Int1101Controller updateSentStatus : ", e);
+			logger.error("Int110101Controller editDetails : ", e);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
 	}
-	
+
 }
