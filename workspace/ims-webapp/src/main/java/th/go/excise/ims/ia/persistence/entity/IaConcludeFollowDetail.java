@@ -42,6 +42,8 @@ public class IaConcludeFollowDetail extends BaseEntity {
 	private BigDecimal levelData;
 	@Column(name = "SEQ")
 	private BigDecimal seq;
+	@Column(name = "ISSUES_CODE")
+	private String issuesCode;
 
 	public Long getId() {
 		return id;
@@ -121,6 +123,14 @@ public class IaConcludeFollowDetail extends BaseEntity {
 
 	public void setSeq(BigDecimal seq) {
 		this.seq = seq;
+	}
+
+	public String getIssuesCode() {
+		return issuesCode;
+	}
+
+	public void setIssuesCode(String issuesCode) {
+		this.issuesCode = issuesCode;
 	}
 
 }

@@ -15,117 +15,191 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "IA_CONCLUDE_FOLLOW_HDR")
-public class IaConcludeFollowHdr
-    extends BaseEntity
-{
+public class IaConcludeFollowHdr extends BaseEntity {
 
 	private static final long serialVersionUID = 7214732600189130473L;
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_CONCLUDE_FOLLOW_HDR_GEN")
-    @SequenceGenerator(name = "IA_CONCLUDE_FOLLOW_HDR_GEN", sequenceName = "IA_CONCLUDE_FOLLOW_HDR_SEQ", allocationSize = 1)
-    @Column(name = "ID")
-    private Long id;
-    @Column(name = "PROJECT_NAME")
-    private String projectName;
-    @Column(name = "BUDGET_YEAR")
-    private String budgetYear;
-    @Column(name = "CHECK_TYPE")
-    private String checkType;
-    @Column(name = "DATE_FROM")
-    private Date dateFrom;
-    @Column(name = "DATE_TO")
-    private Date dateTo;
-    @Column(name = "APPROVERS")
-    private String approvers;
-    @Column(name = "CHECK_STATUS")
-    private String checkStatus;
-    @Column(name = "APPROVE_DATE")
-    private Date approveDate;
-    @Column(name = "NOTATION")
-    private String notation;
-    @Column(name = "SEND_STATUS")
-    private String sendStatus;
-    @Column(name = "INSPECTION_WORK")
-    private String inspectionWork;
-    
-    public Long getId() {
-        return id;
-    }
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_CONCLUDE_FOLLOW_HDR_GEN")
+	@SequenceGenerator(name = "IA_CONCLUDE_FOLLOW_HDR_GEN", sequenceName = "IA_CONCLUDE_FOLLOW_HDR_SEQ", allocationSize = 1)
+	@Column(name = "ID")
+	private Long id;
+	@Column(name = "PROJECT_NAME")
+	private String projectName;
+	@Column(name = "BUDGET_YEAR")
+	private String budgetYear;
+	@Column(name = "CHECK_TYPE")
+	private String checkType;
+	@Column(name = "DATE_FROM")
+	private Date dateFrom;
+	@Column(name = "DATE_TO")
+	private Date dateTo;
+	@Column(name = "APPROVERS")
+	private String approvers;
+	@Column(name = "CHECK_STATUS")
+	private String checkStatus;
+	@Column(name = "APPROVE_DATE")
+	private Date approveDate;
+	@Column(name = "NOTATION")
+	private String notation;
+	@Column(name = "SEND_STATUS")
+	private String sendStatus;
+	@Column(name = "INSPECTION_WORK")
+	private String inspectionWork;
+	@Column(name = "PROJECT_CODE")
+	private String projectCode;
+	@Column(name = "EXCISE_CODE")
+	private String exciseCode;
+	@Column(name = "SECTOR")
+	private String sector;
+	@Column(name = "AREA")
+	private String area;
+	@Column(name = "SYSTEM_NAME")
+	private String systemName;
+	@Column(name = "SYSTEM_CODE")
+	private String systemCode;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getProjectName() {
-        return projectName;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
+	public String getProjectName() {
+		return projectName;
+	}
 
-    public String getBudgetYear() {
-        return budgetYear;
-    }
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
 
-    public void setBudgetYear(String budgetYear) {
-        this.budgetYear = budgetYear;
-    }
+	public String getBudgetYear() {
+		return budgetYear;
+	}
 
-    public String getCheckType() {
-        return checkType;
-    }
+	public void setBudgetYear(String budgetYear) {
+		this.budgetYear = budgetYear;
+	}
 
-    public void setCheckType(String checkType) {
-        this.checkType = checkType;
-    }
+	public String getCheckType() {
+		return checkType;
+	}
 
-    public Date getDateFrom() {
-        return dateFrom;
-    }
+	public void setCheckType(String checkType) {
+		this.checkType = checkType;
+	}
 
-    public void setDateFrom(Date dateFrom) {
-        this.dateFrom = dateFrom;
-    }
+	public Date getDateFrom() {
+		return dateFrom;
+	}
 
-    public Date getDateTo() {
-        return dateTo;
-    }
+	public void setDateFrom(Date dateFrom) {
+		this.dateFrom = dateFrom;
+	}
 
-    public void setDateTo(Date dateTo) {
-        this.dateTo = dateTo;
-    }
+	public Date getDateTo() {
+		return dateTo;
+	}
 
-    public String getApprovers() {
-        return approvers;
-    }
+	public void setDateTo(Date dateTo) {
+		this.dateTo = dateTo;
+	}
 
-    public void setApprovers(String approvers) {
-        this.approvers = approvers;
-    }
+	public String getApprovers() {
+		return approvers;
+	}
 
-    public String getCheckStatus() {
-        return checkStatus;
-    }
+	public void setApprovers(String approvers) {
+		this.approvers = approvers;
+	}
 
-    public void setCheckStatus(String checkStatus) {
-        this.checkStatus = checkStatus;
-    }
+	public String getCheckStatus() {
+		return checkStatus;
+	}
 
-    public Date getApproveDate() {
-        return approveDate;
-    }
+	public void setCheckStatus(String checkStatus) {
+		this.checkStatus = checkStatus;
+	}
 
-    public void setApproveDate(Date approveDate) {
-        this.approveDate = approveDate;
-    }
+	public Date getApproveDate() {
+		return approveDate;
+	}
 
-    public String getNotation() {
-        return notation;
-    }
+	public void setApproveDate(Date approveDate) {
+		this.approveDate = approveDate;
+	}
 
-    public void setNotation(String notation) {
-        this.notation = notation;
-    }
+	public String getNotation() {
+		return notation;
+	}
+
+	public void setNotation(String notation) {
+		this.notation = notation;
+	}
+
+	public String getSendStatus() {
+		return sendStatus;
+	}
+
+	public void setSendStatus(String sendStatus) {
+		this.sendStatus = sendStatus;
+	}
+
+	public String getInspectionWork() {
+		return inspectionWork;
+	}
+
+	public void setInspectionWork(String inspectionWork) {
+		this.inspectionWork = inspectionWork;
+	}
+
+	public String getProjectCode() {
+		return projectCode;
+	}
+
+	public void setProjectCode(String projectCode) {
+		this.projectCode = projectCode;
+	}
+
+	public String getExciseCode() {
+		return exciseCode;
+	}
+
+	public void setExciseCode(String exciseCode) {
+		this.exciseCode = exciseCode;
+	}
+
+	public String getSector() {
+		return sector;
+	}
+
+	public void setSector(String sector) {
+		this.sector = sector;
+	}
+
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+
+	public String getSystemName() {
+		return systemName;
+	}
+
+	public void setSystemName(String systemName) {
+		this.systemName = systemName;
+	}
+
+	public String getSystemCode() {
+		return systemCode;
+	}
+
+	public void setSystemCode(String systemCode) {
+		this.systemCode = systemCode;
+	}
 
 }
