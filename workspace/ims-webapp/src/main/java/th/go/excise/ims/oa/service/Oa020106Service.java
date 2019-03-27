@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import th.go.excise.ims.oa.persistence.entity.OaCustomerLicen;
 import th.go.excise.ims.oa.persistence.entity.OaCustomerLicenDetail;
+import th.go.excise.ims.oa.persistence.entity.OaLicensePlan;
 import th.go.excise.ims.oa.persistence.repository.OaCustomerLicenRepository;
+import th.go.excise.ims.oa.persistence.repository.OaLicensePlanRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa020106JdbcRepository;
 import th.go.excise.ims.oa.vo.Oa020106ButtonVo;
 import th.go.excise.ims.oa.vo.Oa020106FormVo;
@@ -22,6 +24,9 @@ public class Oa020106Service {
 	
 	@Autowired
 	OaCustomerLicenRepository oaCustomerLicenRep;
+	
+	@Autowired
+	OaLicensePlanRepository oaLicensePlanRep;
 	
 	public Oa020106ButtonVo findButtonById(String idStr) {
 		BigDecimal id = new BigDecimal(idStr);
@@ -65,6 +70,14 @@ public class Oa020106Service {
 			response.setDetails(details);
 		}
 		return response;
+	}
+	
+	public void completeLicense(String idStr) {
+		BigDecimal id = new BigDecimal(idStr);
+		Optional<OaLicensePlan> licenOpt = oaLicensePlanRep.findById(id);
+		if (licenOpt.isPresent()) {
+			licenOpt.get().setStatus("5");
+		}
 	}
 
 }

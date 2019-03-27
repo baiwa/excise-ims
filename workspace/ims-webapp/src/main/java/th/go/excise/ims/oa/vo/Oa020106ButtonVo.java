@@ -10,6 +10,15 @@ public class Oa020106ButtonVo {
 	private String licenseNo;
 	private String licenseType;
 	private String identifyType;
+	private String oldCustomer;
+
+	public String getOldCustomer() {
+		return oldCustomer;
+	}
+
+	public void setOldCustomer(String oldCustomer) {
+		this.oldCustomer = oldCustomer;
+	}
 
 	public String getIdentifyType() {
 		return identifyType;

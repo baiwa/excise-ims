@@ -27,6 +27,7 @@ public class Oa020106JdbcRepository {
 		sql.append(" SELECT LP.OA_PLAN_ID AS OA_PLAN_ID, ");
 		sql.append(" CL.LICENSE_TYPE AS LICENSE_TYPE, ");
 		sql.append(" CL.IDENTIFY_TYPE AS IDENTIFY_TYPE, ");
+		sql.append(" CL.OLD_CUSTOMER AS OLD_CUSTOMER, ");
 		sql.append(" LU.OA_LUBRICANTS_ID AS OA_LUBRICANTS_ID, ");
 		sql.append(" CL.LICENSE_NO AS LICENSE_NO, ");
 		sql.append(" LUD.OA_LUBRICANTS_DTL_ID AS OA_LUBRICANTS_DTL_ID, ");
@@ -55,6 +56,7 @@ public class Oa020106JdbcRepository {
 			vo.setOaLubricantsDtlId(rs.getBigDecimal("OA_LUBRICANTS_DTL_ID"));
 			vo.setOaLubricantsId(rs.getBigDecimal("OA_LUBRICANTS_ID"));
 			vo.setIdentifyType(rs.getString("IDENTIFY_TYPE"));
+			vo.setOldCustomer(rs.getString("OLD_CUSTOMER"));
 			return vo;
 		}
 	};

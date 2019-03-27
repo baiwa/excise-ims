@@ -29,10 +29,8 @@ public class Oa0202JdbcRepository {
 		sql.append(" INNER JOIN OA_CUSTOMER_LICEN CL ");
 		sql.append(" ON CL.OA_CUSLICENSE_ID = LP.LICENSE_ID ");
 		sql.append(" WHERE LP.IS_DELETED     = 'N' ");
-		sql.append(" AND (TRUNC(SYSDATE + ?)) <= LP.AUDIT_START ");
-		sql.append(" AND (TRUNC(SYSDATE + 1 + ?)- 1/(24*60*60)) >= LP.AUDIT_START ");
-		sql.append(" AND LP.STATUS = '3' ");
-		params.add(addDate);
+		sql.append(" AND ((TRUNC(SYSDATE + ?)) BETWEEN LP.AUDIT_START AND LP.AUDIT_END) ");
+		sql.append(" AND LP.STATUS = '2' ");
 		params.add(addDate);
 		if (StringUtils.isNotBlank(offCode)) {
 			sql.append(" AND LP.OFFICE_CODE LIKE ? ");

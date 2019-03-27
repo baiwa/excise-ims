@@ -101,6 +101,11 @@ public class WebSecurityConfig {
 //					.sessionRegistry(sessionRegistry())
 					;
 			
+			http
+			   .headers()
+			      .frameOptions()
+			         .sameOrigin();
+			
 			http.csrf().disable();
 		}
 		

@@ -27,17 +27,25 @@ public class Oa0208JdbcRepository {
 	public List<Oa0208Vo> findByBudgetYear(String budgetYear, String offCode) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" SELECT * ");
-		sql.append(" FROM OA_PLAN ");
-		sql.append(" WHERE IS_DELETED = 'N' AND STATUS = 2 "); // WAITING FOR APPROVE
+		sql.append(" SELECT O.OA_PLAN_ID AS OA_PLAN_ID, ");
+		sql.append(" O.AUDIT_START AS AUDIT_START, ");
+		sql.append(" O.AUDIT_END AS AUDIT_END, ");
+		sql.append(" O.FISCOL_YEAR AS FISCOL_YEAR ");
+		sql.append(" FROM OA_PLAN O ");
+		sql.append(" INNER JOIN OA_LICENSE_PLAN P ");
+		sql.append(" ON P.OA_PLAN_ID = O.OA_PLAN_ID ");
+		sql.append(" INNER JOIN OA_CUSTOMER_LICEN H ");
+		sql.append(" ON H.OA_CUSLICENSE_ID = P.LICENSE_ID ");
+		sql.append(" WHERE O.IS_DELETED = 'N' AND O.STATUS = 2 "); // WAITING FOR APPROVE
 		if (StringUtils.isNotBlank(budgetYear)) {
 			params.add(budgetYear);
-			sql.append(" AND FISCOL_YEAR = ? ");
+			sql.append(" AND O.FISCOL_YEAR = ? ");
 		}
 		if (StringUtils.isNotBlank(OaOfficeCode.officeCodeLike(offCode))) {
 			params.add(OaOfficeCode.officeCodeLike(offCode) + '%');
-			sql.append(" AND OFFICE_CODE LIKE ? ");
+			sql.append(" AND O.OFFICE_CODE LIKE ? ");
 		}
+		sql.append(" GROUP BY O.OA_PLAN_ID, O.AUDIT_START, O.AUDIT_END, O.FISCOL_YEAR ");
 		List<Oa0208Vo> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(), dataRowmapper);
 		return datas;
 	}
@@ -77,17 +85,27 @@ public class Oa0208JdbcRepository {
 	public List<Oa0208ApproveVo> findApproveByBudgetYear(String budgetYear, String offCode) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" SELECT * ");
-		sql.append(" FROM OA_PLAN ");
-		sql.append(" WHERE IS_DELETED = 'N' AND STATUS = 3 "); // APPROVED
+		sql.append(" SELECT O.OA_PLAN_ID AS OA_PLAN_ID, ");
+		sql.append(" O.AUDIT_START AS AUDIT_START, ");
+		sql.append(" O.AUDIT_END AS AUDIT_END, ");
+		sql.append(" O.FISCOL_YEAR AS FISCOL_YEAR, ");
+		sql.append(" O.OFFICE_CODE AS OFFICE_CODE, ");
+		sql.append(" O.STATUS AS STATUS ");
+		sql.append(" FROM OA_PLAN O ");
+		sql.append(" INNER JOIN OA_LICENSE_PLAN P ");
+		sql.append(" ON P.OA_PLAN_ID = O.OA_PLAN_ID ");
+		sql.append(" INNER JOIN OA_CUSTOMER_LICEN H ");
+		sql.append(" ON H.OA_CUSLICENSE_ID = P.LICENSE_ID ");
+		sql.append(" WHERE O.IS_DELETED = 'N' AND O.STATUS = 3 "); // APPROVED
 		if (StringUtils.isNotBlank(budgetYear)) {
 			params.add(budgetYear);
-			sql.append(" AND FISCOL_YEAR = ? ");
+			sql.append(" AND O.FISCOL_YEAR = ? ");
 		}
 		if (StringUtils.isNotBlank(OaOfficeCode.officeCodeLike(offCode))) {
 			params.add(OaOfficeCode.officeCodeLike(offCode) + '%');
-			sql.append(" AND OFFICE_CODE LIKE ? ");
+			sql.append(" AND O.OFFICE_CODE LIKE ? ");
 		}
+		sql.append(" GROUP BY O.OA_PLAN_ID, O.AUDIT_START, O.AUDIT_END, O.FISCOL_YEAR, O.OFFICE_CODE, O.STATUS ");
 		List<Oa0208ApproveVo> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(), dataApproveRowmapper);
 		return datas;
 	}
