@@ -77,6 +77,7 @@ public class Oa020106Service {
 		Optional<OaLicensePlan> licenOpt = oaLicensePlanRep.findById(id);
 		if (licenOpt.isPresent()) {
 			licenOpt.get().setStatus("5");
+			oaLicensePlanRep.save(licenOpt.get());
 		}
 	}
 

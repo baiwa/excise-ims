@@ -110,8 +110,8 @@ public class Oa0107JdbcRepository {
 	public List<OaHydCustomerLicenDtl> findByLicenseId(BigDecimal licenseId) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" SELECT * FROM OA_HYD_CUSTOMER_LICEN_DTL WHERE IS_DELETED='N' ");
-		sql.append(" AND OA_CUSLICENSE_ID = ? AND IS_DELETED = 'N' ");
+		sql.append(" SELECT * FROM OA_HYD_CUSTOMER_LICEN_DTL WHERE ");
+		sql.append(" OA_CUSLICENSE_ID = ? AND IS_DELETED = 'N' ");
 		params.add(licenseId);
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<OaHydCustomerLicenDtl> lists = commonJdbcTemplate.query(sql.toString(), params.toArray(),
