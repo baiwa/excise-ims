@@ -47,7 +47,7 @@
 	<pageHeader>
 		<band height="343" splitType="Stretch">
 			<image isUsingCache="false">
-				<reportElement isPrintRepeatedValues="false" x="204" y="0" width="55" height="59" uuid="8acc1f25-cb66-413d-a9c0-e08548d94a46"/>
+				<reportElement isPrintRepeatedValues="false" x="204" y="0" width="60" height="60" uuid="8acc1f25-cb66-413d-a9c0-e08548d94a46"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField>

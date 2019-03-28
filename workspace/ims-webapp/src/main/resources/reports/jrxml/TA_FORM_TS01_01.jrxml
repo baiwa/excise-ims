@@ -44,9 +44,9 @@
 		<![CDATA[]]>
 	</queryString>
 	<pageHeader>
-		<band height="730" splitType="Stretch">
+		<band height="731" splitType="Stretch">
 			<image isUsingCache="false">
-				<reportElement isPrintRepeatedValues="false" x="195" y="0" width="50" height="50" uuid="8acc1f25-cb66-413d-a9c0-e08548d94a46"/>
+				<reportElement isPrintRepeatedValues="false" x="195" y="0" width="60" height="60" uuid="8acc1f25-cb66-413d-a9c0-e08548d94a46"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField>
@@ -55,7 +55,7 @@
 				<textFieldExpression><![CDATA["ตส. ๐๑-๐๑"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="Topic" x="0" y="55" width="460" height="25" uuid="861f16b3-f966-4bff-b95f-486a25fe61c6"/>
+				<reportElement style="Topic" x="0" y="66" width="460" height="25" uuid="861f16b3-f966-4bff-b95f-486a25fe61c6"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["บันทึกผลการวิเคราะห์การชำระภาษีสรรพสามิต"]]></textFieldExpression>
 			</textField>
