@@ -15,8 +15,4 @@ public interface TaFormTs0114DtlRepository extends CommonJpaCrudRepository<TaFor
     @Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.formTsNumber = :formTsNumber")
     public List<TaFormTs0114Dtl> findByFormTsNumber(@Param("formTsNumber") String formTsNumber);
 
-    TaFormTs0114Dtl findByFormTsNumberAndFormTs0114DtlId(Long formTs0114DtlId);
-
-    @Override
-    Optional<TaFormTs0114Dtl> findById(Long aLong);
 }

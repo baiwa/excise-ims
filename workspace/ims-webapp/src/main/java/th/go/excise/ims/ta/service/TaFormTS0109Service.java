@@ -19,6 +19,7 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSIO
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.IMG_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
@@ -99,17 +100,21 @@ public class TaFormTS0109Service extends AbstractTaFormTSService<TaFormTS0109Vo,
 
     @Override
     public List<String> getFormTsNumberList() {
-        // TODO Auto-generated method stub
-        return null;
+        return formTs0109Repository.findFormTsNumber();
     }
 
     @Override
     public TaFormTS0109Vo getFormTS(String formTsNumber) {
-        // TODO Auto-generated method stub
-        return null;
+        TaFormTS0109Vo formTS0109Vo = null;
+        if (StringUtils.isNotBlank(formTsNumber)) {
+            TaFormTs0109 entiry = formTs0109Repository.findByFormTsNumber(formTsNumber);
+            formTS0109Vo = new TaFormTS0109Vo();
+            if (entiry != null) {
+
+                toVo(formTS0109Vo, entiry);
+            }
+        }
+        return formTS0109Vo;
     }
 
-    public List<String> getformTs0109List() {
-        return formTs0109Repository.findFormTsNumber();
-    }
 }

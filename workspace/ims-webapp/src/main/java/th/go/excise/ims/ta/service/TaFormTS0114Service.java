@@ -65,15 +65,15 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
         TaFormTs0114Dtl taFormTs0114Dtl = null;
         if (StringUtils.isNotEmpty(formTS0114Vo.getFormTsNumber())) {
 
-            taFormTs0114DtlRepository.setIsDeleteY(officeCode, budgetYear, formTS0114Vo.getFormTsNumber()) ;
+            taFormTs0114DtlRepository.setIsDeleteY(officeCode, budgetYear, formTS0114Vo.getFormTsNumber());
 
             taFormTs0114Hdr = taFormTs0114HdrRepository.findByFormTsNumber(formTS0114Vo.getFormTsNumber());
             toEntity(taFormTs0114Hdr, formTS0114Vo);
-            for (TaFormTS0114DtlVo formDtl: formTS0114Vo.getTaFormTS0114DtlVoList()) {
+            for (TaFormTS0114DtlVo formDtl : formTS0114Vo.getTaFormTS0114DtlVoList()) {
                 //TaFormTS0114DtlVo dtlVo = taFormTs0114DtlRepository.formDtl(officeCode, budgetYear, formTS0114Vo.getFormTsNumber());
                 //taFormTs0114Dtl = taFormTs0114DtlRepository.findByFormTsNumberAndFormTs0114DtlId(formTS0114Vo.getFormTsNumber(), Long.valueOf(dtlVo.getFormTs0114DtlId()));
                 Optional<TaFormTs0114Dtl> dtlVo = taFormTs0114DtlRepository.findById(Long.valueOf(formDtl.getFormTs0114DtlId()));
-                if (dtlVo.isPresent()){
+                if (dtlVo.isPresent()) {
                     taFormTs0114Dtl = dtlVo.get();
                     taFormTs0114Dtl.setTaxDate(formDtl.getTaxDate());
                     taFormTs0114Dtl.setDutyTypeText(formDtl.getDutyTypeText());
@@ -82,9 +82,9 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
                     taFormTs0114Dtl.setExtraAmt(formDtl.getExtraAmt());
                     taFormTs0114Dtl.setMoiAmt(formDtl.getMoiAmt());
                     taFormTs0114Dtl.setSumAmt(formDtl.getSumAmt());
-                }else{
+                } else {
                     taFormTs0114Dtl = new TaFormTs0114Dtl();
-                    toEntityDtl(taFormTs0114Dtl,formDtl);
+                    toEntityDtl(taFormTs0114Dtl, formDtl);
                 }
 
                 taFormTs0114DtlRepository.save(taFormTs0114Dtl);
@@ -101,6 +101,9 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
             for (TaFormTS0114DtlVo formDtl : formTS0114Vo.getTaFormTS0114DtlVoList()) {
                 taFormTs0114Dtl = new TaFormTs0114Dtl();
                 toEntityDtl(taFormTs0114Dtl, formDtl);
+                taFormTs0114Dtl.setOfficeCode(officeCode);
+                taFormTs0114Dtl.setBudgetYear(budgetYear);
+                taFormTs0114Dtl.setFormTsNumber(taFormTs0114Hdr.getFormTsNumber());
                 taFormTs0114DtlRepository.save(taFormTs0114Dtl);
             }
         }
@@ -168,19 +171,40 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
 
     @Override
     public List<String> getFormTsNumberList() {
-        // TODO Auto-generated method stub
-        return null;
+        String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+        return taFormTs0114HdrRepository.findFormTsNumberByOfficeCode(officeCode);
     }
 
     @Override
     public TaFormTS0114Vo getFormTS(String formTsNumber) {
-        // TODO Auto-generated method stub
-        return null;
+        TaFormTS0114Vo taFormTS0114Vo = new TaFormTS0114Vo();
+        TaFormTs0114Hdr hdr = taFormTs0114HdrRepository.findByFormTsNumber(formTsNumber);
+        if (hdr != null) {
+            toVo(taFormTS0114Vo, hdr);
+        }
+        List<TaFormTs0114Dtl> dtls = taFormTs0114DtlRepository.findByFormTsNumber(formTsNumber);
+        List<TaFormTS0114DtlVo> dtlVos = new ArrayList<>();
+        for (TaFormTs0114Dtl dtl : dtls) {
+            TaFormTS0114DtlVo dtlVo = new TaFormTS0114DtlVo();
+            toVoDtl(dtlVo, dtl);
+            dtlVos.add(dtlVo);
+        }
+
+        taFormTS0114Vo.setTaFormTS0114DtlVoList(dtlVos);
+        return taFormTS0114Vo;
     }
 
-    public void toEntityDtl(TaFormTs0114Dtl entity, TaFormTS0114DtlVo vo) {
+    private void toEntityDtl(TaFormTs0114Dtl entity, TaFormTS0114DtlVo vo) {
         try {
             BeanUtils.copyProperties(entity, vo);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            logger.warn(e.getMessage(), e);
+        }
+    }
+
+    private void toVoDtl(TaFormTS0114DtlVo vo, TaFormTs0114Dtl entity) {
+        try {
+            BeanUtils.copyProperties(vo, entity);
         } catch (IllegalAccessException | InvocationTargetException e) {
             logger.warn(e.getMessage(), e);
         }

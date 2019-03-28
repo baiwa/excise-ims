@@ -372,12 +372,30 @@ public class TaFormTSController {
 	// TODO Form TS number ts
 	@GetMapping("/formTSNumber/ta-form-ts0109")
 	@ResponseBody
-	public ResponseData<List<String>> formTsList() {
+	public ResponseData<List<String>> formTs09List() {
 		logger.info("formTs0109List");
 
 		ResponseData<List<String>> response = new ResponseData<>();
 		try {
-			response.setData(taFormTS0109Service.getformTs0109List());
+			response.setData(taFormTS0109Service.getFormTsNumberList());
+			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+
+	// TODO Form TS number ts
+	@GetMapping("/formTSNumber/ta-form-ts0114")
+	@ResponseBody
+	public ResponseData<List<String>> formTs14List() {
+		logger.info("formTs0109List");
+
+		ResponseData<List<String>> response = new ResponseData<>();
+		try {
+			response.setData(taFormTS0114Service.getFormTsNumberList());
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
