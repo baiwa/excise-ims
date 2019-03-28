@@ -9,15 +9,14 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
-import th.go.excise.ims.oa.vo.Oa0202Vo;
+import th.go.excise.ims.oa.vo.Oa0102Vo;
 
 @Repository
-public class Oa0202JdbcRepository {
-
+public class Oa0102JdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
-	public List<Oa0202Vo> findAll(String offCode, int addDate) {
+	public List<Oa0102Vo> findAll(String offCode, int addDate) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 		sql.append(" SELECT LP.OA_PLAN_ID         AS OA_PLAN_ID, ");
@@ -26,7 +25,7 @@ public class Oa0202JdbcRepository {
 		sql.append("   CL.COMPANY_NAME            AS COMPANY_NAME, ");
 		sql.append("   CL.ADDRESS                 AS ADDRESS ");
 		sql.append(" FROM OA_LICENSE_PLAN LP ");
-		sql.append(" INNER JOIN OA_CUSTOMER_LICEN CL ");
+		sql.append(" INNER JOIN OA_HYD_CUSTOMER_LICEN CL ");
 		sql.append(" ON CL.OA_CUSLICENSE_ID = LP.LICENSE_ID ");
 		sql.append(" WHERE LP.IS_DELETED     = 'N' ");
 		sql.append(" AND ((TRUNC(SYSDATE + ?)) BETWEEN LP.AUDIT_START AND LP.AUDIT_END) ");
@@ -37,8 +36,8 @@ public class Oa0202JdbcRepository {
 			params.add(offCode + "%");
 		}
 		@SuppressWarnings({ "unchecked", "rawtypes" })
-		List<Oa0202Vo> lists = commonJdbcTemplate.query(sql.toString(), params.toArray(),
-				new BeanPropertyRowMapper(Oa0202Vo.class));
+		List<Oa0102Vo> lists = commonJdbcTemplate.query(sql.toString(), params.toArray(),
+				new BeanPropertyRowMapper(Oa0102Vo.class));
 		return lists;
 	}
 	

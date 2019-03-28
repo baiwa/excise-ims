@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import th.go.excise.ims.oa.persistence.entity.OaHydCustomer;
 import th.go.excise.ims.oa.persistence.entity.OaHydCustomerLicen;
 import th.go.excise.ims.oa.persistence.entity.OaHydCustomerLicenDtl;
+import th.go.excise.ims.oa.persistence.entity.OaLicensePlan;
 import th.go.excise.ims.oa.persistence.repository.OaHydCustomerLicenRepository;
 import th.go.excise.ims.oa.persistence.repository.OaHydCustomerRepository;
+import th.go.excise.ims.oa.persistence.repository.OaLicensePlanRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa010106JdbcRepository;
 import th.go.excise.ims.oa.vo.Oa010106ButtonVo;
 import th.go.excise.ims.oa.vo.Oa010106FormVo;
@@ -23,20 +25,20 @@ public class Oa010106Service {
 	private Oa010106JdbcRepository oa010106JdbcRep;
 	
 	@Autowired
-	private OaHydCustomerRepository oaHydCustomerRep;
+	private OaHydCustomerLicenRepository oaHydCustomerLicenRep;
 	
 	@Autowired
-	private OaHydCustomerLicenRepository oaHydCustomerLicenRep;
+	OaLicensePlanRepository oaLicensePlanRep;
 	
 	public Oa010106ButtonVo findButtonById(String idStr) {
 		BigDecimal id = new BigDecimal(idStr);
 		return oa010106JdbcRep.findButtonIdById(id);
 	}
 	
-	public OaHydCustomer findById(String idStr) {
+	public OaHydCustomerLicen findById(String idStr) {
 		BigDecimal id = new BigDecimal(idStr);
-		Optional<OaHydCustomer> optOaCustomer = oaHydCustomerRep.findById(id);
-		OaHydCustomer  oaCustomer =  new OaHydCustomer();
+		Optional<OaHydCustomerLicen> optOaCustomer = oaHydCustomerLicenRep.findById(id);
+		OaHydCustomerLicen  oaCustomer =  new OaHydCustomerLicen();
 		if (optOaCustomer.isPresent()) {
 			oaCustomer = optOaCustomer.get();
 		}
@@ -70,6 +72,15 @@ public class Oa010106Service {
 			response.setDetails(details);
 		}
 		return response;
+	}
+	
+	public void completeLicense(String idStr) {
+		BigDecimal id = new BigDecimal(idStr);
+		Optional<OaLicensePlan> licenOpt = oaLicensePlanRep.findById(id);
+		if (licenOpt.isPresent()) {
+			licenOpt.get().setStatus("5");
+			oaLicensePlanRep.save(licenOpt.get());
+		}
 	}
 	
 }
