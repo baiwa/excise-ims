@@ -21,6 +21,8 @@ public class Int1107Service {
 		List<Int11Vo> dataList = int1107JdbcRepository.getData(form);
 		for (Int11Vo int11Vo : dataList) {
 			int11Vo.setApproveDateString(ConvertDateUtils.formatDateToString(int11Vo.getApproveDate(), ConvertDateUtils.DD_MM_YYYY ,ConvertDateUtils.LOCAL_EN));
+			int11Vo.setDateFromString(ConvertDateUtils.formatDateToString(int11Vo.getDateFrom(), ConvertDateUtils.DD_MM_YYYY));
+			int11Vo.setDateToString(ConvertDateUtils.formatDateToString(int11Vo.getDateTo(), ConvertDateUtils.DD_MM_YYYY));
 		}
 		DataTableAjax<Int11Vo> dataTableAjax = new DataTableAjax<Int11Vo>();
 		dataTableAjax.setData(dataList);

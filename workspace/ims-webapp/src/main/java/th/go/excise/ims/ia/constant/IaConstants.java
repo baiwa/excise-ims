@@ -49,6 +49,9 @@ public class IaConstants {
 //	************************* Risk Factors *************************
 
 	public class IA_DATA_EVALUATE {
+		
+		public static final String PARAM_GROUP_CODE = "IA_DATA_EVALUATE";
+		
 		public static final String NEW = "NEW";
 		public static final String QUESTIONNAIRE = "questionnaire";
 		public static final String BUDGET_PROJECT = "budget_project";
@@ -60,6 +63,9 @@ public class IaConstants {
 	}
 
 	public class IA_RISK_COLOR {
+		
+		public static final String PARAM_GROUP_CODE = "IA_RISK_COLOR";
+		
 		public static final String COLOR1 = "เขียวเข้ม";
 		public static final String COLOR1_CODE = "#22911ef5";
 
