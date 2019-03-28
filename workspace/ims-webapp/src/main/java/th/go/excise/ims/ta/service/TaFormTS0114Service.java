@@ -3,10 +3,7 @@ package th.go.excise.ims.ta.service;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.transaction.Transactional;
 
@@ -73,17 +70,18 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
             taFormTs0114Hdr = taFormTs0114HdrRepository.findByFormTsNumber(formTS0114Vo.getFormTsNumber());
             toEntity(taFormTs0114Hdr, formTS0114Vo);
             for (TaFormTS0114DtlVo formDtl: formTS0114Vo.getTaFormTS0114DtlVoList()) {
-                TaFormTS0114DtlVo dtlVo = taFormTs0114DtlRepository.formDtl(officeCode, budgetYear, formTS0114Vo.getFormTsNumber());
-
-                if (dtlVo != null){
-                    taFormTs0114Dtl = taFormTs0114DtlRepository.findByFormTsNumberAndFormTs0114DtlId(formTS0114Vo.getFormTsNumber(), Long.valueOf(dtlVo.getFormTs0114DtlId()));
-                    taFormTs0114Dtl.setTaxDate(dtlVo.getTaxDate());
-                    taFormTs0114Dtl.setDutyTypeText(dtlVo.getDutyTypeText());
-                    taFormTs0114Dtl.setTaxAmt(dtlVo.getTaxAmt());
-                    taFormTs0114Dtl.setFineAmt(dtlVo.getFineAmt());
-                    taFormTs0114Dtl.setExtraAmt(dtlVo.getExtraAmt());
-                    taFormTs0114Dtl.setMoiAmt(dtlVo.getMoiAmt());
-                    taFormTs0114Dtl.setSumAmt(dtlVo.getSumAmt());
+                //TaFormTS0114DtlVo dtlVo = taFormTs0114DtlRepository.formDtl(officeCode, budgetYear, formTS0114Vo.getFormTsNumber());
+                //taFormTs0114Dtl = taFormTs0114DtlRepository.findByFormTsNumberAndFormTs0114DtlId(formTS0114Vo.getFormTsNumber(), Long.valueOf(dtlVo.getFormTs0114DtlId()));
+                Optional<TaFormTs0114Dtl> dtlVo = taFormTs0114DtlRepository.findById(Long.valueOf(formDtl.getFormTs0114DtlId()));
+                if (dtlVo.isPresent()){
+                    taFormTs0114Dtl = dtlVo.get();
+                    taFormTs0114Dtl.setTaxDate(formDtl.getTaxDate());
+                    taFormTs0114Dtl.setDutyTypeText(formDtl.getDutyTypeText());
+                    taFormTs0114Dtl.setTaxAmt(formDtl.getTaxAmt());
+                    taFormTs0114Dtl.setFineAmt(formDtl.getFineAmt());
+                    taFormTs0114Dtl.setExtraAmt(formDtl.getExtraAmt());
+                    taFormTs0114Dtl.setMoiAmt(formDtl.getMoiAmt());
+                    taFormTs0114Dtl.setSumAmt(formDtl.getSumAmt());
                 }else{
                     taFormTs0114Dtl = new TaFormTs0114Dtl();
                     toEntityDtl(taFormTs0114Dtl,formDtl);
