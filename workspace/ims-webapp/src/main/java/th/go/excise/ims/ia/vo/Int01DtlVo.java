@@ -18,6 +18,8 @@ public class Int01DtlVo {
 	private String inspector;
 	private String officer;
 	private String position;
+	
+	private Int01MonthVo monthVo = null;
 
 	public BigDecimal getPlanDtlId() {
 		return planDtlId;
@@ -113,6 +115,14 @@ public class Int01DtlVo {
 
 	public void setPosition(String position) {
 		this.position = position;
+	}
+
+	public Int01MonthVo getMonthVo() {
+		return monthVo;
+	}
+
+	public void setMonthVo(Int01MonthVo monthVo) {
+		this.monthVo = monthVo;
 	}
 
 }
