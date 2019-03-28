@@ -29,7 +29,7 @@ public class Oa0102JdbcRepository {
 		sql.append(" ON CL.OA_CUSLICENSE_ID = LP.LICENSE_ID ");
 		sql.append(" WHERE LP.IS_DELETED     = 'N' ");
 		sql.append(" AND ((TRUNC(SYSDATE + ?)) BETWEEN LP.AUDIT_START AND LP.AUDIT_END) ");
-		sql.append(" AND LP.STATUS = '3' ");
+		sql.append(" AND (LP.STATUS = '3' OR LP.STATUS = '5') ");
 		params.add(addDate);
 		if (StringUtils.isNotBlank(offCode)) {
 			sql.append(" AND LP.OFFICE_CODE LIKE ? ");

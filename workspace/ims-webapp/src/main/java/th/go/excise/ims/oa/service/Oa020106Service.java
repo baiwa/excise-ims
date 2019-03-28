@@ -76,7 +76,7 @@ public class Oa020106Service {
 		BigDecimal id = new BigDecimal(idStr);
 		Optional<OaLicensePlan> licenOpt = oaLicensePlanRep.findById(id);
 		if (licenOpt.isPresent()) {
-			licenOpt.get().setStatus("5");
+			licenOpt.get().setStatus("6");
 			oaLicensePlanRep.save(licenOpt.get());
 		}
 	}
