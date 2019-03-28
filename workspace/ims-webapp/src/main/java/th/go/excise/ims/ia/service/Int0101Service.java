@@ -36,6 +36,7 @@ public class Int0101Service {
 				entityPlanDay.setPlanHdrId(dataFilterDtl.getPlanHdrId());
 				entityPlanDay.setPlanDtlId(dataFilterDtl.getPlanDtlId());
 				entityPlanDay.setActivity(planDay.getActivity());
+				entityPlanDay.setActivityStatus(IaConstants.PLAN_DAY_ACTIVITY_STATUS.PARAM_CODE_I);
 				if(planDay.getActivity().equals(IaConstants.PLAN_DAY_WORDING.ENGAGEMENT_FULL)) {
 					entityPlanDay.setActivityShort(IaConstants.PLAN_DAY_WORDING.ENGAGEMENT_ABBREVIATION);
 				}else if(planDay.getActivity().equals(IaConstants.PLAN_DAY_WORDING.AUDIT_FULL)) {
