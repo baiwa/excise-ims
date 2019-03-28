@@ -10,11 +10,14 @@ import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRe
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0109;
 
 public interface TaFormTs0109Repository extends CommonJpaCrudRepository<TaFormTs0109, Long> {
-	
-	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.formTsNumber = :formTsNumber")
-	public TaFormTs0109 findByFormTsNumber(@Param("formTsNumber") String formTsNumber);
-	
-	@Query("select new java.lang.String(e.formTsNumber) from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode order by e.formTsNumber desc")
-	public List<String> findFormTsNumberByOfficeCode(@Param("officeCode") String officeCode);
-	
+
+    @Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.formTsNumber = :formTsNumber")
+    public TaFormTs0109 findByFormTsNumber(@Param("formTsNumber") String formTsNumber);
+
+    @Query("select new java.lang.String(e.formTsNumber) from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode order by e.formTsNumber desc")
+    public List<String> findFormTsNumberByOfficeCode(@Param("officeCode") String officeCode);
+
+    @Query("select new java.lang.String(e.formTsNumber) from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' order by e.formTsNumber desc")
+    List<String> findFormTsNumber();
+
 }

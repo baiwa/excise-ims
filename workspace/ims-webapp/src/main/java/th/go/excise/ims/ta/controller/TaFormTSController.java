@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,18 +13,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import th.co.baiwa.buckwaframework.common.bean.ReportJsonBean;
+import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.rest.adapter.BigDecimalTypeAdapter;
 import th.co.baiwa.buckwaframework.common.rest.adapter.DateThaiTypeAdapter;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ta.service.TaFormTS0101Service;
 import th.go.excise.ims.ta.service.TaFormTS0107Service;
 import th.go.excise.ims.ta.service.TaFormTS0108Service;
@@ -42,24 +44,7 @@ import th.go.excise.ims.ta.service.TaFormTS0118Service;
 import th.go.excise.ims.ta.service.TaFormTS0119Service;
 import th.go.excise.ims.ta.service.TaFormTS0120Service;
 import th.go.excise.ims.ta.service.TaFormTS0121Service;
-import th.go.excise.ims.ta.vo.TaFormTS0101Vo;
-import th.go.excise.ims.ta.vo.TaFormTS0107Vo;
-import th.go.excise.ims.ta.vo.TaFormTS0108Vo;
-import th.go.excise.ims.ta.vo.TaFormTS0109Vo;
-import th.go.excise.ims.ta.vo.TaFormTS01101Vo;
-import th.go.excise.ims.ta.vo.TaFormTS0110Vo;
-import th.go.excise.ims.ta.vo.TaFormTS0111Vo;
-import th.go.excise.ims.ta.vo.TaFormTS0112Vo;
-import th.go.excise.ims.ta.vo.TaFormTS0113Vo;
-import th.go.excise.ims.ta.vo.TaFormTS01142Vo;
-import th.go.excise.ims.ta.vo.TaFormTS0114Vo;
-import th.go.excise.ims.ta.vo.TaFormTS0115Vo;
-import th.go.excise.ims.ta.vo.TaFormTS0116Vo;
-import th.go.excise.ims.ta.vo.TaFormTS01171Vo;
-import th.go.excise.ims.ta.vo.TaFormTS0118Vo;
-import th.go.excise.ims.ta.vo.TaFormTS0119Vo;
-import th.go.excise.ims.ta.vo.TaFormTS0120Vo;
-import th.go.excise.ims.ta.vo.TaFormTS0121Vo;
+import th.go.excise.ims.ta.vo.*;
 
 @Controller
 @RequestMapping("/api/ta/report")
@@ -157,7 +142,7 @@ public class TaFormTSController {
 		FileCopyUtils.copy(reportFile, response.getOutputStream());
 	}
 
-	// TODO TaFormTS0110
+	// TODO TaFormTS0109
 	@PostMapping("/pdf/ta-form-ts0109")
 	public void processFormTS0109(@ModelAttribute ReportJsonBean reportJsonBean, HttpServletResponse response) throws Exception {
 		logger.info("processFormTS0110");
@@ -382,4 +367,23 @@ public class TaFormTSController {
 		FileCopyUtils.copy(reportFile, response.getOutputStream());
 	}
 
+	// TODO =================>  Get Form TS number
+
+	// TODO Form TS number ts
+	@GetMapping("/formTSNumber/ta-form-ts0109")
+	@ResponseBody
+	public ResponseData<List<String>> formTsList() {
+		logger.info("formTs0109List");
+
+		ResponseData<List<String>> response = new ResponseData<>();
+		try {
+			response.setData(taFormTS0109Service.getformTs0109List());
+			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
 }
