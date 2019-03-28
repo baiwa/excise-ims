@@ -48,14 +48,12 @@
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement style="Topic" x="377" y="38" width="76" height="22" uuid="6d1514d6-b255-44a7-b908-8165137638d3"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom">
-					<font size="16"/>
-				</textElement>
+				<reportElement style="Topic" x="380" y="35" width="80" height="25" uuid="6d1514d6-b255-44a7-b908-8165137638d3"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตส. ๐๑-๒๑"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Topic" x="0" y="65" width="452" height="25" uuid="861f16b3-f966-4bff-b95f-486a25fe61c6"/>
+				<reportElement style="Topic" x="0" y="60" width="460" height="25" uuid="861f16b3-f966-4bff-b95f-486a25fe61c6"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA["บันทึกมอบหมายสำนวนการตรวจสอบภาษีสรรพสามิต"]]></textFieldExpression>
 			</textField>
@@ -65,7 +63,7 @@
 				<textFieldExpression><![CDATA["ราย"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="20" y="90" width="433" height="20" uuid="d9294cfd-f3b5-450c-8484-37d25fcbdfdb"/>
+				<reportElement style="TextDetail" x="20" y="90" width="440" height="20" uuid="d9294cfd-f3b5-450c-8484-37d25fcbdfdb"/>
 				<textFieldExpression><![CDATA[$P{factoryName}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -74,20 +72,20 @@
 				<textFieldExpression><![CDATA["ระหว่าง"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="38" y="110" width="166" height="20" uuid="716d20ac-5599-491e-a1e7-8200d69a8b11"/>
+				<reportElement style="TextDetail" x="38" y="110" width="174" height="20" uuid="716d20ac-5599-491e-a1e7-8200d69a8b11"/>
 				<textFieldExpression><![CDATA[$P{officerSendFullName1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="204" y="110" width="38" height="20" uuid="eb3ef058-adbb-4af5-a077-c9ca222acef1"/>
+				<reportElement style="TextDetail" x="212" y="110" width="38" height="20" uuid="eb3ef058-adbb-4af5-a077-c9ca222acef1"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตำแหน่ง"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="242" y="110" width="172" height="20" uuid="886dfb4b-afd5-4cc0-87bd-a509900c4cff"/>
+				<reportElement style="TextDetail" x="250" y="110" width="172" height="20" uuid="886dfb4b-afd5-4cc0-87bd-a509900c4cff"/>
 				<textFieldExpression><![CDATA[$P{officerSendPosition1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="414" y="110" width="38" height="20" uuid="733e3928-547a-4919-bb9c-cc1b5c708431"/>
+				<reportElement style="TextDetail" x="422" y="110" width="38" height="20" uuid="733e3928-547a-4919-bb9c-cc1b5c708431"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ผู้ส่งมอบ"]]></textFieldExpression>
 			</textField>
@@ -97,20 +95,20 @@
 				<textFieldExpression><![CDATA["กับ"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="20" y="130" width="184" height="20" uuid="55aba319-fb35-41ea-a68a-aaa4ff7484a4"/>
+				<reportElement style="TextDetail" x="20" y="130" width="192" height="20" uuid="55aba319-fb35-41ea-a68a-aaa4ff7484a4"/>
 				<textFieldExpression><![CDATA[$P{officerReceiveFullName1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="204" y="130" width="38" height="20" uuid="f0a7ab8f-f2ed-4200-bc04-1f9c0a2e97c1"/>
+				<reportElement style="TextDetail" x="212" y="130" width="38" height="20" uuid="f0a7ab8f-f2ed-4200-bc04-1f9c0a2e97c1"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตำแหน่ง"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="242" y="130" width="172" height="20" uuid="324ac691-7863-461d-a90e-40c84ed9e6ce"/>
+				<reportElement style="TextDetail" x="250" y="130" width="172" height="20" uuid="324ac691-7863-461d-a90e-40c84ed9e6ce"/>
 				<textFieldExpression><![CDATA[$P{officerReceivePosition1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="414" y="130" width="38" height="20" uuid="04d2a5ee-3302-4922-94a7-da70cd9fc15a"/>
+				<reportElement style="TextDetail" x="422" y="130" width="38" height="20" uuid="04d2a5ee-3302-4922-94a7-da70cd9fc15a"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ผู้รับมอบ"]]></textFieldExpression>
 			</textField>
@@ -469,31 +467,31 @@
 				<textFieldExpression><![CDATA[")"]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="20" y="104" width="433" height="1" uuid="b0febeeb-6db3-4a14-b29f-dd5ce9d50a19"/>
+				<reportElement x="20" y="104" width="440" height="1" uuid="b0febeeb-6db3-4a14-b29f-dd5ce9d50a19"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="35" y="124" width="169" height="1" uuid="836caadf-2e43-46f4-bfa8-69186d9a6d75"/>
+				<reportElement x="35" y="124" width="177" height="1" uuid="836caadf-2e43-46f4-bfa8-69186d9a6d75"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="17" y="144" width="187" height="1" uuid="ebeea299-9d01-43d7-a0e2-c8ea4311dc9e"/>
+				<reportElement x="17" y="144" width="195" height="1" uuid="ebeea299-9d01-43d7-a0e2-c8ea4311dc9e"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="240" y="124" width="174" height="1" uuid="cb3e0afd-49f8-4266-958a-7f489f57f1d2"/>
+				<reportElement x="244" y="124" width="178" height="1" uuid="cb3e0afd-49f8-4266-958a-7f489f57f1d2"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="240" y="144" width="174" height="1" uuid="d0a7477f-7abd-4596-9644-027f695558f6"/>
+				<reportElement x="244" y="144" width="178" height="1" uuid="d0a7477f-7abd-4596-9644-027f695558f6"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>

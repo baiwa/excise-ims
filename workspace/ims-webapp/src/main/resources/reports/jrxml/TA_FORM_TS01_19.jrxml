@@ -8,14 +8,8 @@
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<property name="com.jaspersoft.studio.report.description" value=""/>
-	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="Angsana New" fontSize="18" isBold="true"/>
+	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
 	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="16"/>
-	<style name="data" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="Angsana New" fontSize="14">
-		<box>
-			<pen lineWidth="0.0" lineStyle="Dotted"/>
-			<bottomPen lineWidth="3.0" lineStyle="Dotted"/>
-		</box>
-	</style>
 	<parameter name="logo" class="java.io.InputStream"/>
 	<parameter name="formTsNumber" class="java.lang.String"/>
 	<parameter name="bookNumber1" class="java.lang.String"/>
@@ -58,17 +52,13 @@
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement style="TextDetail" x="390" y="38" width="70" height="22" uuid="6d1514d6-b255-44a7-b908-8165137638d3"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New" isBold="true"/>
-				</textElement>
+				<reportElement style="Topic" x="380" y="35" width="80" height="25" uuid="6d1514d6-b255-44a7-b908-8165137638d3"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตส. ๐๑-๑๙"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Topic" x="0" y="60" width="460" height="28" uuid="861f16b3-f966-4bff-b95f-486a25fe61c6"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA["หนังสือแจ้งผลการตรวจสอบภาษีสรรพสามิต"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -446,9 +436,7 @@
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="183" y="550" width="7" height="22" uuid="aa3e5c87-ac39-4e9d-81a6-4fd4424a4c45"/>
-				<textElement verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -458,9 +446,7 @@
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="370" y="550" width="7" height="22" uuid="f8f99d2c-1177-476e-8db2-ba4eaee4434e"/>
-				<textElement verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[")"]]></textFieldExpression>
 			</textField>
 			<textField>

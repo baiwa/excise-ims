@@ -42,7 +42,7 @@ public class TaFormTS0121ServiceTest {
 		formTS0121Vo.setDocAcct1No("2");
 		formTS0121Vo.setDocAcct2Num("30");
 		formTS0121Vo.setDocAcct2No("4");
-		formTS0121Vo.setDocOther("DocOther DocOther DocOther DocOther");
+		formTS0121Vo.setDocOther("ลองดูนะ ดูดีๆ เลยนะ ดู ไม่ดู ดูไม่ดู ดู ไม่เสียตังค์ x x x ลองดูนะ ดูดีๆ เลยนะ ดู ไม่ดู ดูไม่ดู ดู ไม่เสียตังค์ x x x ลองดูนะ ดูดีๆ เลยนะ ดู ไม่ดู ดูไม่ดู ดู ไม่เสียตังค์");
 		formTS0121Vo.setSignOfficerFullName1("SignOfficerFullName1");
 		formTS0121Vo.setSignOfficerFullName2("SignOfficerFullName2");
 		formTS0121Vo.setSignWitnessFullName1("SignWitnessFullName1");

@@ -54,7 +54,7 @@
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement style="Topic" x="384" y="35" width="76" height="25" uuid="6d1514d6-b255-44a7-b908-8165137638d3"/>
+				<reportElement style="Topic" x="380" y="35" width="80" height="25" uuid="6d1514d6-b255-44a7-b908-8165137638d3"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตส. ๐๑-๒๐"]]></textFieldExpression>
 			</textField>
