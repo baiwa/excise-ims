@@ -77,7 +77,7 @@ public class Int030101Service {
 
 	@Autowired
 	private ExcelUtil excelUtil;
-	
+
 	@Autowired
 	private UpdateStatusRiskFactorsService updateStatusRiskFactorsService;
 
@@ -150,8 +150,7 @@ public class Int030101Service {
 		formVo.setRiskIndicators(form.getRiskIndicators());
 
 		res.setInt030101FormVo(formVo);
-		
-		
+
 		return res;
 	}
 
@@ -203,7 +202,7 @@ public class Int030101Service {
 
 			// Id.
 			cell = row.createCell(cellNum);
-			cell.setCellValue(item.getId().toString()+"-"+item.getProjectCode());
+			cell.setCellValue(item.getId().toString() + "-" + item.getProjectCode());
 			cellNum++;
 
 			cell = row.createCell(cellNum);
@@ -252,7 +251,7 @@ public class Int030101Service {
 				sheet.setColumnWidth(i, 76 * 200);
 			} else if (i == 3) {
 				sheet.setColumnWidth(i, 76 * 80);
-			} 
+			}
 		}
 
 		/* Detail */
@@ -273,7 +272,7 @@ public class Int030101Service {
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getId().toString()+"-"+data.getSystemCode());
+			cell.setCellValue(data.getId().toString() + "-" + data.getSystemCode());
 			cellNum++;
 
 			cell = row.createCell(cellNum);
@@ -371,13 +370,12 @@ public class Int030101Service {
 		return outByteStream;
 	}
 
-
 	private List<IaRiskSelectCase> saveDataList(String budgetYear, BigDecimal inspectionWork) {
 		// WEB SERVICE QUERY
 		// NOW MOCKING DATA
-		
+
 //		Data mock inspectionWork 5
-		
+
 		List<String> dataList1 = new ArrayList<String>();
 		dataList1.add("30100");
 		dataList1.add("40100");
@@ -392,9 +390,9 @@ public class Int030101Service {
 		dataList3.add("สำนักงานสรรพสามิตพื้นที่เชียงใหม่");
 		dataList3.add("สำนักงานสรรพสามิตพื้นที่นครราชสีมา");
 		dataList3.add("สำนักงานสรรพสามิตพื้นที่อุดรธานี");
-		
+
 //		Data mock inspectionWork 4 
-		
+
 		List<String> dataList6 = new ArrayList<String>();
 		dataList6.add("2");
 		dataList6.add("3");
@@ -405,19 +403,18 @@ public class Int030101Service {
 		dataList7.add("ระบบความปลอดภัยกลาง (SSO) http://authen.excise.go.th/oiddas");
 		dataList7.add("ระบบงานอีเมล์กรมสรรพสามิต http://mail.excise.go.th");
 
-		
 //		Data mock inspectionWork 3
-		
+
 		List<String> dataList4 = new ArrayList<String>();
 		dataList4.add("10");
 		dataList4.add("20");
 		dataList4.add("30");
-		
+
 		List<String> dataList5 = new ArrayList<String>();
 		dataList5.add("แผนหลักเกณฑ์การประเมินผลการปฏิบัติราชการ");
 		dataList5.add("โครงการตามยุทธศาตร์");
 		dataList5.add("แผนบริหารความเสี่ยง");
-		
+
 		List<IaRiskSelectCase> selectCases = new ArrayList<>();
 		if (inspectionWork.compareTo(new BigDecimal(3)) == 0) {
 			IaRiskSelectCase selectCase = new IaRiskSelectCase();
@@ -485,14 +482,14 @@ public class Int030101Service {
 					String idSelectAndprojectCode = dataFormatter.formatCellValue(row.getCell(columns++));
 					BigDecimal idSelect = null;
 					String idSelectString = StringUtils.trim(idSelectAndprojectCode).split("-")[0];
-					idSelect = (StringUtils.isNotBlank(idSelectString))?new BigDecimal(idSelectString):idSelect;
+					idSelect = (StringUtils.isNotBlank(idSelectString)) ? new BigDecimal(idSelectString) : idSelect;
 					dataUpload.setIdSelect(idSelect);
-					
+
 					String projectCode = StringUtils.trim(idSelectAndprojectCode).split("-")[1];
-					projectCode = (StringUtils.isNotBlank(projectCode))?projectCode:"";
+					projectCode = (StringUtils.isNotBlank(projectCode)) ? projectCode : "";
 					dataUpload.setProjectCode(projectCode);
 					dataUpload.setProject(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
-					
+
 					dataUpload.setRiskCost(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
 					// dataUpload.setInspectionWork(new
 					// BigDecimal(dataFormatter.formatCellValue(row.getCell(columns++))));
@@ -512,13 +509,13 @@ public class Int030101Service {
 					String idSelectAndSystemCode = dataFormatter.formatCellValue(row.getCell(columns++));
 					BigDecimal idSelect = null;
 					String idSelectString = StringUtils.trim(idSelectAndSystemCode).split("-")[0];
-					idSelect = (StringUtils.isNotBlank(idSelectString))?new BigDecimal(idSelectString):idSelect;
+					idSelect = (StringUtils.isNotBlank(idSelectString)) ? new BigDecimal(idSelectString) : idSelect;
 					dataUpload.setIdSelect(idSelect);
-					
+
 					String systemCode = StringUtils.trim(idSelectAndSystemCode).split("-")[1];
-					systemCode = (StringUtils.isNotBlank(systemCode))?systemCode:"";
+					systemCode = (StringUtils.isNotBlank(systemCode)) ? systemCode : "";
 					dataUpload.setSystemCode(systemCode);
-					
+
 					dataUpload.setSystemName(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
 					dataUpload.setRiskCost(StringUtils.trim(dataFormatter.formatCellValue(row.getCell(columns++))));
 					// dataUpload.setInspectionWork(new
@@ -581,26 +578,29 @@ public class Int030101Service {
 
 		List<IaRiskFactorsData> dataList = form.getIaRiskFactorsDataList();
 		IaRiskFactorsData dataSet = null;
-		for (IaRiskFactorsData iaRiskFactorsData : dataList) {
-			dataSet = new IaRiskFactorsData();
-			dataSet.setBudgetYear(form.getBudgetYear());
-			dataSet.setInspectionWork(form.getInspectionWork());
-			dataSet.setIdFactors(form.getIdFactors());
-			dataSet.setIdSelect(iaRiskFactorsData.getIdSelect());
-			
-			dataSet.setProjectCode(iaRiskFactorsData.getProjectCode());
-			dataSet.setProject(iaRiskFactorsData.getProject());
-			
-			dataSet.setExciseCode(iaRiskFactorsData.getExciseCode());
-			dataSet.setSector(iaRiskFactorsData.getSector());
-			dataSet.setArea(iaRiskFactorsData.getArea());
-			
-			dataSet.setSystemCode(iaRiskFactorsData.getSystemCode());
-			dataSet.setSystemName(iaRiskFactorsData.getSystemName());
-			
-			dataSet.setRiskCost(iaRiskFactorsData.getRiskCost());
-			iaRiskFactorsDataRepository.save(dataSet);
+		if (dataList != null) {
+			for (IaRiskFactorsData iaRiskFactorsData : dataList) {
+				dataSet = new IaRiskFactorsData();
+				dataSet.setBudgetYear(form.getBudgetYear());
+				dataSet.setInspectionWork(form.getInspectionWork());
+				dataSet.setIdFactors(form.getIdFactors());
+				dataSet.setIdSelect(iaRiskFactorsData.getIdSelect());
+
+				dataSet.setProjectCode(iaRiskFactorsData.getProjectCode());
+				dataSet.setProject(iaRiskFactorsData.getProject());
+
+				dataSet.setExciseCode(iaRiskFactorsData.getExciseCode());
+				dataSet.setSector(iaRiskFactorsData.getSector());
+				dataSet.setArea(iaRiskFactorsData.getArea());
+
+				dataSet.setSystemCode(iaRiskFactorsData.getSystemCode());
+				dataSet.setSystemName(iaRiskFactorsData.getSystemName());
+
+				dataSet.setRiskCost(iaRiskFactorsData.getRiskCost());
+				iaRiskFactorsDataRepository.save(dataSet);
+			}
 		}
+
 	}
 
 	@Transactional

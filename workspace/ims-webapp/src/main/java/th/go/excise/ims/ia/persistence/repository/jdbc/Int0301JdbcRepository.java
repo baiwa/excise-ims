@@ -86,6 +86,7 @@ public class Int0301JdbcRepository {
 			   irf.setCreatedBy(rs.getString("CREATED_BY"));
 			   irf.setIdMaster(rs.getBigDecimal("ID_MASTER"));
 			   irf.setDataEvaluate(rs.getString("DATA_EVALUATE"));
+			   
 			   // vo.setCreatedDateDesc(ConvertDateUtils.formatDateToString(rs
 			   // .getDate("CREATED_DATE"), ConvertDateUtils.DD_MM_YYYY,
 			   // ConvertDateUtils.LOCAL_TH));
@@ -161,7 +162,7 @@ public class Int0301JdbcRepository {
 			   
 			   irfc.setRiskUnit(rs.getString("RISK_UNIT"));
 			   irfc.setPercent(rs.getBigDecimal("PERCENT"));
-
+			   irfc.setRiskIndicators(rs.getString("RISK_INDICATORS"));
 			   vo.setIaRiskFactorsConfig(irfc);
 			   return vo;
 		}
