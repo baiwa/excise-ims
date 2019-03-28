@@ -4,17 +4,16 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.report.description" value=""/>
-	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="21" isBold="true"/>
+	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
 	<style name="TextDetail" hTextAlign="Left" vTextAlign="Middle" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="16">
 		<paragraph lineSpacing="1_1_2"/>
 	</style>
-	<style name="data" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="14">
+	<style name="data" scaleImage="FillFrame" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="12">
 		<box>
 			<pen lineWidth="0.0" lineStyle="Dotted"/>
 			<bottomPen lineWidth="3.0" lineStyle="Dotted"/>
 		</box>
 	</style>
-	<style name="DetailText" fontName="TH Sarabun New" fontSize="12"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -35,10 +34,8 @@
 	<pageHeader>
 		<band height="60" splitType="Stretch">
 			<textField>
-				<reportElement style="TextDetail" positionType="Float" x="0" y="30" width="800" height="25" uuid="1dc131dd-50dd-4698-b94e-9d16eb35bae1"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New" size="18" isBold="true"/>
-				</textElement>
+				<reportElement style="Topic" positionType="Float" x="0" y="30" width="800" height="25" uuid="1dc131dd-50dd-4698-b94e-9d16eb35bae1"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA["สมุดสั่งการออกตรวจสอบภาษีสรรพสามิต"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -59,9 +56,7 @@
 				</box>
 				<textField>
 					<reportElement style="TextDetail" x="0" y="22" width="40" height="22" uuid="8f02f1d6-b606-4753-b719-5759ebc84752"/>
-					<textElement textAlignment="Center" verticalAlignment="Top">
-						<font fontName="TH Sarabun New"/>
-					</textElement>
+					<textElement textAlignment="Center" verticalAlignment="Top"/>
 					<textFieldExpression><![CDATA["เลขที่"]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -167,9 +162,7 @@
 				</box>
 				<textField>
 					<reportElement style="TextDetail" x="0" y="22" width="70" height="22" uuid="c8c4a5c9-0caf-4543-b899-fc35f58b2fee"/>
-					<textElement textAlignment="Center" verticalAlignment="Bottom">
-						<font fontName="TH Sarabun New" size="16"/>
-					</textElement>
+					<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 					<textFieldExpression><![CDATA["เรื่องอะไร"]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -262,113 +255,91 @@
 	<detail>
 		<band height="22" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="" style="DetailText" positionType="Float" x="0" y="0" width="40" height="22" uuid="c0f2329a-912b-455b-8847-ea33008e0605"/>
+				<reportElement key="" style="data" positionType="Float" x="0" y="0" width="40" height="22" uuid="c0f2329a-912b-455b-8847-ea33008e0605"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="14"/>
-				</textElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{recNo}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="DetailText" stretchType="ContainerHeight" x="40" y="0" width="80" height="22" uuid="11a39111-1578-4623-a6ad-683c34f5ef6d"/>
+				<reportElement style="data" stretchType="ContainerHeight" x="40" y="0" width="80" height="22" uuid="11a39111-1578-4623-a6ad-683c34f5ef6d"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="14"/>
-				</textElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("d MMM yyyy",new Locale("th", "TH")).format($F{auditDate})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="DetailText" stretchType="ContainerHeight" x="120" y="0" width="90" height="22" uuid="2c228c65-2a95-41bf-9136-22dce7fa0f75"/>
+				<reportElement style="data" stretchType="ContainerHeight" x="120" y="0" width="90" height="22" uuid="2c228c65-2a95-41bf-9136-22dce7fa0f75"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="14"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{officerFullName}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="DetailText" stretchType="ContainerHeight" x="210" y="0" width="70" height="22" uuid="6049ec45-a411-421b-93b2-c7c3e1d7d65a"/>
+				<reportElement style="data" stretchType="ContainerHeight" x="210" y="0" width="70" height="22" uuid="6049ec45-a411-421b-93b2-c7c3e1d7d65a"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="14"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{officerPosition}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="DetailText" stretchType="ContainerHeight" x="280" y="0" width="70" height="22" uuid="71d0f559-8213-414a-9b4c-037a6c97d9b6"/>
+				<reportElement style="data" stretchType="ContainerHeight" x="280" y="0" width="70" height="22" uuid="71d0f559-8213-414a-9b4c-037a6c97d9b6"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="14"/>
-				</textElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{auditTime}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="DetailText" stretchType="ContainerHeight" x="350" y="0" width="70" height="22" uuid="56954d45-91a7-4dcb-bff5-48ee7a31ea0d"/>
+				<reportElement style="data" stretchType="ContainerHeight" x="350" y="0" width="70" height="22" uuid="56954d45-91a7-4dcb-bff5-48ee7a31ea0d"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="14"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{auditDest}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="DetailText" stretchType="ContainerHeight" x="420" y="0" width="70" height="22" uuid="4a909bb5-f103-411c-ac66-a4952d92c052"/>
+				<reportElement style="data" stretchType="ContainerHeight" x="420" y="0" width="70" height="22" uuid="4a909bb5-f103-411c-ac66-a4952d92c052"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="14"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{auditTopic}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="DetailText" stretchType="ContainerHeight" x="490" y="0" width="70" height="22" uuid="75824da9-b938-4238-888d-24e91c4785f8"/>
+				<reportElement style="data" stretchType="ContainerHeight" x="490" y="0" width="70" height="22" uuid="75824da9-b938-4238-888d-24e91c4785f8"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="14"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{approvedAck}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="DetailText" stretchType="ContainerHeight" x="560" y="0" width="70" height="22" uuid="9fc6ef27-ec65-4c02-a21b-57cccaa9993e"/>
+				<reportElement style="data" stretchType="ContainerHeight" x="560" y="0" width="70" height="22" uuid="9fc6ef27-ec65-4c02-a21b-57cccaa9993e"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="14"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{officerAck}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="DetailText" stretchType="ContainerHeight" x="630" y="0" width="100" height="22" uuid="65f17b85-621e-4960-b97e-7495535b5a59"/>
+				<reportElement style="data" stretchType="ContainerHeight" x="630" y="0" width="100" height="22" uuid="65f17b85-621e-4960-b97e-7495535b5a59"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="14"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{auditResultDate}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="DetailText" stretchType="ContainerHeight" x="730" y="0" width="70" height="22" uuid="a85f7769-a9f7-4dcf-96f9-2510f4bee09b"/>
+				<reportElement style="data" stretchType="ContainerHeight" x="730" y="0" width="70" height="22" uuid="a85f7769-a9f7-4dcf-96f9-2510f4bee09b"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="14"/>
-				</textElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{auditComment}]]></textFieldExpression>
 			</textField>
 		</band>
