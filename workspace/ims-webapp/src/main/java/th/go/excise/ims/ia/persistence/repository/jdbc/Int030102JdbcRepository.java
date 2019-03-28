@@ -64,6 +64,42 @@ public class Int030102JdbcRepository {
 		iaRiskFactorsMasterList = commonJdbcTemplate.query(sql.toString(), params.toArray(), listRowmapper);
 		return iaRiskFactorsMasterList;
 	}
+	
+	public List<Int030102Vo> listIgnoreIsDeleted(Int030102FormVo form) {
+		List<Int030102Vo> iaRiskFactorsMasterList = new ArrayList<Int030102Vo>();
+		StringBuilder sql = new StringBuilder(" SELECT  a.ID AS ID_MASTER_RES,  " + 
+				"        c.ID_CONFIG AS ID_CONFIG_RES, " + 
+				"				a.RISK_FACTORS_MASTER,   " + 
+				"				b.BUDGET_YEAR,   " + 
+				"				b.INSPECTION_WORK,   " + 
+				"				b.STATUS,   " + 
+				"				a.CREATED_BY AS CREATED_BY_RES,   " + 
+				"				a.CREATED_DATE  AS CREATED_DATE_RES,  " + 
+				"				a.DATA_EVALUATE , " + 
+				"				a.NOT_DELETE , " + 
+				"				a.SIDE , " + 
+				"        c.* " + 
+				"				FROM IA_RISK_FACTORS_MASTER a  " + 
+				"				LEFT JOIN IA_RISK_FACTORS_STATUS b  " + 
+				"				ON a.ID = b.ID_MASTER  " + 
+				"        LEFT JOIN (SELECT e.id AS ID_CONFIG,d.ID_MASTER,e.* from IA_RISK_FACTORS d  " + 
+				"                    FULL JOIN IA_RISK_FACTORS_CONFIG e  " + 
+				"                    ON d.ID = e.ID_FACTORS  " + 
+				"                    WHERE d.INSPECTION_WORK =  ?  " + 
+				"                    AND d.BUDGET_YEAR = ? ) c " + 
+				"        ON a.ID = c.ID_MASTER  " + 
+				"				WHERE a.IS_DELETED = 'N' AND  " + 
+				"				b.INSPECTION_WORK = ? " + 
+				"				AND b.BUDGET_YEAR = ? ");
+		List<Object> params = new ArrayList<Object>();
+		params.add(form.getInspectionWork());
+		params.add(form.getBudgetYear());
+		params.add(form.getInspectionWork());	
+		params.add(form.getBudgetYear());
+		sql.append(" ORDER BY a.CREATED_DATE,a.ID ASC");
+		iaRiskFactorsMasterList = commonJdbcTemplate.query(sql.toString(), params.toArray(), listRowmapper);
+		return iaRiskFactorsMasterList;
+	}
 
 
 

@@ -19,6 +19,7 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ia.service.Int0305Service;
 import th.go.excise.ims.ia.vo.Int030102Vo;
+import th.go.excise.ims.ia.vo.Int0301FormVo;
 import th.go.excise.ims.ia.vo.Int0305FormVo;
 import th.go.excise.ims.ia.vo.Int0305Vo;
 
@@ -123,6 +124,23 @@ public class Int0305Controller {
 
 		} catch (Exception e) {
 			logger.error("Int0305Controller add RiskFactors : ", e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	@PostMapping("/saveRiskFactorsConfig")
+	@ResponseBody
+	public ResponseData<String> saveRiskFactorsConfig(@RequestBody Int0305FormVo form) {
+		ResponseData<String> response = new ResponseData<String>();
+		try {	
+			int0305Service.saveRiskFactorsConfig(form);
+			response.setData("SUCCESS");
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Int0301Controller saveRiskFactorsConfig : ", e);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}

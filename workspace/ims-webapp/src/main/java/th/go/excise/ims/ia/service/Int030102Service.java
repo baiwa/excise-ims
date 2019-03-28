@@ -71,6 +71,22 @@ public class Int030102Service {
 		return iaRiskFactorsMasterList;
 	}
 	
+	public List<Int030102Vo> listIgnoreIsDeleted(Int030102FormVo form) {
+		checkAndInsertTableFactorsStatus(form);
+		List<Int030102Vo> iaRiskFactorsMasterList = new ArrayList<Int030102Vo>();
+		iaRiskFactorsMasterList = int030102JdbcRepository.listIgnoreIsDeleted(form);
+		
+		for(int i=3; i<=5;i++ ) {
+			long count = int0401JdbcRepository.findCountRowWithoutStatus(ExciseUtils.getCurrentBudgetYear(), new BigDecimal(i));
+			if (count == 0) {
+				saveDataList(ExciseUtils.getCurrentBudgetYear(), new BigDecimal(i));
+			}
+		
+		}
+		
+		return iaRiskFactorsMasterList;
+	}
+	
 	public List<Int030102FormVo> budgetYearDropdown() {
 		List<Int030102FormVo> response = int030102JdbcRepository.budgetYearDropdown();
 		return response;

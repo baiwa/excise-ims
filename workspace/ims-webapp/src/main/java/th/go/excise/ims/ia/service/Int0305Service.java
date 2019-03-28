@@ -1,13 +1,19 @@
 package th.go.excise.ims.ia.service;
 
+import java.util.Date;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.constant.IaConstants;
+import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster2;
+import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsMaster2Repository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsMasterRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaRiskFactorsMaster2JdbcRepository;
@@ -15,6 +21,7 @@ import th.go.excise.ims.ia.persistence.repository.jdbc.Int030102JdbcRepository;
 import th.go.excise.ims.ia.vo.Int030101FormVo;
 import th.go.excise.ims.ia.vo.Int030102FormVo;
 import th.go.excise.ims.ia.vo.Int030102Vo;
+import th.go.excise.ims.ia.vo.Int0301FormVo;
 import th.go.excise.ims.ia.vo.Int0305FormVo;
 
 @Service
@@ -37,13 +44,19 @@ public class Int0305Service {
 	
 	@Autowired
 	private Int030102JdbcRepository int030102JdbcRepository;
+	
+	@Autowired
+	private IaRiskFactorsConfigRepository iaRiskFactorsConfigRepository;
+	
+	@Autowired
+	private UpdateStatusRiskFactorsService updateStatusRiskFactorsService;
 
 	public List<Int030102Vo> list(Int0305FormVo form) {
 //		List<Int0305Vo> iaRiskFactorsMasterList = iaRiskFactorsMaster2JdbcRepository.list(form);
 		Int030102FormVo form030102 = new Int030102FormVo();
 		form030102.setBudgetYear(form.getBudgetYear());
 		form030102.setInspectionWork(form.getInspectionWork());
-		List<Int030102Vo> iaRiskFactorsMasterList = int030102Service.list(form030102);
+		List<Int030102Vo> iaRiskFactorsMasterList = int030102Service.listIgnoreIsDeleted(form030102);
 		
 		return iaRiskFactorsMasterList;
 	}
@@ -102,6 +115,63 @@ public class Int0305Service {
 			int030102Service.save(form030102);
 		}
 		
+	}
+	
+	@Transactional
+	public void saveRiskFactorsConfig(Int0305FormVo form) {
+		IaRiskFactorsConfig entity = new IaRiskFactorsConfig();
+		IaRiskFactorsConfig formConfig = form.getIaRiskFactorsConfig();
+		
+		entity = iaRiskFactorsConfigRepository.findById(formConfig.getId()).get();
+		
+		entity.setIdFactors(formConfig.getIdFactors());
+		entity.setInfoUsedRisk(formConfig.getInfoUsedRisk());
+
+		entity.setVerylow(formConfig.getVerylow());
+		entity.setVerylowStart(formConfig.getVerylowStart());
+		entity.setVerylowEnd(formConfig.getVerylowEnd());
+		entity.setVerylowRating(formConfig.getVerylowRating());
+		entity.setVerylowColor(formConfig.getVerylowColor());
+		entity.setVerylowCondition(formConfig.getVerylowCondition());
+
+		entity.setLow(formConfig.getLow());
+		entity.setLowStart(formConfig.getLowStart());
+		entity.setLowEnd(formConfig.getLowEnd());
+		entity.setLowRating(formConfig.getLowRating());
+		entity.setLowColor(formConfig.getLowColor());
+		entity.setLowCondition(formConfig.getLowCondition());
+
+		entity.setMedium(formConfig.getMedium());
+		entity.setMediumStart(formConfig.getMediumStart());
+		entity.setMediumEnd(formConfig.getMediumEnd());
+		entity.setMediumRating(formConfig.getMediumRating());
+		entity.setMediumColor(formConfig.getMediumColor());
+		entity.setMediumCondition(formConfig.getMediumCondition());
+
+		entity.setHigh(formConfig.getHigh());
+		entity.setHighStart(formConfig.getHighStart());
+		entity.setHighEnd(formConfig.getHighEnd());
+		entity.setHighRating(formConfig.getHighRating());
+		entity.setHighColor(formConfig.getHighColor());
+		entity.setHighCondition(formConfig.getHighCondition());
+
+		entity.setVeryhigh(formConfig.getVeryhigh());
+		entity.setVeryhighStart(formConfig.getVeryhighStart());
+		entity.setVeryhighEnd(formConfig.getVeryhighEnd());
+		entity.setVeryhighRating(formConfig.getVeryhighRating());
+		entity.setVeryhighColor(formConfig.getVeryhighColor());
+		entity.setVeryhighCondition(formConfig.getVeryhighCondition());
+
+		Date startDate = ConvertDateUtils.parseStringToDate(form.getStartDate(), ConvertDateUtils.DD_MM_YYYY);
+		entity.setStartDate(startDate);
+
+		Date endDate = ConvertDateUtils.parseStringToDate(form.getEndDate(), ConvertDateUtils.DD_MM_YYYY);
+		entity.setEndDate(endDate);
+		iaRiskFactorsConfigRepository.save(entity);
+		
+		updateStatusRiskFactorsService.updateStatusIaRiskFactors(formConfig.getIdFactors(), IaConstants.IA_STATUS_RISK_FACTORS.STATUS_2_CODE);
+		
+
 	}
 	
 }
