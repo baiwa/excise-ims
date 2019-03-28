@@ -563,18 +563,18 @@ public class Int030101Service {
 //		logger.info("dataSetConfig", dataSetConfig);
 //		iaRiskFactorsConfigRepository.save(dataSetConfig);
 
+		int030101JdbcRepository.deleteFactosData(form.getIdFactors().toString());
+		IaRiskFactorsConfig configData = iaRiskFactorsConfigRepository.findByIdFactors(form.getIdFactors());
 		if (!StringUtils.isEmpty(form.getDateFrom()) || !StringUtils.isEmpty(form.getDateTo())) {
-			int030101JdbcRepository.deleteFactosData(form.getIdFactors().toString());
-			IaRiskFactorsConfig configData = iaRiskFactorsConfigRepository.findByIdFactors(form.getIdFactors());
 			configData.setStartDate(ConvertDateUtils.parseStringToDate(form.getDateFrom(), ConvertDateUtils.DD_MM_YYYY,
 					ConvertDateUtils.LOCAL_TH));
 			configData.setEndDate(ConvertDateUtils.parseStringToDate(form.getDateTo(), ConvertDateUtils.DD_MM_YYYY,
 					ConvertDateUtils.LOCAL_TH));
-			configData.setInfoUsedRiskDesc(form.getInfoUsedRiskDesc());
-			configData.setRiskIndicators(form.getRiskIndicators());
-			configData.setRiskUnit(form.getRiskUnit());
-			iaRiskFactorsConfigRepository.save(configData);
 		}
+		configData.setInfoUsedRiskDesc(form.getInfoUsedRiskDesc());
+		configData.setRiskIndicators(form.getRiskIndicators());
+		configData.setRiskUnit(form.getRiskUnit());
+		iaRiskFactorsConfigRepository.save(configData);
 
 		List<IaRiskFactorsData> dataList = form.getIaRiskFactorsDataList();
 		IaRiskFactorsData dataSet = null;
