@@ -17,7 +17,16 @@ public class Oa0206Vo {
 	private String licenseNo;
 	private String identifyNo;
 	private String warehouseAddress;
+	private BigDecimal oaLicensePlan;
 	
+	
+	
+	public BigDecimal getOaLicensePlan() {
+		return oaLicensePlan;
+	}
+	public void setOaLicensePlan(BigDecimal oaLicensePlan) {
+		this.oaLicensePlan = oaLicensePlan;
+	}
 	public BigDecimal getCustomerId() {
 		return customerId;
 	}

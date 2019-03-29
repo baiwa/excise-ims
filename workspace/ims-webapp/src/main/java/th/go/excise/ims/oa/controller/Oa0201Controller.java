@@ -36,12 +36,31 @@ public class Oa0201Controller {
 	
 	@PutMapping("/save")
 	@ResponseBody
-	public ResponseData<Oa0201FromVo> updateById(@RequestBody Oa0201FromVo request) {
+	public ResponseData<Oa0201FromVo> save(@RequestBody Oa0201FromVo request) {
 		ResponseData<Oa0201FromVo> responseData = new ResponseData<Oa0201FromVo>();
 		Oa0201FromVo data = new Oa0201FromVo();
 		try {
 			String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 			data = oa0201Service.saveOAPlan(request,offCode);
+			responseData.setData(data);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) { 
+			logger.error("Oa02010608Controller::updateById ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
+	@PutMapping("/update")
+	@ResponseBody
+	public ResponseData<Oa0201FromVo> updateById(@RequestBody Oa0201FromVo request) {
+		ResponseData<Oa0201FromVo> responseData = new ResponseData<Oa0201FromVo>();
+		Oa0201FromVo data = new Oa0201FromVo();
+		try {
+			String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+			data = oa0201Service.updateOAPlan(request,offCode);
 			responseData.setData(data);
 			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);

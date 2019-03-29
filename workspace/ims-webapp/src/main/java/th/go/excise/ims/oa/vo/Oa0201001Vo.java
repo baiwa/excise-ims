@@ -1,12 +1,21 @@
 package th.go.excise.ims.oa.vo;
 
+import java.math.BigDecimal;
+
 import th.go.excise.ims.oa.persistence.entity.OaCustomerLicen;
 
 public class Oa0201001Vo extends OaCustomerLicen{
 
 	private String officeName1;
 	private String officeName2;
+	private BigDecimal licensePlanId;
 	
+	public BigDecimal getLicensePlanId() {
+		return licensePlanId;
+	}
+	public void setLicensePlanId(BigDecimal licensePlanId) {
+		this.licensePlanId = licensePlanId;
+	}
 	public String getOfficeName1() {
 		return officeName1;
 	}

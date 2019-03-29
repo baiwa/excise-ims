@@ -24,7 +24,10 @@ import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.go.excise.ims.oa.persistence.entity.OaHydrocarbDtl;
+import th.go.excise.ims.oa.persistence.entity.OaLubricants;
+import th.go.excise.ims.oa.persistence.entity.OaLubricantsDtl;
 import th.go.excise.ims.oa.persistence.repository.OaHydrocarbDtlRepository;
+import th.go.excise.ims.oa.persistence.repository.OaLubricantsDtlRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0206JdbcRepository;
 import th.go.excise.ims.oa.utils.OaOfficeCode;
 import th.go.excise.ims.oa.vo.Oa0206FormVo;
@@ -38,6 +41,9 @@ public class Oa0206Service {
 	
 	@Autowired
 	private OaHydrocarbDtlRepository oaHydrocarbDtlRepo;
+	
+	@Autowired 
+	private OaLubricantsDtlRepository oaLubricantsDtlRepo;
 	
 	public DataTableAjax<Oa0206Vo> filterByCriteria(Oa0206FormVo request,String officeCode) {
 		String offCode = OaOfficeCode.officeCodeLike(officeCode);
@@ -65,11 +71,11 @@ public class Oa0206Service {
 	
 	
 	@SuppressWarnings("finally")
-	public byte[] objectToPDF() {
+	public byte[] objectToPDF(String licenseId,String dtlId) {
 		byte[] content = null;
 		try {
 			Map<String, Object> params = new HashMap<String, Object>();
-			params  = setPrepareJasperOaOpe01();
+			params  = setPrepareJasperOaOpe01(licenseId,dtlId);
 			JasperPrint jasperPrint1 = ReportUtils.getJasperPrint("OA_LUB_01"+"."+ FILE_EXTENSION.JASPER, params, new JREmptyDataSource());
 			JasperPrint jasperPrint2 = ReportUtils.getJasperPrint("OA_OPE_05"+"."+ FILE_EXTENSION.JASPER, params, new JREmptyDataSource());
 			JasperPrint jasperPrint3 = ReportUtils.getJasperPrint("OA_OPE_07"+"."+ FILE_EXTENSION.JASPER, params, new JREmptyDataSource());
@@ -106,12 +112,14 @@ public class Oa0206Service {
 		}
 	}
 	
-	public Map<String, Object> setPrepareJasperOaOpe01() {
+	public Map<String, Object> setPrepareJasperOaOpe01(String licenseId,String dtlId) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		BigDecimal id = new BigDecimal("1");
-		Oa0206Vo license = oa0206JdbcRepo.getCustomerLicenseById("7");
-		Optional<OaHydrocarbDtl> oaHydrocabon = oaHydrocarbDtlRepo.findById(id);
-		OaHydrocarbDtl data = oaHydrocabon.get();
+		BigDecimal id = new BigDecimal(licenseId);
+		Oa0206Vo license = oa0206JdbcRepo.getCustomerLicenseById(id);
+//		Optional<OaHydrocarbDtl> oaHydrocabon = oaHydrocarbDtlRepo.findById(id);
+//		OaHydrocarbDtl data = oaHydrocabon.get();
+		Optional<OaLubricantsDtl> oaHydrocabon = oaLubricantsDtlRepo.findById(new BigDecimal(dtlId));
+		OaLubricantsDtl data = oaHydrocabon.get();
 		
 		params.put("licenseNo1", license.getLicenseNo());
 		params.put("licenseNo2","");

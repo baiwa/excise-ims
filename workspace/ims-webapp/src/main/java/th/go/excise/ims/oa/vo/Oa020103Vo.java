@@ -15,9 +15,15 @@ public class Oa020103Vo {
 	private String officeCode;
 	private String isDeleted;
 	private String userId;
+	private BigDecimal oaPersonAuditPlanId;
 	
 	
-	
+	public BigDecimal getOaPersonAuditPlanId() {
+		return oaPersonAuditPlanId;
+	}
+	public void setOaPersonAuditPlanId(BigDecimal oaPersonAuditPlanId) {
+		this.oaPersonAuditPlanId = oaPersonAuditPlanId;
+	}
 	public String getUserId() {
 		return userId;
 	}

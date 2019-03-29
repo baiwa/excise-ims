@@ -161,10 +161,10 @@ public class Oa0201JdbcRepository {
 	public List<Oa020103Vo> findUserAuditerByPlanId(String officeCode,BigDecimal planId){
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" SELECT WS.* FROM WS_USER WS ");
+		sql.append(" SELECT AU.OA_PERSON_AUDIT_PLAN_ID ,  WS.* FROM WS_USER WS ");
 		sql.append(" INNER JOIN WS_USER_ROLE USE_ROL ON USE_ROL.USER_ID = WS.USER_ID " );
 		sql.append(" INNER JOIN OA_PERSON_AUDIT_PLAN AU ON AU.OA_PERSON_ID = WS.WS_USER_ID  ");
-		sql.append( "  WHERE AU.OA_PLAN_ID = ? " );
+		sql.append( "  WHERE AU.OA_PLAN_ID = ? AND AU.IS_DELETED = 'N' " );
 		params.add(planId);
 //		if (StringUtils.isNotBlank(officeCode)) {
 //			sql.append(" AND OFFICE_CODE LIKE ?  ");
@@ -174,18 +174,18 @@ public class Oa0201JdbcRepository {
 		sql.append(" ORDER BY WS.WS_USER_ID ");
 		
 
-		List<Oa020103Vo> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(),userRowmapper);
+		List<Oa020103Vo> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(),auditerRowmapper);
 		return datas;
 	}
 	
 	public List<Oa0201001Vo> findLicenseByPlanId(BigDecimal planId) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" SELECT ED_SECTOR.OFF_NAME OFFICE_NAME_MIAN ,ED_AREA.OFF_NAME OFFICE_NAME_SUB , LIC.* FROM OA_CUSTOMER_LICEN LIC ");
+		sql.append(" SELECT LP.OA_LICENSE_PLAN_ID ,  ED_SECTOR.OFF_NAME OFFICE_NAME_MIAN ,ED_AREA.OFF_NAME OFFICE_NAME_SUB , LIC.* FROM OA_CUSTOMER_LICEN LIC ");
 		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_SECTOR ON ED_SECTOR.OFF_CODE = CONCAT(SUBSTR(LIC.OFF_CODE, 0, 2),'0000')");
 		sql.append("  INNER JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE = CONCAT(SUBSTR(LIC.OFF_CODE, 0, 4),'00')   ");
 		sql.append("  INNER JOIN OA_LICENSE_PLAN LP ON LP.LICENSE_ID = LIC.OA_CUSLICENSE_ID ");
-		sql.append("   WHERE LP.OA_PLAN_ID = ? ");
+		sql.append("   WHERE LP.OA_PLAN_ID = ? AND LP.IS_DELETED = 'N' ");
 		params.add(planId);
 		List<Oa0201001Vo> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(),dataRowmapper);
 
@@ -195,11 +195,11 @@ public class Oa0201JdbcRepository {
 	public List<Oa0201001Vo> findLicenseHydroByPlanId(BigDecimal planId) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" SELECT ED_SECTOR.OFF_NAME OFFICE_NAME_MIAN ,ED_AREA.OFF_NAME OFFICE_NAME_SUB , LIC.* FROM OA_HYD_CUSTOMER_LICEN LIC ");
+		sql.append(" SELECT LP.OA_LICENSE_PLAN_ID , ED_SECTOR.OFF_NAME OFFICE_NAME_MIAN ,ED_AREA.OFF_NAME OFFICE_NAME_SUB , LIC.* FROM OA_HYD_CUSTOMER_LICEN LIC ");
 		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_SECTOR ON ED_SECTOR.OFF_CODE = CONCAT(SUBSTR(LIC.OFF_CODE, 0, 2),'0000')");
 		sql.append("  INNER JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE = CONCAT(SUBSTR(LIC.OFF_CODE, 0, 4),'00')   ");
 		sql.append("  INNER JOIN OA_LICENSE_PLAN LP ON LP.LICENSE_ID = LIC.OA_CUSLICENSE_ID ");
-		sql.append("   WHERE LP.OA_PLAN_ID = ? ");
+		sql.append("   WHERE LP.OA_PLAN_ID = ? AND LP.IS_DELETED = 'N'");
 		params.add(planId);
 		List<Oa0201001Vo> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(),dataRowmapper);
 
@@ -209,7 +209,7 @@ public class Oa0201JdbcRepository {
 	public List<Oa020103Vo> findUserApprover(String officeCode){
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" SELECT WS.* FROM WS_USER WS ");
+		sql.append(" SELECT  WS.* FROM WS_USER WS ");
 		sql.append(" INNER JOIN WS_USER_ROLE USE_ROL ON USE_ROL.USER_ID = WS.USER_ID " );
 		sql.append(" WHERE USE_ROL.ROLE_CODE = 'ROLE_OA_HEAD' ");
 		if (StringUtils.isNotBlank(officeCode)) {
@@ -231,6 +231,7 @@ public class Oa0201JdbcRepository {
 			vo.setCompanyName(rs.getString("COMPANY_NAME"));
 			vo.setOaCuslicenseId(rs.getBigDecimal("OA_CUSLICENSE_ID"));
 			vo.setLicenseType(rs.getString("LICENSE_TYPE"));
+			vo.setLicensePlanId(rs.getBigDecimal("OA_LICENSE_PLAN_ID"));
 			return vo;
 		}
 	};
@@ -250,4 +251,19 @@ public class Oa0201JdbcRepository {
 		}
 	};
 
+	private RowMapper<Oa020103Vo> auditerRowmapper = new RowMapper<Oa020103Vo>() {
+
+		@Override
+		public Oa020103Vo mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Oa020103Vo vo = new Oa020103Vo();
+			vo.setOaPersonAuditPlanId(rs.getBigDecimal("OA_PERSON_AUDIT_PLAN_ID"));
+			vo.setUserThaiName(rs.getString("USER_THAI_NAME")+" "+rs.getString("USER_THAI_SURNAME"));
+			vo.setWsUserId(rs.getBigDecimal("WS_USER_ID"));
+			vo.setTitle(rs.getString("TITLE"));
+			vo.setOfficeCode(rs.getString("OFFICE_CODE"));
+			vo.setUserThaiSurname(rs.getString("USER_THAI_SURNAME"));
+			vo.setUserId(rs.getString("USER_ID"));
+			return vo;
+		}
+	};
 }
