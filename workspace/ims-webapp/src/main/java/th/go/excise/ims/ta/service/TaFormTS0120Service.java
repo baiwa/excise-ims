@@ -22,8 +22,10 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.ta.persistence.entity.TaFormTs0109;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0120;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0120Repository;
+import th.go.excise.ims.ta.vo.TaFormTS0109Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0120Vo;
 
 @Service
@@ -112,14 +114,21 @@ public class TaFormTS0120Service extends AbstractTaFormTSService<TaFormTS0120Vo,
 
 	@Override
 	public List<String> getFormTsNumberList() {
-		// TODO Auto-generated method stub
-		return null;
+		return taFormTs0120Repository.findFormTsNumber();
 	}
 
 	@Override
 	public TaFormTS0120Vo getFormTS(String formTsNumber) {
-		// TODO Auto-generated method stub
-		return null;
+		TaFormTS0120Vo formTS0120Vo = null;
+        if (StringUtils.isNotBlank(formTsNumber)) {
+            TaFormTs0120 entiry = taFormTs0120Repository.findByFormTsNumber(formTsNumber);
+            formTS0120Vo = new TaFormTS0120Vo();
+            if (entiry != null) {
+
+                toVo(formTS0120Vo, entiry);
+            }
+        }
+        return formTS0120Vo;
 	}
 
 }

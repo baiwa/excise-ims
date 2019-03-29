@@ -22,20 +22,22 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.ta.persistence.entity.TaFormTs0109;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0121;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0121Repository;
+import th.go.excise.ims.ta.vo.TaFormTS0109Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0121Vo;
 
 @Service
 public class TaFormTS0121Service extends AbstractTaFormTSService<TaFormTS0121Vo, TaFormTs0121> {
-	
-private static final Logger logger = LoggerFactory.getLogger(TaFormTS0121Service.class);
-	
+
+	private static final Logger logger = LoggerFactory.getLogger(TaFormTS0121Service.class);
+
 	@Autowired
 	private TaFormTSSequenceService taFormTSSequenceService;
 	@Autowired
 	private TaFormTs0121Repository taFormTs0121Repository;
-	
+
 	@Transactional(rollbackOn = { Exception.class })
 	public byte[] processFormTS(TaFormTS0121Vo formTS0121Vo) throws Exception {
 		logger.info("processFormTS");
@@ -45,7 +47,7 @@ private static final Logger logger = LoggerFactory.getLogger(TaFormTS0121Service
 
 		return reportFile;
 	}
-	
+
 	protected void saveFormTS(TaFormTS0121Vo formTS0121Vo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
@@ -64,12 +66,13 @@ private static final Logger logger = LoggerFactory.getLogger(TaFormTS0121Service
 		}
 		taFormTs0121Repository.save(formTS0121);
 	}
-	
+
 	public byte[] generateReport(TaFormTS0121Vo request) throws Exception, IOException {
 		Map<String, Object> params = new HashMap<String, Object>();
 
 		// get data to report
-		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE + "." + FILE_EXTENSION.JPG));
+		params.put("logo",
+				ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE + "." + FILE_EXTENSION.JPG));
 		params.put("formTsNumber", request.getFormTsNumber());
 		params.put("factoryName", request.getFactoryName());
 		params.put("officerSendFullName1", request.getOfficerSendFullName1());
@@ -96,9 +99,10 @@ private static final Logger logger = LoggerFactory.getLogger(TaFormTS0121Service
 		params.put("signOfficerFullName2", request.getSignOfficerFullName2());
 		params.put("signWitnessFullName1", request.getSignWitnessFullName1());
 		params.put("signWitnessFullName2", request.getSignWitnessFullName2());
-		
+
 		// set output
-		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_21 + "." + FILE_EXTENSION.JASPER, params);
+		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_21 + "." + FILE_EXTENSION.JASPER,
+				params);
 		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
 		ReportUtils.closeResourceFileInputStream(params);
 
@@ -107,14 +111,21 @@ private static final Logger logger = LoggerFactory.getLogger(TaFormTS0121Service
 
 	@Override
 	public List<String> getFormTsNumberList() {
-		// TODO Auto-generated method stub
-		return null;
+		return taFormTs0121Repository.findFormTsNumber();
 	}
 
 	@Override
 	public TaFormTS0121Vo getFormTS(String formTsNumber) {
-		// TODO Auto-generated method stub
-		return null;
+		TaFormTS0121Vo formTS0121Vo = null;
+		if (StringUtils.isNotBlank(formTsNumber)) {
+			TaFormTs0121 entiry = taFormTs0121Repository.findByFormTsNumber(formTsNumber);
+			formTS0121Vo = new TaFormTS0121Vo();
+			if (entiry != null) {
+
+				toVo(formTS0121Vo, entiry);
+			}
+		}
+		return formTS0121Vo;
 	}
 
 }

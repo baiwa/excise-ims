@@ -115,5 +115,41 @@ public class TaSetFormTSController {
 		}
 		return response;
 	}
+	
+	// TODO Form TS number ts 20
+	@PostMapping("/ta-form-ts0120")
+	@ResponseBody
+	public ResponseData<TaFormTS0120Vo> getformTs20List(@RequestBody TaFormTS0120Vo formVo) {
+		logger.info("getformTs20List");
+
+		ResponseData<TaFormTS0120Vo> response = new ResponseData<>();
+		try {
+			response.setData(taFormTS0120Service.getFormTS(formVo.getFormTsNumber()));
+			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	// TODO Form TS number ts 21
+	@PostMapping("/ta-form-ts0121")
+	@ResponseBody
+	public ResponseData<TaFormTS0121Vo> getformTs21List(@RequestBody TaFormTS0121Vo formVo) {
+		logger.info("getformTs21List");
+		
+		ResponseData<TaFormTS0121Vo> response = new ResponseData<>();
+		try {
+			response.setData(taFormTS0121Service.getFormTS(formVo.getFormTsNumber()));
+			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
 
 }
