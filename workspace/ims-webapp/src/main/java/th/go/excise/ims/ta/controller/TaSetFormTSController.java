@@ -40,6 +40,8 @@ import th.go.excise.ims.ta.service.TaFormTS0120Service;
 import th.go.excise.ims.ta.service.TaFormTS0121Service;
 import th.go.excise.ims.ta.vo.TaFormTS0109Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0114Vo;
+import th.go.excise.ims.ta.vo.TaFormTS0120Vo;
+import th.go.excise.ims.ta.vo.TaFormTS0121Vo;
 
 @Controller
 @RequestMapping("/api/ta/set-form-ts")
