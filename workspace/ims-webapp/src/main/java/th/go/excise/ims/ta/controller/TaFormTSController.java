@@ -171,7 +171,7 @@ public class TaFormTSController {
 
 		return response;
 	}
-	@PostMapping("/save-from-ts/{tsNumber}/{formTsNumber}")
+	@PostMapping("/save-from-ts/{tsNumber}")
 	@ResponseBody
 	public ResponseData<?> saveFromTs(@PathVariable("tsNumber") String tsNumber, @RequestBody ReportJsonBean reportJsonBean){
 		logger.info("getFormTSNumber tsNumber={}", tsNumber);
