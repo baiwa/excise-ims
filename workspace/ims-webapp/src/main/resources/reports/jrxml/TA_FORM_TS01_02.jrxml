@@ -209,7 +209,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{bookNumber1}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -226,17 +226,17 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{bookNumber2}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="9" y="112" width="68" height="1" uuid="d483a677-0691-42dd-a418-fbdf8ad2f31b"/>
+				<reportElement x="9" y="113" width="68" height="1" uuid="d483a677-0691-42dd-a418-fbdf8ad2f31b"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="85" y="112" width="62" height="1" uuid="b5e52d57-5a2b-445e-8644-5c619b9fe887"/>
+				<reportElement x="85" y="113" width="62" height="1" uuid="b5e52d57-5a2b-445e-8644-5c619b9fe887"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
@@ -250,11 +250,11 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{docDear}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="22" y="131" width="141" height="1" uuid="d212f835-32bf-47e6-b89a-d1c3daee59c6"/>
+				<reportElement x="22" y="132" width="141" height="1" uuid="d212f835-32bf-47e6-b89a-d1c3daee59c6"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
@@ -268,11 +268,11 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{docFrom}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="54" y="150" width="167" height="1" uuid="23fac64d-0802-4705-b288-7c5c62e8e7ef"/>
+				<reportElement x="54" y="151" width="167" height="1" uuid="23fac64d-0802-4705-b288-7c5c62e8e7ef"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
@@ -286,11 +286,11 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{docText1}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="19" y="169" width="441" height="1" uuid="a6f09fdd-0b44-4dab-9b7c-cee4a3dea114"/>
+				<reportElement x="19" y="170" width="441" height="1" uuid="a6f09fdd-0b44-4dab-9b7c-cee4a3dea114"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
@@ -325,7 +325,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{factoryName}]]></textFieldExpression>
 			</textField>
 			<line>
@@ -343,7 +343,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{newRegId}]]></textFieldExpression>
 			</textField>
 			<line>
@@ -361,7 +361,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{factoryAddress}]]></textFieldExpression>
 			</textField>
 			<line>
@@ -379,7 +379,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{factoryTypeText}]]></textFieldExpression>
 			</textField>
 			<line>
@@ -416,7 +416,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{auditCase}]]></textFieldExpression>
 			</textField>
 			<line>
@@ -444,7 +444,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{signOfficerFullName}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -461,7 +461,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{signOfficerPosition}]]></textFieldExpression>
 			</textField>
 			<line>
@@ -485,7 +485,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{signOfficerDate} != null ? new SimpleDateFormat("d/MMM/yyyy",new Locale("th", "TH")).format($P{signOfficerDate}) : ""]]></textFieldExpression>
 			</textField>
 			<line>
@@ -495,7 +495,7 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="197" y="382" width="120" height="1" uuid="bd1fc9ef-873e-4b9a-b96d-07f37434d39e"/>
+				<reportElement x="197" y="383" width="120" height="1" uuid="bd1fc9ef-873e-4b9a-b96d-07f37434d39e"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
@@ -509,7 +509,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{regDear}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -561,7 +561,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{signRegFullName}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -578,7 +578,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{signRegPosition}]]></textFieldExpression>
 			</textField>
 			<line>
@@ -602,7 +602,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{signRegDate} != null ? new SimpleDateFormat("d/MMM/yyyy",new Locale("th", "TH")).format($P{signRegDate}) : ""]]></textFieldExpression>
 			</textField>
 			<line>
@@ -612,7 +612,7 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="197" y="510" width="120" height="1" uuid="32c18108-7b1d-4a43-b58a-71503560eab9"/>
+				<reportElement x="197" y="511" width="120" height="1" uuid="32c18108-7b1d-4a43-b58a-71503560eab9"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
@@ -636,7 +636,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{signComdFullName}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -653,7 +653,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{signComdPosition}]]></textFieldExpression>
 			</textField>
 			<line>
@@ -677,7 +677,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{signComdDate} != null ? new SimpleDateFormat("d/MMM/yyyy",new Locale("th", "TH")).format($P{signComdDate}) : ""]]></textFieldExpression>
 			</textField>
 			<line>
@@ -687,7 +687,7 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="198" y="625" width="120" height="1" uuid="ee62f513-1d3c-4b39-810f-4b276eee274b"/>
+				<reportElement x="198" y="626" width="120" height="1" uuid="ee62f513-1d3c-4b39-810f-4b276eee274b"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
@@ -756,7 +756,7 @@
 				<textFieldExpression><![CDATA[$P{financeDear}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement style="data2" x="20" y="656" width="141" height="1" uuid="37a31756-b514-4617-b343-4d444bbf4ed9"/>
+				<reportElement style="data2" x="20" y="657" width="141" height="1" uuid="37a31756-b514-4617-b343-4d444bbf4ed9"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
@@ -780,7 +780,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{signFinanceFullName}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -797,7 +797,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{signFinancePosition}]]></textFieldExpression>
 			</textField>
 			<line>
@@ -821,17 +821,17 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{signFinanceDate} != null ? new SimpleDateFormat("d/MMM/yyyy",new Locale("th", "TH")).format($P{signFinanceDate}) : ""]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="197" y="703" width="120" height="1" uuid="c53cb191-213c-471e-bf08-c32499533dc8"/>
+				<reportElement x="197" y="704" width="120" height="1" uuid="c53cb191-213c-471e-bf08-c32499533dc8"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="197" y="718" width="120" height="1" uuid="f7410397-742b-4385-8af4-70ddc03e40d6"/>
+				<reportElement x="197" y="719" width="120" height="1" uuid="f7410397-742b-4385-8af4-70ddc03e40d6"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
