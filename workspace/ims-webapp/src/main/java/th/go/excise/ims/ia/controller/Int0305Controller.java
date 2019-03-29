@@ -147,6 +147,22 @@ public class Int0305Controller {
 		return response;
 	}
 	
-	
+	@PostMapping("/saveAll")
+	@ResponseBody
+	public ResponseData<String> saveAll(@RequestBody Int0305FormVo form) {
+		ResponseData<String> response = new ResponseData<String>();
+		try {	
+			BigDecimal idFactors = int0305Service.saveAll(form);
+//			int0305Service.updateStatusFactors(idFactors);
+			response.setData("SUCCESS");
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Int0301Controller saveAll : ", e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
 
 }
