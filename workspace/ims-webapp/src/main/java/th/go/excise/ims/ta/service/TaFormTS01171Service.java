@@ -44,7 +44,7 @@ private static final Logger logger = LoggerFactory.getLogger(TaFormTS01171Servic
 	public byte[] processFormTS(TaFormTS01171Vo formTS01171Vo) throws Exception {
 		logger.info("processFormTS");
 
-//		saveFormTS(formTS01171Vo);
+		saveFormTS(formTS01171Vo);
 		byte[] reportFile = generateReport(formTS01171Vo);
 
 		return reportFile;
@@ -125,14 +125,21 @@ private static final Logger logger = LoggerFactory.getLogger(TaFormTS01171Servic
 
 	@Override
 	public List<String> getFormTsNumberList() {
-		// TODO Auto-generated method stub
-		return null;
+		return taFormTs01171Repository.findFormTsNumber();
 	}
 
 	@Override
 	public TaFormTS01171Vo getFormTS(String formTsNumber) {
-		// TODO Auto-generated method stub
-		return null;
+		TaFormTS01171Vo formTS01171Vo = null;
+        if (StringUtils.isNotBlank(formTsNumber)) {
+            TaFormTs01171 entiry = taFormTs01171Repository.findByFormTsNumber(formTsNumber);
+            formTS01171Vo = new TaFormTS01171Vo();
+            if (entiry != null) {
+
+                toVo(formTS01171Vo, entiry);
+            }
+        }
+        return formTS01171Vo;
 	}
 
 }

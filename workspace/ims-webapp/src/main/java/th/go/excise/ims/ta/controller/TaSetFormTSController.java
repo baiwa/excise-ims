@@ -40,6 +40,7 @@ import th.go.excise.ims.ta.service.TaFormTS0120Service;
 import th.go.excise.ims.ta.service.TaFormTS0121Service;
 import th.go.excise.ims.ta.vo.TaFormTS0109Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0114Vo;
+import th.go.excise.ims.ta.vo.TaFormTS01171Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0120Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0121Vo;
 
@@ -49,7 +50,9 @@ public class TaSetFormTSController {
 
 	private static final Logger logger = LoggerFactory.getLogger(TaSetFormTSController.class);
 
-	private Gson gson = new GsonBuilder().serializeNulls().registerTypeAdapter(Date.class, DateThaiTypeAdapter.getInstance()).registerTypeAdapter(BigDecimal.class, BigDecimalTypeAdapter.getInstance()).create();
+	private Gson gson = new GsonBuilder().serializeNulls()
+			.registerTypeAdapter(Date.class, DateThaiTypeAdapter.getInstance())
+			.registerTypeAdapter(BigDecimal.class, BigDecimalTypeAdapter.getInstance()).create();
 
 	private TaFormTS0101Service taFormTS0101Service;
 	private TaFormTS0107Service taFormTS0107Service;
@@ -71,9 +74,15 @@ public class TaSetFormTSController {
 	private TaFormTS0121Service taFormTS0121Service;
 
 	@Autowired
-	public TaSetFormTSController(TaFormTS0101Service taFormTS0101Service, TaFormTS0107Service taFormTS0107Service, TaFormTS0108Service taFormTS0108Service, TaFormTS0109Service taFormTS0109Service, TaFormTS0110Service taFormTS0110Service, TaFormTS0111Service taFormTS0111Service,
-                                 TaFormTS01101Service taFormTS01101Service, TaFormTS0112Service taFormTS0112Service, TaFormTS0113Service taFormTS0113Service, TaFormTS0114Service taFormTS0114Service, TaFormTS01142Service taFormTS01142Service, TaFormTS0115Service taFormTS0115Service,
-                                 TaFormTS01171Service taFormTS01171Service, TaFormTS0118Service taFormTS0118Service, TaFormTS0116Service taFormTS0116Service, TaFormTS0119Service taFormTS0119Service, TaFormTS0120Service taFormTS0120Service, TaFormTS0121Service taFormTS0121Service) {
+	public TaSetFormTSController(TaFormTS0101Service taFormTS0101Service, TaFormTS0107Service taFormTS0107Service,
+			TaFormTS0108Service taFormTS0108Service, TaFormTS0109Service taFormTS0109Service,
+			TaFormTS0110Service taFormTS0110Service, TaFormTS0111Service taFormTS0111Service,
+			TaFormTS01101Service taFormTS01101Service, TaFormTS0112Service taFormTS0112Service,
+			TaFormTS0113Service taFormTS0113Service, TaFormTS0114Service taFormTS0114Service,
+			TaFormTS01142Service taFormTS01142Service, TaFormTS0115Service taFormTS0115Service,
+			TaFormTS01171Service taFormTS01171Service, TaFormTS0118Service taFormTS0118Service,
+			TaFormTS0116Service taFormTS0116Service, TaFormTS0119Service taFormTS0119Service,
+			TaFormTS0120Service taFormTS0120Service, TaFormTS0121Service taFormTS0121Service) {
 
 		this.taFormTS0101Service = taFormTS0101Service;
 		this.taFormTS0107Service = taFormTS0107Service;
@@ -92,12 +101,10 @@ public class TaSetFormTSController {
 		this.taFormTS0119Service = taFormTS0119Service;
 		this.taFormTS0120Service = taFormTS0120Service;
 		this.taFormTS0121Service = taFormTS0121Service;
-		this.taFormTS0116Service= taFormTS0116Service;
+		this.taFormTS0116Service = taFormTS0116Service;
 	}
 
-
-
-	// TODO =================>  Get Form TS number
+	// TODO =================> Get Form TS number
 	// TODO Form TS number ts 09
 	@PostMapping("/ta-form-ts0109")
 	@ResponseBody
@@ -111,11 +118,13 @@ public class TaSetFormTSController {
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
 		}
 		return response;
 	}
+
 	// TODO Form TS number ts 14
 	@PostMapping("/ta-form-ts0114")
 	@ResponseBody
@@ -128,12 +137,32 @@ public class TaSetFormTSController {
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
 		}
 		return response;
 	}
-	
+
+	// TODO Form TS number ts 171
+	@PostMapping("/ta-form-ts01171")
+	@ResponseBody
+	public ResponseData<TaFormTS01171Vo> getformTs171List(@RequestBody TaFormTS01171Vo formVo) {
+		logger.info("getformTs171List");
+
+		ResponseData<TaFormTS01171Vo> response = new ResponseData<>();
+		try {
+			response.setData(taFormTS01171Service.getFormTS(formVo.getFormTsNumber()));
+			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+
 	// TODO Form TS number ts 20
 	@PostMapping("/ta-form-ts0120")
 	@ResponseBody
@@ -146,25 +175,27 @@ public class TaSetFormTSController {
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
 		}
 		return response;
 	}
-	
+
 	// TODO Form TS number ts 21
 	@PostMapping("/ta-form-ts0121")
 	@ResponseBody
 	public ResponseData<TaFormTS0121Vo> getformTs21List(@RequestBody TaFormTS0121Vo formVo) {
 		logger.info("getformTs21List");
-		
+
 		ResponseData<TaFormTS0121Vo> response = new ResponseData<>();
 		try {
 			response.setData(taFormTS0121Service.getFormTS(formVo.getFormTsNumber()));
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
 		}
 		return response;

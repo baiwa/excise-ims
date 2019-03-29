@@ -44,7 +44,7 @@ public class TaFormTS0121Service extends AbstractTaFormTSService<TaFormTS0121Vo,
 	public byte[] processFormTS(TaFormTS0121Vo formTS0121Vo) throws Exception {
 		logger.info("processFormTS");
 
-//		saveFormTS(formTS0121Vo);
+		saveFormTS(formTS0121Vo);
 		byte[] reportFile = generateReport(formTS0121Vo);
 
 		return reportFile;
