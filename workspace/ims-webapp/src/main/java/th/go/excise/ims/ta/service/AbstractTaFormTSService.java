@@ -20,8 +20,8 @@ public abstract class AbstractTaFormTSService<VO extends Object, ENTITY> {
 	public abstract String getReportName();
 	
 	public abstract byte[] processFormTS(VO vo) throws Exception;
-	
-	protected abstract void saveFormTS(VO vo);
+
+	public abstract void saveFormTS(VO vo);
 	
 	public abstract byte[] generateReport(VO vo) throws Exception;
 	

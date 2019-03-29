@@ -56,7 +56,7 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 
 		return reportFile;
 	}
-	
+
 	protected void saveFormTS(TaFormTS01101ListVo formTS01101ListVo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
@@ -161,7 +161,7 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 	}
 
 	@Override
-	protected void saveFormTS(TaFormTS0110Vo vo) {
+	public void saveFormTS(TaFormTS0110Vo vo) {
 		// TODO Auto-generated method stub
 		
 	}

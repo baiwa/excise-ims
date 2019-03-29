@@ -49,8 +49,8 @@ private static final Logger logger = LoggerFactory.getLogger(TaFormTS01171Servic
 
 		return reportFile;
 	}
-	
-	protected void saveFormTS(TaFormTS01171Vo formTS01171Vo) {
+
+	public void saveFormTS(TaFormTS01171Vo formTS01171Vo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
 		logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS01171Vo.getFormTsNumber());

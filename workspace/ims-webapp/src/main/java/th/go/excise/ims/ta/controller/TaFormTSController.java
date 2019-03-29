@@ -15,12 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -176,5 +171,23 @@ public class TaFormTSController {
 
 		return response;
 	}
-	
+	@PostMapping("/save-from-ts/{tsNumber}/{formTsNumber}")
+	@ResponseBody
+	public ResponseData<?> saveFromTs(@PathVariable("tsNumber") String tsNumber, @RequestBody ReportJsonBean reportJsonBean){
+		logger.info("getFormTSNumber tsNumber={}", tsNumber);
+		ResponseData<String> response = new ResponseData<>();
+		try {
+			AbstractTaFormTSService taFormTSService = taFormTSMap.get(tsNumber);
+			Object formVo = gson.fromJson(reportJsonBean.getJson(), taFormTSService.getVoClass());
+			taFormTSService.saveFormTS(formVo);
+			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
+		}
+
+		return response;
+	}
+
 }
