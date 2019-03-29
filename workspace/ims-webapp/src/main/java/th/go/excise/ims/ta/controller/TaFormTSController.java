@@ -140,7 +140,7 @@ public class TaFormTSController {
 		FileCopyUtils.copy(reportFile, response.getOutputStream());
 	}
 	
-	@GetMapping("/formTSNumber/{tsNumber}")
+	@GetMapping("/form-ts-number/{tsNumber}")
 	@ResponseBody
 	public ResponseData<List<String>> getFormTSNumber(@PathVariable("tsNumber") String tsNumber) {
 		logger.info("getFormTSNumber tsNumber={}", tsNumber);
@@ -156,6 +156,24 @@ public class TaFormTSController {
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
 		}
 		
+		return response;
+	}
+
+	@PostMapping("/get-from-ts/{tsNumber}/{formTsNumber}")
+	@ResponseBody
+	public ResponseData<String> getFromTs(@PathVariable("tsNumber") String tsNumber, @PathVariable("formTsNumber") String formTsNumber){
+		logger.info("getFormTSNumber tsNumber={}", tsNumber);
+		ResponseData<String> response = new ResponseData<>();
+		try {
+			AbstractTaFormTSService taFormTSService = taFormTSMap.get(tsNumber);
+			response.setData(gson.toJson(taFormTSService.getFormTS(formTsNumber), taFormTSService.getVoClass()));
+			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
+		}
+
 		return response;
 	}
 	
