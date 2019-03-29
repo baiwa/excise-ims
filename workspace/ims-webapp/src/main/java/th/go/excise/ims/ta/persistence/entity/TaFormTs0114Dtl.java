@@ -153,8 +153,4 @@ public class TaFormTs0114Dtl extends BaseEntity {
 		this.sumAmt = sumAmt;
 	}
 
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-	}
-
 }

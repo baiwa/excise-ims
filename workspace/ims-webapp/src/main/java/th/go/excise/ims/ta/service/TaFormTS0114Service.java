@@ -2,8 +2,11 @@ package th.go.excise.ims.ta.service;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -18,6 +21,7 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.IMG_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
@@ -27,7 +31,6 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0114Dtl;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0114Hdr;
-import th.go.excise.ims.ta.persistence.repository.TaFormTs0113Repository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0114DtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0114HdrRepository;
 import th.go.excise.ims.ta.vo.TaFormTS0114DtlVo;
@@ -72,9 +75,9 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
             for (TaFormTS0114DtlVo formDtl : formTS0114Vo.getTaFormTS0114DtlVoList()) {
                 //TaFormTS0114DtlVo dtlVo = taFormTs0114DtlRepository.formDtl(officeCode, budgetYear, formTS0114Vo.getFormTsNumber());
                 //taFormTs0114Dtl = taFormTs0114DtlRepository.findByFormTsNumberAndFormTs0114DtlId(formTS0114Vo.getFormTsNumber(), Long.valueOf(dtlVo.getFormTs0114DtlId()));
-                Optional<TaFormTs0114Dtl> dtlVo = taFormTs0114DtlRepository.findById(Long.valueOf(formDtl.getFormTs0114DtlId()));
-                if (dtlVo.isPresent()) {
-                    taFormTs0114Dtl = dtlVo.get();
+                 TaFormTs0114Dtl dtlVo = taFormTs0114DtlRepository.findByFormTs0114DtlIdAndIsDeleted(Long.valueOf(formDtl.getFormTs0114DtlId()), FLAG.Y_FLAG);
+                if (dtlVo != null) {
+                    taFormTs0114Dtl = dtlVo;
                     taFormTs0114Dtl.setTaxDate(formDtl.getTaxDate());
                     taFormTs0114Dtl.setDutyTypeText(formDtl.getDutyTypeText());
                     taFormTs0114Dtl.setTaxAmt(formDtl.getTaxAmt());
@@ -82,9 +85,12 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
                     taFormTs0114Dtl.setExtraAmt(formDtl.getExtraAmt());
                     taFormTs0114Dtl.setMoiAmt(formDtl.getMoiAmt());
                     taFormTs0114Dtl.setSumAmt(formDtl.getSumAmt());
+                    taFormTs0114Dtl.setIsDeleted(FLAG.N_FLAG);
                 } else {
                     taFormTs0114Dtl = new TaFormTs0114Dtl();
                     toEntityDtl(taFormTs0114Dtl, formDtl);
+                    taFormTs0114Dtl.setOfficeCode(officeCode);
+                    taFormTs0114Dtl.setBudgetYear(budgetYear);
                 }
 
                 taFormTs0114DtlRepository.save(taFormTs0114Dtl);

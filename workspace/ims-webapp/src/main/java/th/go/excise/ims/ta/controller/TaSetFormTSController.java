@@ -1,30 +1,45 @@
 package th.go.excise.ims.ta.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.math.BigDecimal;
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.*;
-import th.co.baiwa.buckwaframework.common.bean.ReportJsonBean;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
-import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
-import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.rest.adapter.BigDecimalTypeAdapter;
 import th.co.baiwa.buckwaframework.common.rest.adapter.DateThaiTypeAdapter;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.ta.service.*;
-import th.go.excise.ims.ta.vo.*;
-
-import javax.servlet.http.HttpServletResponse;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
+import th.go.excise.ims.ta.service.TaFormTS0101Service;
+import th.go.excise.ims.ta.service.TaFormTS0107Service;
+import th.go.excise.ims.ta.service.TaFormTS0108Service;
+import th.go.excise.ims.ta.service.TaFormTS0109Service;
+import th.go.excise.ims.ta.service.TaFormTS01101Service;
+import th.go.excise.ims.ta.service.TaFormTS0110Service;
+import th.go.excise.ims.ta.service.TaFormTS0111Service;
+import th.go.excise.ims.ta.service.TaFormTS0112Service;
+import th.go.excise.ims.ta.service.TaFormTS0113Service;
+import th.go.excise.ims.ta.service.TaFormTS01142Service;
+import th.go.excise.ims.ta.service.TaFormTS0114Service;
+import th.go.excise.ims.ta.service.TaFormTS0115Service;
+import th.go.excise.ims.ta.service.TaFormTS0116Service;
+import th.go.excise.ims.ta.service.TaFormTS01171Service;
+import th.go.excise.ims.ta.service.TaFormTS0118Service;
+import th.go.excise.ims.ta.service.TaFormTS0119Service;
+import th.go.excise.ims.ta.service.TaFormTS0120Service;
+import th.go.excise.ims.ta.service.TaFormTS0121Service;
+import th.go.excise.ims.ta.vo.TaFormTS0109Vo;
+import th.go.excise.ims.ta.vo.TaFormTS0114Vo;
 
 @Controller
 @RequestMapping("/api/ta/set-form-ts")
@@ -84,12 +99,13 @@ public class TaSetFormTSController {
 	// TODO Form TS number ts 09
 	@PostMapping("/ta-form-ts0109")
 	@ResponseBody
-	public ResponseData<TaFormTS0109Vo> getformTs09List(@RequestBody TaFormTS0109Vo formVo) {
+	public ResponseData<String> getformTs09List(@RequestBody TaFormTS0109Vo formVo) {
 		logger.info("getformTsList");
 
-		ResponseData<TaFormTS0109Vo> response = new ResponseData<>();
+		ResponseData<String> response = new ResponseData<>();
 		try {
-			response.setData(taFormTS0109Service.getFormTS(formVo.getFormTsNumber()));
+			response.setData(gson.toJson(taFormTS0109Service.getFormTS(formVo.getFormTsNumber())));
+
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -101,12 +117,12 @@ public class TaSetFormTSController {
 	// TODO Form TS number ts 14
 	@PostMapping("/ta-form-ts0114")
 	@ResponseBody
-	public ResponseData<TaFormTS0114Vo> getformTs14List(@RequestBody TaFormTS0114Vo formVo) {
+	public ResponseData<String> getformTs14List(@RequestBody TaFormTS0114Vo formVo) {
 		logger.info("getformTsList");
 
-		ResponseData<TaFormTS0114Vo> response = new ResponseData<>();
+		ResponseData<String> response = new ResponseData<>();
 		try {
-			response.setData(taFormTS0114Service.getFormTS(formVo.getFormTsNumber()));
+			response.setData(gson.toJson(taFormTS0114Service.getFormTS(formVo.getFormTsNumber())));
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

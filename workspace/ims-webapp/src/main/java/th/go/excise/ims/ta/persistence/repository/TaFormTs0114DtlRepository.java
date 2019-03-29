@@ -1,7 +1,6 @@
 package th.go.excise.ims.ta.persistence.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,4 +14,6 @@ public interface TaFormTs0114DtlRepository extends CommonJpaCrudRepository<TaFor
     @Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.formTsNumber = :formTsNumber")
     public List<TaFormTs0114Dtl> findByFormTsNumber(@Param("formTsNumber") String formTsNumber);
 
+    
+    TaFormTs0114Dtl findByFormTs0114DtlIdAndIsDeleted(Long id, String isDeleted);
 }
