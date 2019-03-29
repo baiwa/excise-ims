@@ -2,8 +2,14 @@ package th.go.excise.ims.ta.service;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -13,14 +19,53 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.IMG_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.ta.persistence.entity.TaFormTs0116;
+import th.go.excise.ims.ta.persistence.repository.TaFormTs0116Repository;
 import th.go.excise.ims.ta.vo.TaFormTS0116Vo;
 
 @Service
-public class TaFormTS0116Service {
+public class TaFormTS0116Service extends AbstractTaFormTSService<TaFormTS0116Vo, TaFormTs0116> {
+	
+	private static final Logger logger = LoggerFactory.getLogger(TaFormTS0116Service.class);
+	
+	@Autowired
+	private TaFormTSSequenceService taFormTSSequenceService;
+	@Autowired
+	private TaFormTs0116Repository taFormTs0116Repository;
+	
+	public String getReportName() {
+		return REPORT_NAME.TA_FORM_TS01_16;
+	}
+	
+	@Transactional(rollbackOn = { Exception.class })
+	@Override
+	public byte[] processFormTS(TaFormTS0116Vo formTS0116Vo) throws Exception {
+		logger.info("processFormTS");
+		
+		saveFormTS(formTS0116Vo);
+		byte[] reportFile = generateReport(formTS0116Vo);
+		
+		return reportFile;
+	}
+	
+	@Override
+	protected void saveFormTS(TaFormTS0116Vo formTS0116Vo) {
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		String budgetYear = ExciseUtils.getCurrentBudgetYear();
+		logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS0116Vo.getFormTsNumber());
 
+		// Set Data
+		TaFormTS0116Vo formTs0116 = null;
+		
+	}
+	
 	public byte[] generateReport(TaFormTS0116Vo formTS0116Vo) throws Exception, IOException {
+		logger.info("export generateReport");
+		
 		Map<String, Object> params = new HashMap<String, Object>();
-
+		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE + "." + FILE_EXTENSION.JPG));
 		params.put("docText",formTS0116Vo.getDocText());
 		params.put("docDear",formTS0116Vo.getDocDear());
 		params.put("factoryName",formTS0116Vo.getFactoryName());
@@ -59,9 +104,6 @@ public class TaFormTS0116Service {
 		params.put("signApproverFullName",formTS0116Vo.getSignApproverFullName());
 		params.put("signApproverPosition",formTS0116Vo.getSignApproverPosition());
 		params.put("signApproverDate",formTS0116Vo.getSignApproverDate());
-		// get data to report
-		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE + "." + FILE_EXTENSION.JPG));
-
 	
 		// set output
 		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_16 + "." + FILE_EXTENSION.JASPER, params);
@@ -70,4 +112,24 @@ public class TaFormTS0116Service {
 
 		return content;
 	}
+	
+	@Override
+	public List<String> getFormTsNumberList() {
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		return taFormTs0116Repository.findFormTsNumberByOfficeCode(officeCode);
+	}
+	
+	@Override
+	public TaFormTS0116Vo getFormTS(String formTsNumber) {
+		logger.info("getFormTS formTsNumber={}");
+		
+		TaFormTs0116 formTs0116 = taFormTs0116Repository.findByFormTsNumber(formTsNumber);
+		
+		// Set Data
+		TaFormTS0116Vo formTs0116Vo = new TaFormTS0116Vo();
+		toVo(formTs0116Vo, formTs0116);
+		
+		return formTs0116Vo;
+	}
+	
 }

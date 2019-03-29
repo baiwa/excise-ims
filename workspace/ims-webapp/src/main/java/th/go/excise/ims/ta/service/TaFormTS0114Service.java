@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -47,7 +46,11 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
     private TaFormTs0114HdrRepository taFormTs0114HdrRepository;
     @Autowired
     private TaFormTs0114DtlRepository taFormTs0114DtlRepository;
-
+    
+    public String getReportName() {
+		return REPORT_NAME.TA_FORM_TS01_14;
+	}
+    
     @Transactional(rollbackOn = {Exception.class})
     public byte[] processFormTS(TaFormTS0114Vo taFormTS0114Vo) throws Exception {
         logger.info("processFormTS");

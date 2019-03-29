@@ -36,6 +36,10 @@ private static final Logger logger = LoggerFactory.getLogger(TaFormTS01171Servic
 	@Autowired
 	private TaFormTs01171Repository taFormTs01171Repository;
 	
+	public String getReportName() {
+		return REPORT_NAME.TA_FORM_TS01_17_1;
+	}
+	
 	@Transactional(rollbackOn = { Exception.class })
 	public byte[] processFormTS(TaFormTS01171Vo formTS01171Vo) throws Exception {
 		logger.info("processFormTS");

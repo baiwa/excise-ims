@@ -1,15 +1,23 @@
 package th.go.excise.ims.ta.service;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractTaFormTSService<VO, ENTITY> {
+public abstract class AbstractTaFormTSService<VO extends Object, ENTITY> {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AbstractTaFormTSService.class);
+	
+	@SuppressWarnings("unchecked")
+	public Class<VO> getVoClass() {
+		return ((Class<VO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
+	}
+	
+	public abstract String getReportName();
 	
 	public abstract byte[] processFormTS(VO vo) throws Exception;
 	

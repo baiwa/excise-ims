@@ -7,12 +7,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.export.ExporterInputItem;
 import net.sf.jasperreports.export.SimpleExporterInput;
@@ -23,10 +27,58 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.IMG_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.ta.persistence.entity.TaFormTs0117;
+import th.go.excise.ims.ta.persistence.repository.TaFormTs0117Repository;
 import th.go.excise.ims.ta.vo.TaFormTS0117Vo;
 
 @Service
-public class TaFormTS0117Service {
+public class TaFormTS0117Service extends AbstractTaFormTSService<TaFormTS0117Vo, TaFormTs0117> {
+	
+	private static final Logger logger = LoggerFactory.getLogger(TaFormTS0117Service.class);
+
+	@Autowired
+	private TaFormTSSequenceService taFormTSSequenceService;
+	@Autowired
+	private TaFormTs0117Repository taFormTs0117Repository;
+	
+	public String getReportName() {
+		return REPORT_NAME.TA_FORM_TS01_17;
+	}
+	
+	@Transactional(rollbackOn = { Exception.class })
+	@Override
+	public byte[] processFormTS(TaFormTS0117Vo formTS0117Vo) throws Exception {
+		logger.info("processFormTS");
+		
+		saveFormTS(formTS0117Vo);
+		byte[] reportFile = generateReport(formTS0117Vo);
+		
+		return reportFile;
+	}
+	
+	@Override
+	protected void saveFormTS(TaFormTS0117Vo formTS0117Vo) {
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		String budgetYear = ExciseUtils.getCurrentBudgetYear();
+		logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS0117Vo.getFormTsNumber());
+
+		// Set Data
+		TaFormTs0117 formTs0117 = null;
+		if (StringUtils.isNotEmpty(formTS0117Vo.getFormTsNumber())) {
+			formTs0117 = taFormTs0117Repository.findByFormTsNumber(formTS0117Vo.getFormTsNumber());
+			toEntity(formTs0117, formTS0117Vo);
+		} else {
+			formTs0117 = new TaFormTs0117();
+			toEntity(formTs0117, formTS0117Vo);
+			formTs0117.setOfficeCode(officeCode);
+			formTs0117.setBudgetYear(budgetYear);
+			formTs0117.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
+		}
+		taFormTs0117Repository.save(formTs0117);
+	}
+	
 	public byte[] generateReport(TaFormTS0117Vo formTS0117Vo) throws IOException, JRException {
 	
 		Map<String, Object> params = new HashMap<>();
@@ -94,9 +146,28 @@ public class TaFormTS0117Service {
 		exporter.exportReport();
 		byte[] content = outputStream.toByteArray();
 		
-//		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
 		ReportUtils.closeResourceFileInputStream(params);
-
+		
 		return content;
 	}
+
+	@Override
+	public List<String> getFormTsNumberList() {
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		return taFormTs0117Repository.findFormTsNumberByOfficeCode(officeCode);
+	}
+	
+	@Override
+	public TaFormTS0117Vo getFormTS(String formTsNumber) {
+		logger.info("getFormTS formTsNumber={}");
+		
+		TaFormTs0117 formTs0117 = taFormTs0117Repository.findByFormTsNumber(formTsNumber);
+		
+		// Set Data
+		TaFormTS0117Vo formTs0117Vo = new TaFormTS0117Vo();
+		toVo(formTs0117Vo, formTs0117);
+		
+		return formTs0117Vo;
+	}
+	
 }

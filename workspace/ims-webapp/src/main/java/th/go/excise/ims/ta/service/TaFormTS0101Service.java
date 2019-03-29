@@ -35,6 +35,10 @@ public class TaFormTS0101Service extends AbstractTaFormTSService<TaFormTS0101Vo,
 	@Autowired
 	private TaFormTs0101Repository taFormTs0101Repository;
 	
+	public String getReportName() {
+		return REPORT_NAME.TA_FORM_TS01_01;
+	}
+	
 	@Transactional(rollbackOn = { Exception.class })
 	@Override
 	public byte[] processFormTS(TaFormTS0101Vo formTS0101Vo) throws Exception {

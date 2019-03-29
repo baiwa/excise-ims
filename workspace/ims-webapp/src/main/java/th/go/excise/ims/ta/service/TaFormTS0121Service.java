@@ -22,10 +22,8 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
-import th.go.excise.ims.ta.persistence.entity.TaFormTs0109;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0121;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0121Repository;
-import th.go.excise.ims.ta.vo.TaFormTS0109Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0121Vo;
 
 @Service
@@ -37,7 +35,11 @@ public class TaFormTS0121Service extends AbstractTaFormTSService<TaFormTS0121Vo,
 	private TaFormTSSequenceService taFormTSSequenceService;
 	@Autowired
 	private TaFormTs0121Repository taFormTs0121Repository;
-
+	
+	public String getReportName() {
+		return REPORT_NAME.TA_FORM_TS01_21;
+	}
+	
 	@Transactional(rollbackOn = { Exception.class })
 	public byte[] processFormTS(TaFormTS0121Vo formTS0121Vo) throws Exception {
 		logger.info("processFormTS");

@@ -19,13 +19,11 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSIO
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.IMG_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
-import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0109;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0109Repository;
-import th.go.excise.ims.ta.persistence.repository.TaFormTs0112Repository;
 import th.go.excise.ims.ta.vo.TaFormTS0109Vo;
 
 @Service
@@ -37,7 +35,11 @@ public class TaFormTS0109Service extends AbstractTaFormTSService<TaFormTS0109Vo,
     private TaFormTSSequenceService taFormTSSequenceService;
     @Autowired
     private TaFormTs0109Repository formTs0109Repository;
-
+    
+    public String getReportName() {
+		return REPORT_NAME.TA_FORM_TS01_09;
+	}
+    
     @Transactional(rollbackOn = {Exception.class})
     public byte[] processFormTS(TaFormTS0109Vo taFormTS0109Vo) throws Exception {
         logger.info("processFormTS");

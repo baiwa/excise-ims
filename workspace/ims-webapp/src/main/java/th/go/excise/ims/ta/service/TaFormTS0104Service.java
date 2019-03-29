@@ -32,7 +32,11 @@ public class TaFormTS0104Service extends AbstractTaFormTSService<TaFormTS0104Vo,
 	private TaFormTSSequenceService taFormTSSequenceService;
 	@Autowired
 	private TaFormTs0104Repository taFormTs0104Repository;
-
+	
+	public String getReportName() {
+		return REPORT_NAME.TA_FORM_TS01_04;
+	}
+	
 	@Override
 	public byte[] processFormTS(TaFormTS0104Vo formTS0104Vo) throws Exception {
 		logger.info("processFormTS");

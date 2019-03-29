@@ -36,12 +36,16 @@ import th.go.excise.ims.ta.vo.TaFormTS0110Vo;
 @Service
 public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo, TaFormTs0110> {
 
-	private static final Logger logger = LoggerFactory.getLogger(TaFormTS0107Service.class);
+	private static final Logger logger = LoggerFactory.getLogger(TaFormTS0110Service.class);
 	
 	@Autowired
 	private TaFormTSSequenceService taFormTSSequenceService;
 	@Autowired
 	private TaFormTs0110Repository taFormTs0110Repository;
+	
+	public String getReportName() {
+		return REPORT_NAME.TA_FORM_TS01_10;
+	}
 	
 	@Transactional(rollbackOn = { Exception.class })
 	public byte[] processFormTS(TaFormTS01101ListVo formTS01101ListVo) throws Exception {

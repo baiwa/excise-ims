@@ -27,7 +27,6 @@ import th.go.excise.ims.ta.persistence.entity.TaFormTs01142Hdr;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs01142DtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs01142HdrRepository;
 import th.go.excise.ims.ta.vo.TaFormTS01142Vo;
-import th.go.excise.ims.ta.vo.TaFormTS0114Vo;
 
 @Service
 public class TaFormTS01142Service  extends AbstractTaFormTSService<TaFormTS01142Vo, TaFormTs01142Hdr>{
@@ -39,6 +38,9 @@ public class TaFormTS01142Service  extends AbstractTaFormTSService<TaFormTS01142
 	@Autowired
 	private TaFormTs01142HdrRepository taFormTs01142HdrRepository;
 	
+	public String getReportName() {
+		return REPORT_NAME.TA_FORM_TS01_14_2;
+	}
 	
 	@Transactional(rollbackOn = { Exception.class })
 	public byte[] processFormTS(TaFormTS01142Vo taFormTS01142Vo) throws Exception {

@@ -34,7 +34,11 @@ public class TaFormTS0112Service extends AbstractTaFormTSService<TaFormTS0112Vo,
 	private TaFormTSSequenceService taFormTSSequenceService;
 	@Autowired
 	private TaFormTs0112Repository taFormTs0112Repository;
-
+	
+	public String getReportName() {
+		return REPORT_NAME.TA_FORM_TS01_12;
+	}
+	
 	@Transactional(rollbackOn = { Exception.class })
 	public byte[] processFormTS(TaFormTS0112Vo TaFormTS0112Vo) throws Exception {
 		logger.info("processFormTS");
