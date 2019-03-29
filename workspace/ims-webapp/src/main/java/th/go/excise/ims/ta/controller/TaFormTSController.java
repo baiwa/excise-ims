@@ -180,10 +180,11 @@ public class TaFormTSController {
 			AbstractTaFormTSService taFormTSService = taFormTSMap.get(tsNumber);
 			Object formVo = gson.fromJson(reportJsonBean.getJson(), taFormTSService.getVoClass());
 			taFormTSService.saveFormTS(formVo);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
 		}
 
