@@ -22,7 +22,7 @@ import th.go.excise.ims.ta.vo.TaFormTS0114Vo;
 //@ActiveProfiles(value = PROFILE.UNITTEST)
 public class TaFormTS0114ServiceTest {
 	
-	private static final String REPORT_FILE = PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_14 + "." + FILE_EXTENSION.PDF;
+	private static final String REPORT_FILE = PATH.TEST_PATH + "%s" + "." + FILE_EXTENSION.PDF;
 
 //	@Autowired
 //	private TaFormTS0113Service taFormTS0113Service;
@@ -51,8 +51,8 @@ public class TaFormTS0114ServiceTest {
 		vo.setBookDate(ConvertDateUtils.parseStringToDate("04/01/2562", ConvertDateUtils.DD_MM_YYYY));
 		vo.setAuditDateStart(ConvertDateUtils.parseStringToDate("04/01/2562", ConvertDateUtils.DD_MM_YYYY));
 		vo.setAuditDateEnd(ConvertDateUtils.parseStringToDate("03/02/2562", ConvertDateUtils.DD_MM_YYYY));
-		vo.setAuditSumMonth("");
-		vo.setAuditSumDay("");
+		vo.setAuditSumMonth("1");
+		vo.setAuditSumDay("2");
 		vo.setAuditBookType("2");
 		vo.setAuditBookTypeOther("อื่นๆ");
 		vo.setAuditBookNumber("2");
@@ -85,10 +85,23 @@ public class TaFormTS0114ServiceTest {
 		itemVo.setMoiAmt(new BigDecimal(253));
 		itemVo.setSumAmt(new BigDecimal(253));
 		listItem.add(itemVo);
-		
 		vo.setTaFormTS0114DtlVoList(listItem);
 		
 		byte[] reportFile = formTS0114Service.generateReport(vo);
-		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_14))));
 	}
+	
+	@Test
+	public void test_generateReport_Blank() throws Exception {		
+		TaFormTS0114Service formTS0114Service = new TaFormTS0114Service();
+		
+		TaFormTS0114Vo vo = new TaFormTS0114Vo();
+		
+		List<TaFormTS0114DtlVo> listItem = new ArrayList<>();
+		vo.setTaFormTS0114DtlVoList(listItem);
+		
+		byte[] reportFile = formTS0114Service.generateReport(vo);
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_14 + "_blank"))));
+	}
+	
 }

@@ -349,7 +349,7 @@
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="410" width="460" height="40" uuid="feef48de-dda6-47ef-9402-f701298be8c1"/>
 				<textElement textAlignment="Left" verticalAlignment="Top"/>
-				<textFieldExpression><![CDATA["                                                 "+$P{docOther}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["                                           " + ($P{docOther} != null ? $P{docOther} : "")]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="20" y="410" width="120" height="20" uuid="3af50296-21c6-4eb9-8648-78a82cb8a8d2"/>

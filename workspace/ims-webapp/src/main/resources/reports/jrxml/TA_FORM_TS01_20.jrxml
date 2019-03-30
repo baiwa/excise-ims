@@ -98,7 +98,7 @@
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="240" y="129" width="35" height="22" uuid="6243755b-a27f-4410-a712-62a64897d5f2"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ลงวันที่"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -108,7 +108,7 @@
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="295" y="129" width="30" height="22" uuid="a6ceee5e-7cb7-4851-9324-8918eabc1071"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["เดือน"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -118,7 +118,7 @@
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="385" y="129" width="30" height="22" uuid="52a66146-028d-4220-9e6c-565b02829f2f"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["พ.ศ."]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -151,7 +151,8 @@
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="155" y="195" width="305" height="22" uuid="6485c566-3b00-46fc-9baf-ef5024bf4099"/>
-				<textElement textAlignment="Center"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Left"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateStart}) + " - " + 
 new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})]]></textFieldExpression>
 			</textField>
@@ -167,7 +168,7 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="90" y="217" width="25" height="22" uuid="b55f957d-745b-4f10-96a8-34e415d774ca"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["หมู่ที่"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -177,7 +178,7 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="145" y="217" width="55" height="22" uuid="c079d048-0411-4cab-89a3-fa1651dd43b1"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตรอก/ซอย"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -187,7 +188,7 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="295" y="217" width="25" height="22" uuid="6d311736-963a-4bde-b183-98a2b19c4037"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ถนน "]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -196,38 +197,38 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 				<textFieldExpression><![CDATA[$P{facThnName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="0" y="239" width="60" height="22" uuid="cabaa2bb-1869-487e-bdb2-164965656c4c"/>
+				<reportElement style="TextDetail" x="0" y="239" width="55" height="22" uuid="cabaa2bb-1869-487e-bdb2-164965656c4c"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตำบล/แขวง"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="60" y="239" width="170" height="22" uuid="5b4f5427-4c8c-4b70-a91f-dd1a588c8af2"/>
+				<reportElement style="TextDetail" x="55" y="239" width="175" height="22" uuid="5b4f5427-4c8c-4b70-a91f-dd1a588c8af2"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{facTambolName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="230" y="239" width="60" height="22" uuid="835554be-4564-4144-986a-15c5869ca2fc"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<reportElement style="TextDetail" x="230" y="239" width="55" height="22" uuid="835554be-4564-4144-986a-15c5869ca2fc"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["อำเภอ/เขต"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="290" y="239" width="170" height="22" uuid="c0fb1925-138e-4363-a22a-ffb3f4bb6eea"/>
+				<reportElement style="TextDetail" x="285" y="239" width="175" height="22" uuid="c0fb1925-138e-4363-a22a-ffb3f4bb6eea"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{facAmphurName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="0" y="261" width="40" height="22" uuid="09703819-dd39-4ff6-8533-31260c17947c"/>
+				<reportElement style="TextDetail" x="0" y="261" width="35" height="22" uuid="09703819-dd39-4ff6-8533-31260c17947c"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["จังหวัด"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="40" y="261" width="150" height="22" uuid="fd33162c-110c-42c1-a91a-f6bbe2ac7bc6"/>
+				<reportElement style="TextDetail" x="35" y="261" width="155" height="22" uuid="fd33162c-110c-42c1-a91a-f6bbe2ac7bc6"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{facProvinceName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="190" y="261" width="60" height="22" uuid="401fae87-be02-4fce-9fab-5a6cdeb4e1c4"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["รหัสไปรษณีย์"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -248,7 +249,7 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="327" width="460" height="44" uuid="91a2f3ea-a8a0-43b9-a9bb-c7dbd77e7690"/>
 				<textElement textAlignment="Left" verticalAlignment="Top"/>
-				<textFieldExpression><![CDATA["            "+$P{expandReason}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["            " + ($P{expandReason} != null ? $P{expandReason} : "")]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="371" width="22" height="22" uuid="f7249ef7-c052-48d6-b8de-2abb723855b2"/>
@@ -270,28 +271,28 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 				<textFieldExpression><![CDATA["1".equals( $P{expandFlag2} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="25" y="393" width="290" height="22" uuid="b72bf21f-0367-43d8-8c54-a0bc507b3c03"/>
+				<reportElement style="TextDetail" x="25" y="393" width="288" height="22" uuid="b72bf21f-0367-43d8-8c54-a0bc507b3c03"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["การตรวจสอบภาษีรายนี้เคยขออนุมัติขยายเวลาการตรวจสอบ ครั้งที่"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="315" y="393" width="40" height="22" uuid="c459ca50-b7c6-47ff-abc6-4016a02576bc"/>
+				<reportElement style="TextDetail" x="313" y="393" width="40" height="22" uuid="c459ca50-b7c6-47ff-abc6-4016a02576bc"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{expandNo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="355" y="393" width="36" height="22" uuid="4768c671-fcae-4e77-a95f-9972efe61ec5"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<reportElement style="TextDetail" x="353" y="393" width="36" height="22" uuid="4768c671-fcae-4e77-a95f-9972efe61ec5"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ถึงวันที่"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="391" y="393" width="20" height="22" uuid="ed19506a-55da-46ed-ab51-9534b6ea0174"/>
+				<reportElement style="TextDetail" x="389" y="393" width="20" height="22" uuid="ed19506a-55da-46ed-ab51-9534b6ea0174"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("d",new Locale("th", "TH")).format($P{expandDateOld})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="25" y="415" width="30" height="22" uuid="95c99729-f90d-426f-9619-342855666f38"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["เดือน"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -301,7 +302,7 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="115" y="415" width="30" height="22" uuid="e0e4f6bf-e83e-4edb-bb01-45afb1c251d8"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["พ.ศ."]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -321,7 +322,7 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="300" y="437" width="30" height="22" uuid="5dcf1d80-247c-4be5-b949-aa42d5111083"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["เดือน"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -331,7 +332,7 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="390" y="437" width="27" height="22" uuid="9fb5ca07-bd32-4fa7-98bf-c4550048914f"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["พ.ศ."]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -356,7 +357,7 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="213" y="502" width="7" height="22" uuid="5da68c86-3dbf-4e61-b527-a8c0ca23d711"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -457,7 +458,7 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="60" y="254" width="170" height="1" uuid="a5860ca2-bda5-45e2-b90c-c97615cc89aa"/>
+				<reportElement x="55" y="254" width="175" height="1" uuid="a5860ca2-bda5-45e2-b90c-c97615cc89aa"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
@@ -511,13 +512,13 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="290" y="254" width="170" height="1" uuid="8013e9f1-0d35-4d1c-9a38-356aaf9932e6"/>
+				<reportElement x="285" y="254" width="175" height="1" uuid="8013e9f1-0d35-4d1c-9a38-356aaf9932e6"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="40" y="276" width="150" height="1" uuid="0f95acb5-18ee-4ba5-9fb7-60d50591037b"/>
+				<reportElement x="35" y="276" width="155" height="1" uuid="0f95acb5-18ee-4ba5-9fb7-60d50591037b"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
@@ -541,13 +542,13 @@ new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{auditDateEnd})
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="315" y="408" width="40" height="1" uuid="55ce3d0c-9ebb-467b-9c5b-e29e25b97d3a"/>
+				<reportElement x="313" y="408" width="40" height="1" uuid="55ce3d0c-9ebb-467b-9c5b-e29e25b97d3a"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="391" y="408" width="20" height="1" uuid="54d6c24d-dc4a-4b56-ab35-5a5e45b99de8"/>
+				<reportElement x="389" y="408" width="20" height="1" uuid="54d6c24d-dc4a-4b56-ab35-5a5e45b99de8"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>

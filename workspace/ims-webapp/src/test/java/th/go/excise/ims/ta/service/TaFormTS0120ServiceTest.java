@@ -15,7 +15,7 @@ import th.go.excise.ims.ta.vo.TaFormTS0120Vo;
 
 public class TaFormTS0120ServiceTest {
 	
-	private static final String REPORT_FILE = PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_20 + "." + FILE_EXTENSION.PDF;
+	private static final String REPORT_FILE = PATH.TEST_PATH + "%s" + "." + FILE_EXTENSION.PDF;
 	
 	@Test
 	public void test_generateReport() throws Exception {
@@ -55,7 +55,17 @@ public class TaFormTS0120ServiceTest {
 		formTS0120Vo.setSignApproverDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2561, 6, 15))));
 		
 		byte[] reportFile = taFormTS0120Service.generateReport(formTS0120Vo);
-		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_20))));
+	}
+	
+	@Test
+	public void test_generateReport_Blank() throws Exception {
+		TaFormTS0120Service taFormTS0120Service = new TaFormTS0120Service();
+		
+		TaFormTS0120Vo formTS0120Vo = new TaFormTS0120Vo();
+		
+		byte[] reportFile = taFormTS0120Service.generateReport(formTS0120Vo);
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_20 + "_blank"))));
 	}
 
 }

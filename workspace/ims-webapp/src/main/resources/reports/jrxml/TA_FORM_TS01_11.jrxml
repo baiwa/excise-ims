@@ -41,16 +41,16 @@
 	<title>
 		<band height="350">
 			<image scaleImage="RealHeight" isUsingCache="false">
-				<reportElement isPrintRepeatedValues="false" x="195" y="1" width="60" height="60" uuid="3d3749e4-eaab-407f-b14d-14d65fd5003e"/>
+				<reportElement isPrintRepeatedValues="false" x="190" y="0" width="60" height="60" uuid="3d3749e4-eaab-407f-b14d-14d65fd5003e"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement style="Topic" isPrintRepeatedValues="false" x="390" y="35" width="70" height="26" uuid="c407ac3f-0407-49e2-bacc-2046b9b9c4cd"/>
+				<reportElement style="Topic" isPrintRepeatedValues="false" x="380" y="35" width="80" height="25" uuid="c407ac3f-0407-49e2-bacc-2046b9b9c4cd"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตส. ๐๑-๑๑"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Topic" isPrintRepeatedValues="false" x="0" y="70" width="460" height="25" uuid="ff6c4e91-edf3-482d-896d-41fe9bc84a27"/>
+				<reportElement style="Topic" isPrintRepeatedValues="false" x="0" y="60" width="460" height="25" uuid="ff6c4e91-edf3-482d-896d-41fe9bc84a27"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA["ใบรับมอบและส่งมอบบัญชี และเอกสาร"]]></textFieldExpression>
 			</textField>

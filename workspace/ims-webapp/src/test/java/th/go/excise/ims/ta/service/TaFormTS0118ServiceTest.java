@@ -19,7 +19,7 @@ import th.go.excise.ims.ta.vo.TaFormTS0118Vo;
 
 public class TaFormTS0118ServiceTest {
 	
-	private static final String REPORT_FILE = PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_18 + "." + FILE_EXTENSION.PDF;
+	private static final String REPORT_FILE = PATH.TEST_PATH + "%s" + "." + FILE_EXTENSION.PDF;
 	
 	@Test
 	public void test_generateReport() throws Exception {
@@ -76,7 +76,22 @@ public class TaFormTS0118ServiceTest {
 		formTS0118Vo.setTaFormTS0118DtlVoList(formTS0118DtlVoList);
 		
 		byte[] reportFile = taFormTS0118Service.generateReport(formTS0118Vo);
-		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_18))));
+	}
+	
+	@Test
+	public void test_generateReport_Blank() throws Exception {
+		TaFormTS0118Service taFormTS0118Service = new TaFormTS0118Service();
+		
+		TaFormTS0118Vo formTS0118Vo = new TaFormTS0118Vo();
+		
+		List<TaFormTS0118DtlVo> formTS0118DtlVoList = new ArrayList<>();
+		formTS0118DtlVoList.add(new TaFormTS0118DtlVo());
+		
+		formTS0118Vo.setTaFormTS0118DtlVoList(formTS0118DtlVoList);
+		
+		byte[] reportFile = taFormTS0118Service.generateReport(formTS0118Vo);
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_18 + "_blank"))));
 	}
 	
 }

@@ -22,9 +22,11 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.ta.persistence.entity.TaFormTs0117;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs01171;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs01171Repository;
 import th.go.excise.ims.ta.vo.TaFormTS01171Vo;
+import th.go.excise.ims.ta.vo.TaFormTS0117Vo;
 
 @Service
 public class TaFormTS01171Service extends AbstractTaFormTSService<TaFormTS01171Vo, TaFormTs01171> {
@@ -125,21 +127,21 @@ private static final Logger logger = LoggerFactory.getLogger(TaFormTS01171Servic
 
 	@Override
 	public List<String> getFormTsNumberList() {
-		return taFormTs01171Repository.findFormTsNumber();
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		return taFormTs01171Repository.findFormTsNumberByOfficeCode(officeCode);
 	}
 
 	@Override
 	public TaFormTS01171Vo getFormTS(String formTsNumber) {
-		TaFormTS01171Vo formTS01171Vo = null;
-        if (StringUtils.isNotBlank(formTsNumber)) {
-            TaFormTs01171 entiry = taFormTs01171Repository.findByFormTsNumber(formTsNumber);
-            formTS01171Vo = new TaFormTS01171Vo();
-            if (entiry != null) {
-
-                toVo(formTS01171Vo, entiry);
-            }
-        }
-        return formTS01171Vo;
+		logger.info("getFormTS formTsNumber={}");
+		
+		TaFormTs01171 formTs01171 = taFormTs01171Repository.findByFormTsNumber(formTsNumber);
+		
+		// Set Data
+		TaFormTS01171Vo formTs01171Vo = new TaFormTS01171Vo();
+		toVo(formTs01171Vo, formTs01171);
+		
+		return formTs01171Vo;
 	}
 
 }

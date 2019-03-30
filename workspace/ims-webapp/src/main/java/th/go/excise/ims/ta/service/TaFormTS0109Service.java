@@ -34,7 +34,7 @@ public class TaFormTS0109Service extends AbstractTaFormTSService<TaFormTS0109Vo,
     @Autowired
     private TaFormTSSequenceService taFormTSSequenceService;
     @Autowired
-    private TaFormTs0109Repository formTs0109Repository;
+    private TaFormTs0109Repository taFormTs0109Repository;
     
     public String getReportName() {
 		return REPORT_NAME.TA_FORM_TS01_09;
@@ -57,7 +57,7 @@ public class TaFormTS0109Service extends AbstractTaFormTSService<TaFormTS0109Vo,
 
         TaFormTs0109 formTS0109 = null;
         if (StringUtils.isNotEmpty(taFormTS0109Vo.getFormTsNumber())) {
-            formTS0109 = formTs0109Repository.findByFormTsNumber(taFormTS0109Vo.getFormTsNumber());
+            formTS0109 = taFormTs0109Repository.findByFormTsNumber(taFormTS0109Vo.getFormTsNumber());
             toEntity(formTS0109, taFormTS0109Vo);
         } else {
             formTS0109 = new TaFormTs0109();
@@ -66,7 +66,7 @@ public class TaFormTS0109Service extends AbstractTaFormTSService<TaFormTS0109Vo,
             formTS0109.setBudgetYear(budgetYear);
             formTS0109.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
         }
-        formTs0109Repository.save(formTS0109);
+        taFormTs0109Repository.save(formTS0109);
     }
 
     public byte[] generateReport(TaFormTS0109Vo formTS0109Vo) throws Exception, IOException {
@@ -102,21 +102,21 @@ public class TaFormTS0109Service extends AbstractTaFormTSService<TaFormTS0109Vo,
 
     @Override
     public List<String> getFormTsNumberList() {
-        return formTs0109Repository.findFormTsNumber();
+    	String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+        return taFormTs0109Repository.findFormTsNumberByOfficeCode(officeCode);
     }
 
     @Override
     public TaFormTS0109Vo getFormTS(String formTsNumber) {
-        TaFormTS0109Vo formTS0109Vo = null;
-        if (StringUtils.isNotBlank(formTsNumber)) {
-            TaFormTs0109 entiry = formTs0109Repository.findByFormTsNumber(formTsNumber);
-            formTS0109Vo = new TaFormTS0109Vo();
-            if (entiry != null) {
-
-                toVo(formTS0109Vo, entiry);
-            }
-        }
-        return formTS0109Vo;
+    	logger.info("getFormTS formTsNumber={}");
+		
+		TaFormTs0109 formTs0109 = taFormTs0109Repository.findByFormTsNumber(formTsNumber);
+		
+		// Set Data
+		TaFormTS0109Vo formTs0109Vo = new TaFormTS0109Vo();
+		toVo(formTs0109Vo, formTs0109);
+		
+		return formTs0109Vo;
     }
 
 }

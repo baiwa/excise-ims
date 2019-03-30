@@ -15,7 +15,7 @@ import th.go.excise.ims.ta.vo.TaFormTS0121Vo;
 
 public class TaFormTS0121ServiceTest {
 	
-	private static final String REPORT_FILE = PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_21 + "." + FILE_EXTENSION.PDF;
+	private static final String REPORT_FILE = PATH.TEST_PATH + "%s" + "." + FILE_EXTENSION.PDF;
 	
 	@Test
 	public void test_generateReport() throws Exception {
@@ -49,7 +49,17 @@ public class TaFormTS0121ServiceTest {
 		formTS0121Vo.setSignWitnessFullName2("SignWitnessFullName2");
 		
 		byte[] reportFile = taFormTS0121Service.generateReport(formTS0121Vo);
-		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_21))));
+	}
+	
+	@Test
+	public void test_generateReport_Blank() throws Exception {
+		TaFormTS0121Service taFormTS0121Service = new TaFormTS0121Service();
+		
+		TaFormTS0121Vo formTS0121Vo = new TaFormTS0121Vo();
+		
+		byte[] reportFile = taFormTS0121Service.generateReport(formTS0121Vo);
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_21 + "_blank"))));
 	}
 
 }

@@ -372,7 +372,7 @@
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="66" y="394" width="30" height="22" uuid="ff08e259-3611-42ab-bcbc-379d977c2071"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["เดือน"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -382,7 +382,7 @@
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="166" y="394" width="26" height="22" uuid="fe89feca-8639-4fe2-9436-69cd7cdcb691"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["พ.ศ."]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -436,7 +436,7 @@
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="183" y="550" width="7" height="22" uuid="aa3e5c87-ac39-4e9d-81a6-4fd4424a4c45"/>
-				<textElement verticalAlignment="Bottom"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">

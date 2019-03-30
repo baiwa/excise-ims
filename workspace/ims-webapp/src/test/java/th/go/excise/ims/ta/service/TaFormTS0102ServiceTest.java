@@ -14,7 +14,8 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.go.excise.ims.ta.vo.TaFormTS0102Vo;
 
 public class TaFormTS0102ServiceTest {
-	private static final String REPORT_FILE = PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_02 + "." + FILE_EXTENSION.PDF;
+	
+	private static final String REPORT_FILE = PATH.TEST_PATH + "%s" + "." + FILE_EXTENSION.PDF;
 
 	@Test
 	public void test_generateReport() throws Exception {
@@ -55,6 +56,18 @@ public class TaFormTS0102ServiceTest {
 		formTS0102Vo.setSignFinanceDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 3, 10))));
 
 		byte[] reportFile = taFormTS0102Service.generateReport(formTS0102Vo);
-		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_02))));
 	}
+	
+	@Test
+	public void test_generateReport_Blank() throws Exception {
+		TaFormTS0102Service taFormTS0102Service = new TaFormTS0102Service();
+		
+		// set data
+		TaFormTS0102Vo formTS0102Vo = new TaFormTS0102Vo();
+		
+		byte[] reportFile = taFormTS0102Service.generateReport(formTS0102Vo);
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_02 + "_blank"))));
+	}
+	
 }

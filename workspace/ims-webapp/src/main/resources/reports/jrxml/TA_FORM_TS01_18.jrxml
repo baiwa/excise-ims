@@ -96,12 +96,6 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{bookNumber1}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="630" y="47" width="50" height="1" uuid="03ac28cd-6f2d-4100-97fa-4ef1c13e292a"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineStyle="Dotted"/>
-				</graphicElement>
-			</line>
 			<textField>
 				<reportElement style="TextDetail12" x="680" y="36" width="5" height="16" uuid="915499a7-108f-4c66-921e-366fc9c2b9ee"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
@@ -112,12 +106,6 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{bookNumber2}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="685" y="47" width="70" height="1" uuid="d56e6c93-f1a6-4374-842d-c7d9bbf40412"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineStyle="Dotted"/>
-				</graphicElement>
-			</line>
 			<textField>
 				<reportElement style="TextDetail12" x="590" y="52" width="20" height="16" uuid="0e97cffd-9ba2-4671-b2d4-230f5863b480"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
@@ -128,12 +116,6 @@
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{docDate} != null ? new SimpleDateFormat("d",new Locale("th", "TH")).format($P{docDate}) : ""]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="610" y="63" width="20" height="1" uuid="bfca8cca-d7df-4f42-8f91-a19396652805"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineStyle="Dotted"/>
-				</graphicElement>
-			</line>
 			<textField>
 				<reportElement style="TextDetail12" x="630" y="52" width="30" height="16" uuid="90c42e80-6763-4d5a-ac74-482f5b0918fd"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
@@ -144,12 +126,6 @@
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{docDate} != null ? new SimpleDateFormat("MMMM",new Locale("th", "TH")).format($P{docDate}) : ""]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="660" y="63" width="60" height="1" uuid="a020a098-f7b4-43b2-a72e-e13d0697a52f"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineStyle="Dotted"/>
-				</graphicElement>
-			</line>
 			<textField>
 				<reportElement style="TextDetail12" x="720" y="52" width="20" height="16" uuid="211cdcd0-ecb7-4421-aedb-a402c69bf3df"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
@@ -160,15 +136,6 @@
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{docDate} != null ? new SimpleDateFormat("yyyy",new Locale("th", "TH")).format($P{docDate}) : ""]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="740" y="63" width="40" height="1" uuid="9b0882dc-3683-4c80-b97e-c43178dc3e8c"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineStyle="Dotted"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement x="0" y="70" width="802" height="1" uuid="8c414549-0f9a-4c01-95ce-0c76fc5d8928"/>
-			</line>
 			<textField>
 				<reportElement style="TextDetail12" x="0" y="75" width="70" height="16" uuid="2014f0e7-43cb-41d7-a701-4f8cc8679341"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
@@ -179,12 +146,6 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{ownerFullName}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="70" y="86" width="210" height="1" uuid="274c0f35-a53c-4aab-bc0f-566d16ac5fcd"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineStyle="Dotted"/>
-				</graphicElement>
-			</line>
 			<textField isBlankWhenNull="true">
 				<reportElement positionType="FixRelativeToBottom" x="300" y="75" width="18" height="16" uuid="07a59e48-ad87-4261-b490-26a083892c98"/>
 				<textElement verticalAlignment="Bottom">
@@ -231,12 +192,6 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{factoryName}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="440" y="86" width="220" height="1" uuid="fb3e2434-bb2c-483d-9723-6fbda5320ad4"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineStyle="Dotted"/>
-				</graphicElement>
-			</line>
 			<textField>
 				<reportElement style="TextDetail12" x="0" y="123" width="85" height="16" uuid="e6949eb5-50af-4c4e-b0e7-91156a954b56"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
@@ -247,12 +202,6 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{newRegId}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="85" y="134" width="195" height="1" uuid="a12882a4-9b70-4105-af8c-5384709ded07"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineStyle="Dotted"/>
-				</graphicElement>
-			</line>
 			<textField>
 				<reportElement style="TextDetail12" x="0" y="139" width="40" height="16" uuid="dedfbc2f-ef39-417d-b83c-dedb5495c5ca"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
@@ -263,12 +212,6 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{factoryAddress}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="40" y="150" width="760" height="1" uuid="cebe976b-1002-41ba-acb4-a471c4317c26"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineStyle="Dotted"/>
-				</graphicElement>
-			</line>
 			<textField>
 				<reportElement style="TextDetail12" x="0" y="155" width="180" height="16" uuid="04fb19a5-324f-474e-9d29-d3d5a17e4443"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
@@ -279,12 +222,6 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{companyAddress}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="180" y="166" width="620" height="1" uuid="4acf69e8-1ea9-447e-9a96-47cbff3ab46e"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineStyle="Dotted"/>
-				</graphicElement>
-			</line>
 			<textField>
 				<reportElement style="TextDetail12" x="0" y="171" width="110" height="16" uuid="3513f484-448a-440f-84b5-904bf0fa7ef8"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
@@ -295,12 +232,6 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{lawSection}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="110" y="182" width="120" height="1" uuid="187cb3aa-63e5-4814-9c9b-4f2e6cf70da1"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineStyle="Dotted"/>
-				</graphicElement>
-			</line>
 			<textField>
 				<reportElement style="TextDetail12" x="230" y="171" width="30" height="16" uuid="03f39f80-1913-4a1b-a5ef-47ae5afd544c"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
@@ -311,12 +242,6 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{lawGroup}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="260" y="182" width="130" height="1" uuid="b8a4061c-4d5e-4da2-8709-7137ea5539ab"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineStyle="Dotted"/>
-				</graphicElement>
-			</line>
 			<textField>
 				<reportElement style="TextDetail12" x="390" y="171" width="410" height="16" uuid="090994fc-fe97-457e-8354-86c4993b138b"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
@@ -333,12 +258,6 @@
 				<textFieldExpression><![CDATA[($P{auditDateStart} != null ? new SimpleDateFormat("d MMM yyyy",new Locale("th", "TH")).format($P{auditDateStart}) : "") + 
 					($P{auditDateEnd} != null ? "  ถึง  " + new SimpleDateFormat("d MMM yyyy",new Locale("th", "TH")).format($P{auditDateEnd}) : "")]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="130" y="198" width="150" height="1" uuid="6467650c-76a3-4a0d-aa38-c12723f73d01"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineStyle="Dotted"/>
-				</graphicElement>
-			</line>
 			<textField>
 				<reportElement style="TextDetail12" x="280" y="187" width="60" height="16" uuid="27ecd5ba-f2d3-4698-bfe7-907c2825f3a9"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
@@ -350,12 +269,6 @@
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{sumAllTaxAmt}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="340" y="198" width="100" height="1" uuid="ed0f5697-da88-48c3-8262-078459fe6c23"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineStyle="Dotted"/>
-				</graphicElement>
-			</line>
 			<textField>
 				<reportElement style="TextDetail12" x="440" y="187" width="20" height="16" uuid="c7293269-7bfb-4fbb-b4a1-10d4b8ce41c8"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
@@ -371,12 +284,6 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{sumAllTaxText}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="500" y="198" width="200" height="1" uuid="d01b34e3-8300-43d7-8100-91e516285b24"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineStyle="Dotted"/>
-				</graphicElement>
-			</line>
 			<textField>
 				<reportElement style="TextDetail12" x="700" y="187" width="20" height="16" uuid="c368a78e-4766-488e-8ef1-90b35d98daaa"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
@@ -392,17 +299,110 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{officeName}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement style="TextDetail12" x="350" y="203" width="450" height="16" uuid="2da39b62-468b-4002-a93d-5f975c302718"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["ภายใน ๓๐ วัน นับแต่วันที่ได้รับแจ้งการประเมินภาษีสรรพสามิต ดังรายละเอียดต่อไปนี้"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="630" y="47" width="50" height="1" uuid="03ac28cd-6f2d-4100-97fa-4ef1c13e292a"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="685" y="47" width="70" height="1" uuid="d56e6c93-f1a6-4374-842d-c7d9bbf40412"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="610" y="63" width="20" height="1" uuid="bfca8cca-d7df-4f42-8f91-a19396652805"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="660" y="63" width="60" height="1" uuid="a020a098-f7b4-43b2-a72e-e13d0697a52f"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="740" y="63" width="40" height="1" uuid="9b0882dc-3683-4c80-b97e-c43178dc3e8c"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="70" width="802" height="1" uuid="8c414549-0f9a-4c01-95ce-0c76fc5d8928"/>
+			</line>
+			<line>
+				<reportElement x="70" y="86" width="210" height="1" uuid="274c0f35-a53c-4aab-bc0f-566d16ac5fcd"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="440" y="86" width="220" height="1" uuid="fb3e2434-bb2c-483d-9723-6fbda5320ad4"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="85" y="134" width="195" height="1" uuid="a12882a4-9b70-4105-af8c-5384709ded07"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="40" y="150" width="760" height="1" uuid="cebe976b-1002-41ba-acb4-a471c4317c26"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="180" y="166" width="620" height="1" uuid="4acf69e8-1ea9-447e-9a96-47cbff3ab46e"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="110" y="182" width="120" height="1" uuid="187cb3aa-63e5-4814-9c9b-4f2e6cf70da1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="260" y="182" width="130" height="1" uuid="b8a4061c-4d5e-4da2-8709-7137ea5539ab"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="130" y="198" width="150" height="1" uuid="6467650c-76a3-4a0d-aa38-c12723f73d01"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="340" y="198" width="100" height="1" uuid="ed0f5697-da88-48c3-8262-078459fe6c23"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="500" y="198" width="200" height="1" uuid="d01b34e3-8300-43d7-8100-91e516285b24"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
 			<line>
 				<reportElement x="70" y="214" width="280" height="1" uuid="8f9e76c6-4476-4197-8e96-6eacc61105cd"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
-			<textField>
-				<reportElement style="TextDetail12" x="350" y="203" width="450" height="16" uuid="2da39b62-468b-4002-a93d-5f975c302718"/>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA["ภายใน ๓๐ วัน นับแต่วันที่ได้รับแจ้งการประเมินภาษีสรรพสามิต ดังรายละเอียดต่อไปนี้"]]></textFieldExpression>
-			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>

@@ -64,8 +64,7 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
     public void saveFormTS(TaFormTS0114Vo formTS0114Vo) {
         String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
         String budgetYear = ExciseUtils.getCurrentBudgetYear();
-        logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode,
-                formTS0114Vo.getFormTsNumber());
+        logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS0114Vo.getFormTsNumber());
 
         TaFormTs0114Hdr taFormTs0114Hdr = null;
         TaFormTs0114Dtl taFormTs0114Dtl = null;
@@ -103,9 +102,7 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
             toEntity(taFormTs0114Hdr, formTS0114Vo);
             taFormTs0114Hdr.setOfficeCode(officeCode);
             taFormTs0114Hdr.setBudgetYear(budgetYear);
-            taFormTs0114Hdr.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode,
-                    budgetYear));
-
+            taFormTs0114Hdr.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
 
             for (TaFormTS0114DtlVo formDtl : formTS0114Vo.getTaFormTS0114DtlVoList()) {
                 taFormTs0114Dtl = new TaFormTs0114Dtl();
