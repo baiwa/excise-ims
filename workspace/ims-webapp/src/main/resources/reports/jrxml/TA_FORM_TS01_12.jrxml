@@ -457,6 +457,7 @@
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="213" y="600" width="7" height="20" uuid="15d02ca7-21e8-4d74-96aa-722fa3bc39d1"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -478,6 +479,7 @@
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="213" y="640" width="7" height="20" uuid="5da68c86-3dbf-4e61-b527-a8c0ca23d711"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -499,6 +501,7 @@
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="213" y="680" width="7" height="20" uuid="ce4c9916-6852-4875-9dbf-f54c5e6293b5"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -520,6 +523,7 @@
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="213" y="720" width="7" height="20" uuid="a0e5273d-f5e0-4844-84b3-f7e68c98cb6f"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">

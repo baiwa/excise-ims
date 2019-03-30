@@ -29,7 +29,7 @@
 	<pageHeader>
 		<band height="610" splitType="Stretch">
 			<image>
-				<reportElement x="190" y="0" width="60" height="60" uuid="90ca04f2-82d8-4e03-92ba-af7e35dc179c"/>
+				<reportElement x="200" y="0" width="60" height="60" uuid="90ca04f2-82d8-4e03-92ba-af7e35dc179c"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField>
