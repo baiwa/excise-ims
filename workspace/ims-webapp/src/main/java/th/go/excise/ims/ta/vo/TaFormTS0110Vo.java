@@ -1,6 +1,7 @@
 package th.go.excise.ims.ta.vo;
 
 import java.util.Date;
+import java.util.List;
 
 public class TaFormTS0110Vo {
 
@@ -35,6 +36,7 @@ public class TaFormTS0110Vo {
 	private String testimonyFactoryFullName;
 	private String newRegId;
 	private String testimonyText;
+	private List<TaFormTS0110Vo> taFormTS0110VoList;
 
 	public String getFormTsNumber() {
 		return formTsNumber;
@@ -282,6 +284,14 @@ public class TaFormTS0110Vo {
 
 	public void setTestimonyText(String testimonyText) {
 		this.testimonyText = testimonyText;
+	}
+
+	public List<TaFormTS0110Vo> getTaFormTS0110VoList() {
+		return taFormTS0110VoList;
+	}
+
+	public void setTaFormTS0110VoList(List<TaFormTS0110Vo> taFormTS0110VoList) {
+		this.taFormTS0110VoList = taFormTS0110VoList;
 	}
 
 }
