@@ -36,11 +36,11 @@ public class TaFormTS0106Service extends AbstractTaFormTSService<TaFormTS0106Vo,
 	private TaFormTSSequenceService taFormTSSequenceService;
 	@Autowired
 	private TaFormTs0106Repository taFormTs0106Repository;
-	
+
 	public String getReportName() {
 		return REPORT_NAME.TA_FORM_TS01_06;
 	}
-	
+
 	@Transactional(rollbackOn = { Exception.class })
 	@Override
 	public byte[] processFormTS(TaFormTS0106Vo formTS0106Vo) throws Exception {
@@ -81,7 +81,42 @@ public class TaFormTS0106Service extends AbstractTaFormTSService<TaFormTS0106Vo,
 		// set data to report
 		Map<String, Object> params = new HashMap<>();
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE + "." + FILE_EXTENSION.JPG));
-		
+		params.put("docPlace", formTS0106Vo.getDocPlace());
+		params.put("docDate", formTS0106Vo.getDocDate());
+		params.put("writerFullName", formTS0106Vo.getWriterFullName());
+		params.put("writerPositionFlag", formTS0106Vo.getWriterPositionFlag());
+		params.put("factoryName", formTS0106Vo.getFactoryName());
+		params.put("newRegId", formTS0106Vo.getNewRegId());
+		params.put("facAddrNo", formTS0106Vo.getFacAddrNo());
+		params.put("facMooNo", formTS0106Vo.getFacMooNo());
+		params.put("facSoiName", formTS0106Vo.getFacSoiName());
+		params.put("facThnName", formTS0106Vo.getFacThnName());
+		params.put("facTambolName", formTS0106Vo.getFacTambolName());
+		params.put("facAmphurName", formTS0106Vo.getFacAmphurName());
+		params.put("facProvinceName", formTS0106Vo.getFacProvinceName());
+		params.put("facZipCode", formTS0106Vo.getFacZipCode());
+		params.put("facTelNo", formTS0106Vo.getFacTelNo());
+		params.put("refBookNumber1", formTS0106Vo.getRefBookNumber1());
+		params.put("refBookNumber2", formTS0106Vo.getRefBookNumber2());
+		params.put("refDocDate", formTS0106Vo.getRefDocDate());
+		params.put("authFullName", formTS0106Vo.getAuthFullName());
+		params.put("authAge", formTS0106Vo.getAuthAge());
+		params.put("authAddrNo", formTS0106Vo.getAuthAddrNo());
+		params.put("authSoiName", formTS0106Vo.getAuthSoiName());
+		params.put("authThnName", formTS0106Vo.getAuthThnName());
+		params.put("authTambolName", formTS0106Vo.getAuthTambolName());
+		params.put("authAmphurName", formTS0106Vo.getAuthAmphurName());
+		params.put("authProvinceName", formTS0106Vo.getAuthProvinceName());
+		params.put("authZipCode", formTS0106Vo.getAuthZipCode());
+		params.put("authTelNo", formTS0106Vo.getAuthTelNo());
+		params.put("authCardId", formTS0106Vo.getAuthCardId());
+		params.put("authCardPlace", formTS0106Vo.getAuthCardPlace());
+		params.put("docText", formTS0106Vo.getDocText());
+		params.put("signAuthFullName1", formTS0106Vo.getSignAuthFullName1());
+		params.put("signAuthFullName2", formTS0106Vo.getSignAuthFullName2());
+		params.put("signAuthFullName3", formTS0106Vo.getSignAuthFullName3());
+		params.put("signWitnessFullName1", formTS0106Vo.getSignWitnessFullName1());
+		params.put("signWitnessFullName2", formTS0106Vo.getSignWitnessFullName2());
 
 		// set output
 		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_06 + "." + FILE_EXTENSION.JASPER, params);
