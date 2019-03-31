@@ -1,6 +1,7 @@
 package th.go.excise.ims.ta.vo;
 
 import java.util.Date;
+import java.util.List;
 
 public class TaFormTS01141Vo {
 
@@ -14,6 +15,7 @@ public class TaFormTS01141Vo {
 	private Date auditDateStart;
 	private Date auditDateEnd;
 	private String auditDesc;
+	private List<TaFormTS01141Vo> TaFormTS01141VoList;
 
 	public String getFormTsNumber() {
 		return formTsNumber;
@@ -93,6 +95,14 @@ public class TaFormTS01141Vo {
 
 	public void setAuditDesc(String auditDesc) {
 		this.auditDesc = auditDesc;
+	}
+
+	public List<TaFormTS01141Vo> getTaFormTS01141VoList() {
+		return TaFormTS01141VoList;
+	}
+
+	public void setTaFormTS01141VoList(List<TaFormTS01141Vo> taFormTS01141VoList) {
+		TaFormTS01141VoList = taFormTS01141VoList;
 	}
 
 }
