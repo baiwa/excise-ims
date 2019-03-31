@@ -78,7 +78,7 @@ public class TaFormTS0105Service extends AbstractTaFormTSService<TaFormTS0105Vo,
 
 		// set data to report
 		Map<String, Object> params = new HashMap<>();
-		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE + "." + FILE_EXTENSION.JPG));
+		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
 		params.put("BookNumber1",formTS0105Vo.getBookNumber1());
 		params.put("BookNumber2",formTS0105Vo.getBookNumber2());
 		params.put("OfficeName",formTS0105Vo.getOfficeName());
@@ -97,10 +97,6 @@ public class TaFormTS0105Service extends AbstractTaFormTSService<TaFormTS0105Vo,
 		params.put("SignOfficerPosition",formTS0105Vo.getSignOfficerPosition());
 		params.put("OtherText",formTS0105Vo.getOtherText());
 		params.put("OtherPhone",formTS0105Vo.getOtherPhone());
-
-
-
-
 
 		// set output
 		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_05 + "." + FILE_EXTENSION.JASPER, params);

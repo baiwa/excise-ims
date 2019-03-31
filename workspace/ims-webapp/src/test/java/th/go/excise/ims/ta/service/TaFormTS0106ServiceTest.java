@@ -39,7 +39,7 @@ public class TaFormTS0106ServiceTest {
 		formTS0106Vo.setRefBookNumber2("");
 		formTS0106Vo.setRefDocDate(ConvertDateUtils.parseStringToDate("01/03/2562", ConvertDateUtils.DD_MM_YYYY));
 		formTS0106Vo.setAuthFullName("");
-		formTS0106Vo.setAuthAge("");
+		formTS0106Vo.setAuthAge("24");
 		formTS0106Vo.setAuthAddrNo("");
 		formTS0106Vo.setAuthSoiName("");
 		formTS0106Vo.setAuthThnName("");
