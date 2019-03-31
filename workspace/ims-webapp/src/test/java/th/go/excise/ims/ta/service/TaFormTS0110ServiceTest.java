@@ -28,7 +28,7 @@ import th.go.excise.ims.ta.vo.TaFormTS0110Vo;
 //@ActiveProfiles(value = PROFILE.UNITTEST)
 public class TaFormTS0110ServiceTest {
 	
-	private static final String REPORT_FILE = PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_10 + "." + FILE_EXTENSION.PDF;
+	private static final String REPORT_FILE = PATH.TEST_PATH + "%s" + "." + FILE_EXTENSION.PDF;
 	
 //	@Autowired
 //	private TaFormTS0110Service taFormTS0110Service;
@@ -69,15 +69,29 @@ public class TaFormTS0110ServiceTest {
 		formTS0110Vo.setNewRegId("2562000001");
 		formTS0110Vo.setTestimonyText("ทดสอบการพิมพ์เอกสาร เพื่อการทดสอบ จึงทดสอบมาเพื่อทดสอบ");
 		
-		List<TaFormTS0110Vo> taFormTS0110VoList = new ArrayList<>();
-		TaFormTS0110Vo form = new TaFormTS0110Vo();
-		form.setTestimonyPageNo("1");
-		form.setTestimonyText("ทดสอบข้อความ");
-		taFormTS0110VoList.add(form);
-		formTS0110Vo.setTaFormTS0110VoList(taFormTS0110VoList);
+		List<TaFormTS0110Vo> subFormTS0110VoList = new ArrayList<>();
+		TaFormTS0110Vo subFormTS0110Vo = null;
+		for (int i = 0; i < 3; i++) {
+			subFormTS0110Vo = new TaFormTS0110Vo();
+			subFormTS0110Vo.setTestimonyPageNo(String.valueOf((i + 1)));
+			subFormTS0110Vo.setTestimonyText("ทดสอบข้อความ " + String.valueOf((i + 1)));
+			subFormTS0110VoList.add(subFormTS0110Vo);
+		}
+		formTS0110Vo.setTaFormTS0110VoList(subFormTS0110VoList);
 
 		byte[] reportFile = taFormTS0110Service.generateReport(formTS0110Vo);
-		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_10))));
+	}
+	
+	@Test
+	public void test_generateReport_Blank() throws Exception {
+		TaFormTS0110Service taFormTS0110Service = new TaFormTS0110Service();
+		
+		// set data
+		TaFormTS0110Vo formTS0110Vo = new TaFormTS0110Vo();
+		
+		byte[] reportFile = taFormTS0110Service.generateReport(formTS0110Vo);
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_10 + "_blank"))));
 	}
 
 }

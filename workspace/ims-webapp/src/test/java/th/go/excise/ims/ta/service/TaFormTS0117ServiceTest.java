@@ -19,7 +19,7 @@ public class TaFormTS0117ServiceTest {
 	@Test
 	public void test_generateReport() throws Exception {
 
-		TaFormTS0117Service taFormTS0116Service = new TaFormTS0117Service();
+		TaFormTS0117Service taFormTS0117Service = new TaFormTS0117Service();
 		TaFormTS0117Vo formTS0117Vo = new TaFormTS0117Vo();
 
 		formTS0117Vo.setBookNumber1("23");
@@ -67,7 +67,7 @@ public class TaFormTS0117ServiceTest {
 		formTS0117Vo.setOfficeTime("13.30");
 		formTS0117Vo.setSignOfficerFullName("");
 		formTS0117Vo.setSignOfficerPosition("");
-		byte[] reportFile = taFormTS0116Service.generateReport(formTS0117Vo);
+		byte[] reportFile = taFormTS0117Service.generateReport(formTS0117Vo);
 		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
 
 	}

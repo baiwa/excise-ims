@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_10" pageWidth="595" pageHeight="1842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="55" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_10" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="55" whenResourceMissingType="Empty" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
 	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="16"/>
 	<parameter name="logo" class="java.io.InputStream"/>
@@ -572,67 +564,67 @@
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="454" width="460" height="15" uuid="2c2e683b-0c7b-4d44-870c-1ffdfbfd0bf7"/>
 				<box>
 					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
 				</box>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="469" width="460" height="22" uuid="777a0ff2-dd30-4e40-9310-3f25057f7cbc"/>
 				<box>
 					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
 				</box>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="491" width="460" height="22" uuid="38c74aff-a569-47b1-90a6-0ee7c2e08660"/>
 				<box>
 					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
 				</box>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="513" width="460" height="22" uuid="e3515b6e-bf45-423f-b8c2-6a480d1a1c46"/>
 				<box>
 					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
 				</box>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="535" width="460" height="22" uuid="6ebe2b4c-518d-4dcf-933f-a31db7391b97"/>
 				<box>
 					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
 				</box>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="557" width="460" height="22" uuid="5fdca4ac-fd6c-4bea-a676-a88ecb1054da"/>
 				<box>
 					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
 				</box>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="579" width="460" height="22" uuid="2bf68a23-7ffe-4fa9-8826-e979cd0dbde5"/>
 				<box>
 					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
 				</box>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="601" width="460" height="22" uuid="a1c756f7-ad5a-489d-8e06-5bea4b84655c"/>
 				<box>
 					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
 				</box>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="623" width="460" height="22" uuid="b0c79569-b324-4c54-8d04-74a1cc7ad418"/>
 				<box>
 					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
 				</box>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="645" width="460" height="22" uuid="d8fbe2c5-3d9c-4813-b350-30369cd3542d"/>
 				<box>
 					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
 				</box>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="667" width="460" height="22" uuid="45ba0eed-9ab1-4f11-8d91-f2abad4022ac"/>
 				<box>
 					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>

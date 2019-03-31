@@ -76,6 +76,9 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 	
 	public byte[] generateReport(TaFormTS0110Vo formTS0110Vo) throws Exception {
 		logger.info("export exportTaFormTS0110");
+		
+		List<ExporterInputItem> items = new ArrayList<ExporterInputItem>();
+		JasperPrint jasperPrint = null;
 
 		Map<String, Object> params = new HashMap<>();
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
@@ -110,20 +113,19 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 		params.put("testimonyText", formTS0110Vo.getTestimonyText());
 
 		// set output
-		JasperPrint jasperPrint1 = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_10 + "." + FILE_EXTENSION.JASPER, params);
-		List<ExporterInputItem> items = new ArrayList<ExporterInputItem>();
-		items.add(new SimpleExporterInputItem(jasperPrint1));
+		jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_10 + "." + FILE_EXTENSION.JASPER, params);
+		items.add(new SimpleExporterInputItem(jasperPrint));
 		
 		//add report TA_FORM_TS01_10_1
-		if (0 < formTS0110Vo.getTaFormTS0110VoList().size()) {
-			for (int i = 0; i < formTS0110Vo.getTaFormTS0110VoList().size(); i++) {
-				TaFormTS0110Vo form = formTS0110Vo.getTaFormTS0110VoList().get(i);
-				Map<String, Object> params2 = new HashMap<>();
-				params2.put("testimonyPageNo", form.getTestimonyPageNo());
-				params2.put("testimonyOf", formTS0110Vo.getTestimonyOf());
-				params2.put("testimonyText", form.getTestimonyText());
-				JasperPrint jasperPrint2 = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_10_1 + "." + FILE_EXTENSION.JASPER, params2);
-				items.add(new SimpleExporterInputItem(jasperPrint2));
+		if (formTS0110Vo.getTaFormTS0110VoList() != null) {
+			Map<String, Object> subParams = null;
+			for (TaFormTS0110Vo subFormTS0110Vo : formTS0110Vo.getTaFormTS0110VoList()) {
+				subParams = new HashMap<>();
+				subParams.put("testimonyPageNo", subFormTS0110Vo.getTestimonyPageNo());
+				subParams.put("testimonyOf", subFormTS0110Vo.getTestimonyOf());
+				subParams.put("testimonyText", subFormTS0110Vo.getTestimonyText());
+				jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_10_1 + "." + FILE_EXTENSION.JASPER, subParams);
+				items.add(new SimpleExporterInputItem(jasperPrint));
 			}
 		}
 		
