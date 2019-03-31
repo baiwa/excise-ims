@@ -79,24 +79,24 @@ public class TaFormTS0105Service extends AbstractTaFormTSService<TaFormTS0105Vo,
 		// set data to report
 		Map<String, Object> params = new HashMap<>();
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
-		params.put("BookNumber1",formTS0105Vo.getBookNumber1());
-		params.put("BookNumber2",formTS0105Vo.getBookNumber2());
-		params.put("OfficeName",formTS0105Vo.getOfficeName());
-		params.put("DocDate",formTS0105Vo.getDocDate());
-		params.put("DocDear",formTS0105Vo.getDocDear());
-		params.put("RefBookNumber1",formTS0105Vo.getRefBookNumber1());
-		params.put("RefBookNumber2",formTS0105Vo.getRefBookNumber2());
-		params.put("RefDocDate",formTS0105Vo.getRefDocDate());
-		params.put("RefDocSend",formTS0105Vo.getRefDocSend());
-		params.put("CaseDate",formTS0105Vo.getCaseDate());
-		params.put("CaseTime",formTS0105Vo.getCaseTime());
-		params.put("DestText",formTS0105Vo.getDestText());
-		params.put("DestDate",formTS0105Vo.getDestDate());
-		params.put("DestTime",formTS0105Vo.getDestTime());
-		params.put("SignOfficerFullName",formTS0105Vo.getSignOfficerFullName());
-		params.put("SignOfficerPosition",formTS0105Vo.getSignOfficerPosition());
-		params.put("OtherText",formTS0105Vo.getOtherText());
-		params.put("OtherPhone",formTS0105Vo.getOtherPhone());
+		params.put("bookNumber1",formTS0105Vo.getBookNumber1());
+		params.put("bookNumber2",formTS0105Vo.getBookNumber2());
+		params.put("officeName",formTS0105Vo.getOfficeName());
+		params.put("docDate",formTS0105Vo.getDocDate());
+		params.put("docDear",formTS0105Vo.getDocDear());
+		params.put("refBookNumber1",formTS0105Vo.getRefBookNumber1());
+		params.put("refBookNumber2",formTS0105Vo.getRefBookNumber2());
+		params.put("refDocDate",formTS0105Vo.getRefDocDate());
+		params.put("refDocSend",formTS0105Vo.getRefDocSend());
+		params.put("caseDate",formTS0105Vo.getCaseDate());
+		params.put("caseTime",formTS0105Vo.getCaseTime());
+		params.put("destText",formTS0105Vo.getDestText());
+		params.put("destDate",formTS0105Vo.getDestDate());
+		params.put("destTime",formTS0105Vo.getDestTime());
+		params.put("signOfficerFullName",formTS0105Vo.getSignOfficerFullName());
+		params.put("signOfficerPosition",formTS0105Vo.getSignOfficerPosition());
+		params.put("otherText",formTS0105Vo.getOtherText());
+		params.put("otherPhone",formTS0105Vo.getOtherPhone());
 
 		// set output
 		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_05 + "." + FILE_EXTENSION.JASPER, params);

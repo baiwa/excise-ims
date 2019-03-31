@@ -491,6 +491,18 @@
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
+			<line>
+				<reportElement x="276" y="564" width="117" height="1" uuid="b8373661-35fc-4119-a383-e94a67cd5aea"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="276" y="587" width="117" height="1" uuid="cf31b581-484c-44f1-a343-4e3feb83981a"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
 		</band>
 	</pageHeader>
 </jasperReport>
