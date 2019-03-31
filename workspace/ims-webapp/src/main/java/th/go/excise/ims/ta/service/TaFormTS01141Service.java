@@ -61,29 +61,33 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 
 	public byte[] generateReport(TaFormTS01141Vo formTS01141Vo) throws Exception {
 		logger.info("export TA_FORM_TS01_14_1");
-		Map<String, Object> params1 = new HashMap<>();
-		params1.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE + "." + FILE_EXTENSION.JPG));
-		params1.put("docDate", formTS01141Vo.getDocDate());
-		params1.put("docDear", formTS01141Vo.getDocDear());
-		params1.put("factoryName", formTS01141Vo.getFactoryName());
-		params1.put("factoryTypeText", formTS01141Vo.getFactoryTypeText());
-		params1.put("auditDateStart", formTS01141Vo.getAuditDateStart());
-		params1.put("auditDateEnd", formTS01141Vo.getAuditDateEnd());
-		params1.put("auditDesc", formTS01141Vo.getAuditDesc());
-
-		logger.info("export TA_FORM_TS01_14_1P2");
-		Map<String, Object> params2 = new HashMap<>();
-		params2.put("pageNo", formTS01141Vo.getPageNo());
-		params2.put("auditDesc", formTS01141Vo.getAuditDesc());
+		
+		Map<String, Object> params = null;
+		List<ExporterInputItem> items = new ArrayList<ExporterInputItem>();
+		JasperPrint jasperPrint = null;
+		
+		params = new HashMap<>();
+		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE + "." + FILE_EXTENSION.JPG));
+		params.put("docDate", formTS01141Vo.getDocDate());
+		params.put("docDear", formTS01141Vo.getDocDear());
+		params.put("factoryName", formTS01141Vo.getFactoryName());
+		params.put("factoryTypeText", formTS01141Vo.getFactoryTypeText());
+		params.put("auditDateStart", formTS01141Vo.getAuditDateStart());
+		params.put("auditDateEnd", formTS01141Vo.getAuditDateEnd());
+		params.put("auditDesc", formTS01141Vo.getAuditDesc());
+		
+		jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_14_1 + "." + FILE_EXTENSION.JASPER, params);
+		items.add(new SimpleExporterInputItem(jasperPrint));
+		
+		for (TaFormTS01141Vo subFormTS01141Vo : formTS01141Vo.getTaFormTS01141VoList()) {
+			params = new HashMap<>();
+			params.put("pageNo", subFormTS01141Vo.getPageNo());
+			params.put("auditDesc", subFormTS01141Vo.getAuditDesc());
+			jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_14_1P2 + "." + FILE_EXTENSION.JASPER, params);
+			items.add(new SimpleExporterInputItem(jasperPrint));
+		}
 
 		// set output
-		JasperPrint jasperPrint1 = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_14_1 + "." + FILE_EXTENSION.JASPER, params1);
-		JasperPrint jasperPrint2 = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_14_1P2 + "." + FILE_EXTENSION.JASPER, params2);
-
-		List<ExporterInputItem> items = new ArrayList<ExporterInputItem>();
-		items.add(new SimpleExporterInputItem(jasperPrint1));
-		items.add(new SimpleExporterInputItem(jasperPrint2));
-
 		JRPdfExporter exporter = new JRPdfExporter();
 		exporter.setExporterInput(new SimpleExporterInput(items));
 
@@ -92,8 +96,7 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 		exporter.exportReport();
 		byte[] content = outputStream.toByteArray();
 
-		ReportUtils.closeResourceFileInputStream(params1);
-		ReportUtils.closeResourceFileInputStream(params2);
+		ReportUtils.closeResourceFileInputStream(params);
 
 		return content;
 	}
