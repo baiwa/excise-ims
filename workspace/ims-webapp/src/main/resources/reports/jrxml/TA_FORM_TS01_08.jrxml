@@ -4,16 +4,17 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
-	<style name="TextDetail" hTextAlign="Left" vTextAlign="Middle" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="16">
-		<paragraph lineSpacing="1_1_2"/>
-	</style>
-	<style name="data" scaleImage="FillFrame" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="12">
-		<box>
-			<pen lineWidth="0.0" lineStyle="Dotted"/>
-			<bottomPen lineWidth="3.0" lineStyle="Dotted"/>
-		</box>
-	</style>
+	<style name="TextDetail" hTextAlign="Left" vTextAlign="Middle" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="16"/>
+	<style name="data" scaleImage="FillFrame" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="12"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -32,14 +33,14 @@
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="60" splitType="Stretch">
+		<band height="50" splitType="Stretch">
 			<textField>
-				<reportElement style="Topic" positionType="Float" x="0" y="30" width="800" height="25" uuid="1dc131dd-50dd-4698-b94e-9d16eb35bae1"/>
+				<reportElement style="Topic" positionType="Float" x="0" y="25" width="800" height="25" uuid="1dc131dd-50dd-4698-b94e-9d16eb35bae1"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA["สมุดสั่งการออกตรวจสอบภาษีสรรพสามิต"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="720" y="0" width="80" height="22" uuid="e739e000-82d7-4726-a733-315ef340014c"/>
+				<reportElement style="Topic" x="720" y="0" width="80" height="25" uuid="e739e000-82d7-4726-a733-315ef340014c"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font size="16" isBold="true"/>
 				</textElement>
@@ -255,7 +256,7 @@
 	<detail>
 		<band height="22" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="" style="data" positionType="Float" x="0" y="0" width="40" height="22" uuid="c0f2329a-912b-455b-8847-ea33008e0605"/>
+				<reportElement key="" style="data" positionType="Float" stretchType="ContainerHeight" x="0" y="0" width="40" height="22" uuid="c0f2329a-912b-455b-8847-ea33008e0605"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>

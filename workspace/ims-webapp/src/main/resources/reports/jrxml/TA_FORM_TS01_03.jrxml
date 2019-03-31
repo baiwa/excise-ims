@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_03" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="35" bottomMargin="35" whenResourceMissingType="Error" uuid="48a3de5f-799a-490c-8b9a-9ff322272948">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_03" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="35" bottomMargin="35" uuid="48a3de5f-799a-490c-8b9a-9ff322272948">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="cm"/>
 	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
@@ -55,7 +55,7 @@
 	<pageHeader>
 		<band height="760" splitType="Stretch">
 			<image hAlign="Center" vAlign="Middle" isUsingCache="false">
-				<reportElement isPrintRepeatedValues="false" x="190" y="0" width="60" height="60" uuid="d3819e76-5732-48b9-b1b9-640c66ad352e"/>
+				<reportElement isPrintRepeatedValues="false" x="200" y="0" width="60" height="60" uuid="d3819e76-5732-48b9-b1b9-640c66ad352e"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField>
@@ -143,7 +143,7 @@
 			<textField isBlankWhenNull="false">
 				<reportElement style="TextDetail" x="0" y="150" width="20" height="20" uuid="a6399154-d450-41c3-ba8b-00a418a53d69"/>
 				<textElement verticalAlignment="Bottom">
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA["1".equals( $P{factoryType} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
@@ -155,7 +155,7 @@
 			<textField>
 				<reportElement style="TextDetail" x="120" y="150" width="20" height="20" uuid="fae9cd8a-b58e-4550-a18b-06d7acf7872c"/>
 				<textElement verticalAlignment="Bottom">
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA["2".equals( $P{factoryType} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
@@ -167,7 +167,7 @@
 			<textField>
 				<reportElement style="TextDetail" x="220" y="150" width="20" height="20" uuid="3d2a9094-38d7-45c2-8cfc-a6f31a5fb850"/>
 				<textElement verticalAlignment="Bottom">
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA["3".equals( $P{factoryType} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>

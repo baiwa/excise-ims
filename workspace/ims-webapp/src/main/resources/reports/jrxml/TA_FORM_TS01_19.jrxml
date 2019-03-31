@@ -3,11 +3,11 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_19" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="55" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
 	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="16"/>
 	<parameter name="logo" class="java.io.InputStream"/>
@@ -48,7 +48,7 @@
 	<pageHeader>
 		<band height="730" splitType="Stretch">
 			<image isUsingCache="false">
-				<reportElement isPrintRepeatedValues="false" x="187" y="0" width="60" height="60" uuid="8acc1f25-cb66-413d-a9c0-e08548d94a46"/>
+				<reportElement isPrintRepeatedValues="false" x="200" y="0" width="60" height="60" uuid="8acc1f25-cb66-413d-a9c0-e08548d94a46"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField>
@@ -460,22 +460,22 @@
 				<textFieldExpression><![CDATA[$P{signOfficerPosition}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="0" y="616" width="49" height="22" uuid="c050881d-bb71-434b-8011-552eb2208387"/>
+				<reportElement style="TextDetail" x="0" y="680" width="49" height="22" uuid="c050881d-bb71-434b-8011-552eb2208387"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["หน่วยงาน"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="49" y="616" width="182" height="22" uuid="813480f6-d7e7-47ba-8936-3f9534c1e076"/>
+				<reportElement style="TextDetail" x="49" y="680" width="182" height="22" uuid="813480f6-d7e7-47ba-8936-3f9534c1e076"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{officeName2}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="0" y="638" width="25" height="22" uuid="0353bda2-854b-444a-a6c3-de1d5e6b33e9"/>
+				<reportElement style="TextDetail" x="0" y="702" width="25" height="22" uuid="0353bda2-854b-444a-a6c3-de1d5e6b33e9"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["โทร"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="25" y="638" width="206" height="22" uuid="661018ed-a93e-44b6-8e2f-dbd041539d4b"/>
+				<reportElement style="TextDetail" x="25" y="702" width="206" height="22" uuid="661018ed-a93e-44b6-8e2f-dbd041539d4b"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{officePhone}]]></textFieldExpression>
 			</textField>
@@ -630,13 +630,13 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="49" y="631" width="182" height="1" uuid="dcd1c8db-1b7c-42e2-96df-a80dcf28ca78"/>
+				<reportElement x="49" y="695" width="182" height="1" uuid="dcd1c8db-1b7c-42e2-96df-a80dcf28ca78"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="25" y="653" width="206" height="1" uuid="51adb139-13b4-4224-8521-c29106d15ebf"/>
+				<reportElement x="25" y="717" width="206" height="1" uuid="51adb139-13b4-4224-8521-c29106d15ebf"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>

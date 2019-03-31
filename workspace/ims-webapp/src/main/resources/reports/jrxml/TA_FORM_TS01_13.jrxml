@@ -1,24 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_13" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="55" whenResourceMissingType="Empty" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_13" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="55" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
 	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="16" isBold="false"/>
-	<style name="data" fill="Solid" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" isBlankWhenNull="false" fontName="TH Sarabun New" fontSize="16">
-		<box>
-			<pen lineWidth="0.0" lineStyle="Dotted"/>
-			<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-			<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-			<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-			<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-		</box>
-		<paragraph firstLineIndent="0"/>
-	</style>
 	<parameter name="logo" class="java.io.InputStream"/>
 	<parameter name="docPlace" class="java.lang.String"/>
 	<parameter name="docDate" class="java.util.Date"/>
@@ -52,7 +42,7 @@
 	<pageHeader>
 		<band height="710">
 			<image isUsingCache="false">
-				<reportElement isPrintRepeatedValues="false" x="190" y="0" width="60" height="60" uuid="8acc1f25-cb66-413d-a9c0-e08548d94a46"/>
+				<reportElement isPrintRepeatedValues="false" x="200" y="0" width="60" height="60" uuid="8acc1f25-cb66-413d-a9c0-e08548d94a46"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField>
@@ -71,7 +61,7 @@
 				<textFieldExpression><![CDATA["ที่"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement key="" style="data" isPrintRepeatedValues="false" x="285" y="90" width="175" height="22" isRemoveLineWhenBlank="true" uuid="27363560-d00d-45fb-887a-c2859013a5e9"/>
+				<reportElement key="" style="TextDetail" isPrintRepeatedValues="false" x="285" y="90" width="175" height="22" isRemoveLineWhenBlank="true" uuid="27363560-d00d-45fb-887a-c2859013a5e9"/>
 				<textFieldExpression><![CDATA[$P{docPlace}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -82,7 +72,7 @@
 				<textFieldExpression><![CDATA["วันที่"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="280" y="112" width="20" height="22" uuid="1eb9fc12-246f-4497-9616-2d5bd25945dd"/>
+				<reportElement style="TextDetail" x="280" y="112" width="20" height="22" uuid="1eb9fc12-246f-4497-9616-2d5bd25945dd"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("d",new Locale("th", "TH")).format($P{docDate})]]></textFieldExpression>
 			</textField>
@@ -92,7 +82,7 @@
 				<textFieldExpression><![CDATA["เดือน"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="332" y="112" width="60" height="22" uuid="7a30d245-5412-40e4-b85e-0913df17f530"/>
+				<reportElement style="TextDetail" x="332" y="112" width="60" height="22" uuid="7a30d245-5412-40e4-b85e-0913df17f530"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("MMMM",new Locale("th", "TH")).format($P{docDate})]]></textFieldExpression>
 			</textField>
@@ -102,7 +92,7 @@
 				<textFieldExpression><![CDATA["พ.ศ."]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement key="" style="data" x="420" y="112" width="40" height="22" uuid="a0e8d78a-bb19-413f-8d7f-fb6d9440c13f"/>
+				<reportElement key="" style="TextDetail" x="420" y="112" width="40" height="22" uuid="a0e8d78a-bb19-413f-8d7f-fb6d9440c13f"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy",new Locale("th", "TH")).format($P{docDate})]]></textFieldExpression>
 			</textField>
@@ -115,7 +105,7 @@
 				<textFieldExpression><![CDATA["วันนี้ เวลา"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement key="" style="data" x="119" y="140" width="50" height="22" uuid="231e34c3-14a0-4e85-a9d7-852b38f8b2ba"/>
+				<reportElement key="" style="TextDetail" x="119" y="140" width="50" height="22" uuid="231e34c3-14a0-4e85-a9d7-852b38f8b2ba"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{docTime}]]></textFieldExpression>
 			</textField>
@@ -130,7 +120,7 @@
 				<textFieldExpression><![CDATA["ข้าพเจ้า"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="230" y="140" width="230" height="22" uuid="0bd11cc9-9c6c-48ed-bf1c-0d014ce28e1f"/>
+				<reportElement style="TextDetail" x="230" y="140" width="230" height="22" uuid="0bd11cc9-9c6c-48ed-bf1c-0d014ce28e1f"/>
 				<textFieldExpression><![CDATA[$P{headOfficerFullName}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -142,7 +132,7 @@
 				<textFieldExpression><![CDATA["ตำแหน่ง"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="42" y="162" width="113" height="22" uuid="8a331240-aff2-4431-b9b5-cea2dbe72b14"/>
+				<reportElement style="TextDetail" x="42" y="162" width="113" height="22" uuid="8a331240-aff2-4431-b9b5-cea2dbe72b14"/>
 				<textFieldExpression><![CDATA[$P{headOfficerPosition}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -151,7 +141,7 @@
 				<textFieldExpression><![CDATA["พร้อมคณะตามหนังสือ"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="255" y="162" width="90" height="22" uuid="ed09412e-7eb9-4656-9562-207bc98416d6"/>
+				<reportElement style="TextDetail" x="255" y="162" width="90" height="22" uuid="ed09412e-7eb9-4656-9562-207bc98416d6"/>
 				<textFieldExpression><![CDATA[$P{refBookNumber1}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -160,7 +150,7 @@
 				<textFieldExpression><![CDATA["ลงวันที่"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="380" y="162" width="80" height="22" uuid="9d144f30-10b6-4f74-b23e-39ddce1a0047"/>
+				<reportElement style="TextDetail" x="380" y="162" width="80" height="22" uuid="9d144f30-10b6-4f74-b23e-39ddce1a0047"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("d MMM yyyy",new Locale("th", "TH")).format($P{refBookDate})]]></textFieldExpression>
 			</textField>
@@ -173,9 +163,9 @@
 				<textFieldExpression><![CDATA["ได้มาตรวจ ณ"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="65" y="184" width="22" height="22" uuid="d025de06-0518-4fea-a2c6-dcac2a39a0be"/>
+				<reportElement style="TextDetail" x="65" y="184" width="22" height="22" uuid="d025de06-0518-4fea-a2c6-dcac2a39a0be"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="16" isBold="false"/>
+					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA["1".equals( $P{factoryType} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
@@ -185,7 +175,7 @@
 				<textFieldExpression><![CDATA["โรงอุตสาหกรรม"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="162" y="184" width="22" height="22" uuid="412bb364-c5da-4c05-ab22-ade1f8d1574c"/>
+				<reportElement style="TextDetail" x="162" y="184" width="22" height="22" uuid="412bb364-c5da-4c05-ab22-ade1f8d1574c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
@@ -197,7 +187,7 @@
 				<textFieldExpression><![CDATA["สถานบริการ"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="244" y="184" width="22" height="22" uuid="adf7668b-ff8f-4e7a-b5dc-df2e3bb757ff"/>
+				<reportElement style="TextDetail" x="244" y="184" width="22" height="22" uuid="adf7668b-ff8f-4e7a-b5dc-df2e3bb757ff"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
@@ -214,7 +204,7 @@
 				<textFieldExpression><![CDATA["ชื่อ"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="20" y="206" width="200" height="22" uuid="a458d518-db4d-482a-986e-a8c39b176d8e"/>
+				<reportElement style="TextDetail" x="20" y="206" width="200" height="22" uuid="a458d518-db4d-482a-986e-a8c39b176d8e"/>
 				<textFieldExpression><![CDATA[$P{factoryName}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -223,7 +213,7 @@
 				<textFieldExpression><![CDATA["ทะเบียนสรรพสามิตเลขที่"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="330" y="206" width="130" height="22" uuid="b3ae6eb4-6e5d-419e-a44f-be4c49054e0a"/>
+				<reportElement style="TextDetail" x="330" y="206" width="130" height="22" uuid="b3ae6eb4-6e5d-419e-a44f-be4c49054e0a"/>
 				<textFieldExpression><![CDATA[$P{newRegId}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -232,7 +222,7 @@
 				<textFieldExpression><![CDATA["ตั้งอยู่เลขที่"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="52" y="228" width="30" height="22" uuid="02d150f3-9d06-4f85-9984-5fba3ecf14c7"/>
+				<reportElement style="TextDetail" x="52" y="228" width="30" height="22" uuid="02d150f3-9d06-4f85-9984-5fba3ecf14c7"/>
 				<textFieldExpression><![CDATA[$P{facAddrNo}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -241,7 +231,7 @@
 				<textFieldExpression><![CDATA["ซอย "]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="109" y="228" width="70" height="22" uuid="92ab2840-2948-42a8-a778-086ae792067f"/>
+				<reportElement style="TextDetail" x="109" y="228" width="70" height="22" uuid="92ab2840-2948-42a8-a778-086ae792067f"/>
 				<textFieldExpression><![CDATA[$P{facSoiName}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -250,7 +240,7 @@
 				<textFieldExpression><![CDATA["ถนน "]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="205" y="228" width="95" height="22" uuid="5b0249ae-833a-4c74-886f-114d29a2de59"/>
+				<reportElement style="TextDetail" x="205" y="228" width="95" height="22" uuid="5b0249ae-833a-4c74-886f-114d29a2de59"/>
 				<textFieldExpression><![CDATA[$P{facThnName}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -259,7 +249,7 @@
 				<textFieldExpression><![CDATA["ตำบล/แขวง"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="355" y="228" width="105" height="22" uuid="737dcb9a-006b-42a0-93b4-b313bed44ca7"/>
+				<reportElement style="TextDetail" x="355" y="228" width="105" height="22" uuid="737dcb9a-006b-42a0-93b4-b313bed44ca7"/>
 				<textFieldExpression><![CDATA[$P{facTambolName}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -268,7 +258,7 @@
 				<textFieldExpression><![CDATA["อำเภอ/เขต"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="54" y="250" width="130" height="22" uuid="39c56f7e-8e8f-46e2-9527-e2ecf3739852"/>
+				<reportElement style="TextDetail" x="54" y="250" width="130" height="22" uuid="39c56f7e-8e8f-46e2-9527-e2ecf3739852"/>
 				<textFieldExpression><![CDATA[$P{facAmphurName}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -277,7 +267,7 @@
 				<textFieldExpression><![CDATA["จังหวัด"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="220" y="250" width="130" height="22" uuid="d803d0ef-358e-4a05-b24b-91fdfb791d93"/>
+				<reportElement style="TextDetail" x="220" y="250" width="130" height="22" uuid="d803d0ef-358e-4a05-b24b-91fdfb791d93"/>
 				<textFieldExpression><![CDATA[$P{facProvinceName}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -286,7 +276,7 @@
 				<textFieldExpression><![CDATA["รหัสไปรษณีย์"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="data" x="410" y="250" width="50" height="22" uuid="7e56cdc0-32d4-4a5a-ba82-7aec6422d4d1"/>
+				<reportElement style="TextDetail" x="410" y="250" width="50" height="22" uuid="7e56cdc0-32d4-4a5a-ba82-7aec6422d4d1"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{facZipCode}]]></textFieldExpression>
 			</textField>
@@ -296,7 +286,7 @@
 				<textFieldExpression><![CDATA["ในวันที่"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="data" x="35" y="272" width="70" height="22" uuid="f4758261-c4b5-4b1a-bc8b-471e810dda90"/>
+				<reportElement style="TextDetail" x="35" y="272" width="70" height="22" uuid="f4758261-c4b5-4b1a-bc8b-471e810dda90"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("d MMM yyyy",new Locale("th", "TH")).format($P{auditDate})]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -305,7 +295,7 @@
 				<textFieldExpression><![CDATA["โดยมี"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="data" x="132" y="272" width="112" height="22" uuid="806f3fee-9aba-4f7a-9b03-4f4ff660b532"/>
+				<reportElement style="TextDetail" x="132" y="272" width="112" height="22" uuid="806f3fee-9aba-4f7a-9b03-4f4ff660b532"/>
 				<textFieldExpression><![CDATA[$P{ownerFullName}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -314,7 +304,7 @@
 				<textFieldExpression><![CDATA["ตำแหน่ง"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="data" x="284" y="272" width="114" height="22" uuid="4ff8db28-6be4-48b6-8572-a5aaf7206eea"/>
+				<reportElement style="TextDetail" x="284" y="272" width="114" height="22" uuid="4ff8db28-6be4-48b6-8572-a5aaf7206eea"/>
 				<textFieldExpression><![CDATA[$P{ownerPosition}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -338,7 +328,7 @@
 				<textFieldExpression><![CDATA["กิจการค้าของข้าพเจ้า ทั้งที่มิได้ให้ทรัพย์สินหรือเอกสารของ"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="data" x="252" y="344" width="208" height="22" uuid="a5af06df-6b04-484c-9a55-be0d8f5e1915"/>
+				<reportElement style="TextDetail" x="252" y="344" width="208" height="22" uuid="a5af06df-6b04-484c-9a55-be0d8f5e1915"/>
 				<textFieldExpression><![CDATA[$P{factoryName2}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -357,7 +347,7 @@
 				<textFieldExpression><![CDATA["ตรวจเสร็จเวลา"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="data" x="140" y="410" width="50" height="22" uuid="2c5c3609-9a6a-4cfd-9275-9df5edda9afc"/>
+				<reportElement style="TextDetail" x="140" y="410" width="50" height="22" uuid="2c5c3609-9a6a-4cfd-9275-9df5edda9afc"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{auditFinishTime}]]></textFieldExpression>
 			</textField>
@@ -382,12 +372,12 @@
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="" style="data" x="250" y="472" width="120" height="22" uuid="80411cc2-07fb-43aa-8a53-40c14d4e5a4e"/>
+				<reportElement key="" style="TextDetail" x="250" y="472" width="120" height="22" uuid="80411cc2-07fb-43aa-8a53-40c14d4e5a4e"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{signOwnerFullName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="" style="data" isPrintRepeatedValues="false" x="370" y="472" width="7" height="22" uuid="035e523e-1633-4a6d-aa19-9196889e519e"/>
+				<reportElement key="" style="TextDetail" isPrintRepeatedValues="false" x="370" y="472" width="7" height="22" uuid="035e523e-1633-4a6d-aa19-9196889e519e"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[")"]]></textFieldExpression>
 			</textField>
@@ -409,12 +399,12 @@
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="" style="data" x="250" y="522" width="120" height="22" uuid="d515b88d-7264-457b-86be-975800d5a5e4"/>
+				<reportElement key="" style="TextDetail" x="250" y="522" width="120" height="22" uuid="d515b88d-7264-457b-86be-975800d5a5e4"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{signOfficerFullName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="" style="data" isPrintRepeatedValues="false" x="370" y="522" width="7" height="22" uuid="09885615-454f-4288-8b48-7cbea80da38e"/>
+				<reportElement key="" style="TextDetail" isPrintRepeatedValues="false" x="370" y="522" width="7" height="22" uuid="09885615-454f-4288-8b48-7cbea80da38e"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[")"]]></textFieldExpression>
 			</textField>
@@ -434,12 +424,12 @@
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="" style="data" x="250" y="572" width="120" height="22" uuid="83283921-1606-42e6-9aec-ed6128cd53f1"/>
+				<reportElement key="" style="TextDetail" x="250" y="572" width="120" height="22" uuid="83283921-1606-42e6-9aec-ed6128cd53f1"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{signWitnessFullName1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="" style="data" isPrintRepeatedValues="false" x="370" y="572" width="7" height="22" uuid="b9c98bbc-1e92-4118-81e8-2bca3a1e52b0"/>
+				<reportElement key="" style="TextDetail" isPrintRepeatedValues="false" x="370" y="572" width="7" height="22" uuid="b9c98bbc-1e92-4118-81e8-2bca3a1e52b0"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[")"]]></textFieldExpression>
 			</textField>
@@ -459,12 +449,12 @@
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="" style="data" x="250" y="622" width="120" height="22" uuid="84668131-399f-40d3-9c1e-602489c753aa"/>
+				<reportElement key="" style="TextDetail" x="250" y="622" width="120" height="22" uuid="84668131-399f-40d3-9c1e-602489c753aa"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{signWitnessFullName2}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="" style="data" isPrintRepeatedValues="false" x="370" y="622" width="7" height="22" uuid="84352857-7c4f-4923-a04a-cf84acc9800e"/>
+				<reportElement key="" style="TextDetail" isPrintRepeatedValues="false" x="370" y="622" width="7" height="22" uuid="84352857-7c4f-4923-a04a-cf84acc9800e"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[")"]]></textFieldExpression>
 			</textField>

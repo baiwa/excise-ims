@@ -5,12 +5,6 @@
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
 	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="16"/>
-	<style name="data" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="16">
-		<box>
-			<pen lineWidth="0.0" lineStyle="Dotted"/>
-			<bottomPen lineWidth="3.0" lineStyle="Dotted"/>
-		</box>
-	</style>
 	<parameter name="logo" class="java.io.InputStream"/>
 	<parameter name="formTsNumber" class="java.lang.String"/>
 	<parameter name="factoryName" class="java.lang.String"/>
@@ -50,7 +44,7 @@
 	<pageHeader>
 		<band height="705" splitType="Stretch">
 			<image>
-				<reportElement x="195" y="0" width="60" height="60" uuid="90ca04f2-82d8-4e03-92ba-af7e35dc179c"/>
+				<reportElement x="200" y="0" width="60" height="60" uuid="90ca04f2-82d8-4e03-92ba-af7e35dc179c"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField>

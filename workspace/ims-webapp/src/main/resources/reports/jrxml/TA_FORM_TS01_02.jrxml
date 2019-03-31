@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_02" pageWidth="595" pageHeight="842" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="45" bottomMargin="45" uuid="c9edd8aa-539f-48e6-b06d-8e45212954eb">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_02" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="45" bottomMargin="45" uuid="c9edd8aa-539f-48e6-b06d-8e45212954eb">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
 	<style name="data1" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="14"/>
 	<style name="data2" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="12"/>
@@ -163,7 +155,7 @@
 			<textField isBlankWhenNull="true">
 				<reportElement x="16" y="170" width="19" height="20" uuid="95b0aa87-3f0a-4c8f-9729-bdd797b322d9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="14" isBold="false"/>
+					<font fontName="DejaVu Sans" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA["1".equals( $P{companyType} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
@@ -175,7 +167,7 @@
 			<textField isBlankWhenNull="true">
 				<reportElement x="104" y="170" width="19" height="20" uuid="8d8f625b-ce23-455b-a439-4d42f3348838"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="14" isBold="false"/>
+					<font fontName="DejaVu Sans" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA["2".equals( $P{companyType} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
@@ -187,7 +179,7 @@
 			<textField isBlankWhenNull="true">
 				<reportElement x="172" y="170" width="19" height="20" uuid="ad77644d-6791-4a02-b902-d6163d95839f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="14" isBold="false"/>
+					<font fontName="DejaVu Sans" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA["3".equals( $P{companyType} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>

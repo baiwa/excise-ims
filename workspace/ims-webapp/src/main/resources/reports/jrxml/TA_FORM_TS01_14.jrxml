@@ -66,15 +66,15 @@
 	<pageHeader>
 		<band height="584" splitType="Stretch">
 			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+			<image scaleImage="RealHeight" isUsingCache="false">
+				<reportElement isPrintRepeatedValues="false" x="200" y="0" width="60" height="60" uuid="5a1caaeb-e7ce-440b-8c69-284994cdbbd5"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
 			<textField>
 				<reportElement style="Topic" isPrintRepeatedValues="false" x="380" y="35" width="80" height="25" uuid="6d1514d6-b255-44a7-b908-8165137638d3"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตส. ๐๑-๑๔"]]></textFieldExpression>
 			</textField>
-			<image scaleImage="RealHeight" isUsingCache="false">
-				<reportElement isPrintRepeatedValues="false" x="190" y="0" width="60" height="60" uuid="5a1caaeb-e7ce-440b-8c69-284994cdbbd5"/>
-				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
-			</image>
 			<textField>
 				<reportElement style="Topic" isPrintRepeatedValues="false" x="0" y="60" width="460" height="25" uuid="89fb7e81-82d2-43e7-bf7c-cff672e374f4"/>
 				<box>

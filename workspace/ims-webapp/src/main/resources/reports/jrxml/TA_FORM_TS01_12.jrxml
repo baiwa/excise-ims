@@ -57,7 +57,7 @@
 	<pageHeader>
 		<band height="752" splitType="Stretch">
 			<image>
-				<reportElement x="190" y="0" width="60" height="60" uuid="90ca04f2-82d8-4e03-92ba-af7e35dc179c"/>
+				<reportElement x="200" y="0" width="60" height="60" uuid="90ca04f2-82d8-4e03-92ba-af7e35dc179c"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField>
@@ -301,7 +301,7 @@
 			<textField isBlankWhenNull="false">
 				<reportElement x="405" y="330" width="20" height="20" uuid="ef9a2050-2efe-4405-96cd-eac8a3ff1db6"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA["1".equals( $P{ownerPosition} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
@@ -312,7 +312,7 @@
 			<textField isBlankWhenNull="false">
 				<reportElement x="0" y="350" width="20" height="20" uuid="ba1be1c1-0fbb-45cd-9eac-1cc551e23872"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA["2".equals( $P{ownerPosition} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
@@ -323,7 +323,7 @@
 			<textField isBlankWhenNull="false">
 				<reportElement x="90" y="350" width="20" height="20" uuid="8d407e73-e829-4936-895f-efce6b27d783"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA["3".equals( $P{ownerPosition} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
@@ -334,7 +334,7 @@
 			<textField isBlankWhenNull="false">
 				<reportElement x="180" y="350" width="20" height="20" uuid="4c53d99f-5f20-45ff-a7d0-994daa3abdc2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA["4".equals( $P{ownerPosition} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
@@ -394,7 +394,7 @@
 			<textField isBlankWhenNull="false">
 				<reportElement x="225" y="510" width="20" height="20" uuid="3c377327-986c-4aeb-9bf7-9b7e9226c545"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA["1".equals( $P{ownerPosition2} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
@@ -405,7 +405,7 @@
 			<textField isBlankWhenNull="false">
 				<reportElement x="280" y="510" width="20" height="20" uuid="97f9cdd5-2ac3-4e17-8d77-43fd0afbbd2c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA["2".equals( $P{ownerPosition2} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
@@ -416,7 +416,7 @@
 			<textField isBlankWhenNull="false">
 				<reportElement x="370" y="510" width="20" height="20" uuid="378f94c1-e953-4b53-ada7-eed652fcc452"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA["3".equals( $P{ownerPosition2} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
@@ -427,7 +427,7 @@
 			<textField isBlankWhenNull="false">
 				<reportElement x="0" y="530" width="20" height="20" uuid="f614c379-987e-4b07-9a20-83ba2be5813d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA["4".equals( $P{ownerPosition2} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>

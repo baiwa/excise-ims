@@ -34,16 +34,12 @@
 			</image>
 			<textField>
 				<reportElement style="Topic" x="380" y="35" width="80" height="25" uuid="6d1514d6-b255-44a7-b908-8165137638d3"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตส. ๐๑-๐๙"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Topic" x="0" y="60" width="460" height="25" uuid="861f16b3-f966-4bff-b95f-486a25fe61c6"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New"/>
-				</textElement>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA["คำสั่งให้ตรวจค้น"]]></textFieldExpression>
 			</textField>
 			<textField>
