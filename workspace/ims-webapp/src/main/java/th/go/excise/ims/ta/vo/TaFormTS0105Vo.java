@@ -9,7 +9,7 @@ public class TaFormTS0105Vo {
 	private String bookNumber2;
 	private String officeName;
 	private Date docDate;
-	private Date docDear;
+	private String docDear;
 	private String refBookNumber1;
 	private String refBookNumber2;
 	private Date refDocDate;
@@ -64,11 +64,11 @@ public class TaFormTS0105Vo {
 		this.docDate = docDate;
 	}
 
-	public Date getDocDear() {
+	public String getDocDear() {
 		return docDear;
 	}
 
-	public void setDocDear(Date docDear) {
+	public void setDocDear(String docDear) {
 		this.docDear = docDear;
 	}
 
