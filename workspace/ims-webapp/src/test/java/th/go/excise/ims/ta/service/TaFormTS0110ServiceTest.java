@@ -2,7 +2,9 @@ package th.go.excise.ims.ta.service;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
@@ -66,6 +68,13 @@ public class TaFormTS0110ServiceTest {
 		formTS0110Vo.setTestimonyFactoryFullName("สมศํกดิ์");
 		formTS0110Vo.setNewRegId("2562000001");
 		formTS0110Vo.setTestimonyText("ทดสอบการพิมพ์เอกสาร เพื่อการทดสอบ จึงทดสอบมาเพื่อทดสอบ");
+		
+		List<TaFormTS0110Vo> taFormTS0110VoList = new ArrayList<>();
+		TaFormTS0110Vo form = new TaFormTS0110Vo();
+		form.setTestimonyPageNo("1");
+		form.setTestimonyText("ทดสอบข้อความ");
+		taFormTS0110VoList.add(form);
+		formTS0110Vo.setTaFormTS0110VoList(taFormTS0110VoList);
 
 		byte[] reportFile = taFormTS0110Service.generateReport(formTS0110Vo);
 		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
