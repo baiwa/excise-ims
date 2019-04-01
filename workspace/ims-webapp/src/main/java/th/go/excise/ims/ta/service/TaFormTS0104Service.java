@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +50,7 @@ public class TaFormTS0104Service extends AbstractTaFormTSService<TaFormTS0104Vo,
 
 	}
 
+	@Transactional(rollbackOn = { Exception.class })
 	@Override
 	public void saveFormTS(TaFormTS0104Vo formTS0104Vo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
