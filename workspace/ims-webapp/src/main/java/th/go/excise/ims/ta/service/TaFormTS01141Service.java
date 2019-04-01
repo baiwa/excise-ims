@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import net.sf.jasperreports.export.ExporterInputItem;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleExporterInputItem;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.IMG_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
@@ -56,11 +58,77 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
 		logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS01141Vo.getFormTsNumber());
-
+		
+		// Set Data
+		TaFormTs01141 formTs01141 = null;
+		List<TaFormTs01141> formTs01141List = new ArrayList<>();
+		if (StringUtils.isNotEmpty(formTS01141Vo.getFormTsNumber())) {
+			// Case Update FormTS
+			List<TaFormTs01141> taFormTs01141List = taFormTs01141Repository.findByFormTsNumber(formTS01141Vo.getFormTsNumber());
+			
+			// Update isDeleted = 'Y' for Default
+			for (TaFormTs01141 taFormTs01141 : taFormTs01141List) {
+				if (Integer.parseInt(taFormTs01141.getPageNo()) >= 1) {
+					taFormTs01141.setIsDeleted(FLAG.Y_FLAG);
+				}
+			}
+			
+			// Set Main Record
+			formTs01141 = getEntityByPageNo(taFormTs01141List, "0");
+			toEntity(formTs01141, formTS01141Vo);
+			formTs01141List.add(formTs01141);
+			
+			// Set Sub Record
+			if (formTS01141Vo.getTaFormTS01141VoList() != null) {
+				for (TaFormTS01141Vo subFormTS01141Vo : formTS01141Vo.getTaFormTS01141VoList()) {
+					formTs01141 = getEntityByPageNo(taFormTs01141List, subFormTS01141Vo.getPageNo());
+					if (formTs01141 != null) {
+						// Exist Page
+						formTs01141.setAuditDesc(subFormTS01141Vo.getAuditDesc());
+						formTs01141.setIsDeleted(FLAG.N_FLAG);
+						formTs01141List.add(formTs01141);
+					} else {
+						// New Page
+						formTs01141 = new TaFormTs01141();
+						toEntity(formTs01141, subFormTS01141Vo);
+						formTs01141.setOfficeCode(officeCode);
+						formTs01141.setBudgetYear(budgetYear);
+						formTs01141.setFormTsNumber(formTS01141Vo.getFormTsNumber());
+						formTs01141List.add(formTs01141);
+					}
+				}
+			}
+			
+		} else {
+			// Case New FormTS
+			String formTsNumber = taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear);
+			
+			// Set Main Record
+			formTs01141 = new TaFormTs01141();
+			toEntity(formTs01141, formTS01141Vo);
+			formTs01141.setOfficeCode(officeCode);
+			formTs01141.setBudgetYear(budgetYear);
+			formTs01141.setFormTsNumber(formTsNumber);
+			formTs01141List.add(formTs01141);
+			
+			// Set Sub Record
+			if (formTS01141Vo.getTaFormTS01141VoList() != null) {
+				for (TaFormTS01141Vo subFormTS01141Vo : formTS01141Vo.getTaFormTS01141VoList()) {
+					formTs01141 = new TaFormTs01141();
+					toEntity(formTs01141, subFormTS01141Vo);
+					formTs01141.setOfficeCode(officeCode);
+					formTs01141.setBudgetYear(budgetYear);
+					formTs01141.setFormTsNumber(formTsNumber);
+					formTs01141List.add(formTs01141);
+				}
+			}
+		}
+		
+		taFormTs01141Repository.saveAll(formTs01141List);
 	}
 
 	public byte[] generateReport(TaFormTS01141Vo formTS01141Vo) throws Exception {
-		logger.info("export TA_FORM_TS01_14_1");
+		logger.info("generateReport");
 		
 		List<ExporterInputItem> items = new ArrayList<ExporterInputItem>();
 		JasperPrint jasperPrint = null;
@@ -104,14 +172,45 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 	}
 
 	public List<String> getFormTsNumberList() {
-		// TODO Auto-generated method stub
-		return null;
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		return taFormTs01141Repository.findFormTsNumberByOfficeCode(officeCode);
 	}
 
 	@Override
 	public TaFormTS01141Vo getFormTS(String formTsNumber) {
-		// TODO Auto-generated method stub
-		return null;
+		TaFormTS01141Vo formTS01141Vo = new TaFormTS01141Vo();
+		TaFormTS01141Vo subFormTS01141Vo = null;
+		List<TaFormTS01141Vo> formTS01141VoList = new ArrayList<>();
+		
+		List<TaFormTs01141> taFormTs01141List = taFormTs01141Repository.findByFormTsNumber(formTsNumber);
+		for (TaFormTs01141 taFormTs01141 : taFormTs01141List) {
+			if ("0".equals(taFormTs01141.getPageNo())) {
+				// Main Page
+				toVo(formTS01141Vo, taFormTs01141);
+			} else {
+				// Sub Page
+				subFormTS01141Vo = new TaFormTS01141Vo();
+				toVo(subFormTS01141Vo, taFormTs01141);
+				formTS01141VoList.add(subFormTS01141Vo);
+			}
+		}
+		formTS01141Vo.setTaFormTS01141VoList(formTS01141VoList);
+		
+		// Sorting
+		formTS01141Vo.getTaFormTS01141VoList().sort((p1, p2) -> Integer.parseInt(p1.getPageNo()) - Integer.parseInt(p2.getPageNo()));
+		
+		return formTS01141Vo;
+	}
+	
+	private TaFormTs01141 getEntityByPageNo(List<TaFormTs01141> formTs01141List, String pageNo) {
+		TaFormTs01141 formTs01141 = null;
+		for (TaFormTs01141 taFormTs01141 : formTs01141List) {
+			if (pageNo.equals(taFormTs01141.getPageNo())) {
+				formTs01141 = taFormTs01141;
+				break;
+			}
+		}
+		return formTs01141;
 	}
 
 }
