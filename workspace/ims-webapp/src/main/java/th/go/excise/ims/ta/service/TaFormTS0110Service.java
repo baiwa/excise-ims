@@ -66,7 +66,6 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 		
 		// Set Data
 		TaFormTs0110 formTs0110 = null;
-		List<TaFormTs0110> formTs0110List = new ArrayList<>();
 		if (StringUtils.isNotEmpty(formTS0110Vo.getFormTsNumber())) {
 			// Case Update FormTS
 			List<TaFormTs0110> taFormTs0110List = taFormTs0110Repository.findByFormTsNumber(formTS0110Vo.getFormTsNumber());
@@ -81,7 +80,6 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 			// Set Main Record
 			formTs0110 = getEntityByPageNo(taFormTs0110List, "0");
 			toEntity(formTs0110, formTS0110Vo);
-			formTs0110List.add(formTs0110);
 			
 			// Set Sub Record
 			if (formTS0110Vo.getTaFormTS0110VoList() != null) {
@@ -92,7 +90,6 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 						formTs0110.setTestimonyOf(formTS0110Vo.getTestimonyOf());
 						formTs0110.setTestimonyText(subFormTS0110Vo.getTestimonyText());
 						formTs0110.setIsDeleted(FLAG.N_FLAG);
-						formTs0110List.add(formTs0110);
 					} else {
 						// New Page
 						formTs0110 = new TaFormTs0110();
@@ -100,14 +97,17 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 						formTs0110.setOfficeCode(officeCode);
 						formTs0110.setBudgetYear(budgetYear);
 						formTs0110.setFormTsNumber(formTS0110Vo.getFormTsNumber());
-						formTs0110List.add(formTs0110);
+						taFormTs0110List.add(formTs0110);
 					}
 				}
 			}
 			
+			taFormTs0110Repository.saveAll(taFormTs0110List);
+			
 		} else {
 			// Case New FormTS
 			String formTsNumber = taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear);
+			List<TaFormTs0110> formTs0110List = new ArrayList<>();
 			
 			// Set Main Record
 			formTs0110 = new TaFormTs0110();
@@ -129,9 +129,9 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 					formTs0110List.add(formTs0110);
 				}
 			}
+			
+			taFormTs0110Repository.saveAll(formTs0110List);
 		}
-		
-		taFormTs0110Repository.saveAll(formTs0110List);
 	}
 
 	@Override
