@@ -1,6 +1,7 @@
 package th.go.excise.ims.oa.service;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,24 +12,36 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.export.ExporterInputItem;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleExporterInputItem;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
+import th.go.excise.ims.oa.persistence.entity.OaCustomerLicenDetail;
+import th.go.excise.ims.oa.persistence.entity.OaHydrocarbDtl;
+import th.go.excise.ims.oa.persistence.entity.OaLubricantsCompare;
 import th.go.excise.ims.oa.persistence.entity.OaLubricantsCust;
 import th.go.excise.ims.oa.persistence.entity.OaLubricantsDtl;
+import th.go.excise.ims.oa.persistence.repository.OaCustomerLicenDetailRepository;
 import th.go.excise.ims.oa.persistence.repository.OaHydrocarbDtlRepository;
+import th.go.excise.ims.oa.persistence.repository.OaLubricantsCompareRepository;
 import th.go.excise.ims.oa.persistence.repository.OaLubricantsDtlRepository;
+import th.go.excise.ims.oa.persistence.repository.jdbc.Oa020106JdbcRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0206JdbcRepository;
 import th.go.excise.ims.oa.utils.OaOfficeCode;
+import th.go.excise.ims.oa.vo.Oa020106ButtonVo;
 import th.go.excise.ims.oa.vo.Oa020106DtlVo;
 import th.go.excise.ims.oa.vo.Oa0206CustomersVo;
 import th.go.excise.ims.oa.vo.Oa0206FormVo;
@@ -54,6 +67,15 @@ public class Oa0206Service {
 	
 	@Autowired
 	private Oa02010609Service oa02010609Service;
+	
+	@Autowired
+	private OaCustomerLicenDetailRepository customerLicenseRepo;
+	
+	@Autowired
+	private OaLubricantsCompareRepository lubricantsComapreRepo;
+	
+	@Autowired
+	private Oa020106JdbcRepository buttonRepo;
 	
 	public DataTableAjax<Oa0206Vo> filterByCriteria(Oa0206FormVo request,String officeCode) {
 		String offCode = OaOfficeCode.officeCodeLike(officeCode);
@@ -84,6 +106,7 @@ public class Oa0206Service {
 	public byte[] objectToPDF(String licenseId,String dtlId) {
 		byte[] content = null;
 		try {
+//			Oa020106ButtonVo idAll = buttonRepo.findButtonIdById(new BigDecimal(dtlId));
 			
 			// OA_LUB_04
 			// Ope020106 [09]
@@ -91,24 +114,34 @@ public class Oa0206Service {
 			List<OaLubricantsCust> custs = ope02010609.getCustdeles();
 			List<Oa0206CustomersVo> customers = new ArrayList<>();
 			Oa0206CustomersVo customer; int count = 0;
-			for(OaLubricantsCust cust: custs) {
-				BigDecimal seq = new BigDecimal(count++);
-				customer = new Oa0206CustomersVo();
-				customer.setAddress(cust.getAddress());
-				customer.setCustName(cust.getCustName());
-				customer.setMobile(cust.getMobile());
-				customer.setSeq(seq.toString());
-				customers.add(customer);
+			if (custs != null ) {
+				for(OaLubricantsCust cust: custs) {
+					BigDecimal seq = new BigDecimal(count++);
+					customer = new Oa0206CustomersVo();
+					customer.setAddress(cust.getAddress());
+					customer.setCustName(cust.getCustName());
+					customer.setMobile(cust.getMobile());
+					customer.setSeq(seq.toString());
+					customers.add(customer);
+				}
 			}
+
 			JRDataSource oaOpe04DataSource = new JRBeanCollectionDataSource(customers);
 			Map<String, Object> params = new HashMap<String, Object>();
 			params  = setPrepareJasperOaOpe01(licenseId,dtlId);
+			
+			List<OaLubricantsCompare> listCompare = new ArrayList<OaLubricantsCompare>();
+			listCompare = lubricantsComapreRepo.findByOaLubricantsIdAndIsDeleted(new BigDecimal(dtlId), "N");
+			
+
+
+			
 			JasperPrint jasperPrint1 = ReportUtils.getJasperPrint("OA_LUB_01"+"."+ FILE_EXTENSION.JASPER, params, new JREmptyDataSource());
-			JasperPrint jasperPrint2 = ReportUtils.getJasperPrint("OA_OPE_05"+"."+ FILE_EXTENSION.JASPER, params, new JREmptyDataSource());
-			JasperPrint jasperPrint3 = ReportUtils.getJasperPrint("OA_OPE_07"+"."+ FILE_EXTENSION.JASPER, params, new JREmptyDataSource());
+			JasperPrint jasperPrint2 = ReportUtils.getJasperPrint("OA_LUB_05"+"."+ FILE_EXTENSION.JASPER, params, listCompare.size()> 0 ?  new JRBeanCollectionDataSource(listCompare, false) :new JREmptyDataSource());
+			JasperPrint jasperPrint3 = ReportUtils.getJasperPrint("OA_LUB_07"+"."+ FILE_EXTENSION.JASPER, params);
 			JasperPrint jasperPrint4 = ReportUtils.getJasperPrint("OA_OPE_02"+"."+ FILE_EXTENSION.JASPER, params, new JREmptyDataSource());
 			JasperPrint jasperPrint5 = ReportUtils.getJasperPrint("OA_OPE_03"+"."+ FILE_EXTENSION.JASPER, params, new JREmptyDataSource());
-			JasperPrint jasperPrint6 = ReportUtils.getJasperPrint("OA_OPE_04"+"."+ FILE_EXTENSION.JASPER, params, oaOpe04DataSource);
+			JasperPrint jasperPrint6 = ReportUtils.getJasperPrint("OA_OPE_04"+"."+ FILE_EXTENSION.JASPER, params,  new JREmptyDataSource());
 //			JasperPrint jasperPrint7 = ReportUtils.getJasperPrint("Solvent-01", params, new JREmptyDataSource());
 //			JasperPrint jasperPrint8 = ReportUtils.getJasperPrint("Solvent-02", params, new JREmptyDataSource());
 
@@ -146,8 +179,7 @@ public class Oa0206Service {
 //		Optional<OaHydrocarbDtl> oaHydrocabon = oaHydrocarbDtlRepo.findById(id);
 //		OaHydrocarbDtl data = oaHydrocabon.get();
 		Optional<OaLubricantsDtl> oaHydrocabon = oaLubricantsDtlRepo.findById(new BigDecimal(dtlId));
-		OaLubricantsDtl data = oaHydrocabon.get();
-		
+		OaLubricantsDtl data = oaHydrocabon.get();	
 		params.put("licenseNo1", license.getLicenseNo());
 		params.put("licenseNo2","");
 		params.put("licenseDate", "11" );
@@ -230,6 +262,26 @@ public class Oa0206Service {
 		params.put("numOfCust", ope02010609.getNumOfCust());
 		params.put("goodQuality", ope02010609.getGoodQuality());
 		params.put("otherRemark", ope02010609.getOtherRemark());
+		
+		
+		// OA_LUB_05
+		// GET SUB REPORT
+		InputStream jasperStream = ReportUtils.getResourceFile(ReportConstants.PATH.JRXML_PATH, "SUB_01_OA_LUB_05"+"."+ FILE_EXTENSION.JASPER);
+		try {
+			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+			params.put("SUB_01_OA_LUB_05",  jasperReport);
+		} catch (JRException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		BigDecimal summary = new BigDecimal(0);
+		List<OaCustomerLicenDetail> listLicenseDetail = new ArrayList<OaCustomerLicenDetail>();
+		listLicenseDetail = customerLicenseRepo.findByoaCuslicenseIdAndIsDeleted(id, "N");
+		for (int i = 0; i < listLicenseDetail.size(); i++) {
+			summary = summary.add(listLicenseDetail.get(i).getAmount());
+		}
+		params.put("licenseList",  new JRBeanCollectionDataSource(listLicenseDetail, false));
+		params.put("licenseSumary", summary);
 		
 		return params;
 	}
