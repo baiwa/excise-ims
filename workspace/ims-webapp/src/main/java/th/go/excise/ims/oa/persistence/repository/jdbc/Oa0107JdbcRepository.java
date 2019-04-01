@@ -53,7 +53,7 @@ public class Oa0107JdbcRepository {
 
 		String limit = OracleUtils.limitForDatable(sql.toString(), request.getStart(), request.getLength());
 		@SuppressWarnings({ "rawtypes", "unchecked" })
-		List<Oa0107CodeVo> datas = this.commonJdbcTemplate.query(limit, params.toArray(),
+		List<Oa0107CodeVo> datas = this.commonJdbcTemplate.query(limit + " ORDER BY rnum DESC ", params.toArray(),
 				new BeanPropertyRowMapper(Oa0107CodeVo.class));
 
 		return datas;
@@ -172,6 +172,7 @@ public class Oa0107JdbcRepository {
 				sql.append(" AND OFF_CODE LIKE ? ");
 			}
 		}
+		sql.append(" ORDER BY CREATED_DATE DESC ");
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<OaHydCustomerLicen> lists = commonJdbcTemplate.query(sql.toString(), params.toArray(),
 				new BeanPropertyRowMapper(OaHydCustomerLicen.class));
