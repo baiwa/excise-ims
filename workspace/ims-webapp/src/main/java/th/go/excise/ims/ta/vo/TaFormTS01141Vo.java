@@ -15,7 +15,7 @@ public class TaFormTS01141Vo {
 	private Date auditDateStart;
 	private Date auditDateEnd;
 	private String auditDesc;
-	private List<TaFormTS01141Vo> TaFormTS01141VoList;
+	private List<TaFormTS01141Vo> taFormTS01141VoList;
 
 	public String getFormTsNumber() {
 		return formTsNumber;
@@ -98,11 +98,11 @@ public class TaFormTS01141Vo {
 	}
 
 	public List<TaFormTS01141Vo> getTaFormTS01141VoList() {
-		return TaFormTS01141VoList;
+		return taFormTS01141VoList;
 	}
 
 	public void setTaFormTS01141VoList(List<TaFormTS01141Vo> taFormTS01141VoList) {
-		TaFormTS01141VoList = taFormTS01141VoList;
+		this.taFormTS01141VoList = taFormTS01141VoList;
 	}
 
 }
