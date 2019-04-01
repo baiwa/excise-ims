@@ -2,6 +2,7 @@ package th.go.excise.ims.ta.persistence.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,8 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
@@ -24,14 +27,8 @@ public class TaFormTs0114Dtl extends BaseEntity {
 	@SequenceGenerator(name = "TA_FORM_TS0114_DTL_GEN", sequenceName = "TA_FORM_TS0114_DTL_SEQ", allocationSize = 1)
 	@Column(name = "FORM_TS0114_DTL_ID")
 	private Long formTs0114DtlId;
-	@Column(name = "OFFICE_CODE")
-	private String officeCode;
-	@Column(name = "BUDGET_YEAR")
-	private String budgetYear;
 	@Column(name = "FORM_TS_NUMBER")
 	private String formTsNumber;
-	@Column(name = "NEW_REG_ID")
-	private String newRegId;
 	@Column(name = "REC_NO")
 	private String recNo;
 	@Column(name = "TAX_DATE")
@@ -57,36 +54,12 @@ public class TaFormTs0114Dtl extends BaseEntity {
 		this.formTs0114DtlId = formTs0114DtlId;
 	}
 
-	public String getOfficeCode() {
-		return officeCode;
-	}
-
-	public void setOfficeCode(String officeCode) {
-		this.officeCode = officeCode;
-	}
-
-	public String getBudgetYear() {
-		return budgetYear;
-	}
-
-	public void setBudgetYear(String budgetYear) {
-		this.budgetYear = budgetYear;
-	}
-
 	public String getFormTsNumber() {
 		return formTsNumber;
 	}
 
 	public void setFormTsNumber(String formTsNumber) {
 		this.formTsNumber = formTsNumber;
-	}
-
-	public String getNewRegId() {
-		return newRegId;
-	}
-
-	public void setNewRegId(String newRegId) {
-		this.newRegId = newRegId;
 	}
 
 	public String getRecNo() {
@@ -151,6 +124,10 @@ public class TaFormTs0114Dtl extends BaseEntity {
 
 	public void setSumAmt(BigDecimal sumAmt) {
 		this.sumAmt = sumAmt;
+	}
+	
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
 }

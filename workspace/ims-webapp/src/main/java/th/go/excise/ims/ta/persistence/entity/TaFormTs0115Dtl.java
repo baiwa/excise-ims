@@ -24,14 +24,8 @@ public class TaFormTs0115Dtl extends BaseEntity {
 	@SequenceGenerator(name = "TA_FORM_TS0115_DTL_GEN", sequenceName = "TA_FORM_TS0115_DTL_SEQ", allocationSize = 1)
 	@Column(name = "FORM_TS0115_DTL_ID")
 	private Long formTs0115DtlId;
-	@Column(name = "OFFICE_CODE")
-	private String officeCode;
-	@Column(name = "BUDGET_YEAR")
-	private String budgetYear;
 	@Column(name = "FORM_TS_NUMBER")
 	private String formTsNumber;
-	@Column(name = "NEW_REG_ID")
-	private String newRegId;
 	@Column(name = "REC_NO")
 	private String recNo;
 	@Column(name = "REC_DATE")
@@ -57,36 +51,12 @@ public class TaFormTs0115Dtl extends BaseEntity {
 		this.formTs0115DtlId = formTs0115DtlId;
 	}
 
-	public String getOfficeCode() {
-		return officeCode;
-	}
-
-	public void setOfficeCode(String officeCode) {
-		this.officeCode = officeCode;
-	}
-
-	public String getBudgetYear() {
-		return budgetYear;
-	}
-
-	public void setBudgetYear(String budgetYear) {
-		this.budgetYear = budgetYear;
-	}
-
 	public String getFormTsNumber() {
 		return formTsNumber;
 	}
 
 	public void setFormTsNumber(String formTsNumber) {
 		this.formTsNumber = formTsNumber;
-	}
-
-	public String getNewRegId() {
-		return newRegId;
-	}
-
-	public void setNewRegId(String newRegId) {
-		this.newRegId = newRegId;
 	}
 
 	public String getRecNo() {
