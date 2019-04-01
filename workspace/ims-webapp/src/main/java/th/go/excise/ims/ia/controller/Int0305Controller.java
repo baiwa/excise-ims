@@ -136,6 +136,7 @@ public class Int0305Controller {
 		ResponseData<String> response = new ResponseData<String>();
 		try {	
 			int0305Service.saveRiskFactorsConfig(form);
+//			int0305Service.updateStatusFactors(form.getIaRiskFactorsConfig().getIdFactors());
 			response.setData("SUCCESS");
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);

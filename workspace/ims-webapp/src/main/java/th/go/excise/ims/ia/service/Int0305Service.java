@@ -15,10 +15,12 @@ import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster2;
+import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsStatus;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsMaster2Repository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsMasterRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsRepository;
+import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsStatusRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaRiskFactorsMaster2JdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int030102JdbcRepository;
 import th.go.excise.ims.ia.vo.Int030101FormVo;
@@ -38,6 +40,9 @@ public class Int0305Service {
 	@Autowired
 	private IaRiskFactorsMasterRepository iaRiskFactorsMasterRepository;
 
+	@Autowired
+	IaRiskFactorsStatusRepository iaRiskFactorsStatusRepository;
+	
 	@Autowired
 	private IaRiskFactorsRepository iaRiskFactorsRepository;
 
@@ -179,8 +184,8 @@ public class Int0305Service {
 		entity.setEndDate(endDate);
 		iaRiskFactorsConfigRepository.save(entity);
 
-		updateStatusRiskFactorsService.updateStatusIaRiskFactors(formConfig.getIdFactors(),
-				IaConstants.IA_STATUS_RISK_FACTORS.STATUS_2_CODE);
+//		updateStatusRiskFactorsService.updateStatusIaRiskFactors(formConfig.getIdFactors(),
+//				IaConstants.IA_STATUS_RISK_FACTORS.STATUS_2_CODE);
 
 	}
 
@@ -196,6 +201,13 @@ public class Int0305Service {
 		masterData.setDataEvaluate("NEW");
 		IaRiskFactorsMaster masterDataRes = iaRiskFactorsMasterRepository.save(masterData);
 
+		IaRiskFactorsStatus dataFactorsStatus = new IaRiskFactorsStatus();
+		dataFactorsStatus.setIdMaster(masterDataRes.getId());
+		dataFactorsStatus.setBudgetYear(form.getBudgetYear());
+		dataFactorsStatus.setStatus("Y");
+		dataFactorsStatus.setInspectionWork(form.getInspectionWork());
+		iaRiskFactorsStatusRepository.save(dataFactorsStatus);
+		
 		IaRiskFactors factorsData = new IaRiskFactors();
 		factorsData.setRiskFactors(form.getRiskFactorsMaster());
 		factorsData.setBudgetYear(form.getBudgetYear());
