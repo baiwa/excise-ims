@@ -17,6 +17,7 @@ import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster2;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsStatus;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
+import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsMasConRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsMaster2Repository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsMasterRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsRepository;
@@ -46,6 +47,9 @@ public class Int0305Service {
 	@Autowired
 	private IaRiskFactorsRepository iaRiskFactorsRepository;
 
+	@Autowired
+	private IaRiskFactorsMasConRepository iaRiskFactorsMasConRepository;
+	
 	@Autowired
 	private Int030101Service int030101Service;
 
@@ -208,6 +212,56 @@ public class Int0305Service {
 		dataFactorsStatus.setInspectionWork(form.getInspectionWork());
 		iaRiskFactorsStatusRepository.save(dataFactorsStatus);
 		
+		
+//		IaRiskFactorsMasCon entity = new IaRiskFactorsMasCon();
+//		IaRiskFactorsConfig formConfig = form.getIaRiskFactorsConfig();
+//
+//		entity.setIdMaster(masterDataRes.getId());
+//		entity.setInfoUsedRisk(formConfig.getInfoUsedRisk());
+//		entity.setFactorsLevel(new BigDecimal(form.getFactorsLevel()));
+//		entity.setVerylow(formConfig.getVerylow());
+//		entity.setVerylowStart(formConfig.getVerylowStart());
+//		entity.setVerylowEnd(formConfig.getVerylowEnd());
+//		entity.setVerylowRating(formConfig.getVerylowRating());
+//		entity.setVerylowColor(formConfig.getVerylowColor());
+//		entity.setVerylowCondition(formConfig.getVerylowCondition());
+//
+//		entity.setLow(formConfig.getLow());
+//		entity.setLowStart(formConfig.getLowStart());
+//		entity.setLowEnd(formConfig.getLowEnd());
+//		entity.setLowRating(formConfig.getLowRating());
+//		entity.setLowColor(formConfig.getLowColor());
+//		entity.setLowCondition(formConfig.getLowCondition());
+//
+//		entity.setMedium(formConfig.getMedium());
+//		entity.setMediumStart(formConfig.getMediumStart());
+//		entity.setMediumEnd(formConfig.getMediumEnd());
+//		entity.setMediumRating(formConfig.getMediumRating());
+//		entity.setMediumColor(formConfig.getMediumColor());
+//		entity.setMediumCondition(formConfig.getMediumCondition());
+//
+//		entity.setHigh(formConfig.getHigh());
+//		entity.setHighStart(formConfig.getHighStart());
+//		entity.setHighEnd(formConfig.getHighEnd());
+//		entity.setHighRating(formConfig.getHighRating());
+//		entity.setHighColor(formConfig.getHighColor());
+//		entity.setHighCondition(formConfig.getHighCondition());
+//
+//		entity.setVeryhigh(formConfig.getVeryhigh());
+//		entity.setVeryhighStart(formConfig.getVeryhighStart());
+//		entity.setVeryhighEnd(formConfig.getVeryhighEnd());
+//		entity.setVeryhighRating(formConfig.getVeryhighRating());
+//		entity.setVeryhighColor(formConfig.getVeryhighColor());
+//		entity.setVeryhighCondition(formConfig.getVeryhighCondition());
+//
+//		Date startDate = ConvertDateUtils.parseStringToDate(form.getStartDate(), ConvertDateUtils.DD_MM_YYYY);
+//		entity.setStartDate(startDate);
+//
+//		Date endDate = ConvertDateUtils.parseStringToDate(form.getEndDate(), ConvertDateUtils.DD_MM_YYYY);
+//		entity.setEndDate(endDate);
+//		iaRiskFactorsMasConRepository.save(entity);
+		
+//		
 		IaRiskFactors factorsData = new IaRiskFactors();
 		factorsData.setRiskFactors(form.getRiskFactorsMaster());
 		factorsData.setBudgetYear(form.getBudgetYear());
@@ -216,7 +270,6 @@ public class Int0305Service {
 		factorsData.setInspectionWork(form.getInspectionWork());
 		factorsData.setIdMaster(masterData.getId());
 		factorsData.setDataEvaluate("NEW");
-
 		IaRiskFactors factorsDataRes = iaRiskFactorsRepository.save(factorsData);
 
 		IaRiskFactorsConfig entity = new IaRiskFactorsConfig();
@@ -266,10 +319,13 @@ public class Int0305Service {
 		Date endDate = ConvertDateUtils.parseStringToDate(form.getEndDate(), ConvertDateUtils.DD_MM_YYYY);
 		entity.setEndDate(endDate);
 		iaRiskFactorsConfigRepository.save(entity);
+		
+		
 
 //		updateStatusRiskFactorsService.updateStatusIaRiskFactors(factorsDataRes.getId(),
 //				IaConstants.IA_STATUS_RISK_FACTORS.STATUS_2_CODE);
-		return factorsDataRes.getId();
+//		return factorsDataRes.getId();
+		return null;
 	}
 
 	public void updateStatusFactors(BigDecimal id) {
