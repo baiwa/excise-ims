@@ -5,6 +5,8 @@ public class Int0606FormVo {
 	private String startDate;
 	private String endDate;
 	private String offCode;
+	
+
 
 	public String getStartDate() {
 		return startDate;
@@ -29,5 +31,7 @@ public class Int0606FormVo {
 	public void setOffCode(String offCode) {
 		this.offCode = offCode;
 	}
+
+
 
 }
