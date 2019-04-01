@@ -70,7 +70,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{ownerFullName}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -123,7 +123,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{factoryName}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -140,7 +140,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($P{auditDateStart} != null ? new SimpleDateFormat("d MMM yyyy",new Locale("th", "TH")).format($P{auditDateStart}) : "") + 
 					($P{auditDateEnd} != null ? "  ถึง  " + new SimpleDateFormat("d MMM yyyy",new Locale("th", "TH")).format($P{auditDateEnd}) : "")]]></textFieldExpression>
 			</textField>
@@ -175,7 +175,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{newRegId}]]></textFieldExpression>
 			</textField>
 			<line>
@@ -185,13 +185,13 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="140" y="157" width="220" height="1" uuid="7d64b81a-9379-4b60-915b-9c500dbe2780"/>
+				<reportElement x="140" y="155" width="220" height="1" uuid="7d64b81a-9379-4b60-915b-9c500dbe2780"/>
 				<graphicElement>
 					<pen lineWidth="1.0" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="446" y="156" width="215" height="1" uuid="7c4664a4-3984-43a1-9a00-292ac1a47f23"/>
+				<reportElement x="446" y="155" width="215" height="1" uuid="7c4664a4-3984-43a1-9a00-292ac1a47f23"/>
 				<graphicElement>
 					<pen lineWidth="1.0" lineStyle="Dotted"/>
 				</graphicElement>
@@ -203,7 +203,7 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="101" y="176" width="150" height="1" uuid="0110e29a-beb2-4fe9-8ea3-cf070a8f8300"/>
+				<reportElement x="101" y="174" width="150" height="1" uuid="0110e29a-beb2-4fe9-8ea3-cf070a8f8300"/>
 				<graphicElement>
 					<pen lineWidth="1.0" lineStyle="Dotted"/>
 				</graphicElement>
@@ -334,7 +334,7 @@
 					<pen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top"/>
-				<textFieldExpression><![CDATA[$F{recDate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{recDate} != null ? new SimpleDateFormat("d MMM yyyy",new Locale("th", "TH")).format($F{recDate}) : ""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="TextData" stretchType="ContainerHeight" x="50" y="0" width="40" height="20" uuid="814789b8-dba7-4972-a330-682f9c78b906"/>
@@ -437,12 +437,12 @@
 	<summary>
 		<band height="110">
 			<textField>
-				<reportElement style="TextDetail" x="0" y="10" width="130" height="20" uuid="4a3f25ca-567e-448d-a0dc-7a91e655c4f0"/>
+				<reportElement style="TextDetail" x="0" y="10" width="126" height="20" uuid="4a3f25ca-567e-448d-a0dc-7a91e655c4f0"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["หมายเหตุ เงินเพิ่มคำนวณถึงวันที่"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="130" y="10" width="20" height="20" uuid="3d168c4a-935c-4688-9b9e-a759437b5a74"/>
+				<reportElement style="TextDetail" x="126" y="10" width="24" height="20" uuid="3d168c4a-935c-4688-9b9e-a759437b5a74"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{extraAmtDate} != null ? new SimpleDateFormat("d",new Locale("th", "TH")).format($P{extraAmtDate}) : ""]]></textFieldExpression>
 			</textField>
@@ -529,7 +529,7 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="130" y="24" width="20" height="1" uuid="78543554-0286-4440-a37a-23c65b3365bc"/>
+				<reportElement x="126" y="24" width="24" height="1" uuid="78543554-0286-4440-a37a-23c65b3365bc"/>
 				<graphicElement>
 					<pen lineWidth="1.0" lineStyle="Dotted"/>
 				</graphicElement>

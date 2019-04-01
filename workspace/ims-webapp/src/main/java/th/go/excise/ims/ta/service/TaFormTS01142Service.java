@@ -76,7 +76,7 @@ public class TaFormTS01142Service  extends AbstractTaFormTSService<TaFormTS01142
 		params.put("signOfficerFullName",formTS01142Vo.getSignOfficerFullName());
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(formTS01142Vo.getTaFormTS01142DtlVoList());
-		
+
 		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_14_2 + "." + FILE_EXTENSION.JASPER, params, dataSource);
 		byte[] reportFile = JasperExportManager.exportReportToPdf(jasperPrint);
 		ReportUtils.closeResourceFileInputStream(params);
