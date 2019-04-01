@@ -36,11 +36,12 @@ public class TaFormTS0121Service extends AbstractTaFormTSService<TaFormTS0121Vo,
 	@Autowired
 	private TaFormTs0121Repository taFormTs0121Repository;
 	
+	@Override
 	public String getReportName() {
 		return REPORT_NAME.TA_FORM_TS01_21;
 	}
 	
-	@Transactional(rollbackOn = { Exception.class })
+	@Override
 	public byte[] processFormTS(TaFormTS0121Vo formTS0121Vo) throws Exception {
 		logger.info("processFormTS");
 
@@ -50,6 +51,8 @@ public class TaFormTS0121Service extends AbstractTaFormTSService<TaFormTS0121Vo,
 		return reportFile;
 	}
 
+	@Transactional(rollbackOn = { Exception.class })
+	@Override
 	public void saveFormTS(TaFormTS0121Vo formTS0121Vo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
@@ -69,12 +72,12 @@ public class TaFormTS0121Service extends AbstractTaFormTSService<TaFormTS0121Vo,
 		taFormTs0121Repository.save(formTS0121);
 	}
 
+	@Override
 	public byte[] generateReport(TaFormTS0121Vo request) throws Exception, IOException {
 		Map<String, Object> params = new HashMap<String, Object>();
 
 		// get data to report
-		params.put("logo",
-				ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE + "." + FILE_EXTENSION.JPG));
+		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE + "." + FILE_EXTENSION.JPG));
 		params.put("formTsNumber", request.getFormTsNumber());
 		params.put("factoryName", request.getFactoryName());
 		params.put("officerSendFullName1", request.getOfficerSendFullName1());

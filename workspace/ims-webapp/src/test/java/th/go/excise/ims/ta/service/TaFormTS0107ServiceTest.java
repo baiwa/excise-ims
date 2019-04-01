@@ -15,7 +15,7 @@ import th.go.excise.ims.ta.vo.TaFormTS0107Vo;
 
 public class TaFormTS0107ServiceTest {
 
-	private static final String REPORT_FILE = PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_07 + "." + FILE_EXTENSION.PDF;
+	private static final String REPORT_FILE = PATH.TEST_PATH + "%s" + "." + FILE_EXTENSION.PDF;
 
 	@Test
 	public void test_generateReport() throws Exception {
@@ -64,7 +64,18 @@ public class TaFormTS0107ServiceTest {
 		formTS0107Vo.setOtherPhone("");
 
 		byte[] reportFile = taFormTS0107Service.generateReport(formTS0107Vo);
-		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_07))));
+	}
+	
+	@Test
+	public void test_generateReport_Blank() throws Exception {
+		TaFormTS0107Service taFormTS0107Service = new TaFormTS0107Service();
+		
+		// set data
+		TaFormTS0107Vo formTS0107Vo = new TaFormTS0107Vo();
+		
+		byte[] reportFile = taFormTS0107Service.generateReport(formTS0107Vo);
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_07 + "_blank"))));
 	}
 
 }

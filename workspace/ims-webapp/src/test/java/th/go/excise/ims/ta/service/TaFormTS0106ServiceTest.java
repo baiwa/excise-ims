@@ -13,12 +13,13 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ta.vo.TaFormTS0106Vo;
 
 public class TaFormTS0106ServiceTest {
-	private static final String REPORT_FILE = PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_06 + "." + FILE_EXTENSION.PDF;
+	
+	private static final String REPORT_FILE = PATH.TEST_PATH + "%s" + "." + FILE_EXTENSION.PDF;
 
 	@Test
 	public void test_generateReport() throws Exception {
-
 		TaFormTS0106Service taFormTS0106Service = new TaFormTS0106Service();
+		
 		TaFormTS0106Vo formTS0106Vo = new TaFormTS0106Vo();
 		formTS0106Vo.setDocPlace("");
 		formTS0106Vo.setDocDate(ConvertDateUtils.parseStringToDate("01/03/2562", ConvertDateUtils.DD_MM_YYYY));
@@ -56,8 +57,19 @@ public class TaFormTS0106ServiceTest {
 		formTS0106Vo.setSignAuthFullName3("");
 		formTS0106Vo.setSignWitnessFullName1("");
 		formTS0106Vo.setSignWitnessFullName2("");
+		
 		byte[] reportFile = taFormTS0106Service.generateReport(formTS0106Vo);
-		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
-
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_06))));
 	}
+	
+	@Test
+	public void test_generateReport_Blank() throws Exception {
+		TaFormTS0106Service taFormTS0106Service = new TaFormTS0106Service();
+		
+		TaFormTS0106Vo formTS0106Vo = new TaFormTS0106Vo();
+		
+		byte[] reportFile = taFormTS0106Service.generateReport(formTS0106Vo);
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_06 + "_blank"))));
+	}
+	
 }

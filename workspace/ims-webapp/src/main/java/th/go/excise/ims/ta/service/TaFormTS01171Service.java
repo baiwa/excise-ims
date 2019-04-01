@@ -38,11 +38,12 @@ private static final Logger logger = LoggerFactory.getLogger(TaFormTS01171Servic
 	@Autowired
 	private TaFormTs01171Repository taFormTs01171Repository;
 	
+	@Override
 	public String getReportName() {
 		return REPORT_NAME.TA_FORM_TS01_17_1;
 	}
 	
-	@Transactional(rollbackOn = { Exception.class })
+	@Override
 	public byte[] processFormTS(TaFormTS01171Vo formTS01171Vo) throws Exception {
 		logger.info("processFormTS");
 
@@ -52,6 +53,8 @@ private static final Logger logger = LoggerFactory.getLogger(TaFormTS01171Servic
 		return reportFile;
 	}
 
+	@Transactional(rollbackOn = { Exception.class })
+	@Override
 	public void saveFormTS(TaFormTS01171Vo formTS01171Vo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
@@ -71,6 +74,7 @@ private static final Logger logger = LoggerFactory.getLogger(TaFormTS01171Servic
 		taFormTs01171Repository.save(formTS01171);
 	}
 	
+	@Override
 	public byte[] generateReport(TaFormTS01171Vo request) throws Exception, IOException {
 		Map<String, Object> params = new HashMap<String, Object>();
 

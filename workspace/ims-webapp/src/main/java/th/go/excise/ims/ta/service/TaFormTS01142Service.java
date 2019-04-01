@@ -30,7 +30,9 @@ import th.go.excise.ims.ta.vo.TaFormTS01142Vo;
 
 @Service
 public class TaFormTS01142Service  extends AbstractTaFormTSService<TaFormTS01142Vo, TaFormTs01142Hdr>{
+	
 	private static final Logger logger = LoggerFactory.getLogger(TaFormTS0114Service.class);
+	
 	@Autowired
 	private TaFormTSSequenceService taFormTSSequenceService;
 	@Autowired
@@ -38,26 +40,30 @@ public class TaFormTS01142Service  extends AbstractTaFormTSService<TaFormTS01142
 	@Autowired
 	private TaFormTs01142HdrRepository taFormTs01142HdrRepository;
 	
+	@Override
 	public String getReportName() {
 		return REPORT_NAME.TA_FORM_TS01_14_2;
 	}
 	
-	@Transactional(rollbackOn = { Exception.class })
+	@Override
 	public byte[] processFormTS(TaFormTS01142Vo taFormTS01142Vo) throws Exception {
 		logger.info("processFormTS");
 
-		// saveFormTS(formTS0113Vo);
+		saveFormTS(taFormTS01142Vo);
 		byte[] reportFile = generateReport(taFormTS01142Vo);
 
 		return reportFile;
 	}
 
+	@Transactional(rollbackOn = { Exception.class })
+	@Override
 	public void saveFormTS(TaFormTS01142Vo formTS01142Vo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
 	
 	}
 
+	@Override
 	public byte[] generateReport(TaFormTS01142Vo formTS01142Vo) throws Exception, IOException {
 		logger.info("generateReport");
 
@@ -84,11 +90,6 @@ public class TaFormTS01142Service  extends AbstractTaFormTSService<TaFormTS01142
 		return reportFile;
 	}
 
-
-
-
-
-
 	@Override
 	public List<String> getFormTsNumberList() {
 		// TODO Auto-generated method stub
@@ -101,7 +102,5 @@ public class TaFormTS01142Service  extends AbstractTaFormTSService<TaFormTS01142
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
 	
 }

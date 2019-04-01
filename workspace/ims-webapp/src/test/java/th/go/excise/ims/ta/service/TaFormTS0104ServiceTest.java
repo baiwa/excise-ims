@@ -14,7 +14,8 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.go.excise.ims.ta.vo.TaFormTS0104Vo;
 
 public class TaFormTS0104ServiceTest {
-	private static final String REPORT_FILE = PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_04 + "." + FILE_EXTENSION.PDF;
+	
+	private static final String REPORT_FILE = PATH.TEST_PATH + "%s" + "." + FILE_EXTENSION.PDF;
 
 	@Test
 	public void test_generateReport() throws Exception {
@@ -41,6 +42,18 @@ public class TaFormTS0104ServiceTest {
 		formTS0104Vo.setOtherPhone("082-4562626");
 		
 		byte[] reportFile = taFormTS0104Service.generateReport(formTS0104Vo);
-		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_04))));
 	}
+	
+	@Test
+	public void test_generateReport_Blank() throws Exception {
+		TaFormTS0104Service taFormTS0104Service = new TaFormTS0104Service();
+		
+		// set data
+		TaFormTS0104Vo formTS0104Vo = new TaFormTS0104Vo();
+		
+		byte[] reportFile = taFormTS0104Service.generateReport(formTS0104Vo);
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_04 + "_blank"))));
+	}
+	
 }

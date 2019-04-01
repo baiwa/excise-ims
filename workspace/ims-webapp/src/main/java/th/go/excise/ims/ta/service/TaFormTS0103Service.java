@@ -69,7 +69,6 @@ public class TaFormTS0103Service extends AbstractTaFormTSService<TaFormTS0103Vo,
 			formTs0103.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
 		}
 		taFormTs0103Repository.save(formTs0103);
-
 	}
 
 	@Override

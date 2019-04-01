@@ -25,10 +25,10 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.vo.TaFormTS01141Vo;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class)
-@WithUserDetails(value = "admin", userDetailsServiceBeanName = "userDetailService")
-@ActiveProfiles(value = PROFILE.UNITTEST)
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = Application.class)
+//@WithUserDetails(value = "admin", userDetailsServiceBeanName = "userDetailService")
+//@ActiveProfiles(value = PROFILE.UNITTEST)
 public class TaFormTS01141ServiceTest {
 	
 	@Autowired
@@ -36,7 +36,7 @@ public class TaFormTS01141ServiceTest {
 	
 	private static final String REPORT_FILE = PATH.TEST_PATH + "%s" + "." + FILE_EXTENSION.PDF;
 
-//	@Test
+	@Test
 	public void test_generateReport() throws Exception {
 		TaFormTS01141Service taFormTS01141Service = new TaFormTS01141Service();
 
@@ -64,7 +64,7 @@ public class TaFormTS01141ServiceTest {
 		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_14_1))));
 	}
 	
-//	@Test
+	@Test
 	public void test_generateReport_Blank() throws Exception {
 		TaFormTS01141Service taFormTS01141Service = new TaFormTS01141Service();
 		
@@ -79,7 +79,7 @@ public class TaFormTS01141ServiceTest {
 		String formTsNumber = "000000-2562-000038";
 		
 		TaFormTS01141Vo formTS01141Vo = new TaFormTS01141Vo();
-		//formTS01141Vo.setFormTsNumber(formTsNumber);
+		formTS01141Vo.setFormTsNumber(formTsNumber);
 		formTS01141Vo.setPageNo("0");
 		formTS01141Vo.setDocDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 3, 15))));
 		formTS01141Vo.setDocDear("นาย วิทยารัตน์ สุรบดีพงษ์");
@@ -110,7 +110,7 @@ public class TaFormTS01141ServiceTest {
 		taFormTS01141Service.saveFormTS(formTS01141Vo);
 	}
 	
-	@Test
+//	@Test
 	public void test_getFormTS() throws Exception {
 		String formTsNumber = "000000-2562-000038";
 		

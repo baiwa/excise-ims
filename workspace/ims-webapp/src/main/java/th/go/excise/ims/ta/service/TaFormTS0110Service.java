@@ -230,10 +230,11 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 				formTS0110VoList.add(subFormTS0110Vo);
 			}
 		}
-		formTS0110Vo.setTaFormTS0110VoList(formTS0110VoList);
 		
 		// Sorting
-		formTS0110Vo.getTaFormTS0110VoList().sort((p1, p2) -> Integer.parseInt(p1.getTestimonyPageNo()) - Integer.parseInt(p2.getTestimonyPageNo()));
+		formTS0110VoList.sort((p1, p2) -> Integer.parseInt(p1.getTestimonyPageNo()) - Integer.parseInt(p2.getTestimonyPageNo()));
+		
+		formTS0110Vo.setTaFormTS0110VoList(formTS0110VoList);
 		
 		return formTS0110Vo;
 	}

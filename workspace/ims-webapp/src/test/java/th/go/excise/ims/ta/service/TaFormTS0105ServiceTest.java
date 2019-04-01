@@ -13,12 +13,13 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ta.vo.TaFormTS0105Vo;
 
 public class TaFormTS0105ServiceTest {
-	private static final String REPORT_FILE = PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_05 + "." + FILE_EXTENSION.PDF;
+	
+	private static final String REPORT_FILE = PATH.TEST_PATH + "%s" + "." + FILE_EXTENSION.PDF;
 
 	@Test
 	public void test_generateReport() throws Exception {
-
 		TaFormTS0105Service taFormTS0105Service = new TaFormTS0105Service();
+		
 		TaFormTS0105Vo formTS0105Vo = new TaFormTS0105Vo();
 		formTS0105Vo.setBookNumber1("253");
 		formTS0105Vo.setBookNumber2("325");
@@ -40,7 +41,17 @@ public class TaFormTS0105ServiceTest {
 		formTS0105Vo.setOtherPhone("0933413252");
 		
 		byte[] reportFile = taFormTS0105Service.generateReport(formTS0105Vo);
-		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
-
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_05))));
 	}
+	
+	@Test
+	public void test_generateReport_Blank() throws Exception {
+		TaFormTS0105Service taFormTS0105Service = new TaFormTS0105Service();
+		
+		TaFormTS0105Vo formTS0105Vo = new TaFormTS0105Vo();
+		
+		byte[] reportFile = taFormTS0105Service.generateReport(formTS0105Vo);
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_05 + "_blank"))));
+	}
+	
 }

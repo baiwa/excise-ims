@@ -53,11 +53,12 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 	@Autowired
 	private TaFormTs0111DtlRepository taFormTs0111DtlRepository;
 
+	@Override
 	public String getReportName() {
 		return REPORT_NAME.TA_FORM_TS01_11;
 	}
 	
-	@Transactional(rollbackOn = { Exception.class })
+	@Override
 	public byte[] processFormTS(TaFormTS0111Vo formTS0111Vo) throws Exception {
 		logger.info("processFormTS");
 
@@ -67,6 +68,8 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 		return reportFile;
 	}
 
+	@Transactional(rollbackOn = { Exception.class })
+	@Override
 	public void saveFormTS(TaFormTS0111Vo formTS0111Vo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
@@ -91,8 +94,6 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
                 } else {
                 	formTS0111Dtl = new TaFormTs0111Dtl();
                     toEntityDtl(formTS0111Dtl, formDtl);
-                    formTS0111Dtl.setOfficeCode(officeCode);
-                    formTS0111Dtl.setBudgetYear(budgetYear);
                 }
 
                 taFormTs0111DtlRepository.save(formTS0111Dtl);
@@ -107,8 +108,6 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 			for (TaFormTS0111DtlVo formDtl : formTS0111Vo.getTaFormTS0111DtlVoList()) {
 				formTS0111Dtl = new TaFormTs0111Dtl();
                 toEntityDtl(formTS0111Dtl, formDtl);
-                formTS0111Dtl.setOfficeCode(officeCode);
-                formTS0111Dtl.setBudgetYear(budgetYear);
                 formTS0111Dtl.setFormTsNumber(formTS0111Hdr.getFormTsNumber());
                 taFormTs0111DtlRepository.save(formTS0111Dtl);
             }
@@ -116,6 +115,7 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 		taFormTs0111HdrRepository.save(formTS0111Hdr);
 	}
 
+	@Override
 	public byte[] generateReport(TaFormTS0111Vo formTS0111Vo) throws IOException, JRException {
 		logger.info("export TA_FORM_TS01_11");
 
@@ -148,7 +148,7 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 		params.put("signWitnessFullName1", formTS0111Vo.getSignWitnessFullName1());
 		params.put("signWitnessFullName2", formTS0111Vo.getSignWitnessFullName2());
 		
-		logger.info("export TA_FORM_TS01_11-2");
+		logger.info("export TA_FORM_TS01_11P2");
 		params.put("authFullName1", formTS0111Vo.getAuthFullName1());
 		params.put("signAuthFullName2", formTS0111Vo.getSignAuthFullName2());
 		params.put("signWitnessFullName3", formTS0111Vo.getSignWitnessFullName3());
@@ -180,42 +180,10 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
 		exporter.exportReport();
 		byte[] content = outputStream.toByteArray();
-		
-//		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
 		ReportUtils.closeResourceFileInputStream(params);
 
 		return content;
 	}
-
-//	public byte[] exportTaFormTS0111P2(TaFormTS0111Vo ts0111Vo) throws IOException, JRException {
-//		logger.info("export TA_FORM_TS01_11-2");
-//
-//		Map<String, Object> params = new HashMap<>();
-//		params.put("authFullName1", ts0111Vo.getAuthFullName1());
-//		params.put("signAuthFullName2", ts0111Vo.getSignAuthFullName2());
-//		params.put("signWitnessFullName3", ts0111Vo.getSignWitnessFullName3());
-//		params.put("signWitnessFullName4", ts0111Vo.getSignWitnessFullName4());
-//		params.put("authFullName2", ts0111Vo.getAuthFullName2());
-//		params.put("authPosition", ts0111Vo.getAuthPosition());
-//		params.put("authPositionOther", ts0111Vo.getAuthPositionOther());
-//		params.put("authFrom", ts0111Vo.getAuthFrom());
-//		params.put("signAuthFullName3", ts0111Vo.getSignAuthFullName3());
-//		params.put("signAuthFullName4", ts0111Vo.getSignAuthFullName4());
-//		params.put("signWitnessFullName5", ts0111Vo.getSignWitnessFullName5());
-//		params.put("signWitnessFullName6", ts0111Vo.getSignWitnessFullName6());
-//		// format string to LocalDate
-//		Date localDate = ConvertDateUtils.parseStringToDate(ts0111Vo.getAuthDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN);
-//		params.put("day", ConvertDateUtils.formatDateToString(localDate, ConvertDateUtils.DD, ConvertDateUtils.LOCAL_TH));
-//		params.put("month", ConvertDateUtils.formatDateToString(localDate, ConvertDateUtils.MMMM, ConvertDateUtils.LOCAL_TH));
-//		params.put("year", ConvertDateUtils.formatDateToString(localDate, ConvertDateUtils.YYYY));
-//
-//		// set output
-//		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_11P2 + "." + FILE_EXTENSION.JASPER, params);
-//		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
-//		ReportUtils.closeResourceFileInputStream(params);
-//
-//		return content;
-//	}
 
 	@Override
 	public List<String> getFormTsNumberList() {
