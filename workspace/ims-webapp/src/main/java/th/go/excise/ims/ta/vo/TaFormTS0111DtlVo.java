@@ -1,11 +1,19 @@
 package th.go.excise.ims.ta.vo;
 
 public class TaFormTS0111DtlVo {
-
+	private String formTs0111DtlId;
 	private String recNo;
 	private String docName;
 	private String docQty;
 	private String docComment;
+
+	public String getFormTs0111DtlId() {
+		return formTs0111DtlId;
+	}
+
+	public void setFormTs0111DtlId(String formTs0111DtlId) {
+		this.formTs0111DtlId = formTs0111DtlId;
+	}
 
 	public String getRecNo() {
 		return recNo;

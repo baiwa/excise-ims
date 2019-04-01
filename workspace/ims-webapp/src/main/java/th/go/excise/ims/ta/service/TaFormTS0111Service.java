@@ -2,6 +2,7 @@ package th.go.excise.ims.ta.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.Map;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,7 @@ import net.sf.jasperreports.export.ExporterInputItem;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleExporterInputItem;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.IMG_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
@@ -32,9 +36,15 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0111Dtl;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0111Hdr;
+import th.go.excise.ims.ta.persistence.entity.TaFormTs0114Dtl;
+import th.go.excise.ims.ta.persistence.entity.TaFormTs0114Hdr;
+import th.go.excise.ims.ta.persistence.entity.TaFormTs0120;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0111DtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0111HdrRepository;
+import th.go.excise.ims.ta.vo.TaFormTS0111DtlVo;
 import th.go.excise.ims.ta.vo.TaFormTS0111Vo;
+import th.go.excise.ims.ta.vo.TaFormTS0114DtlVo;
+import th.go.excise.ims.ta.vo.TaFormTS0114Vo;
 
 @Service
 public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo, TaFormTs0111Hdr> {
@@ -70,6 +80,46 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 		TaFormTs0111Hdr formTS0111Hdr = null;
 		TaFormTs0111Dtl formTS0111Dtl = null;
 		List<TaFormTs0111Dtl> formTS0111DtlList = new ArrayList<>();
+		// save header & detail
+		if (StringUtils.isNotEmpty(formTS0111Vo.getFormTsNumber())) {
+			
+			taFormTs0111DtlRepository.setIsDeleteY(officeCode, budgetYear, formTS0111Vo.getFormTsNumber());
+			
+			formTS0111Hdr = taFormTs0111HdrRepository.findByFormTsNumber(formTS0111Vo.getFormTsNumber());
+			toEntity(formTS0111Hdr, formTS0111Vo);
+			
+			for (TaFormTS0111DtlVo formDtl : formTS0111Vo.getTaFormTS0111DtlVoList()) {
+                
+                 TaFormTs0111Dtl dtlVo = taFormTs0111DtlRepository.findByFormTs0111DtlIdAndIsDeleted(Long.valueOf(formDtl.getFormTs0111DtlId()), FLAG.Y_FLAG);
+                if (dtlVo != null) {
+                	formTS0111Dtl = dtlVo;
+                	formTS0111Dtl.setIsDeleted(FLAG.N_FLAG);
+                } else {
+                	formTS0111Dtl = new TaFormTs0111Dtl();
+                    toEntityDtl(formTS0111Dtl, formDtl);
+                    formTS0111Dtl.setOfficeCode(officeCode);
+                    formTS0111Dtl.setBudgetYear(budgetYear);
+                }
+
+                taFormTs0111DtlRepository.save(formTS0111Dtl);
+            }
+		} else {
+			formTS0111Hdr = new TaFormTs0111Hdr();
+			toEntity(formTS0111Hdr, formTS0111Vo);
+			formTS0111Hdr.setOfficeCode(officeCode);
+			formTS0111Hdr.setBudgetYear(budgetYear);
+			formTS0111Hdr.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
+			
+			for (TaFormTS0111DtlVo formDtl : formTS0111Vo.getTaFormTS0111DtlVoList()) {
+				formTS0111Dtl = new TaFormTs0111Dtl();
+                toEntityDtl(formTS0111Dtl, formDtl);
+                formTS0111Dtl.setOfficeCode(officeCode);
+                formTS0111Dtl.setBudgetYear(budgetYear);
+                formTS0111Dtl.setFormTsNumber(formTS0111Hdr.getFormTsNumber());
+                taFormTs0111DtlRepository.save(formTS0111Dtl);
+            }
+		}
+		taFormTs0111HdrRepository.save(formTS0111Hdr);
 	}
 
 	public byte[] generateReport(TaFormTS0111Vo formTS0111Vo) throws IOException, JRException {
@@ -175,14 +225,43 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 
 	@Override
 	public List<String> getFormTsNumberList() {
-		// TODO Auto-generated method stub
-		return null;
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+        return taFormTs0111HdrRepository.findFormTsNumberByOfficeCode(officeCode);
 	}
 
 	@Override
 	public TaFormTS0111Vo getFormTS(String formTsNumber) {
-		// TODO Auto-generated method stub
-		return null;
+		TaFormTS0111Vo taFormTS0111Vo = new TaFormTS0111Vo();
+        TaFormTs0111Hdr hdr = taFormTs0111HdrRepository.findByFormTsNumber(formTsNumber);
+        if (hdr != null) {
+            toVo(taFormTS0111Vo, hdr);
+        }
+        List<TaFormTs0111Dtl> dtls = taFormTs0111DtlRepository.findByFormTsNumber(formTsNumber);
+        List<TaFormTS0111DtlVo> dtlVos = new ArrayList<>();
+        for (TaFormTs0111Dtl dtl : dtls) {
+            TaFormTS0111DtlVo dtlVo = new TaFormTS0111DtlVo();
+            toVoDtl(dtlVo, dtl);
+            dtlVos.add(dtlVo);
+        }
+
+        taFormTS0111Vo.setTaFormTS0111DtlVoList(dtlVos);
+        return taFormTS0111Vo;
 	}
+	
+    private void toEntityDtl(TaFormTs0111Dtl entity, TaFormTS0111DtlVo vo) {
+        try {
+            BeanUtils.copyProperties(entity, vo);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            logger.warn(e.getMessage(), e);
+        }
+    }
+
+    private void toVoDtl(TaFormTS0111DtlVo vo, TaFormTs0111Dtl entity) {
+        try {
+            BeanUtils.copyProperties(vo, entity);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            logger.warn(e.getMessage(), e);
+        }
+    }
 
 }

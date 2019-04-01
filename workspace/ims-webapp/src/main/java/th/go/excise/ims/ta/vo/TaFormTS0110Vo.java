@@ -5,6 +5,7 @@ import java.util.List;
 
 public class TaFormTS0110Vo {
 
+	private String formTs0110Id;
 	private String formTsNumber;
 	private String testimonyPageNo;
 	private String testimonyOf;
@@ -37,6 +38,14 @@ public class TaFormTS0110Vo {
 	private String newRegId;
 	private String testimonyText;
 	private List<TaFormTS0110Vo> taFormTS0110VoList;
+
+	public String getFormTs0110Id() {
+		return formTs0110Id;
+	}
+
+	public void setFormTs0110Id(String formTs0110Id) {
+		this.formTs0110Id = formTs0110Id;
+	}
 
 	public String getFormTsNumber() {
 		return formTsNumber;

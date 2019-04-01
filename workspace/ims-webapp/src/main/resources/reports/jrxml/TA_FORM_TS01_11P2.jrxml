@@ -49,27 +49,23 @@
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="52" width="460" height="22" uuid="16c8501a-7472-4c69-a943-2817a1c298f5"/>
-				<textFieldExpression><![CDATA["ขอรับรองว่า  ได้ตรวจสอบจำนวนบัญชี  และเอกสารที่ส่งมอบแก่พนักงานเจ้าหน้าที่แล้ว  เห็นว่าถูกต้อง"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ขอรับรองว่า  ได้ตรวจสอบจำนวนบัญชี  และเอกสารที่ส่งมอบแก่พนักงานเจ้าหน้าที่แล้ว  เห็นว่าถูกต้อง ครบถ้วนตามจำนวนที่"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="74" width="460" height="22" uuid="260b8868-a80e-4cfc-8602-c105c275977b"/>
-				<textFieldExpression><![CDATA["ครบถ้วนตามจำนวนที่กล่าวข้างต้นและจะรีบติดต่อขอรับคืนภายในกำหนดเวลาสามสิบวัน นับแต่วันที่ได้รับ"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["กล่าวข้างต้นและจะรีบติดต่อขอรับคืนภายในกำหนดเวลาสามสิบวัน นับแต่วันที่ได้รับ แจ้งจากพนักงานเจ้าหน้าที่ให้มารับคืน "]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="96" width="460" height="22" uuid="df3be210-60de-41ca-8d57-0153d7d098f1"/>
-				<textFieldExpression><![CDATA["แจ้งจากพนักงานเจ้าหน้าที่ให้มารับคืน   หากพ้นกำหนดเวลาดังกล่าวแล้ว   ให้ถือว่าพนักงานเจ้าหน้าที่"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["หากพ้นกำหนดเวลาดังกล่าวแล้ว   ให้ถือว่าพนักงานเจ้าหน้าที่ ไม่ต้องรับผิดชอบในการสูญหายบกพร่องเกี่ยวกับบัญชีและ"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="140" width="460" height="22" uuid="49c699ab-e893-4320-ba6e-94fb52238d40"/>
-				<textFieldExpression><![CDATA["ข้าพเจ้ายินยอมให้พนักงานเจ้าหน้าที่ดังกล่าวพิจารณาดำเนินการกับบัญชีและเอกสารนั้นตามที่"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["เอกสารนั้นตามที่เห็นสมควรต่อไป"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="118" width="460" height="22" uuid="aafe1d8e-7d1f-4572-aecd-8e10bd20660e"/>
-				<textFieldExpression><![CDATA["ไม่ต้องรับผิดชอบในการสูญหายบกพร่องเกี่ยวกับบัญชีและเอกสารต่าง  ๆ  ดังกล่าวแต่ประการใด  และ "]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="TextDetail" x="0" y="162" width="460" height="22" uuid="431516e3-0aa8-4cb9-af6b-5f0d6c3859b1"/>
-				<textFieldExpression><![CDATA["เห็นสมควรต่อไป"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["เอกสารต่าง  ๆ ดังกล่าวแต่ประการใด  และข้าพเจ้ายินยอมให้พนักงานเจ้าหน้าที่ดังกล่าวพิจารณาดำเนินการกับบัญชีและ "]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="240" y="192" width="35" height="22" uuid="106b7027-e753-4ac4-88be-7fc9046513ae"/>
@@ -163,7 +159,9 @@
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="370" y="360" width="20" height="22" uuid="298d8233-4c14-4d88-97d2-0bbb73056023"/>
-				<textElement verticalAlignment="Bottom"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="14"/>
+				</textElement>
 				<textFieldExpression><![CDATA["1".equals( $P{authPosition} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -173,7 +171,9 @@
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="30" y="382" width="20" height="22" uuid="49074bde-ed68-4a4d-9f6a-607980a4cea2"/>
-				<textElement verticalAlignment="Bottom"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="14"/>
+				</textElement>
 				<textFieldExpression><![CDATA["2".equals( $P{authPosition} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -183,7 +183,9 @@
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="132" y="382" width="20" height="22" uuid="6ba76a8c-9b01-4907-9296-21e1f734fa97"/>
-				<textElement verticalAlignment="Bottom"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="14"/>
+				</textElement>
 				<textFieldExpression><![CDATA["3".equals( $P{authPosition} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -193,36 +195,38 @@
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="225" y="382" width="20" height="22" uuid="79898fb5-2a11-4264-8c84-26b2381036e5"/>
-				<textElement verticalAlignment="Bottom"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="14"/>
+				</textElement>
 				<textFieldExpression><![CDATA["4".equals( $P{authPosition} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="245" y="382" width="95" height="22" uuid="c6895ee2-aa9d-4630-ae0e-32eb0fa72372"/>
+				<reportElement style="TextDetail" x="245" y="382" width="82" height="22" uuid="c6895ee2-aa9d-4630-ae0e-32eb0fa72372"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ผู้รับมอบอำนาจ ของ"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="340" y="382" width="120" height="22" uuid="e48d95ec-673a-4c2d-a102-1b7ab22c1a94"/>
+				<reportElement style="TextDetail" x="327" y="382" width="133" height="22" uuid="e48d95ec-673a-4c2d-a102-1b7ab22c1a94"/>
 				<box leftPadding="2"/>
 				<textFieldExpression><![CDATA[$P{authPositionOther}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="30" y="404" width="290" height="22" uuid="14276440-b3f8-47f8-b7aa-9120ef4bee1d"/>
+				<reportElement style="TextDetail" x="30" y="404" width="252" height="22" uuid="14276440-b3f8-47f8-b7aa-9120ef4bee1d"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ขอรับรองว่า ได้รับมอบบัญชีและเอกสารต่าง ๆ ดังกล่าวข้างต้น  จาก"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="320" y="404" width="140" height="22" uuid="b85961eb-0d34-4541-979e-5092c6cef9d5"/>
+				<reportElement style="TextDetail" x="282" y="404" width="178" height="22" uuid="b85961eb-0d34-4541-979e-5092c6cef9d5"/>
 				<box leftPadding="2"/>
 				<textFieldExpression><![CDATA[$P{authFrom}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="30" y="426" width="45" height="22" uuid="174383e9-cd00-42a4-b2ad-c80a3888c8c3"/>
+				<reportElement style="TextDetail" x="30" y="426" width="38" height="22" uuid="174383e9-cd00-42a4-b2ad-c80a3888c8c3"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["เมื่อวันที่"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="75" y="426" width="30" height="22" uuid="267019e2-466f-4271-b4d1-eaf9f68237a3"/>
+				<reportElement style="TextDetail" x="68" y="426" width="37" height="22" uuid="267019e2-466f-4271-b4d1-eaf9f68237a3"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("d",new Locale("th", "TH")).format($P{authDate})]]></textFieldExpression>
 			</textField>
@@ -242,12 +246,12 @@
 				<textFieldExpression><![CDATA["พ.ศ."]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="221" y="426" width="44" height="22" uuid="7e8c8257-2e61-4330-8085-f0752b43f23e"/>
+				<reportElement style="TextDetail" x="221" y="426" width="42" height="22" uuid="7e8c8257-2e61-4330-8085-f0752b43f23e"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy",new Locale("th", "TH")).format($P{authDate})]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="265" y="426" width="65" height="22" uuid="979379cb-4eba-44bc-9ee7-30d449c425be"/>
+				<reportElement style="TextDetail" x="267" y="426" width="63" height="22" uuid="979379cb-4eba-44bc-9ee7-30d449c425be"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["เรียบร้อยแล้ว"]]></textFieldExpression>
 			</textField>
@@ -376,19 +380,19 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="340" y="397" width="120" height="1" uuid="5a025b1e-68be-49a0-8dcc-11fdcd06ece5"/>
+				<reportElement x="327" y="397" width="133" height="1" uuid="5a025b1e-68be-49a0-8dcc-11fdcd06ece5"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="320" y="419" width="140" height="1" uuid="a095400e-8590-446d-a1ff-b79dfccfefb2"/>
+				<reportElement x="282" y="419" width="178" height="1" uuid="a095400e-8590-446d-a1ff-b79dfccfefb2"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="75" y="441" width="30" height="1" uuid="8c7d6da9-b063-4a5f-aff8-713768894473"/>
+				<reportElement x="68" y="441" width="37" height="1" uuid="8c7d6da9-b063-4a5f-aff8-713768894473"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
@@ -400,7 +404,7 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="221" y="441" width="44" height="1" uuid="10d112ae-cf8f-4e8e-a79f-acb260af8545"/>
+				<reportElement x="221" y="441" width="42" height="1" uuid="10d112ae-cf8f-4e8e-a79f-acb260af8545"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>

@@ -126,7 +126,7 @@ public class TaFormTSController {
 		
 		AbstractTaFormTSService taFormTSService = taFormTSMap.get(tsNumber);
 		Object formVo = gson.fromJson(reportJsonBean.getJson(), taFormTSService.getVoClass());
-		byte[] reportFile = taFormTSService.generateReport(formVo);
+		byte[] reportFile = taFormTSService.processFormTS(formVo);
 
 		String filename = String.format(taFormTSService.getReportName() + "_%s." + FILE_EXTENSION.PDF, DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now()));
 		response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", filename));
