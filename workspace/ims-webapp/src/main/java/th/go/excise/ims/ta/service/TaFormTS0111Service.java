@@ -36,15 +36,10 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0111Dtl;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0111Hdr;
-import th.go.excise.ims.ta.persistence.entity.TaFormTs0114Dtl;
-import th.go.excise.ims.ta.persistence.entity.TaFormTs0114Hdr;
-import th.go.excise.ims.ta.persistence.entity.TaFormTs0120;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0111DtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0111HdrRepository;
 import th.go.excise.ims.ta.vo.TaFormTS0111DtlVo;
 import th.go.excise.ims.ta.vo.TaFormTS0111Vo;
-import th.go.excise.ims.ta.vo.TaFormTS0114DtlVo;
-import th.go.excise.ims.ta.vo.TaFormTS0114Vo;
 
 @Service
 public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo, TaFormTs0111Hdr> {
@@ -79,7 +74,6 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 
 		TaFormTs0111Hdr formTS0111Hdr = null;
 		TaFormTs0111Dtl formTS0111Dtl = null;
-		List<TaFormTs0111Dtl> formTS0111DtlList = new ArrayList<>();
 		// save header & detail
 		if (StringUtils.isNotEmpty(formTS0111Vo.getFormTsNumber())) {
 			

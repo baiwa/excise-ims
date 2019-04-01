@@ -20,6 +20,7 @@ import net.sf.jasperreports.export.ExporterInputItem;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleExporterInputItem;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.IMG_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
@@ -35,21 +36,21 @@ import th.go.excise.ims.ta.vo.TaFormTS0110Vo;
 public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo, TaFormTs0110> {
 
 	private static final Logger logger = LoggerFactory.getLogger(TaFormTS0110Service.class);
-	
+
 	@Autowired
 	private TaFormTSSequenceService taFormTSSequenceService;
 	@Autowired
 	private TaFormTs0110Repository taFormTs0110Repository;
-	
+
 	public String getReportName() {
 		return REPORT_NAME.TA_FORM_TS01_10;
 	}
-	
+
 	@Transactional(rollbackOn = { Exception.class })
 	public byte[] processFormTS(TaFormTS0110Vo formTS0110Vo) throws Exception {
 		logger.info("processFormTS");
 
-//		saveFormTS(formTS0110Vo);
+		saveFormTS(formTS0110Vo);
 		byte[] reportFile = generateReport(formTS0110Vo);
 
 		return reportFile;
@@ -60,28 +61,57 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
 		logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS0110Vo.getFormTsNumber());
 
-		TaFormTs0110 formTS0110 = null;
+		TaFormTs0110 taFormTs0110Dtl = null;
+		TaFormTs0110 taFormTs0110Hdr = null;
 		if (StringUtils.isNotEmpty(formTS0110Vo.getFormTsNumber())) {
-			formTS0110 = taFormTs0110Repository.findByFormTsNumber(formTS0110Vo.getFormTsNumber());
-			toEntity(formTS0110, formTS0110Vo);
+
+			taFormTs0110Repository.setIsDeleteY(officeCode, budgetYear, formTS0110Vo.getFormTsNumber());
+
+			for (TaFormTS0110Vo formDtl : formTS0110Vo.getTaFormTS0110VoList()) {
+				TaFormTs0110 dtlVo = taFormTs0110Repository
+						.findByFormTs0110IdAndIsDeleted(Long.valueOf(formDtl.getFormTs0110Id()), FLAG.Y_FLAG);
+				if (dtlVo != null) {
+					taFormTs0110Dtl = dtlVo;
+					toEntity(taFormTs0110Dtl, formDtl);
+					taFormTs0110Dtl.setIsDeleted(FLAG.N_FLAG);
+				} else {
+					taFormTs0110Dtl = new TaFormTs0110();
+					toEntity(taFormTs0110Dtl, formDtl);
+					taFormTs0110Dtl.setOfficeCode(officeCode);
+					taFormTs0110Dtl.setBudgetYear(budgetYear);
+				}
+
+				taFormTs0110Repository.save(taFormTs0110Dtl);
+			}
 		} else {
-			formTS0110 = new TaFormTs0110();
-			toEntity(formTS0110, formTS0110Vo);
-			formTS0110.setOfficeCode(officeCode);
-			formTS0110.setBudgetYear(budgetYear);
-			formTS0110.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
+			taFormTs0110Hdr = new TaFormTs0110();
+			toEntity(taFormTs0110Hdr, formTS0110Vo);
+			taFormTs0110Hdr.setOfficeCode(officeCode);
+			taFormTs0110Hdr.setBudgetYear(budgetYear);
+			taFormTs0110Hdr.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
+			taFormTs0110Repository.save(taFormTs0110Hdr);
+			
+			for (TaFormTS0110Vo formDtl : formTS0110Vo.getTaFormTS0110VoList()) {
+				taFormTs0110Dtl = new TaFormTs0110();
+				toEntity(taFormTs0110Dtl, formDtl);
+				taFormTs0110Dtl.setOfficeCode(officeCode);
+				taFormTs0110Dtl.setBudgetYear(budgetYear);
+				taFormTs0110Dtl.setFormTsNumber(taFormTs0110Hdr.getFormTsNumber());
+				taFormTs0110Repository.save(taFormTs0110Dtl);
+			}
 		}
-		taFormTs0110Repository.save(formTS0110);
+
 	}
-	
+
 	public byte[] generateReport(TaFormTS0110Vo formTS0110Vo) throws Exception {
 		logger.info("export exportTaFormTS0110");
-		
+
 		List<ExporterInputItem> items = new ArrayList<ExporterInputItem>();
 		JasperPrint jasperPrint = null;
 
 		Map<String, Object> params = new HashMap<>();
-		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
+		params.put("logo",
+				ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
 		params.put("testimonyOf", formTS0110Vo.getTestimonyOf());
 		params.put("testimonyTopic", formTS0110Vo.getTestimonyTopic());
 		params.put("docDate", formTS0110Vo.getDocDate());
@@ -115,28 +145,29 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 		// set output
 		jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_10 + "." + FILE_EXTENSION.JASPER, params);
 		items.add(new SimpleExporterInputItem(jasperPrint));
-		
-		//add report TA_FORM_TS01_10_1
+
+		// add report TA_FORM_TS01_10_1
 		if (formTS0110Vo.getTaFormTS0110VoList() != null) {
 			Map<String, Object> subParams = null;
 			for (TaFormTS0110Vo subFormTS0110Vo : formTS0110Vo.getTaFormTS0110VoList()) {
 				subParams = new HashMap<>();
 				subParams.put("testimonyPageNo", subFormTS0110Vo.getTestimonyPageNo());
-				subParams.put("testimonyOf", subFormTS0110Vo.getTestimonyOf());
+				subParams.put("testimonyOf", formTS0110Vo.getTestimonyOf());
 				subParams.put("testimonyText", subFormTS0110Vo.getTestimonyText());
-				jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_10_1 + "." + FILE_EXTENSION.JASPER, subParams);
+				jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_10_1 + "." + FILE_EXTENSION.JASPER,
+						subParams);
 				items.add(new SimpleExporterInputItem(jasperPrint));
 			}
 		}
-		
+
 		JRPdfExporter exporter = new JRPdfExporter();
 		exporter.setExporterInput(new SimpleExporterInput(items));
-		
+
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
 		exporter.exportReport();
 		byte[] content = outputStream.toByteArray();
-		
+
 		ReportUtils.closeResourceFileInputStream(params);
 
 		return content;
@@ -144,14 +175,25 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 
 	@Override
 	public List<String> getFormTsNumberList() {
-		// TODO Auto-generated method stub
-		return null;
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		return taFormTs0110Repository.findFormTsNumberByOfficeCode(officeCode);
 	}
 
 	@Override
 	public TaFormTS0110Vo getFormTS(String formTsNumber) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("getFormTS formTsNumber={}");
+		TaFormTS0110Vo taFormTS0110Vo = new TaFormTS0110Vo();
+
+		// Set Data
+		List<TaFormTs0110> dtls = taFormTs0110Repository.findByFormTsNumber(formTsNumber);
+        List<TaFormTS0110Vo> dtlVos = new ArrayList<>();
+        for (TaFormTs0110 dtl : dtls) {
+            TaFormTS0110Vo dtlVo = new TaFormTS0110Vo();
+            toVo(dtlVo, dtl);
+            dtlVos.add(dtlVo);
+        }
+        taFormTS0110Vo.setTaFormTS0110VoList(dtlVos);
+		return taFormTS0110Vo;
 	}
 
 }
