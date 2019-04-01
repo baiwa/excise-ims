@@ -52,13 +52,19 @@ public class Oa0107Service {
 		for (OaHydCustomerLicen real : realData) {
 			Oa010106FormVo realD = new Oa010106FormVo();
 			realD.setOaCuslicenseId(real.getOaCuslicenseId());
-			realD.setAddress(real.getAddress());
+
+			realD.setReceiveNo(real.getReceiveNo());
+			realD.setLicenseNo(real.getLicenseNo());
+			realD.setName(real.getName());
 			realD.setCompanyName(real.getCompanyName());
 			realD.setIdentifyNo(real.getIdentifyNo());
-			realD.setIdentifyType(real.getIdentifyType());
-			realD.setName(real.getName());
-			realD.setOffCode(real.getOffCode());
+			realD.setStartDate(real.getStartDate());
+			realD.setEndDate(real.getEndDate());
 			realD.setLicenseType(real.getLicenseType());
+			
+			realD.setIdentifyType(real.getIdentifyType());
+			realD.setAddress(real.getAddress());
+			realD.setOffCode(real.getOffCode());
 			for (ExciseDept exciseDept : exciseDepts) {
 				if (exciseDept.getOfficeCode().substring(0, 2).equals(real.getOffCode().substring(0, 2))) {
 					realD.setSectorName(exciseDept.getDeptName());
