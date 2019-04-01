@@ -76,8 +76,10 @@ public class TaFormTS01141ServiceTest {
 	
 //	@Test
 	public void test_saveFormTS() throws Exception {
+		String formTsNumber = "000000-2562-000038";
+		
 		TaFormTS01141Vo formTS01141Vo = new TaFormTS01141Vo();
-		formTS01141Vo.setFormTsNumber("000000-2562-000038");
+		//formTS01141Vo.setFormTsNumber(formTsNumber);
 		formTS01141Vo.setPageNo("0");
 		formTS01141Vo.setDocDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 3, 15))));
 		formTS01141Vo.setDocDear("นาย วิทยารัตน์ สุรบดีพงษ์");
@@ -98,10 +100,10 @@ public class TaFormTS01141ServiceTest {
 		}
 		
 		// Case Update with New Page
-		subFormTS01141Vo = new TaFormTS01141Vo();
-		subFormTS01141Vo.setPageNo("3");
-		subFormTS01141Vo.setAuditDesc("ทดสอบข้อความในใบต่อ 3");
-		subFormTS01141VoList.add(subFormTS01141Vo);
+//		subFormTS01141Vo = new TaFormTS01141Vo();
+//		subFormTS01141Vo.setPageNo("3");
+//		subFormTS01141Vo.setAuditDesc("ทดสอบข้อความในใบต่อ 3");
+//		subFormTS01141VoList.add(subFormTS01141Vo);
 		
 		formTS01141Vo.setTaFormTS01141VoList(subFormTS01141VoList);
 		

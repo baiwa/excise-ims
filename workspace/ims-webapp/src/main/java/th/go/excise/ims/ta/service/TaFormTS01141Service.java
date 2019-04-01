@@ -42,18 +42,23 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 	@Autowired
 	private TaFormTs01141Repository taFormTs01141Repository;
 	
+	@Override
 	public String getReportName() {
 		return REPORT_NAME.TA_FORM_TS01_14_1;
 	}
 	
-	@Transactional(rollbackOn = { Exception.class })
+	@Override
 	public byte[] processFormTS(TaFormTS01141Vo formTS01141Vo) throws Exception {
 		logger.info("processFormTS");
+		
 		saveFormTS(formTS01141Vo);
 		byte[] reportFile = generateReport(formTS01141Vo);
+		
 		return reportFile;
 	}
 
+	@Transactional(rollbackOn = { Exception.class })
+	@Override
 	public void saveFormTS(TaFormTS01141Vo formTS01141Vo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
@@ -127,6 +132,7 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 		taFormTs01141Repository.saveAll(formTs01141List);
 	}
 
+	@Override
 	public byte[] generateReport(TaFormTS01141Vo formTS01141Vo) throws Exception {
 		logger.info("generateReport");
 		
@@ -171,6 +177,7 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 		return content;
 	}
 
+	@Override
 	public List<String> getFormTsNumberList() {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		return taFormTs01141Repository.findFormTsNumberByOfficeCode(officeCode);
@@ -178,6 +185,8 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 
 	@Override
 	public TaFormTS01141Vo getFormTS(String formTsNumber) {
+		logger.info("getFormTS formTsNumber={}");
+		
 		TaFormTS01141Vo formTS01141Vo = new TaFormTS01141Vo();
 		TaFormTS01141Vo subFormTS01141Vo = null;
 		List<TaFormTS01141Vo> formTS01141VoList = new ArrayList<>();
