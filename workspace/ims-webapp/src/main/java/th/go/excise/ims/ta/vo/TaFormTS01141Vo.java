@@ -3,6 +3,9 @@ package th.go.excise.ims.ta.vo;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class TaFormTS01141Vo {
 
 	private String formTsNumber;
@@ -105,4 +108,9 @@ public class TaFormTS01141Vo {
 		this.taFormTS01141VoList = taFormTS01141VoList;
 	}
 
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+	}
+	
 }
