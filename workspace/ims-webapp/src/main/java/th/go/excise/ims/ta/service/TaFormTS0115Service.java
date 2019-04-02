@@ -56,7 +56,7 @@ public class TaFormTS0115Service extends AbstractTaFormTSService<TaFormTS0115Vo,
 	@Override
 	public byte[] processFormTS(TaFormTS0115Vo formTS0115Vo) throws Exception {
 		logger.info("processFormTS");
-		// saveFormTS(formTS0115Vo);
+		saveFormTS(formTS0115Vo);
 		byte[] reportFile = generateReport(formTS0115Vo);
 		return reportFile;
 	}
@@ -107,7 +107,7 @@ public class TaFormTS0115Service extends AbstractTaFormTSService<TaFormTS0115Vo,
 			taFormTs0115Hdr.setOfficeCode(officeCode);
 			taFormTs0115Hdr.setBudgetYear(budgetYear);
 			taFormTs0115Hdr.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
-
+			dtlVoList = new ArrayList<>();
 			for (TaFormTS0115DtlVo formDtl : formTS0115Vo.getTaFormTS0115DtlVoList()) {
 				taFormTs0115Dtl = new TaFormTs0115Dtl();
 				toEntityDtl(taFormTs0115Dtl, formDtl);
