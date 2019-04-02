@@ -47,11 +47,12 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
     @Autowired
     private TaFormTs0114DtlRepository taFormTs0114DtlRepository;
     
+    @Override
     public String getReportName() {
 		return REPORT_NAME.TA_FORM_TS01_14;
 	}
     
-    @Transactional(rollbackOn = {Exception.class})
+    @Override
     public byte[] processFormTS(TaFormTS0114Vo taFormTS0114Vo) throws Exception {
         logger.info("processFormTS");
 
@@ -61,6 +62,8 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
         return reportFile;
     }
 
+    @Transactional(rollbackOn = {Exception.class})
+    @Override
     public void saveFormTS(TaFormTS0114Vo formTS0114Vo) {
         String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
         String budgetYear = ExciseUtils.getCurrentBudgetYear();
@@ -91,8 +94,6 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
                 } else {
                     taFormTs0114Dtl = new TaFormTs0114Dtl();
                     toEntityDtl(taFormTs0114Dtl, formDtl);
-                    taFormTs0114Dtl.setOfficeCode(officeCode);
-                    taFormTs0114Dtl.setBudgetYear(budgetYear);
                 }
 
                 taFormTs0114DtlRepository.save(taFormTs0114Dtl);
@@ -107,8 +108,6 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
             for (TaFormTS0114DtlVo formDtl : formTS0114Vo.getTaFormTS0114DtlVoList()) {
                 taFormTs0114Dtl = new TaFormTs0114Dtl();
                 toEntityDtl(taFormTs0114Dtl, formDtl);
-                taFormTs0114Dtl.setOfficeCode(officeCode);
-                taFormTs0114Dtl.setBudgetYear(budgetYear);
                 taFormTs0114Dtl.setFormTsNumber(taFormTs0114Hdr.getFormTsNumber());
                 taFormTs0114DtlRepository.save(taFormTs0114Dtl);
             }
@@ -116,6 +115,7 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
         taFormTs0114HdrRepository.save(taFormTs0114Hdr);
     }
 
+    @Override
     public byte[] generateReport(TaFormTS0114Vo formTS0114Vo) throws Exception, IOException {
         logger.info("generateReport");
 

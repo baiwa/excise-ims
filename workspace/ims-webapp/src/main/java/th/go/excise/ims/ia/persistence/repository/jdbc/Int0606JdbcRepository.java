@@ -8,13 +8,18 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.persistence.entity.IaCheckLicense;
+import th.go.excise.ims.ia.vo.Int0606FormHdrId;
 import th.go.excise.ims.ia.vo.Int0606FormVo;
+import th.go.excise.ims.ia.vo.Int0606Vo;
+import th.go.excise.ims.ia.vo.Int11FormVo;
+import th.go.excise.ims.ia.vo.Int11Vo;
 
 @Repository
 public class Int0606JdbcRepository {
@@ -72,4 +77,39 @@ public class Int0606JdbcRepository {
 	};
 	
 	
+	private final String SQL_IA_CONCLUDE_FOLLOW_HDR = "SELECT A.ID FROM IA_CONCLUDE_FOLLOW_HDR A WHERE A.BUDGET_YEAR = ? AND A.EXCISE_CODE = ?  ";
+	public List<Int0606Vo> FindIdHdr(Int0606FormHdrId form) {
+		List<Int0606Vo> iaFindIdHdr = new ArrayList<Int0606Vo>();
+		StringBuilder sql = new StringBuilder(SQL_IA_CONCLUDE_FOLLOW_HDR);
+		List<Object> params = new ArrayList<Object>();
+		params.add(form.getBudgetYear());
+		params.add(form.getExciseCode());	
+		iaFindIdHdr = commonJdbcTemplate.query(sql.toString(), params.toArray(), iaFindIdHdrRowmapper);
+		return iaFindIdHdr;
+	}	
+	private RowMapper<Int0606Vo> iaFindIdHdrRowmapper = new RowMapper<Int0606Vo>() {
+		@Override
+		public Int0606Vo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Int0606Vo vo = new Int0606Vo();	
+			vo.setId(rs.getLong("ID"));
+			return vo;
+		}
+	};
+	
+	
+	
+	
+	
+	
+//	public List<Int0606Vo> FindIdHdr(Int0606FormHdrId form) {
+//		StringBuilder sql = new StringBuilder();
+//		List<Object> params = new ArrayList<Object>();
+//		sql.append(" SELECT A.ID FROM IA_CONCLUDE_FOLLOW_HDR A WHERE A.BUDGET_YEAR = ? AND A.EXCISE_CODE = ? ");
+//		params.add(form.getBudgetYear());
+//		params.add(form.getExciseCode());
+//		@SuppressWarnings({ "rawtypes", "unchecked" })
+//		List<Int0606Vo> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(),
+//				new BeanPropertyRowMapper(Int0606Vo.class));
+//		return datas;
+//	}	
 }

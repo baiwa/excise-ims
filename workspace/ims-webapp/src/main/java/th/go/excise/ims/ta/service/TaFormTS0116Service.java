@@ -39,7 +39,6 @@ public class TaFormTS0116Service extends AbstractTaFormTSService<TaFormTS0116Vo,
 		return REPORT_NAME.TA_FORM_TS01_16;
 	}
 	
-	@Transactional(rollbackOn = { Exception.class })
 	@Override
 	public byte[] processFormTS(TaFormTS0116Vo formTS0116Vo) throws Exception {
 		logger.info("processFormTS");
@@ -50,6 +49,7 @@ public class TaFormTS0116Service extends AbstractTaFormTSService<TaFormTS0116Vo,
 		return reportFile;
 	}
 	
+	@Transactional(rollbackOn = { Exception.class })
 	@Override
 	public void saveFormTS(TaFormTS0116Vo formTS0116Vo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
@@ -61,6 +61,7 @@ public class TaFormTS0116Service extends AbstractTaFormTSService<TaFormTS0116Vo,
 		
 	}
 	
+	@Override
 	public byte[] generateReport(TaFormTS0116Vo formTS0116Vo) throws Exception, IOException {
 		logger.info("export generateReport");
 		

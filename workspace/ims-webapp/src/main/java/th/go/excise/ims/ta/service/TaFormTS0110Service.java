@@ -42,11 +42,12 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 	@Autowired
 	private TaFormTs0110Repository taFormTs0110Repository;
 
+	@Override
 	public String getReportName() {
 		return REPORT_NAME.TA_FORM_TS01_10;
 	}
 
-	@Transactional(rollbackOn = { Exception.class })
+	@Override
 	public byte[] processFormTS(TaFormTS0110Vo formTS0110Vo) throws Exception {
 		logger.info("processFormTS");
 
@@ -56,53 +57,84 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 		return reportFile;
 	}
 
+	@Transactional(rollbackOn = { Exception.class })
+	@Override
 	public void saveFormTS(TaFormTS0110Vo formTS0110Vo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
 		logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS0110Vo.getFormTsNumber());
-
-		TaFormTs0110 taFormTs0110Dtl = null;
-		TaFormTs0110 taFormTs0110Hdr = null;
+		
+		// Set Data
+		TaFormTs0110 formTs0110 = null;
 		if (StringUtils.isNotEmpty(formTS0110Vo.getFormTsNumber())) {
-
-			taFormTs0110Repository.setIsDeleteY(officeCode, budgetYear, formTS0110Vo.getFormTsNumber());
-
-			for (TaFormTS0110Vo formDtl : formTS0110Vo.getTaFormTS0110VoList()) {
-				TaFormTs0110 dtlVo = taFormTs0110Repository
-						.findByFormTs0110IdAndIsDeleted(Long.valueOf(formDtl.getFormTs0110Id()), FLAG.Y_FLAG);
-				if (dtlVo != null) {
-					taFormTs0110Dtl = dtlVo;
-					toEntity(taFormTs0110Dtl, formDtl);
-					taFormTs0110Dtl.setIsDeleted(FLAG.N_FLAG);
-				} else {
-					taFormTs0110Dtl = new TaFormTs0110();
-					toEntity(taFormTs0110Dtl, formDtl);
-					taFormTs0110Dtl.setOfficeCode(officeCode);
-					taFormTs0110Dtl.setBudgetYear(budgetYear);
-				}
-
-				taFormTs0110Repository.save(taFormTs0110Dtl);
-			}
-		} else {
-			taFormTs0110Hdr = new TaFormTs0110();
-			toEntity(taFormTs0110Hdr, formTS0110Vo);
-			taFormTs0110Hdr.setOfficeCode(officeCode);
-			taFormTs0110Hdr.setBudgetYear(budgetYear);
-			taFormTs0110Hdr.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
-			taFormTs0110Repository.save(taFormTs0110Hdr);
+			// Case Update FormTS
+			List<TaFormTs0110> taFormTs0110List = taFormTs0110Repository.findByFormTsNumber(formTS0110Vo.getFormTsNumber());
 			
-			for (TaFormTS0110Vo formDtl : formTS0110Vo.getTaFormTS0110VoList()) {
-				taFormTs0110Dtl = new TaFormTs0110();
-				toEntity(taFormTs0110Dtl, formDtl);
-				taFormTs0110Dtl.setOfficeCode(officeCode);
-				taFormTs0110Dtl.setBudgetYear(budgetYear);
-				taFormTs0110Dtl.setFormTsNumber(taFormTs0110Hdr.getFormTsNumber());
-				taFormTs0110Repository.save(taFormTs0110Dtl);
+			// Update isDeleted = 'Y' for Default
+			for (TaFormTs0110 taFormTs0110 : taFormTs0110List) {
+				if (Integer.parseInt(taFormTs0110.getTestimonyPageNo()) >= 1) {
+					taFormTs0110.setIsDeleted(FLAG.Y_FLAG);
+				}
 			}
+			
+			// Set Main Record
+			formTs0110 = getEntityByPageNo(taFormTs0110List, "0");
+			toEntity(formTs0110, formTS0110Vo);
+			
+			// Set Sub Record
+			if (formTS0110Vo.getTaFormTS0110VoList() != null) {
+				for (TaFormTS0110Vo subFormTS0110Vo : formTS0110Vo.getTaFormTS0110VoList()) {
+					formTs0110 = getEntityByPageNo(taFormTs0110List, subFormTS0110Vo.getTestimonyPageNo());
+					if (formTs0110 != null) {
+						// Exist Page
+						formTs0110.setTestimonyOf(formTS0110Vo.getTestimonyOf());
+						formTs0110.setTestimonyText(subFormTS0110Vo.getTestimonyText());
+						formTs0110.setIsDeleted(FLAG.N_FLAG);
+					} else {
+						// New Page
+						formTs0110 = new TaFormTs0110();
+						toEntity(formTs0110, subFormTS0110Vo);
+						formTs0110.setOfficeCode(officeCode);
+						formTs0110.setBudgetYear(budgetYear);
+						formTs0110.setFormTsNumber(formTS0110Vo.getFormTsNumber());
+						taFormTs0110List.add(formTs0110);
+					}
+				}
+			}
+			
+			taFormTs0110Repository.saveAll(taFormTs0110List);
+			
+		} else {
+			// Case New FormTS
+			String formTsNumber = taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear);
+			List<TaFormTs0110> formTs0110List = new ArrayList<>();
+			
+			// Set Main Record
+			formTs0110 = new TaFormTs0110();
+			toEntity(formTs0110, formTS0110Vo);
+			formTs0110.setOfficeCode(officeCode);
+			formTs0110.setBudgetYear(budgetYear);
+			formTs0110.setFormTsNumber(formTsNumber);
+			formTs0110List.add(formTs0110);
+			
+			// Set Sub Record
+			if (formTS0110Vo.getTaFormTS0110VoList() != null) {
+				for (TaFormTS0110Vo subFormTS0110Vo : formTS0110Vo.getTaFormTS0110VoList()) {
+					formTs0110 = new TaFormTs0110();
+					toEntity(formTs0110, subFormTS0110Vo);
+					formTs0110.setTestimonyOf(formTS0110Vo.getTestimonyOf());
+					formTs0110.setOfficeCode(officeCode);
+					formTs0110.setBudgetYear(budgetYear);
+					formTs0110.setFormTsNumber(formTsNumber);
+					formTs0110List.add(formTs0110);
+				}
+			}
+			
+			taFormTs0110Repository.saveAll(formTs0110List);
 		}
-
 	}
 
+	@Override
 	public byte[] generateReport(TaFormTS0110Vo formTS0110Vo) throws Exception {
 		logger.info("export exportTaFormTS0110");
 
@@ -110,8 +142,7 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 		JasperPrint jasperPrint = null;
 
 		Map<String, Object> params = new HashMap<>();
-		params.put("logo",
-				ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
+		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
 		params.put("testimonyOf", formTS0110Vo.getTestimonyOf());
 		params.put("testimonyTopic", formTS0110Vo.getTestimonyTopic());
 		params.put("docDate", formTS0110Vo.getDocDate());
@@ -182,18 +213,41 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 	@Override
 	public TaFormTS0110Vo getFormTS(String formTsNumber) {
 		logger.info("getFormTS formTsNumber={}");
-		TaFormTS0110Vo taFormTS0110Vo = new TaFormTS0110Vo();
+		
+		TaFormTS0110Vo formTS0110Vo = new TaFormTS0110Vo();
+		TaFormTS0110Vo subFormTS0110Vo = null;
+		List<TaFormTS0110Vo> formTS0110VoList = new ArrayList<>();
 
-		// Set Data
-		List<TaFormTs0110> dtls = taFormTs0110Repository.findByFormTsNumber(formTsNumber);
-        List<TaFormTS0110Vo> dtlVos = new ArrayList<>();
-        for (TaFormTs0110 dtl : dtls) {
-            TaFormTS0110Vo dtlVo = new TaFormTS0110Vo();
-            toVo(dtlVo, dtl);
-            dtlVos.add(dtlVo);
-        }
-        taFormTS0110Vo.setTaFormTS0110VoList(dtlVos);
-		return taFormTS0110Vo;
+		List<TaFormTs0110> taFormTs0110List = taFormTs0110Repository.findByFormTsNumber(formTsNumber);
+		for (TaFormTs0110 taFormTs0110 : taFormTs0110List) {
+			if ("0".equals(taFormTs0110.getTestimonyPageNo())) {
+				// Main Page
+				toVo(formTS0110Vo, taFormTs0110);
+			} else {
+				// Sub Page
+				subFormTS0110Vo = new TaFormTS0110Vo();
+				toVo(subFormTS0110Vo, taFormTs0110);
+				formTS0110VoList.add(subFormTS0110Vo);
+			}
+		}
+		
+		// Sorting
+		formTS0110VoList.sort((p1, p2) -> Integer.parseInt(p1.getTestimonyPageNo()) - Integer.parseInt(p2.getTestimonyPageNo()));
+		
+		formTS0110Vo.setTaFormTS0110VoList(formTS0110VoList);
+		
+		return formTS0110Vo;
+	}
+	
+	private TaFormTs0110 getEntityByPageNo(List<TaFormTs0110> formTs0110List, String pageNo) {
+		TaFormTs0110 formTs0110 = null;
+		for (TaFormTs0110 taFormTs0110 : formTs0110List) {
+			if (pageNo.equals(taFormTs0110.getTestimonyPageNo())) {
+				formTs0110 = taFormTs0110;
+				break;
+			}
+		}
+		return formTs0110;
 	}
 
 }

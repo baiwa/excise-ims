@@ -42,18 +42,23 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 	@Autowired
 	private TaFormTs01141Repository taFormTs01141Repository;
 	
+	@Override
 	public String getReportName() {
 		return REPORT_NAME.TA_FORM_TS01_14_1;
 	}
 	
-	@Transactional(rollbackOn = { Exception.class })
+	@Override
 	public byte[] processFormTS(TaFormTS01141Vo formTS01141Vo) throws Exception {
 		logger.info("processFormTS");
+		
 		saveFormTS(formTS01141Vo);
 		byte[] reportFile = generateReport(formTS01141Vo);
+		
 		return reportFile;
 	}
 
+	@Transactional(rollbackOn = { Exception.class })
+	@Override
 	public void saveFormTS(TaFormTS01141Vo formTS01141Vo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
@@ -61,7 +66,6 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 		
 		// Set Data
 		TaFormTs01141 formTs01141 = null;
-		List<TaFormTs01141> formTs01141List = new ArrayList<>();
 		if (StringUtils.isNotEmpty(formTS01141Vo.getFormTsNumber())) {
 			// Case Update FormTS
 			List<TaFormTs01141> taFormTs01141List = taFormTs01141Repository.findByFormTsNumber(formTS01141Vo.getFormTsNumber());
@@ -76,7 +80,6 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 			// Set Main Record
 			formTs01141 = getEntityByPageNo(taFormTs01141List, "0");
 			toEntity(formTs01141, formTS01141Vo);
-			formTs01141List.add(formTs01141);
 			
 			// Set Sub Record
 			if (formTS01141Vo.getTaFormTS01141VoList() != null) {
@@ -86,7 +89,6 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 						// Exist Page
 						formTs01141.setAuditDesc(subFormTS01141Vo.getAuditDesc());
 						formTs01141.setIsDeleted(FLAG.N_FLAG);
-						formTs01141List.add(formTs01141);
 					} else {
 						// New Page
 						formTs01141 = new TaFormTs01141();
@@ -94,14 +96,17 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 						formTs01141.setOfficeCode(officeCode);
 						formTs01141.setBudgetYear(budgetYear);
 						formTs01141.setFormTsNumber(formTS01141Vo.getFormTsNumber());
-						formTs01141List.add(formTs01141);
+						taFormTs01141List.add(formTs01141);
 					}
 				}
 			}
 			
+			taFormTs01141Repository.saveAll(taFormTs01141List);
+			
 		} else {
 			// Case New FormTS
 			String formTsNumber = taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear);
+			List<TaFormTs01141> formTs01141List = new ArrayList<>();
 			
 			// Set Main Record
 			formTs01141 = new TaFormTs01141();
@@ -122,11 +127,12 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 					formTs01141List.add(formTs01141);
 				}
 			}
+			
+			taFormTs01141Repository.saveAll(formTs01141List);
 		}
-		
-		taFormTs01141Repository.saveAll(formTs01141List);
 	}
 
+	@Override
 	public byte[] generateReport(TaFormTS01141Vo formTS01141Vo) throws Exception {
 		logger.info("generateReport");
 		
@@ -171,6 +177,7 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 		return content;
 	}
 
+	@Override
 	public List<String> getFormTsNumberList() {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		return taFormTs01141Repository.findFormTsNumberByOfficeCode(officeCode);
@@ -178,6 +185,8 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 
 	@Override
 	public TaFormTS01141Vo getFormTS(String formTsNumber) {
+		logger.info("getFormTS formTsNumber={}");
+		
 		TaFormTS01141Vo formTS01141Vo = new TaFormTS01141Vo();
 		TaFormTS01141Vo subFormTS01141Vo = null;
 		List<TaFormTS01141Vo> formTS01141VoList = new ArrayList<>();
@@ -194,10 +203,11 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 				formTS01141VoList.add(subFormTS01141Vo);
 			}
 		}
-		formTS01141Vo.setTaFormTS01141VoList(formTS01141VoList);
 		
 		// Sorting
-		formTS01141Vo.getTaFormTS01141VoList().sort((p1, p2) -> Integer.parseInt(p1.getPageNo()) - Integer.parseInt(p2.getPageNo()));
+		formTS01141VoList.sort((p1, p2) -> Integer.parseInt(p1.getPageNo()) - Integer.parseInt(p2.getPageNo()));
+		
+		formTS01141Vo.setTaFormTS01141VoList(formTS01141VoList);
 		
 		return formTS01141Vo;
 	}

@@ -36,11 +36,12 @@ public class TaFormTS0120Service extends AbstractTaFormTSService<TaFormTS0120Vo,
 	@Autowired
 	private TaFormTs0120Repository taFormTs0120Repository;
 	
+	@Override
 	public String getReportName() {
 		return REPORT_NAME.TA_FORM_TS01_20;
 	}
 	
-	@Transactional(rollbackOn = { Exception.class })
+	@Override
 	public byte[] processFormTS(TaFormTS0120Vo formTS0120Vo) throws Exception {
 		logger.info("processFormTS");
 
@@ -50,6 +51,8 @@ public class TaFormTS0120Service extends AbstractTaFormTSService<TaFormTS0120Vo,
 		return reportFile;
 	}
 
+	@Transactional(rollbackOn = { Exception.class })
+	@Override
 	public void saveFormTS(TaFormTS0120Vo formTS0120Vo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
@@ -69,6 +72,7 @@ public class TaFormTS0120Service extends AbstractTaFormTSService<TaFormTS0120Vo,
 		taFormTs0120Repository.save(formTS0120);
 	}
 	
+	@Override
 	public byte[] generateReport(TaFormTS0120Vo request) throws Exception, IOException {
 		Map<String, Object> params = new HashMap<String, Object>();
 

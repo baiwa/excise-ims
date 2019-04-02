@@ -21,10 +21,8 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
-import th.go.excise.ims.ta.persistence.entity.TaFormTs0102;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0106;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0106Repository;
-import th.go.excise.ims.ta.vo.TaFormTS0102Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0106Vo;
 
 @Service
@@ -41,7 +39,6 @@ public class TaFormTS0106Service extends AbstractTaFormTSService<TaFormTS0106Vo,
 		return REPORT_NAME.TA_FORM_TS01_06;
 	}
 
-	@Transactional(rollbackOn = { Exception.class })
 	@Override
 	public byte[] processFormTS(TaFormTS0106Vo formTS0106Vo) throws Exception {
 		logger.info("processFormTS");
@@ -52,6 +49,7 @@ public class TaFormTS0106Service extends AbstractTaFormTSService<TaFormTS0106Vo,
 		return reportFile;
 	}
 
+	@Transactional(rollbackOn = { Exception.class })
 	@Override
 	public void saveFormTS(TaFormTS0106Vo formTS0106Vo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
@@ -70,8 +68,8 @@ public class TaFormTS0106Service extends AbstractTaFormTSService<TaFormTS0106Vo,
 			formTs0106.setBudgetYear(budgetYear);
 			formTs0106.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
 		}
+		
 		taFormTs0106Repository.save(formTs0106);
-
 	}
 
 	@Override
