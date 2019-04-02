@@ -126,6 +126,11 @@ public class Oa0107Service {
 			response.setReceiveNo(licen.getReceiveNo());
 			response.setStartDate(licen.getStartDate());
 			response.setWarehouseAddress(licen.getWarehouseAddress());
+			response.setLicenseTypeUsr(licen.getLicenseTypeUsr());
+			response.setLicenseTypeUsrATxt(licen.getLicenseTypeUsrATxt());
+			response.setLicenseTypeUsrBTxt(licen.getLicenseTypeUsrBTxt());
+			response.setBankGuaranteeTxt(licen.getBankGuaranteeTxt());
+			response.setEmail(licen.getEmail());
 			List<OaHydCustomerLicenDtl> details = oa0107JdbcRep.findByLicenseId(response.getOaCuslicenseId());
 			response.setDetails(details);
 		}
@@ -161,6 +166,11 @@ public class Oa0107Service {
 		licen.setReceiveNo(request.getReceiveNo());
 		licen.setStartDate(request.getStartDate());
 		licen.setWarehouseAddress(request.getWarehouseAddress());
+		licen.setLicenseTypeUsr(request.getLicenseTypeUsr());
+		licen.setLicenseTypeUsrATxt(request.getLicenseTypeUsrATxt());
+		licen.setLicenseTypeUsrBTxt(request.getLicenseTypeUsrBTxt());
+		licen.setBankGuaranteeTxt(request.getBankGuaranteeTxt());
+		licen.setEmail(request.getEmail());
 		licen = oaHydCustomerLicenRep.save(licen);
 		List<OaHydCustomerLicenDtl> details = request.getDetails();
 		if (details != null) {
@@ -208,6 +218,11 @@ public class Oa0107Service {
 			licen.setReceiveNo(request.getReceiveNo());
 			licen.setStartDate(request.getStartDate());
 			licen.setWarehouseAddress(request.getWarehouseAddress());
+			licen.setLicenseTypeUsr(request.getLicenseTypeUsr());
+			licen.setLicenseTypeUsrATxt(request.getLicenseTypeUsrATxt());
+			licen.setLicenseTypeUsrBTxt(request.getLicenseTypeUsrBTxt());
+			licen.setBankGuaranteeTxt(request.getBankGuaranteeTxt());
+			licen.setEmail(request.getEmail());
 			licen = oaHydCustomerLicenRep.save(licen);
 			List<OaHydCustomerLicenDtl> details = request.getDetails();
 			List<OaHydCustomerLicenDtl> detailsOld = new ArrayList<>();

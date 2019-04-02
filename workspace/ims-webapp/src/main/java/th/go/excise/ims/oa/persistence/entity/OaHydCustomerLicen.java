@@ -3,6 +3,7 @@ package th.go.excise.ims.oa.persistence.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,286 +11,335 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "OA_HYD_CUSTOMER_LICEN")
-public class OaHydCustomerLicen
-    extends BaseEntity
-{
+public class OaHydCustomerLicen extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OA_HYD_CUSTOMER_LICEN_GEN")
-    @SequenceGenerator(name = "OA_HYD_CUSTOMER_LICEN_GEN", sequenceName = "OA_HYD_CUSTOMER_LICEN_SEQ", allocationSize = 1)
-    @Column(name = "OA_CUSLICENSE_ID")
-    private BigDecimal oaCuslicenseId;
-    @Column(name = "NAME")
-    private String name;
-    @Column(name = "COMPANY_NAME")
-    private String companyName;
-    @Column(name = "IDENTIFY_NO")
-    private String identifyNo;
-    @Column(name = "IDENTIFY_TYPE")
-    private String identifyType;
-    @Column(name = "LICENSE_TYPE")
-    private String licenseType;
-    @Column(name = "LICENSE_NO")
-    private String licenseNo;
-    @Column(name = "LICENSE_DATE")
-    private Date licenseDate;
-    @Column(name = "LICENSE_TYPE_FOR")
-    private String licenseTypeFor;
-    @Column(name = "LICENSE_TYPE_DESP")
-    private String licenseTypeDesp;
-    @Column(name = "BANK_GUARANTEE")
-    private String bankGuarantee;
-    @Column(name = "BANK_GUARANTEE_NO")
-    private String bankGuaranteeNo;
-    @Column(name = "BANK_GUARANTEE_DATE")
-    private Date bankGuaranteeDate;
-    @Column(name = "OLD_LICENSE_YEAR")
-    private String oldLicenseYear;
-    @Column(name = "OPERATE_NAME")
-    private String operateName;
-    @Column(name = "OPERATE_REMARK")
-    private String operateRemark;
-    @Column(name = "START_DATE")
-    private Date startDate;
-    @Column(name = "END_DATE")
-    private Date endDate;
-    @Column(name = "OFF_CODE")
-    private String offCode;
-    @Column(name = "RECEIVE_DATE")
-    private Date receiveDate;
-    @Column(name = "RECEIVE_NO")
-    private String receiveNo;
-    @Column(name = "APPROVE_NAME")
-    private String approveName;
-    @Column(name = "APPROVE")
-    private String approve;
-    @Column(name = "OLD_CUSTOMER")
-    private String oldCustomer;
-    @Column(name = "MOBILE")
-    private String mobile;
-    @Column(name = "ADDRESS")
-    private String address;
-    @Column(name = "WAREHOUSE_ADDRESS")
-    private String warehouseAddress;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OA_HYD_CUSTOMER_LICEN_GEN")
+	@SequenceGenerator(name = "OA_HYD_CUSTOMER_LICEN_GEN", sequenceName = "OA_HYD_CUSTOMER_LICEN_SEQ", allocationSize = 1)
+	@Column(name = "OA_CUSLICENSE_ID")
+	private BigDecimal oaCuslicenseId;
+	@Column(name = "NAME")
+	private String name;
+	@Column(name = "COMPANY_NAME")
+	private String companyName;
+	@Column(name = "IDENTIFY_NO")
+	private String identifyNo;
+	@Column(name = "IDENTIFY_TYPE")
+	private String identifyType;
+	@Column(name = "LICENSE_TYPE")
+	private String licenseType;
+	@Column(name = "LICENSE_NO")
+	private String licenseNo;
+	@Column(name = "LICENSE_DATE")
+	private Date licenseDate;
+	@Column(name = "LICENSE_TYPE_FOR")
+	private String licenseTypeFor;
+	@Column(name = "LICENSE_TYPE_DESP")
+	private String licenseTypeDesp;
+	@Column(name = "BANK_GUARANTEE")
+	private String bankGuarantee;
+	@Column(name = "BANK_GUARANTEE_NO")
+	private String bankGuaranteeNo;
+	@Column(name = "BANK_GUARANTEE_DATE")
+	private Date bankGuaranteeDate;
+	@Column(name = "OLD_LICENSE_YEAR")
+	private String oldLicenseYear;
+	@Column(name = "OPERATE_NAME")
+	private String operateName;
+	@Column(name = "OPERATE_REMARK")
+	private String operateRemark;
+	@Column(name = "START_DATE")
+	private Date startDate;
+	@Column(name = "END_DATE")
+	private Date endDate;
+	@Column(name = "OFF_CODE")
+	private String offCode;
+	@Column(name = "RECEIVE_DATE")
+	private Date receiveDate;
+	@Column(name = "RECEIVE_NO")
+	private String receiveNo;
+	@Column(name = "APPROVE_NAME")
+	private String approveName;
+	@Column(name = "APPROVE")
+	private String approve;
+	@Column(name = "OLD_CUSTOMER")
+	private String oldCustomer;
+	@Column(name = "MOBILE")
+	private String mobile;
+	@Column(name = "ADDRESS")
+	private String address;
+	@Column(name = "WAREHOUSE_ADDRESS")
+	private String warehouseAddress;
+	@Column(name = "BANK_GUARANTEE_TXT")
+	private String bankGuaranteeTxt;
+	@Column(name = "LICENSE_TYPE_USR")
+	private String licenseTypeUsr;
+	@Column(name = "LICENSE_TYPE_USR_A_TXT")
+	private String licenseTypeUsrATxt;
+	@Column(name = "LICENSE_TYPE_USR_B_TXT")
+	private String licenseTypeUsrBTxt;
+	@Column(name = "EMAIL")
+	private String email;
 
-    public BigDecimal getOaCuslicenseId() {
-        return oaCuslicenseId;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setOaCuslicenseId(BigDecimal oaCuslicenseId) {
-        this.oaCuslicenseId = oaCuslicenseId;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public BigDecimal getOaCuslicenseId() {
+		return oaCuslicenseId;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setOaCuslicenseId(BigDecimal oaCuslicenseId) {
+		this.oaCuslicenseId = oaCuslicenseId;
+	}
 
-    public String getCompanyName() {
-        return companyName;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getIdentifyNo() {
-        return identifyNo;
-    }
+	public String getCompanyName() {
+		return companyName;
+	}
 
-    public void setIdentifyNo(String identifyNo) {
-        this.identifyNo = identifyNo;
-    }
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
 
-    public String getIdentifyType() {
-        return identifyType;
-    }
+	public String getIdentifyNo() {
+		return identifyNo;
+	}
 
-    public void setIdentifyType(String identifyType) {
-        this.identifyType = identifyType;
-    }
+	public void setIdentifyNo(String identifyNo) {
+		this.identifyNo = identifyNo;
+	}
 
-    public String getLicenseType() {
-        return licenseType;
-    }
+	public String getIdentifyType() {
+		return identifyType;
+	}
 
-    public void setLicenseType(String licenseType) {
-        this.licenseType = licenseType;
-    }
+	public void setIdentifyType(String identifyType) {
+		this.identifyType = identifyType;
+	}
 
-    public String getLicenseNo() {
-        return licenseNo;
-    }
+	public String getLicenseType() {
+		return licenseType;
+	}
 
-    public void setLicenseNo(String licenseNo) {
-        this.licenseNo = licenseNo;
-    }
+	public void setLicenseType(String licenseType) {
+		this.licenseType = licenseType;
+	}
 
-    public Date getLicenseDate() {
-        return licenseDate;
-    }
+	public String getLicenseNo() {
+		return licenseNo;
+	}
 
-    public void setLicenseDate(Date licenseDate) {
-        this.licenseDate = licenseDate;
-    }
+	public void setLicenseNo(String licenseNo) {
+		this.licenseNo = licenseNo;
+	}
 
-    public String getLicenseTypeFor() {
-        return licenseTypeFor;
-    }
+	public Date getLicenseDate() {
+		return licenseDate;
+	}
 
-    public void setLicenseTypeFor(String licenseTypeFor) {
-        this.licenseTypeFor = licenseTypeFor;
-    }
+	public void setLicenseDate(Date licenseDate) {
+		this.licenseDate = licenseDate;
+	}
 
-    public String getLicenseTypeDesp() {
-        return licenseTypeDesp;
-    }
+	public String getLicenseTypeFor() {
+		return licenseTypeFor;
+	}
 
-    public void setLicenseTypeDesp(String licenseTypeDesp) {
-        this.licenseTypeDesp = licenseTypeDesp;
-    }
+	public void setLicenseTypeFor(String licenseTypeFor) {
+		this.licenseTypeFor = licenseTypeFor;
+	}
 
-    public String getBankGuarantee() {
-        return bankGuarantee;
-    }
+	public String getLicenseTypeDesp() {
+		return licenseTypeDesp;
+	}
 
-    public void setBankGuarantee(String bankGuarantee) {
-        this.bankGuarantee = bankGuarantee;
-    }
+	public void setLicenseTypeDesp(String licenseTypeDesp) {
+		this.licenseTypeDesp = licenseTypeDesp;
+	}
 
-    public String getBankGuaranteeNo() {
-        return bankGuaranteeNo;
-    }
+	public String getBankGuarantee() {
+		return bankGuarantee;
+	}
 
-    public void setBankGuaranteeNo(String bankGuaranteeNo) {
-        this.bankGuaranteeNo = bankGuaranteeNo;
-    }
+	public void setBankGuarantee(String bankGuarantee) {
+		this.bankGuarantee = bankGuarantee;
+	}
 
-    public Date getBankGuaranteeDate() {
-        return bankGuaranteeDate;
-    }
+	public String getBankGuaranteeNo() {
+		return bankGuaranteeNo;
+	}
 
-    public void setBankGuaranteeDate(Date bankGuaranteeDate) {
-        this.bankGuaranteeDate = bankGuaranteeDate;
-    }
+	public void setBankGuaranteeNo(String bankGuaranteeNo) {
+		this.bankGuaranteeNo = bankGuaranteeNo;
+	}
 
-    public String getOldLicenseYear() {
-        return oldLicenseYear;
-    }
+	public Date getBankGuaranteeDate() {
+		return bankGuaranteeDate;
+	}
 
-    public void setOldLicenseYear(String oldLicenseYear) {
-        this.oldLicenseYear = oldLicenseYear;
-    }
+	public void setBankGuaranteeDate(Date bankGuaranteeDate) {
+		this.bankGuaranteeDate = bankGuaranteeDate;
+	}
 
-    public String getOperateName() {
-        return operateName;
-    }
+	public String getOldLicenseYear() {
+		return oldLicenseYear;
+	}
 
-    public void setOperateName(String operateName) {
-        this.operateName = operateName;
-    }
+	public void setOldLicenseYear(String oldLicenseYear) {
+		this.oldLicenseYear = oldLicenseYear;
+	}
 
-    public String getOperateRemark() {
-        return operateRemark;
-    }
+	public String getOperateName() {
+		return operateName;
+	}
 
-    public void setOperateRemark(String operateRemark) {
-        this.operateRemark = operateRemark;
-    }
+	public void setOperateName(String operateName) {
+		this.operateName = operateName;
+	}
 
-    public Date getStartDate() {
-        return startDate;
-    }
+	public String getOperateRemark() {
+		return operateRemark;
+	}
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
+	public void setOperateRemark(String operateRemark) {
+		this.operateRemark = operateRemark;
+	}
 
-    public Date getEndDate() {
-        return endDate;
-    }
+	public Date getStartDate() {
+		return startDate;
+	}
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
 
-    public String getOffCode() {
-        return offCode;
-    }
+	public Date getEndDate() {
+		return endDate;
+	}
 
-    public void setOffCode(String offCode) {
-        this.offCode = offCode;
-    }
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 
-    public Date getReceiveDate() {
-        return receiveDate;
-    }
+	public String getOffCode() {
+		return offCode;
+	}
 
-    public void setReceiveDate(Date receiveDate) {
-        this.receiveDate = receiveDate;
-    }
+	public void setOffCode(String offCode) {
+		this.offCode = offCode;
+	}
 
-    public String getReceiveNo() {
-        return receiveNo;
-    }
+	public Date getReceiveDate() {
+		return receiveDate;
+	}
 
-    public void setReceiveNo(String receiveNo) {
-        this.receiveNo = receiveNo;
-    }
+	public void setReceiveDate(Date receiveDate) {
+		this.receiveDate = receiveDate;
+	}
 
-    public String getApproveName() {
-        return approveName;
-    }
+	public String getReceiveNo() {
+		return receiveNo;
+	}
 
-    public void setApproveName(String approveName) {
-        this.approveName = approveName;
-    }
+	public void setReceiveNo(String receiveNo) {
+		this.receiveNo = receiveNo;
+	}
 
-    public String getApprove() {
-        return approve;
-    }
+	public String getApproveName() {
+		return approveName;
+	}
 
-    public void setApprove(String approve) {
-        this.approve = approve;
-    }
+	public void setApproveName(String approveName) {
+		this.approveName = approveName;
+	}
 
-    public String getOldCustomer() {
-        return oldCustomer;
-    }
+	public String getApprove() {
+		return approve;
+	}
 
-    public void setOldCustomer(String oldCustomer) {
-        this.oldCustomer = oldCustomer;
-    }
+	public void setApprove(String approve) {
+		this.approve = approve;
+	}
 
-    public String getMobile() {
-        return mobile;
-    }
+	public String getOldCustomer() {
+		return oldCustomer;
+	}
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
+	public void setOldCustomer(String oldCustomer) {
+		this.oldCustomer = oldCustomer;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public String getMobile() {
+		return mobile;
+	}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
 
-    public String getWarehouseAddress() {
-        return warehouseAddress;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public void setWarehouseAddress(String warehouseAddress) {
-        this.warehouseAddress = warehouseAddress;
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getWarehouseAddress() {
+		return warehouseAddress;
+	}
+
+	public void setWarehouseAddress(String warehouseAddress) {
+		this.warehouseAddress = warehouseAddress;
+	}
+
+	public String getBankGuaranteeTxt() {
+		return bankGuaranteeTxt;
+	}
+
+	public void setBankGuaranteeTxt(String bankGuaranteeTxt) {
+		this.bankGuaranteeTxt = bankGuaranteeTxt;
+	}
+
+	public String getLicenseTypeUsr() {
+		return licenseTypeUsr;
+	}
+
+	public void setLicenseTypeUsr(String licenseTypeUsr) {
+		this.licenseTypeUsr = licenseTypeUsr;
+	}
+
+	public String getLicenseTypeUsrATxt() {
+		return licenseTypeUsrATxt;
+	}
+
+	public void setLicenseTypeUsrATxt(String licenseTypeUsrATxt) {
+		this.licenseTypeUsrATxt = licenseTypeUsrATxt;
+	}
+
+	public String getLicenseTypeUsrBTxt() {
+		return licenseTypeUsrBTxt;
+	}
+
+	public void setLicenseTypeUsrBTxt(String licenseTypeUsrBTxt) {
+		this.licenseTypeUsrBTxt = licenseTypeUsrBTxt;
+	}
 
 }
