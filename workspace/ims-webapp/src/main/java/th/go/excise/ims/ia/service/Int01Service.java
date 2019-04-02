@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaPlanDayActivity;
@@ -64,7 +65,7 @@ public class Int01Service {
 				iaPlanDtl.setBudgetYear(budgetYear);
 				iaPlanDtl.setInspectionWork(inspectionWork.getInspectionWork());
 				List<Int01DtlVo> dataFilter = iaPlanDtlJdbcRepository.findByIaPlanDtl(iaPlanDtl);
-
+				
 				/* detail */
 				detail = new Int01TableVo();
 				if (dataFilter.size() > 0) {
@@ -126,23 +127,15 @@ public class Int01Service {
 						monthVo.setHeader11Y("พ.ย. " + (new BigDecimal(afterSub).add(new BigDecimal(1))).toString() );
 						monthVo.setMonth11Y(month11YList);
 						
+						objFilter.setCheckBtnDtl(false);
 						if (planDayActList.size() > 0) {
+							objFilter.setCheckBtnDtl(true);
 							for (IaPlanDayActivity planDayAct : planDayActList) {
-//								planDayVo = new Int0101PlanDayVo();
-//								planDayVo.setActivity(planDayAct.getActivity());
-//								planDayVo.setActivityShort(planDayAct.getActivityShort());
-//								planDayVo.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-//								planDayVo.setPlanDtlId(planDayAct.getPlanDtlId());
-//								planDayVo.setPlanHdrId(planDayAct.getPlanHdrId());
-								/* set color-code follow status */
-//								planDayVo.setActivityStatus(setColorCode(planDayAct.getActivityStatus()));
-								/* set activity */
-//								monthVo = setActivity(planDayAct, monthVo);
-								
 								int monthStart = planDayAct.getDateStartActivity().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue();
 								int yearStart = planDayAct.getDateStartActivity().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear();
 								int monthEnd = planDayAct.getDateEndActivity().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue();
 								int yearEnd = planDayAct.getDateEndActivity().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear();
+								int budgetYearEN = Integer.parseInt(ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(budgetYear, ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_EN));
 								
 								if ( yearStart == yearEnd ) {
 									if( monthStart == 10 ||  (monthEnd >= 10 && monthStart < monthEnd) ) {
@@ -172,6 +165,7 @@ public class Int01Service {
 										
 										month11List.add(month11);
 									}
+									
 									if ( monthStart == 12 || monthEnd == 12 ) {
 										Int0101PlanDayVo month12 = new Int0101PlanDayVo();
 										
@@ -186,7 +180,7 @@ public class Int01Service {
 										month12List.add(month12);
 									}
 									
-									if( monthStart == 1 || (monthEnd >= 1 && monthStart < monthEnd) ) {
+									if( monthStart == 1 || (monthEnd >= 1 && monthStart <= 1 && budgetYearEN == yearStart ) ) {
 										Int0101PlanDayVo month01 = new Int0101PlanDayVo();
 										month01.setActivity(planDayAct.getActivity());
 										month01.setActivityShort(planDayAct.getActivityShort());
@@ -199,7 +193,7 @@ public class Int01Service {
 										month01List.add(month01);
 									}
 									
-									if(monthStart == 2 || (monthEnd >= 2 && monthStart < monthEnd) ) {
+									if(monthStart == 2 || (monthEnd >= 2 && monthStart <= 2 && budgetYearEN == yearStart ) ) {
 										Int0101PlanDayVo month02 = new Int0101PlanDayVo();
 										month02.setActivity(planDayAct.getActivity());
 										month02.setActivityShort(planDayAct.getActivityShort());
@@ -212,7 +206,7 @@ public class Int01Service {
 										month02List.add(month02);
 									}
 									
-									if(monthStart == 3 || (monthEnd >= 3 && monthStart < monthEnd) ) {
+									if(monthStart == 3 || (monthEnd >= 3 && monthStart <= 3 && budgetYearEN == yearStart ) ) {
 										Int0101PlanDayVo month03 = new Int0101PlanDayVo();
 										month03.setActivity(planDayAct.getActivity());
 										month03.setActivityShort(planDayAct.getActivityShort());
@@ -225,7 +219,7 @@ public class Int01Service {
 										month03List.add(month03);
 									}
 									
-									if(monthStart == 4 || (monthEnd >= 4 && monthStart < monthEnd) ) {
+									if(monthStart == 4 || (monthEnd >= 4 && monthStart <= 4 && budgetYearEN == yearStart ) ) {
 										Int0101PlanDayVo month04 = new Int0101PlanDayVo();
 										month04.setActivity(planDayAct.getActivity());
 										month04.setActivityShort(planDayAct.getActivityShort());
@@ -238,7 +232,7 @@ public class Int01Service {
 										month04List.add(month04);
 									}
 									
-									if(monthStart == 5 || (monthEnd >= 5 && monthStart < monthEnd) ) {
+									if(monthStart == 5 || (monthEnd >= 5 && monthStart <= 5 && budgetYearEN == yearStart ) ) {
 										Int0101PlanDayVo month05 = new Int0101PlanDayVo();
 										month05.setActivity(planDayAct.getActivity());
 										month05.setActivityShort(planDayAct.getActivityShort());
@@ -251,7 +245,7 @@ public class Int01Service {
 										month05List.add(month05);
 									}
 									
-									if(monthStart == 6 || ( monthEnd >= 6 && monthStart < monthEnd) ) {
+									if(monthStart == 6 || ( monthEnd >= 6 && monthStart <= 6 && budgetYearEN == yearStart ) ) {
 										Int0101PlanDayVo month06 = new Int0101PlanDayVo();
 										month06.setActivity(planDayAct.getActivity());
 										month06.setActivityShort(planDayAct.getActivityShort());
@@ -264,7 +258,7 @@ public class Int01Service {
 										month06List.add(month06);
 									}
 									
-									if(monthStart == 7 || (monthEnd >= 7 && monthStart < monthEnd) ) {
+									if(monthStart == 7 || (monthEnd >= 7 && monthStart <= 7 && budgetYearEN == yearStart ) ) {
 										Int0101PlanDayVo month07 = new Int0101PlanDayVo();
 										month07.setActivity(planDayAct.getActivity());
 										month07.setActivityShort(planDayAct.getActivityShort());
@@ -277,7 +271,7 @@ public class Int01Service {
 										month07List.add(month07);
 									}
 									
-									if(monthStart == 8 || (monthEnd >= 8 && monthStart < monthEnd) ) {
+									if(monthStart == 8 || (monthEnd >= 8 && monthStart <= 8 && budgetYearEN == yearStart ) ) {
 										Int0101PlanDayVo month08 = new Int0101PlanDayVo();
 										month08.setActivity(planDayAct.getActivity());
 										month08.setActivityShort(planDayAct.getActivityShort());
@@ -290,7 +284,7 @@ public class Int01Service {
 										month08List.add(month08);
 									}
 									
-									if(monthStart == 9 || (monthEnd >= 9 && monthStart < monthEnd) ) {
+									if(monthStart == 9 || (monthEnd >= 9 && monthStart <= 9 && budgetYearEN == yearStart ) ) {
 										Int0101PlanDayVo month09 = new Int0101PlanDayVo();
 										month09.setActivity(planDayAct.getActivity());
 										month09.setActivityShort(planDayAct.getActivityShort());
@@ -304,7 +298,6 @@ public class Int01Service {
 									}
 									
 								} else {
-									
 									if(monthStart == 1 || monthEnd >= 1) {
 										Int0101PlanDayVo month01 = new Int0101PlanDayVo();
 										month01.setActivity(planDayAct.getActivity());
@@ -422,33 +415,47 @@ public class Int01Service {
 										month09List.add(month09);
 									}
 									
-//									if(monthStart == 10 ||monthEnd >= 10 ) {
-//										Int0101PlanDayVo month10 = new Int0101PlanDayVo();
-//										
-//										month10.setActivity(planDayAct.getActivity());
-//										month10.setActivityShort(planDayAct.getActivityShort());
-//										month10.setActivityStatus(planDayAct.getActivityStatus());
-//										month10.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-//										month10.setPlanDtlId(planDayAct.getPlanDtlId());
-//										month10.setPlanHdrId(planDayAct.getPlanHdrId());
-//										month10.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-//										
-//										monthVo.setMonth10(month10);
-//									}
-//									
-//									if(monthStart == 11 || monthEnd >= 11) {
-//										Int0101PlanDayVo month11 = new Int0101PlanDayVo();
-//										
-//										month11.setActivity(planDayAct.getActivity());
-//										month11.setActivityShort(planDayAct.getActivityShort());
-//										month11.setActivityStatus(planDayAct.getActivityStatus());
-//										month11.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-//										month11.setPlanDtlId(planDayAct.getPlanDtlId());
-//										month11.setPlanHdrId(planDayAct.getPlanHdrId());
-//										month11.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-//										
-//										monthVo.setMonth11(month11);
-//									}
+									if(monthStart == 10 ||monthEnd >= 10 ) {
+										Int0101PlanDayVo month10 = new Int0101PlanDayVo();
+										
+										month10.setActivity(planDayAct.getActivity());
+										month10.setActivityShort(planDayAct.getActivityShort());
+										month10.setActivityStatus(planDayAct.getActivityStatus());
+										month10.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+										month10.setPlanDtlId(planDayAct.getPlanDtlId());
+										month10.setPlanHdrId(planDayAct.getPlanHdrId());
+										month10.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+										
+										month10List.add(month10);
+									}
+									
+									if(monthStart == 11 || monthEnd >= 11) {
+										Int0101PlanDayVo month11 = new Int0101PlanDayVo();
+										
+										month11.setActivity(planDayAct.getActivity());
+										month11.setActivityShort(planDayAct.getActivityShort());
+										month11.setActivityStatus(planDayAct.getActivityStatus());
+										month11.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+										month11.setPlanDtlId(planDayAct.getPlanDtlId());
+										month11.setPlanHdrId(planDayAct.getPlanHdrId());
+										month11.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+										
+										month11List.add(month11);
+									}
+									
+									if(monthStart == 12 || monthEnd >= 12) {
+										Int0101PlanDayVo month12 = new Int0101PlanDayVo();
+										
+										month12.setActivity(planDayAct.getActivity());
+										month12.setActivityShort(planDayAct.getActivityShort());
+										month12.setActivityStatus(planDayAct.getActivityStatus());
+										month12.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+										month12.setPlanDtlId(planDayAct.getPlanDtlId());
+										month12.setPlanHdrId(planDayAct.getPlanHdrId());
+										month12.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+										
+										month12List.add(month12);
+									}
 								}
 							}
 							/* set month10List */
