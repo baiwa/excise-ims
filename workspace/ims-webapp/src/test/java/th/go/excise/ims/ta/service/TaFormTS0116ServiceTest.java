@@ -54,10 +54,9 @@ public class TaFormTS0116ServiceTest {
 		formTS0116Vo.setRequestReason("พลังงานทดแทนจากปาล์มน้ำมัน ซึ่งเป็นผลผลิตภายในประเทศ พร้อมทั้ง ขอให้ผลักดันผ่านกฎหมายโดยเร็ว");
 		formTS0116Vo.setRequestDesc("พลังงานทดแทนจากปาล์มน้ำมัน ซึ่งเป็นผลผลิตภายในประเทศ พร้อมทั้ง ขอให้ผลักดันผ่านกฎหมายโดยเร็ว ");
 		formTS0116Vo.setFineNoFlag("");
-		formTS0116Vo.setFineRefrainFlag("");
-		formTS0116Vo.setFindReduceFlag("");
+	
 		formTS0116Vo.setExtraNoFlag("");
-		formTS0116Vo.setExtraReduceFlag("");
+		
 
 		byte[] reportFile = taFormTS0116Service.generateReport(formTS0116Vo);
 		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));

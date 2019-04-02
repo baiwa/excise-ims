@@ -77,11 +77,10 @@ public class TaFormTS0116Service extends AbstractTaFormTSService<TaFormTS0116Vo,
 		params.put("requestReason",formTS0116Vo.getRequestReason());
 		params.put("requestDesc",formTS0116Vo.getRequestDesc());
 		params.put("fineNoFlag",formTS0116Vo.getFineNoFlag());
-		params.put("fineRefrainFlag",formTS0116Vo.getFineRefrainFlag());
-		params.put("findReduceFlag",formTS0116Vo.getFindReduceFlag());
+		params.put("fineAmtFlag",formTS0116Vo.getFineAmtFlag());
 		params.put("finePercent",formTS0116Vo.getFinePercent());
 		params.put("extraNoFlag",formTS0116Vo.getExtraNoFlag());
-		params.put("extraReduceFlag",formTS0116Vo.getExtraReduceFlag());
+		params.put("extraAmtFlag",formTS0116Vo.getExtraAmtFlag());
 		params.put("extraPercent",formTS0116Vo.getExtraPercent());
 		params.put("beforeTaxAmt",formTS0116Vo.getBeforeTaxAmt());
 		params.put("beforeFinePercent",formTS0116Vo.getBeforeFinePercent());
@@ -105,7 +104,6 @@ public class TaFormTS0116Service extends AbstractTaFormTSService<TaFormTS0116Vo,
 		params.put("signApproverFullName",formTS0116Vo.getSignApproverFullName());
 		params.put("signApproverPosition",formTS0116Vo.getSignApproverPosition());
 		params.put("signApproverDate",formTS0116Vo.getSignApproverDate());
-	
 		// set output
 		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_16 + "." + FILE_EXTENSION.JASPER, params);
 		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
