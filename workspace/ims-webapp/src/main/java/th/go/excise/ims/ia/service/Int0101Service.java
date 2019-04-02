@@ -36,33 +36,58 @@ public class Int0101Service {
 		dataFilterDtl.setPosition(request.getPosition());
 		iaPlanDtlRepository.save(dataFilterDtl);
 		
-		/* save plan-day */
-		IaPlanDayActivity entityPlanDay = null;
-		if(request.getPlanVo().size() > 0) {
-			for (Int0101PlanDayVo planDay : request.getPlanVo()) {
-				entityPlanDay = new IaPlanDayActivity();
-				entityPlanDay.setPlanHdrId(dataFilterDtl.getPlanHdrId());
-				entityPlanDay.setPlanDtlId(dataFilterDtl.getPlanDtlId());
-				entityPlanDay.setActivity(planDay.getActivity());
-				entityPlanDay.setActivityStatus(IaConstants.PLAN_DAY_ACTIVITY_STATUS.PARAM_CODE_I);
-				if(planDay.getActivity().equals(IaConstants.PLAN_DAY_WORDING.ENGAGEMENT_FULL)) {
-					entityPlanDay.setActivityShort(IaConstants.PLAN_DAY_WORDING.ENGAGEMENT_ABBREVIATION);
-				}else if(planDay.getActivity().equals(IaConstants.PLAN_DAY_WORDING.AUDIT_FULL)) {
-					entityPlanDay.setActivityShort(IaConstants.PLAN_DAY_WORDING.AUDIT_ABBREVIATION);
-				}else if(planDay.getActivity().equals(IaConstants.PLAN_DAY_WORDING.REPORT_FULL)) {
-					entityPlanDay.setActivityShort(IaConstants.PLAN_DAY_WORDING.REPORT_ABBREVIATION);
-				}else {
-					entityPlanDay.setActivityShort(IaConstants.PLAN_DAY_WORDING.MONITORING_ABBREVIATION);
+		if (request.getFlagUpdate()) {
+			/* update plan-day */
+			if(request.getPlanVo().size() > 0) {
+				List<IaPlanDayActivity> dataAct = iaPlanDayActivityRepository.findByPlanDtlIdAndIsDeleted(request.getPlanDtlId(), "N");
+				for (int i = 0; i < dataAct.size(); i++) {
+					if(IaConstants.PLAN_DAY_WORDING.AUDIT_FULL.equals(dataAct.get(i).getActivity())) {
+						dataAct.get(i).setDateStartActivity(ConvertDateUtils.parseStringToDate(request.getPlanVo().get(i).getDateStartActivityStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+						dataAct.get(i).setDateEndActivity(ConvertDateUtils.parseStringToDate(request.getPlanVo().get(i).getDateEndActivityStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+					} else if (IaConstants.PLAN_DAY_WORDING.ENGAGEMENT_FULL.equals(dataAct.get(i).getActivity())) {
+						dataAct.get(i).setDateStartActivity(ConvertDateUtils.parseStringToDate(request.getPlanVo().get(i).getDateStartActivityStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+						dataAct.get(i).setDateEndActivity(ConvertDateUtils.parseStringToDate(request.getPlanVo().get(i).getDateEndActivityStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+					} else if (IaConstants.PLAN_DAY_WORDING.MONITORING_FULL.equals(dataAct.get(i).getActivity())) {
+						dataAct.get(i).setDateStartActivity(ConvertDateUtils.parseStringToDate(request.getPlanVo().get(i).getDateStartActivityStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+						dataAct.get(i).setDateEndActivity(ConvertDateUtils.parseStringToDate(request.getPlanVo().get(i).getDateEndActivityStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+					} else if (IaConstants.PLAN_DAY_WORDING.REPORT_FULL.equals(dataAct.get(i).getActivity())) {
+						dataAct.get(i).setDateStartActivity(ConvertDateUtils.parseStringToDate(request.getPlanVo().get(i).getDateStartActivityStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+						dataAct.get(i).setDateEndActivity(ConvertDateUtils.parseStringToDate(request.getPlanVo().get(i).getDateEndActivityStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+					}
+					
+					iaPlanDayActivityRepository.save(dataAct.get(i));
 				}
-				entityPlanDay.setDateStartActivity(ConvertDateUtils.parseStringToDate(planDay.getDateStartActivityStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-				entityPlanDay.setDateEndActivity(ConvertDateUtils.parseStringToDate(planDay.getDateEndActivityStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-				
-				iaPlanDayActivityRepository.save(entityPlanDay);
+			}
+		} else {
+			/* save plan-day */
+			IaPlanDayActivity entityPlanDay = null;
+			if(request.getPlanVo().size() > 0) {
+				for (Int0101PlanDayVo planDay : request.getPlanVo()) {
+					entityPlanDay = new IaPlanDayActivity();
+					entityPlanDay.setPlanHdrId(dataFilterDtl.getPlanHdrId());
+					entityPlanDay.setPlanDtlId(dataFilterDtl.getPlanDtlId());
+					entityPlanDay.setActivity(planDay.getActivity());
+					entityPlanDay.setActivityStatus(IaConstants.PLAN_DAY_ACTIVITY_STATUS.PARAM_CODE_I);
+					if(planDay.getActivity().equals(IaConstants.PLAN_DAY_WORDING.ENGAGEMENT_FULL)) {
+						entityPlanDay.setActivityShort(IaConstants.PLAN_DAY_WORDING.ENGAGEMENT_ABBREVIATION);
+					}else if(planDay.getActivity().equals(IaConstants.PLAN_DAY_WORDING.AUDIT_FULL)) {
+						entityPlanDay.setActivityShort(IaConstants.PLAN_DAY_WORDING.AUDIT_ABBREVIATION);
+					}else if(planDay.getActivity().equals(IaConstants.PLAN_DAY_WORDING.REPORT_FULL)) {
+						entityPlanDay.setActivityShort(IaConstants.PLAN_DAY_WORDING.REPORT_ABBREVIATION);
+					}else {
+						entityPlanDay.setActivityShort(IaConstants.PLAN_DAY_WORDING.MONITORING_ABBREVIATION);
+					}
+					entityPlanDay.setDateStartActivity(ConvertDateUtils.parseStringToDate(planDay.getDateStartActivityStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+					entityPlanDay.setDateEndActivity(ConvertDateUtils.parseStringToDate(planDay.getDateEndActivityStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+					
+					iaPlanDayActivityRepository.save(entityPlanDay);
+				}
 			}
 		}
+		
 	}
 	
-	public List<Int0101PlanDayVo> findDataDtlAndAtc(BigDecimal idDtl) {
+	public List<Int0101PlanDayVo> findDataDtlAndAct(BigDecimal idDtl) {
 		List<Int0101PlanDayVo> joinData = new ArrayList<>();
 		
 		if(idDtl != null) {

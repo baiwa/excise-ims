@@ -137,326 +137,379 @@ public class Int01Service {
 								int yearEnd = planDayAct.getDateEndActivity().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear();
 								int budgetYearEN = Integer.parseInt(ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(budgetYear, ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_EN));
 								
-								if ( yearStart == yearEnd ) {
-									if( monthStart == 10 ||  (monthEnd >= 10 && monthStart < monthEnd) ) {
-										Int0101PlanDayVo month10 = new Int0101PlanDayVo();
+								if (budgetYearEN == yearStart) {
+									if ( (yearStart == yearEnd) && (monthEnd < 10) ) {
+									
+										if( monthStart == 1 || (monthEnd >= 1 && monthStart <= 1 && budgetYearEN == yearStart ) ) {
+											Int0101PlanDayVo month01 = new Int0101PlanDayVo();
+											month01.setActivity(planDayAct.getActivity());
+											month01.setActivityShort(planDayAct.getActivityShort());
+											month01.setActivityStatus(planDayAct.getActivityStatus());
+											month01.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month01.setPlanDtlId(planDayAct.getPlanDtlId());
+											month01.setPlanHdrId(planDayAct.getPlanHdrId());
+											month01.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month01List.add(month01);
+										}
 										
-										month10.setActivity(planDayAct.getActivity());
-										month10.setActivityShort(planDayAct.getActivityShort());
-										month10.setActivityStatus(planDayAct.getActivityStatus());
-										month10.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month10.setPlanDtlId(planDayAct.getPlanDtlId());
-										month10.setPlanHdrId(planDayAct.getPlanHdrId());
-										month10.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+										if(monthStart == 2 || (monthEnd >= 2 && monthStart <= 2 && budgetYearEN == yearStart ) ) {
+											Int0101PlanDayVo month02 = new Int0101PlanDayVo();
+											month02.setActivity(planDayAct.getActivity());
+											month02.setActivityShort(planDayAct.getActivityShort());
+											month02.setActivityStatus(planDayAct.getActivityStatus());
+											month02.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month02.setPlanDtlId(planDayAct.getPlanDtlId());
+											month02.setPlanHdrId(planDayAct.getPlanHdrId());
+											month02.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month02List.add(month02);
+										}
 										
-										month10List.add(month10);
+										if(monthStart == 3 || (monthEnd >= 3 && monthStart <= 3 && budgetYearEN == yearStart ) ) {
+											Int0101PlanDayVo month03 = new Int0101PlanDayVo();
+											month03.setActivity(planDayAct.getActivity());
+											month03.setActivityShort(planDayAct.getActivityShort());
+											month03.setActivityStatus(planDayAct.getActivityStatus());
+											month03.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month03.setPlanDtlId(planDayAct.getPlanDtlId());
+											month03.setPlanHdrId(planDayAct.getPlanHdrId());
+											month03.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month03List.add(month03);
+										}
+										
+										if(monthStart == 4 || (monthEnd >= 4 && monthStart <= 4 && budgetYearEN == yearStart ) ) {
+											Int0101PlanDayVo month04 = new Int0101PlanDayVo();
+											month04.setActivity(planDayAct.getActivity());
+											month04.setActivityShort(planDayAct.getActivityShort());
+											month04.setActivityStatus(planDayAct.getActivityStatus());
+											month04.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month04.setPlanDtlId(planDayAct.getPlanDtlId());
+											month04.setPlanHdrId(planDayAct.getPlanHdrId());
+											month04.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month04List.add(month04);
+										}
+										
+										if(monthStart == 5 || (monthEnd >= 5 && monthStart <= 5 && budgetYearEN == yearStart ) ) {
+											Int0101PlanDayVo month05 = new Int0101PlanDayVo();
+											month05.setActivity(planDayAct.getActivity());
+											month05.setActivityShort(planDayAct.getActivityShort());
+											month05.setActivityStatus(planDayAct.getActivityStatus());
+											month05.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month05.setPlanDtlId(planDayAct.getPlanDtlId());
+											month05.setPlanHdrId(planDayAct.getPlanHdrId());
+											month05.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month05List.add(month05);
+										}
+										
+										if(monthStart == 6 || ( monthEnd >= 6 && monthStart <= 6 && budgetYearEN == yearStart ) ) {
+											Int0101PlanDayVo month06 = new Int0101PlanDayVo();
+											month06.setActivity(planDayAct.getActivity());
+											month06.setActivityShort(planDayAct.getActivityShort());
+											month06.setActivityStatus(planDayAct.getActivityStatus());
+											month06.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month06.setPlanDtlId(planDayAct.getPlanDtlId());
+											month06.setPlanHdrId(planDayAct.getPlanHdrId());
+											month06.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month06List.add(month06);
+										}
+										
+										if(monthStart == 7 || (monthEnd >= 7 && monthStart <= 7 && budgetYearEN == yearStart ) ) {
+											Int0101PlanDayVo month07 = new Int0101PlanDayVo();
+											month07.setActivity(planDayAct.getActivity());
+											month07.setActivityShort(planDayAct.getActivityShort());
+											month07.setActivityStatus(planDayAct.getActivityStatus());
+											month07.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month07.setPlanDtlId(planDayAct.getPlanDtlId());
+											month07.setPlanHdrId(planDayAct.getPlanHdrId());
+											month07.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month07List.add(month07);
+										}
+										
+										if(monthStart == 8 || (monthEnd >= 8 && monthStart <= 8 && budgetYearEN == yearStart ) ) {
+											Int0101PlanDayVo month08 = new Int0101PlanDayVo();
+											month08.setActivity(planDayAct.getActivity());
+											month08.setActivityShort(planDayAct.getActivityShort());
+											month08.setActivityStatus(planDayAct.getActivityStatus());
+											month08.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month08.setPlanDtlId(planDayAct.getPlanDtlId());
+											month08.setPlanHdrId(planDayAct.getPlanHdrId());
+											month08.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month08List.add(month08);
+										}
+										
+										if(monthStart == 9 || (monthEnd >= 9 && monthStart <= 9 && budgetYearEN == yearStart ) ) {
+											Int0101PlanDayVo month09 = new Int0101PlanDayVo();
+											month09.setActivity(planDayAct.getActivity());
+											month09.setActivityShort(planDayAct.getActivityShort());
+											month09.setActivityStatus(planDayAct.getActivityStatus());
+											month09.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month09.setPlanDtlId(planDayAct.getPlanDtlId());
+											month09.setPlanHdrId(planDayAct.getPlanHdrId());
+											month09.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month09List.add(month09);
+										}
+										
+									} else {
+										
+										if( monthStart == 10 ||  (monthEnd >= 10 && monthStart < monthEnd) ) {
+											Int0101PlanDayVo month10Y = new Int0101PlanDayVo();
+											
+											month10Y.setActivity(planDayAct.getActivity());
+											month10Y.setActivityShort(planDayAct.getActivityShort());
+											month10Y.setActivityStatus(planDayAct.getActivityStatus());
+											month10Y.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month10Y.setPlanDtlId(planDayAct.getPlanDtlId());
+											month10Y.setPlanHdrId(planDayAct.getPlanHdrId());
+											month10Y.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month10List.add(month10Y);
+										}
+										
+										if( monthStart == 11 || (monthEnd >= 11 && monthStart < monthEnd) ) {
+											Int0101PlanDayVo month11Y = new Int0101PlanDayVo();
+											
+											month11Y.setActivity(planDayAct.getActivity());
+											month11Y.setActivityShort(planDayAct.getActivityShort());
+											month11Y.setActivityStatus(planDayAct.getActivityStatus());
+											month11Y.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month11Y.setPlanDtlId(planDayAct.getPlanDtlId());
+											month11Y.setPlanHdrId(planDayAct.getPlanHdrId());
+											month11Y.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month11List.add(month11Y);
+										}
+										
+										if ( monthStart == 12 || monthEnd == 12 ) {
+											Int0101PlanDayVo month12Y = new Int0101PlanDayVo();
+											
+											month12Y.setActivity(planDayAct.getActivity());
+											month12Y.setActivityShort(planDayAct.getActivityShort());
+											month12Y.setActivityStatus(planDayAct.getActivityStatus());
+											month12Y.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month12Y.setPlanDtlId(planDayAct.getPlanDtlId());
+											month12Y.setPlanHdrId(planDayAct.getPlanHdrId());
+											month12Y.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month12List.add(month12Y);
+										}
 									}
 									
-									if( monthStart == 11 || (monthEnd >= 11 && monthStart < monthEnd) ) {
-										Int0101PlanDayVo month11 = new Int0101PlanDayVo();
-										
-										month11.setActivity(planDayAct.getActivity());
-										month11.setActivityShort(planDayAct.getActivityShort());
-										month11.setActivityStatus(planDayAct.getActivityStatus());
-										month11.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month11.setPlanDtlId(planDayAct.getPlanDtlId());
-										month11.setPlanHdrId(planDayAct.getPlanHdrId());
-										month11.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month11List.add(month11);
-									}
+								} else if (budgetYearEN > yearStart) {
 									
-									if ( monthStart == 12 || monthEnd == 12 ) {
-										Int0101PlanDayVo month12 = new Int0101PlanDayVo();
+									if(yearStart == yearEnd) {
+										if( monthStart == 10 ||  (monthEnd >= 10 && monthStart < monthEnd) ) {
+											Int0101PlanDayVo month10 = new Int0101PlanDayVo();
+											
+											month10.setActivity(planDayAct.getActivity());
+											month10.setActivityShort(planDayAct.getActivityShort());
+											month10.setActivityStatus(planDayAct.getActivityStatus());
+											month10.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month10.setPlanDtlId(planDayAct.getPlanDtlId());
+											month10.setPlanHdrId(planDayAct.getPlanHdrId());
+											month10.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month10List.add(month10);
+										}
 										
-										month12.setActivity(planDayAct.getActivity());
-										month12.setActivityShort(planDayAct.getActivityShort());
-										month12.setActivityStatus(planDayAct.getActivityStatus());
-										month12.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month12.setPlanDtlId(planDayAct.getPlanDtlId());
-										month12.setPlanHdrId(planDayAct.getPlanHdrId());
-										month12.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+										if( monthStart == 11 || (monthEnd >= 11 && monthStart < monthEnd) ) {
+											Int0101PlanDayVo month11 = new Int0101PlanDayVo();
+											
+											month11.setActivity(planDayAct.getActivity());
+											month11.setActivityShort(planDayAct.getActivityShort());
+											month11.setActivityStatus(planDayAct.getActivityStatus());
+											month11.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month11.setPlanDtlId(planDayAct.getPlanDtlId());
+											month11.setPlanHdrId(planDayAct.getPlanHdrId());
+											month11.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month11List.add(month11);
+										}
 										
-										month12List.add(month12);
+										if ( monthStart == 12 || monthEnd == 12 ) {
+											Int0101PlanDayVo month12 = new Int0101PlanDayVo();
+											
+											month12.setActivity(planDayAct.getActivity());
+											month12.setActivityShort(planDayAct.getActivityShort());
+											month12.setActivityStatus(planDayAct.getActivityStatus());
+											month12.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month12.setPlanDtlId(planDayAct.getPlanDtlId());
+											month12.setPlanHdrId(planDayAct.getPlanHdrId());
+											month12.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month12List.add(month12);
+										}
+									} else {
+										if(monthStart == 1 || monthEnd >= 1) {
+											Int0101PlanDayVo month01 = new Int0101PlanDayVo();
+											month01.setActivity(planDayAct.getActivity());
+											month01.setActivityShort(planDayAct.getActivityShort());
+											month01.setActivityStatus(planDayAct.getActivityStatus());
+											month01.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month01.setPlanDtlId(planDayAct.getPlanDtlId());
+											month01.setPlanHdrId(planDayAct.getPlanHdrId());
+											month01.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month01List.add(month01);
+										}
+										
+										if(monthStart == 2 || monthEnd >= 2) {
+											Int0101PlanDayVo month02 = new Int0101PlanDayVo();
+											month02.setActivity(planDayAct.getActivity());
+											month02.setActivityShort(planDayAct.getActivityShort());
+											month02.setActivityStatus(planDayAct.getActivityStatus());
+											month02.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month02.setPlanDtlId(planDayAct.getPlanDtlId());
+											month02.setPlanHdrId(planDayAct.getPlanHdrId());
+											month02.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month02List.add(month02);
+										}
+										
+										if(monthStart == 3 || monthEnd >= 3) {
+											Int0101PlanDayVo month03 = new Int0101PlanDayVo();
+											month03.setActivity(planDayAct.getActivity());
+											month03.setActivityShort(planDayAct.getActivityShort());
+											month03.setActivityStatus(planDayAct.getActivityStatus());
+											month03.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month03.setPlanDtlId(planDayAct.getPlanDtlId());
+											month03.setPlanHdrId(planDayAct.getPlanHdrId());
+											month03.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month03List.add(month03);
+										}
+										
+										if(monthStart == 4 || monthEnd >= 4) {
+											Int0101PlanDayVo month04 = new Int0101PlanDayVo();
+											month04.setActivity(planDayAct.getActivity());
+											month04.setActivityShort(planDayAct.getActivityShort());
+											month04.setActivityStatus(planDayAct.getActivityStatus());
+											month04.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month04.setPlanDtlId(planDayAct.getPlanDtlId());
+											month04.setPlanHdrId(planDayAct.getPlanHdrId());
+											month04.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month04List.add(month04);
+										}
+										
+										if(monthStart == 5 || monthEnd >= 5) {
+											Int0101PlanDayVo month05 = new Int0101PlanDayVo();
+											month05.setActivity(planDayAct.getActivity());
+											month05.setActivityShort(planDayAct.getActivityShort());
+											month05.setActivityStatus(planDayAct.getActivityStatus());
+											month05.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month05.setPlanDtlId(planDayAct.getPlanDtlId());
+											month05.setPlanHdrId(planDayAct.getPlanHdrId());
+											month05.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month05List.add(month05);
+										}
+										
+										if(monthStart == 6 || monthEnd >= 6) {
+											Int0101PlanDayVo month06 = new Int0101PlanDayVo();
+											month06.setActivity(planDayAct.getActivity());
+											month06.setActivityShort(planDayAct.getActivityShort());
+											month06.setActivityStatus(planDayAct.getActivityStatus());
+											month06.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month06.setPlanDtlId(planDayAct.getPlanDtlId());
+											month06.setPlanHdrId(planDayAct.getPlanHdrId());
+											month06.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month06List.add(month06);
+										}
+										
+										if(monthStart == 7 || monthEnd >= 7) {
+											Int0101PlanDayVo month07 = new Int0101PlanDayVo();
+											month07.setActivity(planDayAct.getActivity());
+											month07.setActivityShort(planDayAct.getActivityShort());
+											month07.setActivityStatus(planDayAct.getActivityStatus());
+											month07.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month07.setPlanDtlId(planDayAct.getPlanDtlId());
+											month07.setPlanHdrId(planDayAct.getPlanHdrId());
+											month07.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month07List.add(month07);
+										}
+										
+										if(monthStart == 8 || monthEnd >= 8) {
+											Int0101PlanDayVo month08 = new Int0101PlanDayVo();
+											month08.setActivity(planDayAct.getActivity());
+											month08.setActivityShort(planDayAct.getActivityShort());
+											month08.setActivityStatus(planDayAct.getActivityStatus());
+											month08.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month08.setPlanDtlId(planDayAct.getPlanDtlId());
+											month08.setPlanHdrId(planDayAct.getPlanHdrId());
+											month08.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month08List.add(month08);
+										}
+										
+										if(monthStart == 9 || monthEnd >= 9) {
+											Int0101PlanDayVo month09 = new Int0101PlanDayVo();
+											month09.setActivity(planDayAct.getActivity());
+											month09.setActivityShort(planDayAct.getActivityShort());
+											month09.setActivityStatus(planDayAct.getActivityStatus());
+											month09.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month09.setPlanDtlId(planDayAct.getPlanDtlId());
+											month09.setPlanHdrId(planDayAct.getPlanHdrId());
+											month09.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month09List.add(month09);
+										}
+										if( monthStart == 10 ||  (monthEnd >= 10 && monthStart < monthEnd) ) {
+											Int0101PlanDayVo month10Y = new Int0101PlanDayVo();
+											
+											month10Y.setActivity(planDayAct.getActivity());
+											month10Y.setActivityShort(planDayAct.getActivityShort());
+											month10Y.setActivityStatus(planDayAct.getActivityStatus());
+											month10Y.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month10Y.setPlanDtlId(planDayAct.getPlanDtlId());
+											month10Y.setPlanHdrId(planDayAct.getPlanHdrId());
+											month10Y.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month10List.add(month10Y);
+										}
+										
+										if( monthStart == 11 || (monthEnd >= 11 && monthStart < monthEnd) ) {
+											Int0101PlanDayVo month11Y = new Int0101PlanDayVo();
+											
+											month11Y.setActivity(planDayAct.getActivity());
+											month11Y.setActivityShort(planDayAct.getActivityShort());
+											month11Y.setActivityStatus(planDayAct.getActivityStatus());
+											month11Y.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month11Y.setPlanDtlId(planDayAct.getPlanDtlId());
+											month11Y.setPlanHdrId(planDayAct.getPlanHdrId());
+											month11Y.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month11List.add(month11Y);
+										}
+										
+										if ( monthStart == 12 || monthEnd == 12 ) {
+											Int0101PlanDayVo month12Y = new Int0101PlanDayVo();
+											
+											month12Y.setActivity(planDayAct.getActivity());
+											month12Y.setActivityShort(planDayAct.getActivityShort());
+											month12Y.setActivityStatus(planDayAct.getActivityStatus());
+											month12Y.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
+											month12Y.setPlanDtlId(planDayAct.getPlanDtlId());
+											month12Y.setPlanHdrId(planDayAct.getPlanHdrId());
+											month12Y.setColorCode(setColorCode(planDayAct.getActivityStatus()));
+											
+											month12List.add(month12Y);
+										}
 									}
+								} else if (budgetYearEN < yearStart) {
 									
-									if( monthStart == 1 || (monthEnd >= 1 && monthStart <= 1 && budgetYearEN == yearStart ) ) {
-										Int0101PlanDayVo month01 = new Int0101PlanDayVo();
-										month01.setActivity(planDayAct.getActivity());
-										month01.setActivityShort(planDayAct.getActivityShort());
-										month01.setActivityStatus(planDayAct.getActivityStatus());
-										month01.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month01.setPlanDtlId(planDayAct.getPlanDtlId());
-										month01.setPlanHdrId(planDayAct.getPlanHdrId());
-										month01.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month01List.add(month01);
-									}
-									
-									if(monthStart == 2 || (monthEnd >= 2 && monthStart <= 2 && budgetYearEN == yearStart ) ) {
-										Int0101PlanDayVo month02 = new Int0101PlanDayVo();
-										month02.setActivity(planDayAct.getActivity());
-										month02.setActivityShort(planDayAct.getActivityShort());
-										month02.setActivityStatus(planDayAct.getActivityStatus());
-										month02.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month02.setPlanDtlId(planDayAct.getPlanDtlId());
-										month02.setPlanHdrId(planDayAct.getPlanHdrId());
-										month02.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month02List.add(month02);
-									}
-									
-									if(monthStart == 3 || (monthEnd >= 3 && monthStart <= 3 && budgetYearEN == yearStart ) ) {
-										Int0101PlanDayVo month03 = new Int0101PlanDayVo();
-										month03.setActivity(planDayAct.getActivity());
-										month03.setActivityShort(planDayAct.getActivityShort());
-										month03.setActivityStatus(planDayAct.getActivityStatus());
-										month03.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month03.setPlanDtlId(planDayAct.getPlanDtlId());
-										month03.setPlanHdrId(planDayAct.getPlanHdrId());
-										month03.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month03List.add(month03);
-									}
-									
-									if(monthStart == 4 || (monthEnd >= 4 && monthStart <= 4 && budgetYearEN == yearStart ) ) {
-										Int0101PlanDayVo month04 = new Int0101PlanDayVo();
-										month04.setActivity(planDayAct.getActivity());
-										month04.setActivityShort(planDayAct.getActivityShort());
-										month04.setActivityStatus(planDayAct.getActivityStatus());
-										month04.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month04.setPlanDtlId(planDayAct.getPlanDtlId());
-										month04.setPlanHdrId(planDayAct.getPlanHdrId());
-										month04.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month04List.add(month04);
-									}
-									
-									if(monthStart == 5 || (monthEnd >= 5 && monthStart <= 5 && budgetYearEN == yearStart ) ) {
-										Int0101PlanDayVo month05 = new Int0101PlanDayVo();
-										month05.setActivity(planDayAct.getActivity());
-										month05.setActivityShort(planDayAct.getActivityShort());
-										month05.setActivityStatus(planDayAct.getActivityStatus());
-										month05.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month05.setPlanDtlId(planDayAct.getPlanDtlId());
-										month05.setPlanHdrId(planDayAct.getPlanHdrId());
-										month05.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month05List.add(month05);
-									}
-									
-									if(monthStart == 6 || ( monthEnd >= 6 && monthStart <= 6 && budgetYearEN == yearStart ) ) {
-										Int0101PlanDayVo month06 = new Int0101PlanDayVo();
-										month06.setActivity(planDayAct.getActivity());
-										month06.setActivityShort(planDayAct.getActivityShort());
-										month06.setActivityStatus(planDayAct.getActivityStatus());
-										month06.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month06.setPlanDtlId(planDayAct.getPlanDtlId());
-										month06.setPlanHdrId(planDayAct.getPlanHdrId());
-										month06.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month06List.add(month06);
-									}
-									
-									if(monthStart == 7 || (monthEnd >= 7 && monthStart <= 7 && budgetYearEN == yearStart ) ) {
-										Int0101PlanDayVo month07 = new Int0101PlanDayVo();
-										month07.setActivity(planDayAct.getActivity());
-										month07.setActivityShort(planDayAct.getActivityShort());
-										month07.setActivityStatus(planDayAct.getActivityStatus());
-										month07.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month07.setPlanDtlId(planDayAct.getPlanDtlId());
-										month07.setPlanHdrId(planDayAct.getPlanHdrId());
-										month07.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month07List.add(month07);
-									}
-									
-									if(monthStart == 8 || (monthEnd >= 8 && monthStart <= 8 && budgetYearEN == yearStart ) ) {
-										Int0101PlanDayVo month08 = new Int0101PlanDayVo();
-										month08.setActivity(planDayAct.getActivity());
-										month08.setActivityShort(planDayAct.getActivityShort());
-										month08.setActivityStatus(planDayAct.getActivityStatus());
-										month08.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month08.setPlanDtlId(planDayAct.getPlanDtlId());
-										month08.setPlanHdrId(planDayAct.getPlanHdrId());
-										month08.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month08List.add(month08);
-									}
-									
-									if(monthStart == 9 || (monthEnd >= 9 && monthStart <= 9 && budgetYearEN == yearStart ) ) {
-										Int0101PlanDayVo month09 = new Int0101PlanDayVo();
-										month09.setActivity(planDayAct.getActivity());
-										month09.setActivityShort(planDayAct.getActivityShort());
-										month09.setActivityStatus(planDayAct.getActivityStatus());
-										month09.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month09.setPlanDtlId(planDayAct.getPlanDtlId());
-										month09.setPlanHdrId(planDayAct.getPlanHdrId());
-										month09.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month09List.add(month09);
-									}
-									
-								} else {
-									if(monthStart == 1 || monthEnd >= 1) {
-										Int0101PlanDayVo month01 = new Int0101PlanDayVo();
-										month01.setActivity(planDayAct.getActivity());
-										month01.setActivityShort(planDayAct.getActivityShort());
-										month01.setActivityStatus(planDayAct.getActivityStatus());
-										month01.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month01.setPlanDtlId(planDayAct.getPlanDtlId());
-										month01.setPlanHdrId(planDayAct.getPlanHdrId());
-										month01.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month01List.add(month01);
-									}
-									
-									if(monthStart == 2 || monthEnd >= 2) {
-										Int0101PlanDayVo month02 = new Int0101PlanDayVo();
-										month02.setActivity(planDayAct.getActivity());
-										month02.setActivityShort(planDayAct.getActivityShort());
-										month02.setActivityStatus(planDayAct.getActivityStatus());
-										month02.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month02.setPlanDtlId(planDayAct.getPlanDtlId());
-										month02.setPlanHdrId(planDayAct.getPlanHdrId());
-										month02.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month02List.add(month02);
-									}
-									
-									if(monthStart == 3 || monthEnd >= 3) {
-										Int0101PlanDayVo month03 = new Int0101PlanDayVo();
-										month03.setActivity(planDayAct.getActivity());
-										month03.setActivityShort(planDayAct.getActivityShort());
-										month03.setActivityStatus(planDayAct.getActivityStatus());
-										month03.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month03.setPlanDtlId(planDayAct.getPlanDtlId());
-										month03.setPlanHdrId(planDayAct.getPlanHdrId());
-										month03.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month03List.add(month03);
-									}
-									
-									if(monthStart == 4 || monthEnd >= 4) {
-										Int0101PlanDayVo month04 = new Int0101PlanDayVo();
-										month04.setActivity(planDayAct.getActivity());
-										month04.setActivityShort(planDayAct.getActivityShort());
-										month04.setActivityStatus(planDayAct.getActivityStatus());
-										month04.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month04.setPlanDtlId(planDayAct.getPlanDtlId());
-										month04.setPlanHdrId(planDayAct.getPlanHdrId());
-										month04.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month04List.add(month04);
-									}
-									
-									if(monthStart == 5 || monthEnd >= 5) {
-										Int0101PlanDayVo month05 = new Int0101PlanDayVo();
-										month05.setActivity(planDayAct.getActivity());
-										month05.setActivityShort(planDayAct.getActivityShort());
-										month05.setActivityStatus(planDayAct.getActivityStatus());
-										month05.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month05.setPlanDtlId(planDayAct.getPlanDtlId());
-										month05.setPlanHdrId(planDayAct.getPlanHdrId());
-										month05.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month05List.add(month05);
-									}
-									
-									if(monthStart == 6 || monthEnd >= 6) {
-										Int0101PlanDayVo month06 = new Int0101PlanDayVo();
-										month06.setActivity(planDayAct.getActivity());
-										month06.setActivityShort(planDayAct.getActivityShort());
-										month06.setActivityStatus(planDayAct.getActivityStatus());
-										month06.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month06.setPlanDtlId(planDayAct.getPlanDtlId());
-										month06.setPlanHdrId(planDayAct.getPlanHdrId());
-										month06.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month06List.add(month06);
-									}
-									
-									if(monthStart == 7 || monthEnd >= 7) {
-										Int0101PlanDayVo month07 = new Int0101PlanDayVo();
-										month07.setActivity(planDayAct.getActivity());
-										month07.setActivityShort(planDayAct.getActivityShort());
-										month07.setActivityStatus(planDayAct.getActivityStatus());
-										month07.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month07.setPlanDtlId(planDayAct.getPlanDtlId());
-										month07.setPlanHdrId(planDayAct.getPlanHdrId());
-										month07.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month07List.add(month07);
-									}
-									
-									if(monthStart == 8 || monthEnd >= 8) {
-										Int0101PlanDayVo month08 = new Int0101PlanDayVo();
-										month08.setActivity(planDayAct.getActivity());
-										month08.setActivityShort(planDayAct.getActivityShort());
-										month08.setActivityStatus(planDayAct.getActivityStatus());
-										month08.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month08.setPlanDtlId(planDayAct.getPlanDtlId());
-										month08.setPlanHdrId(planDayAct.getPlanHdrId());
-										month08.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month08List.add(month08);
-									}
-									
-									if(monthStart == 9 || monthEnd >= 9) {
-										Int0101PlanDayVo month09 = new Int0101PlanDayVo();
-										month09.setActivity(planDayAct.getActivity());
-										month09.setActivityShort(planDayAct.getActivityShort());
-										month09.setActivityStatus(planDayAct.getActivityStatus());
-										month09.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month09.setPlanDtlId(planDayAct.getPlanDtlId());
-										month09.setPlanHdrId(planDayAct.getPlanHdrId());
-										month09.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month09List.add(month09);
-									}
-									
-									if(monthStart == 10 ||monthEnd >= 10 ) {
-										Int0101PlanDayVo month10 = new Int0101PlanDayVo();
-										
-										month10.setActivity(planDayAct.getActivity());
-										month10.setActivityShort(planDayAct.getActivityShort());
-										month10.setActivityStatus(planDayAct.getActivityStatus());
-										month10.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month10.setPlanDtlId(planDayAct.getPlanDtlId());
-										month10.setPlanHdrId(planDayAct.getPlanHdrId());
-										month10.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month10List.add(month10);
-									}
-									
-									if(monthStart == 11 || monthEnd >= 11) {
-										Int0101PlanDayVo month11 = new Int0101PlanDayVo();
-										
-										month11.setActivity(planDayAct.getActivity());
-										month11.setActivityShort(planDayAct.getActivityShort());
-										month11.setActivityStatus(planDayAct.getActivityStatus());
-										month11.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month11.setPlanDtlId(planDayAct.getPlanDtlId());
-										month11.setPlanHdrId(planDayAct.getPlanHdrId());
-										month11.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month11List.add(month11);
-									}
-									
-									if(monthStart == 12 || monthEnd >= 12) {
-										Int0101PlanDayVo month12 = new Int0101PlanDayVo();
-										
-										month12.setActivity(planDayAct.getActivity());
-										month12.setActivityShort(planDayAct.getActivityShort());
-										month12.setActivityStatus(planDayAct.getActivityStatus());
-										month12.setPlanDayActivityId(planDayAct.getPlanDayActivityId());
-										month12.setPlanDtlId(planDayAct.getPlanDtlId());
-										month12.setPlanHdrId(planDayAct.getPlanHdrId());
-										month12.setColorCode(setColorCode(planDayAct.getActivityStatus()));
-										
-										month12List.add(month12);
-									}
 								}
+								
+								
 							}
 							/* set month10List */
 							monthVo.setMonth10(month10List);
