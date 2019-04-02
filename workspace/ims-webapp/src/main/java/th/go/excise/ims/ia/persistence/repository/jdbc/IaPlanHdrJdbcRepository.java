@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
-import th.go.excise.ims.ia.persistence.entity.IaPlanHdr;
 import th.go.excise.ims.ia.vo.Int01HdrVo;
 
 @Repository
