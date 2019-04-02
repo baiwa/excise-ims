@@ -87,7 +87,7 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
             if (formTS0114Vo.getTaFormTS0114DtlVoList() != null) {
                 for (TaFormTS0114DtlVo formDtlVo : formTS0114Vo.getTaFormTS0114DtlVoList()) {
 
-                    taFormTs0114Dtl = getEntityByRecNo(dtlVoList, formDtlVo.getFormTs0114DtlId());
+                    taFormTs0114Dtl = getEntityById(dtlVoList, formDtlVo.getFormTs0114DtlId());
                     if (taFormTs0114Dtl != null) {
                         // Exist Page
                         toEntityDtl(taFormTs0114Dtl, formDtlVo);
@@ -221,11 +221,11 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
         }
     }
 
-    private TaFormTs0114Dtl getEntityByRecNo(List<TaFormTs0114Dtl> taFormTs0114Dtls, String id) {
+    private TaFormTs0114Dtl getEntityById(List<TaFormTs0114Dtl> taFormTs0114Dtls, String id) {
         TaFormTs0114Dtl formTs0114Dtl = null;
-        for (TaFormTs0114Dtl taFormTs0108Dtl : taFormTs0114Dtls) {
-            if (id.equals(taFormTs0108Dtl.getFormTs0114DtlId())) {
-                formTs0114Dtl = taFormTs0108Dtl;
+        for (TaFormTs0114Dtl taFormTs0114Dtl : taFormTs0114Dtls) {
+            if (id.equals(taFormTs0114Dtl.getFormTs0114DtlId().toString())) {
+                formTs0114Dtl = taFormTs0114Dtl;
                 break;
             }
         }
