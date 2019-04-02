@@ -50,16 +50,14 @@ public class TaFormTs0116 extends BaseEntity {
 	private String requestDesc;
 	@Column(name = "FINE_NO_FLAG")
 	private String fineNoFlag;
-	@Column(name = "FINE_REFRAIN_FLAG")
-	private String fineRefrainFlag;
-	@Column(name = "FIND_REDUCE_FLAG")
-	private String findReduceFlag;
+	@Column(name = "FINE_AMT_FLAG")
+	private String fineAmtFlag;
 	@Column(name = "FINE_PERCENT")
 	private BigDecimal finePercent;
 	@Column(name = "EXTRA_NO_FLAG")
 	private String extraNoFlag;
-	@Column(name = "EXTRA_REDUCE_FLAG")
-	private String extraReduceFlag;
+	@Column(name = "EXTRA_AMT_FLAG")
+	private String extraAmtFlag;
 	@Column(name = "EXTRA_PERCENT")
 	private BigDecimal extraPercent;
 	@Column(name = "BEFORE_TAX_AMT")
@@ -219,20 +217,12 @@ public class TaFormTs0116 extends BaseEntity {
 		this.fineNoFlag = fineNoFlag;
 	}
 
-	public String getFineRefrainFlag() {
-		return fineRefrainFlag;
+	public String getFineAmtFlag() {
+		return fineAmtFlag;
 	}
 
-	public void setFineRefrainFlag(String fineRefrainFlag) {
-		this.fineRefrainFlag = fineRefrainFlag;
-	}
-
-	public String getFindReduceFlag() {
-		return findReduceFlag;
-	}
-
-	public void setFindReduceFlag(String findReduceFlag) {
-		this.findReduceFlag = findReduceFlag;
+	public void setFineAmtFlag(String fineAmtFlag) {
+		this.fineAmtFlag = fineAmtFlag;
 	}
 
 	public BigDecimal getFinePercent() {
@@ -251,12 +241,12 @@ public class TaFormTs0116 extends BaseEntity {
 		this.extraNoFlag = extraNoFlag;
 	}
 
-	public String getExtraReduceFlag() {
-		return extraReduceFlag;
+	public String getExtraAmtFlag() {
+		return extraAmtFlag;
 	}
 
-	public void setExtraReduceFlag(String extraReduceFlag) {
-		this.extraReduceFlag = extraReduceFlag;
+	public void setExtraAmtFlag(String extraAmtFlag) {
+		this.extraAmtFlag = extraAmtFlag;
 	}
 
 	public BigDecimal getExtraPercent() {
