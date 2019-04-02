@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
@@ -15,14 +16,17 @@ import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
+import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMasCon;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsStatus;
 import th.go.excise.ims.ia.persistence.entity.IaRiskSelectCase;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
+import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsMasConRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsMasterRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsStatusRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskSelectCaseRepository;
+import th.go.excise.ims.ia.persistence.repository.jdbc.IaRiskFactosMasterJdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int030102JdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0401JdbcRepository;
 import th.go.excise.ims.ia.vo.Int030102FormVo;
@@ -33,7 +37,7 @@ public class Int030102Service {
 
 	@Autowired
 	private Int030102JdbcRepository int030102JdbcRepository;
-	
+
 	@Autowired
 	private UpdateStatusRiskFactorsService updateStatusRiskFactorsService;
 
@@ -48,57 +52,65 @@ public class Int030102Service {
 
 	@Autowired
 	private IaRiskFactorsConfigRepository iaRiskFactorsConfigRepository;
-	
+
 	@Autowired
 	private IaRiskSelectCaseRepository iaRiskSelectCaseRep;
-	
+
 	@Autowired
 	private Int0401JdbcRepository int0401JdbcRepository;
 
+	@Autowired
+	private IaRiskFactorsMasConRepository iaRiskFactorsMasConRepository;
+
+	@Autowired
+	IaRiskFactosMasterJdbcRepository iaRiskFactosMasterJdbcRepository;
+	
 	public List<Int030102Vo> list(Int030102FormVo form) {
 		checkAndInsertTableFactorsStatus(form);
 		List<Int030102Vo> iaRiskFactorsMasterList = new ArrayList<Int030102Vo>();
 		iaRiskFactorsMasterList = int030102JdbcRepository.list(form);
-		
-		for(int i=3; i<=5;i++ ) {
-			long count = int0401JdbcRepository.findCountRowWithoutStatus(ExciseUtils.getCurrentBudgetYear(), new BigDecimal(i));
+
+		for (int i = 3; i <= 5; i++) {
+			long count = int0401JdbcRepository.findCountRowWithoutStatus(ExciseUtils.getCurrentBudgetYear(),
+					new BigDecimal(i));
 			if (count == 0) {
 				saveDataList(ExciseUtils.getCurrentBudgetYear(), new BigDecimal(i));
 			}
-		
+
 		}
-		
+
 		return iaRiskFactorsMasterList;
 	}
-	
+
 	public List<Int030102Vo> listIgnoreIsDeleted(Int030102FormVo form) {
 		checkAndInsertTableFactorsStatus(form);
 		List<Int030102Vo> iaRiskFactorsMasterList = new ArrayList<Int030102Vo>();
-		iaRiskFactorsMasterList = int030102JdbcRepository.listIgnoreIsDeleted(form);
-		
-		for(int i=3; i<=5;i++ ) {
-			long count = int0401JdbcRepository.findCountRowWithoutStatus(ExciseUtils.getCurrentBudgetYear(), new BigDecimal(i));
+//		iaRiskFactorsMasterList = int030102JdbcRepository.listIgnoreIsDeleted(form);
+		iaRiskFactorsMasterList = iaRiskFactosMasterJdbcRepository.listIgnoreIsDeleted(form);
+	
+		for (int i = 3; i <= 5; i++) {
+			long count = int0401JdbcRepository.findCountRowWithoutStatus(ExciseUtils.getCurrentBudgetYear(),
+					new BigDecimal(i));
 			if (count == 0) {
 				saveDataList(ExciseUtils.getCurrentBudgetYear(), new BigDecimal(i));
 			}
-		
+
 		}
-		
+
 		return iaRiskFactorsMasterList;
 	}
-	
+
 	public List<Int030102FormVo> budgetYearDropdown() {
 		List<Int030102FormVo> response = int030102JdbcRepository.budgetYearDropdown();
 		return response;
-		
+
 	}
-	
+
 	private List<IaRiskSelectCase> saveDataList(String budgetYear, BigDecimal inspectionWork) {
 		// WEB SERVICE QUERY
 		// NOW MOCKING DATA
-		
+
 //		Data mock inspectionWork 5
-		
 
 		List<String> dataList1 = new ArrayList<String>();
 		dataList1.add("30100");
@@ -114,9 +126,9 @@ public class Int030102Service {
 		dataList3.add("สำนักงานสรรพสามิตพื้นที่เชียงใหม่");
 		dataList3.add("สำนักงานสรรพสามิตพื้นที่นครราชสีมา");
 		dataList3.add("สำนักงานสรรพสามิตพื้นที่อุดรธานี");
-		
+
 //		Data mock inspectionWork 4 
-		
+
 		List<String> dataList6 = new ArrayList<String>();
 		dataList6.add("2");
 		dataList6.add("3");
@@ -127,19 +139,18 @@ public class Int030102Service {
 		dataList7.add("ระบบความปลอดภัยกลาง (SSO) http://authen.excise.go.th/oiddas");
 		dataList7.add("ระบบงานอีเมล์กรมสรรพสามิต http://mail.excise.go.th");
 
-		
 //		Data mock inspectionWork 3
-		
+
 		List<String> dataList4 = new ArrayList<String>();
 		dataList4.add("10");
 		dataList4.add("20");
 		dataList4.add("30");
-		
+
 		List<String> dataList5 = new ArrayList<String>();
 		dataList5.add("แผนหลักเกณฑ์การประเมินผลการปฏิบัติราชการ");
 		dataList5.add("โครงการตามยุทธศาตร์");
 		dataList5.add("แผนบริหารความเสี่ยง");
-		
+
 		List<IaRiskSelectCase> selectCases = new ArrayList<>();
 		if (inspectionWork.compareTo(new BigDecimal(3)) == 0) {
 			selectCases = new ArrayList<>();
@@ -172,18 +183,18 @@ public class Int030102Service {
 			List<ExciseDept> exciseSectorList = ApplicationCache.getExciseSectorList();
 			IaRiskSelectCase selectCase = new IaRiskSelectCase();
 			for (ExciseDept exciseDept : exciseSectorList) {
-				
+
 //	************* Insert Sactor ************* 
 				selectCase = new IaRiskSelectCase();
-				ExciseDept sector = ApplicationCache.getExciseDept(exciseDept.getOfficeCode().substring(0, 2)+"0000");
+				ExciseDept sector = ApplicationCache.getExciseDept(exciseDept.getOfficeCode().substring(0, 2) + "0000");
 				selectCase.setExciseCode(exciseDept.getOfficeCode());
 				selectCase.setSector(sector.getDeptName());
-				
+
 				if (!"0000".equals(exciseDept.getOfficeCode().substring(2, 6))) {
-					
+
 					ExciseDept area = ApplicationCache.getExciseDept(exciseDept.getOfficeCode());
 					selectCase.setArea(area.getDeptName());
-					
+
 				} else {
 					selectCase.setArea("");
 				}
@@ -191,20 +202,21 @@ public class Int030102Service {
 				selectCase.setInspectionWork(inspectionWork);
 				selectCase.setStatus("C");
 				selectCases.add(selectCase);
-				
+
 //	************* Insert Area ************* 
 				List<ExciseDept> exciseAreaList = ApplicationCache.getExciseAreaList(exciseDept.getOfficeCode());
 				for (ExciseDept exciseDeptArea : exciseAreaList) {
 					selectCase = new IaRiskSelectCase();
-					ExciseDept sectorArea = ApplicationCache.getExciseDept(exciseDeptArea.getOfficeCode().substring(0, 2)+"0000");
+					ExciseDept sectorArea = ApplicationCache
+							.getExciseDept(exciseDeptArea.getOfficeCode().substring(0, 2) + "0000");
 					selectCase.setExciseCode(exciseDeptArea.getOfficeCode());
 					selectCase.setSector(sectorArea.getDeptName());
-					
+
 					if (!"0000".equals(exciseDeptArea.getOfficeCode().substring(2, 6))) {
-						
+
 						ExciseDept area2 = ApplicationCache.getExciseDept(exciseDeptArea.getOfficeCode());
 						selectCase.setArea(area2.getDeptName());
-						
+
 					} else {
 						selectCase.setArea("");
 					}
@@ -213,10 +225,9 @@ public class Int030102Service {
 					selectCase.setStatus("C");
 					selectCases.add(selectCase);
 				}
-				
-				
+
 			}
-			
+
 			selectCases = (List<IaRiskSelectCase>) iaRiskSelectCaseRep.saveAll(selectCases);
 		}
 		return selectCases;
@@ -251,9 +262,11 @@ public class Int030102Service {
 	public void editStatus(Int030102FormVo form) {
 //		iaRiskFactorsMasterRepository.deleteById(form.getId());
 		int030102JdbcRepository.editStatus(form);
-		updateStatusRiskFactorsService.updateStatusAddIaRiskFactorsMaster(form.getBudgetYear(), form.getInspectionWork());
+		updateStatusRiskFactorsService.updateStatusAddIaRiskFactorsMaster(form.getBudgetYear(),
+				form.getInspectionWork());
 	}
 
+	@Transactional
 	public void save(Int030102FormVo form) {
 
 		List<IaRiskFactorsMaster> iaRiskFactorsMasterList = int030102JdbcRepository.listSaveFactors(form);
@@ -286,9 +299,51 @@ public class Int030102Service {
 				data.setCreatedBy(UserLoginUtils.getCurrentUsername());
 				data.setCreatedDate(LocalDateTime.now());
 				IaRiskFactors resultIdFactors = iaRiskFactorsRepository.save(data);
+
+				IaRiskFactorsMasCon dataCon = new IaRiskFactorsMasCon();
+				dataCon = iaRiskFactorsMasConRepository.findByIdMaster(iaRiskFactorsMaster.getId());
+
 				IaRiskFactorsConfig dataConfig = new IaRiskFactorsConfig();
 				dataConfig.setIdFactors(resultIdFactors.getId());
-				dataConfig.setFactorsLevel(new BigDecimal(3));
+				dataConfig.setFactorsLevel(dataCon.getFactorsLevel());
+				dataConfig.setRiskUnit(dataCon.getRiskUnit());
+				dataConfig.setRiskIndicators(dataCon.getRiskIndicators());
+				dataConfig.setInfoUsedRiskDesc(dataCon.getInfoUsedRiskDesc());
+				
+				dataConfig.setVerylow(dataCon.getVerylow());
+				dataConfig.setVerylowStart(dataCon.getVerylowStart());
+				dataConfig.setVerylowEnd(dataCon.getVerylowEnd());
+				dataConfig.setVerylowRating(dataCon.getVerylowRating());
+				dataConfig.setVerylowColor(dataCon.getVerylowColor());
+				dataConfig.setVerylowCondition(dataCon.getVerylowCondition());
+
+				dataConfig.setLow(dataCon.getLow());
+				dataConfig.setLowStart(dataCon.getLowStart());
+				dataConfig.setLowEnd(dataCon.getLowEnd());
+				dataConfig.setLowRating(dataCon.getLowRating());
+				dataConfig.setLowColor(dataCon.getLowColor());
+				dataConfig.setLowCondition(dataCon.getLowCondition());
+
+				dataConfig.setMedium(dataCon.getMedium());
+				dataConfig.setMediumStart(dataCon.getMediumStart());
+				dataConfig.setMediumEnd(dataCon.getMediumEnd());
+				dataConfig.setMediumRating(dataCon.getMediumRating());
+				dataConfig.setMediumColor(dataCon.getMediumColor());
+				dataConfig.setMediumCondition(dataCon.getMediumCondition());
+
+				dataConfig.setHigh(dataCon.getHigh());
+				dataConfig.setHighStart(dataCon.getHighStart());
+				dataConfig.setHighEnd(dataCon.getHighEnd());
+				dataConfig.setHighRating(dataCon.getHighRating());
+				dataConfig.setHighColor(dataCon.getHighColor());
+				dataConfig.setHighCondition(dataCon.getHighCondition());
+
+				dataConfig.setVeryhigh(dataCon.getVeryhigh());
+				dataConfig.setVeryhighStart(dataCon.getVeryhighStart());
+				dataConfig.setVeryhighEnd(dataCon.getVeryhighEnd());
+				dataConfig.setVeryhighRating(dataCon.getVeryhighRating());
+				dataConfig.setVeryhighColor(dataCon.getVeryhighColor());
+				dataConfig.setVeryhighCondition(dataCon.getVeryhighCondition());
 
 				dataConfig.setCreatedBy(UserLoginUtils.getCurrentUsername());
 				dataConfig.setCreatedDate(LocalDateTime.now());
@@ -307,14 +362,14 @@ public class Int030102Service {
 		int030102JdbcRepository.saveRiskFactorsLevel(form);
 		int030102JdbcRepository.claerDateCir(form);
 		int030102JdbcRepository.saveRiskFactClerAll(form);
-		updateStatusRiskFactorsService.updateStatusSaveRiskFactorsLevel(form.getBudgetYear(),form.getInspectionWork());
+		updateStatusRiskFactorsService.updateStatusSaveRiskFactorsLevel(form.getBudgetYear(), form.getInspectionWork());
 	}
-	
+
 	public void updateStatus(Int030102FormVo form) {
 		int030102JdbcRepository.listUpdateStatus(form);
 		save(form);
 	}
-	
+
 	public IaRiskFactors factorList(IaRiskFactorsMaster form) {
 		IaRiskFactors factor = new IaRiskFactors();
 		List<IaRiskFactors> factorsList = iaRiskFactorsRepository.findByIdMaster(form.getId());
