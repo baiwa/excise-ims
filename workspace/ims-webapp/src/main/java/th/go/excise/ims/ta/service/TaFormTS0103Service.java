@@ -129,7 +129,7 @@ public class TaFormTS0103Service extends AbstractTaFormTSService<TaFormTS0103Vo,
 
 	@Override
 	public TaFormTS0103Vo getFormTS(String formTsNumber) {
-		logger.info("getFormTS formTsNumber={}");
+		logger.info("getFormTS formTsNumber={}", formTsNumber);
 
 		TaFormTs0103 formTs0103 = taFormTs0103Repository.findByFormTsNumber(formTsNumber);
 

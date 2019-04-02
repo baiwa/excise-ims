@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class TaFormTS01142DtlVo {
 
+	private String formTs01142DtlId;
 	private String recNo;
 	private Date recDate;
 	private String dutyTypeText;
@@ -19,6 +20,14 @@ public class TaFormTS01142DtlVo {
 	private BigDecimal addMoiAmt;
 	private BigDecimal addSumAllTaxAmt;
 	private String addMonthNum;
+
+	public String getFormTs01142DtlId() {
+		return formTs01142DtlId;
+	}
+
+	public void setFormTs01142DtlId(String formTs01142DtlId) {
+		this.formTs01142DtlId = formTs01142DtlId;
+	}
 
 	public String getRecNo() {
 		return recNo;

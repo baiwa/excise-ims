@@ -96,6 +96,7 @@ public class TaFormTS0109Service extends AbstractTaFormTSService<TaFormTS0109Vo,
         params.put("searchDate", formTS0109Vo.getSearchDate());
         params.put("signOfficerFullName", formTS0109Vo.getSignOfficerFullName());
         params.put("signOfficerPosition", formTS0109Vo.getSignOfficerPosition());
+        
         // set output
         JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_09 + "." + FILE_EXTENSION.JASPER, params);
         byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
@@ -112,7 +113,7 @@ public class TaFormTS0109Service extends AbstractTaFormTSService<TaFormTS0109Vo,
 
     @Override
     public TaFormTS0109Vo getFormTS(String formTsNumber) {
-    	logger.info("getFormTS formTsNumber={}");
+    	logger.info("getFormTS formTsNumber={}", formTsNumber);
 		
 		TaFormTs0109 formTs0109 = taFormTs0109Repository.findByFormTsNumber(formTsNumber);
 		

@@ -22,11 +22,9 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
-import th.go.excise.ims.ta.persistence.entity.TaFormTs0117;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs01171;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs01171Repository;
 import th.go.excise.ims.ta.vo.TaFormTS01171Vo;
-import th.go.excise.ims.ta.vo.TaFormTS0117Vo;
 
 @Service
 public class TaFormTS01171Service extends AbstractTaFormTSService<TaFormTS01171Vo, TaFormTs01171> {
@@ -137,7 +135,7 @@ private static final Logger logger = LoggerFactory.getLogger(TaFormTS01171Servic
 
 	@Override
 	public TaFormTS01171Vo getFormTS(String formTsNumber) {
-		logger.info("getFormTS formTsNumber={}");
+		logger.info("getFormTS formTsNumber={}", formTsNumber);
 		
 		TaFormTs01171 formTs01171 = taFormTs01171Repository.findByFormTsNumber(formTsNumber);
 		

@@ -36,192 +36,202 @@ import java.util.Map;
 @Service
 public class TaFormTS0118Service extends AbstractTaFormTSService<TaFormTS0118Vo, TaFormTs0118Hdr> {
 
-    private static final Logger logger = LoggerFactory.getLogger(TaFormTS0118Service.class);
+	private static final Logger logger = LoggerFactory.getLogger(TaFormTS0118Service.class);
 
-    @Autowired
-    private TaFormTSSequenceService taFormTSSequenceService;
-    @Autowired
-    private TaFormTs0118HdrRepository taFormTs0118HdrRepository;
-    @Autowired
-    private TaFormTs0118DtlRepository taFormTs0118DtlRepository;
+	@Autowired
+	private TaFormTSSequenceService taFormTSSequenceService;
+	@Autowired
+	private TaFormTs0118HdrRepository taFormTs0118HdrRepository;
+	@Autowired
+	private TaFormTs0118DtlRepository taFormTs0118DtlRepository;
 
-    @Override
-    public String getReportName() {
-        return REPORT_NAME.TA_FORM_TS01_18;
-    }
+	@Override
+	public String getReportName() {
+		return REPORT_NAME.TA_FORM_TS01_18;
+	}
 
-    @Override
-    public byte[] processFormTS(TaFormTS0118Vo formTS0118Vo) throws Exception {
-        logger.info("processFormTS");
+	@Override
+	public byte[] processFormTS(TaFormTS0118Vo formTS0118Vo) throws Exception {
+		logger.info("processFormTS");
 
-        saveFormTS(formTS0118Vo);
-        byte[] reportFile = generateReport(formTS0118Vo);
+		saveFormTS(formTS0118Vo);
+		byte[] reportFile = generateReport(formTS0118Vo);
 
-        return reportFile;
-    }
+		return reportFile;
+	}
 
-    @Transactional(rollbackOn = {Exception.class})
-    @Override
-    public void saveFormTS(TaFormTS0118Vo formTS0118Vo) {
-        String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-        String budgetYear = ExciseUtils.getCurrentBudgetYear();
+	@Transactional(rollbackOn = { Exception.class })
+	@Override
+	public void saveFormTS(TaFormTS0118Vo formTS0118Vo) {
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		String budgetYear = ExciseUtils.getCurrentBudgetYear();
 
-        logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS0118Vo.getFormTsNumber());
+		logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS0118Vo.getFormTsNumber());
 
-        TaFormTs0118Hdr taFormTs0118Hdr = null;
-        TaFormTs0118Dtl taFormTs0118Dtl = null;
-        List<TaFormTs0118Dtl> dtlVoList = null;
-        if (StringUtils.isNotEmpty(formTS0118Vo.getFormTsNumber())) {
+		TaFormTs0118Hdr formTs0118Hdr = null;
+		TaFormTs0118Dtl formTs0118Dtl = null;
+		List<TaFormTs0118Dtl> formTs0118DtlList = null;
+		if (StringUtils.isNotEmpty(formTS0118Vo.getFormTsNumber())) {
+			// Case Update FormTS
 
-            //==> Set Hdr
-            taFormTs0118Hdr = taFormTs0118HdrRepository.findByFormTsNumber(formTS0118Vo.getFormTsNumber());
-            toEntity(taFormTs0118Hdr, formTS0118Vo);
+			// ==> Set Hdr
+			formTs0118Hdr = taFormTs0118HdrRepository.findByFormTsNumber(formTS0118Vo.getFormTsNumber());
+			toEntity(formTs0118Hdr, formTS0118Vo);
 
-            //==> Set Dtl
-            //taFormTs0114DtlRepository.setIsDeleteY(officeCode, budgetYear, formTS0114Vo.getFormTsNumber());
-            dtlVoList = taFormTs0118DtlRepository.findByFormTsNumber(formTS0118Vo.getFormTsNumber());
-            // Set flag Y
-            dtlVoList.forEach(e -> {
-                e.setIsDeleted(FLAG.Y_FLAG);
-                e.setRecNo(null);
-            });
+			// ==> Set Dtl
+			formTs0118DtlList = taFormTs0118DtlRepository.findByFormTsNumber(formTS0118Vo.getFormTsNumber());
 
-            if (formTS0118Vo.getTaFormTS0118DtlVoList() != null) {
-                int i = 1;
-                for (TaFormTS0118DtlVo formDtlVo : formTS0118Vo.getTaFormTS0118DtlVoList()) {
+			// Set flag Y
+			formTs0118DtlList.forEach(e -> {
+				e.setIsDeleted(FLAG.Y_FLAG);
+				e.setRecNo(null);
+			});
 
-                    taFormTs0118Dtl = getEntityById(dtlVoList, formDtlVo.getFormTs0118DtlId());
-                    if (taFormTs0118Dtl != null) {
-                        // Exist Page
-                        toEntityDtl(taFormTs0118Dtl, formDtlVo);
-                        taFormTs0118Dtl.setIsDeleted(FLAG.N_FLAG);
-                        taFormTs0118Dtl.setRecNo(String.valueOf(i));
-                    } else {
-                        // New Page
-                        taFormTs0118Dtl = new TaFormTs0118Dtl();
-                        toEntityDtl(taFormTs0118Dtl, formDtlVo);
-                        taFormTs0118Dtl.setFormTsNumber(formTS0118Vo.getFormTsNumber());
-                        taFormTs0118Dtl.setRecNo(String.valueOf(i));
-                        dtlVoList.add(taFormTs0118Dtl);
-                    }
-                    i++;
-                }
-            }
-            taFormTs0118DtlRepository.saveAll(dtlVoList);
-        } else {
-            taFormTs0118Hdr = new TaFormTs0118Hdr();
-            toEntity(taFormTs0118Hdr, formTS0118Vo);
-            taFormTs0118Hdr.setOfficeCode(officeCode);
-            taFormTs0118Hdr.setBudgetYear(budgetYear);
-            taFormTs0118Hdr.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
+			if (formTS0118Vo.getTaFormTS0118DtlVoList() != null) {
+				int i = 1;
+				for (TaFormTS0118DtlVo formTS0118DtlVo : formTS0118Vo.getTaFormTS0118DtlVoList()) {
+					formTs0118Dtl = getEntityById(formTs0118DtlList, formTS0118DtlVo.getFormTs0118DtlId());
+					if (formTs0118Dtl != null) {
+						// Exist Record
+						toEntityDtl(formTs0118Dtl, formTS0118DtlVo);
+						formTs0118Dtl.setIsDeleted(FLAG.N_FLAG);
+						formTs0118Dtl.setRecNo(String.valueOf(i));
+					} else {
+						// New Record
+						formTs0118Dtl = new TaFormTs0118Dtl();
+						toEntityDtl(formTs0118Dtl, formTS0118DtlVo);
+						formTs0118Dtl.setFormTsNumber(formTS0118Vo.getFormTsNumber());
+						formTs0118Dtl.setRecNo(String.valueOf(i));
+						formTs0118DtlList.add(formTs0118Dtl);
+					}
+					i++;
+				}
+				taFormTs0118DtlRepository.saveAll(formTs0118DtlList);
+			}
+		} else {
+			// Case New FormTS
 
-            dtlVoList = new ArrayList<>();
-            int i = 1;
-            for (TaFormTS0118DtlVo formDtl : formTS0118Vo.getTaFormTS0118DtlVoList()) {
-                taFormTs0118Dtl = new TaFormTs0118Dtl();
-                toEntityDtl(taFormTs0118Dtl, formDtl);
-                taFormTs0118Dtl.setFormTsNumber(taFormTs0118Hdr.getFormTsNumber());
-                taFormTs0118Dtl.setRecNo(String.valueOf(i));
-                dtlVoList.add(taFormTs0118Dtl);
-                i++;
-            }
-            taFormTs0118DtlRepository.saveAll(dtlVoList);
-        }
-        taFormTs0118HdrRepository.save(taFormTs0118Hdr);
-    }
+			// Set Header Record
+			formTs0118Hdr = new TaFormTs0118Hdr();
+			toEntity(formTs0118Hdr, formTS0118Vo);
+			formTs0118Hdr.setOfficeCode(officeCode);
+			formTs0118Hdr.setBudgetYear(budgetYear);
+			formTs0118Hdr.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
 
-    @Override
-    public byte[] generateReport(TaFormTS0118Vo formTs0118Vo) throws Exception, IOException {
-        Map<String, Object> params = new HashMap<String, Object>();
+			// Set Detail Record
+			formTs0118DtlList = new ArrayList<>();
+			int i = 1;
+			for (TaFormTS0118DtlVo formTS0118DtlVo : formTS0118Vo.getTaFormTS0118DtlVoList()) {
+				formTs0118Dtl = new TaFormTs0118Dtl();
+				toEntityDtl(formTs0118Dtl, formTS0118DtlVo);
+				formTs0118Dtl.setFormTsNumber(formTs0118Hdr.getFormTsNumber());
+				formTs0118Dtl.setRecNo(String.valueOf(i));
+				formTs0118DtlList.add(formTs0118Dtl);
+				i++;
+			}
+			taFormTs0118DtlRepository.saveAll(formTs0118DtlList);
+		}
 
-        // get data to report
-        params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
-        params.put("formTsNumber", formTs0118Vo.getFormTsNumber());
-        params.put("bookNumber1", formTs0118Vo.getBookNumber1());
-        params.put("bookNumber2", formTs0118Vo.getBookNumber2());
-        params.put("docDate", formTs0118Vo.getDocDate());
-        params.put("ownerFullName", formTs0118Vo.getOwnerFullName());
-        params.put("factoryType", formTs0118Vo.getFactoryType());
-        params.put("factoryName", formTs0118Vo.getFactoryName());
-        params.put("newRegId", formTs0118Vo.getNewRegId());
-        params.put("factoryAddress", formTs0118Vo.getFactoryAddress());
-        params.put("companyAddress", formTs0118Vo.getCompanyAddress());
-        params.put("lawSection", formTs0118Vo.getLawSection());
-        params.put("lawGroup", formTs0118Vo.getLawGroup());
-        params.put("auditDateStart", formTs0118Vo.getAuditDateStart());
-        params.put("auditDateEnd", formTs0118Vo.getAuditDateEnd());
-        params.put("sumAllTaxAmt", formTs0118Vo.getSumAllTaxAmt());
-        params.put("sumAllTaxText", formTs0118Vo.getSumAllTaxText());
-        params.put("officeName", formTs0118Vo.getOfficeName());
-        params.put("tableHeaderDutyType", formTs0118Vo.getTableHeaderDutyType());
-        params.put("tableHeaderUnit", formTs0118Vo.getTableHeaderUnit());
-        params.put("reasonText", formTs0118Vo.getReasonText());
-        params.put("signOfficerFullName1", formTs0118Vo.getSignOfficerFullName1());
-        params.put("signOfficerDate1", formTs0118Vo.getSignOfficerDate1());
-        params.put("signOfficerFullName2", formTs0118Vo.getSignOfficerFullName2());
-        params.put("signOfficerDate2", formTs0118Vo.getSignOfficerDate2());
-        params.put("extraMoneyDate", formTs0118Vo.getExtraMoneyDate());
+		taFormTs0118HdrRepository.save(formTs0118Hdr);
+	}
 
-        JRDataSource dataSource = new JRBeanCollectionDataSource(formTs0118Vo.getTaFormTS0118DtlVoList());
+	@Override
+	public byte[] generateReport(TaFormTS0118Vo formTs0118Vo) throws Exception, IOException {
+		logger.info("generateReport");
+		
+		// get data to report
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
+		params.put("formTsNumber", formTs0118Vo.getFormTsNumber());
+		params.put("bookNumber1", formTs0118Vo.getBookNumber1());
+		params.put("bookNumber2", formTs0118Vo.getBookNumber2());
+		params.put("docDate", formTs0118Vo.getDocDate());
+		params.put("ownerFullName", formTs0118Vo.getOwnerFullName());
+		params.put("factoryType", formTs0118Vo.getFactoryType());
+		params.put("factoryName", formTs0118Vo.getFactoryName());
+		params.put("newRegId", formTs0118Vo.getNewRegId());
+		params.put("factoryAddress", formTs0118Vo.getFactoryAddress());
+		params.put("companyAddress", formTs0118Vo.getCompanyAddress());
+		params.put("lawSection", formTs0118Vo.getLawSection());
+		params.put("lawGroup", formTs0118Vo.getLawGroup());
+		params.put("auditDateStart", formTs0118Vo.getAuditDateStart());
+		params.put("auditDateEnd", formTs0118Vo.getAuditDateEnd());
+		params.put("sumAllTaxAmt", formTs0118Vo.getSumAllTaxAmt());
+		params.put("sumAllTaxText", formTs0118Vo.getSumAllTaxText());
+		params.put("officeName", formTs0118Vo.getOfficeName());
+		params.put("tableHeaderDutyType", formTs0118Vo.getTableHeaderDutyType());
+		params.put("tableHeaderUnit", formTs0118Vo.getTableHeaderUnit());
+		params.put("reasonText", formTs0118Vo.getReasonText());
+		params.put("signOfficerFullName1", formTs0118Vo.getSignOfficerFullName1());
+		params.put("signOfficerDate1", formTs0118Vo.getSignOfficerDate1());
+		params.put("signOfficerFullName2", formTs0118Vo.getSignOfficerFullName2());
+		params.put("signOfficerDate2", formTs0118Vo.getSignOfficerDate2());
+		params.put("extraMoneyDate", formTs0118Vo.getExtraMoneyDate());
 
-        // set output
-        JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_18 + "." + FILE_EXTENSION.JASPER, params, dataSource);
-        byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
-        ReportUtils.closeResourceFileInputStream(params);
+		JRDataSource dataSource = new JRBeanCollectionDataSource(formTs0118Vo.getTaFormTS0118DtlVoList());
 
-        return content;
-    }
+		// set output
+		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_18 + "." + FILE_EXTENSION.JASPER, params, dataSource);
+		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
+		ReportUtils.closeResourceFileInputStream(params);
 
-    @Override
-    public List<String> getFormTsNumberList() {
-        String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-        return taFormTs0118HdrRepository.findFormTsNumberByOfficeCode(officeCode);
-    }
+		return content;
+	}
 
-    @Override
-    public TaFormTS0118Vo getFormTS(String formTsNumber) {
-        TaFormTS0118Vo taFormTS0118Vo = new TaFormTS0118Vo();
-        TaFormTs0118Hdr hdr = taFormTs0118HdrRepository.findByFormTsNumber(formTsNumber);
-        if (hdr != null) {
-            toVo(taFormTS0118Vo, hdr);
-        }
-        List<TaFormTs0118Dtl> dtls = taFormTs0118DtlRepository.findByFormTsNumber(formTsNumber);
-        List<TaFormTS0118DtlVo> dtlVos = new ArrayList<>();
-        for (TaFormTs0118Dtl dtl : dtls) {
-            TaFormTS0118DtlVo dtlVo = new TaFormTS0118DtlVo();
-            toVoDtl(dtlVo, dtl);
-            dtlVos.add(dtlVo);
-        }
+	@Override
+	public List<String> getFormTsNumberList() {
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		return taFormTs0118HdrRepository.findFormTsNumberByOfficeCode(officeCode);
+	}
 
-        taFormTS0118Vo.setTaFormTS0118DtlVoList(dtlVos);
-        return taFormTS0118Vo;
-    }
+	@Override
+	public TaFormTS0118Vo getFormTS(String formTsNumber) {
+		logger.info("getFormTS formTsNumber={}", formTsNumber);
+		
+		// Prepare Header
+		TaFormTS0118Vo formTS0118Vo = new TaFormTS0118Vo();
+		TaFormTs0118Hdr formTs0118Hdr = taFormTs0118HdrRepository.findByFormTsNumber(formTsNumber);
+		toVo(formTS0118Vo, formTs0118Hdr);
+		
+		// Prepare Detail
+		List<TaFormTs0118Dtl> formTs0118DtlList = taFormTs0118DtlRepository.findByFormTsNumber(formTsNumber);
+		List<TaFormTS0118DtlVo> formTS0118DtlVoList = new ArrayList<>();
+		TaFormTS0118DtlVo formTS0118DtlVo = null;
+		for (TaFormTs0118Dtl formTs0118Dtl : formTs0118DtlList) {
+			formTS0118DtlVo = new TaFormTS0118DtlVo();
+			toVoDtl(formTS0118DtlVo, formTs0118Dtl);
+			formTS0118DtlVoList.add(formTS0118DtlVo);
+		}
+		formTS0118Vo.setTaFormTS0118DtlVoList(formTS0118DtlVoList);
+		
+		return formTS0118Vo;
+	}
 
-    private void toEntityDtl(TaFormTs0118Dtl entity, TaFormTS0118DtlVo vo) {
-        try {
-            BeanUtils.copyProperties(entity, vo);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            logger.warn(e.getMessage(), e);
-        }
-    }
+	private void toEntityDtl(TaFormTs0118Dtl entity, TaFormTS0118DtlVo vo) {
+		try {
+			BeanUtils.copyProperties(entity, vo);
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			logger.warn(e.getMessage(), e);
+		}
+	}
 
-    private void toVoDtl(TaFormTS0118DtlVo vo, TaFormTs0118Dtl entity) {
-        try {
-            BeanUtils.copyProperties(vo, entity);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            logger.warn(e.getMessage(), e);
-        }
-    }
+	private void toVoDtl(TaFormTS0118DtlVo vo, TaFormTs0118Dtl entity) {
+		try {
+			BeanUtils.copyProperties(vo, entity);
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			logger.warn(e.getMessage(), e);
+		}
+	}
 
-    private TaFormTs0118Dtl getEntityById(List<TaFormTs0118Dtl> taFormTs0118Dtls, String id) {
-        TaFormTs0118Dtl formTs0118Dtl = null;
-        for (TaFormTs0118Dtl taFormTS0118Dtl : taFormTs0118Dtls) {
-            if (id.equals(taFormTS0118Dtl.getFormTs0118DtlId().toString())) {
-                formTs0118Dtl = taFormTS0118Dtl;
-                break;
-            }
-        }
-        return formTs0118Dtl;
-    }
+	private TaFormTs0118Dtl getEntityById(List<TaFormTs0118Dtl> formTs0118DtlList, String id) {
+		TaFormTs0118Dtl formTs0118Dtl = null;
+		for (TaFormTs0118Dtl taFormTS0118Dtl : formTs0118DtlList) {
+			if (id.equals(taFormTS0118Dtl.getFormTs0118DtlId().toString())) {
+				formTs0118Dtl = taFormTS0118Dtl;
+				break;
+			}
+		}
+		return formTs0118Dtl;
+	}
 
 }
