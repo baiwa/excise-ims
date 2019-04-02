@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public class TaFormTS0118DtlVo {
 
+	private String formTs0118DtlId;
 	private String recNo;
 	private String dutyTypeText;
 	private BigDecimal goodsQty;
@@ -20,6 +21,14 @@ public class TaFormTS0118DtlVo {
 	private BigDecimal sumAllTaxAmt;
 	private BigDecimal moiAmt;
 	private BigDecimal netTaxAmt;
+
+	public String getFormTs0118DtlId() {
+		return formTs0118DtlId;
+	}
+
+	public void setFormTs0118DtlId(String formTs0118DtlId) {
+		this.formTs0118DtlId = formTs0118DtlId;
+	}
 
 	public String getRecNo() {
 		return recNo;
