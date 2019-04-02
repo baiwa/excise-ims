@@ -1,5 +1,9 @@
 package th.go.excise.ims.ia.service;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +13,7 @@ import th.go.excise.ims.ia.persistence.entity.IaPlanDayActivity;
 import th.go.excise.ims.ia.persistence.entity.IaPlanDtl;
 import th.go.excise.ims.ia.persistence.repository.IaPlanDayActivityRepository;
 import th.go.excise.ims.ia.persistence.repository.IaPlanDtlRepository;
+import th.go.excise.ims.ia.persistence.repository.jdbc.IaPlanDayActivityJdbcRepository;
 import th.go.excise.ims.ia.vo.Int0101FormVo;
 import th.go.excise.ims.ia.vo.Int0101PlanDayVo;
 
@@ -20,6 +25,9 @@ public class Int0101Service {
 	
 	@Autowired
 	private IaPlanDtlRepository iaPlanDtlRepository;
+	
+	@Autowired
+	private IaPlanDayActivityJdbcRepository iaPlanDayActivityJdbcRepository;
 	
 	public void save(Int0101FormVo request) {
 		/* update plan-detail */
@@ -46,13 +54,26 @@ public class Int0101Service {
 				}else {
 					entityPlanDay.setActivityShort(IaConstants.PLAN_DAY_WORDING.MONITORING_ABBREVIATION);
 				}
-				entityPlanDay.setDateStartActivity(ConvertDateUtils.parseStringToDate(planDay.getDateStartActivity(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-				entityPlanDay.setDateEndActivity(ConvertDateUtils.parseStringToDate(planDay.getDateEndActivity(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+				entityPlanDay.setDateStartActivity(ConvertDateUtils.parseStringToDate(planDay.getDateStartActivityStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+				entityPlanDay.setDateEndActivity(ConvertDateUtils.parseStringToDate(planDay.getDateEndActivityStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 				
 				iaPlanDayActivityRepository.save(entityPlanDay);
 			}
 		}
-
+	}
+	
+	public List<Int0101PlanDayVo> findDataDtlAndAtc(BigDecimal idDtl) {
+		List<Int0101PlanDayVo> joinData = new ArrayList<>();
+		
+		if(idDtl != null) {
+			joinData = iaPlanDayActivityJdbcRepository.getDataDtlAndAtc(idDtl);
+			/* set date-str */
+			for (Int0101PlanDayVo obj : joinData) {
+				obj.setDateStartActivityStr(ConvertDateUtils.formatDateToString(obj.getDateStartActivity(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+				obj.setDateEndActivityStr(ConvertDateUtils.formatDateToString(obj.getDateEndActivity(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			}
+		}
+		return joinData;
 	}
 
 }

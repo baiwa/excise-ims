@@ -20,6 +20,7 @@ public class Int01DtlVo {
 	private String position;
 	
 	private Int01MonthVo monthVo = null;
+	private Boolean checkBtnDtl;
 
 	public BigDecimal getPlanDtlId() {
 		return planDtlId;
@@ -123,6 +124,14 @@ public class Int01DtlVo {
 
 	public void setMonthVo(Int01MonthVo monthVo) {
 		this.monthVo = monthVo;
+	}
+
+	public Boolean getCheckBtnDtl() {
+		return checkBtnDtl;
+	}
+
+	public void setCheckBtnDtl(Boolean checkBtnDtl) {
+		this.checkBtnDtl = checkBtnDtl;
 	}
 
 }

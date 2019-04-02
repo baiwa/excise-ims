@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class TaFormTS0115DtlVo {
-
+	private String formTs0115DtlId;
 	private String recNo;
 	private Date recDate;
 	private String dutyTypeText;
@@ -13,6 +13,14 @@ public class TaFormTS0115DtlVo {
 	private BigDecimal extraAmt;
 	private BigDecimal moiAmt;
 	private BigDecimal sumTaxAmt;
+
+	public String getFormTs0115DtlId() {
+		return formTs0115DtlId;
+	}
+
+	public void setFormTs0115DtlId(String formTs0115DtlId) {
+		this.formTs0115DtlId = formTs0115DtlId;
+	}
 
 	public String getRecNo() {
 		return recNo;
