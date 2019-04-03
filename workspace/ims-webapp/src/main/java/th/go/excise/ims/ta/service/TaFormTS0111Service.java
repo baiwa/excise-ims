@@ -57,7 +57,7 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 	public String getReportName() {
 		return REPORT_NAME.TA_FORM_TS01_11;
 	}
-	
+
 	@Override
 	public byte[] processFormTS(TaFormTS0111Vo formTS0111Vo) throws Exception {
 		logger.info("processFormTS");
@@ -77,47 +77,76 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 
 		TaFormTs0111Hdr formTS0111Hdr = null;
 		TaFormTs0111Dtl formTS0111Dtl = null;
-		// save header & detail
+		List<TaFormTs0111Dtl> formTs0111DtlList = null;
+		
 		if (StringUtils.isNotEmpty(formTS0111Vo.getFormTsNumber())) {
-			
-			taFormTs0111DtlRepository.setIsDeleteY(officeCode, budgetYear, formTS0111Vo.getFormTsNumber());
-			
+			// Case Update FormTS
+
+			// Update Header
 			formTS0111Hdr = taFormTs0111HdrRepository.findByFormTsNumber(formTS0111Vo.getFormTsNumber());
 			toEntity(formTS0111Hdr, formTS0111Vo);
-			
-			for (TaFormTS0111DtlVo formDtl : formTS0111Vo.getTaFormTS0111DtlVoList()) {
-                
-                 TaFormTs0111Dtl dtlVo = taFormTs0111DtlRepository.findByFormTs0111DtlIdAndIsDeleted(Long.valueOf(formDtl.getFormTs0111DtlId()), FLAG.Y_FLAG);
-                if (dtlVo != null) {
-                	formTS0111Dtl = dtlVo;
-                	formTS0111Dtl.setIsDeleted(FLAG.N_FLAG);
-                } else {
-                	formTS0111Dtl = new TaFormTs0111Dtl();
-                    toEntityDtl(formTS0111Dtl, formDtl);
-                }
 
-                taFormTs0111DtlRepository.save(formTS0111Dtl);
-            }
+			// Update Detail
+			formTs0111DtlList = taFormTs0111DtlRepository.findByFormTsNumber(formTS0111Vo.getFormTsNumber());
+			
+			// Update isDeleted = 'Y' for Default
+			formTs0111DtlList.forEach(e -> {
+				e.setIsDeleted(FLAG.Y_FLAG);
+				e.setRecNo(null);
+			});
+			
+			// Set Detail Record
+			if (formTS0111Vo.getTaFormTS0111DtlVoList() != null) {
+				int i = 1;
+				for (TaFormTS0111DtlVo formTS0111DtlVo : formTS0111Vo.getTaFormTS0111DtlVoList()) {
+					formTS0111Dtl = getEntityById(formTs0111DtlList, formTS0111DtlVo.getFormTs0111DtlId());
+					if (formTS0111Dtl != null) {
+                        // Exist Page
+                        toEntityDtl(formTS0111Dtl, formTS0111DtlVo);
+                        formTS0111Dtl.setIsDeleted(FLAG.N_FLAG);
+                        formTS0111Dtl.setRecNo(String.valueOf(i));
+                    } else {
+                        // New Page
+                    	formTS0111Dtl = new TaFormTs0111Dtl();
+                        toEntityDtl(formTS0111Dtl, formTS0111DtlVo);
+                        formTS0111Dtl.setFormTsNumber(formTS0111Vo.getFormTsNumber());
+                        formTS0111Dtl.setRecNo(String.valueOf(i));
+                        formTs0111DtlList.add(formTS0111Dtl);
+                    }
+					i++;
+				}
+				taFormTs0111DtlRepository.saveAll(formTs0111DtlList);
+			}
+			
 		} else {
+			// Case New FormTS
+			
+			// Set Header Record
 			formTS0111Hdr = new TaFormTs0111Hdr();
 			toEntity(formTS0111Hdr, formTS0111Vo);
 			formTS0111Hdr.setOfficeCode(officeCode);
 			formTS0111Hdr.setBudgetYear(budgetYear);
 			formTS0111Hdr.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
-			
-			for (TaFormTS0111DtlVo formDtl : formTS0111Vo.getTaFormTS0111DtlVoList()) {
+
+			// Set Detail Record
+			formTs0111DtlList = new ArrayList<>();
+			int i = 1;
+			for (TaFormTS0111DtlVo formTS0111DtlVo : formTS0111Vo.getTaFormTS0111DtlVoList()) {
 				formTS0111Dtl = new TaFormTs0111Dtl();
-                toEntityDtl(formTS0111Dtl, formDtl);
-                formTS0111Dtl.setFormTsNumber(formTS0111Hdr.getFormTsNumber());
-                taFormTs0111DtlRepository.save(formTS0111Dtl);
-            }
+				toEntityDtl(formTS0111Dtl, formTS0111DtlVo);
+				formTS0111Dtl.setFormTsNumber(formTS0111Hdr.getFormTsNumber());
+				formTS0111Dtl.setRecNo(String.valueOf(i));
+				formTs0111DtlList.add(formTS0111Dtl);
+			}
+			taFormTs0111DtlRepository.saveAll(formTs0111DtlList);
 		}
+		
 		taFormTs0111HdrRepository.save(formTS0111Hdr);
 	}
 
 	@Override
 	public byte[] generateReport(TaFormTS0111Vo formTS0111Vo) throws IOException, JRException {
-		logger.info("export TA_FORM_TS01_11");
+		logger.info("generateReport");
 
 		Map<String, Object> params = new HashMap<>();
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE + "." + FILE_EXTENSION.JPG));
@@ -147,7 +176,7 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 		params.put("signAuthFullName1", formTS0111Vo.getSignAuthFullName1());
 		params.put("signWitnessFullName1", formTS0111Vo.getSignWitnessFullName1());
 		params.put("signWitnessFullName2", formTS0111Vo.getSignWitnessFullName2());
-		
+
 		logger.info("export TA_FORM_TS01_11P2");
 		params.put("authFullName1", formTS0111Vo.getAuthFullName1());
 		params.put("signAuthFullName2", formTS0111Vo.getSignAuthFullName2());
@@ -162,20 +191,20 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 		params.put("signAuthFullName4", formTS0111Vo.getSignAuthFullName4());
 		params.put("signWitnessFullName5", formTS0111Vo.getSignWitnessFullName5());
 		params.put("signWitnessFullName6", formTS0111Vo.getSignWitnessFullName6());
-		
+
 		JRDataSource dataSource = new JRBeanCollectionDataSource(formTS0111Vo.getTaFormTS0111DtlVoList());
-		
+
 		// set output
 		JasperPrint jasperPrint1 = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_11 + "." + FILE_EXTENSION.JASPER, params, dataSource);
 		JasperPrint jasperPrint2 = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_11P2 + "." + FILE_EXTENSION.JASPER, params);
-		
+
 		List<ExporterInputItem> items = new ArrayList<ExporterInputItem>();
 		items.add(new SimpleExporterInputItem(jasperPrint1));
 		items.add(new SimpleExporterInputItem(jasperPrint2));
-		
+
 		JRPdfExporter exporter = new JRPdfExporter();
 		exporter.setExporterInput(new SimpleExporterInput(items));
-		
+
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
 		exporter.exportReport();
@@ -188,42 +217,59 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 	@Override
 	public List<String> getFormTsNumberList() {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-        return taFormTs0111HdrRepository.findFormTsNumberByOfficeCode(officeCode);
+		return taFormTs0111HdrRepository.findFormTsNumberByOfficeCode(officeCode);
 	}
 
 	@Override
 	public TaFormTS0111Vo getFormTS(String formTsNumber) {
-		TaFormTS0111Vo taFormTS0111Vo = new TaFormTS0111Vo();
-        TaFormTs0111Hdr hdr = taFormTs0111HdrRepository.findByFormTsNumber(formTsNumber);
-        if (hdr != null) {
-            toVo(taFormTS0111Vo, hdr);
-        }
-        List<TaFormTs0111Dtl> dtls = taFormTs0111DtlRepository.findByFormTsNumber(formTsNumber);
-        List<TaFormTS0111DtlVo> dtlVos = new ArrayList<>();
-        for (TaFormTs0111Dtl dtl : dtls) {
-            TaFormTS0111DtlVo dtlVo = new TaFormTS0111DtlVo();
-            toVoDtl(dtlVo, dtl);
-            dtlVos.add(dtlVo);
-        }
+		logger.info("getFormTS formTsNumber={}", formTsNumber);
 
-        taFormTS0111Vo.setTaFormTS0111DtlVoList(dtlVos);
-        return taFormTS0111Vo;
+		// Prepare Header
+		TaFormTS0111Vo formTS0111Vo = new TaFormTS0111Vo();
+		TaFormTs0111Hdr formTs0111Hdr = taFormTs0111HdrRepository.findByFormTsNumber(formTsNumber);
+		toVo(formTS0111Vo, formTs0111Hdr);
+
+		// Prepare Detail
+		List<TaFormTs0111Dtl> formTs0111DtlList = taFormTs0111DtlRepository.findByFormTsNumber(formTsNumber);
+		List<TaFormTS0111DtlVo> formTS0111DtlVoList = new ArrayList<>();
+		TaFormTS0111DtlVo formTS0111DtlVo = null;
+		for (TaFormTs0111Dtl formTs0111Dtl : formTs0111DtlList) {
+			formTS0111DtlVo = new TaFormTS0111DtlVo();
+			toVoDtl(formTS0111DtlVo, formTs0111Dtl);
+			formTS0111DtlVoList.add(formTS0111DtlVo);
+		}
+		formTS0111Vo.setTaFormTS0111DtlVoList(formTS0111DtlVoList);
+
+		return formTS0111Vo;
+	}
+
+	private void toEntityDtl(TaFormTs0111Dtl entity, TaFormTS0111DtlVo vo) {
+		try {
+			BeanUtils.copyProperties(entity, vo);
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			logger.warn(e.getMessage(), e);
+		}
+	}
+
+	private void toVoDtl(TaFormTS0111DtlVo vo, TaFormTs0111Dtl entity) {
+		try {
+			BeanUtils.copyProperties(vo, entity);
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			logger.warn(e.getMessage(), e);
+		}
 	}
 	
-    private void toEntityDtl(TaFormTs0111Dtl entity, TaFormTS0111DtlVo vo) {
-        try {
-            BeanUtils.copyProperties(entity, vo);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            logger.warn(e.getMessage(), e);
+	private TaFormTs0111Dtl getEntityById(List<TaFormTs0111Dtl> taFormTs0111DtlList, String id) {
+        TaFormTs0111Dtl formTs0111Dtl = null;
+        
+        for (TaFormTs0111Dtl taFormTs0111Dtl : taFormTs0111DtlList) {
+            if (id.equals(taFormTs0111Dtl.getFormTs0111DtlId().toString())) {
+                formTs0111Dtl = taFormTs0111Dtl;
+                break;
+            }
         }
-    }
-
-    private void toVoDtl(TaFormTS0111DtlVo vo, TaFormTs0111Dtl entity) {
-        try {
-            BeanUtils.copyProperties(vo, entity);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            logger.warn(e.getMessage(), e);
-        }
+        
+        return formTs0111Dtl;
     }
 
 }

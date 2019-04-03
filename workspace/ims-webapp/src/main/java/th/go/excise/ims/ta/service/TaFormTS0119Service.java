@@ -74,11 +74,11 @@ public class TaFormTS0119Service extends AbstractTaFormTSService<TaFormTS0119Vo,
 
 	@Override
 	public byte[] generateReport(TaFormTS0119Vo formTS0119Vo) throws Exception, IOException {
-		Map<String, Object> params = new HashMap<String, Object>();
-
+		logger.info("generateReport");
+		
 		// get data to report
+		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
-
 		params.put("bookNumber1", formTS0119Vo.getBookNumber1());
 		params.put("bookNumber2", formTS0119Vo.getBookNumber2());
 		params.put("docText1", formTS0119Vo.getDocText1());
@@ -118,14 +118,21 @@ public class TaFormTS0119Service extends AbstractTaFormTSService<TaFormTS0119Vo,
 
 	@Override
 	public List<String> getFormTsNumberList() {
-		// TODO Auto-generated method stub
-		return null;
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		return taFormTs0119Repository.findFormTsNumberByOfficeCode(officeCode);
 	}
 
 	@Override
 	public TaFormTS0119Vo getFormTS(String formTsNumber) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("getFormTS formTsNumber={}", formTsNumber);
+		
+		TaFormTs0119 formTs0119 = taFormTs0119Repository.findByFormTsNumber(formTsNumber);
+		
+		// Set Data
+		TaFormTS0119Vo formTs0119Vo = new TaFormTS0119Vo();
+		toVo(formTs0119Vo, formTs0119);
+		
+		return formTs0119Vo;
 	}
 
 }

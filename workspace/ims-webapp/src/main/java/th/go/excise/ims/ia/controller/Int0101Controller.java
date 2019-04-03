@@ -56,7 +56,7 @@ private static final Logger logger = LoggerFactory.getLogger(Int0101Controller.c
 		
 		ResponseData<List<Int0101PlanDayVo>> responseData = new ResponseData<List<Int0101PlanDayVo>>();
 		try {
-			responseData.setData(int0101Service.findDataDtlAndAtc(idDtl));
+			responseData.setData(int0101Service.findDataDtlAndAct(idDtl));
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();

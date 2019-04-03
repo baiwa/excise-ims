@@ -102,7 +102,6 @@ public class TaFormTS0108Service extends AbstractTaFormTSService<TaFormTS0108Vo,
                     i++;
                 }
             }
-
             taFormTs0108DtlRepository.saveAll(formTs0108DtlList);
 
         } else {
@@ -155,7 +154,7 @@ public class TaFormTS0108Service extends AbstractTaFormTSService<TaFormTS0108Vo,
 
     @Override
     public TaFormTS0108Vo getFormTS(String formTsNumber) {
-        logger.info("getFormTS formTsNumber={}");
+    	logger.info("getFormTS formTsNumber={}", formTsNumber);
 
         // Set Header
         TaFormTS0108Vo formTS0108Vo = new TaFormTS0108Vo();

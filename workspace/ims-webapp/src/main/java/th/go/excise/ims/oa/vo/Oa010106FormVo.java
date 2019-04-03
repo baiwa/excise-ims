@@ -36,8 +36,21 @@ public class Oa010106FormVo {
 	private String warehouseAddress;
 	private String sectorName;
 	private String areaName;
+	private String bankGuaranteeTxt;
+	private String licenseTypeUsr;
+	private String licenseTypeUsrATxt;
+	private String licenseTypeUsrBTxt;
+	private String email;
 	private List<OaHydCustomerLicenDtl> details;
 	private List<OaHydCustomerLicenDtl> deletes;
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public BigDecimal getOaCuslicenseId() {
 		return oaCuslicenseId;
@@ -269,6 +282,38 @@ public class Oa010106FormVo {
 
 	public void setAreaName(String areaName) {
 		this.areaName = areaName;
+	}
+
+	public String getBankGuaranteeTxt() {
+		return bankGuaranteeTxt;
+	}
+
+	public void setBankGuaranteeTxt(String bankGuaranteeTxt) {
+		this.bankGuaranteeTxt = bankGuaranteeTxt;
+	}
+
+	public String getLicenseTypeUsr() {
+		return licenseTypeUsr;
+	}
+
+	public void setLicenseTypeUsr(String licenseTypeUsr) {
+		this.licenseTypeUsr = licenseTypeUsr;
+	}
+
+	public String getLicenseTypeUsrATxt() {
+		return licenseTypeUsrATxt;
+	}
+
+	public void setLicenseTypeUsrATxt(String licenseTypeUsrATxt) {
+		this.licenseTypeUsrATxt = licenseTypeUsrATxt;
+	}
+
+	public String getLicenseTypeUsrBTxt() {
+		return licenseTypeUsrBTxt;
+	}
+
+	public void setLicenseTypeUsrBTxt(String licenseTypeUsrBTxt) {
+		this.licenseTypeUsrBTxt = licenseTypeUsrBTxt;
 	}
 
 	public List<OaHydCustomerLicenDtl> getDetails() {

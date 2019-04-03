@@ -74,9 +74,10 @@ public class TaFormTS0120Service extends AbstractTaFormTSService<TaFormTS0120Vo,
 	
 	@Override
 	public byte[] generateReport(TaFormTS0120Vo request) throws Exception, IOException {
-		Map<String, Object> params = new HashMap<String, Object>();
-
+		logger.info("generateReport");
+		
 		// get data to report
+		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE + "." + FILE_EXTENSION.JPG));
 		params.put("factoryName", request.getFactoryName());
 		params.put("docDear", request.getDocDear());
@@ -125,16 +126,15 @@ public class TaFormTS0120Service extends AbstractTaFormTSService<TaFormTS0120Vo,
 
 	@Override
 	public TaFormTS0120Vo getFormTS(String formTsNumber) {
-		TaFormTS0120Vo formTS0120Vo = null;
-        if (StringUtils.isNotBlank(formTsNumber)) {
-            TaFormTs0120 entiry = taFormTs0120Repository.findByFormTsNumber(formTsNumber);
-            formTS0120Vo = new TaFormTS0120Vo();
-            if (entiry != null) {
-
-                toVo(formTS0120Vo, entiry);
-            }
-        }
-        return formTS0120Vo;
+		logger.info("getFormTS formTsNumber={}", formTsNumber);
+		
+		TaFormTs0120 formTs0120 = taFormTs0120Repository.findByFormTsNumber(formTsNumber);
+		
+		// Set Data
+		TaFormTS0120Vo formTs0120Vo = new TaFormTS0120Vo();
+		toVo(formTs0120Vo, formTs0120);
+		
+		return formTs0120Vo;
 	}
 
 }

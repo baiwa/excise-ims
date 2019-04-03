@@ -74,9 +74,10 @@ public class TaFormTS0121Service extends AbstractTaFormTSService<TaFormTS0121Vo,
 
 	@Override
 	public byte[] generateReport(TaFormTS0121Vo request) throws Exception, IOException {
-		Map<String, Object> params = new HashMap<String, Object>();
-
+		logger.info("generateReport");
+		
 		// get data to report
+		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE + "." + FILE_EXTENSION.JPG));
 		params.put("formTsNumber", request.getFormTsNumber());
 		params.put("factoryName", request.getFactoryName());
@@ -106,8 +107,7 @@ public class TaFormTS0121Service extends AbstractTaFormTSService<TaFormTS0121Vo,
 		params.put("signWitnessFullName2", request.getSignWitnessFullName2());
 
 		// set output
-		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_21 + "." + FILE_EXTENSION.JASPER,
-				params);
+		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_21 + "." + FILE_EXTENSION.JASPER, params);
 		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
 		ReportUtils.closeResourceFileInputStream(params);
 
@@ -121,16 +121,15 @@ public class TaFormTS0121Service extends AbstractTaFormTSService<TaFormTS0121Vo,
 
 	@Override
 	public TaFormTS0121Vo getFormTS(String formTsNumber) {
-		TaFormTS0121Vo formTS0121Vo = null;
-		if (StringUtils.isNotBlank(formTsNumber)) {
-			TaFormTs0121 entiry = taFormTs0121Repository.findByFormTsNumber(formTsNumber);
-			formTS0121Vo = new TaFormTS0121Vo();
-			if (entiry != null) {
-
-				toVo(formTS0121Vo, entiry);
-			}
-		}
-		return formTS0121Vo;
+		logger.info("getFormTS formTsNumber={}", formTsNumber);
+		
+		TaFormTs0121 formTs0121 = taFormTs0121Repository.findByFormTsNumber(formTsNumber);
+		
+		// Set Data
+		TaFormTS0121Vo formTs0121Vo = new TaFormTS0121Vo();
+		toVo(formTs0121Vo, formTs0121);
+		
+		return formTs0121Vo;
 	}
 
 }

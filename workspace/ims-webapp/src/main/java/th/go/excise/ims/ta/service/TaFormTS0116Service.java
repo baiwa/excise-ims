@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,8 +58,18 @@ public class TaFormTS0116Service extends AbstractTaFormTSService<TaFormTS0116Vo,
 		logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS0116Vo.getFormTsNumber());
 
 		// Set Data
-		TaFormTS0116Vo formTs0116 = null;
-		
+		TaFormTs0116 formTs0116 = null;
+		if (StringUtils.isNotEmpty(formTS0116Vo.getFormTsNumber())) {
+			formTs0116 = taFormTs0116Repository.findByFormTsNumber(formTS0116Vo.getFormTsNumber());
+			toEntity(formTs0116, formTS0116Vo);
+		} else {
+			formTs0116 = new TaFormTs0116();
+			toEntity(formTs0116, formTS0116Vo);
+			formTs0116.setOfficeCode(officeCode);
+			formTs0116.setBudgetYear(budgetYear);
+			formTs0116.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
+		}
+		taFormTs0116Repository.save(formTs0116);
 	}
 	
 	@Override
@@ -120,7 +131,7 @@ public class TaFormTS0116Service extends AbstractTaFormTSService<TaFormTS0116Vo,
 	
 	@Override
 	public TaFormTS0116Vo getFormTS(String formTsNumber) {
-		logger.info("getFormTS formTsNumber={}");
+		logger.info("getFormTS formTsNumber={}", formTsNumber);
 		
 		TaFormTs0116 formTs0116 = taFormTs0116Repository.findByFormTsNumber(formTsNumber);
 		

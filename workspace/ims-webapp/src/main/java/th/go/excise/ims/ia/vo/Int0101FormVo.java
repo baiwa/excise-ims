@@ -7,7 +7,8 @@ public class Int0101FormVo {
 	private BigDecimal planDtlId;
 	private String responsiblePerson;
 	private String position;
-	List<Int0101PlanDayVo> planVo;
+	private List<Int0101PlanDayVo> planVo;
+	private Boolean flagUpdate;
 
 	public BigDecimal getPlanDtlId() {
 		return planDtlId;
@@ -40,5 +41,14 @@ public class Int0101FormVo {
 	public void setPlanVo(List<Int0101PlanDayVo> planVo) {
 		this.planVo = planVo;
 	}
+
+	public Boolean getFlagUpdate() {
+		return flagUpdate;
+	}
+
+	public void setFlagUpdate(Boolean flagUpdate) {
+		this.flagUpdate = flagUpdate;
+	}
+	
 
 }
