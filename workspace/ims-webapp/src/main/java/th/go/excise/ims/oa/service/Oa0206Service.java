@@ -3,12 +3,16 @@ package th.go.excise.ims.oa.service;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.hibernate.hql.internal.ast.SqlASTFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +32,8 @@ import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.go.excise.ims.oa.persistence.entity.OaCustomerLicenDetail;
 import th.go.excise.ims.oa.persistence.entity.OaHydrocarbDtl;
@@ -139,9 +145,9 @@ public class Oa0206Service {
 			JasperPrint jasperPrint1 = ReportUtils.getJasperPrint("OA_LUB_01"+"."+ FILE_EXTENSION.JASPER, params, new JREmptyDataSource());
 			JasperPrint jasperPrint2 = ReportUtils.getJasperPrint("OA_LUB_05"+"."+ FILE_EXTENSION.JASPER, params, listCompare.size()> 0 ?  new JRBeanCollectionDataSource(listCompare, false) :new JREmptyDataSource());
 			JasperPrint jasperPrint3 = ReportUtils.getJasperPrint("OA_LUB_07"+"."+ FILE_EXTENSION.JASPER, params);
-			JasperPrint jasperPrint4 = ReportUtils.getJasperPrint("OA_OPE_02"+"."+ FILE_EXTENSION.JASPER, params, new JREmptyDataSource());
-			JasperPrint jasperPrint5 = ReportUtils.getJasperPrint("OA_OPE_03"+"."+ FILE_EXTENSION.JASPER, params, new JREmptyDataSource());
-			JasperPrint jasperPrint6 = ReportUtils.getJasperPrint("OA_OPE_04"+"."+ FILE_EXTENSION.JASPER, params,  new JREmptyDataSource());
+			JasperPrint jasperPrint4 = ReportUtils.getJasperPrint("OA_LUB_02"+"."+ FILE_EXTENSION.JASPER, params, new JREmptyDataSource());
+			JasperPrint jasperPrint5 = ReportUtils.getJasperPrint("OA_LUB_03"+"."+ FILE_EXTENSION.JASPER, params, new JREmptyDataSource());
+			JasperPrint jasperPrint6 = ReportUtils.getJasperPrint("OA_LUB_04"+"."+ FILE_EXTENSION.JASPER, params, customers.size() >0 ? oaOpe04DataSource:new JREmptyDataSource());
 //			JasperPrint jasperPrint7 = ReportUtils.getJasperPrint("Solvent-01", params, new JREmptyDataSource());
 //			JasperPrint jasperPrint8 = ReportUtils.getJasperPrint("Solvent-02", params, new JREmptyDataSource());
 
@@ -180,11 +186,17 @@ public class Oa0206Service {
 //		OaHydrocarbDtl data = oaHydrocabon.get();
 		Optional<OaLubricantsDtl> oaHydrocabon = oaLubricantsDtlRepo.findById(new BigDecimal(dtlId));
 		OaLubricantsDtl data = oaHydrocabon.get();	
+		java.sql.Date sqlDate = new java.sql.Date(license.getStartDate().getTime());
+		LocalDate localDate = LocalDateConverter.convertToEntityAttribute(sqlDate);
+		int year = localDate.getYear()+543;
+		int day = localDate.getDayOfMonth();
+		
+		// OA_LUB_01
 		params.put("licenseNo1", license.getLicenseNo());
 		params.put("licenseNo2","");
-		params.put("licenseDate", "11" );
-		params.put("licenseMonth", "เมษายน");
-		params.put("licenseYear", "2562");
+		params.put("licenseDate",Integer.toString(day) );
+		params.put("licenseMonth", ConvertDateUtils.getMonthThai(localDate.getMonthValue(), ConvertDateUtils.FULL_MONTH));
+		params.put("licenseYear",Integer.toString(year)  );
 		params.put("companyName", license.getCompanyName());
 		params.put("identityCompany", license.getIdentifyNo());
 		params.put("totalEmployee", data.getEmployeeTemporary().toString());
