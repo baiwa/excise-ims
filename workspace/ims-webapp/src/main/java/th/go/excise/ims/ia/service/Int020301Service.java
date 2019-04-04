@@ -35,7 +35,9 @@ import th.go.excise.ims.ia.persistence.repository.IaRiskQtnConfigRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireSideJdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int020301JdbcRepository;
 import th.go.excise.ims.ia.util.ExcelUtil;
+import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
 import th.go.excise.ims.ia.util.IntCalculateCriteriaUtil;
+import th.go.excise.ims.ia.vo.ExciseDepartmentVo;
 import th.go.excise.ims.ia.vo.ExportRiskVo;
 import th.go.excise.ims.ia.vo.Int020301DataVo;
 import th.go.excise.ims.ia.vo.Int020301HeaderVo;
@@ -197,7 +199,13 @@ public class Int020301Service {
 			} else {
 				data.setAreaName("");
 			}
+			
+			ExciseDepartmentVo exciseDepartmentVo = ExciseDepartmentUtil.getExciseDepartment(data.getOfficeCode());
+			data.setExciseDepartmentVo(exciseDepartmentVo);
+			
 		}
+		
+		
 		return datas;
 	}
 	

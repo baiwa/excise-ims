@@ -23,6 +23,8 @@ public class Int020301InfoVo {
 	BigDecimal riskNum;
 
 	IntCalculateCriteriaVo intCalculateCriteriaVo;
+	
+	ExciseDepartmentVo exciseDepartmentVo;
 
 	public BigDecimal getIdMadeHdr() {
 		return idMadeHdr;
@@ -159,5 +161,15 @@ public class Int020301InfoVo {
 	public void setIntCalculateCriteriaVo(IntCalculateCriteriaVo intCalculateCriteriaVo) {
 		this.intCalculateCriteriaVo = intCalculateCriteriaVo;
 	}
+
+	public ExciseDepartmentVo getExciseDepartmentVo() {
+		return exciseDepartmentVo;
+	}
+
+	public void setExciseDepartmentVo(ExciseDepartmentVo exciseDepartmentVo) {
+		this.exciseDepartmentVo = exciseDepartmentVo;
+	}
+	
+	
 
 }
