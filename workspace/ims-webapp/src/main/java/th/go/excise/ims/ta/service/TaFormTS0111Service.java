@@ -78,7 +78,7 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 		TaFormTs0111Hdr formTS0111Hdr = null;
 		TaFormTs0111Dtl formTS0111Dtl = null;
 		List<TaFormTs0111Dtl> formTs0111DtlList = null;
-		
+
 		if (StringUtils.isNotEmpty(formTS0111Vo.getFormTsNumber())) {
 			// Case Update FormTS
 
@@ -88,39 +88,39 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 
 			// Update Detail
 			formTs0111DtlList = taFormTs0111DtlRepository.findByFormTsNumber(formTS0111Vo.getFormTsNumber());
-			
+
 			// Update isDeleted = 'Y' for Default
 			formTs0111DtlList.forEach(e -> {
 				e.setIsDeleted(FLAG.Y_FLAG);
 				e.setRecNo(null);
 			});
-			
+
 			// Set Detail Record
 			if (formTS0111Vo.getTaFormTS0111DtlVoList() != null) {
 				int i = 1;
 				for (TaFormTS0111DtlVo formTS0111DtlVo : formTS0111Vo.getTaFormTS0111DtlVoList()) {
 					formTS0111Dtl = getEntityById(formTs0111DtlList, formTS0111DtlVo.getFormTs0111DtlId());
 					if (formTS0111Dtl != null) {
-                        // Exist Page
-                        toEntityDtl(formTS0111Dtl, formTS0111DtlVo);
-                        formTS0111Dtl.setIsDeleted(FLAG.N_FLAG);
-                        formTS0111Dtl.setRecNo(String.valueOf(i));
-                    } else {
-                        // New Page
-                    	formTS0111Dtl = new TaFormTs0111Dtl();
-                        toEntityDtl(formTS0111Dtl, formTS0111DtlVo);
-                        formTS0111Dtl.setFormTsNumber(formTS0111Vo.getFormTsNumber());
-                        formTS0111Dtl.setRecNo(String.valueOf(i));
-                        formTs0111DtlList.add(formTS0111Dtl);
-                    }
+						// Exist Page
+						toEntityDtl(formTS0111Dtl, formTS0111DtlVo);
+						formTS0111Dtl.setIsDeleted(FLAG.N_FLAG);
+						formTS0111Dtl.setRecNo(String.valueOf(i));
+					} else {
+						// New Page
+						formTS0111Dtl = new TaFormTs0111Dtl();
+						toEntityDtl(formTS0111Dtl, formTS0111DtlVo);
+						formTS0111Dtl.setFormTsNumber(formTS0111Vo.getFormTsNumber());
+						formTS0111Dtl.setRecNo(String.valueOf(i));
+						formTs0111DtlList.add(formTS0111Dtl);
+					}
 					i++;
 				}
 				taFormTs0111DtlRepository.saveAll(formTs0111DtlList);
 			}
-			
+
 		} else {
 			// Case New FormTS
-			
+
 			// Set Header Record
 			formTS0111Hdr = new TaFormTs0111Hdr();
 			toEntity(formTS0111Hdr, formTS0111Vo);
@@ -141,7 +141,7 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 			}
 			taFormTs0111DtlRepository.saveAll(formTs0111DtlList);
 		}
-		
+
 		taFormTs0111HdrRepository.save(formTS0111Hdr);
 	}
 
@@ -237,6 +237,9 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 		for (TaFormTs0111Dtl formTs0111Dtl : formTs0111DtlList) {
 			formTS0111DtlVo = new TaFormTS0111DtlVo();
 			toVoDtl(formTS0111DtlVo, formTs0111Dtl);
+			formTS0111DtlVo.setDocName(StringUtils.defaultString(formTS0111DtlVo.getDocName()));
+			formTS0111DtlVo.setDocComment(StringUtils.defaultString(formTS0111DtlVo.getDocQty()));
+			formTS0111DtlVo.setDocQty(StringUtils.defaultString(formTS0111DtlVo.getDocComment()));
 			formTS0111DtlVoList.add(formTS0111DtlVo);
 		}
 		formTS0111Vo.setTaFormTS0111DtlVoList(formTS0111DtlVoList);
@@ -259,18 +262,18 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 			logger.warn(e.getMessage(), e);
 		}
 	}
-	
+
 	private TaFormTs0111Dtl getEntityById(List<TaFormTs0111Dtl> taFormTs0111DtlList, String id) {
-        TaFormTs0111Dtl formTs0111Dtl = null;
-        
-        for (TaFormTs0111Dtl taFormTs0111Dtl : taFormTs0111DtlList) {
-            if (id.equals(taFormTs0111Dtl.getFormTs0111DtlId().toString())) {
-                formTs0111Dtl = taFormTs0111Dtl;
-                break;
-            }
-        }
-        
-        return formTs0111Dtl;
-    }
+		TaFormTs0111Dtl formTs0111Dtl = null;
+
+		for (TaFormTs0111Dtl taFormTs0111Dtl : taFormTs0111DtlList) {
+			if (id.equals(taFormTs0111Dtl.getFormTs0111DtlId().toString())) {
+				formTs0111Dtl = taFormTs0111Dtl;
+				break;
+			}
+		}
+
+		return formTs0111Dtl;
+	}
 
 }

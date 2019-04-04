@@ -54,10 +54,10 @@ public class TaFormTS0115Service extends AbstractTaFormTSService<TaFormTS0115Vo,
 	@Override
 	public byte[] processFormTS(TaFormTS0115Vo formTS0115Vo) throws Exception {
 		logger.info("processFormTS");
-		
+
 		saveFormTS(formTS0115Vo);
 		byte[] reportFile = generateReport(formTS0115Vo);
-		
+
 		return reportFile;
 	}
 
@@ -71,10 +71,10 @@ public class TaFormTS0115Service extends AbstractTaFormTSService<TaFormTS0115Vo,
 		TaFormTs0115Hdr formTs0115Hdr = null;
 		TaFormTs0115Dtl formTs0115Dtl = null;
 		List<TaFormTs0115Dtl> formTs0115DtlList = null;
-		
+
 		if (StringUtils.isNotEmpty(formTS0115Vo.getFormTsNumber())) {
 			// Case Update FormTS
-			
+
 			// ==> Set Hdr
 			formTs0115Hdr = taFormTs0115HdrRepository.findByFormTsNumber(formTS0115Vo.getFormTsNumber());
 			toEntity(formTs0115Hdr, formTS0115Vo);
@@ -109,17 +109,17 @@ public class TaFormTS0115Service extends AbstractTaFormTSService<TaFormTS0115Vo,
 				}
 				taFormTs0115DtlRepository.saveAll(formTs0115DtlList);
 			}
-			
+
 		} else {
 			// Case New FormTS
-			
+
 			// Set Header Record
 			formTs0115Hdr = new TaFormTs0115Hdr();
 			toEntity(formTs0115Hdr, formTS0115Vo);
 			formTs0115Hdr.setOfficeCode(officeCode);
 			formTs0115Hdr.setBudgetYear(budgetYear);
 			formTs0115Hdr.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
-			
+
 			// Set Detail Record
 			formTs0115DtlList = new ArrayList<>();
 			int i = 1;
@@ -133,14 +133,14 @@ public class TaFormTS0115Service extends AbstractTaFormTSService<TaFormTS0115Vo,
 			}
 			taFormTs0115DtlRepository.saveAll(formTs0115DtlList);
 		}
-		
+
 		taFormTs0115HdrRepository.save(formTs0115Hdr);
 	}
 
 	@Override
 	public byte[] generateReport(TaFormTS0115Vo formTs0115Vo) throws Exception {
 		logger.info("generateReport");
-		
+
 		// get data to report
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE + "." + FILE_EXTENSION.JPG));
@@ -181,12 +181,12 @@ public class TaFormTS0115Service extends AbstractTaFormTSService<TaFormTS0115Vo,
 	@Override
 	public TaFormTS0115Vo getFormTS(String formTsNumber) {
 		logger.info("getFormTS formTsNumber={}", formTsNumber);
-		
+
 		// Prepare Header
 		TaFormTS0115Vo formTS0115Vo = new TaFormTS0115Vo();
 		TaFormTs0115Hdr formTs0115Hdr = taFormTs0115HdrRepository.findByFormTsNumber(formTsNumber);
 		toVo(formTS0115Vo, formTs0115Hdr);
-		
+
 		// Prepare Detail
 		List<TaFormTs0115Dtl> formTs0115DtlList = taFormTs0115DtlRepository.findByFormTsNumber(formTsNumber);
 		List<TaFormTS0115DtlVo> formTS0115DtlVoList = new ArrayList<>();
@@ -194,10 +194,12 @@ public class TaFormTS0115Service extends AbstractTaFormTSService<TaFormTS0115Vo,
 		for (TaFormTs0115Dtl formTs0115Dtl : formTs0115DtlList) {
 			formTS0115DtlVo = new TaFormTS0115DtlVo();
 			toVoDtl(formTS0115DtlVo, formTs0115Dtl);
+			formTS0115DtlVo.setDutyTypeText(StringUtils.defaultString(formTS0115DtlVo.getDutyTypeText()));
+
 			formTS0115DtlVoList.add(formTS0115DtlVo);
 		}
 		formTS0115Vo.setTaFormTS0115DtlVoList(formTS0115DtlVoList);
-		
+
 		return formTS0115Vo;
 	}
 
@@ -219,14 +221,14 @@ public class TaFormTS0115Service extends AbstractTaFormTSService<TaFormTS0115Vo,
 
 	private TaFormTs0115Dtl getEntityById(List<TaFormTs0115Dtl> formTs0115DtlList, String id) {
 		TaFormTs0115Dtl formTs0115Dtl = null;
-		
+
 		for (TaFormTs0115Dtl taFormTs0115Dtl : formTs0115DtlList) {
 			if (id.equals(taFormTs0115Dtl.getFormTs0115DtlId().toString())) {
 				formTs0115Dtl = taFormTs0115Dtl;
 				break;
 			}
 		}
-		
+
 		return formTs0115Dtl;
 	}
 
