@@ -59,7 +59,7 @@ private static final Logger logger = LoggerFactory.getLogger(TaFormTS01171Servic
 		logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS01171Vo.getFormTsNumber());
 
 		TaFormTs01171 formTS01171 = null;
-		if (StringUtils.isNotEmpty(formTS01171Vo.getFormTsNumber())) {
+		if (StringUtils.isNotBlank(formTS01171Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS01171Vo.getFormTsNumber())) {
 			formTS01171 = taFormTs01171Repository.findByFormTsNumber(formTS01171Vo.getFormTsNumber());
 			toEntity(formTS01171, formTS01171Vo);
 		} else {

@@ -71,7 +71,7 @@ public class TaFormTS0118Service extends AbstractTaFormTSService<TaFormTS0118Vo,
 		TaFormTs0118Hdr formTs0118Hdr = null;
 		TaFormTs0118Dtl formTs0118Dtl = null;
 		List<TaFormTs0118Dtl> formTs0118DtlList = null;
-		if (StringUtils.isNotEmpty(formTS0118Vo.getFormTsNumber())) {
+		if (StringUtils.isNotBlank(formTS0118Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0118Vo.getFormTsNumber())) {
 			// Case Update FormTS
 
 			// ==> Set Hdr

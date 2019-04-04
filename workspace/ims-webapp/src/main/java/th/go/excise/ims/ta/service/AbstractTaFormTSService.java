@@ -12,6 +12,8 @@ public abstract class AbstractTaFormTSService<VO extends Object, ENTITY> {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AbstractTaFormTSService.class);
 	
+	protected static final String NULL = "NULL";
+	
 	@SuppressWarnings("unchecked")
 	public Class<VO> getVoClass() {
 		return ((Class<VO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);

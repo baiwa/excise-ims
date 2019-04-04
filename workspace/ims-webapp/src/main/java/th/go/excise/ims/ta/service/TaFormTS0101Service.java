@@ -58,7 +58,7 @@ public class TaFormTS0101Service extends AbstractTaFormTSService<TaFormTS0101Vo,
 
 		// Set Data
 		TaFormTs0101 formTs0101 = null;
-		if (StringUtils.isNotEmpty(formTS0101Vo.getFormTsNumber())) {
+		if (StringUtils.isNotBlank(formTS0101Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0101Vo.getFormTsNumber())) {
 			formTs0101 = taFormTs0101Repository.findByFormTsNumber(formTS0101Vo.getFormTsNumber());
 			toEntity(formTs0101, formTS0101Vo);
 		} else {

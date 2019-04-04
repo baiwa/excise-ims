@@ -66,7 +66,7 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 		
 		// Set Data
 		TaFormTs01141 formTs01141 = null;
-		if (StringUtils.isNotEmpty(formTS01141Vo.getFormTsNumber())) {
+		if (StringUtils.isNotBlank(formTS01141Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS01141Vo.getFormTsNumber())) {
 			// Case Update FormTS
 			List<TaFormTs01141> taFormTs01141List = taFormTs01141Repository.findByFormTsNumber(formTS01141Vo.getFormTsNumber());
 			

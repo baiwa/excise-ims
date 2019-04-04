@@ -57,7 +57,7 @@ public class TaFormTS0113Service extends AbstractTaFormTSService<TaFormTS0113Vo,
         logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS0113Vo.getFormTsNumber());
 
         TaFormTs0113 formTS0113 = null;
-        if (StringUtils.isNotEmpty(formTS0113Vo.getFormTsNumber())) {
+        if (StringUtils.isNotBlank(formTS0113Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0113Vo.getFormTsNumber())) {
             formTS0113 = taFormTs0113Repository.findByFormTsNumber(formTS0113Vo.getFormTsNumber());
             toEntity(formTS0113, formTS0113Vo);
         } else {

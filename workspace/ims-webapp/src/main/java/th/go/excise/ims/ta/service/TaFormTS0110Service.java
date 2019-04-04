@@ -64,9 +64,8 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
 		logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS0110Vo.getFormTsNumber());
 		
-		// Set Data
 		TaFormTs0110 formTs0110 = null;
-		if (StringUtils.isNotEmpty(formTS0110Vo.getFormTsNumber())) {
+		if (StringUtils.isNotBlank(formTS0110Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0110Vo.getFormTsNumber())) {
 			// Case Update FormTS
 			List<TaFormTs0110> taFormTs0110List = taFormTs0110Repository.findByFormTsNumber(formTS0110Vo.getFormTsNumber());
 			

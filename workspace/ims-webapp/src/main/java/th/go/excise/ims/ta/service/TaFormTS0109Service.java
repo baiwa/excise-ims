@@ -53,18 +53,18 @@ public class TaFormTS0109Service extends AbstractTaFormTSService<TaFormTS0109Vo,
 
     @Transactional(rollbackOn = {Exception.class})
     @Override
-    public void saveFormTS(TaFormTS0109Vo taFormTS0109Vo) {
+    public void saveFormTS(TaFormTS0109Vo formTS0109Vo) {
         String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
         String budgetYear = ExciseUtils.getCurrentBudgetYear();
-        logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, taFormTS0109Vo.getFormTsNumber());
+        logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS0109Vo.getFormTsNumber());
 
         TaFormTs0109 formTS0109 = null;
-        if (StringUtils.isNotEmpty(taFormTS0109Vo.getFormTsNumber())) {
-            formTS0109 = taFormTs0109Repository.findByFormTsNumber(taFormTS0109Vo.getFormTsNumber());
-            toEntity(formTS0109, taFormTS0109Vo);
+        if (StringUtils.isNotBlank(formTS0109Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0109Vo.getFormTsNumber())) {
+            formTS0109 = taFormTs0109Repository.findByFormTsNumber(formTS0109Vo.getFormTsNumber());
+            toEntity(formTS0109, formTS0109Vo);
         } else {
             formTS0109 = new TaFormTs0109();
-            toEntity(formTS0109, taFormTS0109Vo);
+            toEntity(formTS0109, formTS0109Vo);
             formTS0109.setOfficeCode(officeCode);
             formTS0109.setBudgetYear(budgetYear);
             formTS0109.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));

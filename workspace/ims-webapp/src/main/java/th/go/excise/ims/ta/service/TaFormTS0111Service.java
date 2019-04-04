@@ -78,8 +78,7 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 		TaFormTs0111Hdr formTS0111Hdr = null;
 		TaFormTs0111Dtl formTS0111Dtl = null;
 		List<TaFormTs0111Dtl> formTs0111DtlList = null;
-
-		if (StringUtils.isNotEmpty(formTS0111Vo.getFormTsNumber())) {
+		if (StringUtils.isNotBlank(formTS0111Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0111Vo.getFormTsNumber())) {
 			// Case Update FormTS
 
 			// Update Header

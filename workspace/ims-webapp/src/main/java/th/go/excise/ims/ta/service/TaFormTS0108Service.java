@@ -71,7 +71,7 @@ public class TaFormTS0108Service extends AbstractTaFormTSService<TaFormTS0108Vo,
         TaFormTs0108Hdr formTs0108Hdr = null;
         TaFormTs0108Dtl formTs0108Dtl = null;
         List<TaFormTs0108Dtl> formTs0108DtlList = null;
-        if (StringUtils.isNotEmpty(formTS0108Vo.getFormTsNumber())) {
+        if (StringUtils.isNotBlank(formTS0108Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0108Vo.getFormTsNumber())) {
             // Case Update FormTS
             formTs0108DtlList = taFormTs0108DtlRepository.findByFormTsNumber(formTS0108Vo.getFormTsNumber());
 
@@ -101,8 +101,8 @@ public class TaFormTS0108Service extends AbstractTaFormTSService<TaFormTS0108Vo,
                     }
                     i++;
                 }
+                taFormTs0108DtlRepository.saveAll(formTs0108DtlList);
             }
-            taFormTs0108DtlRepository.saveAll(formTs0108DtlList);
 
         } else {
             // Case New FormTS
