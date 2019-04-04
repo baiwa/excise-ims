@@ -137,6 +137,7 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 				formTS0111Dtl.setFormTsNumber(formTS0111Hdr.getFormTsNumber());
 				formTS0111Dtl.setRecNo(String.valueOf(i));
 				formTs0111DtlList.add(formTS0111Dtl);
+				i++;
 			}
 			taFormTs0111DtlRepository.saveAll(formTs0111DtlList);
 		}
