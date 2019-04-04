@@ -26,6 +26,7 @@ public class Int0305FormVo {
 	private String riskUnit;
 	private String infoUsedRiskDesc;
 	private String riskIndicators;
+	private String dataEvaluate;
 
 	private List<Int0305FormVo> int0305FormVoList;
 
@@ -193,6 +194,14 @@ public class Int0305FormVo {
 
 	public void setIdConfig(BigDecimal idConfig) {
 		this.idConfig = idConfig;
+	}
+
+	public String getDataEvaluate() {
+		return dataEvaluate;
+	}
+
+	public void setDataEvaluate(String dataEvaluate) {
+		this.dataEvaluate = dataEvaluate;
 	}
 
 }
