@@ -96,8 +96,7 @@ public class TaFormTS0120Service extends AbstractTaFormTSService<TaFormTS0120Vo,
 		params.put("facProvinceName", request.getFacProvinceName());
 		params.put("facZipCode", request.getFacZipCode());
 		params.put("expandReason", request.getExpandReason());
-		params.put("expandFlag1", request.getExpandFlag1());
-		params.put("expandFlag2", request.getExpandFlag2());
+		params.put("expandFlag", request.getExpandFlag());
 		params.put("expandNo", request.getExpandNo());
 		params.put("expandDateOld", request.getExpandDateOld());
 		params.put("expandDateNew", request.getExpandDateNew());
@@ -121,7 +120,8 @@ public class TaFormTS0120Service extends AbstractTaFormTSService<TaFormTS0120Vo,
 
 	@Override
 	public List<String> getFormTsNumberList() {
-		return taFormTs0120Repository.findFormTsNumber();
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		return taFormTs0120Repository.findFormTsNumberByOfficeCode(officeCode);
 	}
 
 	@Override

@@ -39,8 +39,7 @@ public class TaFormTS0120ServiceTest {
 		formTS0120Vo.setFacProvinceName("กรุงเทพฯ");
 		formTS0120Vo.setFacZipCode("10123");
 		formTS0120Vo.setExpandReason("เป็นไงบ้าง กับ เหตุผลเดิมๆ เลยเนอะ abc abc abc abc  abc abc abc abc abc abc abc abc abc abc abc abc ทดสอบขึ้นบรรดทัดใหม่อยุ่ด้วย จุ๊ก จู๊กๆเลยนะ");
-		formTS0120Vo.setExpandFlag1("1");
-		formTS0120Vo.setExpandFlag2("1");
+		formTS0120Vo.setExpandFlag("1");
 		formTS0120Vo.setExpandNo("12345");
 		formTS0120Vo.setExpandDateOld(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2561, 6, 15))));
 		formTS0120Vo.setExpandDateNew(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2561, 6, 15))));
