@@ -63,10 +63,8 @@ public class TaFormTs0120 extends BaseEntity {
 	private String facZipCode;
 	@Column(name = "EXPAND_REASON")
 	private String expandReason;
-	@Column(name = "EXPAND_FLAG1")
-	private String expandFlag1;
-	@Column(name = "EXPAND_FLAG2")
-	private String expandFlag2;
+	@Column(name = "EXPAND_FLAG")
+	private String expandFlag;
 	@Column(name = "EXPAND_NO")
 	private String expandNo;
 	@Column(name = "EXPAND_DATE_OLD")
@@ -260,20 +258,12 @@ public class TaFormTs0120 extends BaseEntity {
 		this.expandReason = expandReason;
 	}
 
-	public String getExpandFlag1() {
-		return expandFlag1;
+	public String getExpandFlag() {
+		return expandFlag;
 	}
 
-	public void setExpandFlag1(String expandFlag1) {
-		this.expandFlag1 = expandFlag1;
-	}
-
-	public String getExpandFlag2() {
-		return expandFlag2;
-	}
-
-	public void setExpandFlag2(String expandFlag2) {
-		this.expandFlag2 = expandFlag2;
+	public void setExpandFlag(String expandFlag) {
+		this.expandFlag = expandFlag;
 	}
 
 	public String getExpandNo() {
