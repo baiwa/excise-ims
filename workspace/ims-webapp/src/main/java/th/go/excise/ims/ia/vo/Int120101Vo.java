@@ -27,6 +27,9 @@ public class Int120101Vo {
 	private BigDecimal taxStamp;
 	private String stampCodeStart;
 	private String stampCodeEnd;
+	private String stampChecker2;
+	private String stampChecker3;
+	private String departmentName;
 
 	private String note;
 	private String createdDate;
@@ -238,6 +241,30 @@ public class Int120101Vo {
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+	public String getStampChecker2() {
+		return stampChecker2;
+	}
+
+	public void setStampChecker2(String stampChecker2) {
+		this.stampChecker2 = stampChecker2;
+	}
+
+	public String getStampChecker3() {
+		return stampChecker3;
+	}
+
+	public void setStampChecker3(String stampChecker3) {
+		this.stampChecker3 = stampChecker3;
+	}
+
+	public String getDepartmentName() {
+		return departmentName;
+	}
+
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
 	}
 
 }

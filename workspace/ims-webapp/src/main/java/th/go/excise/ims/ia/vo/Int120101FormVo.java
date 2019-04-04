@@ -18,6 +18,8 @@ public class Int120101FormVo extends DataTableRequest {
 	private List<Int120101Vo> dataList;
 	private Int120101Vo data;
 	private String searchFlag;
+	private String paramCode;
+	private String status;
 
 	public String getSector() {
 		return sector;
@@ -81,6 +83,22 @@ public class Int120101FormVo extends DataTableRequest {
 
 	public void setSearchFlag(String searchFlag) {
 		this.searchFlag = searchFlag;
+	}
+
+	public String getParamCode() {
+		return paramCode;
+	}
+
+	public void setParamCode(String paramCode) {
+		this.paramCode = paramCode;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

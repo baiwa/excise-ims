@@ -14,6 +14,8 @@ import th.co.baiwa.buckwaframework.common.bean.LabelValueBean;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.vo.Int120101FormVo;
 import th.go.excise.ims.ia.vo.Int120101Vo;
 
@@ -28,25 +30,28 @@ public class IaStampDetailJdbcRepository {
 
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
-		params.add(SQL);
+		if (StringUtils.isNotBlank(formVo.getParamCode())) {
+			sql.append(" AND STATUS = ? ");
+			params.add(ApplicationCache.getParamInfoByCode(IaConstants.STAMP_STATUS.PARAM_GROUP_CODE, formVo.getParamCode()).getValue1());
+		}
 //		if (StringUtils.isNotBlank(formVo.getSector())) {
-//			sql.append(" AND EXCISE_DEPARTMENT=? ");
+//			sql.append(" AND EXCISE_DEPARTMENT = ? ");
 //			params.add(StringUtils.trim(formVo.getSector()));
 //		}
 //		if (StringUtils.isNotBlank(formVo.getArea())) {
-//			sql.append(" AND EXCISE_REGION=? ");
+//			sql.append(" AND EXCISE_REGION = ? ");
 //			params.add(StringUtils.trim(formVo.getArea()));
 //		}
 //		if (StringUtils.isNotBlank(formVo.getBranch())) {
-//			sql.append(" AND EXCISE_DISTRICT=? ");
+//			sql.append(" AND EXCISE_DISTRICT = ? ");
 //			params.add(StringUtils.trim(formVo.getBranch()));
 //		}
 		if (StringUtils.isNotBlank(formVo.getDateForm()) && StringUtils.isNotBlank(formVo.getDateTo())) {
-			sql.append(" AND TO_CHAR(DATE_OF_PAY,'YYYYMMDD') BETWEEN ? AND ?");
+			sql.append(" AND TO_CHAR(DATE_OF_PAY,'DDMMYYYY') BETWEEN ? AND ?");
 			params.add(formVo.getDateForm());
 			params.add(formVo.getDateTo());
 		}
-//		sql.append(" ORDER BY CREATED_DATE DESC");
+		sql.append(" ORDER BY CREATED_DATE DESC ");
 
 		String sqlCount = OracleUtils.countForDataTable(sql.toString());
 		Integer count = this.commonJdbcTemplate.queryForObject(sqlCount, params.toArray(), Integer.class);
@@ -57,24 +62,26 @@ public class IaStampDetailJdbcRepository {
 
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
-		params.add(SQL);
-		params.add(SQL);
-		if (StringUtils.isNotBlank(formVo.getSector())) {
-			sql.append(" AND EXCISE_DEPARTMENT=? ");
-			params.add(StringUtils.trim(formVo.getSector()));
+		if (StringUtils.isNotBlank(formVo.getParamCode())) {
+			sql.append(" AND STATUS = ? ");
+			params.add(ApplicationCache.getParamInfoByCode(IaConstants.STAMP_STATUS.PARAM_GROUP_CODE, formVo.getParamCode()).getValue1());
 		}
-		if (StringUtils.isNotBlank(formVo.getArea())) {
-			sql.append(" AND EXCISE_REGION=? ");
-			params.add(StringUtils.trim(formVo.getArea()));
-		}
-		if (StringUtils.isNotBlank(formVo.getBranch())) {
-			sql.append(" AND EXCISE_DISTRICT=? ");
-			params.add(StringUtils.trim(formVo.getBranch()));
-		}
+//		if (StringUtils.isNotBlank(formVo.getSector())) {
+//			sql.append(" AND EXCISE_DEPARTMENT = ? ");
+//			params.add(StringUtils.trim(formVo.getSector()));
+//		}
+//		if (StringUtils.isNotBlank(formVo.getArea())) {
+//			sql.append(" AND EXCISE_REGION = ? ");
+//			params.add(StringUtils.trim(formVo.getArea()));
+//		}
+//		if (StringUtils.isNotBlank(formVo.getBranch())) {
+//			sql.append(" AND EXCISE_DISTRICT = ? ");
+//			params.add(StringUtils.trim(formVo.getBranch()));
+//		}
 		if (StringUtils.isNotBlank(formVo.getDateForm()) && StringUtils.isNotBlank(formVo.getDateTo())) {
-			sql.append(" AND TO_CHAR(DATE_OF_PAY,'YYYYMMDD') BETWEEN ? AND ?");
-			params.add(formVo.getDateForm());
-			params.add(formVo.getDateTo());
+			sql.append(" AND (? <= DATE_OF_PAY) AND (? >= DATE_OF_PAY)");
+			params.add(ConvertDateUtils.parseStringToDate(formVo.getDateForm(), ConvertDateUtils.DD_MM_YY,ConvertDateUtils.LOCAL_TH));
+			params.add(ConvertDateUtils.parseStringToDate(formVo.getDateTo(), ConvertDateUtils.DD_MM_YY,ConvertDateUtils.LOCAL_TH));
 		}
 		sql.append(" ORDER BY CREATED_DATE DESC ");
 		List<Int120101Vo> list = commonJdbcTemplate.query(sql.toString(), params.toArray(), stamRowmapper);
@@ -85,8 +92,6 @@ public class IaStampDetailJdbcRepository {
 	public List<Int120101Vo> exportFile(Int120101FormVo formVo) {
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<>();
-		params.add(SQL);
-		params.add(SQL);
 		if (StringUtils.isNotBlank(formVo.getSector())) {
 			sql.append(" AND EXCISE_DEPARTMENT=? ");
 			params.add(StringUtils.trim(formVo.getSector()));
@@ -124,6 +129,8 @@ public class IaStampDetailJdbcRepository {
 			vo.setFivePartDate(ConvertDateUtils.formatDateToString(rs.getDate("FIVE_PART_DATE"), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 			vo.setStampCheckDate(ConvertDateUtils.formatDateToString(rs.getDate("STAMP_CHECK_DATE"), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 			vo.setStampChecker(rs.getString("STAMP_CHECKER"));
+			vo.setStampChecker2(rs.getString("STAMP_CHECKER_2"));
+			vo.setStampChecker3(rs.getString("STAMP_CHECKER_3"));
 			vo.setStampBrand(rs.getString("STAMP_BRAND"));
 			vo.setNumberOfBook(rs.getBigDecimal("NUMBER_OF_BOOK"));
 			vo.setNumberOfStamp(rs.getBigDecimal("NUMBER_OF_STAMP"));
@@ -137,6 +144,7 @@ public class IaStampDetailJdbcRepository {
 			vo.setStampCodeStart(rs.getString("STAMP_CODE_START"));
 			vo.setStampCodeEnd(rs.getString("STAMP_CODE_END"));
 			vo.setFileName(rs.getString("FILE_NAME"));
+			vo.setDepartmentName(rs.getString("DEPARTMENT_NAME"));
 
 			return vo;
 		}

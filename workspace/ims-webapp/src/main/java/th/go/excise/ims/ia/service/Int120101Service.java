@@ -30,6 +30,8 @@ import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.LabelValueBean;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaStampDetail;
 import th.go.excise.ims.ia.persistence.entity.IaStampFile;
 import th.go.excise.ims.ia.persistence.repository.IaStampDetailRepository;
@@ -143,18 +145,17 @@ public class Int120101Service {
 	private static final Logger log = LoggerFactory.getLogger(Int120101Service.class);
 
 	public DataTableAjax<Int120101Vo> findAll(Int120101FormVo formVo) {
-
+		int count = 0;
 		List<Int120101Vo> list = new ArrayList<Int120101Vo>();
 		if ("TRUE".equalsIgnoreCase(formVo.getSearchFlag())) {
-//			formVo.setDateForm(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateForm()));
-//			formVo.setDateTo(DateConstant.convertStrDDMMYYYYToStrYYYYMMDD(formVo.getDateTo()));
 			list = iaStampDetailJdbcRepository.findAll(formVo);
+			count = iaStampDetailJdbcRepository.count(formVo);
 		}
 		
 		DataTableAjax<Int120101Vo> dataTableAjax = new DataTableAjax<Int120101Vo>();
 		dataTableAjax.setDraw(formVo.getDraw() + 1);
-		dataTableAjax.setRecordsTotal(iaStampDetailJdbcRepository.count(formVo));
-		dataTableAjax.setRecordsFiltered(iaStampDetailJdbcRepository.count(formVo));
+		dataTableAjax.setRecordsTotal(count);
+		dataTableAjax.setRecordsFiltered(count);
 		dataTableAjax.setData(list);
 
 		return dataTableAjax;
@@ -181,7 +182,7 @@ public class Int120101Service {
 //		entity.setOfficeDesc(lov.getSubTypeDescription());
 
 		entity.setDateOfPay(ConvertDateUtils.parseStringToDate(form.getDateOfPay(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-		entity.setStatus(form.getStatus());
+		entity.setStatus(ApplicationCache.getParamInfoByCode(IaConstants.STAMP_STATUS.PARAM_GROUP_CODE, form.getStatus()).getValue1());
 
 		entity.setBookNumberWithdrawStamp(form.getBookNumberWithdrawStamp());
 		entity.setDateWithdrawStamp(ConvertDateUtils.parseStringToDate(form.getDateWithdrawStamp(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
