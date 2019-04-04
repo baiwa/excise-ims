@@ -1,18 +1,21 @@
 package th.go.excise.ims.ia.vo;
 
+import java.math.BigDecimal;
+
 public class Int120401FormVo {
-	private String accountId;
+	private BigDecimal accountId;
 	private String accountName;
 	private String searchFlag;
 	private String year;
 	private String yearFrom;
 	private String yearTo;
 
-	public String getAccountId() {
+
+	public BigDecimal getAccountId() {
 		return accountId;
 	}
 
-	public void setAccountId(String accountId) {
+	public void setAccountId(BigDecimal accountId) {
 		this.accountId = accountId;
 	}
 

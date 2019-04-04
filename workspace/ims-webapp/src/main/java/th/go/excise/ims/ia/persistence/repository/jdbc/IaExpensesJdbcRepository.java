@@ -1,16 +1,42 @@
 package th.go.excise.ims.ia.persistence.repository.jdbc;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.go.excise.ims.ia.persistence.entity.IaExpenses;
+import th.go.excise.ims.ia.vo.Int120401FormVo;
 
 @Repository
 public class IaExpensesJdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
-//	private final String SQL = "SELECT * FROM IA_EXPENSES WHERE IS_DELETED = 'N' ";
+	private final String SQL = "SELECT * FROM IA_EXPENSES WHERE IS_DELETED = 'N' ";
+
+	public List<IaExpenses> findByYearByCoa(Int120401FormVo formVo) {
+		StringBuilder sql = new StringBuilder(SQL);
+		List<Object> params = new ArrayList<>();
+
+		if (formVo.getAccountId() != null) {
+			sql.append(" AND ACCOUNT_ID = ? ");
+			params.add(formVo.getAccountId());
+		}
+//		if(StringUtils.isNotBlank(formVo.getYear())) {
+//			sql.append(" AND ACCOUNTID = ? ");
+//			params.add(formVo.getAccountId());
+//		}
+//		
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		List<IaExpenses> data = commonJdbcTemplate.query(sql.toString(), params.toArray(),
+				new BeanPropertyRowMapper(IaExpenses.class));
+		return data;
+	}
 //
 //	public Long count(Int120401FormVo formVo) {
 //		StringBuilder sql = new StringBuilder(SQL);
@@ -92,5 +118,5 @@ public class IaExpensesJdbcRepository {
 //			return vo;
 //		}
 //	};
-	
+
 }
