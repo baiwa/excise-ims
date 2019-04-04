@@ -28,6 +28,7 @@ import th.go.excise.ims.ia.persistence.repository.IaStampDetailRepository;
 import th.go.excise.ims.ia.persistence.repository.IaStampFileRepository;
 import th.go.excise.ims.ia.persistence.repository.IaStampGenreRepository;
 import th.go.excise.ims.ia.persistence.repository.IaStampTypeRepository;
+import th.go.excise.ims.ia.persistence.repository.jdbc.IaStampTypeJdbcRepository;
 import th.go.excise.ims.ia.vo.ExciseFile;
 import th.go.excise.ims.ia.vo.Int12010101Vo;
 
@@ -44,7 +45,7 @@ public class Int12010101Service {
 	private IaStampFileRepository iaStampFileRepository;
 	
 	@Autowired
-    private IaStampTypeRepository iaStamTypeRepository;
+    private IaStampTypeJdbcRepository iaStampTypeJdbcRepository;
 
 	@Autowired
     private IaStampGenreRepository iaStamGenreRepository;
@@ -117,7 +118,8 @@ public class Int12010101Service {
 	}
 	
 	public List<IaStampType> stamTypes(){
-        return iaStamTypeRepository.findAll();
+		
+        return iaStampTypeJdbcRepository.getDataAll();
     }
 
     public List<IaStampGenre> stamGenres(String stamTypeId){
