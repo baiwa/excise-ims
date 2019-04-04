@@ -143,4 +143,21 @@ public class IaConstants {
 		public static final String VALUE_1_DESC_III = "ดำเนินการเสร็จสิ้น";
 		public static final String VALUE_2_COLOR_III = "#5ef35e";
 	}
+	
+//	************************* IA_STAMP_DETAIL *************************
+	
+	public class STAMP_STATUS {
+
+		public static final String PARAM_GROUP_CODE = "IA_STAMP_STATUS";
+
+		public static final String PARAM_CODE_I = "1";
+		public static final String VALUE_1_DESC_I = "รับ";
+
+		public static final String PARAM_CODE_II = "2";
+		public static final String VALUE_1_DESC_II = "จ่าย";
+		
+		public static final String PARAM_CODE_III = "3";
+		public static final String VALUE_1_DESC_III = "ส่งคืน";
+
+	}
 }
