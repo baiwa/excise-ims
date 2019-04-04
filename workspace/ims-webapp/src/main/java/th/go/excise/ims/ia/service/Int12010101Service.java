@@ -22,8 +22,12 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.ia.persistence.entity.IaStampDetail;
 import th.go.excise.ims.ia.persistence.entity.IaStampFile;
+import th.go.excise.ims.ia.persistence.entity.IaStampGenre;
+import th.go.excise.ims.ia.persistence.entity.IaStampType;
 import th.go.excise.ims.ia.persistence.repository.IaStampDetailRepository;
 import th.go.excise.ims.ia.persistence.repository.IaStampFileRepository;
+import th.go.excise.ims.ia.persistence.repository.IaStampGenreRepository;
+import th.go.excise.ims.ia.persistence.repository.IaStampTypeRepository;
 import th.go.excise.ims.ia.vo.ExciseFile;
 import th.go.excise.ims.ia.vo.Int12010101Vo;
 
@@ -38,6 +42,12 @@ public class Int12010101Service {
 	
 	@Autowired
 	private IaStampFileRepository iaStampFileRepository;
+	
+	@Autowired
+    private IaStampTypeRepository iaStamTypeRepository;
+
+	@Autowired
+    private IaStampGenreRepository iaStamGenreRepository;
 	
     @Value("${app.path.upload}")
     private String pathed;
@@ -105,6 +115,14 @@ public class Int12010101Service {
             
         }
 	}
+	
+	public List<IaStampType> stamTypes(){
+        return iaStamTypeRepository.findAll();
+    }
+
+    public List<IaStampGenre> stamGenres(String stamTypeId){
+	    return iaStamGenreRepository.findByStampTypeId(stamTypeId);
+    }
 	
 	
 	 public void uploadFile(String exciseId, ExciseFile[] files){
