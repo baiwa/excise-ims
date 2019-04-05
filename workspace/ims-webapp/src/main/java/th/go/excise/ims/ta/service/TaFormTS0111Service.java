@@ -237,8 +237,8 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 			formTS0111DtlVo = new TaFormTS0111DtlVo();
 			toVoDtl(formTS0111DtlVo, formTs0111Dtl);
 			formTS0111DtlVo.setDocName(StringUtils.defaultString(formTS0111DtlVo.getDocName()));
-			formTS0111DtlVo.setDocComment(StringUtils.defaultString(formTS0111DtlVo.getDocQty()));
-			formTS0111DtlVo.setDocQty(StringUtils.defaultString(formTS0111DtlVo.getDocComment()));
+			formTS0111DtlVo.setDocQty(StringUtils.defaultString(formTS0111DtlVo.getDocQty()));
+			formTS0111DtlVo.setDocComment(StringUtils.defaultString(formTS0111DtlVo.getDocComment()));
 			formTS0111DtlVoList.add(formTS0111DtlVo);
 		}
 		formTS0111Vo.setTaFormTS0111DtlVoList(formTS0111DtlVoList);
