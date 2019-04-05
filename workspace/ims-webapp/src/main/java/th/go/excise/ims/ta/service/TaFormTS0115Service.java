@@ -192,8 +192,15 @@ public class TaFormTS0115Service extends AbstractTaFormTSService<TaFormTS0115Vo,
 		TaFormTS0115DtlVo formTS0115DtlVo = null;
 		for (TaFormTs0115Dtl formTs0115Dtl : formTs0115DtlList) {
 			formTS0115DtlVo = new TaFormTS0115DtlVo();
-			toVoDtl(formTS0115DtlVo, formTs0115Dtl);
-			formTS0115DtlVo.setDutyTypeText(StringUtils.defaultString(formTS0115DtlVo.getDutyTypeText()));
+			formTS0115DtlVo.setFormTs0115DtlId(StringUtils.defaultString(Long.toString(formTs0115Dtl.getFormTs0115DtlId())));
+			formTS0115DtlVo.setRecNo(StringUtils.defaultString(formTs0115Dtl.getRecNo()));
+			formTS0115DtlVo.setDutyTypeText(StringUtils.defaultString(formTs0115Dtl.getDutyTypeText()));
+			formTS0115DtlVo.setRecDate(formTs0115Dtl.getRecDate());
+			formTS0115DtlVo.setTaxAmt(formTs0115Dtl.getTaxAmt());
+			formTS0115DtlVo.setFineAmt(formTs0115Dtl.getFineAmt());
+			formTS0115DtlVo.setExtraAmt(formTs0115Dtl.getExtraAmt());
+			formTS0115DtlVo.setMoiAmt(formTs0115Dtl.getMoiAmt());
+			formTS0115DtlVo.setSumTaxAmt(formTs0115Dtl.getSumTaxAmt());
 
 			formTS0115DtlVoList.add(formTS0115DtlVo);
 		}
@@ -205,14 +212,6 @@ public class TaFormTS0115Service extends AbstractTaFormTSService<TaFormTS0115Vo,
 	private void toEntityDtl(TaFormTs0115Dtl entity, TaFormTS0115DtlVo vo) {
 		try {
 			BeanUtils.copyProperties(entity, vo);
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			logger.warn(e.getMessage(), e);
-		}
-	}
-
-	private void toVoDtl(TaFormTS0115DtlVo vo, TaFormTs0115Dtl entity) {
-		try {
-			BeanUtils.copyProperties(vo, entity);
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			logger.warn(e.getMessage(), e);
 		}
