@@ -43,7 +43,7 @@ public class PccRequestHeaderService {
 	
 	
 	public String postRestful(String endPoint, Object object) throws IOException {
-		logger.info(" endPoint : {}",  endPoint);
+		logger.info(" postRestful endPoint : {}",  endPoint);
 		PccRequestHeader requestRestful = new PccRequestHeader();
 		requestRestful.setSystemId(systemId);
 		requestRestful.setUserName(username);
@@ -53,6 +53,11 @@ public class PccRequestHeaderService {
 		Gson gson = new Gson();
 		String json = gson.toJson(requestRestful);
 		return wsService.post(endPoint, json);
+	}
+	
+	public String getRestful(String endPoint) throws IOException {
+		logger.info(" getRestful endPoint : {}",  endPoint);
+		return wsService.get(endPoint);
 	}
 	
 	

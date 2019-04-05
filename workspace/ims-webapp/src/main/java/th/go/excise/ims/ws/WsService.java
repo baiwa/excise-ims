@@ -56,4 +56,17 @@ public class WsService {
 	    return response.body().string();
 	  }
 	}
+	
+	public String get(String url) throws IOException {
+
+		logger.info(" getRestful url : {}", url);
+		  Request request = new Request.Builder()
+		      .url(url)
+		      .build();
+		  
+		  	Response response = client.newCall(request).execute();
+		  	
+		    return response.body().string();
+		  
+		}
 }
