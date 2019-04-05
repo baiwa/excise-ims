@@ -8,7 +8,8 @@ public class TaFormTS0116Vo {
 	private String formTsNumber;
 	private String docText;
 	private String docDear;
-	private String factoryName;
+	private String factoryName1;
+	private String factoryName2;
 	private String factoryType;
 	private String newRegId;
 	private Date requestDate;
@@ -47,6 +48,22 @@ public class TaFormTS0116Vo {
 	private String signApproverFullName;
 	private String signApproverPosition;
 	private Date signApproverDate;
+	
+	public String getFactoryName1() {
+		return factoryName1;
+	}
+
+	public void setFactoryName1(String factoryName1) {
+		this.factoryName1 = factoryName1;
+	}
+
+	public String getFactoryName2() {
+		return factoryName2;
+	}
+
+	public void setFactoryName2(String factoryName2) {
+		this.factoryName2 = factoryName2;
+	}
 
 	public String getFormTsNumber() {
 		return formTsNumber;
@@ -71,15 +88,6 @@ public class TaFormTS0116Vo {
 	public void setDocDear(String docDear) {
 		this.docDear = docDear;
 	}
-
-	public String getFactoryName() {
-		return factoryName;
-	}
-
-	public void setFactoryName(String factoryName) {
-		this.factoryName = factoryName;
-	}
-
 	public String getFactoryType() {
 		return factoryType;
 	}

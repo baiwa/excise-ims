@@ -80,7 +80,8 @@ public class TaFormTS0116Service extends AbstractTaFormTSService<TaFormTS0116Vo,
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE + "." + FILE_EXTENSION.JPG));
 		params.put("docText",formTS0116Vo.getDocText());
 		params.put("docDear",formTS0116Vo.getDocDear());
-		params.put("factoryName",formTS0116Vo.getFactoryName());
+		params.put("factoryName1",formTS0116Vo.getFactoryName1());
+		params.put("factoryName2",formTS0116Vo.getFactoryName2());
 		params.put("factoryType",formTS0116Vo.getFactoryType());
 		params.put("newRegId",formTS0116Vo.getNewRegId());
 		params.put("requestDate",formTS0116Vo.getRequestDate());

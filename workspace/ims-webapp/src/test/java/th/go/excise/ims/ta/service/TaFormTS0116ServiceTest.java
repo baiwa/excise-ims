@@ -28,7 +28,7 @@ public class TaFormTS0116ServiceTest {
 		//formTS0116Vo.setFormTsNumber("");
 		formTS0116Vo.setDocText("");
 		formTS0116Vo.setDocDear("");
-		formTS0116Vo.setFactoryName("");
+		formTS0116Vo.setFactoryName1("");
 		formTS0116Vo.setFactoryType("");
 		formTS0116Vo.setNewRegId("");
 		formTS0116Vo.setRequestDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 3, 4))));
