@@ -20,7 +20,7 @@ public class TaFormTS0116Vo {
 	private String requestDesc;
 	private String fineNoFlag;
 	private String fineExceptAmtFlag;
-	private String findReduceAmtFlag;
+	private String fineReduceAmtFlag;
 	private BigDecimal finePercent;
 	private String extraNoFlag;
 	private String extraReduceAmtFlag;
@@ -168,12 +168,12 @@ public class TaFormTS0116Vo {
 		this.fineExceptAmtFlag = fineExceptAmtFlag;
 	}
 
-	public String getFindReduceAmtFlag() {
-		return findReduceAmtFlag;
+	public String getFineReduceAmtFlag() {
+		return fineReduceAmtFlag;
 	}
 
-	public void setFindReduceAmtFlag(String findReduceAmtFlag) {
-		this.findReduceAmtFlag = findReduceAmtFlag;
+	public void setFineReduceAmtFlag(String fineReduceAmtFlag) {
+		this.fineReduceAmtFlag = fineReduceAmtFlag;
 	}
 
 	public BigDecimal getFinePercent() {
