@@ -36,10 +36,12 @@ public class TaFormTs0116 extends BaseEntity {
 	private String docText;
 	@Column(name = "DOC_DEAR")
 	private String docDear;
-	@Column(name = "FACTORY_NAME")
-	private String factoryName;
+	@Column(name = "FACTORY_NAME1")
+	private String factoryName1;
 	@Column(name = "FACTORY_TYPE")
 	private String factoryType;
+	@Column(name = "FACTORY_NAME2")
+	private String factoryName2;
 	@Column(name = "REQUEST_DATE")
 	private Date requestDate;
 	@Column(name = "REQUEST_TYPE_EXCEPT")
@@ -169,12 +171,12 @@ public class TaFormTs0116 extends BaseEntity {
 		this.docDear = docDear;
 	}
 
-	public String getFactoryName() {
-		return factoryName;
+	public String getFactoryName1() {
+		return factoryName1;
 	}
 
-	public void setFactoryName(String factoryName) {
-		this.factoryName = factoryName;
+	public void setFactoryName1(String factoryName1) {
+		this.factoryName1 = factoryName1;
 	}
 
 	public String getFactoryType() {
@@ -183,6 +185,14 @@ public class TaFormTs0116 extends BaseEntity {
 
 	public void setFactoryType(String factoryType) {
 		this.factoryType = factoryType;
+	}
+
+	public String getFactoryName2() {
+		return factoryName2;
+	}
+
+	public void setFactoryName2(String factoryName2) {
+		this.factoryName2 = factoryName2;
 	}
 
 	public Date getRequestDate() {

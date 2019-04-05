@@ -9,8 +9,9 @@
 	<parameter name="logo" class="java.io.InputStream"/>
 	<parameter name="docText" class="java.lang.String"/>
 	<parameter name="docDear" class="java.lang.String"/>
-	<parameter name="factoryName" class="java.lang.String"/>
+	<parameter name="factoryName1" class="java.lang.String"/>
 	<parameter name="factoryType" class="java.lang.String"/>
+	<parameter name="factoryName2" class="java.lang.String"/>
 	<parameter name="newRegId" class="java.lang.String"/>
 	<parameter name="requestDate" class="java.util.Date"/>
 	<parameter name="requestTypeExcept" class="java.lang.String"/>
@@ -101,7 +102,7 @@
 					<pen lineWidth="0.0" lineStyle="Dotted"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$P{factoryName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{factoryName1}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement key="" x="0" y="145" width="20" height="20" uuid="f8bef9ab-f6d8-48a4-972f-181f833eed49"/>
@@ -150,7 +151,7 @@
 					<pen lineWidth="0.0" lineStyle="Dotted"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$P{factoryName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{factoryName2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="164" width="92" height="18" uuid="a0f68f79-c717-4cf8-a4a0-38fb9f2bd550"/>
