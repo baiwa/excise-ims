@@ -1,5 +1,6 @@
 package th.go.excise.ims.ia.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,4 +66,22 @@ public class Int12040101Controller {
 		return responseData;
 	}
 	
+	@PostMapping("/findExpensesById/{id}")
+	@ResponseBody
+	public ResponseData<IaExpenses> findByYearByCoa(@PathVariable("id") BigDecimal id) {
+		ResponseData<IaExpenses> responseData = new ResponseData<IaExpenses>();
+		IaExpenses data = new IaExpenses();
+
+		try {
+			data = int12040101Service.findExpensesById(id);
+			responseData.setData(data);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Int020101Controller::findAllQtnSide ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
 }

@@ -1,5 +1,6 @@
 package th.go.excise.ims.ia.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,9 @@ public class Int12040101Service {
 	
 	public void saveExpenses(IaExpenses form) {
 		IaExpenses data = new IaExpenses();
+		if(form.getId() != null) {
+			data = iaExpensesRepository.findById(form.getId()).get();
+		}
 		data.setAccountId(form.getAccountId());
 		data.setAccountName(form.getAccountName());
 		data.setServiceReceive(form.getServiceReceive());
@@ -59,5 +63,11 @@ public class Int12040101Service {
 		data.setOfficeCode(form.getOfficeCode());
 		data.setOfficeDesc(form.getOfficeDesc());
 		iaExpensesRepository.save(data);
+	}
+	
+	public IaExpenses findExpensesById(BigDecimal id) {
+		IaExpenses dataRes = new IaExpenses();
+		dataRes = iaExpensesRepository.findById(id).get();
+		return dataRes;
 	}
 }

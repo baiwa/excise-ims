@@ -1,7 +1,11 @@
 package th.go.excise.ims.ia.persistence.repository.jdbc;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder.In;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +13,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.persistence.entity.IaExpenses;
 import th.go.excise.ims.ia.vo.Int120401FormVo;
 
@@ -27,11 +32,20 @@ public class IaExpensesJdbcRepository {
 			sql.append(" AND ACCOUNT_ID = ? ");
 			params.add(formVo.getAccountId());
 		}
-//		if(StringUtils.isNotBlank(formVo.getYear())) {
-//			sql.append(" AND ACCOUNTID = ? ");
-//			params.add(formVo.getAccountId());
-//		}
-//		
+
+		if (StringUtils.isNotBlank(formVo.getYear())) {
+			Integer yearFormInt = Integer.parseInt(formVo.getYear()) - 544;
+			Integer yearToInt = Integer.parseInt(formVo.getYear()) - 543;
+			String yearFormStr = "01-DEC-" + yearFormInt.toString();
+			String yearToStr = "30-NOV-" + yearToInt.toString();
+			sql.append(" AND CREATED_DATE >= ? ");
+			params.add(yearFormStr);
+//			params.add(formVo.getYearFrom());
+			sql.append(" AND CREATED_DATE <= ? ");
+			params.add(yearToStr);
+//			params.add(formVo.getYearTo());
+		}
+
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<IaExpenses> data = commonJdbcTemplate.query(sql.toString(), params.toArray(),
 				new BeanPropertyRowMapper(IaExpenses.class));
