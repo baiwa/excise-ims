@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_09" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="55" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_09" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="55" isIgnorePagination="true" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.report.description" value=""/>
@@ -27,7 +27,7 @@
 		<![CDATA[]]>
 	</queryString>
 	<pageHeader>
-		<band height="610" splitType="Stretch">
+		<band height="730" splitType="Stretch">
 			<image>
 				<reportElement x="200" y="0" width="60" height="60" uuid="90ca04f2-82d8-4e03-92ba-af7e35dc179c"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
@@ -748,6 +748,12 @@
 				<reportElement x="330" y="224" width="130" height="1" uuid="42a62676-8bdf-4da6-9ebf-690ede35dd9c"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="530" width="460" height="1" uuid="2fceaa07-f044-4c8d-90be-1ec7bf6ca1bf"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 		</band>

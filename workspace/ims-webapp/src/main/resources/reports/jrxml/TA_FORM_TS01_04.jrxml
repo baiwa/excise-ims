@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_04" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="55" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_04" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="55" isIgnorePagination="true" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
@@ -27,7 +27,7 @@
 		<![CDATA[]]>
 	</queryString>
 	<pageHeader>
-		<band height="704" splitType="Stretch">
+		<band height="730" splitType="Stretch">
 			<image isUsingCache="false">
 				<reportElement isPrintRepeatedValues="false" x="200" y="0" width="60" height="60" uuid="4d191d5a-621d-4eb5-9655-b0b21d984de0"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
@@ -243,17 +243,17 @@
 				<textFieldExpression><![CDATA[$P{signOfficerPosition}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="0" y="650" width="155" height="22" uuid="c98524e9-200f-44e5-8767-418f789ef412"/>
+				<reportElement style="TextDetail" x="0" y="680" width="155" height="22" uuid="c98524e9-200f-44e5-8767-418f789ef412"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{otherText}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="0" y="672" width="20" height="22" uuid="957de1df-b7cb-49dd-84ed-4c17ba786576"/>
+				<reportElement style="TextDetail" x="0" y="702" width="20" height="22" uuid="957de1df-b7cb-49dd-84ed-4c17ba786576"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["โทร"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="20" y="672" width="135" height="22" uuid="b3b5f250-b139-483d-8e8b-443a7e27261e"/>
+				<reportElement style="TextDetail" x="20" y="702" width="135" height="22" uuid="b3b5f250-b139-483d-8e8b-443a7e27261e"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{otherPhone}]]></textFieldExpression>
 			</textField>
@@ -407,13 +407,13 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="0" y="665" width="155" height="1" uuid="f3bc65f9-7907-4f75-99e4-bca37908a73f"/>
+				<reportElement x="0" y="695" width="155" height="1" uuid="f3bc65f9-7907-4f75-99e4-bca37908a73f"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="20" y="687" width="135" height="1" uuid="b4bc6eee-4474-4de3-a8f0-f1ff2312f36e"/>
+				<reportElement x="20" y="717" width="135" height="1" uuid="b4bc6eee-4474-4de3-a8f0-f1ff2312f36e"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
