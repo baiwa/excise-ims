@@ -14,6 +14,8 @@ public class Int020101UpdateVo {
 	private String status;
 	private String qtnYear;
 	private String toDepartment;
+	private String usagePatterns;
+	private String factorLevel;
 
 	private List<Int020101SideVo> side;
 
@@ -95,6 +97,22 @@ public class Int020101UpdateVo {
 
 	public void setToDepartment(String toDepartment) {
 		this.toDepartment = toDepartment;
+	}
+
+	public String getUsagePatterns() {
+		return usagePatterns;
+	}
+
+	public void setUsagePatterns(String usagePatterns) {
+		this.usagePatterns = usagePatterns;
+	}
+
+	public String getFactorLevel() {
+		return factorLevel;
+	}
+
+	public void setFactorLevel(String factorLevel) {
+		this.factorLevel = factorLevel;
 	}
 
 }

@@ -125,7 +125,8 @@ public class Int02Service {
 		data.setQtnHeaderName(request.getQtnHeaderName());
 		data.setNote(request.getNote());
 		data.setToDepartment(res.getToDepartment());
-
+		data.setFactorLevel(res.getFactorLevel());
+		data.setUsagePatterns(res.getUsagePatterns());
 		/* update table Questionnaire-Made-Hdr */
 //		List<IaQuestionnaireMadeHdr> dataMadeHdr = iaQuestionnaireMadeHdrRepository.findByIdHdr(request.getId());
 //		for (IaQuestionnaireMadeHdr objMadeHdr : dataMadeHdr) {
