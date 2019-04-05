@@ -184,7 +184,7 @@ public class TaFormTSController {
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			response.setMessage(e.getMessage());
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
 		}
 
