@@ -42,22 +42,30 @@ public class TaFormTs0116 extends BaseEntity {
 	private String factoryType;
 	@Column(name = "REQUEST_DATE")
 	private Date requestDate;
-	@Column(name = "REQUEST_TYPE")
-	private String requestType;
+	@Column(name = "REQUEST_TYPE_EXCEPT")
+	private String requestTypeExcept;
+	@Column(name = "REQUEST_TYPE_REDUCE")
+	private String requestTypeReduce;
+	@Column(name = "REQUEST_TYPE_FINE_AMT")
+	private String requestTypeFineAmt;
+	@Column(name = "REQUEST_TYPE_EXTRA_AMT")
+	private String requestTypeExtraAmt;
 	@Column(name = "REQUEST_REASON")
 	private String requestReason;
 	@Column(name = "REQUEST_DESC")
 	private String requestDesc;
 	@Column(name = "FINE_NO_FLAG")
 	private String fineNoFlag;
-	@Column(name = "FINE_AMT_FLAG")
-	private String fineAmtFlag;
+	@Column(name = "FINE_EXCEPT_AMT_FLAG")
+	private String fineExceptAmtFlag;
+	@Column(name = "FIND_REDUCE_AMT_FLAG")
+	private String findReduceAmtFlag;
 	@Column(name = "FINE_PERCENT")
 	private BigDecimal finePercent;
 	@Column(name = "EXTRA_NO_FLAG")
 	private String extraNoFlag;
-	@Column(name = "EXTRA_AMT_FLAG")
-	private String extraAmtFlag;
+	@Column(name = "EXTRA_REDUCE_AMT_FLAG")
+	private String extraReduceAmtFlag;
 	@Column(name = "EXTRA_PERCENT")
 	private BigDecimal extraPercent;
 	@Column(name = "BEFORE_TAX_AMT")
@@ -185,12 +193,36 @@ public class TaFormTs0116 extends BaseEntity {
 		this.requestDate = requestDate;
 	}
 
-	public String getRequestType() {
-		return requestType;
+	public String getRequestTypeExcept() {
+		return requestTypeExcept;
 	}
 
-	public void setRequestType(String requestType) {
-		this.requestType = requestType;
+	public void setRequestTypeExcept(String requestTypeExcept) {
+		this.requestTypeExcept = requestTypeExcept;
+	}
+
+	public String getRequestTypeReduce() {
+		return requestTypeReduce;
+	}
+
+	public void setRequestTypeReduce(String requestTypeReduce) {
+		this.requestTypeReduce = requestTypeReduce;
+	}
+
+	public String getRequestTypeFineAmt() {
+		return requestTypeFineAmt;
+	}
+
+	public void setRequestTypeFineAmt(String requestTypeFineAmt) {
+		this.requestTypeFineAmt = requestTypeFineAmt;
+	}
+
+	public String getRequestTypeExtraAmt() {
+		return requestTypeExtraAmt;
+	}
+
+	public void setRequestTypeExtraAmt(String requestTypeExtraAmt) {
+		this.requestTypeExtraAmt = requestTypeExtraAmt;
 	}
 
 	public String getRequestReason() {
@@ -217,12 +249,20 @@ public class TaFormTs0116 extends BaseEntity {
 		this.fineNoFlag = fineNoFlag;
 	}
 
-	public String getFineAmtFlag() {
-		return fineAmtFlag;
+	public String getFineExceptAmtFlag() {
+		return fineExceptAmtFlag;
 	}
 
-	public void setFineAmtFlag(String fineAmtFlag) {
-		this.fineAmtFlag = fineAmtFlag;
+	public void setFineExceptAmtFlag(String fineExceptAmtFlag) {
+		this.fineExceptAmtFlag = fineExceptAmtFlag;
+	}
+
+	public String getFindReduceAmtFlag() {
+		return findReduceAmtFlag;
+	}
+
+	public void setFindReduceAmtFlag(String findReduceAmtFlag) {
+		this.findReduceAmtFlag = findReduceAmtFlag;
 	}
 
 	public BigDecimal getFinePercent() {
@@ -241,12 +281,12 @@ public class TaFormTs0116 extends BaseEntity {
 		this.extraNoFlag = extraNoFlag;
 	}
 
-	public String getExtraAmtFlag() {
-		return extraAmtFlag;
+	public String getExtraReduceAmtFlag() {
+		return extraReduceAmtFlag;
 	}
 
-	public void setExtraAmtFlag(String extraAmtFlag) {
-		this.extraAmtFlag = extraAmtFlag;
+	public void setExtraReduceAmtFlag(String extraReduceAmtFlag) {
+		this.extraReduceAmtFlag = extraReduceAmtFlag;
 	}
 
 	public BigDecimal getExtraPercent() {
