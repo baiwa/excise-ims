@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Oa07Vo {
+	private String newRegId;
 	private String cusFullname;
 	private String facFullname;
 	private String facAddress;
 	private String dutyCode;
+	private String dutyDesc;
 	private String officeCodeR4000;
 	private String secCode;
 	private String secDesc;
@@ -17,6 +19,31 @@ public class Oa07Vo {
 	private String regDate;
 	private String regCapital;
 	private List<String> taxPayList = new ArrayList<>();
+	private List<String> perceneDiff = new ArrayList<>();
+
+	public String getDutyDesc() {
+		return dutyDesc;
+	}
+
+	public void setDutyDesc(String dutyDesc) {
+		this.dutyDesc = dutyDesc;
+	}
+
+	public String getNewRegId() {
+		return newRegId;
+	}
+
+	public void setNewRegId(String newRegId) {
+		this.newRegId = newRegId;
+	}
+
+	public List<String> getPerceneDiff() {
+		return perceneDiff;
+	}
+
+	public void setPerceneDiff(List<String> perceneDiff) {
+		this.perceneDiff = perceneDiff;
+	}
 
 	public List<String> getTaxPayList() {
 		return taxPayList;

@@ -4,7 +4,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
@@ -12,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0703JdbcRepository;
 import th.go.excise.ims.oa.vo.Oa0703TaxpayVo;
 import th.go.excise.ims.oa.vo.Oa07FormVo;
@@ -35,37 +40,62 @@ public class Oa0703Service {
 		Oa07Vo vo = null;
 		for (Oa07Reg4000Vo reg4000 : reg4000List) {
 			vo = new Oa07Vo();
-			copyPropertiesReg4000(vo, reg4000);
-
-			// ==> query tax pay
-			List<Oa0703TaxpayVo> reg8000MList = oa07Jdb03cRepository.reg8000M(reg4000.getNewRegId());
+			copyPropertiesReg4000(vo, reg4000);	
+			String dutyDesc = ExciseUtils.getDutyDesc(vo.getDutyCode());
+			vo.setDutyDesc(dutyDesc);
 
 			int i = 0;
-			List<String> listDtl = new ArrayList<>();
-			for (Oa0703TaxpayVo reg8000 : reg8000MList) {
+			List<String> taxListDtl = new ArrayList<>();
+			List<String> percenDiffList = new ArrayList<>();
+			List<Integer> budgetYears = new ArrayList<>();
 
-				//check sum null
-				if(reg8000.getSumTaxAmount() == null) {
-					reg8000.setSumTaxAmount(BigDecimal.ZERO);
-				}
+			//=> add list bydget year
+			Date yyyyDate = ConvertDateUtils.parseStringToDate(formVo.getBudgetYear(), ConvertDateUtils.YYYY);
+			String yyyy = ConvertDateUtils.formatDateToString(yyyyDate, ConvertDateUtils.YYYY,ConvertDateUtils.LOCAL_EN);
+			for (int p = Integer.valueOf(formVo.getPreviousYear()); p > 0; p--) {
+				int budgerYear = Integer.valueOf(yyyy);
+				budgetYears.add(budgerYear - p);
+			}
+			// ==> query tax pay
+			List<Oa0703TaxpayVo> reg8000MList = oa07Jdb03cRepository.reg8000M(reg4000.getNewRegId(), budgetYears);
+			Map<String, Oa0703TaxpayVo> reg8000MMap = new HashMap<>();
+			for (Oa0703TaxpayVo voMap : reg8000MList) {				
+				reg8000MMap.put(voMap.getTaxYear(), voMap);
+			}
+						
+			for (int idx = 0; idx < budgetYears.size(); idx++) {
+				Oa0703TaxpayVo reg8000 = reg8000MMap.get(budgetYears.get(idx));
 				
-				listDtl.add(reg8000.getSumTaxAmount().toString());
-				if (i > 0) {
-					Oa0703TaxpayVo taxAmBefor = reg8000MList.get(i - 1);
-					if(taxAmBefor.getSumTaxAmount() == null) {
-						taxAmBefor.setSumTaxAmount(BigDecimal.ZERO);
+				if(reg8000 != null) {
+					// check sum null
+					if (reg8000.getSumTaxAmount() == null) {
+						reg8000.setSumTaxAmount(BigDecimal.ZERO);
 					}
-					BigDecimal sub = reg8000.getSumTaxAmount().subtract(taxAmBefor.getSumTaxAmount()); // b-a
-					BigDecimal multi = sub.multiply(new BigDecimal(100)); // b-a*100
-					BigDecimal avg = multi.divide(reg8000.getSumTaxAmount(), 2, RoundingMode.HALF_UP); //b-a*100/b
 
-					listDtl.add(avg.toString()+" %");
+					taxListDtl.add(reg8000.getSumTaxAmount().toString());
+					if (i > 0) {
+						Oa0703TaxpayVo taxAmBefor = reg8000MList.get(i - 1);
+						if (taxAmBefor.getSumTaxAmount() == null) {
+							taxAmBefor.setSumTaxAmount(BigDecimal.ZERO);
+						}
+						BigDecimal sub = reg8000.getSumTaxAmount().subtract(taxAmBefor.getSumTaxAmount()); // b-a
+						BigDecimal multi = sub.multiply(new BigDecimal(100)); // b-a*100
+						BigDecimal avg = multi.divide(reg8000.getSumTaxAmount(), 2, RoundingMode.HALF_UP); // b-a*100/b
+
+						// taxListDtl.add(avg.toString()+" %");
+						percenDiffList.add(avg.toString() + " %");
+					} else {
+						// taxListDtl.add("");
+						percenDiffList.add("");
+					}
 				}else {
-					listDtl.add("");
+					percenDiffList.add("");
+					taxListDtl.add(BigDecimal.ZERO.toString());
 				}
 				i++;
 			}
-			vo.setTaxPayList(listDtl);
+			vo.setTaxPayList(taxListDtl);
+			vo.setPerceneDiff(percenDiffList);
 			voList.add(vo);
 		}
 		return voList;

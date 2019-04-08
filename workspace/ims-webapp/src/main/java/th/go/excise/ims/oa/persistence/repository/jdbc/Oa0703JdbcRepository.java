@@ -90,7 +90,7 @@ public class Oa0703JdbcRepository {
 	};
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public List<Oa0703TaxpayVo> reg8000M(String newRegId) {
+	public List<Oa0703TaxpayVo> reg8000M(String newRegId, List<Integer> budgetYears) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 
@@ -100,10 +100,26 @@ public class Oa0703JdbcRepository {
 		sql.append("    SUM(TAX_AMOUNT) SUM_TAX_AMOUNT");
 		sql.append(" FROM  TA_WS_INC8000_M WHERE IS_DELETED='N' ");
 		sql.append(" AND NEW_REG_ID=? ");
+		params.add(newRegId);
+		if (!budgetYears.isEmpty()) {
+			sql.append(" AND TAX_YEAR IN( ");
+			int i = 0;
+			for (Integer budgetYear : budgetYears) {
+				sql.append(" ? ");
+				params.add(budgetYear);
+				if(i != (budgetYears.size()-1)) {
+					sql.append(" , ");
+				}
+				i++;
+			}
+			
+			sql.append(" ) ");
+		}
+		
 		sql.append(" GROUP BY NEW_REG_ID, TAX_YEAR ");
 		sql.append(" ORDER BY TAX_YEAR ");
 
-		params.add(newRegId);
+		
 		return this.commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper(Oa0703TaxpayVo.class));
 	}
 
