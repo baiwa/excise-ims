@@ -23,6 +23,50 @@ public class Oa0703JdbcRepository {
 	@Autowired
 	CommonJdbcTemplate commonJdbcTemplate;
 
+	public Long reg4000Count(Oa07FormVo formVo) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+
+		sql.append(" SELECT R4000.CUS_FULLNAME ,  ");
+		sql.append("   R4000.FAC_FULLNAME ,  ");
+		sql.append("   R4000.NEW_REG_ID ,  ");
+		sql.append("   R4000.FAC_ADDRESS ,  ");
+		sql.append("   R4000.DUTY_CODE ,  ");
+		sql.append("   R4000.OFFICE_CODE OFFICE_CODE_R4000 ,  ");
+		sql.append("   ED_SECTOR.OFFICE_CODE SEC_CODE ,  ");
+		sql.append("   ED_SECTOR.OFF_SHORT_NAME SEC_DESC ,  ");
+		sql.append("   ED_AREA.OFFICE_CODE AREA_CODE ,  ");
+		sql.append("   ED_AREA.OFF_SHORT_NAME AREA_DESC ,  ");
+		sql.append("   R4000.REG_STATUS,  ");
+		sql.append("   R4000.REG_DATE,  ");
+		sql.append("   R4000.REG_CAPITAL  ");
+		sql.append(" FROM TA_WS_REG4000 R4000 ");
+		sql.append(" INNER JOIN (  ");
+		sql.append("   SELECT OFF_CODE OFFICE_CODE,  ");
+		sql.append("     OFF_NAME,  ");
+		sql.append("     OFF_SHORT_NAME  ");
+		sql.append("   FROM EXCISE_DEPARTMENT  ");
+		sql.append("   WHERE IS_DELETED = 'N'  ");
+		sql.append("     AND CONCAT (SUBSTR(OFF_CODE, 0, 2),'0000') = OFF_CODE  ");
+		sql.append(" ) ED_SECTOR ON ED_SECTOR.OFFICE_CODE = CONCAT (SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000')  ");
+		sql.append(" INNER JOIN (  ");
+		sql.append("   SELECT OFF_CODE OFFICE_CODE,  ");
+		sql.append("     OFF_NAME,  ");
+		sql.append("     OFF_SHORT_NAME  ");
+		sql.append("   FROM EXCISE_DEPARTMENT  ");
+		sql.append("   WHERE IS_DELETED = 'N'  ");
+		sql.append("     AND CONCAT (SUBSTR(OFF_CODE, 0, 4),'00') = OFF_CODE  ");
+		sql.append(" ) ED_AREA ON ED_AREA.OFFICE_CODE = CONCAT (SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
+		sql.append(" WHERE R4000.IS_DELETED='N' ");
+
+		if (StringUtils.isNotBlank(formVo.getNewRegId())) {
+			sql.append(" AND r4000.new_reg_id=?  ");
+			params.add(formVo.getNewRegId());
+		}
+		String countSql = OracleUtils.countForDataTable(sql.toString());
+		return this.commonJdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
+	}
+
 	public List<Oa07Reg4000Vo> reg4000(Oa07FormVo formVo) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
@@ -107,20 +151,20 @@ public class Oa0703JdbcRepository {
 			for (Integer budgetYear : budgetYears) {
 				sql.append(" ? ");
 				params.add(budgetYear);
-				if(i != (budgetYears.size()-1)) {
+				if (i != (budgetYears.size() - 1)) {
 					sql.append(" , ");
 				}
 				i++;
 			}
-			
+
 			sql.append(" ) ");
 		}
-		
+
 		sql.append(" GROUP BY NEW_REG_ID, TAX_YEAR ");
 		sql.append(" ORDER BY TAX_YEAR ");
 
-		
-		return this.commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper(Oa0703TaxpayVo.class));
+		return this.commonJdbcTemplate.query(sql.toString(), params.toArray(),
+				new BeanPropertyRowMapper(Oa0703TaxpayVo.class));
 	}
 
 }

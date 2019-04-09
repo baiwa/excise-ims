@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,7 @@ import th.go.excise.ims.oa.vo.Oa0703TaxpayVo;
 import th.go.excise.ims.oa.vo.Oa07FormVo;
 import th.go.excise.ims.oa.vo.Oa07Reg4000Vo;
 import th.go.excise.ims.oa.vo.Oa07Vo;
+import th.go.excise.ims.oa.vo.ResponseOa07Vo;
 
 @Service
 public class Oa0703Service {
@@ -31,7 +33,7 @@ public class Oa0703Service {
 	@Autowired
 	private Oa0703JdbcRepository oa07Jdb03cRepository;
 
-	public List<Oa07Vo> reg4000(Oa07FormVo formVo) {
+	public ResponseOa07Vo reg4000(Oa07FormVo formVo) {
 
 		List<Oa07Reg4000Vo> reg4000List = oa07Jdb03cRepository.reg4000(formVo);
 
@@ -52,10 +54,16 @@ public class Oa0703Service {
 			//=> add list bydget year
 			Date yyyyDate = ConvertDateUtils.parseStringToDate(formVo.getBudgetYear(), ConvertDateUtils.YYYY);
 			String yyyy = ConvertDateUtils.formatDateToString(yyyyDate, ConvertDateUtils.YYYY,ConvertDateUtils.LOCAL_EN);
-			for (int p = Integer.valueOf(formVo.getPreviousYear()); p > 0; p--) {
+//			for (int p = Integer.valueOf(formVo.getPreviousYear()); p > 0; p--) {
+//				int budgerYear = Integer.valueOf(yyyy);
+//				budgetYears.add(budgerYear - p);
+//			}
+//			
+			for (int p = 0; p < Integer.valueOf(formVo.getPreviousYear()); p++) {
 				int budgerYear = Integer.valueOf(yyyy);
 				budgetYears.add(budgerYear - p);
 			}
+			Collections.sort(budgetYears); 
 			// ==> query tax pay
 			List<Oa0703TaxpayVo> reg8000MList = oa07Jdb03cRepository.reg8000M(reg4000.getNewRegId(), budgetYears);
 			Map<String, Oa0703TaxpayVo> reg8000MMap = new HashMap<>();
@@ -64,7 +72,7 @@ public class Oa0703Service {
 			}
 						
 			for (int idx = 0; idx < budgetYears.size(); idx++) {
-				Oa0703TaxpayVo reg8000 = reg8000MMap.get(budgetYears.get(idx));
+				Oa0703TaxpayVo reg8000 = reg8000MMap.get(budgetYears.get(idx).toString());
 				
 				if(reg8000 != null) {
 					// check sum null
@@ -98,7 +106,11 @@ public class Oa0703Service {
 			vo.setPerceneDiff(percenDiffList);
 			voList.add(vo);
 		}
-		return voList;
+		
+		ResponseOa07Vo response07 = new ResponseOa07Vo();
+		response07.setDataList(voList);
+		response07.setCount(oa07Jdb03cRepository.reg4000Count(formVo));
+		return response07;
 	}
 
 	private void copyPropertiesReg4000(Oa07Vo vo1, Oa07Reg4000Vo vo2) {
