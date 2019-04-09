@@ -129,7 +129,7 @@ public class TaFormTS01142Service  extends AbstractTaFormTSService<TaFormTS01142
 				formTS01142Dtl.setFormTsNumber(formTS01142Hdr.getFormTsNumber());
 				formTs01142DtlList.add(formTS01142Dtl);
 			}
-			taFormTs01142DtlRepository.save(formTS01142Dtl);
+			taFormTs01142DtlRepository.saveAll(formTs01142DtlList);
 		}
 		
 		taFormTs01142HdrRepository.save(formTS01142Hdr);
