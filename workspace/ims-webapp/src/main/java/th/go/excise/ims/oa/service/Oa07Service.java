@@ -41,10 +41,10 @@ public class Oa07Service {
 			copyPropertiesReg4000(vo,reg4000);
 			
 			//==> query tax pay
-			List<TaWsInc8000M> reg8000MList = oa07JdbcRepository.reg8000M(formVo);
-			for (TaWsInc8000M reg8000 : reg8000MList) {
-				//vo.getTaxPayList().add(reg8000.getTaxAmount())
-			}
+//			List<TaWsInc8000M> reg8000MList = oa07JdbcRepository.reg8000M(formVo);
+//			for (TaWsInc8000M reg8000 : reg8000MList) {
+//				//vo.getTaxPayList().add(reg8000.getTaxAmount())
+//			}
 			
 			voList.add(vo);
 		}

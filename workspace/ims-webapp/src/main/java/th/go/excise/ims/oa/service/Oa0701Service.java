@@ -4,13 +4,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +18,21 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
-import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0703JdbcRepository;
+import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0701JdbcRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa07JdbcRepository;
-import th.go.excise.ims.oa.vo.Oa0703TaxpayVo;
+import th.go.excise.ims.oa.vo.Oa0701Reg8000Vo;
 import th.go.excise.ims.oa.vo.Oa07FormVo;
 import th.go.excise.ims.oa.vo.Oa07Reg4000Vo;
 import th.go.excise.ims.oa.vo.Oa07Vo;
 import th.go.excise.ims.oa.vo.ResponseOa07Vo;
 
 @Service
-public class Oa0703Service {
+public class Oa0701Service {
 
-	private static final Logger logger = LoggerFactory.getLogger(Oa0703Service.class);
+	private static final Logger logger = LoggerFactory.getLogger(Oa0701Service.class);
 
 	@Autowired
-	private Oa0703JdbcRepository oa07Jdb03cRepository;
+	private Oa0701JdbcRepository oa0701JdbcRepository;
 	
 	@Autowired
 	private Oa07JdbcRepository oa07JdbcRepository;
@@ -53,46 +53,55 @@ public class Oa0703Service {
 			int i = 0;
 			List<String> taxListDtl = new ArrayList<>();
 			List<String> percenDiffList = new ArrayList<>();
-			List<Integer> budgetYears = new ArrayList<>();
-
-			//=> add list bydget year
-			Date yyyyDate = ConvertDateUtils.parseStringToDate(formVo.getBudgetYear(), ConvertDateUtils.YYYY);
-			String yyyy = ConvertDateUtils.formatDateToString(yyyyDate, ConvertDateUtils.YYYY,ConvertDateUtils.LOCAL_EN);
-//			for (int p = Integer.valueOf(formVo.getPreviousYear()); p > 0; p--) {
-//				int budgerYear = Integer.valueOf(yyyy);
-//				budgetYears.add(budgerYear - p);
-//			}
-//			
-			for (int p = 0; p < Integer.valueOf(formVo.getPreviousYear()); p++) {
-				int budgerYear = Integer.valueOf(yyyy);
-				budgetYears.add(budgerYear - p);
-			}
-			Collections.sort(budgetYears); 
+			
+			// ==> convert date
+			String startDate = null;
+			String endDate = null;
+			if ("1".equals(formVo.getCheckType())) {
+				
+				
+			}else if("2".equals(formVo.getCheckType())){
+				Date dateS = ConvertDateUtils.parseStringToDate(formVo.getMonthStart(), ConvertDateUtils.MM_YYYY);
+				Date dateE = ConvertDateUtils.parseStringToDate(formVo.getMonthEnd(), ConvertDateUtils.MM_YYYY);
+				startDate = ConvertDateUtils.formatDateToString(dateS, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
+				endDate = ConvertDateUtils.formatDateToString(dateE, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
+			}else {}
+			
 			// ==> query tax pay
-			List<Oa0703TaxpayVo> reg8000MList = oa07Jdb03cRepository.reg8000M(reg4000.getNewRegId(), budgetYears);
-			Map<String, Oa0703TaxpayVo> reg8000MMap = new HashMap<>();
-			for (Oa0703TaxpayVo voMap : reg8000MList) {				
-				reg8000MMap.put(voMap.getTaxYear(), voMap);
+			List<Oa0701Reg8000Vo> reg8000MList = oa0701JdbcRepository.reg8000M(reg4000.getNewRegId(), startDate, endDate);
+			// ==> 8000M
+			Map<String, Oa0701Reg8000Vo> reg8000MMap = new HashMap<>();
+			for (Oa0701Reg8000Vo voMap : reg8000MList) {
+				reg8000MMap.put(voMap.getYearMonth(), voMap);
 			}
-						
-			for (int idx = 0; idx < budgetYears.size(); idx++) {
-				Oa0703TaxpayVo reg8000 = reg8000MMap.get(budgetYears.get(idx).toString());
+			
+			//==> Add list months
+			Date dateS = ConvertDateUtils.parseStringToDate(formVo.getMonthStart(), ConvertDateUtils.MM_YYYY);
+			Date dateE = ConvertDateUtils.parseStringToDate(formVo.getMonthStart(), ConvertDateUtils.MM_YYYY);
+			List<String> yearmonthList = new ArrayList<>();
+			for (int m = 0; m < Integer.valueOf(formVo.getMonthNum()); m++) {
+				String ym = ConvertDateUtils.formatDateToString(DateUtils.addMonths(dateS, m), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
+				yearmonthList.add(ym);
+			}
+			
+			for (int idx = 0; idx < Integer.valueOf(formVo.getMonthNum()); idx++) {
+				Oa0701Reg8000Vo reg8000 = reg8000MMap.get(yearmonthList.get(idx));
 				
 				if(reg8000 != null) {
 					// check sum null
-					if (reg8000.getSumTaxAmount() == null) {
-						reg8000.setSumTaxAmount(BigDecimal.ZERO);
+					if (reg8000.getTaxAmount() == null) {
+						reg8000.setTaxAmount(BigDecimal.ZERO);
 					}
 
-					taxListDtl.add(reg8000.getSumTaxAmount().toString());
+					taxListDtl.add(reg8000.getTaxAmount().toString());
 					if (i > 0) {
-						Oa0703TaxpayVo taxAmBefor = reg8000MList.get(i - 1);
-						if (taxAmBefor.getSumTaxAmount() == null) {
-							taxAmBefor.setSumTaxAmount(BigDecimal.ZERO);
+						Oa0701Reg8000Vo taxAmBefor = reg8000MList.get(i - 1);
+						if (taxAmBefor.getTaxAmount() == null) {
+							taxAmBefor.setTaxAmount(BigDecimal.ZERO);
 						}
-						BigDecimal sub = reg8000.getSumTaxAmount().subtract(taxAmBefor.getSumTaxAmount()); // b-a
+						BigDecimal sub = reg8000.getTaxAmount().subtract(taxAmBefor.getTaxAmount()); // b-a
 						BigDecimal multi = sub.multiply(new BigDecimal(100)); // b-a*100
-						BigDecimal avg = multi.divide(reg8000.getSumTaxAmount(), 2, RoundingMode.HALF_UP); // b-a*100/b
+						BigDecimal avg = multi.divide(reg8000.getTaxAmount(), 2, RoundingMode.HALF_UP); // b-a*100/b
 
 						// taxListDtl.add(avg.toString()+" %");
 						percenDiffList.add(avg.toString() + " %");
