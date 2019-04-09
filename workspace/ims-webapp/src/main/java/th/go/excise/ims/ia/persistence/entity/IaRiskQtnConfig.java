@@ -74,7 +74,7 @@ public class IaRiskQtnConfig extends BaseEntity {
 	@Column(name = "VERYLOW_CONDITION")
 	private String verylowCondition;
 	@Column(name = "VERYHIGH")
-	private String VERYHIGH;
+	private String veryhigh;
 	@Column(name = "VERYHIGH_START")
 	private String veryhighStart;
 	@Column(name = "VERYHIGH_END")
@@ -294,12 +294,12 @@ public class IaRiskQtnConfig extends BaseEntity {
 		this.verylowCondition = verylowCondition;
 	}
 
-	public String getVERYHIGH() {
-		return VERYHIGH;
+	public String getVeryhigh() {
+		return veryhigh;
 	}
 
-	public void setVERYHIGH(String vERYHIGH) {
-		VERYHIGH = vERYHIGH;
+	public void setVeryhigh(String veryhigh) {
+		this.veryhigh = veryhigh;
 	}
 
 	public String getVeryhighStart() {
