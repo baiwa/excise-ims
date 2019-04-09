@@ -23,8 +23,6 @@ public class OaAchCustomerLicen
     @SequenceGenerator(name = "OA_ACH_CUSTOMER_LICEN_GEN", sequenceName = "OA_ACH_CUSTOMER_LICEN_SEQ", allocationSize = 1)
     @Column(name = "OA_CUSLICENSE_ID")
     private BigDecimal oaCuslicenseId;
-    @Column(name = "OA_CUSTOMER_ID")
-    private BigDecimal oaCustomerId;
     @Column(name = "LICENSE_NO")
     private String licenseNo;
     @Column(name = "LICENSE_DATE")
@@ -135,14 +133,6 @@ public class OaAchCustomerLicen
 
     public void setOaCuslicenseId(BigDecimal oaCuslicenseId) {
         this.oaCuslicenseId = oaCuslicenseId;
-    }
-
-    public BigDecimal getOaCustomerId() {
-        return oaCustomerId;
-    }
-
-    public void setOaCustomerId(BigDecimal oaCustomerId) {
-        this.oaCustomerId = oaCustomerId;
     }
 
     public String getLicenseNo() {

@@ -104,7 +104,6 @@ public class Oa0412Service {
 			response.setLicenseDate(licen.getLicenseDate());
 			response.setLicenseNo(licen.getLicenseNo());
 			response.setOaCuslicenseId(licen.getOaCuslicenseId());
-			response.setOaCustomerId(licen.getOaCustomerId());
 			response.setOffCode(licen.getOffCode());
 			response.setOperateName(licen.getOperateName());
 			response.setOperateRemark(licen.getOperateRemark());
@@ -138,7 +137,6 @@ public class Oa0412Service {
 		licen.setEndDate(request.getEndDate());
 		licen.setLicenseDate(request.getLicenseDate());
 		licen.setLicenseNo(request.getReceiveNo());
-		licen.setOaCustomerId(request.getOaCustomerId());
 		licen.setOffCode(request.getOffCode());
 		licen.setOperateName(request.getOperateName());
 		licen.setOperateRemark(request.getOperateRemark());
@@ -184,7 +182,6 @@ public class Oa0412Service {
 			licen.setEndDate(request.getEndDate());
 			licen.setLicenseDate(request.getLicenseDate());
 			licen.setLicenseNo(request.getLicenseNo());
-			licen.setOaCustomerId(request.getOaCustomerId());
 			licen.setOffCode(request.getOffCode());
 			licen.setOperateName(request.getOperateName());
 			licen.setOperateRemark(request.getOperateRemark());

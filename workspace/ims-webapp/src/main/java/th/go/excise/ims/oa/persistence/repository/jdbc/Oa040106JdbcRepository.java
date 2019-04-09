@@ -34,7 +34,7 @@ public class Oa040106JdbcRepository {
 		sql.append(" FROM OA_LICENSE_PLAN LP ");
 		sql.append(" INNER JOIN OA_ALCOHOL LU ");
 		sql.append(" ON LU.OA_PLAN_ID = LP.OA_PLAN_ID ");
-		sql.append(" INNER JOIN OA_CUSTOMER_LICEN CL ");
+		sql.append(" INNER JOIN OA_ACH_CUSTOMER_LICEN CL ");
 		sql.append(" ON CL.OA_CUSLICENSE_ID = LP.LICENSE_ID ");
 		sql.append(" INNER JOIN OA_ALCOHOL_DTL LUD ");
 		sql.append(" ON LUD.OA_ALCOHOL_ID = LU.OA_ALCOHOL_ID ");
