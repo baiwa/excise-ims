@@ -13,16 +13,13 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
-import th.go.excise.ims.oa.persistence.entity.OaAchCustomer;
 import th.go.excise.ims.oa.persistence.entity.OaAchCustomerLicen;
 import th.go.excise.ims.oa.persistence.entity.OaAchCustomerLicenDtl;
-import th.go.excise.ims.oa.persistence.entity.OaCustomerLicen;
 import th.go.excise.ims.oa.persistence.repository.OaAchCustomerLicenDtlRepository;
 import th.go.excise.ims.oa.persistence.repository.OaAchCustomerLicenRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0412JdbcRepository;
 import th.go.excise.ims.oa.vo.Oa0107CodeVo;
 import th.go.excise.ims.oa.vo.Oa020106FormVo;
-import th.go.excise.ims.oa.vo.Oa0207CodeVo;
 import th.go.excise.ims.oa.vo.Oa040106FormVo;
 import th.go.excise.ims.oa.vo.Oa0412Vo;
 

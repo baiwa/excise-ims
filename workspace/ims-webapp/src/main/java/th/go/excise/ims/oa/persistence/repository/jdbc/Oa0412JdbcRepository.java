@@ -11,14 +11,10 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
-import th.go.excise.ims.oa.persistence.entity.OaAchCustomer;
 import th.go.excise.ims.oa.persistence.entity.OaAchCustomerLicen;
 import th.go.excise.ims.oa.persistence.entity.OaAchCustomerLicenDtl;
-import th.go.excise.ims.oa.persistence.entity.OaCustomerLicen;
 import th.go.excise.ims.oa.utils.OaOfficeCode;
 import th.go.excise.ims.oa.vo.Oa0107CodeVo;
-import th.go.excise.ims.oa.vo.Oa0207CodeVo;
-import th.go.excise.ims.oa.vo.Oa0207Vo;
 import th.go.excise.ims.oa.vo.Oa040106FormVo;
 import th.go.excise.ims.oa.vo.Oa0412Vo;
 

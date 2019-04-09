@@ -2,7 +2,6 @@
 package th.go.excise.ims.oa.persistence.entity;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,124 +24,66 @@ public class OaAlcoholDtl
     private BigDecimal oaAlcoholDtlId;
     @Column(name = "OA_ALCOHOL_ID")
     private BigDecimal oaAlcoholId;
-    @Column(name = "OFFICE_PLACE_OWNER")
-    private String officePlaceOwner;
-    @Column(name = "OFFICE_RENT_AMOUNT")
-    private BigDecimal officeRentAmount;
-    @Column(name = "WORKING_START_DATE")
-    private Date workingStartDate;
-    @Column(name = "WORKING_END_DATE")
-    private Date workingEndDate;
-    @Column(name = "WORKDAY_PERMONTH")
-    private BigDecimal workdayPermonth;
-    @Column(name = "NUMBER_OF_TANK")
-    private BigDecimal numberOfTank;
-    @Column(name = "TANK_CAPACITY")
-    private String tankCapacity;
-    @Column(name = "NUMBER_UTILITY")
-    private String numberUtility;
-    @Column(name = "ORDER_TYPE")
-    private String orderType;
-    @Column(name = "ORDER_PAY_METHOD")
-    private String orderPayMethod;
-    @Column(name = "EMPLOYEE_PERMANENT")
-    private BigDecimal employeePermanent;
-    @Column(name = "EMPLOYEE_TEMPORARY")
-    private BigDecimal employeeTemporary;
-    @Column(name = "PAY_METHOD_OTHER")
-    private String payMethodOther;
-    @Column(name = "DAILY_ACC")
-    private String dailyAcc;
-    @Column(name = "DAILY_ACC_DOC")
-    private String dailyAccDoc;
-    @Column(name = "DAILY_AUDIT_REMARK")
-    private String dailyAuditRemark;
-    @Column(name = "MONTHLY_ACC")
-    private String monthlyAcc;
-    @Column(name = "MONTHLY_ACC_DOC")
-    private String monthlyAccDoc;
-    @Column(name = "MONTHLY_AUDIT_REMARK")
-    private String monthlyAuditRemark;
-    @Column(name = "MONTHLY_ACC_04")
-    private String monthlyAcc04;
-    @Column(name = "MONTHLY_ACC_DOC_04")
-    private String monthlyAccDoc04;
-    @Column(name = "MONTHLY_AUDIT_REMARK_04")
-    private String monthlyAuditRemark04;
-    @Column(name = "MATERAIL")
-    private String materail;
-    @Column(name = "DOCUMENT")
-    private BigDecimal document;
-    @Column(name = "PRODUCT_PROCESS")
-    private String productProcess;
-    @Column(name = "PRODUCT_NEXTIME")
-    private String productNextime;
-    @Column(name = "USE_START_DATE")
-    private Date useStartDate;
-    @Column(name = "USE_END_DATE")
-    private Date useEndDate;
-    @Column(name = "BUY_OVERLIMIT")
-    private String buyOverlimit;
-    @Column(name = "BUY_FROM_INDUST")
-    private String buyFromIndust;
-    @Column(name = "BUY_INDUST_LICENSE")
-    private String buyIndustLicense;
-    @Column(name = "BUY_FROM_IMPORTER")
-    private String buyFromImporter;
-    @Column(name = "BUY_IMPORTER_LICENSE")
-    private String buyImporterLicense;
-    @Column(name = "BUY_FROM_AGENT")
-    private String buyFromAgent;
-    @Column(name = "BUY_AGENT_LICENSE")
-    private String buyAgentLicense;
-    @Column(name = "USED_TYPE")
-    private String usedType;
-    @Column(name = "USED_REMARK")
-    private String usedRemark;
-    @Column(name = "SALER_TYPE")
-    private String salerType;
-    @Column(name = "SALER_CAPACITY")
-    private String salerCapacity;
-    @Column(name = "NUM_OF_CUST")
-    private BigDecimal numOfCust;
-    @Column(name = "GOOD_QUALITY")
-    private String goodQuality;
-    @Column(name = "AGENT_START_DATE")
-    private Date agentStartDate;
-    @Column(name = "AGENT_END_DATE")
-    private Date agentEndDate;
-    @Column(name = "AGENT_OVERLIMIT")
-    private String agentOverlimit;
-    @Column(name = "A_BUY_FROM_INDUST")
-    private String ABuyFromIndust;
-    @Column(name = "A_BUY_INDUST_LICENSE")
-    private String ABuyIndustLicense;
-    @Column(name = "A_BUY_FROM_IMPORTER")
-    private String ABuyFromImporter;
-    @Column(name = "A_IMPORTER_LICENSE")
-    private String AImporterLicense;
-    @Column(name = "A_BUY_FROM_AGENT")
-    private String ABuyFromAgent;
-    @Column(name = "A_BUY_AGENT_LICENSE")
-    private String ABuyAgentLicense;
-    @Column(name = "A_SALE_TO_AGENT")
-    private String ASaleToAgent;
-    @Column(name = "A_SALE_AGENT_LICENSE")
-    private String ASaleAgentLicense;
-    @Column(name = "A_SALE_TO_USER")
-    private String ASaleToUser;
-    @Column(name = "A_SALE_USER_LICENSE")
-    private String ASaleUserLicense;
-    @Column(name = "SENT_TO_AGENT")
-    private String sentToAgent;
-    @Column(name = "AGENT_REMARK")
-    private String agentRemark;
-    @Column(name = "SENT_TO_USER")
-    private String sentToUser;
-    @Column(name = "OTHER_REMARK")
-    private String otherRemark;
-    @Column(name = "AUDIT_RESULT")
-    private String auditResult;
+    @Column(name = "LICENSE_MENUFAC")
+    private String licenseMenufac;
+    @Column(name = "LICENSE_MENUFAC_REMARK")
+    private String licenseMenufacRemark;
+    @Column(name = "LICENSE_TYPE2")
+    private String licenseType2;
+    @Column(name = "LICENSE_TYPE2_REMARK")
+    private String licenseType2Remark;
+    @Column(name = "ACH_DEGREE")
+    private String achDegree;
+    @Column(name = "ACH_DEGREE_REMARK")
+    private String achDegreeRemark;
+    @Column(name = "ACH_CAPACITY")
+    private String achCapacity;
+    @Column(name = "ACH_CAPACITY_REMARK")
+    private String achCapacityRemark;
+    @Column(name = "ACH_APPROVE")
+    private String achApprove;
+    @Column(name = "ACH_APPROVE_REMARK")
+    private String achApproveRemark;
+    @Column(name = "ACH_PRICE")
+    private String achPrice;
+    @Column(name = "ACH_PRICE_REMARK")
+    private String achPriceRemark;
+    @Column(name = "PLACE_STATUS")
+    private String placeStatus;
+    @Column(name = "PLACE_STATUS_REMARK")
+    private String placeStatusRemark;
+    @Column(name = "EQM_TANK")
+    private String eqmTank;
+    @Column(name = "EQM_TANK_NUM")
+    private BigDecimal eqmTankNum;
+    @Column(name = "EQM_DISTIL")
+    private String eqmDistil;
+    @Column(name = "EQM_DISTIL_NUM")
+    private BigDecimal eqmDistilNum;
+    @Column(name = "EQM_PACKING")
+    private String eqmPacking;
+    @Column(name = "EQM_PACKING_NUM")
+    private BigDecimal eqmPackingNum;
+    @Column(name = "AUDIT_07_01")
+    private String audit0701;
+    @Column(name = "AUDIT_07_01_REMARK")
+    private String audit0701Remark;
+    @Column(name = "AUDIT_07_02_1")
+    private String audit07021;
+    @Column(name = "AUDIT_07_02_1_REMARK")
+    private String audit07021Remark;
+    @Column(name = "AUDIT_07_02_2")
+    private String audit07022;
+    @Column(name = "AUDIT_07_02_2_REMARK")
+    private String audit07022Remark;
+    @Column(name = "EQUIPMENT_USED")
+    private String equipmentUsed;
+    @Column(name = "EQUIPMENT_USED_REMARK")
+    private String equipmentUsedRemark;
+    @Column(name = "AUDIT_OTHER")
+    private String auditOther;
+    @Column(name = "AUDIT_SUGGESTION")
+    private String auditSuggestion;
 
     public BigDecimal getOaAlcoholDtlId() {
         return oaAlcoholDtlId;
@@ -160,476 +101,244 @@ public class OaAlcoholDtl
         this.oaAlcoholId = oaAlcoholId;
     }
 
-    public String getOfficePlaceOwner() {
-        return officePlaceOwner;
+    public String getLicenseMenufac() {
+        return licenseMenufac;
     }
 
-    public void setOfficePlaceOwner(String officePlaceOwner) {
-        this.officePlaceOwner = officePlaceOwner;
+    public void setLicenseMenufac(String licenseMenufac) {
+        this.licenseMenufac = licenseMenufac;
     }
 
-    public BigDecimal getOfficeRentAmount() {
-        return officeRentAmount;
+    public String getLicenseMenufacRemark() {
+        return licenseMenufacRemark;
     }
 
-    public void setOfficeRentAmount(BigDecimal officeRentAmount) {
-        this.officeRentAmount = officeRentAmount;
+    public void setLicenseMenufacRemark(String licenseMenufacRemark) {
+        this.licenseMenufacRemark = licenseMenufacRemark;
     }
 
-    public Date getWorkingStartDate() {
-        return workingStartDate;
+    public String getLicenseType2() {
+        return licenseType2;
     }
 
-    public void setWorkingStartDate(Date workingStartDate) {
-        this.workingStartDate = workingStartDate;
+    public void setLicenseType2(String licenseType2) {
+        this.licenseType2 = licenseType2;
     }
 
-    public Date getWorkingEndDate() {
-        return workingEndDate;
+    public String getLicenseType2Remark() {
+        return licenseType2Remark;
     }
 
-    public void setWorkingEndDate(Date workingEndDate) {
-        this.workingEndDate = workingEndDate;
+    public void setLicenseType2Remark(String licenseType2Remark) {
+        this.licenseType2Remark = licenseType2Remark;
     }
 
-    public BigDecimal getWorkdayPermonth() {
-        return workdayPermonth;
+    public String getAchDegree() {
+        return achDegree;
     }
 
-    public void setWorkdayPermonth(BigDecimal workdayPermonth) {
-        this.workdayPermonth = workdayPermonth;
+    public void setAchDegree(String achDegree) {
+        this.achDegree = achDegree;
     }
 
-    public BigDecimal getNumberOfTank() {
-        return numberOfTank;
+    public String getAchDegreeRemark() {
+        return achDegreeRemark;
     }
 
-    public void setNumberOfTank(BigDecimal numberOfTank) {
-        this.numberOfTank = numberOfTank;
+    public void setAchDegreeRemark(String achDegreeRemark) {
+        this.achDegreeRemark = achDegreeRemark;
     }
 
-    public String getTankCapacity() {
-        return tankCapacity;
+    public String getAchCapacity() {
+        return achCapacity;
     }
 
-    public void setTankCapacity(String tankCapacity) {
-        this.tankCapacity = tankCapacity;
+    public void setAchCapacity(String achCapacity) {
+        this.achCapacity = achCapacity;
     }
 
-    public String getNumberUtility() {
-        return numberUtility;
+    public String getAchCapacityRemark() {
+        return achCapacityRemark;
     }
 
-    public void setNumberUtility(String numberUtility) {
-        this.numberUtility = numberUtility;
+    public void setAchCapacityRemark(String achCapacityRemark) {
+        this.achCapacityRemark = achCapacityRemark;
     }
 
-    public String getOrderType() {
-        return orderType;
+    public String getAchApprove() {
+        return achApprove;
     }
 
-    public void setOrderType(String orderType) {
-        this.orderType = orderType;
+    public void setAchApprove(String achApprove) {
+        this.achApprove = achApprove;
     }
 
-    public String getOrderPayMethod() {
-        return orderPayMethod;
+    public String getAchApproveRemark() {
+        return achApproveRemark;
     }
 
-    public void setOrderPayMethod(String orderPayMethod) {
-        this.orderPayMethod = orderPayMethod;
+    public void setAchApproveRemark(String achApproveRemark) {
+        this.achApproveRemark = achApproveRemark;
     }
 
-    public BigDecimal getEmployeePermanent() {
-        return employeePermanent;
+    public String getAchPrice() {
+        return achPrice;
     }
 
-    public void setEmployeePermanent(BigDecimal employeePermanent) {
-        this.employeePermanent = employeePermanent;
+    public void setAchPrice(String achPrice) {
+        this.achPrice = achPrice;
     }
 
-    public BigDecimal getEmployeeTemporary() {
-        return employeeTemporary;
+    public String getAchPriceRemark() {
+        return achPriceRemark;
     }
 
-    public void setEmployeeTemporary(BigDecimal employeeTemporary) {
-        this.employeeTemporary = employeeTemporary;
+    public void setAchPriceRemark(String achPriceRemark) {
+        this.achPriceRemark = achPriceRemark;
     }
 
-    public String getPayMethodOther() {
-        return payMethodOther;
+    public String getPlaceStatus() {
+        return placeStatus;
     }
 
-    public void setPayMethodOther(String payMethodOther) {
-        this.payMethodOther = payMethodOther;
+    public void setPlaceStatus(String placeStatus) {
+        this.placeStatus = placeStatus;
     }
 
-    public String getDailyAcc() {
-        return dailyAcc;
+    public String getPlaceStatusRemark() {
+        return placeStatusRemark;
     }
 
-    public void setDailyAcc(String dailyAcc) {
-        this.dailyAcc = dailyAcc;
+    public void setPlaceStatusRemark(String placeStatusRemark) {
+        this.placeStatusRemark = placeStatusRemark;
     }
 
-    public String getDailyAccDoc() {
-        return dailyAccDoc;
+    public String getEqmTank() {
+        return eqmTank;
     }
 
-    public void setDailyAccDoc(String dailyAccDoc) {
-        this.dailyAccDoc = dailyAccDoc;
+    public void setEqmTank(String eqmTank) {
+        this.eqmTank = eqmTank;
     }
 
-    public String getDailyAuditRemark() {
-        return dailyAuditRemark;
+    public BigDecimal getEqmTankNum() {
+        return eqmTankNum;
     }
 
-    public void setDailyAuditRemark(String dailyAuditRemark) {
-        this.dailyAuditRemark = dailyAuditRemark;
+    public void setEqmTankNum(BigDecimal eqmTankNum) {
+        this.eqmTankNum = eqmTankNum;
     }
 
-    public String getMonthlyAcc() {
-        return monthlyAcc;
+    public String getEqmDistil() {
+        return eqmDistil;
     }
 
-    public void setMonthlyAcc(String monthlyAcc) {
-        this.monthlyAcc = monthlyAcc;
+    public void setEqmDistil(String eqmDistil) {
+        this.eqmDistil = eqmDistil;
     }
 
-    public String getMonthlyAccDoc() {
-        return monthlyAccDoc;
+    public BigDecimal getEqmDistilNum() {
+        return eqmDistilNum;
     }
 
-    public void setMonthlyAccDoc(String monthlyAccDoc) {
-        this.monthlyAccDoc = monthlyAccDoc;
+    public void setEqmDistilNum(BigDecimal eqmDistilNum) {
+        this.eqmDistilNum = eqmDistilNum;
     }
 
-    public String getMonthlyAuditRemark() {
-        return monthlyAuditRemark;
+    public String getEqmPacking() {
+        return eqmPacking;
     }
 
-    public void setMonthlyAuditRemark(String monthlyAuditRemark) {
-        this.monthlyAuditRemark = monthlyAuditRemark;
+    public void setEqmPacking(String eqmPacking) {
+        this.eqmPacking = eqmPacking;
     }
 
-    public String getMonthlyAcc04() {
-        return monthlyAcc04;
+    public BigDecimal getEqmPackingNum() {
+        return eqmPackingNum;
     }
 
-    public void setMonthlyAcc04(String monthlyAcc04) {
-        this.monthlyAcc04 = monthlyAcc04;
+    public void setEqmPackingNum(BigDecimal eqmPackingNum) {
+        this.eqmPackingNum = eqmPackingNum;
     }
 
-    public String getMonthlyAccDoc04() {
-        return monthlyAccDoc04;
+    public String getAudit0701() {
+        return audit0701;
     }
 
-    public void setMonthlyAccDoc04(String monthlyAccDoc04) {
-        this.monthlyAccDoc04 = monthlyAccDoc04;
+    public void setAudit0701(String audit0701) {
+        this.audit0701 = audit0701;
     }
 
-    public String getMonthlyAuditRemark04() {
-        return monthlyAuditRemark04;
+    public String getAudit0701Remark() {
+        return audit0701Remark;
     }
 
-    public void setMonthlyAuditRemark04(String monthlyAuditRemark04) {
-        this.monthlyAuditRemark04 = monthlyAuditRemark04;
+    public void setAudit0701Remark(String audit0701Remark) {
+        this.audit0701Remark = audit0701Remark;
     }
 
-    public String getMaterail() {
-        return materail;
+    public String getAudit07021() {
+        return audit07021;
     }
 
-    public void setMaterail(String materail) {
-        this.materail = materail;
+    public void setAudit07021(String audit07021) {
+        this.audit07021 = audit07021;
     }
 
-    public BigDecimal getDocument() {
-        return document;
+    public String getAudit07021Remark() {
+        return audit07021Remark;
     }
 
-    public void setDocument(BigDecimal document) {
-        this.document = document;
+    public void setAudit07021Remark(String audit07021Remark) {
+        this.audit07021Remark = audit07021Remark;
     }
 
-    public String getProductProcess() {
-        return productProcess;
+    public String getAudit07022() {
+        return audit07022;
     }
 
-    public void setProductProcess(String productProcess) {
-        this.productProcess = productProcess;
+    public void setAudit07022(String audit07022) {
+        this.audit07022 = audit07022;
     }
 
-    public String getProductNextime() {
-        return productNextime;
+    public String getAudit07022Remark() {
+        return audit07022Remark;
     }
 
-    public void setProductNextime(String productNextime) {
-        this.productNextime = productNextime;
+    public void setAudit07022Remark(String audit07022Remark) {
+        this.audit07022Remark = audit07022Remark;
     }
 
-    public Date getUseStartDate() {
-        return useStartDate;
+    public String getEquipmentUsed() {
+        return equipmentUsed;
     }
 
-    public void setUseStartDate(Date useStartDate) {
-        this.useStartDate = useStartDate;
+    public void setEquipmentUsed(String equipmentUsed) {
+        this.equipmentUsed = equipmentUsed;
     }
 
-    public Date getUseEndDate() {
-        return useEndDate;
+    public String getEquipmentUsedRemark() {
+        return equipmentUsedRemark;
     }
 
-    public void setUseEndDate(Date useEndDate) {
-        this.useEndDate = useEndDate;
+    public void setEquipmentUsedRemark(String equipmentUsedRemark) {
+        this.equipmentUsedRemark = equipmentUsedRemark;
     }
 
-    public String getBuyOverlimit() {
-        return buyOverlimit;
+    public String getAuditOther() {
+        return auditOther;
     }
 
-    public void setBuyOverlimit(String buyOverlimit) {
-        this.buyOverlimit = buyOverlimit;
+    public void setAuditOther(String auditOther) {
+        this.auditOther = auditOther;
     }
 
-    public String getBuyFromIndust() {
-        return buyFromIndust;
+    public String getAuditSuggestion() {
+        return auditSuggestion;
     }
 
-    public void setBuyFromIndust(String buyFromIndust) {
-        this.buyFromIndust = buyFromIndust;
-    }
-
-    public String getBuyIndustLicense() {
-        return buyIndustLicense;
-    }
-
-    public void setBuyIndustLicense(String buyIndustLicense) {
-        this.buyIndustLicense = buyIndustLicense;
-    }
-
-    public String getBuyFromImporter() {
-        return buyFromImporter;
-    }
-
-    public void setBuyFromImporter(String buyFromImporter) {
-        this.buyFromImporter = buyFromImporter;
-    }
-
-    public String getBuyImporterLicense() {
-        return buyImporterLicense;
-    }
-
-    public void setBuyImporterLicense(String buyImporterLicense) {
-        this.buyImporterLicense = buyImporterLicense;
-    }
-
-    public String getBuyFromAgent() {
-        return buyFromAgent;
-    }
-
-    public void setBuyFromAgent(String buyFromAgent) {
-        this.buyFromAgent = buyFromAgent;
-    }
-
-    public String getBuyAgentLicense() {
-        return buyAgentLicense;
-    }
-
-    public void setBuyAgentLicense(String buyAgentLicense) {
-        this.buyAgentLicense = buyAgentLicense;
-    }
-
-    public String getUsedType() {
-        return usedType;
-    }
-
-    public void setUsedType(String usedType) {
-        this.usedType = usedType;
-    }
-
-    public String getUsedRemark() {
-        return usedRemark;
-    }
-
-    public void setUsedRemark(String usedRemark) {
-        this.usedRemark = usedRemark;
-    }
-
-    public String getSalerType() {
-        return salerType;
-    }
-
-    public void setSalerType(String salerType) {
-        this.salerType = salerType;
-    }
-
-    public String getSalerCapacity() {
-        return salerCapacity;
-    }
-
-    public void setSalerCapacity(String salerCapacity) {
-        this.salerCapacity = salerCapacity;
-    }
-
-    public BigDecimal getNumOfCust() {
-        return numOfCust;
-    }
-
-    public void setNumOfCust(BigDecimal numOfCust) {
-        this.numOfCust = numOfCust;
-    }
-
-    public String getGoodQuality() {
-        return goodQuality;
-    }
-
-    public void setGoodQuality(String goodQuality) {
-        this.goodQuality = goodQuality;
-    }
-
-    public Date getAgentStartDate() {
-        return agentStartDate;
-    }
-
-    public void setAgentStartDate(Date agentStartDate) {
-        this.agentStartDate = agentStartDate;
-    }
-
-    public Date getAgentEndDate() {
-        return agentEndDate;
-    }
-
-    public void setAgentEndDate(Date agentEndDate) {
-        this.agentEndDate = agentEndDate;
-    }
-
-    public String getAgentOverlimit() {
-        return agentOverlimit;
-    }
-
-    public void setAgentOverlimit(String agentOverlimit) {
-        this.agentOverlimit = agentOverlimit;
-    }
-
-    public String getABuyFromIndust() {
-        return ABuyFromIndust;
-    }
-
-    public void setABuyFromIndust(String ABuyFromIndust) {
-        this.ABuyFromIndust = ABuyFromIndust;
-    }
-
-    public String getABuyIndustLicense() {
-        return ABuyIndustLicense;
-    }
-
-    public void setABuyIndustLicense(String ABuyIndustLicense) {
-        this.ABuyIndustLicense = ABuyIndustLicense;
-    }
-
-    public String getABuyFromImporter() {
-        return ABuyFromImporter;
-    }
-
-    public void setABuyFromImporter(String ABuyFromImporter) {
-        this.ABuyFromImporter = ABuyFromImporter;
-    }
-
-    public String getAImporterLicense() {
-        return AImporterLicense;
-    }
-
-    public void setAImporterLicense(String AImporterLicense) {
-        this.AImporterLicense = AImporterLicense;
-    }
-
-    public String getABuyFromAgent() {
-        return ABuyFromAgent;
-    }
-
-    public void setABuyFromAgent(String ABuyFromAgent) {
-        this.ABuyFromAgent = ABuyFromAgent;
-    }
-
-    public String getABuyAgentLicense() {
-        return ABuyAgentLicense;
-    }
-
-    public void setABuyAgentLicense(String ABuyAgentLicense) {
-        this.ABuyAgentLicense = ABuyAgentLicense;
-    }
-
-    public String getASaleToAgent() {
-        return ASaleToAgent;
-    }
-
-    public void setASaleToAgent(String ASaleToAgent) {
-        this.ASaleToAgent = ASaleToAgent;
-    }
-
-    public String getASaleAgentLicense() {
-        return ASaleAgentLicense;
-    }
-
-    public void setASaleAgentLicense(String ASaleAgentLicense) {
-        this.ASaleAgentLicense = ASaleAgentLicense;
-    }
-
-    public String getASaleToUser() {
-        return ASaleToUser;
-    }
-
-    public void setASaleToUser(String ASaleToUser) {
-        this.ASaleToUser = ASaleToUser;
-    }
-
-    public String getASaleUserLicense() {
-        return ASaleUserLicense;
-    }
-
-    public void setASaleUserLicense(String ASaleUserLicense) {
-        this.ASaleUserLicense = ASaleUserLicense;
-    }
-
-    public String getSentToAgent() {
-        return sentToAgent;
-    }
-
-    public void setSentToAgent(String sentToAgent) {
-        this.sentToAgent = sentToAgent;
-    }
-
-    public String getAgentRemark() {
-        return agentRemark;
-    }
-
-    public void setAgentRemark(String agentRemark) {
-        this.agentRemark = agentRemark;
-    }
-
-    public String getSentToUser() {
-        return sentToUser;
-    }
-
-    public void setSentToUser(String sentToUser) {
-        this.sentToUser = sentToUser;
-    }
-
-    public String getOtherRemark() {
-        return otherRemark;
-    }
-
-    public void setOtherRemark(String otherRemark) {
-        this.otherRemark = otherRemark;
-    }
-
-    public String getAuditResult() {
-        return auditResult;
-    }
-
-    public void setAuditResult(String auditResult) {
-        this.auditResult = auditResult;
+    public void setAuditSuggestion(String auditSuggestion) {
+        this.auditSuggestion = auditSuggestion;
     }
 
 }

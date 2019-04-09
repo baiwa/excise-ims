@@ -3,10 +3,10 @@ package th.go.excise.ims.oa.persistence.repository;
 
 import java.math.BigDecimal;
 import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRepository;
-import th.go.excise.ims.oa.persistence.entity.OaHydCustomer;
+import th.go.excise.ims.oa.persistence.entity.OaAlcoholPacking;
 
-public interface OaHydCustomerRepository
-    extends CommonJpaCrudRepository<OaHydCustomer, BigDecimal>
+public interface OaAlcoholPackingRepository
+    extends CommonJpaCrudRepository<OaAlcoholPacking, BigDecimal>
 {
 
 
