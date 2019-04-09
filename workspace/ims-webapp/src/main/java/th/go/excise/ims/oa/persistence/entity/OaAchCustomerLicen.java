@@ -59,8 +59,69 @@ public class OaAchCustomerLicen
     private Date usedDate;
     @Column(name = "MONEY")
 	private BigDecimal money;
+    @Column(name = "NAME")
+    private String name;
+    @Column(name = "COMPANY_NAME")
+    private String companyName;
+    @Column(name = "IDENTIFY_NO")
+    private String identifyNo;
+    @Column(name = "IDENTIFY_TYPE")
+    private String identifyType;
+    @Column(name = "ADDRESS")
+    private String address;
+    @Column(name = "MOBILE")
+    private String mobile;
+    
+    
+    public String getAddress() {
+		return address;
+	}
 
-    public BigDecimal getMoney() {
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getIdentifyNo() {
+		return identifyNo;
+	}
+
+	public void setIdentifyNo(String identifyNo) {
+		this.identifyNo = identifyNo;
+	}
+
+	public String getIdentifyType() {
+		return identifyType;
+	}
+
+	public void setIdentifyType(String identifyType) {
+		this.identifyType = identifyType;
+	}
+
+	public BigDecimal getMoney() {
 		return money;
 	}
 

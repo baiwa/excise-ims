@@ -146,7 +146,7 @@ public class Oa0207Service {
 		licen.setIdentifyNo(request.getIdentifyNo());
 		licen.setIdentifyType(request.getIdentifyType());
 		licen.setLicenseDate(request.getLicenseDate());
-		licen.setLicenseNo(request.getLicenseNo());
+		licen.setLicenseNo(request.getReceiveNo());
 		licen.setLicenseType(request.getLicenseType());
 		licen.setLicenseTypeDesp(request.getLicenseTypeDesp());
 		licen.setLicenseTypeFor(request.getLicenseTypeFor());

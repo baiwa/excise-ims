@@ -60,9 +60,9 @@ public class Oa0106Controller {
 		return response;
 	}
 
-	@PostMapping("/pdf/{id}")
-	public void pdfTs(@PathVariable("id") String idStr, HttpServletResponse response) throws IOException, JRException {
-		byte[] reportFile = oa0106Service.objectToPDF();
+	@PostMapping("/pdf/{id}/{dtlId}")
+	public void pdfTs(@PathVariable("id") String idStr,@PathVariable("dtlId") String dtlId, HttpServletResponse response) throws IOException, JRException {
+		byte[] reportFile = oa0106Service.objectToPDF(idStr,dtlId);
 
 		response.setContentType("application/pdf");
 		response.addHeader("Content-Disposition", "inline;filename=hydDocabonService.pdf");
@@ -70,11 +70,11 @@ public class Oa0106Controller {
 		IOUtils.write(reportFile, response.getOutputStream());
 	}
 
-	@GetMapping("/pdf/{id}")
-	public void pdfTsGet(@PathVariable("id") String idStr, HttpServletResponse response)
+	@GetMapping("/pdf/{id}/{dtlId}")
+	public void pdfTsGet(@PathVariable("id") String idStr,@PathVariable("dtlId") String dtlId, HttpServletResponse response)
 			throws IOException, JRException {
 
-		byte[] reportFile = oa0106Service.objectToPDF();
+		byte[] reportFile = oa0106Service.objectToPDF(idStr,dtlId);
 
 		response.setContentType("application/pdf");
 		response.addHeader("Content-Disposition", "inline;filename=hydDocabonService.pdf");
