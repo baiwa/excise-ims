@@ -241,5 +241,21 @@ public class MasterConditionMainController {
         }
         return response;
     }
+    
+    @GetMapping("/get-main-cond-freq-type")
+    @ResponseBody
+    public ResponseData<List<ParamInfo>> getMainCondFreqType() {
+        ResponseData<List<ParamInfo>> response = new ResponseData<>();
+        try {
+            response.setData(masterConditionService.getMainCondFreqType());
+            response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+            response.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.FAILED);
+        }
+        return response;
+    }
 
 }

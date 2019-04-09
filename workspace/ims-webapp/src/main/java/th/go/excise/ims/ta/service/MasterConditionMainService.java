@@ -220,7 +220,7 @@ public class MasterConditionMainService {
     }
 
     public List<ParamInfo> getMainCondRange() {
-        List<ParamInfo> list = ApplicationCache.getParamInfoListByGroupCode("TA_MAIN_COND_RANGE");
+        List<ParamInfo> list = ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.TA_MAIN_COND_RANGE);
         return list;
     }
 
@@ -267,6 +267,11 @@ public class MasterConditionMainService {
         }
 
         return listVo;
+    }
+    
+    public List<ParamInfo> getMainCondFreqType() {
+        List<ParamInfo> list = ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.TA_MAIN_COND_FREQ_TYPE);
+        return list;
     }
 
 }
