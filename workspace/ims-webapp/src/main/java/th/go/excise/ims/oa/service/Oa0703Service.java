@@ -58,11 +58,7 @@ public class Oa0703Service {
 			//=> add list bydget year
 			Date yyyyDate = ConvertDateUtils.parseStringToDate(formVo.getBudgetYear(), ConvertDateUtils.YYYY);
 			String yyyy = ConvertDateUtils.formatDateToString(yyyyDate, ConvertDateUtils.YYYY,ConvertDateUtils.LOCAL_EN);
-//			for (int p = Integer.valueOf(formVo.getPreviousYear()); p > 0; p--) {
-//				int budgerYear = Integer.valueOf(yyyy);
-//				budgetYears.add(budgerYear - p);
-//			}
-//			
+
 			for (int p = 0; p < Integer.valueOf(formVo.getPreviousYear()); p++) {
 				int budgerYear = Integer.valueOf(yyyy);
 				budgetYears.add(budgerYear - p);
@@ -88,17 +84,13 @@ public class Oa0703Service {
 					if (idx > 0) {
 						String taxAmBeforArr = taxListDtl.get(idx - 1);
 						BigDecimal sumTaxAmBefor = new BigDecimal(taxAmBeforArr);
-						/*if (sumTaxAmBefor == null) {
-							taxAmBefor.setSumTaxAmount(BigDecimal.ZERO);
-						}*/
+
 						BigDecimal sub = reg8000.getSumTaxAmount().subtract(sumTaxAmBefor); // b-a
 						BigDecimal multi = sub.multiply(new BigDecimal(100)); // b-a*100
 						BigDecimal avg = multi.divide(reg8000.getSumTaxAmount(), 2, RoundingMode.HALF_UP); // b-a*100/b
 
-						// taxListDtl.add(avg.toString()+" %");
 						percenDiffList.add(avg.toString() + " %");
 					} else {
-						// taxListDtl.add("");
 						percenDiffList.add("");
 					}
 				}else {
