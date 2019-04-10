@@ -50,7 +50,6 @@ public class Oa0701Service {
 			String dutyDesc = ExciseUtils.getDutyDesc(vo.getDutyCode());
 			vo.setDutyDesc(dutyDesc);
 
-			int i = 0;
 			List<String> taxListDtl = new ArrayList<>();
 			List<String> percenDiffList = new ArrayList<>();
 			
@@ -58,7 +57,11 @@ public class Oa0701Service {
 			String startDate = null;
 			String endDate = null;
 			if ("1".equals(formVo.getCheckType())) {
-				
+				Date yearPreviouse = DateUtils.addYears(ConvertDateUtils.parseStringToDate(formVo.getBudgetYear(), ConvertDateUtils.YYYY), -1);
+				startDate = ConvertDateUtils.formatDateToString(yearPreviouse, ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_EN) + "10";
+				endDate = ConvertDateUtils.formatDateToString(
+							ConvertDateUtils.parseStringToDate(formVo.getBudgetYear(), ConvertDateUtils.YYYY), 
+							ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_EN) + "09";
 				
 			}else if("2".equals(formVo.getCheckType())){
 				Date dateS = ConvertDateUtils.parseStringToDate(formVo.getMonthStart(), ConvertDateUtils.MM_YYYY);
@@ -72,12 +75,12 @@ public class Oa0701Service {
 			// ==> 8000M
 			Map<String, Oa0701Reg8000Vo> reg8000MMap = new HashMap<>();
 			for (Oa0701Reg8000Vo voMap : reg8000MList) {
-				reg8000MMap.put(voMap.getYearMonth(), voMap);
+				reg8000MMap.put(voMap.getYearMonth().toString(), voMap);
 			}
 			
 			//==> Add list months
-			Date dateS = ConvertDateUtils.parseStringToDate(formVo.getMonthStart(), ConvertDateUtils.MM_YYYY);
-			Date dateE = ConvertDateUtils.parseStringToDate(formVo.getMonthStart(), ConvertDateUtils.MM_YYYY);
+			Date dateS = ConvertDateUtils.parseStringToDate(startDate, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
+			//Date dateE = ConvertDateUtils.parseStringToDate(formVo.getMonthStart(), ConvertDateUtils.MM_YYYY);
 			List<String> yearmonthList = new ArrayList<>();
 			for (int m = 0; m < Integer.valueOf(formVo.getMonthNum()); m++) {
 				String ym = ConvertDateUtils.formatDateToString(DateUtils.addMonths(dateS, m), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
@@ -94,12 +97,14 @@ public class Oa0701Service {
 					}
 
 					taxListDtl.add(reg8000.getTaxAmount().toString());
-					if (i > 0) {
-						Oa0701Reg8000Vo taxAmBefor = reg8000MList.get(i - 1);
-						if (taxAmBefor.getTaxAmount() == null) {
-							taxAmBefor.setTaxAmount(BigDecimal.ZERO);
-						}
-						BigDecimal sub = reg8000.getTaxAmount().subtract(taxAmBefor.getTaxAmount()); // b-a
+					if (idx > 0) {
+						String taxAmBeforArr = taxListDtl.get(idx - 1);
+						BigDecimal taxAmBefor = new BigDecimal(taxAmBeforArr);
+						//Oa0701Reg8000Vo taxAmBefor = reg8000MList.get(idx - 1);
+//						if (taxAmBefor.getTaxAmount() == null) {
+//							taxAmBefor.setTaxAmount(BigDecimal.ZERO);
+//						}
+						BigDecimal sub = reg8000.getTaxAmount().subtract(taxAmBefor); // b-a
 						BigDecimal multi = sub.multiply(new BigDecimal(100)); // b-a*100
 						BigDecimal avg = multi.divide(reg8000.getTaxAmount(), 2, RoundingMode.HALF_UP); // b-a*100/b
 
@@ -112,8 +117,7 @@ public class Oa0701Service {
 				}else {
 					percenDiffList.add("");
 					taxListDtl.add(BigDecimal.ZERO.toString());
-				}
-				i++;
+				}			
 			}
 			vo.setTaxPayList(taxListDtl);
 			vo.setPerceneDiff(percenDiffList);

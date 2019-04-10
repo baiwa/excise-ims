@@ -24,7 +24,7 @@ public class Oa0701JdbcRepository {
 		sql.append(" SELECT ");
 		sql.append("      new_reg_id, ");
 		sql.append("      TAX_AMOUNT, ");
-		sql.append("      concat(tax_year, case LENGTH(TAX_MONTH) when 1 then concat('0',TAX_MONTH)end) year_month ");
+		sql.append("      concat(tax_year, case LENGTH(TAX_MONTH) when 1 then concat('0',TAX_MONTH) WHEN 2   THEN tax_month end) year_month ");
 		sql.append("  FROM ");
 		sql.append("      ta_ws_inc8000_m ");
 		sql.append("  WHERE ");

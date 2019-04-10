@@ -50,7 +50,7 @@ public class Oa0703Service {
 			String dutyDesc = ExciseUtils.getDutyDesc(vo.getDutyCode());
 			vo.setDutyDesc(dutyDesc);
 
-			int i = 0;
+			//int i = 0;
 			List<String> taxListDtl = new ArrayList<>();
 			List<String> percenDiffList = new ArrayList<>();
 			List<Integer> budgetYears = new ArrayList<>();
@@ -85,12 +85,13 @@ public class Oa0703Service {
 					}
 
 					taxListDtl.add(reg8000.getSumTaxAmount().toString());
-					if (i > 0) {
-						Oa0703TaxpayVo taxAmBefor = reg8000MList.get(i - 1);
-						if (taxAmBefor.getSumTaxAmount() == null) {
+					if (idx > 0) {
+						String taxAmBeforArr = taxListDtl.get(idx - 1);
+						BigDecimal sumTaxAmBefor = new BigDecimal(taxAmBeforArr);
+						/*if (sumTaxAmBefor == null) {
 							taxAmBefor.setSumTaxAmount(BigDecimal.ZERO);
-						}
-						BigDecimal sub = reg8000.getSumTaxAmount().subtract(taxAmBefor.getSumTaxAmount()); // b-a
+						}*/
+						BigDecimal sub = reg8000.getSumTaxAmount().subtract(sumTaxAmBefor); // b-a
 						BigDecimal multi = sub.multiply(new BigDecimal(100)); // b-a*100
 						BigDecimal avg = multi.divide(reg8000.getSumTaxAmount(), 2, RoundingMode.HALF_UP); // b-a*100/b
 
@@ -104,7 +105,7 @@ public class Oa0703Service {
 					percenDiffList.add("");
 					taxListDtl.add(BigDecimal.ZERO.toString());
 				}
-				i++;
+				//i++;
 			}
 			vo.setTaxPayList(taxListDtl);
 			vo.setPerceneDiff(percenDiffList);
