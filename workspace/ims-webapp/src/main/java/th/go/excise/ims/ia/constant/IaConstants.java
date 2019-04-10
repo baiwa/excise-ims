@@ -45,6 +45,12 @@ public class IaConstants {
 		public static final String STATUS_4_DESC = "ยกเลิกแบบสอบถาม";
 
 	}
+	
+	public class USAGE_PATTERNS_QTN {
+		public static final String QUESTIONNAIR_DESC = "Q";
+		
+		public static final String FACTOR_DESC = "F";
+	}
 
 //	************************* Risk Factors *************************
 
