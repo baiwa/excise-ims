@@ -50,6 +50,8 @@ public class IaConstants {
 		public static final String QUESTIONNAIR_DESC = "Q";
 		
 		public static final String FACTOR_DESC = "F";
+
+		public static final String NULL_DESC = "";
 	}
 
 //	************************* Risk Factors *************************
