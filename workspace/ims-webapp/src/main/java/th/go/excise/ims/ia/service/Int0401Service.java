@@ -423,7 +423,7 @@ public class Int0401Service {
 			List<Int030405Vo> list = int030405Service.systemUnworkingList(form);
 			for (Int030405Vo int030405Vo : list) {
 				
-				if(int030405Vo.getIaRiskSystemUnworking().getSystemcode().equals(systemCode)) {
+				if(int030405Vo.getIaRiskSystemUnworking().getSystemCode().equals(systemCode)) {
 					
 					calVo.setCodeColor(int030405Vo.getIntCalculateCriteriaVo().getCodeColor());
 					calVo.setColor(int030405Vo.getIntCalculateCriteriaVo().getColor());

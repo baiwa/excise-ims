@@ -1,4 +1,4 @@
-package th.go.excise.ims.ws.client.pcc.wsSystemUnworking.service;
+package th.go.excise.ims.ws.client.pcc.systemunworking.service;
 
 import java.io.IOException;
 
@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
 
 import th.go.excise.ims.ws.client.pcc.common.service.PccRequestHeaderService;
-import th.go.excise.ims.ws.client.pcc.wsSystemUnworking.oxm.ResponseData;
+import th.go.excise.ims.ws.client.pcc.systemunworking.oxm.ResponseData;
 
 @Service
-public class WsSystemUnworkingService {
+public class SystemUnworkingService {
 	
-	private Logger logger = LoggerFactory.getLogger(WsSystemUnworkingService.class);
+	private Logger logger = LoggerFactory.getLogger(SystemUnworkingService.class);
 	
     @Value("${ws.excise.wsSystemUnworking}")
     private String endpoint;
@@ -24,10 +24,11 @@ public class WsSystemUnworkingService {
     @Autowired
     private PccRequestHeaderService pccRequestHeaderService;
     
-	public ResponseData getRestFul(String budgetYear) throws IOException {
+	public ResponseData getRestFul(String year,String month) throws IOException {
 		ResponseData responseData = new ResponseData();
-		String json = pccRequestHeaderService.getRestful(endpoint +"?year="+budgetYear);
-		logger.info("endpoint : "+endpoint +"?year="+budgetYear);
+		String param = "?year="+year+"&month="+month;
+		String json = pccRequestHeaderService.getRestful(endpoint +param);
+		logger.info("endpoint : "+endpoint + param);
 //		logger.info("json : "+json);
 		Gson gson = new Gson();
 		responseData = gson.fromJson(json, ResponseData.class);

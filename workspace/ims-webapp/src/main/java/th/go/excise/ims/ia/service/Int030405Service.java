@@ -63,24 +63,24 @@ public class Int030405Service {
 
 		for (IaRiskSystemUnworking iaRiskSystemUnworking : systemUnworkingList) {
 			IaRiskSystemUnworking dataSet = new IaRiskSystemUnworking();
-			dataSet.setBudgetYear(form.getBudgetYear());
-			dataSet.setBudgetYear(form.getBudgetYear());
-			dataSet.setSystemcode(iaRiskSystemUnworking.getSystemcode());
-			dataSet.setSystemname(iaRiskSystemUnworking.getSystemname());
-			dataSet.setCountall(iaRiskSystemUnworking.getCountall());
-			dataSet.setCounterror(iaRiskSystemUnworking.getCounterror());
-			dataSet.setErrordetailError10(iaRiskSystemUnworking.getErrordetailError10());
-			dataSet.setErrordetailError11(iaRiskSystemUnworking.getErrordetailError11());
-			dataSet.setErrordetailError12(iaRiskSystemUnworking.getErrordetailError12());
-			dataSet.setErrordetailError01(iaRiskSystemUnworking.getErrordetailError01());
-			dataSet.setErrordetailError02(iaRiskSystemUnworking.getErrordetailError02());
-			dataSet.setErrordetailError03(iaRiskSystemUnworking.getErrordetailError03());
-			dataSet.setErrordetailError04(iaRiskSystemUnworking.getErrordetailError04());
-			dataSet.setErrordetailError05(iaRiskSystemUnworking.getErrordetailError05());
-			dataSet.setErrordetailError06(iaRiskSystemUnworking.getErrordetailError06());
-			dataSet.setErrordetailError07(iaRiskSystemUnworking.getErrordetailError07());
-			dataSet.setErrordetailError08(iaRiskSystemUnworking.getErrordetailError08());
-			dataSet.setErrordetailError09(iaRiskSystemUnworking.getErrordetailError09());
+//			dataSet.setBudgetYear(form.getBudgetYear());
+//			dataSet.setBudgetYear(form.getBudgetYear());
+//			dataSet.setSystemcode(iaRiskSystemUnworking.getSystemcode());
+//			dataSet.setSystemname(iaRiskSystemUnworking.getSystemname());
+//			dataSet.setCountall(iaRiskSystemUnworking.getCountall());
+//			dataSet.setCounterror(iaRiskSystemUnworking.getCounterror());
+//			dataSet.setErrordetailError10(iaRiskSystemUnworking.getErrordetailError10());
+//			dataSet.setErrordetailError11(iaRiskSystemUnworking.getErrordetailError11());
+//			dataSet.setErrordetailError12(iaRiskSystemUnworking.getErrordetailError12());
+//			dataSet.setErrordetailError01(iaRiskSystemUnworking.getErrordetailError01());
+//			dataSet.setErrordetailError02(iaRiskSystemUnworking.getErrordetailError02());
+//			dataSet.setErrordetailError03(iaRiskSystemUnworking.getErrordetailError03());
+//			dataSet.setErrordetailError04(iaRiskSystemUnworking.getErrordetailError04());
+//			dataSet.setErrordetailError05(iaRiskSystemUnworking.getErrordetailError05());
+//			dataSet.setErrordetailError06(iaRiskSystemUnworking.getErrordetailError06());
+//			dataSet.setErrordetailError07(iaRiskSystemUnworking.getErrordetailError07());
+//			dataSet.setErrordetailError08(iaRiskSystemUnworking.getErrordetailError08());
+//			dataSet.setErrordetailError09(iaRiskSystemUnworking.getErrordetailError09());
 			res.add(dataSet);
 		}
 
@@ -94,8 +94,8 @@ public class Int030405Service {
 		for (IaRiskSystemUnworking iaRiskSystemUnworking : res) {
 			Int030405Vo resDataCalSet = new Int030405Vo();
 			IntCalculateCriteriaVo risk = new IntCalculateCriteriaVo();
-			if (StringUtils.isNoneBlank(iaRiskSystemUnworking.getCountall())) {
-				risk = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(iaRiskSystemUnworking.getCountall()),
+			if (StringUtils.isNoneBlank(iaRiskSystemUnworking.getCountAll())) {
+				risk = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(iaRiskSystemUnworking.getCountAll()),
 						getForm0304.getIaRiskFactorsConfig());
 			}
 			resDataCalSet.setIaRiskSystemUnworking(iaRiskSystemUnworking);
@@ -343,86 +343,86 @@ public class Int030405Service {
 			cellNum++;
 			// Column 2
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getIaRiskSystemUnworking().getSystemname());
+			cell.setCellValue(data.getIaRiskSystemUnworking().getSystemName());
 			cell.setCellStyle(tdLeft);
 			cellNum++;
 
 			// Column 3
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError01());
-			cell.setCellStyle(tdStyle);
-			cellNum++;
+//			cell = row.createCell(cellNum);
+//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError01());
+//			cell.setCellStyle(tdStyle);
+//			cellNum++;
+//
+//			// Column 4
+//			cell = row.createCell(cellNum);
+//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError02());
+//			cell.setCellStyle(tdStyle);
+//			cellNum++;
+//
+//			// Column 5
+//			cell = row.createCell(cellNum);
+//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError03());
+//			cell.setCellStyle(tdStyle);
+//			cellNum++;
+//
+//			// Column 6
+//			cell = row.createCell(cellNum);
+//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError04());
+//			cell.setCellStyle(tdStyle);
+//			cellNum++;
+//			
+//			// Column 7
+//			cell = row.createCell(cellNum);
+//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError05());
+//			cell.setCellStyle(tdStyle);
+//			cellNum++;
+//			
+//			// Column 8
+//			cell = row.createCell(cellNum);
+//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError06());
+//			cell.setCellStyle(tdStyle);
+//			cellNum++;
+//			
+//			// Column 9
+//			cell = row.createCell(cellNum);
+//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError07());
+//			cell.setCellStyle(tdStyle);
+//			cellNum++;
+//			
+//			// Column 10
+//			cell = row.createCell(cellNum);
+//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError08());
+//			cell.setCellStyle(tdStyle);
+//			cellNum++;
+//			
+//			// Column 11
+//			cell = row.createCell(cellNum);
+//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError09());
+//			cell.setCellStyle(tdStyle);
+//			cellNum++;
+//			
+//			// Column 12
+//			cell = row.createCell(cellNum);
+//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError10());
+//			cell.setCellStyle(tdStyle);
+//			cellNum++;
+//			
+//			// Column 13
+//			cell = row.createCell(cellNum);
+//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError11());
+//			cell.setCellStyle(tdStyle);
+//			cellNum++;
+//			
+//			// Column 12
+//			cell = row.createCell(cellNum);
+//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError12());
+//			cell.setCellStyle(tdStyle);
+//			cellNum++;
 
-			// Column 4
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError02());
-			cell.setCellStyle(tdStyle);
-			cellNum++;
-
-			// Column 5
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError03());
-			cell.setCellStyle(tdStyle);
-			cellNum++;
-
-			// Column 6
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError04());
-			cell.setCellStyle(tdStyle);
-			cellNum++;
-			
-			// Column 7
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError05());
-			cell.setCellStyle(tdStyle);
-			cellNum++;
-			
-			// Column 8
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError06());
-			cell.setCellStyle(tdStyle);
-			cellNum++;
-			
-			// Column 9
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError07());
-			cell.setCellStyle(tdStyle);
-			cellNum++;
-			
-			// Column 10
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError08());
-			cell.setCellStyle(tdStyle);
-			cellNum++;
-			
-			// Column 11
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError09());
-			cell.setCellStyle(tdStyle);
-			cellNum++;
-			
-			// Column 12
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError10());
-			cell.setCellStyle(tdStyle);
-			cellNum++;
-			
 			// Column 13
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError11());
-			cell.setCellStyle(tdStyle);
-			cellNum++;
-			
-			// Column 12
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError12());
-			cell.setCellStyle(tdStyle);
-			cellNum++;
-
-			// Column 13
-			cell = row.createCell(cellNum);
-			if (data.getIaRiskSystemUnworking().getCountall() != null) {
-				cell.setCellValue(data.getIaRiskSystemUnworking().getCountall().toString());
+			if (data.getIaRiskSystemUnworking().getCountAll() != null) {
+				cell.setCellValue(data.getIaRiskSystemUnworking().getCountAll().toString());
 			}else {
 				cell.setCellValue("-");
 			}

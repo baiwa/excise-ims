@@ -21,40 +21,26 @@ public class IaRiskSystemUnworking extends BaseEntity {
 	@SequenceGenerator(name = "IA_RISK_SYSTEM_UNWORKING_GEN", sequenceName = "IA_RISK_SYSTEM_UNWORKING_SEQ", allocationSize = 1)
 	@Column(name = "ID")
 	private BigDecimal id;
-	@Column(name = "BUDGET_YEAR")
-	private String budgetYear;
-	@Column(name = "SYSTEMCODE")
-	private String systemcode;
-	@Column(name = "SYSTEMNAME")
-	private String systemname;
-	@Column(name = "COUNTALL")
-	private String countall;
-	@Column(name = "COUNTERROR")
-	private String counterror;
-	@Column(name = "ERRORDETAIL_ERROR10")
-	private String errordetailError10;
-	@Column(name = "ERRORDETAIL_ERROR11")
-	private String errordetailError11;
-	@Column(name = "ERRORDETAIL_ERROR12")
-	private String errordetailError12;
-	@Column(name = "ERRORDETAIL_ERROR01")
-	private String errordetailError01;
-	@Column(name = "ERRORDETAIL_ERROR02")
-	private String errordetailError02;
-	@Column(name = "ERRORDETAIL_ERROR03")
-	private String errordetailError03;
-	@Column(name = "ERRORDETAIL_ERROR04")
-	private String errordetailError04;
-	@Column(name = "ERRORDETAIL_ERROR05")
-	private String errordetailError05;
-	@Column(name = "ERRORDETAIL_ERROR06")
-	private String errordetailError06;
-	@Column(name = "ERRORDETAIL_ERROR07")
-	private String errordetailError07;
-	@Column(name = "ERRORDETAIL_ERROR08")
-	private String errordetailError08;
-	@Column(name = "ERRORDETAIL_ERROR09")
-	private String errordetailError09;
+	@Column(name = "SYSTEM_CODE")
+	private String systemCode;
+	@Column(name = "SYSTEM_NAME")
+	private String systemName;
+	@Column(name = "COUNT_ALL")
+	private String countAll;
+	@Column(name = "COUNT_NORMAL")
+	private String countNormal;
+	@Column(name = "COUNT_ERROR")
+	private String countError;
+	@Column(name = "START_DATE")
+	private String startDate;
+	@Column(name = "END_DATE")
+	private String endDate;
+	@Column(name = "YEAR")
+	private String year;
+	@Column(name = "MONTH")
+	private String month;
+	@Column(name = "STATUS")
+	private String status;
 
 	public BigDecimal getId() {
 		return id;
@@ -64,140 +50,88 @@ public class IaRiskSystemUnworking extends BaseEntity {
 		this.id = id;
 	}
 
-	public String getBudgetYear() {
-		return budgetYear;
+	public String getSystemCode() {
+		return systemCode;
 	}
 
-	public void setBudgetYear(String budgetYear) {
-		this.budgetYear = budgetYear;
+	public void setSystemCode(String systemCode) {
+		this.systemCode = systemCode;
 	}
 
-	public String getSystemcode() {
-		return systemcode;
+	public String getSystemName() {
+		return systemName;
 	}
 
-	public void setSystemcode(String systemcode) {
-		this.systemcode = systemcode;
+	public void setSystemName(String systemName) {
+		this.systemName = systemName;
 	}
 
-	public String getSystemname() {
-		return systemname;
+	public String getCountAll() {
+		return countAll;
 	}
 
-	public void setSystemname(String systemname) {
-		this.systemname = systemname;
+	public void setCountAll(String countAll) {
+		this.countAll = countAll;
 	}
 
-	public String getCountall() {
-		return countall;
+	public String getCountNormal() {
+		return countNormal;
 	}
 
-	public void setCountall(String countall) {
-		this.countall = countall;
+	public void setCountNormal(String countNormal) {
+		this.countNormal = countNormal;
 	}
 
-	public String getCounterror() {
-		return counterror;
+	public String getCountError() {
+		return countError;
 	}
 
-	public void setCounterror(String counterror) {
-		this.counterror = counterror;
+	public void setCountError(String countError) {
+		this.countError = countError;
 	}
 
-	public String getErrordetailError10() {
-		return errordetailError10;
+	public String getStartDate() {
+		return startDate;
 	}
 
-	public void setErrordetailError10(String errordetailError10) {
-		this.errordetailError10 = errordetailError10;
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
 	}
 
-	public String getErrordetailError11() {
-		return errordetailError11;
+	public String getEndDate() {
+		return endDate;
 	}
 
-	public void setErrordetailError11(String errordetailError11) {
-		this.errordetailError11 = errordetailError11;
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 
-	public String getErrordetailError12() {
-		return errordetailError12;
+	public String getYear() {
+		return year;
 	}
 
-	public void setErrordetailError12(String errordetailError12) {
-		this.errordetailError12 = errordetailError12;
+	public void setYear(String year) {
+		this.year = year;
 	}
 
-	public String getErrordetailError01() {
-		return errordetailError01;
+	public String getMonth() {
+		return month;
 	}
 
-	public void setErrordetailError01(String errordetailError01) {
-		this.errordetailError01 = errordetailError01;
+	public void setMonth(String month) {
+		this.month = month;
 	}
 
-	public String getErrordetailError02() {
-		return errordetailError02;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setErrordetailError02(String errordetailError02) {
-		this.errordetailError02 = errordetailError02;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
-	public String getErrordetailError03() {
-		return errordetailError03;
-	}
-
-	public void setErrordetailError03(String errordetailError03) {
-		this.errordetailError03 = errordetailError03;
-	}
-
-	public String getErrordetailError04() {
-		return errordetailError04;
-	}
-
-	public void setErrordetailError04(String errordetailError04) {
-		this.errordetailError04 = errordetailError04;
-	}
-
-	public String getErrordetailError05() {
-		return errordetailError05;
-	}
-
-	public void setErrordetailError05(String errordetailError05) {
-		this.errordetailError05 = errordetailError05;
-	}
-
-	public String getErrordetailError06() {
-		return errordetailError06;
-	}
-
-	public void setErrordetailError06(String errordetailError06) {
-		this.errordetailError06 = errordetailError06;
-	}
-
-	public String getErrordetailError07() {
-		return errordetailError07;
-	}
-
-	public void setErrordetailError07(String errordetailError07) {
-		this.errordetailError07 = errordetailError07;
-	}
-
-	public String getErrordetailError08() {
-		return errordetailError08;
-	}
-
-	public void setErrordetailError08(String errordetailError08) {
-		this.errordetailError08 = errordetailError08;
-	}
-
-	public String getErrordetailError09() {
-		return errordetailError09;
-	}
-
-	public void setErrordetailError09(String errordetailError09) {
-		this.errordetailError09 = errordetailError09;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

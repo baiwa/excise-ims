@@ -13,6 +13,6 @@ public interface IaRiskSystemUnworkingRepository
     extends CommonJpaCrudRepository<IaRiskSystemUnworking, BigDecimal>
 {
 
-	@Query(value = "Select e.* from IA_RISK_SYSTEM_UNWORKING e  WHERE e.BUDGET_YEAR = ?1", nativeQuery = true)
-	public  List<IaRiskSystemUnworking> findByBudgetYear(String budgetYear);
+	@Query(value = "Select e.* from IA_RISK_SYSTEM_UNWORKING e  WHERE e.YEAR = ?1", nativeQuery = true)
+	public  List<IaRiskSystemUnworking> findByBudgetYear(String year);
 }
