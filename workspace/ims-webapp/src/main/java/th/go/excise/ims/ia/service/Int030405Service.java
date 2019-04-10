@@ -58,29 +58,27 @@ public class Int030405Service {
 	public List<Int030405Vo> systemUnworkingList(Int030405FormVo form) {
 		List<Int030405Vo> resDataCal = new ArrayList<Int030405Vo>();
 		List<IaRiskSystemUnworking> systemUnworkingList = new ArrayList<IaRiskSystemUnworking>();
-		systemUnworkingList = iaRiskSystemUnworkingRepository.findByBudgetYear(form.getBudgetYear());
+		systemUnworkingList = iaRiskSystemUnworkingRepository.findByBudgetYear(
+				form.getStartDate().split("/")[1]+form.getStartDate().split("/")[0],form.getEndDate().split("/")[1]+form.getEndDate().split("/")[0]);
 		List<IaRiskSystemUnworking> res = new ArrayList<IaRiskSystemUnworking>();
 
 		for (IaRiskSystemUnworking iaRiskSystemUnworking : systemUnworkingList) {
 			IaRiskSystemUnworking dataSet = new IaRiskSystemUnworking();
-//			dataSet.setBudgetYear(form.getBudgetYear());
-//			dataSet.setBudgetYear(form.getBudgetYear());
-//			dataSet.setSystemcode(iaRiskSystemUnworking.getSystemcode());
-//			dataSet.setSystemname(iaRiskSystemUnworking.getSystemname());
-//			dataSet.setCountall(iaRiskSystemUnworking.getCountall());
-//			dataSet.setCounterror(iaRiskSystemUnworking.getCounterror());
-//			dataSet.setErrordetailError10(iaRiskSystemUnworking.getErrordetailError10());
-//			dataSet.setErrordetailError11(iaRiskSystemUnworking.getErrordetailError11());
-//			dataSet.setErrordetailError12(iaRiskSystemUnworking.getErrordetailError12());
-//			dataSet.setErrordetailError01(iaRiskSystemUnworking.getErrordetailError01());
-//			dataSet.setErrordetailError02(iaRiskSystemUnworking.getErrordetailError02());
-//			dataSet.setErrordetailError03(iaRiskSystemUnworking.getErrordetailError03());
-//			dataSet.setErrordetailError04(iaRiskSystemUnworking.getErrordetailError04());
-//			dataSet.setErrordetailError05(iaRiskSystemUnworking.getErrordetailError05());
-//			dataSet.setErrordetailError06(iaRiskSystemUnworking.getErrordetailError06());
-//			dataSet.setErrordetailError07(iaRiskSystemUnworking.getErrordetailError07());
-//			dataSet.setErrordetailError08(iaRiskSystemUnworking.getErrordetailError08());
-//			dataSet.setErrordetailError09(iaRiskSystemUnworking.getErrordetailError09());
+
+			dataSet.setSystemCode(iaRiskSystemUnworking.getSystemCode());
+			dataSet.setSystemName(iaRiskSystemUnworking.getSystemName());
+			
+			dataSet.setCountAll(iaRiskSystemUnworking.getCountAll());
+			dataSet.setCountNormal(iaRiskSystemUnworking.getCountNormal());
+			dataSet.setCountError(iaRiskSystemUnworking.getCountError());
+			
+			dataSet.setStartDate(iaRiskSystemUnworking.getStartDate());
+			dataSet.setEndDate(iaRiskSystemUnworking.getEndDate());
+			
+			dataSet.setMonth(iaRiskSystemUnworking.getMonth());
+			dataSet.setYear(iaRiskSystemUnworking.getYear());
+			dataSet.setStatus(iaRiskSystemUnworking.getStatus());
+
 			res.add(dataSet);
 		}
 
