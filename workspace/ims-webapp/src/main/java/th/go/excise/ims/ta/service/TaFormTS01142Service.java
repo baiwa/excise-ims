@@ -129,7 +129,7 @@ public class TaFormTS01142Service  extends AbstractTaFormTSService<TaFormTS01142
 				formTS01142Dtl.setFormTsNumber(formTS01142Hdr.getFormTsNumber());
 				formTs01142DtlList.add(formTS01142Dtl);
 			}
-			taFormTs01142DtlRepository.save(formTS01142Dtl);
+			taFormTs01142DtlRepository.saveAll(formTs01142DtlList);
 		}
 		
 		taFormTs01142HdrRepository.save(formTS01142Hdr);
@@ -177,14 +177,26 @@ public class TaFormTS01142Service  extends AbstractTaFormTSService<TaFormTS01142
 		TaFormTS01142Vo formTS01142Vo = new TaFormTS01142Vo();
 		TaFormTs01142Hdr formTs01142Hdr = taFormTs01142HdrRepository.findByFormTsNumber(formTsNumber);
 		toVo(formTS01142Vo, formTs01142Hdr);
-
 		// Prepare Detail
 		List<TaFormTs01142Dtl> formTs01142DtlList = taFormTs01142DtlRepository.findByFormTsNumber(formTsNumber);
 		List<TaFormTS01142DtlVo> formTS01142DtlVoList = new ArrayList<>();
 		TaFormTS01142DtlVo formTS01142DtlVo = null;
 		for (TaFormTs01142Dtl formTs01142Dtl : formTs01142DtlList) {
 			formTS01142DtlVo = new TaFormTS01142DtlVo();
-			toVoDtl(formTS01142DtlVo, formTs01142Dtl);
+			formTS01142DtlVo.setFormTs01142DtlId(StringUtils.defaultString(Long.toString(formTs01142Dtl.getFormTs01142DtlId())));
+			formTS01142DtlVo.setRecDate(formTs01142Dtl.getRecDate());
+			formTS01142DtlVo.setDutyTypeText(StringUtils.defaultString(formTs01142Dtl.getDutyTypeText()));
+			formTS01142DtlVo.setValueFromAudit(formTs01142Dtl.getValueFromAudit());
+			formTS01142DtlVo.setTaxRate(formTs01142Dtl.getTaxRate());
+			formTS01142DtlVo.setAuditTaxAmt(formTs01142Dtl.getAuditTaxAmt());
+			formTS01142DtlVo.setPaidTaxAmt(formTs01142Dtl.getPaidTaxAmt());
+			formTS01142DtlVo.setAddTaxAmt(formTs01142Dtl.getAddTaxAmt());
+			formTS01142DtlVo.setAddFineAmt(formTs01142Dtl.getAddFineAmt());
+			formTS01142DtlVo.setAddExtraAmt(formTs01142Dtl.getAddExtraAmt());
+			formTS01142DtlVo.setAddSumTaxAmt(formTs01142Dtl.getAddSumTaxAmt());
+			formTS01142DtlVo.setAddMoiAmt(formTs01142Dtl.getAddMoiAmt());
+			formTS01142DtlVo.setAddSumAllTaxAmt(formTs01142Dtl.getAddSumAllTaxAmt());
+			formTS01142DtlVo.setAddMonthNum(formTs01142Dtl.getAddMonthNum());
 			formTS01142DtlVoList.add(formTS01142DtlVo);
 		}
 		formTS01142Vo.setTaFormTS01142DtlVoList(formTS01142DtlVoList);
@@ -195,14 +207,6 @@ public class TaFormTS01142Service  extends AbstractTaFormTSService<TaFormTS01142
 	private void toEntityDtl(TaFormTs01142Dtl entity, TaFormTS01142DtlVo vo) {
 		try {
 			BeanUtils.copyProperties(entity, vo);
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			logger.warn(e.getMessage(), e);
-		}
-	}
-
-	private void toVoDtl(TaFormTS01142DtlVo vo, TaFormTs01142Dtl entity) {
-		try {
-			BeanUtils.copyProperties(vo, entity);
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			logger.warn(e.getMessage(), e);
 		}

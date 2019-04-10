@@ -62,12 +62,12 @@ public class Oa0106Service {
 	}
 
 	@SuppressWarnings("finally")
-	public byte[] objectToPDF() {
+	public byte[] objectToPDF(String licenseId,String dtlId) {
 		byte[] content = null;
 		try {
 			Map<String, Object> params = new HashMap<String, Object>();
-			params = setPrepareJasperOaOpe01();
-			JasperPrint jasperPrint1 = ReportUtils.getJasperPrint("OA_LUB_01" + "." + FILE_EXTENSION.JASPER, params,
+			params = setPrepareJasperOaOpe01(licenseId,dtlId);
+			JasperPrint jasperPrint1 = ReportUtils.getJasperPrint("OA_OPE_01" + "." + FILE_EXTENSION.JASPER, params,
 					new JREmptyDataSource());
 			JasperPrint jasperPrint2 = ReportUtils.getJasperPrint("OA_OPE_05" + "." + FILE_EXTENSION.JASPER, params,
 					new JREmptyDataSource());
@@ -109,10 +109,10 @@ public class Oa0106Service {
 		}
 	}
 
-	public Map<String, Object> setPrepareJasperOaOpe01() {
+	public Map<String, Object> setPrepareJasperOaOpe01(String licenseId,String dtlId) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		BigDecimal id = new BigDecimal("1");
-		Oa0106Vo license = oa0106JdbcRepo.getCustomerLicenseById("7");
+		BigDecimal id = new BigDecimal(dtlId);
+		Oa0106Vo license = oa0106JdbcRepo.getCustomerLicenseById(licenseId);
 		Optional<OaHydrocarbDtl> oaHydrocabon = oaHydrocarbDtlRepo.findById(id);
 		OaHydrocarbDtl data = oaHydrocabon.get();
 
@@ -136,7 +136,7 @@ public class Oa0106Service {
 		params.put("numberUtility", data.getNumberUtility());
 		params.put("orderType", data.getOrderType());
 		params.put("orderPayMethod", data.getOrderPayMethod());
-		params.put("rentOfficePrice", data.getOfficeRentAmount().toString());
+		params.put("rentOfficePrice",data.getOfficeRentAmount() != null ? data.getOfficeRentAmount().toString():null);
 		params.put("orderPayMethodOther", data.getPayMethodOther());
 
 		return params;

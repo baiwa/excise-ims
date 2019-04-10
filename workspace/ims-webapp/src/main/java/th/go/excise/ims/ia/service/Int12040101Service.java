@@ -11,6 +11,7 @@ import th.go.excise.ims.ia.persistence.entity.IaChartOfAcc;
 import th.go.excise.ims.ia.persistence.entity.IaExpenses;
 import th.go.excise.ims.ia.persistence.repository.IaChartOfAccRepository;
 import th.go.excise.ims.ia.persistence.repository.IaExpensesRepository;
+import th.go.excise.ims.ia.persistence.repository.jdbc.IaChartOfAccJdbcRepository;
 
 @Service
 public class Int12040101Service {
@@ -20,10 +21,14 @@ public class Int12040101Service {
 	
 	@Autowired
 	private IaExpensesRepository iaExpensesRepository;
+	
+//	@Autowired
+//	private IaChartOfAccJdbcRepository iaChartOfAccJdbcRepository;
 
 	public List<IaChartOfAcc> findAll() {
 		List<IaChartOfAcc> data = new ArrayList<>();
 		data = iaChartOfAccRepository.findAll();
+//		data = iaChartOfAccJdbcRepository.findAll();
 		for (IaChartOfAcc iaChartOfAccData : data) {
 			iaChartOfAccData.setCreatedBy(null);
 			iaChartOfAccData.setCreatedDate(null);
@@ -62,6 +67,12 @@ public class Int12040101Service {
 		data.setNote(form.getNote());
 		data.setOfficeCode(form.getOfficeCode());
 		data.setOfficeDesc(form.getOfficeDesc());
+		
+		data.setAverageCostOut(form.getAverageCostOut());
+		data.setAverageGiveOut(form.getAverageGiveOut());
+		data.setAverageFromOut(form.getAverageFromOut());
+		data.setAverageComeCostOut(form.getAverageComeCostOut());
+		
 		iaExpensesRepository.save(data);
 	}
 	

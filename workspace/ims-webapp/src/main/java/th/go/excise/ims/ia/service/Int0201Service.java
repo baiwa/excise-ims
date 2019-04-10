@@ -374,9 +374,11 @@ public class Int0201Service {
 		// Update here
 		risk.setLow(request.getLow());
 		risk.setLowStart(request.getLowStart());
+		risk.setLowEnd(request.getLowEnd());
 		risk.setLowRating(request.getLowRating());
 		risk.setLowColor(request.getLowColor());
-
+		risk.setLowCondition(request.getLowCondition());
+		
 		risk.setMedium(request.getMedium());
 		risk.setMediumStart(request.getMediumStart());
 		risk.setMediumEnd(request.getMediumEnd());
@@ -386,9 +388,24 @@ public class Int0201Service {
 
 		risk.setHigh(request.getHigh());
 		risk.setHighStart(request.getHighStart());
+		risk.setHighEnd(request.getHighEnd());
 		risk.setHighRating(request.getHighRating());
 		risk.setHighColor(request.getHighColor());
 		risk.setHighCondition(request.getHighCondition());
+		
+		risk.setVeryhigh(request.getVeryhigh());
+		risk.setVeryhighStart(request.getVeryhighStart());
+		risk.setVeryhighEnd(request.getVeryhighEnd());
+		risk.setVeryhighRating(request.getVeryhighRating());
+		risk.setVeryhighColor(request.getVeryhighColor());
+		risk.setVeryhighCondition(request.getVeryhighCondition());
+		
+		risk.setVerylow(request.getVerylow());
+		risk.setVerylowStart(request.getVerylowStart());
+		risk.setVerylowEnd(request.getVerylowEnd());
+		risk.setVerylowRating(request.getVerylowRating());
+		risk.setVerylowColor(request.getVerylowColor());
+		risk.setVerylowCondition(request.getVerylowCondition());
 
 		risk = iaRiskQtnConfigRepository.save(risk);
 

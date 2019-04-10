@@ -21,8 +21,8 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESS
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.oa.persistence.entity.OaAchCustomer;
 import th.go.excise.ims.oa.service.Oa0412Service;
+import th.go.excise.ims.oa.vo.Oa020106FormVo;
 import th.go.excise.ims.oa.vo.Oa040106FormVo;
 import th.go.excise.ims.oa.vo.Oa0412Vo;
 
@@ -37,10 +37,11 @@ public class Oa0412Controller {
 
 	@PostMapping("/filter")
 	@ResponseBody
-	public DataTableAjax<OaAchCustomer> filterByCriteria(@RequestBody Oa0412Vo request) {
-		DataTableAjax<OaAchCustomer> response = new DataTableAjax<>();
+	public DataTableAjax<Oa020106FormVo> filterByCriteria(@RequestBody Oa0412Vo request) {
+		DataTableAjax<Oa020106FormVo> response = new DataTableAjax<>();
 		try {
-			response = oa0412Service.filterByCriteria(request);
+			String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+			response = oa0412Service.filterByCriteria(request,offCode);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Oa0412Controller::filterByCriteria => ", e);
@@ -71,6 +72,7 @@ public class Oa0412Controller {
 		ResponseData<Oa040106FormVo> responseData = new ResponseData<>();
 		Oa040106FormVo data = new Oa040106FormVo();
 		try {
+			
 			data = oa0412Service.findCustomerLicenAll(licenseIdStr);
 			responseData.setData(data);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);

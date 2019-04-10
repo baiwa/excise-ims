@@ -1,33 +1,43 @@
 package th.go.excise.ims.ta.vo;
 
+import java.math.BigDecimal;
+
 public class AnalysisIncomeCompareLastMonthVo {
 	private String taxMonth;
-	private String incomeAmt;
-	private String diffIncomeAmt;
-	private String diffIncomePnt;
+	private BigDecimal incomeAmt;
+	private BigDecimal diffIncomeAmt;
+	private BigDecimal diffIncomePnt;
+
 	public String getTaxMonth() {
 		return taxMonth;
 	}
+
 	public void setTaxMonth(String taxMonth) {
 		this.taxMonth = taxMonth;
 	}
-	public String getIncomeAmt() {
+
+	public BigDecimal getIncomeAmt() {
 		return incomeAmt;
 	}
-	public void setIncomeAmt(String incomeAmt) {
+
+	public void setIncomeAmt(BigDecimal incomeAmt) {
 		this.incomeAmt = incomeAmt;
 	}
-	public String getDiffIncomeAmt() {
+
+	public BigDecimal getDiffIncomeAmt() {
 		return diffIncomeAmt;
 	}
-	public void setDiffIncomeAmt(String diffIncomeAmt) {
+
+	public void setDiffIncomeAmt(BigDecimal diffIncomeAmt) {
 		this.diffIncomeAmt = diffIncomeAmt;
 	}
-	public String getDiffIncomePnt() {
+
+	public BigDecimal getDiffIncomePnt() {
 		return diffIncomePnt;
 	}
-	public void setDiffIncomePnt(String diffIncomePnt) {
+
+	public void setDiffIncomePnt(BigDecimal diffIncomePnt) {
 		this.diffIncomePnt = diffIncomePnt;
 	}
-	
+
 }

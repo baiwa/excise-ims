@@ -23,8 +23,6 @@ public class OaAchCustomerLicen
     @SequenceGenerator(name = "OA_ACH_CUSTOMER_LICEN_GEN", sequenceName = "OA_ACH_CUSTOMER_LICEN_SEQ", allocationSize = 1)
     @Column(name = "OA_CUSLICENSE_ID")
     private BigDecimal oaCuslicenseId;
-    @Column(name = "OA_CUSTOMER_ID")
-    private BigDecimal oaCustomerId;
     @Column(name = "LICENSE_NO")
     private String licenseNo;
     @Column(name = "LICENSE_DATE")
@@ -59,8 +57,69 @@ public class OaAchCustomerLicen
     private Date usedDate;
     @Column(name = "MONEY")
 	private BigDecimal money;
+    @Column(name = "NAME")
+    private String name;
+    @Column(name = "COMPANY_NAME")
+    private String companyName;
+    @Column(name = "IDENTIFY_NO")
+    private String identifyNo;
+    @Column(name = "IDENTIFY_TYPE")
+    private String identifyType;
+    @Column(name = "ADDRESS")
+    private String address;
+    @Column(name = "MOBILE")
+    private String mobile;
+    
+    
+    public String getAddress() {
+		return address;
+	}
 
-    public BigDecimal getMoney() {
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getIdentifyNo() {
+		return identifyNo;
+	}
+
+	public void setIdentifyNo(String identifyNo) {
+		this.identifyNo = identifyNo;
+	}
+
+	public String getIdentifyType() {
+		return identifyType;
+	}
+
+	public void setIdentifyType(String identifyType) {
+		this.identifyType = identifyType;
+	}
+
+	public BigDecimal getMoney() {
 		return money;
 	}
 
@@ -74,14 +133,6 @@ public class OaAchCustomerLicen
 
     public void setOaCuslicenseId(BigDecimal oaCuslicenseId) {
         this.oaCuslicenseId = oaCuslicenseId;
-    }
-
-    public BigDecimal getOaCustomerId() {
-        return oaCustomerId;
-    }
-
-    public void setOaCustomerId(BigDecimal oaCustomerId) {
-        this.oaCustomerId = oaCustomerId;
     }
 
     public String getLicenseNo() {

@@ -126,7 +126,7 @@ public class TaFormTSController {
 		
 		AbstractTaFormTSService taFormTSService = taFormTSMap.get(tsNumber);
 		Object formVo = gson.fromJson(reportJsonBean.getJson(), taFormTSService.getVoClass());
-		byte[] reportFile = taFormTSService.processFormTS(formVo);
+		byte[] reportFile = taFormTSService.generateReport(formVo);
 
 		String filename = String.format(taFormTSService.getReportName() + "_%s." + FILE_EXTENSION.PDF, DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now()));
 		response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", filename));
@@ -184,7 +184,7 @@ public class TaFormTSController {
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			response.setMessage(e.getMessage());
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
 		}
 

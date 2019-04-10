@@ -7,12 +7,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.go.excise.ims.oa.persistence.entity.OaHydCustomer;
 import th.go.excise.ims.oa.persistence.entity.OaHydCustomerLicen;
 import th.go.excise.ims.oa.persistence.entity.OaHydCustomerLicenDtl;
 import th.go.excise.ims.oa.persistence.entity.OaLicensePlan;
 import th.go.excise.ims.oa.persistence.repository.OaHydCustomerLicenRepository;
-import th.go.excise.ims.oa.persistence.repository.OaHydCustomerRepository;
 import th.go.excise.ims.oa.persistence.repository.OaLicensePlanRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa010106JdbcRepository;
 import th.go.excise.ims.oa.vo.Oa010106ButtonVo;

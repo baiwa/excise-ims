@@ -8,8 +8,18 @@ public class AnalysisFormVo extends DataTableRequest {
 	 * 
 	 */
 	private static final long serialVersionUID = -4962250628414975351L;
+	private String newRegId;
 	private String startDate;
 	private String endDate;
+
+	
+	public String getNewRegId() {
+		return newRegId;
+	}
+
+	public void setNewRegId(String newRegId) {
+		this.newRegId = newRegId;
+	}
 
 	public String getStartDate() {
 		return startDate;

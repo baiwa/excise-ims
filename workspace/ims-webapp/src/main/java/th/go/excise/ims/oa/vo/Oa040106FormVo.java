@@ -26,8 +26,73 @@ public class Oa040106FormVo {
 	private String createdFactTime;
 	private Date usedDate;
 	private BigDecimal money;
+	private String name;
+	private String companyName;
+	private String identifyNo;
+	private String identifyType;
+	private String warehouseAddress;
+	private String address;
+	private String mobile;
 	private List<OaAchCustomerLicenDtl> details;
 	private List<OaAchCustomerLicenDtl> deletes;
+
+	
+	
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getIdentifyNo() {
+		return identifyNo;
+	}
+
+	public void setIdentifyNo(String identifyNo) {
+		this.identifyNo = identifyNo;
+	}
+
+	public String getIdentifyType() {
+		return identifyType;
+	}
+
+	public void setIdentifyType(String identifyType) {
+		this.identifyType = identifyType;
+	}
+
+	public String getWarehouseAddress() {
+		return warehouseAddress;
+	}
+
+	public void setWarehouseAddress(String warehouseAddress) {
+		this.warehouseAddress = warehouseAddress;
+	}
 
 	public BigDecimal getMoney() {
 		return money;

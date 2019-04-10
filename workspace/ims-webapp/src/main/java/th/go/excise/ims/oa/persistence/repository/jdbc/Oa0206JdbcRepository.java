@@ -26,7 +26,7 @@ public class Oa0206JdbcRepository {
 		List<Object> params = new ArrayList<Object>();
 		sql.append(" SELECT LP.OA_LICENSE_PLAN_ID,CL.* FROM OA_CUSTOMER_LICEN CL ");
 		sql.append(" INNER JOIN OA_LICENSE_PLAN LP ON LP.LICENSE_ID = CL.OA_CUSLICENSE_ID ");
-		sql.append(" WHERE LP.STATUS = '5' AND LP.OFFICE_CODE LIKE  ?  ");
+		sql.append(" WHERE LP.STATUS = '6' AND LP.OFFICE_CODE LIKE  ?  ");
 		sql.append(" ORDER BY START_DATE DESC");
 		params.add(officeCode+"%");
 		
@@ -42,7 +42,7 @@ public class Oa0206JdbcRepository {
 		List<Object> params = new ArrayList<Object>();
 		sql.append(" SELECT CL.* FROM OA_CUSTOMER_LICEN CL ");
 		sql.append(" INNER JOIN OA_LICENSE_PLAN LP ON LP.LICENSE_ID = CL.OA_CUSLICENSE_ID ");
-		sql.append(" WHERE LP.STATUS = '5' AND LP.OFFICE_CODE LIKE  ?  ");
+		sql.append(" WHERE LP.STATUS = '6' AND LP.OFFICE_CODE LIKE  ?  ");
 		sql.append(" ORDER BY START_DATE DESC");
 		params.add(officeCode);
 		String sqlCount = OracleUtils.countForDataTable(sql.toString());
@@ -56,7 +56,7 @@ public class Oa0206JdbcRepository {
 		List<Object> params = new ArrayList<Object>();
 		sql.append(" SELECT LP.OA_LICENSE_PLAN_ID,CL.* FROM OA_HYD_CUSTOMER_LICEN CL ");
 		sql.append(" INNER JOIN OA_LICENSE_PLAN LP ON LP.LICENSE_ID = CL.OA_CUSLICENSE_ID ");
-		sql.append(" WHERE LP.STATUS = '5' AND LP.OFFICE_CODE LIKE  ?  ");
+		sql.append(" WHERE LP.STATUS = '6' AND LP.OFFICE_CODE LIKE  ?  ");
 		sql.append(" ORDER BY START_DATE DESC");
 		params.add(officeCode+"%");
 		
@@ -72,7 +72,7 @@ public class Oa0206JdbcRepository {
 		List<Object> params = new ArrayList<Object>();
 		sql.append(" SELECT LP.OA_LICENSE_PLAN_ID ,CL.* FROM OA_HYD_CUSTOMER_LICEN CL ");
 		sql.append(" INNER JOIN OA_LICENSE_PLAN LP ON LP.LICENSE_ID = CL.OA_CUSLICENSE_ID ");
-		sql.append(" WHERE LP.STATUS = '5' AND LP.OFFICE_CODE LIKE  ?  ");
+		sql.append(" WHERE LP.STATUS = '6' AND LP.OFFICE_CODE LIKE  ?  ");
 		sql.append(" ORDER BY START_DATE DESC");
 		params.add(officeCode);
 		String sqlCount = OracleUtils.countForDataTable(sql.toString());
