@@ -395,12 +395,14 @@ public class Int0201Service {
 		
 		risk.setVeryhigh(request.getVeryhigh());
 		risk.setVeryhighStart(request.getVeryhighStart());
+		risk.setVeryhighEnd(request.getVeryhighEnd());
 		risk.setVeryhighRating(request.getVeryhighRating());
 		risk.setVeryhighColor(request.getVeryhighColor());
 		risk.setVeryhighCondition(request.getVeryhighCondition());
 		
 		risk.setVerylow(request.getVerylow());
 		risk.setVerylowStart(request.getVerylowStart());
+		risk.setVerylowEnd(request.getVerylowEnd());
 		risk.setVerylowRating(request.getVerylowRating());
 		risk.setVerylowColor(request.getVerylowColor());
 		risk.setVerylowCondition(request.getVerylowCondition());

@@ -72,6 +72,14 @@ public class IaExpenses extends BaseEntity {
 	private String officeCode;
 	@Column(name = "OFFICE_DESC")
 	private String officeDesc;
+	@Column(name = "AVERAGE_COST_OUT")
+	private BigDecimal averageCostOut;
+	@Column(name = "AVERAGE_GIVE_OUT")
+	private String averageGiveOut;
+	@Column(name = "AVERAGE_FROM_OUT")
+	private BigDecimal averageFromOut;
+	@Column(name = "AVERAGE_COME_COST_OUT")
+	private String averageComeCostOut;
 
 	public BigDecimal getId() {
 		return id;
@@ -267,6 +275,38 @@ public class IaExpenses extends BaseEntity {
 
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+	public BigDecimal getAverageCostOut() {
+		return averageCostOut;
+	}
+
+	public void setAverageCostOut(BigDecimal averageCostOut) {
+		this.averageCostOut = averageCostOut;
+	}
+
+	public String getAverageGiveOut() {
+		return averageGiveOut;
+	}
+
+	public void setAverageGiveOut(String averageGiveOut) {
+		this.averageGiveOut = averageGiveOut;
+	}
+
+	public BigDecimal getAverageFromOut() {
+		return averageFromOut;
+	}
+
+	public void setAverageFromOut(BigDecimal averageFromOut) {
+		this.averageFromOut = averageFromOut;
+	}
+
+	public String getAverageComeCostOut() {
+		return averageComeCostOut;
+	}
+
+	public void setAverageComeCostOut(String averageComeCostOut) {
+		this.averageComeCostOut = averageComeCostOut;
 	}
 
 }

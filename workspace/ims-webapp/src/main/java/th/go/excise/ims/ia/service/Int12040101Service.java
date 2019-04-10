@@ -67,6 +67,12 @@ public class Int12040101Service {
 		data.setNote(form.getNote());
 		data.setOfficeCode(form.getOfficeCode());
 		data.setOfficeDesc(form.getOfficeDesc());
+		
+		data.setAverageCostOut(form.getAverageCostOut());
+		data.setAverageGiveOut(form.getAverageGiveOut());
+		data.setAverageFromOut(form.getAverageFromOut());
+		data.setAverageComeCostOut(form.getAverageComeCostOut());
+		
 		iaExpensesRepository.save(data);
 	}
 	
