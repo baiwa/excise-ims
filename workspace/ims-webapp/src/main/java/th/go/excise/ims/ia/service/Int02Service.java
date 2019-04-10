@@ -125,8 +125,14 @@ public class Int02Service {
 		data.setQtnHeaderName(request.getQtnHeaderName());
 		data.setNote(request.getNote());
 		data.setToDepartment(res.getToDepartment());
-		data.setFactorLevel(res.getFactorLevel());
+//		data.setFactorLevel(res.getFactorLevel());
 		data.setUsagePatterns(res.getUsagePatterns());
+		if(IaConstants.USAGE_PATTERNS_QTN.QUESTIONNAIR_DESC.equals(res.getUsagePatterns())) {
+			/* flag 'Q' */
+			data.setFactorLevel(res.getFactorLevel());
+		} else {
+			data.setFactorLevel("");
+		}
 		/* update table Questionnaire-Made-Hdr */
 //		List<IaQuestionnaireMadeHdr> dataMadeHdr = iaQuestionnaireMadeHdrRepository.findByIdHdr(request.getId());
 //		for (IaQuestionnaireMadeHdr objMadeHdr : dataMadeHdr) {
