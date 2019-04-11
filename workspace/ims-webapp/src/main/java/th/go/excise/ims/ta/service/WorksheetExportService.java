@@ -109,8 +109,8 @@ public class WorksheetExportService {
 		rowNum = generateWorksheetDetail(workbook, sheet, row, rowNum, cell, taxOperatorDatatableVoList);
 		
 		// Column Width
-		int colIndex = 0;
-		colIndex = setColumnWidthAndMergeCell(sheet, colIndex, formVo.getDateRange());
+		setColumnWidth(sheet, 0, formVo.getDateRange());
+		setMergeCell(sheet, formVo.getDateRange());
 		
 		byte[] content = null;
 		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
@@ -128,16 +128,21 @@ public class WorksheetExportService {
 		logger.info("exportXlsxDraftWorksheet officeCode={}, budgetYear={}, draftNumber={}", officeCode, formVo.getBudgetYear(), formVo.getDraftNumber());
 		
 		// Prepare Data for Export
-//		TaDraftWorksheetHdr draftWorksheetHdr = taDraftWorksheetHdrRepository.findByDraftNumber(formVo.getDraftNumber());
-//		formVo.setDateStart(convertToThaiDate(draftWorksheetHdr.getYearMonthStart()));
-//		formVo.setDateEnd(convertToThaiDate(draftWorksheetHdr.getYearMonthEnd()));
-//		formVo.setDateRange(draftWorksheetHdr.getMonthNum());
-//		formVo.setOfficeCode(officeCode);
-//		
-//		formVo.setStart(0);
-//		formVo.setLength(taDraftWorksheetDtlRepository.countByCriteria(formVo).intValue());
-//		List<TaxOperatorDetailVo> draftVoList = taDraftWorksheetDtlRepository.findByCriteria(formVo);
-//		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = TaxAuditUtils.prepareTaxOperatorDatatable(draftVoList, formVo);
+		TaWorksheetHdr worksheetHdr = taWorksheetHdrRepository.findByAnalysisNumber(formVo.getDraftNumber());
+		formVo.setBudgetYear(worksheetHdr.getBudgetYear());
+		formVo.setAnalysisNumber(formVo.getDraftNumber());
+		
+		TaWorksheetCondMainHdr worksheetCondMainHdr = taWorksheetCondMainHdrRepository.findByAnalysisNumber(formVo.getDraftNumber());
+		formVo.setDateStart(convertToThaiDate(worksheetCondMainHdr.getYearMonthStart()));
+		formVo.setDateEnd(convertToThaiDate(worksheetCondMainHdr.getYearMonthEnd()));
+		formVo.setDateRange(worksheetCondMainHdr.getMonthNum());
+		
+		formVo.setOfficeCode(officeCode);
+		formVo.setStart(0);
+		formVo.setLength(taWorksheetDtlRepository.countByCriteria(formVo).intValue());
+		
+		List<TaxOperatorDetailVo> worksheetVoList = taWorksheetDtlRepository.findByCriteria(formVo);
+		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = TaxAuditUtils.prepareTaxOperatorDatatable(worksheetVoList, formVo);
 		
 		// Label and Text
 		String SHEET_NAME = "รายชื่อผู้ประกอบการ";
@@ -168,11 +173,11 @@ public class WorksheetExportService {
 		/*
 		 * Details
 		 */
-//		rowNum = generateWorksheetDetail(workbook, sheet, row, rowNum, cell, taxOperatorDatatableVoList);
+		rowNum = generateWorksheetDetail(workbook, sheet, row, rowNum, cell, taxOperatorDatatableVoList);
 		
 		// Column Width
-		int colIndex = 0;
-		colIndex = setColumnWidthAndMergeCell(sheet, colIndex, formVo.getDateRange());
+		setColumnWidth(sheet, 0, formVo.getDateRange());
+		setMergeCell(sheet, formVo.getDateRange());
 		
 		byte[] content = null;
 		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
@@ -187,10 +192,12 @@ public class WorksheetExportService {
 	
 	public byte[] exportWorksheet(TaxOperatorFormVo formVo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		logger.info("exportWorksheet officeCode={}, budgetYear={}, analysisNumber={}", officeCode, formVo.getBudgetYear(), formVo.getAnalysisNumber());
+		logger.info("exportWorksheet officeCode={}, analysisNumber={}", officeCode, formVo.getAnalysisNumber());
 		
 		// Prepare for Export
-//		TaWorksheetHdr worksheetHdr = taWorksheetHdrRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
+		TaWorksheetHdr worksheetHdr = taWorksheetHdrRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
+		formVo.setBudgetYear(worksheetHdr.getBudgetYear());
+		
 		TaWorksheetCondMainHdr worksheetCondMainHdr = taWorksheetCondMainHdrRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
 		formVo.setDateStart(convertToThaiDate(worksheetCondMainHdr.getYearMonthStart()));
 		formVo.setDateEnd(convertToThaiDate(worksheetCondMainHdr.getYearMonthEnd()));
@@ -211,7 +218,7 @@ public class WorksheetExportService {
 			condMainMap = new HashMap<>();
 			condMainMap.put(COND_GROUP, condMainDtl.getCondGroup());
 			condMainMap.put(COND_GROUP_DESC, SHEET_NAME + condMainDtl.getCondGroup());
-			condMainMap.put(COND_DTL_DESC, SHEET_NAME + condMainDtl.getCondGroup() + condMainDtl.getCondDtlDesc());
+			condMainMap.put(COND_DTL_DESC, SHEET_NAME + condMainDtl.getCondGroup() + " " + condMainDtl.getCondDtlDesc());
 			condMainList.add(condMainMap);
 		}
 		condMainMap = new HashMap<>();
@@ -270,8 +277,8 @@ public class WorksheetExportService {
 			rowNum = generateWorksheetDetail(workbook, sheet, row, rowNum, cell, taxOperatorDatatableVoList);
 			
 			// Column Width
-			int colIndex = 0;
-			colIndex = setColumnWidthAndMergeCell(sheet, colIndex, formVo.getDateRange());
+			setColumnWidth(sheet, 0, formVo.getDateRange());
+			setMergeCellCondition(sheet, formVo.getDateRange());
 		}
 		
 		byte[] content = null;
@@ -509,7 +516,7 @@ public class WorksheetExportService {
 		return !NO_TAX_AMOUNT.equals(taxAmt) ? decimalFormat.format(NumberUtils.nullToZero(NumberUtils.toBigDecimal(taxAmt))) : taxAmt;
 	}
 	
-	private int setColumnWidthAndMergeCell(Sheet sheet, int colIndex, int dateRange) {
+	private void setColumnWidth(Sheet sheet, int colIndex, int dateRange) {
 		sheet.setColumnWidth(colIndex++, 7 * 256); // ลำดับ
 		sheet.setColumnWidth(colIndex++, 28 * 256); // ทะเบียนสรรพสามิต เดิม/ใหม่
 		sheet.setColumnWidth(colIndex++, 50 * 256); // ชื่อผู้ประกอบการ
@@ -536,7 +543,30 @@ public class WorksheetExportService {
 			sheet.setColumnWidth(colIndex++, 15 * 256); // การชำระภาษี X เดือนแรก และ X เดือนหลัง
 		}
 		sheet.setColumnWidth(colIndex++, 15 * 256); // พิกัดอื่นๆ
+	}
+	
+	private void setMergeCell(Sheet sheet, int dateRange) {
+		// Merge Cell
+		int startTaxAmtIndex = 22;
+		List<Integer> skipRowSpanIndex = Arrays.asList(new Integer[] {
+			8, 9, 13, 14, 15
+		});
+		for (int i = 0; i < startTaxAmtIndex; i++) {
+			if (!skipRowSpanIndex.contains(i)) {
+				sheet.addMergedRegion(new CellRangeAddress(0, 1, i, i));
+			}
+		}
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 9));
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 15));
 		
+		int halfDataRange = dateRange / 2;
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, startTaxAmtIndex, startTaxAmtIndex + halfDataRange - 1));
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, startTaxAmtIndex + halfDataRange, startTaxAmtIndex + dateRange - 1));
+		int startAfterTaxAmtIndex = startTaxAmtIndex + dateRange;
+		sheet.addMergedRegion(new CellRangeAddress(0, 1, startAfterTaxAmtIndex, startAfterTaxAmtIndex));
+	}
+	
+	private void setMergeCellCondition(Sheet sheet, int dateRange) {
 		// Merge Cell
 		int startTaxAmtIndex = 22;
 		List<Integer> skipRowSpanIndex = Arrays.asList(new Integer[] {
@@ -556,8 +586,6 @@ public class WorksheetExportService {
 		sheet.addMergedRegion(new CellRangeAddress(1, 1, startTaxAmtIndex + halfDataRange, startTaxAmtIndex + dateRange - 1));
 		int startAfterTaxAmtIndex = startTaxAmtIndex + dateRange;
 		sheet.addMergedRegion(new CellRangeAddress(1, 2, startAfterTaxAmtIndex, startAfterTaxAmtIndex));
-		
-		return colIndex;
 	}
 	
 }

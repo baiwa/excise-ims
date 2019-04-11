@@ -50,8 +50,7 @@ public class WorksheetExportServiceTest {
 	@Test
 	public void test_exportDraftWorksheet() {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
-		formVo.setBudgetYear("2562");
-		formVo.setDraftNumber("000000-2562-000020");
+		formVo.setDraftNumber("000000-2562-000031");
 		
 		String fileName = "draftWorksheet" + LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE) + ".xlsx";
 		
@@ -67,7 +66,6 @@ public class WorksheetExportServiceTest {
 	@Test
 	public void test_exportWorksheet() {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
-		formVo.setBudgetYear("2562");
 		formVo.setAnalysisNumber("000000-2562-000031");
 		
 		String fileName = "worksheet" + LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE) + ".xlsx";
