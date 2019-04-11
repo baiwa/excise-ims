@@ -21,6 +21,7 @@ public class TaFormTS0106ServiceTest {
 		TaFormTS0106Service taFormTS0106Service = new TaFormTS0106Service();
 		
 		TaFormTS0106Vo formTS0106Vo = new TaFormTS0106Vo();
+		formTS0106Vo.setFormTsNumber("000000-2562-000126");
 		formTS0106Vo.setDocPlace("");
 		formTS0106Vo.setDocDate(ConvertDateUtils.parseStringToDate("01/03/2562", ConvertDateUtils.DD_MM_YYYY));
 		formTS0106Vo.setWriterFullName("ธนพล ชัยภูมิ");
