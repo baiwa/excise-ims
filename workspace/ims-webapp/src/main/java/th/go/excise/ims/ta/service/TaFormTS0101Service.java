@@ -78,6 +78,7 @@ public class TaFormTS0101Service extends AbstractTaFormTSService<TaFormTS0101Vo,
 		// set data to report
 		Map<String, Object> params = new HashMap<>();
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE + "." + FILE_EXTENSION.JPG));
+		params.put("formTsNumber", formTS0101Vo.getFormTsNumber());
 		params.put("newRegId", formTS0101Vo.getNewRegId());
 		params.put("factoryName", formTS0101Vo.getFactoryName());
 		params.put("factoryTypeText", formTS0101Vo.getFactoryTypeText());

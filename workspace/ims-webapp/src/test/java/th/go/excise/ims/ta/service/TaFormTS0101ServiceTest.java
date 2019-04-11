@@ -41,7 +41,8 @@ public class TaFormTS0101ServiceTest {
 		
 		// set data
 		TaFormTS0101Vo formTS0101Vo = new TaFormTS0101Vo();
-		formTS0101Vo.setNewRegId("123456789");
+		formTS0101Vo.setFormTsNumber("000000-2562-000126");
+		formTS0101Vo.setNewRegId("01005150424621002");
 		formTS0101Vo.setFactoryName("บริษัท อูซูอิ อินเตอร์เนชั่นแนลคอร์ปอเรชั่น (ไทยแลนด์) จำกัด");
 		formTS0101Vo.setFactoryTypeText("ขายส่งและผู้ผลิตชิ้นส่วนและอะไหล่รถยนต์");
 		formTS0101Vo.setFactoryAddress("700/454 หมู่ 7 นิคมอุตสาหกรรมอมตะนคร ตำบลดอนหัว อำเภอเมืองชลบุรี จังหวัดชลบุรี 20000");
