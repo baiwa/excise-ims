@@ -23,6 +23,7 @@ public class TaFormTS0104ServiceTest {
 
 		// set data
 		TaFormTS0104Vo formTS0104Vo = new TaFormTS0104Vo();
+		formTS0104Vo.setFormTsNumber("000000-2562-000126");
 		formTS0104Vo.setBookNumber1("กข0002");
 		formTS0104Vo.setBookNumber2("0001");
 		formTS0104Vo.setSubject1("");
