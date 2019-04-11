@@ -2,7 +2,6 @@ package th.go.excise.ims.oa.service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -97,23 +96,17 @@ public class Oa0701Service {
 					}
 
 					taxListDtl.add(reg8000.getTaxAmount().toString());
-					if (idx > 0) {
+					/*if (idx > 0) {
 						String taxAmBeforArr = taxListDtl.get(idx - 1);
 						BigDecimal taxAmBefor = new BigDecimal(taxAmBeforArr);
-						//Oa0701Reg8000Vo taxAmBefor = reg8000MList.get(idx - 1);
-//						if (taxAmBefor.getTaxAmount() == null) {
-//							taxAmBefor.setTaxAmount(BigDecimal.ZERO);
-//						}
 						BigDecimal sub = reg8000.getTaxAmount().subtract(taxAmBefor); // b-a
 						BigDecimal multi = sub.multiply(new BigDecimal(100)); // b-a*100
 						BigDecimal avg = multi.divide(reg8000.getTaxAmount(), 2, RoundingMode.HALF_UP); // b-a*100/b
 
-						// taxListDtl.add(avg.toString()+" %");
 						percenDiffList.add(avg.toString() + " %");
 					} else {
-						// taxListDtl.add("");
 						percenDiffList.add("");
-					}
+					}*/
 				}else {
 					percenDiffList.add("");
 					taxListDtl.add(BigDecimal.ZERO.toString());

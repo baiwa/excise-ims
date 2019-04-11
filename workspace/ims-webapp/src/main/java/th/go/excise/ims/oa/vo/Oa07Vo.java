@@ -20,6 +20,24 @@ public class Oa07Vo {
 	private String regCapital;
 	private List<String> taxPayList = new ArrayList<>();
 	private List<String> perceneDiff = new ArrayList<>();
+	private List<String> groupTaxPay = new ArrayList<>();
+	private List<String> groupYearMonth = new ArrayList<>();
+
+	public List<String> getGroupYearMonth() {
+		return groupYearMonth;
+	}
+
+	public void setGroupYearMonth(List<String> groupYearMonth) {
+		this.groupYearMonth = groupYearMonth;
+	}
+
+	public List<String> getGroupTaxPay() {
+		return groupTaxPay;
+	}
+
+	public void setGroupTaxPay(List<String> groupTaxPay) {
+		this.groupTaxPay = groupTaxPay;
+	}
 
 	public String getDutyDesc() {
 		return dutyDesc;

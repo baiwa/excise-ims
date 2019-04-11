@@ -1,5 +1,14 @@
 package th.go.excise.ims.oa.service;
 
+import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -7,17 +16,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
-import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0701JdbcRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0702JdbcRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa07JdbcRepository;
-import th.go.excise.ims.oa.vo.*;
-
-import java.lang.reflect.InvocationTargetException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.*;
+import th.go.excise.ims.oa.vo.Oa0702Reg8000Vo;
+import th.go.excise.ims.oa.vo.Oa07FormVo;
+import th.go.excise.ims.oa.vo.Oa07Reg4000Vo;
+import th.go.excise.ims.oa.vo.Oa07Vo;
+import th.go.excise.ims.oa.vo.ResponseOa07Vo;
 
 @Service
 public class Oa0702Service {
@@ -30,13 +38,12 @@ public class Oa0702Service {
     @Autowired
     private Oa07JdbcRepository oa07JdbcRepository;
 
-    public ResponseOa07Vo reg4000(Oa07FormVo formVo) {
+	public ResponseOa07Vo reg4000(Oa07FormVo formVo) {
 
         List<Oa07Reg4000Vo> reg4000List = oa07JdbcRepository.reg4000(formVo);
 
         // ==> convert date
         Date dateS = ConvertDateUtils.parseStringToDate(formVo.getMonthStart(), ConvertDateUtils.MM_YYYY);
-        Date dateE = ConvertDateUtils.parseStringToDate(formVo.getMonthEnd(), ConvertDateUtils.MM_YYYY);
 
         //==> Add list year months
         List<String> yearsMonths = new ArrayList<>();
@@ -82,7 +89,7 @@ public class Oa0702Service {
                     }
 
                     taxListDtl.add(reg8000.getTaxAmount().toString());
-                    if (idx > 0) {
+                    /*if (idx > 0) {
                         String taxAmBeforArr = taxListDtl.get(idx - 1);
                         BigDecimal taxAmBefor = new BigDecimal(taxAmBeforArr);
 
@@ -93,14 +100,35 @@ public class Oa0702Service {
                         percenDiffList.add(avg.toString() + " %");
                     } else {
                         percenDiffList.add("");
-                    }
+                    }*/
                 } else {
-                    percenDiffList.add("");
                     taxListDtl.add(BigDecimal.ZERO.toString());
                 }
             }
             vo.setTaxPayList(taxListDtl);
             vo.setPerceneDiff(percenDiffList);
+            
+            
+            // Group year and taxAmount
+            List<String> yearCopyList = new ArrayList<>();
+            yearCopyList.addAll(yearsMonths);
+            //sort
+            Collections.sort(yearCopyList); 
+            List<String> groupTaxPay = new ArrayList<>();
+            List<String> groupYearMonth = new ArrayList<>();
+			for (int i = 0; i < yearCopyList.size(); i++) {
+				
+				String yearCopy = yearCopyList.get(i);
+				Date date = ConvertDateUtils.parseStringToDate(yearCopy, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
+				String monthYear = ConvertDateUtils.formatDateToString(date, ConvertDateUtils.MMM_YYYY_SPAC);
+				groupYearMonth.add(monthYear);
+				int idx = yearsMonths.indexOf(yearCopy);
+				
+				groupTaxPay.add(taxListDtl.get(idx));
+			}
+			
+            vo.setGroupTaxPay(groupTaxPay);
+            vo.setGroupYearMonth(groupYearMonth);
             voList.add(vo);
         }
 
