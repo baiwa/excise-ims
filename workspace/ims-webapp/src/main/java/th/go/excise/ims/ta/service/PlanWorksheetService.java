@@ -1,16 +1,12 @@
 package th.go.excise.ims.ta.service;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
-import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
@@ -33,7 +28,6 @@ import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSelect;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
-import th.go.excise.ims.ta.persistence.entity.TaWsInc8000M;
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetHdrRepository;
@@ -41,9 +35,7 @@ import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetSelectRepositor
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetSendRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetHdrRepository;
-import th.go.excise.ims.ta.persistence.repository.TaWsInc8000MRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
-import th.go.excise.ims.ta.vo.AnalyzeCompareOldYearVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlCusVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetStatus;
@@ -74,9 +66,6 @@ public class PlanWorksheetService {
     
     @Autowired
     private TaWsReg4000Repository reg4000Repository;
-    
-    @Autowired
-    private TaWsInc8000MRepository wsInc8000MRepository;
 
     public TaPlanWorksheetHdr getPlanWorksheetHdr(PlanWorksheetVo formVo) {
         logger.info("getPlanWorksheetHdr budgetYear={}", formVo.getBudgetYear());
@@ -387,123 +376,6 @@ public class PlanWorksheetService {
   		dtlCus.setRegCapital(reg4000.getRegCapital());
   		dtlCus.setDutyCodeDesc(ApplicationCache.getParamInfoByCode(PARAM_GROUP.EXCISE_PRODUCT_TYPE, reg4000.getDutyCode()).getValue1());
   		return dtlCus;
-  	}
-  	
-  	//TODO AnalyzeCompareOldYear
-  	public DataTableAjax<AnalyzeCompareOldYearVo> findByAnalyzeCompareOldYear(AnalyzeCompareOldYearVo formVo) {
-  		// data compare1 ====================>
-		// convert year month (mm/yyyy) to yyyymm
-  		Date date1 = ConvertDateUtils.parseStringToDate(formVo.getTaxYear(), ConvertDateUtils.MM_YYYY);
-		Date date2 = ConvertDateUtils.parseStringToDate(formVo.getTaxMonth(), ConvertDateUtils.MM_YYYY);
-		String new_date11 = ConvertDateUtils.formatDateToString(date1, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
-		String new_date12 = ConvertDateUtils.formatDateToString(date2, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
-		// new_date11 = date start, new_date12 = date end
-		formVo.setTaxYear(new_date11);
-		formVo.setTaxMonth(new_date12);
-		
-		List<TaWsInc8000M> data1 = wsInc8000MRepository.findByAnalyzeCompareOldYear(formVo);
-				
-		// data compare2 =========================>
-		// convert year month (mm/yyyy) to yyyymm
-		String new_date21 = ConvertDateUtils.formatDateToString(DateUtils.addYears(date1, -1), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
-		String new_date22 = ConvertDateUtils.formatDateToString(DateUtils.addYears(date2, -1), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
-		// new_date21 = date start, new_date22 = date end
-		formVo.setTaxYear(new_date21);
-		formVo.setTaxMonth(new_date22);
-		
-		List<TaWsInc8000M> data2 = wsInc8000MRepository.findByAnalyzeCompareOldYear(formVo);
-		// Union data
-		List<AnalyzeCompareOldYearVo> dataAll = new ArrayList<>();
-		if (data1.size() > data2.size()) {
-			for (int i = 0; i < data1.size(); i++) {
-				Boolean haveTaxAmount = false;
-				dataAll.add(new AnalyzeCompareOldYearVo());
-				for (int j = 0; j < data2.size(); j++) {
-					int year = Integer.parseInt(data2.get(j).getTaxYear());
-					String convYear = Integer.toString(year+1);
-					if (data1.get(i).getTaxYear().equals(convYear) && data1.get(i).getTaxMonth().equals(data2.get(j).getTaxMonth())) {
-						dataAll.get(i).setDiff(data1.get(i).getTaxAmount().subtract(data2.get(j).getTaxAmount()));
-						BigDecimal percent = dataAll.get(i).getDiff().divide(data1.get(i).getTaxAmount().max(data2.get(j).getTaxAmount()), 8, RoundingMode.CEILING);
-						percent = percent.multiply(new BigDecimal(100.00));
-						dataAll.get(i).setDiffPercent(percent);
-						dataAll.get(i).setNewRegId(data1.get(i).getNewRegId());
-						dataAll.get(i).setTaxAmount(data1.get(i).getTaxAmount());
-						dataAll.get(i).setTaxAmountOld(data2.get(j).getTaxAmount());
-						dataAll.get(i).setTaxMonth(data1.get(i).getTaxMonth());
-						Date date = ConvertDateUtils.parseStringToDate(data1.get(i).getTaxYear(), ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_EN);
-						String dateStr = ConvertDateUtils.formatDateToString(date, ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_TH);
-						dataAll.get(i).setTaxYear(dateStr);
-						dataAll.get(i).setWsInc8000MId(data1.get(i).getWsInc8000MId());
-						dataAll.get(i).setMonthDesc(ConvertDateUtils.getMonthThai(Integer.parseInt(data1.get(i).getTaxMonth())-1, ConvertDateUtils.SHORT_MONTH)+" "+dateStr);
-						
-						haveTaxAmount = true;
-						break;
-					}
-				}
-				if (!haveTaxAmount) {
-					dataAll.get(i).setDiff(data1.get(i).getTaxAmount());
-					dataAll.get(i).setDiffPercent(new BigDecimal(100.00));
-					dataAll.get(i).setNewRegId(data1.get(i).getNewRegId());
-					dataAll.get(i).setTaxAmount(data1.get(i).getTaxAmount());
-					dataAll.get(i).setTaxAmountOld(new BigDecimal(0.00));
-					dataAll.get(i).setTaxMonth(data1.get(i).getTaxMonth());
-					Date date = ConvertDateUtils.parseStringToDate(data1.get(i).getTaxYear(), ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_EN);
-					String dateStr = ConvertDateUtils.formatDateToString(date, ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_TH);
-					dataAll.get(i).setTaxYear(dateStr);
-					dataAll.get(i).setWsInc8000MId(data1.get(i).getWsInc8000MId());
-					dataAll.get(i).setMonthDesc(ConvertDateUtils.getMonthThai(Integer.parseInt(data1.get(i).getTaxMonth())-1, ConvertDateUtils.SHORT_MONTH)+" "+dateStr);
-				}
-			}
-		} else {
-			for (int i = 0; i < data2.size(); i++) {
-				Boolean haveTaxAmount = false;
-				dataAll.add(new AnalyzeCompareOldYearVo());
-				for (int j = 0; j < data1.size(); j++) {
-					int year = Integer.parseInt(data1.get(j).getTaxYear());
-					String convYear = Integer.toString(year+1);
-					if (data2.get(i).getTaxYear().equals(convYear) && data2.get(i).getTaxMonth().equals(data1.get(j).getTaxMonth())) {
-						dataAll.get(i).setDiff(data2.get(i).getTaxAmount().subtract(data1.get(j).getTaxAmount()));
-						BigDecimal percent = dataAll.get(i).getDiff().divide(data2.get(i).getTaxAmount().max(data1.get(j).getTaxAmount()), 8, RoundingMode.CEILING);
-						percent = percent.multiply(new BigDecimal(100.00));
-						dataAll.get(i).setDiffPercent(percent);
-						dataAll.get(i).setNewRegId(data2.get(i).getNewRegId());
-						dataAll.get(i).setTaxAmount(data2.get(i).getTaxAmount());
-						dataAll.get(i).setTaxAmountOld(data1.get(j).getTaxAmount());
-						dataAll.get(i).setTaxMonth(data2.get(i).getTaxMonth());
-						Date date = ConvertDateUtils.parseStringToDate(data2.get(i).getTaxYear(), ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_EN);
-						String dateStr = ConvertDateUtils.formatDateToString(date, ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_TH);
-						dataAll.get(i).setTaxYear(dateStr);
-						dataAll.get(i).setWsInc8000MId(data2.get(i).getWsInc8000MId());
-						dataAll.get(i).setMonthDesc(ConvertDateUtils.getMonthThai(Integer.parseInt(data2.get(i).getTaxMonth())-1, ConvertDateUtils.SHORT_MONTH)+" "+dateStr);
-						
-						haveTaxAmount = true;
-						break;
-					}
-				}
-				if (!haveTaxAmount) {
-					dataAll.get(i).setDiff(data2.get(i).getTaxAmount());
-					dataAll.get(i).setDiffPercent(new BigDecimal(100.00));
-					dataAll.get(i).setNewRegId(data2.get(i).getNewRegId());
-					dataAll.get(i).setTaxAmount(data2.get(i).getTaxAmount());
-					dataAll.get(i).setTaxAmountOld(new BigDecimal(0.00));
-					dataAll.get(i).setTaxMonth(data2.get(i).getTaxMonth());
-					Date date = ConvertDateUtils.parseStringToDate(data2.get(i).getTaxYear(), ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_EN);
-					String dateStr = ConvertDateUtils.formatDateToString(date, ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_TH);
-					dataAll.get(i).setTaxYear(dateStr);
-					dataAll.get(i).setWsInc8000MId(data2.get(i).getWsInc8000MId());
-					dataAll.get(i).setMonthDesc(ConvertDateUtils.getMonthThai(Integer.parseInt(data2.get(i).getTaxMonth())-1, ConvertDateUtils.SHORT_MONTH)+" "+dateStr);
-				}
-			}
-		}
-		
-		DataTableAjax<AnalyzeCompareOldYearVo> dataTableAjax = new DataTableAjax<>();
-
-		dataTableAjax.setData(dataAll);
-//		dataTableAjax.setDraw(formVo.getDraw() + 1);
-		int count = dataAll.size();
-		dataTableAjax.setRecordsFiltered(count);
-		dataTableAjax.setRecordsTotal(count);
-		return dataTableAjax;
   	}
 
 }

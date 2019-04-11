@@ -28,8 +28,8 @@ import org.springframework.context.annotation.Configuration;
 import th.go.excise.ims.ia.job.JobSystemUnworking;
 import th.go.excise.ims.ia.service.JobSystemUnworkingService;
 
-@Configuration
-@ConditionalOnProperty(name="system.unworking.job.cronExpressions" , havingValue="" ,matchIfMissing=false)
+//@Configuration
+//@ConditionalOnProperty(name="system.unworking.job.cronExpressions" , havingValue="" ,matchIfMissing=false)
 public class SystemUnworkingBatchJobSchedulerConfig {
 
 		

@@ -540,10 +540,4 @@ public class TaxOperatorController {
         return response;
     }
 
-    // TODO AnalyzeCompareOldYear
-    @PostMapping("/find-by-analyze-compare-year")
-    @ResponseBody
-    public DataTableAjax<AnalyzeCompareOldYearVo> findByAnalyzeCompareOldYear(@RequestBody AnalyzeCompareOldYearVo formVo) {
-        return planWorksheetService.findByAnalyzeCompareOldYear(formVo);
-    }
 }

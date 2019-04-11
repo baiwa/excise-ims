@@ -31,8 +31,10 @@ import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainDtl;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondMainDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondMainHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
@@ -60,6 +62,8 @@ public class WorksheetExportService {
 	private TaWorksheetHdrRepository taWorksheetHdrRepository;
 	@Autowired
 	private TaWorksheetDtlRepository taWorksheetDtlRepository;
+	@Autowired
+	private TaWorksheetCondMainHdrRepository taWorksheetCondMainHdrRepository;
 	
 	public byte[] exportPreviewWorksheet(TaxOperatorFormVo formVo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
@@ -187,31 +191,34 @@ public class WorksheetExportService {
 		
 		// Prepare for Export
 //		TaWorksheetHdr worksheetHdr = taWorksheetHdrRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
-//		TaDraftWorksheetHdr draftWorksheetHdr = taDraftWorksheetHdrRepository.findByDraftNumber(worksheetHdr.getDraftNumber());
-//		formVo.setDateStart(convertToThaiDate(draftWorksheetHdr.getYearMonthStart()));
-//		formVo.setDateEnd(convertToThaiDate(draftWorksheetHdr.getYearMonthEnd()));
-//		formVo.setDateRange(draftWorksheetHdr.getMonthNum());
-//		formVo.setOfficeCode(officeCode);
-//		
-//		final String COND_GROUP = "COND_GROUP";
-//		final String COND_GROUP_DESC = "COND_GROUP_DESC";
-//		String SHEET_NAME = "เงื่อนไขที่ ";
-//		String NON_MAIN_COND_GROUP = "0";
-//		String NON_MAIN_COND_DESC = "รายที่ไม่อยู่ในเงื่อนไข";
-//		
-//		List<Map<String, String>> condMainList = new ArrayList<>();
-//		Map<String, String> condMainMap = null;
-//		List<TaWorksheetCondMainDtl> condMainDtlList = taWorksheetCondMainDtlRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
-//		for (TaWorksheetCondMainDtl condMainDtl : condMainDtlList) {
-//			condMainMap = new HashMap<>();
-//			condMainMap.put(COND_GROUP, condMainDtl.getCondGroup());
-//			condMainMap.put(COND_GROUP_DESC, SHEET_NAME + condMainDtl.getCondGroup());
-//			condMainList.add(condMainMap);
-//		}
-//		condMainMap = new HashMap<>();
-//		condMainMap.put(COND_GROUP, NON_MAIN_COND_GROUP);
-//		condMainMap.put(COND_GROUP_DESC, NON_MAIN_COND_DESC);
-//		condMainList.add(condMainMap);
+		TaWorksheetCondMainHdr worksheetCondMainHdr = taWorksheetCondMainHdrRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
+		formVo.setDateStart(convertToThaiDate(worksheetCondMainHdr.getYearMonthStart()));
+		formVo.setDateEnd(convertToThaiDate(worksheetCondMainHdr.getYearMonthEnd()));
+		formVo.setDateRange(worksheetCondMainHdr.getMonthNum());
+		formVo.setOfficeCode(officeCode);
+		
+		final String COND_GROUP = "COND_GROUP";
+		final String COND_GROUP_DESC = "COND_GROUP_DESC";
+		final String COND_DTL_DESC = "COND_DTL_DESC";
+		String SHEET_NAME = "เงื่อนไขที่ ";
+		String NON_MAIN_COND_GROUP = "0";
+		String NON_MAIN_COND_DESC = "รายที่ไม่อยู่ในเงื่อนไข";
+		
+		List<Map<String, String>> condMainList = new ArrayList<>();
+		Map<String, String> condMainMap = null;
+		List<TaWorksheetCondMainDtl> condMainDtlList = taWorksheetCondMainDtlRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
+		for (TaWorksheetCondMainDtl condMainDtl : condMainDtlList) {
+			condMainMap = new HashMap<>();
+			condMainMap.put(COND_GROUP, condMainDtl.getCondGroup());
+			condMainMap.put(COND_GROUP_DESC, SHEET_NAME + condMainDtl.getCondGroup());
+			condMainMap.put(COND_DTL_DESC, SHEET_NAME + condMainDtl.getCondGroup() + condMainDtl.getCondDtlDesc());
+			condMainList.add(condMainMap);
+		}
+		condMainMap = new HashMap<>();
+		condMainMap.put(COND_GROUP, NON_MAIN_COND_GROUP);
+		condMainMap.put(COND_GROUP_DESC, NON_MAIN_COND_DESC);
+		condMainMap.put(COND_DTL_DESC, NON_MAIN_COND_DESC);
+		condMainList.add(condMainMap);
 		
 		// Create Workbook
 		XSSFWorkbook workbook = new XSSFWorkbook();
@@ -223,44 +230,49 @@ public class WorksheetExportService {
 		/* Cell Style */
 		CellStyle cellHeader = ExcelUtils.createThColorStyle(workbook, new XSSFColor(Color.LIGHT_GRAY));
 		
-//		List<TaxOperatorDetailVo> worksheetVoList = null;
-//		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = null;
-//		for (Map<String, String> map : condMainList) {
-//			// Prepare Data for Export
-//			formVo.setStart(0);
-//			formVo.setLength(taWorksheetDtlRepository.countByCriteria(formVo).intValue());
-//			formVo.setCond(map.get(COND_GROUP));
-//			
-//			worksheetVoList = taWorksheetDtlRepository.findByCriteria(formVo);
-//			taxOperatorDatatableVoList = TaxAuditUtils.prepareTaxOperatorDatatable(worksheetVoList, formVo);
-//			
-//			/*
-//			 * Sheet
-//			 */
-//			sheet = workbook.createSheet(map.get(COND_GROUP_DESC));
-//			rowNum = 0;
-//			
-//			/*
-//			 * Column Header
-//			 */
-//			// Header Line 1
-//			row = sheet.createRow(rowNum);
-//			generateWorksheetHeader1(row, cell, cellHeader, formVo);
-//			rowNum++;
-//			// Header Line 2
-//			row = sheet.createRow(rowNum);
-//			generateWorksheetHeader2(row, cell, cellHeader, formVo);
-//			rowNum++;
-//			
-//			/*
-//			 * Details
-//			 */
-//			rowNum = generateWorksheetDetail(workbook, sheet, row, rowNum, cell, taxOperatorDatatableVoList);
-//			
-//			// Column Width
-//			int colIndex = 0;
-//			colIndex = setColumnWidthAndMergeCell(sheet, colIndex, formVo.getDateRange());
-//		}
+		List<TaxOperatorDetailVo> worksheetVoList = null;
+		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = null;
+		for (Map<String, String> map : condMainList) {
+			// Prepare Data for Export
+			formVo.setStart(0);
+			formVo.setLength(taWorksheetDtlRepository.countByCriteria(formVo).intValue());
+			formVo.setCond(map.get(COND_GROUP));
+			
+			worksheetVoList = taWorksheetDtlRepository.findByCriteria(formVo);
+			taxOperatorDatatableVoList = TaxAuditUtils.prepareTaxOperatorDatatable(worksheetVoList, formVo);
+			
+			/*
+			 * Sheet
+			 */
+			sheet = workbook.createSheet(map.get(COND_GROUP_DESC));
+			rowNum = 0;
+			
+			/*
+			 * Column Header
+			 */
+			// Header Line 1
+			row = sheet.createRow(rowNum);
+			cell = row.createCell(1);
+			cell.setCellValue(map.get(COND_DTL_DESC));
+			rowNum++;
+			// Header Line 2
+			row = sheet.createRow(rowNum);
+			generateWorksheetHeader1(row, cell, cellHeader, formVo);
+			rowNum++;
+			// Header Line 3
+			row = sheet.createRow(rowNum);
+			generateWorksheetHeader2(row, cell, cellHeader, formVo);
+			rowNum++;
+			
+			/*
+			 * Details
+			 */
+			rowNum = generateWorksheetDetail(workbook, sheet, row, rowNum, cell, taxOperatorDatatableVoList);
+			
+			// Column Width
+			int colIndex = 0;
+			colIndex = setColumnWidthAndMergeCell(sheet, colIndex, formVo.getDateRange());
+		}
 		
 		byte[] content = null;
 		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
@@ -532,17 +544,18 @@ public class WorksheetExportService {
 		});
 		for (int i = 0; i < startTaxAmtIndex; i++) {
 			if (!skipRowSpanIndex.contains(i)) {
-				sheet.addMergedRegion(new CellRangeAddress(0, 1, i, i));
+				sheet.addMergedRegion(new CellRangeAddress(1, 2, i, i));
 			}
 		}
-		sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 9));
-		sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 15));
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 4));
+		sheet.addMergedRegion(new CellRangeAddress(1, 1, 8, 9));
+		sheet.addMergedRegion(new CellRangeAddress(1, 1, 13, 15));
 		
 		int halfDataRange = dateRange / 2;
-		sheet.addMergedRegion(new CellRangeAddress(0, 0, startTaxAmtIndex, startTaxAmtIndex + halfDataRange - 1));
-		sheet.addMergedRegion(new CellRangeAddress(0, 0, startTaxAmtIndex + halfDataRange, startTaxAmtIndex + dateRange - 1));
+		sheet.addMergedRegion(new CellRangeAddress(1, 1, startTaxAmtIndex, startTaxAmtIndex + halfDataRange - 1));
+		sheet.addMergedRegion(new CellRangeAddress(1, 1, startTaxAmtIndex + halfDataRange, startTaxAmtIndex + dateRange - 1));
 		int startAfterTaxAmtIndex = startTaxAmtIndex + dateRange;
-		sheet.addMergedRegion(new CellRangeAddress(0, 1, startAfterTaxAmtIndex, startAfterTaxAmtIndex));
+		sheet.addMergedRegion(new CellRangeAddress(1, 2, startAfterTaxAmtIndex, startAfterTaxAmtIndex));
 		
 		return colIndex;
 	}

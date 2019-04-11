@@ -27,6 +27,7 @@ import th.go.excise.ims.ta.vo.AnalysisTaxQtyVo;
 import th.go.excise.ims.ta.vo.AnalysisTaxRateVo;
 import th.go.excise.ims.ta.vo.AnalysisTaxRetailPriceVo;
 import th.go.excise.ims.ta.vo.AnalysisTaxValueVo;
+import th.go.excise.ims.ta.vo.AnalyzeCompareOldYearVo;
 
 @Controller
 @RequestMapping("/api/ta/basic-anlysis")
@@ -143,7 +144,7 @@ public class BasicAnlysisController {
 	}
 
 	// TODO 7
-	@PostMapping("/analysis-Income-compareLast-month-data")
+	@PostMapping("/analysis-income-compareLast-month-data")
 	@ResponseBody
 	public DataTableAjax<AnalysisIncomeCompareLastMonthVo> listAnalysisIncomeCompareLastMonthService(@RequestBody AnalysisFormVo request) {
 		logger.info("listAnalysisIncomeCompareLastMonthService");
@@ -160,10 +161,10 @@ public class BasicAnlysisController {
 	// TODO 8
 	@PostMapping("/analysis-income-compareLast-year-data")
 	@ResponseBody
-	public DataTableAjax<AnalysisIncomeCompareLastYearVo> listAnalysisIncomeCompareLastYearService(@RequestBody AnalysisFormVo request) {
+	public DataTableAjax<AnalyzeCompareOldYearVo> listAnalysisIncomeCompareLastYearService(@RequestBody AnalysisFormVo request) {
 		logger.info("listAnalysisIncomeCompareLastYearService");
 
-		DataTableAjax<AnalysisIncomeCompareLastYearVo> response = new DataTableAjax<>();
+		DataTableAjax<AnalyzeCompareOldYearVo> response = new DataTableAjax<>();
 		try {
 			response = analysisIncomeCompareLastYearService.GetAnalysisIncomeCompareLastYear(request);
 		} catch (Exception e) {

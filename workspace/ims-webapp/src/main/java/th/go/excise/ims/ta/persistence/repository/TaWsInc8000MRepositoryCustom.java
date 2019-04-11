@@ -11,7 +11,7 @@ public interface TaWsInc8000MRepositoryCustom {
 	
 	public Map<String, List<TaWsInc8000M>> findByMonthRange(String startMonth, String endMonth);
 	
-	public List<TaWsInc8000M> findByAnalyzeCompareOldYear(AnalyzeCompareOldYearVo formVo);
+	public List<TaWsInc8000M> findByAnalyzeCompareOldYear(AnalysisFormVo formVo);
 	
 	public List<TaWsInc8000M> findByAnalysisIncomeCompareLastMonth(AnalysisFormVo formVo);
 	
