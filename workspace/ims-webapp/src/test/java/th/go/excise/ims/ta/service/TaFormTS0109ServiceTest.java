@@ -29,6 +29,7 @@ public class TaFormTS0109ServiceTest {
 		TaFormTS0109Service taFormTS0109Service = new TaFormTS0109Service();
 
 		TaFormTS0109Vo formVo = new TaFormTS0109Vo();
+		formVo.setFormTsNumber("000000-2562-000126");
 		formVo.setBookNumber1("12345");
 		formVo.setBookNumber2("54321");
 		formVo.setComdPlace("กรมสรรพสามิต");
