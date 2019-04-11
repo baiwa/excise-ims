@@ -8,6 +8,7 @@
 	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="14"/>
 	<style name="TextData" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="13"/>
 	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="formTsNumber" class="java.lang.String"/>
 	<parameter name="ownerFullName" class="java.lang.String"/>
 	<parameter name="factoryType" class="java.lang.String"/>
 	<parameter name="factoryName" class="java.lang.String"/>

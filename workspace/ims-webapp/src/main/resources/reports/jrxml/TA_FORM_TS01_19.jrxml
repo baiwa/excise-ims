@@ -31,17 +31,15 @@
 	<parameter name="facAmphurName" class="java.lang.String"/>
 	<parameter name="facProvinceName" class="java.lang.String"/>
 	<parameter name="facZipCode" class="java.lang.String"/>
-	<parameter name="followType" class="java.lang.String"/>
+	<parameter name="followTypeFlag1" class="java.lang.String"/>
 	<parameter name="refBookNumber" class="java.lang.String"/>
 	<parameter name="refBookDate" class="java.util.Date"/>
 	<parameter name="officeName1" class="java.lang.String"/>
-	<parameter name="followType2" class="java.lang.String"/>
+	<parameter name="followTypeFlag2" class="java.lang.String"/>
 	<parameter name="signOfficerFullName" class="java.lang.String"/>
 	<parameter name="signOfficerPosition" class="java.lang.String"/>
 	<parameter name="officeName2" class="java.lang.String"/>
 	<parameter name="officePhone" class="java.lang.String"/>
-	<parameter name="followTypeFlag1" class="java.lang.String"/>
-	<parameter name="followTypeFlag2" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>

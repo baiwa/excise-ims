@@ -6,6 +6,7 @@
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
 	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="16"/>
 	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="formTsNumber" class="java.lang.String"/>
 	<parameter name="testimonyOf" class="java.lang.String"/>
 	<parameter name="testimonyTopic" class="java.lang.String"/>
 	<parameter name="docDate" class="java.util.Date"/>

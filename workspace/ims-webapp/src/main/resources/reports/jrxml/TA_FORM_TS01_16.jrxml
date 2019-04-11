@@ -7,6 +7,7 @@
 	<style name="TextTopic" fontName="TH Sarabun New" fontSize="16"/>
 	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="13"/>
 	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="formTsNumber" class="java.lang.String"/>
 	<parameter name="docText" class="java.lang.String"/>
 	<parameter name="docDear" class="java.lang.String"/>
 	<parameter name="factoryName1" class="java.lang.String"/>

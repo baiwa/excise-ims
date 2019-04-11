@@ -13,9 +13,10 @@
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="cm"/>
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
 	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="16"/>
+	<parameter name="formTsNumber" class="java.lang.String"/>
 	<parameter name="testimonyPageNo" class="java.lang.String"/>
-	<parameter name="testimonyText" class="java.lang.String"/>
 	<parameter name="testimonyOf" class="java.lang.String"/>
+	<parameter name="testimonyText" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>

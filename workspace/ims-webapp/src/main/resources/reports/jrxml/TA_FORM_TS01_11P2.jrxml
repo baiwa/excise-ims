@@ -13,6 +13,7 @@
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
 	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="14"/>
+	<parameter name="formTsNumber" class="java.lang.String"/>
 	<parameter name="authFullName1" class="java.lang.String"/>
 	<parameter name="signAuthFullName2" class="java.lang.String"/>
 	<parameter name="signWitnessFullName3" class="java.lang.String"/>

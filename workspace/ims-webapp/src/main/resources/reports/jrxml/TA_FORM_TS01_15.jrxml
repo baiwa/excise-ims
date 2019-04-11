@@ -15,6 +15,7 @@
 	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="16"/>
 	<style name="TextData" fontName="TH Sarabun New" fontSize="14"/>
 	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="formTsNumber" class="java.lang.String"/>
 	<parameter name="officeName" class="java.lang.String"/>
 	<parameter name="docDate" class="java.util.Date"/>
 	<parameter name="ownerFullName" class="java.lang.String"/>

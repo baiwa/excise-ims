@@ -6,6 +6,7 @@
 	<property name="com.jaspersoft.studio.report.description" value=""/>
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
 	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="16"/>
+	<parameter name="formTsNumber" class="java.lang.String"/>
 	<parameter name="pageNo" class="java.lang.String"/>
 	<parameter name="auditDesc" class="java.lang.String"/>
 	<queryString>

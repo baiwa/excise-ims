@@ -15,6 +15,7 @@
 	<style name="TextDetail" hImageAlign="Center" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="14"/>
 	<style name="TextComment" fontName="TH Sarabun New" fontSize="10"/>
 	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="formTsNumber" class="java.lang.String"/>
 	<parameter name="bookNumber1" class="java.lang.String"/>
 	<parameter name="bookNumber2" class="java.lang.String"/>
 	<parameter name="officeName1" class="java.lang.String"/>

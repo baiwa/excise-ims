@@ -7,6 +7,7 @@
 	<style name="data1" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="14"/>
 	<style name="data2" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="12"/>
 	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="formTsNumber" class="java.lang.String"/>
 	<parameter name="bookNumber1" class="java.lang.String"/>
 	<parameter name="bookNumber2" class="java.lang.String"/>
 	<parameter name="docDear" class="java.lang.String"/>

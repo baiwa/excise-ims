@@ -7,6 +7,7 @@
 	<style name="TextTopic" hTextAlign="Left" vTextAlign="Bottom" fontName="TH Sarabun New" fontSize="16" isBold="true"/>
 	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" fontName="TH Sarabun New" fontSize="14"/>
 	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="formTsNumber" class="java.lang.String"/>
 	<parameter name="docPlace" class="java.lang.String"/>
 	<parameter name="docDate" class="java.util.Date"/>
 	<parameter name="writerFullName" class="java.lang.String"/>

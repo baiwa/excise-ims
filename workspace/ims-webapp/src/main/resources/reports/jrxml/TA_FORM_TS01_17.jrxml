@@ -7,31 +7,19 @@
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
 	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="14"/>
 	<parameter name="logo" class="java.io.InputStream"/>
-	<parameter name="taxAmt" class="java.math.BigDecimal"/>
-	<parameter name="fineAmt" class="java.math.BigDecimal"/>
-	<parameter name="extraAmt" class="java.math.BigDecimal"/>
-	<parameter name="exciseTaxAmt" class="java.math.BigDecimal"/>
-	<parameter name="moiAmt" class="java.math.BigDecimal"/>
-	<parameter name="sumAllTaxAmt" class="java.math.BigDecimal"/>
-	<parameter name="paymentExciseTaxAmt" class="java.math.BigDecimal"/>
-	<parameter name="docDate" class="java.util.Date"/>
-	<parameter name="refDocDate" class="java.util.Date"/>
-	<parameter name="auditDate" class="java.util.Date"/>
-	<parameter name="callBookDate" class="java.util.Date"/>
-	<parameter name="taxFormDateStart" class="java.util.Date"/>
-	<parameter name="taxFormDateEnd" class="java.util.Date"/>
-	<parameter name="testimonyDate" class="java.util.Date"/>
-	<parameter name="extraDate" class="java.util.Date"/>
-	<parameter name="paymentDate" class="java.util.Date"/>
-	<parameter name="officeDate" class="java.util.Date"/>
+	<parameter name="formTsNumber" class="java.lang.String"/>
 	<parameter name="bookNumber1" class="java.lang.String"/>
 	<parameter name="bookNumber2" class="java.lang.String"/>
 	<parameter name="docTopic" class="java.lang.String"/>
+	<parameter name="docDate" class="java.util.Date"/>
 	<parameter name="docDear" class="java.lang.String"/>
 	<parameter name="refBookNumber1" class="java.lang.String"/>
 	<parameter name="refBookNumber2" class="java.lang.String"/>
+	<parameter name="refDocDate" class="java.util.Date"/>
+	<parameter name="auditDate" class="java.util.Date"/>
 	<parameter name="callBookNumber1" class="java.lang.String"/>
 	<parameter name="callBookNumber2" class="java.lang.String"/>
+	<parameter name="callBookDate" class="java.util.Date"/>
 	<parameter name="factoryName" class="java.lang.String"/>
 	<parameter name="newRegId" class="java.lang.String"/>
 	<parameter name="facAddrNo" class="java.lang.String"/>
@@ -44,14 +32,19 @@
 	<parameter name="facZipCode" class="java.lang.String"/>
 	<parameter name="officerFullName" class="java.lang.String"/>
 	<parameter name="officerPosition" class="java.lang.String"/>
+	<parameter name="taxFormDateStart" class="java.util.Date"/>
+	<parameter name="taxFormDateEnd" class="java.util.Date"/>
+	<parameter name="testimonyDate" class="java.util.Date"/>
 	<parameter name="factDesc" class="java.lang.String"/>
 	<parameter name="lawDesc" class="java.lang.String"/>
 	<parameter name="factoryName2" class="java.lang.String"/>
-	<parameter name="paymentDest" class="java.lang.String"/>
-	<parameter name="officeDest" class="java.lang.String"/>
-	<parameter name="officeTime" class="java.lang.String"/>
-	<parameter name="signOfficerFullName" class="java.lang.String"/>
-	<parameter name="signOfficerPosition" class="java.lang.String"/>
+	<parameter name="taxAmt" class="java.math.BigDecimal"/>
+	<parameter name="fineAmt" class="java.math.BigDecimal"/>
+	<parameter name="extraAmt" class="java.math.BigDecimal"/>
+	<parameter name="exciseTaxAmt" class="java.math.BigDecimal"/>
+	<parameter name="moiAmt" class="java.math.BigDecimal"/>
+	<parameter name="sumAllTaxAmt" class="java.math.BigDecimal"/>
+	<parameter name="extraDate" class="java.util.Date"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
