@@ -17,6 +17,7 @@ import th.go.excise.ims.ta.service.AnalysisTaxFilingService;
 import th.go.excise.ims.ta.service.AnalysisTaxQtyService;
 import th.go.excise.ims.ta.service.AnalysisTaxRateService;
 import th.go.excise.ims.ta.service.AnalysisTaxRetailPriceService;
+import th.go.excise.ims.ta.service.AnalysisTaxValueService;
 import th.go.excise.ims.ta.vo.AnalysisFormVo;
 import th.go.excise.ims.ta.vo.AnalysisIncomeCompareLastMonthVo;
 import th.go.excise.ims.ta.vo.AnalysisIncomeCompareLastYearVo;
@@ -25,6 +26,7 @@ import th.go.excise.ims.ta.vo.AnalysisTaxFilingVo;
 import th.go.excise.ims.ta.vo.AnalysisTaxQtyVo;
 import th.go.excise.ims.ta.vo.AnalysisTaxRateVo;
 import th.go.excise.ims.ta.vo.AnalysisTaxRetailPriceVo;
+import th.go.excise.ims.ta.vo.AnalysisTaxValueVo;
 
 @Controller
 @RequestMapping("/api/ta/basic-anlysis")
@@ -32,6 +34,7 @@ public class BasicAnlysisController {
 	private static final Logger logger = LoggerFactory.getLogger(BasicAnlysisController.class);
 	private AnalysisTaxQtyService analysisTaxQtyService;
 	private AnalysisTaxRetailPriceService analysisTaxQuRetailPriceService;
+	private AnalysisTaxValueService analysisTaxValueService;
 	private AnalysisTaxRateService analysisTaxRateService;
 	private AnalysisTaxAmtsService analysisTaxAmtsService;
 	private AnalysisTaxFilingService analysisTaxFilingService;
@@ -40,10 +43,11 @@ public class BasicAnlysisController {
 
 	@Autowired
 	public BasicAnlysisController(AnalysisTaxQtyService analysisTaxQtyService, AnalysisTaxRetailPriceService analysisTaxQuRetailPriceService, AnalysisTaxRateService analysisTaxRateService, AnalysisTaxAmtsService analysisTaxAmtsService, AnalysisTaxFilingService analysisTaxFilingService,
-			AnalysisIncomeCompareLastMonthService analysisIncomeCompareLastMonthService, AnalysisIncomeCompareLastYearService analysisIncomeCompareLastYearService) {
+			AnalysisIncomeCompareLastMonthService analysisIncomeCompareLastMonthService, AnalysisIncomeCompareLastYearService analysisIncomeCompareLastYearService,AnalysisTaxValueService analysisTaxValueService) {
 		this.analysisTaxQtyService = analysisTaxQtyService;
 		this.analysisTaxQuRetailPriceService = analysisTaxQuRetailPriceService;
 		this.analysisTaxRateService = analysisTaxRateService;
+		this.analysisTaxValueService = analysisTaxValueService;
 		this.analysisTaxAmtsService = analysisTaxAmtsService;
 		this.analysisTaxFilingService = analysisTaxFilingService;
 		this.analysisIncomeCompareLastMonthService = analysisIncomeCompareLastMonthService;
@@ -80,7 +84,19 @@ public class BasicAnlysisController {
 		return response;
 	}
 	// TODO 3
+	@PostMapping("/analysis-lysisTax-value")
+	@ResponseBody
+	public DataTableAjax<AnalysisTaxValueVo> listAnalysisTaxValueService(@RequestBody AnalysisFormVo request) {
+		logger.info("listAnalysisTaxValue");
 
+		DataTableAjax<AnalysisTaxValueVo> response = new DataTableAjax<>();
+		try {
+			response = analysisTaxValueService.GetAnalysisTaxValue(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
+	}
 	// TODO 4
 	@PostMapping("/analysis-taxRate-service-data")
 	@ResponseBody
