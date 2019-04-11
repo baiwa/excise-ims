@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_03" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="35" bottomMargin="35" isIgnorePagination="true" uuid="48a3de5f-799a-490c-8b9a-9ff322272948">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_03" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="35" bottomMargin="10" isIgnorePagination="true" uuid="48a3de5f-799a-490c-8b9a-9ff322272948">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="cm"/>
 	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
@@ -54,7 +54,7 @@
 		<![CDATA[]]>
 	</queryString>
 	<pageHeader>
-		<band height="760" splitType="Stretch">
+		<band height="785" splitType="Stretch">
 			<image hAlign="Center" vAlign="Middle" isUsingCache="false">
 				<reportElement isPrintRepeatedValues="false" x="200" y="0" width="60" height="60" uuid="d3819e76-5732-48b9-b1b9-640c66ad352e"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
@@ -808,6 +808,15 @@
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement key="" style="TextDetail" x="0" y="770" width="150" height="15" uuid="74f0f188-9d0f-40d2-8b6b-5d9084309adb">
+					<printWhenExpression><![CDATA[!($P{formTsNumber} == null || $P{formTsNumber}.length() == 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["เลขที่เอกสารจากระบบ  "+$P{formTsNumber}  ]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 </jasperReport>

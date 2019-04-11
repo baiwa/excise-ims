@@ -23,6 +23,7 @@ public class TaFormTS0103ServiceTest {
 
 		// set data
 		TaFormTS0103Vo formTS0103Vo = new TaFormTS0103Vo();
+		formTS0103Vo.setFormTsNumber("000000-2562-000126");
 		formTS0103Vo.setBookNumber1("กค0003");
 		formTS0103Vo.setBookNumber2("03563");
 		formTS0103Vo.setOfficeName1("สำนักงานสรรพสามิตภาคที่ 1");
