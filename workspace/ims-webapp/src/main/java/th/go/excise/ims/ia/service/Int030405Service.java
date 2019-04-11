@@ -30,8 +30,6 @@ import th.go.excise.ims.ia.util.IntCalculateCriteriaUtil;
 import th.go.excise.ims.ia.vo.ExportRiskVo;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
 import th.go.excise.ims.ia.vo.Int0301Vo;
-import th.go.excise.ims.ia.vo.Int030404FormVo;
-import th.go.excise.ims.ia.vo.Int030404Vo;
 import th.go.excise.ims.ia.vo.Int030405FormVo;
 import th.go.excise.ims.ia.vo.Int030405Vo;
 import th.go.excise.ims.ia.vo.IntCalculateCriteriaVo;
@@ -42,12 +40,10 @@ public class Int030405Service {
 
 	@Autowired
 	private IaRiskSystemUnworkingRepository iaRiskSystemUnworkingRepository;
+	
 
 	@Autowired
 	private Int030405JdbcRepository int030405JdbcRepository;
-
-	@Autowired
-	private IntCalculateCriteriaUtil intCalculateCriteriaUtil;
 	
 	@Autowired
 	private ExcelUtil excelUtil;
@@ -56,32 +52,16 @@ public class Int030405Service {
 	private Int0301Service int0301Service;
 
 	public List<Int030405Vo> systemUnworkingList(Int030405FormVo form) {
+		
+		String startDate = form.getStartDate().split("/")[1]+form.getStartDate().split("/")[0];
+		String endDate = form.getEndDate().split("/")[1]+form.getEndDate().split("/")[0];
+		
 		List<Int030405Vo> resDataCal = new ArrayList<Int030405Vo>();
+		resDataCal = int030405JdbcRepository.findByStartMonthByEndMonthGroup(startDate,endDate);
+		
 		List<IaRiskSystemUnworking> systemUnworkingList = new ArrayList<IaRiskSystemUnworking>();
-		systemUnworkingList = iaRiskSystemUnworkingRepository.findByBudgetYear(
-				form.getStartDate().split("/")[1]+form.getStartDate().split("/")[0],form.getEndDate().split("/")[1]+form.getEndDate().split("/")[0]);
-		List<IaRiskSystemUnworking> res = new ArrayList<IaRiskSystemUnworking>();
-
-		for (IaRiskSystemUnworking iaRiskSystemUnworking : systemUnworkingList) {
-			IaRiskSystemUnworking dataSet = new IaRiskSystemUnworking();
-
-			dataSet.setSystemCode(iaRiskSystemUnworking.getSystemCode());
-			dataSet.setSystemName(iaRiskSystemUnworking.getSystemName());
-			
-			dataSet.setCountAll(iaRiskSystemUnworking.getCountAll());
-			dataSet.setCountNormal(iaRiskSystemUnworking.getCountNormal());
-			dataSet.setCountError(iaRiskSystemUnworking.getCountError());
-			
-			dataSet.setStartDate(iaRiskSystemUnworking.getStartDate());
-			dataSet.setEndDate(iaRiskSystemUnworking.getEndDate());
-			
-			dataSet.setMonth(iaRiskSystemUnworking.getMonth());
-			dataSet.setYear(iaRiskSystemUnworking.getYear());
-			dataSet.setStatus(iaRiskSystemUnworking.getStatus());
-
-			res.add(dataSet);
-		}
-
+		systemUnworkingList = iaRiskSystemUnworkingRepository.findByStartMonthByEndMonth(startDate,endDate);
+		
 		Int0301FormVo dataForm = new Int0301FormVo();
 		dataForm.setBudgetYear(form.getBudgetYear());
 		dataForm.setIdConfig(form.getIdConfig());
@@ -89,16 +69,68 @@ public class Int030405Service {
 		Int0301Vo getForm0304 = getForm0304(dataForm);
 
 		int index = 0;
-		for (IaRiskSystemUnworking iaRiskSystemUnworking : res) {
-			Int030405Vo resDataCalSet = new Int030405Vo();
+		for (Int030405Vo vo : resDataCal) {
 			IntCalculateCriteriaVo risk = new IntCalculateCriteriaVo();
-			if (StringUtils.isNoneBlank(iaRiskSystemUnworking.getCountAll())) {
-				risk = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(iaRiskSystemUnworking.getCountAll()),
+			
+			 	int yearForm =  Integer.valueOf(form.getStartDate().split("/")[1]);
+			 	int yearTo =  Integer.valueOf(form.getEndDate().split("/")[1]); 
+			 	int yearNo =  yearTo - yearForm;
+
+			 	int monthForm = Integer.valueOf(form.getStartDate().split("/")[0]);
+			 	int monthTo =  Integer.valueOf(form.getEndDate().split("/")[0]); 
+
+			 	int monthNo = 0 ;
+			   
+			    if(yearTo>yearForm){
+			      monthNo = (12-monthForm)+(12*((yearTo-yearForm)-1))+monthTo;
+			    }else{
+			      monthNo = monthTo-monthForm;
+			    }
+
+			    int monthArray = monthForm;
+			    int yearArray = yearForm;
+
+	
+			// Set TR Month
+			    for (int i = 0; i <= monthNo; i++) {
+
+			      if(monthArray<=12){
+			    	  //
+			      }else{
+			    	yearArray++;
+			        monthArray=1;
+			      }
+			      IaRiskSystemUnworking data = new IaRiskSystemUnworking();
+			      
+//			      logger.info("Month " + monthArray + " / "+ yearArray);
+			      for (IaRiskSystemUnworking iaRiskSystemUnworking : systemUnworkingList) {
+			    	  
+			    	  if( Integer.valueOf(iaRiskSystemUnworking.getMonth())==monthArray
+			    		  && Integer.valueOf(iaRiskSystemUnworking.getYear())==yearArray 
+			    		  && vo.getSystemCode().equals(iaRiskSystemUnworking.getSystemCode())) {
+			    		  data = new IaRiskSystemUnworking();
+			    		  data = iaRiskSystemUnworking;
+			    	  }
+				}
+			      List<IaRiskSystemUnworking> setIaRiskSys = new ArrayList<IaRiskSystemUnworking>();
+			      if(vo.getIaRiskSystemUnworking()!=null) {
+			    	  setIaRiskSys = vo.getIaRiskSystemUnworking();
+			    	  
+			      }
+			      setIaRiskSys.add(data);
+			      vo.setIaRiskSystemUnworking(setIaRiskSys);
+			      monthArray++;
+			    }
+			
+			
+			
+			
+			if (StringUtils.isNoneBlank(vo.getSumCountError())) {
+				risk = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(vo.getSumCountError()),
 						getForm0304.getIaRiskFactorsConfig());
 			}
-			resDataCalSet.setIaRiskSystemUnworking(iaRiskSystemUnworking);
-			resDataCalSet.setIntCalculateCriteriaVo(risk);
-			resDataCal.add(index, resDataCalSet);
+			vo.setIntCalculateCriteriaVo(risk);
+			index++;
 		}
 //		
 //		intCalculateCriteriaUtil.IntCalculateCriteriaVo()
@@ -341,7 +373,7 @@ public class Int030405Service {
 			cellNum++;
 			// Column 2
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getIaRiskSystemUnworking().getSystemName());
+			cell.setCellValue(data.getSystemName());
 			cell.setCellStyle(tdLeft);
 			cellNum++;
 
@@ -419,8 +451,8 @@ public class Int030405Service {
 
 			// Column 13
 			cell = row.createCell(cellNum);
-			if (data.getIaRiskSystemUnworking().getCountAll() != null) {
-				cell.setCellValue(data.getIaRiskSystemUnworking().getCountAll().toString());
+			if (data.getSumCountAll() != null) {
+				cell.setCellValue(data.getSumCountAll().toString());
 			}else {
 				cell.setCellValue("-");
 			}

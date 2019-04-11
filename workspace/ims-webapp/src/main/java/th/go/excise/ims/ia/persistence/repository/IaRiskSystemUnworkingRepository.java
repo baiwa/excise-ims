@@ -14,5 +14,6 @@ public interface IaRiskSystemUnworkingRepository
 {
 
 	@Query(value = "Select e.* from IA_RISK_SYSTEM_UNWORKING e  WHERE CONCAT(e.YEAR,e.MONTH) >= ?1 AND  CONCAT(e.YEAR,e.MONTH) <= ?2 ", nativeQuery = true)
-	public  List<IaRiskSystemUnworking> findByBudgetYear(String StartMonth,String EndMonth);
+	public  List<IaRiskSystemUnworking> findByStartMonthByEndMonth(String startMonth,String endMonth);
+	
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -15,11 +16,14 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
+import th.go.excise.ims.ia.persistence.entity.IaRiskSystemUnworking;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
 import th.go.excise.ims.ia.vo.Int0301Vo;
+import th.go.excise.ims.ia.vo.Int030405Vo;
 
 @Repository
 public class Int030405JdbcRepository {
+	
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 	
@@ -135,5 +139,23 @@ public class Int030405JdbcRepository {
 			return vo;
 		}
 	};
+	
+	public List<Int030405Vo> findByStartMonthByEndMonthGroup(String startMonth,String endMonth) {
+		List<Int030405Vo> res = new ArrayList<Int030405Vo>();
+
+		StringBuilder sql = new StringBuilder(" SELECT e.SYSTEM_CODE,e.SYSTEM_NAME " + 
+				"   ,SUM(e.COUNT_ALL) AS SUM_COUNT_ALL,SUM(e.COUNT_NORMAL)AS SUM_COUNT_NORMAL,SUM(e.COUNT_ERROR)AS SUM_COUNT_ERROR " +
+				"	FROM IA_RISK_SYSTEM_UNWORKING e " + 
+				"	WHERE CONCAT(e.YEAR,e.MONTH) >= ? " + 
+				"	AND CONCAT(e.YEAR,e.MONTH)   <= ? GROUP BY e.SYSTEM_CODE,e.SYSTEM_NAME ");
+		List<Object> params = new ArrayList<Object>();
+
+		params.add(startMonth);
+		params.add(endMonth);
+		
+		res = commonJdbcTemplate.query(sql.toString(), params.toArray(),new BeanPropertyRowMapper(Int030405Vo.class));
+		
+		return res;
+	}
 
 }
