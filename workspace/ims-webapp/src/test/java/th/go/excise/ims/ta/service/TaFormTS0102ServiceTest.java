@@ -23,6 +23,7 @@ public class TaFormTS0102ServiceTest {
 
 		// set data
 		TaFormTS0102Vo formTS0102Vo = new TaFormTS0102Vo();
+		formTS0102Vo.setFormTsNumber("000000-2562-000126");
 		formTS0102Vo.setBookNumber1("กข0002");
 		formTS0102Vo.setBookNumber2("0001");
 		formTS0102Vo.setDocDear("นายธนาวัตร สุทธิสาร");

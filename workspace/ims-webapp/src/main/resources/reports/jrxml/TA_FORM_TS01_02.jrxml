@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_02" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="45" bottomMargin="45" isIgnorePagination="true" uuid="c9edd8aa-539f-48e6-b06d-8e45212954eb">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_02" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="45" bottomMargin="25" isIgnorePagination="true" uuid="c9edd8aa-539f-48e6-b06d-8e45212954eb">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
 	<style name="data1" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="14"/>
 	<style name="data2" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="12"/>
@@ -43,9 +51,9 @@
 		<![CDATA[]]>
 	</queryString>
 	<pageHeader>
-		<band height="750" splitType="Stretch">
+		<band height="760" splitType="Stretch">
 			<image isUsingCache="false">
-				<reportElement isPrintRepeatedValues="false" x="190" y="0" width="60" height="60" uuid="4d191d5a-621d-4eb5-9655-b0b21d984de0"/>
+				<reportElement isPrintRepeatedValues="false" x="202" y="0" width="60" height="60" uuid="4d191d5a-621d-4eb5-9655-b0b21d984de0"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField>
@@ -829,6 +837,15 @@
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement key="" x="0" y="745" width="150" height="15" uuid="19f27ec0-6b0e-4925-928a-8dc0d9925aa0">
+					<printWhenExpression><![CDATA[!($P{formTsNumber} == null || $P{formTsNumber}.length() == 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="TH Sarabun New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["เลขที่เอกสารจากระบบ  "+$P{formTsNumber}  ]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 </jasperReport>
