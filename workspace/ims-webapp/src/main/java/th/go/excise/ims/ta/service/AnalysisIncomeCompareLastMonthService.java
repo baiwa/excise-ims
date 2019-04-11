@@ -87,8 +87,10 @@ public class AnalysisIncomeCompareLastMonthService {
 
 					calDiffIncomeAmt = NumberUtils.nullToZero(data.get(i).getTaxAmount()).subtract(NumberUtils.nullToZero(data.get(i - 1).getTaxAmount()));
 					
-					calDiffIncomePnt = (calDiffIncomeAmt.divide(NumberUtils.ZeroToOne(NumberUtils.nullToZero(data.get(i).getTaxAmount())), 2, RoundingMode.HALF_UP)).multiply(BigDecimal.valueOf(100));
+					calDiffIncomePnt = (calDiffIncomeAmt.multiply(BigDecimal.valueOf(100))).divide(NumberUtils.ZeroToOne(NumberUtils.nullToZero(data.get(i).getTaxAmount())), 2, RoundingMode.HALF_UP);
 					
+					
+					 //calDiffIncomePnt = (calDiffIncomeAmt.divide(NumberUtils.ZeroToOne(NumberUtils.nullToZero(data.get(i).getTaxAmount())), 2, RoundingMode.HALF_UP)).multiply(BigDecimal.valueOf(100));
 					///calDiffIncomePnt = data.get(i).getTaxAmount() != null ?(calDiffIncomeAmt.divide(data.get(i).getTaxAmount(), 2, RoundingMode.HALF_UP)).multiply(BigDecimal.valueOf(100))  : new BigDecimal(-100);
 					
 					analysisIncomeCompareLastMonthVo.setDiffIncomeAmt(calDiffIncomeAmt);
