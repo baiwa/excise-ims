@@ -157,29 +157,95 @@ public class IntCalculateCriteriaUtil {
 		return value;
 	}
 
+//	public static Boolean checkDataCal(Float dataCal, String condition, String start, String end) {
+//		Boolean res = false;
+//		Float startB = (start != null) ? Float.valueOf(start) : null;
+//		Float endB = (end != null) ? Float.valueOf(end) : null;
+//
+//		if (!"".equals(condition) && condition != null) {
+//
+//			if (("<".equals(condition)) && (dataCal < startB)) {
+//
+//				res = true;
+//
+//			} else if ("<>".equals(condition) && ((startB <= dataCal) && (dataCal <= endB))) {;
+//
+//				res = true;
+//
+//			} else if (">".equals(condition) && (dataCal > startB)) {
+//
+//				res = true;
+//			}
+//		}
+//		return res;
+//	}
+
 	public static Boolean checkDataCal(Float dataCal, String condition, String start, String end) {
 		Boolean res = false;
 		Float startB = (start != null) ? Float.valueOf(start) : null;
 		Float endB = (end != null) ? Float.valueOf(end) : null;
+		String condition1 = condition.split("\\|")[0];
+		String condition2 = condition.split("\\|")[1];
+		if (!"".equals(condition1) && condition1 != null && !"".equals(condition2) && condition2 != null) {
 
-		if (!"".equals(condition) && condition != null) {
+			if (("<".equals(condition1)) && (dataCal < startB)) {
 
-			if (("<".equals(condition)) && (dataCal < startB)) {
+				res = checkDataCal2(dataCal, condition2, end);
+
+			} else if (">=".equals(condition1) && (dataCal >= startB)) {
+				
+				res = checkDataCal2(dataCal, condition2, end);
+
+			}  else if ("<=".equals(condition1) && (dataCal <= startB)) {
+
+				res = checkDataCal2(dataCal, condition2, end);
+
+			} else if (">".equals(condition1) && (dataCal > startB)) {
+	
+				res = checkDataCal2(dataCal, condition2, end);
+				
+			} else if ("=".equals(condition1) && (dataCal == startB)) {;
+
+				res = checkDataCal2(dataCal, condition2, end);
+
+			}
+		}
+		return res;
+	}
+	
+	public static Boolean checkDataCal2(Float dataCal, String condition, String end) {
+		Boolean res = false;
+		Float endB = (end != null) ? Float.valueOf(end) : null;
+		if (!"".equals(condition) && condition != null && !"".equals(condition) && condition != null) {
+
+			if (("<".equals(condition)) && (dataCal < endB)) {
 
 				res = true;
 
-			} else if ("<>".equals(condition) && ((startB <= dataCal) && (dataCal <= endB))) {;
+			} else if (">=".equals(condition) && (dataCal >= endB)) {
 
 				res = true;
 
-			} else if (">".equals(condition) && (dataCal > startB)) {
+			}  else if ("<=".equals(condition) && (dataCal <= endB)) {
 
+				res = true;
+
+			} else if (">".equals(condition) && (dataCal > endB)) {
+	
+				res = true;
+				
+			} else if ("=".equals(condition) && (dataCal == endB)) {
+
+				res = true;
+
+			} else if ("N".equals(condition)) {
+	
 				res = true;
 			}
 		}
 		return res;
 	}
-
+	
 	public static String colorToColorCode(String color) {
 		String colorCode = "";
 		if (IaConstants.IA_RISK_COLOR.COLOR1.equals(color)) {

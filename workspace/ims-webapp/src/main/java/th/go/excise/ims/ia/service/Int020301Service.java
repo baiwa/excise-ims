@@ -18,7 +18,6 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
@@ -27,7 +26,6 @@ import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
-import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfigAll;
 import th.go.excise.ims.ia.persistence.entity.IaRiskQtnConfig;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
@@ -62,10 +60,10 @@ public class Int020301Service {
 
 	@Autowired
 	private IaQuestionnaireHdrRepository iaQuestionnaireHdrRepository;
-	
+
 	@Autowired
 	private IaRiskFactorsConfigRepository iaRiskFactorsConfigRepository;
-	
+
 	@Autowired
 	private UpdateStatusQuestionnaireService questionnaireService;
 
@@ -96,7 +94,9 @@ public class Int020301Service {
 			return configs.getLowCondition();
 		}
 	}
-	IntCalculateCriteriaVo cal =  new IntCalculateCriteriaVo();
+
+	IntCalculateCriteriaVo cal = new IntCalculateCriteriaVo();
+
 	public List<Int020301InfoVo> findInfoByIdHdr(String idHdrStr, String budgetYear, String secter) {
 		BigDecimal idHdr = new BigDecimal(idHdrStr);
 		IaRiskQtnConfig configs = iaRiskQtnConfigRepository.findByIdQtnHdrAndIsDeleted(idHdr, "N");
@@ -104,9 +104,10 @@ public class Int020301Service {
 		datas = int020301JdbcRepository.findInfoByIdSide(idHdr, budgetYear, secter);
 		for (Int020301InfoVo data : datas) {
 			// Sides Data
-			List<Int020301DataVo> sideDtls = int020301JdbcRepository.findDataByIdHdr(idHdr, budgetYear,data.getAreaName());
-			
-			IaRiskFactorsConfig configFactor = matchConfigQtnWithConfig(configs);
+			List<Int020301DataVo> sideDtls = int020301JdbcRepository.findDataByIdHdr(idHdr, budgetYear,
+					data.getAreaName());
+
+			IaRiskFactorsConfig configFactor = matchConfigQtnWithConfig(configs, new BigDecimal(idHdrStr));
 			IntCalculateCriteriaVo cal = new IntCalculateCriteriaVo();
 			String condition = "";
 			double all = 0;
@@ -131,22 +132,23 @@ public class Int020301Service {
 					all = all + sum;
 					declineValue = declineValue + sideDtl.getDeclineValue().doubleValue();
 					condition = conditionConfigs(sideDtl.getDeclineValue(), new BigDecimal(sum), configs);
-					double sumPercent = sideDtl.getDeclineValue().doubleValue()/(sideDtl.getDeclineValue().doubleValue()+sideDtl.getAcceptValue().doubleValue())*100;
+					double sumPercent = sideDtl.getDeclineValue().doubleValue()
+							/ (sideDtl.getDeclineValue().doubleValue() + sideDtl.getAcceptValue().doubleValue()) * 100;
 					cal = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(sumPercent), configFactor);
 				} else {
 					if (sideDtl.getAcceptValue() != null) {
-						
+
 						condition = conditionConfigs(new BigDecimal(0), sideDtl.getAcceptValue(), configs);
 						cal = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(0), configFactor);
-						
+
 					} else {
-						
+
 						condition = conditionConfigs(new BigDecimal(0), new BigDecimal(0), configs);
 						cal = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(0), configFactor);
-						
+
 					}
 				}
-				
+
 				if (">".equals(condition)) { // High
 					sideDtl.setRiskName(configs.getHigh());
 					sideDtl.setRiskColor(configs.getHighColor());
@@ -157,7 +159,7 @@ public class Int020301Service {
 					sideDtl.setRiskName(configs.getLow());
 					sideDtl.setRiskColor(configs.getLowColor());
 				}
-				
+
 				sideDtl.setIntCalculateCriteriaVo(cal);
 			}
 			data.setSideDtls(sideDtls);
@@ -169,8 +171,7 @@ public class Int020301Service {
 			cal = new IntCalculateCriteriaVo();
 			cal = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(avg), configFactor);
 			data.setIntCalculateCriteriaVo(cal);
-			
-			
+
 			// calculate Risk
 			if (">".equals(condition)) { // High
 				data.setRiskText(configs.getHigh());
@@ -199,18 +200,14 @@ public class Int020301Service {
 			} else {
 				data.setAreaName("");
 			}
-			
+
 			ExciseDepartmentVo exciseDepartmentVo = ExciseDepartmentUtil.getExciseDepartment(data.getOfficeCode());
 			data.setExciseDepartmentVo(exciseDepartmentVo);
-			
+
 		}
-		
-		
+
 		return datas;
 	}
-	
-	
-	
 
 	public List<Int020301InfoVo> findInfoByIdHdrRisk(String idHdrStr, String budgetYear, String idConfigStr) {
 		BigDecimal idHdr = new BigDecimal(idHdrStr);
@@ -224,7 +221,8 @@ public class Int020301Service {
 		if (config.isPresent()) {
 			for (Int020301InfoVo data : datas) {
 				// Sides Data
-				List<Int020301DataVo> sideDtls = int020301JdbcRepository.findDataByIdHdr(idHdr, budgetYear,data.getAreaName());
+				List<Int020301DataVo> sideDtls = int020301JdbcRepository.findDataByIdHdr(idHdr, budgetYear,
+						data.getAreaName());
 				String condition = "";
 				double all = 0;
 				double declineValue = 0;
@@ -246,8 +244,10 @@ public class Int020301Service {
 						all = all + sum;
 						declineValue = declineValue + sideDtl.getDeclineValue().doubleValue();
 						condition = conditionConfigs(sideDtl.getDeclineValue(), new BigDecimal(sum), configs);
-						
-						double sumPercent = sideDtl.getDeclineValue().doubleValue()/(sideDtl.getDeclineValue().doubleValue()+sideDtl.getAcceptValue().doubleValue())*100;
+
+						double sumPercent = sideDtl.getDeclineValue().doubleValue()
+								/ (sideDtl.getDeclineValue().doubleValue() + sideDtl.getAcceptValue().doubleValue())
+								* 100;
 						cal = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(sumPercent), configFactor);
 					} else {
 						if (sideDtl.getAcceptValue() != null) {
@@ -275,18 +275,19 @@ public class Int020301Service {
 				data.setRiskQuantity(new BigDecimal(sideDtls.size()));
 				// Sum Data
 				double avg = (declineValue / all) * 100;
-				
+
 				if (avg >= 0) {
 					data.setAvgRisk(new BigDecimal(avg));
 				} else {
 					data.setAvgRisk(new BigDecimal(0));
 				}
-				IntCalculateCriteriaVo risk = IntCalculateCriteriaUtil.calculateCriteria(data.getAvgRisk(),config.get());
-				
+				IntCalculateCriteriaVo risk = IntCalculateCriteriaUtil.calculateCriteria(data.getAvgRisk(),
+						config.get());
+
 				cal = new IntCalculateCriteriaVo();
 				cal = IntCalculateCriteriaUtil.calculateCriteria(data.getAvgRisk(), configFactor);
 				data.setIntCalculateCriteriaVo(cal);
-				
+
 				data.setRiskColor(risk.getColor());
 				data.setRiskText(risk.getTranslatingRisk());
 				data.setRiskNum(risk.getRiskRate());
@@ -309,77 +310,74 @@ public class Int020301Service {
 		}
 		return datas;
 	}
-	
-	public IaRiskFactorsConfig matchConfigQtnWithConfig(IaRiskQtnConfig configQtn) {
+
+	public IaRiskFactorsConfig matchConfigQtnWithConfig(IaRiskQtnConfig configQtn, BigDecimal IdHdr) {
 		IaRiskFactorsConfig con = new IaRiskFactorsConfig();
+		IaQuestionnaireHdr hdrList = iaQuestionnaireHdrRepository.findById(IdHdr).get();
+		con.setFactorsLevel(new BigDecimal(hdrList.getFactorLevel()));
 
-			con.setFactorsLevel(new BigDecimal(3));
-	
-			con.setVerylow("");
-			con.setVerylowStart("");
-			con.setVerylowEnd("");
-			con.setVerylowCondition("");
-			con.setVerylowRating(new BigDecimal(0));
-			con.setVerylowColor("");
-	
-	
-			con.setLow(configQtn.getLow());
-			con.setLowStart((configQtn.getLowStart()!=null)?configQtn.getLowStart().toString():"");
-			con.setLowEnd((configQtn.getLowEnd()!=null)?configQtn.getLowEnd().toString():"");
-			con.setLowCondition(configQtn.getLowCondition());
-			con.setLowRating(configQtn.getLowRating());
-			
-		    String colorLow = colorConfigQtnToColorConfig(configQtn.getLowColor());
-			con.setLowColor(colorLow);
-	
-	
-			con.setMedium(configQtn.getMedium());
-			con.setMediumStart((configQtn.getMediumStart()!=null)?configQtn.getMediumStart().toString():"");
-			con.setMediumEnd((configQtn.getMediumEnd()!=null)?configQtn.getMediumEnd().toString():"");
-			con.setMediumCondition(configQtn.getMediumCondition());
-			con.setMediumRating(configQtn.getMediumRating());
-			
-			String colorMedium = colorConfigQtnToColorConfig(configQtn.getMediumColor());
-			con.setMediumColor(colorMedium);
-	
-	
-			con.setHigh(configQtn.getHigh());
-			con.setHighStart((configQtn.getHighStart()!=null)?configQtn.getHighStart().toString():"");
-			con.setHighEnd((configQtn.getHighEnd()!=null)?configQtn.getHighEnd().toString():"");
-			con.setHighCondition(configQtn.getHighCondition());
-			con.setHighRating(configQtn.getHighRating());
-			
-			String colorHigh = colorConfigQtnToColorConfig(configQtn.getHighColor());
-			con.setHighColor(colorHigh);
-	
-	
-			con.setVeryhigh("");
-			con.setVeryhighStart("");
-			con.setVeryhighEnd("");
-			con.setVeryhighCondition("");
-			con.setVeryhighRating(new BigDecimal(0));
-			con.setVeryhighColor("");
+		con.setVerylow(configQtn.getVerylow());
+		con.setVerylowStart((configQtn.getVerylowStart() != null) ? configQtn.getVerylowStart().toString() : "");
+		con.setVerylowEnd((configQtn.getVerylowEnd() != null) ? configQtn.getVerylowEnd().toString() : "");
+		con.setVerylowCondition(configQtn.getVerylowCondition());
+		con.setVerylowRating(configQtn.getVerylowRating());
+		con.setVerylowColor(configQtn.getVerylowColor());
 
-		
+		con.setLow(configQtn.getLow());
+		con.setLowStart((configQtn.getLowStart() != null) ? configQtn.getLowStart().toString() : "");
+		con.setLowEnd((configQtn.getLowEnd() != null) ? configQtn.getLowEnd().toString() : "");
+		con.setLowCondition(configQtn.getLowCondition());
+		con.setLowRating(configQtn.getLowRating());
+
+//		    String colorLow = colorConfigQtnToColorConfig(configQtn.getLowColor());
+//			con.setLowColor(colorLow);
+		con.setLowColor(configQtn.getLowColor());
+
+		con.setMedium(configQtn.getMedium());
+		con.setMediumStart((configQtn.getMediumStart() != null) ? configQtn.getMediumStart().toString() : "");
+		con.setMediumEnd((configQtn.getMediumEnd() != null) ? configQtn.getMediumEnd().toString() : "");
+		con.setMediumCondition(configQtn.getMediumCondition());
+		con.setMediumRating(configQtn.getMediumRating());
+
+//			String colorMedium = colorConfigQtnToColorConfig(configQtn.getMediumColor());
+//			con.setMediumColor(colorMedium);
+		con.setMediumColor(configQtn.getMediumColor());
+
+		con.setHigh(configQtn.getHigh());
+		con.setHighStart((configQtn.getHighStart() != null) ? configQtn.getHighStart().toString() : "");
+		con.setHighEnd((configQtn.getHighEnd() != null) ? configQtn.getHighEnd().toString() : "");
+		con.setHighCondition(configQtn.getHighCondition());
+		con.setHighRating(configQtn.getHighRating());
+
+//			String colorHigh = colorConfigQtnToColorConfig(configQtn.getHighColor());
+//			con.setHighColor(colorHigh);
+		con.setHighColor(configQtn.getHighColor());
+
+		con.setVeryhigh(configQtn.getVeryhigh());
+		con.setVeryhighStart((configQtn.getVeryhighStart() != null) ? configQtn.getVeryhighStart().toString() : "");
+		con.setVeryhighEnd((configQtn.getVeryhighEnd() != null) ? configQtn.getVeryhighEnd().toString() : "");
+		con.setVeryhighCondition(configQtn.getVeryhighCondition());
+		con.setVeryhighRating(configQtn.getVeryhighRating());
+		con.setVeryhighColor(configQtn.getVeryhighColor());
+
 		return con;
 	}
-	
+
 	public static String colorConfigQtnToColorConfig(String color) {
 		String colorConfig = "";
 		if ("red".equals(color)) {
 			colorConfig = IaConstants.IA_RISK_COLOR.COLOR5;
-			
+
 		} else if ("yellow".equals(color)) {
 			colorConfig = IaConstants.IA_RISK_COLOR.COLOR3;
-			
+
 		} else if ("green".equals(color)) {
 			colorConfig = IaConstants.IA_RISK_COLOR.COLOR2;
-			
+
 		}
 		return colorConfig;
 
 	}
-	
 
 	DecimalFormat formatter = new DecimalFormat("#,##0.00");
 
@@ -832,16 +830,16 @@ public class Int020301Service {
 		}
 
 		/* set sheet */
-		// merge(firstRow, lastRow, firstCol, lastCol)		
+		// merge(firstRow, lastRow, firstCol, lastCol)
 		int colcount = (headerNames.size() * 3) + 6;
-		for (int j = 0	; j < test ; j++) {
-			sheet.addMergedRegion(new CellRangeAddress(rowNum - (j + 10) , rowNum - (j + 10),  0, colcount));
+		for (int j = 0; j < test; j++) {
+			sheet.addMergedRegion(new CellRangeAddress(rowNum - (j + 10), rowNum - (j + 10), 0, colcount));
 		}
-		sheet.addMergedRegion(new CellRangeAddress(rowNum - 9, rowNum - 9,  0, colcount));
-		sheet.addMergedRegion(new CellRangeAddress(rowNum - 8, rowNum - 8,  0, colcount));
-		sheet.addMergedRegion(new CellRangeAddress(rowNum - 7, rowNum - 7,  0, colcount));
-		sheet.addMergedRegion(new CellRangeAddress(rowNum - 6, rowNum - 6,  0, colcount));
-		sheet.addMergedRegion(new CellRangeAddress(rowNum - 5, rowNum - 5,  0, colcount));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 9, rowNum - 9, 0, colcount));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 8, rowNum - 8, 0, colcount));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 7, rowNum - 7, 0, colcount));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 6, rowNum - 6, 0, colcount));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 5, rowNum - 5, 0, colcount));
 		sheet.addMergedRegion(new CellRangeAddress(rowNum - 4, rowNum - 4, 0, colcount));
 		sheet.addMergedRegion(new CellRangeAddress(rowNum - 3, rowNum - 3, 0, colcount));
 		sheet.addMergedRegion(new CellRangeAddress(7 + test, 7 + test, 3, 3 + headerNames.size() * 3 - 1));
@@ -849,10 +847,10 @@ public class Int020301Service {
 			sheet.addMergedRegion(new CellRangeAddress(8 + test, 8 + test, 3 + ((i - 1) * 3), 3 + (i * 3) - 1));
 		}
 		for (int i = 0; i < 3; i++) {
-			sheet.addMergedRegion(new CellRangeAddress(7 + test, 9 + test , i, i));
+			sheet.addMergedRegion(new CellRangeAddress(7 + test, 9 + test, i, i));
 		}
 		for (int i = headerNames.size() * 3 + 3; i <= headerNames.size() * 3 + 3 + 3; i++) {
-			sheet.addMergedRegion(new CellRangeAddress(7 + test , 9 + test  , i, i));
+			sheet.addMergedRegion(new CellRangeAddress(7 + test, 9 + test, i, i));
 		}
 		/* set sheet */
 
