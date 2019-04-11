@@ -41,6 +41,7 @@ public class TaFormTS0110ServiceTest {
 		
 		// set data
 		TaFormTS0110Vo formTS0110Vo = new TaFormTS0110Vo();
+		formTS0110Vo.setFormTsNumber("000000-2562-000126");
 		formTS0110Vo.setTestimonyOf("อคง.");
 		formTS0110Vo.setTestimonyTopic("เบิกงบ");
 		formTS0110Vo.setDocDate(new Date());
@@ -75,6 +76,7 @@ public class TaFormTS0110ServiceTest {
 		TaFormTS0110Vo subFormTS0110Vo = null;
 		for (int i = 0; i < 3; i++) {
 			subFormTS0110Vo = new TaFormTS0110Vo();
+			subFormTS0110Vo.setFormTsNumber("000000-2562-000126");
 			subFormTS0110Vo.setTestimonyPageNo(String.valueOf((i + 1)));
 			subFormTS0110Vo.setTestimonyText("ทดสอบข้อความ " + String.valueOf((i + 1)));
 			subFormTS0110VoList.add(subFormTS0110Vo);

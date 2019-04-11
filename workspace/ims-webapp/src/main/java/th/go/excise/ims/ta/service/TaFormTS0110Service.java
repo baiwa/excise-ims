@@ -142,6 +142,7 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 
 		Map<String, Object> params = new HashMap<>();
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
+		params.put("formTsNumber", formTS0110Vo.getFormTsNumber());
 		params.put("testimonyOf", formTS0110Vo.getTestimonyOf());
 		params.put("testimonyTopic", formTS0110Vo.getTestimonyTopic());
 		params.put("docDate", formTS0110Vo.getDocDate());
@@ -181,6 +182,7 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 			Map<String, Object> subParams = null;
 			for (TaFormTS0110Vo subFormTS0110Vo : formTS0110Vo.getTaFormTS0110VoList()) {
 				subParams = new HashMap<>();
+				subParams.put("formTsNumber", formTS0110Vo.getFormTsNumber());
 				subParams.put("testimonyPageNo", subFormTS0110Vo.getTestimonyPageNo());
 				subParams.put("testimonyOf", formTS0110Vo.getTestimonyOf());
 				subParams.put("testimonyText", subFormTS0110Vo.getTestimonyText());
