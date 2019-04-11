@@ -23,6 +23,7 @@ public class TaFormTS0107ServiceTest {
 
 		// set data
 		TaFormTS0107Vo formTS0107Vo = new TaFormTS0107Vo();
+		formTS0107Vo.setFormTsNumber("000000-2562-000126");
 		formTS0107Vo.setBookNumber1("กข02001");
 		formTS0107Vo.setBookNumber2("200");
 		formTS0107Vo.setOfficeName1("กรมสรรพสามิต");
@@ -66,14 +67,14 @@ public class TaFormTS0107ServiceTest {
 		byte[] reportFile = taFormTS0107Service.generateReport(formTS0107Vo);
 		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_07))));
 	}
-	
+
 	@Test
 	public void test_generateReport_Blank() throws Exception {
 		TaFormTS0107Service taFormTS0107Service = new TaFormTS0107Service();
-		
+
 		// set data
 		TaFormTS0107Vo formTS0107Vo = new TaFormTS0107Vo();
-		
+
 		byte[] reportFile = taFormTS0107Service.generateReport(formTS0107Vo);
 		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_07 + "_blank"))));
 	}
