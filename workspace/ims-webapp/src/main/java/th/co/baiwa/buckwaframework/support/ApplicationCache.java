@@ -101,7 +101,7 @@ public class ApplicationCache {
 		loadParameter();
 		loadMessage();
 		loadExciseDepartment();
-//		loadGeography();
+		loadGeography();
 		logger.info("ApplicationCache Reloaded");
 	}
 
