@@ -137,6 +137,7 @@ public class TaFormTS0108Service extends AbstractTaFormTSService<TaFormTS0108Vo,
         logger.info("generateReport");
 
         Map<String, Object> params = new HashMap<>();
+        params.put("formTsNumber", formTS0108Vo.getFormTsNumber());
         JRDataSource dataSource = new JRBeanCollectionDataSource(formTS0108Vo.getTaFormTS0108DtlVoList());
 
         JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_08 + "." + FILE_EXTENSION.JASPER, params, dataSource);
