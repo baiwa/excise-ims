@@ -390,4 +390,17 @@
 			</textField>
 		</band>
 	</detail>
+	<pageFooter>
+		<band height="30">
+			<textField isBlankWhenNull="true">
+				<reportElement key="" style="TextDetail" x="0" y="15" width="150" height="15" uuid="00e41d50-85aa-4d2f-afb6-2b1eedfa4cfa">
+					<printWhenExpression><![CDATA[!($P{formTsNumber} == null || $P{formTsNumber}.length() == 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["เลขที่เอกสารจากระบบ  "+$P{formTsNumber}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
 </jasperReport>
