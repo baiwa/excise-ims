@@ -21,6 +21,7 @@ public class TaFormTS0105ServiceTest {
 		TaFormTS0105Service taFormTS0105Service = new TaFormTS0105Service();
 		
 		TaFormTS0105Vo formTS0105Vo = new TaFormTS0105Vo();
+		formTS0105Vo.setFormTsNumber("000000-2562-000126");
 		formTS0105Vo.setBookNumber1("253");
 		formTS0105Vo.setBookNumber2("325");
 		formTS0105Vo.setOfficeName("ธนพล ชัยภูมิ");
