@@ -19,13 +19,14 @@ import th.go.excise.ims.ta.vo.TaFormTS0115Vo;
 
 public class TaFormTS0115ServiceTest {
 
-	private static final String REPORT_FILE = PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_15 + "." + FILE_EXTENSION.PDF;
+	private static final String REPORT_FILE = PATH.TEST_PATH + "%s" + "." + FILE_EXTENSION.PDF;
 
 	@Test
 	public void test_generateReport() throws Exception {
 		TaFormTS0115Service taFormTS0115Service = new TaFormTS0115Service();
 
 		TaFormTS0115Vo formTS0115Vo = new TaFormTS0115Vo();
+		formTS0115Vo.setFormTsNumber("000000-2562-000001");
 		formTS0115Vo.setOfficeName("กรมสรรพสามิต");
 		formTS0115Vo.setDocDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 3, 15))));
 		formTS0115Vo.setOwnerFullName("นาย วิทยารัตน์ สุรบดีพงษ์ ");
@@ -60,7 +61,25 @@ public class TaFormTS0115ServiceTest {
 		formTS0115Vo.setTaFormTS0115DtlVoList(formTS0115DtlVoList);
 
 		byte[] reportFile = taFormTS0115Service.generateReport(formTS0115Vo);
-		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_15))));
+	}
+	
+	@Test
+	public void test_generateReport_Blank() throws Exception {
+		TaFormTS0115Service taFormTS0115Service = new TaFormTS0115Service();
+		
+		TaFormTS0115Vo formTS0115Vo = new TaFormTS0115Vo();
+		
+		TaFormTS0115DtlVo formTS0115DtlVo = null;
+		List<TaFormTS0115DtlVo> formTS0115DtlVoList = new ArrayList<>();
+		for (int i = 0; i < 2; i++) {
+			formTS0115DtlVo = new TaFormTS0115DtlVo();
+			formTS0115DtlVoList.add(formTS0115DtlVo);
+		}
+		formTS0115Vo.setTaFormTS0115DtlVoList(formTS0115DtlVoList);
+		
+		byte[] reportFile = taFormTS0115Service.generateReport(formTS0115Vo);
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_15 + "_blank"))));
 	}
 
 }

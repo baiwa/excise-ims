@@ -142,6 +142,7 @@ public class TaFormTS01142Service  extends AbstractTaFormTSService<TaFormTS01142
 		// get data to report
 		Map<String, Object> params = new HashMap<>();
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
+		params.put("formTsNumber", formTS01142Vo.getFormTsNumber());
 		params.put("ownerFullName",formTS01142Vo.getOwnerFullName());
 		params.put("factoryType",formTS01142Vo.getFactoryType());
 		params.put("factoryName",formTS01142Vo.getFactoryName());

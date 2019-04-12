@@ -153,7 +153,7 @@
 				<textFieldExpression><![CDATA["๑."]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="48" y="201" width="318" height="22" uuid="a074c32c-f89f-4541-b51c-77ba240b840a"/>
+				<reportElement style="TextDetail" x="48" y="201" width="350" height="22" uuid="a074c32c-f89f-4541-b51c-77ba240b840a"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -170,7 +170,7 @@
 				<textFieldExpression><![CDATA["๒."]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="48" y="223" width="318" height="22" uuid="9f3f2f76-f94b-4eba-93d4-932231097575"/>
+				<reportElement style="TextDetail" x="48" y="223" width="350" height="22" uuid="9f3f2f76-f94b-4eba-93d4-932231097575"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -187,7 +187,7 @@
 				<textFieldExpression><![CDATA["๓."]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="48" y="245" width="318" height="22" uuid="0dd6ae32-4980-4068-ba8c-e11d5518b740"/>
+				<reportElement style="TextDetail" x="48" y="245" width="350" height="22" uuid="0dd6ae32-4980-4068-ba8c-e11d5518b740"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -204,7 +204,7 @@
 				<textFieldExpression><![CDATA["๔."]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="48" y="267" width="318" height="22" uuid="3d9d7d90-8c45-445d-8eda-b48dd0798766"/>
+				<reportElement style="TextDetail" x="48" y="267" width="350" height="22" uuid="3d9d7d90-8c45-445d-8eda-b48dd0798766"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -221,7 +221,7 @@
 				<textFieldExpression><![CDATA["๕."]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="48" y="289" width="318" height="22" uuid="8c8f3b39-e28d-4775-b050-c00b25941753"/>
+				<reportElement style="TextDetail" x="48" y="289" width="350" height="22" uuid="8c8f3b39-e28d-4775-b050-c00b25941753"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -261,36 +261,36 @@
 				<textFieldExpression><![CDATA[$P{analysisResultText}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="31" y="425" width="69" height="22" uuid="5eba1b0a-ed24-4cbd-988d-16d31ba6afe8"/>
+				<reportElement style="TextDetail" x="30" y="425" width="70" height="22" uuid="5eba1b0a-ed24-4cbd-988d-16d31ba6afe8"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["จึงเห็นสมควร"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement style="TextDetail" positionType="Float" x="139" y="425" width="30" height="22" uuid="a8398076-939d-44ee-9b46-c0249e06c1a4"/>
+				<reportElement style="TextDetail" positionType="Float" x="140" y="425" width="20" height="22" uuid="a8398076-939d-44ee-9b46-c0249e06c1a4"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA["1".equals( $P{callAuditFlag} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="169" y="425" width="117" height="22" uuid="a127d463-e909-406d-a573-d8bc3580efe5"/>
+				<reportElement style="TextDetail" x="160" y="425" width="117" height="22" uuid="a127d463-e909-406d-a573-d8bc3580efe5"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ขออนุมัติออกหนังสือเรียก"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement style="TextDetail" x="139" y="447" width="30" height="22" uuid="74c7e816-1599-4b15-bcfa-fa62ae36b086"/>
+				<reportElement style="TextDetail" x="140" y="447" width="20" height="22" uuid="74c7e816-1599-4b15-bcfa-fa62ae36b086"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA["2".equals( $P{callAuditFlag} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="169" y="447" width="30" height="22" uuid="dc704157-c83c-44c7-bf35-249f9e2b541e"/>
+				<reportElement style="TextDetail" x="160" y="447" width="30" height="22" uuid="dc704157-c83c-44c7-bf35-249f9e2b541e"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["อื่น ๆ"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="199" y="447" width="139" height="22" uuid="1cf7f39b-a1fc-4284-8deb-1c7f45a7bab2"/>
+				<reportElement style="TextDetail" x="190" y="447" width="150" height="22" uuid="1cf7f39b-a1fc-4284-8deb-1c7f45a7bab2"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -379,31 +379,31 @@
 				<textFieldExpression><![CDATA["คำสั่งผู้บังคับบัญชาตามสายงาน"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement style="TextDetail" positionType="Float" x="32" y="602" width="30" height="22" uuid="6eda04e6-abb0-4aba-88b5-eba3af534fe7"/>
+				<reportElement style="TextDetail" positionType="Float" x="40" y="602" width="20" height="22" uuid="6eda04e6-abb0-4aba-88b5-eba3af534fe7"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA["1".equals( $P{approvedFlag} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="62" y="602" width="41" height="22" uuid="8ae10ffb-7964-43ee-b441-faeb8cc6a84e"/>
+				<reportElement style="TextDetail" x="60" y="602" width="40" height="22" uuid="8ae10ffb-7964-43ee-b441-faeb8cc6a84e"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["อนุมัติ"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement style="TextDetail" x="120" y="602" width="30" height="22" uuid="02fc4a63-fbbd-466f-990d-e6ad876449f7"/>
+				<reportElement style="TextDetail" x="110" y="602" width="20" height="22" uuid="02fc4a63-fbbd-466f-990d-e6ad876449f7"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA["0".equals( $P{approvedFlag} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="150" y="602" width="41" height="22" uuid="06fcc8be-bd25-4aad-b52e-5b468576bb11"/>
+				<reportElement style="TextDetail" x="130" y="602" width="40" height="22" uuid="06fcc8be-bd25-4aad-b52e-5b468576bb11"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ไม่อนุมัติ"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="62" y="624" width="177" height="22" uuid="8bfed156-db4d-4563-a5e1-5ceb70b59a39"/>
+				<reportElement style="TextDetail" x="60" y="624" width="177" height="22" uuid="8bfed156-db4d-4563-a5e1-5ceb70b59a39"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ให้ดำเนินการขออนุมัติออกหนังสือเรียกได้"]]></textFieldExpression>
 			</textField>
@@ -500,31 +500,31 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="48" y="216" width="318" height="1" uuid="4783777b-d700-4e5b-a60c-aff37a4091ef"/>
+				<reportElement x="48" y="216" width="350" height="1" uuid="4783777b-d700-4e5b-a60c-aff37a4091ef"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="48" y="238" width="318" height="1" uuid="38b28747-3fd8-443e-9cd0-92de5135ac5f"/>
+				<reportElement x="48" y="238" width="350" height="1" uuid="38b28747-3fd8-443e-9cd0-92de5135ac5f"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="48" y="260" width="318" height="1" uuid="21ffc039-a7cc-43c6-8d11-4193629455d7"/>
+				<reportElement x="48" y="260" width="350" height="1" uuid="21ffc039-a7cc-43c6-8d11-4193629455d7"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="48" y="282" width="318" height="1" uuid="cd0a65e5-cc44-44f9-b1cc-0393e70f6f18"/>
+				<reportElement x="48" y="282" width="350" height="1" uuid="cd0a65e5-cc44-44f9-b1cc-0393e70f6f18"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="48" y="304" width="318" height="1" uuid="dd436122-d61b-4969-b889-849836e4a63b"/>
+				<reportElement x="48" y="304" width="350" height="1" uuid="dd436122-d61b-4969-b889-849836e4a63b"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
@@ -536,7 +536,7 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="199" y="462" width="139" height="1" uuid="7590d31a-b56e-46a3-a982-235863d181b9"/>
+				<reportElement x="190" y="462" width="150" height="1" uuid="7590d31a-b56e-46a3-a982-235863d181b9"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
@@ -626,7 +626,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA["เลขที่เอกสารจากระบบ  "+$P{formTsNumber}  ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["เลขที่เอกสารจากระบบ  "+$P{formTsNumber}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

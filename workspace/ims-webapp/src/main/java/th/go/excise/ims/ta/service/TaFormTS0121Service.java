@@ -73,38 +73,38 @@ public class TaFormTS0121Service extends AbstractTaFormTSService<TaFormTS0121Vo,
 	}
 
 	@Override
-	public byte[] generateReport(TaFormTS0121Vo request) throws Exception, IOException {
+	public byte[] generateReport(TaFormTS0121Vo formTS0121Vo) throws Exception, IOException {
 		logger.info("generateReport");
 		
 		// get data to report
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE + "." + FILE_EXTENSION.JPG));
-		params.put("formTsNumber", request.getFormTsNumber());
-		params.put("factoryName", request.getFactoryName());
-		params.put("officerSendFullName1", request.getOfficerSendFullName1());
-		params.put("officerSendPosition1", request.getOfficerSendPosition1());
-		params.put("officerReceiveFullName1", request.getOfficerReceiveFullName1());
-		params.put("officerReceivePosition1", request.getOfficerReceivePosition1());
-		params.put("officeName", request.getOfficeName());
-		params.put("docDate", request.getDocDate());
-		params.put("comdDesc", request.getComdDesc());
-		params.put("comdDate", request.getComdDate());
-		params.put("officerSendFullName2", request.getOfficerSendFullName2());
-		params.put("factoryName2", request.getFactoryName2());
-		params.put("officerReceiveFullName2", request.getOfficerReceiveFullName2());
-		params.put("officerSendFullName3", request.getOfficerSendFullName3());
-		params.put("officerReceiveFullName3", request.getOfficerReceiveFullName3());
-		params.put("factoryName3", request.getFactoryName3());
-		params.put("doc1Num", request.getDoc1Num());
-		params.put("docAcct1Num", request.getDocAcct1Num());
-		params.put("docAcct1No", request.getDocAcct1No());
-		params.put("docAcct2Num", request.getDocAcct2Num());
-		params.put("docAcct2No", request.getDocAcct2No());
-		params.put("docOther", request.getDocOther());
-		params.put("signOfficerFullName1", request.getSignOfficerFullName1());
-		params.put("signOfficerFullName2", request.getSignOfficerFullName2());
-		params.put("signWitnessFullName1", request.getSignWitnessFullName1());
-		params.put("signWitnessFullName2", request.getSignWitnessFullName2());
+		params.put("formTsNumber", formTS0121Vo.getFormTsNumber());
+		params.put("factoryName", formTS0121Vo.getFactoryName());
+		params.put("officerSendFullName1", formTS0121Vo.getOfficerSendFullName1());
+		params.put("officerSendPosition1", formTS0121Vo.getOfficerSendPosition1());
+		params.put("officerReceiveFullName1", formTS0121Vo.getOfficerReceiveFullName1());
+		params.put("officerReceivePosition1", formTS0121Vo.getOfficerReceivePosition1());
+		params.put("officeName", formTS0121Vo.getOfficeName());
+		params.put("docDate", formTS0121Vo.getDocDate());
+		params.put("comdDesc", formTS0121Vo.getComdDesc());
+		params.put("comdDate", formTS0121Vo.getComdDate());
+		params.put("officerSendFullName2", formTS0121Vo.getOfficerSendFullName2());
+		params.put("factoryName2", formTS0121Vo.getFactoryName2());
+		params.put("officerReceiveFullName2", formTS0121Vo.getOfficerReceiveFullName2());
+		params.put("officerSendFullName3", formTS0121Vo.getOfficerSendFullName3());
+		params.put("officerReceiveFullName3", formTS0121Vo.getOfficerReceiveFullName3());
+		params.put("factoryName3", formTS0121Vo.getFactoryName3());
+		params.put("doc1Num", formTS0121Vo.getDoc1Num());
+		params.put("docAcct1Num", formTS0121Vo.getDocAcct1Num());
+		params.put("docAcct1No", formTS0121Vo.getDocAcct1No());
+		params.put("docAcct2Num", formTS0121Vo.getDocAcct2Num());
+		params.put("docAcct2No", formTS0121Vo.getDocAcct2No());
+		params.put("docOther", formTS0121Vo.getDocOther());
+		params.put("signOfficerFullName1", formTS0121Vo.getSignOfficerFullName1());
+		params.put("signOfficerFullName2", formTS0121Vo.getSignOfficerFullName2());
+		params.put("signWitnessFullName1", formTS0121Vo.getSignWitnessFullName1());
+		params.put("signWitnessFullName2", formTS0121Vo.getSignWitnessFullName2());
 
 		// set output
 		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_21 + "." + FILE_EXTENSION.JASPER, params);

@@ -2,8 +2,6 @@ package th.go.excise.ims.ta.service;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.time.LocalDate;
-import java.time.chrono.ThaiBuddhistDate;
 import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
@@ -20,20 +18,17 @@ import th.go.excise.ims.ta.vo.TaFormTS0112Vo;
 //@ActiveProfiles(value = PROFILE.UNITTEST)
 public class TaFormTS0112ServiceTest {
 
-	private static final String REPORT_FILE = PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_12 + "." + FILE_EXTENSION.PDF;
+	private static final String REPORT_FILE = PATH.TEST_PATH + "%s" + "." + FILE_EXTENSION.PDF;
 
 	// @Autowired
 	// private TaFormTS0113Service taFormTS0113Service;
 
 	@Test
 	public void test_generateReport() throws Exception {
-		System.out.println(ThaiBuddhistDate.of(2562, 1, 4));
-		System.out.println(LocalDate.from(ThaiBuddhistDate.of(2562, 1, 4)));
-		System.out.println(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 1, 4))));
-
 		TaFormTS0112Service taFormTS0112Service = new TaFormTS0112Service();
 
 		TaFormTS0112Vo formVo = new TaFormTS0112Vo();
+		formVo.setFormTsNumber("000000-2562-000001");
 		formVo.setDocPlace("กรมสรรพสามิต");
 		formVo.setDocDate(new Date());
 		formVo.setHeadOfficerFullName("ธีรวุฒิ กุลฤทธิชัย");
@@ -73,6 +68,17 @@ public class TaFormTS0112ServiceTest {
 		formVo.setSignWitnessFullName2("ผู้ดูแลระบบ000000 นามสกุล");
 
 		byte[] reportFile = taFormTS0112Service.generateReport(formVo);
-		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_12))));
 	}
+	
+	@Test
+	public void test_generateReport_Blank() throws Exception {
+		TaFormTS0112Service taFormTS0112Service = new TaFormTS0112Service();
+		
+		TaFormTS0112Vo formVo = new TaFormTS0112Vo();
+		
+		byte[] reportFile = taFormTS0112Service.generateReport(formVo);
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_12 + "_blank"))));
+	}
+	
 }

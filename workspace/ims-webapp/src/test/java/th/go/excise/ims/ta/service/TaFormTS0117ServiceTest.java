@@ -14,14 +14,15 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ta.vo.TaFormTS0117Vo;
 
 public class TaFormTS0117ServiceTest {
-	private static final String REPORT_FILE = PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_17 + "." + FILE_EXTENSION.PDF;
+	
+	private static final String REPORT_FILE = PATH.TEST_PATH + "%s" + "." + FILE_EXTENSION.PDF;
 
 	@Test
 	public void test_generateReport() throws Exception {
-
 		TaFormTS0117Service taFormTS0117Service = new TaFormTS0117Service();
+		
 		TaFormTS0117Vo formTS0117Vo = new TaFormTS0117Vo();
-
+		formTS0117Vo.setFormTsNumber("000000-2562-000001");
 		formTS0117Vo.setBookNumber1("23");
 		formTS0117Vo.setBookNumber2("30");
 		formTS0117Vo.setDocTopic("ตรวจสอบภาษี");
@@ -67,8 +68,19 @@ public class TaFormTS0117ServiceTest {
 		formTS0117Vo.setOfficeTime("13.30");
 		formTS0117Vo.setSignOfficerFullName("");
 		formTS0117Vo.setSignOfficerPosition("");
+		
 		byte[] reportFile = taFormTS0117Service.generateReport(formTS0117Vo);
-		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
-
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_17))));
 	}
+	
+	@Test
+	public void test_generateReport_Blank() throws Exception {
+		TaFormTS0117Service taFormTS0117Service = new TaFormTS0117Service();
+		
+		TaFormTS0117Vo formTS0117Vo = new TaFormTS0117Vo();
+		
+		byte[] reportFile = taFormTS0117Service.generateReport(formTS0117Vo);
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_17 + "_blank"))));
+	}
+	
 }

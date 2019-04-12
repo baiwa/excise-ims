@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_17P2" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="55" isIgnorePagination="true" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_17P2" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="25" isIgnorePagination="true" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
 	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="14"/>
 	<parameter name="formTsNumber" class="java.lang.String"/>
@@ -21,7 +29,7 @@
 		<![CDATA[]]>
 	</queryString>
 	<pageHeader>
-		<band height="730">
+		<band height="760">
 			<textField>
 				<reportElement style="TextDetail" x="0" y="0" width="460" height="20" uuid="cc95c063-3f85-4d5b-8499-a7883871c056"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
@@ -60,12 +68,12 @@
 			<textField>
 				<reportElement style="TextDetail" x="80" y="80" width="380" height="20" uuid="2dd6fb4c-d212-4299-a9f4-4e635985d871"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA["(๒) อาศัยอำนาจตามมาตรา ๑๒๓ (๓) แห่งพระราชบัญญัติภาษีสรรพสามิต พ.ศ. ๒๕๖๐ ในกรณีที่ผู้เสียภาษี"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["(๒) อาศัยอำนาจตามมาตรา ๑๒๓ (๓) แห่งพระราชบัญญัติภาษีสรรพสามิต พ.ศ. ๒๕๖๐ ในกรณี"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="100" width="460" height="20" uuid="8a592bbc-dd68-40d0-82a0-d1fde0bc4aa0"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA["เห็นว่า ประเด็นความผิดข้างต้นไม่ถูกต้อง หรือมีเหตุอื่นใดให้ไม่ต้องรับผิดในการเสียภาษีสรรพสามิต ให้ผู้เสีย"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ที่ผู้เสียภาษีเห็นว่า ประเด็นความผิดข้างต้นไม่ถูกต้อง หรือมีเหตุอื่นใดให้ไม่ต้องรับผิดในการเสียภาษีสรรพสามิต ให้ผู้เสีย"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="120" width="460" height="20" uuid="4da8b28c-5fa7-405a-8d65-836e8c958108"/>
@@ -266,6 +274,15 @@
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement key="" style="TextDetail" x="0" y="745" width="150" height="15" uuid="8dbf9ebf-f67b-4886-922c-d3eb28bc1236">
+					<printWhenExpression><![CDATA[!($P{formTsNumber} == null || $P{formTsNumber}.length() == 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["เลขที่เอกสารจากระบบ  "+$P{formTsNumber}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 </jasperReport>

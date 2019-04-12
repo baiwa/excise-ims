@@ -22,6 +22,7 @@ public class TaFormTS0120ServiceTest {
 		TaFormTS0120Service taFormTS0120Service = new TaFormTS0120Service();
 		
 		TaFormTS0120Vo formTS0120Vo = new TaFormTS0120Vo();
+		formTS0120Vo.setFormTsNumber("000000-2562-000001");
 		formTS0120Vo.setFactoryName("โรงงาน อุตุนิย วิทยา");
 		formTS0120Vo.setDocDear("ผู้อำนวยการ กรมสรรพสามิต");
 		formTS0120Vo.setBookNumber1("กด 23456");

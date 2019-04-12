@@ -86,6 +86,7 @@ public class TaFormTS0117Service extends AbstractTaFormTSService<TaFormTS0117Vo,
 		
 		Map<String, Object> params = new HashMap<>();
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
+		params.put("formTsNumber", formTS0117Vo.getFormTsNumber());
 		params.put("bookNumber1", formTS0117Vo.getBookNumber1());
 		params.put("bookNumber2", formTS0117Vo.getBookNumber2());
 		params.put("docTopic", formTS0117Vo.getDocTopic());

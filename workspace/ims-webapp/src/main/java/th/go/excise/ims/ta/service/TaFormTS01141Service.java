@@ -141,6 +141,7 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 		
 		Map<String, Object> params = new HashMap<>();
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE + "." + FILE_EXTENSION.JPG));
+		params.put("formTsNumber", formTS01141Vo.getFormTsNumber());
 		params.put("docDate", formTS01141Vo.getDocDate());
 		params.put("docDear", formTS01141Vo.getDocDear());
 		params.put("factoryName", formTS01141Vo.getFactoryName());
@@ -156,6 +157,7 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 			Map<String, Object> subParams = null;
 			for (TaFormTS01141Vo subFormTS01141Vo : formTS01141Vo.getTaFormTS01141VoList()) {
 				subParams = new HashMap<>();
+				subParams.put("formTsNumber", formTS01141Vo.getFormTsNumber());
 				subParams.put("pageNo", subFormTS01141Vo.getPageNo());
 				subParams.put("auditDesc", subFormTS01141Vo.getAuditDesc());
 				jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_14_1P2 + "." + FILE_EXTENSION.JASPER, subParams);

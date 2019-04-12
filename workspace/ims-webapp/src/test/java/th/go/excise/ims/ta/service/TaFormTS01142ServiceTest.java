@@ -40,38 +40,39 @@ public class TaFormTS01142ServiceTest {
 	public void test_generateReport() throws Exception {
 		TaFormTS01142Service formTS01142Service = new TaFormTS01142Service();
 
-		TaFormTS01142Vo vo = new TaFormTS01142Vo();
-		vo.setOwnerFullName("ธนพล ชัยภูมิ");
-		vo.setFactoryType("");
-		vo.setFactoryName("");
-		vo.setAuditDateStart(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 3, 15))));
-		vo.setAuditDateEnd(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 4, 9))));
-		vo.setDutyTypeText("");
-		vo.setNewRegId("");
-		vo.setExtraAmtDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 4, 1))));
-		vo.setSignOwnerFullName("");
-		vo.setSignOfficerFullName("");
+		TaFormTS01142Vo formTS01142Vo = new TaFormTS01142Vo();
+		formTS01142Vo.setFormTsNumber("000000-2562-000001");
+		formTS01142Vo.setOwnerFullName("ธนพล ชัยภูมิ");
+		formTS01142Vo.setFactoryType("");
+		formTS01142Vo.setFactoryName("");
+		formTS01142Vo.setAuditDateStart(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 3, 15))));
+		formTS01142Vo.setAuditDateEnd(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 4, 9))));
+		formTS01142Vo.setDutyTypeText("");
+		formTS01142Vo.setNewRegId("");
+		formTS01142Vo.setExtraAmtDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 4, 1))));
+		formTS01142Vo.setSignOwnerFullName("");
+		formTS01142Vo.setSignOfficerFullName("");
 
-		List<TaFormTS01142DtlVo> listItem = new ArrayList<>();
-		TaFormTS01142DtlVo itemVo = new TaFormTS01142DtlVo();
-		itemVo.setRecNo("");
-		itemVo.setRecDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 1, 4))));
-		itemVo.setDutyTypeText("");
-		itemVo.setValueFromAudit(new BigDecimal(253));
-		itemVo.setTaxRate(new BigDecimal(253));
-		itemVo.setAuditTaxAmt(new BigDecimal(253));
-		itemVo.setPaidTaxAmt(new BigDecimal(253));
-		itemVo.setAddTaxAmt(new BigDecimal(253));
-		itemVo.setAddFineAmt(new BigDecimal(253));
-		itemVo.setAddExtraAmt(new BigDecimal(253));
-		itemVo.setAddSumTaxAmt(new BigDecimal(253));
-		itemVo.setAddMoiAmt(new BigDecimal(253));
-		itemVo.setAddSumAllTaxAmt(new BigDecimal(253));
-		itemVo.setAddMonthNum("");
-		listItem.add(itemVo);
-		vo.setTaFormTS01142DtlVoList(listItem);
+		List<TaFormTS01142DtlVo> formTS01142DtlVoList = new ArrayList<>();
+		TaFormTS01142DtlVo formTS01142DtlVo = new TaFormTS01142DtlVo();
+		formTS01142DtlVo.setRecNo("");
+		formTS01142DtlVo.setRecDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 1, 4))));
+		formTS01142DtlVo.setDutyTypeText("");
+		formTS01142DtlVo.setValueFromAudit(new BigDecimal(253));
+		formTS01142DtlVo.setTaxRate(new BigDecimal(253));
+		formTS01142DtlVo.setAuditTaxAmt(new BigDecimal(253));
+		formTS01142DtlVo.setPaidTaxAmt(new BigDecimal(253));
+		formTS01142DtlVo.setAddTaxAmt(new BigDecimal(253));
+		formTS01142DtlVo.setAddFineAmt(new BigDecimal(253));
+		formTS01142DtlVo.setAddExtraAmt(new BigDecimal(253));
+		formTS01142DtlVo.setAddSumTaxAmt(new BigDecimal(253));
+		formTS01142DtlVo.setAddMoiAmt(new BigDecimal(253));
+		formTS01142DtlVo.setAddSumAllTaxAmt(new BigDecimal(253));
+		formTS01142DtlVo.setAddMonthNum("");
+		formTS01142DtlVoList.add(formTS01142DtlVo);
+		formTS01142Vo.setTaFormTS01142DtlVoList(formTS01142DtlVoList);
 
-		byte[] reportFile = formTS01142Service.generateReport(vo);
+		byte[] reportFile = formTS01142Service.generateReport(formTS01142Vo);
 		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_14_2))));
 	}
 

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_13" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="55" isIgnorePagination="true" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_13" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="25" isIgnorePagination="true" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
 	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="16" isBold="false"/>
 	<parameter name="logo" class="java.io.InputStream"/>
@@ -41,7 +41,7 @@
 		<![CDATA[]]>
 	</queryString>
 	<pageHeader>
-		<band height="730">
+		<band height="760">
 			<image isUsingCache="false">
 				<reportElement isPrintRepeatedValues="false" x="200" y="0" width="60" height="60" uuid="8acc1f25-cb66-413d-a9c0-e08548d94a46"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
@@ -286,7 +286,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ในวันที่"]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="35" y="272" width="70" height="22" uuid="f4758261-c4b5-4b1a-bc8b-471e810dda90"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("d MMM yyyy",new Locale("th", "TH")).format($P{auditDate})]]></textFieldExpression>
 			</textField>
@@ -295,7 +295,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["โดยมี"]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="132" y="272" width="112" height="22" uuid="806f3fee-9aba-4f7a-9b03-4f4ff660b532"/>
 				<textFieldExpression><![CDATA[$P{ownerFullName}]]></textFieldExpression>
 			</textField>
@@ -304,7 +304,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตำแหน่ง"]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="284" y="272" width="114" height="22" uuid="4ff8db28-6be4-48b6-8572-a5aaf7206eea"/>
 				<textFieldExpression><![CDATA[$P{ownerPosition}]]></textFieldExpression>
 			</textField>
@@ -328,7 +328,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["กิจการค้าของข้าพเจ้า ทั้งที่มิได้ให้ทรัพย์สินหรือเอกสารของ"]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="252" y="344" width="208" height="22" uuid="a5af06df-6b04-484c-9a55-be0d8f5e1915"/>
 				<textFieldExpression><![CDATA[$P{factoryName2}]]></textFieldExpression>
 			</textField>
@@ -347,7 +347,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ตรวจเสร็จเวลา"]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="140" y="410" width="50" height="22" uuid="2c5c3609-9a6a-4cfd-9275-9df5edda9afc"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{auditFinishTime}]]></textFieldExpression>
@@ -372,7 +372,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement key="" style="TextDetail" x="250" y="472" width="120" height="22" uuid="80411cc2-07fb-43aa-8a53-40c14d4e5a4e"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{signOwnerFullName}]]></textFieldExpression>
@@ -399,7 +399,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement key="" style="TextDetail" x="250" y="522" width="120" height="22" uuid="d515b88d-7264-457b-86be-975800d5a5e4"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{signOfficerFullName}]]></textFieldExpression>
@@ -424,7 +424,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement key="" style="TextDetail" x="250" y="572" width="120" height="22" uuid="83283921-1606-42e6-9aec-ed6128cd53f1"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{signWitnessFullName1}]]></textFieldExpression>
@@ -449,7 +449,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement key="" style="TextDetail" x="250" y="622" width="120" height="22" uuid="84668131-399f-40d3-9c1e-602489c753aa"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{signWitnessFullName2}]]></textFieldExpression>
@@ -645,6 +645,15 @@
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement key="" style="TextDetail" x="0" y="745" width="150" height="15" uuid="dfb42989-8015-4d10-b1d7-524988cd2f0e">
+					<printWhenExpression><![CDATA[!($P{formTsNumber} == null || $P{formTsNumber}.length() == 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["เลขที่เอกสารจากระบบ  "+$P{formTsNumber}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 </jasperReport>

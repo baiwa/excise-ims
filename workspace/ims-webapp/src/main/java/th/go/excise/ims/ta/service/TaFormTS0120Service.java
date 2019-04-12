@@ -73,42 +73,43 @@ public class TaFormTS0120Service extends AbstractTaFormTSService<TaFormTS0120Vo,
 	}
 	
 	@Override
-	public byte[] generateReport(TaFormTS0120Vo request) throws Exception, IOException {
+	public byte[] generateReport(TaFormTS0120Vo formTS0120Vo) throws Exception, IOException {
 		logger.info("generateReport");
 		
 		// get data to report
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE + "." + FILE_EXTENSION.JPG));
-		params.put("factoryName", request.getFactoryName());
-		params.put("docDear", request.getDocDear());
-		params.put("bookNumber1", request.getBookNumber1());
-		params.put("bookDate", request.getBookDate());
-		params.put("factoryName2", request.getFactoryName2());
-		params.put("newRegId", request.getNewRegId());
-		params.put("auditDateStart", request.getAuditDateStart());
-		params.put("auditDateEnd", request.getAuditDateEnd());
-		params.put("facAddrNo", request.getFacAddrNo());
-		params.put("facMooNo", request.getFacMooNo());
-		params.put("facSoiName", request.getFacSoiName());
-		params.put("facThnName", request.getFacThnName());
-		params.put("facTambolName", request.getFacTambolName());
-		params.put("facAmphurName", request.getFacAmphurName());
-		params.put("facProvinceName", request.getFacProvinceName());
-		params.put("facZipCode", request.getFacZipCode());
-		params.put("expandReason", request.getExpandReason());
-		params.put("expandFlag", request.getExpandFlag());
-		params.put("expandNo", request.getExpandNo());
-		params.put("expandDateOld", request.getExpandDateOld());
-		params.put("expandDateNew", request.getExpandDateNew());
-		params.put("signOfficerFullName", request.getSignOfficerFullName());
-		params.put("signOfficerDate", request.getSignOfficerDate());
-		params.put("headOfficerComment", request.getHeadOfficerComment());
-		params.put("signHeadOfficerFullName", request.getSignHeadOfficerFullName());
-		params.put("signHeadOfficerDate", request.getSignHeadOfficerDate());
-		params.put("approverComment", request.getApproverComment());
-		params.put("approveFlag", request.getApproveFlag());
-		params.put("signApproverFullName", request.getSignApproverFullName());
-		params.put("signApproverDate", request.getSignApproverDate());
+		params.put("formTsNumber", formTS0120Vo.getFormTsNumber());
+		params.put("factoryName", formTS0120Vo.getFactoryName());
+		params.put("docDear", formTS0120Vo.getDocDear());
+		params.put("bookNumber1", formTS0120Vo.getBookNumber1());
+		params.put("bookDate", formTS0120Vo.getBookDate());
+		params.put("factoryName2", formTS0120Vo.getFactoryName2());
+		params.put("newRegId", formTS0120Vo.getNewRegId());
+		params.put("auditDateStart", formTS0120Vo.getAuditDateStart());
+		params.put("auditDateEnd", formTS0120Vo.getAuditDateEnd());
+		params.put("facAddrNo", formTS0120Vo.getFacAddrNo());
+		params.put("facMooNo", formTS0120Vo.getFacMooNo());
+		params.put("facSoiName", formTS0120Vo.getFacSoiName());
+		params.put("facThnName", formTS0120Vo.getFacThnName());
+		params.put("facTambolName", formTS0120Vo.getFacTambolName());
+		params.put("facAmphurName", formTS0120Vo.getFacAmphurName());
+		params.put("facProvinceName", formTS0120Vo.getFacProvinceName());
+		params.put("facZipCode", formTS0120Vo.getFacZipCode());
+		params.put("expandReason", formTS0120Vo.getExpandReason());
+		params.put("expandFlag", formTS0120Vo.getExpandFlag());
+		params.put("expandNo", formTS0120Vo.getExpandNo());
+		params.put("expandDateOld", formTS0120Vo.getExpandDateOld());
+		params.put("expandDateNew", formTS0120Vo.getExpandDateNew());
+		params.put("signOfficerFullName", formTS0120Vo.getSignOfficerFullName());
+		params.put("signOfficerDate", formTS0120Vo.getSignOfficerDate());
+		params.put("headOfficerComment", formTS0120Vo.getHeadOfficerComment());
+		params.put("signHeadOfficerFullName", formTS0120Vo.getSignHeadOfficerFullName());
+		params.put("signHeadOfficerDate", formTS0120Vo.getSignHeadOfficerDate());
+		params.put("approverComment", formTS0120Vo.getApproverComment());
+		params.put("approveFlag", formTS0120Vo.getApproveFlag());
+		params.put("signApproverFullName", formTS0120Vo.getSignApproverFullName());
+		params.put("signApproverDate", formTS0120Vo.getSignApproverDate());
 		
 		// set output
 		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_20 + "." + FILE_EXTENSION.JASPER, params);

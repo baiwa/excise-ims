@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_16" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="55" isIgnorePagination="true" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS01_16" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="25" isIgnorePagination="true" uuid="4074e106-b4cb-42de-ab9d-e99f4d4f7cfc">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<style name="Topic" vTextAlign="Middle" vImageAlign="Middle" fontName="TH Sarabun New" fontSize="18" isBold="true"/>
 	<style name="TextTopic" fontName="TH Sarabun New" fontSize="16"/>
 	<style name="TextDetail" hTextAlign="Left" vTextAlign="Bottom" vImageAlign="Middle" rotation="None" fontName="TH Sarabun New" fontSize="13"/>
@@ -54,7 +62,7 @@
 		<![CDATA[]]>
 	</queryString>
 	<pageHeader>
-		<band height="730" splitType="Stretch">
+		<band height="760" splitType="Stretch">
 			<image isUsingCache="false">
 				<reportElement isPrintRepeatedValues="false" x="200" y="0" width="60" height="60" uuid="8acc1f25-cb66-413d-a9c0-e08548d94a46"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
@@ -87,7 +95,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["เรียน"]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="20" y="110" width="120" height="18" uuid="a600ce7f-710f-4cca-9cbf-429ad2d07925"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{docDear}]]></textFieldExpression>
@@ -265,7 +273,7 @@
 					<pen lineWidth="0.0" lineStyle="Dotted"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top"/>
-				<textFieldExpression><![CDATA["                   "+$P{requestReason}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["                   " + ($P{requestReason} != null ? $P{requestReason} : "")]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="218" width="56" height="18" uuid="176eee6b-72f3-4770-b226-09e7458c2e46"/>
@@ -278,7 +286,7 @@
 					<pen lineWidth="0.0" lineStyle="Dotted"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Top"/>
-				<textFieldExpression><![CDATA["                                                                                      " +  $P{requestDesc}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["                                                                                      " +  ($P{requestDesc} != null ? $P{requestDesc} : "")]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="40" y="254" width="192" height="18" uuid="963d70b8-7ac8-4a59-8d65-d88a02a9d81b"/>
@@ -725,73 +733,73 @@
 			<line>
 				<reportElement x="172" y="101" width="147" height="1" uuid="6b0f9093-a057-49b1-9639-7d7fc1adcd3f"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="20" y="123" width="120" height="1" uuid="2a6c8bfa-bf66-4a46-b8fd-a37ab87c232d"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="240" y="141" width="220" height="1" uuid="f961e33d-5fc5-42ae-b615-435aedbd808c"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="283" y="159" width="177" height="1" uuid="9eec910e-1791-4c84-963d-ed2a4aec33b4"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="89" y="177" width="161" height="1" uuid="43636a83-8b43-4953-ac98-b9c7247110e3"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="117" y="194" width="40" height="1" uuid="790258fb-5201-4067-aa9c-a3e3f6d808e1"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="182" y="195" width="90" height="1" uuid="78d3b747-898f-4435-aa4c-35df7d3691b8"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="294" y="195" width="56" height="1" uuid="e85422e5-2601-4865-9222-12c94fea9972"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="56" y="231" width="403" height="1" uuid="8f310630-c8f3-4804-a881-135d6592475b"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="0" y="249" width="460" height="1" uuid="7df61e9f-044b-4cf2-bb85-73054a4546ea"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="229" y="267" width="230" height="1" uuid="5427efdd-807f-4e70-9c44-e53523e96917"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="0" y="285" width="460" height="1" uuid="88ac2008-df89-41f1-a79a-7eaf4072c48b"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
@@ -875,111 +883,120 @@
 			<line>
 				<reportElement x="220" y="560" width="120" height="1" uuid="1a2da22c-a4bb-4b9a-b9e5-b16589f32141"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="220" y="580" width="120" height="1" uuid="392c8195-19e1-40cf-a56f-4ec29ced6760"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="0" y="630" width="160" height="1" uuid="25d6c094-c011-4fbc-963a-ba529ae0ee44"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="0" y="648" width="160" height="1" uuid="8d40e6f9-cf2d-46a4-8797-77266588c5dc"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="40" y="668" width="120" height="1" uuid="29ae8039-cc73-4144-923e-ac3a10e59396"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="40" y="687" width="120" height="1" uuid="b95423ea-225d-4ebc-93c7-00bc9eac58ba"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="40" y="705" width="120" height="1" uuid="c1644fd7-2564-4330-9209-c5743497dda1"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="40" y="723" width="20" height="1" uuid="97c12fa0-cb45-4fb4-842b-f59062c486e6"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="65" y="723" width="60" height="1" uuid="08620926-f37f-4fdb-a725-91d390427e1e"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="130" y="723" width="30" height="1" uuid="c2c63076-91a4-4ec7-b771-a4db1c7dbb0d"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="270" y="630" width="160" height="1" uuid="efcfe011-ed57-41f8-9280-9cc3b5612f8d"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="270" y="648" width="160" height="1" uuid="bc784bc7-f5d7-46f8-8643-1b18ea825bc0"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="310" y="668" width="120" height="1" uuid="cae5a1ce-1c15-4f74-a79d-c0436d86b448"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="310" y="687" width="120" height="1" uuid="a15697d7-d377-436f-aa3b-41ea9c168a36"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="310" y="705" width="120" height="1" uuid="f1040554-f61f-4df9-9a64-902d650e305e"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="310" y="723" width="20" height="1" uuid="61c630d1-4ad2-4d57-a905-e7aefe14a455"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="335" y="724" width="60" height="1" uuid="4957b3fc-2670-49af-a0c7-6adb9d80aef1"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="400" y="724" width="30" height="1" uuid="e706676d-adbd-4d93-b258-e71ca1d51d37"/>
 				<graphicElement>
-					<pen lineWidth="1.0" lineStyle="Dotted"/>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement key="" style="TextDetail" x="0" y="745" width="150" height="15" uuid="3bab5c3b-df59-4b57-9aa3-92034676a9e6">
+					<printWhenExpression><![CDATA[!($P{formTsNumber} == null || $P{formTsNumber}.length() == 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["เลขที่เอกสารจากระบบ  "+$P{formTsNumber}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 </jasperReport>

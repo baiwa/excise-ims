@@ -19,20 +19,17 @@ import th.go.excise.ims.ta.vo.TaFormTS0113Vo;
 //@ActiveProfiles(value = PROFILE.UNITTEST)
 public class TaFormTS0113ServiceTest {
 	
-	private static final String REPORT_FILE = PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_13 + "." + FILE_EXTENSION.PDF;
+	private static final String REPORT_FILE = PATH.TEST_PATH + "%s" + "." + FILE_EXTENSION.PDF;
 
 //	@Autowired
 //	private TaFormTS0113Service taFormTS0113Service;
 
 	@Test
 	public void test_generateReport() throws Exception {
-		System.out.println(ThaiBuddhistDate.of(2562, 1, 4));
-		System.out.println(LocalDate.from(ThaiBuddhistDate.of(2562, 1, 4)));
-		System.out.println(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 1, 4))));
-		
 		TaFormTS0113Service taFormTS0113Service = new TaFormTS0113Service();
 
 		TaFormTS0113Vo formTS0113Vo = new TaFormTS0113Vo();
+		formTS0113Vo.setFormTsNumber("000000-2562-000001");
 		formTS0113Vo.setAuditDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 1, 4))));
 		formTS0113Vo.setAuditFinishTime("09:00");
 		formTS0113Vo.setDocDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 2, 3))));
@@ -48,7 +45,6 @@ public class TaFormTS0113ServiceTest {
 		formTS0113Vo.setFactoryName("บริษัท สปอย จำกัด ");
 		formTS0113Vo.setFactoryName2("บริษัท สปอย จำกัด");
 		formTS0113Vo.setFactoryType("1");
-		formTS0113Vo.setFormTsNumber("test");
 		formTS0113Vo.setHeadOfficerFullName("ธีรวุฒิ กุลฤทธิชัย");
 		formTS0113Vo.setHeadOfficerPosition("สำนักงานสรรพสามิตส่วนกลาง");
 		formTS0113Vo.setNewRegId("01005150424621002");
@@ -62,6 +58,17 @@ public class TaFormTS0113ServiceTest {
 		formTS0113Vo.setSignWitnessFullName2("test");
 
 		byte[] reportFile = taFormTS0113Service.generateReport(formTS0113Vo);
-		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_13))));
 	}
+	
+	@Test
+	public void test_generateReport_Blank() throws Exception {
+		TaFormTS0113Service taFormTS0113Service = new TaFormTS0113Service();
+		
+		TaFormTS0113Vo formTS0113Vo = new TaFormTS0113Vo();
+		
+		byte[] reportFile = taFormTS0113Service.generateReport(formTS0113Vo);
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_13 + "_blank"))));
+	}
+	
 }

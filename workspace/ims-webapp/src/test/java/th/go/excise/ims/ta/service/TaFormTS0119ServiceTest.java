@@ -22,6 +22,7 @@ public class TaFormTS0119ServiceTest {
 		TaFormTS0119Service taFormTS0119Service = new TaFormTS0119Service();
 		
 		TaFormTS0119Vo formTS0119Vo = new TaFormTS0119Vo();
+		formTS0119Vo.setFormTsNumber("000000-2562-000001");
 		formTS0119Vo.setBookNumber1("25632");
 		formTS0119Vo.setBookNumber2("632522");
 		formTS0119Vo.setDocText1("อํานาจในการอนุมัติให้ออกตรวจ");

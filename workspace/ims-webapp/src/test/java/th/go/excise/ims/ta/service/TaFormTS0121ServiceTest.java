@@ -22,6 +22,7 @@ public class TaFormTS0121ServiceTest {
 		TaFormTS0121Service taFormTS0121Service = new TaFormTS0121Service();
 		
 		TaFormTS0121Vo formTS0121Vo = new TaFormTS0121Vo();
+		formTS0121Vo.setFormTsNumber("000000-2562-000001");
 		formTS0121Vo.setFactoryName("FactoryName");
 		formTS0121Vo.setOfficerSendFullName1("OfficerSendFullName1");
 		formTS0121Vo.setOfficerSendPosition1("OfficerSendPosition1");

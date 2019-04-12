@@ -17,15 +17,14 @@ import th.go.excise.ims.ta.vo.TaFormTS0116Vo;
 
 public class TaFormTS0116ServiceTest {
 	
-	private static final String REPORT_FILE = PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_16 + "." + FILE_EXTENSION.PDF;
+	private static final String REPORT_FILE = PATH.TEST_PATH + "%s" + "." + FILE_EXTENSION.PDF;
 	
 	@Test
 	public void test_generateReport() throws Exception {
-		
 		TaFormTS0116Service taFormTS0116Service = new TaFormTS0116Service();
 
 		TaFormTS0116Vo formTS0116Vo = new TaFormTS0116Vo();
-		//formTS0116Vo.setFormTsNumber("");
+		formTS0116Vo.setFormTsNumber("000000-2562-000001");
 		formTS0116Vo.setDocText("");
 		formTS0116Vo.setDocDear("");
 		formTS0116Vo.setFactoryName1("โรงอุตสหกรรม 1");
@@ -70,7 +69,17 @@ public class TaFormTS0116ServiceTest {
 		formTS0116Vo.setSignApproverDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 4, 5))));
 		
 		byte[] reportFile = taFormTS0116Service.generateReport(formTS0116Vo);
-		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_16))));
+	}
+	
+	@Test
+	public void test_generateReport_Blank() throws Exception {
+		TaFormTS0116Service taFormTS0116Service = new TaFormTS0116Service();
+		
+		TaFormTS0116Vo formTS0116Vo = new TaFormTS0116Vo();
+		
+		byte[] reportFile = taFormTS0116Service.generateReport(formTS0116Vo);
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_16 + "_blank"))));
 	}
 	
 }

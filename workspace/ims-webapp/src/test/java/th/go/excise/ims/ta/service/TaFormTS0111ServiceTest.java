@@ -30,7 +30,7 @@ import th.go.excise.ims.ta.vo.TaFormTS0111Vo;
 //@ActiveProfiles(value = PROFILE.UNITTEST)
 public class TaFormTS0111ServiceTest {
 	
-	private static final String REPORT_FILE = PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_11 + "." + FILE_EXTENSION.PDF;
+	private static final String REPORT_FILE = PATH.TEST_PATH + "%s" + "." + FILE_EXTENSION.PDF;
 	
 //	@Autowired
 //	private TaFormTS0111Service taFormTS0111Service;
@@ -40,7 +40,7 @@ public class TaFormTS0111ServiceTest {
 		TaFormTS0111Service taFormTS0111Service = new TaFormTS0111Service();
 		
 		TaFormTS0111Vo formTS0111Vo = new TaFormTS0111Vo();
-		formTS0111Vo.setFormTsNumber("");
+		formTS0111Vo.setFormTsNumber("000000-2562-000001");
 		formTS0111Vo.setDocPlace("สำนักงาน");
 		formTS0111Vo.setDocDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 3, 22))));
 		formTS0111Vo.setDocTime("10:00");
@@ -93,7 +93,17 @@ public class TaFormTS0111ServiceTest {
 		formTS0111Vo.setTaFormTS0111DtlVoList(formTS0111DtlVoList);
 		
 		byte[] reportFile = taFormTS0111Service.generateReport(formTS0111Vo);
-		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_11))));
+	}
+	
+	@Test
+	public void test_generateReport_Blank() throws Exception {
+		TaFormTS0111Service taFormTS0111Service = new TaFormTS0111Service();
+		
+		TaFormTS0111Vo formTS0111Vo = new TaFormTS0111Vo();
+		
+		byte[] reportFile = taFormTS0111Service.generateReport(formTS0111Vo);
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_11 + "_blank"))));
 	}
 	
 }

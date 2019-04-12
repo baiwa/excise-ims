@@ -77,6 +77,7 @@ public class TaFormTS0113Service extends AbstractTaFormTSService<TaFormTS0113Vo,
         // get data to report
         Map<String, Object> params = new HashMap<>();
         params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
+        params.put("formTsNumber", formTS0113Vo.getFormTsNumber());
         params.put("docPlace", formTS0113Vo.getDocPlace());
         params.put("docDate", formTS0113Vo.getDocDate());
         params.put("docTime", formTS0113Vo.getDocTime());

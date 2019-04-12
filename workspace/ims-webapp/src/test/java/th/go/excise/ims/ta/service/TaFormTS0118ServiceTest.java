@@ -26,7 +26,7 @@ public class TaFormTS0118ServiceTest {
 		TaFormTS0118Service taFormTS0118Service = new TaFormTS0118Service();
 		
 		TaFormTS0118Vo formTS0118Vo = new TaFormTS0118Vo();
-		formTS0118Vo.setFormTsNumber("01xxxxxx-xxxxxxxx");
+		formTS0118Vo.setFormTsNumber("000000-2562-000001");
 		formTS0118Vo.setBookNumber1("25632");
 		formTS0118Vo.setBookNumber2("632522");
 		formTS0118Vo.setDocDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 3, 15))));
@@ -54,7 +54,7 @@ public class TaFormTS0118ServiceTest {
 		
 		TaFormTS0118DtlVo formTS0118DtlVo = null;
 		List<TaFormTS0118DtlVo> formTS0118DtlVoList = new ArrayList<>();
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 1; i++) {
 			formTS0118DtlVo = new TaFormTS0118DtlVo();
 			formTS0118DtlVo.setDutyTypeText("น้ำหอม " + (i + 1));
 			formTS0118DtlVo.setGoodsQty(new BigDecimal("10"));

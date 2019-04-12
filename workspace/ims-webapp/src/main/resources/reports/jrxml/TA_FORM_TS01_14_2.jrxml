@@ -435,6 +435,19 @@
 			</textField>
 		</band>
 	</detail>
+	<pageFooter>
+		<band height="15">
+			<textField isBlankWhenNull="true">
+				<reportElement key="" style="TextDetail" x="0" y="0" width="150" height="15" uuid="3044067a-46bc-4652-900a-5b5b4a05c347">
+					<printWhenExpression><![CDATA[!($P{formTsNumber} == null || $P{formTsNumber}.length() == 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["เลขที่เอกสารจากระบบ  "+$P{formTsNumber}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
 	<summary>
 		<band height="110" splitType="Stretch">
 			<textField>

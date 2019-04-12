@@ -73,51 +73,52 @@ private static final Logger logger = LoggerFactory.getLogger(TaFormTS01171Servic
 	}
 	
 	@Override
-	public byte[] generateReport(TaFormTS01171Vo request) throws Exception, IOException {
+	public byte[] generateReport(TaFormTS01171Vo formTS01171Vo) throws Exception, IOException {
 		Map<String, Object> params = new HashMap<String, Object>();
 
 		// get data to report
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
-		params.put("bookNumber1", request.getBookNumber1());
-		params.put("bookNumber2", request.getBookNumber2());
-		params.put("docTopic", request.getDocTopic());
-		params.put("docDate", request.getDocDate());
-		params.put("docDear", request.getDocDear());
-		params.put("factoryName", request.getFactoryName());
-		params.put("newRegId", request.getNewRegId());
-		params.put("factoryType", request.getFactoryType());
-		params.put("facAddrNo", request.getFacAddrNo());
-		params.put("facMooNo", request.getFacMooNo());
-		params.put("facSoiName", request.getFacSoiName());
-		params.put("facThnName", request.getFacThnName());
-		params.put("facTambolName", request.getFacTambolName());
-		params.put("facAmphurName", request.getFacAmphurName());
-		params.put("facProvinceName", request.getFacProvinceName());
-		params.put("facZipCode", request.getFacZipCode());
-		params.put("bookType", request.getBookType());
-		params.put("refBookNumber1", request.getRefBookNumber1());
-		params.put("refBookNumber2", request.getRefBookNumber2());
-		params.put("refDocDate", request.getRefDocDate());
-		params.put("auditDateStart", request.getAuditDateStart());
-		params.put("auditDateEnd", request.getAuditDateEnd());
-		params.put("factDesc", request.getFactDesc());
-		params.put("lawDesc", request.getLawDesc());
-		params.put("factoryName2", request.getFactoryName2());
-		params.put("taxAmt", request.getTaxAmt());
-		params.put("fineAmt", request.getFineAmt());
-		params.put("extraAmt", request.getExtraAmt());
-		params.put("exciseTaxAmt", request.getExciseTaxAmt());
-		params.put("moiAmt", request.getMoiAmt());
-		params.put("sumAllTaxAmt", request.getSumAllTaxAmt());
-		params.put("extraDate", request.getExtraDate());
-		params.put("officeDest", request.getOfficeDest());
-		params.put("officeDate", request.getOfficeDate());
-		params.put("officeTime", request.getOfficeTime());
-		params.put("signOfficerFullName", request.getSignOfficerFullName());
-		params.put("signOfficerPosition", request.getSignOfficerPosition());
-		params.put("officeName", request.getOfficeName());
-		params.put("offficePhone", request.getOffficePhone());
-		params.put("headOfficerFullName", request.getHeadOfficerFullName());
+		params.put("formTsNumber", formTS01171Vo.getFormTsNumber());
+		params.put("bookNumber1", formTS01171Vo.getBookNumber1());
+		params.put("bookNumber2", formTS01171Vo.getBookNumber2());
+		params.put("docTopic", formTS01171Vo.getDocTopic());
+		params.put("docDate", formTS01171Vo.getDocDate());
+		params.put("docDear", formTS01171Vo.getDocDear());
+		params.put("factoryName", formTS01171Vo.getFactoryName());
+		params.put("newRegId", formTS01171Vo.getNewRegId());
+		params.put("factoryType", formTS01171Vo.getFactoryType());
+		params.put("facAddrNo", formTS01171Vo.getFacAddrNo());
+		params.put("facMooNo", formTS01171Vo.getFacMooNo());
+		params.put("facSoiName", formTS01171Vo.getFacSoiName());
+		params.put("facThnName", formTS01171Vo.getFacThnName());
+		params.put("facTambolName", formTS01171Vo.getFacTambolName());
+		params.put("facAmphurName", formTS01171Vo.getFacAmphurName());
+		params.put("facProvinceName", formTS01171Vo.getFacProvinceName());
+		params.put("facZipCode", formTS01171Vo.getFacZipCode());
+		params.put("bookType", formTS01171Vo.getBookType());
+		params.put("refBookNumber1", formTS01171Vo.getRefBookNumber1());
+		params.put("refBookNumber2", formTS01171Vo.getRefBookNumber2());
+		params.put("refDocDate", formTS01171Vo.getRefDocDate());
+		params.put("auditDateStart", formTS01171Vo.getAuditDateStart());
+		params.put("auditDateEnd", formTS01171Vo.getAuditDateEnd());
+		params.put("factDesc", formTS01171Vo.getFactDesc());
+		params.put("lawDesc", formTS01171Vo.getLawDesc());
+		params.put("factoryName2", formTS01171Vo.getFactoryName2());
+		params.put("taxAmt", formTS01171Vo.getTaxAmt());
+		params.put("fineAmt", formTS01171Vo.getFineAmt());
+		params.put("extraAmt", formTS01171Vo.getExtraAmt());
+		params.put("exciseTaxAmt", formTS01171Vo.getExciseTaxAmt());
+		params.put("moiAmt", formTS01171Vo.getMoiAmt());
+		params.put("sumAllTaxAmt", formTS01171Vo.getSumAllTaxAmt());
+		params.put("extraDate", formTS01171Vo.getExtraDate());
+		params.put("officeDest", formTS01171Vo.getOfficeDest());
+		params.put("officeDate", formTS01171Vo.getOfficeDate());
+		params.put("officeTime", formTS01171Vo.getOfficeTime());
+		params.put("signOfficerFullName", formTS01171Vo.getSignOfficerFullName());
+		params.put("signOfficerPosition", formTS01171Vo.getSignOfficerPosition());
+		params.put("officeName", formTS01171Vo.getOfficeName());
+		params.put("offficePhone", formTS01171Vo.getOffficePhone());
+		params.put("headOfficerFullName", formTS01171Vo.getHeadOfficerFullName());
 		
 		// set output
 		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_17_1 + "." + FILE_EXTENSION.JASPER, params);

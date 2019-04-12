@@ -137,31 +137,32 @@ public class TaFormTS0115Service extends AbstractTaFormTSService<TaFormTS0115Vo,
 	}
 
 	@Override
-	public byte[] generateReport(TaFormTS0115Vo formTs0115Vo) throws Exception {
+	public byte[] generateReport(TaFormTS0115Vo formTS0115Vo) throws Exception {
 		logger.info("generateReport");
 
 		// get data to report
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_EXCISE + "." + FILE_EXTENSION.JPG));
-		params.put("officeName", formTs0115Vo.getOfficeName());
-		params.put("docDate", formTs0115Vo.getDocDate());
-		params.put("ownerFullName", formTs0115Vo.getOwnerFullName());
-		params.put("factoryType", formTs0115Vo.getFactoryType());
-		params.put("factoryName", formTs0115Vo.getFactoryName());
-		params.put("newRegId", formTs0115Vo.getNewRegId());
-		params.put("facAddrNo", formTs0115Vo.getFacAddrNo());
-		params.put("facSoiName", formTs0115Vo.getFacSoiName());
-		params.put("facThnName", formTs0115Vo.getFacThnName());
-		params.put("facTambolName", formTs0115Vo.getFacTambolName());
-		params.put("facAmphurName", formTs0115Vo.getFacAmphurName());
-		params.put("facProvinceName", formTs0115Vo.getFacProvinceName());
-		params.put("facZipCode", formTs0115Vo.getFacZipCode());
-		params.put("signOwnerFullName", formTs0115Vo.getSignOwnerFullName());
-		params.put("signOfficerFullName", formTs0115Vo.getSignOfficerFullName());
-		params.put("signWitnessFullName1", formTs0115Vo.getSignWitnessFullName1());
-		params.put("signWitnessFullName2", formTs0115Vo.getSignWitnessFullName2());
+		params.put("formTsNumber", formTS0115Vo.getFormTsNumber());
+		params.put("officeName", formTS0115Vo.getOfficeName());
+		params.put("docDate", formTS0115Vo.getDocDate());
+		params.put("ownerFullName", formTS0115Vo.getOwnerFullName());
+		params.put("factoryType", formTS0115Vo.getFactoryType());
+		params.put("factoryName", formTS0115Vo.getFactoryName());
+		params.put("newRegId", formTS0115Vo.getNewRegId());
+		params.put("facAddrNo", formTS0115Vo.getFacAddrNo());
+		params.put("facSoiName", formTS0115Vo.getFacSoiName());
+		params.put("facThnName", formTS0115Vo.getFacThnName());
+		params.put("facTambolName", formTS0115Vo.getFacTambolName());
+		params.put("facAmphurName", formTS0115Vo.getFacAmphurName());
+		params.put("facProvinceName", formTS0115Vo.getFacProvinceName());
+		params.put("facZipCode", formTS0115Vo.getFacZipCode());
+		params.put("signOwnerFullName", formTS0115Vo.getSignOwnerFullName());
+		params.put("signOfficerFullName", formTS0115Vo.getSignOfficerFullName());
+		params.put("signWitnessFullName1", formTS0115Vo.getSignWitnessFullName1());
+		params.put("signWitnessFullName2", formTS0115Vo.getSignWitnessFullName2());
 
-		JRDataSource dataSource = new JRBeanCollectionDataSource(formTs0115Vo.getTaFormTS0115DtlVoList());
+		JRDataSource dataSource = new JRBeanCollectionDataSource(formTS0115Vo.getTaFormTS0115DtlVoList());
 
 		// set output
 		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_15 + "." + FILE_EXTENSION.JASPER, params, dataSource);

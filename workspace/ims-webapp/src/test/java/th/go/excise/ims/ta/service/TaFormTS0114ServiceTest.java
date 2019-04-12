@@ -31,63 +31,64 @@ public class TaFormTS0114ServiceTest {
 	public void test_generateReport() throws Exception {		
 		TaFormTS0114Service formTS0114Service = new TaFormTS0114Service();
 		
-		TaFormTS0114Vo vo = new TaFormTS0114Vo();
-		vo.setFactoryName("ชื่อโรงอุตสาหกรรม");
-		vo.setNewRegId("3498530945");
-		vo.setFacAddrNo("34");
-		vo.setFacSoiName("สุทธิสาร");
-		vo.setFacThnName("ห้วยขวาง");
-		vo.setFacTambolName("ห้วยขวาง");
-		vo.setFacAmphurName("ห้วยขวาง");
-		vo.setFacProvinceName("กรุงเทพมหานคร");
-		vo.setFacZipCode("10310");
-		vo.setFacTelNo("0979856904");
-		vo.setFacFaxNumber("333448344");
-		vo.setFactoryTypeText("ประเภทกิจการ");
-		vo.setOfficerFullName("ชื่อผู้ตรวจสอบ");
-		vo.setOfficerDept("หน่วยงานผู้ตรวจสอบ");
-		vo.setAuditDate(ConvertDateUtils.parseStringToDate("04/01/2562", ConvertDateUtils.DD_MM_YYYY));
-		vo.setBookNumber1("21223232");
-		vo.setBookDate(ConvertDateUtils.parseStringToDate("04/01/2562", ConvertDateUtils.DD_MM_YYYY));
-		vo.setAuditDateStart(ConvertDateUtils.parseStringToDate("04/01/2562", ConvertDateUtils.DD_MM_YYYY));
-		vo.setAuditDateEnd(ConvertDateUtils.parseStringToDate("03/02/2562", ConvertDateUtils.DD_MM_YYYY));
-		vo.setAuditSumMonth("1");
-		vo.setAuditSumDay("2");
-		vo.setAuditBookType("2");
-		vo.setAuditBookTypeOther("อื่นๆ");
-		vo.setAuditBookNumber("2");
-		vo.setAuditBookDate(ConvertDateUtils.parseStringToDate("04/01/2562", ConvertDateUtils.DD_MM_YYYY));
-		vo.setDocNum("3");
-		vo.setDoc1Num("2");
-		vo.setDoc1Date(ConvertDateUtils.parseStringToDate("04/01/2562", ConvertDateUtils.DD_MM_YYYY));
-		vo.setDoc2Num("1");
-		vo.setDoc2Date(ConvertDateUtils.parseStringToDate("04/01/2562", ConvertDateUtils.DD_MM_YYYY));
-		vo.setDoc3Num("3");
-		vo.setDoc3Date(ConvertDateUtils.parseStringToDate("04/01/2562", ConvertDateUtils.DD_MM_YYYY));
-		vo.setDoc4Num("4");
-		vo.setDoc5Num("5");
-		vo.setDoc6Num("4");
-		vo.setDoc7Num("3");
-		vo.setDoc8Num("2");
-		vo.setDoc9Num("1");
-		vo.setAssReason("เหตุผลการประเมิน");		
-		vo.setSignOfficerFullName("4");
-		vo.setSignOfficerPosition("ตำแหน่ง");
+		TaFormTS0114Vo formTS0114Vo = new TaFormTS0114Vo();
+		formTS0114Vo.setFormTsNumber("000000-2562-000001");
+		formTS0114Vo.setFactoryName("ชื่อโรงอุตสาหกรรม");
+		formTS0114Vo.setNewRegId("3498530945");
+		formTS0114Vo.setFacAddrNo("34");
+		formTS0114Vo.setFacSoiName("สุทธิสาร");
+		formTS0114Vo.setFacThnName("ห้วยขวาง");
+		formTS0114Vo.setFacTambolName("ห้วยขวาง");
+		formTS0114Vo.setFacAmphurName("ห้วยขวาง");
+		formTS0114Vo.setFacProvinceName("กรุงเทพมหานคร");
+		formTS0114Vo.setFacZipCode("10310");
+		formTS0114Vo.setFacTelNo("0979856904");
+		formTS0114Vo.setFacFaxNumber("333448344");
+		formTS0114Vo.setFactoryTypeText("ประเภทกิจการ");
+		formTS0114Vo.setOfficerFullName("ชื่อผู้ตรวจสอบ");
+		formTS0114Vo.setOfficerDept("หน่วยงานผู้ตรวจสอบ");
+		formTS0114Vo.setAuditDate(ConvertDateUtils.parseStringToDate("04/01/2562", ConvertDateUtils.DD_MM_YYYY));
+		formTS0114Vo.setBookNumber1("21223232");
+		formTS0114Vo.setBookDate(ConvertDateUtils.parseStringToDate("04/01/2562", ConvertDateUtils.DD_MM_YYYY));
+		formTS0114Vo.setAuditDateStart(ConvertDateUtils.parseStringToDate("04/01/2562", ConvertDateUtils.DD_MM_YYYY));
+		formTS0114Vo.setAuditDateEnd(ConvertDateUtils.parseStringToDate("03/02/2562", ConvertDateUtils.DD_MM_YYYY));
+		formTS0114Vo.setAuditSumMonth("1");
+		formTS0114Vo.setAuditSumDay("2");
+		formTS0114Vo.setAuditBookType("2");
+		formTS0114Vo.setAuditBookTypeOther("อื่นๆ");
+		formTS0114Vo.setAuditBookNumber("2");
+		formTS0114Vo.setAuditBookDate(ConvertDateUtils.parseStringToDate("04/01/2562", ConvertDateUtils.DD_MM_YYYY));
+		formTS0114Vo.setDocNum("3");
+		formTS0114Vo.setDoc1Num("2");
+		formTS0114Vo.setDoc1Date(ConvertDateUtils.parseStringToDate("04/01/2562", ConvertDateUtils.DD_MM_YYYY));
+		formTS0114Vo.setDoc2Num("1");
+		formTS0114Vo.setDoc2Date(ConvertDateUtils.parseStringToDate("04/01/2562", ConvertDateUtils.DD_MM_YYYY));
+		formTS0114Vo.setDoc3Num("3");
+		formTS0114Vo.setDoc3Date(ConvertDateUtils.parseStringToDate("04/01/2562", ConvertDateUtils.DD_MM_YYYY));
+		formTS0114Vo.setDoc4Num("4");
+		formTS0114Vo.setDoc5Num("5");
+		formTS0114Vo.setDoc6Num("4");
+		formTS0114Vo.setDoc7Num("3");
+		formTS0114Vo.setDoc8Num("2");
+		formTS0114Vo.setDoc9Num("1");
+		formTS0114Vo.setAssReason("เหตุผลการประเมิน");		
+		formTS0114Vo.setSignOfficerFullName("4");
+		formTS0114Vo.setSignOfficerPosition("ตำแหน่ง");
 		
-		List<TaFormTS0114DtlVo> listItem = new ArrayList<>();
-		TaFormTS0114DtlVo itemVo =new TaFormTS0114DtlVo();
-		itemVo.setRecNo("1");
-		itemVo.setTaxDate(ConvertDateUtils.parseStringToDate("01/03/2562", ConvertDateUtils.DD_MM_YYYY));
-		itemVo.setDutyTypeText("1");
-		itemVo.setTaxAmt(new BigDecimal(253));
-		itemVo.setFineAmt(new BigDecimal(253));
-		itemVo.setExtraAmt(new BigDecimal(253));
-		itemVo.setMoiAmt(new BigDecimal(253));
-		itemVo.setSumAmt(new BigDecimal(253));
-		listItem.add(itemVo);
-		vo.setTaFormTS0114DtlVoList(listItem);
+		List<TaFormTS0114DtlVo> formTS0114DtlVoList = new ArrayList<>();
+		TaFormTS0114DtlVo formTS0114DtlVo =new TaFormTS0114DtlVo();
+		formTS0114DtlVo.setRecNo("1");
+		formTS0114DtlVo.setTaxDate(ConvertDateUtils.parseStringToDate("01/03/2562", ConvertDateUtils.DD_MM_YYYY));
+		formTS0114DtlVo.setDutyTypeText("1");
+		formTS0114DtlVo.setTaxAmt(new BigDecimal(253));
+		formTS0114DtlVo.setFineAmt(new BigDecimal(253));
+		formTS0114DtlVo.setExtraAmt(new BigDecimal(253));
+		formTS0114DtlVo.setMoiAmt(new BigDecimal(253));
+		formTS0114DtlVo.setSumAmt(new BigDecimal(253));
+		formTS0114DtlVoList.add(formTS0114DtlVo);
+		formTS0114Vo.setTaFormTS0114DtlVoList(formTS0114DtlVoList);
 		
-		byte[] reportFile = formTS0114Service.generateReport(vo);
+		byte[] reportFile = formTS0114Service.generateReport(formTS0114Vo);
 		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_14))));
 	}
 	
@@ -95,12 +96,12 @@ public class TaFormTS0114ServiceTest {
 	public void test_generateReport_Blank() throws Exception {		
 		TaFormTS0114Service formTS0114Service = new TaFormTS0114Service();
 		
-		TaFormTS0114Vo vo = new TaFormTS0114Vo();
+		TaFormTS0114Vo formTS0114Vo = new TaFormTS0114Vo();
 		
-		List<TaFormTS0114DtlVo> listItem = new ArrayList<>();
-		vo.setTaFormTS0114DtlVoList(listItem);
+		List<TaFormTS0114DtlVo> formTS0114DtlVoList = new ArrayList<>();
+		formTS0114Vo.setTaFormTS0114DtlVoList(formTS0114DtlVoList);
 		
-		byte[] reportFile = formTS0114Service.generateReport(vo);
+		byte[] reportFile = formTS0114Service.generateReport(formTS0114Vo);
 		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_14 + "_blank"))));
 	}
 	
