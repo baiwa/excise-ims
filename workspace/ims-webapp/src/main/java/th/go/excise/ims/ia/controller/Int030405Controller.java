@@ -65,8 +65,11 @@ public class Int030405Controller {
 		return response;
 	}
 	
-	@GetMapping("/year/export/{budgetYear}/{inspectionWork}/{idConfig}/{riskHrdPaperName}/{createUserName}/{createLastName}/{createPosition}/{checkUserName}/{checkLastName}/{checkPosition}")
-	public void exportByYear(@PathVariable("budgetYear") String budgetYear,
+	@GetMapping("/year/export/{startDate}/{endDate}/{budgetYear}/{inspectionWork}/{idConfig}/{riskHrdPaperName}/{createUserName}/{createLastName}/{createPosition}/{checkUserName}/{checkLastName}/{checkPosition}")
+	public void exportByYear(
+			@PathVariable("startDate") String startDate,
+			@PathVariable("endDate") String endDate,
+			@PathVariable("budgetYear") String budgetYear,
 			@PathVariable("inspectionWork") BigDecimal inspectionWork, @PathVariable("idConfig") BigDecimal idConfig,
 			@PathVariable("riskHrdPaperName") String riskHrdPaperName,
 			@PathVariable("createUserName") String createUserName,
@@ -76,9 +79,11 @@ public class Int030405Controller {
 			HttpServletResponse response) throws Exception {
 		// set fileName
 		String fileName = URLEncoder.encode("สรุปผลปัจจัยเสี่ยงจำนวนครั้งที่ใช้งานไม่ได้ของระบบ", "UTF-8");
-
+		startDate = startDate.replace(".", "/");
+	    endDate = endDate.replace(".", "/");
+	    logger.info("startDate "+startDate+"endDate "+endDate);
 		// write it as an excel attachment
-		ByteArrayOutputStream outByteStream = int030405Service.exportInt030405(budgetYear,inspectionWork,idConfig,riskHrdPaperName,createUserName,createLastName,createPosition,checkUserName,checkLastName,checkPosition);
+		ByteArrayOutputStream outByteStream = int030405Service.exportInt030405(startDate,endDate,budgetYear,inspectionWork,idConfig,riskHrdPaperName,createUserName,createLastName,createPosition,checkUserName,checkLastName,checkPosition);
 		byte[] outArray = outByteStream.toByteArray();
 		response.setContentType("application/octet-stream");
 		response.setContentLength(outArray.length);

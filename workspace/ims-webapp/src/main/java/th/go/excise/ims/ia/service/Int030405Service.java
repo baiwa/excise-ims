@@ -150,7 +150,7 @@ public class Int030405Service {
 	}
 
 	
-	public ByteArrayOutputStream exportInt030405(String budgetYear, BigDecimal inspectionWork, BigDecimal idConfig,
+	public ByteArrayOutputStream exportInt030405(String startMonth,String endMonth,String budgetYear, BigDecimal inspectionWork, BigDecimal idConfig,
 			String riskHrdPaperName, String createUserName, String createLastName, String createPosition,
 			String checkUserName, String checkLastName, String checkPosition)
 			throws IOException {
@@ -161,6 +161,7 @@ public class Int030405Service {
 		CellStyle tdStyle = ExcelUtils.createTdCellStyle(workbook);
 		CellStyle TopicCenterlite = ExcelUtils.createTopicCenterliteStyle(workbook);
 		CellStyle tdLeft = ExcelUtils.createLeftCellStyle(workbook);
+		CellStyle tdRight = ExcelUtils.createRightCellStyle(workbook);
 		CellStyle TopicRight = ExcelUtils.createTopicRightStyle(workbook);
 		CellStyle TopicCenter = ExcelUtils.createTopicCenterStyle(workbook);
 		Sheet sheet = workbook.createSheet();
@@ -294,12 +295,69 @@ public class Int030405Service {
 		// Row [0]
 		long budgetYearCon = Long.parseLong(budgetYear);
 		budgetYearCon = budgetYearCon - 1;
+		
+// ******************
+		List<String> tbTH1 = new ArrayList<String>();
+		List<String> tbTH2 = new ArrayList<String>();
+		tbTH1.add("ลำดับที่");
+		tbTH1.add("ระบบสารสนเทศฯ ของกรมสรรพสามิต");
+		
+		tbTH2.add("");
+		tbTH2.add("");
+		
+		int yearForm =  Integer.valueOf(startMonth.split("/")[1]);
+	 	int yearTo =  Integer.valueOf(endMonth.split("/")[1]); 
+	 	int yearNo =  yearTo - yearForm;
+
+	 	int monthForm = Integer.valueOf(startMonth.split("/")[0]);
+	 	int monthTo =  Integer.valueOf(endMonth.split("/")[0]); 
+
+	 	int monthNo = 0 ;
+	   
+	    if(yearTo>yearForm){
+	      monthNo = (12-monthForm)+(12*((yearTo-yearForm)-1))+monthTo;
+	    }else{
+	      monthNo = monthTo-monthForm;
+	    }
+
+	    int monthArray = monthForm;
+	    int yearArray = yearForm;
+	    int yearArray2 = yearForm;
+
+
+	// Set TR Month
+
+	    for (int i = 0; i <= monthNo; i++) {
+    	 if(i == 0) {
+    		 tbTH1.add("ปี " + String.valueOf(yearArray));
+    		 
+	      }else if(monthArray<=12&&i!=0){
+	    	 tbTH1.add("");
+	      }else{
+	    	yearArray++;
+	        monthArray=1;
+	        tbTH1.add("ปี " + String.valueOf(yearArray));
+	      }
+    	 
+//		 	tbTH2.add(String.valueOf(monthArray));
+		 	tbTH2.add(ConvertDateUtils.fullMonth[monthArray-1]);
+		    monthArray++;
+	    }
+	    tbTH1.add("รวม");
+	    tbTH1.add("ประเมินความเสี่ยง");
+	    tbTH1.add("");
+	    
+	    tbTH2.add("");
+	    tbTH2.add("อัตราความเสี่ยง");
+	    tbTH2.add("แปลค่าความเสี่ยง");
+// ******************	
+	    
 		Row row = sheet.createRow(rowNum);
 		Cell cell = row.createCell(cellNum);
-		String[] tbTH1 = { "ลำดับที่" , "ระบบสารสนเทศฯ ของกรมสรรพสามิต" , "ปี " + budgetYearCon , "" , "" , "ปี " + budgetYear , "", "", "", "", "", "", "", "" , "รวม" , "ประเมินความเสี่ยง" , ""  };
-		for (int i = 0; i < tbTH1.length; i++) {
+	
+		for (int i = 0; i < tbTH1.size(); i++) {
 			cell = row.createCell(cellNum);
-			cell.setCellValue(tbTH1[i]);
+			cell.setCellValue(tbTH1.get(i));
 			cell.setCellStyle(thStyle);
 			cellNum++;
 		}
@@ -310,43 +368,57 @@ public class Int030405Service {
 		cellNum = 0;
 		cell = row.createCell(cellNum);
 
-		String[] tbTH2 = { "" , "" , "ต.ค.", "พ.ย." , "ธ.ค." , "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย." , "" , "อัตราความเสี่ยง" , "แปลค่าความเสี่ยง" };
-		for (int i = 0; i < tbTH2.length; i++) {
+		
+		for (int i = 0; i < tbTH2.size(); i++) {
 			cell = row.createCell(cellNum);
-			cell.setCellValue(tbTH2[i]);
+			cell.setCellValue(tbTH2.get(i));
 			cell.setCellStyle(thStyle);
+			if(i>=2) {
+				int width = 76;
+				sheet.setColumnWidth(i, width * 50);
+			}
 			cellNum++;
 		}
 		rowNum++;
 
 		/* set sheet */
 		// merge(firstRow, lastRow, firstCol, lastCol)
+
+		int sizeTable = tbTH2.size()-1;
 		for (int i = 0	; i < test ; i++) {
-			sheet.addMergedRegion(new CellRangeAddress(rowNum - (i + 10) , rowNum - (i + 10), 0 , 16));
+			sheet.addMergedRegion(new CellRangeAddress(rowNum - (i + 10) , rowNum - (i + 10), 0 , sizeTable));
 		}
-		sheet.addMergedRegion(new CellRangeAddress(rowNum - 9, rowNum - 9, 0, 16));
-		sheet.addMergedRegion(new CellRangeAddress(rowNum - 8, rowNum - 8, 0, 16));
-		sheet.addMergedRegion(new CellRangeAddress(rowNum - 7, rowNum - 7, 0, 16));
-		sheet.addMergedRegion(new CellRangeAddress(rowNum - 6, rowNum - 6, 0, 16));
-		sheet.addMergedRegion(new CellRangeAddress(rowNum - 5, rowNum - 5, 0, 16));
-		sheet.addMergedRegion(new CellRangeAddress(rowNum - 4, rowNum - 4, 0, 16));
-		sheet.addMergedRegion(new CellRangeAddress(rowNum - 3, rowNum - 3, 0, 16));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 9, rowNum - 9, 0, sizeTable));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 8, rowNum - 8, 0, sizeTable));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 7, rowNum - 7, 0, sizeTable));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 6, rowNum - 6, 0, sizeTable));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 5, rowNum - 5, 0, sizeTable));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 4, rowNum - 4, 0, sizeTable));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 3, rowNum - 3, 0, sizeTable));
 		sheet.addMergedRegion(new CellRangeAddress(rowNum - 2, rowNum - 1, 0, 0));
 		sheet.addMergedRegion(new CellRangeAddress(rowNum - 2, rowNum - 1, 1, 1));
-		sheet.addMergedRegion(new CellRangeAddress(rowNum - 2, rowNum - 2, 2, 4));
-		sheet.addMergedRegion(new CellRangeAddress(rowNum - 2, rowNum - 2, 5, 13));
-		sheet.addMergedRegion(new CellRangeAddress(rowNum - 2, rowNum - 1, 14, 14));
-		sheet.addMergedRegion(new CellRangeAddress(rowNum - 2, rowNum - 2, 15, 16));
-		/* set sheet */
+		
+// Colspan Year Headder
+		cellNum = 2;
+		int cellNumTo = 1;
+		
+		for (int i = 2	; i < tbTH1.size()-2 ; i++) {
+			if(tbTH1.get(i)!=""&&i!=2) {
+				if(cellNum!=cellNumTo) {
+					sheet.addMergedRegion(new CellRangeAddress(rowNum  - 2 , rowNum  - 2, cellNum , cellNumTo));
+				}
+				cellNum = cellNumTo+1;
+			}
+			cellNumTo++;
+		}
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 2, rowNum - 1, cellNum, cellNum));
+		sheet.addMergedRegion(new CellRangeAddress(rowNum - 2, rowNum - 2, cellNum+1, cellNum+2));
 
 		// setColumnWidth
 		int width = 76;
 		sheet.setColumnWidth(0, width * 30);
 		sheet.setColumnWidth(1, width * 280);
-		for (int i = 15; i <= 16; i++) {	
-				sheet.setColumnWidth(i, width * 76);
-		}
-
+	
 		/* start details */
 		int count = 1;
 		rowNum = 9 + test;
@@ -354,6 +426,8 @@ public class Int030405Service {
 
 		List<Int030405Vo> datas = new ArrayList<Int030405Vo>();
 		Int030405FormVo form = new Int030405FormVo();
+		form.setStartDate(startMonth);
+		form.setEndDate(endMonth);
 		form.setBudgetYear(budgetYear);
 		form.setInspectionWork(inspectionWork);
 		form.setIdConfig(idConfig);
@@ -364,120 +438,21 @@ public class Int030405Service {
 			// Re Initial
 			cellNum = 0;
 			row = sheet.createRow(rowNum);
-			// Column 1
+			
 			CellStyle styleCustom = tdStyle;
 			styleCustom.setAlignment(HorizontalAlignment.CENTER);
-			cell = row.createCell(cellNum);
-			cell.setCellValue(count++);
-			cell.setCellStyle(styleCustom);
-			cellNum++;
-			// Column 2
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getSystemName());
-			cell.setCellStyle(tdLeft);
-			cellNum++;
-
-			// Column 3
-//			cell = row.createCell(cellNum);
-//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError01());
-//			cell.setCellStyle(tdStyle);
-//			cellNum++;
-//
-//			// Column 4
-//			cell = row.createCell(cellNum);
-//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError02());
-//			cell.setCellStyle(tdStyle);
-//			cellNum++;
-//
-//			// Column 5
-//			cell = row.createCell(cellNum);
-//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError03());
-//			cell.setCellStyle(tdStyle);
-//			cellNum++;
-//
-//			// Column 6
-//			cell = row.createCell(cellNum);
-//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError04());
-//			cell.setCellStyle(tdStyle);
-//			cellNum++;
-//			
-//			// Column 7
-//			cell = row.createCell(cellNum);
-//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError05());
-//			cell.setCellStyle(tdStyle);
-//			cellNum++;
-//			
-//			// Column 8
-//			cell = row.createCell(cellNum);
-//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError06());
-//			cell.setCellStyle(tdStyle);
-//			cellNum++;
-//			
-//			// Column 9
-//			cell = row.createCell(cellNum);
-//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError07());
-//			cell.setCellStyle(tdStyle);
-//			cellNum++;
-//			
-//			// Column 10
-//			cell = row.createCell(cellNum);
-//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError08());
-//			cell.setCellStyle(tdStyle);
-//			cellNum++;
-//			
-//			// Column 11
-//			cell = row.createCell(cellNum);
-//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError09());
-//			cell.setCellStyle(tdStyle);
-//			cellNum++;
-//			
-//			// Column 12
-//			cell = row.createCell(cellNum);
-//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError10());
-//			cell.setCellStyle(tdStyle);
-//			cellNum++;
-//			
-//			// Column 13
-//			cell = row.createCell(cellNum);
-//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError11());
-//			cell.setCellStyle(tdStyle);
-//			cellNum++;
-//			
-//			// Column 12
-//			cell = row.createCell(cellNum);
-//			cell.setCellValue(data.getIaRiskSystemUnworking().getErrordetailError12());
-//			cell.setCellStyle(tdStyle);
-//			cellNum++;
-
-			// Column 13
-			cell = row.createCell(cellNum);
-			if (data.getSumCountAll() != null) {
-				cell.setCellValue(data.getSumCountAll().toString());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(tdStyle);
-			cellNum++;
-
-			// Column 14
-			cell = row.createCell(cellNum);
-			if(data.getIntCalculateCriteriaVo().getRiskRate() != null) {
-				cell.setCellValue(data.getIntCalculateCriteriaVo().getRiskRate().doubleValue());
-			}else {
-				cell.setCellValue("-");
-			}
-			cell.setCellStyle(tdStyle);
-			cellNum++;
 			
-			// Column 15
-			cell = row.createCell(cellNum);
-			if(data.getIntCalculateCriteriaVo().getTranslatingRisk() != null) {
-				cell.setCellValue(data.getIntCalculateCriteriaVo().getTranslatingRisk());
-			}else {
-				cell.setCellValue("-");
+			cell = row.createCell(cellNum++);cell.setCellValue(count++);cell.setCellStyle(styleCustom);
+			cell = row.createCell(cellNum++);cell.setCellValue(data.getSystemName());cell.setCellStyle(tdLeft);
+			for (IaRiskSystemUnworking data2 : data.getIaRiskSystemUnworking()) {
+				cell = row.createCell(cellNum++);cell.setCellValue(data2.getCountError());cell.setCellStyle(tdRight);
 			}
-			cell.setCellStyle(tdStyle);
-			cellNum++;
+			cell = row.createCell(cellNum++);cell.setCellValue(data.getSumCountError());cell.setCellStyle(tdRight);
+			cell = row.createCell(cellNum++);cell.setCellValue(data.getIntCalculateCriteriaVo().getRiskRate().toString());cell.setCellStyle(styleCustom);
+			cell = row.createCell(cellNum++);cell.setCellValue(data.getIntCalculateCriteriaVo().getTranslatingRisk());cell.setCellStyle(styleCustom);
+			
+
+	
 
 			// Next Row
 			rowNum++;
@@ -490,5 +465,6 @@ public class Int030405Service {
 
 		return outByteStream;
 	}
+	
 	
 }
