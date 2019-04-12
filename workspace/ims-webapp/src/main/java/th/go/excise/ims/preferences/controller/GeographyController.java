@@ -89,6 +89,27 @@ public class GeographyController {
 		return response;
 	}
 	
+	@PostMapping("/amphur-list")
+	@ApiOperation(
+			tags = MODULE_NAME.PREFERENCES,
+			value = "Get Amphur List"
+			)
+	public ResponseData<List<ExciseAmphur>> getAmphurList() {
+		logger.info("getAmphurList");
+		
+		ResponseData<List<ExciseAmphur>> response = new ResponseData<>();
+		List<ExciseAmphur> exciseAmphurList = ApplicationCache.getExciseAmphurList();
+		if (!CollectionUtils.isEmpty(exciseAmphurList)) {
+			response.setData(exciseAmphurList);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} else {
+			response.setMessage("Amphur List Not Found");
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		
+		return response;
+	}
+	
 	@PostMapping("/amphur-list/{provinceId}")
 	@ApiOperation(
 		tags = MODULE_NAME.PREFERENCES,
@@ -120,6 +141,27 @@ public class GeographyController {
 		
 		ResponseData<List<ExciseDistrict>> response = new ResponseData<>();
 		List<ExciseDistrict> exciseDistrictList = ApplicationCache.getExciseDistrictList(amphurId);
+		if (!CollectionUtils.isEmpty(exciseDistrictList)) {
+			response.setData(exciseDistrictList);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} else {
+			response.setMessage("District List Not Found");
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		
+		return response;
+	}
+	
+	@PostMapping("/district-list")
+	@ApiOperation(
+			tags = MODULE_NAME.PREFERENCES,
+			value = "Get District List"
+			)
+	public ResponseData<List<ExciseDistrict>> getDistrictList() {
+		logger.info("getDistrictList");
+		
+		ResponseData<List<ExciseDistrict>> response = new ResponseData<>();
+		List<ExciseDistrict> exciseDistrictList = ApplicationCache.getExciseDistrictList();
 		if (!CollectionUtils.isEmpty(exciseDistrictList)) {
 			response.setData(exciseDistrictList);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);

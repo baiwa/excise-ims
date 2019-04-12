@@ -69,10 +69,13 @@ public class ApplicationCache {
 	private static final ConcurrentHashMap<String, List<ExciseDept>> EXCISE_AREA_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, List<ExciseDept>> EXCISE_BRANCH_MAP = new ConcurrentHashMap<>();
 
-	private static final List<ExciseGeo> EXCISE_GEO_LIST = new ArrayList<ExciseGeo>();
-	private static final ConcurrentHashMap<String, List<ExciseProvice>> EXCISE_PROVINCE_MAPPER = new ConcurrentHashMap<String, List<ExciseProvice>>();
-	private static final ConcurrentHashMap<String, List<ExciseAmphur>> EXCISE_AMPHUR_MAPPER = new ConcurrentHashMap<String, List<ExciseAmphur>>();
-	private static final ConcurrentHashMap<String, List<ExciseDistrict>> EXCISE_DISTRICT_MAPPER = new ConcurrentHashMap<String, List<ExciseDistrict>>();
+	private static final List<ExciseGeo> EXCISE_GEO_LIST = new ArrayList<>();
+	private static final List<ExciseProvice> EXCISE_PROVINCE_LIST = new ArrayList<>();
+	private static final List<ExciseAmphur> EXCISE_AMPHUR_LIST = new ArrayList<>();
+	private static final List<ExciseDistrict> EXCISE_DISTRICT_LIST = new ArrayList<>();
+	private static final ConcurrentHashMap<String, List<ExciseProvice>> EXCISE_PROVINCE_MAPPER = new ConcurrentHashMap<>();
+	private static final ConcurrentHashMap<String, List<ExciseAmphur>> EXCISE_AMPHUR_MAPPER = new ConcurrentHashMap<>();
+	private static final ConcurrentHashMap<String, List<ExciseDistrict>> EXCISE_DISTRICT_MAPPER = new ConcurrentHashMap<>();
 
 	@Autowired
 	public ApplicationCache(
@@ -204,22 +207,26 @@ public class ApplicationCache {
 	}
 
 	public static List<ExciseProvice> getExciseProviceList() {
-		List<ExciseProvice> resultList = new ArrayList<>();
-		for (Entry<String, List<ExciseProvice>> entry : EXCISE_PROVINCE_MAPPER.entrySet()) {
-			resultList.addAll(entry.getValue());
-		}
-		resultList.sort((p1, p2) -> p1.getProvinceCode().compareTo(p2.getProvinceCode()));
-		return Collections.unmodifiableList(resultList);
+		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_PROVINCE_LIST, new ArrayList<>()));
 	}
 	
 	public static List<ExciseProvice> getExciseProviceListByGeoId(String geoId) {
 		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_PROVINCE_MAPPER.get(geoId), new ArrayList<>()));
 	}
 
+	public static List<ExciseAmphur> getExciseAmphurList() {
+		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_AMPHUR_LIST, new ArrayList<>()));
+	}
+	
 	public static List<ExciseAmphur> getExciseAmphurList(String proviceId) {
 		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_AMPHUR_MAPPER.get(proviceId), new ArrayList<>()));
 	}
 
+	public static List<ExciseDistrict> getExciseDistrictList() {
+		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_DISTRICT_LIST, new ArrayList<>()));
+	}
+	
+	
 	public static List<ExciseDistrict> getExciseDistrictList(String amphurId) {
 		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_DISTRICT_MAPPER.get(amphurId), new ArrayList<>()));
 	}
@@ -378,6 +385,7 @@ public class ApplicationCache {
 				provinceVo = new ExciseProvinceVo();
 				BeanUtils.copyProperties(provinceVo, province);
 				provinceList.add(provinceVo);
+				EXCISE_PROVINCE_LIST.add(provinceVo);
 				EXCISE_PROVINCE_MAPPER.put(provinceVo.getGeoId().toString(), provinceList);
 			}
 			EXCISE_PROVINCE_MAPPER.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getProvinceCode().compareTo(p2.getProvinceCode())));
@@ -398,6 +406,7 @@ public class ApplicationCache {
 				amphurVo = new ExciseAmphurVo();
 				BeanUtils.copyProperties(amphurVo, amphur);
 				amphurList.add(amphurVo);
+				EXCISE_AMPHUR_LIST.add(amphurVo);
 				EXCISE_AMPHUR_MAPPER.put(amphurVo.getProvinceId().toString(), amphurList);
 			}
 			EXCISE_AMPHUR_MAPPER.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getAmphurCode().compareTo(p2.getAmphurCode())));
@@ -418,6 +427,7 @@ public class ApplicationCache {
 				districtVo = new ExciseDistrictVo();
 				BeanUtils.copyProperties(districtVo, district);
 				districtList.add(districtVo);
+				EXCISE_DISTRICT_LIST.add(districtVo);
 				EXCISE_DISTRICT_MAPPER.put(districtVo.getAmphurId().toString(), districtList);
 			}
 			EXCISE_DISTRICT_MAPPER.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getDistrictCode().compareTo(p2.getDistrictCode())));
