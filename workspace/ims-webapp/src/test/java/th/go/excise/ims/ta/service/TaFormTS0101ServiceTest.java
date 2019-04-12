@@ -30,7 +30,7 @@ import th.go.excise.ims.ta.vo.TaFormTS0101Vo;
 //@ActiveProfiles(value = PROFILE.UNITTEST)
 public class TaFormTS0101ServiceTest {
 	
-	private static final String REPORT_FILE = PATH.TEST_PATH + REPORT_NAME.TA_FORM_TS01_01 + "." + FILE_EXTENSION.PDF;
+	private static final String REPORT_FILE = PATH.TEST_PATH + "%s" + "." + FILE_EXTENSION.PDF;
 	
 	@Autowired
 	private TaFormTS0101Service taFormTS0101Service;
@@ -66,15 +66,26 @@ public class TaFormTS0101ServiceTest {
 		formTS0101Vo.setSignApprDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 3, 12))));
 		
 		byte[] reportFile = taFormTS0101Service.generateReport(formTS0101Vo);
-		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_01))));
 	}
 	
-	//@Test
-	public void test_processFormTS() throws Exception {
+	@Test
+	public void test_generateReport_Blank() throws Exception {
+		TaFormTS0101Service taFormTS0101Service = new TaFormTS0101Service();
+		
 		// set data
 		TaFormTS0101Vo formTS0101Vo = new TaFormTS0101Vo();
-		formTS0101Vo.setFormTsNumber("");
-		formTS0101Vo.setNewRegId("123456789_edit");
+		
+		byte[] reportFile = taFormTS0101Service.generateReport(formTS0101Vo);
+		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_01 + "_blank"))));
+	}
+	
+//	@Test
+	public void test_saveFormTS() throws Exception {
+		// set data
+		TaFormTS0101Vo formTS0101Vo = new TaFormTS0101Vo();
+		formTS0101Vo.setFormTsNumber("000000-2562-000351");
+		formTS0101Vo.setNewRegId("123456789_edit2");
 		formTS0101Vo.setFactoryName("บริษัท อูซูอิ อินเตอร์เนชั่นแนลคอร์ปอเรชั่น (ไทยแลนด์) จำกัด");
 		formTS0101Vo.setFactoryTypeText("ขายส่งและผู้ผลิตชิ้นส่วนและอะไหล่รถยนต์");
 		formTS0101Vo.setFactoryAddress("700/454 หมู่ 7 นิคมอุตสาหกรรมอมตะนคร ตำบลดอนหัว อำเภอเมืองชลบุรี จังหวัดชลบุรี 20000");
@@ -97,20 +108,18 @@ public class TaFormTS0101ServiceTest {
 		formTS0101Vo.setSignApprOfficerPosition("ผู้อำนวยการเขต");
 		formTS0101Vo.setSignApprDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 3, 12))));
 		
-		byte[] reportFile = taFormTS0101Service.processFormTS(formTS0101Vo);
-		IOUtils.write(reportFile, new FileOutputStream(new File(REPORT_FILE)));
+		taFormTS0101Service.saveFormTS(formTS0101Vo);
 	}
 	
-	//@Test
-	public void test_getFormTsNumberList() {
-		taFormTS0101Service.getFormTsNumberList()
-			.forEach(e -> System.out.println(e));
-	}
-	
-	//@Test
+//	@Test
 	public void test_getFormTS() {
-		TaFormTS0101Vo formTs0101Vo = taFormTS0101Service.getFormTS("000000-2562-000001");
+		TaFormTS0101Vo formTs0101Vo = taFormTS0101Service.getFormTS("000000-2562-000351");
 		System.out.println(ToStringBuilder.reflectionToString(formTs0101Vo, ToStringStyle.JSON_STYLE));
+	}
+	
+//	@Test
+	public void test_getFormTsNumberList() {
+		taFormTS0101Service.getFormTsNumberList().forEach(e -> System.out.println(e));
 	}
 	
 }

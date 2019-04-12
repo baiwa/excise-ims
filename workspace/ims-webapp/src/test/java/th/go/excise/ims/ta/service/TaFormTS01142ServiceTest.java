@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSIO
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.go.excise.ims.Application;
+import th.go.excise.ims.ta.vo.TaFormTS0111Vo;
 import th.go.excise.ims.ta.vo.TaFormTS01142DtlVo;
 import th.go.excise.ims.ta.vo.TaFormTS01142Vo;
 
@@ -86,9 +89,10 @@ public class TaFormTS01142ServiceTest {
 		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_14_2 + "_blank"))));
 	}
 
-	//@Test
+//	@Test
 	public void test_saveFormTS() throws Exception {
 		TaFormTS01142Vo formTS01142Vo = new TaFormTS01142Vo();
+		formTS01142Vo.setFormTsNumber("000000-2562-000355");
 		formTS01142Vo.setOwnerFullName("ธนพล ชัยภูมิ");
 		formTS01142Vo.setFactoryType("");
 		formTS01142Vo.setFactoryName("");
@@ -102,8 +106,9 @@ public class TaFormTS01142ServiceTest {
 
 		List<TaFormTS01142DtlVo> formTS01142DtlVoList = new ArrayList<>();
 		TaFormTS01142DtlVo formTS01142DtlVo = null;
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 1; i++) {
 			formTS01142DtlVo = new TaFormTS01142DtlVo();
+			formTS01142DtlVo.setFormTs01142DtlId(String.valueOf(78 + i + 1));
 			formTS01142DtlVo.setRecNo("");
 			formTS01142DtlVo.setRecDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 3, 15))));
 			formTS01142DtlVo.setDutyTypeText("0101");
@@ -123,6 +128,17 @@ public class TaFormTS01142ServiceTest {
 		formTS01142Vo.setTaFormTS01142DtlVoList(formTS01142DtlVoList);
 
 		taFormTS01142Service.saveFormTS(formTS01142Vo);
+	}
+	
+//	@Test
+	public void test_getFormTS() {
+		TaFormTS01142Vo formTs01142Vo = taFormTS01142Service.getFormTS("000000-2562-000355");
+		System.out.println(ToStringBuilder.reflectionToString(formTs01142Vo, ToStringStyle.JSON_STYLE));
+	}
+	
+//	@Test
+	public void test_getFormTsNumberList() {
+		taFormTS01142Service.getFormTsNumberList().forEach(e -> System.out.println(e));
 	}
 
 }

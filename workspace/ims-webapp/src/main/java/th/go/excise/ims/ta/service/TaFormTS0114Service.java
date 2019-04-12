@@ -67,15 +67,15 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
 		logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS0114Vo.getFormTsNumber());
 
-		TaFormTs0114Hdr taFormTs0114Hdr = null;
-		TaFormTs0114Dtl taFormTs0114Dtl = null;
+		TaFormTs0114Hdr formTs0114Hdr = null;
+		TaFormTs0114Dtl formTs0114Dtl = null;
 		List<TaFormTs0114Dtl> taFormTs0114DtlList = null;
 		if (StringUtils.isNotBlank(formTS0114Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0114Vo.getFormTsNumber())) {
 			// Case Update FormTS
 
 			// ==> Set Hdr
-			taFormTs0114Hdr = taFormTs0114HdrRepository.findByFormTsNumber(formTS0114Vo.getFormTsNumber());
-			toEntity(taFormTs0114Hdr, formTS0114Vo);
+			formTs0114Hdr = taFormTs0114HdrRepository.findByFormTsNumber(formTS0114Vo.getFormTsNumber());
+			toEntity(formTs0114Hdr, formTS0114Vo);
 
 			// ==> Set Dtl
 			taFormTs0114DtlList = taFormTs0114DtlRepository.findByFormTsNumber(formTS0114Vo.getFormTsNumber());
@@ -90,19 +90,19 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
 			if (formTS0114Vo.getTaFormTS0114DtlVoList() != null) {
 				int i = 1;
 				for (TaFormTS0114DtlVo formDtlVo : formTS0114Vo.getTaFormTS0114DtlVoList()) {
-					taFormTs0114Dtl = getEntityById(taFormTs0114DtlList, formDtlVo.getFormTs0114DtlId());
-					if (taFormTs0114Dtl != null) {
+					formTs0114Dtl = getEntityById(taFormTs0114DtlList, formDtlVo.getFormTs0114DtlId());
+					if (formTs0114Dtl != null) {
 						// Exist Record
-						toEntityDtl(taFormTs0114Dtl, formDtlVo);
-						taFormTs0114Dtl.setIsDeleted(FLAG.N_FLAG);
-						taFormTs0114Dtl.setRecNo(String.valueOf(i));
+						toEntityDtl(formTs0114Dtl, formDtlVo);
+						formTs0114Dtl.setIsDeleted(FLAG.N_FLAG);
+						formTs0114Dtl.setRecNo(String.valueOf(i));
 					} else {
 						// New Record
-						taFormTs0114Dtl = new TaFormTs0114Dtl();
-						toEntityDtl(taFormTs0114Dtl, formDtlVo);
-						taFormTs0114Dtl.setFormTsNumber(formTS0114Vo.getFormTsNumber());
-						taFormTs0114Dtl.setRecNo(String.valueOf(i));
-						taFormTs0114DtlList.add(taFormTs0114Dtl);
+						formTs0114Dtl = new TaFormTs0114Dtl();
+						toEntityDtl(formTs0114Dtl, formDtlVo);
+						formTs0114Dtl.setFormTsNumber(formTS0114Vo.getFormTsNumber());
+						formTs0114Dtl.setRecNo(String.valueOf(i));
+						taFormTs0114DtlList.add(formTs0114Dtl);
 					}
 					i++;
 				}
@@ -113,27 +113,27 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
 			// Case New FormTS
 			
 			// Set Header Record
-			taFormTs0114Hdr = new TaFormTs0114Hdr();
-			toEntity(taFormTs0114Hdr, formTS0114Vo);
-			taFormTs0114Hdr.setOfficeCode(officeCode);
-			taFormTs0114Hdr.setBudgetYear(budgetYear);
-			taFormTs0114Hdr.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
+			formTs0114Hdr = new TaFormTs0114Hdr();
+			toEntity(formTs0114Hdr, formTS0114Vo);
+			formTs0114Hdr.setOfficeCode(officeCode);
+			formTs0114Hdr.setBudgetYear(budgetYear);
+			formTs0114Hdr.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
 			
 			// Set Detail Record
 			taFormTs0114DtlList = new ArrayList<>();
 			int i = 1;
 			for (TaFormTS0114DtlVo formDtl : formTS0114Vo.getTaFormTS0114DtlVoList()) {
-				taFormTs0114Dtl = new TaFormTs0114Dtl();
-				toEntityDtl(taFormTs0114Dtl, formDtl);
-				taFormTs0114Dtl.setFormTsNumber(taFormTs0114Hdr.getFormTsNumber());
-				taFormTs0114Dtl.setRecNo(String.valueOf(i));
-				taFormTs0114DtlList.add(taFormTs0114Dtl);
+				formTs0114Dtl = new TaFormTs0114Dtl();
+				toEntityDtl(formTs0114Dtl, formDtl);
+				formTs0114Dtl.setFormTsNumber(formTs0114Hdr.getFormTsNumber());
+				formTs0114Dtl.setRecNo(String.valueOf(i));
+				taFormTs0114DtlList.add(formTs0114Dtl);
 				i++;
 			}
 			taFormTs0114DtlRepository.saveAll(taFormTs0114DtlList);
 		}
 
-		taFormTs0114HdrRepository.save(taFormTs0114Hdr);
+		taFormTs0114HdrRepository.save(formTs0114Hdr);
 	}
 
 	@Override

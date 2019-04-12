@@ -123,11 +123,14 @@ public class TaFormTS01142Service  extends AbstractTaFormTSService<TaFormTS01142
 
 			// Set Detail Record
 			formTs01142DtlList = new ArrayList<>();
+			int i = 1;
 			for (TaFormTS01142DtlVo formTS01142DtlVo : formTS01142Vo.getTaFormTS01142DtlVoList()) {
 				formTS01142Dtl = new TaFormTs01142Dtl();
 				toEntityDtl(formTS01142Dtl, formTS01142DtlVo);
 				formTS01142Dtl.setFormTsNumber(formTS01142Hdr.getFormTsNumber());
+				formTS01142Dtl.setRecNo(String.valueOf(i));
 				formTs01142DtlList.add(formTS01142Dtl);
+				i++;
 			}
 			taFormTs01142DtlRepository.saveAll(formTs01142DtlList);
 		}
