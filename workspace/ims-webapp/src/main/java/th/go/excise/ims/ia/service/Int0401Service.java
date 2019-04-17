@@ -334,7 +334,7 @@ public class Int0401Service {
 
 				IaRiskFactorsConfig config = iaRiskFactorsConfigRepository.findByIdFactors(idFactors);
 				
-				 List<Int020301InfoVo> list = int020301Service.findInfoByIdHdrRisk(config.getInfoUsedRisk(),budgetYear,config.getId().toString());
+				 List<Int020301InfoVo> list = int020301Service.findInfoByIdHdrRisk(config.getInfoUsedRisk(),budgetYear,config.getId().toString(), null);
 				for (Int020301InfoVo vo : list) {
 					
 					if(vo.getOfficeCode().equals(exciseCode)) {
