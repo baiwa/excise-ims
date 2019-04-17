@@ -28,8 +28,8 @@ public class Oa02Controller {
 		ResponseData<Oa02Vo> responseData = new ResponseData<Oa02Vo>();
 		Oa02Vo data = new Oa02Vo();
 		try {
-//			String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-			data = oa02Service.findOaPlanByYear(year);
+			String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+			data = oa02Service.findOaPlanByYear(year,offCode);
 			responseData.setData(data);
 			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
@@ -47,8 +47,8 @@ public class Oa02Controller {
 		ResponseData<Oa02Vo> responseData = new ResponseData<Oa02Vo>();
 		Oa02Vo data = new Oa02Vo();
 		try {
-//			String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-			data = oa02Service.findOaPlanHydroByYear(year);
+			String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+			data = oa02Service.findOaPlanHydroByYear(year,offCode);
 			responseData.setData(data);
 			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);

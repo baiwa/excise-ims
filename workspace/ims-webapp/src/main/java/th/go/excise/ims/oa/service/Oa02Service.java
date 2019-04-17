@@ -17,20 +17,20 @@ public class Oa02Service {
 	@Autowired
 	private Oa02JdbcRepository o02Repo;
 	
-	public Oa02Vo findOaPlanByYear(String fiscolYear) {
+	public Oa02Vo findOaPlanByYear(String fiscolYear,String offCode) {
 		Oa02Vo plan = new Oa02Vo();
 		List<OaPlan> listPlan  = new ArrayList<>();
 //		listPlan = oaPlanRepo.findByfiscolYearAndIsDeleted(fiscolYear, "N");
-		listPlan = o02Repo.findLubricantPlan(fiscolYear);
+		listPlan = o02Repo.findLubricantPlan(fiscolYear,OaOfficeCode.officeCodeLike(offCode));
 		plan.setListPlan(listPlan);
 		return plan;
 	}
 	
-	public Oa02Vo findOaPlanHydroByYear(String fiscolYear) {
+	public Oa02Vo findOaPlanHydroByYear(String fiscolYear,String offCode) {
 		Oa02Vo plan = new Oa02Vo();
 		List<OaPlan> listPlan  = new ArrayList<>();
 //		listPlan = oaPlanRepo.findByfiscolYearAndIsDeleted(fiscolYear, "N");
-		listPlan = o02Repo.findHydrocarbonPlan(fiscolYear);
+		listPlan = o02Repo.findHydrocarbonPlan(fiscolYear,OaOfficeCode.officeCodeLike(offCode));
 		plan.setListPlan(listPlan);
 		return plan;
 	}

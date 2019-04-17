@@ -136,7 +136,7 @@ public class Oa0412Service {
 		licen.setApproveName(request.getApproveName());
 		licen.setEndDate(request.getEndDate());
 		licen.setLicenseDate(request.getLicenseDate());
-		licen.setLicenseNo(request.getReceiveNo());
+		licen.setLicenseNo(request.getLicenseNo());
 		licen.setOffCode(request.getOffCode());
 		licen.setOperateName(request.getOperateName());
 		licen.setOperateRemark(request.getOperateRemark());
