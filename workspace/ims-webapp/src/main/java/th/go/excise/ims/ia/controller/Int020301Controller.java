@@ -77,14 +77,14 @@ public class Int020301Controller {
 		return responseData;
 	}
 
-	@GetMapping("/info/config/{idHdr}/{budgetYear}/{idConfig}")
+	@GetMapping("/info/config/{idHdr}/{budgetYear}/{idConfig}/{officeCode}")
 	@ResponseBody
 	public ResponseData<List<Int020301InfoVo>> findInfoByIdHdrRisk(@PathVariable("idHdr") String idHdrStr,
-			@PathVariable("budgetYear") String budgetYear, @PathVariable("idConfig") String idConfig) {
+			@PathVariable("budgetYear") String budgetYear, @PathVariable("idConfig") String idConfig, @PathVariable("officeCode") String officeCode) {
 		ResponseData<List<Int020301InfoVo>> responseData = new ResponseData<List<Int020301InfoVo>>();
 		List<Int020301InfoVo> data = new ArrayList<>();
 		try {
-			data = int020301Service.findInfoByIdHdrRisk(idHdrStr, budgetYear, idConfig);
+			data = int020301Service.findInfoByIdHdrRisk(idHdrStr, budgetYear, idConfig, officeCode);
 			responseData.setData(data);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

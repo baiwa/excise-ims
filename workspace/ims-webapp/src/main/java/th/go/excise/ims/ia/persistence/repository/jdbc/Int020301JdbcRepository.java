@@ -63,7 +63,7 @@ public class Int020301JdbcRepository {
 		params.add(idSide);
 		if (!"all".equals(secter) && secter != null && !StringUtils.isEmpty(secter)) {
 			sqlBuilder.append(" AND qmh.IS_DELETED = 'N'AND qmh.OFFICE_CODE like ? ");
-			params.add(secter + "%");
+			params.add(secter.substring(0, 2) + "%");
 		}
 		sqlBuilder.append(" ORDER BY qmh.OFFICE_CODE ASC ");
 		List<Int020301InfoVo> data = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), infoRowMapper);

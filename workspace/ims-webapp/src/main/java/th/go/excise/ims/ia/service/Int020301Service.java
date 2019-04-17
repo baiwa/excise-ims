@@ -132,8 +132,12 @@ public class Int020301Service {
 					all = all + sum;
 					declineValue = declineValue + sideDtl.getDeclineValue().doubleValue();
 					condition = conditionConfigs(sideDtl.getDeclineValue(), new BigDecimal(sum), configs);
-					double sumPercent = sideDtl.getDeclineValue().doubleValue()
-							/ (sideDtl.getDeclineValue().doubleValue() + sideDtl.getAcceptValue().doubleValue()) * 100;
+					double sumPercent = 0;
+					if(((sideDtl.getDeclineValue().doubleValue() + sideDtl.getAcceptValue().doubleValue()) * 100) > 0) {
+						sumPercent = sideDtl.getDeclineValue().doubleValue()
+								/ (sideDtl.getDeclineValue().doubleValue() + sideDtl.getAcceptValue().doubleValue()) * 100;
+					}
+					
 					cal = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(sumPercent), configFactor);
 				} else {
 					if (sideDtl.getAcceptValue() != null) {
@@ -167,7 +171,10 @@ public class Int020301Service {
 			data.setRiskQuantity(new BigDecimal(sideDtls.size()));
 			// Sum Data
 			condition = conditionConfigs(new BigDecimal(declineValue), new BigDecimal(all), configs);
-			double avg = (declineValue / all) * 100;
+			double avg = 0;
+			if(all > 0) {
+				avg = (declineValue / all) * 100;
+			}
 			cal = new IntCalculateCriteriaVo();
 			cal = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(avg), configFactor);
 			data.setIntCalculateCriteriaVo(cal);
@@ -209,12 +216,12 @@ public class Int020301Service {
 		return datas;
 	}
 
-	public List<Int020301InfoVo> findInfoByIdHdrRisk(String idHdrStr, String budgetYear, String idConfigStr) {
+	public List<Int020301InfoVo> findInfoByIdHdrRisk(String idHdrStr, String budgetYear, String idConfigStr, String officeCode) {
 		BigDecimal idHdr = new BigDecimal(idHdrStr);
 		BigDecimal idConfig = new BigDecimal(idConfigStr);
 		IaRiskQtnConfig configs = iaRiskQtnConfigRepository.findByIdQtnHdrAndIsDeleted(idHdr, "N");
 		List<Int020301InfoVo> datas = new ArrayList<>();
-		datas = int020301JdbcRepository.findInfoByIdSide(idHdr, budgetYear, null);
+		datas = int020301JdbcRepository.findInfoByIdSide(idHdr, budgetYear, officeCode );
 		Optional<IaRiskFactorsConfig> config = iaRiskFactorsConfigRep.findById(idConfig);
 		IaRiskFactorsConfig configFactor = iaRiskFactorsConfigRepository.findById(idConfig).get();
 		IntCalculateCriteriaVo cal = new IntCalculateCriteriaVo();
@@ -244,10 +251,13 @@ public class Int020301Service {
 						all = all + sum;
 						declineValue = declineValue + sideDtl.getDeclineValue().doubleValue();
 						condition = conditionConfigs(sideDtl.getDeclineValue(), new BigDecimal(sum), configs);
-
-						double sumPercent = sideDtl.getDeclineValue().doubleValue()
-								/ (sideDtl.getDeclineValue().doubleValue() + sideDtl.getAcceptValue().doubleValue())
-								* 100;
+						
+						double sumPercent = 0;
+						if(((sideDtl.getDeclineValue().doubleValue() + sideDtl.getAcceptValue().doubleValue())* 100) > 0) {
+							sumPercent = sideDtl.getDeclineValue().doubleValue()
+									/ (sideDtl.getDeclineValue().doubleValue() + sideDtl.getAcceptValue().doubleValue()) * 100;
+						}
+						
 						cal = IntCalculateCriteriaUtil.calculateCriteria(new BigDecimal(sumPercent), configFactor);
 					} else {
 						if (sideDtl.getAcceptValue() != null) {
@@ -274,7 +284,10 @@ public class Int020301Service {
 				// RiskQuantity
 				data.setRiskQuantity(new BigDecimal(sideDtls.size()));
 				// Sum Data
-				double avg = (declineValue / all) * 100;
+				double avg =  0;
+				if(all > 0) {
+					avg = (declineValue / all) * 100;
+				}
 
 				if (avg >= 0) {
 					data.setAvgRisk(new BigDecimal(avg));
@@ -314,8 +327,10 @@ public class Int020301Service {
 	public IaRiskFactorsConfig matchConfigQtnWithConfig(IaRiskQtnConfig configQtn, BigDecimal IdHdr) {
 		IaRiskFactorsConfig con = new IaRiskFactorsConfig();
 		IaQuestionnaireHdr hdrList = iaQuestionnaireHdrRepository.findById(IdHdr).get();
-		con.setFactorsLevel(new BigDecimal(hdrList.getFactorLevel()));
-
+		
+		if(hdrList.getFactorLevel() != null) {
+			con.setFactorsLevel(new BigDecimal(hdrList.getFactorLevel()));
+		}
 		con.setVerylow(configQtn.getVerylow());
 		con.setVerylowStart((configQtn.getVerylowStart() != null) ? configQtn.getVerylowStart().toString() : "");
 		con.setVerylowEnd((configQtn.getVerylowEnd() != null) ? configQtn.getVerylowEnd().toString() : "");
@@ -880,7 +895,7 @@ public class Int020301Service {
 		rowNum = 10 + test;
 		cellNum = 0;
 		String idConfigStr = idConfig.toString();
-		List<Int020301InfoVo> details = findInfoByIdHdrRisk(idHdrStr, budgetYear, idConfigStr);
+		List<Int020301InfoVo> details = findInfoByIdHdrRisk(idHdrStr, budgetYear, idConfigStr, null);
 		for (Int020301InfoVo detail : details) {
 			// Re Initial
 			cellNum = 0;
