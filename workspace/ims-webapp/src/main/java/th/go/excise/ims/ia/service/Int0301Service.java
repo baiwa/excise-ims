@@ -35,7 +35,7 @@ public class Int0301Service {
 
 	@Autowired
 	private IaRiskFactorsRepository iaRiskFactorsRepository;
-	
+
 	@Autowired
 	private UpdateStatusRiskFactorsService updateStatusRiskFactorsService;
 
@@ -136,13 +136,35 @@ public class Int0301Service {
 //		}
 		String res = "";
 		if (StringUtils.isNotBlank(condition)) {
-			if ("<".equals(condition)) {
-				res = " น้อยกว่า  " + start + " " + unit;
-			} else if ("<>".equals(condition)) {
-				res = " ระหว่าง  " + start + " ถึง " + end + " " + unit;
-			} else if (">".equals(condition)) {
-				res = " มากกว่า  " + start + " " + unit;
+			String condition1 = condition.split("\\|")[0];
+			String condition2 = condition.split("\\|")[1];
+			if ("=".equals(condition1)) {
+				res = " เท่ากับ  " + start + " " + unit;
+			} else if (">=".equals(condition1)) {
+				res = " มากกว่าเท่ากับ  " + start + checkCondition(condition2, end, unit);
+			} else if ("<=".equals(condition1)) {
+				res = " น้อยกว่าเท่ากับ  " + start+ checkCondition(condition2, end, unit); ;
+			} else if (">".equals(condition1)) {
+				res = " มากกว่า  " + start + checkCondition(condition2, end, unit);
+			} else if ("<".equals(condition1)) {
+				res = " น้อยกว่า  " + start + checkCondition(condition2, end, unit);
 			}
+		}
+		return res;
+	}
+
+	private String checkCondition(String condition, String end, String unit) {
+		String res = "";
+		if ("<".equals(condition)) {
+			res = " น้อยกว่า " + end + " " + unit;
+		} else if (">".equals(condition)) {
+			res = " มากกว่า " + end + " " + unit;
+		} else if ("<=".equals(condition)) {
+			res = " น้อยกว่าเท่ากับ " + end + " " + unit;
+		} else if (">=".equals(condition)) {
+			res = " มากกว่าเท่ากับ " + end + " " + unit;
+		} else if ("=".equals(condition)) {
+			res = " เท่ากับ " + end + " " + unit;
 		}
 		return res;
 	}
@@ -202,9 +224,9 @@ public class Int0301Service {
 		Date endDate = ConvertDateUtils.parseStringToDate(form.getEndDate(), ConvertDateUtils.DD_MM_YYYY);
 		entity.setEndDate(endDate);
 		iaRiskFactorsConfigRepository.save(entity);
-		
-		updateStatusRiskFactorsService.updateStatusIaRiskFactors(formConfig.getIdFactors(), IaConstants.IA_STATUS_RISK_FACTORS.STATUS_2_CODE);
-		
+
+		updateStatusRiskFactorsService.updateStatusIaRiskFactors(formConfig.getIdFactors(),
+				IaConstants.IA_STATUS_RISK_FACTORS.STATUS_2_CODE);
 
 	}
 

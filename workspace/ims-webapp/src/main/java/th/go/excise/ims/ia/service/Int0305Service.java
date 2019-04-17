@@ -94,6 +94,7 @@ public class Int0305Service {
 		entity1 = iaRiskFactorsMasterRepository.findById(form.getIdMaster()).get();
 		entity1.setRiskFactorsMaster(form.getRiskFactorsMaster());
 		entity1.setSide(form.getSide());
+		entity1.setDataEvaluate(form.getDataEvaluate());
 		iaRiskFactorsMasterRepository.save(entity1);
 	}
 
@@ -199,7 +200,7 @@ public class Int0305Service {
 		masterData.setSide(form.getSide());
 		masterData.setInspectionWork(form.getInspectionWork());
 		masterData.setNotDelete("N");
-		masterData.setDataEvaluate("NEW");
+		masterData.setDataEvaluate(form.getDataEvaluate());
 		IaRiskFactorsMaster masterDataRes = iaRiskFactorsMasterRepository.save(masterData);
 
 		IaRiskFactorsStatus dataFactorsStatus = new IaRiskFactorsStatus();

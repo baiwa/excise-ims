@@ -20,10 +20,12 @@ import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMade;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMadeHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
+import th.go.excise.ims.ia.persistence.entity.IaRiskQtnConfig;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireMadeRepository;
 import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireSideRepository;
+import th.go.excise.ims.ia.persistence.repository.IaRiskQtnConfigRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireHdrJdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaQuestionnaireMadeHdrJdbcRepository;
 import th.go.excise.ims.ia.vo.Int020101SideVo;
@@ -48,9 +50,12 @@ public class Int02Service {
 
 	@Autowired
 	private IaQuestionnaireMadeRepository iaQuestionnaireMadeRepository;
-	
+
 	@Autowired
 	private IaQuestionnaireSideRepository iaQuestionnaireSideRepository;
+
+	@Autowired
+	private IaRiskQtnConfigRepository iaRiskQtnConfigRepository;
 
 	public DataTableAjax<Int02Vo> filterQtnHdr(Int02FormVo request) {
 
@@ -126,8 +131,11 @@ public class Int02Service {
 		data.setNote(request.getNote());
 		data.setToDepartment(res.getToDepartment());
 		data.setUsagePatterns(res.getUsagePatterns());
-		if(IaConstants.USAGE_PATTERNS_QTN.QUESTIONNAIR_DESC.equals(res.getUsagePatterns())) {
+		if (IaConstants.USAGE_PATTERNS_QTN.QUESTIONNAIR_DESC.equals(res.getUsagePatterns())) {
 			/* flag 'Q' */
+			if (!(data.getFactorLevel().equals(res.getFactorLevel()))) {
+				updateConfig(id, res.getFactorLevel());
+			}
 			data.setFactorLevel(res.getFactorLevel());
 		} else {
 			data.setFactorLevel(IaConstants.USAGE_PATTERNS_QTN.NULL_DESC);
@@ -174,12 +182,14 @@ public class Int02Service {
 //				daraHdr.setStatus("FAIL_SEND_QTN");
 				iaQuestionnaireHdrRepository.save(daraHdr);
 
-				List<IaQuestionnaireMadeHdr> dataMadeHdr = iaQuestionnaireMadeHdrRepository.findByIdHdrAndIsDeleted(daraHdr.getId(), "N");
+				List<IaQuestionnaireMadeHdr> dataMadeHdr = iaQuestionnaireMadeHdrRepository
+						.findByIdHdrAndIsDeleted(daraHdr.getId(), "N");
 				for (IaQuestionnaireMadeHdr madeHdr : dataMadeHdr) {
 //					madeHdr.setStatus("FAIL_SEND_QTN");
 					iaQuestionnaireMadeHdrRepository.save(madeHdr);
 					/* update status questionnaire made dtl */
-					List<IaQuestionnaireMade> madeDtlList = iaQuestionnaireMadeRepository.findByIdMadeHdrAndIsDeleted(madeHdr.getId(), "N");
+					List<IaQuestionnaireMade> madeDtlList = iaQuestionnaireMadeRepository
+							.findByIdMadeHdrAndIsDeleted(madeHdr.getId(), "N");
 					for (IaQuestionnaireMade madeDtl : madeDtlList) {
 //						madeDtl.setStatus("FAIL_SEND_QTN");
 						iaQuestionnaireMadeRepository.save(madeDtl);
@@ -189,6 +199,81 @@ public class Int02Service {
 				iaQuestionnaireHdrRepository.deleteById(daraHdr.getId());
 			}
 		}
+	}
+
+	public void updateConfig(BigDecimal id, String factorLevel) {
+		IaRiskQtnConfig data = iaRiskQtnConfigRepository.findByIdQtnHdr(id);
+		if ("3".equals(factorLevel)) {
+			data.setVerylow(null);
+			data.setVerylowStart(null);
+			data.setVerylowEnd(null);
+			data.setVerylowRating(null);
+			data.setVerylowColor(null);
+			data.setVerylowCondition(null);
+
+			data.setLow("ต่ำ");
+			data.setLowStart(new BigDecimal(50));
+			data.setLowEnd(null);
+			data.setLowRating(new BigDecimal(1));
+			data.setLowColor("เขียว");
+			data.setLowCondition("<|N");
+
+			data.setMedium("ปานกลาง");
+			data.setMediumStart(new BigDecimal(50));
+			data.setMediumEnd(new BigDecimal(75));
+			data.setMediumRating(new BigDecimal(2));
+			data.setMediumColor("เหลือง");
+			data.setMediumCondition(">=|<=");
+
+			data.setHigh("สูง");
+			data.setHighStart(new BigDecimal(75));
+			data.setHighEnd(null);
+			data.setHighRating(new BigDecimal(3));
+			data.setHighColor("ส้ม");
+			data.setHighCondition(">|N");
+
+			data.setVeryhigh(null);
+			data.setVeryhighStart(null);
+			data.setVeryhighEnd(null);
+			data.setVeryhighRating(null);
+			data.setVeryhighColor(null);
+			data.setVeryhighCondition(null);
+
+		} else if ("5".equals(factorLevel)) {
+
+			data.setVerylow("ต่ำมาก");
+			data.setVerylowStart("5");
+			data.setVerylowEnd(null);
+			data.setVerylowRating(new BigDecimal(1));
+			data.setVerylowColor("เขียวเข้ม");
+			data.setVerylowCondition("<|N");
+			data.setLow("ต่ำ");
+			data.setLowStart(new BigDecimal(5));
+			data.setLowEnd(new BigDecimal(25));
+			data.setLowRating(new BigDecimal(2));
+			data.setLowColor("เขียว");
+			data.setLowCondition(">=|<=");
+			data.setMedium("ปานกลาง");
+			data.setMediumStart(new BigDecimal(50));
+			data.setMediumEnd(new BigDecimal(75));
+			data.setMediumRating(new BigDecimal(3));
+			data.setMediumColor("เหลือง");
+			data.setMediumCondition(">=|<=");
+			data.setHigh("สูง");
+			data.setHighStart(new BigDecimal(75));
+			data.setHighEnd(new BigDecimal(85));
+			data.setHighRating(new BigDecimal(4));
+			data.setHighColor("ส้ม");
+			data.setHighCondition(">=|<=");
+			data.setVeryhigh("สูงมาก");
+			data.setVeryhighStart("85");
+			data.setVeryhighEnd(null);
+			data.setVeryhighRating(new BigDecimal(5));
+			data.setVeryhighColor("แดง");
+			data.setVeryhighCondition(">|N");
+
+		}
+		iaRiskQtnConfigRepository.save(data);
 	}
 
 }
