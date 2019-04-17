@@ -28,11 +28,11 @@ import th.go.excise.ims.ia.persistence.repository.IaRiskIncomePerformRepository;
 import th.go.excise.ims.ia.util.ExcelUtil;
 import th.go.excise.ims.ia.util.IntCalculateCriteriaUtil;
 import th.go.excise.ims.ia.vo.ExportRiskVo;
-import th.go.excise.ims.ia.vo.Int020301DataVo;
-import th.go.excise.ims.ia.vo.Int020301InfoVo;
 import th.go.excise.ims.ia.vo.Int030407Vo;
 import th.go.excise.ims.ia.vo.IntCalculateCriteriaVo;
-import th.go.excise.ims.preferences.vo.ExcelHeaderNameVo;
+import th.go.excise.ims.ws.client.pcc.incfri8040.oxm.IncFri8040Request;
+import th.go.excise.ims.ws.client.pcc.incfri8040.oxm.IncomeList;
+import th.go.excise.ims.ws.client.pcc.incfri8040.service.IncFri8040Service;
 
 @Service
 public class Int030407Service {
@@ -48,13 +48,25 @@ public class Int030407Service {
 
 	@Autowired
 	private Int0301Service int0301Service;
+	
+	@Autowired
+	private IncFri8040Service incFri8040Service;
 
-	public List<Int030407Vo> findByBudgetYear(String budgetYear, String idConfigStr) {
+	public List<Int030407Vo> findByBudgetYear(String budgetYear, String idConfigStr) throws IOException {
+		/* web service */
+//		IncFri8040Request requestWs = new IncFri8040Request();
+//		requestWs.setBudgetYear("2553");
+//		requestWs.setDataPerPage("10");
+//		requestWs.setDateType("Income");
+//		requestWs.setPageNo("1");
+//		List<IncomeList> incomeList = incFri8040Service.postRestFul(requestWs);
+		/* ---------------------------------------- */
+		
 		BigDecimal idConfig = new BigDecimal(idConfigStr);
 		List<IaRiskIncomePerform> incomes = iaRiskIncomePerformRep.findByBudgetYear(budgetYear);
 		Optional<IaRiskFactorsConfig> config = iaRiskFactorsConfigRep.findById(idConfig);
 		List<Int030407Vo> lists = new ArrayList<>();
-		Int030407Vo list;
+		Int030407Vo list = null;
 		for (IaRiskIncomePerform income : incomes) {
 			BigDecimal diffAmount = income.getSumAmount().subtract(income.getForecaseAmount());
 			BigDecimal rateAmount = new BigDecimal(
