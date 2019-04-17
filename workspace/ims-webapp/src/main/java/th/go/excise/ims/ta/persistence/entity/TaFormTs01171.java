@@ -55,7 +55,7 @@ public class TaFormTs01171 extends BaseEntity {
 	@Column(name = "FAC_THN_NAME")
 	private String facThnName;
 	@Column(name = "FAC_TAMBOLNAME")
-	private String facTambolname;
+	private String facTambolName;
 	@Column(name = "FAC_AMPHUR_NAME")
 	private String facAmphurName;
 	@Column(name = "FAC_PROVINCE_NAME")
@@ -239,12 +239,12 @@ public class TaFormTs01171 extends BaseEntity {
 		this.facThnName = facThnName;
 	}
 
-	public String getFacTambolname() {
-		return facTambolname;
+	public String getFacTambolName() {
+		return facTambolName;
 	}
 
-	public void setFacTambolname(String facTambolname) {
-		this.facTambolname = facTambolname;
+	public void setFacTambolName(String facTambolName) {
+		this.facTambolName = facTambolName;
 	}
 
 	public String getFacAmphurName() {
