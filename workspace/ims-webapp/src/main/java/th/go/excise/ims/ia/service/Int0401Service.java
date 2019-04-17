@@ -1,5 +1,6 @@
 package th.go.excise.ims.ia.service;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +79,7 @@ public class Int0401Service {
 	
 
 	public List<Int0401Vo> findByBudgetYearAndInspectionWork(String budgetYear, String inspectionWorkStr,
-			String status) {
+			String status) throws IOException {
 		BigDecimal inspectionWork = new BigDecimal(inspectionWorkStr);
 		List<Int0401Vo> lists = new ArrayList<>();
 		List<IaRiskSelectCase> selectCases = int0401JdbcRep.findRow(budgetYear, inspectionWork, status);
@@ -467,7 +468,7 @@ return calVo;
 
 } 
 	// *****************  Set IntCalculateCriteriaVo Data_Evaluate 7 = income_perform  *****************  
-	public IntCalculateCriteriaVo calIncomePerform(BigDecimal idFactors,String budgetYear, BigDecimal inspectionWork,String exciseCode) {
+	public IntCalculateCriteriaVo calIncomePerform(BigDecimal idFactors,String budgetYear, BigDecimal inspectionWork,String exciseCode) throws IOException {
 		IntCalculateCriteriaVo calVo = new IntCalculateCriteriaVo();
 
 		IaRiskFactorsConfig config = iaRiskFactorsConfigRepository.findByIdFactors(idFactors);
@@ -511,7 +512,7 @@ return calVo;
 		return lists;
 	}
 
-	public List<Int0401Vo> updateRowByStatus(List<BigDecimal> ids, String status) {
+	public List<Int0401Vo> updateRowByStatus(List<BigDecimal> ids, String status) throws IOException {
 		List<IaRiskSelectCase> selectCases = (List<IaRiskSelectCase>) iaRiskSelectCaseRep.findAllById(ids);
 		for (IaRiskSelectCase selectCase : selectCases) {
 			selectCase.setStatus(status);
