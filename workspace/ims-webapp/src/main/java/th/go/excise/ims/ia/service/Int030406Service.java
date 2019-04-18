@@ -7,6 +7,8 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -392,6 +394,20 @@ public class Int030406Service {
 			}
 
 		}
+		
+		Collections.sort(resDataCal, new Comparator<Int030406Vo>() {
+			@Override
+			public int compare(final Int030406Vo object1, final Int030406Vo object2) {
+				int obj1 = Integer.valueOf(object1.getIaRiskCheckPeriod().getLongTime().toString());
+				int obj2 = Integer.valueOf(object2.getIaRiskCheckPeriod().getLongTime().toString());
+				
+//				Very --> Little
+				return (obj1 > obj2)? -1 : (obj1 < obj2) ? 1 : 0;
+				
+//				Little --> Very
+//				return (obj2 > obj1)? -1 : (obj2 < obj1) ? 1 : 0; 
+			}
+		});
 
 		return resDataCal;
 	}

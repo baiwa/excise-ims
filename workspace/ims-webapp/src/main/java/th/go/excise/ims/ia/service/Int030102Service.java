@@ -309,7 +309,7 @@ public class Int030102Service {
 				dataConfig.setRiskUnit(dataCon.getRiskUnit());
 				dataConfig.setRiskIndicators(dataCon.getRiskIndicators());
 				dataConfig.setInfoUsedRiskDesc(dataCon.getInfoUsedRiskDesc());
-				
+				dataConfig.setInfoUsedRisk(dataCon.getInfoUsedRisk());
 				dataConfig.setVerylow(dataCon.getVerylow());
 				dataConfig.setVerylowStart(dataCon.getVerylowStart());
 				dataConfig.setVerylowEnd(dataCon.getVerylowEnd());

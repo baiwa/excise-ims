@@ -138,12 +138,18 @@ public class Int0301Service {
 		if (StringUtils.isNotBlank(condition)) {
 			String condition1 = condition.split("\\|")[0];
 			String condition2 = condition.split("\\|")[1];
+			if(StringUtils.isAllEmpty(start)) {
+				start = "-";
+			}
+			if(StringUtils.isAllEmpty(end)) {
+				end = "-";
+			}
 			if ("=".equals(condition1)) {
 				res = " เท่ากับ  " + start + " " + unit;
 			} else if (">=".equals(condition1)) {
 				res = " มากกว่าเท่ากับ  " + start + checkCondition(condition2, end, unit);
 			} else if ("<=".equals(condition1)) {
-				res = " น้อยกว่าเท่ากับ  " + start+ checkCondition(condition2, end, unit); ;
+				res = " น้อยกว่าเท่ากับ  " + start + checkCondition(condition2, end, unit);
 			} else if (">".equals(condition1)) {
 				res = " มากกว่า  " + start + checkCondition(condition2, end, unit);
 			} else if ("<".equals(condition1)) {
@@ -165,6 +171,8 @@ public class Int0301Service {
 			res = " มากกว่าเท่ากับ " + end + " " + unit;
 		} else if ("=".equals(condition)) {
 			res = " เท่ากับ " + end + " " + unit;
+		} else if ("N".equals(condition)) {
+			res = " " + unit;
 		}
 		return res;
 	}

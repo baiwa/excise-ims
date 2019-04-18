@@ -575,6 +575,8 @@ public class Int030101Service {
 		configData.setRiskIndicators(form.getRiskIndicators());
 		configData.setRiskUnit(form.getRiskUnit());
 		iaRiskFactorsConfigRepository.save(configData);
+		
+		saveRiskFactor(form.getIdFactors(),form.getDataEvaluate());
 
 		List<IaRiskFactorsData> dataList = form.getIaRiskFactorsDataList();
 		IaRiskFactorsData dataSet = null;
@@ -601,6 +603,12 @@ public class Int030101Service {
 			}
 		}
 
+	}
+	
+	public void saveRiskFactor(BigDecimal idFactor,String dataEvaluate) {
+		IaRiskFactors data = iaRiskFactorsRepository.findById(idFactor).get();
+		data.setDataEvaluate(dataEvaluate);
+		iaRiskFactorsRepository.save(data);
 	}
 
 	@Transactional

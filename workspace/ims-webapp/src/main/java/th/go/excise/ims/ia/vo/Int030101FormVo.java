@@ -19,7 +19,9 @@ public class Int030101FormVo {
 	private String riskUnit;
 	private String riskIndicators;
 	private MultipartFile file;
-
+	
+	private String dataEvaluate;
+	
 	private List<IaRiskFactorsData> iaRiskFactorsDataList;
 
 	public BigDecimal getIdFactors() {
@@ -116,6 +118,14 @@ public class Int030101FormVo {
 
 	public void setRiskIndicators(String riskIndicators) {
 		this.riskIndicators = riskIndicators;
+	}
+
+	public String getDataEvaluate() {
+		return dataEvaluate;
+	}
+
+	public void setDataEvaluate(String dataEvaluate) {
+		this.dataEvaluate = dataEvaluate;
 	}
 
 }
