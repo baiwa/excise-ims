@@ -25,6 +25,9 @@ public class Int0401Vo {
 	private BigDecimal riskRate;
 	private String riskText;
 	private String riskColor;
+	
+	/* ExciseDepartmentVo */
+	private ExciseDepartmentVo exciseDepartmentVo;
 
 	public BigDecimal getId() {
 		return id;
@@ -162,10 +165,12 @@ public class Int0401Vo {
 		this.riskColor = riskColor;
 	}
 
-	
+	public ExciseDepartmentVo getExciseDepartmentVo() {
+		return exciseDepartmentVo;
+	}
 
-	
-	
-	
+	public void setExciseDepartmentVo(ExciseDepartmentVo exciseDepartmentVo) {
+		this.exciseDepartmentVo = exciseDepartmentVo;
+	}
 
 }

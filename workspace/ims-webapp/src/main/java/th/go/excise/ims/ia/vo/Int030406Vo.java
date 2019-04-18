@@ -7,6 +7,10 @@ public class Int030406Vo {
 	private IntCalculateCriteriaVo intCalculateCriteriaVo;
 	private String dateFrom;
 	private String dateTo;
+	
+	/* ExciseDepartmentVo */
+	private ExciseDepartmentVo exciseDepartmentVo;
+	
 
 	public IaRiskCheckPeriod getIaRiskCheckPeriod() {
 		return iaRiskCheckPeriod;
@@ -38,6 +42,14 @@ public class Int030406Vo {
 
 	public void setDateTo(String dateTo) {
 		this.dateTo = dateTo;
+	}
+
+	public ExciseDepartmentVo getExciseDepartmentVo() {
+		return exciseDepartmentVo;
+	}
+
+	public void setExciseDepartmentVo(ExciseDepartmentVo exciseDepartmentVo) {
+		this.exciseDepartmentVo = exciseDepartmentVo;
 	}
 
 }

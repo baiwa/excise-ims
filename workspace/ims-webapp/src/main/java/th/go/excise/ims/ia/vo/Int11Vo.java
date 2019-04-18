@@ -6,6 +6,9 @@ public class Int11Vo extends IaConcludeFollowHdr {
 	private String dateToString;
 	private String dateFromString;
 	private String approveDateString;
+	
+	/* ExciseDepartmentVo */
+	private ExciseDepartmentVo exciseDepartmentVo;
 
 	public String getDateToString() {
 		return dateToString;
@@ -29,6 +32,14 @@ public class Int11Vo extends IaConcludeFollowHdr {
 
 	public void setApproveDateString(String approveDateString) {
 		this.approveDateString = approveDateString;
+	}
+
+	public ExciseDepartmentVo getExciseDepartmentVo() {
+		return exciseDepartmentVo;
+	}
+
+	public void setExciseDepartmentVo(ExciseDepartmentVo exciseDepartmentVo) {
+		this.exciseDepartmentVo = exciseDepartmentVo;
 	}
 
 }
