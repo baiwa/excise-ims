@@ -2,6 +2,7 @@ package th.go.excise.ims.oa.service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,7 +98,7 @@ public class Oa0701Service {
 					}
 
 					taxListDtl.add(reg8000.getTaxAmount().toString());
-					/*if (idx > 0) {
+					if (idx > 0) {
 						String taxAmBeforArr = taxListDtl.get(idx - 1);
 						BigDecimal taxAmBefor = new BigDecimal(taxAmBeforArr);
 						BigDecimal sub = reg8000.getTaxAmount().subtract(taxAmBefor); // b-a
@@ -106,14 +108,34 @@ public class Oa0701Service {
 						percenDiffList.add(avg.toString() + " %");
 					} else {
 						percenDiffList.add("");
-					}*/
+					}
 				}else {
 					percenDiffList.add("");
 					taxListDtl.add(BigDecimal.ZERO.toString());
 				}			
 			}
+			//calculate months
+				List<String> monthYear = new ArrayList<>();
+				if ("1".equals(formVo.getCheckType())) {
+					String monthStart = "10/"+ (NumberUtils.toInt(formVo.getBudgetYear()) -1);
+					for(int i=0; i< 12; i++){
+						Date date = ConvertDateUtils.parseStringToDate(monthStart, ConvertDateUtils.MM_YYYY);
+						Date addMonth = DateUtils.addMonths(date, i);
+						String dateStr = ConvertDateUtils.formatDateToString(addMonth, ConvertDateUtils.MMM_YYYY_SPAC);
+						monthYear.add(dateStr);
+					}
+				} else if ("2".equals(formVo.getCheckType())){
+					for(int i=0; i< NumberUtils.toInt(formVo.getMonthNum()); i++){
+						Date date = ConvertDateUtils.parseStringToDate(formVo.getMonthStart(), ConvertDateUtils.MM_YYYY);
+						Date addMonth = DateUtils.addMonths(date, i);
+						String dateStr = ConvertDateUtils.formatDateToString(addMonth, ConvertDateUtils.MMM_YYYY_SPAC);
+						monthYear.add(dateStr);
+					}
+			}
 			vo.setTaxPayList(taxListDtl);
 			vo.setPerceneDiff(percenDiffList);
+			vo.setGroupYearMonth(monthYear);
+
 			voList.add(vo);
 		}
 		

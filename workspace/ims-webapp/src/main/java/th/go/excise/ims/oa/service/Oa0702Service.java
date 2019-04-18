@@ -113,28 +113,12 @@ public class Oa0702Service {
             List<String> groupTaxPay = new ArrayList<>();
             List<String> groupYearMonth = new ArrayList<>();
 			for (int i = 0; i < NumberUtils.toInt(formVo.getPreviousYear()); i++) {
-				String yearCopy = null;
-				Date date = null;
-				String monthYear = null;
-				int idx = 0;
-				
-				yearCopy = yearsMonths.get(i);
-				date = ConvertDateUtils.parseStringToDate(yearCopy, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
-				monthYear = ConvertDateUtils.formatDateToString(date, ConvertDateUtils.MMM_YYYY_SPAC);
-				groupYearMonth.add(monthYear);
-				idx = yearsMonths.indexOf(yearCopy);
-				groupTaxPay.add(taxListDtl.get(idx));
-				
-				int countIdx = i;
-				for (int j = 0; j < NumberUtils.toInt(formVo.getPreviousYear()) - 1; j++) {
-					
-					yearCopy = yearsMonths.get(countIdx += NumberUtils.toInt(formVo.getPreviousYear()));
-					date = ConvertDateUtils.parseStringToDate(yearCopy, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
-					monthYear = ConvertDateUtils.formatDateToString(date, ConvertDateUtils.MMM_YYYY_SPAC);
-					groupYearMonth.add(monthYear);
-					idx = yearsMonths.indexOf(yearCopy);
-					groupTaxPay.add(taxListDtl.get(idx));
-				}
+				Date date = ConvertDateUtils.parseStringToDate(formVo.getMonthStart(), ConvertDateUtils.MM_YYYY);
+				Date subYear = DateUtils.addYears(date, -i);
+				for (int j=0; j<NumberUtils.toInt(formVo.getMonthNum()); i++){
+                    Date addMonth = DateUtils.addMonths(subYear, j);
+                    groupYearMonth.add(ConvertDateUtils.formatDateToString(addMonth, ConvertDateUtils.MMM_YYYY_SPAC));
+                }
 			}
 
             vo.setGroupTaxPay(groupTaxPay);
