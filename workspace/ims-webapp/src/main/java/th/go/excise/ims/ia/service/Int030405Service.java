@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -136,6 +138,21 @@ public class Int030405Service {
 //		intCalculateCriteriaUtil.IntCalculateCriteriaVo()
 //		resDataCal
 //		IntCalculateCriteriaVo risk = IntCalculateCriteriaUtil.calculateCriteria(rateAmount, config.get());
+		
+		Collections.sort(resDataCal, new Comparator<Int030405Vo>() {
+			@Override
+			public int compare(final Int030405Vo object1, final Int030405Vo object2) {
+				int obj1 = Integer.valueOf(object1.getSumCountError());
+				int obj2 = Integer.valueOf(object2.getSumCountError());
+				
+//				Very --> Little
+				return (obj1 > obj2)? -1 : (obj1 < obj2) ? 1 : 0;
+				
+//				Little --> Very
+//				return (obj2 > obj1)? -1 : (obj2 < obj1) ? 1 : 0; 
+			}
+		});
+		
 		return resDataCal;
 	}
 
@@ -246,26 +263,31 @@ public class Int030405Service {
 				exportRiskData.getIaRiskFactorsConfig().getRiskUnit(),
 				exportRiskData.getIaRiskFactorsConfig().getRiskUnit());
 
-		String[] tbTHCondition3 = { exportRiskData.getIaRiskFactorsConfig().getHigh(),
-				exportRiskData.getIaRiskFactorsConfig().getMedium(), exportRiskData.getIaRiskFactorsConfig().getLow() };
-		String[] tbTHCondition5 = { exportRiskData.getIaRiskFactorsConfig().getVeryhigh(),
-				exportRiskData.getIaRiskFactorsConfig().getHigh(), exportRiskData.getIaRiskFactorsConfig().getMedium(),
+		String[] tbTHCondition3 = { 
+				exportRiskData.getIaRiskFactorsConfig().getHigh(),
+				exportRiskData.getIaRiskFactorsConfig().getMedium(), 
+				exportRiskData.getIaRiskFactorsConfig().getLow() };
+		
+		String[] tbTHCondition5 = { 
+				exportRiskData.getIaRiskFactorsConfig().getVeryhigh(),
+				exportRiskData.getIaRiskFactorsConfig().getHigh(), 
+				exportRiskData.getIaRiskFactorsConfig().getMedium(),
 				exportRiskData.getIaRiskFactorsConfig().getLow(),
 				exportRiskData.getIaRiskFactorsConfig().getVerylow() };
+		
 		String[] tbTHConvert3 = { high, medium, low };
 		String[] tbTHConvert5 = { veryhigh, high, medium, low, verylow };
+		
 		for (int j = 0; j < test; j++) {
 			// Row [0]
 			Row row6 = sheet.createRow(rowNum);
 			Cell cell6 = row6.createCell(cellNum);
 			cell6 = row6.createCell(cellNum);
 			if (test == 3) {
-				cell6.setCellValue(tbTHCondition3[j] + " : "
-						+ exportRiskData.getIaRiskFactorsConfig().getRiskIndicators() + " " + tbTHConvert3[j]);
+				cell6.setCellValue(tbTHCondition3[j] + " : " + exportRiskData.getIaRiskFactorsConfig().getRiskIndicators() + " " + tbTHConvert3[j]);
 			}
 			if (test == 5) {
-				cell6.setCellValue(tbTHCondition5[j] + " : "
-						+ exportRiskData.getIaRiskFactorsConfig().getRiskIndicators() + " " + tbTHConvert5[j]);
+				cell6.setCellValue(tbTHCondition5[j] + " : " + exportRiskData.getIaRiskFactorsConfig().getRiskIndicators() + " " + tbTHConvert5[j]);
 			}
 			cell6.setCellStyle(TopicCenterlite);
 			rowNum++;
@@ -448,7 +470,7 @@ public class Int030405Service {
 				cell = row.createCell(cellNum++);cell.setCellValue(data2.getCountError());cell.setCellStyle(tdRight);
 			}
 			cell = row.createCell(cellNum++);cell.setCellValue(data.getSumCountError());cell.setCellStyle(tdRight);
-			cell = row.createCell(cellNum++);cell.setCellValue(data.getIntCalculateCriteriaVo().getRiskRate().toString());cell.setCellStyle(styleCustom);
+			cell = row.createCell(cellNum++);cell.setCellValue((data.getIntCalculateCriteriaVo().getRiskRate()!=null)?data.getIntCalculateCriteriaVo().getRiskRate().toString():"");cell.setCellStyle(styleCustom);
 			cell = row.createCell(cellNum++);cell.setCellValue(data.getIntCalculateCriteriaVo().getTranslatingRisk());cell.setCellStyle(styleCustom);
 			
 
