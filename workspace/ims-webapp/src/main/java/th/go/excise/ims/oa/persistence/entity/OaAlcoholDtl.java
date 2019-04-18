@@ -84,8 +84,58 @@ public class OaAlcoholDtl
     private String auditOther;
     @Column(name = "AUDIT_SUGGESTION")
     private String auditSuggestion;
+    @Column(name = "ACH_STAMP")
+    private String achStamp;
+    @Column(name = "ACH_STAMP_REMARK")
+    private String achStampRemark;
+    @Column(name = "EQM_TANK_STATUS")
+    private String eqmTankStatus;
+    @Column(name = "EQM_DISTIL_STATUS")
+    private String eqmDistilStatus;
+    @Column(name = "EQM_PACKING_STATUS")
+    private String eqmPackingStatus;
 
-    public BigDecimal getOaAlcoholDtlId() {
+    public String getEqmTankStatus() {
+		return eqmTankStatus;
+	}
+
+	public void setEqmTankStatus(String eqmTankStatus) {
+		this.eqmTankStatus = eqmTankStatus;
+	}
+
+	public String getEqmDistilStatus() {
+		return eqmDistilStatus;
+	}
+
+	public void setEqmDistilStatus(String eqmDistilStatus) {
+		this.eqmDistilStatus = eqmDistilStatus;
+	}
+
+	public String getEqmPackingStatus() {
+		return eqmPackingStatus;
+	}
+
+	public void setEqmPackingStatus(String eqmPackingStatus) {
+		this.eqmPackingStatus = eqmPackingStatus;
+	}
+
+	public String getAchStamp() {
+		return achStamp;
+	}
+
+	public void setAchStamp(String achStamp) {
+		this.achStamp = achStamp;
+	}
+
+	public String getAchStampRemark() {
+		return achStampRemark;
+	}
+
+	public void setAchStampRemark(String achStampRemark) {
+		this.achStampRemark = achStampRemark;
+	}
+
+	public BigDecimal getOaAlcoholDtlId() {
         return oaAlcoholDtlId;
     }
 

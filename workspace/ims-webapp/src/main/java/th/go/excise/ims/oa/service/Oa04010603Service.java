@@ -12,7 +12,7 @@ import th.go.excise.ims.oa.persistence.repository.OaAlcoholDtlRepository;
 import th.go.excise.ims.oa.vo.Oa020106DtlVo;
 
 @Service
-public class Oa04010601Service {
+public class Oa04010603Service {
 
 	@Autowired
 	private OaAlcoholDtlRepository oaAlcoholDtlRepo;
@@ -34,20 +34,27 @@ public class Oa04010601Service {
 		if (oaAchDtlOpt.isPresent()) {
 			achDtl = oaAchDtlOpt.get();
 			// TODO SET SOMETHING
-			achDtl.setLicenseMenufac(request.getLicenseMenufac());
-			achDtl.setLicenseMenufacRemark(request.getLicenseMenufacRemark());
-			achDtl.setLicenseType2(request.getLicenseType2());
-			achDtl.setLicenseType2Remark(request.getLicenseType2Remark());
-			achDtl.setAchDegree(request.getAchDegree());
-			achDtl.setAchDegreeRemark(request.getAchDegreeRemark());
-			achDtl.setAchCapacity(request.getAchCapacity());
-			achDtl.setAchCapacityRemark(request.getAchCapacityRemark());
-			achDtl.setAchApprove(request.getAchApprove());
-			achDtl.setAchApproveRemark(request.getAchApproveRemark());
-			achDtl.setAchPrice(request.getAchPrice());
-			achDtl.setAchPriceRemark(request.getAchPriceRemark());
-			achDtl.setAchStamp(request.getAchStamp());
-			achDtl.setAchStampRemark(request.getAchStampRemark());
+			achDtl.setPlaceStatus(request.getPlaceStatus());
+			achDtl.setPlaceStatusRemark(request.getPlaceStatusRemark());
+			achDtl.setEqmTank(request.getEqmTank());
+			achDtl.setEqmTankNum(request.getEqmTankNum());
+			achDtl.setEqmTankStatus(request.getEqmTankStatus());
+			achDtl.setEqmDistil(request.getEqmDistil());
+			achDtl.setEqmDistilNum(request.getEqmDistilNum());
+			achDtl.setEqmDistilStatus(request.getEqmDistilStatus());
+			achDtl.setEqmPacking(request.getEqmPacking());
+			achDtl.setEqmPackingNum(request.getEqmPackingNum());
+			achDtl.setEqmPackingStatus(request.getEqmPackingStatus());
+			achDtl.setAudit0701(request.getAudit0701());
+			achDtl.setAudit0701Remark(request.getAudit0701Remark());
+			achDtl.setAudit07021(request.getAudit07021());
+			achDtl.setAudit07021Remark(request.getAudit07021Remark());
+			achDtl.setAudit07022(request.getAudit07022());
+			achDtl.setAudit07022Remark(request.getAudit07022Remark());
+			achDtl.setEquipmentUsed(request.getEquipmentUsed());
+			achDtl.setEquipmentUsedRemark(request.getEquipmentUsedRemark());
+			achDtl.setAuditOther(request.getAuditOther());
+			achDtl.setAuditSuggestion(request.getAuditSuggestion());
 			
 			// TODO SAVE
 			achDtl = oaAlcoholDtlRepo.save(achDtl);

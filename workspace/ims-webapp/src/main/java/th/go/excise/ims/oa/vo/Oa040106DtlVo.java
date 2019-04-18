@@ -2,6 +2,8 @@ package th.go.excise.ims.oa.vo;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+
 public class Oa040106DtlVo {
 	private BigDecimal oaAlcoholDtlId;
 	private BigDecimal oaAlcoholId;
@@ -35,6 +37,24 @@ public class Oa040106DtlVo {
 	private String equipmentUsedRemark;
 	private String auditOther;
 	private String auditSuggestion;
+	private String achStamp;
+    private String achStampRemark;
+
+	public String getAchStamp() {
+		return achStamp;
+	}
+
+	public void setAchStamp(String achStamp) {
+		this.achStamp = achStamp;
+	}
+
+	public String getAchStampRemark() {
+		return achStampRemark;
+	}
+
+	public void setAchStampRemark(String achStampRemark) {
+		this.achStampRemark = achStampRemark;
+	}
 
 	public BigDecimal getOaAlcoholDtlId() {
 		return oaAlcoholDtlId;
