@@ -17,6 +17,7 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESS
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ia.persistence.entity.IaInspectionPlan;
 import th.go.excise.ims.ia.service.Int10Service;
+import th.go.excise.ims.ia.vo.Int10Vo;
 
 @Controller
 @RequestMapping("/api/ia/int10")
@@ -28,11 +29,11 @@ public class Int10Controller {
 	
 	@GetMapping("/find/ins-plan/{budgetYear}/{inspectionWork}/{status}")
 	@ResponseBody
-	public ResponseData<List<IaInspectionPlan>> saveInspectionPlan(@PathVariable("budgetYear") String budgetYear,
+	public ResponseData<List<Int10Vo>> saveInspectionPlan(@PathVariable("budgetYear") String budgetYear,
 			@PathVariable("inspectionWork") String inspectionWorkStr, @PathVariable("status") String status) {
 		logger.info("FILTER INSPECTION_PLAN");
 		
-		ResponseData<List<IaInspectionPlan>> response = new ResponseData<List<IaInspectionPlan>>();
+		ResponseData<List<Int10Vo>> response = new ResponseData<List<Int10Vo>>();
 		try {
 			response.setData(int10Service.findByBudgetYearAndInspectionWork(budgetYear, inspectionWorkStr, status));
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);

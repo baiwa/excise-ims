@@ -207,10 +207,11 @@ public class Int020301Service {
 			} else {
 				data.setAreaName("");
 			}
-
-			ExciseDepartmentVo exciseDepartmentVo = ExciseDepartmentUtil.getExciseDepartment(data.getOfficeCode());
-			data.setExciseDepartmentVo(exciseDepartmentVo);
-
+			
+			if(data.getOfficeCode() != null) {
+				ExciseDepartmentVo exciseDepartmentVo = ExciseDepartmentUtil.getExciseDepartment(data.getOfficeCode());
+				data.setExciseDepartmentVo(exciseDepartmentVo);
+			}
 		}
 
 		return datas;
@@ -318,6 +319,11 @@ public class Int020301Service {
 					data.setAreaName(area.getDeptName());
 				} else {
 					data.setAreaName("");
+				}
+				
+				/* set ExciseDepartmentVo */
+				if(data.getOfficeCode() != null) {
+					data.setExciseDepartmentVo(ExciseDepartmentUtil.getExciseDepartment(data.getOfficeCode()));
 				}
 			}
 		}

@@ -18,14 +18,18 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ia.controller.Int030406Controller;
 import th.go.excise.ims.ia.persistence.entity.IaRiskCheckPeriod;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaRiskCheckPeriodJdbcRepository;
 import th.go.excise.ims.ia.util.ExcelUtil;
+import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
 import th.go.excise.ims.ia.util.IntCalculateCriteriaUtil;
 import th.go.excise.ims.ia.vo.ExportRiskVo;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
@@ -36,6 +40,8 @@ import th.go.excise.ims.ia.vo.IntCalculateCriteriaVo;
 
 @Service
 public class Int030406Service {
+	
+	private Logger logger = LoggerFactory.getLogger(Int030406Service.class);
 
 	@Autowired
 	private Int030405Service int030405Service;
@@ -378,6 +384,12 @@ public class Int030406Service {
 					.setDateTo(ConvertDateUtils.formatDateToString(list.getDateEnd(), ConvertDateUtils.DD_MM_YYYY));
 			resDataCalSet.setIntCalculateCriteriaVo(risk);
 			resDataCal.add(index, resDataCalSet);
+			
+			/* set ExciseDepartmentVo */
+			logger.info(list.getExciseCode());
+			if(list.getExciseCode() != null) {
+				resDataCalSet.setExciseDepartmentVo(ExciseDepartmentUtil.getExciseDepartment(list.getExciseCode()));
+			}
 
 		}
 

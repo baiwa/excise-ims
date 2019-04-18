@@ -19,7 +19,9 @@ import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigAllReposito
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskSelectCaseRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0401JdbcRepository;
+import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
 import th.go.excise.ims.ia.util.IntCalculateCriteriaUtil;
+import th.go.excise.ims.ia.vo.ExciseDepartmentVo;
 import th.go.excise.ims.ia.vo.Int020301InfoVo;
 import th.go.excise.ims.ia.vo.Int030401FormVo;
 import th.go.excise.ims.ia.vo.Int030401Vo;
@@ -222,9 +224,10 @@ public class Int0401Service {
 					list.setRiskColor(calVoRes.getCodeColor());
 				}
 				
-				
-				
-				
+				/* set ExciseDepartmentVo */
+				if(list.getExciseCode() != null) {
+					list.setExciseDepartmentVo(ExciseDepartmentUtil.getExciseDepartment(list.getExciseCode()));
+				}
 				lists.add(list);
 			}
 		}
