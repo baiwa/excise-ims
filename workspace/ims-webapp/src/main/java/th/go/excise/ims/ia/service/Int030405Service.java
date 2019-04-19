@@ -42,7 +42,6 @@ public class Int030405Service {
 
 	@Autowired
 	private IaRiskSystemUnworkingRepository iaRiskSystemUnworkingRepository;
-	
 
 	@Autowired
 	private Int030405JdbcRepository int030405JdbcRepository;
@@ -166,6 +165,9 @@ public class Int030405Service {
 		return int0301Vo;
 	}
 
+	public void updateStartDate(Int030405FormVo form) {
+		int030405JdbcRepository.updateStartDate(form);
+	}
 	
 	public ByteArrayOutputStream exportInt030405(String startMonth,String endMonth,String budgetYear, BigDecimal inspectionWork, BigDecimal idConfig,
 			String riskHrdPaperName, String createUserName, String createLastName, String createPosition,

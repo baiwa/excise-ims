@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
-import th.go.excise.ims.ia.persistence.entity.IaRiskSystemUnworking;
+import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ia.service.Int030405Service;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
 import th.go.excise.ims.ia.vo.Int0301Vo;
@@ -49,6 +51,23 @@ public class Int030405Controller {
 
 		} catch (Exception e) {
 			logger.error("Int030405Controller systemUnworkingList : ", e);
+		}
+		return response;
+	}
+	
+	@PostMapping("/updateStartDate")
+	@ResponseBody
+	public ResponseData<String> updateStartDate(@RequestBody Int030405FormVo form) {
+		ResponseData<String> response = new ResponseData<String>();
+		try {	
+			int030405Service.updateStartDate(form);
+			response.setData("SUCCESS");
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Int030405Controller updateStartDate : ", e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
 	}

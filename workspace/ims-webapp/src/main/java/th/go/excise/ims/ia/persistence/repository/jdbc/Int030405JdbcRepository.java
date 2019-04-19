@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,9 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
-import th.go.excise.ims.ia.persistence.entity.IaRiskSystemUnworking;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
 import th.go.excise.ims.ia.vo.Int0301Vo;
+import th.go.excise.ims.ia.vo.Int030405FormVo;
 import th.go.excise.ims.ia.vo.Int030405Vo;
 
 @Repository
@@ -157,5 +158,18 @@ public class Int030405JdbcRepository {
 		
 		return res;
 	}
+	
+	public void updateStartDate(Int030405FormVo form) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("     UPDATE IA_RISK_FACTORS_CONFIG C   ");
+		sql.append("      SET C.START_DATE   = ? ,         ");
+		sql.append("      C.END_DATE         = ?           ");
+		sql.append("      WHERE C.ID = ?                   ");	
+		Date start = ConvertDateUtils.parseStringToDate(form.getStartDate(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
+		Date end = ConvertDateUtils.parseStringToDate(form.getEndDate(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
+		commonJdbcTemplate.update(sql.toString(), new Object[] { start , end, form.getId()});
+	}
+	
+	
 
 }

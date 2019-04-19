@@ -23,6 +23,7 @@ public class Int030103Service {
 
 	@Autowired
 	private IaRiskFactorsConfigAllRepository iaRiskFactorsConfigAllRepository;
+	
 
 	@Autowired
 	private UpdateStatusRiskFactorsService updateStatusRiskFactorsService;

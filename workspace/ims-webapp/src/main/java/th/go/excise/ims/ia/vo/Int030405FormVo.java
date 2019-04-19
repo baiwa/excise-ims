@@ -6,10 +6,11 @@ public class Int030405FormVo {
 	private String budgetYear;
 	private BigDecimal inspectionWork;
 	private BigDecimal idConfig;
-	
+
 	private String startDate;
 	private String endDate;
-
+	private BigDecimal id;
+	
 	public String getBudgetYear() {
 		return budgetYear;
 	}
@@ -49,7 +50,13 @@ public class Int030405FormVo {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	
-	
 
+	public BigDecimal getId() {
+		return id;
+	}
+
+	public void setId(BigDecimal id) {
+		this.id = id;
+	}
+	
 }
