@@ -225,7 +225,7 @@ public class Int0401Service {
 				}
 				
 				/* set ExciseDepartmentVo */
-				if(list.getExciseCode() != null) {
+				if( list.getExciseCode() != null && list.getExciseCode().length() == 6 ) {
 					list.setExciseDepartmentVo(ExciseDepartmentUtil.getExciseDepartment(list.getExciseCode()));
 				}
 				lists.add(list);

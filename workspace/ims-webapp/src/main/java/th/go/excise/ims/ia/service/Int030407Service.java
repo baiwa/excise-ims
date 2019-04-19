@@ -16,16 +16,20 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ia.controller.Int030407Controller;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.entity.IaRiskIncomePerform;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskIncomePerformRepository;
 import th.go.excise.ims.ia.util.ExcelUtil;
+import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
 import th.go.excise.ims.ia.util.IntCalculateCriteriaUtil;
 import th.go.excise.ims.ia.vo.ExportRiskVo;
 import th.go.excise.ims.ia.vo.Int030407Vo;
@@ -36,7 +40,8 @@ import th.go.excise.ims.ws.client.pcc.incfri8040.service.IncFri8040Service;
 
 @Service
 public class Int030407Service {
-
+	private Logger logger = LoggerFactory.getLogger(Int030407Service.class);
+	
 	@Autowired
 	private IaRiskFactorsConfigRepository iaRiskFactorsConfigRep;
 
@@ -89,6 +94,11 @@ public class Int030407Service {
 				list.setRateRisk(risk.getRiskRate());
 				list.setTextRisk(risk.getTranslatingRisk());
 				list.setIntCalculateCriteriaVo(risk);
+			}
+			/* set ExciseDepartmentVo */
+			logger.info("office-code: {}", list.getOfficeCode());
+			if( list.getOfficeCode() != null && list.getOfficeCode().length() == 6 ) {
+				list.setExciseDepartmentVo(ExciseDepartmentUtil.getExciseDepartment(list.getOfficeCode()));
 			}
 			lists.add(list);
 		}
