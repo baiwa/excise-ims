@@ -72,12 +72,14 @@ public class IaQuestionnaireSideJdbcRepository {
 	public List<Int020101YearVo> findByStatus() {
 		StringBuilder sqlBuilder = new StringBuilder();
 		List<Object> params = new ArrayList<>();
-		sqlBuilder.append(" SELECT H.BUDGET_YEAR FROM IA_QUESTIONNAIRE_HDR H ");
-		sqlBuilder.append(" INNER JOIN IA_QUESTIONNAIRE_MADE_HDR MH ");
-		sqlBuilder.append(" ON MH.ID_HDR = H.ID ");
-		sqlBuilder.append(" WHERE 1=1 AND H.IS_DELETED = 'N' AND H.STATUS = ? " );
-		sqlBuilder.append(" GROUP BY H.BUDGET_YEAR ");
-		params.add(IaConstants.IA_STATUS.STATUS_6_CODE);
+//		sqlBuilder.append(" SELECT H.BUDGET_YEAR FROM IA_QUESTIONNAIRE_HDR H ");
+//		sqlBuilder.append(" INNER JOIN IA_QUESTIONNAIRE_MADE_HDR MH ");
+//		sqlBuilder.append(" ON MH.ID_HDR = H.ID ");
+//		sqlBuilder.append(" WHERE 1=1 AND H.IS_DELETED = 'N' AND H.USAGE_PATTERNS = ? " );
+//		sqlBuilder.append(" GROUP BY H.BUDGET_YEAR ");
+		sqlBuilder.append(" SELECT DISTINCT H.BUDGET_YEAR FROM IA_QUESTIONNAIRE_HDR H ");
+		sqlBuilder.append(" WHERE 1=1 AND H.IS_DELETED = 'N' AND H.USAGE_PATTERNS = ? " );
+		params.add(IaConstants.USAGE_PATTERNS_QTN.FACTOR_DESC);
 		List<Int020101YearVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), int020101YearRowMapper);
 		return datas;
 	}
@@ -106,13 +108,17 @@ public class IaQuestionnaireSideJdbcRepository {
 	public List<Int020101NameVo> findByYearAndStatus(String year) {
 		StringBuilder sqlBuilder = new StringBuilder();
 		List<Object> params = new ArrayList<>();
+//		sqlBuilder.append(" SELECT H.ID,H.QTN_HEADER_NAME FROM IA_QUESTIONNAIRE_HDR H ");
+//		sqlBuilder.append(" INNER JOIN IA_QUESTIONNAIRE_MADE_HDR MH ");
+//		sqlBuilder.append(" ON MH.ID_HDR = H.ID ");
+//		sqlBuilder.append(" WHERE 1=1 AND H.IS_DELETED = 'N' AND H.USAGE_PATTERNS = ? " );
+//		sqlBuilder.append(" AND H.BUDGET_YEAR = ? ");
+//		sqlBuilder.append(" GROUP BY H.ID,H.QTN_HEADER_NAME ");
 		sqlBuilder.append(" SELECT H.ID,H.QTN_HEADER_NAME FROM IA_QUESTIONNAIRE_HDR H ");
-		sqlBuilder.append(" INNER JOIN IA_QUESTIONNAIRE_MADE_HDR MH ");
-		sqlBuilder.append(" ON MH.ID_HDR = H.ID ");
-		sqlBuilder.append(" WHERE 1=1 AND H.IS_DELETED = 'N' AND H.STATUS = ? " );
+		sqlBuilder.append(" WHERE 1=1 AND H.IS_DELETED = 'N' AND H.USAGE_PATTERNS = ? " );
 		sqlBuilder.append(" AND H.BUDGET_YEAR = ? ");
 		sqlBuilder.append(" GROUP BY H.ID,H.QTN_HEADER_NAME ");
-		params.add(IaConstants.IA_STATUS.STATUS_6_CODE);
+		params.add(IaConstants.USAGE_PATTERNS_QTN.FACTOR_DESC);
 		params.add(year);
 		List<Int020101NameVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), int020101NameRowMapper);
 		return datas;
@@ -218,6 +224,21 @@ public class IaQuestionnaireSideJdbcRepository {
 		Integer count = commonJdbcTemplate.queryForObject(sql.toString(), params.toArray(),Integer.class);
 
 		return count;
+	}
+	
+	public String checkUseQtn(BigDecimal idHead) {
+		StringBuilder sqlBuilder = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		sqlBuilder.append(" SELECT COUNT(*) AS QUANTITY ");
+		sqlBuilder.append(" FROM IA_QUESTIONNAIRE_HDR A ");
+		sqlBuilder.append(" INNER JOIN IA_RISK_FACTORS_CONFIG B ");
+		sqlBuilder.append(" ON A.ID = B.INFO_USED_RISK ");
+		sqlBuilder.append(" WHERE B.INFO_USED_RISK = ? ");
+		params.add(idHead);
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		List<Int020101Vo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(),new BeanPropertyRowMapper(Int020101Vo.class));
+		String data = datas.get(0).getQuantity().toString();
+		return data;
 	}
 	
 }

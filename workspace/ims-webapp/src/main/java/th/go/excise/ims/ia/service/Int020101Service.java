@@ -180,4 +180,8 @@ public class Int020101Service {
 		questionnaireService.updateStatusIaQuestionnaireAutomatic(idHead);
 	}
 
+	public String checkUseQtn(String idHeadStr) {
+		BigDecimal idHead = new BigDecimal(idHeadStr);
+		return iaQtnSideJdbcRep.checkUseQtn(idHead);
+	}
 }

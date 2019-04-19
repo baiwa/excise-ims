@@ -270,4 +270,19 @@ public class Int020101Controller {
 		return responseData;
 	}
 
+	@GetMapping("/checkUseQtn/{idHdr}")
+	@ResponseBody
+	public ResponseData<String> checkUseQtn(@PathVariable("idHdr") String idHead) {
+		ResponseData<String> responseData = new ResponseData<String>();
+		try {
+			String data = int020101Service.checkUseQtn(idHead);
+			responseData.setData(data);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Int020101Controller::checkUse ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
 }

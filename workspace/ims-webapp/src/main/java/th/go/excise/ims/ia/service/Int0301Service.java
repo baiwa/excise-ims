@@ -15,10 +15,13 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.constant.IaConstants;
-import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
+import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
+import th.go.excise.ims.ia.persistence.entity.IaRiskQtnConfig;
+import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsRepository;
+import th.go.excise.ims.ia.persistence.repository.IaRiskQtnConfigRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0301JdbcRepository;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
 import th.go.excise.ims.ia.vo.Int0301Vo;
@@ -35,6 +38,12 @@ public class Int0301Service {
 
 	@Autowired
 	private IaRiskFactorsRepository iaRiskFactorsRepository;
+	
+	@Autowired
+	IaRiskQtnConfigRepository iaRiskQtnConfigRepository;
+	
+	@Autowired
+	IaQuestionnaireHdrRepository iaQuestionnaireHdrRepository;
 
 	@Autowired
 	private UpdateStatusRiskFactorsService updateStatusRiskFactorsService;
@@ -232,10 +241,70 @@ public class Int0301Service {
 		Date endDate = ConvertDateUtils.parseStringToDate(form.getEndDate(), ConvertDateUtils.DD_MM_YYYY);
 		entity.setEndDate(endDate);
 		iaRiskFactorsConfigRepository.save(entity);
-
+		if(StringUtils.isNoneEmpty(entity.getInfoUsedRisk())) {			
+			updateConfigQtn(entity);
+		}
+		
+		
 		updateStatusRiskFactorsService.updateStatusIaRiskFactors(formConfig.getIdFactors(),
 				IaConstants.IA_STATUS_RISK_FACTORS.STATUS_2_CODE);
 
+	}
+	
+	public void updateConfigQtn(IaRiskFactorsConfig dataFactorConfig) {
+		IaQuestionnaireHdr dataHdr = iaQuestionnaireHdrRepository.findById(new BigDecimal(dataFactorConfig.getInfoUsedRisk())).get();
+		dataHdr.setFactorLevel(dataFactorConfig.getFactorsLevel().toString());
+		iaQuestionnaireHdrRepository.save(dataHdr);
+		
+		IaRiskQtnConfig entity = new IaRiskQtnConfig();
+//		entity.setIdFactors(dataFactorConfig.getIdFactors());
+//		entity.setInfoUsedRisk(dataFactorConfig.getInfoUsedRisk());
+		entity = iaRiskQtnConfigRepository.findByIdQtnHdr(new BigDecimal(dataFactorConfig.getInfoUsedRisk()));
+		entity.setVerylow(dataFactorConfig.getVerylow());
+		entity.setVerylowStart(dataFactorConfig.getVerylowStart());
+		entity.setVerylowEnd(dataFactorConfig.getVerylowEnd());
+		entity.setVerylowRating(dataFactorConfig.getVerylowRating());
+		entity.setVerylowColor(dataFactorConfig.getVerylowColor());
+		entity.setVerylowCondition(dataFactorConfig.getVerylowCondition());
+
+		entity.setLow(dataFactorConfig.getLow());
+		entity.setLowStart(new BigDecimal(dataFactorConfig.getLowStart()));
+		if(StringUtils.isNotEmpty(dataFactorConfig.getLowEnd())) {			
+			entity.setLowEnd(new BigDecimal(dataFactorConfig.getLowEnd()));
+		}
+		entity.setLowRating(dataFactorConfig.getLowRating());
+		entity.setLowColor(dataFactorConfig.getLowColor());
+		entity.setLowCondition(dataFactorConfig.getLowCondition());
+
+		entity.setMedium(dataFactorConfig.getMedium());
+		entity.setMediumStart(new BigDecimal(dataFactorConfig.getMediumStart()));
+		entity.setMediumEnd(new BigDecimal(dataFactorConfig.getMediumEnd()));
+		entity.setMediumRating(dataFactorConfig.getMediumRating());
+		entity.setMediumColor(dataFactorConfig.getMediumColor());
+		entity.setMediumCondition(dataFactorConfig.getMediumCondition());
+
+		entity.setHigh(dataFactorConfig.getHigh());
+		entity.setHighStart(new BigDecimal(dataFactorConfig.getHighStart()));
+		if(StringUtils.isNotEmpty(dataFactorConfig.getHighEnd())) {				
+			entity.setHighEnd(new BigDecimal(dataFactorConfig.getHighEnd()));
+		}
+		entity.setHighRating(dataFactorConfig.getHighRating());
+		entity.setHighColor(dataFactorConfig.getHighColor());
+		entity.setHighCondition(dataFactorConfig.getHighCondition());
+
+		entity.setVeryhigh(dataFactorConfig.getVeryhigh());
+		entity.setVeryhighStart(dataFactorConfig.getVeryhighStart());
+		entity.setVeryhighEnd(dataFactorConfig.getVeryhighEnd());
+		entity.setVeryhighRating(dataFactorConfig.getVeryhighRating());
+		entity.setVeryhighColor(dataFactorConfig.getVeryhighColor());
+		entity.setVeryhighCondition(dataFactorConfig.getVeryhighCondition());
+
+//		Date startDate = ConvertDateUtils.parseStringToDate(form.getStartDate(), ConvertDateUtils.DD_MM_YYYY);
+//		entity.setStartDate(startDate);
+//
+//		Date endDate = ConvertDateUtils.parseStringToDate(form.getEndDate(), ConvertDateUtils.DD_MM_YYYY);
+//		entity.setEndDate(endDate);
+		iaRiskQtnConfigRepository.save(entity);
 	}
 
 }
