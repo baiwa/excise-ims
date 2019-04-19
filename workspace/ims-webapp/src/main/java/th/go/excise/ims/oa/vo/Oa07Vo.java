@@ -22,6 +22,15 @@ public class Oa07Vo {
 	private List<String> perceneDiff = new ArrayList<>();
 	private List<String> groupTaxPay = new ArrayList<>();
 	private List<String> groupYearMonth = new ArrayList<>();
+	private List<String> groupYearMonthGraph = new ArrayList<>();
+
+	public List<String> getGroupYearMonthGraph() {
+		return groupYearMonthGraph;
+	}
+
+	public void setGroupYearMonthGraph(List<String> groupYearMonthGraph) {
+		this.groupYearMonthGraph = groupYearMonthGraph;
+	}
 
 	public List<String> getGroupYearMonth() {
 		return groupYearMonth;

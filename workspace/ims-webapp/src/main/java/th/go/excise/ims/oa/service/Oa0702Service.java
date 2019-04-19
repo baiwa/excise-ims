@@ -3,7 +3,6 @@ package th.go.excise.ims.oa.service;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -42,14 +41,17 @@ public class Oa0702Service {
 
         List<Oa07Reg4000Vo> reg4000List = oa07JdbcRepository.reg4000(formVo);
 
-        // ==> convert date
-        Date dateS = ConvertDateUtils.parseStringToDate(formVo.getMonthStart(), ConvertDateUtils.MM_YYYY);
+       
 
         //==> Add list year months
         List<String> yearsMonths = new ArrayList<>();
         // ==> for previous year
         for(int i=0; i< NumberUtils.toInt(formVo.getPreviousYear());i++){
+        	
+        	 // ==> convert date
+            Date dateS = ConvertDateUtils.parseStringToDate(formVo.getMonthStart(), ConvertDateUtils.MM_YYYY);
             dateS = DateUtils.addYears(dateS, -i);
+            
             // ==> add month
             for (int j = 0; j < NumberUtils.toInt(formVo.getMonthNum()); j++) {
                 Date monthAdd = DateUtils.addMonths(dateS, j);
@@ -67,8 +69,6 @@ public class Oa0702Service {
             String dutyDesc = ExciseUtils.getDutyDesc(vo.getDutyCode());
             vo.setDutyDesc(dutyDesc);
 
-            List<String> taxListDtl = new ArrayList<>();
-            List<String> percenDiffList = new ArrayList<>();
 
             // ==> query tax pay
             List<Oa0702Reg8000Vo> reg8000MList = oa0702JdbcRepository.reg8000M(reg4000.getNewRegId(), yearsMonths);
@@ -79,50 +79,63 @@ public class Oa0702Service {
                 reg8000MMap.put(voMap.getYearMonth(), voMap);
             }
 
-            for (int idx = 0; idx < yearsMonths.size(); idx++) {
-                Oa0702Reg8000Vo reg8000 = reg8000MMap.get(yearsMonths.get(idx));
-
-                if (reg8000 != null) {
-                    // check sum null
-                    if (reg8000.getTaxAmount() == null) {
+            List<String> taxListDtl = new ArrayList<>();
+            for (String yearsMonth : yearsMonths) {
+            	Oa0702Reg8000Vo reg8000 = reg8000MMap.get(yearsMonth);
+            	if (reg8000 != null) {
+            		
+            		if (reg8000.getTaxAmount() == null) {
                         reg8000.setTaxAmount(BigDecimal.ZERO);
-                    }
-
-                    taxListDtl.add(reg8000.getTaxAmount().toString());
-                    /*if (idx > 0) {
-                        String taxAmBeforArr = taxListDtl.get(idx - 1);
-                        BigDecimal taxAmBefor = new BigDecimal(taxAmBeforArr);
-
-                        BigDecimal sub = reg8000.getTaxAmount().subtract(taxAmBefor); // b-a
-                        BigDecimal multi = sub.multiply(new BigDecimal(100)); // b-a*100
-                        BigDecimal avg = multi.divide(reg8000.getTaxAmount(), 2, RoundingMode.HALF_UP); // b-a*100/b
-
-                        percenDiffList.add(avg.toString() + " %");
-                    } else {
-                        percenDiffList.add("");
-                    }*/
-                } else {
-                    taxListDtl.add(BigDecimal.ZERO.toString());
-                }
-            }
+                    }            		
+            		taxListDtl.add(reg8000.getTaxAmount().toString());
+            		
+            	}else {
+            		taxListDtl.add(BigDecimal.ZERO.toString());
+            	}
+			}
+           
             vo.setTaxPayList(taxListDtl);
-            vo.setPerceneDiff(percenDiffList);
-            
             
             // Group year and taxAmount
             List<String> groupTaxPay = new ArrayList<>();
             List<String> groupYearMonth = new ArrayList<>();
-			for (int i = 0; i < NumberUtils.toInt(formVo.getPreviousYear()); i++) {
-				Date date = ConvertDateUtils.parseStringToDate(formVo.getMonthStart(), ConvertDateUtils.MM_YYYY);
-				Date subYear = DateUtils.addYears(date, -i);
-				for (int j=0; j<NumberUtils.toInt(formVo.getMonthNum()); i++){
-                    Date addMonth = DateUtils.addMonths(subYear, j);
-                    groupYearMonth.add(ConvertDateUtils.formatDateToString(addMonth, ConvertDateUtils.MMM_YYYY_SPAC));
+            List<String> groupYearMonthGraph = new ArrayList<>();
+            
+            //month
+            for (String yearsMonth : yearsMonths) {
+            	Date date = ConvertDateUtils.parseStringToDate(yearsMonth, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
+            	groupYearMonth.add(ConvertDateUtils.formatDateToString(date, ConvertDateUtils.MMM_YYYY_SPAC));
+				
+			}
+            
+            //month graph
+			for (int i = 0; i < NumberUtils.toInt(formVo.getMonthNum()); i++) {				
+				
+				String yearmonth = yearsMonths.get(i);
+				
+				for (int j=0; j<NumberUtils.toInt(formVo.getPreviousYear()); j++){
+					Date date = ConvertDateUtils.parseStringToDate(yearmonth, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
+					Date subYear = DateUtils.addYears(date, -j);
+					groupYearMonthGraph.add(ConvertDateUtils.formatDateToString(subYear, ConvertDateUtils.MMM_YYYY_SPAC));
+                    
+                    String subYearStr = ConvertDateUtils.formatDateToString(subYear, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
+                    Oa0702Reg8000Vo reg8000 = reg8000MMap.get(subYearStr);
+                	if (reg8000 != null) {
+                		if (reg8000.getTaxAmount() == null) {
+                            reg8000.setTaxAmount(BigDecimal.ZERO);
+                            groupTaxPay.add(reg8000.getTaxAmount().toString());
+                        }else {
+                        	groupTaxPay.add(reg8000.getTaxAmount().toString());
+                        }
+                	}else {
+                		groupTaxPay.add(BigDecimal.ZERO.toString());
+                	}
                 }
 			}
 
             vo.setGroupTaxPay(groupTaxPay);
             vo.setGroupYearMonth(groupYearMonth);
+            vo.setGroupYearMonthGraph(groupYearMonthGraph);
             voList.add(vo);
         }
 

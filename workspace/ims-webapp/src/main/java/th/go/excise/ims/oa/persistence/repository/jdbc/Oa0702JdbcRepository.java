@@ -1,15 +1,14 @@
 package th.go.excise.ims.oa.persistence.repository.jdbc;
 
-import org.apache.commons.lang3.StringUtils;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
-import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
-import th.go.excise.ims.oa.vo.Oa0701Reg8000Vo;
-import th.go.excise.ims.oa.vo.Oa0702Reg8000Vo;
 
-import java.util.ArrayList;
-import java.util.List;
+import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.go.excise.ims.oa.vo.Oa0702Reg8000Vo;
 
 @Repository
 public class Oa0702JdbcRepository {
