@@ -22,7 +22,7 @@
 	<parameter name="officeTime" class="java.lang.String"/>
 	<parameter name="signOfficerFullName" class="java.lang.String"/>
 	<parameter name="signOfficerPosition" class="java.lang.String"/>
-	<parameter name="officeName2" class="java.lang.String"/>
+	<parameter name="officeName" class="java.lang.String"/>
 	<parameter name="officePhone" class="java.lang.String"/>
 	<parameter name="headOfficerFullName" class="java.lang.String"/>
 	<queryString>
@@ -180,7 +180,7 @@
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="45" y="680" width="105" height="20" uuid="26ddf7c4-261e-4f59-adad-3d279b6734f8"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$P{officeName2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{officeName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="700" width="20" height="20" uuid="f67ed5e0-2c9c-40cd-aa95-ff2510b2e0f7"/>

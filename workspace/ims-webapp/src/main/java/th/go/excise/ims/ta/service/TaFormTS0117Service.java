@@ -132,6 +132,9 @@ public class TaFormTS0117Service extends AbstractTaFormTSService<TaFormTS0117Vo,
 		params.put("officeTime", formTS0117Vo.getOfficeTime());
 		params.put("signOfficerFullName", formTS0117Vo.getSignOfficerFullName());
 		params.put("signOfficerPosition", formTS0117Vo.getSignOfficerPosition());
+		params.put("officeName", formTS0117Vo.getOfficeName());
+		params.put("officePhone", formTS0117Vo.getOfficePhone());
+		params.put("headOfficerFullName", formTS0117Vo.getHeadOfficerFullName());
 		
 		// set output
 		JasperPrint jasperPrint1 = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_17 + "." + FILE_EXTENSION.JASPER, params);

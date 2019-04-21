@@ -120,6 +120,12 @@ public class TaFormTs0117 extends BaseEntity {
 	private String signOfficerFullName;
 	@Column(name = "SIGN_OFFICER_POSITION")
 	private String signOfficerPosition;
+	@Column(name = "OFFICE_NAME")
+	private String officeName;
+	@Column(name = "OFFICE_PHONE")
+	private String officePhone;
+	@Column(name = "HEAD_OFFICER_FULL_NAME")
+	private String headOfficerFullName;
 
 	public Long getFormTs0117Id() {
 		return formTs0117Id;
@@ -511,6 +517,30 @@ public class TaFormTs0117 extends BaseEntity {
 
 	public void setSignOfficerPosition(String signOfficerPosition) {
 		this.signOfficerPosition = signOfficerPosition;
+	}
+
+	public String getOfficeName() {
+		return officeName;
+	}
+
+	public void setOfficeName(String officeName) {
+		this.officeName = officeName;
+	}
+
+	public String getOfficePhone() {
+		return officePhone;
+	}
+
+	public void setOfficePhone(String officePhone) {
+		this.officePhone = officePhone;
+	}
+
+	public String getHeadOfficerFullName() {
+		return headOfficerFullName;
+	}
+
+	public void setHeadOfficerFullName(String headOfficerFullName) {
+		this.headOfficerFullName = headOfficerFullName;
 	}
 
 	public String toString() {

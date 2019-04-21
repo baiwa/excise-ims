@@ -51,6 +51,9 @@ public class TaFormTS0117Vo {
 	private String officeTime;
 	private String signOfficerFullName;
 	private String signOfficerPosition;
+	private String officeName;
+	private String officePhone;
+	private String headOfficerFullName;
 
 	public String getFormTsNumber() {
 		return formTsNumber;
@@ -418,6 +421,30 @@ public class TaFormTS0117Vo {
 
 	public void setSignOfficerPosition(String signOfficerPosition) {
 		this.signOfficerPosition = signOfficerPosition;
+	}
+
+	public String getOfficeName() {
+		return officeName;
+	}
+
+	public void setOfficeName(String officeName) {
+		this.officeName = officeName;
+	}
+
+	public String getOfficePhone() {
+		return officePhone;
+	}
+
+	public void setOfficePhone(String officePhone) {
+		this.officePhone = officePhone;
+	}
+
+	public String getHeadOfficerFullName() {
+		return headOfficerFullName;
+	}
+
+	public void setHeadOfficerFullName(String headOfficerFullName) {
+		this.headOfficerFullName = headOfficerFullName;
 	}
 
 }

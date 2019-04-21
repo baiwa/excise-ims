@@ -83,8 +83,11 @@ public class TaFormTS0117ServiceTest {
 		formTS0117Vo.setOfficeDest("โรงผลิตเหล้ายโสธร");
 		formTS0117Vo.setOfficeDate(ConvertDateUtils.parseStringToDate("01/03/2562", ConvertDateUtils.DD_MM_YYYY));
 		formTS0117Vo.setOfficeTime("13.30");
-		formTS0117Vo.setSignOfficerFullName("");
-		formTS0117Vo.setSignOfficerPosition("");
+		formTS0117Vo.setSignOfficerFullName("นายทดสอบ ก่อนนะคับ");
+		formTS0117Vo.setSignOfficerPosition("ตำแหน่ง ทดสอบ");
+		formTS0117Vo.setOfficeName("กรมสรรพสามิต");
+		formTS0117Vo.setOfficePhone("02-345-2443");
+		formTS0117Vo.setHeadOfficerFullName("นายปวิช เตชะไพบูลล์");
 		
 		byte[] reportFile = taFormTS0117Service.generateReport(formTS0117Vo);
 		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_17))));
@@ -149,6 +152,9 @@ public class TaFormTS0117ServiceTest {
 		formTS0117Vo.setOfficeTime("13.30");
 		formTS0117Vo.setSignOfficerFullName("");
 		formTS0117Vo.setSignOfficerPosition("");
+		formTS0117Vo.setOfficeName("กรมสรรพสามิต");
+		formTS0117Vo.setOfficePhone("02-345-2443");
+		formTS0117Vo.setHeadOfficerFullName("นายปวิช เตชะไพบูลล์");
 		
 		taFormTS0117Service.saveFormTS(formTS0117Vo);
 	}
