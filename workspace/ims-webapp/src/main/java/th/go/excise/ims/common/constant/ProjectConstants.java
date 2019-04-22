@@ -10,6 +10,7 @@ public class ProjectConstants {
 	public class EXCISE_OFFICE_CODE {
 		public static final String CENTRAL = "000000";
 		public static final String TA_CENTRAL = "001400";
+		public static final String TA_CENTRAL_SELECTOR = "001401";
 	}
 	
 	public class TA_WORKSHEET_STATUS {

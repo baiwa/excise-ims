@@ -231,7 +231,7 @@ public class MasterConditionMainService {
     	String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
     	List<TaMasCondMainHdr> mainData = taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYear(officeCode, formVo.getBudgetYear());
     	if (CollectionUtils.isEmpty(mainData)) {
-    		mainData = taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYear(EXCISE_OFFICE_CODE.TA_CENTRAL, formVo.getBudgetYear());
+    		mainData = taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYear(EXCISE_OFFICE_CODE.TA_CENTRAL_SELECTOR, formVo.getBudgetYear());
 		}
         return mainData;
     }
