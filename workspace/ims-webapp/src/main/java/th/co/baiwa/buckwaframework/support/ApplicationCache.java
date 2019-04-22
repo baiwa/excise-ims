@@ -61,7 +61,6 @@ public class ApplicationCache {
 	private GeoDistrictRepository geoDistrictRepository;
 	
 	private static final ConcurrentHashMap<String, ParamGroupWrapper> PARAM_GROUP_MAP = new ConcurrentHashMap<>();
-	private static final ConcurrentHashMap<Long, ParamInfo> PARAM_INFO_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, Message> MESSAGE_MAP = new ConcurrentHashMap<>();
 
 	private static final ConcurrentHashMap<String, ExciseDept> EXCISE_DEPT_MAP = new ConcurrentHashMap<>();
@@ -110,10 +109,6 @@ public class ApplicationCache {
 
 	/********************* Method for Get Cache - Start *********************/
 	/** Parameter Group & Parameter Info */
-	public static ParamGroup getParamGroupByCode(String paramGroupCode) {
-		return PARAM_GROUP_MAP.get(paramGroupCode).getParamGroup();
-	}
-	
 	public static List<ParamGroup> getParamGroupList() {
 		List<ParamGroup> resultList = new ArrayList<>();
 		for (Entry<String, ParamGroupWrapper> entry : PARAM_GROUP_MAP.entrySet()) {
@@ -121,9 +116,9 @@ public class ApplicationCache {
 		}
 		return Collections.unmodifiableList(resultList);
 	}
-
-	public static ParamInfo getParamInfoById(Long paramInfoId) {
-		return PARAM_INFO_MAP.get(paramInfoId);
+	
+	public static ParamGroup getParamGroupByCode(String paramGroupCode) {
+		return PARAM_GROUP_MAP.get(paramGroupCode).getParamGroup();
 	}
 	
 	public static ParamInfo getParamInfoByCode(String paramGroupCode, String paramInfoCode) {
@@ -138,7 +133,6 @@ public class ApplicationCache {
 			for (Entry<String, ParamInfo> entry : paramGroupWrapper.getParamInfoCodeMap().entrySet()) {
 				resultList.add(entry.getValue());
 			}
-			resultList.sort((p1, p2) -> p1.getSortingOrder() - p2.getSortingOrder());
 		}
 
 		return Collections.unmodifiableList(resultList);
@@ -236,31 +230,28 @@ public class ApplicationCache {
 		logger.info("load Paramter loading...");
 
 		PARAM_GROUP_MAP.clear();
-		PARAM_INFO_MAP.clear();
 
 		List<th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterGroup> paramGroupList = parameterGroupRepository.findAll();
-		List<th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo> paramInfoList = null;
+		List<th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo> paramInfoList = parameterInfoRepository.findAll();
 		List<ParamInfo> paramInfoVoList = null;
 		ParameterGroupVo paramGroupVo = null;
 		ParameterInfoVo paramInfoVo = null;
 		
 		try {
 			for (th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterGroup paramGroup : paramGroupList) {
-				logger.debug("load parameterGroupCode: {}", paramGroup.getParamGroupCode());
-				
 				paramInfoVoList = new ArrayList<>();
-				paramInfoList = parameterInfoRepository.findByParamGroupCode(paramGroup.getParamGroupCode());
 				for (th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo paramInfo : paramInfoList) {
-					paramInfoVo = new ParameterInfoVo();
-					BeanUtils.copyProperties(paramInfoVo, paramInfo);
-					PARAM_INFO_MAP.put(paramInfoVo.getParamInfoId(), paramInfoVo);
-					paramInfoVoList.add(paramInfoVo);
+					if (paramGroup.getParamGroupCode().equals(paramInfo.getParamGroupCode())) {
+						paramInfoVo = new ParameterInfoVo();
+						BeanUtils.copyProperties(paramInfoVo, paramInfo);
+						paramInfoVoList.add(paramInfoVo);
+					}
 				}
-
+				paramInfoVoList.sort((p1, p2) -> p1.getSortingOrder() - p2.getSortingOrder());
 				PARAM_GROUP_MAP.put(paramGroup.getParamGroupCode(), new ParamGroupWrapper(paramGroupVo, paramInfoVoList));
 			}
 		} catch (Exception e) {
-			logger.warn(e.getMessage());
+			logger.warn(e.getMessage(), e);
 		}
 
 		logger.info("load Paramter loaded [{}]", PARAM_GROUP_MAP.size());

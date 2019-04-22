@@ -37,14 +37,6 @@ public class ApplicationCacheTest {
 	}
 	
 	@Test
-	public void test_getParameterInfoById() {
-		System.out.println("- - - - - paramInfo - - - - -");
-		ParamInfo paramInfo = ApplicationCache.getParamInfoById(1L);
-		System.out.println(paramInfo);
-		Assert.assertNotNull(paramInfo);
-	}
-	
-	@Test
 	public void test_getMessage() {
 		System.out.println("- - - - - getMessage - - - - -");
 		Message message = ApplicationCache.getMessage("S001");
