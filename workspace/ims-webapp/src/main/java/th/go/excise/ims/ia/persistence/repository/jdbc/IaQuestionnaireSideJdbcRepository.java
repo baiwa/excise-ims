@@ -25,19 +25,19 @@ import th.go.excise.ims.preferences.vo.ExcelHeaderNameVo;
 
 @Repository
 public class IaQuestionnaireSideJdbcRepository {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(IaQuestionnaireSideJdbcRepository.class);
 
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
-	
+
 	public List<Int020101Vo> findAll() {
 		String sql = " SELECT * FROM  IA_QUESTIONNAIRE_SIDE WHERE IS_DELETED = 'N' ";
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<Int020101Vo> datas = commonJdbcTemplate.query(sql, new BeanPropertyRowMapper(Int020101Vo.class));
 		return datas;
 	}
-	
+
 	public List<Int020101Vo> findByIdHead(BigDecimal idHead) {
 		StringBuilder sqlBuilder = new StringBuilder();
 		List<Object> params = new ArrayList<>();
@@ -55,20 +55,22 @@ public class IaQuestionnaireSideJdbcRepository {
 		sqlBuilder.append(" ORDER BY S.SEQ ASC ");
 		params.add(idHead);
 		@SuppressWarnings({ "unchecked", "rawtypes" })
-		List<Int020101Vo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(),new BeanPropertyRowMapper(Int020101Vo.class));
+		List<Int020101Vo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(),
+				new BeanPropertyRowMapper(Int020101Vo.class));
 		return datas;
 	}
-	
+
 	public List<Int020101YearVo> findByUsername(String username) {
 		StringBuilder sqlBuilder = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		sqlBuilder.append(" SELECT DISTINCT BUDGET_YEAR FROM IA_QUESTIONNAIRE_HDR WHERE 1=1 AND IS_DELETED = 'N' ");
 		sqlBuilder.append(" AND CREATED_BY = ? ");
 		params.add(username);
-		List<Int020101YearVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), int020101YearRowMapper);
+		List<Int020101YearVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(),
+				int020101YearRowMapper);
 		return datas;
 	}
-	
+
 	public List<Int020101YearVo> findByStatus() {
 		StringBuilder sqlBuilder = new StringBuilder();
 		List<Object> params = new ArrayList<>();
@@ -78,12 +80,13 @@ public class IaQuestionnaireSideJdbcRepository {
 //		sqlBuilder.append(" WHERE 1=1 AND H.IS_DELETED = 'N' AND H.USAGE_PATTERNS = ? " );
 //		sqlBuilder.append(" GROUP BY H.BUDGET_YEAR ");
 		sqlBuilder.append(" SELECT DISTINCT H.BUDGET_YEAR FROM IA_QUESTIONNAIRE_HDR H ");
-		sqlBuilder.append(" WHERE 1=1 AND H.IS_DELETED = 'N' AND H.USAGE_PATTERNS = ? " );
+		sqlBuilder.append(" WHERE 1=1 AND H.IS_DELETED = 'N' AND H.USAGE_PATTERNS = ? ");
 		params.add(IaConstants.USAGE_PATTERNS_QTN.FACTOR_DESC);
-		List<Int020101YearVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), int020101YearRowMapper);
+		List<Int020101YearVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(),
+				int020101YearRowMapper);
 		return datas;
 	}
-	
+
 	private RowMapper<Int020101YearVo> int020101YearRowMapper = new RowMapper<Int020101YearVo>() {
 		@Override
 		public Int020101YearVo mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -92,7 +95,7 @@ public class IaQuestionnaireSideJdbcRepository {
 			return vo;
 		}
 	};
-	
+
 	public List<Int020101NameVo> findByYearAndUsername(String year, String username) {
 		StringBuilder sqlBuilder = new StringBuilder();
 		List<Object> params = new ArrayList<>();
@@ -101,11 +104,12 @@ public class IaQuestionnaireSideJdbcRepository {
 		sqlBuilder.append(" AND CREATED_BY = ? ");
 		params.add(year);
 		params.add(username);
-		List<Int020101NameVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), int020101NameRowMapper);
+		List<Int020101NameVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(),
+				int020101NameRowMapper);
 		return datas;
 	}
-	
-	public List<Int020101NameVo> findByYearAndStatus(String year) {
+
+	public List<Int020101NameVo> findByYearAndStatus(String year, String id) {
 		StringBuilder sqlBuilder = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 //		sqlBuilder.append(" SELECT H.ID,H.QTN_HEADER_NAME FROM IA_QUESTIONNAIRE_HDR H ");
@@ -114,16 +118,30 @@ public class IaQuestionnaireSideJdbcRepository {
 //		sqlBuilder.append(" WHERE 1=1 AND H.IS_DELETED = 'N' AND H.USAGE_PATTERNS = ? " );
 //		sqlBuilder.append(" AND H.BUDGET_YEAR = ? ");
 //		sqlBuilder.append(" GROUP BY H.ID,H.QTN_HEADER_NAME ");
-		sqlBuilder.append(" SELECT H.ID,H.QTN_HEADER_NAME FROM IA_QUESTIONNAIRE_HDR H ");
-		sqlBuilder.append(" WHERE 1=1 AND H.IS_DELETED = 'N' AND H.USAGE_PATTERNS = ? " );
-		sqlBuilder.append(" AND H.BUDGET_YEAR = ? ");
-		sqlBuilder.append(" GROUP BY H.ID,H.QTN_HEADER_NAME ");
+
+//		sqlBuilder.append(" SELECT H.ID,H.QTN_HEADER_NAME FROM IA_QUESTIONNAIRE_HDR H ");
+//		sqlBuilder.append(" WHERE 1=1 AND H.IS_DELETED = 'N' AND H.USAGE_PATTERNS = ? " );
+//		sqlBuilder.append(" AND H.BUDGET_YEAR = ? ");
+//		sqlBuilder.append(" GROUP BY H.ID,H.QTN_HEADER_NAME ");
+
+		sqlBuilder.append(" SELECT A.* FROM IA_QUESTIONNAIRE_HDR A LEFT join IA_RISK_FACTORS_CONFIG B  ");
+		sqlBuilder.append(" on A.id = B.INFO_USED_RISK ");
+		sqlBuilder.append(" where A.USAGE_PATTERNS = ? AND A.BUDGET_YEAR=? And B.INFO_USED_RISK Is NULL ");
+
 		params.add(IaConstants.USAGE_PATTERNS_QTN.FACTOR_DESC);
 		params.add(year);
-		List<Int020101NameVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), int020101NameRowMapper);
+		
+		
+		if(!("null".equals(id))) {
+			sqlBuilder.append(" OR A.ID=? ");
+			params.add(id);
+		}
+		
+		List<Int020101NameVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(),
+				int020101NameRowMapper);
 		return datas;
 	}
-	
+
 	private RowMapper<Int020101NameVo> int020101NameRowMapper = new RowMapper<Int020101NameVo>() {
 		@Override
 		public Int020101NameVo mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -133,7 +151,7 @@ public class IaQuestionnaireSideJdbcRepository {
 			return vo;
 		}
 	};
-	
+
 	public IaQuestionnaireSide findOne(BigDecimal id) {
 		StringBuilder sqlBuilder = new StringBuilder();
 		List<Object> params = new ArrayList<>();
@@ -141,11 +159,11 @@ public class IaQuestionnaireSideJdbcRepository {
 		sqlBuilder.append(" AND ID = ? ");
 		params.add(id);
 		@SuppressWarnings({ "unchecked", "rawtypes" })
-		IaQuestionnaireSide data = (IaQuestionnaireSide) commonJdbcTemplate.queryForObject(sqlBuilder.toString(), params.toArray(), new BeanPropertyRowMapper(IaQuestionnaireSide.class));
+		IaQuestionnaireSide data = (IaQuestionnaireSide) commonJdbcTemplate.queryForObject(sqlBuilder.toString(),
+				params.toArray(), new BeanPropertyRowMapper(IaQuestionnaireSide.class));
 		return data;
 	}
 
-	
 	public List<IaQuestionnaireSideDtl> findBySideIds(List<BigDecimal> ids) {
 		StringBuilder sqlBuilder = new StringBuilder();
 		List<Object> params = new ArrayList<>();
@@ -154,10 +172,11 @@ public class IaQuestionnaireSideJdbcRepository {
 		sqlBuilder.append(StringUtils.join(ids, ", "));
 		sqlBuilder.append(")");
 		logger.info(" QUERY ", StringUtils.join(ids, ", "));
-		List<IaQuestionnaireSideDtl> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), int020101RowMapper);
+		List<IaQuestionnaireSideDtl> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(),
+				int020101RowMapper);
 		return datas;
 	}
-	
+
 	private RowMapper<IaQuestionnaireSideDtl> int020101RowMapper = new RowMapper<IaQuestionnaireSideDtl>() {
 		@Override
 		public IaQuestionnaireSideDtl mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -170,17 +189,18 @@ public class IaQuestionnaireSideJdbcRepository {
 			return vo;
 		}
 	};
-	
+
 	public List<ExcelHeaderNameVo> findNameByIdHdr(BigDecimal idHdr) {
 		StringBuilder sqlBuilder = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		sqlBuilder.append(" SELECT * FROM  IA_QUESTIONNAIRE_SIDE WHERE 1=1 AND IS_DELETED = 'N' ");
 		sqlBuilder.append(" AND ID_HEAD = ? ");
 		params.add(idHdr);
-		List<ExcelHeaderNameVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), excelHeaderNameMapper);
+		List<ExcelHeaderNameVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(),
+				excelHeaderNameMapper);
 		return datas;
 	}
-	
+
 	private RowMapper<ExcelHeaderNameVo> excelHeaderNameMapper = new RowMapper<ExcelHeaderNameVo>() {
 		@Override
 		public ExcelHeaderNameVo mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -189,23 +209,23 @@ public class IaQuestionnaireSideJdbcRepository {
 			return vo;
 		}
 	};
-	
+
 	public Integer checkCountSide(BigDecimal idHdr) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		
+
 		sql.append(" SELECT COUNT(*) ");
 		sql.append(" FROM  IA_QUESTIONNAIRE_SIDE S ");
 		sql.append(" WHERE S.ID_HEAD  = ? ");
 		sql.append(" AND S.IS_DELETED ='N' ");
-		
+
 		params.add(idHdr);
-		
-		Integer count = commonJdbcTemplate.queryForObject(sql.toString(), params.toArray(),Integer.class);
+
+		Integer count = commonJdbcTemplate.queryForObject(sql.toString(), params.toArray(), Integer.class);
 
 		return count;
 	}
-	
+
 	public Integer checkCountSideDtl(BigDecimal idHdr) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
@@ -218,14 +238,14 @@ public class IaQuestionnaireSideJdbcRepository {
 		sql.append(" WHERE S.ID_HEAD  = ? ");
 		sql.append(" AND S.IS_DELETED ='N' ");
 		sql.append(" GROUP BY S.ID) WHERE COUNT  = 0 ");
-		
+
 		params.add(idHdr);
-		
-		Integer count = commonJdbcTemplate.queryForObject(sql.toString(), params.toArray(),Integer.class);
+
+		Integer count = commonJdbcTemplate.queryForObject(sql.toString(), params.toArray(), Integer.class);
 
 		return count;
 	}
-	
+
 	public String checkUseQtn(BigDecimal idHead) {
 		StringBuilder sqlBuilder = new StringBuilder();
 		List<Object> params = new ArrayList<>();
@@ -236,9 +256,10 @@ public class IaQuestionnaireSideJdbcRepository {
 		sqlBuilder.append(" WHERE B.INFO_USED_RISK = ? ");
 		params.add(idHead);
 		@SuppressWarnings({ "unchecked", "rawtypes" })
-		List<Int020101Vo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(),new BeanPropertyRowMapper(Int020101Vo.class));
+		List<Int020101Vo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(),
+				new BeanPropertyRowMapper(Int020101Vo.class));
 		String data = datas.get(0).getQuantity().toString();
 		return data;
 	}
-	
+
 }
