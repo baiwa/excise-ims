@@ -31,15 +31,15 @@ public class OaAlcoholPacking
     private Date auditDate;
     @Column(name = "NAME")
     private String name;
-    @Column(name = "SIZE")
-    private BigDecimal size;
-    @Column(name = "28_DEGREE")
+    @Column(name = "ACH_SIZE")
+    private BigDecimal achSize;
+    @Column(name = "DEGREE_28")
     private BigDecimal degree28;
-    @Column(name = "30_DEGREE")
+    @Column(name = "DEGREE_30")
     private BigDecimal degree30;
-    @Column(name = "35_DEGREE")
+    @Column(name = "DEGREE_35")
     private BigDecimal degree35;
-    @Column(name = "40_DEGREE")
+    @Column(name = "DEGREE_40")
     private BigDecimal degree40;
     @Column(name = "REMARK")
     private String remark;
@@ -84,15 +84,15 @@ public class OaAlcoholPacking
         this.name = name;
     }
 
-    public BigDecimal getSize() {
-        return size;
-    }
+    public BigDecimal getAchSize() {
+		return achSize;
+	}
 
-    public void setSize(BigDecimal size) {
-        this.size = size;
-    }
+	public void setAchSize(BigDecimal achSize) {
+		this.achSize = achSize;
+	}
 
-    public String getRemark() {
+	public String getRemark() {
         return remark;
     }
 
