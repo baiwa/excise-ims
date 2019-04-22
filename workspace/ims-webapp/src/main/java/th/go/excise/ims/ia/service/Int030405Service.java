@@ -54,15 +54,16 @@ public class Int030405Service {
 
 	public List<Int030405Vo> systemUnworkingList(Int030405FormVo form) {
 		
+		
+		List<Int030405Vo> resDataCal = new ArrayList<Int030405Vo>();
+		List<IaRiskSystemUnworking> systemUnworkingList = new ArrayList<IaRiskSystemUnworking>();
+			if(form.getStartDate()!=null&&form.getStartDate()!=""&&form.getEndDate()!=null&&form.getEndDate()!="") {
 		String startDate = form.getStartDate().split("/")[1]+form.getStartDate().split("/")[0];
 		String endDate = form.getEndDate().split("/")[1]+form.getEndDate().split("/")[0];
 		
-		List<Int030405Vo> resDataCal = new ArrayList<Int030405Vo>();
 		resDataCal = int030405JdbcRepository.findByStartMonthByEndMonthGroup(startDate,endDate);
-		
-		List<IaRiskSystemUnworking> systemUnworkingList = new ArrayList<IaRiskSystemUnworking>();
 		systemUnworkingList = iaRiskSystemUnworkingRepository.findByStartMonthByEndMonth(startDate,endDate);
-		
+		}
 		Int0301FormVo dataForm = new Int0301FormVo();
 		dataForm.setBudgetYear(form.getBudgetYear());
 		dataForm.setIdConfig(form.getIdConfig());

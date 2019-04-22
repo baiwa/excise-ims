@@ -3,11 +3,14 @@ package th.go.excise.ims.ia.service;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaInspectionPlan;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
@@ -213,7 +216,7 @@ public class Int0401Service {
 						&& calRiskRatePercent!= null 
 						&& percentAll != null 
 						&& calRiskRatePercent.floatValue()!=0f 
-						&&percentAll.floatValue()!=0f ) {
+						&& percentAll.floatValue()!=0f ) {
 					
 					BigDecimal riskRat = new BigDecimal(calRiskRatePercent.floatValue()/percentAll.floatValue());
 					list.setRiskRate(riskRat.setScale(2, BigDecimal.ROUND_HALF_UP));
@@ -231,6 +234,21 @@ public class Int0401Service {
 				lists.add(list);
 			}
 		}
+		
+		Collections.sort(lists, new Comparator<Int0401Vo>() {
+			@Override
+			public int compare(final Int0401Vo object1, final Int0401Vo object2) {
+				float obj1 = (object1.getRiskRate()!=null)?object1.getRiskRate().floatValue():0f;
+				float obj2 = (object2.getRiskRate()!=null)?object2.getRiskRate().floatValue():0f;
+				
+//				Very --> Little
+				return (obj1 > obj2)? -1 : (obj1 < obj2) ? 1 : 0;
+				
+//				Little --> Very
+//				return (obj2 > obj1)? -1 : (obj2 < obj1) ? 1 : 0; 
+			}
+		});
+		
 		return lists;
 	}
 	
@@ -423,6 +441,8 @@ public class Int0401Service {
 			IaRiskFactorsConfig config = iaRiskFactorsConfigRepository.findByIdFactors(idFactors);
 			form.setBudgetYear(budgetYear);
 			form.setInspectionWork(inspectionWork);
+			form.setStartDate(ConvertDateUtils.formatDateToString(config.getStartDate(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			form.setEndDate(ConvertDateUtils.formatDateToString(config.getEndDate(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH));
 			form.setIdConfig(config.getId());
 			List<Int030405Vo> list = int030405Service.systemUnworkingList(form);
 			for (Int030405Vo int030405Vo : list) {

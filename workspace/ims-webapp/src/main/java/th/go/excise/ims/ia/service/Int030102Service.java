@@ -28,15 +28,20 @@ import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsStatusRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskSelectCaseRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaRiskFactosMasterJdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int030102JdbcRepository;
+import th.go.excise.ims.ia.persistence.repository.jdbc.Int030405JdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0401JdbcRepository;
 import th.go.excise.ims.ia.vo.Int030102FormVo;
 import th.go.excise.ims.ia.vo.Int030102Vo;
+import th.go.excise.ims.ia.vo.Int030405Vo;
 
 @Service
 public class Int030102Service {
 
 	@Autowired
 	private Int030102JdbcRepository int030102JdbcRepository;
+	
+	@Autowired
+	private Int030405JdbcRepository int030405JdbcRepository;
 
 	@Autowired
 	private UpdateStatusRiskFactorsService updateStatusRiskFactorsService;
@@ -110,35 +115,6 @@ public class Int030102Service {
 		// WEB SERVICE QUERY
 		// NOW MOCKING DATA
 
-//		Data mock inspectionWork 5
-
-		List<String> dataList1 = new ArrayList<String>();
-		dataList1.add("30100");
-		dataList1.add("40100");
-		dataList1.add("50100");
-
-		List<String> dataList2 = new ArrayList<String>();
-		dataList2.add("สำนักงานสรรพสามิตภาคที่ 3");
-		dataList2.add("สำนักงานสรรพสามิตภาคที่ 4");
-		dataList2.add("สำนักงานสรรพสามิตภาคที่ 5");
-
-		List<String> dataList3 = new ArrayList<String>();
-		dataList3.add("สำนักงานสรรพสามิตพื้นที่เชียงใหม่");
-		dataList3.add("สำนักงานสรรพสามิตพื้นที่นครราชสีมา");
-		dataList3.add("สำนักงานสรรพสามิตพื้นที่อุดรธานี");
-
-//		Data mock inspectionWork 4 
-
-		List<String> dataList6 = new ArrayList<String>();
-		dataList6.add("2");
-		dataList6.add("3");
-		dataList6.add("4");
-
-		List<String> dataList7 = new ArrayList<String>();
-		dataList7.add("ระบบงานสารสนเทศหลัก http://Web.excise.go.th/EDINTRAWeb");
-		dataList7.add("ระบบความปลอดภัยกลาง (SSO) http://authen.excise.go.th/oiddas");
-		dataList7.add("ระบบงานอีเมล์กรมสรรพสามิต http://mail.excise.go.th");
-
 //		Data mock inspectionWork 3
 
 		List<String> dataList4 = new ArrayList<String>();
@@ -168,15 +144,19 @@ public class Int030102Service {
 		} else if (inspectionWork.compareTo(new BigDecimal(4)) == 0) {
 			selectCases = new ArrayList<>();
 			IaRiskSelectCase selectCase = new IaRiskSelectCase();
-			for (int i = 0; i < dataList6.size(); i++) {
+			
+			List<Int030405Vo> system = int030405JdbcRepository.getSystemByYear("2562");
+			
+			for (Int030405Vo int030405Vo : system) {
 				selectCase = new IaRiskSelectCase();
-				selectCase.setSystemCode(dataList6.get(i));
-				selectCase.setSystemName(dataList7.get(i));
+				selectCase.setSystemCode(int030405Vo.getSystemCode());
+				selectCase.setSystemName(int030405Vo.getSystemName());
 				selectCase.setBudgetYear(budgetYear);
 				selectCase.setInspectionWork(inspectionWork);
 				selectCase.setStatus("C");
 				selectCases.add(selectCase);
 			}
+			
 			selectCases = (List<IaRiskSelectCase>) iaRiskSelectCaseRep.saveAll(selectCases);
 		} else if (inspectionWork.compareTo(new BigDecimal(5)) == 0) {
 			selectCases = new ArrayList<>();
@@ -207,8 +187,7 @@ public class Int030102Service {
 				List<ExciseDept> exciseAreaList = ApplicationCache.getExciseAreaList(exciseDept.getOfficeCode());
 				for (ExciseDept exciseDeptArea : exciseAreaList) {
 					selectCase = new IaRiskSelectCase();
-					ExciseDept sectorArea = ApplicationCache
-							.getExciseDept(exciseDeptArea.getOfficeCode().substring(0, 2) + "0000");
+					ExciseDept sectorArea = ApplicationCache.getExciseDept(exciseDeptArea.getOfficeCode().substring(0, 2) + "0000");
 					selectCase.setExciseCode(exciseDeptArea.getOfficeCode());
 					selectCase.setSector(sectorArea.getDeptName());
 

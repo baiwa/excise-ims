@@ -171,5 +171,31 @@ public class Int030405JdbcRepository {
 	}
 	
 	
+	public List<Int030405Vo> getSystemByYear(String year) {
+		List<Int030405Vo> res = new ArrayList<Int030405Vo>();
+
+		StringBuilder sql = new StringBuilder(" SELECT SYSTEM_CODE,SYSTEM_NAME FROM ( " + 
+				"      SELECT e.SYSTEM_CODE, " + 
+				"      e.SYSTEM_NAME, " + 
+				"      COUNT(sc.SYSTEM_CODE) COUNT " + 
+				"      FROM IA_RISK_SYSTEM_UNWORKING e " + 
+				"      LEFT JOIN ( SELECT * " + 
+				"                  FROM ia_risk_SELECT_CASE sc " + 
+				"                  WHERE INSPECTION_WORK = 4 " + 
+				"                  AND BUDGET_YEAR       = ? ) sc " + 
+				"      ON e.SYSTEM_CODE=sc.SYSTEM_CODE " + 
+				"      WHERE e.YEAR    =  ? " + 
+				"      GROUP BY e.SYSTEM_CODE,e.SYSTEM_NAME ) " + 
+				"	   where COUNT=0 ");
+		List<Object> params = new ArrayList<Object>();
+
+		params.add(year);
+		params.add(year);
+		
+		res = commonJdbcTemplate.query(sql.toString(), params.toArray(),new BeanPropertyRowMapper(Int030405Vo.class));
+		
+		return res;
+	}
+	
 
 }
