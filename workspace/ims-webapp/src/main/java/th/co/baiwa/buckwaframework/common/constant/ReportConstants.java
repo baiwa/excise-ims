@@ -59,6 +59,10 @@ public class ReportConstants {
 		public static final String TA_FORM_TS01_19 = "TA_FORM_TS01_19";
 		public static final String TA_FORM_TS01_20 = "TA_FORM_TS01_20";
 		public static final String TA_FORM_TS01_21 = "TA_FORM_TS01_21";
+		public static final String TA_FORM_TS03_02 = "TA_FORM_TS03_02";
+		public static final String TA_FORM_TS03_03 = "TA_FORM_TS03_03";
+		public static final String TA_FORM_TS04_23 = "TA_FORM_TS04_23";
+		public static final String TA_FORM_TS04_24 = "TA_FORM_TS04_24";
 	}
 
 }
