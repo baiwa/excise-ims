@@ -23,6 +23,7 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	private String condSub3;
 	private String capital;
 	private String risk;
+	private String newRegId;
 	private String cusFullname;
 	private String facFullname;
 	private String mainCondFreqType;
@@ -30,6 +31,23 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	private Integer taxMonthEnd;
 
 	private String flagPage;
+	private String condSubNoAuditFlag;
+
+	public String getCondSubNoAuditFlag() {
+		return condSubNoAuditFlag;
+	}
+
+	public void setCondSubNoAuditFlag(String condSubNoAuditFlag) {
+		this.condSubNoAuditFlag = condSubNoAuditFlag;
+	}
+
+	public String getNewRegId() {
+		return newRegId;
+	}
+
+	public void setNewRegId(String newRegId) {
+		this.newRegId = newRegId;
+	}
 
 	public String getFlagPage() {
 		return flagPage;

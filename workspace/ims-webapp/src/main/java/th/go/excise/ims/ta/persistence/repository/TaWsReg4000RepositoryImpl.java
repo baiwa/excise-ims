@@ -112,6 +112,12 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 			sql.append(" AND CUS_FULLNAME like ?");
 			params.add("%" + StringUtils.trim(formVo.getCusFullname()) + "%");
 		}
+		
+		// newRegId
+		if(StringUtils.isNotBlank(formVo.getNewRegId())) {
+			sql.append(" AND NEW_REG_ID = ?");
+			params.add(StringUtils.trim(formVo.getNewRegId()));
+		}
 	}
 
 	@Override
