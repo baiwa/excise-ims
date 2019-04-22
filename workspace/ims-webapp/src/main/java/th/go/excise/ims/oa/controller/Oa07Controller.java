@@ -29,7 +29,7 @@ public class Oa07Controller {
 	@Autowired
 	private Oa0701Service oa0701Service;
 	@Autowired
-	private Oa0702Service	 oa0702Service;
+	private Oa0702Service oa0702Service;
 	@Autowired
 	private Oa0703Service oa0703Service;
 

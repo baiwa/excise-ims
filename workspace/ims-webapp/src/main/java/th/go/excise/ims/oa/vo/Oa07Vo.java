@@ -23,6 +23,15 @@ public class Oa07Vo {
 	private List<String> groupTaxPay = new ArrayList<>();
 	private List<String> groupYearMonth = new ArrayList<>();
 	private List<String> groupYearMonthGraph = new ArrayList<>();
+	private List<List<String>> dataTableGraph = new ArrayList<>();
+
+	public List<List<String>> getDataTableGraph() {
+		return dataTableGraph;
+	}
+
+	public void setDataTableGraph(List<List<String>> dataTableGraph) {
+		this.dataTableGraph = dataTableGraph;
+	}
 
 	public List<String> getGroupYearMonthGraph() {
 		return groupYearMonthGraph;
