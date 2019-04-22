@@ -40,7 +40,7 @@ public class Int020101Controller {
 
 	@Autowired
 	private Int020101Service int020101Service;
-	
+
 	@Autowired
 	private UpdateStatusQuestionnaireService questionnaireService;
 
@@ -131,8 +131,7 @@ public class Int020101Controller {
 	@ResponseBody
 	public ResponseData<IaQuestionnaireSide> update(@PathVariable("id") String idStr,
 			@RequestBody IaQuestionnaireSide request) {
-		
-		
+
 		ResponseData<IaQuestionnaireSide> responseData = new ResponseData<IaQuestionnaireSide>();
 		try {
 			responseData.setData(int020101Service.update(idStr, request));
@@ -180,7 +179,7 @@ public class Int020101Controller {
 		}
 		return responseData;
 	}
-	
+
 	@GetMapping("/by/status")
 	@ResponseBody
 	public ResponseData<List<Int020101YearVo>> getByStatus() {
@@ -197,7 +196,7 @@ public class Int020101Controller {
 		}
 		return responseData;
 	}
-	
+
 	@GetMapping("/by/year/{year}/user")
 	@ResponseBody
 	public ResponseData<List<Int020101NameVo>> getByYearAndUsername(@PathVariable("year") String year) {
@@ -216,13 +215,14 @@ public class Int020101Controller {
 		return responseData;
 	}
 
-	@GetMapping("/by/year/{year}/status")
+	@GetMapping("/by/year/{year}/{id}/status")
 	@ResponseBody
-	public ResponseData<List<Int020101NameVo>> getByYearAndStatus(@PathVariable("year") String year) {
+	public ResponseData<List<Int020101NameVo>> getByYearAndStatus(@PathVariable("year") String year,
+			@PathVariable("id") String id) {
 		ResponseData<List<Int020101NameVo>> responseData = new ResponseData<List<Int020101NameVo>>();
 		List<Int020101NameVo> data = new ArrayList<>();
 		try {
-			data = int020101Service.findByYearAndStatus(year);
+			data = int020101Service.findByYearAndStatus(year, id);
 			responseData.setData(data);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
@@ -232,39 +232,45 @@ public class Int020101Controller {
 		}
 		return responseData;
 	}
-	
+
 	@DeleteMapping("/delete/choices/{id}/{choiceStr}")
 	@ResponseBody
-	public ResponseData<IaQuestionnaireHdr> deleteQtn(@PathVariable("id") BigDecimal id, @PathVariable("choiceStr") String choiceStr) {
+	public ResponseData<IaQuestionnaireHdr> deleteQtn(@PathVariable("id") BigDecimal id,
+			@PathVariable("choiceStr") String choiceStr) {
 		ResponseData<IaQuestionnaireHdr> responseData = new ResponseData<IaQuestionnaireHdr>();
 		try {
 			responseData.setData(int020101Service.deleteQtn(id, choiceStr));
-			if("CANCEL".equals(choiceStr)) {
+			if ("CANCEL".equals(choiceStr)) {
 				responseData.setMessage(ApplicationCache.getParamInfoByCode("IA_QTN_MESSAGE", "2").getValue1());
-			}else {
-				responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.SUCCESS_CODE).getMessageTh());
+			} else {
+				responseData.setMessage(ApplicationCache
+						.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.SUCCESS_CODE).getMessageTh());
 			}
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
-			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.FAILED_CODE).getMessageTh());
+			responseData.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
 	}
-	
+
 	@GetMapping("/update/status/{idHdr}/{status}")
 	@ResponseBody
-	public ResponseData<IaQuestionnaireHdr> updateQtnStatus(@PathVariable("idHdr") BigDecimal idHdr, @PathVariable("status") String status) {
+	public ResponseData<IaQuestionnaireHdr> updateQtnStatus(@PathVariable("idHdr") BigDecimal idHdr,
+			@PathVariable("status") String status) {
 		ResponseData<IaQuestionnaireHdr> responseData = new ResponseData<IaQuestionnaireHdr>();
 		try {
 			/* update status */
 			questionnaireService.updateStatusIaQuestionnaire(idHdr, status);
-			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			responseData.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
-			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			responseData.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;

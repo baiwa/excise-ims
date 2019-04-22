@@ -29,7 +29,7 @@ public class Int020101Service {
 
 	@Autowired
 	private IaQuestionnaireSideJdbcRepository iaQtnSideJdbcRep;
-	
+
 	@Autowired
 	private UpdateStatusQuestionnaireService questionnaireService;
 
@@ -41,7 +41,7 @@ public class Int020101Service {
 
 	@Autowired
 	private IaQuestionnaireHdrRepository iaQuestionnaireHdrRepository;
-	
+
 	public List<Int020101Vo> findAll() {
 		return iaQtnSideJdbcRep.findAll();
 	}
@@ -63,8 +63,8 @@ public class Int020101Service {
 		return iaQtnSideJdbcRep.findByYearAndUsername(year, username);
 	}
 
-	public List<Int020101NameVo> findByYearAndStatus(String year) {
-		return iaQtnSideJdbcRep.findByYearAndStatus(year);
+	public List<Int020101NameVo> findByYearAndStatus(String year, String id) {
+		return iaQtnSideJdbcRep.findByYearAndStatus(year, id);
 	}
 
 	public IaQuestionnaireSide save(IaQuestionnaireSide request) {
@@ -150,7 +150,6 @@ public class Int020101Service {
 			iaQtnSideDtlRep.save(sideDtl);
 		}
 
-		
 		return data;
 	}
 
@@ -175,7 +174,7 @@ public class Int020101Service {
 		}
 		return response;
 	}
-	
+
 	public void updateStatusIaQuestionnaireAutomatic(BigDecimal idHead) {
 		questionnaireService.updateStatusIaQuestionnaireAutomatic(idHead);
 	}
