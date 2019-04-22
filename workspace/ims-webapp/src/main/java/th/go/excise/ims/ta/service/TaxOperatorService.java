@@ -34,7 +34,8 @@ public class TaxOperatorService {
 		res.setCondGroups(draft.getCondGroups());
 		for (int i = 0; i < formVo.getLength(); i++) {
 			
-			int count = formVo.getStart() + i;			
+			int count = formVo.getStart() + i;	
+			if(list.size() <= count) break;
 			taxList.add(list.get(count));
 		}
 		res.setDatas(taxList);
