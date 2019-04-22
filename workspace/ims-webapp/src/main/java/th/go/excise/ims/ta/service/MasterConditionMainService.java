@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,9 @@ import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
+import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_OFFICE_CODE;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
+import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondMainDtlRepository;
@@ -226,11 +229,15 @@ public class MasterConditionMainService {
 
     public List<TaMasCondMainHdr> getMainCondHdr(MasCondMainRequestVo formVo) {
     	String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-        return taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYear(officeCode, formVo.getBudgetYear());
+    	List<TaMasCondMainHdr> mainData = taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYear(officeCode, formVo.getBudgetYear());
+    	if (CollectionUtils.isEmpty(mainData)) {
+    		mainData = taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYear(EXCISE_OFFICE_CODE.TA_CENTRAL, formVo.getBudgetYear());
+		}
+        return mainData;
     }
 
     public List<MasCondMainResponseVo> getMainCondDtl(MasCondMainRequestVo formVo) {
-        List<TaMasCondMainDtl> listDtl = taMasCondMainDtlRepository.findByBudgetYearAndCondNumberAndOfficeCode(formVo.getBudgetYear(), formVo.getCondNumber(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
+        List<TaMasCondMainDtl> listDtl = taMasCondMainDtlRepository.findByBudgetYearAndCondNumber(formVo.getBudgetYear(), formVo.getCondNumber());
 
         List<MasCondMainResponseVo> listVo = new ArrayList<>();
         for (TaMasCondMainDtl dtl : listDtl) {
