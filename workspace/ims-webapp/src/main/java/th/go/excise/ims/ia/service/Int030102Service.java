@@ -3,6 +3,7 @@ package th.go.excise.ims.ia.service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.constant.IaConstants;
+import th.go.excise.ims.ia.persistence.entity.IaRiskBudgetProject;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMasCon;
@@ -26,6 +28,7 @@ import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsMasterRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsStatusRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskSelectCaseRepository;
+import th.go.excise.ims.ia.persistence.repository.jdbc.IaRiskBudgetProjectJdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaRiskFactosMasterJdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int030102JdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int030405JdbcRepository;
@@ -39,9 +42,6 @@ public class Int030102Service {
 
 	@Autowired
 	private Int030102JdbcRepository int030102JdbcRepository;
-	
-	@Autowired
-	private Int030405JdbcRepository int030405JdbcRepository;
 
 	@Autowired
 	private UpdateStatusRiskFactorsService updateStatusRiskFactorsService;
@@ -57,10 +57,10 @@ public class Int030102Service {
 
 	@Autowired
 	private IaRiskFactorsConfigRepository iaRiskFactorsConfigRepository;
-
+	
 	@Autowired
-	private IaRiskSelectCaseRepository iaRiskSelectCaseRep;
-
+	private IntSetProjectAndSystemAndExciseService intSetProjectAndSystemAndExciseService;
+	
 	@Autowired
 	private Int0401JdbcRepository int0401JdbcRepository;
 
@@ -75,14 +75,8 @@ public class Int030102Service {
 		List<Int030102Vo> iaRiskFactorsMasterList = new ArrayList<Int030102Vo>();
 		iaRiskFactorsMasterList = int030102JdbcRepository.list(form);
 
-		for (int i = 3; i <= 5; i++) {
-			long count = int0401JdbcRepository.findCountRowWithoutStatus(ExciseUtils.getCurrentBudgetYear(),
-					new BigDecimal(i));
-			if (count == 0) {
-				saveDataList(ExciseUtils.getCurrentBudgetYear(), new BigDecimal(i));
-			}
-
-		}
+		intSetProjectAndSystemAndExciseService.setProjectAndSystemAndExcise();
+		
 
 		return iaRiskFactorsMasterList;
 	}
@@ -93,14 +87,9 @@ public class Int030102Service {
 //		iaRiskFactorsMasterList = int030102JdbcRepository.listIgnoreIsDeleted(form);
 		iaRiskFactorsMasterList = iaRiskFactosMasterJdbcRepository.listIgnoreIsDeleted(form);
 	
-		for (int i = 3; i <= 5; i++) {
-			long count = int0401JdbcRepository.findCountRowWithoutStatus(ExciseUtils.getCurrentBudgetYear(),
-					new BigDecimal(i));
-			if (count == 0) {
-				saveDataList(ExciseUtils.getCurrentBudgetYear(), new BigDecimal(i));
-			}
 
-		}
+		intSetProjectAndSystemAndExciseService.setProjectAndSystemAndExcise();
+		
 
 		return iaRiskFactorsMasterList;
 	}
@@ -111,106 +100,6 @@ public class Int030102Service {
 
 	}
 
-	private List<IaRiskSelectCase> saveDataList(String budgetYear, BigDecimal inspectionWork) {
-		// WEB SERVICE QUERY
-		// NOW MOCKING DATA
-
-//		Data mock inspectionWork 3
-
-		List<String> dataList4 = new ArrayList<String>();
-		dataList4.add("10");
-		dataList4.add("20");
-		dataList4.add("30");
-
-		List<String> dataList5 = new ArrayList<String>();
-		dataList5.add("แผนหลักเกณฑ์การประเมินผลการปฏิบัติราชการ");
-		dataList5.add("โครงการตามยุทธศาตร์");
-		dataList5.add("แผนบริหารความเสี่ยง");
-
-		List<IaRiskSelectCase> selectCases = new ArrayList<>();
-		if (inspectionWork.compareTo(new BigDecimal(3)) == 0) {
-			selectCases = new ArrayList<>();
-			IaRiskSelectCase selectCase = new IaRiskSelectCase();
-			for (int i = 0; i < dataList4.size(); i++) {
-				selectCase = new IaRiskSelectCase();
-				selectCase.setProjectCode(dataList4.get(i));
-				selectCase.setProject(dataList5.get(i));
-				selectCase.setBudgetYear(budgetYear);
-				selectCase.setInspectionWork(inspectionWork);
-				selectCase.setStatus("C");
-				selectCases.add(selectCase);
-			}
-			selectCases = (List<IaRiskSelectCase>) iaRiskSelectCaseRep.saveAll(selectCases);
-		} else if (inspectionWork.compareTo(new BigDecimal(4)) == 0) {
-			selectCases = new ArrayList<>();
-			IaRiskSelectCase selectCase = new IaRiskSelectCase();
-			
-			List<Int030405Vo> system = int030405JdbcRepository.getSystemByYear("2562");
-			
-			for (Int030405Vo int030405Vo : system) {
-				selectCase = new IaRiskSelectCase();
-				selectCase.setSystemCode(int030405Vo.getSystemCode());
-				selectCase.setSystemName(int030405Vo.getSystemName());
-				selectCase.setBudgetYear(budgetYear);
-				selectCase.setInspectionWork(inspectionWork);
-				selectCase.setStatus("C");
-				selectCases.add(selectCase);
-			}
-			
-			selectCases = (List<IaRiskSelectCase>) iaRiskSelectCaseRep.saveAll(selectCases);
-		} else if (inspectionWork.compareTo(new BigDecimal(5)) == 0) {
-			selectCases = new ArrayList<>();
-			List<ExciseDept> exciseSectorList = ApplicationCache.getExciseSectorList();
-			IaRiskSelectCase selectCase = new IaRiskSelectCase();
-			for (ExciseDept exciseDept : exciseSectorList) {
-
-//	************* Insert Sactor ************* 
-				selectCase = new IaRiskSelectCase();
-				ExciseDept sector = ApplicationCache.getExciseDept(exciseDept.getOfficeCode().substring(0, 2) + "0000");
-				selectCase.setExciseCode(exciseDept.getOfficeCode());
-				selectCase.setSector(sector.getDeptName());
-
-				if (!"0000".equals(exciseDept.getOfficeCode().substring(2, 6))) {
-
-					ExciseDept area = ApplicationCache.getExciseDept(exciseDept.getOfficeCode());
-					selectCase.setArea(area.getDeptName());
-
-				} else {
-					selectCase.setArea("");
-				}
-				selectCase.setBudgetYear(budgetYear);
-				selectCase.setInspectionWork(inspectionWork);
-				selectCase.setStatus("C");
-				selectCases.add(selectCase);
-
-//	************* Insert Area ************* 
-				List<ExciseDept> exciseAreaList = ApplicationCache.getExciseAreaList(exciseDept.getOfficeCode());
-				for (ExciseDept exciseDeptArea : exciseAreaList) {
-					selectCase = new IaRiskSelectCase();
-					ExciseDept sectorArea = ApplicationCache.getExciseDept(exciseDeptArea.getOfficeCode().substring(0, 2) + "0000");
-					selectCase.setExciseCode(exciseDeptArea.getOfficeCode());
-					selectCase.setSector(sectorArea.getDeptName());
-
-					if (!"0000".equals(exciseDeptArea.getOfficeCode().substring(2, 6))) {
-
-						ExciseDept area2 = ApplicationCache.getExciseDept(exciseDeptArea.getOfficeCode());
-						selectCase.setArea(area2.getDeptName());
-
-					} else {
-						selectCase.setArea("");
-					}
-					selectCase.setBudgetYear(budgetYear);
-					selectCase.setInspectionWork(inspectionWork);
-					selectCase.setStatus("C");
-					selectCases.add(selectCase);
-				}
-
-			}
-
-			selectCases = (List<IaRiskSelectCase>) iaRiskSelectCaseRep.saveAll(selectCases);
-		}
-		return selectCases;
-	}
 
 	public void checkAndInsertTableFactorsStatus(Int030102FormVo form) {
 		int count = int030102JdbcRepository.checkAndInsertTableFactorsStatus(form);

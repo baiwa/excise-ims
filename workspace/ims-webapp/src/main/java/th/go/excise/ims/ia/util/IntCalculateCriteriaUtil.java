@@ -184,8 +184,8 @@ public class IntCalculateCriteriaUtil {
 		Boolean res = false;
 		Float startB = (start != null) ? Float.valueOf(start) : null;
 		Float endB = (end != null) ? Float.valueOf(end) : null;
-		String condition1 = condition.split("\\|")[0];
-		String condition2 = condition.split("\\|")[1];
+		String condition1 = (condition!=null)?condition.split("\\|")[0]:null;
+		String condition2 =  (condition!=null)?condition.split("\\|")[1]:null;
 		if (!"".equals(condition1) && condition1 != null && !"".equals(condition2) && condition2 != null) {
 
 			if (("<".equals(condition1)) && (dataCal < startB)) {

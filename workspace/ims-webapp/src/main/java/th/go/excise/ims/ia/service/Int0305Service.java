@@ -60,6 +60,9 @@ public class Int0305Service {
 
 	@Autowired
 	private UpdateStatusRiskFactorsService updateStatusRiskFactorsService;
+	
+	@Autowired
+	private IntSetProjectAndSystemAndExciseService intSetProjectAndSystemAndExciseService;
 
 	public List<Int030102Vo> list(Int0305FormVo form) {
 //		List<Int0305Vo> iaRiskFactorsMasterList = iaRiskFactorsMaster2JdbcRepository.list(form);
@@ -68,7 +71,7 @@ public class Int0305Service {
 		form030102.setInspectionWork(form.getInspectionWork());
 		List<Int030102Vo> iaRiskFactorsMasterList = new ArrayList<Int030102Vo>();
 		iaRiskFactorsMasterList = int030102Service.listIgnoreIsDeleted(form030102);
-
+		intSetProjectAndSystemAndExciseService.setProjectAndSystemAndExcise();
 		return iaRiskFactorsMasterList;
 	}
 

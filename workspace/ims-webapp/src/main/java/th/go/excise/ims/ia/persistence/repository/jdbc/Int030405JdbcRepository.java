@@ -171,7 +171,7 @@ public class Int030405JdbcRepository {
 	}
 	
 	
-	public List<Int030405Vo> getSystemByYear(String year) {
+	public List<Int030405Vo> getSystemByYear(Date date) {
 		List<Int030405Vo> res = new ArrayList<Int030405Vo>();
 
 		StringBuilder sql = new StringBuilder(" SELECT SYSTEM_CODE,SYSTEM_NAME FROM ( " + 
@@ -189,8 +189,8 @@ public class Int030405JdbcRepository {
 				"	   where COUNT=0 ");
 		List<Object> params = new ArrayList<Object>();
 
-		params.add(year);
-		params.add(year);
+		params.add(ConvertDateUtils.formatDateToString(date, ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_TH));
+		params.add(ConvertDateUtils.formatDateToString(date, ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_TH));
 		
 		res = commonJdbcTemplate.query(sql.toString(), params.toArray(),new BeanPropertyRowMapper(Int030405Vo.class));
 		
