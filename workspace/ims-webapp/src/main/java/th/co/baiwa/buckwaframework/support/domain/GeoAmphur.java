@@ -1,12 +1,6 @@
 package th.co.baiwa.buckwaframework.support.domain;
 
-public interface ExciseAmphur {
-
-	public Long getAmphurId();
-
-	public Long getGeoId();
-
-	public Long getProvinceId();
+public interface GeoAmphur {
 
 	public String getAmphurCode();
 

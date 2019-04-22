@@ -20,31 +20,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import th.co.baiwa.buckwaframework.preferences.constant.MessageConstants.MESSAGE_LANG;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.GeoAmphurRepository;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.GeoDistrictRepository;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.GeoProvinceRepository;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.GeoSectorRepository;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.MessageRepository;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.ParameterGroupRepository;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.ParameterInfoRepository;
+import th.co.baiwa.buckwaframework.preferences.vo.GeoAmphurVo;
+import th.co.baiwa.buckwaframework.preferences.vo.GeoDistrictVo;
+import th.co.baiwa.buckwaframework.preferences.vo.GeoProvinceVo;
+import th.co.baiwa.buckwaframework.preferences.vo.GeoSectorVo;
 import th.co.baiwa.buckwaframework.preferences.vo.MessageVo;
 import th.co.baiwa.buckwaframework.preferences.vo.ParameterGroupVo;
 import th.co.baiwa.buckwaframework.preferences.vo.ParameterInfoVo;
-import th.co.baiwa.buckwaframework.support.domain.ExciseAmphur;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
-import th.co.baiwa.buckwaframework.support.domain.ExciseDistrict;
-import th.co.baiwa.buckwaframework.support.domain.ExciseGeo;
-import th.co.baiwa.buckwaframework.support.domain.ExciseProvice;
+import th.co.baiwa.buckwaframework.support.domain.GeoAmphur;
+import th.co.baiwa.buckwaframework.support.domain.GeoDistrict;
+import th.co.baiwa.buckwaframework.support.domain.GeoProvince;
+import th.co.baiwa.buckwaframework.support.domain.GeoSector;
 import th.co.baiwa.buckwaframework.support.domain.Message;
 import th.co.baiwa.buckwaframework.support.domain.ParamGroup;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.preferences.persistence.entity.ExciseDepartment;
-import th.go.excise.ims.preferences.persistence.repository.ExciseAmphurRepository;
 import th.go.excise.ims.preferences.persistence.repository.ExciseDepartmentRepository;
-import th.go.excise.ims.preferences.persistence.repository.ExciseDistrictRepository;
-import th.go.excise.ims.preferences.persistence.repository.ExciseGeoRepository;
-import th.go.excise.ims.preferences.persistence.repository.ExciseProviceRepository;
-import th.go.excise.ims.preferences.vo.ExciseAmphurVo;
 import th.go.excise.ims.preferences.vo.ExciseDepartmentVo;
-import th.go.excise.ims.preferences.vo.ExciseDistrictVo;
-import th.go.excise.ims.preferences.vo.ExciseGeoVo;
-import th.go.excise.ims.preferences.vo.ExciseProvinceVo;
 
 @Component
 public class ApplicationCache {
@@ -55,10 +55,10 @@ public class ApplicationCache {
 	private ParameterInfoRepository parameterInfoRepository;
 	private MessageRepository messageRepository;
 	private ExciseDepartmentRepository exciseDepartmentRepository;
-	private ExciseGeoRepository exciseGeoRepository;
-	private ExciseProviceRepository exciseProvinceRepository;
-	private ExciseAmphurRepository exciseAmphurRepository;
-	private ExciseDistrictRepository exciseDistrictRepository;
+	private GeoSectorRepository geoSectorRepository;
+	private GeoProvinceRepository geoProvinceRepository;
+	private GeoAmphurRepository geoAmphurRepository;
+	private GeoDistrictRepository geoDistrictRepository;
 	
 	private static final ConcurrentHashMap<String, ParamGroupWrapper> PARAM_GROUP_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<Long, ParamInfo> PARAM_INFO_MAP = new ConcurrentHashMap<>();
@@ -69,13 +69,13 @@ public class ApplicationCache {
 	private static final ConcurrentHashMap<String, List<ExciseDept>> EXCISE_AREA_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, List<ExciseDept>> EXCISE_BRANCH_MAP = new ConcurrentHashMap<>();
 
-	private static final List<ExciseGeo> EXCISE_GEO_LIST = new ArrayList<>();
-	private static final List<ExciseProvice> EXCISE_PROVINCE_LIST = new ArrayList<>();
-	private static final List<ExciseAmphur> EXCISE_AMPHUR_LIST = new ArrayList<>();
-	private static final List<ExciseDistrict> EXCISE_DISTRICT_LIST = new ArrayList<>();
-	private static final ConcurrentHashMap<String, List<ExciseProvice>> EXCISE_PROVINCE_MAPPER = new ConcurrentHashMap<>();
-	private static final ConcurrentHashMap<String, List<ExciseAmphur>> EXCISE_AMPHUR_MAPPER = new ConcurrentHashMap<>();
-	private static final ConcurrentHashMap<String, List<ExciseDistrict>> EXCISE_DISTRICT_MAPPER = new ConcurrentHashMap<>();
+	private static final List<GeoSector> GEO_SECTOR_LIST = new ArrayList<>();
+	private static final List<GeoProvince> GEO_PROVINCE_LIST = new ArrayList<>();
+	private static final List<GeoAmphur> GEO_AMPHUR_LIST = new ArrayList<>();
+	private static final List<GeoDistrict> GEO_DISTRICT_LIST = new ArrayList<>();
+	private static final ConcurrentHashMap<String, List<GeoProvince>> GEO_PROVINCE_MAPPER = new ConcurrentHashMap<>();
+	private static final ConcurrentHashMap<String, List<GeoAmphur>> GEO_AMPHUR_MAPPER = new ConcurrentHashMap<>();
+	private static final ConcurrentHashMap<String, List<GeoDistrict>> GEO_DISTRICT_MAPPER = new ConcurrentHashMap<>();
 
 	@Autowired
 	public ApplicationCache(
@@ -83,18 +83,18 @@ public class ApplicationCache {
 			ParameterInfoRepository parameterInfoRepository,
 			MessageRepository messageRepository,
 			ExciseDepartmentRepository exciseDepartmentRepository,
-			ExciseGeoRepository exciseGeoService,
-			ExciseProviceRepository exciseProvinceService,
-			ExciseAmphurRepository exciseAmphurService,
-			ExciseDistrictRepository exciseDistrictService) {
+			GeoSectorRepository geoSectorRepository,
+			GeoProvinceRepository geoProvinceRepository,
+			GeoAmphurRepository geoAmphurRepository,
+			GeoDistrictRepository geoDistrictRepository) {
 		this.parameterGroupRepository = parameterGroupRepository;
 		this.parameterInfoRepository = parameterInfoRepository;
 		this.messageRepository = messageRepository;
 		this.exciseDepartmentRepository = exciseDepartmentRepository;
-		this.exciseGeoRepository = exciseGeoService;
-		this.exciseProvinceRepository = exciseProvinceService;
-		this.exciseAmphurRepository = exciseAmphurService;
-		this.exciseDistrictRepository = exciseDistrictService;
+		this.geoSectorRepository = geoSectorRepository;
+		this.geoProvinceRepository = geoProvinceRepository;
+		this.geoAmphurRepository = geoAmphurRepository;
+		this.geoDistrictRepository = geoDistrictRepository;
 	}
 	
 	/** Reload */
@@ -202,33 +202,32 @@ public class ApplicationCache {
 	}
 	
 	/** Geography */
-	public static List<ExciseGeo> getExciseGeoList() {
-		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_GEO_LIST, new ArrayList<>()));
+	public static List<GeoSector> getGeoSectorList() {
+		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(GEO_SECTOR_LIST, new ArrayList<>()));
 	}
 
-	public static List<ExciseProvice> getExciseProviceList() {
-		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_PROVINCE_LIST, new ArrayList<>()));
+	public static List<GeoProvince> getGeoProvinceList() {
+		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(GEO_PROVINCE_LIST, new ArrayList<>()));
 	}
 	
-	public static List<ExciseProvice> getExciseProviceListByGeoId(String geoId) {
-		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_PROVINCE_MAPPER.get(geoId), new ArrayList<>()));
+	public static List<GeoProvince> getGeoProvinceList(String sectorCode) {
+		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(GEO_PROVINCE_MAPPER.get(sectorCode), new ArrayList<>()));
 	}
 
-	public static List<ExciseAmphur> getExciseAmphurList() {
-		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_AMPHUR_LIST, new ArrayList<>()));
+	public static List<GeoAmphur> getGeoAmphurList() {
+		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(GEO_AMPHUR_LIST, new ArrayList<>()));
 	}
 	
-	public static List<ExciseAmphur> getExciseAmphurList(String proviceId) {
-		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_AMPHUR_MAPPER.get(proviceId), new ArrayList<>()));
+	public static List<GeoAmphur> getGeoAmphurList(String proviceCode) {
+		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(GEO_AMPHUR_MAPPER.get(proviceCode), new ArrayList<>()));
 	}
 
-	public static List<ExciseDistrict> getExciseDistrictList() {
-		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_DISTRICT_LIST, new ArrayList<>()));
+	public static List<GeoDistrict> getGeoDistrictList() {
+		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(GEO_DISTRICT_LIST, new ArrayList<>()));
 	}
 	
-	
-	public static List<ExciseDistrict> getExciseDistrictList(String amphurId) {
-		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_DISTRICT_MAPPER.get(amphurId), new ArrayList<>()));
+	public static List<GeoDistrict> getGeoDistrictList(String amphurCode) {
+		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(GEO_DISTRICT_MAPPER.get(amphurCode), new ArrayList<>()));
 	}
 	/********************* Method for Get Cache - End *********************/
 
@@ -353,84 +352,87 @@ public class ApplicationCache {
 	}
 
 	private void loadGeography() {
-		EXCISE_GEO_LIST.clear();
-		EXCISE_PROVINCE_MAPPER.clear();
-		EXCISE_AMPHUR_MAPPER.clear();
-		EXCISE_DISTRICT_MAPPER.clear();
+		GEO_SECTOR_LIST.clear();
+		GEO_PROVINCE_MAPPER.clear();
+		GEO_AMPHUR_MAPPER.clear();
+		GEO_DISTRICT_MAPPER.clear();
 		
 		/** Geography */
-		List<th.go.excise.ims.preferences.persistence.entity.ExciseGeo> exciseGeoList = exciseGeoRepository.findAll();
-		ExciseGeoVo geoVo = null;
+		List<th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoSector> geoSectorList = geoSectorRepository.findAll();
+		GeoSectorVo sectorVo = null;
 		try {
-			for (th.go.excise.ims.preferences.persistence.entity.ExciseGeo exciseGeo : exciseGeoList) {
-				geoVo = new ExciseGeoVo();
-				BeanUtils.copyProperties(geoVo, exciseGeo);
-				EXCISE_GEO_LIST.add(geoVo);
+			for (th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoSector sector : geoSectorList) {
+				sectorVo = new GeoSectorVo();
+				BeanUtils.copyProperties(sectorVo, sector);
+				GEO_SECTOR_LIST.add(sectorVo);
 			}
-			EXCISE_GEO_LIST.sort((p1, p2) -> p1.getGeoId().compareTo(p2.getGeoId()));
+			GEO_SECTOR_LIST.sort((p1, p2) -> p1.getSectorCode().compareTo(p2.getSectorCode()));
 		} catch (Exception e) {
 			logger.warn(e.getMessage());
 		}
 		
 		/** Province */
-		List<th.go.excise.ims.preferences.persistence.entity.ExciseProvice> exciseProvinceList = exciseProvinceRepository.findAll();
-		List<ExciseProvice> provinceList = null;
-		ExciseProvinceVo provinceVo = null;
+		List<th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoProvince> geoProvinceList = geoProvinceRepository.findAll();
+		List<GeoProvince> provinceList = null;
+		GeoProvinceVo provinceVo = null;
 		try {
-			for (th.go.excise.ims.preferences.persistence.entity.ExciseProvice province : exciseProvinceList) {
-				provinceList = EXCISE_PROVINCE_MAPPER.get(province.getGeoId().toString());
+			for (th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoProvince province : geoProvinceList) {
+				provinceList = GEO_PROVINCE_MAPPER.get(province.getSectorCode());
 				if (provinceList == null) {
-					provinceList = new ArrayList<ExciseProvice>();
+					provinceList = new ArrayList<GeoProvince>();
 				}
-				provinceVo = new ExciseProvinceVo();
+				provinceVo = new GeoProvinceVo();
 				BeanUtils.copyProperties(provinceVo, province);
 				provinceList.add(provinceVo);
-				EXCISE_PROVINCE_LIST.add(provinceVo);
-				EXCISE_PROVINCE_MAPPER.put(provinceVo.getGeoId().toString(), provinceList);
+				GEO_PROVINCE_LIST.add(provinceVo);
+				GEO_PROVINCE_MAPPER.put(provinceVo.getSectorCode(), provinceList);
 			}
-			EXCISE_PROVINCE_MAPPER.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getProvinceCode().compareTo(p2.getProvinceCode())));
+			GEO_PROVINCE_LIST.sort((p1, p2) -> p1.getProvinceCode().compareTo(p2.getProvinceCode()));
+			GEO_PROVINCE_MAPPER.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getProvinceCode().compareTo(p2.getProvinceCode())));
 		} catch (Exception e) {
 			logger.warn(e.getMessage());
 		}
 		
 		/** Amphur */
-		List<th.go.excise.ims.preferences.persistence.entity.ExciseAmphur> exciseAmphurList = exciseAmphurRepository.findAll();
-		List<ExciseAmphur> amphurList = null;
-		ExciseAmphurVo amphurVo = null;
+		List<th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoAmphur> geoAmphurList = geoAmphurRepository.findAll();
+		List<GeoAmphur> amphurList = null;
+		GeoAmphurVo amphurVo = null;
 		try {
-			for (th.go.excise.ims.preferences.persistence.entity.ExciseAmphur amphur : exciseAmphurList) {
-				amphurList = EXCISE_AMPHUR_MAPPER.get(amphur.getProvinceId().toString());
+			for (th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoAmphur amphur : geoAmphurList) {
+				amphurList = GEO_AMPHUR_MAPPER.get(amphur.getAmphurCode().substring(0, 2));
 				if (amphurList == null) {
-					amphurList = new ArrayList<ExciseAmphur>();
+					amphurList = new ArrayList<GeoAmphur>();
 				}
-				amphurVo = new ExciseAmphurVo();
+				amphurVo = new GeoAmphurVo();
 				BeanUtils.copyProperties(amphurVo, amphur);
 				amphurList.add(amphurVo);
-				EXCISE_AMPHUR_LIST.add(amphurVo);
-				EXCISE_AMPHUR_MAPPER.put(amphurVo.getProvinceId().toString(), amphurList);
+				GEO_AMPHUR_LIST.add(amphurVo);
+				GEO_AMPHUR_MAPPER.put(amphurVo.getAmphurCode().substring(0, 2), amphurList);
 			}
-			EXCISE_AMPHUR_MAPPER.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getAmphurCode().compareTo(p2.getAmphurCode())));
+			GEO_AMPHUR_LIST.sort((p1, p2) -> p1.getAmphurCode().compareTo(p2.getAmphurCode()));
+			GEO_AMPHUR_MAPPER.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getAmphurCode().compareTo(p2.getAmphurCode())));
 		} catch (Exception e) {
 			logger.warn(e.getMessage());
 		}
 		
 		/** District */
-		List<th.go.excise.ims.preferences.persistence.entity.ExciseDistrict> exciseDistricList = exciseDistrictRepository.findAll();
-		List<ExciseDistrict> districtList = null;
-		ExciseDistrictVo districtVo = null;
+		List<th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoDistrict> geoDistricList = geoDistrictRepository.findAll();
+		List<GeoDistrict> districtList = null;
+		GeoDistrictVo districtVo = null;
 		try {
-			for (th.go.excise.ims.preferences.persistence.entity.ExciseDistrict district : exciseDistricList) {
-				districtList = EXCISE_DISTRICT_MAPPER.get(district.getAmphurId().toString());
+			for (th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoDistrict district : geoDistricList) {
+				districtList = GEO_DISTRICT_MAPPER.get(district.getDistrictCode().substring(0, 4));
 				if (districtList == null) {
-					districtList = new ArrayList<ExciseDistrict>();
+					districtList = new ArrayList<GeoDistrict>();
 				}
-				districtVo = new ExciseDistrictVo();
+				districtVo = new GeoDistrictVo();
 				BeanUtils.copyProperties(districtVo, district);
 				districtList.add(districtVo);
-				EXCISE_DISTRICT_LIST.add(districtVo);
-				EXCISE_DISTRICT_MAPPER.put(districtVo.getAmphurId().toString(), districtList);
+				GEO_DISTRICT_LIST.add(districtVo);
+				GEO_DISTRICT_MAPPER.put(districtVo.getDistrictCode().substring(0, 4), districtList);
 			}
-			EXCISE_DISTRICT_MAPPER.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getDistrictCode().compareTo(p2.getDistrictCode())));
+			GEO_DISTRICT_LIST.sort((p1, p2) -> p1.getDistrictCode().compareTo(p2.getDistrictCode()));
+			GEO_DISTRICT_MAPPER.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getDistrictCode().compareTo(p2.getDistrictCode())));
 		} catch (Exception e) {
 			logger.warn(e.getMessage());
 		}

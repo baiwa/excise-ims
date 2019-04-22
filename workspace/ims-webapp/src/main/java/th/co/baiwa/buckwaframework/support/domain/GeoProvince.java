@@ -1,10 +1,8 @@
 package th.co.baiwa.buckwaframework.support.domain;
 
-public interface ExciseProvice {
+public interface GeoProvince {
 
-	public Long getProvinceId();
-
-	public Long getGeoId();
+	public String getSectorCode();
 
 	public String getProvinceCode();
 
