@@ -61,6 +61,10 @@ public class Oa07JdbcRepository {
 			sql.append(" AND r4000.new_reg_id=?  ");
 			params.add(formVo.getNewRegId());
 		}
+		if (StringUtils.isNotBlank(formVo.getFacFullname())) {
+			sql.append(" and FAC_FULLNAME like ? ");
+			params.add("%"+StringUtils.trim(formVo.getFacFullname())+"%");
+		}
 		String countSql = OracleUtils.countForDataTable(sql.toString());
 		return this.commonJdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
 	}
@@ -103,7 +107,11 @@ public class Oa07JdbcRepository {
 
 		if (StringUtils.isNotBlank(formVo.getNewRegId())) {
 			sql.append(" AND r4000.new_reg_id=?  ");
-			params.add(formVo.getNewRegId());
+			params.add(StringUtils.trim(formVo.getNewRegId()));
+		}
+		if (StringUtils.isNotBlank(formVo.getFacFullname())) {
+			sql.append(" and FAC_FULLNAME like ? ");
+			params.add("%"+StringUtils.trim(formVo.getFacFullname())+"%");
 		}
 		return this.commonJdbcTemplate.query(
 				OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(),

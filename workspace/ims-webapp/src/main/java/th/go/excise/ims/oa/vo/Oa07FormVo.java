@@ -13,7 +13,16 @@ public class Oa07FormVo extends DataTableRequest {
 	private String monthEnd;
 	private String previousYear;
 	private String cusFullname;
+	private String facFullname;
 	private String monthNum;
+
+	public String getFacFullname() {
+		return facFullname;
+	}
+
+	public void setFacFullname(String facFullname) {
+		this.facFullname = facFullname;
+	}
 
 	public String getNewRegId() {
 		return newRegId;
