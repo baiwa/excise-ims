@@ -12,7 +12,8 @@ import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
 
 public interface TaPlanWorksheetSendRepository extends CommonJpaCrudRepository<TaPlanWorksheetSend, Long> {
 
-	public List<TaPlanWorksheetSend> findByBudgetYear(String budgetYear);
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode like :officeCode and e.budgetYear = :budgetYear")
+	public List<TaPlanWorksheetSend> findByOfficeCodeAndBudgetYearAll(@Param("officeCode") String officeCode, @Param("budgetYear") String budgetYear);
 
 	public TaPlanWorksheetSend findByPlanNumberAndOfficeCode(String planNumber, String officeCode);
 
