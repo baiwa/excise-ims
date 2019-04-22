@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -133,6 +134,13 @@ public class Int02Service {
 		data.setUsagePatterns(res.getUsagePatterns());
 		if (IaConstants.USAGE_PATTERNS_QTN.QUESTIONNAIR_DESC.equals(res.getUsagePatterns())) {
 			/* flag 'Q' */
+			if(StringUtils.isAllEmpty(data.getFactorLevel())) {
+				if("3".equals(res.getFactorLevel())) {
+					data.setFactorLevel("5");
+				}else if ("5".equals(res.getFactorLevel())) {
+					data.setFactorLevel("3");
+				}
+			}
 			if (!(data.getFactorLevel().equals(res.getFactorLevel()))) {
 				updateConfig(id, res.getFactorLevel());
 			}
