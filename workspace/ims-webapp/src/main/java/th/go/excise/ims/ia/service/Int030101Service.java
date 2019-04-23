@@ -554,7 +554,7 @@ public class Int030101Service {
 		return dataUploadList;
 	}
 
-	@Transactional
+//	@Transactional
 	public void saveFactorsData(Int030101FormVo form) {
 //		BigDecimal idFactor = form.getIdFactors();
 //

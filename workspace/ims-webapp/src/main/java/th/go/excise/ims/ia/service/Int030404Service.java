@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -37,8 +39,6 @@ import th.go.excise.ims.ia.vo.IaRiskProEfTaskVo;
 import th.go.excise.ims.ia.vo.IaRiskProEfVo;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
 import th.go.excise.ims.ia.vo.Int0301Vo;
-import th.go.excise.ims.ia.vo.Int030403FormVo;
-import th.go.excise.ims.ia.vo.Int030403Vo;
 import th.go.excise.ims.ia.vo.Int030404FormVo;
 import th.go.excise.ims.ia.vo.Int030404Vo;
 import th.go.excise.ims.ia.vo.IntCalculateCriteriaVo;
@@ -180,6 +180,20 @@ public class Int030404Service {
 			pedata.add(vo);
 
 		}
+		
+		Collections.sort(pedata, new Comparator<Int030404Vo>() {
+			@Override
+			public int compare(final Int030404Vo object1, final Int030404Vo object2) {
+				float obj1 = Float.parseFloat(object1.getIaRiskProEfVo().getAverageData().toString());
+				float obj2 = Float.parseFloat(object2.getIaRiskProEfVo().getAverageData().toString());
+				
+//				Very --> Little
+				return (obj1 > obj2)? -1 : (obj1 < obj2) ? 1 : 0;
+				
+//				Little --> Very
+//				return (obj2 > obj1)? -1 : (obj2 < obj1) ? 1 : 0; 
+			}
+		});
 		return pedata;
 	}
 

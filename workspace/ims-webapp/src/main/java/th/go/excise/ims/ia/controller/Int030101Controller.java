@@ -159,7 +159,7 @@ public class Int030101Controller {
 //			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			logger.error("Int030102Controller saveFactorsData : ", e);
+			logger.error("Int030101Controller saveFactorsData : ", e);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}

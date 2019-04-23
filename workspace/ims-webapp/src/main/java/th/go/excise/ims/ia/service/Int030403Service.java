@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -28,6 +30,7 @@ import th.go.excise.ims.ia.vo.Int0301FormVo;
 import th.go.excise.ims.ia.vo.Int0301Vo;
 import th.go.excise.ims.ia.vo.Int030403FormVo;
 import th.go.excise.ims.ia.vo.Int030403Vo;
+import th.go.excise.ims.ia.vo.Int030406Vo;
 import th.go.excise.ims.ia.vo.Int030407Vo;
 import th.go.excise.ims.ia.vo.IntCalculateCriteriaVo;
 
@@ -77,6 +80,21 @@ public class Int030403Service {
 			iaRiskBudgetProject.get(index).setIntCalculateCriteriaVo(intCalculateCriteriaVo);
 			index++;
 		}
+		
+		Collections.sort(iaRiskBudgetProject, new Comparator<Int030403Vo>() {
+			@Override
+			public int compare(final Int030403Vo object1, final Int030403Vo object2) {
+				double obj1 = Double.parseDouble(object1.getIaRiskBudgetProject().getApprovedbudgetamount().replaceAll(",", ""));
+				double obj2 = Double.parseDouble(object2.getIaRiskBudgetProject().getApprovedbudgetamount().replaceAll(",", ""));
+				
+//				Very --> Little
+				return (obj1 > obj2)? -1 : (obj1 < obj2) ? 1 : 0;
+				
+//				Little --> Very
+//				return (obj2 > obj1)? -1 : (obj2 < obj1) ? 1 : 0; 
+			}
+		});
+		
 		return iaRiskBudgetProject;
 	}
 

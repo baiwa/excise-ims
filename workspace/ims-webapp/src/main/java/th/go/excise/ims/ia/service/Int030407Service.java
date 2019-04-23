@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +34,7 @@ import th.go.excise.ims.ia.util.ExcelUtil;
 import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
 import th.go.excise.ims.ia.util.IntCalculateCriteriaUtil;
 import th.go.excise.ims.ia.vo.ExportRiskVo;
+import th.go.excise.ims.ia.vo.Int030406Vo;
 import th.go.excise.ims.ia.vo.Int030407Vo;
 import th.go.excise.ims.ia.vo.IntCalculateCriteriaVo;
 import th.go.excise.ims.ws.client.pcc.incfri8040.oxm.IncFri8040Request;
@@ -41,7 +44,7 @@ import th.go.excise.ims.ws.client.pcc.incfri8040.service.IncFri8040Service;
 @Service
 public class Int030407Service {
 	private Logger logger = LoggerFactory.getLogger(Int030407Service.class);
-	
+
 	@Autowired
 	private IaRiskFactorsConfigRepository iaRiskFactorsConfigRep;
 
@@ -53,7 +56,7 @@ public class Int030407Service {
 
 	@Autowired
 	private Int0301Service int0301Service;
-	
+
 	@Autowired
 	private IncFri8040Service incFri8040Service;
 
@@ -66,7 +69,7 @@ public class Int030407Service {
 //		requestWs.setPageNo("1");
 //		List<IncomeList> incomeList = incFri8040Service.postRestFul(requestWs);
 		/* ---------------------------------------- */
-		
+
 		BigDecimal idConfig = new BigDecimal(idConfigStr);
 		List<IaRiskIncomePerform> incomes = iaRiskIncomePerformRep.findByBudgetYear(budgetYear);
 		Optional<IaRiskFactorsConfig> config = iaRiskFactorsConfigRep.findById(idConfig);
@@ -97,11 +100,28 @@ public class Int030407Service {
 			}
 			/* set ExciseDepartmentVo */
 			logger.info("office-code: {}", list.getOfficeCode());
-			if( list.getOfficeCode() != null && list.getOfficeCode().length() == 6 ) {
+			if (list.getOfficeCode() != null && list.getOfficeCode().length() == 6) {
 				list.setExciseDepartmentVo(ExciseDepartmentUtil.getExciseDepartment(list.getOfficeCode()));
 			}
 			lists.add(list);
+
 		}
+		
+		Collections.sort(lists, new Comparator<Int030407Vo>() {
+			@Override
+			public int compare(final Int030407Vo object1, final Int030407Vo object2) {
+				float  obj1 = Float.parseFloat(object1.getRateAmount().toString());
+				float  obj2 = Float.parseFloat(object2.getRateAmount().toString());
+				
+//				Very --> Little
+				return (obj1 > obj2) ? -1 : (obj1 < obj2) ? 1 : 0;
+				
+//				Little --> Very
+//				return (obj2 > obj1)? -1 : (obj2 < obj1) ? 1 : 0; 
+			}
+			
+		});
+
 		return lists;
 	}
 
@@ -294,8 +314,8 @@ public class Int030407Service {
 
 		/* set sheet */
 		// merge(firstRow, lastRow, firstCol, lastCol)
-		for (int i = 0	; i < test ; i++) {
-			sheet.addMergedRegion(new CellRangeAddress(rowNum - (i + 10) , rowNum - (i + 10), 0 , 8));
+		for (int i = 0; i < test; i++) {
+			sheet.addMergedRegion(new CellRangeAddress(rowNum - (i + 10), rowNum - (i + 10), 0, 8));
 		}
 		sheet.addMergedRegion(new CellRangeAddress(rowNum - 9, rowNum - 9, 0, 8));
 		sheet.addMergedRegion(new CellRangeAddress(rowNum - 8, rowNum - 8, 0, 8));
