@@ -90,6 +90,7 @@ public class IntCalculateCriteriaUtil {
 		IntCalculateCriteriaVo value = new IntCalculateCriteriaVo();
 		if (checkDataCal(dataCal.floatValue(), config.getLowCondition(), config.getLowStart(), null)) {
 
+			value.setDataCal(dataCal);
 			value.setRiskRate(config.getLowRating());
 			value.setTranslatingRisk(config.getLow());
 			value.setColor(config.getLowColor());
@@ -97,7 +98,7 @@ public class IntCalculateCriteriaUtil {
 			
 		} else if (checkDataCal(dataCal.floatValue(), config.getMediumCondition(), config.getMediumStart(),
 				config.getMediumEnd())) {
-
+			value.setDataCal(dataCal);
 			value.setRiskRate(config.getMediumRating());
 			value.setTranslatingRisk(config.getMedium());
 			value.setColor(config.getMediumColor());
@@ -105,6 +106,7 @@ public class IntCalculateCriteriaUtil {
 
 		} else if (checkDataCal(dataCal.floatValue(), config.getHighCondition(), config.getHighStart(), null)) {
 
+			value.setDataCal(dataCal);
 			value.setRiskRate(config.getHighRating());
 			value.setTranslatingRisk(config.getHigh());
 			value.setColor(config.getHighColor());
@@ -118,6 +120,7 @@ public class IntCalculateCriteriaUtil {
 		IntCalculateCriteriaVo value = new IntCalculateCriteriaVo();
 		if (checkDataCal(dataCal.floatValue(), config.getVerylowCondition(), config.getVerylowStart(), null)) {
 
+			value.setDataCal(dataCal);
 			value.setRiskRate(config.getVerylowRating());
 			value.setTranslatingRisk(config.getVerylow());
 			value.setColor(config.getVerylowColor());
@@ -126,6 +129,7 @@ public class IntCalculateCriteriaUtil {
 		} else if (checkDataCal(dataCal.floatValue(), config.getLowCondition(), config.getLowStart(),
 				config.getLowEnd())) {
 
+			value.setDataCal(dataCal);
 			value.setRiskRate(config.getLowRating());
 			value.setTranslatingRisk(config.getLow());
 			value.setColor(config.getLowColor());
@@ -134,6 +138,7 @@ public class IntCalculateCriteriaUtil {
 		} else if (checkDataCal(dataCal.floatValue(), config.getMediumCondition(), config.getMediumStart(),
 				config.getMediumEnd())) {
 
+			value.setDataCal(dataCal);
 			value.setRiskRate(config.getMediumRating());
 			value.setTranslatingRisk(config.getMedium());
 			value.setColor(config.getMediumColor());
@@ -142,6 +147,7 @@ public class IntCalculateCriteriaUtil {
 		} else if (checkDataCal(dataCal.floatValue(), config.getHighCondition(), config.getHighStart(),
 				config.getHighEnd())) {
 
+			value.setDataCal(dataCal);
 			value.setRiskRate(config.getHighRating());
 			value.setTranslatingRisk(config.getHigh());
 			value.setColor(config.getHighColor());
@@ -149,6 +155,7 @@ public class IntCalculateCriteriaUtil {
 
 		} else if (checkDataCal(dataCal.floatValue(), config.getVeryhighCondition(), config.getVeryhighStart(), null)) {
 
+			value.setDataCal(dataCal);
 			value.setRiskRate(config.getVeryhighRating());
 			value.setTranslatingRisk(config.getVeryhigh());
 			value.setColor(config.getVeryhighColor());

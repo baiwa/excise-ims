@@ -6,11 +6,22 @@ import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMadeHdr;
 
 public class IntCalculateCriteriaVo {
 
+	private BigDecimal dataCal;
 	private BigDecimal riskRate;
 	private String translatingRisk;
 	private String color;
 	private String codeColor;
 	private BigDecimal percent;
+	
+	
+
+	public BigDecimal getDataCal() {
+		return dataCal;
+	}
+
+	public void setDataCal(BigDecimal dataCal) {
+		this.dataCal = dataCal;
+	}
 
 	public BigDecimal getRiskRate() {
 		return riskRate;

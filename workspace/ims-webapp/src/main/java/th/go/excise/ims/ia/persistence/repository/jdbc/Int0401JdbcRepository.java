@@ -113,30 +113,48 @@ public class Int0401JdbcRepository {
 	};
 
 	// HEAD
-	public List<IaRiskFactors> findHead(String budgetYear, BigDecimal inspectionWork) {
+	public List<Int0401HeaderVo> findHead(String budgetYear, BigDecimal inspectionWork) {
 		StringBuilder sqlBuilder = new StringBuilder();
-		sqlBuilder.append(
-				" SELECT F.* FROM IA_RISK_FACTORS F WHERE F.BUDGET_YEAR = ? AND F.INSPECTION_WORK = ? AND F.IS_DELETED = 'N' ");
+		sqlBuilder.append(" SELECT  F.RISK_FACTORS AS NAME, " + 
+				"        C.INFO_USED_RISK_DESC AS DATA_CAL, " + 
+				"        C.PERCENT AS PERCENT2,  " + 
+				"        F.*  " + 
+				"FROM IA_RISK_FACTORS F " + 
+				"LEFT JOIN IA_RISK_FACTORS_CONFIG C " + 
+				"ON F.ID               = C.ID_FACTORS " + 
+				"WHERE F.BUDGET_YEAR   = ? " + 
+				"AND F.INSPECTION_WORK = ? " + 
+				"AND F.IS_DELETED      = 'N' ");
 		List<Object> params = new ArrayList<>();
 		params.add(budgetYear);
 		params.add(inspectionWork);
-		List<IaRiskFactors> lists = jdbcTemplate.query(sqlBuilder.toString(), params.toArray(), headRowMapper);
+		List<Int0401HeaderVo> lists = jdbcTemplate.query(sqlBuilder.toString(), params.toArray(), headRowMapper);
 		return lists;
 	}
 
 	// HEAD RowMapper
-	private RowMapper<IaRiskFactors> headRowMapper = new RowMapper<IaRiskFactors>() {
+	private RowMapper<Int0401HeaderVo> headRowMapper = new RowMapper<Int0401HeaderVo>() {
 		@Override
-		public IaRiskFactors mapRow(ResultSet rs, int arg1) throws SQLException {
-			IaRiskFactors vo = new IaRiskFactors();
-			vo.setId(rs.getBigDecimal("ID"));
-			vo.setIdMaster(rs.getBigDecimal("ID_MASTER"));
-			vo.setBudgetYear(rs.getString("BUDGET_YEAR"));
-			vo.setInspectionWork(rs.getBigDecimal("INSPECTION_WORK"));
-			vo.setRiskFactors(rs.getString("RISK_FACTORS"));
-			vo.setSide(rs.getString("SIDE"));
-			vo.setStatusScreen(rs.getString("STATUS_SCREEN"));
-			vo.setDataEvaluate(rs.getString("DATA_EVALUATE"));
+		public Int0401HeaderVo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Int0401HeaderVo vo = new Int0401HeaderVo();
+			IaRiskFactors iaRiskFactors = new IaRiskFactors();
+			
+			vo.setName(rs.getString("NAME"));
+			vo.setDataCal(rs.getString("DATA_CAL"));
+			vo.setPercent(rs.getBigDecimal("PERCENT2"));
+			
+			iaRiskFactors.setId(rs.getBigDecimal("ID"));
+			iaRiskFactors.setIdMaster(rs.getBigDecimal("ID_MASTER"));
+			iaRiskFactors.setBudgetYear(rs.getString("BUDGET_YEAR"));
+			iaRiskFactors.setInspectionWork(rs.getBigDecimal("INSPECTION_WORK"));
+			iaRiskFactors.setRiskFactors(rs.getString("RISK_FACTORS"));
+			iaRiskFactors.setSide(rs.getString("SIDE"));
+			iaRiskFactors.setStatusScreen(rs.getString("STATUS_SCREEN"));
+			iaRiskFactors.setDataEvaluate(rs.getString("DATA_EVALUATE"));
+			
+			vo.setIaRiskFactors(iaRiskFactors);
+			
+			
 			return vo;
 		}
 	};

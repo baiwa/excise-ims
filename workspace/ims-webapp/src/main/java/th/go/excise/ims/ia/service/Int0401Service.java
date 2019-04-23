@@ -88,7 +88,7 @@ public class Int0401Service {
 		BigDecimal inspectionWork = new BigDecimal(inspectionWorkStr);
 		List<Int0401Vo> lists = new ArrayList<>();
 		List<IaRiskSelectCase> selectCases = int0401JdbcRep.findRow(budgetYear, inspectionWork, status);
-		List<IaRiskFactors> factors = int0401JdbcRep.findHead(budgetYear, inspectionWork);
+		List<Int0401HeaderVo> factors = int0401JdbcRep.findHead(budgetYear, inspectionWork);
 		Int0401CalConfigVo config = int0401JdbcRep.findConfigAll(budgetYear, inspectionWork);
 		
 		
@@ -105,59 +105,59 @@ public class Int0401Service {
 				BigDecimal percentAll = new BigDecimal(0);
 				String checkStatusScreen = "T";
 				
-				for (IaRiskFactors factor : factors) {
+				for (Int0401HeaderVo factor : factors) {
 					Int0401ListVo listVo = new Int0401ListVo();
 					
 // ******************** CalculateCriteria **********************
 					IntCalculateCriteriaVo calVo = new IntCalculateCriteriaVo();
-					if(IaConstants.IA_STATUS_RISK_FACTORS.STATUS_3_CODE.equals(factor.getStatusScreen())) {
+					if(IaConstants.IA_STATUS_RISK_FACTORS.STATUS_3_CODE.equals(factor.getIaRiskFactors().getStatusScreen())) {
 						
 						// Risk Factors 1 NEW";
-						if(IaConstants.IA_DATA_EVALUATE.NEW.equals(factor.getDataEvaluate())) {
+						if(IaConstants.IA_DATA_EVALUATE.NEW.equals(factor.getIaRiskFactors().getDataEvaluate())) {
 							
-							calVo = calNew(factor.getId(),budgetYear,inspectionWork,selectCase.getProjectCode(),selectCase.getExciseCode(),selectCase.getSystemCode());
+							calVo = calNew(factor.getIaRiskFactors().getId(),budgetYear,inspectionWork,selectCase.getProjectCode(),selectCase.getExciseCode(),selectCase.getSystemCode());
 						
 						}
 						
 						// Risk Factors 2 questionnaire";
-						else if(IaConstants.IA_DATA_EVALUATE.QUESTIONNAIRE.equals(factor.getDataEvaluate())) {
+						else if(IaConstants.IA_DATA_EVALUATE.QUESTIONNAIRE.equals(factor.getIaRiskFactors().getDataEvaluate())) {
 							
-							calVo = calQuestionnaire(factor.getId(),budgetYear,inspectionWork,selectCase.getExciseCode());
+							calVo = calQuestionnaire(factor.getIaRiskFactors().getId(),budgetYear,inspectionWork,selectCase.getExciseCode());
 							
 						}
 						
 						// Risk Factors 3 budget_project";
-						else if(IaConstants.IA_DATA_EVALUATE.BUDGET_PROJECT.equals(factor.getDataEvaluate())) {
+						else if(IaConstants.IA_DATA_EVALUATE.BUDGET_PROJECT.equals(factor.getIaRiskFactors().getDataEvaluate())) {
 							
-							calVo = calBudgetProject(factor.getId(),budgetYear,inspectionWork,selectCase.getProjectCode());
+							calVo = calBudgetProject(factor.getIaRiskFactors().getId(),budgetYear,inspectionWork,selectCase.getProjectCode());
 							
 						}
 						
 						// Risk Factors 4 project_efficiency";
-						else if(IaConstants.IA_DATA_EVALUATE.PROJECT_EFFICIENCY.equals(factor.getDataEvaluate())) {
+						else if(IaConstants.IA_DATA_EVALUATE.PROJECT_EFFICIENCY.equals(factor.getIaRiskFactors().getDataEvaluate())) {
 							
-							calVo = calProjectEfficiency(factor.getId(),budgetYear,inspectionWork,selectCase.getProjectCode());
+							calVo = calProjectEfficiency(factor.getIaRiskFactors().getId(),budgetYear,inspectionWork,selectCase.getProjectCode());
 							
 						}
 						
 						// Risk Factors 5 system_unworking";
-						else if(IaConstants.IA_DATA_EVALUATE.SYSTEM_UNWORKING.equals(factor.getDataEvaluate())) {
+						else if(IaConstants.IA_DATA_EVALUATE.SYSTEM_UNWORKING.equals(factor.getIaRiskFactors().getDataEvaluate())) {
 							
-							calVo = calSystemUnworking(factor.getId(),budgetYear,inspectionWork,selectCase.getSystemCode());
+							calVo = calSystemUnworking(factor.getIaRiskFactors().getId(),budgetYear,inspectionWork,selectCase.getSystemCode());
 							
 						}
 						
 						// Risk Factors 6 check_period";
-						else if(IaConstants.IA_DATA_EVALUATE.CHECK_PERIOD.equals(factor.getDataEvaluate())) {
+						else if(IaConstants.IA_DATA_EVALUATE.CHECK_PERIOD.equals(factor.getIaRiskFactors().getDataEvaluate())) {
 							
-							calVo = calCheckPeriod(factor.getId(),budgetYear,inspectionWork,selectCase.getExciseCode());
+							calVo = calCheckPeriod(factor.getIaRiskFactors().getId(),budgetYear,inspectionWork,selectCase.getExciseCode());
 							
 						}
 						
 						// Risk Factors 7 income_perform";
-						else if(IaConstants.IA_DATA_EVALUATE.INCOME_PERFORM.equals(factor.getDataEvaluate())) {
+						else if(IaConstants.IA_DATA_EVALUATE.INCOME_PERFORM.equals(factor.getIaRiskFactors().getDataEvaluate())) {
 							
-							calVo = calIncomePerform(factor.getId(),budgetYear,inspectionWork,selectCase.getExciseCode());
+							calVo = calIncomePerform(factor.getIaRiskFactors().getId(),budgetYear,inspectionWork,selectCase.getExciseCode());
 							
 						}
 						
@@ -320,6 +320,8 @@ public class Int0401Service {
 				
 				if(new BigDecimal(3).equals(inspectionWork)&&projectCode.equals(vo.getIaRiskFactorsData().getProjectCode())) {
 					
+
+					calVo.setDataCal(vo.getIntCalculateCriteriaVo().getDataCal());
 					calVo.setCodeColor(vo.getIntCalculateCriteriaVo().getCodeColor());
 					calVo.setColor(vo.getIntCalculateCriteriaVo().getColor());
 					calVo.setRiskRate(vo.getIntCalculateCriteriaVo().getRiskRate());
@@ -328,6 +330,8 @@ public class Int0401Service {
 					
 				}else if(new BigDecimal(4).equals(inspectionWork)&&systemCode.equals(vo.getIaRiskFactorsData().getSystemCode())) {
 					
+
+					calVo.setDataCal(vo.getIntCalculateCriteriaVo().getDataCal());
 					calVo.setCodeColor(vo.getIntCalculateCriteriaVo().getCodeColor());
 					calVo.setColor(vo.getIntCalculateCriteriaVo().getColor());
 					calVo.setRiskRate(vo.getIntCalculateCriteriaVo().getRiskRate());
@@ -336,6 +340,8 @@ public class Int0401Service {
 					
 				}else if(new BigDecimal(5).equals(inspectionWork)&&exciseCode.equals(vo.getIaRiskFactorsData().getExciseCode())) {
 					
+
+					calVo.setDataCal(vo.getIntCalculateCriteriaVo().getDataCal());
 					calVo.setCodeColor(vo.getIntCalculateCriteriaVo().getCodeColor());
 					calVo.setColor(vo.getIntCalculateCriteriaVo().getColor());
 					calVo.setRiskRate(vo.getIntCalculateCriteriaVo().getRiskRate());
@@ -360,7 +366,8 @@ public class Int0401Service {
 				for (Int020301InfoVo vo : list) {
 					
 					if(vo.getOfficeCode().equals(exciseCode)) {
-						
+
+						calVo.setDataCal(vo.getIntCalculateCriteriaVo().getDataCal());
 						calVo.setCodeColor(vo.getIntCalculateCriteriaVo().getCodeColor());
 						calVo.setColor(vo.getIntCalculateCriteriaVo().getColor());
 						calVo.setRiskRate(vo.getIntCalculateCriteriaVo().getRiskRate());
@@ -392,7 +399,8 @@ public class Int0401Service {
 			for (Int030403Vo vo : list) {
 				
 				if(vo.getIaRiskBudgetProject().getProjectid().equals(projectCode)) {
-					
+
+					calVo.setDataCal(vo.getIntCalculateCriteriaVo().getDataCal());
 					calVo.setCodeColor(vo.getIntCalculateCriteriaVo().getCodeColor());
 					calVo.setColor(vo.getIntCalculateCriteriaVo().getColor());
 					calVo.setRiskRate(vo.getIntCalculateCriteriaVo().getRiskRate());
@@ -419,7 +427,8 @@ public class Int0401Service {
 			for (Int030404Vo vo : list) {
 				
 				if(vo.getIaRiskProEfVo().getProjectId().equals(projectCode)) {
-					
+
+					calVo.setDataCal(vo.getIntCalculateCriteriaVo().getDataCal());
 					calVo.setCodeColor(vo.getIntCalculateCriteriaVo().getCodeColor());
 					calVo.setColor(vo.getIntCalculateCriteriaVo().getColor());
 					calVo.setRiskRate(vo.getIntCalculateCriteriaVo().getRiskRate());
@@ -445,14 +454,15 @@ public class Int0401Service {
 			form.setEndDate(ConvertDateUtils.formatDateToString(config.getEndDate(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH));
 			form.setIdConfig(config.getId());
 			List<Int030405Vo> list = int030405Service.systemUnworkingList(form);
-			for (Int030405Vo int030405Vo : list) {
+			for (Int030405Vo vo : list) {
 				
-				if(int030405Vo.getSystemCode().equals(systemCode)) {
-					
-					calVo.setCodeColor(int030405Vo.getIntCalculateCriteriaVo().getCodeColor());
-					calVo.setColor(int030405Vo.getIntCalculateCriteriaVo().getColor());
-					calVo.setRiskRate(int030405Vo.getIntCalculateCriteriaVo().getRiskRate());
-					calVo.setTranslatingRisk(int030405Vo.getIntCalculateCriteriaVo().getTranslatingRisk());
+				if(vo.getSystemCode().equals(systemCode)) {
+
+					calVo.setDataCal(vo.getIntCalculateCriteriaVo().getDataCal());
+					calVo.setCodeColor(vo.getIntCalculateCriteriaVo().getCodeColor());
+					calVo.setColor(vo.getIntCalculateCriteriaVo().getColor());
+					calVo.setRiskRate(vo.getIntCalculateCriteriaVo().getRiskRate());
+					calVo.setTranslatingRisk(vo.getIntCalculateCriteriaVo().getTranslatingRisk());
 					calVo.setPercent(config.getPercent());
 					
 				}
@@ -476,7 +486,8 @@ public class Int0401Service {
 	for (Int030406Vo vo : list) {
 		
 		if(vo.getIaRiskCheckPeriod().getExciseCode().equals(exciseCode)) {
-			
+
+			calVo.setDataCal(vo.getIntCalculateCriteriaVo().getDataCal());
 			calVo.setCodeColor(vo.getIntCalculateCriteriaVo().getCodeColor());
 			calVo.setColor(vo.getIntCalculateCriteriaVo().getColor());
 			calVo.setRiskRate(vo.getIntCalculateCriteriaVo().getRiskRate());
@@ -499,7 +510,8 @@ return calVo;
 		for (Int030407Vo vo : list) {
 			
 			if(vo.getOfficeCode().equals(exciseCode)) {
-				
+
+				calVo.setDataCal(vo.getIntCalculateCriteriaVo().getDataCal());
 				calVo.setCodeColor(vo.getIntCalculateCriteriaVo().getCodeColor());
 				calVo.setColor(vo.getIntCalculateCriteriaVo().getColor());
 				calVo.setRiskRate(vo.getIntCalculateCriteriaVo().getRiskRate());
@@ -523,15 +535,7 @@ return calVo;
 
 	public List<Int0401HeaderVo> findHeadByBudgetYearAndInspectionWork(String budgetYear, String inspectionWorkStr) {
 		BigDecimal inspectionWork = new BigDecimal(inspectionWorkStr);
-		List<IaRiskFactors> factors = int0401JdbcRep.findHead(budgetYear, inspectionWork);
-		List<Int0401HeaderVo> lists = new ArrayList<>();
-		for (IaRiskFactors factor : factors) {
-			Int0401HeaderVo header = new Int0401HeaderVo();
-			header.setName(factor.getRiskFactors());
-			IaRiskFactorsConfig config = iaRiskFactorsConfigRepository.findByIdFactors(factor.getId());
-			header.setPercent(config.getPercent());
-			lists.add(header);
-		}
+		List<Int0401HeaderVo> lists = int0401JdbcRep.findHead(budgetYear, inspectionWork);
 		return lists;
 	}
 
