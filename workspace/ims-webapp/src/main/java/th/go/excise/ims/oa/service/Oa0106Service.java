@@ -1,7 +1,9 @@
 package th.go.excise.ims.oa.service;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,17 +14,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.export.ExporterInputItem;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleExporterInputItem;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
+import th.go.excise.ims.oa.persistence.entity.OaHydCustomerLicenDtl;
+import th.go.excise.ims.oa.persistence.entity.OaHydrocarbCompare;
 import th.go.excise.ims.oa.persistence.entity.OaHydrocarbDtl;
+import th.go.excise.ims.oa.persistence.repository.OaHydCustomerLicenDtlRepository;
+import th.go.excise.ims.oa.persistence.repository.OaHydrocarbCompareRepository;
 import th.go.excise.ims.oa.persistence.repository.OaHydrocarbDtlRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0106JdbcRepository;
 import th.go.excise.ims.oa.utils.OaOfficeCode;
@@ -37,6 +49,12 @@ public class Oa0106Service {
 
 	@Autowired
 	private OaHydrocarbDtlRepository oaHydrocarbDtlRepo;
+	
+	@Autowired
+	private OaHydCustomerLicenDtlRepository customerLicenseRepo;
+	
+	@Autowired
+	private OaHydrocarbCompareRepository hydCompareRepo;
 
 	public DataTableAjax<Oa0106Vo> filterByCriteria(Oa0106FormVo request, String officeCode) {
 		String offCode = OaOfficeCode.officeCodeLike(officeCode);
@@ -68,10 +86,22 @@ public class Oa0106Service {
 		try {
 			Map<String, Object> params = new HashMap<String, Object>();
 			params = setPrepareJasperOaOpe01(licenseId,dtlId);
+			
+			List<OaHydrocarbCompare> listCompare = new ArrayList<OaHydrocarbCompare>();
+			listCompare = hydCompareRepo.findByoaHydrocarbIdAndIsDeleted(new BigDecimal(dtlId), "N");
+			
+			if (listCompare.size() >0) {
+				params.put("summaryDate", ConvertDateUtils.formatDateToString(listCompare.get(0).getSumaryDate(), ConvertDateUtils.DD_MM_YYYY , ConvertDateUtils.LOCAL_TH));
+				params.put("summaryTime", ConvertDateUtils.formatDateToString(listCompare.get(0).getSumaryDate(), "HH:mm"));
+				
+				params.put("auditDate", ConvertDateUtils.formatDateToString(listCompare.get(0).getAuditDate(), ConvertDateUtils.DD_MM_YYYY , ConvertDateUtils.LOCAL_TH));
+				params.put("auditTime", ConvertDateUtils.formatDateToString(listCompare.get(0).getAuditDate(), "HH:mm"));
+			}
+			
 			JasperPrint jasperPrint1 = ReportUtils.getJasperPrint("OA_OPE_01" + "." + FILE_EXTENSION.JASPER, params,
 					new JREmptyDataSource());
 			JasperPrint jasperPrint2 = ReportUtils.getJasperPrint("OA_OPE_05" + "." + FILE_EXTENSION.JASPER, params,
-					new JREmptyDataSource());
+					listCompare.size()> 0 ?  new JRBeanCollectionDataSource(listCompare, false) :new JREmptyDataSource());
 			JasperPrint jasperPrint3 = ReportUtils.getJasperPrint("OA_OPE_07" + "." + FILE_EXTENSION.JASPER, params,
 					new JREmptyDataSource());
 			JasperPrint jasperPrint4 = ReportUtils.getJasperPrint("OA_OPE_02" + "." + FILE_EXTENSION.JASPER, params,
@@ -112,33 +142,40 @@ public class Oa0106Service {
 
 	public Map<String, Object> setPrepareJasperOaOpe01(String licenseId,String dtlId) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		BigDecimal id = new BigDecimal(dtlId);
+		BigDecimal id = new BigDecimal(licenseId);
 		Oa0106Vo license = oa0106JdbcRepo.getCustomerLicenseById(licenseId);
-		Optional<OaHydrocarbDtl> oaHydrocabon = oaHydrocarbDtlRepo.findById(id);
+		Optional<OaHydrocarbDtl> oaHydrocabon = oaHydrocarbDtlRepo.findById(new BigDecimal(dtlId));
 		OaHydrocarbDtl data = oaHydrocabon.get();
-
+		
+		java.sql.Date sqlDate = new java.sql.Date(license.getStartDate().getTime());
+		LocalDate localDate = LocalDateConverter.convertToEntityAttribute(sqlDate);
+		int year = localDate.getYear()+543;
+		int day = localDate.getDayOfMonth();
+		
+	
 		// OA_OPE_01
+		params.put("licenseType", license.getLicenseType());
 		params.put("licenseNo1", license.getLicenseNo());
 		params.put("licenseNo2", "");
-		params.put("licenseDate", "11");
-		params.put("licenseMonth", "เมษายน");
-		params.put("licenseYear", "2562");
+		params.put("licenseDate",Integer.toString(day) );
+		params.put("licenseMonth", ConvertDateUtils.getMonthThai(localDate.getMonthValue(), ConvertDateUtils.FULL_MONTH));
+		params.put("licenseYear",Integer.toString(year)  );
 		params.put("companyName", license.getCompanyName());
 		params.put("identityCompany", license.getIdentifyNo());
-		params.put("totalEmployee", data.getEmployeeTemporary().toString());
-		params.put("permanentEmployee", data.getEmployeePermanent().toString());
-		params.put("temporaryEmployee", data.getEmployeeTemporary().toString());
+		params.put("totalEmployee", data.getEmployeeTemporary()!=null?data.getEmployeePermanent().add(data.getEmployeePermanent()):new BigDecimal(0));
+		params.put("permanentEmployee", data.getEmployeePermanent());
+		params.put("temporaryEmployee", data.getEmployeeTemporary());
 		params.put("warehouse", license.getWarehouseAddress());
 		params.put("officeOwnType", data.getOfficePlaceOwner());
-		params.put("workStartTime", data.getWorkingStartDate().toString());
-		params.put("workEndTime", data.getWorkingEndDate().toString());
-		params.put("workingDate", data.getWorkdayPermonth().toString());
-		params.put("numberOfTank", data.getNumberOfTank().toString());
+		params.put("workStartTime", ConvertDateUtils.formatDateToString(data.getWorkingStartDate(), ConvertDateUtils.DD_MM_YYYY,ConvertDateUtils.LOCAL_TH));
+		params.put("workEndTime",ConvertDateUtils.formatDateToString(data.getWorkingEndDate(), ConvertDateUtils.DD_MM_YYYY,ConvertDateUtils.LOCAL_TH));
+		params.put("workingDate", data.getWorkdayPermonth());
+		params.put("numberOfTank", data.getNumberOfTank());
 		params.put("tankCapacity", data.getTankCapacity());
 		params.put("numberUtility", data.getNumberUtility());
 		params.put("orderType", data.getOrderType());
 		params.put("orderPayMethod", data.getOrderPayMethod());
-		params.put("rentOfficePrice",data.getOfficeRentAmount() != null ? data.getOfficeRentAmount().toString():null);
+		params.put("rentOfficePrice",data.getOfficeRentAmount() != null ? data.getOfficeRentAmount():null);
 		params.put("orderPayMethodOther", data.getPayMethodOther());
 
 		// OA_OPE_05
@@ -161,8 +198,28 @@ public class Oa0106Service {
 			params.put("useEndDate", ConvertDateUtils.formatDateToString(data.getUseEndDate(), ConvertDateUtils.DD_MM_YYYY));
 		}
 		params.put("buyOverlimit", data.getBuyOverlimit());
+		
+		// OA_LUB_05
+		// GET SUB REPORT
+		InputStream jasperStream = ReportUtils.getResourceFile(ReportConstants.PATH.JRXML_PATH, "SUB_01_OA_LUB_05"+"."+ FILE_EXTENSION.JASPER);
+		try {
+			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+			params.put("SUB_01_OA_LUB_05",  jasperReport);
+		} catch (JRException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		BigDecimal summary = new BigDecimal(0);
+		List<OaHydCustomerLicenDtl> listLicenseDetail = new ArrayList<OaHydCustomerLicenDtl>();
+		listLicenseDetail = customerLicenseRepo.findByoaCuslicenseIdAndIsDeleted(id, "N");
+		for (int i = 0; i < listLicenseDetail.size(); i++) {
+			summary = summary.add(listLicenseDetail.get(i).getAmount());
+		}
+		params.put("licenseList",  new JRBeanCollectionDataSource(listLicenseDetail, false));
+		params.put("licenseSumary", summary);
 
 		return params;
 	}
+	
 
 }

@@ -12,7 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.beanutils.converters.DateConverter;
 import org.hibernate.hql.internal.ast.SqlASTFactory;
+import org.jfree.ui.DateChooserPanel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,12 +37,14 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSIO
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
+import th.go.excise.ims.oa.persistence.entity.OaCustomerLicen;
 import th.go.excise.ims.oa.persistence.entity.OaCustomerLicenDetail;
 import th.go.excise.ims.oa.persistence.entity.OaHydrocarbDtl;
 import th.go.excise.ims.oa.persistence.entity.OaLubricantsCompare;
 import th.go.excise.ims.oa.persistence.entity.OaLubricantsCust;
 import th.go.excise.ims.oa.persistence.entity.OaLubricantsDtl;
 import th.go.excise.ims.oa.persistence.repository.OaCustomerLicenDetailRepository;
+import th.go.excise.ims.oa.persistence.repository.OaCustomerLicenRepository;
 import th.go.excise.ims.oa.persistence.repository.OaHydrocarbDtlRepository;
 import th.go.excise.ims.oa.persistence.repository.OaLubricantsCompareRepository;
 import th.go.excise.ims.oa.persistence.repository.OaLubricantsDtlRepository;
@@ -79,6 +83,9 @@ public class Oa0206Service {
 	
 	@Autowired
 	private OaLubricantsCompareRepository lubricantsComapreRepo;
+	
+	@Autowired
+	private OaCustomerLicenRepository oaCustomerLicense;
 	
 	@Autowired
 	private Oa020106JdbcRepository buttonRepo;
@@ -139,9 +146,14 @@ public class Oa0206Service {
 			List<OaLubricantsCompare> listCompare = new ArrayList<OaLubricantsCompare>();
 			listCompare = lubricantsComapreRepo.findByOaLubricantsIdAndIsDeleted(new BigDecimal(dtlId), "N");
 			
+			if (listCompare.size() >0) {
+				params.put("summaryDate", ConvertDateUtils.formatDateToString(listCompare.get(0).getSumaryDate(), ConvertDateUtils.DD_MM_YYYY , ConvertDateUtils.LOCAL_TH));
+				params.put("summaryTime", ConvertDateUtils.formatDateToString(listCompare.get(0).getSumaryDate(), "HH:mm"));
+				
+				params.put("auditDate", ConvertDateUtils.formatDateToString(listCompare.get(0).getAuditDate(), ConvertDateUtils.DD_MM_YYYY , ConvertDateUtils.LOCAL_TH));
+				params.put("auditTime", ConvertDateUtils.formatDateToString(listCompare.get(0).getAuditDate(), "HH:mm"));
+			}
 
-
-			
 			JasperPrint jasperPrint1 = ReportUtils.getJasperPrint("OA_LUB_01"+"."+ FILE_EXTENSION.JASPER, params, new JREmptyDataSource());
 			JasperPrint jasperPrint2 = ReportUtils.getJasperPrint("OA_LUB_05"+"."+ FILE_EXTENSION.JASPER, params, listCompare.size()> 0 ?  new JRBeanCollectionDataSource(listCompare, false) :new JREmptyDataSource());
 			JasperPrint jasperPrint3 = ReportUtils.getJasperPrint("OA_LUB_07"+"."+ FILE_EXTENSION.JASPER, params);
@@ -184,14 +196,23 @@ public class Oa0206Service {
 		Oa0206Vo license = oa0206JdbcRepo.getCustomerLicenseById(id);
 //		Optional<OaHydrocarbDtl> oaHydrocabon = oaHydrocarbDtlRepo.findById(id);
 //		OaHydrocarbDtl data = oaHydrocabon.get();
+//		Oa020106ButtonVo idAll = buttonRepo.findButtonIdById(license.getOaLicensePlan());
 		Optional<OaLubricantsDtl> oaHydrocabon = oaLubricantsDtlRepo.findById(new BigDecimal(dtlId));
+		
+//		Optional<OaCustomerLicen> oaCuslicense = oaCustomerLicense.findById(idAll.getOaCuslicenseId());
+		
 		OaLubricantsDtl data = oaHydrocabon.get();	
+//		OaCustomerLicen cus = oaCuslicense.get();
 		java.sql.Date sqlDate = new java.sql.Date(license.getStartDate().getTime());
 		LocalDate localDate = LocalDateConverter.convertToEntityAttribute(sqlDate);
 		int year = localDate.getYear()+543;
 		int day = localDate.getDayOfMonth();
 		
+
+		
+		
 		// OA_LUB_01
+		params.put("licenseType", license.getLicenseType());
 		params.put("licenseNo1", license.getLicenseNo());
 		params.put("licenseNo2","");
 		params.put("licenseDate",Integer.toString(day) );
@@ -199,45 +220,46 @@ public class Oa0206Service {
 		params.put("licenseYear",Integer.toString(year)  );
 		params.put("companyName", license.getCompanyName());
 		params.put("identityCompany", license.getIdentifyNo());
-		params.put("totalEmployee", data.getEmployeeTemporary().toString());
-		params.put("permanentEmployee", data.getEmployeePermanent().toString());
-		params.put("temporaryEmployee", data.getEmployeeTemporary().toString());
+		params.put("totalEmployee", data.getEmployeeTemporary()!=null?data.getEmployeePermanent().add(data.getEmployeePermanent()):new BigDecimal(0));
+		params.put("permanentEmployee", data.getEmployeePermanent());
+		params.put("temporaryEmployee", data.getEmployeeTemporary());
 		params.put("warehouse", license.getWarehouseAddress());
 		params.put("officeOwnType", data.getOfficePlaceOwner());
-		params.put("workStartTime", data.getWorkingStartDate().toString());
-		params.put("workEndTime", data.getWorkingEndDate().toString());
-		params.put("workingDate", data.getWorkdayPermonth().toString());
-		params.put("numberOfTank", data.getNumberOfTank().toString());
+		params.put("workStartTime", ConvertDateUtils.formatDateToString(data.getWorkingStartDate(), ConvertDateUtils.DD_MM_YYYY,ConvertDateUtils.LOCAL_TH));
+		params.put("workEndTime",ConvertDateUtils.formatDateToString(data.getWorkingEndDate(), ConvertDateUtils.DD_MM_YYYY,ConvertDateUtils.LOCAL_TH));
+		params.put("workingDate", data.getWorkdayPermonth());
+		params.put("numberOfTank", data.getNumberOfTank());
 		params.put("tankCapacity", data.getTankCapacity());
 		params.put("numberUtility", data.getNumberUtility());
 		params.put("orderType", data.getOrderType());
 		params.put("orderPayMethod", data.getOrderPayMethod());
-		params.put("rentOfficePrice", data.getOfficeRentAmount().toString());
+		params.put("rentOfficePrice", data.getOfficeRentAmount());
 		params.put("orderPayMethodOther", data.getPayMethodOther());
+		
 		
 
 		// OA_LUB_02
 		// Ope020106 [07]
 		OaLubricantsDtl ope02010607 = oa02010607Service.findDetailById(dtlId);
 		// parameters
-		params.put("dailyAcc", ope02010607.getDailyAcc());
-		params.put("dailyAccDoc", ope02010607.getDailyAccDoc());
-		params.put("dailyAuditRemark", ope02010607.getDailyAuditRemark());
-		params.put("monthlyAcc", ope02010607.getMonthlyAcc());
-		params.put("monthlyAccDoc", ope02010607.getMonthlyAccDoc());
-		params.put("monthlyAuditRemark", ope02010607.getMonthlyAuditRemark());
-		params.put("monthlyAcc04", ope02010607.getMonthlyAcc04());
-		params.put("monthlyAccDoc04", ope02010607.getMonthlyAccDoc04());
-		params.put("monthlyAuditRemark04", ope02010607.getMonthlyAuditRemark04());
-		params.put("monthStart", ope02010607.getAgentStartDate());
-		params.put("monthEnd", ope02010607.getAgentEndDate());
-		params.put("abuyFromIndust", ope02010607.getABuyFromIndust());
-		params.put("abuyFromAgent", ope02010607.getABuyFromAgent());
-		params.put("abuyFromImporter", ope02010607.getABuyFromImporter());
-		params.put("abuyIndustLicense", ope02010607.getABuyIndustLicense());
-		params.put("abuyAgentLicense", ope02010607.getABuyAgentLicense());
-		params.put("abuyImporterLicense", null);
-		params.put("agentOverlimit", ope02010607.getAgentOverlimit());
+//		params.put("dailyAcc", ope02010607.getDailyAcc());
+//		params.put("dailyAccDoc", ope02010607.getDailyAccDoc());
+//		params.put("dailyAuditRemark", ope02010607.getDailyAuditRemark());
+//		params.put("monthlyAcc", ope02010607.getMonthlyAcc());
+//		params.put("monthlyAccDoc", ope02010607.getMonthlyAccDoc());
+//		params.put("monthlyAuditRemark", ope02010607.getMonthlyAuditRemark());
+//		params.put("monthlyAcc04", ope02010607.getMonthlyAcc04());
+//		params.put("monthlyAccDoc04", ope02010607.getMonthlyAccDoc04());
+//		params.put("monthlyAuditRemark04", ope02010607.getMonthlyAuditRemark04());
+//		params.put("monthStart", ope02010607.getAgentStartDate());
+//		params.put("monthEnd", ope02010607.getAgentEndDate());
+//		params.put("abuyFromIndust", ope02010607.getABuyFromIndust());
+//		params.put("abuyFromAgent", ope02010607.getABuyFromAgent());
+//		params.put("abuyFromImporter", ope02010607.getABuyFromImporter());
+//		params.put("abuyIndustLicense", ope02010607.getABuyIndustLicense());
+//		params.put("abuyAgentLicense", ope02010607.getABuyAgentLicense());
+//		params.put("abuyImporterLicense", null);
+//		params.put("agentOverlimit", ope02010607.getAgentOverlimit());
 		
 		// OA_LUB_03
 		// Ope020106 [08]
