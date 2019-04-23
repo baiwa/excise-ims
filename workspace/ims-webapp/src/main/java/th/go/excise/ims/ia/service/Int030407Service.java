@@ -99,7 +99,7 @@ public class Int030407Service {
 				list.setIntCalculateCriteriaVo(risk);
 			}
 			/* set ExciseDepartmentVo */
-			logger.info("office-code: {}", list.getOfficeCode());
+//			logger.info("office-code: {}", list.getOfficeCode());
 			if (list.getOfficeCode() != null && list.getOfficeCode().length() == 6) {
 				list.setExciseDepartmentVo(ExciseDepartmentUtil.getExciseDepartment(list.getOfficeCode()));
 			}
