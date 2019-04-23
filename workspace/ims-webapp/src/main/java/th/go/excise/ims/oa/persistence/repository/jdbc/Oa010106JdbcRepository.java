@@ -59,6 +59,7 @@ public class Oa010106JdbcRepository {
 			vo.setOaCuslicenseId(rs.getBigDecimal("OA_CUSLICENSE_ID"));
 			vo.setOaHydrocarbDtlId(rs.getBigDecimal("OA_HYDROCARB_DTL_ID"));
 			vo.setOaHydrocarbId(rs.getBigDecimal("OA_HYDROCARB_ID"));
+			vo.setOldCustomer(rs.getString("OLD_CUSTOMER"));
 			return vo;
 		}
 	};
