@@ -3,6 +3,7 @@ package th.go.excise.ims.ta.vo;
 import java.util.Date;
 
 public class TaFormTS0423DtlVo {
+	private String formTs0423DtlId;
 	private String recNo;
 	private String operatorOfficeName;
 	private Date auditDateStart;
@@ -13,6 +14,12 @@ public class TaFormTS0423DtlVo {
 	private String auditResult;
 	private String officerFullName;
 	
+	public String getFormTs0423DtlId() {
+		return formTs0423DtlId;
+	}
+	public void setFormTs0423DtlId(String formTs0423DtlId) {
+		this.formTs0423DtlId = formTs0423DtlId;
+	}
 	public String getRecNo() {
 		return recNo;
 	}

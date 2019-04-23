@@ -22,6 +22,7 @@
 	<parameter name="facTambolName" class="java.lang.String"/>
 	<parameter name="facAmphurName" class="java.lang.String"/>
 	<parameter name="facProvinceName" class="java.lang.String"/>
+	<parameter name="formTsNumber" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -327,8 +328,8 @@
 					<pen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[($F{auditDateStart}!= null ? new SimpleDateFormat("d MMM yyyy",new Locale("th", "TH")).format($F{auditDateStart}) : "") + 
-					($F{auditDateEnd} != null ? "  ถึง  " + new SimpleDateFormat("d MMM yyyy",new Locale("th", "TH")).format($F{auditDateEnd}) : "")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{auditDateStart}!= null ? new SimpleDateFormat("dd/MM/yy",new Locale("th", "TH")).format($F{auditDateStart}) : "") + 
+					($F{auditDateEnd} != null ? "\n  ถึง  \n" + new SimpleDateFormat("dd/MM/yy",new Locale("th", "TH")).format($F{auditDateEnd}) : "")]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="font" positionType="Float" x="236" y="0" width="63" height="16" uuid="4e232f10-1c7b-4963-ac2e-fe7f6e0b0550"/>
@@ -336,7 +337,7 @@
 					<pen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("d MMM yyyy",new Locale("th", "TH")).format($F{reqDocDate})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yy",new Locale("th", "TH")).format($F{reqDocDate})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="font" positionType="Float" x="299" y="0" width="63" height="16" uuid="3f0c6827-68b3-4eeb-a6cc-5d3311286ddc"/>
@@ -344,7 +345,7 @@
 					<pen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("d MMM yyyy",new Locale("th", "TH")).format($F{informDocDate})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yy",new Locale("th", "TH")).format($F{informDocDate})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="font" positionType="Float" x="362" y="0" width="154" height="16" uuid="5aff08c7-5bb0-49fb-9f3d-0b861826e17c"/>
@@ -372,4 +373,17 @@
 			</textField>
 		</band>
 	</detail>
+	<pageFooter>
+		<band height="26">
+			<textField isBlankWhenNull="true">
+				<reportElement key="" x="0" y="8" width="150" height="15" uuid="3b673ad5-8131-4f8f-954d-0c225bf5f70f">
+					<printWhenExpression><![CDATA[!($P{formTsNumber} == null || $P{formTsNumber}.length() == 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="TH Sarabun New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["เลขที่เอกสารจากระบบ  "+$P{formTsNumber}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
 </jasperReport>

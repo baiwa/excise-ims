@@ -15,7 +15,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -52,6 +58,7 @@ import th.go.excise.ims.ta.service.TaFormTS0118Service;
 import th.go.excise.ims.ta.service.TaFormTS0119Service;
 import th.go.excise.ims.ta.service.TaFormTS0120Service;
 import th.go.excise.ims.ta.service.TaFormTS0121Service;
+import th.go.excise.ims.ta.service.TaFormTS0423Service;
 
 @Controller
 @RequestMapping("/api/ta/report")
@@ -68,6 +75,7 @@ public class TaFormTSController {
 	
 	@Autowired
 	public TaFormTSController(
+		
 		TaFormTS0101Service taFormTS0101Service,
 		TaFormTS0102Service taFormTS0102Service,
 		TaFormTS0103Service taFormTS0103Service,
@@ -91,7 +99,8 @@ public class TaFormTSController {
 		TaFormTS0118Service taFormTS0118Service,
 		TaFormTS0119Service taFormTS0119Service,
 		TaFormTS0120Service taFormTS0120Service,
-		TaFormTS0121Service taFormTS0121Service) {
+		TaFormTS0121Service taFormTS0121Service,
+		TaFormTS0423Service taFormTS0423Service) {
 		
 		taFormTSMap.put("ta-form-ts0101", taFormTS0101Service);
 		taFormTSMap.put("ta-form-ts0102", taFormTS0102Service);
@@ -117,6 +126,7 @@ public class TaFormTSController {
 		taFormTSMap.put("ta-form-ts0119", taFormTS0119Service);
 		taFormTSMap.put("ta-form-ts0120", taFormTS0120Service);
 		taFormTSMap.put("ta-form-ts0121", taFormTS0121Service);
+		taFormTSMap.put("ta-form-ts0423", taFormTS0423Service);
 	}
 	
 	@SuppressWarnings("unchecked")

@@ -350,7 +350,7 @@
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("d MMM yy",new Locale("th", "TH")).format($F{callDocDate})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yy",new Locale("th", "TH")).format($F{callDocDate})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="font" stretchType="ContainerHeight" x="406" y="0" width="54" height="18" uuid="53002945-4c79-432a-ac37-9c86123cba04"/>
@@ -358,8 +358,8 @@
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[($F{auditDateStart}!= null ? new SimpleDateFormat("d MMM yy",new Locale("th", "TH")).format($F{auditDateStart}) : "") + 
-     ($F{auditDateEnd} != null ? "  ถึง  " + new SimpleDateFormat("d MMM yy",new Locale("th", "TH")).format($F{auditDateEnd}) : "")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{auditDateStart}!= null ? new SimpleDateFormat("dd/MM/yy",new Locale("th", "TH")).format($F{auditDateStart}) : "") + 
+     ($F{auditDateEnd} != null ? "\n  ถึง  \n" + new SimpleDateFormat("dd/MM/yy",new Locale("th", "TH")).format($F{auditDateEnd}) : "")]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="font" stretchType="ContainerHeight" x="460" y="0" width="42" height="18" uuid="4bee7933-30cf-48d3-a937-baf6f29785fa"/>
@@ -367,7 +367,7 @@
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{taxAmt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{taxAmt} != null ? (new DecimalFormat("#,##0.00").format($F{taxAmt}).split("\\.")[0]) : ""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="font" stretchType="ContainerHeight" x="502" y="0" width="10" height="18" uuid="436f68d3-3b4d-489a-bfd0-47d5de754e33"/>
@@ -375,6 +375,7 @@
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{taxAmt} != null ? (new DecimalFormat("#,##0.00").format($F{taxAmt}).split("\\.")[1]) : ""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement style="font" stretchType="ContainerHeight" x="512" y="0" width="42" height="18" uuid="76f3abe0-bd3a-4345-a40a-d56422a239e6"/>
@@ -382,7 +383,7 @@
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{fineAmt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fineAmt} != null ? (new DecimalFormat("#,##0.00").format($F{fineAmt}).split("\\.")[0]) : ""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="font" stretchType="ContainerHeight" x="554" y="0" width="10" height="18" uuid="afed305c-84d0-4d0e-8d8d-eafc4f37b920"/>
@@ -390,6 +391,7 @@
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fineAmt} != null ? (new DecimalFormat("#,##0.00").format($F{fineAmt}).split("\\.")[1]) : ""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement style="font" stretchType="ContainerHeight" x="564" y="0" width="42" height="18" uuid="0695cfd9-aa49-486f-a1b8-d33b16e22747"/>
@@ -397,7 +399,7 @@
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{extraAmt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{extraAmt} != null ? (new DecimalFormat("#,##0.00").format($F{extraAmt}).split("\\.")[0]) : ""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="font" stretchType="ContainerHeight" x="606" y="0" width="10" height="18" uuid="4f72ca73-baac-46c2-8781-06152a34de5c"/>
@@ -405,6 +407,7 @@
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{extraAmt} != null ? (new DecimalFormat("#,##0.00").format($F{extraAmt}).split("\\.")[1]) : ""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement style="font" stretchType="ContainerHeight" x="616" y="0" width="42" height="18" uuid="08859ac3-10e2-4b68-b677-bbb3e155aa94"/>
@@ -414,7 +417,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{moiAmt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{moiAmt} != null ? (new DecimalFormat("#,##0.00").format($F{moiAmt}).split("\\.")[0]) : ""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="font" stretchType="ContainerHeight" x="658" y="0" width="10" height="18" uuid="cb01162d-9fa7-4447-b0a4-c19c09c6075d"/>
@@ -422,6 +425,7 @@
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{moiAmt} != null ? (new DecimalFormat("#,##0.00").format($F{moiAmt}).split("\\.")[1]) : ""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement style="font" stretchType="ContainerHeight" x="668" y="0" width="42" height="18" uuid="b381ddb0-3526-47bf-b221-630baed46c01"/>
@@ -429,7 +433,7 @@
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{netTaxAmt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{netTaxAmt} != null ? (new DecimalFormat("#,##0.00").format($F{netTaxAmt}).split("\\.")[0]) : ""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="font" stretchType="ContainerHeight" x="720" y="0" width="34" height="18" uuid="90cc5742-679d-44a3-b7b4-622412213edd"/>
@@ -453,7 +457,21 @@
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{netTaxAmt} != null ? (new DecimalFormat("#,##0.00").format($F{netTaxAmt}).split("\\.")[1]) : ""]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
+	<pageFooter>
+		<band height="26">
+			<textField isBlankWhenNull="true">
+				<reportElement key="" x="0" y="8" width="150" height="15" uuid="2d169f8a-3c25-42ee-b666-86f1fdfd09f4">
+					<printWhenExpression><![CDATA[!($P{formTsNumber} == null || $P{formTsNumber}.length() == 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="TH Sarabun New" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["เลขที่เอกสารจากระบบ  "+$P{formTsNumber}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
 </jasperReport>
