@@ -398,6 +398,7 @@ public class WorksheetExportService {
 			}
 		}
 		headerText1List.add("พิกัดอื่นๆ");
+		headerText1List.add("กลุ่มของการชำระภาษี");
 		headerText1List.add("ขนาดทุนจดทะเบียน");
 		headerText1List.add("ระดับความเสี่ยง");
 		headerText1List.add("ผู้ประกอบการที่ไม่มีการตรวจสอบภาษีในระยะเวลาที่กำหนด");
@@ -574,6 +575,11 @@ public class WorksheetExportService {
 			cell.setCellValue(taxVo.getOtherDutyName());
 			cell.setCellStyle(cellLeft);
 			
+			//กลุ่มของการชำระภาษี
+			cell = row.createCell(cellNum++);
+			cell.setCellValue(taxVo.getCondTaxGrp());
+			cell.setCellStyle(cellLeft);
+			
 			//ขนาดทุนจดทะเบียน
 			cell = row.createCell(cellNum++);
 			cell.setCellValue(taxVo.getCondSubCapitalDesc());
@@ -651,6 +657,7 @@ public class WorksheetExportService {
 		sheet.addMergedRegion(new CellRangeAddress(0, 1, startAfterTaxAmtIndex+1, startAfterTaxAmtIndex+1));
 		sheet.addMergedRegion(new CellRangeAddress(0, 1, startAfterTaxAmtIndex+2, startAfterTaxAmtIndex+2));
 		sheet.addMergedRegion(new CellRangeAddress(0, 1, startAfterTaxAmtIndex+3, startAfterTaxAmtIndex+3));
+		sheet.addMergedRegion(new CellRangeAddress(0, 1, startAfterTaxAmtIndex+4, startAfterTaxAmtIndex+4));
 	}
 	
 	private void setMergeCellCondition(Sheet sheet, int dateRange) {
