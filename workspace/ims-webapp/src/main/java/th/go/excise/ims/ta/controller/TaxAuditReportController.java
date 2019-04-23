@@ -110,5 +110,25 @@ public class TaxAuditReportController {
         outStream.write(outArray);
 
     }
+    
+ // TODO Worksheet cond sub
+    @GetMapping("/ta-rpt0003-1")
+    @ResponseBody
+    public void exportWorksheetCondSub(@ModelAttribute TaxOperatorFormVo formVo, HttpServletRequest httpServletRequest, HttpServletResponse response)
+            throws Exception {
+
+        logger.info("listRawMaterialReceive export!!");
+
+        /* set fileName */
+        String fileName = URLEncoder.encode("Worksheet Cond sub", "UTF-8");
+        /* write it as an excel attachment */
+        byte[] outArray = exportService.exportCondSubWorksheet(formVo);
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+
+        OutputStream outStream = response.getOutputStream();
+        outStream.write(outArray);
+
+    }
 
 }
