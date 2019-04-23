@@ -12,7 +12,7 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "ADM_MENU")
-public class AdmMenu extends BaseEntity {
+public class Menu extends BaseEntity {
 
 	private static final long serialVersionUID = -1840907549267978591L;
 
