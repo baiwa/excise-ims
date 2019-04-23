@@ -1,6 +1,11 @@
 package th.co.baiwa.buckwaframework.accesscontrol.persistence.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
@@ -10,11 +15,26 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 public class AdmMenu extends BaseEntity {
 
 	private static final long serialVersionUID = -1840907549267978591L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADM_MENU_GEN")
+	@SequenceGenerator(name = "ADM_MENU_GEN", sequenceName = "ADM_MENU_SEQ", allocationSize = 1)
+	@Column(name = "MENU_ID")
 	private Long menuId;
+
+	@Column(name = "MENU_CODE")
 	private String menuCode;
+
+	@Column(name = "MENU_NAME")
 	private String menuName;
+
+	@Column(name = "PARENT_ID")
 	private String parentId;
+
+	@Column(name = "URL")
 	private String URL;
+
+	@Column(name = "SORTING_ORDER")
 	private String sortingOrder;
 
 	public Long getMenuId() {
