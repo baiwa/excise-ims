@@ -20,6 +20,7 @@ import net.sf.jasperreports.export.SimpleExporterInputItem;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.go.excise.ims.oa.persistence.entity.OaHydrocarbDtl;
 import th.go.excise.ims.oa.persistence.repository.OaHydrocarbDtlRepository;
@@ -116,6 +117,7 @@ public class Oa0106Service {
 		Optional<OaHydrocarbDtl> oaHydrocabon = oaHydrocarbDtlRepo.findById(id);
 		OaHydrocarbDtl data = oaHydrocabon.get();
 
+		// OA_OPE_01
 		params.put("licenseNo1", license.getLicenseNo());
 		params.put("licenseNo2", "");
 		params.put("licenseDate", "11");
@@ -138,6 +140,27 @@ public class Oa0106Service {
 		params.put("orderPayMethod", data.getOrderPayMethod());
 		params.put("rentOfficePrice",data.getOfficeRentAmount() != null ? data.getOfficeRentAmount().toString():null);
 		params.put("orderPayMethodOther", data.getPayMethodOther());
+
+		// OA_OPE_05
+		
+		// OA_OPE_07
+		
+		// OA_OPE_02
+		params.put("asaleToAgent", data.getASaleToAgent());
+		params.put("asaleToUser", data.getASaleToUser());
+		params.put("asaleAgentLicense", data.getASaleAgentLicense());
+		params.put("asaleUserLicense", data.getASaleUserLicense());
+		params.put("sentToAgent", data.getSentToAgent());
+		params.put("sentToUser", data.getSentToUser());
+		params.put("materail", data.getMaterail());
+		params.put("document", data.getDocument());
+		params.put("productProcess", data.getProductProcess());
+		params.put("productNextime", data.getProductNextime());
+		if (data.getUseStartDate() != null && data.getUseEndDate() != null) {
+			params.put("useStartDate", ConvertDateUtils.formatDateToString(data.getUseStartDate(), ConvertDateUtils.DD_MM_YYYY));
+			params.put("useEndDate", ConvertDateUtils.formatDateToString(data.getUseEndDate(), ConvertDateUtils.DD_MM_YYYY));
+		}
+		params.put("buyOverlimit", data.getBuyOverlimit());
 
 		return params;
 	}
