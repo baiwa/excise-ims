@@ -28,7 +28,7 @@ public class WorksheetExportServiceTest {
 	@Autowired
 	private WorksheetExportService worksheetExportService;
 	
-	@Test
+	//@Test
 	public void test_exportPreviewWorksheet() {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
 		formVo.setBudgetYear("2562");
@@ -47,7 +47,7 @@ public class WorksheetExportServiceTest {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void test_exportDraftWorksheet() {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
 		formVo.setDraftNumber("000000-2562-000031");
@@ -63,7 +63,7 @@ public class WorksheetExportServiceTest {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void test_exportWorksheet() {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
 		formVo.setAnalysisNumber("000000-2562-000031");
@@ -79,4 +79,19 @@ public class WorksheetExportServiceTest {
 		}
 	}
 	
+	@Test
+	public void exportCondSubWorksheet() {
+		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
+		formVo.setAnalysisNumber("000000-2562-000031");
+		
+		String fileName = "WorksheetCondSub" + LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE) + ".xlsx";
+		
+		try (FileOutputStream Output = new FileOutputStream(OUTPUT_PATH + "/" + fileName)) {
+			byte[] outArray = worksheetExportService.exportCondSubWorksheet(formVo);
+			Output.write(outArray);
+			System.out.println("Creating excel " + fileName + " Done");
+		} catch (IOException e) {
+			e.printStackTrace(System.out);
+		}
+	}
 }

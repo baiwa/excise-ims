@@ -72,6 +72,60 @@ public class TaxOperatorDetailVo {
 	private String areaSelOfficeCode;
 	private String selectBy;
 	private String regCapital;
+	private String condSubCapital;
+	private String condSubRisk;
+	private String condSubNoAudit;
+	private String condSubCapitalDesc;
+	private String condSubRiskDesc;
+	private String condSubNoAuditDesc;
+
+	public String getCondSubCapitalDesc() {
+		return condSubCapitalDesc;
+	}
+
+	public void setCondSubCapitalDesc(String condSubCapitalDesc) {
+		this.condSubCapitalDesc = condSubCapitalDesc;
+	}
+
+	public String getCondSubRiskDesc() {
+		return condSubRiskDesc;
+	}
+
+	public void setCondSubRiskDesc(String condSubRiskDesc) {
+		this.condSubRiskDesc = condSubRiskDesc;
+	}
+
+	public String getCondSubNoAuditDesc() {
+		return condSubNoAuditDesc;
+	}
+
+	public void setCondSubNoAuditDesc(String condSubNoAuditDesc) {
+		this.condSubNoAuditDesc = condSubNoAuditDesc;
+	}
+
+	public String getCondSubCapital() {
+		return condSubCapital;
+	}
+
+	public void setCondSubCapital(String condSubCapital) {
+		this.condSubCapital = condSubCapital;
+	}
+
+	public String getCondSubRisk() {
+		return condSubRisk;
+	}
+
+	public void setCondSubRisk(String condSubRisk) {
+		this.condSubRisk = condSubRisk;
+	}
+
+	public String getCondSubNoAudit() {
+		return condSubNoAudit;
+	}
+
+	public void setCondSubNoAudit(String condSubNoAudit) {
+		this.condSubNoAudit = condSubNoAudit;
+	}
 
 	public String getRegCapital() {
 		return regCapital;
