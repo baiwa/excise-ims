@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -84,7 +85,7 @@ public class MasterConditionSubService {
 			capitalList.add(new MasCondSubCapitalVo());
 			capitalList.get(i).setCapital(voOld);
 			MasCondSubCapitalVo vo = capitalList.get(i);
-			if (null != vo.getCapital().getDutyCode()) {
+			if (!StringUtils.equals("0000", vo.getCapital().getDutyCode())) {
 				for (ParamInfo paramInfo : paramInfoList) {
 					if (paramInfo.getParamCode().equals(vo.getCapital().getDutyCode())) {
 						capitalList.get(i).setCapitalDesc(paramInfo.getValue1());
@@ -92,10 +93,10 @@ public class MasterConditionSubService {
 					}
 				}
 			} 
-//			else {
-//				capitalList.get(i).setCapital(capitalRepository.findByOfficeCodeAndBudgetYearTotal(UserLoginUtils.getCurrentUserBean().getOfficeCode(), form.getCapital().getBudgetYear()));
-//				capitalList.get(i).setCapitalDesc("เลือกทั้งหมด");
-//			}
+			else {
+				capitalList.get(i).setCapital(capitalRepository.findByOfficeCodeAndBudgetYearTotal(UserLoginUtils.getCurrentUserBean().getOfficeCode(), form.getCapital().getBudgetYear()));
+				capitalList.get(i).setCapitalDesc("เลือกทั้งหมด");
+			}
 		}
 		return capitalList;
 	}

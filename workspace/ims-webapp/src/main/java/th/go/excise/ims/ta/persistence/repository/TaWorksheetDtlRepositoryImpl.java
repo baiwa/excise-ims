@@ -244,7 +244,13 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			TaxAuditUtils.commonSelectionWorksheetRowMapper(vo, rs);
 			vo.setDraftNumber(rs.getString("ANALYSIS_NUMBER"));
 			vo.setCondTaxGrp(rs.getString("COND_MAIN_GRP"));
-
+			vo.setCondSubCapital(rs.getString("COND_SUB_CAPITAL"));
+			vo.setCondSubRisk(rs.getString("COND_SUB_RISK"));
+			vo.setCondSubNoAudit(rs.getString("COND_SUB_NO_AUDIT"));
+			vo.setCondSubCapitalDesc(ApplicationCache.getParamInfoByCode("TA_SUB_COND_CAPITAL", rs.getString("COND_SUB_CAPITAL")).getValue1());
+			vo.setCondSubRiskDesc(ApplicationCache.getParamInfoByCode("TA_RISK_LEVEL", rs.getString("COND_SUB_RISK")).getValue1());
+			vo.setCondSubNoAuditDesc(rs.getString("COND_SUB_NO_AUDIT"));
+								
 			vo.setRegCapital(rs.getString("REG_CAPITAL"));
 			vo.setRegStatus(rs.getString("REG_STATUS") + " " + ConvertDateUtils
 					.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_TH));

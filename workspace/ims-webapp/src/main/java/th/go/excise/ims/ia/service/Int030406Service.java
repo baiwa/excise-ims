@@ -27,7 +27,6 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
-import th.go.excise.ims.ia.controller.Int030406Controller;
 import th.go.excise.ims.ia.persistence.entity.IaRiskCheckPeriod;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaRiskCheckPeriodJdbcRepository;
 import th.go.excise.ims.ia.util.ExcelUtil;

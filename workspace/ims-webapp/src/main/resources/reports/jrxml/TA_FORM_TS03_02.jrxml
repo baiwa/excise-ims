@@ -218,7 +218,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["ตรวจ\nครั้งที่"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -226,7 +228,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["ผู้ดำเนินการ"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -234,7 +238,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["หน่วยงานที่\nตรวจสอบ"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -242,7 +248,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["ผู้ตรวจสอบ"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -250,7 +258,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["หนังสือเรียก"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -258,7 +268,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["เลขที่"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -266,7 +278,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["วดป."]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -274,7 +288,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["ช่วงเวลาที่\nตรวจสอบ"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -282,7 +298,9 @@
 				<box leftPadding="2">
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Left"/>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["- ส่งตรวจสอบ\n- โอน\n- ระงับ"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -290,7 +308,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["วดป."]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -298,7 +318,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["หนังสือแจ้งผล\nการตรวจสอบ"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -306,7 +328,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["เลขที่"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -314,7 +338,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["วดป."]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -322,7 +348,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["ผลการตรวจสอบภาษี"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -330,7 +358,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["ภาษีสรรพสามิต"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -338,7 +368,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["เบี้ยปรับ"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -346,7 +378,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["เงินเพิ่ม"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -354,7 +388,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["ภาษีเพื่อ\nราชการส่วน\nท้องถิ่น"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -362,7 +398,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["รวมเงิน"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -370,7 +408,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["การประเมิน\nตามคำชี้ขาดของ\n.....จำนวนเงิน"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -378,7 +418,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["ลงนาม\nผู้บันทึก"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -386,7 +428,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["หมายเหตุ"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -394,7 +438,9 @@
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["วดป."]]></textFieldExpression>
 			</textField>
 		</band>
@@ -447,8 +493,8 @@
 					<pen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[($F{auditDateStart} != null ? new SimpleDateFormat("dd/MM/yy",new Locale("th", "TH")).format($F{auditDateStart}) : "") +"\n"+
-					($F{auditDateEnd} != null ? "  ถึง  " + new SimpleDateFormat("dd/MM/yy",new Locale("th", "TH")).format($F{auditDateEnd}) : "")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{auditDateStart} != null ? new SimpleDateFormat("dd/MM/yy",new Locale("th", "TH")).format($F{auditDateStart}) : "") +
+					($F{auditDateEnd} != null ? "\n  ถึง  \n" + new SimpleDateFormat("dd/MM/yy",new Locale("th", "TH")).format($F{auditDateEnd}) : "")]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="Label" stretchType="ContainerHeight" x="190" y="0" width="50" height="12" uuid="d242db40-8b0f-4d10-88a2-406992bcb90c"/>
@@ -597,7 +643,7 @@
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="70" splitType="Stretch">
+		<band height="51" splitType="Stretch">
 			<textField>
 				<reportElement style="Label" x="15" y="0" width="40" height="12" uuid="9a71966c-6f54-40c7-accc-9c989061a8ff"/>
 				<textFieldExpression><![CDATA["หมายเหตุ"]]></textFieldExpression>
@@ -615,7 +661,7 @@
 				<textFieldExpression><![CDATA["๒. หนังสือแจ้งผลการตรวจสอบภาษีสรรพสามิต (ต.ส. ๐๑-๑๙)"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement key="" x="0" y="55" width="150" height="15" uuid="8cde0965-4cec-4b5f-91a9-58472d24dab8">
+				<reportElement key="" x="0" y="36" width="150" height="15" uuid="8cde0965-4cec-4b5f-91a9-58472d24dab8">
 					<printWhenExpression><![CDATA[!($P{formTsNumber} == null || $P{formTsNumber}.length() == 0)]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">

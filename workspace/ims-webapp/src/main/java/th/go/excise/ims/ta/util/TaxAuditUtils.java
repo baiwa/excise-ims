@@ -52,6 +52,12 @@ public class TaxAuditUtils {
 				taxOperatorDatatableVo.setSelectBy(taxOperatorDetailVo.getSelectBy());
 				taxOperatorDatatableVo.setCondTaxGrp(taxOperatorDetailVo.getCondTaxGrp());
 				taxOperatorDatatableVo.setRegCapital(taxOperatorDetailVo.getRegCapital());
+				taxOperatorDatatableVo.setCondSubCapital(taxOperatorDetailVo.getCondSubCapital());
+				taxOperatorDatatableVo.setCondSubRisk(taxOperatorDetailVo.getCondSubRisk());
+				taxOperatorDatatableVo.setCondSubNoAudit(taxOperatorDetailVo.getCondSubNoAudit());
+				taxOperatorDatatableVo.setCondSubCapitalDesc(taxOperatorDetailVo.getCondSubCapitalDesc());
+				taxOperatorDatatableVo.setCondSubRiskDesc(taxOperatorDetailVo.getCondSubRiskDesc());
+				taxOperatorDatatableVo.setCondSubNoAuditDesc(taxOperatorDetailVo.getCondSubNoAuditDesc());
 			}
 			
 			taxAmtList = new ArrayList<>();

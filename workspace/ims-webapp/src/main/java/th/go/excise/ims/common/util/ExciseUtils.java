@@ -26,15 +26,15 @@ public class ExciseUtils {
 	}
 	
 	public static boolean isSector(String officeCode) {
-		return isValidOfficeCode(officeCode) && Pattern.matches("([0-9]{1}[1-9]{1}0{4})", officeCode);
+		return isValidOfficeCode(officeCode) && Pattern.matches("(0[1-9]|10)0{4}", officeCode);
 	}
 	
 	public static boolean isArea(String officeCode) {
-		return isValidOfficeCode(officeCode) && Pattern.matches("([0-9]{1}[1-9]{1}[0-9]{1}[1-9]{1}0{2})", officeCode);
+		return isValidOfficeCode(officeCode) && Pattern.matches("(0[1-9]|10)(0[1-9]|[1-9][0-9])0{2}", officeCode);
 	}
 	
 	public static boolean isBranch(String officeCode) {
-		return isValidOfficeCode(officeCode) && Pattern.matches("([0-9]{1}[1-9]{1}[0-9]{1}[1-9]{1}[0-9]{1}[1-9]{1})", officeCode);
+		return isValidOfficeCode(officeCode) && Pattern.matches("(0[1-9]|10)(0[1-9]|[1-9][0-9])(0[1-9]|[1-9][0-9])", officeCode);
 	}
 	
 	public static String whereInLocalOfficeCode(String officeCode) {

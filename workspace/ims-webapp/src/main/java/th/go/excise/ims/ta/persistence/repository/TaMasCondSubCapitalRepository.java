@@ -18,9 +18,9 @@ public interface TaMasCondSubCapitalRepository extends CommonJpaCrudRepository<T
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode and e.budgetYear = :budgetYear and e.dutyCode = :dutyCode")
 	public TaMasCondSubCapital findByOfficeCodeAndBudgetYearAndDutyCode(@Param("officeCode") String officeCode, @Param("budgetYear") String budgetYear, @Param("dutyCode") String dutyCode);
 	
-	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode and e.budgetYear = :budgetYear and e.dutyCode is null")
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode and e.budgetYear = :budgetYear and e.dutyCode is '0000'")
 	public TaMasCondSubCapital findByOfficeCodeAndBudgetYearTotal(@Param("officeCode") String officeCode, @Param("budgetYear") String budgetYear);
 
-	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode and e.budgetYear = :budgetYear and e.dutyCode is not null")
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode and e.budgetYear = :budgetYear and e.dutyCode is not '0000'")
 	public List<TaMasCondSubCapital> findByOfficeCodeAndBudgetYearNotTotal(@Param("officeCode") String officeCode, @Param("budgetYear") String budgetYear);
 }
