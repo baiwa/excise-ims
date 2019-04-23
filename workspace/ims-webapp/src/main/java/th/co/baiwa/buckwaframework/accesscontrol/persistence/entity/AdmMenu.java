@@ -1,4 +1,4 @@
-package th.go.excise.ims.preferences.persistence.entity;
+package th.co.baiwa.buckwaframework.accesscontrol.persistence.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
