@@ -5,12 +5,14 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.swagger.annotations.ApiOperation;
+import th.co.baiwa.buckwaframework.accesscontrol.service.MenuService;
 import th.co.baiwa.buckwaframework.accesscontrol.vo.MenuVo;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.DocumentConstants.MODULE_NAME;
@@ -23,6 +25,8 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 public class MenuController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(RoleController.class);
+	@Autowired
+	private MenuService menuService;
 	
 	@PostMapping("/list")
 	@ApiOperation(
@@ -35,7 +39,8 @@ public class MenuController {
 
 		ResponseData<List<MenuVo>> responseData = new ResponseData<>();
 		try {
-			responseData.setData(getMockMenu());
+			//responseData.setData(getMockMenu());
+			responseData.setData(menuService.list());
 			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
