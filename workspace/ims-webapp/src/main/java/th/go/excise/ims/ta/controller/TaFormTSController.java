@@ -58,7 +58,10 @@ import th.go.excise.ims.ta.service.TaFormTS0118Service;
 import th.go.excise.ims.ta.service.TaFormTS0119Service;
 import th.go.excise.ims.ta.service.TaFormTS0120Service;
 import th.go.excise.ims.ta.service.TaFormTS0121Service;
+import th.go.excise.ims.ta.service.TaFormTS0302Service;
+import th.go.excise.ims.ta.service.TaFormTS0303Service;
 import th.go.excise.ims.ta.service.TaFormTS0423Service;
+import th.go.excise.ims.ta.service.TaFormTS0424Service;
 
 @Controller
 @RequestMapping("/api/ta/report")
@@ -100,7 +103,11 @@ public class TaFormTSController {
 		TaFormTS0119Service taFormTS0119Service,
 		TaFormTS0120Service taFormTS0120Service,
 		TaFormTS0121Service taFormTS0121Service,
-		TaFormTS0423Service taFormTS0423Service) {
+		TaFormTS0302Service taFormTS0302Service,
+		TaFormTS0303Service taFormTS0303Service,
+		TaFormTS0423Service taFormTS0423Service,
+		TaFormTS0424Service taFormTS0424Service
+		) {
 		
 		taFormTSMap.put("ta-form-ts0101", taFormTS0101Service);
 		taFormTSMap.put("ta-form-ts0102", taFormTS0102Service);
@@ -126,7 +133,10 @@ public class TaFormTSController {
 		taFormTSMap.put("ta-form-ts0119", taFormTS0119Service);
 		taFormTSMap.put("ta-form-ts0120", taFormTS0120Service);
 		taFormTSMap.put("ta-form-ts0121", taFormTS0121Service);
+		taFormTSMap.put("ta-form-ts0302", taFormTS0302Service);
+		taFormTSMap.put("ta-form-ts0303", taFormTS0303Service);
 		taFormTSMap.put("ta-form-ts0423", taFormTS0423Service);
+		taFormTSMap.put("ta-form-ts0424", taFormTS0424Service);
 	}
 	
 	@SuppressWarnings("unchecked")
