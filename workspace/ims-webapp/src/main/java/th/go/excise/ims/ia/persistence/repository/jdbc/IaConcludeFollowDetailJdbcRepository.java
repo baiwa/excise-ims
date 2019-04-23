@@ -12,6 +12,7 @@ import th.go.excise.ims.ia.vo.Int110101FormVo;
 import th.go.excise.ims.ia.vo.Int110101Vo;
 import th.go.excise.ims.ia.vo.Int1101FormVo;
 import th.go.excise.ims.ia.vo.Int1101Vo;
+import th.go.excise.ims.ia.vo.Int11050101FormVo;
 
 @Repository
 public class IaConcludeFollowDetailJdbcRepository {
@@ -31,6 +32,18 @@ public class IaConcludeFollowDetailJdbcRepository {
 
 		return datas;
 	}
+	
+	public void editDetailPerformance(Int11050101FormVo form) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("   UPDATE IA_CONCLUDE_FOLLOW_DETAIL C     ");
+		sql.append("   SET C.ISSUES = ? ,                     ");
+		sql.append("   C.WHAT_SHOULD_BE = ? ,                 ");
+		sql.append("   C.GUIDELINES_DEVELOPING = ? ,          ");
+		sql.append("   C.REFERENCE = ?                        ");
+		sql.append("   WHERE C.ID = ?                         ");
+		commonJdbcTemplate.update(sql.toString(), new Object[] {form.getIssues(),form.getWhatShouldBe(),form.getGuidelinesDeveloping(),form.getReference(),form.getId()});
+	}
+	
 
 	public void editDetails(Int110101FormVo form) {
 		StringBuilder sql = new StringBuilder();

@@ -1,17 +1,17 @@
 package th.go.excise.ims.ia.vo;
 
-public class Int1102Vo {
-	private Long id;
+public class Int11050101FormVo {
+	private String id;
 	private String issues;
 	private String whatShouldBe;
 	private String guidelinesDeveloping;
 	private String reference;
-	
-	public Long getId() {
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -46,7 +46,5 @@ public class Int1102Vo {
 	public void setReference(String reference) {
 		this.reference = reference;
 	}
-	
-	
 
 }

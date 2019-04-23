@@ -7,6 +7,8 @@ public class Int110101Vo {
 	private String riskEffect;
 	private String cause;
 	private String recommend;
+	private String guidelinesDeveloping;
+	private String reference;
 
 	public String getIssues() {
 		return issues;
@@ -55,5 +57,23 @@ public class Int110101Vo {
 	public void setRecommend(String recommend) {
 		this.recommend = recommend;
 	}
+
+	public String getGuidelinesDeveloping() {
+		return guidelinesDeveloping;
+	}
+
+	public void setGuidelinesDeveloping(String guidelinesDeveloping) {
+		this.guidelinesDeveloping = guidelinesDeveloping;
+	}
+
+	public String getReference() {
+		return reference;
+	}
+
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
+	
+	
 
 }

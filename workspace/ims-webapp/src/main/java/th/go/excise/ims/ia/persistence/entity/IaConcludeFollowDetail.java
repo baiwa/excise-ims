@@ -44,6 +44,10 @@ public class IaConcludeFollowDetail extends BaseEntity {
 	private BigDecimal seq;
 	@Column(name = "ISSUES_CODE")
 	private String issuesCode;
+	@Column(name = "GUIDELINES_DEVELOPING")
+	private String guidelinesDeveloping;
+	@Column(name = "REFERENCE")
+	private String reference;
 
 	public Long getId() {
 		return id;
@@ -132,5 +136,23 @@ public class IaConcludeFollowDetail extends BaseEntity {
 	public void setIssuesCode(String issuesCode) {
 		this.issuesCode = issuesCode;
 	}
+
+	public String getGuidelinesDeveloping() {
+		return guidelinesDeveloping;
+	}
+
+	public void setGuidelinesDeveloping(String guidelinesDeveloping) {
+		this.guidelinesDeveloping = guidelinesDeveloping;
+	}
+
+	public String getReference() {
+		return reference;
+	}
+
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
+	
+	
 
 }

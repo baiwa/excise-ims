@@ -40,6 +40,9 @@ public class Int1101Service {
 		int11Vo.setCheckType(dataList.getCheckType());
 		int11Vo.setCheckStatus(dataList.getCheckStatus());
 		int11Vo.setNotation(dataList.getNotation());
+		int11Vo.setSystemName(dataList.getSystemName());
+		int11Vo.setSector(dataList.getSector());
+		int11Vo.setInspectionWork(dataList.getInspectionWork());
 		return int11Vo;
 	}
 	

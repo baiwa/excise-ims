@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -40,7 +42,7 @@ public class Int1102JdbcRepository {
 		List<Int1102Vo> Int1102VoList = new ArrayList<Int1102Vo>();
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append("SELECT a.ISSUES , a.WHAT_SHOULD_BE ");
+		sql.append("SELECT a.ID , a.ISSUES , a.WHAT_SHOULD_BE , a.GUIDELINES_DEVELOPING , a.REFERENCE ");
 		sql.append("FROM IA_CONCLUDE_FOLLOW_DETAIL a ");
 		sql.append("WHERE a.ID_HDR = ? AND a.IS_DELETED = 'N' ");
 		params.add(form.getId());
@@ -52,8 +54,11 @@ public class Int1102JdbcRepository {
 		@Override
 		public Int1102Vo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Int1102Vo vo = new Int1102Vo();
+			vo.setId(rs.getLong("ID"));
 			vo.setIssues(rs.getString("ISSUES"));
 			vo.setWhatShouldBe(rs.getString("WHAT_SHOULD_BE"));
+			vo.setGuidelinesDeveloping(rs.getString("GUIDELINES_DEVELOPING"));
+			vo.setReference(rs.getString("REFERENCE"));
 			return vo;
 		}
 	};
