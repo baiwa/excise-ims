@@ -247,9 +247,16 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			vo.setCondSubCapital(rs.getString("COND_SUB_CAPITAL"));
 			vo.setCondSubRisk(rs.getString("COND_SUB_RISK"));
 			vo.setCondSubNoAudit(rs.getString("COND_SUB_NO_AUDIT"));
-			vo.setCondSubCapitalDesc(ApplicationCache.getParamInfoByCode("TA_SUB_COND_CAPITAL", rs.getString("COND_SUB_CAPITAL")).getValue1());
-			vo.setCondSubRiskDesc(ApplicationCache.getParamInfoByCode("TA_RISK_LEVEL", rs.getString("COND_SUB_RISK")).getValue1());
-			vo.setCondSubNoAuditDesc(rs.getString("COND_SUB_NO_AUDIT"));
+			
+			try {
+				vo.setCondSubCapitalDesc(ApplicationCache.getParamInfoByCode("TA_SUB_COND_CAPITAL", rs.getString("COND_SUB_CAPITAL")).getValue1());
+				vo.setCondSubRiskDesc(ApplicationCache.getParamInfoByCode("TA_RISK_LEVEL", rs.getString("COND_SUB_RISK")).getValue1());
+				vo.setCondSubNoAuditDesc(rs.getString("COND_SUB_NO_AUDIT"));
+			} catch (Exception e) {
+				vo.setCondSubCapitalDesc("");
+				vo.setCondSubRiskDesc("");
+				vo.setCondSubNoAuditDesc("");
+			}
 								
 			vo.setRegCapital(rs.getString("REG_CAPITAL"));
 			vo.setRegStatus(rs.getString("REG_STATUS") + " " + ConvertDateUtils
