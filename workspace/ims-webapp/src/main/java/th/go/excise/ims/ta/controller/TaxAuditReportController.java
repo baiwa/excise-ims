@@ -1,25 +1,34 @@
 package th.go.excise.ims.ta.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import th.co.baiwa.buckwaframework.common.bean.ResponseData;
-import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
-import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.ta.service.WorksheetExportService;
-import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
-import th.go.excise.ims.ta.vo.WsReg4000FormVo;
-import th.go.excise.ims.ws.client.pcc.regfri4000.oxm.RegMaster60List;
-import th.go.excise.ims.ws.client.pcc.regfri4000.service.RegFri4000Service;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.ta.service.PlanWorksheetExportService;
+import th.go.excise.ims.ta.service.WorksheetExportService;
+import th.go.excise.ims.ta.vo.PlanWorksheetVo;
+import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
+import th.go.excise.ims.ta.vo.WsReg4000FormVo;
+import th.go.excise.ims.ws.client.pcc.regfri4000.oxm.RegMaster60List;
+import th.go.excise.ims.ws.client.pcc.regfri4000.service.RegFri4000Service;
 
 @Controller
 @RequestMapping("/api/ta/report")
@@ -32,6 +41,9 @@ public class TaxAuditReportController {
 
     @Autowired
     private RegFri4000Service regFri4000Service;
+    
+    @Autowired
+    private PlanWorksheetExportService planWorksheetExportService;
 
     //TODO Get details operator
     @PostMapping("/get-details-operator")
@@ -129,6 +141,26 @@ public class TaxAuditReportController {
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);
 
+    }
+    
+    // TODO Plan Worksheet  
+    @GetMapping("/export-worksheet-selected")
+    @ResponseBody
+    public void exportPlanWorksheet(@ModelAttribute PlanWorksheetVo formVo, HttpServletRequest httpServletRequest, HttpServletResponse response)
+    		throws Exception {
+    	
+    	logger.info("exportPlanWorksheet export!!");
+    	
+    	/* set fileName */
+    	String fileName = URLEncoder.encode("Plan Worksheet", "UTF-8");
+    	/* write it as an excel attachment */
+    	byte[] outArray = planWorksheetExportService.exportPlanWorksheet(formVo);
+    	response.setContentType("application/octet-stream");
+    	response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+    	
+    	OutputStream outStream = response.getOutputStream();
+    	outStream.write(outArray);
+    	
     }
 
 }

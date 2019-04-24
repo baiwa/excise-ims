@@ -248,6 +248,12 @@ public class PlanWorksheetService {
 
         return dataTableAjax;
     }
+    
+    public List<PlanWorksheetDatatableVo> planDtlDatatableAll(PlanWorksheetVo formVo) {
+    	formVo.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+    	
+    	return taPlanWorksheetDtlRepository.findAllByCriteria(formVo);    
+    }
 
     public Boolean checkSubmitDatePlanWorksheetSend(PlanWorksheetVo formVo) {
         TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository.findByPlanNumberAndOfficeCodeAndSubmitDateIsNull(formVo.getPlanNumber(), UserLoginUtils.getCurrentUserBean().getOfficeCode());

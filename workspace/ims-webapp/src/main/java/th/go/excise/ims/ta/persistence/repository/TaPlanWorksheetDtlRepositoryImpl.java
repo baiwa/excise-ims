@@ -54,6 +54,17 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 			params.add(formVo.getOfficeCode());
 		}
 	}
+	
+	@Override
+	public List<PlanWorksheetDatatableVo> findAllByCriteria(PlanWorksheetVo formVo) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		buildByCriteriaQuery(sql, params, formVo);
+
+		sql.append(" ORDER BY R4000.DUTY_CODE, R4000.OFFICE_CODE, R4000.NEW_REG_ID ");
+
+		return commonJdbcTemplate.query(sql.toString(), params.toArray(), planDtlDatatableRowMapper);
+	}
 
 	@Override
 	public List<PlanWorksheetDatatableVo> findByCriteria(PlanWorksheetVo formVo) {

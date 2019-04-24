@@ -10,6 +10,8 @@ import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 public interface TaPlanWorksheetDtlRepositoryCustom {
 
 	public List<PlanWorksheetDatatableVo> findByCriteria(PlanWorksheetVo formVo);
+	
+	public List<PlanWorksheetDatatableVo> findAllByCriteria(PlanWorksheetVo formVo);
 
 	public Long countByCriteria(PlanWorksheetVo formVo);
 	
