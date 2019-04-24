@@ -71,6 +71,12 @@ public class TaFormTS0303Service extends AbstractTaFormTSService<TaFormTS0303Vo,
 		List<TaFormTs0303Dtl> formTs0303DtlList = null;
 		if (StringUtils.isNotBlank(formTS0303Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0303Vo.getFormTsNumber())) {
 			// Case Update FormTS
+
+			// ==> Set Hdr
+			formTs0303Hdr = taFormTs0303HdrRepository.findByFormTsNumber(formTS0303Vo.getFormTsNumber());
+			toEntity(formTs0303Hdr, formTS0303Vo);
+
+			// ==> Set Dtl
 			formTs0303DtlList = taFormTs0303DtlRepository.findByFormTsNumber(formTS0303Vo.getFormTsNumber());
 
 			// Update isDeleted = 'Y' for Default
@@ -111,7 +117,6 @@ public class TaFormTS0303Service extends AbstractTaFormTSService<TaFormTS0303Vo,
 			formTs0303Hdr.setBudgetYear(budgetYear);
 			formTs0303Hdr.setOfficeCode(officeCode);
 			formTs0303Hdr.setFormTsNumber(formTsNumber);
-			taFormTs0303HdrRepository.save(formTs0303Hdr);
 
 			// Set Detail Record
 			formTs0303DtlList = new ArrayList<>();
@@ -127,6 +132,7 @@ public class TaFormTS0303Service extends AbstractTaFormTSService<TaFormTS0303Vo,
 				}
 				taFormTs0303DtlRepository.saveAll(formTs0303DtlList);
 			}
+			taFormTs0303HdrRepository.save(formTs0303Hdr);
 		}
 	}
 
@@ -161,17 +167,44 @@ public class TaFormTS0303Service extends AbstractTaFormTSService<TaFormTS0303Vo,
 		toVo(formTS0303Vo, formTs0303Hdr);
 
 		// Set Detail
-		TaFormTS0303DtlVo formTS0303DtlVo = null;
-		List<TaFormTS0303DtlVo> formTS0303DtlVoList = new ArrayList<>();
 		List<TaFormTs0303Dtl> formTs0303DtlList = taFormTs0303DtlRepository.findByFormTsNumber(formTsNumber);
+		List<TaFormTS0303DtlVo> formTS0303DtlVoList = new ArrayList<>();
+		TaFormTS0303DtlVo formTS0303DtlVo = null;
+
 		for (TaFormTs0303Dtl formTs0303Dtl : formTs0303DtlList) {
 			formTS0303DtlVo = new TaFormTS0303DtlVo();
-			toVoDtl(formTS0303DtlVo, formTs0303Dtl);
+			formTS0303DtlVo.setFormTs0303DtlId(StringUtils.defaultString(Long.toString(formTs0303Dtl.getFormTs0303DtlId())));
+			formTS0303DtlVo.setRecNo(StringUtils.defaultString(formTs0303Dtl.getRecNo()));
+			formTS0303DtlVo.setOwnerFullName(StringUtils.defaultString(formTs0303Dtl.getOwnerFullName()));
+			formTS0303DtlVo.setNewRegId(StringUtils.defaultString(formTs0303Dtl.getNewRegId()));
+			formTS0303DtlVo.setFactoryTypeText(StringUtils.defaultString(formTs0303Dtl.getFactoryTypeText()));
+			formTS0303DtlVo.setReqDocNo(StringUtils.defaultString(formTs0303Dtl.getReqDocNo()));
+			formTS0303DtlVo.setReqDocDate(formTs0303Dtl.getReqDocDate());
+			formTS0303DtlVo.setInformDocNo(StringUtils.defaultString(formTs0303Dtl.getInformDocNo()));
+			formTS0303DtlVo.setInformDocDate(formTs0303Dtl.getInformDocDate());
+			formTS0303DtlVo.setCallDocNo(StringUtils.defaultString(formTs0303Dtl.getCallDocNo()));
+			formTS0303DtlVo.setCallDocDate(formTs0303Dtl.getCallDocDate());
+			formTS0303DtlVo.setAuditDateStart(formTs0303Dtl.getAuditDateStart());
+			formTS0303DtlVo.setAuditDateEnd(formTs0303Dtl.getAuditDateEnd());
+			formTS0303DtlVo.setResultDocNo(StringUtils.defaultString(formTs0303Dtl.getResultDocNo()));
+			formTS0303DtlVo.setResultDocDate(formTs0303Dtl.getResultDocDate());
+			formTS0303DtlVo.setResultTaxAmt(formTs0303Dtl.getResultTaxAmt());
+			formTS0303DtlVo.setResultFineAmt(formTs0303Dtl.getResultFineAmt());
+			formTS0303DtlVo.setResultExtraAmt(formTs0303Dtl.getResultExtraAmt());
+			formTS0303DtlVo.setResultMoiAmt(formTs0303Dtl.getResultMoiAmt());
+			formTS0303DtlVo.setResultNetTaxAmt(formTs0303Dtl.getResultNetTaxAmt());
+			formTS0303DtlVo.setAssessmentAmt(formTs0303Dtl.getAssessmentAmt());
+			formTS0303DtlVo.setOfficerFullName(StringUtils.defaultString(formTs0303Dtl.getOfficerFullName()));
+			formTS0303DtlVo.setOfficerDate(formTs0303Dtl.getOfficerDate());
+			formTS0303DtlVo.setOfficerComment(StringUtils.defaultString(formTs0303Dtl.getOfficerComment()));
+
+			// toVoDtl(formTS0303DtlVo, formTs0303Dtl);
 			formTS0303DtlVoList.add(formTS0303DtlVo);
 		}
 
 		// Sorting
-		formTS0303DtlVoList.sort((p1, p2) -> Integer.parseInt(p1.getRecNo()) - Integer.parseInt(p2.getRecNo()));
+		// formTS0303DtlVoList.sort((p1, p2) -> Integer.parseInt(p1.getRecNo()) -
+		// Integer.parseInt(p2.getRecNo()));
 
 		formTS0303Vo.setTaFormTS0303DtlVoList(formTS0303DtlVoList);
 
@@ -186,13 +219,13 @@ public class TaFormTS0303Service extends AbstractTaFormTSService<TaFormTS0303Vo,
 		}
 	}
 
-	private void toVoDtl(TaFormTS0303DtlVo vo, TaFormTs0303Dtl entity) {
-		try {
-			BeanUtils.copyProperties(vo, entity);
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			logger.warn(e.getMessage(), e);
-		}
-	}
+//	private void toVoDtl(TaFormTS0303DtlVo vo, TaFormTs0303Dtl entity) {
+//		try {
+//			BeanUtils.copyProperties(vo, entity);
+//		} catch (IllegalAccessException | InvocationTargetException e) {
+//			logger.warn(e.getMessage(), e);
+//		}
+//	}
 
 	private TaFormTs0303Dtl getEntityById(List<TaFormTs0303Dtl> formTs0303DtlList, String id) {
 		TaFormTs0303Dtl formTs0303Dtl = null;
