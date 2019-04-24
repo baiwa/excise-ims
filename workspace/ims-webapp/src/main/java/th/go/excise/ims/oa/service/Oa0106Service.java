@@ -39,6 +39,7 @@ import th.go.excise.ims.oa.persistence.repository.OaHydrocarbDtlRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0106JdbcRepository;
 import th.go.excise.ims.oa.utils.OaOfficeCode;
 import th.go.excise.ims.oa.vo.Oa0106FormVo;
+import th.go.excise.ims.oa.vo.Oa0106SolventVo;
 import th.go.excise.ims.oa.vo.Oa0106Vo;
 
 @Service
@@ -226,11 +227,20 @@ public class Oa0106Service {
 		byte[] content = null;
 		try {
 			Map<String, Object> params = new HashMap<String, Object>();
-			
 			params = setObjectSolvent(licenseId,dtlId);
 			
+			List<Oa0106SolventVo> list = new ArrayList<Oa0106SolventVo>();
+			for(int i=0; i<4; i++) {
+				Oa0106SolventVo test = new Oa0106SolventVo();
+				test.setSeq(arabic2thai(i+1));
+				if (i == 0) {
+					test.setFirst("Y");
+				}
+				list.add(test);
+			}
+			
 			JasperPrint jasperPrint1 = ReportUtils.getJasperPrint("OA_SOLVENT_01" + "." + FILE_EXTENSION.JASPER, params,
-					new JREmptyDataSource());
+					list.size()> 0 ?  new JRBeanCollectionDataSource(list, false) :new JREmptyDataSource());
 
 			List<ExporterInputItem> items = new ArrayList<ExporterInputItem>();
 
@@ -291,5 +301,18 @@ public class Oa0106Service {
 		return params;
 	}
 	
+	private String arabic2thai(int index) {
+		StringBuilder number = new StringBuilder ("" + index);
+		char[] th = {'๐','๑','๒','๓','๔','๕','๖','๗','๘','๙'};
+		char[] en = {'0','1','2','3','4','5','6','7','8','9'};
+		for(int j=0; j<number.length(); j++) {
+			for(int i=0; i<en.length; i++) {
+				if (en[i] == number.charAt(j)) {
+					number.setCharAt(j, th[i]);
+				}
+			}
+		}
+		return number.toString();
+	}
 
 }
