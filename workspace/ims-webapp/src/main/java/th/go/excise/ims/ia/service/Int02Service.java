@@ -260,25 +260,25 @@ public class Int02Service {
 			data.setLowEnd(new BigDecimal(25));
 			data.setLowRating(new BigDecimal(2));
 			data.setLowColor("เขียว");
-			data.setLowCondition(">=|<=");
+			data.setLowCondition(">=|<");
 			data.setMedium("ปานกลาง");
 			data.setMediumStart(new BigDecimal(50));
 			data.setMediumEnd(new BigDecimal(75));
 			data.setMediumRating(new BigDecimal(3));
 			data.setMediumColor("เหลือง");
-			data.setMediumCondition(">=|<=");
+			data.setMediumCondition(">=|<");
 			data.setHigh("สูง");
 			data.setHighStart(new BigDecimal(75));
 			data.setHighEnd(new BigDecimal(85));
 			data.setHighRating(new BigDecimal(4));
 			data.setHighColor("ส้ม");
-			data.setHighCondition(">=|<=");
+			data.setHighCondition(">=|<");
 			data.setVeryhigh("สูงมาก");
 			data.setVeryhighStart("85");
 			data.setVeryhighEnd(null);
 			data.setVeryhighRating(new BigDecimal(5));
 			data.setVeryhighColor("แดง");
-			data.setVeryhighCondition(">|N");
+			data.setVeryhighCondition(">=|N");
 
 		}
 		iaRiskQtnConfigRepository.save(data);
