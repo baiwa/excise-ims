@@ -43,6 +43,11 @@ public class Int1101Service {
 		int11Vo.setSystemName(dataList.getSystemName());
 		int11Vo.setSector(dataList.getSector());
 		int11Vo.setInspectionWork(dataList.getInspectionWork());
+		int11Vo.setInspectionUnit(dataList.getInspectionUnit());
+		int11Vo.setReportNumber(dataList.getReportNumber());
+		int11Vo.setDateReceiving(dataList.getDateReceiving());
+		int11Vo.setReportingResults(dataList.getReportingResults());
+		int11Vo.setHeadInspectionUnit(dataList.getHeadInspectionUnit());
 		return int11Vo;
 	}
 	

@@ -57,6 +57,16 @@ public class IaConcludeFollowHdr extends BaseEntity {
 	private String systemName;
 	@Column(name = "SYSTEM_CODE")
 	private String systemCode;
+	@Column(name = "INSPECTION_UNIT")
+	private String inspectionUnit;
+	@Column(name = "REPORT_NUMBER")
+	private String reportNumber;
+	@Column(name = "DATE_RECEIVING")
+	private Date dateReceiving;
+	@Column(name = "REPORTING_RESULTS")
+	private String reportingResults;
+	@Column(name = "HEAD_INSPECTION_UNIT")
+	private String headInspectionUnit;
 
 	public Long getId() {
 		return id;
@@ -201,5 +211,47 @@ public class IaConcludeFollowHdr extends BaseEntity {
 	public void setSystemCode(String systemCode) {
 		this.systemCode = systemCode;
 	}
+
+	public String getInspectionUnit() {
+		return inspectionUnit;
+	}
+
+	public void setInspectionUnit(String inspectionUnit) {
+		this.inspectionUnit = inspectionUnit;
+	}
+
+	public String getReportNumber() {
+		return reportNumber;
+	}
+
+	public void setReportNumber(String reportNumber) {
+		this.reportNumber = reportNumber;
+	}
+
+	public Date getDateReceiving() {
+		return dateReceiving;
+	}
+
+	public void setDateReceiving(Date dateReceiving) {
+		this.dateReceiving = dateReceiving;
+	}
+
+	public String getReportingResults() {
+		return reportingResults;
+	}
+
+	public void setReportingResults(String reportingResults) {
+		this.reportingResults = reportingResults;
+	}
+
+	public String getHeadInspectionUnit() {
+		return headInspectionUnit;
+	}
+
+	public void setHeadInspectionUnit(String headInspectionUnit) {
+		this.headInspectionUnit = headInspectionUnit;
+	}
+	
+	
 
 }
