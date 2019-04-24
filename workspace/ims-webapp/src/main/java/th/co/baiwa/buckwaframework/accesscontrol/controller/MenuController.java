@@ -41,7 +41,7 @@ public class MenuController {
 		try {
 			//responseData.setData(getMockMenu());
 			responseData.setData(menuService.list());
-			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			responseData.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -53,7 +53,7 @@ public class MenuController {
 	
 	private List<MenuVo> getMockMenu() {
 		List<MenuVo> menuList = new ArrayList<>();
-		
+			
 		// Level 0
 		MenuVo menuTaRoot = new MenuVo();
 		menuTaRoot.setMenuName("ตรวจสอบภาษี");
