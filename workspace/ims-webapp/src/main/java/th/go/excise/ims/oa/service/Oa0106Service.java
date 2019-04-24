@@ -221,5 +221,75 @@ public class Oa0106Service {
 		return params;
 	}
 	
+	@SuppressWarnings("finally")
+	public byte[] objectToSolvent(String licenseId,String dtlId) {
+		byte[] content = null;
+		try {
+			Map<String, Object> params = new HashMap<String, Object>();
+			
+			params = setObjectSolvent(licenseId,dtlId);
+			
+			JasperPrint jasperPrint1 = ReportUtils.getJasperPrint("OA_SOLVENT_01" + "." + FILE_EXTENSION.JASPER, params,
+					new JREmptyDataSource());
+
+			List<ExporterInputItem> items = new ArrayList<ExporterInputItem>();
+
+			items.add(new SimpleExporterInputItem(jasperPrint1));
+
+			JRPdfExporter exporter = new JRPdfExporter();
+			exporter.setExporterInput(new SimpleExporterInput(items));
+
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
+			exporter.exportReport();
+			content = outputStream.toByteArray();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+
+		} finally {
+			return content;
+		}
+	}
+	
+	public Map<String, Object> setObjectSolvent(String licenseId,String dtlId) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		Oa0106Vo license = oa0106JdbcRepo.getCustomerLicenseById(licenseId);
+		String province = license.getAddress().split(" ")[3].replace("จ.", "").trim();
+		String amphoe = license.getAddress().split(" ")[2].replace("อ.", "").trim();
+		String district = license.getAddress().split(" ")[1].replace("ต.", "").trim();
+		String addressNo = license.getAddress().split(" ")[0].replace("เลขที่", "").trim();
+		//	String postcode = license.getAddress().split(" ")[4].trim();
+		params.put("soi", null);
+		params.put("road", null);
+		params.put("groupNo", null);
+		params.put("province", province);
+		params.put("amphoe", amphoe);
+		params.put("addressNo", addressNo);
+		params.put("district", district);
+		params.put("factoryname", license.getCompanyName());
+		params.put("username", license.getCompanyName());
+		params.put("userposition", "POSITION");
+		params.put("telephone", null);
+		if ("A".equalsIgnoreCase(license.getLicenseType())) {
+			params.put("agent", "Y");
+		}
+		if ("B".equalsIgnoreCase(license.getLicenseType())) {
+			params.put("user", "Y");
+		}
+		params.put("starttime", null);
+		params.put("endtime", null);
+		params.put("day", null);
+		params.put("month", null);
+		params.put("year", null);
+		params.put("writeat", null);
+		params.put("myname", null);
+		params.put("myposition", null);
+		params.put("underby", null);
+		params.put("mylicense", null);
+		params.put("myname", null);
+		return params;
+	}
+	
 
 }
