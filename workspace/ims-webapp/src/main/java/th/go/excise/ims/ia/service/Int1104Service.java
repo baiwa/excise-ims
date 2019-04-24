@@ -9,8 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.go.excise.ims.ia.persistence.entity.IaFollowRecommendDtl;
 import th.go.excise.ims.ia.persistence.entity.IaFollowRecommendHdr;
 import th.go.excise.ims.ia.persistence.repository.IaFollowRecommendHdrRepository;
+import th.go.excise.ims.ia.persistence.repository.jdbc.IaFollowRecommendDtlJdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaFollowRecommendHdrJdbcRepository;
 import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
 import th.go.excise.ims.ia.vo.Int1104Vo;
@@ -24,6 +27,9 @@ public class Int1104Service {
 	
 	@Autowired
 	private IaFollowRecommendHdrJdbcRepository iaFollowRecommendHdrJdbcRepository;
+	
+	@Autowired
+	private IaFollowRecommendDtlJdbcRepository iaFollowRecommendDtlJdbcRepository;
 	
 	public List<Int1104Vo> findByBudgetYearAndInspectionWork(String budgetYear, String inspectionWorkStr) {
 		BigDecimal inspectionWork = new BigDecimal(inspectionWorkStr);
@@ -42,9 +48,9 @@ public class Int1104Service {
 			int1104Vo.setExciseCode(iaFollowRecommendHdr.getExciseCode());
 			int1104Vo.setInspectionWork(iaFollowRecommendHdr.getInspectionWork());
 			int1104Vo.setNoteClosedWork(iaFollowRecommendHdr.getNoteClosedWork());
-			int1104Vo.setNotifyDateFrom(iaFollowRecommendHdr.getNotifyDateFrom());
-			int1104Vo.setNotifyDateTo(iaFollowRecommendHdr.getNotifyDateTo());
-			int1104Vo.setNotifyNo(iaFollowRecommendHdr.getNotifyNo());
+//			int1104Vo.setNotifyDateFrom(iaFollowRecommendHdr.getNotifyDateFrom());
+//			int1104Vo.setNotifyDateTo(iaFollowRecommendHdr.getNotifyDateTo());
+//			int1104Vo.setNotifyNo(iaFollowRecommendHdr.getNotifyNo());
 			int1104Vo.setProjectCode(iaFollowRecommendHdr.getProjectCode());
 			int1104Vo.setSector(iaFollowRecommendHdr.getSector());
 			int1104Vo.setProjectName(iaFollowRecommendHdr.getProjectName());
@@ -52,7 +58,17 @@ public class Int1104Service {
 			int1104Vo.setSystemCode(iaFollowRecommendHdr.getSystemCode());
 			int1104Vo.setSystemName(iaFollowRecommendHdr.getSystemName());
 			int1104Vo.setStatus(iaFollowRecommendHdr.getStatus());
-
+			
+			/* find details */
+			List<IaFollowRecommendDtl> dataDtl = iaFollowRecommendDtlJdbcRepository.getDataInDeadline(iaFollowRecommendHdr.getId());
+			for (IaFollowRecommendDtl iaFollowRecommendDtl : dataDtl) {
+				int1104Vo.setFollowNotifyDate(iaFollowRecommendDtl.getFollowNotifyDate());
+				int1104Vo.setResultNotifyDate(iaFollowRecommendDtl.getResultNotifyDate());
+				int1104Vo.setFollowNotifyDateStr(ConvertDateUtils.formatDateToString(iaFollowRecommendDtl.getFollowNotifyDate(), ConvertDateUtils.DD_MM_YY));
+				int1104Vo.setResultNotifyDateStr(ConvertDateUtils.formatDateToString(iaFollowRecommendDtl.getResultNotifyDate(), ConvertDateUtils.DD_MM_YY));
+				int1104Vo.setTimeNotify(iaFollowRecommendDtl.getTimeNotify());
+			}
+			
 			/* set ExciseDepartmentVo */
 			logger.info(iaFollowRecommendHdr.getExciseCode());
 			if(iaFollowRecommendHdr.getExciseCode() != null) {
