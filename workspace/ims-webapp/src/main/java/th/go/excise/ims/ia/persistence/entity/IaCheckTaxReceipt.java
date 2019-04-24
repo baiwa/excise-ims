@@ -18,11 +18,7 @@ public class IaCheckTaxReceipt
     extends BaseEntity
 {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -3796104276173470465L;
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_CHECK_TAX_RECEIPT_GEN")
     @SequenceGenerator(name = "IA_CHECK_TAX_RECEIPT_GEN", sequenceName = "IA_CHECK_TAX_RECEIPT_SEQ", allocationSize = 1)
     @Column(name = "ID")
@@ -34,7 +30,7 @@ public class IaCheckTaxReceipt
     @Column(name = "TRN_DATE")
     private Date trnDate;
     @Column(name = "OFFICE_RECEIVE")
-    private Date officeReceive;
+    private String officeReceive;
     @Column(name = "DEPOSIT_DATE")
     private Date depositDate;
     @Column(name = "SEND_DATE")
@@ -83,6 +79,14 @@ public class IaCheckTaxReceipt
     private BigDecimal checkedAmount;
     @Column(name = "TAX_PRINT_NO")
     private String taxPrintNo;
+    @Column(name = "PIN_NID_ID")
+    private String pinNidId;
+    @Column(name = "NEW_REG_ID")
+    private String newRegId;
+    @Column(name = "CUS_NAME")
+    private String cusName;
+    @Column(name = "FAC_NAME")
+    private String facName;
 
     public BigDecimal getId() {
         return id;
@@ -116,11 +120,11 @@ public class IaCheckTaxReceipt
         this.trnDate = trnDate;
     }
 
-    public Date getOfficeReceive() {
+    public String getOfficeReceive() {
         return officeReceive;
     }
 
-    public void setOfficeReceive(Date officeReceive) {
+    public void setOfficeReceive(String officeReceive) {
         this.officeReceive = officeReceive;
     }
 
@@ -314,6 +318,38 @@ public class IaCheckTaxReceipt
 
     public void setTaxPrintNo(String taxPrintNo) {
         this.taxPrintNo = taxPrintNo;
+    }
+
+    public String getPinNidId() {
+        return pinNidId;
+    }
+
+    public void setPinNidId(String pinNidId) {
+        this.pinNidId = pinNidId;
+    }
+
+    public String getNewRegId() {
+        return newRegId;
+    }
+
+    public void setNewRegId(String newRegId) {
+        this.newRegId = newRegId;
+    }
+
+    public String getCusName() {
+        return cusName;
+    }
+
+    public void setCusName(String cusName) {
+        this.cusName = cusName;
+    }
+
+    public String getFacName() {
+        return facName;
+    }
+
+    public void setFacName(String facName) {
+        this.facName = facName;
     }
 
 }
