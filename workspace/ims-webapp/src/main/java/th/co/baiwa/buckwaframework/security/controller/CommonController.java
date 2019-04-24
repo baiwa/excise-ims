@@ -21,18 +21,18 @@ public class CommonController {
 	/**
 	 * Home page
 	 */
-	@RequestMapping(value = {"/", "index.htm"})
-	public String root() {
-		return "redirect:/index.html";
-	}
-	
-	@RequestMapping(value = {"/index.html"})
-	public ModelAndView index() {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("index");
-		
-		return mav;
-	}
+//	@RequestMapping(value = {"/", "index.htm"})
+//	public String root() {
+//		return "redirect:/index.html";
+//	}
+//	
+//	@RequestMapping(value = {"/index.html"})
+//	public ModelAndView index() {
+//		ModelAndView mav = new ModelAndView();
+//		mav.setViewName("index");
+//		
+//		return mav;
+//	}
 	
 	@RequestMapping(value = "/welcome.html", method = RequestMethod.GET)
 	public ModelAndView welcome(HttpServletRequest httpRequest) {
