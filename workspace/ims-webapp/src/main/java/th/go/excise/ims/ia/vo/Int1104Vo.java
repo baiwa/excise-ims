@@ -17,17 +17,23 @@ public class Int1104Vo {
 	private String checkType;
 	private Date reportDate;
 	private Date approveDate;
-	private String notifyNo;
-	private Date notifyDateFrom;
-	private Date notifyDateTo;
 	private String status;
 	private Date dateClosedWork;
 	private String noteClosedWork;
 	private String inspectionWork;
 	private String exciseCode;
 	private BigDecimal idConcludeFollowHdr;
-	
-	/* deetails */
+	private BigDecimal timeNotify;
+
+	/* dtls */
+	private Date followReportDate;
+	private Date resultNotifyDate;
+	private Date followNotifyDate;
+	private String followReportDateStr;
+	private String resultNotifyDateStr;
+	private String followNotifyDateStr;
+
+	/* deetails List */
 	private List<Int110401DtlVo> details;
 
 	/* ExciseDepartmentVo */
@@ -121,30 +127,6 @@ public class Int1104Vo {
 		this.approveDate = approveDate;
 	}
 
-	public String getNotifyNo() {
-		return notifyNo;
-	}
-
-	public void setNotifyNo(String notifyNo) {
-		this.notifyNo = notifyNo;
-	}
-
-	public Date getNotifyDateFrom() {
-		return notifyDateFrom;
-	}
-
-	public void setNotifyDateFrom(Date notifyDateFrom) {
-		this.notifyDateFrom = notifyDateFrom;
-	}
-
-	public Date getNotifyDateTo() {
-		return notifyDateTo;
-	}
-
-	public void setNotifyDateTo(Date notifyDateTo) {
-		this.notifyDateTo = notifyDateTo;
-	}
-
 	public String getStatus() {
 		return status;
 	}
@@ -193,12 +175,28 @@ public class Int1104Vo {
 		this.idConcludeFollowHdr = idConcludeFollowHdr;
 	}
 
-	public ExciseDepartmentVo getExciseDepartmentVo() {
-		return exciseDepartmentVo;
+	public Date getFollowReportDate() {
+		return followReportDate;
 	}
 
-	public void setExciseDepartmentVo(ExciseDepartmentVo exciseDepartmentVo) {
-		this.exciseDepartmentVo = exciseDepartmentVo;
+	public void setFollowReportDate(Date followReportDate) {
+		this.followReportDate = followReportDate;
+	}
+
+	public Date getResultNotifyDate() {
+		return resultNotifyDate;
+	}
+
+	public void setResultNotifyDate(Date resultNotifyDate) {
+		this.resultNotifyDate = resultNotifyDate;
+	}
+
+	public Date getFollowNotifyDate() {
+		return followNotifyDate;
+	}
+
+	public void setFollowNotifyDate(Date followNotifyDate) {
+		this.followNotifyDate = followNotifyDate;
 	}
 
 	public List<Int110401DtlVo> getDetails() {
@@ -207,6 +205,46 @@ public class Int1104Vo {
 
 	public void setDetails(List<Int110401DtlVo> details) {
 		this.details = details;
+	}
+
+	public ExciseDepartmentVo getExciseDepartmentVo() {
+		return exciseDepartmentVo;
+	}
+
+	public void setExciseDepartmentVo(ExciseDepartmentVo exciseDepartmentVo) {
+		this.exciseDepartmentVo = exciseDepartmentVo;
+	}
+
+	public BigDecimal getTimeNotify() {
+		return timeNotify;
+	}
+
+	public void setTimeNotify(BigDecimal timeNotify) {
+		this.timeNotify = timeNotify;
+	}
+
+	public String getFollowReportDateStr() {
+		return followReportDateStr;
+	}
+
+	public void setFollowReportDateStr(String followReportDateStr) {
+		this.followReportDateStr = followReportDateStr;
+	}
+
+	public String getResultNotifyDateStr() {
+		return resultNotifyDateStr;
+	}
+
+	public void setResultNotifyDateStr(String resultNotifyDateStr) {
+		this.resultNotifyDateStr = resultNotifyDateStr;
+	}
+
+	public String getFollowNotifyDateStr() {
+		return followNotifyDateStr;
+	}
+
+	public void setFollowNotifyDateStr(String followNotifyDateStr) {
+		this.followNotifyDateStr = followNotifyDateStr;
 	}
 
 }

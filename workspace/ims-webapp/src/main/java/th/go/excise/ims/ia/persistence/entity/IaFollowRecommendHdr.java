@@ -47,12 +47,6 @@ public class IaFollowRecommendHdr extends BaseEntity {
 	private Date reportDate;
 	@Column(name = "APPROVE_DATE")
 	private Date approveDate;
-	@Column(name = "NOTIFY_NO")
-	private String notifyNo;
-	@Column(name = "NOTIFY_DATE_FROM")
-	private Date notifyDateFrom;
-	@Column(name = "NOTIFY_DATE_TO")
-	private Date notifyDateTo;
 	@Column(name = "STATUS")
 	private String status;
 	@Column(name = "DATE_CLOSED_WORK")
@@ -152,30 +146,6 @@ public class IaFollowRecommendHdr extends BaseEntity {
 
 	public void setApproveDate(Date approveDate) {
 		this.approveDate = approveDate;
-	}
-
-	public String getNotifyNo() {
-		return notifyNo;
-	}
-
-	public void setNotifyNo(String notifyNo) {
-		this.notifyNo = notifyNo;
-	}
-
-	public Date getNotifyDateFrom() {
-		return notifyDateFrom;
-	}
-
-	public void setNotifyDateFrom(Date notifyDateFrom) {
-		this.notifyDateFrom = notifyDateFrom;
-	}
-
-	public Date getNotifyDateTo() {
-		return notifyDateTo;
-	}
-
-	public void setNotifyDateTo(Date notifyDateTo) {
-		this.notifyDateTo = notifyDateTo;
 	}
 
 	public String getStatus() {

@@ -1,18 +1,25 @@
 package th.go.excise.ims.ia.vo;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class Int110401DtlVo {
 	private BigDecimal id;
 	private BigDecimal idFollowRecommendHdr;
 	private String followNotifyBookNumber;
 	private String followNotifyDateStr;
-	private String daedlinesIStr;
-	private String daedlinesIIStr;
+	private String daedlinesStartStr;
+	private String daedlinesEndStr;
 	private String resultNotifyBookNumber;
 	private String resultNotifyDateStr;
 	private String followReportBookNumber;
 	private String followReportDateStr;
+	private Date followReportDate;
+	private Date resultNotifyDate;
+	private Date followNotifyDate;
+	private BigDecimal timeNotify;
+	
+	private Boolean flagUpdate;
 
 	public BigDecimal getIdFollowRecommendHdr() {
 		return idFollowRecommendHdr;
@@ -36,22 +43,6 @@ public class Int110401DtlVo {
 
 	public void setFollowNotifyDateStr(String followNotifyDateStr) {
 		this.followNotifyDateStr = followNotifyDateStr;
-	}
-
-	public String getDaedlinesIStr() {
-		return daedlinesIStr;
-	}
-
-	public void setDaedlinesIStr(String daedlinesIStr) {
-		this.daedlinesIStr = daedlinesIStr;
-	}
-
-	public String getDaedlinesIIStr() {
-		return daedlinesIIStr;
-	}
-
-	public void setDaedlinesIIStr(String daedlinesIIStr) {
-		this.daedlinesIIStr = daedlinesIIStr;
 	}
 
 	public String getResultNotifyBookNumber() {
@@ -92,6 +83,62 @@ public class Int110401DtlVo {
 
 	public void setId(BigDecimal id) {
 		this.id = id;
+	}
+
+	public Date getFollowReportDate() {
+		return followReportDate;
+	}
+
+	public void setFollowReportDate(Date followReportDate) {
+		this.followReportDate = followReportDate;
+	}
+
+	public Date getResultNotifyDate() {
+		return resultNotifyDate;
+	}
+
+	public void setResultNotifyDate(Date resultNotifyDate) {
+		this.resultNotifyDate = resultNotifyDate;
+	}
+
+	public Date getFollowNotifyDate() {
+		return followNotifyDate;
+	}
+
+	public void setFollowNotifyDate(Date followNotifyDate) {
+		this.followNotifyDate = followNotifyDate;
+	}
+
+	public BigDecimal getTimeNotify() {
+		return timeNotify;
+	}
+
+	public void setTimeNotify(BigDecimal timeNotify) {
+		this.timeNotify = timeNotify;
+	}
+
+	public String getDaedlinesStartStr() {
+		return daedlinesStartStr;
+	}
+
+	public void setDaedlinesStartStr(String daedlinesStartStr) {
+		this.daedlinesStartStr = daedlinesStartStr;
+	}
+
+	public String getDaedlinesEndStr() {
+		return daedlinesEndStr;
+	}
+
+	public void setDaedlinesEndStr(String daedlinesEndStr) {
+		this.daedlinesEndStr = daedlinesEndStr;
+	}
+
+	public Boolean getFlagUpdate() {
+		return flagUpdate;
+	}
+
+	public void setFlagUpdate(Boolean flagUpdate) {
+		this.flagUpdate = flagUpdate;
 	}
 
 }

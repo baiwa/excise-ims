@@ -33,10 +33,10 @@ public class IaFollowRecommendDtl extends BaseEntity {
 	private String followNotifyBookNumber;
 	@Column(name = "FOLLOW_NOTIFY_DATE")
 	private Date followNotifyDate;
-	@Column(name = "DAEDLINES_I")
-	private Date daedlinesI;
-	@Column(name = "DAEDLINES_II")
-	private Date daedlinesII;
+	@Column(name = "DAEDLINES_START")
+	private Date daedlinesStart;
+	@Column(name = "DAEDLINES_END")
+	private Date daedlinesEnd;
 	@Column(name = "RESULT_NOTIFY_BOOK_NUMBER")
 	private String resultNotifyBookNumber;
 	@Column(name = "RESULT_NOTIFY_DATE")
@@ -45,6 +45,8 @@ public class IaFollowRecommendDtl extends BaseEntity {
 	private String followReportBookNumber;
 	@Column(name = "FOLLOW_REPORT_DATE")
 	private Date followReportDate;
+	@Column(name = "TIME_NOTIFY")
+	private BigDecimal timeNotify;
 
 	public BigDecimal getId() {
 		return id;
@@ -78,12 +80,20 @@ public class IaFollowRecommendDtl extends BaseEntity {
 		this.followNotifyDate = followNotifyDate;
 	}
 
-	public Date getDaedlinesI() {
-		return daedlinesI;
+	public Date getDaedlinesStart() {
+		return daedlinesStart;
 	}
 
-	public void setDaedlinesI(Date daedlinesI) {
-		this.daedlinesI = daedlinesI;
+	public void setDaedlinesStart(Date daedlinesStart) {
+		this.daedlinesStart = daedlinesStart;
+	}
+
+	public Date getDaedlinesEnd() {
+		return daedlinesEnd;
+	}
+
+	public void setDaedlinesEnd(Date daedlinesEnd) {
+		this.daedlinesEnd = daedlinesEnd;
 	}
 
 	public String getResultNotifyBookNumber() {
@@ -118,16 +128,16 @@ public class IaFollowRecommendDtl extends BaseEntity {
 		this.followReportDate = followReportDate;
 	}
 
+	public BigDecimal getTimeNotify() {
+		return timeNotify;
+	}
+
+	public void setTimeNotify(BigDecimal timeNotify) {
+		this.timeNotify = timeNotify;
+	}
+
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-	}
-
-	public Date getDaedlinesII() {
-		return daedlinesII;
-	}
-
-	public void setDaedlinesII(Date daedlinesII) {
-		this.daedlinesII = daedlinesII;
 	}
 
 }
