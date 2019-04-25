@@ -41,8 +41,11 @@ import th.go.excise.ims.oa.persistence.repository.OaHydrocarbDtlRepository;
 import th.go.excise.ims.oa.persistence.repository.OaLubricantsCompareRepository;
 import th.go.excise.ims.oa.persistence.repository.OaLubricantsDtlRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa020106JdbcRepository;
+import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0201JdbcRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0206JdbcRepository;
 import th.go.excise.ims.oa.utils.OaOfficeCode;
+import th.go.excise.ims.oa.vo.Oa0106SolventVo;
+import th.go.excise.ims.oa.vo.Oa020103Vo;
 import th.go.excise.ims.oa.vo.Oa020106DtlVo;
 import th.go.excise.ims.oa.vo.Oa0206CustomersVo;
 import th.go.excise.ims.oa.vo.Oa0206FormVo;
@@ -81,6 +84,9 @@ public class Oa0206Service {
 
 	@Autowired
 	private Oa020106JdbcRepository buttonRepo;
+	
+	@Autowired
+	private Oa0201JdbcRepository oa0201JdbcRep;
 
 	public DataTableAjax<Oa0206Vo> filterByCriteria(Oa0206FormVo request, String officeCode) {
 		String offCode = OaOfficeCode.officeCodeLike(officeCode);
@@ -323,20 +329,23 @@ public class Oa0206Service {
 	}
 
 	@SuppressWarnings("finally")
-	public byte[] objectToLubricant(String licenseId, String dtlId) {
+	public byte[] objectToLubricant(String licenseId, String dtlId, String planId) {
 		byte[] content = null;
 		try {
 			Map<String, Object> params = new HashMap<String, Object>();
-			params = setObjectSolvent(licenseId, dtlId);
-
+			params = setObjectSolvent(licenseId, dtlId, planId);
+			
+			List<Oa020103Vo> persons = oa0201JdbcRep.findUserAuditerByPlanId("", new BigDecimal(planId));
 			List<Oa0206LubricantVo> list = new ArrayList<Oa0206LubricantVo>();
-			for (int i = 0; i < 4; i++) {
-				Oa0206LubricantVo test = new Oa0206LubricantVo();
-				test.setSeq(arabic2thai(i + 1));
-				if (i == 0) {
-					test.setFirst("Y");
+			for(int i=1; i<persons.size(); i++) {
+				Oa0206LubricantVo person = new Oa0206LubricantVo();
+				person.setName(persons.get(i).getUserThaiName() + " " + persons.get(i).getUserThaiSurname());
+				person.setPosition(person.getPosition());
+				person.setSeq(arabic2thai(i+1));
+				if (i == 1) {
+					person.setFirst("Y");
 				}
-				list.add(test);
+				list.add(person);
 			}
 
 			JasperPrint jasperPrint1 = ReportUtils.getJasperPrint("OA_LUBRICANT_01" + "." + FILE_EXTENSION.JASPER, params,
@@ -361,7 +370,7 @@ public class Oa0206Service {
 		}
 	}
 
-	public Map<String, Object> setObjectSolvent(String licenseId, String dtlId) {
+	public Map<String, Object> setObjectSolvent(String licenseId, String dtlId, String planId) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		Oa0206Vo license = oa0206JdbcRepo.getCustomerLicenseById(new BigDecimal(licenseId));
 		String province = license.getAddress().split(" ")[3].replace("จ.", "").trim();

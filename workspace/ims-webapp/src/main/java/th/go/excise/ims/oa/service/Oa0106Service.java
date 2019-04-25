@@ -26,6 +26,7 @@ import net.sf.jasperreports.export.SimpleExporterInputItem;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants;
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
@@ -33,14 +34,18 @@ import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.go.excise.ims.oa.persistence.entity.OaHydCustomerLicenDtl;
 import th.go.excise.ims.oa.persistence.entity.OaHydrocarbCompare;
 import th.go.excise.ims.oa.persistence.entity.OaHydrocarbDtl;
+import th.go.excise.ims.oa.persistence.entity.OaPersonAuditPlan;
 import th.go.excise.ims.oa.persistence.repository.OaHydCustomerLicenDtlRepository;
 import th.go.excise.ims.oa.persistence.repository.OaHydrocarbCompareRepository;
 import th.go.excise.ims.oa.persistence.repository.OaHydrocarbDtlRepository;
+import th.go.excise.ims.oa.persistence.repository.OaPersonAuditPlanRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0106JdbcRepository;
+import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0201JdbcRepository;
 import th.go.excise.ims.oa.utils.OaOfficeCode;
 import th.go.excise.ims.oa.vo.Oa0106FormVo;
 import th.go.excise.ims.oa.vo.Oa0106SolventVo;
 import th.go.excise.ims.oa.vo.Oa0106Vo;
+import th.go.excise.ims.oa.vo.Oa020103Vo;
 
 @Service
 public class Oa0106Service {
@@ -56,6 +61,9 @@ public class Oa0106Service {
 	
 	@Autowired
 	private OaHydrocarbCompareRepository hydCompareRepo;
+	
+	@Autowired
+	private Oa0201JdbcRepository oa0201JdbcRep;
 
 	public DataTableAjax<Oa0106Vo> filterByCriteria(Oa0106FormVo request, String officeCode) {
 		String offCode = OaOfficeCode.officeCodeLike(officeCode);
@@ -152,7 +160,6 @@ public class Oa0106Service {
 		LocalDate localDate = LocalDateConverter.convertToEntityAttribute(sqlDate);
 		int year = localDate.getYear()+543;
 		int day = localDate.getDayOfMonth();
-		
 	
 		// OA_OPE_01
 		params.put("licenseType", license.getLicenseType());
@@ -223,20 +230,22 @@ public class Oa0106Service {
 	}
 	
 	@SuppressWarnings("finally")
-	public byte[] objectToSolvent(String licenseId,String dtlId) {
+	public byte[] objectToSolvent(String licenseId,String dtlId, String planId) {
 		byte[] content = null;
 		try {
 			Map<String, Object> params = new HashMap<String, Object>();
-			params = setObjectSolvent(licenseId,dtlId);
-			
+			params = setObjectSolvent(licenseId,dtlId, planId);
+			List<Oa020103Vo> persons = oa0201JdbcRep.findUserAuditerByPlanId("", new BigDecimal(planId));
 			List<Oa0106SolventVo> list = new ArrayList<Oa0106SolventVo>();
-			for(int i=0; i<4; i++) {
-				Oa0106SolventVo test = new Oa0106SolventVo();
-				test.setSeq(arabic2thai(i+1));
-				if (i == 0) {
-					test.setFirst("Y");
+			for(int i=1; i<persons.size(); i++) {
+				Oa0106SolventVo person = new Oa0106SolventVo();
+				person.setName(persons.get(i).getUserThaiName() + " " + persons.get(i).getUserThaiSurname());
+				person.setPosition(person.getPosition());
+				person.setSeq(arabic2thai(i+1));
+				if (i == 1) {
+					person.setFirst("Y");
 				}
-				list.add(test);
+				list.add(person);
 			}
 			
 			JasperPrint jasperPrint1 = ReportUtils.getJasperPrint("OA_SOLVENT_01" + "." + FILE_EXTENSION.JASPER, params,
@@ -262,7 +271,7 @@ public class Oa0106Service {
 		}
 	}
 	
-	public Map<String, Object> setObjectSolvent(String licenseId,String dtlId) {
+	public Map<String, Object> setObjectSolvent(String licenseId,String dtlId, String planId) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		Oa0106Vo license = oa0106JdbcRepo.getCustomerLicenseById(licenseId);
 		String province = license.getAddress().split(" ")[3].replace("จ.", "").trim();
@@ -270,6 +279,13 @@ public class Oa0106Service {
 		String district = license.getAddress().split(" ")[1].replace("ต.", "").trim();
 		String addressNo = license.getAddress().split(" ")[0].replace("เลขที่", "").trim();
 		//	String postcode = license.getAddress().split(" ")[4].trim();
+		List<Oa020103Vo> persons = oa0201JdbcRep.findUserAuditerByPlanId("", new BigDecimal(planId));
+		if (persons.size() > 0) {
+			Oa020103Vo data = persons.get(0);
+			params.put("myname", data.getUserThaiName() + " " + data.getUserThaiSurname());
+			params.put("myposition", data.getTitle());
+			params.put("mylicense", data.getUserThaiId());
+		}
 		params.put("soi", null);
 		params.put("road", null);
 		params.put("groupNo", null);
@@ -293,11 +309,7 @@ public class Oa0106Service {
 		params.put("month", null);
 		params.put("year", null);
 		params.put("writeat", null);
-		params.put("myname", null);
-		params.put("myposition", null);
 		params.put("underby", null);
-		params.put("mylicense", null);
-		params.put("myname", null);
 		return params;
 	}
 	

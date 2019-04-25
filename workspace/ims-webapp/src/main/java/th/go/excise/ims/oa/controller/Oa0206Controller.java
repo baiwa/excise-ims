@@ -83,9 +83,9 @@ public class Oa0206Controller {
 		IOUtils.write(reportFile, response.getOutputStream());
 	}
 	
-	@GetMapping("/pdf/lubricant/{id}/{dtlId}")
-	public void pdfSolvent(@PathVariable("id") String idStr,@PathVariable("dtlId") String dtlId, HttpServletResponse response) throws IOException, JRException {
-		byte[] reportFile = oa0206Service.objectToLubricant(idStr,dtlId);
+	@GetMapping("/pdf/lubricant/{id}/{dtlId}/{planId}")
+	public void pdfSolvent(@PathVariable("id") String idStr,@PathVariable("dtlId") String dtlId, @PathVariable("planId") String planId, HttpServletResponse response) throws IOException, JRException {
+		byte[] reportFile = oa0206Service.objectToLubricant(idStr, dtlId, planId);
 
 		response.setContentType("application/pdf");
 		response.addHeader("Content-Disposition", "inline;filename=lubricantService.pdf");

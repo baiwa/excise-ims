@@ -83,9 +83,9 @@ public class Oa0106Controller {
 		IOUtils.write(reportFile, response.getOutputStream());
 	}
 	
-	@GetMapping("/pdf/solvent/{id}/{dtlId}")
-	public void pdfSolvent(@PathVariable("id") String idStr,@PathVariable("dtlId") String dtlId, HttpServletResponse response) throws IOException, JRException {
-		byte[] reportFile = oa0106Service.objectToSolvent(idStr,dtlId);
+	@GetMapping("/pdf/solvent/{id}/{dtlId}/{planId}")
+	public void pdfSolvent(@PathVariable("id") String idStr, @PathVariable("dtlId") String dtlId, @PathVariable("planId") String planId, HttpServletResponse response) throws IOException, JRException {
+		byte[] reportFile = oa0106Service.objectToSolvent(idStr,dtlId, planId);
 
 		response.setContentType("application/pdf");
 		response.addHeader("Content-Disposition", "inline;filename=hydDocabonService.pdf");
