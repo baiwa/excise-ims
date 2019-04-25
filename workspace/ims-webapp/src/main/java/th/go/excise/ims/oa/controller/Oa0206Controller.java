@@ -66,7 +66,7 @@ public class Oa0206Controller {
 		byte[] reportFile = oa0206Service.objectToPDF(idStr,dtlId);
 
 		response.setContentType("application/pdf");
-		response.addHeader("Content-Disposition", "inline;filename=hydDocabonService.pdf");
+		response.addHeader("Content-Disposition", "inline;filename=lubricantService.pdf");
 
 		IOUtils.write(reportFile, response.getOutputStream());
 	}
@@ -77,11 +77,21 @@ public class Oa0206Controller {
 		byte[] reportFile = oa0206Service.objectToPDF(idStr,dtlId);
 
 		response.setContentType("application/pdf");
-		response.addHeader("Content-Disposition", "inline;filename=hydDocabonService.pdf");
+		response.addHeader("Content-Disposition", "inline;filename=lubricantService.pdf");
 		response.addHeader("X-Frame-Options", "SAMEORIGIN");
 
 		IOUtils.write(reportFile, response.getOutputStream());
 	}
 	
+	@GetMapping("/pdf/lubricant/{id}/{dtlId}")
+	public void pdfSolvent(@PathVariable("id") String idStr,@PathVariable("dtlId") String dtlId, HttpServletResponse response) throws IOException, JRException {
+		byte[] reportFile = oa0206Service.objectToLubricant(idStr,dtlId);
+
+		response.setContentType("application/pdf");
+		response.addHeader("Content-Disposition", "inline;filename=lubricantService.pdf");
+		response.addHeader("X-Frame-Options", "SAMEORIGIN");
+
+		IOUtils.write(reportFile, response.getOutputStream());
+	}
 
 }
