@@ -387,7 +387,7 @@ public class Int030406Service {
 			resDataCal.add(index, resDataCalSet);
 			
 			/* set ExciseDepartmentVo */
-			logger.info(list.getExciseCode());
+//			logger.info(list.getExciseCode());
 			if(list.getExciseCode() != null) {
 				resDataCalSet.setExciseDepartmentVo(ExciseDepartmentUtil.getExciseDepartment(list.getExciseCode()));
 			}

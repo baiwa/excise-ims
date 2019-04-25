@@ -80,7 +80,7 @@ public class Int030103Service {
 	public void updataConfigAll(Int0301FormVo form) {
 		IaRiskFactorsConfigAll entity = new IaRiskFactorsConfigAll();
 		IaRiskFactorsConfigAll formConfigAll = form.getIaRiskFactorsConfigAll();
-		entity = iaRiskFactorsConfigAllRepository.findById(formConfigAll.getId()).get();
+		entity = iaRiskFactorsConfigAllRepository.findByBudgetYearByInspectionWork(formConfigAll.getBudgetYear(), formConfigAll.getInspectionWork());
 		entity.setVerylow(formConfigAll.getVerylow());
 		entity.setVerylowStart(formConfigAll.getVerylowStart());
 		entity.setVerylowEnd(formConfigAll.getVerylowEnd());
