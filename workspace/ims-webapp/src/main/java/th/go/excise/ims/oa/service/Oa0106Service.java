@@ -237,15 +237,26 @@ public class Oa0106Service {
 			params = setObjectSolvent(licenseId,dtlId, planId);
 			List<Oa020103Vo> persons = oa0201JdbcRep.findUserAuditerByPlanId("", new BigDecimal(planId));
 			List<Oa0106SolventVo> list = new ArrayList<Oa0106SolventVo>();
-			for(int i=1; i<persons.size(); i++) {
-				Oa0106SolventVo person = new Oa0106SolventVo();
-				person.setName(persons.get(i).getUserThaiName() + " " + persons.get(i).getUserThaiSurname());
-				person.setPosition(person.getPosition());
-				person.setSeq(arabic2thai(i+1));
-				if (i == 1) {
-					person.setFirst("Y");
+			if (persons.size() > 1) {
+				for(int i=1; i<persons.size(); i++) {
+					Oa0106SolventVo person = new Oa0106SolventVo();
+					person.setName(persons.get(i).getUserThaiName());
+					person.setPosition(person.getPosition());
+					person.setSeq(arabic2thai(i));
+					if (i == 1) {
+						person.setFirst("Y");
+					}
+					list.add(person);
+				}	
+			} else {
+				for(int i=0; i<4; i++) {
+					Oa0106SolventVo person = new Oa0106SolventVo();
+					person.setSeq(arabic2thai(i+1));
+					if (i == 0) {
+						person.setFirst("Y");
+					}
+					list.add(person);
 				}
-				list.add(person);
 			}
 			
 			JasperPrint jasperPrint1 = ReportUtils.getJasperPrint("OA_SOLVENT_01" + "." + FILE_EXTENSION.JASPER, params,
@@ -282,7 +293,7 @@ public class Oa0106Service {
 		List<Oa020103Vo> persons = oa0201JdbcRep.findUserAuditerByPlanId("", new BigDecimal(planId));
 		if (persons.size() > 0) {
 			Oa020103Vo data = persons.get(0);
-			params.put("myname", data.getUserThaiName() + " " + data.getUserThaiSurname());
+			params.put("myname", data.getUserThaiName());
 			params.put("myposition", data.getTitle());
 			params.put("mylicense", data.getUserThaiId());
 		}
