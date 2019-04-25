@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.oa.vo.Oa07FormVo;
 import th.go.excise.ims.oa.vo.Oa07Reg4000Vo;
 
@@ -21,10 +22,7 @@ public class Oa07JdbcRepository {
 	@Autowired
 	CommonJdbcTemplate commonJdbcTemplate;
 
-	public Long reg4000Count(Oa07FormVo formVo) {
-		StringBuilder sql = new StringBuilder();
-		List<Object> params = new ArrayList<Object>();
-
+	private void sqlBuilder(StringBuilder sql, List<Object> params, Oa07FormVo formVo) {
 		sql.append(" SELECT R4000.CUS_FULLNAME ,  ");
 		sql.append("   R4000.FAC_FULLNAME ,  ");
 		sql.append("   R4000.NEW_REG_ID ,  ");
@@ -56,54 +54,9 @@ public class Oa07JdbcRepository {
 		sql.append("     AND CONCAT (SUBSTR(OFF_CODE, 0, 4),'00') = OFF_CODE  ");
 		sql.append(" ) ED_AREA ON ED_AREA.OFFICE_CODE = CONCAT (SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
 		sql.append(" WHERE R4000.IS_DELETED='N' ");
-
-		if (StringUtils.isNotBlank(formVo.getNewRegId())) {
-			sql.append(" AND r4000.new_reg_id=?  ");
-			params.add(formVo.getNewRegId());
-		}
-		if (StringUtils.isNotBlank(formVo.getFacFullname())) {
-			sql.append(" and FAC_FULLNAME like ? ");
-			params.add("%"+StringUtils.trim(formVo.getFacFullname())+"%");
-		}
-		String countSql = OracleUtils.countForDataTable(sql.toString());
-		return this.commonJdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
-	}
-
-	public List<Oa07Reg4000Vo> reg4000(Oa07FormVo formVo) {
-		StringBuilder sql = new StringBuilder();
-		List<Object> params = new ArrayList<Object>();
-
-		sql.append(" SELECT R4000.CUS_FULLNAME ,  ");
-		sql.append("   R4000.FAC_FULLNAME ,  ");
-		sql.append("   R4000.NEW_REG_ID ,  ");
-		sql.append("   R4000.FAC_ADDRESS ,  ");
-		sql.append("   R4000.DUTY_CODE ,  ");
-		sql.append("   R4000.OFFICE_CODE OFFICE_CODE_R4000 ,  ");
-		sql.append("   ED_SECTOR.OFFICE_CODE SEC_CODE ,  ");
-		sql.append("   ED_SECTOR.OFF_SHORT_NAME SEC_DESC ,  ");
-		sql.append("   ED_AREA.OFFICE_CODE AREA_CODE ,  ");
-		sql.append("   ED_AREA.OFF_SHORT_NAME AREA_DESC ,  ");
-		sql.append("   R4000.REG_STATUS,  ");
-		sql.append("   R4000.REG_DATE,  ");
-		sql.append("   R4000.REG_CAPITAL  ");
-		sql.append(" FROM TA_WS_REG4000 R4000 ");
-		sql.append(" INNER JOIN (  ");
-		sql.append("   SELECT OFF_CODE OFFICE_CODE,  ");
-		sql.append("     OFF_NAME,  ");
-		sql.append("     OFF_SHORT_NAME  ");
-		sql.append("   FROM EXCISE_DEPARTMENT  ");
-		sql.append("   WHERE IS_DELETED = 'N'  ");
-		sql.append("     AND CONCAT (SUBSTR(OFF_CODE, 0, 2),'0000') = OFF_CODE  ");
-		sql.append(" ) ED_SECTOR ON ED_SECTOR.OFFICE_CODE = CONCAT (SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000')  ");
-		sql.append(" INNER JOIN (  ");
-		sql.append("   SELECT OFF_CODE OFFICE_CODE,  ");
-		sql.append("     OFF_NAME,  ");
-		sql.append("     OFF_SHORT_NAME  ");
-		sql.append("   FROM EXCISE_DEPARTMENT  ");
-		sql.append("   WHERE IS_DELETED = 'N'  ");
-		sql.append("     AND CONCAT (SUBSTR(OFF_CODE, 0, 4),'00') = OFF_CODE  ");
-		sql.append(" ) ED_AREA ON ED_AREA.OFFICE_CODE = CONCAT (SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
-		sql.append(" WHERE R4000.IS_DELETED='N' ");
+		sql.append(" AND R4000.OFFICE_CODE = ?");
+		
+		params.add(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 
 		if (StringUtils.isNotBlank(formVo.getNewRegId())) {
 			sql.append(" AND r4000.new_reg_id=?  ");
@@ -113,6 +66,23 @@ public class Oa07JdbcRepository {
 			sql.append(" and FAC_FULLNAME like ? ");
 			params.add("%"+StringUtils.trim(formVo.getFacFullname())+"%");
 		}
+	}
+	public Long reg4000Count(Oa07FormVo formVo) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+
+		sqlBuilder(sql, params, formVo);
+		
+		String countSql = OracleUtils.countForDataTable(sql.toString());
+		return this.commonJdbcTemplate.queryForObject(countSql, params.toArray(), Long.class);
+	}
+
+	public List<Oa07Reg4000Vo> reg4000(Oa07FormVo formVo) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+
+		sqlBuilder(sql, params, formVo);
+		
 		return this.commonJdbcTemplate.query(
 				OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(),
 				reg4000Rowmapper);
