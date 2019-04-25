@@ -20,7 +20,7 @@ public class TaFormTS0424DtlVo {
 	private BigDecimal extraAmt;
 	private BigDecimal moiAmt;
 	private BigDecimal nettaxAmt;
-	private Integer residueNum;
+	private String residueNum;
 	private String officerComment;
 	
 	
@@ -121,10 +121,10 @@ public class TaFormTS0424DtlVo {
 	public void setNettaxAmt(BigDecimal nettaxAmt) {
 		this.nettaxAmt = nettaxAmt;
 	}
-	public Integer getResidueNum() {
+	public String getResidueNum() {
 		return residueNum;
 	}
-	public void setResidueNum(Integer residueNum) {
+	public void setResidueNum(String residueNum) {
 		this.residueNum = residueNum;
 	}
 	public String getOfficerComment() {

@@ -55,7 +55,7 @@ public class TaFormTS0424ServiceTest {
 			formTS0424DtlVo.setExtraAmt(new BigDecimal(253000));			
 			formTS0424DtlVo.setMoiAmt(new BigDecimal(253000));
 			formTS0424DtlVo.setNettaxAmt(new BigDecimal(253000));
-			formTS0424DtlVo.setResidueNum(new Integer(12));
+			formTS0424DtlVo.setResidueNum("12");
 			formTS0424DtlVo.setOfficerComment("");
 			
 			
