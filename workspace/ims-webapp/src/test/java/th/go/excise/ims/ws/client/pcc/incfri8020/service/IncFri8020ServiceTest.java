@@ -25,7 +25,7 @@ public class IncFri8020ServiceTest {
 	@Autowired
 	private IncFri8020Service IncFri8020RequestService;
 	
-	@Test
+	//@Test
 	public void testIncFri8020() throws IOException {
 		IncFri8020Request incFri8020Request = new IncFri8020Request();
 		incFri8020Request.setYearMonthFrom("201802");
@@ -38,5 +38,15 @@ public class IncFri8020ServiceTest {
 		for (IncomeList incomeList : IncFri8020Response) {
 			System.out.println("ReceiptNo : "+ incomeList.getReceiptNo());
 		}
+	}
+	@Test
+	public void syncDataIncFri8020() throws IOException {
+		IncFri8020Request incFri8020Request = new IncFri8020Request();
+		incFri8020Request.setYearMonthFrom("201802");
+		incFri8020Request.setYearMonthTo("201808");
+		incFri8020Request.setOfficeCode("010100");
+		incFri8020Request.setDateType("Income");
+		IncFri8020RequestService.syncDataIncFri8020(incFri8020Request);
+		
 	}
 }

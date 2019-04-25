@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ import th.go.excise.ims.ws.client.pcc.incfri8020.oxm.IncFri8020Request;
 import th.go.excise.ims.ws.client.pcc.incfri8020.oxm.IncFri8020Response;
 import th.go.excise.ims.ws.client.pcc.incfri8020.oxm.IncomeList;
 import th.go.excise.ims.ws.client.pcc.incfri8020.oxm.ResponseData;
+import th.go.excise.ims.ws.client.persistence.entity.WsIncfri8020Inc;
+import th.go.excise.ims.ws.client.persistence.repository.WsIncfri8020IncRepository;
 
 @Service
 public class IncFri8020Service {
@@ -32,6 +35,9 @@ public class IncFri8020Service {
 	private final String RETURN_RESPONSE_STATUS_OK = "OK";
 	@Autowired
 	private PccRequestHeaderService pccRequestHeaderService;
+	
+	@Autowired
+	private WsIncfri8020IncRepository wsIncfri8020IncRepository;
 
 	public List<IncomeList> postRestFul(IncFri8020Request incFri8000Request) throws IOException {
 		logger.info("IncFri8020Request : postRestFul");
@@ -49,17 +55,24 @@ public class IncFri8020Service {
 	public void syncDataIncFri8020(IncFri8020Request incFri8020Request) {
 		int pageNo = 1;
 		List<IncomeList> incomeList;
+		List<WsIncfri8020Inc> wsIncfri8020IncList;
+		WsIncfri8020Inc wsInc = new WsIncfri8020Inc();
 		try {
 			do {
+				
+				incomeList = new ArrayList<>();
+				wsIncfri8020IncList = new ArrayList<>();
 				incFri8020Request.setPageNo(String.valueOf(pageNo));
 				incFri8020Request.setDataPerPage(String.valueOf(MAX_DATA));
 				incomeList = postRestFul(incFri8020Request);
-				System.out.println(pageNo+"######################");
-				for (IncomeList income : incomeList) {
-					System.out.println(income.getReceiptNo());
+				for (IncomeList inc : incomeList) {
+					wsInc = new WsIncfri8020Inc();
+					BeanUtils.copyProperties(wsInc, inc);
+					wsIncfri8020IncList.add(wsInc);
 				}
+				wsIncfri8020IncRepository.batchInsert(wsIncfri8020IncList);
 			} while (MAX_DATA == incomeList.size());
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

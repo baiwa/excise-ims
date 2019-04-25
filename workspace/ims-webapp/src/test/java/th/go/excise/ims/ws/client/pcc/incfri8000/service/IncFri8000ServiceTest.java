@@ -11,8 +11,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.ws.client.pcc.incfri8000.oxm.IncFri8000Request;
-import th.go.excise.ims.ws.client.pcc.incfri8000.oxm.IncomeList;
-import th.go.excise.ims.ws.client.pcc.incfri8000.oxm.ResponseData;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
