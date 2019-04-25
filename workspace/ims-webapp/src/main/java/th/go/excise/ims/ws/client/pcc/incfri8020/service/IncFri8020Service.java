@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.ia.controller.Int02010101Controller;
 import th.go.excise.ims.ws.client.pcc.common.service.PccRequestHeaderService;
 import th.go.excise.ims.ws.client.pcc.incfri8020.oxm.IncFri8020Request;
@@ -59,7 +60,6 @@ public class IncFri8020Service {
 		WsIncfri8020Inc wsInc = new WsIncfri8020Inc();
 		try {
 			do {
-				
 				incomeList = new ArrayList<>();
 				wsIncfri8020IncList = new ArrayList<>();
 				incFri8020Request.setPageNo(String.valueOf(pageNo));
@@ -67,8 +67,34 @@ public class IncFri8020Service {
 				incomeList = postRestFul(incFri8020Request);
 				for (IncomeList inc : incomeList) {
 					wsInc = new WsIncfri8020Inc();
-					BeanUtils.copyProperties(wsInc, inc);
+					wsInc.setDepositDate(ConvertDateUtils.parseStringToDate(inc.getDepositDate(), ConvertDateUtils.YYYYMMDD));
+					wsInc.setSendDate(ConvertDateUtils.parseStringToDate(inc.getSendDate(), ConvertDateUtils.YYYYMMDD));
+					wsInc.setReceiptDate(ConvertDateUtils.parseStringToDate(inc.getReceiptDate(), ConvertDateUtils.YYYYMMDD));
+					wsInc.setIncomeName(inc.getIncomeName());
+					wsInc.setReceiptNo(inc.getReceiptNo());
+					wsInc.setNetTaxAmount(NumberUtils.toBigDecimal(inc.getNettaxAmount()));
+					wsInc.setNetLocAmount(NumberUtils.toBigDecimal(inc.getNetLocAmount()));
+					wsInc.setLocOthAmount(NumberUtils.toBigDecimal(inc.getLocOthAmount()));
+					wsInc.setLocExpAmount(NumberUtils.toBigDecimal(inc.getLocExpAmount()));
+					wsInc.setOlderFundAmount(NumberUtils.toBigDecimal(inc.getOlderFundAmount()));
+					wsInc.setTpbsFundAmount(NumberUtils.toBigDecimal(inc.getTpbsFundAmount()));
+					wsInc.setSendAmount(NumberUtils.toBigDecimal(inc.getSendAmount()));
+					wsInc.setStampAmount(NumberUtils.toBigDecimal(inc.getStampAmount()));
+					wsInc.setCustomAmount(NumberUtils.toBigDecimal(inc.getCustomAmount()));
+					wsInc.setTrnDate(ConvertDateUtils.parseStringToDate(inc.getTrnDate(), ConvertDateUtils.YYYYMMDD));
+					wsInc.setOfficeReceive(inc.getOfficeReceive());
+					wsInc.setIncomeCode(inc.getIncomeCode());
+					wsInc.setReceiptNoOlderFund(inc.getReceiptNoOlderFund());
+					wsInc.setReceiptNoTpbsFund(inc.getReceiptNoTpbsFund());
+					wsInc.setReceiptNoSssFund(inc.getReceiptNoSssFund());
+					wsInc.setReceiptNoSportFund(inc.getReceiptNoSportFund());
+					wsInc.setSportFundAmount(NumberUtils.toBigDecimal(inc.getSportFundAmount()));
+					wsInc.setPinNidId(inc.getPinNidId());
+					wsInc.setNewRegId(inc.getNewRegId());
+					wsInc.setCusName(inc.getCusName());
+					wsInc.setFacName(inc.getFacName());
 					wsIncfri8020IncList.add(wsInc);
+					pageNo++;
 				}
 				wsIncfri8020IncRepository.batchInsert(wsIncfri8020IncList);
 			} while (MAX_DATA == incomeList.size());
