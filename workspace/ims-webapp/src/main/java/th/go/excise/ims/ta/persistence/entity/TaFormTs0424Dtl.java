@@ -55,7 +55,7 @@ public class TaFormTs0424Dtl extends BaseEntity {
 	@Column(name = "NETTAX_AMT")
 	private BigDecimal nettaxAmt;
 	@Column(name = "RESIDUE_NUM")
-	private Integer residueNum;
+	private String residueNum;
 	@Column(name = "OFFICER_COMMENT")
 	private String officerComment;
 
@@ -195,11 +195,11 @@ public class TaFormTs0424Dtl extends BaseEntity {
 		this.nettaxAmt = nettaxAmt;
 	}
 
-	public Integer getResidueNum() {
+	public String getResidueNum() {
 		return residueNum;
 	}
 
-	public void setResidueNum(Integer residueNum) {
+	public void setResidueNum(String residueNum) {
 		this.residueNum = residueNum;
 	}
 

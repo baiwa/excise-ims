@@ -98,13 +98,16 @@ public class Oa0108Service {
 			for (OaLicensePlan data : datas) {
 				if ("3".equalsIgnoreCase(status.trim())) { // IF STATUS == '3'
 					// TODO
-					OaHydrocarb hydca = new OaHydrocarb();
-					hydca.setOaPlanId(data.getOaPlanId());
-					hydca.setLicenseId(data.getLicenseId());
-					hydca = oaHydrocarbRep.save(hydca);
-					OaHydrocarbDtl hydcaDtl = new OaHydrocarbDtl();
-					hydcaDtl.setOaHydrocarbId(hydca.getOaHydrocarbId());
-					hydcaDtl = oaHydrocarbDtlRep.save(hydcaDtl);
+					Optional<OaHydrocarb> hydcaOpt = oaHydrocarbRep.findByLicenseIdAndOaPlanIdAndIsDeleted(data.getOaPlanId(), data.getLicenseId(), FLAG.N_FLAG);
+					if (!hydcaOpt.isPresent()) {
+						OaHydrocarb hydca = new OaHydrocarb();
+						hydca.setOaPlanId(data.getOaPlanId());
+						hydca.setLicenseId(data.getLicenseId());
+						hydca = oaHydrocarbRep.save(hydca);
+						OaHydrocarbDtl hydcaDtl = new OaHydrocarbDtl();
+						hydcaDtl.setOaHydrocarbId(hydca.getOaHydrocarbId());
+						hydcaDtl = oaHydrocarbDtlRep.save(hydcaDtl);
+					}
 				}
 				data.setStatus(status);
 			}
