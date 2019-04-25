@@ -341,7 +341,7 @@ public class Oa0206Service {
 				for(int i=1; i<persons.size(); i++) {
 					Oa0206LubricantVo person = new Oa0206LubricantVo();
 					person.setName(persons.get(i).getUserThaiName());
-					person.setPosition(person.getPosition());
+					person.setPosition(persons.get(i).getTitle());
 					person.setSeq(arabic2thai(i));
 					if (i == 1) {
 						person.setFirst("Y");
