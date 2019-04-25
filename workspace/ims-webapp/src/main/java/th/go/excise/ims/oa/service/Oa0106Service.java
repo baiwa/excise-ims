@@ -31,6 +31,7 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSIO
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.oa.persistence.entity.OaHydCustomerLicenDtl;
 import th.go.excise.ims.oa.persistence.entity.OaHydrocarbCompare;
 import th.go.excise.ims.oa.persistence.entity.OaHydrocarbDtl;
@@ -296,6 +297,7 @@ public class Oa0106Service {
 			params.put("myname", data.getUserThaiName());
 			params.put("myposition", data.getTitle());
 			params.put("mylicense", data.getUserThaiId());
+			params.put("underby", ApplicationCache.getExciseDept(data.getOfficeCode()).getDeptName());
 		}
 		params.put("soi", null);
 		params.put("road", null);
@@ -307,7 +309,7 @@ public class Oa0106Service {
 		params.put("factoryname", license.getCompanyName());
 		params.put("username", license.getCompanyName());
 		params.put("userposition", "POSITION");
-		params.put("telephone", null);
+		params.put("telephone", license.getTelephone());
 		if ("A".equalsIgnoreCase(license.getLicenseType())) {
 			params.put("agent", "Y");
 		}
@@ -320,7 +322,6 @@ public class Oa0106Service {
 		params.put("month", null);
 		params.put("year", null);
 		params.put("writeat", null);
-		params.put("underby", null);
 		return params;
 	}
 	

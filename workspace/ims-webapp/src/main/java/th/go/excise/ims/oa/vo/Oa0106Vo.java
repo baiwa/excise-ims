@@ -17,7 +17,14 @@ public class Oa0106Vo {
 	private String licenseNo;
 	private String identifyNo;
 	private String warehouseAddress;
+	private String telephone;
 	
+	public String getTelephone() {
+		return telephone;
+	}
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
 	public BigDecimal getCustomerId() {
 		return customerId;
 	}

@@ -106,6 +106,7 @@ public class Oa0106JdbcRepository {
 			vo.setLicenseNo(rs.getString("LICENSE_NO"));
 			vo.setIdentifyNo(rs.getString("IDENTIFY_NO"));
 			vo.setWarehouseAddress(rs.getString("WAREHOUSE_ADDRESS"));
+			vo.setTelephone(rs.getString("MOBILE"));
 			return vo;
 		}
 	};
