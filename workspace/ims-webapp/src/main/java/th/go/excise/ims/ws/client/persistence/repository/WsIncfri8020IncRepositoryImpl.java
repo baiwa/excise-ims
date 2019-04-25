@@ -17,6 +17,7 @@ import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.vo.Int0601Vo;
 import th.go.excise.ims.ws.client.persistence.entity.WsIncfri8020Inc;
 
@@ -74,8 +75,8 @@ public class WsIncfri8020IncRepositoryImpl implements WsIncfri8020IncRepositoryC
 		StringBuilder sql = new StringBuilder(" SELECT * FROM WS_INCFRI8020_INC WS");
 		sql.append(" WHERE WS.IS_DELETED = '").append(FLAG.N_FLAG).append("'");
 		if(StringUtils.isNoneBlank(criteria.getOfficeReceive())) {
-			paramList.add(criteria.getOfficeReceive());
-			sql.append(" AND WS.OFFICE_RECEIVE = ? ");
+			paramList.add(ExciseUtils.whereInLocalOfficeCode(criteria.getOfficeReceive()));
+			sql.append(" AND WS.OFFICE_RECEIVE like ? ");
 		}
 		
 		if(criteria.getReceiptDateFrom() != null) {
