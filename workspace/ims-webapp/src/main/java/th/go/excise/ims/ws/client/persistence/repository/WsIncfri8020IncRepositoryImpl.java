@@ -88,7 +88,7 @@ public class WsIncfri8020IncRepositoryImpl implements WsIncfri8020IncRepositoryC
 			paramList.add(criteria.getReceiptDateTo());
 			sql.append(" AND WS.RECEIPT_DATE <= ? ");
 		}
-		
+		sql.append(" ORDER BY RECEIPT_NO ");
 		return commonJdbcTemplate.query(sql.toString(),paramList.toArray(),  mapping);
 	}
 
