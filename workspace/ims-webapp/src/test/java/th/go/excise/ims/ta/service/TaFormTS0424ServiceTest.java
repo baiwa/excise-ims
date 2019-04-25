@@ -39,28 +39,28 @@ public class TaFormTS0424ServiceTest {
 		List<TaFormTS0424DtlVo> formTS0424DtlVoList = new ArrayList<>();
 		
 		for(int i = 0; i<=5;i++) {
-			TaFormTS0424DtlVo formTS0423DtlVo = new TaFormTS0424DtlVo();
-			formTS0423DtlVo.setRecNo(String.valueOf((i + 1)));
-			formTS0423DtlVo.setOperatorOfficeName("ตรวจสอบภายใน");
-			formTS0423DtlVo.setAuditDateStart(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 6, 4))));
-			formTS0423DtlVo.setOperatorFullName("กิตติศักดิ์ สาสอง");
-			formTS0423DtlVo.setOwnerFullName("หนึ่งฤทัย วงจันทอง"	);
-			formTS0423DtlVo.setNewRegId("01035520119771001");
-			formTS0423DtlVo.setFactoryTypeText("น้ำมันหล่อลื่น");
-			formTS0423DtlVo.setCallDocDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 1, 4))));
-			formTS0423DtlVo.setAuditDateStart(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 3, 4))));
-			formTS0423DtlVo.setAuditDateEnd(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 6, 4))));
-			formTS0423DtlVo.setTaxAmt(new BigDecimal(253000));
-			formTS0423DtlVo.setFineAmt(new BigDecimal(253000));
-			formTS0423DtlVo.setExtraAmt(new BigDecimal(253000));			
-			formTS0423DtlVo.setMoiAmt(new BigDecimal(253000));
-			formTS0423DtlVo.setNetTaxAmt(new BigDecimal(253000));
-			formTS0423DtlVo.setResidueNum(new Integer(12));
-			formTS0423DtlVo.setOfficerComment("");
+			TaFormTS0424DtlVo formTS0424DtlVo = new TaFormTS0424DtlVo();
+			formTS0424DtlVo.setRecNo(String.valueOf((i + 1)));
+			formTS0424DtlVo.setOperatorOfficeName("ตรวจสอบภายใน");
+			formTS0424DtlVo.setAuditDateStart(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 6, 4))));
+			formTS0424DtlVo.setOperatorFullName("กิตติศักดิ์ สาสอง");
+			formTS0424DtlVo.setOwnerFullName("หนึ่งฤทัย วงจันทอง"	);
+			formTS0424DtlVo.setNewRegId("01035520119771001");
+			formTS0424DtlVo.setFactoryTypeText("น้ำมันหล่อลื่น");
+			formTS0424DtlVo.setCallDocDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 1, 4))));
+			formTS0424DtlVo.setAuditDateStart(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 3, 4))));
+			formTS0424DtlVo.setAuditDateEnd(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 6, 4))));
+			formTS0424DtlVo.setTaxAmt(new BigDecimal(253000));
+			formTS0424DtlVo.setFineAmt(new BigDecimal(253000));
+			formTS0424DtlVo.setExtraAmt(new BigDecimal(253000));			
+			formTS0424DtlVo.setMoiAmt(new BigDecimal(253000));
+			formTS0424DtlVo.setNettaxAmt(new BigDecimal(253000));
+			formTS0424DtlVo.setResidueNum(new Integer(12));
+			formTS0424DtlVo.setOfficerComment("");
 			
 			
 			
-			formTS0424DtlVoList.add(formTS0423DtlVo);
+			formTS0424DtlVoList.add(formTS0424DtlVo);
 			
 			
 			

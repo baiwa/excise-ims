@@ -246,7 +246,7 @@
 				<textFieldExpression><![CDATA["หน่วยงานผู้ตรวจ"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="font" positionType="Float" x="236" y="0" width="63" height="29" uuid="69cbabce-cc2b-439f-8b0a-cb79ff453f3f"/>
+				<reportElement style="font" positionType="Float" x="236" y="0" width="50" height="29" uuid="69cbabce-cc2b-439f-8b0a-cb79ff453f3f"/>
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
@@ -254,7 +254,7 @@
 				<textFieldExpression><![CDATA["วันที่ขออนุมัติ"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="font" positionType="Float" x="299" y="0" width="63" height="29" uuid="1b2007e4-41eb-42d8-9eea-4e8fcee5efed"/>
+				<reportElement style="font" positionType="Float" x="286" y="0" width="50" height="29" uuid="1b2007e4-41eb-42d8-9eea-4e8fcee5efed"/>
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
@@ -279,7 +279,7 @@
 				<textFieldExpression><![CDATA["ตรวจสอบ"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="font" positionType="Float" x="362" y="0" width="154" height="29" uuid="97547b00-841f-4cbe-b3e0-d20823fffd17"/>
+				<reportElement style="font" positionType="Float" x="336" y="0" width="166" height="29" uuid="97547b00-841f-4cbe-b3e0-d20823fffd17"/>
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
@@ -287,7 +287,7 @@
 				<textFieldExpression><![CDATA["เหตุผลที่ขอตรวจ"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="font" positionType="Float" x="516" y="0" width="154" height="29" uuid="de32b43b-b6c8-4e63-8ee3-40d3bda7f860"/>
+				<reportElement style="font" positionType="Float" x="502" y="0" width="168" height="29" uuid="de32b43b-b6c8-4e63-8ee3-40d3bda7f860"/>
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
@@ -306,70 +306,72 @@
 	</columnHeader>
 	<detail>
 		<band height="16" splitType="Stretch">
-			<textField isBlankWhenNull="true">
-				<reportElement style="font" positionType="Float" x="0" y="0" width="27" height="16" uuid="c13dbb8e-b82c-4df1-8abc-338757639b7e"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="font" positionType="Float" stretchType="ContainerHeight" x="0" y="0" width="27" height="16" uuid="c13dbb8e-b82c-4df1-8abc-338757639b7e"/>
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{recNo}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="font" positionType="Float" x="27" y="0" width="146" height="16" uuid="50c88f46-a648-433e-89b7-3191173b5ca4"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="font" positionType="Float" stretchType="ContainerHeight" x="27" y="0" width="146" height="16" uuid="50c88f46-a648-433e-89b7-3191173b5ca4"/>
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{operatorOfficeName}]]></textFieldExpression>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["  "+$F{operatorOfficeName}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="font" positionType="Float" x="173" y="0" width="63" height="16" uuid="ef5c102f-c656-4137-8edc-29676d6a4cea"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="font" positionType="Float" stretchType="ContainerHeight" x="173" y="0" width="63" height="16" uuid="ef5c102f-c656-4137-8edc-29676d6a4cea"/>
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($F{auditDateStart}!= null ? new SimpleDateFormat("dd/MM/yy",new Locale("th", "TH")).format($F{auditDateStart}) : "") + 
-					($F{auditDateEnd} != null ? "\n  ถึง  \n" + new SimpleDateFormat("dd/MM/yy",new Locale("th", "TH")).format($F{auditDateEnd}) : "")]]></textFieldExpression>
+     ($F{auditDateEnd} != null ? "\n  ถึง  \n" + new SimpleDateFormat("dd/MM/yy",new Locale("th", "TH")).format($F{auditDateEnd}) : "")]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="font" positionType="Float" x="236" y="0" width="63" height="16" uuid="4e232f10-1c7b-4963-ac2e-fe7f6e0b0550"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="font" positionType="Float" stretchType="ContainerHeight" x="236" y="0" width="50" height="16" uuid="4e232f10-1c7b-4963-ac2e-fe7f6e0b0550"/>
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yy",new Locale("th", "TH")).format($F{reqDocDate})]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="font" positionType="Float" x="299" y="0" width="63" height="16" uuid="3f0c6827-68b3-4eeb-a6cc-5d3311286ddc"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="font" positionType="Float" stretchType="ContainerHeight" x="286" y="0" width="50" height="16" uuid="3f0c6827-68b3-4eeb-a6cc-5d3311286ddc"/>
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yy",new Locale("th", "TH")).format($F{informDocDate})]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="font" positionType="Float" x="362" y="0" width="154" height="16" uuid="5aff08c7-5bb0-49fb-9f3d-0b861826e17c"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="font" positionType="Float" stretchType="ContainerHeight" x="336" y="0" width="166" height="16" uuid="5aff08c7-5bb0-49fb-9f3d-0b861826e17c"/>
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{auditReason}]]></textFieldExpression>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["  "+$F{auditReason}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="font" positionType="Float" x="516" y="0" width="154" height="16" uuid="91f343ec-31a0-45c2-808b-e90ee7ad361d"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="font" positionType="Float" stretchType="ContainerHeight" x="502" y="0" width="168" height="16" uuid="91f343ec-31a0-45c2-808b-e90ee7ad361d"/>
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{auditResult}]]></textFieldExpression>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["  "+$F{auditResult}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="font" positionType="Float" x="670" y="0" width="132" height="16" uuid="65e4f28e-7ca4-4d41-a4bf-cf8cb8ba6c4b"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="font" positionType="Float" stretchType="ContainerHeight" x="670" y="0" width="132" height="16" uuid="65e4f28e-7ca4-4d41-a4bf-cf8cb8ba6c4b"/>
 				<box>
 					<pen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{officerFullName}]]></textFieldExpression>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["  "+$F{officerFullName}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

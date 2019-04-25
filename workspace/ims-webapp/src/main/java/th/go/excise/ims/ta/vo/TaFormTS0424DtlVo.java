@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class TaFormTS0424DtlVo {
+	private String formTs0424DtlId;
 	private String recNo;
 	private String operatorOfficeName;
 	private String operatorFullName;
@@ -18,11 +19,17 @@ public class TaFormTS0424DtlVo {
 	private BigDecimal fineAmt;
 	private BigDecimal extraAmt;
 	private BigDecimal moiAmt;
-	private BigDecimal netTaxAmt;
+	private BigDecimal nettaxAmt;
 	private Integer residueNum;
 	private String officerComment;
 	
 	
+	public String getFormTs0424DtlId() {
+		return formTs0424DtlId;
+	}
+	public void setFormTs0424DtlId(String formTs0424DtlId) {
+		this.formTs0424DtlId = formTs0424DtlId;
+	}
 	public String getRecNo() {
 		return recNo;
 	}
@@ -107,11 +114,12 @@ public class TaFormTS0424DtlVo {
 	public void setMoiAmt(BigDecimal moiAmt) {
 		this.moiAmt = moiAmt;
 	}
-	public BigDecimal getNetTaxAmt() {
-		return netTaxAmt;
+
+	public BigDecimal getNettaxAmt() {
+		return nettaxAmt;
 	}
-	public void setNetTaxAmt(BigDecimal netTaxAmt) {
-		this.netTaxAmt = netTaxAmt;
+	public void setNettaxAmt(BigDecimal nettaxAmt) {
+		this.nettaxAmt = nettaxAmt;
 	}
 	public Integer getResidueNum() {
 		return residueNum;

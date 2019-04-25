@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS04_24" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="40" bottomMargin="40" uuid="f52612fc-fcca-4a08-bd7b-698b8f566bea">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_FORM_TS04_24" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="40" bottomMargin="40" uuid="f52612fc-fcca-4a08-bd7b-698b8f566bea">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
@@ -34,7 +34,7 @@
 	<field name="fineAmt" class="java.math.BigDecimal"/>
 	<field name="extraAmt" class="java.math.BigDecimal"/>
 	<field name="moiAmt" class="java.math.BigDecimal"/>
-	<field name="netTaxAmt" class="java.math.BigDecimal"/>
+	<field name="nettaxAmt" class="java.math.BigDecimal"/>
 	<field name="residueNum" class="java.lang.Integer"/>
 	<field name="officerComment" class="java.lang.String"/>
 	<background>
@@ -433,7 +433,7 @@
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{netTaxAmt} != null ? (new DecimalFormat("#,##0.00").format($F{netTaxAmt}).split("\\.")[0]) : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nettaxAmt} != null ? (new DecimalFormat("#,##0.00").format($F{nettaxAmt}).split("\\.")[0]) : ""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="font" stretchType="ContainerHeight" x="720" y="0" width="34" height="18" uuid="90cc5742-679d-44a3-b7b4-622412213edd"/>
@@ -457,7 +457,7 @@
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{netTaxAmt} != null ? (new DecimalFormat("#,##0.00").format($F{netTaxAmt}).split("\\.")[1]) : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nettaxAmt} != null ? (new DecimalFormat("#,##0.00").format($F{nettaxAmt}).split("\\.")[1]) : ""]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

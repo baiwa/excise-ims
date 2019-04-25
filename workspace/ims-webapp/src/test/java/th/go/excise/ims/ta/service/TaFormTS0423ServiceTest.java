@@ -9,12 +9,10 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
-import th.go.excise.ims.ta.vo.TaFormTS01142Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0423DtlVo;
 import th.go.excise.ims.ta.vo.TaFormTS0423Vo;
 
@@ -42,7 +40,8 @@ public class TaFormTS0423ServiceTest {
 			TaFormTS0423DtlVo formTS0423DtlVo = new TaFormTS0423DtlVo();
 			formTS0423DtlVo.setRecNo(String.valueOf((i + 1)));
 			formTS0423DtlVo.setOperatorOfficeName("ตรวจสอบภายใน");
-			formTS0423DtlVo.setAuditDateStart(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 1, 4))));
+			formTS0423DtlVo.setAuditDateStart(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 3, 4))));
+			formTS0423DtlVo.setAuditDateEnd(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 6, 4))));
 			formTS0423DtlVo.setReqDocDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 1, 4))));
 			formTS0423DtlVo.setInformDocDate(java.sql.Date.valueOf(LocalDate.from(ThaiBuddhistDate.of(2562, 1, 4))));
 			formTS0423DtlVo.setAuditReason("การจ่ายภาษีผิดปกติ");
