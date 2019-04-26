@@ -1,4 +1,4 @@
-package th.go.excise.ims.ws.client.pcc.InquiryDutyGroup.oxm;
+package th.go.excise.ims.ws.client.pcc.inquiryDutyGroup.oxm;
 
 import java.util.List;
 

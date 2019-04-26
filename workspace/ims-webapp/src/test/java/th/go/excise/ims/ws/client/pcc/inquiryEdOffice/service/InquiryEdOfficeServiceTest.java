@@ -1,4 +1,4 @@
-package th.go.excise.ims.ws.client.pcc.inquiryHoliday;
+package th.go.excise.ims.ws.client.pcc.inquiryEdOffice.service;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,27 +13,27 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
-import th.go.excise.ims.ws.client.pcc.inquiryHoliday.oxm.InquiryHoliday;
-import th.go.excise.ims.ws.client.pcc.inquiryHoliday.oxm.InquiryHolidayRequest;
-import th.go.excise.ims.ws.client.pcc.inquiryHoliday.service.InquiryHolidayService;
+import th.go.excise.ims.ws.client.pcc.inquiryEdOffice.oxm.EdOffice;
+import th.go.excise.ims.ws.client.pcc.inquiryEdOffice.oxm.InquiryEdOfficeRequest;
+import th.go.excise.ims.ws.client.pcc.inquiryEdOffice.service.InquiryEdOfficeService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 @WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
 @ActiveProfiles(value = PROFILE.UNITTEST)
-public class InquiryHolidayServiceTest {
+public class InquiryEdOfficeServiceTest {
 
 	@Autowired
-	private InquiryHolidayService inquiryHolidayService;
+	private InquiryEdOfficeService inquiryEdOfficeService;
 
 	@Test
-	public void inquiryHoliday() {
-		InquiryHolidayRequest holidayRequest  = new InquiryHolidayRequest();
+	public void inquiryEdOffice() {
+		InquiryEdOfficeRequest officeRequest  = new InquiryEdOfficeRequest();
 		
 		try {
-			List<InquiryHoliday> inquiryHolidayResponseList = inquiryHolidayService.postRestFul(holidayRequest);
-			for (InquiryHoliday inquiryHolidayResponse : inquiryHolidayResponseList) {
-				System.out.println(inquiryHolidayResponse);
+			List<EdOffice> inquiryEdOfficeResponseList = inquiryEdOfficeService.postRestFul(officeRequest);
+			for (EdOffice inquiryEdOfficeResponse : inquiryEdOfficeResponseList) {
+				System.out.println(inquiryEdOfficeResponse);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

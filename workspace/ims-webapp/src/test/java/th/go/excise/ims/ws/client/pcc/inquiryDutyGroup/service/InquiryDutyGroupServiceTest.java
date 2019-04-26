@@ -1,4 +1,4 @@
-package th.go.excise.ims.ws.client.pcc.inquiryDutyGroup;
+package th.go.excise.ims.ws.client.pcc.inquiryDutyGroup.service;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,10 +21,10 @@ import com.google.gson.GsonBuilder;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
-import th.go.excise.ims.ws.client.pcc.InquiryDutyGroup.oxm.DutyGroup;
-import th.go.excise.ims.ws.client.pcc.InquiryDutyGroup.oxm.InquiryDutyGroupRequest;
-import th.go.excise.ims.ws.client.pcc.InquiryDutyGroup.oxm.InquiryDutyGroupResponse;
-import th.go.excise.ims.ws.client.pcc.InquiryDutyGroup.service.InquiryDutyGroupService;
+import th.go.excise.ims.ws.client.pcc.inquiryDutyGroup.oxm.DutyGroup;
+import th.go.excise.ims.ws.client.pcc.inquiryDutyGroup.oxm.InquiryDutyGroupRequest;
+import th.go.excise.ims.ws.client.pcc.inquiryDutyGroup.oxm.InquiryDutyGroupResponse;
+import th.go.excise.ims.ws.client.pcc.inquiryDutyGroup.service.InquiryDutyGroupService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)

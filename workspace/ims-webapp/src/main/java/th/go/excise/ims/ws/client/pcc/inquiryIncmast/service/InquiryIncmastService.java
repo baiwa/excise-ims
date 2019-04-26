@@ -1,4 +1,4 @@
-package th.go.excise.ims.ws.client.pcc.InquiryDutyGroup.service;
+package th.go.excise.ims.ws.client.pcc.inquiryIncmast.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,17 +11,14 @@ import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
 
 import th.go.excise.ims.ws.WsService;
-import th.go.excise.ims.ws.client.pcc.InquiryDutyGroup.oxm.DutyGroup;
-import th.go.excise.ims.ws.client.pcc.InquiryDutyGroup.oxm.InquiryDutyGroupRequest;
-import th.go.excise.ims.ws.client.pcc.InquiryDutyGroup.oxm.InquiryDutyGroupResponse;
 import th.go.excise.ims.ws.client.pcc.common.oxm.PccRequestHeader;
 import th.go.excise.ims.ws.client.pcc.common.service.PccRequestHeaderService;
-
-
+import th.go.excise.ims.ws.client.pcc.inquiryIncmast.oxm.InquiryIncmast;
+import th.go.excise.ims.ws.client.pcc.inquiryIncmast.oxm.InquiryIncmastRequest;
+import th.go.excise.ims.ws.client.pcc.inquiryIncmast.oxm.InquiryIncmastResponse;
 @Service
-public class InquiryDutyGroupService {
-
-	@Value("${ws.excise.endpointInquiryDutyGroup}")
+public class InquiryIncmastService {
+	@Value("${ws.excise.endpointInquiryIncmast}")
 	private String endpoint;
 
 	@Autowired
@@ -29,28 +26,26 @@ public class InquiryDutyGroupService {
 
 	@Autowired
 	private WsService wsService;
-
-	public List<DutyGroup> postRestFul(InquiryDutyGroupRequest inquiryDutyGroupRequest) throws IOException {
-		List<DutyGroup> dutyGroupList = new ArrayList<>();
-
-		// String json = pccRequestHeaderService.postRestful(endpoint, licFri6010Request);
+	
+	public List<InquiryIncmast> postRestFul(InquiryIncmastRequest inquiryIncmastRequest) throws IOException {
+		List<InquiryIncmast> licenseList = new ArrayList<>();
+		
+//		String json = pccRequestHeaderService.postRestful(endpoint, licFri6010Request);
 		PccRequestHeader requestRestful = new PccRequestHeader();
 		requestRestful.setSystemId("WSS");
 		requestRestful.setUserName("wss001");
 		requestRestful.setPassword("123456");
 		requestRestful.setIpAddress("10.1.1.1");
-		requestRestful.setRequestData(inquiryDutyGroupRequest);
+		requestRestful.setRequestData(inquiryIncmastRequest);
 		Gson gson = new Gson();
 		String json2 = gson.toJson(requestRestful);
 		String json = wsService.post(endpoint, json2);
-		System.out.println(json);
-
+		
 		gson = new Gson();
-		InquiryDutyGroupResponse pccResponseHeader = gson.fromJson(json, InquiryDutyGroupResponse.class);
+		InquiryIncmastResponse pccResponseHeader = gson.fromJson(json, InquiryIncmastResponse.class);
 		if ("OK".equals(pccResponseHeader.getResponseCode())) {
-			dutyGroupList = pccResponseHeader.getResponseData();
+			licenseList = pccResponseHeader.getResponseData();
 		}
-
-		return dutyGroupList;
+		return licenseList;
 	}
 }
