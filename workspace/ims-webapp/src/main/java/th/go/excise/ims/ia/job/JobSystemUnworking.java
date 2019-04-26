@@ -22,7 +22,7 @@ public class JobSystemUnworking implements Job {
 		    JobDataMap dataMap = context.getJobDetail().getJobDataMap();
 			try {
 				logger.info("Job SystemUnworking Working ...");
-				JobSystemUnworkingService interJobService = (JobSystemUnworkingService) dataMap.get("jobSystemUnworkingService");
+				JobSystemUnworkingService systemUnworkingJobService = (JobSystemUnworkingService) dataMap.get("jobSystemUnworkingService");
 				
 				String date = ConvertDateUtils.formatDateToString(new Date(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
 				String month = date.split("/")[0];
@@ -30,7 +30,7 @@ public class JobSystemUnworking implements Job {
 				
 				logger.info("date : " + date + " month : " + month + " year : " + year);
 				
-//				interJobService.runBatchSystemUnworking(year,month);
+				systemUnworkingJobService.runBatchSystemUnworking(year,month);
 				
 			}catch (Exception e) {
 				logger.error("Job SystemUnworking" , e);
