@@ -3,6 +3,7 @@ package th.co.baiwa.buckwaframework.common.config;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import th.co.baiwa.buckwaframework.common.rest.adapter.DateThaiTypeAdapter;
 import th.co.baiwa.buckwaframework.common.rest.adapter.LocalDateJsonDeserializer;
 import th.co.baiwa.buckwaframework.common.rest.adapter.LocalDateJsonSerializer;
 import th.co.baiwa.buckwaframework.common.rest.adapter.LocalDateTimeJsonSerializer;
@@ -60,6 +62,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 			.registerTypeAdapter(LocalDate.class, LocalDateJsonSerializer.getInstance())
 			.registerTypeAdapter(LocalDate.class, LocalDateJsonDeserializer.getInstance())
 			.registerTypeAdapter(LocalDateTime.class, LocalDateTimeJsonSerializer.getInstance())
+			.registerTypeAdapter(Date.class, DateThaiTypeAdapter.getInstance())
 			.create();
 	}
 
