@@ -23,8 +23,10 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0424Dtl;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0424Hdr;
@@ -205,8 +207,9 @@ public class TaFormTS0424Service extends AbstractTaFormTSService<TaFormTS0424Vo,
 		
 		params.put("formTsNumber", taFormTS0424Vo.getFormTsNumber());
 		params.put("factoryName",taFormTS0424Vo.getFactoryName());
-		params.put("auditMonthStart",taFormTS0424Vo.getAuditMonthStart());
-		params.put("auditMonthEnd",taFormTS0424Vo.getAuditMonthEnd());
+		params.put("auditMonthStart", StringUtils.isNotEmpty(taFormTS0424Vo.getAuditMonthStart()) ? ApplicationCache.getParamInfoByCode("MONTH_LIST", taFormTS0424Vo.getAuditMonthStart()).getValue1() : null);
+		params.put("auditMonthEnd",StringUtils.isNoneEmpty(taFormTS0424Vo.getAuditMonthEnd()) ? ApplicationCache.getParamInfoByCode("MONTH_LIST", taFormTS0424Vo.getAuditMonthEnd()).getValue1() : null);
+		
 		params.put("auditYear",taFormTS0424Vo.getAuditYear());
 		
         JRDataSource dataSource = new JRBeanCollectionDataSource(taFormTS0424Vo.getTaFormTS0424DtlVoList());

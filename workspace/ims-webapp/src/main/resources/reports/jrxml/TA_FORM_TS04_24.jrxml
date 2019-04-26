@@ -35,7 +35,7 @@
 	<field name="extraAmt" class="java.math.BigDecimal"/>
 	<field name="moiAmt" class="java.math.BigDecimal"/>
 	<field name="nettaxAmt" class="java.math.BigDecimal"/>
-	<field name="residueNum" class="java.lang.Integer"/>
+	<field name="residueNum" class="java.lang.String"/>
 	<field name="officerComment" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
