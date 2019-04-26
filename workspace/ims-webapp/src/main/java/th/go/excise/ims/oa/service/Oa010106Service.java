@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import th.go.excise.ims.oa.persistence.entity.OaHydCustomerLicen;
 import th.go.excise.ims.oa.persistence.entity.OaHydCustomerLicenDtl;
 import th.go.excise.ims.oa.persistence.entity.OaLicensePlan;
+import th.go.excise.ims.oa.persistence.entity.OaPlan;
 import th.go.excise.ims.oa.persistence.repository.OaHydCustomerLicenRepository;
 import th.go.excise.ims.oa.persistence.repository.OaLicensePlanRepository;
+import th.go.excise.ims.oa.persistence.repository.OaPlanRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa010106JdbcRepository;
 import th.go.excise.ims.oa.vo.Oa010106ButtonVo;
 import th.go.excise.ims.oa.vo.Oa010106FormVo;
@@ -27,6 +29,9 @@ public class Oa010106Service {
 	
 	@Autowired
 	OaLicensePlanRepository oaLicensePlanRep;
+	
+	@Autowired
+	OaPlanRepository oaPlanRepo;
 	
 	public Oa010106ButtonVo findButtonById(String idStr) {
 		BigDecimal id = new BigDecimal(idStr);
@@ -78,6 +83,13 @@ public class Oa010106Service {
 		if (licenOpt.isPresent()) {
 			licenOpt.get().setStatus("6");
 			oaLicensePlanRep.save(licenOpt.get());
+			
+			// update status plan
+			Optional<OaPlan> plan = oaPlanRepo.findById(licenOpt.get().getOaPlanId());
+			if (plan.isPresent()) {
+				plan.get().setStatus("6");
+				oaPlanRepo.save(plan.get());
+			}
 		}
 	}
 	
