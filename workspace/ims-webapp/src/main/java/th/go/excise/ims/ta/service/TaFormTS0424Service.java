@@ -204,7 +204,6 @@ public class TaFormTS0424Service extends AbstractTaFormTSService<TaFormTS0424Vo,
 	public byte[] generateReport(TaFormTS0424Vo taFormTS0424Vo) throws Exception, IOException {
 		// get data to report
 		Map<String, Object> params = new HashMap<>();
-		
 		params.put("formTsNumber", taFormTS0424Vo.getFormTsNumber());
 		params.put("factoryName",taFormTS0424Vo.getFactoryName());
 		params.put("auditMonthStart", StringUtils.isNotEmpty(taFormTS0424Vo.getAuditMonthStart()) ? ApplicationCache.getParamInfoByCode("MONTH_LIST", taFormTS0424Vo.getAuditMonthStart()).getValue1() : null);
