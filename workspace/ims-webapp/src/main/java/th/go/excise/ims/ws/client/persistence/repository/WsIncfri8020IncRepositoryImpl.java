@@ -130,8 +130,6 @@ public class WsIncfri8020IncRepositoryImpl implements WsIncfri8020IncRepositoryC
 			vo.setCreatedDate(LocalDateTimeConverter.convertToEntityAttribute(rs.getTimestamp("CREATED_DATE")));
 			vo.setUpdatedBy(rs.getString("UPDATED_BY"));
 			vo.setUpdatedDate(LocalDateTimeConverter.convertToEntityAttribute(rs.getTimestamp("UPDATED_DATE")));
-
-			
 			return vo;
 		}
 	};

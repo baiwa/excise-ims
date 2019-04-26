@@ -38,5 +38,23 @@ public class Int0601Controller {
 		}
 		return response;
 	}
+	
+	@PostMapping("/saveHdr")
+	@ResponseBody
+	public ResponseData<List<WsIncfri8020Inc>> addWsIncfri8020Inc(@RequestBody Int0601Vo request) {
+		ResponseData<List<WsIncfri8020Inc>> response = new ResponseData<List<WsIncfri8020Inc>>();
+		try {
+			response.setData(wsIncfri8020IncService.findByCriterai(request));
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	
 
 }

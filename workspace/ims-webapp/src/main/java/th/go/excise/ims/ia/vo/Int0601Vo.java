@@ -5,6 +5,7 @@ import java.util.Date;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import th.go.excise.ims.ia.persistence.entity.IaAuditIncH;
 import th.go.excise.ims.ws.client.persistence.entity.WsIncfri8020Inc;
 
 public class Int0601Vo extends WsIncfri8020Inc{
@@ -17,7 +18,7 @@ public class Int0601Vo extends WsIncfri8020Inc{
 	
 	private Date receiptDateFrom;
 	private Date receiptDateTo;
-	
+	private IaAuditIncH iaAuditIncH;
 	
 	public Date getReceiptDateFrom() {
 		return receiptDateFrom;
@@ -37,6 +38,14 @@ public class Int0601Vo extends WsIncfri8020Inc{
 	
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+	public IaAuditIncH getIaAuditIncH() {
+		return iaAuditIncH;
+	}
+
+	public void setIaAuditIncH(IaAuditIncH iaAuditIncH) {
+		this.iaAuditIncH = iaAuditIncH;
 	}
 	
 }
