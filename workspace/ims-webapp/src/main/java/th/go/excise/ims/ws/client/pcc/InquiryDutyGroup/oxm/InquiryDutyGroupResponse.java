@@ -1,20 +1,23 @@
 package th.go.excise.ims.ws.client.pcc.InquiryDutyGroup.oxm;
 
+import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class InquiryDutyGroupResponse {
+	
 	@SerializedName("ResponseCode")
 	@Expose
 	private String responseCode;
-	
+
 	@SerializedName("ResponseMessage")
 	@Expose
 	private String responseMessage;
-	
+
 	@SerializedName("ResponseData")
 	@Expose
-	private ResponseData responseData;
+	private List<DutyGroup> responseData;
 
 	public String getResponseCode() {
 		return responseCode;
@@ -32,11 +35,11 @@ public class InquiryDutyGroupResponse {
 		this.responseMessage = responseMessage;
 	}
 
-	public ResponseData getResponseData() {
+	public List<DutyGroup> getResponseData() {
 		return responseData;
 	}
 
-	public void setResponseData(ResponseData responseData) {
+	public void setResponseData(List<DutyGroup> responseData) {
 		this.responseData = responseData;
 	}
 

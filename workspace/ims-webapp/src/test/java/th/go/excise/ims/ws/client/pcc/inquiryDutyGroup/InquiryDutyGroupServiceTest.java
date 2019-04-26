@@ -1,8 +1,13 @@
 package th.go.excise.ims.ws.client.pcc.inquiryDutyGroup;
 
-import java.io.IOException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +16,14 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
-import th.go.excise.ims.ws.client.pcc.InquiryDutyGroup.oxm.IncomeList;
+import th.go.excise.ims.ws.client.pcc.InquiryDutyGroup.oxm.DutyGroup;
 import th.go.excise.ims.ws.client.pcc.InquiryDutyGroup.oxm.InquiryDutyGroupRequest;
+import th.go.excise.ims.ws.client.pcc.InquiryDutyGroup.oxm.InquiryDutyGroupResponse;
 import th.go.excise.ims.ws.client.pcc.InquiryDutyGroup.service.InquiryDutyGroupService;
 
 @RunWith(SpringRunner.class)
@@ -27,17 +36,31 @@ public class InquiryDutyGroupServiceTest {
 	private InquiryDutyGroupService inquiryDutyGroupService;
 
 	@Test
-	public void InquiryDutyGroup() {
+	public void InquiryDutyGroup() throws Exception {
 		InquiryDutyGroupRequest inquiryDutyGroupRequest = new InquiryDutyGroupRequest();
 		
 		try {
-			List<IncomeList> inquiryDutyGroupResponseList = inquiryDutyGroupService.postRestFul(inquiryDutyGroupRequest);
-			for (IncomeList inquiryDutyGroupResponse : inquiryDutyGroupResponseList) {
-				System.out.println(inquiryDutyGroupResponse);
-			}
-		} catch (IOException e) {
+			List<DutyGroup> inquiryDutyGroupResponseList = inquiryDutyGroupService.postRestFul(inquiryDutyGroupRequest);
+			inquiryDutyGroupResponseList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void test_mock_json() throws Exception {
+		
+		String jsonFile = getJsonFile("dutyGroup.json");
+		Gson gson = new GsonBuilder().create();
+		Reader reader = new InputStreamReader(new FileInputStream(new File(jsonFile)), "UTF-8");
+		InquiryDutyGroupResponse response = gson.fromJson(reader, InquiryDutyGroupResponse.class);
+		reader.close();
+		
+		response.getResponseData().forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
+	}
+	
+	private String getJsonFile(String fileName) {
+		return (new File(ClassLoader.getSystemResource("json/" + fileName).getPath())).getPath();
 	}
 	
 }
