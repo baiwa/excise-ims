@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.RowMapper;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
@@ -75,18 +76,18 @@ public class WsIncfri8020IncRepositoryImpl implements WsIncfri8020IncRepositoryC
 		StringBuilder sql = new StringBuilder(" SELECT * FROM WS_INCFRI8020_INC WS");
 		sql.append(" WHERE WS.IS_DELETED = '").append(FLAG.N_FLAG).append("'");
 		if(StringUtils.isNoneBlank(criteria.getOfficeReceive())) {
-			paramList.add(ExciseUtils.whereInLocalOfficeCode(criteria.getOfficeReceive()));
 			sql.append(" AND WS.OFFICE_RECEIVE like ? ");
+			paramList.add(ExciseUtils.whereInLocalOfficeCode(criteria.getOfficeReceive()));
 		}
 		
 		if(criteria.getReceiptDateFrom() != null) {
-			paramList.add(criteria.getReceiptDateFrom());
 			sql.append(" AND WS.RECEIPT_DATE >= ? ");
+			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		}
 		
 		if(criteria.getReceiptDateTo() != null) {
-			paramList.add(criteria.getReceiptDateTo());
 			sql.append(" AND WS.RECEIPT_DATE <= ? ");
+			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		}
 		sql.append(" ORDER BY RECEIPT_NO ");
 		return commonJdbcTemplate.query(sql.toString(),paramList.toArray(),  mapping);

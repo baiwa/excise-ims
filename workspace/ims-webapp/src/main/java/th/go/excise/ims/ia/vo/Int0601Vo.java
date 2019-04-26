@@ -1,43 +1,39 @@
 package th.go.excise.ims.ia.vo;
 
-import java.util.Date;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncH;
-import th.go.excise.ims.ws.client.persistence.entity.WsIncfri8020Inc;
 
-public class Int0601Vo extends WsIncfri8020Inc{
+public class Int0601Vo {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 9028920557799300449L;
-	
-	
-	private Date receiptDateFrom;
-	private Date receiptDateTo;
+	private String officeReceive;
+	private String receiptDateFrom;
+	private String receiptDateTo;
 	private IaAuditIncH iaAuditIncH;
-	
-	public Date getReceiptDateFrom() {
+
+	public String getOfficeReceive() {
+		return officeReceive;
+	}
+
+	public void setOfficeReceive(String officeReceive) {
+		this.officeReceive = officeReceive;
+	}
+
+	public String getReceiptDateFrom() {
 		return receiptDateFrom;
 	}
-	
-	public void setReceiptDateFrom(Date receiptDateFrom) {
+
+	public void setReceiptDateFrom(String receiptDateFrom) {
 		this.receiptDateFrom = receiptDateFrom;
 	}
-	
-	public Date getReceiptDateTo() {
+
+	public String getReceiptDateTo() {
 		return receiptDateTo;
 	}
-	
-	public void setReceiptDateTo(Date receiptDateTo) {
+
+	public void setReceiptDateTo(String receiptDateTo) {
 		this.receiptDateTo = receiptDateTo;
-	}
-	
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
 	public IaAuditIncH getIaAuditIncH() {
@@ -48,4 +44,8 @@ public class Int0601Vo extends WsIncfri8020Inc{
 		this.iaAuditIncH = iaAuditIncH;
 	}
 	
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
 }
