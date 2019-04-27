@@ -16,306 +16,309 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "WS_INCFRI8020_REC")
-public class WsIncfri8020Rec extends BaseEntity {
+public class WsIncfri8020Rec
+    extends BaseEntity
+{
 
-	private static final long serialVersionUID = 6799396639819412409L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WS_INCFRI8020_REC_GEN")
-	@SequenceGenerator(name = "WS_INCFRI8020_REC_GEN", sequenceName = "WS_INCFRI8020_REC_SEQ", allocationSize = 1)
-	@Column(name = "IA_WS_INCFRI8020_REC_ID")
-	private BigDecimal iaWsIncfri8020RecId;
-	@Column(name = "DEPOSIT_DATE")
-	private Date depositDate;
-	@Column(name = "SEND_DATE")
-	private Date sendDate;
-	@Column(name = "RECEIPT_DATE")
-	private Date receiptDate;
-	@Column(name = "INCOME_NAME")
-	private String incomeName;
-	@Column(name = "RECEIPT_NO")
-	private String receiptNo;
-	@Column(name = "NET_TAX_AMOUNT")
-	private BigDecimal netTaxAmount;
-	@Column(name = "NET_LOC_AMOUNT")
-	private BigDecimal netLocAmount;
-	@Column(name = "LOC_OTH_AMOUNT")
-	private BigDecimal locOthAmount;
-	@Column(name = "LOC_EXP_AMOUNT")
-	private BigDecimal locExpAmount;
-	@Column(name = "OLDER_FUND_AMOUNT")
-	private BigDecimal olderFundAmount;
-	@Column(name = "TPBS_FUND_AMOUNT")
-	private BigDecimal tpbsFundAmount;
-	@Column(name = "SEND_AMOUNT")
-	private BigDecimal sendAmount;
-	@Column(name = "STAMP_AMOUNT")
-	private BigDecimal stampAmount;
-	@Column(name = "CUSTOM_AMOUNT")
-	private BigDecimal customAmount;
-	@Column(name = "TRN_DATE")
-	private Date trnDate;
-	@Column(name = "OFFICE_RECEIVE")
-	private String officeReceive;
-	@Column(name = "INCOME_CODE")
-	private String incomeCode;
-	@Column(name = "RECEIPT_NO_OLDER_FUND")
-	private String receiptNoOlderFund;
-	@Column(name = "RECEIPT_NO_TPBS_FUND")
-	private String receiptNoTpbsFund;
-	@Column(name = "RECEIPT_NO_SSS_FUND")
-	private String receiptNoSssFund;
-	@Column(name = "RECEIPT_NO_SPORT_FUND")
-	private String receiptNoSportFund;
-	@Column(name = "SPORT_FUND_AMOUNT")
-	private BigDecimal sportFundAmount;
-	@Column(name = "PIN_NID_ID")
-	private String pinNidId;
-	@Column(name = "NEW_REG_ID")
-	private String newRegId;
-	@Column(name = "CUS_NAME")
-	private String cusName;
-	@Column(name = "FAC_NAME")
-	private String facName;
-	@Column(name = "IS_DELETED")
-	private String isDeleted;
-	@Column(name = "VERSION")
-	private BigDecimal version;
-	@Column(name = "CREATED_BY")
-	private String createdBy;
-	@Column(name = "CREATED_DATE")
-	private Date createdDate;
-	@Column(name = "UPDATED_BY")
-	private String updatedBy;
-	@Column(name = "UPDATED_DATE")
-	private Date updatedDate;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WS_INCFRI8020_REC_GEN")
+    @SequenceGenerator(name = "WS_INCFRI8020_REC_GEN", sequenceName = "WS_INCFRI8020_REC_SEQ", allocationSize = 1)
+    @Column(name = "WS_INCFRI8020_REC_ID")
+    private Long wsIncfri8020RecId;
+    @Column(name = "RECEIPT_DATE")
+    private Date receiptDate;
+    @Column(name = "DEPOSIT_DATE")
+    private Date depositDate;
+    @Column(name = "SEND_DATE")
+    private Date sendDate;
+    @Column(name = "INCOME_NAME")
+    private String incomeName;
+    @Column(name = "RECEIPT_NO")
+    private String receiptNo;
+    @Column(name = "NET_TAX_AMT")
+    private BigDecimal netTaxAmt;
+    @Column(name = "NET_LOC_AMT")
+    private BigDecimal netLocAmt;
+    @Column(name = "LOC_OTH_AMT")
+    private BigDecimal locOthAmt;
+    @Column(name = "LOC_EXP_AMT")
+    private BigDecimal locExpAmt;
+    @Column(name = "SSS_FUND_AMT")
+    private BigDecimal sssFundAmt;
+    @Column(name = "TPBS_FUND_AMT")
+    private BigDecimal tpbsFundAmt;
+    @Column(name = "SPORT_FUND_AMT")
+    private BigDecimal sportFundAmt;
+    @Column(name = "OLDER_FUND_AMT")
+    private BigDecimal olderFundAmt;
+    @Column(name = "SEND_AMT")
+    private BigDecimal sendAmt;
+    @Column(name = "STAMP_AMT")
+    private BigDecimal stampAmt;
+    @Column(name = "CUSTOM_AMT")
+    private BigDecimal customAmt;
+    @Column(name = "TRN_DATE")
+    private Date trnDate;
+    @Column(name = "OFFICE_RECEIVE")
+    private String officeReceive;
+    @Column(name = "INCOME_CODE")
+    private String incomeCode;
+    @Column(name = "RECEIPT_NO_SSS_FUND")
+    private String receiptNoSssFund;
+    @Column(name = "RECEIPT_NO_TPBS_FUND")
+    private String receiptNoTpbsFund;
+    @Column(name = "RECEIPT_NO_SPORT_FUND")
+    private String receiptNoSportFund;
+    @Column(name = "RECEIPT_NO_OLDER_FUND")
+    private String receiptNoOlderFund;
+    @Column(name = "PIN_NID_ID")
+    private String pinNidId;
+    @Column(name = "NEW_REG_ID")
+    private String newRegId;
+    @Column(name = "CUS_NAME")
+    private String cusName;
+    @Column(name = "FAC_NAME")
+    private String facName;
+    @Column(name = "IS_DELETED")
+    private String isDeleted;
+    @Column(name = "VERSION")
+    private BigDecimal version;
+    @Column(name = "CREATED_BY")
+    private String createdBy;
+    @Column(name = "CREATED_DATE")
+    private Date createdDate;
+    @Column(name = "UPDATED_BY")
+    private String updatedBy;
+    @Column(name = "UPDATED_DATE")
+    private Date updatedDate;
 
-	public BigDecimal getIaWsIncfri8020RecId() {
-		return iaWsIncfri8020RecId;
-	}
+    public Long getWsIncfri8020RecId() {
+        return wsIncfri8020RecId;
+    }
 
-	public void setIaWsIncfri8020RecId(BigDecimal iaWsIncfri8020RecId) {
-		this.iaWsIncfri8020RecId = iaWsIncfri8020RecId;
-	}
+    public void setWsIncfri8020RecId(Long wsIncfri8020RecId) {
+        this.wsIncfri8020RecId = wsIncfri8020RecId;
+    }
 
-	public Date getDepositDate() {
-		return depositDate;
-	}
+    public Date getReceiptDate() {
+        return receiptDate;
+    }
 
-	public void setDepositDate(Date depositDate) {
-		this.depositDate = depositDate;
-	}
+    public void setReceiptDate(Date receiptDate) {
+        this.receiptDate = receiptDate;
+    }
 
-	public Date getSendDate() {
-		return sendDate;
-	}
+    public Date getDepositDate() {
+        return depositDate;
+    }
 
-	public void setSendDate(Date sendDate) {
-		this.sendDate = sendDate;
-	}
+    public void setDepositDate(Date depositDate) {
+        this.depositDate = depositDate;
+    }
 
-	public Date getReceiptDate() {
-		return receiptDate;
-	}
+    public Date getSendDate() {
+        return sendDate;
+    }
 
-	public void setReceiptDate(Date receiptDate) {
-		this.receiptDate = receiptDate;
-	}
+    public void setSendDate(Date sendDate) {
+        this.sendDate = sendDate;
+    }
 
-	public String getIncomeName() {
-		return incomeName;
-	}
+    public String getIncomeName() {
+        return incomeName;
+    }
 
-	public void setIncomeName(String incomeName) {
-		this.incomeName = incomeName;
-	}
+    public void setIncomeName(String incomeName) {
+        this.incomeName = incomeName;
+    }
 
-	public String getReceiptNo() {
-		return receiptNo;
-	}
+    public String getReceiptNo() {
+        return receiptNo;
+    }
 
-	public void setReceiptNo(String receiptNo) {
-		this.receiptNo = receiptNo;
-	}
+    public void setReceiptNo(String receiptNo) {
+        this.receiptNo = receiptNo;
+    }
 
-	public BigDecimal getNetTaxAmount() {
-		return netTaxAmount;
-	}
+    public BigDecimal getNetTaxAmt() {
+        return netTaxAmt;
+    }
 
-	public void setNetTaxAmount(BigDecimal netTaxAmount) {
-		this.netTaxAmount = netTaxAmount;
-	}
+    public void setNetTaxAmt(BigDecimal netTaxAmt) {
+        this.netTaxAmt = netTaxAmt;
+    }
 
-	public BigDecimal getNetLocAmount() {
-		return netLocAmount;
-	}
+    public BigDecimal getNetLocAmt() {
+        return netLocAmt;
+    }
 
-	public void setNetLocAmount(BigDecimal netLocAmount) {
-		this.netLocAmount = netLocAmount;
-	}
+    public void setNetLocAmt(BigDecimal netLocAmt) {
+        this.netLocAmt = netLocAmt;
+    }
 
-	public BigDecimal getLocOthAmount() {
-		return locOthAmount;
-	}
+    public BigDecimal getLocOthAmt() {
+        return locOthAmt;
+    }
 
-	public void setLocOthAmount(BigDecimal locOthAmount) {
-		this.locOthAmount = locOthAmount;
-	}
+    public void setLocOthAmt(BigDecimal locOthAmt) {
+        this.locOthAmt = locOthAmt;
+    }
 
-	public BigDecimal getLocExpAmount() {
-		return locExpAmount;
-	}
+    public BigDecimal getLocExpAmt() {
+        return locExpAmt;
+    }
 
-	public void setLocExpAmount(BigDecimal locExpAmount) {
-		this.locExpAmount = locExpAmount;
-	}
+    public void setLocExpAmt(BigDecimal locExpAmt) {
+        this.locExpAmt = locExpAmt;
+    }
 
-	public BigDecimal getOlderFundAmount() {
-		return olderFundAmount;
-	}
+    public BigDecimal getSssFundAmt() {
+        return sssFundAmt;
+    }
 
-	public void setOlderFundAmount(BigDecimal olderFundAmount) {
-		this.olderFundAmount = olderFundAmount;
-	}
+    public void setSssFundAmt(BigDecimal sssFundAmt) {
+        this.sssFundAmt = sssFundAmt;
+    }
 
-	public BigDecimal getTpbsFundAmount() {
-		return tpbsFundAmount;
-	}
+    public BigDecimal getTpbsFundAmt() {
+        return tpbsFundAmt;
+    }
 
-	public void setTpbsFundAmount(BigDecimal tpbsFundAmount) {
-		this.tpbsFundAmount = tpbsFundAmount;
-	}
+    public void setTpbsFundAmt(BigDecimal tpbsFundAmt) {
+        this.tpbsFundAmt = tpbsFundAmt;
+    }
 
-	public BigDecimal getSendAmount() {
-		return sendAmount;
-	}
+    public BigDecimal getSportFundAmt() {
+        return sportFundAmt;
+    }
 
-	public void setSendAmount(BigDecimal sendAmount) {
-		this.sendAmount = sendAmount;
-	}
+    public void setSportFundAmt(BigDecimal sportFundAmt) {
+        this.sportFundAmt = sportFundAmt;
+    }
 
-	public BigDecimal getStampAmount() {
-		return stampAmount;
-	}
+    public BigDecimal getOlderFundAmt() {
+        return olderFundAmt;
+    }
 
-	public void setStampAmount(BigDecimal stampAmount) {
-		this.stampAmount = stampAmount;
-	}
+    public void setOlderFundAmt(BigDecimal olderFundAmt) {
+        this.olderFundAmt = olderFundAmt;
+    }
 
-	public BigDecimal getCustomAmount() {
-		return customAmount;
-	}
+    public BigDecimal getSendAmt() {
+        return sendAmt;
+    }
 
-	public void setCustomAmount(BigDecimal customAmount) {
-		this.customAmount = customAmount;
-	}
+    public void setSendAmt(BigDecimal sendAmt) {
+        this.sendAmt = sendAmt;
+    }
 
-	public Date getTrnDate() {
-		return trnDate;
-	}
+    public BigDecimal getStampAmt() {
+        return stampAmt;
+    }
 
-	public void setTrnDate(Date trnDate) {
-		this.trnDate = trnDate;
-	}
+    public void setStampAmt(BigDecimal stampAmt) {
+        this.stampAmt = stampAmt;
+    }
 
-	public String getOfficeReceive() {
-		return officeReceive;
-	}
+    public BigDecimal getCustomAmt() {
+        return customAmt;
+    }
 
-	public void setOfficeReceive(String officeReceive) {
-		this.officeReceive = officeReceive;
-	}
+    public void setCustomAmt(BigDecimal customAmt) {
+        this.customAmt = customAmt;
+    }
 
-	public String getIncomeCode() {
-		return incomeCode;
-	}
+    public Date getTrnDate() {
+        return trnDate;
+    }
 
-	public void setIncomeCode(String incomeCode) {
-		this.incomeCode = incomeCode;
-	}
+    public void setTrnDate(Date trnDate) {
+        this.trnDate = trnDate;
+    }
 
-	public String getReceiptNoOlderFund() {
-		return receiptNoOlderFund;
-	}
+    public String getOfficeReceive() {
+        return officeReceive;
+    }
 
-	public void setReceiptNoOlderFund(String receiptNoOlderFund) {
-		this.receiptNoOlderFund = receiptNoOlderFund;
-	}
+    public void setOfficeReceive(String officeReceive) {
+        this.officeReceive = officeReceive;
+    }
 
-	public String getReceiptNoTpbsFund() {
-		return receiptNoTpbsFund;
-	}
+    public String getIncomeCode() {
+        return incomeCode;
+    }
 
-	public void setReceiptNoTpbsFund(String receiptNoTpbsFund) {
-		this.receiptNoTpbsFund = receiptNoTpbsFund;
-	}
+    public void setIncomeCode(String incomeCode) {
+        this.incomeCode = incomeCode;
+    }
 
-	public String getReceiptNoSssFund() {
-		return receiptNoSssFund;
-	}
+    public String getReceiptNoSssFund() {
+        return receiptNoSssFund;
+    }
 
-	public void setReceiptNoSssFund(String receiptNoSssFund) {
-		this.receiptNoSssFund = receiptNoSssFund;
-	}
+    public void setReceiptNoSssFund(String receiptNoSssFund) {
+        this.receiptNoSssFund = receiptNoSssFund;
+    }
 
-	public String getReceiptNoSportFund() {
-		return receiptNoSportFund;
-	}
+    public String getReceiptNoTpbsFund() {
+        return receiptNoTpbsFund;
+    }
 
-	public void setReceiptNoSportFund(String receiptNoSportFund) {
-		this.receiptNoSportFund = receiptNoSportFund;
-	}
+    public void setReceiptNoTpbsFund(String receiptNoTpbsFund) {
+        this.receiptNoTpbsFund = receiptNoTpbsFund;
+    }
 
-	public BigDecimal getSportFundAmount() {
-		return sportFundAmount;
-	}
+    public String getReceiptNoSportFund() {
+        return receiptNoSportFund;
+    }
 
-	public void setSportFundAmount(BigDecimal sportFundAmount) {
-		this.sportFundAmount = sportFundAmount;
-	}
+    public void setReceiptNoSportFund(String receiptNoSportFund) {
+        this.receiptNoSportFund = receiptNoSportFund;
+    }
 
-	public String getPinNidId() {
-		return pinNidId;
-	}
+    public String getReceiptNoOlderFund() {
+        return receiptNoOlderFund;
+    }
 
-	public void setPinNidId(String pinNidId) {
-		this.pinNidId = pinNidId;
-	}
+    public void setReceiptNoOlderFund(String receiptNoOlderFund) {
+        this.receiptNoOlderFund = receiptNoOlderFund;
+    }
 
-	public String getNewRegId() {
-		return newRegId;
-	}
+    public String getPinNidId() {
+        return pinNidId;
+    }
 
-	public void setNewRegId(String newRegId) {
-		this.newRegId = newRegId;
-	}
+    public void setPinNidId(String pinNidId) {
+        this.pinNidId = pinNidId;
+    }
 
-	public String getCusName() {
-		return cusName;
-	}
+    public String getNewRegId() {
+        return newRegId;
+    }
 
-	public void setCusName(String cusName) {
-		this.cusName = cusName;
-	}
+    public void setNewRegId(String newRegId) {
+        this.newRegId = newRegId;
+    }
 
-	public String getFacName() {
-		return facName;
-	}
+    public String getCusName() {
+        return cusName;
+    }
 
-	public void setFacName(String facName) {
-		this.facName = facName;
-	}
+    public void setCusName(String cusName) {
+        this.cusName = cusName;
+    }
 
-	public String getIsDeleted() {
-		return isDeleted;
-	}
+    public String getFacName() {
+        return facName;
+    }
 
-	public void setIsDeleted(String isDeleted) {
-		this.isDeleted = isDeleted;
-	}
+    public void setFacName(String facName) {
+        this.facName = facName;
+    }
 
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-	}
+    
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    }
 
 }

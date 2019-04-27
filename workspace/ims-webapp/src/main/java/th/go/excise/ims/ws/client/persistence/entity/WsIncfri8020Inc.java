@@ -3,7 +3,6 @@ package th.go.excise.ims.ws.client.persistence.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,67 +10,69 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "WS_INCFRI8020_INC")
 public class WsIncfri8020Inc extends BaseEntity {
 
-	private static final long serialVersionUID = -7630377590457414954L;
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7573187900625263248L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WS_INCFRI8020_INC_GEN")
 	@SequenceGenerator(name = "WS_INCFRI8020_INC_GEN", sequenceName = "WS_INCFRI8020_INC_SEQ", allocationSize = 1)
-	@Column(name = "IA_WS_INCFRI8020_INC_ID")
-	private Long iaWsIncfri8020IncId;
+	@Column(name = "WS_INCFRI8020_INC_ID")
+	private Long wsIncfri8020IncId;
+	@Column(name = "RECEIPT_DATE")
+	private Date receiptDate;
 	@Column(name = "DEPOSIT_DATE")
 	private Date depositDate;
 	@Column(name = "SEND_DATE")
 	private Date sendDate;
-	@Column(name = "RECEIPT_DATE")
-	private Date receiptDate;
 	@Column(name = "INCOME_NAME")
 	private String incomeName;
 	@Column(name = "RECEIPT_NO")
 	private String receiptNo;
-	@Column(name = "NET_TAX_AMOUNT")
-	private BigDecimal netTaxAmount;
-	@Column(name = "NET_LOC_AMOUNT")
-	private BigDecimal netLocAmount;
-	@Column(name = "LOC_OTH_AMOUNT")
-	private BigDecimal locOthAmount;
-	@Column(name = "LOC_EXP_AMOUNT")
-	private BigDecimal locExpAmount;
-	@Column(name = "OLDER_FUND_AMOUNT")
-	private BigDecimal olderFundAmount;
-	@Column(name = "TPBS_FUND_AMOUNT")
-	private BigDecimal tpbsFundAmount;
-	@Column(name = "SEND_AMOUNT")
-	private BigDecimal sendAmount;
-	@Column(name = "STAMP_AMOUNT")
-	private BigDecimal stampAmount;
-	@Column(name = "CUSTOM_AMOUNT")
-	private BigDecimal customAmount;
+	@Column(name = "NET_TAX_AMT")
+	private BigDecimal netTaxAmt;
+	@Column(name = "NET_LOC_AMT")
+	private BigDecimal netLocAmt;
+	@Column(name = "LOC_OTH_AMT")
+	private BigDecimal locOthAmt;
+	@Column(name = "LOC_EXP_AMT")
+	private BigDecimal locExpAmt;
+	@Column(name = "SSS_FUND_AMT")
+	private BigDecimal sssFundAmt;
+	@Column(name = "TPBS_FUND_AMT")
+	private BigDecimal tpbsFundAmt;
+	@Column(name = "SPORT_FUND_AMT")
+	private BigDecimal sportFundAmt;
+	@Column(name = "OLDER_FUND_AMT")
+	private BigDecimal olderFundAmt;
+	@Column(name = "SEND_AMT")
+	private BigDecimal sendAmt;
+	@Column(name = "STAMP_AMT")
+	private BigDecimal stampAmt;
+	@Column(name = "CUSTOM_AMT")
+	private BigDecimal customAmt;
 	@Column(name = "TRN_DATE")
 	private Date trnDate;
 	@Column(name = "OFFICE_RECEIVE")
 	private String officeReceive;
 	@Column(name = "INCOME_CODE")
 	private String incomeCode;
-	@Column(name = "RECEIPT_NO_OLDER_FUND")
-	private String receiptNoOlderFund;
-	@Column(name = "RECEIPT_NO_TPBS_FUND")
-	private String receiptNoTpbsFund;
 	@Column(name = "RECEIPT_NO_SSS_FUND")
 	private String receiptNoSssFund;
+	@Column(name = "RECEIPT_NO_TPBS_FUND")
+	private String receiptNoTpbsFund;
 	@Column(name = "RECEIPT_NO_SPORT_FUND")
 	private String receiptNoSportFund;
-	@Column(name = "SPORT_FUND_AMOUNT")
-	private BigDecimal sportFundAmount;
+	@Column(name = "RECEIPT_NO_OLDER_FUND")
+	private String receiptNoOlderFund;
 	@Column(name = "PIN_NID_ID")
 	private String pinNidId;
 	@Column(name = "NEW_REG_ID")
@@ -80,8 +81,35 @@ public class WsIncfri8020Inc extends BaseEntity {
 	private String cusName;
 	@Column(name = "FAC_NAME")
 	private String facName;
+	@Column(name = "IS_DELETED")
+	private String isDeleted;
+	@Column(name = "VERSION")
+	private BigDecimal version;
+	@Column(name = "CREATED_BY")
+	private String createdBy;
+	@Column(name = "CREATED_DATE")
+	private Date createdDate;
+	@Column(name = "UPDATED_BY")
+	private String updatedBy;
+	@Column(name = "UPDATED_DATE")
+	private Date updatedDate;
 
-	
+	public Long getWsIncfri8020IncId() {
+		return wsIncfri8020IncId;
+	}
+
+	public void setWsIncfri8020IncId(Long wsIncfri8020IncId) {
+		this.wsIncfri8020IncId = wsIncfri8020IncId;
+	}
+
+	public Date getReceiptDate() {
+		return receiptDate;
+	}
+
+	public void setReceiptDate(Date receiptDate) {
+		this.receiptDate = receiptDate;
+	}
+
 	public Date getDepositDate() {
 		return depositDate;
 	}
@@ -96,14 +124,6 @@ public class WsIncfri8020Inc extends BaseEntity {
 
 	public void setSendDate(Date sendDate) {
 		this.sendDate = sendDate;
-	}
-
-	public Date getReceiptDate() {
-		return receiptDate;
-	}
-
-	public void setReceiptDate(Date receiptDate) {
-		this.receiptDate = receiptDate;
 	}
 
 	public String getIncomeName() {
@@ -122,76 +142,92 @@ public class WsIncfri8020Inc extends BaseEntity {
 		this.receiptNo = receiptNo;
 	}
 
-	public BigDecimal getNetTaxAmount() {
-		return netTaxAmount;
+	public BigDecimal getNetTaxAmt() {
+		return netTaxAmt;
 	}
 
-	public void setNetTaxAmount(BigDecimal netTaxAmount) {
-		this.netTaxAmount = netTaxAmount;
+	public void setNetTaxAmt(BigDecimal netTaxAmt) {
+		this.netTaxAmt = netTaxAmt;
 	}
 
-	public BigDecimal getNetLocAmount() {
-		return netLocAmount;
+	public BigDecimal getNetLocAmt() {
+		return netLocAmt;
 	}
 
-	public void setNetLocAmount(BigDecimal netLocAmount) {
-		this.netLocAmount = netLocAmount;
+	public void setNetLocAmt(BigDecimal netLocAmt) {
+		this.netLocAmt = netLocAmt;
 	}
 
-	public BigDecimal getLocOthAmount() {
-		return locOthAmount;
+	public BigDecimal getLocOthAmt() {
+		return locOthAmt;
 	}
 
-	public void setLocOthAmount(BigDecimal locOthAmount) {
-		this.locOthAmount = locOthAmount;
+	public void setLocOthAmt(BigDecimal locOthAmt) {
+		this.locOthAmt = locOthAmt;
 	}
 
-	public BigDecimal getLocExpAmount() {
-		return locExpAmount;
+	public BigDecimal getLocExpAmt() {
+		return locExpAmt;
 	}
 
-	public void setLocExpAmount(BigDecimal locExpAmount) {
-		this.locExpAmount = locExpAmount;
+	public void setLocExpAmt(BigDecimal locExpAmt) {
+		this.locExpAmt = locExpAmt;
 	}
 
-	public BigDecimal getOlderFundAmount() {
-		return olderFundAmount;
+	public BigDecimal getSssFundAmt() {
+		return sssFundAmt;
 	}
 
-	public void setOlderFundAmount(BigDecimal olderFundAmount) {
-		this.olderFundAmount = olderFundAmount;
+	public void setSssFundAmt(BigDecimal sssFundAmt) {
+		this.sssFundAmt = sssFundAmt;
 	}
 
-	public BigDecimal getTpbsFundAmount() {
-		return tpbsFundAmount;
+	public BigDecimal getTpbsFundAmt() {
+		return tpbsFundAmt;
 	}
 
-	public void setTpbsFundAmount(BigDecimal tpbsFundAmount) {
-		this.tpbsFundAmount = tpbsFundAmount;
+	public void setTpbsFundAmt(BigDecimal tpbsFundAmt) {
+		this.tpbsFundAmt = tpbsFundAmt;
 	}
 
-	public BigDecimal getSendAmount() {
-		return sendAmount;
+	public BigDecimal getSportFundAmt() {
+		return sportFundAmt;
 	}
 
-	public void setSendAmount(BigDecimal sendAmount) {
-		this.sendAmount = sendAmount;
+	public void setSportFundAmt(BigDecimal sportFundAmt) {
+		this.sportFundAmt = sportFundAmt;
 	}
 
-	public BigDecimal getStampAmount() {
-		return stampAmount;
+	public BigDecimal getOlderFundAmt() {
+		return olderFundAmt;
 	}
 
-	public void setStampAmount(BigDecimal stampAmount) {
-		this.stampAmount = stampAmount;
+	public void setOlderFundAmt(BigDecimal olderFundAmt) {
+		this.olderFundAmt = olderFundAmt;
 	}
 
-	public BigDecimal getCustomAmount() {
-		return customAmount;
+	public BigDecimal getSendAmt() {
+		return sendAmt;
 	}
 
-	public void setCustomAmount(BigDecimal customAmount) {
-		this.customAmount = customAmount;
+	public void setSendAmt(BigDecimal sendAmt) {
+		this.sendAmt = sendAmt;
+	}
+
+	public BigDecimal getStampAmt() {
+		return stampAmt;
+	}
+
+	public void setStampAmt(BigDecimal stampAmt) {
+		this.stampAmt = stampAmt;
+	}
+
+	public BigDecimal getCustomAmt() {
+		return customAmt;
+	}
+
+	public void setCustomAmt(BigDecimal customAmt) {
+		this.customAmt = customAmt;
 	}
 
 	public Date getTrnDate() {
@@ -218,12 +254,12 @@ public class WsIncfri8020Inc extends BaseEntity {
 		this.incomeCode = incomeCode;
 	}
 
-	public String getReceiptNoOlderFund() {
-		return receiptNoOlderFund;
+	public String getReceiptNoSssFund() {
+		return receiptNoSssFund;
 	}
 
-	public void setReceiptNoOlderFund(String receiptNoOlderFund) {
-		this.receiptNoOlderFund = receiptNoOlderFund;
+	public void setReceiptNoSssFund(String receiptNoSssFund) {
+		this.receiptNoSssFund = receiptNoSssFund;
 	}
 
 	public String getReceiptNoTpbsFund() {
@@ -234,14 +270,6 @@ public class WsIncfri8020Inc extends BaseEntity {
 		this.receiptNoTpbsFund = receiptNoTpbsFund;
 	}
 
-	public String getReceiptNoSssFund() {
-		return receiptNoSssFund;
-	}
-
-	public void setReceiptNoSssFund(String receiptNoSssFund) {
-		this.receiptNoSssFund = receiptNoSssFund;
-	}
-
 	public String getReceiptNoSportFund() {
 		return receiptNoSportFund;
 	}
@@ -250,12 +278,12 @@ public class WsIncfri8020Inc extends BaseEntity {
 		this.receiptNoSportFund = receiptNoSportFund;
 	}
 
-	public BigDecimal getSportFundAmount() {
-		return sportFundAmount;
+	public String getReceiptNoOlderFund() {
+		return receiptNoOlderFund;
 	}
 
-	public void setSportFundAmount(BigDecimal sportFundAmount) {
-		this.sportFundAmount = sportFundAmount;
+	public void setReceiptNoOlderFund(String receiptNoOlderFund) {
+		this.receiptNoOlderFund = receiptNoOlderFund;
 	}
 
 	public String getPinNidId() {
@@ -290,24 +318,8 @@ public class WsIncfri8020Inc extends BaseEntity {
 		this.facName = facName;
 	}
 
-	public String getIsDeleted() {
-		return isDeleted;
-	}
-
-	public void setIsDeleted(String isDeleted) {
-		this.isDeleted = isDeleted;
-	}
-
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-	}
-
-	public Long getIaWsIncfri8020IncId() {
-		return iaWsIncfri8020IncId;
-	}
-
-	public void setIaWsIncfri8020IncId(Long iaWsIncfri8020IncId) {
-		this.iaWsIncfri8020IncId = iaWsIncfri8020IncId;
 	}
 
 }
