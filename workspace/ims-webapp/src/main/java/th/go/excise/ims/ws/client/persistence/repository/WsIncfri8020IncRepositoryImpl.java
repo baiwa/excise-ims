@@ -80,12 +80,12 @@ public class WsIncfri8020IncRepositoryImpl implements WsIncfri8020IncRepositoryC
 			paramList.add(ExciseUtils.whereInLocalOfficeCode(criteria.getOfficeReceive()));
 		}
 		
-		if(criteria.getReceiptDateFrom() != null) {
+		if (StringUtils.isNotEmpty(criteria.getReceiptDateFrom())) {
 			sql.append(" AND WS.RECEIPT_DATE >= ? ");
 			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		}
-		
-		if(criteria.getReceiptDateTo() != null) {
+
+		if (StringUtils.isNotEmpty(criteria.getReceiptDateTo())) {
 			sql.append(" AND WS.RECEIPT_DATE <= ? ");
 			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		}
