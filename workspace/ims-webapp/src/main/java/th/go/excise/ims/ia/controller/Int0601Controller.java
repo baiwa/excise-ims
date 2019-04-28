@@ -50,7 +50,7 @@ public class Int0601Controller {
 	public ResponseData<IaAuditIncH> addWsIncfri8020Inc(@RequestBody Int0601Vo request) {
 		ResponseData<IaAuditIncH> response = new ResponseData<IaAuditIncH>();
 		try {
-			response.setData(iaAuditIncHService.createIaAuditIncH(request));
+			response.setData(iaAuditIncHService.createIaAuditInc(request));
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
