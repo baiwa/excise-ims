@@ -1,9 +1,7 @@
 package th.go.excise.ims.ta.controller;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,21 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import th.co.baiwa.buckwaframework.common.bean.ResponseData;
-import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
-import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ta.service.PlanWorksheetExportService;
 import th.go.excise.ims.ta.service.WorksheetExportService;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
-import th.go.excise.ims.ta.vo.WsReg4000FormVo;
-import th.go.excise.ims.ws.client.pcc.regfri4000.oxm.RegMaster60List;
-import th.go.excise.ims.ws.client.pcc.regfri4000.service.RegFri4000Service;
 
 @Controller
 @RequestMapping("/api/ta/report")
@@ -40,28 +30,7 @@ public class TaxAuditReportController {
     private WorksheetExportService exportService;
 
     @Autowired
-    private RegFri4000Service regFri4000Service;
-    
-    @Autowired
     private PlanWorksheetExportService planWorksheetExportService;
-
-    //TODO Get details operator
-    @PostMapping("/get-details-operator")
-    @ResponseBody
-    public ResponseData<List<RegMaster60List>> getDetailsOperator(@RequestBody WsReg4000FormVo wsReg4000FormVo) {
-        ResponseData<List<RegMaster60List>> response = new ResponseData<>();
-        try {
-            List<RegMaster60List> regFri4000Response = regFri4000Service.getDetailsOperator(wsReg4000FormVo);
-            response.setData(regFri4000Response);
-            response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
-            response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
-        } catch (IOException e) {
-            response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
-            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
-            e.printStackTrace();
-        }
-        return response;
-    }
 
     // TODO preview worksheet
     @GetMapping("/ta-rpt0001")

@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
-import th.go.excise.ims.ia.controller.Int030407Controller;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.entity.IaRiskIncomePerform;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
@@ -34,11 +33,8 @@ import th.go.excise.ims.ia.util.ExcelUtil;
 import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
 import th.go.excise.ims.ia.util.IntCalculateCriteriaUtil;
 import th.go.excise.ims.ia.vo.ExportRiskVo;
-import th.go.excise.ims.ia.vo.Int030406Vo;
 import th.go.excise.ims.ia.vo.Int030407Vo;
 import th.go.excise.ims.ia.vo.IntCalculateCriteriaVo;
-import th.go.excise.ims.ws.client.pcc.incfri8040.oxm.IncFri8040Request;
-import th.go.excise.ims.ws.client.pcc.incfri8040.oxm.IncomeList;
 import th.go.excise.ims.ws.client.pcc.incfri8040.service.IncFri8040Service;
 
 @Service

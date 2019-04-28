@@ -1,4 +1,3 @@
-
 package th.go.excise.ims.ia.controller;
 
 import java.util.List;
@@ -14,27 +13,23 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncH;
-import th.go.excise.ims.ia.service.IaAuditIncHService;
+import th.go.excise.ims.ia.service.Int0601Service;
 import th.go.excise.ims.ia.vo.Int0601Vo;
-import th.go.excise.ims.ws.client.persistence.entity.WsIncfri8020Inc;
-import th.go.excise.ims.ws.client.service.WsIncfri8020IncService;
+import th.go.excise.ims.ws.persistence.entity.WsIncfri8020Inc;
 
 @Controller
 @RequestMapping("/api/ia/int06/01")
 public class Int0601Controller {
 
 	@Autowired
-	private WsIncfri8020IncService wsIncfri8020IncService;
+	private Int0601Service int0601Service;
 
-	@Autowired
-	private IaAuditIncHService iaAuditIncHService;
-
-	@PostMapping("/findTab1")
+	@PostMapping("/find-tab1")
 	@ResponseBody
 	public ResponseData<List<WsIncfri8020Inc>> fillterDate(@RequestBody Int0601Vo request) {
 		ResponseData<List<WsIncfri8020Inc>> response = new ResponseData<List<WsIncfri8020Inc>>();
 		try {
-			response.setData(wsIncfri8020IncService.findByCriterai(request));
+			response.setData(int0601Service.findTab1ByCriteria(request));
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
@@ -45,12 +40,12 @@ public class Int0601Controller {
 		return response;
 	}
 
-	@PostMapping("/saveHdr")
+	@PostMapping("/save-hdr")
 	@ResponseBody
 	public ResponseData<IaAuditIncH> addWsIncfri8020Inc(@RequestBody Int0601Vo request) {
 		ResponseData<IaAuditIncH> response = new ResponseData<IaAuditIncH>();
 		try {
-			response.setData(iaAuditIncHService.createIaAuditInc(request));
+			response.setData(int0601Service.createIaAuditInc(request));
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

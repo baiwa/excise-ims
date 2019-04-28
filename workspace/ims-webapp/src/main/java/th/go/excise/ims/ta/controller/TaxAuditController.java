@@ -31,6 +31,8 @@ import th.go.excise.ims.ta.vo.OutsidePlanVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
+import th.go.excise.ims.ta.vo.WsRegfri4000FormVo;
+import th.go.excise.ims.ws.client.pcc.regfri4000.model.RegMaster60;
 
 @Controller
 @RequestMapping("/api/ta/tax-audit")
@@ -40,9 +42,29 @@ public class TaxAuditController {
 
 	@Autowired
 	private TaxAuditService taxAuditService;
-	
+
 	@Autowired
 	private RecordMessageService recordMessageService;
+
+	// FIXME
+	@PostMapping("/get-details-operator")
+	@ResponseBody
+	public ResponseData<RegMaster60> getOperatorDetail(@RequestBody WsRegfri4000FormVo wsRegfri4000FormVo) {
+		logger.info("getOperatorDetails newRegId={}", wsRegfri4000FormVo.getNewRegId());
+
+		ResponseData<RegMaster60> response = new ResponseData<>();
+		try {
+			RegMaster60 regMaster60 = taxAuditService.getOperatorDetail(wsRegfri4000FormVo);
+			response.setData(regMaster60);
+			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+		} catch (Exception e) {
+			response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+		}
+
+		return response;
+	}
 
 	@PostMapping("/get-plan-dtl")
 	@ResponseBody
@@ -120,7 +142,7 @@ public class TaxAuditController {
 		}
 		return responseData;
 	}
-	
+
 	@GetMapping("/get-doc-type")
 	@ResponseBody
 	public ResponseData<List<FormDocTypeVo>> getTypeDoc() {
