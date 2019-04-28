@@ -35,6 +35,8 @@ public class IaAuditIncD1 extends BaseEntity {
 	private String docCtlNo;
 	@Column(name = "RECEIPT_NO")
 	private String receiptNo;
+	@Column(name = "RUN_CHECK")
+	private BigDecimal runCheck;
 	@Column(name = "RECEIPT_DATE")
 	private Date receiptDate;
 	@Column(name = "TAX_NAME")
@@ -140,6 +142,14 @@ public class IaAuditIncD1 extends BaseEntity {
 
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+	public BigDecimal getRunCheck() {
+		return runCheck;
+	}
+
+	public void setRunCheck(BigDecimal runCheck) {
+		this.runCheck = runCheck;
 	}
 
 }

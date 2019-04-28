@@ -20,24 +20,37 @@ public class IaAuditIncD1RepositoryImpl implements IaAuditIncD1RepositoryCuston 
 	private CommonJdbcTemplate commonJdbcTemplate;
 
 	@Override
-	public void batchInsert(List<IaAuditIncD1> iaAuditIncD1List) {
-		String sql = SqlGeneratorUtils.genSqlInsert("IA_AUDIT_INC_D1", Arrays.asList("IA_AUDIT_INC_D_ID", "AUDIT_INC_NO", "OFFICE_CODE", "DOC_CTL_NO", "RECEIPT_NO", "RECEIPT_DATE", "TAX_NAME", "TAX_CODE", "AMOUNT", "REMARK", "CREATED_BY"), "IA_AUDIT_INC_D1_SEQ");
+	public void batchInsert(List<IaAuditIncD1> iaAuditIncD1List ,String auditIncNo) {
+		String sql = SqlGeneratorUtils.genSqlInsert("IA_AUDIT_INC_D1", Arrays.asList(
+				"IA_AUDIT_INC_D_ID"
+				,"AUDIT_INC_NO"
+				,"OFFICE_CODE"
+				,"DOC_CTL_NO"
+				,"RECEIPT_NO"
+				,"RUN_CHECK"
+				,"RECEIPT_DATE"
+				,"TAX_NAME"
+				,"TAX_CODE"
+				,"AMOUNT"
+				,"REMARK"
+				,"CREATED_BY"),
+				"IA_AUDIT_INC_D1_SEQ");
 
 		String username = UserLoginUtils.getCurrentUsername();
 
 		commonJdbcTemplate.batchUpdate(sql, iaAuditIncD1List, 1000, new ParameterizedPreparedStatementSetter<IaAuditIncD1>() {
 			public void setValues(PreparedStatement ps, IaAuditIncD1 iaAuditInc) throws SQLException {
 				List<Object> paramList = new ArrayList<Object>();
-				paramList.add(iaAuditInc.getAuditIncNo());
+				paramList.add(auditIncNo);
 				paramList.add(iaAuditInc.getOfficeCode());
 				paramList.add(iaAuditInc.getDocCtlNo());
 				paramList.add(iaAuditInc.getReceiptNo());
+				paramList.add(iaAuditInc.getRunCheck());
 				paramList.add(iaAuditInc.getReceiptDate());
 				paramList.add(iaAuditInc.getTaxName());
 				paramList.add(iaAuditInc.getTaxCode());
 				paramList.add(iaAuditInc.getAmount());
 				paramList.add(iaAuditInc.getRemark());
-				paramList.add(iaAuditInc.getCreatedBy());
 				paramList.add(username);
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
 			}

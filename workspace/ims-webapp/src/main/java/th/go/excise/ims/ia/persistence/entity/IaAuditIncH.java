@@ -1,8 +1,8 @@
 
 package th.go.excise.ims.ia.persistence.entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
@@ -53,18 +55,7 @@ public class IaAuditIncH extends BaseEntity {
 	private String d4ConditionText;
 	@Column(name = "D4_CRITERIA_TEXT")
 	private String d4CriteriaText;
-	@Column(name = "IS_DELETED")
-	private String isDeleted;
-	@Column(name = "VERSION")
-	private BigDecimal version;
-	@Column(name = "CREATED_BY")
-	private String createdBy;
-	@Column(name = "CREATED_DATE")
-	private Date createdDate;
-	@Column(name = "UPDATED_BY")
-	private String updatedBy;
-	@Column(name = "UPDATED_DATE")
-	private Date updatedDate;
+	
 
 	public Long getAuditIncSeq() {
 		return auditIncSeq;

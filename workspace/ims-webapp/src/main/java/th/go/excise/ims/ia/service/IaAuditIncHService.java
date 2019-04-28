@@ -13,41 +13,45 @@ import th.go.excise.ims.ia.vo.Int0601Vo;
 
 @Service
 public class IaAuditIncHService {
-	
+
 	private Logger logger = LoggerFactory.getLogger(IaAuditIncHService.class);
-	
+
 	@Autowired
 	private IaAuditIncHRepository iaAuditIncHRepository;
-	
+
 	@Autowired
 	private IaAuditIncD1Repository iaAuditIncD1Repository;
-	
+
 	@Autowired
 	private IaAuditIncD2Repository iaAuditIncD2Repository;
 
 	public IaAuditIncH createIaAuditInc(Int0601Vo vo) {
 		logger.info("insert IaAuditIncH");
 		IaAuditIncH iaAuditIncH = vo.getIaAuditIncH();
-		if(iaAuditIncH != null && iaAuditIncH.getAuditIncSeq() != null) {
+		String auditIncNo = "";
+		if (iaAuditIncH != null && iaAuditIncH.getAuditIncSeq() != null) {
+
 			iaAuditIncH = iaAuditIncHRepository.findById(vo.getIaAuditIncH().getAuditIncSeq()).get();
-		}else {
-			iaAuditIncH.setAuditIncNo(iaAuditIncH.getOfficeCode() +"/"+ iaAuditIncHRepository.generateAuditIncNo());
+			auditIncNo = iaAuditIncH.getAuditIncNo();
+		} else {
+			auditIncNo = iaAuditIncH.getOfficeCode() + "/" + iaAuditIncHRepository.generateAuditIncNo();
+			iaAuditIncH.setAuditIncNo(auditIncNo);
 			iaAuditIncH = iaAuditIncHRepository.save(iaAuditIncH);
 		}
-		if(iaAuditIncH.getAuditIncSeq() != null) {
-			logger.info("insert IaAuditIncH Completed "); 
-			if(vo.getIaAuditIncD1List() != null && vo.getIaAuditIncD1List().size() > 0) {
-				logger.info("insert Drtail : 1 "); 
-				iaAuditIncD1Repository.batchInsert(vo.getIaAuditIncD1List());
+		if (iaAuditIncH.getAuditIncSeq() != null) {
+			logger.info("insert IaAuditIncH Completed ");
+			if (vo.getIaAuditIncD1List() != null && vo.getIaAuditIncD1List().size() > 0) {
+				logger.info("insert Drtail : 1 ");
+				iaAuditIncD1Repository.batchInsert(vo.getIaAuditIncD1List(), auditIncNo);
 			}
-			if(vo.getIaAuditIncD2List() != null && vo.getIaAuditIncD2List().size() > 0) {
-				logger.info("insert Drtail : 2 "); 
+			if (vo.getIaAuditIncD2List() != null && vo.getIaAuditIncD2List().size() > 0) {
+				logger.info("insert Drtail : 2 ");
 				iaAuditIncD2Repository.batchInsert(vo.getIaAuditIncD2List());
 			}
-		}else {
-			logger.info("insert IaAuditIncH incomplet "); 
+		} else {
+			logger.info("insert IaAuditIncH incomplet ");
 		}
-		
+
 		return iaAuditIncH;
 	}
 
