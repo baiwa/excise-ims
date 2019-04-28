@@ -1,7 +1,6 @@
-package th.go.excise.ims.ws.client.pcc.inquiryEdOffice.service;
+package th.go.excise.ims.ws.client.pcc.inquiryedoffice.service;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.lang.reflect.Type;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,43 +8,37 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import th.go.excise.ims.ws.WsService;
-import th.go.excise.ims.ws.client.pcc.common.oxm.PccRequestHeader;
-import th.go.excise.ims.ws.client.pcc.common.service.PccRequestHeaderService;
-import th.go.excise.ims.ws.client.pcc.inquiryEdOffice.oxm.EdOffice;
-import th.go.excise.ims.ws.client.pcc.inquiryEdOffice.oxm.InquiryEdOfficeRequest;
-import th.go.excise.ims.ws.client.pcc.inquiryEdOffice.oxm.InquiryEdOfficeResponse;
+import th.go.excise.ims.ws.client.pcc.common.PccServiceProperties;
+import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
+import th.go.excise.ims.ws.client.pcc.common.model.PccResponseHeader;
+import th.go.excise.ims.ws.client.pcc.common.service.AbstractPccRestfulService;
+import th.go.excise.ims.ws.client.pcc.inquiryedoffice.model.EdOffice;
+import th.go.excise.ims.ws.client.service.RestfulClientService;
+
 @Service
-public class InquiryEdOfficeService {
-	@Value("${ws.excise.endpointInquiryEdOffice}")
-	private String endpoint;
-
-	@Autowired
-	private PccRequestHeaderService pccRequestHeaderService;
-
-	@Autowired
-	private WsService wsService;
+public class InquiryEdOfficeService extends AbstractPccRestfulService<EdOffice, List<EdOffice>> {
 	
-	public List<EdOffice> postRestFul(InquiryEdOfficeRequest inquiryEdOfficeRequest) throws IOException {
-		List<EdOffice> licenseList = new ArrayList<>();
-		
-//		String json = pccRequestHeaderService.postRestful(endpoint, licFri6010Request);
-		PccRequestHeader requestRestful = new PccRequestHeader();
-		requestRestful.setSystemId("WSS");
-		requestRestful.setUserName("wss001");
-		requestRestful.setPassword("123456");
-		requestRestful.setIpAddress("10.1.1.1");
-		requestRestful.setRequestData(inquiryEdOfficeRequest);
-		Gson gson = new Gson();
-		String json2 = gson.toJson(requestRestful);
-		String json = wsService.post(endpoint, json2);
-		
-		gson = new Gson();
-		InquiryEdOfficeResponse pccResponseHeader = gson.fromJson(json, InquiryEdOfficeResponse.class);
-		if ("OK".equals(pccResponseHeader.getResponseCode())) {
-			licenseList = pccResponseHeader.getResponseData();
-		}
-		return licenseList;
+	@Autowired
+	public InquiryEdOfficeService(
+			@Value("${ws.excise.endpoint.rdb.inquiry-ed-office}") String url,
+			PccServiceProperties pccServicePrpperties,
+			RestfulClientService restfulClientService,
+			Gson gson) {
+		super.url = url;
+		super.pccServicePrpperties = pccServicePrpperties;
+		super.restfulClientService = restfulClientService;
+		super.gson = gson;
+	}
+
+	@Override
+	protected List<EdOffice> execute(EdOffice requestData) throws PccRestfulException {
+		return executePost(requestData);
+	}
+
+	@Override
+	protected Type getResponseDataType() {
+		return new TypeToken<PccResponseHeader<List<EdOffice>>>(){}.getType();
 	}
 }

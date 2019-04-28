@@ -24,6 +24,9 @@ import th.go.excise.ims.ta.vo.OutsidePlanVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
+import th.go.excise.ims.ta.vo.WsRegfri4000FormVo;
+import th.go.excise.ims.ws.client.pcc.regfri4000.model.RegMaster60;
+import th.go.excise.ims.ws.client.pcc.regfri4000.service.RegFri4000Service;
 
 @Service
 public class TaxAuditService {
@@ -35,6 +38,9 @@ public class TaxAuditService {
 
 	@Autowired
 	private TaWsReg4000Repository taWsReg4000Repository;
+	
+	@Autowired
+	private RegFri4000Service regFri4000Service;
 
 	public DataTableAjax<PlanWorksheetDatatableVo> getPlanWorksheetDtl(PlanWorksheetVo formVo) {
 
@@ -87,5 +93,10 @@ public class TaxAuditService {
 	public FactoryVo getFactoryByNewRegId(String idStr) {
 		logger.info("getFactoryByNewRegId");
 		return taWsReg4000Repository.findByNewRegId(idStr);
+	}
+
+	public RegMaster60 getOperatorDetail(WsRegfri4000FormVo wsRegfri4000FormVo) {
+		//regFri4000Service.execute(requestData);
+		return null;
 	}
 }

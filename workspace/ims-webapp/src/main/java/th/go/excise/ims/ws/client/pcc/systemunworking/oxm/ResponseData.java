@@ -7,21 +7,21 @@ import com.google.gson.annotations.SerializedName;
 
 public class ResponseData {
 
-    @SerializedName("year")
-    @Expose
-    private String year;
-    
-    @SerializedName("month")
-    @Expose
-    private String month;
-    
-    @SerializedName("status")
-    @Expose
-    private String status;
-    
-    @SerializedName("data")
-    @Expose
-    private List<DataList> data;
+	@SerializedName("year")
+	@Expose
+	private String year;
+
+	@SerializedName("month")
+	@Expose
+	private String month;
+
+	@SerializedName("status")
+	@Expose
+	private String status;
+
+	@SerializedName("data")
+	@Expose
+	private List<DataList> data;
 
 	public String getYear() {
 		return year;
@@ -54,7 +54,5 @@ public class ResponseData {
 	public void setData(List<DataList> data) {
 		this.data = data;
 	}
-
-	
 
 }

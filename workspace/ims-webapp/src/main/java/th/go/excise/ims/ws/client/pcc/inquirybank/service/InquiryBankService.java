@@ -1,7 +1,6 @@
 package th.go.excise.ims.ws.client.pcc.inquirybank.service;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.lang.reflect.Type;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,45 +8,38 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import th.go.excise.ims.ws.WsService;
-import th.go.excise.ims.ws.client.pcc.common.oxm.PccRequestHeader;
-import th.go.excise.ims.ws.client.pcc.common.service.PccRequestHeaderService;
-import th.go.excise.ims.ws.client.pcc.inquirybank.oxm.InquiryBank;
-import th.go.excise.ims.ws.client.pcc.inquirybank.oxm.InquiryBankRequest;
-import th.go.excise.ims.ws.client.pcc.inquirybank.oxm.InquiryBankResponse;
+import th.go.excise.ims.ws.client.pcc.common.PccServiceProperties;
+import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
+import th.go.excise.ims.ws.client.pcc.common.model.PccResponseHeader;
+import th.go.excise.ims.ws.client.pcc.common.service.AbstractPccRestfulService;
+import th.go.excise.ims.ws.client.pcc.inquirybank.model.Bank;
+import th.go.excise.ims.ws.client.service.RestfulClientService;
 
 @Service
-public class InquiryBankService {
+public class InquiryBankService extends AbstractPccRestfulService<Bank, List<Bank>> {
 
-    @Value("${ws.excise.endpointInquiryBank}")
-    private String endpoint;
+	@Autowired
+	public InquiryBankService(
+			@Value("${ws.excise.endpoint.rdb.inquiry-bank}") String url,
+			PccServiceProperties pccServicePrpperties,
+			RestfulClientService restfulClientService,
+			Gson gson) {
+		super.url = url;
+		super.pccServicePrpperties = pccServicePrpperties;
+		super.restfulClientService = restfulClientService;
+		super.gson = gson;
+	}
 
-    @Autowired
-    private PccRequestHeaderService pccRequestHeaderService;
-    
-    @Autowired
-	private WsService wsService;
+	@Override
+	public List<Bank> execute(Bank requestData) throws PccRestfulException {
+		return executePost(requestData);
+	}
 
-    public List<InquiryBank> postRestFul(InquiryBankRequest inquiryBankRequest) throws IOException {
-    	List<InquiryBank> licenseList = new ArrayList<>();
-		
-		PccRequestHeader requestRestful = new PccRequestHeader();
-		requestRestful.setSystemId("WSS");
-		requestRestful.setUserName("wss001");
-		requestRestful.setPassword("123456");
-		requestRestful.setIpAddress("10.1.1.1");
-		requestRestful.setRequestData(inquiryBankRequest);
-		Gson gson = new Gson();
-		String json2 = gson.toJson(requestRestful);
-		String json = wsService.post(endpoint, json2);
-		
-		gson = new Gson();
-		InquiryBankResponse pccResponseHeader = gson.fromJson(json, InquiryBankResponse.class);
-		if ("OK".equals(pccResponseHeader.getResponseCode())) {
-			licenseList = pccResponseHeader.getResponseData();
-		}
-		return licenseList;
+	@Override
+	protected Type getResponseDataType() {
+		return new TypeToken<PccResponseHeader<List<Bank>>>(){}.getType();
 	}
 
 }

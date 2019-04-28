@@ -1,8 +1,9 @@
 package th.go.excise.ims.ws.client.pcc.inquiryoffcodeaddress.service;
 
-import java.io.IOException;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,31 +12,48 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.google.gson.Gson;
+
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
-import th.go.excise.ims.ws.client.pcc.inquiryoffcodeaddress.oxm.InquiryOffcodeAddress;
-import th.go.excise.ims.ws.client.pcc.inquiryoffcodeaddress.oxm.InquiryOffcodeAddressRequest;
+import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
+import th.go.excise.ims.ws.client.pcc.common.util.PccServiceTestUtils;
+import th.go.excise.ims.ws.client.pcc.inquiryoffcodeaddress.model.OffCodeAddress;
+import th.go.excise.ims.ws.client.service.RestfulClientService;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class)
-@WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
-@ActiveProfiles(value = PROFILE.UNITTEST)
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = Application.class)
+//@WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
+//@ActiveProfiles(value = PROFILE.UNITTEST)
 public class InquiryOffcodeAddressServiceTest {
 
 	@Autowired
 	private InquiryOffcodeAddressService inquiryOffcodeAddressService;
 
-	@Test
-	public void testInquiryBank() {
-		InquiryOffcodeAddressRequest inquiryOffcodeAddress = new InquiryOffcodeAddressRequest();
-		
+	//@Test
+	public void test_execute() {
 		try {
-			List<InquiryOffcodeAddress> inquiryOffcodeAddressResponseList = inquiryOffcodeAddressService.postRestFul(inquiryOffcodeAddress);
-			for (InquiryOffcodeAddress inquiryOffcodeAddressResponse : inquiryOffcodeAddressResponseList) {
-				System.out.println(inquiryOffcodeAddressResponse);
-			}
-		} catch (IOException e) {
+			OffCodeAddress requestData = new OffCodeAddress();
+			List<OffCodeAddress> offCodeAddressList = inquiryOffcodeAddressService.execute(requestData);
+			offCodeAddressList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
+		} catch (PccRestfulException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void test_execute_Manual() {
+		String url = "http://webtest.excise.go.th/EDRestServicesUAT/reg/InquiryOffcodeAddress";
+		InquiryOffcodeAddressService inquiryOffcodeAddressService = new InquiryOffcodeAddressService(url, PccServiceTestUtils.getPccServiceProperties(), new RestfulClientService(), new Gson());
+		
+		try {
+			OffCodeAddress requestData = new OffCodeAddress();
+			//requestData.setOffcode("");
+			List<OffCodeAddress> offCodeAddressList = inquiryOffcodeAddressService.execute(requestData);
+			offCodeAddressList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
+		} catch (PccRestfulException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

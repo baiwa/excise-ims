@@ -1,53 +1,43 @@
 package th.go.excise.ims.ws.client.pcc.inquirytitle.service;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.lang.reflect.Type;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import th.go.excise.ims.ws.WsService;
-import th.go.excise.ims.ws.client.pcc.common.oxm.PccRequestHeader;
-import th.go.excise.ims.ws.client.pcc.common.service.PccRequestHeaderService;
-import th.go.excise.ims.ws.client.pcc.inquirytitle.oxm.InquiryTitle;
-import th.go.excise.ims.ws.client.pcc.inquirytitle.oxm.InquiryTitleRequest;
-import th.go.excise.ims.ws.client.pcc.inquirytitle.oxm.InquiryTitleResponse;
+import th.go.excise.ims.ws.client.pcc.common.PccServiceProperties;
+import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
+import th.go.excise.ims.ws.client.pcc.common.model.PccResponseHeader;
+import th.go.excise.ims.ws.client.pcc.common.service.AbstractPccRestfulService;
+import th.go.excise.ims.ws.client.pcc.inquirytitle.model.Title;
+import th.go.excise.ims.ws.client.service.RestfulClientService;
 
 @Service
-public class InquiryTitleService {
-
-    @Value("${ws.excise.endpointInquiryTitle}")
-    private String endpoint;
-
-    @Autowired
-    private PccRequestHeaderService pccRequestHeaderService;
+public class InquiryTitleService extends AbstractPccRestfulService<Title, List<Title>> {
+	
+    public InquiryTitleService(
+    		@Value("${ws.excise.endpoint.rdb.inquiry-title}") String url,
+			PccServiceProperties pccServicePrpperties,
+			RestfulClientService restfulClientService,
+			Gson gson) {
+		super.url = url;
+		super.pccServicePrpperties = pccServicePrpperties;
+		super.restfulClientService = restfulClientService;
+		super.gson = gson;
+	}
     
-    @Autowired
-	private WsService wsService;
+    @Override
+	public List<Title> execute(Title requestData) throws PccRestfulException {
+		return executePost(requestData);
+	}
 
-    public List<InquiryTitle> postRestFul(InquiryTitleRequest inquiryTitleRequest) throws IOException {
-    	List<InquiryTitle> licenseList = new ArrayList<>();
-		
-		PccRequestHeader requestRestful = new PccRequestHeader();
-		requestRestful.setSystemId("WSS");
-		requestRestful.setUserName("wss001");
-		requestRestful.setPassword("123456");
-		requestRestful.setIpAddress("10.1.1.1");
-		requestRestful.setRequestData(inquiryTitleRequest);
-		Gson gson = new Gson();
-		String json2 = gson.toJson(requestRestful);
-		String json = wsService.post(endpoint, json2);
-		
-		gson = new Gson();
-		InquiryTitleResponse pccResponseHeader = gson.fromJson(json, InquiryTitleResponse.class);
-		if ("OK".equals(pccResponseHeader.getResponseCode())) {
-			licenseList = pccResponseHeader.getResponseData();
-		}
-		return licenseList;
+	@Override
+	protected Type getResponseDataType() {
+		return new TypeToken<PccResponseHeader<List<Title>>>(){}.getType();
 	}
 
 }

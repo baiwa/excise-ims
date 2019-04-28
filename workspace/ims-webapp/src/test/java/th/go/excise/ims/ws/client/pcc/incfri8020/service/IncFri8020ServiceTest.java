@@ -1,8 +1,7 @@
 package th.go.excise.ims.ws.client.pcc.incfri8020.service;
 
-import java.io.IOException;
-import java.util.List;
-
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,42 +10,70 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.google.gson.Gson;
+
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
-import th.go.excise.ims.ws.client.pcc.incfri8020.oxm.IncFri8020Request;
-import th.go.excise.ims.ws.client.pcc.incfri8020.oxm.IncomeList;
+import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
+import th.go.excise.ims.ws.client.pcc.common.util.PccServiceTestUtils;
+import th.go.excise.ims.ws.client.pcc.incfri8020.model.RequestData;
+import th.go.excise.ims.ws.client.pcc.incfri8020.model.ResponseData;
+import th.go.excise.ims.ws.client.service.RestfulClientService;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class)
-@WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
-@ActiveProfiles(value = PROFILE.UNITTEST)
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = Application.class)
+//@WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
+//@ActiveProfiles(value = PROFILE.UNITTEST)
 public class IncFri8020ServiceTest {
 	
 	@Autowired
-	private IncFri8020Service IncFri8020RequestService;
+	private IncFri8020Service incFri8020Service;
 	
 	//@Test
-	public void testIncFri8020() throws IOException {
-		IncFri8020Request incFri8020Request = new IncFri8020Request();
-		incFri8020Request.setYearMonthFrom("201802");
-		incFri8020Request.setYearMonthTo("201808");
-		incFri8020Request.setOfficeCode("010100");
-		incFri8020Request.setDateType("Income");
-		incFri8020Request.setPageNo("1");
-		incFri8020Request.setDataPerPage("10");
-		List<IncomeList> IncFri8020Response = IncFri8020RequestService.postRestFul(incFri8020Request);
-		for (IncomeList incomeList : IncFri8020Response) {
-			System.out.println("ReceiptNo : "+ incomeList.getReceiptNo());
+	public void test_execute() {
+		try {
+			RequestData requestData = new RequestData();
+			requestData.setOfficeCode("000300");
+			requestData.setYearMonthFrom("201802");
+			requestData.setYearMonthTo("201802");
+			requestData.setDateType("Income");
+			requestData.setPageNo("1");
+			requestData.setDataPerPage("10");
+			ResponseData responseData = incFri8020Service.execute(requestData);
+			responseData.getIncomeList().forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
+		} catch (PccRestfulException e) {
+			e.printStackTrace();
 		}
 	}
+	
 	@Test
-	public void syncDataIncFri8020() throws IOException {
-		IncFri8020Request incFri8020Request = new IncFri8020Request();
-		incFri8020Request.setYearMonthFrom("201802");
-		incFri8020Request.setYearMonthTo("201808");
-		incFri8020Request.setOfficeCode("010100");
-		incFri8020Request.setDateType("Income");
-		IncFri8020RequestService.syncDataIncFri8020(incFri8020Request);
+	public void test_execute_Manual() {
+		String url = "http://webtest.excise.go.th/EDAuditServicesUAT/inc/IncFri8020";
+		IncFri8020Service incFri8020Service = new IncFri8020Service(url, PccServiceTestUtils.getPccServiceProperties(), new RestfulClientService(), new Gson());
 		
+		try {
+			RequestData requestData = new RequestData();
+			requestData.setOfficeCode("000300");
+			requestData.setYearMonthFrom("201802");
+			requestData.setYearMonthTo("201802");
+			requestData.setDateType("Income");
+			requestData.setPageNo("1");
+			requestData.setDataPerPage("10");
+			ResponseData responseData = incFri8020Service.execute(requestData);
+			responseData.getIncomeList().forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
+		} catch (PccRestfulException e) {
+			e.printStackTrace();
+		}
 	}
+	
+//	@Test
+//	public void syncDataIncFri8020() throws IOException {
+//		IncFri8020Request incFri8020Request = new IncFri8020Request();
+//		incFri8020Request.setYearMonthFrom("201802");
+//		incFri8020Request.setYearMonthTo("201808");
+//		incFri8020Request.setOfficeCode("010100");
+//		incFri8020Request.setDateType("Income");
+//		IncFri8020RequestService.syncDataIncFri8020(incFri8020Request);
+//	}
+	
 }

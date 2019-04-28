@@ -1,8 +1,9 @@
 package th.go.excise.ims.ws.client.pcc.inquirybank.service;
 
-import java.io.IOException;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,14 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.google.gson.Gson;
+
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
-import th.go.excise.ims.ws.client.pcc.inquirybank.oxm.InquiryBank;
-import th.go.excise.ims.ws.client.pcc.inquirybank.oxm.InquiryBankRequest;
+import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
+import th.go.excise.ims.ws.client.pcc.common.util.PccServiceTestUtils;
+import th.go.excise.ims.ws.client.pcc.inquirybank.model.Bank;
+import th.go.excise.ims.ws.client.service.RestfulClientService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
@@ -26,16 +31,29 @@ public class InquiryBankServiceTest {
 	private InquiryBankService inquiryBankService;
 
 	@Test
-	public void testInquiryBank() {
-		InquiryBankRequest inquiryBank = new InquiryBankRequest();
-		
+	public void test_execute() {
 		try {
-			List<InquiryBank> inquiryBankResponseList = inquiryBankService.postRestFul(inquiryBank);
-			for (InquiryBank inquiryBankResponse : inquiryBankResponseList) {
-				System.out.println(inquiryBankResponse);
-			}
-		} catch (IOException e) {
+			Bank requestData = new Bank();
+			List<Bank> bankList = inquiryBankService.execute(requestData);
+			bankList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
+		} catch (PccRestfulException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void test_execute_Manual() {
+		String url = "http://webtest.excise.go.th/EDRestServicesUAT/rdb/InquiryBank";
+		InquiryBankService inquiryBankService = new InquiryBankService(url, PccServiceTestUtils.getPccServiceProperties(), new RestfulClientService(), new Gson());
+		
+		try {
+			Bank requestData = new Bank();
+			requestData.setBankCode("001");
+			List<Bank> bankList = inquiryBankService.execute(requestData);
+			bankList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
+		} catch (PccRestfulException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

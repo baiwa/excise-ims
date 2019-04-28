@@ -13,6 +13,10 @@ public class ProjectConstants {
 		public static final String TA_CENTRAL_SELECTOR = "001401";
 	}
 	
+	public class WEB_SERVICE {
+		public static final String PCC_RESPONSE_CODE_OK = "OK";
+	}
+	
 	public class TA_WORKSHEET_STATUS {
 		public static final String DRAFT = "D";
 		public static final String CONDITION = "C";

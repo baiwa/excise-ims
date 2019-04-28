@@ -1,7 +1,6 @@
-package th.go.excise.ims.ws.client.pcc.inquiryHospital.service;
+package th.go.excise.ims.ws.client.pcc.inquiryhospital.service;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.lang.reflect.Type;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,44 +8,38 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import th.go.excise.ims.ws.WsService;
-import th.go.excise.ims.ws.client.pcc.common.oxm.PccRequestHeader;
-import th.go.excise.ims.ws.client.pcc.common.service.PccRequestHeaderService;
-import th.go.excise.ims.ws.client.pcc.inquiryHoliday.oxm.InquiryHolidayRequest;
-import th.go.excise.ims.ws.client.pcc.inquiryHospital.oxm.InquiryHospital;
-import th.go.excise.ims.ws.client.pcc.inquiryHospital.oxm.InquiryHospitalRequest;
-import th.go.excise.ims.ws.client.pcc.inquiryHospital.oxm.InquiryHospitalResponse;
+import th.go.excise.ims.ws.client.pcc.common.PccServiceProperties;
+import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
+import th.go.excise.ims.ws.client.pcc.common.model.PccResponseHeader;
+import th.go.excise.ims.ws.client.pcc.common.service.AbstractPccRestfulService;
+import th.go.excise.ims.ws.client.pcc.inquiryhospital.model.Hospital;
+import th.go.excise.ims.ws.client.service.RestfulClientService;
+
 @Service
-public class InquiryHospitalService {
-	@Value("${ws.excise.endpointInquiryHoliday}")
-	private String endpoint;
-
-	@Autowired
-	private PccRequestHeaderService pccRequestHeaderService;
-
-	@Autowired
-	private WsService wsService;
+public class InquiryHospitalService extends AbstractPccRestfulService<Hospital, List<Hospital>> {
 	
-	public List<InquiryHospital> postRestFul(InquiryHospitalRequest inquiryHospitalRequest) throws IOException {
-		List<InquiryHospital> licenseList = new ArrayList<>();
-		
-//		String json = pccRequestHeaderService.postRestful(endpoint, licFri6010Request);
-		PccRequestHeader requestRestful = new PccRequestHeader();
-		requestRestful.setSystemId("WSS");
-		requestRestful.setUserName("wss001");
-		requestRestful.setPassword("123456");
-		requestRestful.setIpAddress("10.1.1.1");
-		requestRestful.setRequestData(inquiryHospitalRequest);
-		Gson gson = new Gson();
-		String json2 = gson.toJson(requestRestful);
-		String json = wsService.post(endpoint, json2);
-		
-		gson = new Gson();
-		InquiryHospitalResponse pccResponseHeader = gson.fromJson(json, InquiryHospitalResponse.class);
-		if ("OK".equals(pccResponseHeader.getResponseCode())) {
-			licenseList = pccResponseHeader.getResponseData();
-		}
-		return licenseList;
+	@Autowired
+	public InquiryHospitalService(
+			@Value("${ws.excise.endpoint.rdb.inquiry-hospital}") String url,
+			PccServiceProperties pccServicePrpperties,
+			RestfulClientService restfulClientService,
+			Gson gson) {
+		super.url = url;
+		super.pccServicePrpperties = pccServicePrpperties;
+		super.restfulClientService = restfulClientService;
+		super.gson = gson;
 	}
+
+	@Override
+	public List<Hospital> execute(Hospital requestData) throws PccRestfulException {
+		return executePost(requestData);
+	}
+
+	@Override
+	protected Type getResponseDataType() {
+		return new TypeToken<PccResponseHeader<List<Hospital>>>(){}.getType();
+	}
+	
 }

@@ -1,38 +1,45 @@
 package th.go.excise.ims.ws.client.pcc.incfri8040.service;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Type;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import th.go.excise.ims.ws.client.pcc.common.service.PccRequestHeaderService;
-import th.go.excise.ims.ws.client.pcc.incfri8040.oxm.IncFri8040Request;
-import th.go.excise.ims.ws.client.pcc.incfri8040.oxm.IncFri8040Response;
-import th.go.excise.ims.ws.client.pcc.incfri8040.oxm.IncomeList;
-import th.go.excise.ims.ws.client.pcc.incfri8040.oxm.ResponseData;
+import th.go.excise.ims.ws.client.pcc.common.PccServiceProperties;
+import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
+import th.go.excise.ims.ws.client.pcc.common.model.PccResponseHeader;
+import th.go.excise.ims.ws.client.pcc.common.service.AbstractPccRestfulService;
+import th.go.excise.ims.ws.client.pcc.incfri8040.model.RequestData;
+import th.go.excise.ims.ws.client.pcc.incfri8040.model.ResponseData;
+import th.go.excise.ims.ws.client.service.RestfulClientService;
 
 @Service
-public class IncFri8040Service {
-	@Value("${ws.excise.endpointIncFri8040}")
-	private String endpoint;
+public class IncFri8040Service extends AbstractPccRestfulService<RequestData, ResponseData> {
 
 	@Autowired
-	private PccRequestHeaderService pccRequestHeaderService;
-
-	public List<IncomeList> postRestFul(IncFri8040Request incFri8040Request) throws IOException {
-		List<IncomeList> incomeListList = new ArrayList<>();
-		String json = pccRequestHeaderService.postRestful(endpoint, incFri8040Request);
-		Gson gson = new Gson();
-		IncFri8040Response pccResponseHeader = gson.fromJson(json, IncFri8040Response.class);
-		if ("OK".equals(pccResponseHeader.getResponseCode())) {
-			ResponseData incFri8040Response =  pccResponseHeader.getResponseData();
-			incomeListList = incFri8040Response.getIncomeList();
-		}
-		return incomeListList;
+	public IncFri8040Service(
+			@Value("${ws.excise.endpoint.inc.incfri8020}") String url,
+			PccServiceProperties pccServicePrpperties,
+			RestfulClientService restfulClientService,
+			Gson gson) {
+		super.url = url;
+		super.pccServicePrpperties = pccServicePrpperties;
+		super.restfulClientService = restfulClientService;
+		super.gson = gson;
 	}
+
+	@Override
+	public ResponseData execute(RequestData requestData) throws PccRestfulException {
+		return executePost(requestData);
+	}
+
+	@Override
+	protected Type getResponseDataType() {
+		return new TypeToken<PccResponseHeader<ResponseData>>(){}.getType();
+	}
+	
 }
