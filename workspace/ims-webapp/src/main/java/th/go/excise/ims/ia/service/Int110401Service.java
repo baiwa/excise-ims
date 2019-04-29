@@ -79,16 +79,20 @@ public class Int110401Service {
 		IaFollowRecommendDtl entity = null;
 		for (Int110401DtlVo int110401Vo : request) {
 			entity = new IaFollowRecommendDtl();
-			entity.setIdFollowRecommendHdr(int110401Vo.getIdFollowRecommendHdr());
-			entity.setFollowNotifyBookNumber(int110401Vo.getFollowNotifyBookNumber());
-			entity.setResultNotifyBookNumber(int110401Vo.getResultNotifyBookNumber());
-			entity.setFollowReportBookNumber(int110401Vo.getFollowReportBookNumber());
-			entity.setDaedlinesStart(ConvertDateUtils.parseStringToDate(int110401Vo.getDaedlinesStartStr(), ConvertDateUtils.DD_MM_YYYY));
-			entity.setDaedlinesEnd(ConvertDateUtils.parseStringToDate(int110401Vo.getDaedlinesEndStr(), ConvertDateUtils.DD_MM_YYYY));
-			entity.setFollowNotifyDate(ConvertDateUtils.parseStringToDate(int110401Vo.getFollowNotifyDateStr(), ConvertDateUtils.DD_MM_YYYY));
-			entity.setFollowReportDate(ConvertDateUtils.parseStringToDate(int110401Vo.getFollowReportDateStr(), ConvertDateUtils.DD_MM_YYYY));
-			entity.setResultNotifyDate(ConvertDateUtils.parseStringToDate(int110401Vo.getResultNotifyDateStr(), ConvertDateUtils.DD_MM_YYYY));
-			iaFollowRecommendDtlRepository.save(entity);
+			if(!int110401Vo.getFlagUpdate() || int110401Vo.getId() == null) {
+				entity.setIdFollowRecommendHdr(int110401Vo.getIdFollowRecommendHdr());
+				entity.setFollowNotifyBookNumber(int110401Vo.getFollowNotifyBookNumber());
+				entity.setResultNotifyBookNumber(int110401Vo.getResultNotifyBookNumber());
+				entity.setFollowReportBookNumber(int110401Vo.getFollowReportBookNumber());
+				entity.setTimeNotify(int110401Vo.getTimeNotify());
+				entity.setDaedlinesStart(ConvertDateUtils.parseStringToDate(int110401Vo.getDaedlinesStartStr(), ConvertDateUtils.DD_MM_YYYY));
+				entity.setDaedlinesEnd(ConvertDateUtils.parseStringToDate(int110401Vo.getDaedlinesEndStr(), ConvertDateUtils.DD_MM_YYYY));
+				entity.setFollowNotifyDate(ConvertDateUtils.parseStringToDate(int110401Vo.getFollowNotifyDateStr(), ConvertDateUtils.DD_MM_YYYY));
+				entity.setFollowReportDate(ConvertDateUtils.parseStringToDate(int110401Vo.getFollowReportDateStr(), ConvertDateUtils.DD_MM_YYYY));
+				entity.setResultNotifyDate(ConvertDateUtils.parseStringToDate(int110401Vo.getResultNotifyDateStr(), ConvertDateUtils.DD_MM_YYYY));
+				iaFollowRecommendDtlRepository.save(entity);
+				
+			}
 		}
 	}
 
