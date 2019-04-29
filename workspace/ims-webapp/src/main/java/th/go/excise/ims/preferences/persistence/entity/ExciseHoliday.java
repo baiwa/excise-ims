@@ -25,7 +25,7 @@ public class ExciseHoliday extends BaseEntity {
 	private Long holidayId;
 	@Column(name = "HOLIDAY_DATE")
 	private LocalDate holidayDate;
-
+	
 	public Long getHolidayId() {
 		return holidayId;
 	}
