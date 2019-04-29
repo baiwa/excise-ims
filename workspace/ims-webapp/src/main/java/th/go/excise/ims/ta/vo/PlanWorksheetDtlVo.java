@@ -10,8 +10,8 @@ public class PlanWorksheetDtlVo {
 	private String planType;
 	private String auditStatus;
 	private String auditType;
-    private String start;
-    private String end;
+    private String auditStartDate;
+    private String auditEndDate;
     private String cusFullName;
     private String facFullName;
     private String officeCodeR4000;    
@@ -20,7 +20,7 @@ public class PlanWorksheetDtlVo {
     private String secDesc;    
     private String areaCode;    
     private String areaDesc;    
-    private String title;    
+    private String title;
     
 	public Long getPlanWorksheetDtlId() {
 		return planWorksheetDtlId;
@@ -76,17 +76,17 @@ public class PlanWorksheetDtlVo {
 	public void setAuditType(String auditType) {
 		this.auditType = auditType;
 	}
-	public String getStart() {
-		return start;
+	public String getAuditStartDate() {
+		return auditStartDate;
 	}
-	public void setStart(String start) {
-		this.start = start;
+	public void setAuditStartDate(String auditStartDate) {
+		this.auditStartDate = auditStartDate;
 	}
-	public String getEnd() {
-		return end;
+	public String getAuditEndDate() {
+		return auditEndDate;
 	}
-	public void setEnd(String end) {
-		this.end = end;
+	public void setAuditEndDate(String auditEndDate) {
+		this.auditEndDate = auditEndDate;
 	}
 	public String getCusFullName() {
 		return cusFullName;

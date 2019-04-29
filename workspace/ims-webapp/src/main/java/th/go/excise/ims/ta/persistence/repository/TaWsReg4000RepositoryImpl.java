@@ -22,6 +22,7 @@ import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
 import th.go.excise.ims.ta.vo.FactoryVo;
@@ -266,15 +267,21 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 
 	private void buildFactoryQuery(StringBuilder sql, List<Object> params, String newRegId) {
 		sql.append(
-				" SELECT r.new_reg_id,r.cus_fullname,r.fac_fullname,r.fac_address,r.office_code,r.duty_code,ed_sector.off_short_name AS sec_desc ,ed_area.off_short_name AS area_desc ");
+				" SELECT r.new_reg_id,r.cus_fullname,r.fac_fullname,r.fac_address,r.office_code,r.duty_code,ed_sector.off_short_name AS sec_desc ,ed_area.off_short_name AS area_desc," + 
+				"    plan_worksheet.AUDIT_TYPE AS audit_type," + 
+				"    plan_worksheet.AUDIT_START_DATE AS audit_start_date," + 
+				"    plan_worksheet.AUDIT_END_DATE AS audit_end_date");
 		sql.append(" FROM ta_ws_reg4000  r ");
 		sql.append(" INNER JOIN excise_department  ed_sector ");
 		sql.append(" ON ed_sector.off_code = CONCAT(SUBSTR(r.office_code, 0, 2),'0000') ");
 		sql.append(" INNER JOIN excise_department  ed_area ");
 		sql.append(" ON ed_area.off_code  = CONCAT(SUBSTR(r.office_code, 0, 4),'00') ");
+		sql.append(" INNER JOIN ta_plan_worksheet_dtl plan_worksheet ON plan_worksheet.new_reg_id = r.new_reg_id ");
 		sql.append(" WHERE r.is_deleted = ? ");
+		sql.append(" AND plan_worksheet.OFFICE_CODE = ? ");
 
 		params.add(FLAG.N_FLAG);
+		params.add(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 
 		if (StringUtils.isNotBlank(newRegId)) {
 			sql.append(" AND r.new_reg_id = ? ");
@@ -303,6 +310,9 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 						factoryVo.setSecDesc(rs.getString("sec_desc"));
 						factoryVo.setAreaDesc(rs.getString("area_desc"));
 						factoryVo.setDutyDesc(ExciseUtils.getDutyDesc(rs.getString("duty_code")));
+						factoryVo.setAuditType(rs.getString("AUDIT_TYPE"));
+						factoryVo.setAuditStartDate(ConvertDateUtils.formatDateToString(rs.getDate("AUDIT_START_DATE"), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+						factoryVo.setAuditEndDate(ConvertDateUtils.formatDateToString(rs.getDate("AUDIT_END_DATE"), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 						return factoryVo;
 					}
 

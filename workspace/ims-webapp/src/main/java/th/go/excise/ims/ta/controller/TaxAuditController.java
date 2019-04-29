@@ -157,5 +157,21 @@ public class TaxAuditController {
 		}
 		return responseData;
 	}
+	
+	@PostMapping("/update-plan-ws-dtl")
+	@ResponseBody
+	public ResponseData<List<PlanWorksheetDtlVo>> savePlanWsDtl(@RequestBody PlanWorksheetDtlVo formVo) {
+		ResponseData<List<PlanWorksheetDtlVo>> res = new ResponseData<>();
+		try {
+			taxAuditService.savePlanWsDtl(formVo);
+			res.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			res.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			res.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			res.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
+		}
+		return res;
+	}
 
 }
