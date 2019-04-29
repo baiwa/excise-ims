@@ -20,7 +20,7 @@ public abstract class AbstractPccRestfulService<REQUEST_DATA, RESPONSE_DATA> {
 	protected RestfulClientService restfulClientService;
 	protected Gson gson;
 	
-	protected abstract RESPONSE_DATA execute(REQUEST_DATA requestData) throws PccRestfulException;
+	public abstract RESPONSE_DATA execute(REQUEST_DATA requestData) throws PccRestfulException;
 	
 	protected RESPONSE_DATA executePost(REQUEST_DATA requestData) throws PccRestfulException {
 		PccRequestHeader<REQUEST_DATA> request = new PccRequestHeader<>();

@@ -9,11 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
@@ -98,5 +100,15 @@ public class TaxAuditService {
 	public RegMaster60 getOperatorDetail(WsRegfri4000FormVo wsRegfri4000FormVo) {
 		//regFri4000Service.execute(requestData);
 		return null;
+	}
+	
+	public void savePlanWsDtl(PlanWorksheetDtlVo formVo) {
+		logger.info("savePlanWsDtl: newRegId = {}", formVo.getNewRegId());
+		TaPlanWorksheetDtl planWsDtl = new TaPlanWorksheetDtl();
+		planWsDtl = taPlanWorksheetDtlRepository.findByOfficeCodeAndNewRegId(UserLoginUtils.getCurrentUserBean().getOfficeCode(), formVo.getNewRegId());
+		planWsDtl.setAuditType(formVo.getAuditType());
+		planWsDtl.setAuditStartDate(ConvertDateUtils.parseStringToLocalDate(formVo.getAuditStartDate(), ConvertDateUtils.DD_MM_YYYY));
+		planWsDtl.setAuditEndDate(ConvertDateUtils.parseStringToLocalDate(formVo.getAuditEndDate(), ConvertDateUtils.DD_MM_YYYY));
+		taPlanWorksheetDtlRepository.save(planWsDtl);
 	}
 }

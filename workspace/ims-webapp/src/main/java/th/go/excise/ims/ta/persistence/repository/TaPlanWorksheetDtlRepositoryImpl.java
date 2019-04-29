@@ -211,8 +211,8 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
             vo.setPlanType(rs.getString("PLAN_TYPE"));
             vo.setAuditStatus(rs.getString("AUDIT_STATUS"));
             vo.setAuditType(rs.getString("AUDIT_TYPE"));
-            vo.setStart(ConvertDateUtils.formatDateToString(rs.getDate("AUDIT_START_DATE"), "yyyy-MM-dd", ConvertDateUtils.LOCAL_TH));
-            vo.setEnd(ConvertDateUtils.formatDateToString(rs.getDate("AUDIT_END_DATE"), "yyyy-MM-dd", ConvertDateUtils.LOCAL_TH));
+            vo.setAuditStartDate(ConvertDateUtils.formatDateToString(rs.getDate("AUDIT_START_DATE"), "yyyy-MM-dd", ConvertDateUtils.LOCAL_TH));
+            vo.setAuditEndDate(ConvertDateUtils.formatDateToString(rs.getDate("AUDIT_END_DATE"), "yyyy-MM-dd", ConvertDateUtils.LOCAL_TH));
             vo.setCusFullName(rs.getString("CUS_FULLNAME"));
             vo.setFacFullName(rs.getString("FAC_FULLNAME"));
             vo.setOfficeCodeR4000(rs.getString("OFFICE_CODE_R4000"));
