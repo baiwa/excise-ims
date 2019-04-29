@@ -33,7 +33,7 @@ public class InquiryDutyGroupService extends AbstractPccRestfulService<DutyGroup
 	}
 
 	@Override
-	protected List<DutyGroup> execute(DutyGroup requestData) throws PccRestfulException {
+	public List<DutyGroup> execute(DutyGroup requestData) throws PccRestfulException {
 		return executePost(requestData);
 	}
 

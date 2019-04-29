@@ -33,7 +33,7 @@ public class InquiryEdOfficeService extends AbstractPccRestfulService<EdOffice, 
 	}
 
 	@Override
-	protected List<EdOffice> execute(EdOffice requestData) throws PccRestfulException {
+	public List<EdOffice> execute(EdOffice requestData) throws PccRestfulException {
 		return executePost(requestData);
 	}
 
