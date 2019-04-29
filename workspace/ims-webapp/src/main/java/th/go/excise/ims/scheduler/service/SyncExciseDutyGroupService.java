@@ -17,7 +17,7 @@ import th.go.excise.ims.ws.client.pcc.inquirydutygroup.service.InquiryDutyGroupS
 @Service
 public class SyncExciseDutyGroupService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(SyncExciseDutyGroupServiceTest.class);
+	private static final Logger logger = LoggerFactory.getLogger(SyncExciseDutyGroupService.class);
 
 	@Autowired
 	private InquiryDutyGroupService inquiryDutyGroupService;
