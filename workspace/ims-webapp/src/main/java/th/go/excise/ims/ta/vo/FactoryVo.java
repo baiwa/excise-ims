@@ -9,6 +9,9 @@ public class FactoryVo {
 	private String secDesc;
 	private String areaDesc;
 	private String dutyDesc;
+	private String auditType;
+	private String auditStartDate;
+	private String auditEndDate;
 
 	public String getNewRegId() {
 		return newRegId;
@@ -64,6 +67,30 @@ public class FactoryVo {
 
 	public void setDutyDesc(String dutyDesc) {
 		this.dutyDesc = dutyDesc;
+	}
+
+	public String getAuditType() {
+		return auditType;
+	}
+
+	public void setAuditType(String auditType) {
+		this.auditType = auditType;
+	}
+
+	public String getAuditStartDate() {
+		return auditStartDate;
+	}
+
+	public void setAuditStartDate(String auditStartDate) {
+		this.auditStartDate = auditStartDate;
+	}
+
+	public String getAuditEndDate() {
+		return auditEndDate;
+	}
+
+	public void setAuditEndDate(String auditEndDate) {
+		this.auditEndDate = auditEndDate;
 	}
 
 }
