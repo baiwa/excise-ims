@@ -14,20 +14,23 @@ import com.google.gson.Gson;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
+import th.go.excise.ims.scheduler.service.SyncWsIncfri8020IncService;
 import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
 import th.go.excise.ims.ws.client.pcc.common.util.PccServiceTestUtils;
 import th.go.excise.ims.ws.client.pcc.incfri8020.model.RequestData;
 import th.go.excise.ims.ws.client.pcc.incfri8020.model.ResponseData;
 import th.go.excise.ims.ws.client.service.RestfulClientService;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest(classes = Application.class)
-//@WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
-//@ActiveProfiles(value = PROFILE.UNITTEST)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Application.class)
+@WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
+@ActiveProfiles(value = PROFILE.UNITTEST)
 public class IncFri8020ServiceTest {
 	
 	@Autowired
 	private IncFri8020Service incFri8020Service;
+	@Autowired
+	private SyncWsIncfri8020IncService  syncWsIncfri8020IncService;
 	
 	//@Test
 	public void test_execute() {
@@ -46,7 +49,7 @@ public class IncFri8020ServiceTest {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void test_execute_Manual() {
 		String url = "http://webtest.excise.go.th/EDAuditServicesUAT/inc/IncFri8020";
 		IncFri8020Service incFri8020Service = new IncFri8020Service(url, PccServiceTestUtils.getPccServiceProperties(), new RestfulClientService(), new Gson());
@@ -66,14 +69,16 @@ public class IncFri8020ServiceTest {
 		}
 	}
 	
-//	@Test
-//	public void syncDataIncFri8020() throws IOException {
-//		IncFri8020Request incFri8020Request = new IncFri8020Request();
-//		incFri8020Request.setYearMonthFrom("201802");
-//		incFri8020Request.setYearMonthTo("201808");
-//		incFri8020Request.setOfficeCode("010100");
-//		incFri8020Request.setDateType("Income");
-//		IncFri8020RequestService.syncDataIncFri8020(incFri8020Request);
-//	}
+	@Test
+	public void syncDataIncFri8020() {
+		String url = "http://webtest.excise.go.th/EDAuditServicesUAT/inc/IncFri8020";
+		IncFri8020Service incFri8020Service = new IncFri8020Service(url, PccServiceTestUtils.getPccServiceProperties(), new RestfulClientService(), new Gson());
+		RequestData requestData = new RequestData();
+		requestData.setOfficeCode("000300");
+		requestData.setYearMonthFrom("201802");
+		requestData.setYearMonthTo("201808");
+		requestData.setDateType("Income");
+		syncWsIncfri8020IncService.syncData(requestData);
+	}
 	
 }

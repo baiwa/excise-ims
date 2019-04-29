@@ -55,5 +55,20 @@ public class Int0601Controller {
 		}
 		return response;
 	}
+	
+	@PostMapping("/find-all-data-header")
+	@ResponseBody
+	public ResponseData<List<IaAuditIncH>> findAllDataHeader() {
+		ResponseData<List<IaAuditIncH>> response = new ResponseData<List<IaAuditIncH>>();
+		try {
+			response.setData(int0601Service.findAllIaAuditIncH());
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
 
 }

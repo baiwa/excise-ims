@@ -17,24 +17,25 @@ import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
 import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.ia.persistence.entity.IaAuditIncD2;
 import th.go.excise.ims.ia.vo.Int0601Vo;
 import th.go.excise.ims.ws.persistence.entity.WsIncfri8020Inc;
 
 @Repository
 public class Int0601JdbcRepository {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(Int0601JdbcRepository.class);
-	
+
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
 	public List<WsIncfri8020Inc> findTab1ByCriteria(Int0601Vo criteria) {
 		logger.info("findTab1ByCriteria");
-		
+
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sql = new StringBuilder(" SELECT * FROM WS_INCFRI8020_INC WS");
 		sql.append(" WHERE WS.IS_DELETED = '").append(FLAG.N_FLAG).append("'");
-		
+
 		if (StringUtils.isNoneBlank(criteria.getOfficeReceive())) {
 			sql.append(" AND WS.OFFICE_RECEIVE like ? ");
 			paramList.add(ExciseUtils.whereInLocalOfficeCode(criteria.getOfficeReceive()));
@@ -49,7 +50,7 @@ public class Int0601JdbcRepository {
 			sql.append(" AND WS.RECEIPT_DATE <= ? ");
 			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		}
-		
+
 		sql.append(" ORDER BY RECEIPT_NO ");
 
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), tab1RowMapper);
@@ -94,6 +95,41 @@ public class Int0601JdbcRepository {
 			vo.setUpdatedBy(rs.getString("UPDATED_BY"));
 			vo.setUpdatedDate(LocalDateTimeConverter.convertToEntityAttribute(rs.getTimestamp("UPDATED_DATE")));
 
+			return vo;
+		}
+	};
+
+	public List<IaAuditIncD2> findDataTab2(Int0601Vo criteria) {
+		List<Object> paramList = new ArrayList<>();
+		StringBuilder sql = new StringBuilder(" SELECT WS.RECEIPT_DATE , SUM(WS.NET_TAX_AMT) NET_TAX_AMT, COUNT(1) PRINT_PER_DAY FROM WS_INCFRI8020_INC WS ");
+		sql.append(" WHERE WS.IS_DELETED = '").append(FLAG.N_FLAG).append("'");
+
+		if (StringUtils.isNoneBlank(criteria.getOfficeReceive())) {
+			sql.append(" AND WS.OFFICE_RECEIVE like ? ");
+			paramList.add(ExciseUtils.whereInLocalOfficeCode(criteria.getOfficeReceive()));
+		}
+
+		if (StringUtils.isNotEmpty(criteria.getReceiptDateFrom())) {
+			sql.append(" AND WS.RECEIPT_DATE >= ? ");
+			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+		}
+
+		if (StringUtils.isNotEmpty(criteria.getReceiptDateTo())) {
+			sql.append(" AND WS.RECEIPT_DATE <= ? ");
+			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+		}
+		sql.append(" GROUP BY WS.RECEIPT_DATE ");
+		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), tab2RowMapper);
+	}
+	
+	private RowMapper<IaAuditIncD2> tab2RowMapper = new RowMapper<IaAuditIncD2>() {
+		@Override
+		public IaAuditIncD2 mapRow(ResultSet rs, int rowNum) throws SQLException {
+			IaAuditIncD2 vo = new IaAuditIncD2();
+			vo.setReceiptDate(rs.getDate("RECEIPT_DATE"));
+			vo.setAmount(rs.getBigDecimal("NET_TAX_AMT"));
+			vo.setReceiptDate(rs.getDate("PRINT_PER_DAY"));
+			
 			return vo;
 		}
 	};

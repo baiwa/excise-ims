@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
+import th.go.excise.ims.ia.persistence.entity.IaAuditIncD2;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncH;
 import th.go.excise.ims.ia.persistence.repository.IaAuditIncD1Repository;
 import th.go.excise.ims.ia.persistence.repository.IaAuditIncD2Repository;
@@ -65,6 +67,14 @@ public class Int0601Service {
 		}
 
 		return iaAuditIncH;
+	}
+	
+	public List<IaAuditIncH> findAllIaAuditIncH(){
+		return iaAuditIncHRepository.findByIsDeletedOrderByAuditIncNoAsc(FLAG.N_FLAG);
+	}
+	
+	public List<IaAuditIncD2> findIaAuditIncD2ByCriteria(Int0601Vo criteria){
+		return int0601JdbcRepository.findDataTab2(criteria);
 	}
 	
 }

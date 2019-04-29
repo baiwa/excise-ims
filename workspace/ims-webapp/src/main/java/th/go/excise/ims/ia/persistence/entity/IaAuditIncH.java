@@ -55,7 +55,6 @@ public class IaAuditIncH extends BaseEntity {
 	private String d4ConditionText;
 	@Column(name = "D4_CRITERIA_TEXT")
 	private String d4CriteriaText;
-	
 
 	public Long getAuditIncSeq() {
 		return auditIncSeq;
@@ -168,8 +167,6 @@ public class IaAuditIncH extends BaseEntity {
 	public void setD4CriteriaText(String d4CriteriaText) {
 		this.d4CriteriaText = d4CriteriaText;
 	}
-
-
 
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
