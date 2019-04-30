@@ -16,7 +16,7 @@ import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
 @SpringBootTest(classes = Application.class)
 @WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
 @ActiveProfiles(value = PROFILE.UNITTEST)
-public class SyncSExciseBankServiceTest {
+public class SyncExciseBankServiceTest {
 
 	@Autowired
 	private SyncExciseBankService syncExciseBankService;

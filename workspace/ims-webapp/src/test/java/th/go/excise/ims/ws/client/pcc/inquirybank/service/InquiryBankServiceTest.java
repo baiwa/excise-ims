@@ -41,7 +41,7 @@ public class InquiryBankServiceTest {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void test_execute_Manual() {
 		String url = "http://webtest.excise.go.th/EDRestServicesUAT/rdb/InquiryBank";
 		InquiryBankService inquiryBankService = new InquiryBankService(url, PccServiceTestUtils.getPccServiceProperties(), new RestfulClientService(), new Gson());
