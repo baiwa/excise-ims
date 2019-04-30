@@ -17,8 +17,8 @@ import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
 import th.go.excise.ims.common.util.ExciseUtils;
-import th.go.excise.ims.ia.persistence.entity.IaAuditIncD2;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD3;
+import th.go.excise.ims.ia.vo.IaAuditIncD2Vo;
 import th.go.excise.ims.ia.vo.Int0601RequestVo;
 import th.go.excise.ims.ws.persistence.entity.WsIncfri8020Inc;
 
@@ -100,9 +100,9 @@ public class Int0601JdbcRepository {
 		}
 	};
 
-	public List<IaAuditIncD2> findDataTab2(Int0601RequestVo criteria) {
+	public List<IaAuditIncD2Vo> findDataTab2(Int0601RequestVo criteria) {
 		List<Object> paramList = new ArrayList<>();
-		StringBuilder sql = new StringBuilder(" SELECT WS.RECEIPT_DATE , SUM(WS.NET_TAX_AMT) NET_TAX_AMT, COUNT(1) PRINT_PER_DAY FROM WS_INCFRI8020_INC WS ");
+		StringBuilder sql = new StringBuilder(" SELECT WS.WS_INCFRI8020_INC_ID ID, WS.RECEIPT_DATE RECEIPT_DATE, SUM(WS.NET_TAX_AMT) NET_TAX_AMT, COUNT(1) PRINT_PER_DAY FROM WS_INCFRI8020_INC WS ");
 		sql.append(" WHERE WS.IS_DELETED = '").append(FLAG.N_FLAG).append("'");
 
 		if (StringUtils.isNoneBlank(criteria.getOfficeReceive())) {
@@ -119,18 +119,18 @@ public class Int0601JdbcRepository {
 			sql.append(" AND WS.RECEIPT_DATE <= ? ");
 			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		}
-		sql.append(" GROUP BY WS.RECEIPT_DATE ");
+		sql.append(" GROUP BY WS.WS_INCFRI8020_INC_ID, WS.RECEIPT_DATE ");
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), tab2RowMapper);
 	}
 	
-	private RowMapper<IaAuditIncD2> tab2RowMapper = new RowMapper<IaAuditIncD2>() {
+	private RowMapper<IaAuditIncD2Vo> tab2RowMapper = new RowMapper<IaAuditIncD2Vo>() {
 		@Override
-		public IaAuditIncD2 mapRow(ResultSet rs, int rowNum) throws SQLException {
-			IaAuditIncD2 vo = new IaAuditIncD2();
-			vo.setReceiptDate(rs.getDate("RECEIPT_DATE"));
-			vo.setAmount(rs.getBigDecimal("NET_TAX_AMT"));
-			vo.setReceiptDate(rs.getDate("PRINT_PER_DAY"));
-			
+		public IaAuditIncD2Vo mapRow(ResultSet rs, int rowNum) throws SQLException {
+			IaAuditIncD2Vo vo = new IaAuditIncD2Vo();
+			vo.setId(rs.getString("ID"));
+			vo.setReceiptDate(ConvertDateUtils.formatDateToString(rs.getDate("RECEIPT_DATE"), ConvertDateUtils.DD_MM_YYYY));
+			vo.setAmount(rs.getString("NET_TAX_AMT"));
+			vo.setPrintPerDay(rs.getString("PRINT_PER_DAY"));
 			return vo;
 		}
 	};

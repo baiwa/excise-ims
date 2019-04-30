@@ -15,6 +15,7 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STAT
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD2;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncH;
 import th.go.excise.ims.ia.service.Int0601Service;
+import th.go.excise.ims.ia.vo.IaAuditIncD2Vo;
 import th.go.excise.ims.ia.vo.Int0601RequestVo;
 import th.go.excise.ims.ia.vo.Int0601SaveVo;
 import th.go.excise.ims.ws.persistence.entity.WsIncfri8020Inc;
@@ -75,8 +76,8 @@ public class Int0601Controller {
 	
 	@PostMapping("/find-tab2")
 	@ResponseBody
-	public ResponseData<List<IaAuditIncD2>> findTab2(@RequestBody Int0601RequestVo request) {
-		ResponseData<List<IaAuditIncD2>> response = new ResponseData<List<IaAuditIncD2>>();
+	public ResponseData<List<IaAuditIncD2Vo>> findTab2(@RequestBody Int0601RequestVo request) {
+		ResponseData<List<IaAuditIncD2Vo>> response = new ResponseData<List<IaAuditIncD2Vo>>();
 		try {
 			response.setData(int0601Service.findIaAuditIncD2ByCriteria(request));
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
