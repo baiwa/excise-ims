@@ -16,7 +16,7 @@ import th.go.excise.ims.ws.client.pcc.inquiryholiday.service.InquiryHolidayServi
 
 @Service
 public class SyncExciseHolidayService {
-	private static final Logger logger = LoggerFactory.getLogger(SyncExciseDutyGroupService.class);
+	private static final Logger logger = LoggerFactory.getLogger(SyncExciseHolidayService.class);
 
 	@Autowired
 	private InquiryHolidayService inquiryHolidayService;

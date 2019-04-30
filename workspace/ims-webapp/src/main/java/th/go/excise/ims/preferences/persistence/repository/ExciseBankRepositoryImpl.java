@@ -36,8 +36,8 @@ public class ExciseBankRepositoryImpl  implements ExciseBankRepositoryCustom{
 			"EBK.BANK_NAME",
 			"EBK.SHORT_NAME",
 			"EBK.BEGIN_DATE",
-			"EBG.CREATED_BY",
-			"EBG.CREATED_DATE"
+			"EBK.CREATED_BY",
+			"EBK.CREATED_DATE"
 		));
 		
 		StringBuilder sql = new StringBuilder();
