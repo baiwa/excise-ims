@@ -15,7 +15,8 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STAT
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD2;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncH;
 import th.go.excise.ims.ia.service.Int0601Service;
-import th.go.excise.ims.ia.vo.Int0601Vo;
+import th.go.excise.ims.ia.vo.Int0601RequestVo;
+import th.go.excise.ims.ia.vo.Int0601SaveVo;
 import th.go.excise.ims.ws.persistence.entity.WsIncfri8020Inc;
 
 @Controller
@@ -27,7 +28,7 @@ public class Int0601Controller {
 
 	@PostMapping("/find-tab1")
 	@ResponseBody
-	public ResponseData<List<WsIncfri8020Inc>> findTab1(@RequestBody Int0601Vo request) {
+	public ResponseData<List<WsIncfri8020Inc>> findTab1(@RequestBody Int0601RequestVo request) {
 		ResponseData<List<WsIncfri8020Inc>> response = new ResponseData<List<WsIncfri8020Inc>>();
 		try {
 			response.setData(int0601Service.findTab1ByCriteria(request));
@@ -43,7 +44,7 @@ public class Int0601Controller {
 
 	@PostMapping("/save-hdr")
 	@ResponseBody
-	public ResponseData<IaAuditIncH> addWsIncfri8020Inc(@RequestBody Int0601Vo request) {
+	public ResponseData<IaAuditIncH> addWsIncfri8020Inc(@RequestBody Int0601SaveVo request) {
 		ResponseData<IaAuditIncH> response = new ResponseData<IaAuditIncH>();
 		try {
 			response.setData(int0601Service.createIaAuditInc(request));
@@ -74,7 +75,7 @@ public class Int0601Controller {
 	
 	@PostMapping("/find-tab2")
 	@ResponseBody
-	public ResponseData<List<IaAuditIncD2>> findTab2(@RequestBody Int0601Vo request) {
+	public ResponseData<List<IaAuditIncD2>> findTab2(@RequestBody Int0601RequestVo request) {
 		ResponseData<List<IaAuditIncD2>> response = new ResponseData<List<IaAuditIncD2>>();
 		try {
 			response.setData(int0601Service.findIaAuditIncD2ByCriteria(request));

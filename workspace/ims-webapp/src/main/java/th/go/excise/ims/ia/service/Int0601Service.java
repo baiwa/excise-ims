@@ -14,7 +14,8 @@ import th.go.excise.ims.ia.persistence.repository.IaAuditIncD1Repository;
 import th.go.excise.ims.ia.persistence.repository.IaAuditIncD2Repository;
 import th.go.excise.ims.ia.persistence.repository.IaAuditIncHRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0601JdbcRepository;
-import th.go.excise.ims.ia.vo.Int0601Vo;
+import th.go.excise.ims.ia.vo.Int0601RequestVo;
+import th.go.excise.ims.ia.vo.Int0601SaveVo;
 import th.go.excise.ims.ws.persistence.entity.WsIncfri8020Inc;
 
 @Service
@@ -34,12 +35,12 @@ public class Int0601Service {
 	@Autowired
 	private IaAuditIncD2Repository iaAuditIncD2Repository;
 	
-	public List<WsIncfri8020Inc> findTab1ByCriteria(Int0601Vo int0601Vo){
+	public List<WsIncfri8020Inc> findTab1ByCriteria(Int0601RequestVo int0601Vo){
 		logger.info("findByCriterai");
 		return int0601JdbcRepository.findTab1ByCriteria(int0601Vo);
 	}
 	
-	public IaAuditIncH createIaAuditInc(Int0601Vo vo) {
+	public IaAuditIncH createIaAuditInc(Int0601SaveVo vo) {
 		logger.info("insert IaAuditIncH");
 		IaAuditIncH iaAuditIncH = vo.getIaAuditIncH();
 		String auditIncNo = "";
@@ -73,7 +74,7 @@ public class Int0601Service {
 		return iaAuditIncHRepository.findByIsDeletedOrderByAuditIncNoAsc(FLAG.N_FLAG);
 	}
 	
-	public List<IaAuditIncD2> findIaAuditIncD2ByCriteria(Int0601Vo criteria){
+	public List<IaAuditIncD2> findIaAuditIncD2ByCriteria(Int0601RequestVo criteria){
 		return int0601JdbcRepository.findDataTab2(criteria);
 	}
 	

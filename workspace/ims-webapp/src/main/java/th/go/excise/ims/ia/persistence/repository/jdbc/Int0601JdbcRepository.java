@@ -19,7 +19,7 @@ import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD2;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD3;
-import th.go.excise.ims.ia.vo.Int0601Vo;
+import th.go.excise.ims.ia.vo.Int0601RequestVo;
 import th.go.excise.ims.ws.persistence.entity.WsIncfri8020Inc;
 
 @Repository
@@ -30,7 +30,7 @@ public class Int0601JdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
-	public List<WsIncfri8020Inc> findTab1ByCriteria(Int0601Vo criteria) {
+	public List<WsIncfri8020Inc> findTab1ByCriteria(Int0601RequestVo criteria) {
 		logger.info("findTab1ByCriteria");
 
 		List<Object> paramList = new ArrayList<>();
@@ -100,7 +100,7 @@ public class Int0601JdbcRepository {
 		}
 	};
 
-	public List<IaAuditIncD2> findDataTab2(Int0601Vo criteria) {
+	public List<IaAuditIncD2> findDataTab2(Int0601RequestVo criteria) {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sql = new StringBuilder(" SELECT WS.RECEIPT_DATE , SUM(WS.NET_TAX_AMT) NET_TAX_AMT, COUNT(1) PRINT_PER_DAY FROM WS_INCFRI8020_INC WS ");
 		sql.append(" WHERE WS.IS_DELETED = '").append(FLAG.N_FLAG).append("'");
@@ -135,7 +135,7 @@ public class Int0601JdbcRepository {
 		}
 	};
 	
-	public List<IaAuditIncD3> findDataTab3(Int0601Vo criteria) {
+	public List<IaAuditIncD3> findDataTab3(Int0601RequestVo criteria) {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT ");
