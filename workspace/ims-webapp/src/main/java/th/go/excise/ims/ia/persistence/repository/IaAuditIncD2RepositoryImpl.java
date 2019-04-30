@@ -38,7 +38,6 @@ public class IaAuditIncD2RepositoryImpl implements IaAuditIncD2RepositoryCustom{
 				paramList.add(iaAuditInc.getPrintPerDay());
 				paramList.add(iaAuditInc.getAuditCheck());
 				paramList.add(iaAuditInc.getRemark());
-				paramList.add(iaAuditInc.getCreatedBy());
 				paramList.add(username);
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
 			}

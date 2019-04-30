@@ -20,33 +20,72 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 @Table(name = "IA_REP_DISB_PER_MONTH")
 public class IaRepDisbPerMonth extends BaseEntity {
 	
-	private static final long serialVersionUID = 9035508519749912878L;
+	private static final long serialVersionUID = 8685875891626823212L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_REP_DISB_PER_MONTH_GEN")
 	@SequenceGenerator(name = "IA_REP_DISB_PER_MONTH_GEN", sequenceName = "IA_REP_DISB_PER_MONTH_SEQ", allocationSize = 1)
 	@Column(name = "IA_REP_DISB_PER_MONTH_ID")
-	private BigDecimal iaRepDisbPerMonthId;
+	private Long iaRepDisbPerMonthId;
+	@Column(name = "DEPARTMENT_CODE")
+	private String departmentCode;
+	@Column(name = "PERIOD_FROM")
+	private String periodFrom;
+	@Column(name = "PERIOD_TO")
+	private String periodTo;
+	@Column(name = "PERIOD_YEAR")
+	private String periodYear;
 	@Column(name = "ACC_NO")
 	private String accNo;
 	@Column(name = "ACC_NAME")
 	private String accName;
 	@Column(name = "CARRY_FORWARD")
 	private BigDecimal carryForward;
-	@Column(name = "CARRYFORWARD")
-	private BigDecimal carryforward;
+	@Column(name = "BRING_FORWARD")
+	private BigDecimal bringForward;
 	@Column(name = "DEBIT")
 	private BigDecimal debit;
-	@Column(name = "CREBIT")
-	private BigDecimal crebit;
-	
+	@Column(name = "CREDIT")
+	private BigDecimal credit;
 
-	public BigDecimal getIaRepDisbPerMonthId() {
+	public Long getIaRepDisbPerMonthId() {
 		return iaRepDisbPerMonthId;
 	}
 
-	public void setIaRepDisbPerMonthId(BigDecimal iaRepDisbPerMonthId) {
+	public void setIaRepDisbPerMonthId(Long iaRepDisbPerMonthId) {
 		this.iaRepDisbPerMonthId = iaRepDisbPerMonthId;
+	}
+
+	public String getDepartmentCode() {
+		return departmentCode;
+	}
+
+	public void setDepartmentCode(String departmentCode) {
+		this.departmentCode = departmentCode;
+	}
+
+	public String getPeriodFrom() {
+		return periodFrom;
+	}
+
+	public void setPeriodFrom(String periodFrom) {
+		this.periodFrom = periodFrom;
+	}
+
+	public String getPeriodTo() {
+		return periodTo;
+	}
+
+	public void setPeriodTo(String periodTo) {
+		this.periodTo = periodTo;
+	}
+
+	public String getPeriodYear() {
+		return periodYear;
+	}
+
+	public void setPeriodYear(String periodYear) {
+		this.periodYear = periodYear;
 	}
 
 	public String getAccNo() {
@@ -73,12 +112,12 @@ public class IaRepDisbPerMonth extends BaseEntity {
 		this.carryForward = carryForward;
 	}
 
-	public BigDecimal getCarryforward() {
-		return carryforward;
+	public BigDecimal getBringForward() {
+		return bringForward;
 	}
 
-	public void setCarryforward(BigDecimal carryforward) {
-		this.carryforward = carryforward;
+	public void setBringForward(BigDecimal bringForward) {
+		this.bringForward = bringForward;
 	}
 
 	public BigDecimal getDebit() {
@@ -89,20 +128,18 @@ public class IaRepDisbPerMonth extends BaseEntity {
 		this.debit = debit;
 	}
 
-	public BigDecimal getCrebit() {
-		return crebit;
-	}
-
-	public void setCrebit(BigDecimal crebit) {
-		this.crebit = crebit;
-	}
-
-	public String getIsDeleted() {
-		return isDeleted;
-	}
+	
 
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+	public BigDecimal getCredit() {
+		return credit;
+	}
+
+	public void setCredit(BigDecimal credit) {
+		this.credit = credit;
 	}
 
 }
