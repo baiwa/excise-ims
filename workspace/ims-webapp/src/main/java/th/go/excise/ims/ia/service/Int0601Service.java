@@ -1,3 +1,4 @@
+
 package th.go.excise.ims.ia.service;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
+import th.go.excise.ims.ia.persistence.entity.IaAuditIncD1;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncH;
 import th.go.excise.ims.ia.persistence.repository.IaAuditIncD1Repository;
 import th.go.excise.ims.ia.persistence.repository.IaAuditIncD2Repository;
@@ -77,6 +79,10 @@ public class Int0601Service {
 	public List<IaAuditIncD2Vo> findIaAuditIncD2ByCriteria(Int0601RequestVo criteria){
 		return int0601JdbcRepository.findDataTab2(criteria);
 	}
+	
+	public List<IaAuditIncD1> findIaAuditIncD1ByAuditIncNo(String  auditIncNo){
+		return iaAuditIncD1Repository.findByAuditIncNoOrderByReceiptNo(auditIncNo);
+	} 
 	
 	
 	

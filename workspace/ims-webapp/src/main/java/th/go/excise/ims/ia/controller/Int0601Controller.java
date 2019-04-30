@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
-import th.go.excise.ims.ia.persistence.entity.IaAuditIncD2;
+import th.go.excise.ims.ia.persistence.entity.IaAuditIncD1;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncH;
 import th.go.excise.ims.ia.service.Int0601Service;
 import th.go.excise.ims.ia.vo.IaAuditIncD2Vo;
@@ -89,5 +90,22 @@ public class Int0601Controller {
 		}
 		return response;
 	}
-
+	
+	
+	
+	@PostMapping("/find-tab1-by-auditnumber/{auditIncNo}")
+	@ResponseBody
+	public ResponseData<List<IaAuditIncD1>> findIaAuditIncD1ByAuditIncNo(@PathVariable("auditIncNo") String auditIncNo) {
+		ResponseData<List<IaAuditIncD1>> response = new ResponseData<List<IaAuditIncD1>>();
+		try {
+			response.setData(int0601Service.findIaAuditIncD1ByAuditIncNo(auditIncNo));
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
 }

@@ -19,9 +19,9 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 @Entity
 @Table(name = "IA_REP_DISB_PER_MONTH")
 public class IaRepDisbPerMonth extends BaseEntity {
-	
+
 	private static final long serialVersionUID = 8685875891626823212L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_REP_DISB_PER_MONTH_GEN")
 	@SequenceGenerator(name = "IA_REP_DISB_PER_MONTH_GEN", sequenceName = "IA_REP_DISB_PER_MONTH_SEQ", allocationSize = 1)
@@ -127,8 +127,6 @@ public class IaRepDisbPerMonth extends BaseEntity {
 	public void setDebit(BigDecimal debit) {
 		this.debit = debit;
 	}
-
-	
 
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
