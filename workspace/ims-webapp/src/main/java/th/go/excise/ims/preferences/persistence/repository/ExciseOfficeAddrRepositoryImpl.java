@@ -2,7 +2,9 @@ package th.go.excise.ims.preferences.persistence.repository;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +32,7 @@ public class ExciseOfficeAddrRepositoryImpl implements ExciseOfficeAddrRepositor
 		final int BATCH_SIZE = 1000;
 
 		List<String> insertColumnNames = new ArrayList<>(
-				Arrays.asList("EOA.OFFICE_ADDR_ID", "EOA.OFF_CODE", "EOA.ADDRESS", "EOA.FAX"));
+				Arrays.asList("EOA.OFFICE_ADDR_ID", "EOA.OFF_CODE", "EOA.ADDRESS", "EOA.FAX", "EOA.CREATED_BY", "EOA.CREATED_DATE"));
 
 		StringBuilder sql = new StringBuilder();
 		sql.append(" MERGE INTO EXCISE_OFFICE_ADDR EOA ");

@@ -73,20 +73,20 @@ public class ExciseTitleRepositoryImpl implements ExciseTitleRepositoryCustom {
 						paramList.add(title.getTitleCode());
 						// Update Statement
 						paramList.add(title.getTitleName());
-						paramList.add(title.getShortTitle());
-						paramList.add(title.getTitleType());
 						paramList.add(title.getTitleSeq());
+						paramList.add(title.getTitleType());
 						paramList.add(title.getSuffixName());
+						paramList.add(title.getShortTitle());
 						paramList.add(title.getShortSuffix());
 						paramList.add(SYSTEM_USER.BATCH);
 						paramList.add(LocalDateTime.now());
 						// Insert Statement
 						paramList.add(title.getTitleCode());
 						paramList.add(title.getTitleName());
-						paramList.add(title.getShortTitle());
-						paramList.add(title.getTitleType());
 						paramList.add(title.getTitleSeq());
+						paramList.add(title.getTitleType());
 						paramList.add(title.getSuffixName());
+						paramList.add(title.getShortTitle());
 						paramList.add(title.getShortSuffix());
 						paramList.add(LocalDate.parse(title.getBeginDate(), DateTimeFormatter.BASIC_ISO_DATE));
 						paramList.add(SYSTEM_USER.BATCH);

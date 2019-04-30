@@ -79,7 +79,7 @@ public class ExciseIncMastRepositoryImpl implements ExciseIncMastRepositoryCusto
 					public void setValues(PreparedStatement ps, IncomeMaster incMast) throws SQLException {
 						List<Object> paramList = new ArrayList<Object>();
 						// Using Condition
-						paramList.add(incMast.getGroupId());
+						paramList.add(incMast.getIncCode());
 						// Update Statement
 						paramList.add(incMast.getIncType());
 						paramList.add(incMast.getIncName());
@@ -105,6 +105,11 @@ public class ExciseIncMastRepositoryImpl implements ExciseIncMastRepositoryCusto
 						paramList.add(SYSTEM_USER.BATCH);
 						paramList.add(LocalDateTime.now());
 						// Insert Statement
+						paramList.add(incMast.getIncCode());
+						paramList.add(incMast.getIncType());
+						paramList.add(incMast.getIncName());
+						paramList.add(incMast.getIncNamePrint());
+						paramList.add(incMast.getIncFlag());
 						paramList.add(incMast.getAccsendCode());
 						paramList.add(incMast.getAccCode());
 						paramList.add(incMast.getCdFlag());
@@ -117,11 +122,6 @@ public class ExciseIncMastRepositoryImpl implements ExciseIncMastRepositoryCusto
 						paramList.add(incMast.getInccodPrnstamp());
 						paramList.add(incMast.getIncgrpCode());
 						paramList.add(incMast.getIncgrpFlag());
-						paramList.add(incMast.getIncCode());
-						paramList.add(incMast.getIncFlag());
-						paramList.add(incMast.getIncName());
-						paramList.add(incMast.getIncNamePrint());
-						paramList.add(incMast.getIncType());
 						paramList.add(incMast.getLoctypFlag());
 						paramList.add(incMast.getLocFlag());
 						paramList.add(incMast.getMoneyType());

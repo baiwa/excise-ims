@@ -2,7 +2,9 @@ package th.go.excise.ims.preferences.persistence.repository;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +31,7 @@ public class ExciseHospitalRepositoryImpl implements ExciseHospitalRepositoryCus
 			final int BATCH_SIZE = 1000;
 			
 			List<String> insertColumnNames = new ArrayList<>(Arrays.asList(
-				"EH.HOLIDAY_ID",
+				"EH.HOSP_ID",
 				"EH.HOSP_CODE",
 				"EH.HOSP_TYPE",
 				"EH.HOSP_CATE",
@@ -38,7 +40,6 @@ public class ExciseHospitalRepositoryImpl implements ExciseHospitalRepositoryCus
 				"EH.THNNAME",
 				"EH.TAMBOL_CODE",
 				"EH.ZIPCODE",
-				"EH.BEGIN_DATE",
 				"EH.BEGIN_DATE",
 				"EH.CREATED_BY",
 				"EH.CREATED_DATE"
@@ -62,7 +63,7 @@ public class ExciseHospitalRepositoryImpl implements ExciseHospitalRepositoryCus
 			sql.append("     EH.UPDATED_DATE = ? ");
 			sql.append(" WHEN NOT MATCHED THEN ");
 			sql.append("   INSERT (" + org.springframework.util.StringUtils.collectionToDelimitedString(insertColumnNames, ",") + ") ");
-			sql.append("   VALUES (EXCISE_BANK_SEQ.NEXTVAL" + org.apache.commons.lang3.StringUtils.repeat(",?", insertColumnNames.size() - 1) + ") ");
+			sql.append("   VALUES (EXCISE_HOSPITAL_SEQ.NEXTVAL" + org.apache.commons.lang3.StringUtils.repeat(",?", insertColumnNames.size() - 1) + ") ");
 			
 			commonJdbcTemplate.batchUpdate(sql.toString(), hospitalList, BATCH_SIZE, new ParameterizedPreparedStatementSetter<Hospital>() {
 				public void setValues(PreparedStatement ps, Hospital hospital) throws SQLException {
@@ -70,6 +71,7 @@ public class ExciseHospitalRepositoryImpl implements ExciseHospitalRepositoryCus
 					// Using Condition
 					paramList.add(hospital.getHospCode());
 					// Update Statement
+					
 					paramList.add(hospital.getHospType());
 					paramList.add(hospital.getHospCate());
 					paramList.add(hospital.getHospName());
@@ -77,11 +79,18 @@ public class ExciseHospitalRepositoryImpl implements ExciseHospitalRepositoryCus
 					paramList.add(hospital.getThnname());
 					paramList.add(hospital.getTambolCode());
 					paramList.add(hospital.getZIPCODE());
-			
 					paramList.add(SYSTEM_USER.BATCH);
 					paramList.add(LocalDateTime.now());
 					// Insert Statement
-				
+					paramList.add(hospital.getHospCode());
+					paramList.add(hospital.getHospType());
+					paramList.add(hospital.getHospCate());
+					paramList.add(hospital.getHospName());
+					paramList.add(hospital.getAddrno());
+					paramList.add(hospital.getThnname());
+					paramList.add(hospital.getTambolCode());
+					paramList.add(hospital.getZIPCODE());
+					paramList.add(LocalDate.parse(hospital.getBeginDate(), DateTimeFormatter.BASIC_ISO_DATE));
 					paramList.add(SYSTEM_USER.BATCH);
 					paramList.add(LocalDateTime.now());
 					commonJdbcTemplate.preparePs(ps, paramList.toArray());

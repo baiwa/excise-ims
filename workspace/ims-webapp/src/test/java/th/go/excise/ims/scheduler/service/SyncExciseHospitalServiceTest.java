@@ -18,10 +18,10 @@ import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
 @ActiveProfiles(value = PROFILE.UNITTEST)
 public class SyncExciseHospitalServiceTest {
 	@Autowired
-	private SyncExciseHolidayService syncExciseHolidayService;
+	private ExciseHospitalServive exciseHospitalServive;
 	
 	@Test
 	public void test_syncData() throws PccRestfulException {
-		syncExciseHolidayService.syncData();
+		exciseHospitalServive.syncData();
 	}
 }
