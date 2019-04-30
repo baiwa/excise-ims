@@ -1,14 +1,21 @@
 package th.go.excise.ims.common.util;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -191,6 +198,27 @@ public abstract class ExcelUtils {
 		fontBold.setFontName(fontName);
 		fontBold.setBold(true);
 		return fontBold;
+	}
+	
+	
+	
+
+
+	public static List<List<String>> readExcel(File file) throws Exception {
+		List<List<String>> excelData = new ArrayList<>();
+		Workbook workbook = WorkbookFactory.create(file);
+		Sheet sheet = workbook.getSheetAt(0);
+		DataFormatter dataFormatter = new DataFormatter();
+		sheet.forEach(row -> {
+			List<String> listInLine = new ArrayList<>();
+			row.forEach(cell -> {
+				String cellValue = dataFormatter.formatCellValue(cell);
+				listInLine.add(cellValue);
+			});
+			excelData.add(listInLine);
+		});
+		workbook.close();
+		return excelData;
 	}
 
 }

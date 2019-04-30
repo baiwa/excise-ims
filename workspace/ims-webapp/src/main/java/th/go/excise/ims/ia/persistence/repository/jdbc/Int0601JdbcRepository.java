@@ -18,6 +18,7 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD2;
+import th.go.excise.ims.ia.persistence.entity.IaAuditIncD3;
 import th.go.excise.ims.ia.vo.Int0601Vo;
 import th.go.excise.ims.ws.persistence.entity.WsIncfri8020Inc;
 
@@ -130,6 +131,53 @@ public class Int0601JdbcRepository {
 			vo.setAmount(rs.getBigDecimal("NET_TAX_AMT"));
 			vo.setReceiptDate(rs.getDate("PRINT_PER_DAY"));
 			
+			return vo;
+		}
+	};
+	
+	public List<IaAuditIncD3> findDataTab3(Int0601Vo criteria) {
+		List<Object> paramList = new ArrayList<>();
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT ");
+		sql.append(" WS.INCOME_CODE TAX_CODE, ");
+		sql.append(" WS.INCOME_NAME TAX_NAME, ");
+		sql.append(" SUM(WS.NET_TAX_AMT) AMOUNT, ");
+		sql.append(" COUNT(1) COUNT_RECEIPT ");
+		sql.append(" FROM ");
+		sql.append(" WS_INCFRI8020_INC WS ");
+		sql.append(" GROUP BY ");
+		sql.append(" WS.INCOME_CODE, ");
+		sql.append(" WS.INCOME_NAME ");
+		sql.append(" ORDER BY ");
+		sql.append(" WS.INCOME_CODE ");
+		sql.append(" WHERE WS.IS_DELETED = '").append(FLAG.N_FLAG).append("'");
+
+		if (StringUtils.isNoneBlank(criteria.getOfficeReceive())) {
+			sql.append(" AND WS.OFFICE_RECEIVE like ? ");
+			paramList.add(ExciseUtils.whereInLocalOfficeCode(criteria.getOfficeReceive()));
+		}
+
+		if (StringUtils.isNotEmpty(criteria.getReceiptDateFrom())) {
+			sql.append(" AND WS.RECEIPT_DATE >= ? ");
+			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+		}
+
+		if (StringUtils.isNotEmpty(criteria.getReceiptDateTo())) {
+			sql.append(" AND WS.RECEIPT_DATE <= ? ");
+			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+		}
+		sql.append(" ORDER BY WS.INCOME_CODE ");
+		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), tab3RowMapper);
+	}
+	
+	private RowMapper<IaAuditIncD3> tab3RowMapper = new RowMapper<IaAuditIncD3>() {
+		@Override
+		public IaAuditIncD3 mapRow(ResultSet rs, int rowNum) throws SQLException {
+			IaAuditIncD3 vo = new IaAuditIncD3();
+			vo.setTaxCode(rs.getString("TAX_CODE"));
+			vo.setTaxName(rs.getString("TAX_NAME"));
+			vo.setAmount(rs.getBigDecimal("AMOUNT"));
+			vo.setCountReceipt(rs.getBigDecimal("COUNT_RECEIPT"));
 			return vo;
 		}
 	};

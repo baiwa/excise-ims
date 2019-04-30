@@ -77,4 +77,6 @@ public class Int0601Service {
 		return int0601JdbcRepository.findDataTab2(criteria);
 	}
 	
+	
+	
 }
