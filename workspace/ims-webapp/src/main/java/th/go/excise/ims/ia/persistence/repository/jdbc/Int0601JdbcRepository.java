@@ -102,7 +102,7 @@ public class Int0601JdbcRepository {
 
 	public List<IaAuditIncD2Vo> findDataTab2(Int0601RequestVo criteria) {
 		List<Object> paramList = new ArrayList<>();
-		StringBuilder sql = new StringBuilder(" SELECT WS.WS_INCFRI8020_INC_ID ID, WS.RECEIPT_DATE RECEIPT_DATE, SUM(WS.NET_TAX_AMT) NET_TAX_AMT, COUNT(1) PRINT_PER_DAY FROM WS_INCFRI8020_INC WS ");
+		StringBuilder sql = new StringBuilder(" SELECT WS.RECEIPT_DATE RECEIPT_DATE, SUM(WS.NET_TAX_AMT) NET_TAX_AMT, COUNT(1) PRINT_PER_DAY FROM WS_INCFRI8020_INC WS ");
 		sql.append(" WHERE WS.IS_DELETED = '").append(FLAG.N_FLAG).append("'");
 
 		if (StringUtils.isNoneBlank(criteria.getOfficeReceive())) {
@@ -119,7 +119,7 @@ public class Int0601JdbcRepository {
 			sql.append(" AND WS.RECEIPT_DATE <= ? ");
 			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		}
-		sql.append(" GROUP BY WS.WS_INCFRI8020_INC_ID, WS.RECEIPT_DATE ");
+		sql.append(" GROUP BY WS.RECEIPT_DATE ");
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), tab2RowMapper);
 	}
 	
@@ -127,7 +127,7 @@ public class Int0601JdbcRepository {
 		@Override
 		public IaAuditIncD2Vo mapRow(ResultSet rs, int rowNum) throws SQLException {
 			IaAuditIncD2Vo vo = new IaAuditIncD2Vo();
-			vo.setId(rs.getString("ID"));
+		
 			vo.setReceiptDate(ConvertDateUtils.formatDateToString(rs.getDate("RECEIPT_DATE"), ConvertDateUtils.DD_MM_YYYY));
 			vo.setAmount(rs.getString("NET_TAX_AMT"));
 			vo.setPrintPerDay(rs.getString("PRINT_PER_DAY"));
