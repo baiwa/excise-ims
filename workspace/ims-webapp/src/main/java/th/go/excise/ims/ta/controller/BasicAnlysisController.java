@@ -20,14 +20,13 @@ import th.go.excise.ims.ta.service.AnalysisTaxRetailPriceService;
 import th.go.excise.ims.ta.service.AnalysisTaxValueService;
 import th.go.excise.ims.ta.vo.AnalysisFormVo;
 import th.go.excise.ims.ta.vo.AnalysisIncomeCompareLastMonthVo;
-import th.go.excise.ims.ta.vo.AnalysisIncomeCompareLastYearVo;
-import th.go.excise.ims.ta.vo.AnalysisTaxAmtVo;
-import th.go.excise.ims.ta.vo.AnalysisTaxFilingVo;
-import th.go.excise.ims.ta.vo.AnalysisTaxQtyVo;
-import th.go.excise.ims.ta.vo.AnalysisTaxRateVo;
-import th.go.excise.ims.ta.vo.AnalysisTaxRetailPriceVo;
-import th.go.excise.ims.ta.vo.AnalysisTaxValueVo;
 import th.go.excise.ims.ta.vo.AnalyzeCompareOldYearVo;
+import th.go.excise.ims.ta.vo.PaperBasicAnalysisD1Vo;
+import th.go.excise.ims.ta.vo.PaperBasicAnalysisD2Vo;
+import th.go.excise.ims.ta.vo.PaperBasicAnalysisD3Vo;
+import th.go.excise.ims.ta.vo.PaperBasicAnalysisD4Vo;
+import th.go.excise.ims.ta.vo.PaperBasicAnalysisD5Vo;
+import th.go.excise.ims.ta.vo.PaperBasicAnalysisD6Vo;
 
 @Controller
 @RequestMapping("/api/ta/basic-anlysis")
@@ -58,10 +57,10 @@ public class BasicAnlysisController {
 	// TODO 1
 	@PostMapping("/analysis-tax-qty-data")
 	@ResponseBody
-	public DataTableAjax<AnalysisTaxQtyVo> listAnalysisTaxQty(@RequestBody AnalysisFormVo request) {
+	public DataTableAjax<PaperBasicAnalysisD1Vo> listAnalysisTaxQty(@RequestBody AnalysisFormVo request) {
 		logger.info("analysisTaxQtyService");
 
-		DataTableAjax<AnalysisTaxQtyVo> response = new DataTableAjax<>();
+		DataTableAjax<PaperBasicAnalysisD1Vo> response = new DataTableAjax<>();
 		try {
 			response = analysisTaxQtyService.GetAnalysisTaxQty(request);
 		} catch (Exception e) {
@@ -73,10 +72,10 @@ public class BasicAnlysisController {
 	// TODO 2
 	@PostMapping("/analysis-taxQuRetail-price-data")
 	@ResponseBody
-	public DataTableAjax<AnalysisTaxRetailPriceVo> listAnalysisTaxQuRetailPrice(@RequestBody AnalysisFormVo request) {
+	public DataTableAjax<PaperBasicAnalysisD2Vo> listAnalysisTaxQuRetailPrice(@RequestBody AnalysisFormVo request) {
 		logger.info("analysisTaxQuRetailPriceService");
 
-		DataTableAjax<AnalysisTaxRetailPriceVo> response = new DataTableAjax<>();
+		DataTableAjax<PaperBasicAnalysisD2Vo> response = new DataTableAjax<>();
 		try {
 			response = analysisTaxQuRetailPriceService.GetAnalysisTaxQuRetailPrice(request);
 		} catch (Exception e) {
@@ -87,10 +86,10 @@ public class BasicAnlysisController {
 	// TODO 3
 	@PostMapping("/analysis-lysisTax-value")
 	@ResponseBody
-	public DataTableAjax<AnalysisTaxValueVo> listAnalysisTaxValueService(@RequestBody AnalysisFormVo request) {
+	public DataTableAjax<PaperBasicAnalysisD3Vo> listAnalysisTaxValueService(@RequestBody AnalysisFormVo request) {
 		logger.info("listAnalysisTaxValue");
 
-		DataTableAjax<AnalysisTaxValueVo> response = new DataTableAjax<>();
+		DataTableAjax<PaperBasicAnalysisD3Vo> response = new DataTableAjax<>();
 		try {
 			response = analysisTaxValueService.GetAnalysisTaxValue(request);
 		} catch (Exception e) {
@@ -101,10 +100,10 @@ public class BasicAnlysisController {
 	// TODO 4
 	@PostMapping("/analysis-taxRate-service-data")
 	@ResponseBody
-	public DataTableAjax<AnalysisTaxRateVo> listAnalysisTaxRateService(@RequestBody AnalysisFormVo request) {
+	public DataTableAjax<PaperBasicAnalysisD4Vo> listAnalysisTaxRateService(@RequestBody AnalysisFormVo request) {
 		logger.info("listAnalysisTaxRateService");
 
-		DataTableAjax<AnalysisTaxRateVo> response = new DataTableAjax<>();
+		DataTableAjax<PaperBasicAnalysisD4Vo> response = new DataTableAjax<>();
 		try {
 			response = analysisTaxRateService.GetAnalysisTaxRate(request);
 		} catch (Exception e) {
@@ -116,10 +115,10 @@ public class BasicAnlysisController {
 	// TODO 5
 	@PostMapping("/list-analysis-taxAmts-service-data")
 	@ResponseBody
-	public DataTableAjax<AnalysisTaxAmtVo> listAnalysisTaxAmtsService(@RequestBody AnalysisFormVo request) {
+	public DataTableAjax<PaperBasicAnalysisD5Vo> listAnalysisTaxAmtsService(@RequestBody AnalysisFormVo request) {
 		logger.info("listAnalysisTaxAmtsService");
 
-		DataTableAjax<AnalysisTaxAmtVo> response = new DataTableAjax<>();
+		DataTableAjax<PaperBasicAnalysisD5Vo> response = new DataTableAjax<>();
 		try {
 			response = analysisTaxAmtsService.GetAnalysisTaxAmt(request);
 		} catch (Exception e) {
@@ -131,10 +130,10 @@ public class BasicAnlysisController {
 	// TODO 6
 	@PostMapping("/analysis-tax-filing-data")
 	@ResponseBody
-	public DataTableAjax<AnalysisTaxFilingVo> listAnalysisTaxFilingService(@RequestBody AnalysisFormVo request) {
+	public DataTableAjax<PaperBasicAnalysisD6Vo> listAnalysisTaxFilingService(@RequestBody AnalysisFormVo request) {
 		logger.info("listAnalysisTaxFilingService");
 
-		DataTableAjax<AnalysisTaxFilingVo> response = new DataTableAjax<>();
+		DataTableAjax<PaperBasicAnalysisD6Vo> response = new DataTableAjax<>();
 		try {
 			response = analysisTaxFilingService.GetAnalysisTaxFiling(request);
 		} catch (Exception e) {

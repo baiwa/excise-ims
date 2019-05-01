@@ -2,7 +2,15 @@ package th.go.excise.ims.ta.vo;
 
 import java.math.BigDecimal;
 
-public class PaperBasicAnalysisD1Vo {
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
+
+public class PaperBasicAnalysisD1Vo  extends DataTableRequest{
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3796016387872443037L;
 	private String paperBaNo;
 	private String recNo;
 	private String goodsDesc;
