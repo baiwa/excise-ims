@@ -25,7 +25,6 @@ public class OutsidePlanVo {
 	public String getDutyDesc() {
 		return dutyDesc;
 	}
-
 	public void setDutyDesc(String dutyDesc) {
 		this.dutyDesc = dutyDesc;
 	}
