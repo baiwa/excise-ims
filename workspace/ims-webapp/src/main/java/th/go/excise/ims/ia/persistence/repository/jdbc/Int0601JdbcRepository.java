@@ -181,5 +181,45 @@ public class Int0601JdbcRepository {
 			return vo;
 		}
 	};
+	
+//	public List<IaAuditIncD4Vo> findDataTab4(Int0601RequestVo criteria) {
+//		List<Object> paramList = new ArrayList<>();
+//		StringBuilder sql = new StringBuilder(" SELECT WS.RECEIPT_DATE RECEIPT_DATE, SUM(WS.NET_TAX_AMT) NET_TAX_AMT, COUNT(1) PRINT_PER_DAY FROM WS_INCFRI8020_INC WS ");
+//		sql.append(" WHERE WS.IS_DELETED = '").append(FLAG.N_FLAG).append("'");
+//
+//		if (StringUtils.isNoneBlank(criteria.getOfficeReceive())) {
+//			sql.append(" AND WS.OFFICE_RECEIVE like ? ");
+//			paramList.add(ExciseUtils.whereInLocalOfficeCode(criteria.getOfficeReceive()));
+//		}
+//
+//		if (StringUtils.isNotEmpty(criteria.getReceiptDateFrom())) {
+//			sql.append(" AND WS.RECEIPT_DATE >= ? ");
+//			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+//		}
+//
+//		if (StringUtils.isNotEmpty(criteria.getReceiptDateTo())) {
+//			sql.append(" AND WS.RECEIPT_DATE <= ? ");
+//			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+//		}
+//		sql.append(" GROUP BY WS.RECEIPT_DATE ");
+//		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), tab2RowMapper);
+//	}
+//	
+//	private RowMapper<IaAuditIncD2Vo> tab2RowMapper = new RowMapper<IaAuditIncD2Vo>() {
+//		@Override
+//		public IaAuditIncD2Vo mapRow(ResultSet rs, int rowNum) throws SQLException {
+//			IaAuditIncD2Vo vo = new IaAuditIncD2Vo();
+//			RECEIPT_NO
+//			RECEIPT_DATE
+//			INCOME_NAME
+//			INCOME_CODE
+//			NET_TAX_AMT
+//
+//			vo.setReceiptDate(ConvertDateUtils.formatDateToString(rs.getDate("RECEIPT_DATE"), ConvertDateUtils.DD_MM_YYYY));
+//			vo.setAmount(rs.getString("NET_TAX_AMT"));
+//			vo.setPrintPerDay(rs.getString("PRINT_PER_DAY"));
+//			return vo;
+//		}
+//	};
 
 }
