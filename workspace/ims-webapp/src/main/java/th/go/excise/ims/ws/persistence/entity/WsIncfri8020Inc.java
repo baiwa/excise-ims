@@ -34,6 +34,8 @@ public class WsIncfri8020Inc extends BaseEntity {
 	private String incomeName;
 	@Column(name = "RECEIPT_NO")
 	private String receiptNo;
+	@Column(name = "INC_CTL_NO")
+	private String incCtlNo;
 	@Column(name = "NET_TAX_AMT")
 	private BigDecimal netTaxAmt;
 	@Column(name = "NET_LOC_AMT")
@@ -317,6 +319,14 @@ public class WsIncfri8020Inc extends BaseEntity {
 
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+	public String getIncCtlNo() {
+		return incCtlNo;
+	}
+
+	public void setIncCtlNo(String incCtlNo) {
+		this.incCtlNo = incCtlNo;
 	}
 
 }

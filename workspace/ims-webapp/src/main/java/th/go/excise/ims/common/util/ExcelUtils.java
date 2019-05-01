@@ -1,6 +1,9 @@
 package th.go.excise.ims.common.util;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +15,18 @@ import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
+//import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import com.monitorjbl.xlsx.StreamingReader;
 
 public abstract class ExcelUtils {
 
@@ -146,9 +153,8 @@ public abstract class ExcelUtils {
 		thColor.setWrapText(true);
 		return thColor;
 	}
-	
 
-	public static XSSFCellStyle createCellColorStyle(XSSFWorkbook workbook, XSSFColor color,HorizontalAlignment horAl,VerticalAlignment verAl) {
+	public static XSSFCellStyle createCellColorStyle(XSSFWorkbook workbook, XSSFColor color, HorizontalAlignment horAl, VerticalAlignment verAl) {
 		XSSFCellStyle thColor = workbook.createCellStyle();
 		thColor.setFillForegroundColor(color);
 		thColor.setAlignment(horAl);
@@ -161,13 +167,13 @@ public abstract class ExcelUtils {
 		thColor.setWrapText(true);
 		return thColor;
 	}
-	
+
 	public static XSSFCellStyle createTopicCenterliteStyle(XSSFWorkbook workbook) {
 		XSSFCellStyle topicCenterlite = workbook.createCellStyle();
 		topicCenterlite.setAlignment(HorizontalAlignment.CENTER);
 		return topicCenterlite;
 	}
-	
+
 	public static XSSFCellStyle createTopicCenterStyle(XSSFWorkbook workbook) {
 		XSSFCellStyle topicCenter = workbook.createCellStyle();
 		topicCenter.setAlignment(HorizontalAlignment.CENTER);
@@ -199,10 +205,6 @@ public abstract class ExcelUtils {
 		fontBold.setBold(true);
 		return fontBold;
 	}
-	
-	
-	
-
 
 	public static List<List<String>> readExcel(File file) throws Exception {
 		List<List<String>> excelData = new ArrayList<>();

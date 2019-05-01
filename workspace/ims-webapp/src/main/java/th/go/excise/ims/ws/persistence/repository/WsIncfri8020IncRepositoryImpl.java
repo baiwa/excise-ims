@@ -37,9 +37,10 @@ public class WsIncfri8020IncRepositoryImpl implements WsIncfri8020IncRepositoryC
 				"SSS_FUND_AMT", "TPBS_FUND_AMT", "SPORT_FUND_AMT", "OLDER_FUND_AMT", "SEND_AMT",
 				"STAMP_AMT", "CUSTOM_AMT", "TRN_DATE", "OFFICE_RECEIVE", "INCOME_CODE",
 				"RECEIPT_NO_SSS_FUND", "RECEIPT_NO_TPBS_FUND", "RECEIPT_NO_SPORT_FUND", "RECEIPT_NO_OLDER_FUND", "PIN_NID_ID",
-				"NEW_REG_ID", "CUS_NAME", "FAC_NAME", "CREATED_BY"
+				"NEW_REG_ID", "CUS_NAME", "FAC_NAME","INC_CTL_NO", "CREATED_BY"
 			),
 			"WS_INCFRI8020_INC_SEQ");
+		
 
 		commonJdbcTemplate.batchUpdate(sql, incfri8020IncList, BATCH_SIZE, new ParameterizedPreparedStatementSetter<WsIncfri8020Inc>() {
 			public void setValues(PreparedStatement ps, WsIncfri8020Inc incfri8020Inc) throws SQLException {
@@ -71,6 +72,7 @@ public class WsIncfri8020IncRepositoryImpl implements WsIncfri8020IncRepositoryC
 				paramList.add(incfri8020Inc.getNewRegId());
 				paramList.add(incfri8020Inc.getCusName());
 				paramList.add(incfri8020Inc.getFacName());
+				paramList.add(incfri8020Inc.getIncCtlNo());
 				paramList.add(SYSTEM_USER.BATCH);
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
 			}
