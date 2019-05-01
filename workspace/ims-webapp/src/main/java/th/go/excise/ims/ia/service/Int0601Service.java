@@ -13,6 +13,7 @@ import th.go.excise.ims.ia.persistence.entity.IaAuditIncD1;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncH;
 import th.go.excise.ims.ia.persistence.repository.IaAuditIncD1Repository;
 import th.go.excise.ims.ia.persistence.repository.IaAuditIncD2Repository;
+import th.go.excise.ims.ia.persistence.repository.IaAuditIncD3Repository;
 import th.go.excise.ims.ia.persistence.repository.IaAuditIncHRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0601JdbcRepository;
 import th.go.excise.ims.ia.vo.IaAuditIncD2Vo;
@@ -33,10 +34,13 @@ public class Int0601Service {
 
 	@Autowired
 	private IaAuditIncD1Repository iaAuditIncD1Repository;
-
+	
 	@Autowired
 	private IaAuditIncD2Repository iaAuditIncD2Repository;
 	
+	@Autowired
+	private IaAuditIncD3Repository iaAuditIncD3Repository;
+
 	public List<WsIncfri8020Inc> findTab1ByCriteria(Int0601RequestVo int0601Vo){
 		logger.info("findByCriterai");
 		return int0601JdbcRepository.findTab1ByCriteria(int0601Vo);
@@ -64,6 +68,10 @@ public class Int0601Service {
 			if (vo.getIaAuditIncD2List() != null && vo.getIaAuditIncD2List().size() > 0) {
 				logger.info("insert Drtail : 2 ");
 				iaAuditIncD2Repository.batchInsert(vo.getIaAuditIncD2List());
+			}
+			if (vo.getIaAuditIncD3List() != null && vo.getIaAuditIncD3List().size() > 0) {
+				logger.info("insert Drtail : 3 ");
+				iaAuditIncD3Repository.batchInsert(vo.getIaAuditIncD3List());
 			}
 		} else {
 			logger.info("insert IaAuditIncH incomplet ");

@@ -4,6 +4,7 @@ import java.util.List;
 
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD1;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD2;
+import th.go.excise.ims.ia.persistence.entity.IaAuditIncD3;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncH;
 
 public class Int0601SaveVo {
@@ -12,6 +13,7 @@ public class Int0601SaveVo {
 	private IaAuditIncH iaAuditIncH;
 	private List<IaAuditIncD1> iaAuditIncD1List;
 	private List<IaAuditIncD2> iaAuditIncD2List;
+	private List<IaAuditIncD3> iaAuditIncD3List;
 	
 	
 	public IaAuditIncH getIaAuditIncH() {
@@ -31,6 +33,12 @@ public class Int0601SaveVo {
 	}
 	public void setIaAuditIncD2List(List<IaAuditIncD2> iaAuditIncD2List) {
 		this.iaAuditIncD2List = iaAuditIncD2List;
+	}
+	public List<IaAuditIncD3> getIaAuditIncD3List() {
+		return iaAuditIncD3List;
+	}
+	public void setIaAuditIncD3List(List<IaAuditIncD3> iaAuditIncD3List) {
+		this.iaAuditIncD3List = iaAuditIncD3List;
 	}
 
 
