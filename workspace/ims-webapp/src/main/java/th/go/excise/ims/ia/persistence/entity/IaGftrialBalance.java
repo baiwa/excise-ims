@@ -17,16 +17,16 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
-@Table(name = "IA_REP_DISB_PER_MONTH")
-public class IaRepDisbPerMonth extends BaseEntity {
+@Table(name = "IA_GFTRIAL_BALANCE")
+public class IaGftrialBalance extends BaseEntity {
 
-	private static final long serialVersionUID = 8685875891626823212L;
-
+	
+	private static final long serialVersionUID = -8839341270076938113L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_REP_DISB_PER_MONTH_GEN")
-	@SequenceGenerator(name = "IA_REP_DISB_PER_MONTH_GEN", sequenceName = "IA_REP_DISB_PER_MONTH_SEQ", allocationSize = 1)
-	@Column(name = "IA_REP_DISB_PER_MONTH_ID")
-	private Long iaRepDisbPerMonthId;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_GFTRIAL_BALANCE_GEN")
+	@SequenceGenerator(name = "IA_GFTRIAL_BALANCE_GEN", sequenceName = "IA_GFTRIAL_BALANCE_SEQ", allocationSize = 1)
+	@Column(name = "IA_GFTRIAL_BALANCE_ID")
+	private Long iaGftrialBalanceId;
 	@Column(name = "DEPARTMENT_CODE")
 	private String departmentCode;
 	@Column(name = "PERIOD_FROM")
@@ -48,12 +48,12 @@ public class IaRepDisbPerMonth extends BaseEntity {
 	@Column(name = "CREDIT")
 	private BigDecimal credit;
 
-	public Long getIaRepDisbPerMonthId() {
-		return iaRepDisbPerMonthId;
+	public Long getIaGftrialBalanceId() {
+		return iaGftrialBalanceId;
 	}
 
-	public void setIaRepDisbPerMonthId(Long iaRepDisbPerMonthId) {
-		this.iaRepDisbPerMonthId = iaRepDisbPerMonthId;
+	public void setIaGftrialBalanceId(Long iaGftrialBalanceId) {
+		this.iaGftrialBalanceId = iaGftrialBalanceId;
 	}
 
 	public String getDepartmentCode() {
@@ -128,16 +128,16 @@ public class IaRepDisbPerMonth extends BaseEntity {
 		this.debit = debit;
 	}
 
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-	}
-
 	public BigDecimal getCredit() {
 		return credit;
 	}
 
 	public void setCredit(BigDecimal credit) {
 		this.credit = credit;
+	}
+
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
 }

@@ -17,14 +17,14 @@ import th.go.excise.ims.Application;
 @SpringBootTest(classes = Application.class)
 @WithUserDetails(value = "admin", userDetailsServiceBeanName = "userDetailService")
 @ActiveProfiles(value = PROFILE.UNITTEST)
-public class IaRepDisbPerMonthServiceTest {
+public class IaSumRepDisbPerMonthServiceTest {
 	
 	@Autowired
-	private IaGftrialBalanceService iaRepDisbPerMonthService;
+	private IaGfdrawAccountService iaGfdrawAccountService;
 	
 	@Test 
 	public void addDataByExcel() {
 		
-		iaRepDisbPerMonthService.addDataByExcel(new File("F:/เอกสารพี่นก/รายงานงบทดลองหน่วยเบิกจ่ายรายเดือน.xlsx"));
+		iaGfdrawAccountService.addDataByExcel(new File("F:/เอกสารพี่นก/รายงานสรุปรายการเบิกจ่ายของหน่วยงาน.xlsx"));
 	}
 }

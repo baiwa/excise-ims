@@ -14,6 +14,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD1;
+import th.go.excise.ims.ia.persistence.entity.IaAuditIncD3;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncH;
 import th.go.excise.ims.ia.service.Int0601Service;
 import th.go.excise.ims.ia.vo.IaAuditIncD2Vo;
@@ -99,6 +100,22 @@ public class Int0601Controller {
 		ResponseData<List<IaAuditIncD1>> response = new ResponseData<List<IaAuditIncD1>>();
 		try {
 			response.setData(int0601Service.findIaAuditIncD1ByAuditIncNo(auditIncNo));
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	@PostMapping("/find-tab3")
+	@ResponseBody
+	public ResponseData<List<IaAuditIncD3>> findTab3 (@RequestBody Int0601RequestVo request) {
+		ResponseData<List<IaAuditIncD3>> response = new ResponseData<List<IaAuditIncD3>>();
+		try {
+			response.setData(int0601Service.findIaAuditIncD3ByCriteria(request));
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

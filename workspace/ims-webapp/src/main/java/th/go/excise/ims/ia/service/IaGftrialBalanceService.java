@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
-import th.go.excise.ims.ia.persistence.entity.IaRepDisbPerMonth;
-import th.go.excise.ims.ia.persistence.repository.IaRepDisbPerMonthRepository;
+import th.go.excise.ims.ia.persistence.entity.IaGftrialBalance;
+import th.go.excise.ims.ia.persistence.repository.IaGftrialBalanceRepository;
 
 @Service
-public class IaRepDisbPerMonthService {
+public class IaGftrialBalanceService {
 
 	@Autowired
-	private IaRepDisbPerMonthRepository iaRepDisbPerMonthRepository;
+	private IaGftrialBalanceRepository iaGftrialBalanceRepository;
 	
 	private final String KEY_FILTER  = "User name     :";
 
@@ -40,8 +40,8 @@ public class IaRepDisbPerMonthService {
 			String periodFrom = "";
 			String periodTo = "";
 			String periodYear = "";
-			List<IaRepDisbPerMonth> iaRepDisbPerMonthList = new ArrayList<>();
-			IaRepDisbPerMonth iaRepDisbPerMonth = new IaRepDisbPerMonth();
+			List<IaGftrialBalance> iaRepDisbPerMonthList = new ArrayList<>();
+			IaGftrialBalance iaRepDisbPerMonth = new IaGftrialBalance();
 			List<List<String>> allLine = ExcelUtils.readExcel(file);
 			for (List<String> line : allLine) {
 				if (line != null && line.size() == 5 && line.get(0) != null && KEY_FILTER.equals(line.get(0).trim())) {
@@ -52,7 +52,7 @@ public class IaRepDisbPerMonthService {
 					periodTo = periodData[3];
 					periodYear = periodData[5];
 				}else if(line != null && line.size() == 6) {
-					iaRepDisbPerMonth = new IaRepDisbPerMonth();
+					iaRepDisbPerMonth = new IaGftrialBalance();
 					iaRepDisbPerMonth.setDepartmentCode(departmentCode);
 					iaRepDisbPerMonth.setPeriodFrom(periodFrom);
 					iaRepDisbPerMonth.setPeriodTo(periodTo);
@@ -66,7 +66,7 @@ public class IaRepDisbPerMonthService {
 					iaRepDisbPerMonthList.add(iaRepDisbPerMonth);
 				}
 			}
-			iaRepDisbPerMonthRepository.batchInsert(iaRepDisbPerMonthList);
+			iaGftrialBalanceRepository.batchInsert(iaRepDisbPerMonthList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

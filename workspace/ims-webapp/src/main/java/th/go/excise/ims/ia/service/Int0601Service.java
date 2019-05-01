@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD1;
+import th.go.excise.ims.ia.persistence.entity.IaAuditIncD3;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncH;
 import th.go.excise.ims.ia.persistence.repository.IaAuditIncD1Repository;
 import th.go.excise.ims.ia.persistence.repository.IaAuditIncD2Repository;
@@ -91,6 +92,9 @@ public class Int0601Service {
 	public List<IaAuditIncD1> findIaAuditIncD1ByAuditIncNo(String  auditIncNo){
 		return iaAuditIncD1Repository.findByAuditIncNoOrderByReceiptNo(auditIncNo);
 	} 
+	public List<IaAuditIncD3> findIaAuditIncD3ByCriteria(Int0601RequestVo criteria){
+		return int0601JdbcRepository.findDataTab3(criteria);
+	}
 	
 	
 	
