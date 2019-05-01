@@ -111,9 +111,9 @@ public class Int0601Controller {
 	
 	
 	
-	@PostMapping("/find-tab1-by-auditnumber/{auditIncNo}")
+	@PostMapping("/find-tab1-by-auditnumber")
 	@ResponseBody
-	public ResponseData<List<IaAuditIncD1>> findIaAuditIncD1ByAuditIncNo(@PathVariable("auditIncNo") String auditIncNo) {
+	public ResponseData<List<IaAuditIncD1>> findIaAuditIncD1ByAuditIncNo(@RequestBody String auditIncNo) {
 		ResponseData<List<IaAuditIncD1>> response = new ResponseData<List<IaAuditIncD1>>();
 		try {
 			response.setData(int0601Service.findIaAuditIncD1ByAuditIncNo(auditIncNo));
