@@ -47,18 +47,7 @@ public class IaAuditIncD1 extends BaseEntity {
 	private BigDecimal amount;
 	@Column(name = "REMARK")
 	private String remark;
-	@Column(name = "IS_DELETED")
-	private String isDeleted;
-	@Column(name = "VERSION")
-	private BigDecimal version;
-	@Column(name = "CREATED_BY")
-	private String createdBy;
-	@Column(name = "CREATED_DATE")
-	private Date createdDate;
-	@Column(name = "UPDATED_BY")
-	private String updatedBy;
-	@Column(name = "UPDATED_DATE")
-	private Date updatedDate;
+	
 
 	public Long getIaAuditIncDId() {
 		return iaAuditIncDId;
