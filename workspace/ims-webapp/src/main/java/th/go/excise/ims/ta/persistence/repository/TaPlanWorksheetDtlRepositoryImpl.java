@@ -104,6 +104,18 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 			vo.setAnalysisNumber(rs.getString("ANALYSIS_NUMBER"));
 			vo.setNewRegId(rs.getString("NEW_REG_ID"));
 			vo.setAuditStatus(rs.getString("AUDIT_STATUS"));
+			String auditType = "-";
+			if (StringUtils.isNotEmpty(rs.getString("AUDIT_TYPE"))) {
+				auditType = ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_AUDIT_TYPE, rs.getString("AUDIT_TYPE")).getValue1();
+			}
+			vo.setAuditType(auditType);
+			String auditDate = "-";
+			String start = ConvertDateUtils.formatDateToString(rs.getDate("AUDIT_START_DATE"), ConvertDateUtils.DD_MM_YYYY);
+			String end = ConvertDateUtils.formatDateToString(rs.getDate("AUDIT_END_DATE"), ConvertDateUtils.DD_MM_YYYY);
+			if (StringUtils.isNotEmpty(start) && StringUtils.isNotEmpty(end)) {
+				auditDate = start + " - " +end;
+			}
+			vo.setAuditDate(auditDate);
 			vo.setAuditStatusDesc(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_AUDIT_STATUS, rs.getString("AUDIT_STATUS")).getValue1());
 			return vo;
 		}

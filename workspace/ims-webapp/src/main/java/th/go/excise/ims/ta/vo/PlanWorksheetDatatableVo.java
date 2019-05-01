@@ -18,6 +18,8 @@ public class PlanWorksheetDatatableVo {
 	private String condMainGrp;
 	private String auditStatus;
 	private String auditStatusDesc;
+	private String auditType;
+	private String auditDate;
 
 	public String getCusFullname() {
 		return cusFullname;
@@ -145,6 +147,22 @@ public class PlanWorksheetDatatableVo {
 
 	public void setAuditStatusDesc(String auditStatusDesc) {
 		this.auditStatusDesc = auditStatusDesc;
+	}
+
+	public String getAuditType() {
+		return auditType;
+	}
+
+	public void setAuditType(String auditType) {
+		this.auditType = auditType;
+	}
+
+	public String getAuditDate() {
+		return auditDate;
+	}
+
+	public void setAuditDate(String auditDate) {
+		this.auditDate = auditDate;
 	}
 
 }
