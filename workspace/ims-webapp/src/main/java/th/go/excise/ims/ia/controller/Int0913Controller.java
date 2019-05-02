@@ -15,11 +15,11 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
-import th.go.excise.ims.ia.persistence.entity.IaUtilityBill;
 import th.go.excise.ims.ia.service.Int0913Service;
 import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
 import th.go.excise.ims.ia.vo.ExciseDepartmentVo;
 import th.go.excise.ims.ia.vo.Int091301ResultSearchVo;
+import th.go.excise.ims.ia.vo.Int091301SaveVo;
 import th.go.excise.ims.ia.vo.Int091301SearchVo;
 
 @Controller
@@ -48,9 +48,10 @@ public class Int0913Controller {
 	
 	@PostMapping("/find-091302-save")
 	@ResponseBody
-	public ResponseData<?> saveIaUtilityBill(@RequestBody IaUtilityBill request) {
+	public ResponseData<?> saveIaUtilityBill(@RequestBody Int091301SaveVo request) {
 		ResponseData response = new ResponseData();
 		try {
+			int0913Service.saveIaUtilityBill(request);
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
