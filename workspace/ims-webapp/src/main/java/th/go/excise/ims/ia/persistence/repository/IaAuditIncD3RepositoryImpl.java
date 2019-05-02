@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
-import th.go.excise.ims.ia.persistence.entity.IaAuditIncD3;
+import th.go.excise.ims.ia.vo.IaAuditIncD3Vo;
 
 public class IaAuditIncD3RepositoryImpl implements IaAuditIncD3RepositoryCustom {
 
@@ -20,7 +20,7 @@ public class IaAuditIncD3RepositoryImpl implements IaAuditIncD3RepositoryCustom 
 	private CommonJdbcTemplate commonJdbcTemplate;
 
 	@Override
-	public void batchInsert(List<IaAuditIncD3> iaAuditIncD3List) {
+	public void batchInsert(List<IaAuditIncD3Vo> iaAuditIncD3List) {
 		String sql = SqlGeneratorUtils.genSqlInsert("IA_AUDIT_INC_D3", Arrays.asList(
 				"IA_AUDIT_INC_D3_ID"
 				,"TAX_CODE"
@@ -32,8 +32,8 @@ public class IaAuditIncD3RepositoryImpl implements IaAuditIncD3RepositoryCustom 
 
 		String username = UserLoginUtils.getCurrentUsername();
 
-		commonJdbcTemplate.batchUpdate(sql, iaAuditIncD3List, 1000, new ParameterizedPreparedStatementSetter<IaAuditIncD3>() {
-			public void setValues(PreparedStatement ps, IaAuditIncD3 iaAuditInc) throws SQLException {
+		commonJdbcTemplate.batchUpdate(sql, iaAuditIncD3List, 1000, new ParameterizedPreparedStatementSetter<IaAuditIncD3Vo>() {
+			public void setValues(PreparedStatement ps, IaAuditIncD3Vo iaAuditInc) throws SQLException {
 				List<Object> paramList = new ArrayList<Object>();
 				paramList.add(iaAuditInc.getTaxCode());
 				paramList.add(iaAuditInc.getTaxName());
