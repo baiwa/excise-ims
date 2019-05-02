@@ -17,7 +17,7 @@ import th.go.excise.ims.ia.persistence.entity.IaAuditIncD1;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD3;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncH;
 import th.go.excise.ims.ia.service.Int0601Service;
-import th.go.excise.ims.ia.vo.IaAuditIncD2DatatableDtlVo;
+import th.go.excise.ims.ia.vo.IaAuditIncD3DatatableDtlVo;
 import th.go.excise.ims.ia.vo.IaAuditIncD2Vo;
 import th.go.excise.ims.ia.vo.Int0601RequestVo;
 import th.go.excise.ims.ia.vo.Int0601SaveVo;
@@ -93,12 +93,12 @@ public class Int0601Controller {
 		return response;
 	}
 	
-	@PostMapping("/find-tab2-dtl")
+	@PostMapping("/find-tab3-dtl")
 	@ResponseBody
-	public ResponseData<IaAuditIncD2DatatableDtlVo> findTab2Dtl(@RequestBody Int0601RequestVo request) {
-		ResponseData<IaAuditIncD2DatatableDtlVo> response = new ResponseData<IaAuditIncD2DatatableDtlVo>();
+	public ResponseData<IaAuditIncD3DatatableDtlVo> findTab2Dtl(@RequestBody Int0601RequestVo request) {
+		ResponseData<IaAuditIncD3DatatableDtlVo> response = new ResponseData<IaAuditIncD3DatatableDtlVo>();
 		try {
-			response.setData(int0601Service.findTab2Dtl(request));
+			response.setData(int0601Service.findTab3Dtl(request));
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

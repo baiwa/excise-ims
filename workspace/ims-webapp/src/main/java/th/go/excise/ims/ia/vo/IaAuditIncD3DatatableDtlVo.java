@@ -6,7 +6,7 @@ import java.util.List;
 
 import th.go.excise.ims.ws.persistence.entity.WsIncfri8020Inc;
 
-public class IaAuditIncD2DatatableDtlVo {
+public class IaAuditIncD3DatatableDtlVo {
 	private List<WsIncfri8020Inc> wsIncfri8020Inc;
 	private BigDecimal sumAmt;
 	
