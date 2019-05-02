@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.persistence.entity.IaUtilityBill;
 import th.go.excise.ims.ia.persistence.repository.IaUtilityBillRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0913JdbcRepository;
@@ -33,8 +35,8 @@ public class Int0913Service {
 			entity = iaUtilityBillRepository.findById(vo.getUtilityBillSeq()).get();
 		}else {
 			entity = new IaUtilityBill();
+			entity.setExciseCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 		}
-		entity.setExciseCode(vo.getExciseCode());
 		entity.setUbillType(vo.getUbillType());
 		entity.setMonthWdPay(vo.getMonthWdPay());
 		entity.setInvoiceSeq(vo.getInvoiceSeq());
