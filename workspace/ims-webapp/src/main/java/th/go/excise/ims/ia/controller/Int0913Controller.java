@@ -61,7 +61,7 @@ public class Int0913Controller {
 		}
 		return response;
 	}
-	@PostMapping("/find-091302-delete/{}")
+	@PostMapping("/find-091302-delete/{id}")
 	@ResponseBody
 	public ResponseData<?> deleteIaUtilityBill(@PathVariable("id") Long id) {
 		ResponseData response = new ResponseData();
