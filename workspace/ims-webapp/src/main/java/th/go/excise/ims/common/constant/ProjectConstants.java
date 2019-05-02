@@ -31,4 +31,13 @@ public class ProjectConstants {
 		public static final String SUCCESS = "S";
 	}
 	
+	public static class QUARTER {
+		public static final String[] Q1 = {"10","11","12"};
+		public static final String[] Q2 = {"01","02","03"};
+		public static final String[] Q3 = {"04","05","06"};
+		public static final String[] Q4 = {"07","08","09"};
+	}
+	
+	
+	
 }

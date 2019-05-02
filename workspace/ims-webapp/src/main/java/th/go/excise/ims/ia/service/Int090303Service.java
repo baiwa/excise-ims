@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import th.go.excise.ims.ia.persistence.entity.IaCheckControlRegis;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int090303JdbcRepository;
-import th.go.excise.ims.ia.vo.Int030102FormVo;
 import th.go.excise.ims.ia.vo.Int0900303FormVo;
 
 @Service
