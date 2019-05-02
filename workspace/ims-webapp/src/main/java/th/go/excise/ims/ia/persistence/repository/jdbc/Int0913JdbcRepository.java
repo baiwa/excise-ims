@@ -35,7 +35,7 @@ public class Int0913JdbcRepository {
 			paramList.add(vo.getUbillType());
 		}
 		if (StringUtils.isNoneBlank(vo.getOfficeCode())) {
-			sql.append(" AND U.EXCISE_CODE = ? ");
+			sql.append(" AND U.EXCISE_CODE LIKE ? ");
 			paramList.add(ExciseUtils.whereInLocalOfficeCode(vo.getOfficeCode()));
 		}
 		if (StringUtils.isNoneBlank(vo.getMonthWdPayFrom())) {
