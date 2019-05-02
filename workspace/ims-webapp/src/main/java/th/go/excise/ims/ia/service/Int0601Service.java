@@ -1,16 +1,19 @@
 
 package th.go.excise.ims.ia.service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD1;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD3;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncH;
@@ -19,6 +22,7 @@ import th.go.excise.ims.ia.persistence.repository.IaAuditIncD2Repository;
 import th.go.excise.ims.ia.persistence.repository.IaAuditIncD3Repository;
 import th.go.excise.ims.ia.persistence.repository.IaAuditIncHRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0601JdbcRepository;
+import th.go.excise.ims.ia.vo.IaAuditIncD1Vo;
 import th.go.excise.ims.ia.vo.IaAuditIncD2DatatableDtlVo;
 import th.go.excise.ims.ia.vo.IaAuditIncD2Vo;
 import th.go.excise.ims.ia.vo.Int0601RequestVo;
@@ -50,13 +54,12 @@ public class Int0601Service {
 		return int0601JdbcRepository.findByCriteria(int0601Vo);
 	}
 	
-	public IaAuditIncH createIaAuditInc(Int0601SaveVo vo) {
+	public IaAuditIncH createIaAuditInc(Int0601SaveVo int0601SaveVo) throws IllegalAccessException, InvocationTargetException {
 		logger.info("insert IaAuditIncH");
-		IaAuditIncH iaAuditIncH = vo.getIaAuditIncH();
+		IaAuditIncH iaAuditIncH = int0601SaveVo.getIaAuditIncH();
 		String auditIncNo = "";
 		if (iaAuditIncH != null && iaAuditIncH.getAuditIncSeq() != null) {
-
-			iaAuditIncH = iaAuditIncHRepository.findById(vo.getIaAuditIncH().getAuditIncSeq()).get();
+			iaAuditIncH = iaAuditIncHRepository.findById(int0601SaveVo.getIaAuditIncH().getAuditIncSeq()).get();
 			auditIncNo = iaAuditIncH.getAuditIncNo();
 		} else {
 			auditIncNo = iaAuditIncH.getOfficeCode() + "/" + iaAuditIncHRepository.generateAuditIncNo();
@@ -65,17 +68,39 @@ public class Int0601Service {
 		}
 		if (iaAuditIncH.getAuditIncSeq() != null) {
 			logger.info("insert IaAuditIncH Completed ");
-			if (vo.getIaAuditIncD1List() != null && vo.getIaAuditIncD1List().size() > 0) {
+			if (int0601SaveVo.getIaAuditIncD1List() != null && int0601SaveVo.getIaAuditIncD1List().size() > 0) {
 				logger.info("insert Drtail : 1 ");
-				iaAuditIncD1Repository.batchInsert(vo.getIaAuditIncD1List(), auditIncNo);
+				List<IaAuditIncD1> entitySaveList = new ArrayList<>();
+				List<IaAuditIncD1> entityUpdateList = new ArrayList<>();
+				IaAuditIncD1 d1 = null;
+				for (IaAuditIncD1Vo vo : int0601SaveVo.getIaAuditIncD1List()) {
+					d1 = new IaAuditIncD1();
+					d1.setIaAuditIncDId(vo.getIaAuditIncDId());
+					d1.setAuditIncNo(vo.getAuditIncNo());
+					d1.setOfficeCode(vo.getOfficeCode());
+					d1.setDocCtlNo(vo.getDocCtlNo());
+					d1.setReceiptNo(vo.getReceiptNo());
+					d1.setRunCheck(vo.getRunCheck());
+					d1.setReceiptDate(ConvertDateUtils.parseStringToDate(vo.getReceiptDate(), ConvertDateUtils.YYYY_MM_DD , ConvertDateUtils.LOCAL_TH));
+					d1.setTaxName(vo.getTaxName());
+					d1.setTaxCode(vo.getTaxCode());
+					d1.setAmount(vo.getAmount());
+					d1.setRemark(vo.getRemark());
+					if(d1.getIaAuditIncDId() == null) {
+						entitySaveList.add(d1);
+					}else {
+						entityUpdateList.add(d1);
+					}
+				}
+				iaAuditIncD1Repository.batchInsert(entitySaveList, auditIncNo);
 			}
-			if (vo.getIaAuditIncD2List() != null && vo.getIaAuditIncD2List().size() > 0) {
+			if (int0601SaveVo.getIaAuditIncD2List() != null && int0601SaveVo.getIaAuditIncD2List().size() > 0) {
 				logger.info("insert Drtail : 2 ");
-				iaAuditIncD2Repository.batchInsert(vo.getIaAuditIncD2List());
+				iaAuditIncD2Repository.batchInsert(int0601SaveVo.getIaAuditIncD2List());
 			}
-			if (vo.getIaAuditIncD3List() != null && vo.getIaAuditIncD3List().size() > 0) {
+			if (int0601SaveVo.getIaAuditIncD3List() != null && int0601SaveVo.getIaAuditIncD3List().size() > 0) {
 				logger.info("insert Drtail : 3 ");
-				iaAuditIncD3Repository.batchInsert(vo.getIaAuditIncD3List());
+				iaAuditIncD3Repository.batchInsert(int0601SaveVo.getIaAuditIncD3List());
 			}
 		} else {
 			logger.info("insert IaAuditIncH incomplet ");

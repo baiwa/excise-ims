@@ -19,13 +19,13 @@ import th.go.excise.ims.ia.vo.Int091301ResultSearchVo;
 import th.go.excise.ims.ia.vo.Int091301SearchVo;
 
 @Controller
-@RequestMapping("/api/ia/int091301")
-public class Int0913Controller {
+@RequestMapping("/api/ia/int091303")
+public class Int091303Controller {
 
 	@Autowired
 	private Int0913Service int0913Service;
 	
-	@PostMapping("/find-091301-search")
+	@PostMapping("/find-091303-search")
 	@ResponseBody
 	public ResponseData<List<Int091301ResultSearchVo>> findIaUtilityBill(@RequestBody Int091301SearchVo request) {
 		ResponseData<List<Int091301ResultSearchVo>> response = new ResponseData<List<Int091301ResultSearchVo>>();
