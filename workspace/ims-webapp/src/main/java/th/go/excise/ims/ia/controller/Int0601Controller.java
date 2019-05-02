@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD1;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD3;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncH;
@@ -55,7 +56,7 @@ public class Int0601Controller {
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;

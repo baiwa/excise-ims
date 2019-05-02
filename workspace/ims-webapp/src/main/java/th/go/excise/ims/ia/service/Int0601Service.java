@@ -86,6 +86,13 @@ public class Int0601Service {
 					d1.setTaxCode(vo.getTaxCode());
 					d1.setAmount(vo.getAmount());
 					d1.setRemark(vo.getRemark());
+
+					// Tab 4
+					d1.setCheckTax0307(vo.getCheckTax0307());
+					d1.setCheckStamp(vo.getCheckStamp());
+					d1.setCheckTax0307(vo.getCheckTax0307());
+					d1.setRemarkTax(vo.getRemarkTax());
+
 					if(d1.getIaAuditIncDId() == null) {
 						entitySaveList.add(d1);
 					}else {
