@@ -1,9 +1,9 @@
 package th.go.excise.ims.ia.persistence.repository;
 
+import th.go.excise.ims.ia.vo.IaAuditIncD2Vo;
+
 import java.util.List;
 
-import th.go.excise.ims.ia.persistence.entity.IaAuditIncD2;
-
 public interface IaAuditIncD2RepositoryCustom {
-	public void batchInsert( List<IaAuditIncD2> wsAuditIncD2List );
+	public void batchInsert( List<IaAuditIncD2Vo> wsAuditIncD2List );
 }

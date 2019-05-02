@@ -134,8 +134,8 @@ public class Int0601JdbcRepository {
 			IaAuditIncD2Vo vo = new IaAuditIncD2Vo();
 		
 			vo.setReceiptDate(ConvertDateUtils.formatDateToString(rs.getDate("RECEIPT_DATE"), ConvertDateUtils.YYYY_MM_DD, ConvertDateUtils.LOCAL_EN));
-			vo.setAmount(rs.getString("NET_TAX_AMT"));
-			vo.setPrintPerDay(rs.getString("PRINT_PER_DAY"));
+			vo.setAmount(rs.getBigDecimal("NET_TAX_AMT"));
+			vo.setPrintPerDay(rs.getBigDecimal("PRINT_PER_DAY"));
 			return vo;
 		}
 	};
