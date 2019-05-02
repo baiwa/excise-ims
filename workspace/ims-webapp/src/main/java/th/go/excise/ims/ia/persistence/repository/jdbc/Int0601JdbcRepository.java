@@ -51,9 +51,9 @@ public class Int0601JdbcRepository {
 			sql.append(" AND WS.RECEIPT_DATE <= ? ");
 			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		}
-		if (StringUtils.isNotEmpty(criteria.getReceiptDatefixDate())) {
-			sql.append(" AND TRUNC(WS.RECEIPT_DATE) = ? ");
-			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+		if (StringUtils.isNotEmpty(criteria.getTaxCode())) {
+			sql.append(" AND WS.INCOME_CODE = ? ");
+			paramList.add(criteria.getTaxCode());
 		}
 
 		sql.append(" ORDER BY RECEIPT_NO ");

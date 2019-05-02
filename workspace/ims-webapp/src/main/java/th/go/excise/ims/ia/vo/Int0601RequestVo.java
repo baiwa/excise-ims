@@ -5,7 +5,8 @@ public class Int0601RequestVo {
 	private String officeReceive;
 	private String receiptDateFrom;
 	private String receiptDateTo;
-	private String receiptDatefixDate;
+	private String taxCode;
+	
 	public String getOfficeReceive() {
 		return officeReceive;
 	}
@@ -24,12 +25,11 @@ public class Int0601RequestVo {
 	public void setReceiptDateTo(String receiptDateTo) {
 		this.receiptDateTo = receiptDateTo;
 	}
-	public String getReceiptDatefixDate() {
-		return receiptDatefixDate;
+	public String getTaxCode() {
+		return taxCode;
 	}
-	public void setReceiptDatefixDate(String receiptDatefixDate) {
-		this.receiptDatefixDate = receiptDatefixDate;
+	public void setTaxCode(String taxCode) {
+		this.taxCode = taxCode;
 	}
-
-
+	 
 }

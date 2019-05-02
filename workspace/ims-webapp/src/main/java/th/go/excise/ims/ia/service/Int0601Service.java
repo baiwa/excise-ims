@@ -22,8 +22,8 @@ import th.go.excise.ims.ia.persistence.repository.IaAuditIncD3Repository;
 import th.go.excise.ims.ia.persistence.repository.IaAuditIncHRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0601JdbcRepository;
 import th.go.excise.ims.ia.vo.IaAuditIncD1Vo;
-import th.go.excise.ims.ia.vo.IaAuditIncD2DatatableDtlVo;
 import th.go.excise.ims.ia.vo.IaAuditIncD2Vo;
+import th.go.excise.ims.ia.vo.IaAuditIncD3DatatableDtlVo;
 import th.go.excise.ims.ia.vo.Int0601RequestVo;
 import th.go.excise.ims.ia.vo.Int0601SaveVo;
 import th.go.excise.ims.ws.persistence.entity.WsIncfri8020Inc;
@@ -130,16 +130,16 @@ public class Int0601Service {
 	public List<IaAuditIncD3> findIaAuditIncD3ByCriteria(Int0601RequestVo criteria){
 		return int0601JdbcRepository.findDataTab3(criteria);
 	}
-	public IaAuditIncD2DatatableDtlVo findTab2Dtl(Int0601RequestVo criteria){
-		IaAuditIncD2DatatableDtlVo iaAuditIncD2DatatableDtlVo = new IaAuditIncD2DatatableDtlVo();
+	public IaAuditIncD3DatatableDtlVo findTab3Dtl(Int0601RequestVo criteria){
+		IaAuditIncD3DatatableDtlVo iaAuditIncD3DatatableDtlVo = new IaAuditIncD3DatatableDtlVo();
 		List<WsIncfri8020Inc> wsIncfri8020IncList = int0601JdbcRepository.findByCriteria(criteria);
 		BigDecimal sumAmt = BigDecimal.ZERO;
 		for (WsIncfri8020Inc wsIncfri8020Inc : wsIncfri8020IncList) {
-			sumAmt.add(wsIncfri8020Inc.getNetLocAmt());
+			sumAmt = sumAmt.add(wsIncfri8020Inc.getNetLocAmt());
 		}
-		iaAuditIncD2DatatableDtlVo.setWsIncfri8020Inc(wsIncfri8020IncList);
-		iaAuditIncD2DatatableDtlVo.setSumAmt(sumAmt);
-		return iaAuditIncD2DatatableDtlVo;
+		iaAuditIncD3DatatableDtlVo.setWsIncfri8020Inc(wsIncfri8020IncList);
+		iaAuditIncD3DatatableDtlVo.setSumAmt(sumAmt);
+		return iaAuditIncD3DatatableDtlVo;
 	}
 	
 	
