@@ -52,7 +52,7 @@ public class Int0601Controller {
 		ResponseData<IaAuditIncH> response = new ResponseData<IaAuditIncH>();
 		try {
 			response.setData(int0601Service.createIaAuditInc(request));
-			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
