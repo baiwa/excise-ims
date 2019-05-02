@@ -2,7 +2,6 @@ package th.go.excise.ims.ia.vo;
 
 import java.util.List;
 
-import th.go.excise.ims.ia.persistence.entity.IaAuditIncD2;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD3;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncH;
 

@@ -150,11 +150,7 @@ public class Int0601JdbcRepository {
 		sql.append(" COUNT(1) COUNT_RECEIPT ");
 		sql.append(" FROM ");
 		sql.append(" WS_INCFRI8020_INC WS ");
-		sql.append(" GROUP BY ");
-		sql.append(" WS.INCOME_CODE, ");
-		sql.append(" WS.INCOME_NAME ");
-		sql.append(" ORDER BY ");
-		sql.append(" WS.INCOME_CODE ");
+		
 		sql.append(" WHERE WS.IS_DELETED = '").append(FLAG.N_FLAG).append("'");
 
 		if (StringUtils.isNoneBlank(criteria.getOfficeReceive())) {
@@ -171,7 +167,11 @@ public class Int0601JdbcRepository {
 			sql.append(" AND WS.RECEIPT_DATE <= ? ");
 			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		}
-		sql.append(" ORDER BY WS.INCOME_CODE ");
+		sql.append(" GROUP BY ");
+		sql.append(" WS.INCOME_CODE, ");
+		sql.append(" WS.INCOME_NAME ");
+		sql.append(" ORDER BY ");
+		sql.append(" WS.INCOME_CODE ");
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), tab3RowMapper);
 	}
 	

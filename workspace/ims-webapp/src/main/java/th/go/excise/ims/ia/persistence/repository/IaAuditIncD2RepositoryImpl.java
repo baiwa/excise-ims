@@ -1,18 +1,19 @@
 package th.go.excise.ims.ia.persistence.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
-import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
-import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
-import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
-import th.go.excise.ims.ia.persistence.entity.IaAuditIncD2;
-import th.go.excise.ims.ia.vo.IaAuditIncD2Vo;
-
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
+
+import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.ia.vo.IaAuditIncD2Vo;
 
 public class IaAuditIncD2RepositoryImpl implements IaAuditIncD2RepositoryCustom{
 
@@ -33,7 +34,7 @@ public class IaAuditIncD2RepositoryImpl implements IaAuditIncD2RepositoryCustom{
 		commonJdbcTemplate.batchUpdate(sql, iaAuditIncD2List, 1000, new ParameterizedPreparedStatementSetter<IaAuditIncD2Vo>() {
 			public void setValues(PreparedStatement ps, IaAuditIncD2Vo iaAuditInc) throws SQLException {
 				List<Object> paramList = new ArrayList<Object>();
-				paramList.add(iaAuditInc.getReceiptDate());
+				paramList.add(ConvertDateUtils.parseStringToDate(iaAuditInc.getReceiptDate(), ConvertDateUtils.YYYY_MM_DD, ConvertDateUtils.LOCAL_EN));
 				paramList.add(iaAuditInc.getAmount());
 				paramList.add(iaAuditInc.getPrintPerDay());
 				paramList.add(iaAuditInc.getAuditCheck());
