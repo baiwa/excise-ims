@@ -26,19 +26,24 @@ public class Int0913JdbcRepository {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT * FROM IA_UTILITY_BILL U WHERE U.IS_DELETED = 'N' ");
+		if(vo.getUtilityBillSeq()!=null) {
+			sql.append(" AND UTILITY_BILL_SEQ = ? ");
+			paramList.add(vo.getUtilityBillSeq());
+		}
 		if (StringUtils.isNoneBlank(vo.getUbillType())) {
-			sql.append(" AND U.UBILL_TYPE = ?");
+			sql.append(" AND U.UBILL_TYPE = ? ");
+			paramList.add(vo.getUbillType());
 		}
 		if (StringUtils.isNoneBlank(vo.getOfficeCode())) {
-			sql.append(" AND U.EXCISE_CODE = ?");
+			sql.append(" AND U.EXCISE_CODE = ? ");
 			paramList.add(ExciseUtils.whereInLocalOfficeCode(vo.getOfficeCode()));
 		}
 		if (StringUtils.isNoneBlank(vo.getMonthWdPayFrom())) {
-			sql.append(" AND U.MONTH_WD_PAY >= ?");
+			sql.append(" AND U.MONTH_WD_PAY >= ? ");
 			paramList.add(vo.getMonthWdPayFrom());
 		}
 		if (StringUtils.isNoneBlank(vo.getMonthWdPayTo())) {
-			sql.append(" AND U.MONTH_WD_PAY <= ?");
+			sql.append(" AND U.MONTH_WD_PAY <= ? ");
 			paramList.add(vo.getMonthWdPayFrom());
 		}
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), int091301Mapping);
