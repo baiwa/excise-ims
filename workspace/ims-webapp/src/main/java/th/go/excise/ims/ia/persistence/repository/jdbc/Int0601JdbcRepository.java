@@ -133,7 +133,7 @@ public class Int0601JdbcRepository {
 		public IaAuditIncD2Vo mapRow(ResultSet rs, int rowNum) throws SQLException {
 			IaAuditIncD2Vo vo = new IaAuditIncD2Vo();
 		
-			vo.setReceiptDate(ConvertDateUtils.formatDateToString(rs.getDate("RECEIPT_DATE"), ConvertDateUtils.DD_MM_YYYY));
+			vo.setReceiptDate(ConvertDateUtils.formatDateToString(rs.getDate("RECEIPT_DATE"), ConvertDateUtils.YYYY_MM_DD, ConvertDateUtils.LOCAL_EN));
 			vo.setAmount(rs.getString("NET_TAX_AMT"));
 			vo.setPrintPerDay(rs.getString("PRINT_PER_DAY"));
 			return vo;

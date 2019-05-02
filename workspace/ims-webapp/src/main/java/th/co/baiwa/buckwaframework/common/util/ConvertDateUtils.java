@@ -33,6 +33,7 @@ public class ConvertDateUtils {
 	public static final String DD_MMM_YYYY_SPAC = "dd MMM yyyy";
 	public static final String DD_MMMM_YYYY_SPAC = "dd MMMM yyyy";
 	public static final String DD_MM_YY = "dd/MM/yy";
+	public static final String YYYY_MM_DD = "yyyy-MM-dd";
 	public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 	public static final String DD_MM_YYYY_HHMMSS = "dd/MM/yyyy HH:mm:ss";
 
