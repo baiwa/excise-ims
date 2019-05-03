@@ -135,7 +135,7 @@ public class Int0601Service {
 		List<WsIncfri8020Inc> wsIncfri8020IncList = int0601JdbcRepository.findByCriteria(criteria);
 		BigDecimal sumAmt = BigDecimal.ZERO;
 		for (WsIncfri8020Inc wsIncfri8020Inc : wsIncfri8020IncList) {
-			sumAmt = sumAmt.add(wsIncfri8020Inc.getNetLocAmt());
+			sumAmt = sumAmt.add(wsIncfri8020Inc.getNetTaxAmt());
 		}
 		iaAuditIncD3DatatableDtlVo.setWsIncfri8020Inc(wsIncfri8020IncList);
 		iaAuditIncD3DatatableDtlVo.setSumAmt(sumAmt);
