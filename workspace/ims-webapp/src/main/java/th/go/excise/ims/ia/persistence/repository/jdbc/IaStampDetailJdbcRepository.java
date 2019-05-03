@@ -15,6 +15,7 @@ import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.vo.Int120101FormVo;
 import th.go.excise.ims.ia.vo.Int120101Vo;
@@ -33,6 +34,10 @@ public class IaStampDetailJdbcRepository {
 		if (StringUtils.isNotBlank(formVo.getParamCode())) {
 			sql.append(" AND STATUS = ? ");
 			params.add(ApplicationCache.getParamInfoByCode(IaConstants.STAMP_STATUS.PARAM_GROUP_CODE, formVo.getParamCode()).getValue1());
+		}
+		if (StringUtils.isNoneBlank(formVo.getOfficeCode())) {
+			sql.append(" AND OFFICE_CODE LIKE ? ");
+			params.add(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
 		}
 //		if (StringUtils.isNotBlank(formVo.getSector())) {
 //			sql.append(" AND EXCISE_DEPARTMENT = ? ");
@@ -65,6 +70,10 @@ public class IaStampDetailJdbcRepository {
 		if (StringUtils.isNotBlank(formVo.getParamCode())) {
 			sql.append(" AND STATUS = ? ");
 			params.add(ApplicationCache.getParamInfoByCode(IaConstants.STAMP_STATUS.PARAM_GROUP_CODE, formVo.getParamCode()).getValue1());
+		}
+		if (StringUtils.isNoneBlank(formVo.getOfficeCode())) {
+			sql.append(" AND OFFICE_CODE LIKE ? ");
+			params.add(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
 		}
 //		if (StringUtils.isNotBlank(formVo.getSector())) {
 //			sql.append(" AND EXCISE_DEPARTMENT = ? ");
