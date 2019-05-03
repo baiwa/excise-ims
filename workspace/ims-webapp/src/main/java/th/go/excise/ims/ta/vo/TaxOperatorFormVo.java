@@ -31,106 +31,7 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	private Integer taxMonthEnd;
 
 	private String flagPage;
-
-	private String conSubCapital;
-	private String condSubRisk;
 	private String condSubNoAuditFlag;
-
-	public String getConSubCapital() {
-		return conSubCapital;
-	}
-
-	public void setConSubCapital(String conSubCapital) {
-		this.conSubCapital = conSubCapital;
-	}
-
-	public String getCondSubRisk() {
-		return condSubRisk;
-	}
-
-	public void setCondSubRisk(String condSubRisk) {
-		this.condSubRisk = condSubRisk;
-	}
-
-	public String getCondSubNoAuditFlag() {
-		return condSubNoAuditFlag;
-	}
-
-	public void setCondSubNoAuditFlag(String condSubNoAuditFlag) {
-		this.condSubNoAuditFlag = condSubNoAuditFlag;
-	}
-
-	public String getNewRegId() {
-		return newRegId;
-	}
-
-	public void setNewRegId(String newRegId) {
-		this.newRegId = newRegId;
-	}
-
-	public String getFlagPage() {
-		return flagPage;
-	}
-
-	public void setFlagPage(String flagPage) {
-		this.flagPage = flagPage;
-	}
-
-	public String getMainCondFreqType() {
-		return mainCondFreqType;
-	}
-
-	public void setMainCondFreqType(String mainCondFreqType) {
-		this.mainCondFreqType = mainCondFreqType;
-	}
-
-	public Integer getTaxMonthStart() {
-		return taxMonthStart;
-	}
-
-	public void setTaxMonthStart(Integer taxMonthStart) {
-		this.taxMonthStart = taxMonthStart;
-	}
-
-	public Integer getTaxMonthEnd() {
-		return taxMonthEnd;
-	}
-
-	public void setTaxMonthEnd(Integer taxMonthEnd) {
-		this.taxMonthEnd = taxMonthEnd;
-	}
-
-	public String getCusFullname() {
-		return cusFullname;
-	}
-
-	public void setCusFullname(String cusFullname) {
-		this.cusFullname = cusFullname;
-	}
-
-	public String getFacFullname() {
-		return facFullname;
-	}
-
-	public void setFacFullname(String facFullname) {
-		this.facFullname = facFullname;
-	}
-
-	public String getCapital() {
-		return capital;
-	}
-
-	public void setCapital(String capital) {
-		this.capital = capital;
-	}
-
-	public String getRisk() {
-		return risk;
-	}
-
-	public void setRisk(String risk) {
-		this.risk = risk;
-	}
 
 	public String getDateStart() {
 		return dateStart;
@@ -250,6 +151,86 @@ public class TaxOperatorFormVo extends DataTableRequest {
 
 	public void setCondSub3(String condSub3) {
 		this.condSub3 = condSub3;
+	}
+
+	public String getCapital() {
+		return capital;
+	}
+
+	public void setCapital(String capital) {
+		this.capital = capital;
+	}
+
+	public String getRisk() {
+		return risk;
+	}
+
+	public void setRisk(String risk) {
+		this.risk = risk;
+	}
+
+	public String getNewRegId() {
+		return newRegId;
+	}
+
+	public void setNewRegId(String newRegId) {
+		this.newRegId = newRegId;
+	}
+
+	public String getCusFullname() {
+		return cusFullname;
+	}
+
+	public void setCusFullname(String cusFullname) {
+		this.cusFullname = cusFullname;
+	}
+
+	public String getFacFullname() {
+		return facFullname;
+	}
+
+	public void setFacFullname(String facFullname) {
+		this.facFullname = facFullname;
+	}
+
+	public String getMainCondFreqType() {
+		return mainCondFreqType;
+	}
+
+	public void setMainCondFreqType(String mainCondFreqType) {
+		this.mainCondFreqType = mainCondFreqType;
+	}
+
+	public Integer getTaxMonthStart() {
+		return taxMonthStart;
+	}
+
+	public void setTaxMonthStart(Integer taxMonthStart) {
+		this.taxMonthStart = taxMonthStart;
+	}
+
+	public Integer getTaxMonthEnd() {
+		return taxMonthEnd;
+	}
+
+	public void setTaxMonthEnd(Integer taxMonthEnd) {
+		this.taxMonthEnd = taxMonthEnd;
+	}
+
+	public String getFlagPage() {
+		return flagPage;
+	}
+
+	public void setFlagPage(String flagPage) {
+		this.flagPage = flagPage;
+	}
+
+	public String getCondSubNoAuditFlag() {
+		return condSubNoAuditFlag;
+	}
+
+	public void setCondSubNoAuditFlag(String condSubNoAuditFlag) {
+		this.condSubNoAuditFlag = condSubNoAuditFlag;
 	}
 
 }
