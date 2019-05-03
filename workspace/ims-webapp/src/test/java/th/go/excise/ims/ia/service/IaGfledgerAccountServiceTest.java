@@ -1,6 +1,7 @@
 package th.go.excise.ims.ia.service;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +24,7 @@ public class IaGfledgerAccountServiceTest {
 	private IaGfledgerAccountService iaGfledgerAccountService;
 	
 	@Test 
-	public void addDataByExcel() {
+	public void addDataByExcel() throws FileNotFoundException {
 		iaGfledgerAccountService.addDataByExcel(new File("F:\\เอกสารพี่นก\\excel\\02-05-2562\\แยกประเภท ประภัสสร.xlsx"));
 	}
 

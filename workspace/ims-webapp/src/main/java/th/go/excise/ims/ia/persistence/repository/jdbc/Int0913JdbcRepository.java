@@ -44,7 +44,7 @@ public class Int0913JdbcRepository {
 		}
 		if (StringUtils.isNoneBlank(vo.getMonthWdPayTo())) {
 			sql.append(" AND U.MONTH_WD_PAY <= ? ");
-			paramList.add(vo.getMonthWdPayFrom());
+			paramList.add(vo.getMonthWdPayTo());
 		}
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), int091301Mapping);
 	}

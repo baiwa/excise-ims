@@ -49,7 +49,7 @@ public class Int091303Service {
 		}
 		Int091301SearchVo searchVo = new Int091301SearchVo();
 		searchVo.setMonthWdPayFrom(from);
-		searchVo.setMonthWdPayFrom(to);
+		searchVo.setMonthWdPayTo(to);
 		List<Int091301ResultSearchVo> int091301ResultSearchVoList = int0913JdbcRepository.findIaUtilityBillByCriteria(searchVo);
 		Map<String, Int091303ResultVo> map = new HashMap<>();
 		Set<String> listOfKey = new HashSet<String>();

@@ -21,10 +21,8 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 @Table(name = "IA_GFDRAW_ACCOUNT")
 public class IaGfdrawAccount extends BaseEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4242843409848853425L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_GFDRAW_ACCOUNT_GEN")
 	@SequenceGenerator(name = "IA_GFDRAW_ACCOUNT_GEN", sequenceName = "IA_GFDRAW_ACCOUNT_SEQ", allocationSize = 1)
