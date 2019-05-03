@@ -20,6 +20,7 @@ public class Int120101FormVo extends DataTableRequest {
 	private String searchFlag;
 	private String paramCode;
 	private String status;
+	private String officeCode;
 
 	public String getSector() {
 		return sector;
@@ -99,6 +100,14 @@ public class Int120101FormVo extends DataTableRequest {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getOfficeCode() {
+		return officeCode;
+	}
+
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
 	}
 
 }

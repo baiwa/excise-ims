@@ -19,9 +19,12 @@ import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.service.Int120101Service;
+import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
+import th.go.excise.ims.ia.vo.ExciseDepartmentVo;
 import th.go.excise.ims.ia.vo.Int120101FormVo;
 import th.go.excise.ims.ia.vo.Int120101Vo;
 
@@ -84,5 +87,21 @@ public class Int120101Controller {
 			log.error("Error ! ==> exportFile method exportFile", e);
 		}
 
+	}
+	
+	@GetMapping("/get/department")
+	@ResponseBody
+	public ResponseData<ExciseDepartmentVo> getDepartment() {
+		ResponseData<ExciseDepartmentVo> response = new ResponseData<ExciseDepartmentVo>();
+		try {
+			response.setData(ExciseDepartmentUtil.getExciseDepartment(UserLoginUtils.getCurrentUserBean().getOfficeCode()));
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
 	}
 }
