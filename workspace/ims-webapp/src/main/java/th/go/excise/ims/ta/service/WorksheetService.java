@@ -25,6 +25,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -102,10 +103,13 @@ public class WorksheetService {
         // Sub Condition - No Audit
         TaWorksheetCondSubNoAudit condSubNoAudit = taWorksheetCondSubNoAuditRepository.findByAnalysisNumber(analysisNumber);
         List<String> budgetYearList = new ArrayList<>();
-        for (int i = 0; i < condSubNoAudit.getNoTaxAuditYearNum(); i++) {
-            budgetYearList.add(String.valueOf(Integer.parseInt(budgetYear) - (i + 1)));
+        Map<String, String> condSubNoAuditMap = new HashMap<>();
+        if (condSubNoAudit != null) {
+    		for (int i = 0; i < condSubNoAudit.getNoTaxAuditYearNum(); i++) {
+    			budgetYearList.add(String.valueOf(Integer.parseInt(budgetYear) - (i + 1)));
+    		}
+        	condSubNoAuditMap = taPlanWorksheetHisRepository.findAuditPlanCodeByOfficeCodeAndBudgetYearList(officeCode, budgetYearList);
         }
-        Map<String, String> condSubNoAuditMap = taPlanWorksheetHisRepository.findAuditPlanCodeByOfficeCodeAndBudgetYearList(officeCode, budgetYearList);
         
         
         // ==> Assessment Condition
