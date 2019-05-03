@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 
 @RunWith(SpringRunner.class)
@@ -35,8 +36,8 @@ public class WorksheetServiceTest {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
 		formVo.setBudgetYear("2562");
 		
-		List<String> analysisNumberList = worksheetService.findAllAnalysisNumber(formVo);
-		analysisNumberList.forEach(System.out::println);
+		 List<TaWorksheetHdr> bh = worksheetService.findAllAnalysisNumber(formVo);
+		
 	}
 	
 }
