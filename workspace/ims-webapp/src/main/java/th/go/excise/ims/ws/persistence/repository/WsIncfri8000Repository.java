@@ -2,6 +2,7 @@ package th.go.excise.ims.ws.persistence.repository;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRepository;
@@ -14,6 +15,6 @@ public interface WsIncfri8000Repository extends CommonJpaCrudRepository<WsIncfri
 		value = "UPDATE WS_INCFRI8000 SET IS_DELETED = '" + FLAG.Y_FLAG + "' WHERE DATE_TYPE = :dateType",
 		nativeQuery = true
 	)
-	public void queryUpdateIsDeletedY(String dateType);
+	public void queryUpdateIsDeletedY(@Param("dateType") String dateType);
 	
 }

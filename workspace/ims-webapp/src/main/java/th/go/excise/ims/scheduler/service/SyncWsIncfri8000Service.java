@@ -6,6 +6,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +42,7 @@ public class SyncWsIncfri8000Service {
 	@Autowired
 	private WsIncfri8000CreditRepository wsIncfri8000CreditRepository;
 	
+	@Transactional(rollbackOn = {Exception.class})
 	public void syncData(RequestData requestData) throws PccRestfulException {
 		logger.info("syncData Incfri8000 Start");
 		long start = System.currentTimeMillis();
@@ -48,7 +51,7 @@ public class SyncWsIncfri8000Service {
 		int indexPage = 0;
 		
 		String dateTypeCode = convertDateType(requestData.getDateType());
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMM", ConvertDateUtils.LOCAL_TH);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd", ConvertDateUtils.LOCAL_TH);
 		
 		List<Income> incomeList = null;
 		WsIncfri8000 incfri8000 = null;
