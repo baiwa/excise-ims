@@ -339,15 +339,16 @@ public class WorksheetService {
         TaxOperatorVo vo = new TaxOperatorVo();
 
         TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository.findByOfficeCodeAndBudgetYear(officeCode, budgetYear);
-        if (StringUtils.isNotBlank(formVo.getSeeDataSelect()) && planSend == null) {
-            vo.setDatas(new ArrayList<>());
-            vo.setCount(0L);
-        } else {
+		/*
+		 * if (StringUtils.isNotBlank(formVo.getSeeDataSelect()) && planSend == null) {
+		 * vo.setDatas(new ArrayList<>()); vo.setCount(0L); } else {
+		 */
             List<TaxOperatorDetailVo> list = taWorksheetDtlRepository.findByCriteria(formVo);
             vo.setDatas(TaxAuditUtils.prepareTaxOperatorDatatable(list, formVo));
             vo.setCount(taWorksheetDtlRepository.countByCriteria(formVo));
-        }
-
+		/*
+		 * }
+		 */
         return vo;
     }
 
