@@ -63,7 +63,6 @@ public class SyncWsRegfri4000Service {
 			regMaster60List = regFri4000Service.execute(requestData).getRegMaster60List();
 			if (regMaster60List != null && regMaster60List.size() > 0) {
 				logger.info("Restful Post to Regfri4000 Response size: {}", regMaster60List.size());
-				regfri4000List = new ArrayList<>();
 				for (RegMaster60 regMaster60 : regMaster60List) {
 					regfri4000 = new WsRegfri4000();
 					regfri4000.setNewRegId(regMaster60.getNewregId());
