@@ -1,8 +1,6 @@
 package th.go.excise.ims.scheduler.service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +49,6 @@ public class SyncWsIncfri8000Service {
 		int indexPage = 0;
 		
 		String dateTypeCode = convertDateType(requestData.getDateType());
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd", ConvertDateUtils.LOCAL_TH);
 		
 		List<Income> incomeList = null;
 		WsIncfri8000 incfri8000 = null;
@@ -69,16 +66,16 @@ public class SyncWsIncfri8000Service {
 					incfri8000.setRegId(income.getRegId());
 					incfri8000.setNewRegId(income.getNewregId());
 					incfri8000.setReceiptNo(income.getReceiptNo());
-					incfri8000.setReceiptDate(StringUtils.isNotBlank(income.getReceiptDate()) ? LocalDate.parse(income.getReceiptDate(), formatter) : null);
+					incfri8000.setReceiptDate(StringUtils.isNotBlank(income.getReceiptDate()) ? ConvertDateUtils.parseStringToLocalDate(income.getReceiptDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_TH) : null);
 					incfri8000.setTaxAmount(StringUtils.isNotEmpty(income.getTaxAmount()) ? new BigDecimal(income.getTaxAmount()) : BigDecimal.ZERO);
 					incfri8000.setPenAmount(StringUtils.isNotEmpty(income.getPenAmount()) ? new BigDecimal(income.getPenAmount()) : BigDecimal.ZERO);
 					incfri8000.setAddAmount(StringUtils.isNotEmpty(income.getAddAmount()) ? new BigDecimal(income.getAddAmount()) : BigDecimal.ZERO);
 					incfri8000.setReduceAmount(StringUtils.isNotEmpty(income.getReduceAmount()) ? new BigDecimal(income.getReduceAmount()) : BigDecimal.ZERO);
 					incfri8000.setCreditAmount(StringUtils.isNotEmpty(income.getCreditAmount()) ? new BigDecimal(income.getCreditAmount()) : BigDecimal.ZERO);
 					incfri8000.setOfficeReceiveCode(income.getOfficeReceiveCode());
-					incfri8000.setTrnDate(StringUtils.isNotBlank(income.getTrnDate()) ? LocalDate.parse(income.getTrnDate(), formatter) : null);
-					incfri8000.setDepositDate(StringUtils.isNotBlank(income.getDepositDate()) ? LocalDate.parse(income.getDepositDate(), formatter) : null);
-					incfri8000.setSendDate(StringUtils.isNotBlank(income.getSendDate()) ? LocalDate.parse(income.getSendDate(), formatter) : null);
+					incfri8000.setTrnDate(StringUtils.isNotBlank(income.getTrnDate()) ? ConvertDateUtils.parseStringToLocalDate(income.getTrnDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_TH) : null);
+					incfri8000.setDepositDate(StringUtils.isNotBlank(income.getDepositDate()) ? ConvertDateUtils.parseStringToLocalDate(income.getDepositDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_TH) : null);
+					incfri8000.setSendDate(StringUtils.isNotBlank(income.getSendDate()) ? ConvertDateUtils.parseStringToLocalDate(income.getSendDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_TH) : null);
 					incfri8000.setIncomeCode(income.getIncomeCode());
 					incfri8000.setIncomeType(income.getIncomeType());
 					if (income.getCreditList() != null && income.getCreditList().size() > 0) {
@@ -88,7 +85,7 @@ public class SyncWsIncfri8000Service {
 							incfri8000Credit.setRegId(income.getRegId());
 							incfri8000Credit.setNewRegId(income.getNewregId());
 							incfri8000Credit.setApproveNo(credit.getApproveNo());
-							incfri8000Credit.setApproveDate(StringUtils.isNotBlank(credit.getApproveDate()) ? LocalDate.parse(credit.getApproveDate(), formatter) : null);
+							incfri8000Credit.setApproveDate(StringUtils.isNotBlank(credit.getApproveDate()) ? ConvertDateUtils.parseStringToLocalDate(credit.getApproveDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_EN) : null);
 							incfri8000CreditList.add(incfri8000Credit);
 						}
 					}
