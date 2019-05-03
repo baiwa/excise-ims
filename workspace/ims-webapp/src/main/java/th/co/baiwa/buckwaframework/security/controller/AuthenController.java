@@ -104,7 +104,7 @@ public class AuthenController {
 			UserProfileVo userProfileVo = new UserProfileVo();
 			BeanUtils.copyProperties(userProfileVo, userBean);
 			userProfileVo.setAuthorityList(UserLoginUtils.getGrantedAuthorityList());
-			userProfileVo.setDepartmentName(ApplicationCache.getExciseDept(userProfileVo.getOfficeCode()).getDeptName());
+			userProfileVo.setDepartmentName(ApplicationCache.getExciseDept(userProfileVo.getOfficeCode()).getDeptShortName());
 			respData.setData(userProfileVo);
 			respData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (IllegalAccessException | InvocationTargetException e) {
