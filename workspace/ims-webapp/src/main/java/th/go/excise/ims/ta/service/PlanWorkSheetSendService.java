@@ -38,10 +38,8 @@ public class PlanWorkSheetSendService {
 		TaPlanWorksheetSend plan = null;
 		ExciseDept dataListNull = new ExciseDepartmentVo();
 
-		String convertOfficeCode = ExciseUtils
-				.whereInLocalOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
-		listPlan = planWorksheetSendRepository.findByOfficeCodeAndBudgetYearAll(convertOfficeCode,
-				ExciseUtils.getCurrentBudgetYear());
+		String convertOfficeCode = ExciseUtils.whereInLocalOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+		listPlan = planWorksheetSendRepository.findByOfficeCodeAndBudgetYearAll(convertOfficeCode, ExciseUtils.getCurrentBudgetYear());
 		if (ExciseUtils.isCentral(UserLoginUtils.getCurrentUserBean().getOfficeCode())) {
 			listSector = TaxAuditUtils.getExciseSectorList();
 			for (ExciseDept list : listSector) {

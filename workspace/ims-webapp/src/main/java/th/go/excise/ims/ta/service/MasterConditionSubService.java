@@ -214,10 +214,10 @@ public class MasterConditionSubService {
 			noAudit = new TaMasCondSubNoAudit();
 			noAudit.setBudgetYear(form.getBudgetYear());
 			noAudit.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
-			noAudit.setNoTaxAuditYearNum(form.getNoTaxAuditYearNum());
+			noAudit.setNoTaxAuditYearNum(form.getNoTaxAuditYearNum() != null ? form.getNoTaxAuditYearNum() : 1);
 		} else {
 			noAudit = noAuditRepository.findByBudgetYearAndOfficeCode(form.getBudgetYear(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
-			noAudit.setNoTaxAuditYearNum(form.getNoTaxAuditYearNum());
+			noAudit.setNoTaxAuditYearNum(form.getNoTaxAuditYearNum() != null ? form.getNoTaxAuditYearNum() : 1);
 		}
 		noAuditRepository.save(noAudit);
 	}
