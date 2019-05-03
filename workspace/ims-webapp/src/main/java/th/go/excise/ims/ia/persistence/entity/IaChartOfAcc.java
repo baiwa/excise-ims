@@ -34,6 +34,9 @@ public class IaChartOfAcc
     private Date startDate;
     @Column(name = "END_DATE")
     private Date endDate;
+    @Column(name = "COA_TYPE")
+    private String coaType;
+    
 
     public BigDecimal getCoaId() {
         return coaId;
@@ -82,5 +85,15 @@ public class IaChartOfAcc
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+	public String getCoaType() {
+		return coaType;
+	}
+
+	public void setCoaType(String coaType) {
+		this.coaType = coaType;
+	}
+    
+    
 
 }

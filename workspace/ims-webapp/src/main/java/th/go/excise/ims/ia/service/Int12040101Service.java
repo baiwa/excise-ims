@@ -12,23 +12,25 @@ import th.go.excise.ims.ia.persistence.entity.IaExpenses;
 import th.go.excise.ims.ia.persistence.repository.IaChartOfAccRepository;
 import th.go.excise.ims.ia.persistence.repository.IaExpensesRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaChartOfAccJdbcRepository;
+import th.go.excise.ims.ia.vo.Int0301FormVo;
+import th.go.excise.ims.ia.vo.Int0301Vo;
 
 @Service
 public class Int12040101Service {
 
-	@Autowired
-	private IaChartOfAccRepository iaChartOfAccRepository;
+//	@Autowired
+//	private IaChartOfAccRepository iaChartOfAccRepository;
 	
 	@Autowired
 	private IaExpensesRepository iaExpensesRepository;
 	
-//	@Autowired
-//	private IaChartOfAccJdbcRepository iaChartOfAccJdbcRepository;
+	@Autowired
+	private IaChartOfAccJdbcRepository iaChartOfAccJdbcRepository;
 
 	public List<IaChartOfAcc> findAll() {
 		List<IaChartOfAcc> data = new ArrayList<>();
-		data = iaChartOfAccRepository.findAll();
-//		data = iaChartOfAccJdbcRepository.findAll();
+//		data = iaChartOfAccRepository.findAll();
+		data = iaChartOfAccJdbcRepository.findAll();
 		for (IaChartOfAcc iaChartOfAccData : data) {
 			iaChartOfAccData.setCreatedBy(null);
 			iaChartOfAccData.setCreatedDate(null);

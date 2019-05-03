@@ -18,12 +18,11 @@ public class IaChartOfAccJdbcRepository {
 	public List<IaChartOfAcc> findAll() {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" SELECT * FROM IA_CHART_OF_ACC WHERE IS_DELETED = 'N' ");
+		sql.append(" SELECT * FROM IA_CHART_OF_ACC WHERE IS_DELETED = 'N' AND COA_TYPE = '5' ");
 
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<IaChartOfAcc> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(),
 				new BeanPropertyRowMapper(IaChartOfAcc.class));
-
 		return datas;
 	}
 }
