@@ -25,8 +25,15 @@ public class Int0913Service {
 	private IaUtilityBillRepository iaUtilityBillRepository;
 	
 	public List<Int091301ResultSearchVo> findIaUtilityBill(Int091301SearchVo int091301SearchVo){
-		
-		return int0913JdbcRepository.findIaUtilityBillByCriteria(int091301SearchVo);
+		List<Int091301ResultSearchVo> dataFilter = int0913JdbcRepository.findIaUtilityBillByCriteria(int091301SearchVo);
+		if(dataFilter.size() > 0) {
+			/* change format YYYYMM to MM/YYYY */
+			for (Int091301ResultSearchVo vo : dataFilter) {
+				vo.setMonthWdPay(formatYYYYMMToMM_YYYY(vo.getMonthWdPay()));
+				vo.setInvoiceMonth(formatYYYYMMToMM_YYYY(vo.getInvoiceMonth()));
+			}
+		}
+		return dataFilter;
 	}
 	
 	public IaUtilityBill saveIaUtilityBill(Int091301SaveVo vo) {
@@ -37,10 +44,11 @@ public class Int0913Service {
 			entity = new IaUtilityBill();
 			entity.setExciseCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 		}
+
 		entity.setUbillType(vo.getUbillType());
-		entity.setMonthWdPay(vo.getMonthWdPay());
+		entity.setMonthWdPay(formatMM_YYYYToYYYYMM(vo.getMonthWdPay()));
 		entity.setInvoiceSeq(vo.getInvoiceSeq());
-		entity.setInvoiceMonth(vo.getInvoiceMonth());
+		entity.setInvoiceMonth(formatMM_YYYYToYYYYMM(vo.getInvoiceMonth()));
 		entity.setInvoiceNo(vo.getInvoiceNo());
 		entity.setTelInvNumber(vo.getTelInvNumber());
 		entity.setInvoiceDate(ConvertDateUtils.parseStringToDate(vo.getInvoiceDate(), ConvertDateUtils.DD_MM_YYYY , ConvertDateUtils.LOCAL_TH) );
@@ -61,6 +69,14 @@ public class Int0913Service {
 	
 	public void deleteIaUtilityBillById(Long id) {
 		 iaUtilityBillRepository.deleteById(id);
+	}
+	
+	private String formatMM_YYYYToYYYYMM(String dateStr) {
+		return ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(dateStr, ConvertDateUtils.MM_YYYY), ConvertDateUtils.YYYYMM);
+	}
+	
+	private String formatYYYYMMToMM_YYYY(String dateStr) {
+		return ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(dateStr, ConvertDateUtils.YYYYMM), ConvertDateUtils.MM_YYYY);
 	}
 
 }
