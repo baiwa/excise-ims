@@ -29,8 +29,7 @@ public class SyncExciseOfficeAddrService {
 	public void syncData() throws PccRestfulException {
 		logger.info("syncData");
 		
-		OffCodeAddress requestData = new OffCodeAddress();
-		List<OffCodeAddress> offCodeAddressList = inquiryOffcodeAddressService.execute(requestData);
+		List<OffCodeAddress> offCodeAddressList = inquiryOffcodeAddressService.execute(new Object());
 		
 		exciseOfficeAddrRepository.queryUpdateIsDeletedY();
 		exciseOfficeAddrRepository.batchUpdate(offCodeAddressList);

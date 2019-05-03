@@ -18,7 +18,7 @@ import th.go.excise.ims.ws.client.pcc.inquiryholiday.model.Holiday;
 import th.go.excise.ims.ws.client.service.RestfulClientService;
 
 @Service
-public class InquiryHolidayService extends AbstractPccRestfulService<Holiday, List<Holiday>> {
+public class InquiryHolidayService extends AbstractPccRestfulService<Object, List<Holiday>> {
 	
 	@Autowired
 	public InquiryHolidayService(
@@ -33,7 +33,7 @@ public class InquiryHolidayService extends AbstractPccRestfulService<Holiday, Li
 	}
 
 	@Override
-	public List<Holiday> execute(Holiday requestData) throws PccRestfulException {
+	public List<Holiday> execute(Object requestData) throws PccRestfulException {
 		return executePost(requestData);
 	}
 

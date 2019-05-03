@@ -286,7 +286,7 @@ public class ApplicationCache {
 		EXCISE_AREA_MAP.clear();
 		EXCISE_BRANCH_MAP.clear();
 		
-		List<th.go.excise.ims.preferences.persistence.entity.ExciseDepartment> exciseDepartmentList = exciseDepartmentRepository.findAllActiveDepartment();
+		List<th.go.excise.ims.preferences.persistence.entity.ExciseDepartment> exciseDepartmentList = exciseDepartmentRepository.findAll();
 		
 		ExciseDepartmentVo deptVo = null;
 		List<ExciseDept> areaList = null;

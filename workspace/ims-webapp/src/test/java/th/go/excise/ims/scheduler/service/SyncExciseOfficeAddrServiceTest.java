@@ -25,4 +25,5 @@ public class SyncExciseOfficeAddrServiceTest {
 	public void test_syncData() throws PccRestfulException {
 		syncExciseOfficeAddrService.syncData();
 	}
+	
 }

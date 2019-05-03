@@ -14,21 +14,31 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
 import th.go.excise.ims.ws.client.pcc.inquirybank.model.Bank;
 
-public class ExciseBankRepositoryImpl  implements ExciseBankRepositoryCustom{
-	private static final Logger logger = LoggerFactory.getLogger(ExciseBankRepositoryImpl.class);
+public class ExciseBankRepositoryImpl implements ExciseBankRepositoryCustom {
 	
+	private static final Logger logger = LoggerFactory.getLogger(ExciseBankRepositoryImpl.class);
+
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 	
 	@Override
 	public void batchUpdate(List<Bank> bankList) {
-		logger.info("batchUpdate");
+		logger.info("batchUpdate bankList.size()={}", bankList.size());
 		
 		final int BATCH_SIZE = 1000;
+		
+		List<String> updateColumnNames = new ArrayList<>(Arrays.asList(
+			"EBK.BANK_NAME = ?",
+			"EBK.SHORT_NAME = ?",
+			"EBK.IS_DELETED = ?",
+			"EBK.UPDATED_BY = ?",
+			"EBK.UPDATED_DATE = ?"
+		));
 		
 		List<String> insertColumnNames = new ArrayList<>(Arrays.asList(
 			"EBK.BANK_ID",
@@ -46,11 +56,7 @@ public class ExciseBankRepositoryImpl  implements ExciseBankRepositoryCustom{
 		sql.append(" ON (EBK.BANK_CODE = ?) ");
 		sql.append(" WHEN MATCHED THEN ");
 		sql.append("   UPDATE SET ");
-		sql.append("     EBK.BANK_NAME = ?, ");
-		sql.append("     EBK.SHORT_NAME = ?, ");
-		sql.append("     EBK.IS_DELETED = 'N', ");
-		sql.append("     EBK.UPDATED_BY = ?, ");
-		sql.append("     EBK.UPDATED_DATE = ? ");
+		sql.append(org.springframework.util.StringUtils.collectionToDelimitedString(updateColumnNames, ","));
 		sql.append(" WHEN NOT MATCHED THEN ");
 		sql.append("   INSERT (" + org.springframework.util.StringUtils.collectionToDelimitedString(insertColumnNames, ",") + ") ");
 		sql.append("   VALUES (EXCISE_BANK_SEQ.NEXTVAL" + org.apache.commons.lang3.StringUtils.repeat(",?", insertColumnNames.size() - 1) + ") ");
@@ -63,6 +69,7 @@ public class ExciseBankRepositoryImpl  implements ExciseBankRepositoryCustom{
 				// Update Statement
 				paramList.add(bank.getBankName());
 				paramList.add(bank.getShortName());
+				paramList.add(FLAG.N_FLAG);
 				paramList.add(SYSTEM_USER.BATCH);
 				paramList.add(LocalDateTime.now());
 				// Insert Statement

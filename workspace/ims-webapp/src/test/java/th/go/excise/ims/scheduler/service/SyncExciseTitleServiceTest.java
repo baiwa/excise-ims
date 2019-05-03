@@ -25,4 +25,5 @@ public class SyncExciseTitleServiceTest {
 	public void test_syncData() throws PccRestfulException {
 		syncExciseTitleService.syncData();
 	}
+	
 }

@@ -29,8 +29,7 @@ public class SyncExciseTitleService {
 	public void syncData() throws PccRestfulException {
 		logger.info("syncData");
 		
-		Title requestData = new Title();
-		List<Title> titleList = inquiryTitleService.execute(requestData);
+		List<Title> titleList = inquiryTitleService.execute(new Object());
 		
 		exciseTitleRepository.queryUpdateIsDeletedY();
 		exciseTitleRepository.batchUpdate(titleList);

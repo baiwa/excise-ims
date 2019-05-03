@@ -18,7 +18,7 @@ import th.go.excise.ims.ws.client.pcc.inquirydutygroup.model.DutyGroup;
 import th.go.excise.ims.ws.client.service.RestfulClientService;
 
 @Service
-public class InquiryDutyGroupService extends AbstractPccRestfulService<DutyGroup, List<DutyGroup>> {
+public class InquiryDutyGroupService extends AbstractPccRestfulService<Object, List<DutyGroup>> {
 	
 	@Autowired
 	public InquiryDutyGroupService(
@@ -33,7 +33,7 @@ public class InquiryDutyGroupService extends AbstractPccRestfulService<DutyGroup
 	}
 
 	@Override
-	public List<DutyGroup> execute(DutyGroup requestData) throws PccRestfulException {
+	public List<DutyGroup> execute(Object requestData) throws PccRestfulException {
 		return executePost(requestData);
 	}
 

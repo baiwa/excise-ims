@@ -17,11 +17,13 @@ import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
 @WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
 @ActiveProfiles(value = PROFILE.UNITTEST)
 public class SyncExciseHospitalServiceTest {
-	@Autowired
-	private ExciseHospitalServive exciseHospitalServive;
 	
+	@Autowired
+	private SyncExciseHospitalServive syncExciseHospitalServive;
+
 	@Test
 	public void test_syncData() throws PccRestfulException {
-		exciseHospitalServive.syncData();
+		syncExciseHospitalServive.syncData();
 	}
+	
 }

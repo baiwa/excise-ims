@@ -21,16 +21,16 @@ import th.go.excise.ims.ws.client.pcc.common.util.PccServiceTestUtils;
 import th.go.excise.ims.ws.client.pcc.inquirybank.model.Bank;
 import th.go.excise.ims.ws.client.service.RestfulClientService;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class)
-@WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
-@ActiveProfiles(value = PROFILE.UNITTEST)
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = Application.class)
+//@WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
+//@ActiveProfiles(value = PROFILE.UNITTEST)
 public class InquiryBankServiceTest {
 
 	@Autowired
 	private InquiryBankService inquiryBankService;
 
-	@Test
+//	@Test
 	public void test_execute() {
 		try {
 			Bank requestData = new Bank();
@@ -41,7 +41,7 @@ public class InquiryBankServiceTest {
 		}
 	}
 	
-	//@Test
+	@Test
 	public void test_execute_Manual() {
 		String url = "http://webtest.excise.go.th/EDRestServicesUAT/rdb/InquiryBank";
 		InquiryBankService inquiryBankService = new InquiryBankService(url, PccServiceTestUtils.getPccServiceProperties(), new RestfulClientService(), new Gson());

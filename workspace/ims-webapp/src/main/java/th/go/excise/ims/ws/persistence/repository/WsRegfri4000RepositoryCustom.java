@@ -6,8 +6,6 @@ import th.go.excise.ims.ws.persistence.entity.WsRegfri4000;
 
 public interface WsRegfri4000RepositoryCustom {
 	
-	public void batchInsert(List<WsRegfri4000> regfri4000List);
-	
-	public void truncate();
+	public void batchUpdate(List<WsRegfri4000> regfri4000List);
 	
 }

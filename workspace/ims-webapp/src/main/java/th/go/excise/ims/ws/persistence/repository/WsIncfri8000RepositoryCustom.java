@@ -6,6 +6,6 @@ import th.go.excise.ims.ws.persistence.entity.WsIncfri8000;
 
 public interface WsIncfri8000RepositoryCustom {
 	
-	public void batchInsert(List<WsIncfri8000> incfri8000List);
+	public void batchUpdate(List<WsIncfri8000> incfri8000List);
 	
 }

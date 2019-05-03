@@ -14,11 +14,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
 import th.go.excise.ims.ws.client.pcc.inquiryholiday.model.Holiday;
 
 public class ExciseHolidayRepositoryImpl implements ExciseHolidayRepositoryCustom {
+	
 	private static final Logger logger = LoggerFactory.getLogger(ExciseHolidayRepositoryImpl.class);
 
 	@Autowired
@@ -26,15 +28,22 @@ public class ExciseHolidayRepositoryImpl implements ExciseHolidayRepositoryCusto
 
 	@Override
 	public void batchUpdate(List<Holiday> holidayList) {
-		logger.info("batchUpdate");
+		logger.info("batchUpdate holidayList.size()={}", holidayList.size());
 
 		final int BATCH_SIZE = 1000;
-
+		
+		List<String> updateColumnNames = new ArrayList<>(Arrays.asList(
+			"EH.IS_DELETED = ?",
+			"EH.UPDATED_BY = ?",
+			"EH.UPDATED_DATE = ?"
+		));
+		
 		List<String> insertColumnNames = new ArrayList<>(Arrays.asList(
-				"EH.HOLIDAY_ID",
-				"EH.HOLIDAY_DATE",
-				"EH.CREATED_BY",
-				"EH.CREATED_DATE"));
+			"EH.HOLIDAY_ID",
+			"EH.HOLIDAY_DATE",
+			"EH.CREATED_BY",
+			"EH.CREATED_DATE"
+		));
 
 		StringBuilder sql = new StringBuilder();
 		sql.append(" MERGE INTO EXCISE_HOLIDAY EH ");
@@ -42,9 +51,7 @@ public class ExciseHolidayRepositoryImpl implements ExciseHolidayRepositoryCusto
 		sql.append(" ON (EH.HOLIDAY_DATE = ?) ");
 		sql.append(" WHEN MATCHED THEN ");
 		sql.append("   UPDATE SET ");
-		sql.append("     EH.IS_DELETED = 'N', ");
-		sql.append("     EH.UPDATED_BY = ?, ");
-		sql.append("     EH.UPDATED_DATE = ? ");
+		sql.append(org.springframework.util.StringUtils.collectionToDelimitedString(updateColumnNames, ","));
 		sql.append(" WHEN NOT MATCHED THEN ");
 		sql.append("   INSERT (" + org.springframework.util.StringUtils.collectionToDelimitedString(insertColumnNames, ",") + ") ");
 		sql.append("   VALUES (EXCISE_HOLIDAY_SEQ.NEXTVAL" + org.apache.commons.lang3.StringUtils.repeat(",?", insertColumnNames.size() - 1) + ") ");
@@ -55,6 +62,7 @@ public class ExciseHolidayRepositoryImpl implements ExciseHolidayRepositoryCusto
 				// Using Condition
 				paramList.add(LocalDate.parse(holiday.getHolidayDate(), DateTimeFormatter.BASIC_ISO_DATE));
 				// Update Statement
+				paramList.add(FLAG.N_FLAG);
 				paramList.add(SYSTEM_USER.BATCH);
 				paramList.add(LocalDateTime.now());
 				// Insert Statement

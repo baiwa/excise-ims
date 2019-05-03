@@ -1,21 +1,20 @@
 package th.go.excise.ims.ws.client.pcc.regfri4000.service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
+import th.go.excise.ims.Application;
 import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
-import th.go.excise.ims.ws.client.pcc.common.model.PccResponseHeader;
 import th.go.excise.ims.ws.client.pcc.common.util.PccServiceTestUtils;
 import th.go.excise.ims.ws.client.pcc.regfri4000.model.RequestData;
 import th.go.excise.ims.ws.client.pcc.regfri4000.model.ResponseData;
@@ -30,13 +29,14 @@ public class RegFri4000ServiceTest {
 	@Autowired
 	private RegFri4000Service regFri4000Service;
 	
-	//@Test
+//	@Test
 	public void test_execute() {
 		try {
 			RequestData requestData = new RequestData();
 			requestData.setType("1");
 			requestData.setNid("");
 			requestData.setNewregId("");
+			requestData.setHomeOfficeId("");
 			requestData.setActive("1");
 			requestData.setPageNo("1");
 			requestData.setDataPerPage("10");
@@ -57,6 +57,7 @@ public class RegFri4000ServiceTest {
 			requestData.setType("1");
 			requestData.setNid("");
 			requestData.setNewregId("");
+			requestData.setHomeOfficeId("");
 			requestData.setActive("1");
 			requestData.setPageNo("1");
 			requestData.setDataPerPage("10");

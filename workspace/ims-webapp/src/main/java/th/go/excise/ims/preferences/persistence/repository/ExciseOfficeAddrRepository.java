@@ -15,4 +15,5 @@ public interface ExciseOfficeAddrRepository extends CommonJpaCrudRepository<Exci
 		nativeQuery = true
 	)
 	public void queryUpdateIsDeletedY();
+	
 }

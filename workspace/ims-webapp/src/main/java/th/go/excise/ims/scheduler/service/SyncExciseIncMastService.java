@@ -28,8 +28,7 @@ public class SyncExciseIncMastService {
 	public void syncData() throws PccRestfulException {
 		logger.info("syncData");
 		
-		IncomeMaster requestData = new IncomeMaster();
-		List<IncomeMaster> dutyGroupList = inquiryIncMastService.execute(requestData);
+		List<IncomeMaster> dutyGroupList = inquiryIncMastService.execute(new Object());
 		
 		exciseIncMastRepository.queryUpdateIsDeletedY();
 		exciseIncMastRepository.batchUpdate(dutyGroupList);

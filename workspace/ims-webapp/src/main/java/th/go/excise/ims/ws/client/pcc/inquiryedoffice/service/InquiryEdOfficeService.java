@@ -18,7 +18,7 @@ import th.go.excise.ims.ws.client.pcc.inquiryedoffice.model.EdOffice;
 import th.go.excise.ims.ws.client.service.RestfulClientService;
 
 @Service
-public class InquiryEdOfficeService extends AbstractPccRestfulService<EdOffice, List<EdOffice>> {
+public class InquiryEdOfficeService extends AbstractPccRestfulService<Object, List<EdOffice>> {
 	
 	@Autowired
 	public InquiryEdOfficeService(
@@ -33,7 +33,7 @@ public class InquiryEdOfficeService extends AbstractPccRestfulService<EdOffice, 
 	}
 
 	@Override
-	public List<EdOffice> execute(EdOffice requestData) throws PccRestfulException {
+	public List<EdOffice> execute(Object requestData) throws PccRestfulException {
 		return executePost(requestData);
 	}
 

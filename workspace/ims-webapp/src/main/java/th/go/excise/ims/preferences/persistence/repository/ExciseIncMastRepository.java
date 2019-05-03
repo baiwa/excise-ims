@@ -8,7 +8,7 @@ import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRe
 import th.go.excise.ims.preferences.persistence.entity.ExciseIncMast;
 
 public interface ExciseIncMastRepository extends CommonJpaCrudRepository<ExciseIncMast, Long>, ExciseIncMastRepositoryCustom {
-	
+
 	@Modifying
 	@Query(
 		value = "UPDATE EXCISE_INC_MAST SET IS_DELETED = '" + FLAG.Y_FLAG + "'",

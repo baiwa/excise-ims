@@ -17,6 +17,10 @@ public class RequestData {
 	@Expose
 	private String newregId;
 
+	@SerializedName("HomeOfficeId")
+	@Expose
+	private String homeOfficeId;
+
 	@SerializedName("Active")
 	@Expose
 	private String active;
@@ -51,6 +55,14 @@ public class RequestData {
 
 	public void setNewregId(String newregId) {
 		this.newregId = newregId;
+	}
+
+	public String getHomeOfficeId() {
+		return homeOfficeId;
+	}
+
+	public void setHomeOfficeId(String homeOfficeId) {
+		this.homeOfficeId = homeOfficeId;
 	}
 
 	public String getActive() {

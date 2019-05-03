@@ -25,4 +25,5 @@ public class SyncExciseIncMastServiceTest {
 	public void test_syncData() throws PccRestfulException {
 		syncExciseIncMastService.syncData();
 	}
+	
 }

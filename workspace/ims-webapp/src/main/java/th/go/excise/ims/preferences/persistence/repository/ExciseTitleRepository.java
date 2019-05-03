@@ -15,4 +15,5 @@ public interface ExciseTitleRepository extends CommonJpaCrudRepository<ExciseTit
 		nativeQuery = true
 	)
 	public void queryUpdateIsDeletedY();
+	
 }

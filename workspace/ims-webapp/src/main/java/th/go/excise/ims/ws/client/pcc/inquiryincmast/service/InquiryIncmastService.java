@@ -18,7 +18,7 @@ import th.go.excise.ims.ws.client.pcc.inquiryincmast.model.IncomeMaster;
 import th.go.excise.ims.ws.client.service.RestfulClientService;
 
 @Service
-public class InquiryIncmastService extends AbstractPccRestfulService<IncomeMaster, List<IncomeMaster>> {
+public class InquiryIncmastService extends AbstractPccRestfulService<Object, List<IncomeMaster>> {
 
 	@Autowired
 	public InquiryIncmastService(
@@ -33,7 +33,7 @@ public class InquiryIncmastService extends AbstractPccRestfulService<IncomeMaste
 	}
 
 	@Override
-	public List<IncomeMaster> execute(IncomeMaster requestData) throws PccRestfulException {
+	public List<IncomeMaster> execute(Object requestData) throws PccRestfulException {
 		return executePost(requestData);
 	}
 

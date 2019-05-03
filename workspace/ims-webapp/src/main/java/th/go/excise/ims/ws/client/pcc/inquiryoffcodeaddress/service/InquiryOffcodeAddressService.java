@@ -18,7 +18,7 @@ import th.go.excise.ims.ws.client.pcc.inquiryoffcodeaddress.model.OffCodeAddress
 import th.go.excise.ims.ws.client.service.RestfulClientService;
 
 @Service
-public class InquiryOffcodeAddressService extends AbstractPccRestfulService<OffCodeAddress, List<OffCodeAddress>> {
+public class InquiryOffcodeAddressService extends AbstractPccRestfulService<Object, List<OffCodeAddress>> {
 
 	@Autowired
 	public InquiryOffcodeAddressService(
@@ -33,7 +33,7 @@ public class InquiryOffcodeAddressService extends AbstractPccRestfulService<OffC
 	}
 
 	@Override
-	public List<OffCodeAddress> execute(OffCodeAddress requestData) throws PccRestfulException {
+	public List<OffCodeAddress> execute(Object requestData) throws PccRestfulException {
 		return executePost(requestData);
 	}
 

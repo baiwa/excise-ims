@@ -28,8 +28,7 @@ public class SyncExciseBankService {
 	public void syncData() throws PccRestfulException {
 		logger.info("syncData");
 		
-		Bank requestData = new Bank();
-		List<Bank> bankList = inquiryBankService.execute(requestData);
+		List<Bank> bankList = inquiryBankService.execute(new Object());
 		
 		exciseBankRepository.queryUpdateIsDeletedY();
 		exciseBankRepository.batchUpdate(bankList);

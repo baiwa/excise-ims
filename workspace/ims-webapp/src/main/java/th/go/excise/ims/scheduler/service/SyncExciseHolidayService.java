@@ -28,8 +28,7 @@ public class SyncExciseHolidayService {
 	public void syncData() throws PccRestfulException {
 		logger.info("syncData");
 		
-		Holiday requestData = new Holiday();
-		List<Holiday> bankList = inquiryHolidayService.execute(requestData);
+		List<Holiday> bankList = inquiryHolidayService.execute(new Object());
 		
 		exciseHolidayRepository.queryUpdateIsDeletedY();
 		exciseHolidayRepository.batchUpdate(bankList);

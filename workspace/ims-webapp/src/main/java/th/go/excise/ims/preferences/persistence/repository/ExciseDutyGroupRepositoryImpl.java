@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
 import th.go.excise.ims.ws.client.pcc.inquirydutygroup.model.DutyGroup;
@@ -27,9 +28,19 @@ public class ExciseDutyGroupRepositoryImpl implements ExciseDutyGroupRepositoryC
 	
 	@Override
 	public void batchUpdate(List<DutyGroup> dutyGroupList) {
-		logger.info("batchUpdate");
+		logger.info("batchUpdate dutyGroupList.size()={}", dutyGroupList.size());
 		
 		final int BATCH_SIZE = 1000;
+		
+		List<String> updateColumnNames = new ArrayList<>(Arrays.asList(
+			"EDG.DUTY_GROUP_NAME = ?",
+			"EDG.DUTY_GROUP_STATUS = ?",
+			"EDG.SUP_DUTY_GROUP_CODE = ?",
+			"EDG.REG_STATUS = ?",
+			"EDG.IS_DELETED = ?",
+			"EDG.UPDATED_BY = ?",
+			"EDG.UPDATED_DATE = ?"
+		));
 		
 		List<String> insertColumnNames = new ArrayList<>(Arrays.asList(
 			"EDG.DUTY_GROUP_ID",
@@ -49,13 +60,7 @@ public class ExciseDutyGroupRepositoryImpl implements ExciseDutyGroupRepositoryC
 		sql.append(" ON (EDG.DUTY_GROUP_CODE = ?) ");
 		sql.append(" WHEN MATCHED THEN ");
 		sql.append("   UPDATE SET ");
-		sql.append("     EDG.DUTY_GROUP_NAME = ?, ");
-		sql.append("     EDG.DUTY_GROUP_STATUS = ?, ");
-		sql.append("     EDG.SUP_DUTY_GROUP_CODE = ?, ");
-		sql.append("     EDG.REG_STATUS = ?, ");
-		sql.append("     EDG.IS_DELETED = 'N', ");
-		sql.append("     EDG.UPDATED_BY = ?, ");
-		sql.append("     EDG.UPDATED_DATE = ? ");
+		sql.append(org.springframework.util.StringUtils.collectionToDelimitedString(updateColumnNames, ","));
 		sql.append(" WHEN NOT MATCHED THEN ");
 		sql.append("   INSERT (" + org.springframework.util.StringUtils.collectionToDelimitedString(insertColumnNames, ",") + ") ");
 		sql.append("   VALUES (EXCISE_DUTY_GROUP_SEQ.NEXTVAL" + org.apache.commons.lang3.StringUtils.repeat(",?", insertColumnNames.size() - 1) + ") ");
@@ -70,6 +75,7 @@ public class ExciseDutyGroupRepositoryImpl implements ExciseDutyGroupRepositoryC
 				paramList.add(dutyGroup.getGroupStatus());
 				paramList.add(dutyGroup.getSupGroupId());
 				paramList.add(dutyGroup.getRegStatus());
+				paramList.add(FLAG.N_FLAG);
 				paramList.add(SYSTEM_USER.BATCH);
 				paramList.add(LocalDateTime.now());
 				// Insert Statement

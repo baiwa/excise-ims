@@ -5,5 +5,7 @@ import java.util.List;
 import th.go.excise.ims.ws.client.pcc.inquirybank.model.Bank;
 
 public interface ExciseBankRepositoryCustom {
+
 	public void batchUpdate(List<Bank> bankList);
+
 }

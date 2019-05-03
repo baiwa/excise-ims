@@ -2,7 +2,6 @@ package th.go.excise.ims.ws.persistence.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,14 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "WS_REGFRI4000")
 public class WsRegfri4000 extends BaseEntity {
 
-	private static final long serialVersionUID = -1929969959472907502L;
+	private static final long serialVersionUID = -7048262812422174478L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WS_REGFRI4000_GEN")
@@ -52,6 +50,8 @@ public class WsRegfri4000 extends BaseEntity {
 	private String facUrl;
 	@Column(name = "FAC_TYPE")
 	private String facType;
+	@Column(name = "REG_ID")
+	private String regId;
 	@Column(name = "REG_STATUS")
 	private String regStatus;
 	@Column(name = "REG_DATE")
@@ -183,6 +183,14 @@ public class WsRegfri4000 extends BaseEntity {
 
 	public void setFacType(String facType) {
 		this.facType = facType;
+	}
+
+	public String getRegId() {
+		return regId;
+	}
+
+	public void setRegId(String regId) {
+		this.regId = regId;
 	}
 
 	public String getRegStatus() {

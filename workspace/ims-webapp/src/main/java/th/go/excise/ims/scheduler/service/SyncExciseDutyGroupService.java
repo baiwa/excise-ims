@@ -29,8 +29,7 @@ public class SyncExciseDutyGroupService {
 	public void syncData() throws PccRestfulException {
 		logger.info("syncData");
 		
-		DutyGroup requestData = new DutyGroup();
-		List<DutyGroup> dutyGroupList = inquiryDutyGroupService.execute(requestData);
+		List<DutyGroup> dutyGroupList = inquiryDutyGroupService.execute(new Object());
 		
 		exciseDutyGroupRepository.queryUpdateIsDeletedY();
 		exciseDutyGroupRepository.batchUpdate(dutyGroupList);

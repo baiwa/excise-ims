@@ -17,7 +17,7 @@ import th.go.excise.ims.ws.client.pcc.inquirytitle.model.Title;
 import th.go.excise.ims.ws.client.service.RestfulClientService;
 
 @Service
-public class InquiryTitleService extends AbstractPccRestfulService<Title, List<Title>> {
+public class InquiryTitleService extends AbstractPccRestfulService<Object, List<Title>> {
 	
     public InquiryTitleService(
     		@Value("${ws.excise.endpoint.rdb.inquiry-title}") String url,
@@ -31,7 +31,7 @@ public class InquiryTitleService extends AbstractPccRestfulService<Title, List<T
 	}
     
     @Override
-	public List<Title> execute(Title requestData) throws PccRestfulException {
+	public List<Title> execute(Object requestData) throws PccRestfulException {
 		return executePost(requestData);
 	}
 

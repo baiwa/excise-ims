@@ -16,8 +16,8 @@ import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
 @SpringBootTest(classes = Application.class)
 @WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
 @ActiveProfiles(value = PROFILE.UNITTEST)
-
 public class SyncExciseHolidayServiceTest {
+	
 	@Autowired
 	private SyncExciseHolidayService syncExciseHolidayService;
 	
@@ -25,4 +25,5 @@ public class SyncExciseHolidayServiceTest {
 	public void test_syncData() throws PccRestfulException {
 		syncExciseHolidayService.syncData();
 	}
+	
 }

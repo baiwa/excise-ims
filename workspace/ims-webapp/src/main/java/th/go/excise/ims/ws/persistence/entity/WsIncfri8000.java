@@ -1,6 +1,7 @@
 package th.go.excise.ims.ws.persistence.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,13 +15,15 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 @Table(name = "WS_INCFRI8000")
 public class WsIncfri8000 extends BaseEntity {
 
-	private static final long serialVersionUID = -8985958631247590208L;
+	private static final long serialVersionUID = 489419906787285724L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WS_INCFRI8000_GEN")
 	@SequenceGenerator(name = "WS_INCFRI8000_GEN", sequenceName = "WS_INCFRI8000_SEQ", allocationSize = 1)
 	@Column(name = "INCFRI8000_ID")
 	private Long incfri8000Id;
+	@Column(name = "DATE_TYPE")
+	private String dateType;
 	@Column(name = "REG_ID")
 	private String regId;
 	@Column(name = "NEW_REG_ID")
@@ -28,7 +31,7 @@ public class WsIncfri8000 extends BaseEntity {
 	@Column(name = "RECEIPT_NO")
 	private String receiptNo;
 	@Column(name = "RECEIPT_DATE")
-	private String receiptDate;
+	private LocalDate receiptDate;
 	@Column(name = "TAX_AMOUNT")
 	private BigDecimal taxAmount;
 	@Column(name = "PEN_AMOUNT")
@@ -42,11 +45,11 @@ public class WsIncfri8000 extends BaseEntity {
 	@Column(name = "OFFICE_RECEIVE_CODE")
 	private String officeReceiveCode;
 	@Column(name = "TRN_DATE")
-	private String trnDate;
+	private LocalDate trnDate;
 	@Column(name = "DEPOSIT_DATE")
-	private String depositDate;
+	private LocalDate depositDate;
 	@Column(name = "SEND_DATE")
-	private String sendDate;
+	private LocalDate sendDate;
 	@Column(name = "INCOME_CODE")
 	private String incomeCode;
 	@Column(name = "INCOME_TYPE")
@@ -58,6 +61,14 @@ public class WsIncfri8000 extends BaseEntity {
 
 	public void setIncfri8000Id(Long incfri8000Id) {
 		this.incfri8000Id = incfri8000Id;
+	}
+
+	public String getDateType() {
+		return dateType;
+	}
+
+	public void setDateType(String dateType) {
+		this.dateType = dateType;
 	}
 
 	public String getRegId() {
@@ -84,11 +95,11 @@ public class WsIncfri8000 extends BaseEntity {
 		this.receiptNo = receiptNo;
 	}
 
-	public String getReceiptDate() {
+	public LocalDate getReceiptDate() {
 		return receiptDate;
 	}
 
-	public void setReceiptDate(String receiptDate) {
+	public void setReceiptDate(LocalDate receiptDate) {
 		this.receiptDate = receiptDate;
 	}
 
@@ -140,27 +151,27 @@ public class WsIncfri8000 extends BaseEntity {
 		this.officeReceiveCode = officeReceiveCode;
 	}
 
-	public String getTrnDate() {
+	public LocalDate getTrnDate() {
 		return trnDate;
 	}
 
-	public void setTrnDate(String trnDate) {
+	public void setTrnDate(LocalDate trnDate) {
 		this.trnDate = trnDate;
 	}
 
-	public String getDepositDate() {
+	public LocalDate getDepositDate() {
 		return depositDate;
 	}
 
-	public void setDepositDate(String depositDate) {
+	public void setDepositDate(LocalDate depositDate) {
 		this.depositDate = depositDate;
 	}
 
-	public String getSendDate() {
+	public LocalDate getSendDate() {
 		return sendDate;
 	}
 
-	public void setSendDate(String sendDate) {
+	public void setSendDate(LocalDate sendDate) {
 		this.sendDate = sendDate;
 	}
 
