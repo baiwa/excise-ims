@@ -31,7 +31,26 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	private Integer taxMonthEnd;
 
 	private String flagPage;
+
+	private String conSubCapital;
+	private String condSubRisk;
 	private String condSubNoAuditFlag;
+
+	public String getConSubCapital() {
+		return conSubCapital;
+	}
+
+	public void setConSubCapital(String conSubCapital) {
+		this.conSubCapital = conSubCapital;
+	}
+
+	public String getCondSubRisk() {
+		return condSubRisk;
+	}
+
+	public void setCondSubRisk(String condSubRisk) {
+		this.condSubRisk = condSubRisk;
+	}
 
 	public String getCondSubNoAuditFlag() {
 		return condSubNoAuditFlag;

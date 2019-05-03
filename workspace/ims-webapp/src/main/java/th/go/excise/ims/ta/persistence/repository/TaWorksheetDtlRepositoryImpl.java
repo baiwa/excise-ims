@@ -207,10 +207,19 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			sql.append("AND COND_SUB_RISK=? ");
 			params.add(formVo.getRisk());
 		}
+		if (StringUtils.isNotBlank(formVo.getConSubCapital())) {
+			sql.append("AND COND_SUB_NO_AUDIT=? ");
+			params.add(formVo.getConSubCapital());
+		}
+		if (StringUtils.isNotBlank(formVo.getCondSubRisk())) {
+			sql.append("AND COND_SUB_NO_AUDIT=? ");
+			params.add(formVo.getCondSubRisk());
+		}
 		if (StringUtils.isNotBlank(formVo.getCondSubNoAuditFlag())) {
 			sql.append("AND COND_SUB_NO_AUDIT=? ");
 			params.add(formVo.getCondSubNoAuditFlag());
-		}
+		}     
+		                      
 
 		sql.append(" AND R4000.OFFICE_CODE LIKE ? ");
 		params.add(ExciseUtils.whereInLocalOfficeCode(officeCode));
