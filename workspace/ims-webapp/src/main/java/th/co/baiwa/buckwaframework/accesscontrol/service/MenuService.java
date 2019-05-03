@@ -5,28 +5,34 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.repository.MenuRepository;
 import th.co.baiwa.buckwaframework.accesscontrol.vo.MenuVo;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 
 @Service
 public class MenuService {
-
+	
+	private static final Logger logger = LoggerFactory.getLogger(MenuService.class);
+	
 	@Autowired
 	private MenuRepository menuRepository;
 
-	public List<MenuVo> list() {
-
+	public List<MenuVo> findByRoles() {
+		List<String> roleList = UserLoginUtils.getGrantedAuthorityList();
+		logger.info("findByRole roleList={}", org.springframework.util.StringUtils.collectionToCommaDelimitedString(roleList));
+		
 		// ==> query list menu
-		List<MenuVo> menuAll = menuRepository.listMenu();
-
-		List<MenuVo> roots = menuAll.stream().filter(p -> p.getParentId() == null).collect(Collectors.toList());
+		List<MenuVo> menuList = menuRepository.findByRoles(roleList);
+		
+		List<MenuVo> roots = menuList.stream().filter(p -> p.getParentId() == null).collect(Collectors.toList());
 		// ==> add root
-		List<MenuVo> result = new ArrayList<MenuVo>();
+		List<MenuVo> resultList = new ArrayList<MenuVo>();
 		roots.forEach(e -> {
-			
 			MenuVo vo = new MenuVo();
 			vo.setMenuId(e.getMenuId());
 			vo.setParentId(e.getParentId());
@@ -34,28 +40,28 @@ public class MenuService {
 			vo.setUrl(e.getUrl());
 			vo.setSortingOrder(e.getSortingOrder());
 			if (1 == e.getLvl()) {
-				List<MenuVo> list = this.recursiveFunc(e.getMenuId(), e.getUrl(), menuAll);
+				List<MenuVo> list = recursiveFunc(e.getMenuId(), e.getUrl(), menuList);
 				vo.setMenuVoList(list);
 			}
-			result.add(vo);
-
+			resultList.add(vo);
 		});
-
-		return result;
+		
+		return resultList;
 	}
 
-	public List<MenuVo> recursiveFunc(String id, String url, List<MenuVo> menuAll) {
-		List<MenuVo> data = new ArrayList<MenuVo>();
-		menuAll.forEach(e -> {
-			if (id.equals(e.getParentId()))
-				data.add(e);
+	private List<MenuVo> recursiveFunc(String id, String url, List<MenuVo> menuList) {
+		List<MenuVo> dataList = new ArrayList<MenuVo>();
+		menuList.forEach(e -> {
+			if (id.equals(e.getParentId())) {
+				dataList.add(e);
+			}
 		});
-		for (int i = 0; i < data.size(); i++) {
-			if (StringUtils.isNotBlank(data.get(i).getMenuId()) && data.get(i).getUrl() == null) {
-				data.get(i).setMenuVoList(this.recursiveFunc(data.get(i).getMenuId(), data.get(i).getUrl(), menuAll));
+		for (int i = 0; i < dataList.size(); i++) {
+			if (StringUtils.isNotBlank(dataList.get(i).getMenuId()) && dataList.get(i).getUrl() == null) {
+				dataList.get(i).setMenuVoList(recursiveFunc(dataList.get(i).getMenuId(), dataList.get(i).getUrl(), menuList));
 			}
 		}
-		return data;
+		return dataList;
 	}
 
 }

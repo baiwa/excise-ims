@@ -4,7 +4,10 @@ import java.util.List;
 
 import th.co.baiwa.buckwaframework.accesscontrol.vo.MenuVo;
 
-public interface MenuRepositoryCustom {	
+public interface MenuRepositoryCustom {
+
+	//public List<MenuVo> listMenu();
 	
-	public List<MenuVo> listMenu();
+	public List<MenuVo> findByRoles(List<String> roleList);
+
 }
