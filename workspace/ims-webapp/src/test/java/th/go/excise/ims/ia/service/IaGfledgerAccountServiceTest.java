@@ -24,7 +24,7 @@ public class IaGfledgerAccountServiceTest {
 	
 	@Test 
 	public void addDataByExcel() {
-		iaGfledgerAccountService.addDataByExcel(new File("F:/เอกสารพี่นก/แยกประภเท2.xlsx"));
+		iaGfledgerAccountService.addDataByExcel(new File("F:\\เอกสารพี่นก\\excel\\02-05-2562\\แยกประเภท ประภัสสร.xlsx"));
 	}
 
 }

@@ -16,188 +16,316 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "IA_GFLEDGER_ACCOUNT")
-public class IaGfledgerAccount extends BaseEntity {
+public class IaGfledgerAccount
+    extends BaseEntity
+{
 
-	private static final long serialVersionUID = -7273038421473858670L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_GFLEDGER_ACCOUNT_GEN")
-	@SequenceGenerator(name = "IA_GFLEDGER_ACCOUNT_GEN", sequenceName = "IA_GFLEDGER_ACCOUNT_SEQ", allocationSize = 1)
-	@Column(name = "IA_GFLEDGER_ACCOUNT_SEQ")
-	private Long iaGfledgerAccountSeq;
-	@Column(name = "DEPARTMENT_CODE")
-	private String departmentCode;
-	@Column(name = "GL_ACCOUNT_NO")
-	private String glAccountNo;
-	@Column(name = "GL_ACCOUNT_NAME")
-	private String glAccountName;
-	@Column(name = "ST_CODE")
-	private String stCode;
-	@Column(name = "DISB_DEP_CODE")
-	private String disbDepCode;
-	@Column(name = "DOC_NO")
-	private String docNo;
-	@Column(name = "GL_AREA_CODE")
-	private String glAreaCode;
-	@Column(name = "TYPE")
-	private String type;
-	@Column(name = "DOC_DATE")
-	private Date docDate;
-	@Column(name = "PK_CODE")
-	private String pkCode;
-	@Column(name = "AMOUNT")
-	private BigDecimal amount;
-	@Column(name = "LOCAL_CURR")
-	private String localCurr;
-	@Column(name = "TX_CODE")
-	private String txCode;
-	@Column(name = "CLRNG_DOC")
-	private String clrngDoc;
-	@Column(name = "REMARK_GFLEDGER_ACCOUNT")
-	private String remarkGfledgerAccount;
-	@Column(name = "IS_DELETED")
-	private String isDeleted;
-	@Column(name = "VERSION")
-	private BigDecimal version;
-	@Column(name = "CREATED_BY")
-	private String createdBy;
-	@Column(name = "CREATED_DATE")
-	private Date createdDate;
-	@Column(name = "UPDATED_BY")
-	private String updatedBy;
-	@Column(name = "UPDATED_DATE")
-	private Date updatedDate;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_GFLEDGER_ACCOUNT_GEN")
+    @SequenceGenerator(name = "IA_GFLEDGER_ACCOUNT_GEN", sequenceName = "IA_GFLEDGER_ACCOUNT_SEQ", allocationSize = 1)
+    @Column(name = "IA_GFLEDGER_ACCOUNT_SEQ")
+    private Long iaGfledgerAccountSeq;
+    @Column(name = "ST_CODE")
+    private String stCode;
+    @Column(name = "DETERMINATON")
+    private String determinaton;
+    @Column(name = "DOC_NO")
+    private String docNo;
+    @Column(name = "CODE")
+    private String code;
+    @Column(name = "TYPE")
+    private String type;
+    @Column(name = "DOC_DATE")
+    private String docDate;
+    @Column(name = "PK_CODE")
+    private String pkCode;
+    @Column(name = "CURR_AMT")
+    private BigDecimal currAmt;
+    @Column(name = "SOURCE_MONEY")
+    private String sourceMoney;
+    @Column(name = "KEY_REF_3")
+    private String keyRef3;
+    @Column(name = "DEP_CODE")
+    private String depCode;
+    @Column(name = "POSTING_DATE")
+    private Date postingDate;
+    @Column(name = "YEAR_MONTH")
+    private String yearMonth;
+    @Column(name = "TAX_AMT")
+    private BigDecimal taxAmt;
+    @Column(name = "TAX_EXRMPT_AMT")
+    private BigDecimal taxExrmptAmt;
+    @Column(name = "REF_CODE")
+    private String refCode;
+    @Column(name = "GL_ACC")
+    private String glAcc;
+    @Column(name = "FORWARD_CLEARING_LIST")
+    private String forwardClearingList;
+    @Column(name = "CLG_I")
+    private BigDecimal clgI;
+    @Column(name = "BUDGET_CODE")
+    private String budgetCode;
+    @Column(name = "KEY_REF_1")
+    private String keyRef1;
+    @Column(name = "KEY_REF_2")
+    private String keyRef2;
+    @Column(name = "DEPOSIT_ACC")
+    private String depositAcc;
+    @Column(name = "SUB_ACC")
+    private String subAcc;
+    @Column(name = "DEPOSIT_NAME")
+    private String depositName;
+    @Column(name = "ACC_OWN")
+    private String accOwn;
+    @Column(name = "DOC_HEADER_MSG")
+    private String docHeaderMsg;
+    @Column(name = "TX_CODE")
+    private String txCode;
+    @Column(name = "CLRNG_DOC")
+    private String clrngDoc;
 
-	public Long getIaGfledgerAccountSeq() {
-		return iaGfledgerAccountSeq;
-	}
+    public Long getIaGfledgerAccountSeq() {
+        return iaGfledgerAccountSeq;
+    }
 
-	public void setIaGfledgerAccountSeq(Long iaGfledgerAccountSeq) {
-		this.iaGfledgerAccountSeq = iaGfledgerAccountSeq;
-	}
+    public void setIaGfledgerAccountSeq(Long iaGfledgerAccountSeq) {
+        this.iaGfledgerAccountSeq = iaGfledgerAccountSeq;
+    }
 
-	public String getDepartmentCode() {
-		return departmentCode;
-	}
+    public String getStCode() {
+        return stCode;
+    }
 
-	public void setDepartmentCode(String departmentCode) {
-		this.departmentCode = departmentCode;
-	}
+    public void setStCode(String stCode) {
+        this.stCode = stCode;
+    }
 
-	public String getGlAccountNo() {
-		return glAccountNo;
-	}
+    public String getDeterminaton() {
+        return determinaton;
+    }
 
-	public void setGlAccountNo(String glAccountNo) {
-		this.glAccountNo = glAccountNo;
-	}
+    public void setDeterminaton(String determinaton) {
+        this.determinaton = determinaton;
+    }
 
-	public String getGlAccountName() {
-		return glAccountName;
-	}
+    public String getDocNo() {
+        return docNo;
+    }
 
-	public void setGlAccountName(String glAccountName) {
-		this.glAccountName = glAccountName;
-	}
+    public void setDocNo(String docNo) {
+        this.docNo = docNo;
+    }
 
-	public String getStCode() {
-		return stCode;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public void setStCode(String stCode) {
-		this.stCode = stCode;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public String getDisbDepCode() {
-		return disbDepCode;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setDisbDepCode(String disbDepCode) {
-		this.disbDepCode = disbDepCode;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public String getDocNo() {
-		return docNo;
-	}
+    public String getDocDate() {
+        return docDate;
+    }
 
-	public void setDocNo(String docNo) {
-		this.docNo = docNo;
-	}
+    public void setDocDate(String docDate) {
+        this.docDate = docDate;
+    }
 
-	public String getGlAreaCode() {
-		return glAreaCode;
-	}
+    public String getPkCode() {
+        return pkCode;
+    }
 
-	public void setGlAreaCode(String glAreaCode) {
-		this.glAreaCode = glAreaCode;
-	}
+    public void setPkCode(String pkCode) {
+        this.pkCode = pkCode;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public BigDecimal getCurrAmt() {
+        return currAmt;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setCurrAmt(BigDecimal currAmt) {
+        this.currAmt = currAmt;
+    }
 
-	public Date getDocDate() {
-		return docDate;
-	}
+    public String getSourceMoney() {
+        return sourceMoney;
+    }
 
-	public void setDocDate(Date docDate) {
-		this.docDate = docDate;
-	}
+    public void setSourceMoney(String sourceMoney) {
+        this.sourceMoney = sourceMoney;
+    }
 
-	public String getPkCode() {
-		return pkCode;
-	}
+    public String getKeyRef3() {
+        return keyRef3;
+    }
 
-	public void setPkCode(String pkCode) {
-		this.pkCode = pkCode;
-	}
+    public void setKeyRef3(String keyRef3) {
+        this.keyRef3 = keyRef3;
+    }
 
-	public BigDecimal getAmount() {
-		return amount;
-	}
+    public String getDepCode() {
+        return depCode;
+    }
 
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
-	}
+    public void setDepCode(String depCode) {
+        this.depCode = depCode;
+    }
 
-	public String getLocalCurr() {
-		return localCurr;
-	}
+    public Date getPostingDate() {
+        return postingDate;
+    }
 
-	public void setLocalCurr(String localCurr) {
-		this.localCurr = localCurr;
-	}
+    public void setPostingDate(Date postingDate) {
+        this.postingDate = postingDate;
+    }
 
-	public String getTxCode() {
-		return txCode;
-	}
+    public String getYearMonth() {
+        return yearMonth;
+    }
 
-	public void setTxCode(String txCode) {
-		this.txCode = txCode;
-	}
+    public void setYearMonth(String yearMonth) {
+        this.yearMonth = yearMonth;
+    }
 
-	public String getClrngDoc() {
-		return clrngDoc;
-	}
+    public BigDecimal getTaxAmt() {
+        return taxAmt;
+    }
 
-	public void setClrngDoc(String clrngDoc) {
-		this.clrngDoc = clrngDoc;
-	}
+    public void setTaxAmt(BigDecimal taxAmt) {
+        this.taxAmt = taxAmt;
+    }
 
-	public String getRemarkGfledgerAccount() {
-		return remarkGfledgerAccount;
-	}
+    public BigDecimal getTaxExrmptAmt() {
+        return taxExrmptAmt;
+    }
 
-	public void setRemarkGfledgerAccount(String remarkGfledgerAccount) {
-		this.remarkGfledgerAccount = remarkGfledgerAccount;
-	}
+    public void setTaxExrmptAmt(BigDecimal taxExrmptAmt) {
+        this.taxExrmptAmt = taxExrmptAmt;
+    }
 
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-	}
+    public String getRefCode() {
+        return refCode;
+    }
+
+    public void setRefCode(String refCode) {
+        this.refCode = refCode;
+    }
+
+    public String getGlAcc() {
+        return glAcc;
+    }
+
+    public void setGlAcc(String glAcc) {
+        this.glAcc = glAcc;
+    }
+
+    public String getForwardClearingList() {
+        return forwardClearingList;
+    }
+
+    public void setForwardClearingList(String forwardClearingList) {
+        this.forwardClearingList = forwardClearingList;
+    }
+
+    public BigDecimal getClgI() {
+        return clgI;
+    }
+
+    public void setClgI(BigDecimal clgI) {
+        this.clgI = clgI;
+    }
+
+    public String getBudgetCode() {
+        return budgetCode;
+    }
+
+    public void setBudgetCode(String budgetCode) {
+        this.budgetCode = budgetCode;
+    }
+
+    public String getKeyRef1() {
+        return keyRef1;
+    }
+
+    public void setKeyRef1(String keyRef1) {
+        this.keyRef1 = keyRef1;
+    }
+
+    public String getKeyRef2() {
+        return keyRef2;
+    }
+
+    public void setKeyRef2(String keyRef2) {
+        this.keyRef2 = keyRef2;
+    }
+
+    public String getDepositAcc() {
+        return depositAcc;
+    }
+
+    public void setDepositAcc(String depositAcc) {
+        this.depositAcc = depositAcc;
+    }
+
+    public String getSubAcc() {
+        return subAcc;
+    }
+
+    public void setSubAcc(String subAcc) {
+        this.subAcc = subAcc;
+    }
+
+    public String getDepositName() {
+        return depositName;
+    }
+
+    public void setDepositName(String depositName) {
+        this.depositName = depositName;
+    }
+
+    public String getAccOwn() {
+        return accOwn;
+    }
+
+    public void setAccOwn(String accOwn) {
+        this.accOwn = accOwn;
+    }
+
+    public String getDocHeaderMsg() {
+        return docHeaderMsg;
+    }
+
+    public void setDocHeaderMsg(String docHeaderMsg) {
+        this.docHeaderMsg = docHeaderMsg;
+    }
+
+    public String getTxCode() {
+        return txCode;
+    }
+
+    public void setTxCode(String txCode) {
+        this.txCode = txCode;
+    }
+
+    public String getClrngDoc() {
+        return clrngDoc;
+    }
+
+    public void setClrngDoc(String clrngDoc) {
+        this.clrngDoc = clrngDoc;
+    }
+
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    }
 
 }

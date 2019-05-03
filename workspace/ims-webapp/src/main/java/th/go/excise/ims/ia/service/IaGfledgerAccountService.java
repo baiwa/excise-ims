@@ -54,10 +54,8 @@ public class IaGfledgerAccountService {
 				iaGfledgerAccount = new IaGfledgerAccount();
 				
 				for (Cell c : r) {
-					System.out.print(c.getColumnIndex() + ":" + c.getStringCellValue() + "||");
-//					if() {
-//						
-//					}
+					System.out.print(c.getColumnIndex() + ":" + ExcelUtils.getCellValueAsString(c) + "||");
+
 				}
 				System.out.println();
 			}
