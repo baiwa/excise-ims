@@ -260,8 +260,8 @@ public class TaxOperatorController {
 
     @PostMapping("/find-all-analysis-number")
     @ResponseBody
-    public ResponseData<List<String>> findAllAnalysisNumber(@RequestBody TaxOperatorFormVo formVo) {
-        ResponseData<List<String>> response = new ResponseData<>();
+    public ResponseData<List<TaWorksheetHdr>> findAllAnalysisNumber(@RequestBody TaxOperatorFormVo formVo) {
+        ResponseData<List<TaWorksheetHdr>> response = new ResponseData<>();
 
         try {
             response.setData(worksheetService.findAllAnalysisNumber(formVo));

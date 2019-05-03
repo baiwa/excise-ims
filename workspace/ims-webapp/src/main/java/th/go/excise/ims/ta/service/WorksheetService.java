@@ -282,14 +282,14 @@ public class WorksheetService {
         return condSubNoAuditCode;
     }
 
-    public List<String> findAllAnalysisNumber(TaxOperatorFormVo formVo) {
+    public List<TaWorksheetHdr> findAllAnalysisNumber(TaxOperatorFormVo formVo) {
         String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
         String budgetYear = formVo.getBudgetYear();
         if (StringUtils.isEmpty(budgetYear)) {
             budgetYear = ExciseUtils.getCurrentBudgetYear();
         }
         logger.info("findAllAnalysisNumber officeCode={}, budgetYear={}", officeCode, budgetYear);
-        return taWorksheetHdrRepository.findAllAnalysisNumberByOfficeCodeAndBudgetYearAndWorksheetStatus(officeCode, budgetYear, TA_WORKSHEET_STATUS.CONDITION);
+        return taWorksheetHdrRepository.findByOfficeCodeAndBudgetYearOrderByCreatedDateDesc(officeCode, budgetYear);
     }
 
     public YearMonthVo getMonthStart(TaxOperatorFormVo formVo) {

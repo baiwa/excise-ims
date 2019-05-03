@@ -26,4 +26,5 @@ public interface TaWorksheetHdrRepository extends CommonJpaCrudRepository<TaWork
 	@Query("update #{#entityName} e set e.worksheetStatus = :worksheetStatus where e.isDeleted = '" + FLAG.N_FLAG + "' and e.budgetYear = :budgetYear")
 	public void updateWorksheetStatusByBudgetYear(@Param("worksheetStatus") String worksheetStatus, @Param("budgetYear") String budgetYear);
 	
+	public List<TaWorksheetHdr> findByOfficeCodeAndBudgetYearOrderByCreatedDateDesc(String officeCode, String budgetYear);
 }
