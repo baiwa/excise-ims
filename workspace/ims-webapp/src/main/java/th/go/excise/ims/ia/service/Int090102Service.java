@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.ia.persistence.entity.IaEmpWorkingDtl;
@@ -19,6 +20,9 @@ public class Int090102Service {
 	
 	public void save(IaEmpWorkingDtlSaveVo formVo) {
 		IaEmpWorkingDtl emp = new IaEmpWorkingDtl();
+		if (null != formVo.getIaEmpWorkingDtlSeq()) {
+			emp = empWorkingDtlRepository.findByIaEmpWorkingDtlSeq(formVo.getIaEmpWorkingDtlSeq());
+		}
 		emp.setUserLogin(UserLoginUtils.getCurrentUserBean().getUserThaiId());
 		String userName = UserLoginUtils.getCurrentUserBean().getUserThaiName() + " " + UserLoginUtils.getCurrentUserBean().getUserThaiSurname();
 		emp.setUserName(userName);
@@ -35,5 +39,13 @@ public class Int090102Service {
 	public List<IaEmpWorkingDtl> getByMonth(IaEmpWorkingDtlSaveVo formVo) {
 		List<IaEmpWorkingDtl> emp = empWorkingDtlRepository.findByMonth(formVo);
 		return emp;
+	}
+	
+	public void delete(IaEmpWorkingDtlSaveVo formVo) {
+		IaEmpWorkingDtl emp = new IaEmpWorkingDtl();
+		emp = empWorkingDtlRepository.findByIaEmpWorkingDtlSeq(formVo.getIaEmpWorkingDtlSeq());
+		emp.setIsDeleted(FLAG.Y_FLAG);
+		
+		empWorkingDtlRepository.save(emp);
 	}
 }

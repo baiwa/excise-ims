@@ -2,12 +2,19 @@ package th.go.excise.ims.ia.vo;
 
 public class IaEmpWorkingDtlSaveVo {
 	
+	private Long iaEmpWorkingDtlSeq;
 	private String workingDate;
 	private String workingFlag;
 	private String workingDesc;
 	private String workingRemark;
 	private String reimburseExpFlag;
 	
+	public Long getIaEmpWorkingDtlSeq() {
+		return iaEmpWorkingDtlSeq;
+	}
+	public void setIaEmpWorkingDtlSeq(Long iaEmpWorkingDtlSeq) {
+		this.iaEmpWorkingDtlSeq = iaEmpWorkingDtlSeq;
+	}
 	public String getWorkingDate() {
 		return workingDate;
 	}

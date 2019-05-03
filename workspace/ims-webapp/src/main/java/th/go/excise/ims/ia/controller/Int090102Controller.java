@@ -47,13 +47,30 @@ public class Int090102Controller {
 	@PostMapping("/get-by-month")
 	@ResponseBody
 	public ResponseData<List<IaEmpWorkingDtl>> getByMonth(@RequestBody IaEmpWorkingDtlSaveVo request) {
-		logger.info("save -> Int090102");
+		logger.info("get-by-month -> Int090102");
 		ResponseData<List<IaEmpWorkingDtl>> responseData = new ResponseData<List<IaEmpWorkingDtl>>();
 		try {
 			responseData.setData(int090102Service.getByMonth(request));
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
+	@PostMapping("/delete")
+	@ResponseBody
+	public ResponseData<T> delete(@RequestBody IaEmpWorkingDtlSaveVo request) {
+		logger.info("delete -> Int090102");
+		ResponseData<T> responseData = new ResponseData<T>();
+		try {
+			int090102Service.delete(request);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.DELETE.SUCCESS_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.DELETE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
