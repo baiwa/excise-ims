@@ -27,12 +27,12 @@ public class SyncExciseDutyGroupService {
 	
 	@Transactional(rollbackOn = {Exception.class})
 	public void syncData() throws PccRestfulException {
-		logger.info("syncData");
+		logger.info("syncData InquiryDutyGroup");
 		
 		List<DutyGroup> dutyGroupList = inquiryDutyGroupService.execute(new Object());
 		
 		exciseDutyGroupRepository.queryUpdateIsDeletedY();
-		exciseDutyGroupRepository.batchUpdate(dutyGroupList);
+		exciseDutyGroupRepository.batchMerge(dutyGroupList);
 	}
 	
 }

@@ -6,6 +6,6 @@ import th.go.excise.ims.ws.client.pcc.inquiryholiday.model.Holiday;
 
 public interface ExciseHolidayRepositoryCustom {
 	
-	public void batchUpdate(List<Holiday> holidayList);
+	public void batchMerge(List<Holiday> holidayList);
 	
 }

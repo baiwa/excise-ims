@@ -25,8 +25,8 @@ public class ExciseOfficeAddrRepositoryImpl implements ExciseOfficeAddrRepositor
 	private CommonJdbcTemplate commonJdbcTemplate;
 
 	@Override
-	public void batchUpdate(List<OffCodeAddress> offCodeAddressList) {
-		logger.info("batchUpdate offCodeAddressList.size()={}", offCodeAddressList.size());
+	public void batchMerge(List<OffCodeAddress> offCodeAddressList) {
+		logger.info("batchMerge offCodeAddressList.size()={}", offCodeAddressList.size());
 
 		final int BATCH_SIZE = 1000;
 		

@@ -6,6 +6,6 @@ import th.go.excise.ims.ws.client.pcc.inquiryhospital.model.Hospital;
 
 public interface ExciseHospitalRepositoryCustom {
 	
-	public void batchUpdate(List<Hospital> hospitalList);
+	public void batchMerge(List<Hospital> hospitalList);
 	
 }

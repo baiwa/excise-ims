@@ -33,7 +33,7 @@ public class InquiryDutyGroupServiceTest {
 	//@Test
 	public void test_execute() {
 		try {
-			DutyGroup requestData = new DutyGroup();
+			Object requestData = new Object();
 			List<DutyGroup> dutyGroupList = inquiryDutyGroupService.execute(requestData);
 			dutyGroupList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
 		} catch (PccRestfulException e) {
@@ -47,8 +47,7 @@ public class InquiryDutyGroupServiceTest {
 		InquiryDutyGroupService inquiryDutyGroupService = new InquiryDutyGroupService(url, PccServiceTestUtils.getPccServiceProperties(), new RestfulClientService(), new Gson());
 		
 		try {
-			DutyGroup requestData = new DutyGroup();
-			requestData.setGroupId("");
+			Object requestData = new Object();
 			List<DutyGroup> dutyGroupList = inquiryDutyGroupService.execute(requestData);
 			dutyGroupList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
 		} catch (PccRestfulException e) {

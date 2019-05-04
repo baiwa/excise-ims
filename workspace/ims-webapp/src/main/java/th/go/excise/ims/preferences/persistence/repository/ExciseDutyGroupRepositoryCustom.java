@@ -6,6 +6,6 @@ import th.go.excise.ims.ws.client.pcc.inquirydutygroup.model.DutyGroup;
 
 public interface ExciseDutyGroupRepositoryCustom {
 	
-	public void batchUpdate(List<DutyGroup> dutyGroupList);
+	public void batchMerge(List<DutyGroup> dutyGroupList);
 	
 }

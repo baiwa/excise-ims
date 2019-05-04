@@ -27,8 +27,8 @@ public class ExciseBankRepositoryImpl implements ExciseBankRepositoryCustom {
 	private CommonJdbcTemplate commonJdbcTemplate;
 	
 	@Override
-	public void batchUpdate(List<Bank> bankList) {
-		logger.info("batchUpdate bankList.size()={}", bankList.size());
+	public void batchMerge(List<Bank> bankList) {
+		logger.info("batchMerge bankList.size()={}", bankList.size());
 		
 		final int BATCH_SIZE = 1000;
 		

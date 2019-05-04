@@ -33,7 +33,7 @@ public class InquiryBankServiceTest {
 //	@Test
 	public void test_execute() {
 		try {
-			Bank requestData = new Bank();
+			Object requestData = new Object();
 			List<Bank> bankList = inquiryBankService.execute(requestData);
 			bankList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
 		} catch (PccRestfulException e) {
@@ -47,8 +47,7 @@ public class InquiryBankServiceTest {
 		InquiryBankService inquiryBankService = new InquiryBankService(url, PccServiceTestUtils.getPccServiceProperties(), new RestfulClientService(), new Gson());
 		
 		try {
-			Bank requestData = new Bank();
-			requestData.setBankCode("001");
+			Object requestData = new Object();
 			List<Bank> bankList = inquiryBankService.execute(requestData);
 			bankList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
 		} catch (PccRestfulException e) {

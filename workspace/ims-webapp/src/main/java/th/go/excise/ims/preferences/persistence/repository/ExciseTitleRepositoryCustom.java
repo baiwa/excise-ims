@@ -6,6 +6,6 @@ import th.go.excise.ims.ws.client.pcc.inquirytitle.model.Title;
 
 public interface ExciseTitleRepositoryCustom {
 
-	public void batchUpdate(List<Title> titleList);
+	public void batchMerge(List<Title> titleList);
 	
 }

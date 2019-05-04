@@ -18,7 +18,7 @@ import th.go.excise.ims.ws.client.pcc.inquiryduedateps0112.model.DuedatePs0112;
 import th.go.excise.ims.ws.client.service.RestfulClientService;
 
 @Service
-public class InquiryDuedatePs0112Service extends AbstractPccRestfulService<DuedatePs0112, List<DuedatePs0112>>  {
+public class InquiryDuedatePs0112Service extends AbstractPccRestfulService<Object, List<DuedatePs0112>>  {
 	
 	@Autowired
 	public InquiryDuedatePs0112Service(
@@ -33,7 +33,7 @@ public class InquiryDuedatePs0112Service extends AbstractPccRestfulService<Dueda
 	}
 
 	@Override
-	public List<DuedatePs0112> execute(DuedatePs0112 requestData) throws PccRestfulException {
+	public List<DuedatePs0112> execute(Object requestData) throws PccRestfulException {
 		return executePost(requestData);
 	}
 

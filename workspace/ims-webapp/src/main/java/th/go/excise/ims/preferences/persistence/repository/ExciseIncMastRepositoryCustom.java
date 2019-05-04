@@ -6,6 +6,6 @@ import th.go.excise.ims.ws.client.pcc.inquiryincmast.model.IncomeMaster;
 
 public interface ExciseIncMastRepositoryCustom {
 	
-	public void batchUpdate(List<IncomeMaster> incMastList);
+	public void batchMerge(List<IncomeMaster> incMastList);
 
 }

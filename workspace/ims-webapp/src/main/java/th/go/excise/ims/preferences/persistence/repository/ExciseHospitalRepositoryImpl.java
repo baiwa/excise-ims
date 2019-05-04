@@ -27,8 +27,8 @@ public class ExciseHospitalRepositoryImpl implements ExciseHospitalRepositoryCus
 	private CommonJdbcTemplate commonJdbcTemplate;
 	
 	@Override
-	public void batchUpdate(List<Hospital> hospitalList) {
-		logger.info("batchUpdate hospitalList.size()={}", hospitalList.size());
+	public void batchMerge(List<Hospital> hospitalList) {
+		logger.info("batchMerge hospitalList.size()={}", hospitalList.size());
 		
 		final int BATCH_SIZE = 1000;
 		

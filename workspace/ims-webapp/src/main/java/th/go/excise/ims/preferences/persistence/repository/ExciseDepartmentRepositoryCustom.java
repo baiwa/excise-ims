@@ -6,6 +6,6 @@ import th.go.excise.ims.ws.client.pcc.inquiryedoffice.model.EdOffice;
 
 public interface ExciseDepartmentRepositoryCustom {
 	
-	public void batchUpdate(List<EdOffice> edOfficeList);
+	public void batchMerge(List<EdOffice> edOfficeList);
 	
 }

@@ -33,7 +33,7 @@ public class InquiryTitleServiceTest {
 	//@Test
 	public void test_execute() {
 		try {
-			Title requestData = new Title();
+			Object requestData = new Object();
 			List<Title> titleList = inquiryTitleService.execute(requestData);
 			titleList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
 		} catch (PccRestfulException e) {
@@ -47,8 +47,7 @@ public class InquiryTitleServiceTest {
 		InquiryTitleService inquiryTitleService = new InquiryTitleService(url, PccServiceTestUtils.getPccServiceProperties(), new RestfulClientService(), new Gson());
 		
 		try {
-			Title requestData = new Title();
-//			requestBody.setTitleCode("");
+			Object requestData = new Object();
 			List<Title> titleList = inquiryTitleService.execute(requestData);
 			titleList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
 		} catch (PccRestfulException e) {

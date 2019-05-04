@@ -33,7 +33,7 @@ public class InquiryHospitalServiceTest {
 	//@Test
 	public void test_execute() {
 		try {
-			Hospital requestData = new Hospital();
+			Object requestData = new Object();
 			List<Hospital> hospitalList = inquiryHospitalService.execute(requestData);
 			hospitalList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
 		} catch (PccRestfulException e) {
@@ -47,7 +47,7 @@ public class InquiryHospitalServiceTest {
 		InquiryHospitalService inquiryHospitalService = new InquiryHospitalService(url, PccServiceTestUtils.getPccServiceProperties(), new RestfulClientService(), new Gson());
 		
 		try {
-			Hospital requestData = new Hospital();
+			Object requestData = new Object();
 			//requestData.setHospCode("");
 			List<Hospital> hospitalList = inquiryHospitalService.execute(requestData);
 			hospitalList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));

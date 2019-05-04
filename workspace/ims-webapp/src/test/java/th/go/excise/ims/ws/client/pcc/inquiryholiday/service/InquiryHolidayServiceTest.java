@@ -30,16 +30,16 @@ public class InquiryHolidayServiceTest {
 	@Autowired
 	private InquiryHolidayService inquiryHolidayService;
 
-//	//@Test
-//	public void test_execute() {
-//		try {
-//			Holiday requestData = new Holiday();
-//			List<Holiday> holidayList = inquiryHolidayService.execute(requestData);
-//			holidayList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
-//		} catch (PccRestfulException e) {
-//			e.printStackTrace();
-//		}
-//	}
+	//@Test
+	public void test_execute() {
+		try {
+			Object requestData = new Object();
+			List<Holiday> holidayList = inquiryHolidayService.execute(requestData);
+			holidayList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
+		} catch (PccRestfulException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	@Test
 	public void test_execute_Manual() {
@@ -47,7 +47,7 @@ public class InquiryHolidayServiceTest {
 		InquiryHolidayService inquiryHolidayService = new InquiryHolidayService(url, PccServiceTestUtils.getPccServiceProperties(), new RestfulClientService(), new Gson());
 		
 		try {
-			Holiday requestData = new Holiday();
+			Object requestData = new Object();
 			List<Holiday> holidayList = inquiryHolidayService.execute(requestData);
 			holidayList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
 		} catch (PccRestfulException e) {

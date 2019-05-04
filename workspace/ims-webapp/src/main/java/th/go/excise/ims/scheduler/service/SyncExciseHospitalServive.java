@@ -25,11 +25,11 @@ public class SyncExciseHospitalServive {
 	
 	@Transactional(rollbackOn = {Exception.class})
 	public void syncData() throws PccRestfulException {
-		logger.info("syncData");
+		logger.info("syncData InquiryHospital");
 		
 		List<Hospital> hospitalList = inquiryHospitalService.execute(new Object());
 		
 		exciseHospitalRepository.queryUpdateIsDeletedY();
-		exciseHospitalRepository.batchUpdate(hospitalList);
+		exciseHospitalRepository.batchMerge(hospitalList);
 	}
 }

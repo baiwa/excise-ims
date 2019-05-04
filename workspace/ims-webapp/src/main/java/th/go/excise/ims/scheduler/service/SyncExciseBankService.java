@@ -26,11 +26,11 @@ public class SyncExciseBankService {
 	
 	@Transactional(rollbackOn = {Exception.class})
 	public void syncData() throws PccRestfulException {
-		logger.info("syncData");
+		logger.info("syncData InquiryBank");
 		
 		List<Bank> bankList = inquiryBankService.execute(new Object());
 		
 		exciseBankRepository.queryUpdateIsDeletedY();
-		exciseBankRepository.batchUpdate(bankList);
+		exciseBankRepository.batchMerge(bankList);
 	}
 }

@@ -31,26 +31,26 @@ public class InquiryDuedatePs0112Test {
 	@Autowired
 	private InquiryDuedatePs0112Service inquiryDuedatePs0112Service;
 
-//	//@Test
-//	public void test_execute() {
-//		try {
-//			Holiday requestData = new Holiday();
-//			List<Holiday> holidayList = inquiryHolidayService.execute(requestData);
-//			holidayList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
-//		} catch (PccRestfulException e) {
-//			e.printStackTrace();
-//		}
-//	}
-	
 	@Test
+	public void test_execute() {
+		try {
+			Object requestData = new Object();
+			List<DuedatePs0112> duedatePs0112List = inquiryDuedatePs0112Service.execute(requestData);
+			duedatePs0112List.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
+		} catch (PccRestfulException e) {
+			e.printStackTrace();
+		}
+	}
+
+//	@Test
 	public void test_execute_Manual() {
 		String url = "http://webtest.excise.go.th/EDRestServicesUAT/rdb/InquiryDuedatePs0112";
 		InquiryDuedatePs0112Service inquiryDuedatePs0112Service = new InquiryDuedatePs0112Service(url, PccServiceTestUtils.getPccServiceProperties(), new RestfulClientService(), new Gson());
-		
+
 		try {
-			DuedatePs0112 requestData = new DuedatePs0112();
-			List<DuedatePs0112> holidayList = inquiryDuedatePs0112Service.execute(requestData);
-			holidayList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
+			Object requestData = new Object();
+			List<DuedatePs0112> duedatePs0112List = inquiryDuedatePs0112Service.execute(requestData);
+			duedatePs0112List.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
 		} catch (PccRestfulException e) {
 			e.printStackTrace();
 		}

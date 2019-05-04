@@ -106,7 +106,7 @@ public class SyncWsRegfri4000Service {
 					regfri4000List.add(regfri4000);
 				}
 			} else {
-				logger.info("ws 4000 no response data", regMaster60List.size());
+				logger.warn("WS Regfri4000 is empty ResponseData", regMaster60List.size());
 			}
 		} while (regMaster60List.size() == WS_DATA_SIZE);
 		

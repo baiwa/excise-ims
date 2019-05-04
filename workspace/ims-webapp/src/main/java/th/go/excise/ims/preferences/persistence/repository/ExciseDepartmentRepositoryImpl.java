@@ -25,8 +25,8 @@ public class ExciseDepartmentRepositoryImpl implements ExciseDepartmentRepositor
 	private CommonJdbcTemplate commonJdbcTemplate;
 	
 	@Override
-	public void batchUpdate(List<EdOffice> edOfficeList) {
-		logger.info("batchUpdate edOfficeList.size()={}", edOfficeList.size());
+	public void batchMerge(List<EdOffice> edOfficeList) {
+		logger.info("batchMerge edOfficeList.size()={}", edOfficeList.size());
 		
 		final int BATCH_SIZE = 1000;
 		

@@ -27,11 +27,11 @@ public class SyncExciseTitleService {
 	
 	@Transactional(rollbackOn = {Exception.class})
 	public void syncData() throws PccRestfulException {
-		logger.info("syncData");
+		logger.info("syncData InquiryTitle");
 		
 		List<Title> titleList = inquiryTitleService.execute(new Object());
 		
 		exciseTitleRepository.queryUpdateIsDeletedY();
-		exciseTitleRepository.batchUpdate(titleList);
+		exciseTitleRepository.batchMerge(titleList);
 	}
 }

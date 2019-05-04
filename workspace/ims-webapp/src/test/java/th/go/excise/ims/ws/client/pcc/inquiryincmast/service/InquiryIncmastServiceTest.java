@@ -33,7 +33,7 @@ public class InquiryIncmastServiceTest {
 	//@Test
 	public void test_execute() {
 		try {
-			IncomeMaster requestData = new IncomeMaster();
+			Object requestData = new Object();
 			List<IncomeMaster> incomeMasterList = inquiryIncmastService.execute(requestData);
 			incomeMasterList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
 		} catch (PccRestfulException e) {
@@ -47,8 +47,7 @@ public class InquiryIncmastServiceTest {
 		InquiryIncmastService inquiryIncmastService = new InquiryIncmastService(url, PccServiceTestUtils.getPccServiceProperties(), new RestfulClientService(), new Gson());
 		
 		try {
-			IncomeMaster requestData = new IncomeMaster();
-			requestData.setIncCode("");
+			Object requestData = new Object();
 			List<IncomeMaster> incomeMasterList = inquiryIncmastService.execute(requestData);
 			incomeMasterList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
 		} catch (PccRestfulException e) {

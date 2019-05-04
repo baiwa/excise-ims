@@ -27,8 +27,8 @@ public class ExciseDutyGroupRepositoryImpl implements ExciseDutyGroupRepositoryC
 	private CommonJdbcTemplate commonJdbcTemplate;
 	
 	@Override
-	public void batchUpdate(List<DutyGroup> dutyGroupList) {
-		logger.info("batchUpdate dutyGroupList.size()={}", dutyGroupList.size());
+	public void batchMerge(List<DutyGroup> dutyGroupList) {
+		logger.info("batchMerge dutyGroupList.size()={}", dutyGroupList.size());
 		
 		final int BATCH_SIZE = 1000;
 		

@@ -27,8 +27,8 @@ public class ExciseIncMastRepositoryImpl implements ExciseIncMastRepositoryCusto
 	private CommonJdbcTemplate commonJdbcTemplate;
 
 	@Override
-	public void batchUpdate(List<IncomeMaster> incMastList) {
-		logger.info("batchUpdate incMastList.size()={}", incMastList.size());
+	public void batchMerge(List<IncomeMaster> incMastList) {
+		logger.info("batchMerge incMastList.size()={}", incMastList.size());
 
 		final int BATCH_SIZE = 1000;
 		

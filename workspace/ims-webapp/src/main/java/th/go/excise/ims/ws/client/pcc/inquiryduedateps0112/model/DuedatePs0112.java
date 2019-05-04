@@ -5,15 +5,14 @@ import com.google.gson.annotations.SerializedName;
 
 public class DuedatePs0112 {
 
-
 	@SerializedName("YEAR")
 	@Expose
 	private String year;
-	
+
 	@SerializedName("MONTH")
 	@Expose
-	private String groupid;
-	
+	private String month;
+
 	@SerializedName("DUE_DATE")
 	@Expose
 	private String duedate;
@@ -26,12 +25,12 @@ public class DuedatePs0112 {
 		this.year = year;
 	}
 
-	public String getGroupid() {
-		return groupid;
+	public String getMonth() {
+		return month;
 	}
 
-	public void setGroupid(String groupid) {
-		this.groupid = groupid;
+	public void setMonth(String month) {
+		this.month = month;
 	}
 
 	public String getDuedate() {
@@ -42,5 +41,4 @@ public class DuedatePs0112 {
 		this.duedate = duedate;
 	}
 
-	
 }

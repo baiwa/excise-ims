@@ -6,6 +6,6 @@ import th.go.excise.ims.ws.client.pcc.inquiryoffcodeaddress.model.OffCodeAddress
 
 public interface ExciseOfficeAddrRepositoryCustom {
 
-	public void batchUpdate(List<OffCodeAddress> offCodeAddressList);
+	public void batchMerge(List<OffCodeAddress> offCodeAddressList);
 	
 }

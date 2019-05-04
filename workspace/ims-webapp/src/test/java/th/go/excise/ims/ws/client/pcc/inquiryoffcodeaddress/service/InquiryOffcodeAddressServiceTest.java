@@ -33,7 +33,7 @@ public class InquiryOffcodeAddressServiceTest {
 	//@Test
 	public void test_execute() {
 		try {
-			OffCodeAddress requestData = new OffCodeAddress();
+			Object requestData = new Object();
 			List<OffCodeAddress> offCodeAddressList = inquiryOffcodeAddressService.execute(requestData);
 			offCodeAddressList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
 		} catch (PccRestfulException e) {
@@ -47,7 +47,7 @@ public class InquiryOffcodeAddressServiceTest {
 		InquiryOffcodeAddressService inquiryOffcodeAddressService = new InquiryOffcodeAddressService(url, PccServiceTestUtils.getPccServiceProperties(), new RestfulClientService(), new Gson());
 		
 		try {
-			OffCodeAddress requestData = new OffCodeAddress();
+			Object requestData = new Object();
 			//requestData.setOffcode("");
 			List<OffCodeAddress> offCodeAddressList = inquiryOffcodeAddressService.execute(requestData);
 			offCodeAddressList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));

@@ -27,8 +27,8 @@ public class ExciseHolidayRepositoryImpl implements ExciseHolidayRepositoryCusto
 	private CommonJdbcTemplate commonJdbcTemplate;
 
 	@Override
-	public void batchUpdate(List<Holiday> holidayList) {
-		logger.info("batchUpdate holidayList.size()={}", holidayList.size());
+	public void batchMerge(List<Holiday> holidayList) {
+		logger.info("batchMerge holidayList.size()={}", holidayList.size());
 
 		final int BATCH_SIZE = 1000;
 		

@@ -33,7 +33,7 @@ public class InquiryEdOfficeServiceTest {
 	//@Test
 	public void test_execute() {
 		try {
-			EdOffice requestData = new EdOffice();
+			Object requestData = new Object();
 			List<EdOffice> edOfficeList = inquiryEdOfficeService.execute(requestData);
 			edOfficeList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
 		} catch (PccRestfulException e) {
@@ -47,8 +47,7 @@ public class InquiryEdOfficeServiceTest {
 		InquiryEdOfficeService inquiryEdOfficeService = new InquiryEdOfficeService(url, PccServiceTestUtils.getPccServiceProperties(), new RestfulClientService(), new Gson());
 		
 		try {
-			EdOffice requestData = new EdOffice();
-			//requestData.setOffcode("");
+			Object requestData = new Object();
 			List<EdOffice> edOfficeList = inquiryEdOfficeService.execute(requestData);
 			edOfficeList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
 		} catch (PccRestfulException e) {

@@ -27,11 +27,11 @@ public class SyncExciseOfficeAddrService {
 	
 	@Transactional(rollbackOn = {Exception.class})
 	public void syncData() throws PccRestfulException {
-		logger.info("syncData");
+		logger.info("syncData InquiryOffcodeAddress");
 		
 		List<OffCodeAddress> offCodeAddressList = inquiryOffcodeAddressService.execute(new Object());
 		
 		exciseOfficeAddrRepository.queryUpdateIsDeletedY();
-		exciseOfficeAddrRepository.batchUpdate(offCodeAddressList);
+		exciseOfficeAddrRepository.batchMerge(offCodeAddressList);
 	}
 }

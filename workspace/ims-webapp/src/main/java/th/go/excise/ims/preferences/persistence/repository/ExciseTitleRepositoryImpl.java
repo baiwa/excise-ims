@@ -27,8 +27,8 @@ public class ExciseTitleRepositoryImpl implements ExciseTitleRepositoryCustom {
 	private CommonJdbcTemplate commonJdbcTemplate;
 
 	@Override
-	public void batchUpdate(List<Title> titleList) {
-		logger.info("batchUpdate titleList.size()={}", titleList.size());
+	public void batchMerge(List<Title> titleList) {
+		logger.info("batchMerge titleList.size()={}", titleList.size());
 
 		final int BATCH_SIZE = 1000;
 		
