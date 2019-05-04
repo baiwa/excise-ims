@@ -8,11 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.go.excise.ims.ia.job.JobSystemUnworking;
-import th.go.excise.ims.ia.persistence.entity.IaRiskSystemUnworking;
 import th.go.excise.ims.ia.persistence.repository.IaRiskSystemUnworkingRepository;
-import th.go.excise.ims.ws.client.pcc.systemunworking.oxm.DataList;
-import th.go.excise.ims.ws.client.pcc.systemunworking.oxm.ResponseData;
-import th.go.excise.ims.ws.client.pcc.systemunworking.service.SystemUnworkingService;
 
 @Service
 public class JobSystemUnworkingService {
@@ -22,34 +18,34 @@ public class JobSystemUnworkingService {
 	@Autowired
 	private IaRiskSystemUnworkingRepository iaRiskSystemUnworkingRepository;
 	
-	@Autowired
-	private SystemUnworkingService wsSystemUnworkingService;
+//	@Autowired
+//	private SystemUnworkingService wsSystemUnworkingService;
 	
 	public void runBatchSystemUnworking(String year,String month) throws IOException {
 		logger.info("Run Batch SystemUnworking ...");
 		
-		ResponseData req = wsSystemUnworkingService.getRestFul(year, month);
-		IaRiskSystemUnworking entity = new IaRiskSystemUnworking();
-		if(req!=null&&req.getData().size()>0) {
-			for (DataList element : req.getData()) {
-				entity = new IaRiskSystemUnworking();
-				
-				entity.setYear(year);
-				entity.setMonth(month);
-				entity.setStatus(req.getStatus());
-				
-				entity.setSystemCode(element.getSystemCode());
-				entity.setSystemName(element.getSystemName());
-				entity.setCountAll(element.getCountAll());
-				entity.setCountNormal(element.getCountNormal());
-				entity.setCountError(element.getCountError());
-				entity.setStartDate(element.getStartDate());
-				entity.setEndDate(element.getEndDate());
-				
-				
-				iaRiskSystemUnworkingRepository.save(entity);
-			}
-		}
+//		ResponseData req = wsSystemUnworkingService.getRestFul(year, month);
+//		IaRiskSystemUnworking entity = new IaRiskSystemUnworking();
+//		if(req!=null&&req.getData().size()>0) {
+//			for (DataList element : req.getData()) {
+//				entity = new IaRiskSystemUnworking();
+//				
+//				entity.setYear(year);
+//				entity.setMonth(month);
+//				entity.setStatus(req.getStatus());
+//				
+//				entity.setSystemCode(element.getSystemCode());
+//				entity.setSystemName(element.getSystemName());
+//				entity.setCountAll(element.getCountAll());
+//				entity.setCountNormal(element.getCountNormal());
+//				entity.setCountError(element.getCountError());
+//				entity.setStartDate(element.getStartDate());
+//				entity.setEndDate(element.getEndDate());
+//				
+//				
+//				iaRiskSystemUnworkingRepository.save(entity);
+//			}
+//		}
 		
 		
 	}
