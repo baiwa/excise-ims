@@ -7,6 +7,8 @@ public class WsRegfri4000FormVo extends RegMaster60 {
 	private String newRegId;
 	private String customerAddress;
 	private String facAddress;
+	private String factoryType;
+	private String factoryTypeText;
 
 	public String getNewRegId() {
 		return newRegId;
@@ -30,6 +32,22 @@ public class WsRegfri4000FormVo extends RegMaster60 {
 
 	public void setFacAddress(String facAddress) {
 		this.facAddress = facAddress;
+	}
+
+	public String getFactoryType() {
+		return factoryType;
+	}
+
+	public void setFactoryType(String factoryType) {
+		this.factoryType = factoryType;
+	}
+
+	public String getFactoryTypeText() {
+		return factoryTypeText;
+	}
+
+	public void setFactoryTypeText(String factoryTypeText) {
+		this.factoryTypeText = factoryTypeText;
 	}
 
 }

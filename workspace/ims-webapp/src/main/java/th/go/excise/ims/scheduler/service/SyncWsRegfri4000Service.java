@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
+import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
 import th.go.excise.ims.ws.client.pcc.regfri4000.model.RegDuty;
 import th.go.excise.ims.ws.client.pcc.regfri4000.model.RegMaster60;
@@ -68,13 +69,13 @@ public class SyncWsRegfri4000Service {
 					regfri4000.setNewRegId(regMaster60.getNewregId());
 					regfri4000.setCusId(regMaster60.getCusId());
 					regfri4000.setCusFullname(regMaster60.getCusFullname());
-					regfri4000.setCusAddress(buildCusAddress(regMaster60));
+					regfri4000.setCusAddress(ExciseUtils.buildCusAddress(regMaster60));
 					regfri4000.setCusTelno(regMaster60.getCusTelno());
 					regfri4000.setCusEmail(regMaster60.getCusEmail());
 					regfri4000.setCusUrl(regMaster60.getCusUrl());
 					regfri4000.setFacId(regMaster60.getFacId());
 					regfri4000.setFacFullname(regMaster60.getFacFullname());
-					regfri4000.setFacAddress(buildFacAddress(regMaster60));
+					regfri4000.setFacAddress(ExciseUtils.buildFacAddress(regMaster60));
 					regfri4000.setFacTelno(regMaster60.getFacTelno());
 					regfri4000.setFacEmail(regMaster60.getFacEmail());
 					regfri4000.setFacUrl(regMaster60.getFacUrl());
@@ -120,84 +121,6 @@ public class SyncWsRegfri4000Service {
 		
 		long end = System.currentTimeMillis();
 		logger.info("syncData Regfri4000 Success, using {} seconds", (float) (end - start) / 1000F);
-	}
-	
-	private String buildCusAddress(RegMaster60 regMaster60) {
-		StringBuilder address = new StringBuilder(regMaster60.getCusAddrno());
-		if (regMaster60.getCusBuildname() != null) {
-			address.append(" ").append(regMaster60.getCusBuildname());
-		}
-		if (regMaster60.getCusFloorno() != null) {
-			address.append(" ").append(regMaster60.getCusFloorno());
-		}
-		if (regMaster60.getCusRoomno() != null) {
-			address.append(" ").append(regMaster60.getCusRoomno());
-		}
-		if (regMaster60.getCusMoono() != null) {
-			address.append(" ").append(regMaster60.getCusMoono());
-		}
-		if (regMaster60.getCusVillage() != null) {
-			address.append(" ").append(regMaster60.getCusVillage());
-		}
-		if (regMaster60.getCusSoiname() != null) {
-			address.append(" ").append(regMaster60.getCusSoiname());
-		}
-		if (regMaster60.getCusThnname() != null) {
-			address.append(" ").append(regMaster60.getCusThnname());
-		}
-		if (regMaster60.getCusTambolname() != null) {
-			address.append(" ").append(regMaster60.getCusTambolname());
-		}
-		if (regMaster60.getCusAmphurname() != null) {
-			address.append(" ").append(regMaster60.getCusAmphurname());
-		}
-		if (regMaster60.getCusProvincename() != null) {
-			address.append(" ").append(regMaster60.getCusProvincename());
-		}
-		if (regMaster60.getCusZipcode() != null) {
-			address.append(" ").append(regMaster60.getCusZipcode());
-		}
-		
-		return address.toString();
-	}
-
-	private String buildFacAddress(RegMaster60 regMaster60) {
-		StringBuilder address = new StringBuilder(regMaster60.getFacAddrno());
-		if (regMaster60.getFacBuildname() != null) {
-			address.append(" ").append(regMaster60.getFacBuildname());
-		}
-		if (regMaster60.getFacFloorno() != null) {
-			address.append(" ").append(regMaster60.getFacFloorno());
-		}
-		if (regMaster60.getFacRoomno() != null) {
-			address.append(" ").append(regMaster60.getFacRoomno());
-		}
-		if (regMaster60.getFacMoono() != null) {
-			address.append(" ").append(regMaster60.getFacMoono());
-		}
-		if (regMaster60.getFacVillage() != null) {
-			address.append(" ").append(regMaster60.getFacVillage());
-		}
-		if (regMaster60.getFacSoiname() != null) {
-			address.append(" ").append(regMaster60.getFacSoiname());
-		}
-		if (regMaster60.getFacThnname() != null) {
-			address.append(" ").append(regMaster60.getFacThnname());
-		}
-		if (regMaster60.getFacTambolname() != null) {
-			address.append(" ").append(regMaster60.getFacTambolname());
-		}
-		if (regMaster60.getFacAmphurname() != null) {
-			address.append(" ").append(regMaster60.getFacAmphurname());
-		}
-		if (regMaster60.getFacProvincename() != null) {
-			address.append(" ").append(regMaster60.getFacProvincename());
-		}
-		if (regMaster60.getFacZipcode() != null) {
-			address.append(" ").append(regMaster60.getFacZipcode());
-		}
-		
-		return address.toString();
 	}
 	
 }

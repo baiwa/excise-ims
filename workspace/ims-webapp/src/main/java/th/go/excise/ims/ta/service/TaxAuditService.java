@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
@@ -100,7 +101,9 @@ public class TaxAuditService {
 		return taWsReg4000Repository.findByNewRegId(idStr);
 	}
 
-	public List<WsRegfri4000FormVo> getOperatorDetail(WsRegfri4000FormVo wsRegfri4000FormVo) throws Exception {
+	public WsRegfri4000FormVo getOperatorDetails(WsRegfri4000FormVo wsRegfri4000FormVo) throws Exception {
+		logger.info("getOperatorDetails newRegId={}", wsRegfri4000FormVo.getNewRegId());
+		
 		RequestData requestData = new RequestData();
 		requestData.setType("2");
 		requestData.setNid("");
@@ -111,89 +114,21 @@ public class TaxAuditService {
 		requestData.setDataPerPage("1");
 		
 		List<RegMaster60> regMaster60List = regFri4000Service.execute(requestData).getRegMaster60List();
-		List<WsRegfri4000FormVo> formVoList = new ArrayList<>();
+		WsRegfri4000FormVo formVo = new WsRegfri4000FormVo();
 		RegMaster60 regMaster60 = null;
 		if (regMaster60List != null && regMaster60List.size() > 0) {
 			regMaster60 = regMaster60List.get(0);
-			WsRegfri4000FormVo formVo = buildOperatorAddress(regMaster60);
-			formVoList.add(formVo);
+			BeanUtils.copyProperties(formVo, regMaster60);
+			formVo.setNewRegId(regMaster60.getNewregId());
+			formVo.setCustomerAddress(ExciseUtils.buildCusAddress(regMaster60));
+			formVo.setFacAddress(ExciseUtils.buildFacAddress(regMaster60));
+			formVo.setFactoryType(ExciseUtils.getFactoryType(formVo.getNewRegId()));
+			if (StringUtils.isNotEmpty(formVo.getFactoryType())) {
+				formVo.setFactoryTypeText(ApplicationCache.getParamInfoByCode(PARAM_GROUP.EXCISE_FACTORY_TYPE, formVo.getFactoryType()).getValue2());
+			}
 		}
-		
-		return formVoList;
-	}
-
-	public WsRegfri4000FormVo buildOperatorAddress(RegMaster60 regMaster60) throws Exception {
-		WsRegfri4000FormVo formVo = new WsRegfri4000FormVo();
-		BeanUtils.copyProperties(formVo, regMaster60);
-		formVo.setNewRegId(regMaster60.getNewregId());
-		
-		// ==> Customer Address
-		StringBuilder cusAddress = new StringBuilder();
-		if (checkAddressNotEmpty(regMaster60.getCusAddrno())) {
-			cusAddress.append(regMaster60.getCusAddrno());
-		}
-		if (checkAddressNotEmpty(regMaster60.getCusMoono())) {
-			cusAddress.append(" หมู่ที่ " + regMaster60.getCusMoono());
-		}
-		if (checkAddressNotEmpty(regMaster60.getCusVillage())) {
-			cusAddress.append(" " + regMaster60.getCusVillage());
-		}
-		if (checkAddressNotEmpty(regMaster60.getCusSoiname())) {
-			cusAddress.append(" ซ. " + regMaster60.getCusSoiname());
-		}
-		if (checkAddressNotEmpty(regMaster60.getCusThnname())) {
-			cusAddress.append(" ถ. " + regMaster60.getCusThnname());
-		}
-		if (checkAddressNotEmpty(regMaster60.getCusTambolname())) {
-			cusAddress.append(" ต. " + regMaster60.getCusTambolname());
-		}
-		if (checkAddressNotEmpty(regMaster60.getCusAmphurname())) {
-			cusAddress.append(" อ. " + regMaster60.getCusAmphurname());
-		}
-		if (checkAddressNotEmpty(regMaster60.getCusProvincename())) {
-			cusAddress.append(" จ. " + regMaster60.getCusProvincename());
-		}
-		if (checkAddressNotEmpty(regMaster60.getCusZipcode())) {
-			cusAddress.append(" " + regMaster60.getCusZipcode());
-		}
-		formVo.setCustomerAddress(cusAddress.toString());
-
-		// ==> Fac Address
-		StringBuilder facAddress = new StringBuilder();
-		if (checkAddressNotEmpty(regMaster60.getFacAddrno())) {
-			facAddress.append(regMaster60.getFacAddrno());
-		}
-		if (checkAddressNotEmpty(regMaster60.getFacMoono())) {
-			facAddress.append(" หมู่ที่ " + regMaster60.getFacMoono());
-		}
-		if (checkAddressNotEmpty(regMaster60.getFacVillage())) {
-			facAddress.append(" " + regMaster60.getFacVillage());
-		}
-		if (checkAddressNotEmpty(regMaster60.getFacSoiname())) {
-			facAddress.append(" ซ. " + regMaster60.getFacSoiname());
-		}
-		if (checkAddressNotEmpty(regMaster60.getFacThnname())) {
-			facAddress.append(" ถ. " + regMaster60.getFacThnname());
-		}
-		if (checkAddressNotEmpty(regMaster60.getFacTambolname())) {
-			facAddress.append(" ต. " + regMaster60.getFacTambolname());
-		}
-		if (checkAddressNotEmpty(regMaster60.getFacAmphurname())) {
-			facAddress.append(" อ. " + regMaster60.getFacAmphurname());
-		}
-		if (checkAddressNotEmpty(regMaster60.getFacProvincename())) {
-			facAddress.append(" จ. " + regMaster60.getFacProvincename());
-		}
-		if (checkAddressNotEmpty(regMaster60.getFacZipcode())) {
-			facAddress.append(" " + regMaster60.getFacZipcode());
-		}
-		formVo.setFacAddress(facAddress.toString());
 		
 		return formVo;
-	}
-
-	private Boolean checkAddressNotEmpty(String value) {
-		return StringUtils.isNotBlank(value) && !"-".equals(value);
 	}
 
 	public void savePlanWsDtl(PlanWorksheetDtlVo formVo) {

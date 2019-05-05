@@ -45,20 +45,20 @@ public class TaxAuditController {
 	@Autowired
 	private RecordMessageService recordMessageService;
 
-	@PostMapping("/get-details-operator")
+	@PostMapping("/get-operator-details")
 	@ResponseBody
-	public ResponseData<List<WsRegfri4000FormVo>> getOperatorDetail(@RequestBody WsRegfri4000FormVo wsRegfri4000FormVo) {
+	public ResponseData<WsRegfri4000FormVo> getOperatorDetails(@RequestBody WsRegfri4000FormVo wsRegfri4000FormVo) {
 		logger.info("getOperatorDetails newRegId={}", wsRegfri4000FormVo.getNewRegId());
 
-		ResponseData<List<WsRegfri4000FormVo>> response = new ResponseData<>();
+		ResponseData<WsRegfri4000FormVo> response = new ResponseData<>();
 		try {
-			List<WsRegfri4000FormVo> formVo = taxAuditService.getOperatorDetail(wsRegfri4000FormVo);
+			WsRegfri4000FormVo formVo = taxAuditService.getOperatorDetails(wsRegfri4000FormVo);
 			response.setData(formVo);
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
 		} catch (Exception e) {
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setMessage(e.getMessage());
 		}
 
 		return response;
