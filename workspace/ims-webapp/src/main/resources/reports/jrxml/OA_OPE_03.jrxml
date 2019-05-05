@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Report_03" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="519c6b2b-d2fb-4902-bde7-b7c1167d3cbb">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<style name="Style1" fontName="TH Sarabun New" fontSize="15"/>
@@ -33,70 +33,70 @@
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["ผู้ได้รับอนุญาติ"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ผู้ได้รับอนุญาต"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="406" y="62" width="66" height="20" uuid="b327f57d-7e7c-4e6a-ae36-8a756c09b221"/>
+				<reportElement x="406" y="62" width="74" height="20" uuid="b327f57d-7e7c-4e6a-ae36-8a756c09b221"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["ผู้ได้รับอนุญาติ"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ผู้ไม่ได้รับอนุญาต"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement positionType="FixRelativeToBottom" x="314" y="86" width="20" height="20" uuid="3c7a8aaf-8052-4631-9eb7-d6e28e868f27"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610" ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement positionType="FixRelativeToBottom" x="314" y="110" width="20" height="20" uuid="02fb0df8-997a-456e-af01-bef16752418e"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610" ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement positionType="FixRelativeToBottom" x="314" y="134" width="20" height="20" uuid="5a295e8a-47b5-4f24-b67d-56b90375f4e7"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610" ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement positionType="FixRelativeToBottom" x="429" y="87" width="20" height="20" uuid="47b0679b-8c26-44a1-be3f-231418f50526"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610" ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement positionType="FixRelativeToBottom" x="429" y="111" width="20" height="20" uuid="159643cd-fb06-447b-a585-e2222ebe422a"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610" ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement positionType="FixRelativeToBottom" x="174" y="86" width="20" height="20" uuid="453005e0-0a16-4d27-bdbd-fe1be4a41156"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610" ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement positionType="FixRelativeToBottom" x="174" y="110" width="20" height="20" uuid="0dc36af2-4eba-48b6-b704-eb493bc6844c"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610" ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement positionType="FixRelativeToBottom" x="174" y="134" width="20" height="20" uuid="9e963926-4469-43ec-a809-a51876f3d179"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610" ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Style1" x="199" y="87" width="101" height="20" uuid="05e1ba67-2ba6-488d-be66-44840cf2318f"/>
@@ -162,7 +162,7 @@
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610" ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="432" y="175" width="16" height="20" uuid="45879938-c71d-4919-8f45-8857f93d5b58"/>
@@ -176,7 +176,7 @@
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610" ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="44" y="236" width="458" height="14" uuid="cceb7916-51d3-4471-8f45-63c28a4fad0d"/>

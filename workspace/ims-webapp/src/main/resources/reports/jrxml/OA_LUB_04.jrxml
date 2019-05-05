@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Report_04" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6e319576-6bbb-4056-b4f4-2f746f461e9e">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<style name="font" fontName="TH Sarabun New" fontSize="15"/>
@@ -53,11 +53,11 @@
 				<textFieldExpression><![CDATA["ผู้ได้รับอนุญาต"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="font" x="416" y="62" width="66" height="20" uuid="2b94fde4-49cc-4a09-a26e-596e2b8a2eb1"/>
+				<reportElement style="font" x="414" y="62" width="74" height="20" uuid="2b94fde4-49cc-4a09-a26e-596e2b8a2eb1"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["ผู้ได้รับอนุญาต"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ผู้ไม่ได้รับอนุญาต"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="font" positionType="FixRelativeToBottom" x="324" y="87" width="20" height="20" uuid="d98935a9-ddba-49da-9f2d-35ede439bedf"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Report_03" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="519c6b2b-d2fb-4902-bde7-b7c1167d3cbb">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<style name="Style1" fontName="TH Sarabun New" fontSize="15"/>
@@ -10,7 +10,7 @@
 	<parameter name="sentToAgent" class="java.lang.String"/>
 	<parameter name="sentToUser" class="java.lang.String"/>
 	<parameter name="materail" class="java.lang.String"/>
-	<parameter name="document" class="java.lang.String"/>
+	<parameter name="document" class="java.math.BigDecimal"/>
 	<parameter name="productProcess" class="java.lang.String"/>
 	<parameter name="productNextime" class="java.lang.String"/>
 	<parameter name="useStartDate" class="java.lang.String"/>
@@ -56,11 +56,11 @@
 				<textFieldExpression><![CDATA["ผู้ได้รับอนุญาต"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="406" y="62" width="66" height="20" uuid="b327f57d-7e7c-4e6a-ae36-8a756c09b221"/>
+				<reportElement x="406" y="62" width="74" height="20" uuid="b327f57d-7e7c-4e6a-ae36-8a756c09b221"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["ผู้ได้รับอนุญาต"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ผู้ไม่ได้รับอนุญาต"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement positionType="FixRelativeToBottom" x="314" y="86" width="20" height="20" uuid="3c7a8aaf-8052-4631-9eb7-d6e28e868f27"/>
@@ -137,7 +137,7 @@
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["ส่งต่อตัวแทนทอดไป"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ส่งต่อตัวแทนทอดต่อไป"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Style1" x="42" y="135" width="101" height="20" uuid="c9afa0ed-33fe-4d86-9ff5-3645291961e7"/>
@@ -185,7 +185,7 @@
 				<textElement>
 					<font fontName="TH Sarabun New" size="15" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" ๗. กรรมวิธีในการผลิต (รายการ/รายใหม่/สถานะผู้ใช้)"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" ๗. กรรมวิธีในการผลิต (รายเก่า/รายใหม่/สถานะผู้ใช้)"]]></textFieldExpression>
 			</textField>
 			<ellipse>
 				<reportElement x="75" y="616" width="3" height="3" backcolor="#000000" uuid="1a9253fc-eca8-4830-a0cc-d2f27422b0b7"/>
@@ -349,7 +349,7 @@
 					<pen lineWidth="1.0" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
-			<textField isBlankWhenNull="true">
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement style="Style1" x="240" y="285" width="51" height="20" uuid="e5812eb8-b5c6-4eae-b5e8-3648d3b73414"/>
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="15"/>
