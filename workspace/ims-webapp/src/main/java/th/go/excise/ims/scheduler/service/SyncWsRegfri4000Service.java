@@ -112,12 +112,12 @@ public class SyncWsRegfri4000Service {
 		} while (regMaster60List.size() == WS_DATA_SIZE);
 		
 		wsRegfri4000Repository.queryUpdateIsDeletedY();
-		wsRegfri4000Repository.batchUpdate(regfri4000List);
-		logger.info("Batch Update WS_REGFRI4000 Success");
+		wsRegfri4000Repository.batchMerge(regfri4000List);
+		logger.info("Batch Merge WS_REGFRI4000 Success");
 		
 		wsRegfri4000DutyRepository.queryUpdateIsDeletedY();
-		wsRegfri4000DutyRepository.batchUpdate(regfri4000DutyList);
-		logger.info("Batch Update WS_REGFRI4000_DUTY Success");
+		wsRegfri4000DutyRepository.batchMerge(regfri4000DutyList);
+		logger.info("Batch Merge WS_REGFRI4000_DUTY Success");
 		
 		long end = System.currentTimeMillis();
 		logger.info("syncData Regfri4000 Success, using {} seconds", (float) (end - start) / 1000F);

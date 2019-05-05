@@ -23,8 +23,8 @@ public class WsRegfri4000RepositoryImpl implements WsRegfri4000RepositoryCustom 
 	private CommonJdbcTemplate commonJdbcTemplate;
 
 	@Override
-	public void batchUpdate(List<WsRegfri4000> regfri4000List) {
-		logger.info("batchUpdate regfri4000List.size()={}", regfri4000List.size());
+	public void batchMerge(List<WsRegfri4000> regfri4000List) {
+		logger.info("batchMerge regfri4000List.size()={}", regfri4000List.size());
 		
 		final int BATCH_SIZE = 1000;
 		

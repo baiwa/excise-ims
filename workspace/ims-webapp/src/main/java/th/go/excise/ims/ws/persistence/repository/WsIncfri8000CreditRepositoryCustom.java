@@ -6,6 +6,8 @@ import th.go.excise.ims.ws.persistence.entity.WsIncfri8000Credit;
 
 public interface WsIncfri8000CreditRepositoryCustom {
 	
-	public void batchUpdate(List<WsIncfri8000Credit> incfri8000CreditList);
+	public void forceDeleteByDateType(String dateType, String dateStart, String dateEnd);
+	
+	public void batchInsert(List<WsIncfri8000Credit> incfri8000CreditList);
 	
 }

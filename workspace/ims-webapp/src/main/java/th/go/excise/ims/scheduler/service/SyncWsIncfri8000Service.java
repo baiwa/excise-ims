@@ -1,6 +1,9 @@
 package th.go.excise.ims.scheduler.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
+import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
 import th.go.excise.ims.ws.client.pcc.incfri8000.model.Credit;
 import th.go.excise.ims.ws.client.pcc.incfri8000.model.Income;
@@ -48,7 +52,7 @@ public class SyncWsIncfri8000Service {
 		requestData.setDataPerPage(String.valueOf(WS_DATA_SIZE));
 		int indexPage = 0;
 		
-		String dateTypeCode = convertDateType(requestData.getDateType());
+		String dateTypeCode = ExciseUtils.convertIncfri8000DateType(requestData.getDateType());
 		
 		List<Income> incomeList = null;
 		WsIncfri8000 incfri8000 = null;
@@ -86,6 +90,7 @@ public class SyncWsIncfri8000Service {
 							incfri8000Credit.setNewRegId(income.getNewregId());
 							incfri8000Credit.setApproveNo(credit.getApproveNo());
 							incfri8000Credit.setApproveDate(StringUtils.isNotBlank(credit.getApproveDate()) ? ConvertDateUtils.parseStringToLocalDate(credit.getApproveDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_EN) : null);
+							incfri8000Credit.setRefDate(WEB_SERVICE.INCFRI8000.DATE_TYPE_INCOME_CODE.equals(dateTypeCode) ? incfri8000.getTrnDate() : incfri8000.getReceiptDate());
 							incfri8000CreditList.add(incfri8000Credit);
 						}
 					}
@@ -94,26 +99,22 @@ public class SyncWsIncfri8000Service {
 			}
 		} while (incomeList.size() == WS_DATA_SIZE);
 		
-		wsIncfri8000Repository.queryUpdateIsDeletedY(dateTypeCode);
-		wsIncfri8000Repository.batchUpdate(incfri8000List);
-		logger.info("Batch Update WS_INCFRI8000 Success");
+		// Set dateStart and dateEnd
+		LocalDate localDateStart = LocalDate.parse(requestData.getYearMonthFrom() + "01", DateTimeFormatter.BASIC_ISO_DATE);
+		LocalDate localDateEnd = LocalDate.parse(requestData.getYearMonthTo() + "01", DateTimeFormatter.BASIC_ISO_DATE);
+		String dateStart = localDateStart.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
+		String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
 		
-		wsIncfri8000CreditRepository.queryUpdateIsDeletedY(dateTypeCode);
-		wsIncfri8000CreditRepository.batchUpdate(incfri8000CreditList);
-		logger.info("Batch Update WS_INCFRI8000_CREDIT Success");
+		wsIncfri8000Repository.forceDeleteByDateType(dateTypeCode, dateStart, dateEnd);
+		wsIncfri8000Repository.batchInsert(incfri8000List);
+		logger.info("Batch Insert WS_INCFRI8000 Success");
+		
+		wsIncfri8000CreditRepository.forceDeleteByDateType(dateTypeCode, dateStart, dateEnd);
+		wsIncfri8000CreditRepository.batchInsert(incfri8000CreditList);
+		logger.info("Batch Insert WS_INCFRI8000_CREDIT Success");
 		
 		long end = System.currentTimeMillis();
 		logger.info("syncData Incfri8000 Success, using {} seconds", (float) (end - start) / 1000F);
-	}
-	
-	private String convertDateType(String dateType) {
-		if (WEB_SERVICE.INCFRI8000.DATE_TYPE_INCOME.equals(dateType)) {
-			return WEB_SERVICE.INCFRI8000.DATE_TYPE_INCOME_CODE;
-		} else if (WEB_SERVICE.INCFRI8000.DATE_TYPE_RECEIPT.equals(dateType)) {
-			return WEB_SERVICE.INCFRI8000.DATE_TYPE_RECEIPT_CODE;
-		} else {
-			return null;
-		}
 	}
 
 }

@@ -25,6 +25,8 @@ public class WsIncfri8000M extends BaseEntity {
 	private Long incfri8000MId;
 	@Column(name = "DATE_TYPE")
 	private String dateType;
+	@Column(name = "REG_ID")
+	private String regId;
 	@Column(name = "NEW_REG_ID")
 	private String newRegId;
 	@Column(name = "TAX_YEAR")
@@ -48,6 +50,14 @@ public class WsIncfri8000M extends BaseEntity {
 
 	public void setDateType(String dateType) {
 		this.dateType = dateType;
+	}
+
+	public String getRegId() {
+		return regId;
+	}
+
+	public void setRegId(String regId) {
+		this.regId = regId;
 	}
 
 	public String getNewRegId() {

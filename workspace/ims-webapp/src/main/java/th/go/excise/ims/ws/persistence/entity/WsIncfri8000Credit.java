@@ -17,7 +17,7 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 public class WsIncfri8000Credit extends BaseEntity {
 
 	private static final long serialVersionUID = 4897632867025691596L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WS_INCFRI8000_CREDIT_GEN")
 	@SequenceGenerator(name = "WS_INCFRI8000_CREDIT_GEN", sequenceName = "WS_INCFRI8000_CREDIT_SEQ", allocationSize = 1)
@@ -33,6 +33,8 @@ public class WsIncfri8000Credit extends BaseEntity {
 	private String approveNo;
 	@Column(name = "APPROVE_DATE")
 	private LocalDate approveDate;
+	@Column(name = "REF_DATE")
+	private LocalDate refDate;
 
 	public Long getIncfri8000Id() {
 		return incfri8000Id;
@@ -80,6 +82,14 @@ public class WsIncfri8000Credit extends BaseEntity {
 
 	public void setApproveDate(LocalDate approveDate) {
 		this.approveDate = approveDate;
+	}
+
+	public LocalDate getRefDate() {
+		return refDate;
+	}
+
+	public void setRefDate(LocalDate refDate) {
+		this.refDate = refDate;
 	}
 
 }

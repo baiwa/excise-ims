@@ -6,6 +6,6 @@ import th.go.excise.ims.ws.persistence.entity.WsRegfri4000Duty;
 
 public interface WsRegfri4000DutyRepositoryCustom {
 	
-	public void batchUpdate(List<WsRegfri4000Duty> regfri4000DutyList);
+	public void batchMerge(List<WsRegfri4000Duty> regfri4000DutyList);
 	
 }

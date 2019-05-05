@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
+import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
 import th.go.excise.ims.ws.client.pcc.regfri4000.model.RegMaster60;
 
 public class ExciseUtils {
@@ -238,5 +239,15 @@ public class ExciseUtils {
 		}
 		
 	}
-
+	
+	public static String convertIncfri8000DateType(String dateType) {
+		if (WEB_SERVICE.INCFRI8000.DATE_TYPE_INCOME.equals(dateType)) {
+			return WEB_SERVICE.INCFRI8000.DATE_TYPE_INCOME_CODE;
+		} else if (WEB_SERVICE.INCFRI8000.DATE_TYPE_RECEIPT.equals(dateType)) {
+			return WEB_SERVICE.INCFRI8000.DATE_TYPE_RECEIPT_CODE;
+		} else {
+			return null;
+		}
+	}
+	
 }
