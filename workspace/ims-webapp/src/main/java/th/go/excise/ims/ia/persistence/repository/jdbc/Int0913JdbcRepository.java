@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.go.excise.ims.common.constant.ProjectConstants;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.vo.Int091301ResultSearchVo;
 import th.go.excise.ims.ia.vo.Int091301SearchVo;
@@ -45,6 +46,16 @@ public class Int0913JdbcRepository {
 		if (StringUtils.isNoneBlank(vo.getMonthWdPayTo())) {
 			sql.append(" AND U.MONTH_WD_PAY <= ? ");
 			paramList.add(vo.getMonthWdPayTo());
+		}
+		if(StringUtils.isNoneBlank(vo.getBudgetYear())) {
+			int year = Integer.parseInt(vo.getBudgetYear());
+			sql.append("--where by buggetyear");
+			sql.append(" AND U.MONTH_WD_PAY >= ? ");
+			paramList.add((year-1)+ProjectConstants.QUARTER.Q1[0]);
+			
+			sql.append(" AND U.MONTH_WD_PAY <= ? ");
+			paramList.add((year)+ProjectConstants.QUARTER.Q4[2]);
+			sql.append("--End where by buggetyear");
 		}
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), int091301Mapping);
 	}

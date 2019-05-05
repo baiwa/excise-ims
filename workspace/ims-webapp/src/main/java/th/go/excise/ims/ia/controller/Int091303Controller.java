@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.go.excise.ims.ia.persistence.entity.IaUtilityBudget;
 import th.go.excise.ims.ia.service.Int091303Service;
 import th.go.excise.ims.ia.vo.Int091303ResultVo;
+import th.go.excise.ims.ia.vo.Int091303SaveVo;
 import th.go.excise.ims.ia.vo.Int091303SearchVo;
 
 @Controller
@@ -39,6 +41,21 @@ public class Int091303Controller {
 		return response;
 	}
 	
-	
+
+	@PostMapping("/find-091303-save")
+	@ResponseBody
+	public ResponseData<IaUtilityBudget> save(@RequestBody Int091303SaveVo request) {
+		ResponseData<IaUtilityBudget> response = new ResponseData<IaUtilityBudget>();
+		try {
+			response.setData(int091303Service.save(request));
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
 	
 }

@@ -30,7 +30,6 @@ public class IaGfledgerAccountRepositoryImpl implements IaGfledgerAccountReposit
 		commonJdbcTemplate.batchUpdate(sql, iaGfledgerAccountList, 1000, new ParameterizedPreparedStatementSetter<IaGfledgerAccount>() {
 			public void setValues(PreparedStatement ps, IaGfledgerAccount entity) throws SQLException {
 				List<Object> paramList = new ArrayList<Object>();
-				paramList.add(entity.getIaGfledgerAccountSeq());
 				paramList.add(entity.getStCode());
 				paramList.add(entity.getDeterminaton());
 				paramList.add(entity.getDocNo());

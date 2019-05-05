@@ -29,8 +29,6 @@ import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.service.Int020301Service;
 import th.go.excise.ims.ia.vo.Int020301HeaderVo;
 import th.go.excise.ims.ia.vo.Int020301InfoVo;
-import th.go.excise.ims.ia.vo.Int030101FormVo;
-import th.go.excise.ims.ia.vo.Int030101Vo;
 
 @Controller
 @RequestMapping("/api/ia/int02/03/01")

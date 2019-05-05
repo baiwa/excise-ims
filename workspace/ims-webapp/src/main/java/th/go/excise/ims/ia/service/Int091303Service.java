@@ -8,16 +8,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.go.excise.ims.common.constant.ProjectConstants;
+import th.go.excise.ims.ia.persistence.entity.IaUtilityBudget;
+import th.go.excise.ims.ia.persistence.repository.IaUtilityBudgetRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0913JdbcRepository;
 import th.go.excise.ims.ia.vo.Int091301ResultSearchVo;
 import th.go.excise.ims.ia.vo.Int091301SearchVo;
 import th.go.excise.ims.ia.vo.Int091303ResultVo;
+import th.go.excise.ims.ia.vo.Int091303SaveVo;
 import th.go.excise.ims.ia.vo.Int091303SearchVo;
 
 @Service
@@ -27,6 +31,9 @@ public class Int091303Service {
 	
 	@Autowired
 	private Int0913JdbcRepository int0913JdbcRepository;
+	
+	@Autowired
+	private IaUtilityBudgetRepository iaUtilityBudgetRepository;
 
 	public List<Int091303ResultVo> int091303SearchVo(Int091303SearchVo vo) {
 		logger.info("int091303SearchVo ==> quarter = {} && budgetYear = {}" , vo.getQuarter() , vo.getBudgetYear());
@@ -94,6 +101,20 @@ public class Int091303Service {
 		}
 		return voView;
  	}
+	
+	
+	public IaUtilityBudget save(Int091303SaveVo int091303SaveVo) {
+		
+		IaUtilityBudget iaUtilityBudget = iaUtilityBudgetRepository.findById(int091303SaveVo.getUtilityBudgetSeq()).get();
+		if(iaUtilityBudget == null ) {
+			iaUtilityBudget = new IaUtilityBudget();
+		}
+		iaUtilityBudget.setExciseCode(int091303SaveVo.getExciseCode());
+		iaUtilityBudget.setUbudgetQ(int091303SaveVo.getUbudgetQ());
+		iaUtilityBudget.setBudgetAmt(int091303SaveVo.getBudgetAmt());
+		iaUtilityBudget.setNonBudgetAmt(int091303SaveVo.getNonBudgetAmt());
+		return iaUtilityBudgetRepository.save(iaUtilityBudget);
+	}
 	
 	
 }

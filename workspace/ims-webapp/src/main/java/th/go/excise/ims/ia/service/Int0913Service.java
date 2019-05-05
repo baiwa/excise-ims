@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
-import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.persistence.entity.IaUtilityBill;
 import th.go.excise.ims.ia.persistence.repository.IaUtilityBillRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0913JdbcRepository;
@@ -25,6 +24,7 @@ public class Int0913Service {
 	private IaUtilityBillRepository iaUtilityBillRepository;
 	
 	public List<Int091301ResultSearchVo> findIaUtilityBill(Int091301SearchVo int091301SearchVo){
+		
 		List<Int091301ResultSearchVo> dataFilter = int0913JdbcRepository.findIaUtilityBillByCriteria(int091301SearchVo);
 		if(dataFilter.size() > 0) {
 			/* change format YYYYMM to MM/YYYY */
