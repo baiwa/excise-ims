@@ -18,21 +18,22 @@
 	<parameter name="licenseYear" class="java.lang.String"/>
 	<parameter name="companyName" class="java.lang.String"/>
 	<parameter name="identityCompany" class="java.lang.String"/>
-	<parameter name="totalEmployee" class="java.lang.String"/>
-	<parameter name="permanentEmployee" class="java.lang.String"/>
-	<parameter name="temporaryEmployee" class="java.lang.String"/>
+	<parameter name="totalEmployee" class="java.math.BigDecimal"/>
+	<parameter name="permanentEmployee" class="java.math.BigDecimal"/>
+	<parameter name="temporaryEmployee" class="java.math.BigDecimal"/>
 	<parameter name="warehouse" class="java.lang.String"/>
 	<parameter name="officeOwnType" class="java.lang.String"/>
-	<parameter name="rentOfficePrice" class="java.lang.String"/>
+	<parameter name="rentOfficePrice" class="java.math.BigDecimal"/>
 	<parameter name="workStartTime" class="java.lang.String"/>
 	<parameter name="workEndTime" class="java.lang.String"/>
-	<parameter name="workingDate" class="java.lang.String"/>
-	<parameter name="numberOfTank" class="java.lang.String"/>
+	<parameter name="workingDate" class="java.math.BigDecimal"/>
+	<parameter name="numberOfTank" class="java.math.BigDecimal"/>
 	<parameter name="tankCapacity" class="java.lang.String"/>
 	<parameter name="numberUtility" class="java.lang.String"/>
 	<parameter name="orderType" class="java.lang.String"/>
 	<parameter name="orderPayMethod" class="java.lang.String"/>
 	<parameter name="orderPayMethodOther" class="java.lang.String"/>
+	<parameter name="licenseType" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -60,28 +61,28 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["A".equals( $P{licenseType} )? "\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="normalText" x="56" y="80" width="270" height="20" uuid="6d6caa72-2e1a-4f67-9a36-fe720b4ec3e9"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["รายการใหม่ (กรอกเฉพาะข้อ ๑, ๗ และ ๙ เท่านั้น)"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["รายใหม่ (กรอกเฉพาะข้อ ๑, ๗ และ ๙ เท่านั้น)"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement key="" positionType="FixRelativeToBottom" x="36" y="100" width="20" height="20" uuid="27dc0147-c62d-4b82-a412-b513bfd1e76f"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["B".equals( $P{licenseType} )? "\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="normalText" x="56" y="100" width="134" height="20" uuid="b4363479-9c3e-476c-bb4f-e60ffeae1c82"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["รายการเก่า ตามใบอนุญาตเลขที่"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["รายเก่า ตามใบอนุญาตเลขที่"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="253" y="98" width="13" height="24" uuid="c3607211-dd4e-4c30-9cca-89649244a81b"/>
@@ -91,21 +92,21 @@
 				<textFieldExpression><![CDATA["/"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="normalText" x="322" y="100" width="25" height="20" uuid="71524a61-33dd-4afc-990f-9a518fdee394"/>
+				<reportElement style="normalText" x="320" y="100" width="33" height="20" uuid="71524a61-33dd-4afc-990f-9a518fdee394"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["วันที่"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ลงวันที่"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="normalText" x="374" y="100" width="28" height="20" uuid="6c8bdf2b-8948-485c-b093-4cd107213390"/>
+				<reportElement style="normalText" x="380" y="100" width="28" height="20" uuid="6c8bdf2b-8948-485c-b093-4cd107213390"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
 				<textFieldExpression><![CDATA["เดือน"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="normalText" x="454" y="100" width="24" height="20" uuid="aa86535c-4288-4702-a7e5-6af9cb7350aa"/>
+				<reportElement style="normalText" x="460" y="100" width="24" height="20" uuid="aa86535c-4288-4702-a7e5-6af9cb7350aa"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
@@ -256,28 +257,28 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="normalText" x="57" y="345" width="132" height="20" uuid="c35c93ad-5261-4f1f-89b6-3850730d8ca0"/>
+				<reportElement style="normalText" x="57" y="347" width="132" height="20" uuid="c35c93ad-5261-4f1f-89b6-3850730d8ca0"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
 				<textFieldExpression><![CDATA["๑.๕ ลักษณะสถานประกอบการ"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="normalText" x="214" y="345" width="50" height="20" uuid="1cd0f7c9-a6c2-428d-9ae5-fa138479e9bc"/>
+				<reportElement style="normalText" x="214" y="347" width="50" height="20" uuid="1cd0f7c9-a6c2-428d-9ae5-fa138479e9bc"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
 				<textFieldExpression><![CDATA["เจ้าของเอง"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="normalText" x="290" y="345" width="50" height="20" uuid="5051b582-2c07-48f1-aa7b-57a2b6365459"/>
+				<reportElement style="normalText" x="290" y="347" width="50" height="20" uuid="5051b582-2c07-48f1-aa7b-57a2b6365459"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
 				<textFieldExpression><![CDATA["เช่าเดือนละ"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="normalText" x="391" y="345" width="29" height="20" uuid="402c105c-0a3a-4ce1-9fec-ac45d4fa9af4"/>
+				<reportElement style="normalText" x="405" y="347" width="29" height="20" uuid="402c105c-0a3a-4ce1-9fec-ac45d4fa9af4"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
@@ -526,14 +527,14 @@
 				<textFieldExpression><![CDATA["อื่น ๆ ระบุ"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="FixRelativeToBottom" x="191" y="345" width="20" height="20" uuid="87c4a374-70d3-4f12-98a6-ac32071e9e14"/>
+				<reportElement positionType="FixRelativeToBottom" x="191" y="347" width="20" height="20" uuid="87c4a374-70d3-4f12-98a6-ac32071e9e14"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="15"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Y".equals( $P{officeOwnType} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="FixRelativeToBottom" x="267" y="345" width="20" height="20" uuid="e8b02c36-a0d4-4aa5-9320-3d88a7daa007"/>
+				<reportElement positionType="FixRelativeToBottom" x="267" y="347" width="20" height="20" uuid="e8b02c36-a0d4-4aa5-9320-3d88a7daa007"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="15"/>
 				</textElement>
@@ -560,28 +561,28 @@
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement style="normalText" x="262" y="100" width="60" height="21" uuid="87ebbb33-5d72-49ea-9d86-8a7bbe9fe2e0"/>
+				<reportElement style="normalText" x="262" y="100" width="58" height="21" uuid="87ebbb33-5d72-49ea-9d86-8a7bbe9fe2e0"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="TH Sarabun New"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{licenseNo2}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement stretchType="RelativeToTallestObject" x="262" y="114" width="60" height="1" uuid="696c0c61-bffd-48a5-bc44-cbc718fa4405"/>
+				<reportElement stretchType="RelativeToTallestObject" x="262" y="114" width="58" height="1" uuid="696c0c61-bffd-48a5-bc44-cbc718fa4405"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement style="normalText" x="347" y="100" width="27" height="20" uuid="bad636b3-6e69-4955-b364-a74bc4b683de"/>
+				<reportElement style="normalText" x="353" y="100" width="27" height="20" uuid="bad636b3-6e69-4955-b364-a74bc4b683de"/>
 				<textFieldExpression><![CDATA[$P{licenseDate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="normalText" x="402" y="100" width="52" height="20" uuid="cde17832-9b09-4262-a5a7-0257669f6d84"/>
+				<reportElement style="normalText" x="408" y="100" width="52" height="20" uuid="cde17832-9b09-4262-a5a7-0257669f6d84"/>
 				<textFieldExpression><![CDATA[$P{licenseMonth}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="normalText" x="478" y="100" width="42" height="20" uuid="b91e9614-2166-4d13-972e-0bc6101a90f9"/>
+				<reportElement style="normalText" x="484" y="100" width="42" height="20" uuid="b91e9614-2166-4d13-972e-0bc6101a90f9"/>
 				<textFieldExpression><![CDATA[$P{licenseYear}]]></textFieldExpression>
 			</textField>
 			<line>
@@ -604,7 +605,7 @@
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
-			<textField>
+			<textField pattern="#,##0.##" isBlankWhenNull="true">
 				<reportElement style="normalText" positionType="Float" x="174" y="210" width="44" height="20" uuid="8a587250-89a2-4ffe-bbaa-9eafeabe9111"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{totalEmployee}]]></textFieldExpression>
@@ -621,12 +622,12 @@
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
-			<textField>
+			<textField pattern="#,##0.##" isBlankWhenNull="true">
 				<reportElement style="normalText" x="300" y="210" width="44" height="20" uuid="1031a0ca-9731-4b6a-8658-4b70986e1265"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{permanentEmployee}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.##" isBlankWhenNull="true">
 				<reportElement style="normalText" x="433" y="210" width="44" height="20" uuid="69050424-2784-45dc-a68b-33af8d15257b"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{temporaryEmployee}]]></textFieldExpression>
@@ -647,13 +648,13 @@
 				<reportElement style="normalText" x="94" y="250" width="446" height="20" uuid="43136fc4-a99a-449d-8a7a-2501c7652c0e"/>
 				<textFieldExpression><![CDATA[$P{warehouse}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement style="normalText" x="340" y="345" width="50" height="20" uuid="a723cae8-3bc9-4a42-b428-aecc3d99eb99"/>
+			<textField pattern="#,##0.##" isBlankWhenNull="true">
+				<reportElement style="normalText" x="340" y="347" width="65" height="20" uuid="a723cae8-3bc9-4a42-b428-aecc3d99eb99"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA["N".equals( $P{officeOwnType} )?$P{rentOfficePrice} : ""]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="340" y="360" width="50" height="1" uuid="c11a3fd1-099e-4eaa-b835-51e8c861763a"/>
+				<reportElement x="340" y="362" width="65" height="1" uuid="c11a3fd1-099e-4eaa-b835-51e8c861763a"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
@@ -688,7 +689,7 @@
 				<reportElement style="normalText" x="218" y="405" width="46" height="20" uuid="885260ba-93e6-433b-aa45-7c77a67c5615"/>
 				<textFieldExpression><![CDATA[$P{workingDate}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="normalText" x="235" y="425" width="56" height="20" uuid="d394fb37-5f35-4d71-91ed-fb6d6416ef20"/>
 				<textFieldExpression><![CDATA[$P{numberOfTank}]]></textFieldExpression>
 			</textField>

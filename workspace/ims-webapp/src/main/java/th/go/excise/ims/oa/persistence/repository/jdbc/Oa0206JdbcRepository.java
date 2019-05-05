@@ -44,7 +44,7 @@ public class Oa0206JdbcRepository {
 		sql.append(" INNER JOIN OA_LICENSE_PLAN LP ON LP.LICENSE_ID = CL.OA_CUSLICENSE_ID ");
 		sql.append(" WHERE LP.STATUS = '6' AND LP.OFFICE_CODE LIKE  ?  ");
 		sql.append(" ORDER BY START_DATE DESC");
-		params.add(officeCode);
+		params.add(officeCode+"%");
 		String sqlCount = OracleUtils.countForDataTable(sql.toString());
 		Integer count = this.commonJdbcTemplate.queryForObject(sqlCount, params.toArray(), Integer.class);
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Report_02" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2ae589b1-0d67-4f6f-b1d9-9303ca5b62aa">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<style name="font" fontName="TH Sarabun New" fontSize="15">
@@ -32,7 +32,7 @@
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["๕.๑ การจำบัญชีประจำวัน"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["๕.๑ การจัดทำบัญชีประจำวัน"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="font" x="0" y="14" width="554" height="20" uuid="e7c3d1e2-6011-4e2a-9350-0ce1340b3fd3"/>
@@ -145,7 +145,7 @@
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["๕.๑ การจัดทำงบเดือน"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["๕.๒ การจัดทำงบเดือน"]]></textFieldExpression>
 			</textField>
 			<ellipse>
 				<reportElement x="56" y="226" width="3" height="3" backcolor="#000000" uuid="47f6ece1-d4d0-4c44-9969-411b5baab9e9"/>
@@ -349,7 +349,7 @@
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["๖.๑ การสุ่มตรวจจำนวนการซื้อและการจำหน่ายน้ำมันหล่อลื่น เปรียบเทียบกับจำนวนที่ได้รับอนุญาต"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["๖.๑ การสุ่มตรวจจำนวนการซื้อและการจำหน่ายสารละลาย เปรียบเทียบกับจำนวนที่ได้รับอนุญาต"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="font" x="62" y="517" width="58" height="20" uuid="c7f504b8-3d2f-43e8-945b-08167a708195"/>
@@ -400,7 +400,7 @@
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["ซื้อน้ำมันหล่อลื่นจาก"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ซื้อสารละลายจาก"]]></textFieldExpression>
 			</textField>
 			<ellipse>
 				<reportElement x="47" y="546" width="3" height="3" backcolor="#000000" uuid="861f6038-705e-45c3-806a-dbf0a2b80b9a"/>
@@ -410,7 +410,7 @@
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["การซื้อน้ำมันหล่อลื่น มีจำนวนการซื้อ"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["การซื้อสารละลาย มีจำนวนการซื้อ"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="font" positionType="FixRelativeToBottom" x="194" y="557" width="20" height="20" uuid="318196f4-afa1-43e0-add9-3358d3c4e150"/>
@@ -445,14 +445,14 @@
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["ผู้ได้รับอนุญาติ"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ผู้ได้รับอนุญาต"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="font" x="406" y="600" width="66" height="20" uuid="29f8c4fc-a6b4-4725-8b86-27cfe4e42b57"/>
+				<reportElement style="font" x="403" y="600" width="74" height="20" uuid="29f8c4fc-a6b4-4725-8b86-27cfe4e42b57"/>
 				<textElement>
 					<font fontName="TH Sarabun New" size="15"/>
 				</textElement>
-				<textFieldExpression><![CDATA["ผู้ได้รับอนุญาติ"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ผู้ไม่ได้รับอนุญาต"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="font" positionType="FixRelativeToBottom" x="314" y="625" width="20" height="20" uuid="57f32572-33a1-4b66-9a75-cf5b7ead9dc3"/>
