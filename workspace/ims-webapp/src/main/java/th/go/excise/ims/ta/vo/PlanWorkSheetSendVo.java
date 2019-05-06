@@ -4,6 +4,7 @@ import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
 
 public class PlanWorkSheetSendVo {
+
 	private ExciseDept sector;
 	private ExciseDept area;
 	private TaPlanWorksheetSend planWorksheetSend;
@@ -40,5 +41,5 @@ public class PlanWorkSheetSendVo {
 	public void setTotalFacNum(Integer totalFacNum) {
 		this.totalFacNum = totalFacNum;
 	}
-	
+
 }

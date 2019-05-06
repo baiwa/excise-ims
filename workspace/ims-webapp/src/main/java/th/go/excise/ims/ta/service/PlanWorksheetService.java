@@ -95,6 +95,25 @@ public class PlanWorksheetService {
 		List<TaPlanWorksheetSend> planSendList = new ArrayList<>();
 		TaPlanWorksheetSend planSend = null;
 		if (FLAG.Y_FLAG.equals(formVo.getSendAllFlag())) {
+			// FIXME IF Send All, check TA CENTRAL Office Code
+			// OfficeCode 001402
+			{
+				planSend = new TaPlanWorksheetSend();
+				planSend.setBudgetYear(formVo.getBudgetYear());
+				planSend.setPlanNumber(planNumber);
+				planSend.setOfficeCode(EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR1);
+				planSend.setSendDate(LocalDate.now());
+				planSendList.add(planSend);
+			}
+			// OfficeCode 001403
+			{
+				planSend = new TaPlanWorksheetSend();
+				planSend.setBudgetYear(formVo.getBudgetYear());
+				planSend.setPlanNumber(planNumber);
+				planSend.setOfficeCode(EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR2);
+				planSend.setSendDate(LocalDate.now());
+				planSendList.add(planSend);
+			}
 			List<ExciseDept> sectorList = ApplicationCache.getExciseSectorList();
 			List<ExciseDept> areaList = null;
 			// Sector
@@ -297,9 +316,10 @@ public class PlanWorksheetService {
 			if (ExciseUtils.isCentral(officeCode)) {
 				List<ExciseDept> sectorList = ApplicationCache.getExciseSectorList();
 				for (ExciseDept sector : sectorList) {
-					if (!officeCode.equals(sector.getOfficeCode())) {
-						saveObjectTaPlanWorksheetSend(formVo, sector.getOfficeCode());
+					if (ExciseUtils.isCentral(sector.getOfficeCode())) {
+						continue;
 					}
+					saveObjectTaPlanWorksheetSend(formVo, sector.getOfficeCode());
 				}
 			}
 			if (ExciseUtils.isSector(officeCode)) {
@@ -312,12 +332,15 @@ public class PlanWorksheetService {
 	}
 
 	private void saveObjectTaPlanWorksheetSend(PlanWorksheetVo formVo, String officeCode) {
-		TaPlanWorksheetSend planSendStampDate = new TaPlanWorksheetSend();
-		planSendStampDate.setBudgetYear(formVo.getBudgetYear());
-		planSendStampDate.setPlanNumber(formVo.getPlanNumber());
-		planSendStampDate.setOfficeCode(officeCode);
-		planSendStampDate.setSendDate(LocalDate.now());
-		taPlanWorksheetSendRepository.save(planSendStampDate);
+		TaPlanWorksheetSend planSendStampDate = taPlanWorksheetSendRepository.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), officeCode);
+		if (planSendStampDate == null) {
+			planSendStampDate = new TaPlanWorksheetSend();
+			planSendStampDate.setBudgetYear(formVo.getBudgetYear());
+			planSendStampDate.setPlanNumber(formVo.getPlanNumber());
+			planSendStampDate.setOfficeCode(officeCode);
+			planSendStampDate.setSendDate(LocalDate.now());
+			taPlanWorksheetSendRepository.save(planSendStampDate);
+		}
 	}
 
 	public PlanWorksheetStatus getPlanHeaderStatus(PlanWorksheetVo formVo) {
