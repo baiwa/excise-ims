@@ -51,34 +51,34 @@ public class TaFormTS0423Service extends AbstractTaFormTSService<TaFormTS0423Vo,
 	}
 
 	@Override
-	public byte[] processFormTS(TaFormTS0423Vo taFormTS0423Vo) throws Exception {
+	public byte[] processFormTS(TaFormTS0423Vo formTS0423Vo) throws Exception {
 		logger.info("processFormTS");
 
-		saveFormTS(taFormTS0423Vo);
-		byte[] reportFile = generateReport(taFormTS0423Vo);
+		saveFormTS(formTS0423Vo);
+		byte[] reportFile = generateReport(formTS0423Vo);
 
 		return reportFile;
 	}
 
 	@Transactional(rollbackOn = { Exception.class })
 	@Override
-	public void saveFormTS(TaFormTS0423Vo taFormTS0423Vo) {
+	public void saveFormTS(TaFormTS0423Vo formTS0423Vo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
-		logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, taFormTS0423Vo.getFormTsNumber());
+		logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS0423Vo.getFormTsNumber());
 
 		TaFormTs0423Hdr formTS0423Hdr = null;
 		TaFormTs0423Dtl formTS0423Dtl = null;
 		List<TaFormTs0423Dtl> formTs0423DtlList = null;
-		if (StringUtils.isNotBlank(taFormTS0423Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(taFormTS0423Vo.getFormTsNumber())) {
+		if (StringUtils.isNotBlank(formTS0423Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0423Vo.getFormTsNumber())) {
 			// Case Update FormTS
 
 			// Update Header
-			formTS0423Hdr = taFormTs0423HdrRepository.findByFormTsNumber(taFormTS0423Vo.getFormTsNumber());
-			toEntity(formTS0423Hdr, taFormTS0423Vo);
+			formTS0423Hdr = taFormTs0423HdrRepository.findByFormTsNumber(formTS0423Vo.getFormTsNumber());
+			toEntity(formTS0423Hdr, formTS0423Vo);
 
 			// Update Detail
-			formTs0423DtlList = taFormTs0423DtlRepository.findByFormTsNumber(taFormTS0423Vo.getFormTsNumber());
+			formTs0423DtlList = taFormTs0423DtlRepository.findByFormTsNumber(formTS0423Vo.getFormTsNumber());
 
 			// Update isDeleted = 'Y' for Default
 			formTs0423DtlList.forEach(e -> {
@@ -87,9 +87,9 @@ public class TaFormTS0423Service extends AbstractTaFormTSService<TaFormTS0423Vo,
 			});
 
 			// Set Detail Record
-			if (taFormTS0423Vo.getTaFormTS0423DtlVoList() != null) {
+			if (formTS0423Vo.getTaFormTS0423DtlVoList() != null) {
 				int i = 1;
-				for (TaFormTS0423DtlVo formTS0423DtlVo : taFormTS0423Vo.getTaFormTS0423DtlVoList()) {
+				for (TaFormTS0423DtlVo formTS0423DtlVo : formTS0423Vo.getTaFormTS0423DtlVoList()) {
 					formTS0423Dtl = getEntityById(formTs0423DtlList, formTS0423DtlVo.getFormTs0423DtlId());
 					if (formTS0423Dtl != null) {
 						// Exist Page
@@ -100,7 +100,7 @@ public class TaFormTS0423Service extends AbstractTaFormTSService<TaFormTS0423Vo,
 						// New Page
 						formTS0423Dtl = new TaFormTs0423Dtl();
 						toEntityDtl(formTS0423Dtl, formTS0423DtlVo);
-						formTS0423Dtl.setFormTsNumber(taFormTS0423Vo.getFormTsNumber());
+						formTS0423Dtl.setFormTsNumber(formTS0423Vo.getFormTsNumber());
 						formTS0423Dtl.setRecNo(String.valueOf(i));
 						formTs0423DtlList.add(formTS0423Dtl);
 					}
@@ -114,7 +114,7 @@ public class TaFormTS0423Service extends AbstractTaFormTSService<TaFormTS0423Vo,
 
 			// Set Header Record
 			formTS0423Hdr = new TaFormTs0423Hdr();
-			toEntity(formTS0423Hdr, taFormTS0423Vo);
+			toEntity(formTS0423Hdr, formTS0423Vo);
 			formTS0423Hdr.setOfficeCode(officeCode);
 			formTS0423Hdr.setBudgetYear(budgetYear);
 			formTS0423Hdr.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
@@ -122,7 +122,7 @@ public class TaFormTS0423Service extends AbstractTaFormTSService<TaFormTS0423Vo,
 			// Set Detail Record
 			formTs0423DtlList = new ArrayList<>();
 			int i = 1;
-			for (TaFormTS0423DtlVo formTS0423DtlVo : taFormTS0423Vo.getTaFormTS0423DtlVoList()) {
+			for (TaFormTS0423DtlVo formTS0423DtlVo : formTS0423Vo.getTaFormTS0423DtlVoList()) {
 				formTS0423Dtl = new TaFormTs0423Dtl();
 				toEntityDtl(formTS0423Dtl, formTS0423DtlVo);
 				formTS0423Dtl.setFormTsNumber(formTS0423Hdr.getFormTsNumber());

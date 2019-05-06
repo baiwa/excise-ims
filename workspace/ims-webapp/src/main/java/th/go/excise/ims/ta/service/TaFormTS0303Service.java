@@ -197,15 +197,8 @@ public class TaFormTS0303Service extends AbstractTaFormTSService<TaFormTS0303Vo,
 			formTS0303DtlVo.setOfficerFullName(StringUtils.defaultString(formTs0303Dtl.getOfficerFullName()));
 			formTS0303DtlVo.setOfficerDate(formTs0303Dtl.getOfficerDate());
 			formTS0303DtlVo.setOfficerComment(StringUtils.defaultString(formTs0303Dtl.getOfficerComment()));
-
-			// toVoDtl(formTS0303DtlVo, formTs0303Dtl);
 			formTS0303DtlVoList.add(formTS0303DtlVo);
 		}
-
-		// Sorting
-		// formTS0303DtlVoList.sort((p1, p2) -> Integer.parseInt(p1.getRecNo()) -
-		// Integer.parseInt(p2.getRecNo()));
-
 		formTS0303Vo.setTaFormTS0303DtlVoList(formTS0303DtlVoList);
 
 		return formTS0303Vo;
@@ -218,14 +211,6 @@ public class TaFormTS0303Service extends AbstractTaFormTSService<TaFormTS0303Vo,
 			logger.warn(e.getMessage(), e);
 		}
 	}
-
-//	private void toVoDtl(TaFormTS0303DtlVo vo, TaFormTs0303Dtl entity) {
-//		try {
-//			BeanUtils.copyProperties(vo, entity);
-//		} catch (IllegalAccessException | InvocationTargetException e) {
-//			logger.warn(e.getMessage(), e);
-//		}
-//	}
 
 	private TaFormTs0303Dtl getEntityById(List<TaFormTs0303Dtl> formTs0303DtlList, String id) {
 		TaFormTs0303Dtl formTs0303Dtl = null;

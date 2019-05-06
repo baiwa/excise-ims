@@ -52,6 +52,7 @@ public class TaFormTS0302Service extends AbstractTaFormTSService<TaFormTS0302Vo,
 	@Override
 	public byte[] processFormTS(TaFormTS0302Vo formTS0302Vo) throws Exception {
 		logger.info("processFormTS");
+		
 		saveFormTS(formTS0302Vo);
 		byte[] reportFile = generateReport(formTS0302Vo);
 
@@ -200,7 +201,6 @@ public class TaFormTS0302Service extends AbstractTaFormTSService<TaFormTS0302Vo,
 			formTS0302DtlVo.setOfficerFullName(StringUtils.defaultString(formTs0302Dtl.getOfficerFullName()));
 			formTS0302DtlVo.setOfficerDate(formTs0302Dtl.getOfficerDate());
 			formTS0302DtlVo.setOfficerComment(StringUtils.defaultString(formTs0302Dtl.getOfficerComment()));
-
 			formTS0302DtlVoList.add(formTS0302DtlVo);
 		}
 		formTS0302Vo.setTaFormTS0302DtlVoList(formTS0302DtlVoList);
