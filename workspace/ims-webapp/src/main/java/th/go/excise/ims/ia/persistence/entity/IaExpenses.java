@@ -17,10 +17,8 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 @Table(name = "IA_EXPENSES")
 public class IaExpenses extends BaseEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3253860408150851803L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_EXPENSES_GEN")
 	@SequenceGenerator(name = "IA_EXPENSES_GEN", sequenceName = "IA_EXPENSES_SEQ", allocationSize = 1)
