@@ -61,95 +61,95 @@ public class IaGfledgerAccountService {
 				try {
 
 					for (Cell c : r) {
-
 						valueExc = ExcelUtils.getCellValueAsString(c) + " : " + c.getColumnIndex();
-						if ("รหัส".indexOf(ExcelUtils.getCellValueAsString(r.getCell(7) ))== -1  && StringUtils.isNoneBlank(ExcelUtils.getCellValueAsString(r.getCell(7)))) {
+						System.out.print(valueExc +"||");
+						if ("รหัส".indexOf(ExcelUtils.getCellValueAsString(r.getCell(7) ))== -1 && "*".indexOf(ExcelUtils.getCellValueAsString(r.getCell(7) ))== -1 && "สถานะ:".indexOf(ExcelUtils.getCellValueAsString(r.getCell(7) ))== -1  && StringUtils.isNoneBlank(ExcelUtils.getCellValueAsString(r.getCell(7)))) {
 							switch (c.getColumnIndex()) {
-							case 0:
+							case 2:
 								iaGfledgerAccount.setStCode(ExcelUtils.getCellValueAsString(c));
 								break;
-							case 1:
+							case 3:
 								iaGfledgerAccount.setDeterminaton(ExcelUtils.getCellValueAsString(c));
 								break;
-							case 2:
+							case 5:
 								iaGfledgerAccount.setDocNo(ExcelUtils.getCellValueAsString(c));
 								break;
-							case 3:
+							case 7:
 								iaGfledgerAccount.setCode(ExcelUtils.getCellValueAsString(c));
 								break;
-							case 4:
+							case 8:
 								iaGfledgerAccount.setType(ExcelUtils.getCellValueAsString(c));
 								break;
-							case 5:
+							case 9:
 								iaGfledgerAccount.setDocDate(ExcelUtils.getCellValueAsString(c));
 								break;
-							case 6:
+							case 10:
 								iaGfledgerAccount.setPkCode(ExcelUtils.getCellValueAsString(c));
 								break;
-							case 7:
+							case 11:
 								iaGfledgerAccount.setCurrAmt(NumberUtils.toBigDecimal(ExcelUtils.getCellValueAsString(c)));
 								break;
-							case 8:
+							case 13:
 								iaGfledgerAccount.setSourceMoney(ExcelUtils.getCellValueAsString(c));
 								break;
-							case 9:
+							case 14:
 								iaGfledgerAccount.setKeyRef3(ExcelUtils.getCellValueAsString(c));
 								break;
-							case 10:
+							case 15:
 								iaGfledgerAccount.setDepCode(ExcelUtils.getCellValueAsString(c));
 								break;
-							case 11:
+							case 16:
 								iaGfledgerAccount.setPostingDate(ConvertDateUtils.parseStringToDate(ExcelUtils.getCellValueAsString(c), ConvertDateUtils.DD_MM_YYYY_DOT));
 								break;
-							case 12:
-								iaGfledgerAccount.setYearMonth(ExcelUtils.getCellValueAsString(c));
-								break;
-							case 13:
-								iaGfledgerAccount.setTaxAmt(NumberUtils.toBigDecimal(ExcelUtils.getCellValueAsString(c)));
-								break;
-							case 14:
-								iaGfledgerAccount.setTaxExrmptAmt(NumberUtils.toBigDecimal(ExcelUtils.getCellValueAsString(c)));
-								break;
-							case 15:
-								iaGfledgerAccount.setRefCode(ExcelUtils.getCellValueAsString(c));
-								break;
-							case 16:
-								iaGfledgerAccount.setGlAcc(ExcelUtils.getCellValueAsString(c));
-								break;
 							case 17:
-								iaGfledgerAccount.setForwardClearingList(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setYearMonth(ExcelUtils.getCellValueAsString(c) != null ? ExcelUtils.getCellValueAsString(c).replace("/", "") : null);
 								break;
 							case 18:
-								iaGfledgerAccount.setClgI(NumberUtils.toBigDecimal(ExcelUtils.getCellValueAsString(c)));
+								iaGfledgerAccount.setTaxAmt(NumberUtils.toBigDecimal(ExcelUtils.getCellValueAsString(c)));
 								break;
 							case 19:
-								iaGfledgerAccount.setBudgetCode(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setTaxExrmptAmt(NumberUtils.toBigDecimal(ExcelUtils.getCellValueAsString(c)));
 								break;
 							case 20:
-								iaGfledgerAccount.setKeyRef1(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setRefCode(ExcelUtils.getCellValueAsString(c));
 								break;
 							case 21:
-								iaGfledgerAccount.setKeyRef2(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setGlAcc(ExcelUtils.getCellValueAsString(c));
 								break;
 							case 22:
-								iaGfledgerAccount.setDepositAcc(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setForwardClearingList(ExcelUtils.getCellValueAsString(c));
 								break;
 							case 23:
-								iaGfledgerAccount.setSubAcc(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setClgI(NumberUtils.toBigDecimal(ExcelUtils.getCellValueAsString(c)));
 								break;
 							case 24:
-								iaGfledgerAccount.setDepositName(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setBudgetCode(ExcelUtils.getCellValueAsString(c));
 								break;
 							case 25:
-								iaGfledgerAccount.setAccOwn(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setKeyRef1(ExcelUtils.getCellValueAsString(c));
 								break;
 							case 26:
-								iaGfledgerAccount.setDocHeaderMsg(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setKeyRef2(ExcelUtils.getCellValueAsString(c));
 								break;
 							case 27:
-								iaGfledgerAccount.setTxCode(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setDepositAcc(ExcelUtils.getCellValueAsString(c));
 								break;
 							case 28:
+								iaGfledgerAccount.setSubAcc(ExcelUtils.getCellValueAsString(c));
+								break;
+							case 29:
+								iaGfledgerAccount.setDepositName(ExcelUtils.getCellValueAsString(c));
+								break;
+							case 30:
+								iaGfledgerAccount.setAccOwn(ExcelUtils.getCellValueAsString(c));
+								break;
+							case 31:
+								iaGfledgerAccount.setDocHeaderMsg(ExcelUtils.getCellValueAsString(c));
+								break;
+							case 32:
+								iaGfledgerAccount.setTxCode(ExcelUtils.getCellValueAsString(c));
+								break;
+							case 33:
 								iaGfledgerAccount.setClrngDoc(ExcelUtils.getCellValueAsString(c));
 								break;
 
@@ -158,18 +158,23 @@ public class IaGfledgerAccountService {
 							}
 						}
 					}
-					iaGfledgerAccountList.add(iaGfledgerAccount);
+					System.out.println("");
+					
+					if(StringUtils.isNoneBlank(iaGfledgerAccount.getDocNo())) {
+						iaGfledgerAccountList.add(iaGfledgerAccount);
+						System.out.println(" iaGfledgerAccountList .size : " + iaGfledgerAccountList.size());
+					}
 
 				} catch (Exception e) {
-					System.out.println("######################################################");
-					System.out.println("######################################################");
-					System.out.println("######################################################");
-					System.out.println("######################################################");
-					System.out.println(valueExc);
-					e.printStackTrace();
+					
 				}
 			}
 		}
-		iaGfledgerAccountRepository.insertBatch(iaGfledgerAccountList);
+		try {
+			iaGfledgerAccountRepository.insertBatch(iaGfledgerAccountList);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
