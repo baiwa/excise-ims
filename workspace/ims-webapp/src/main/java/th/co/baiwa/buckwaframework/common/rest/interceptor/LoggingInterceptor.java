@@ -77,9 +77,9 @@ public class LoggingInterceptor implements Interceptor {
 				return response;
 			}
 			
-//			if (responseBody.contentLength() != 0) {
-//				logger.info(buffer.clone().readString(StandardCharsets.UTF_8));
-//			}
+			if (responseBody.contentLength() != 0) {
+				logger.info(buffer.clone().readString(StandardCharsets.UTF_8));
+			}
 			
 			logger.info("<-- END HTTP (" + buffer.size() + "-byte body)");
 		}
