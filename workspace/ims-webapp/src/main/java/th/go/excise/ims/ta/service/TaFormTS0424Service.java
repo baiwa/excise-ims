@@ -23,7 +23,6 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
-import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
@@ -34,10 +33,12 @@ import th.go.excise.ims.ta.persistence.repository.TaFormTs0424DtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0424HdrRepository;
 import th.go.excise.ims.ta.vo.TaFormTS0424DtlVo;
 import th.go.excise.ims.ta.vo.TaFormTS0424Vo;
+
 @Service
 public class TaFormTS0424Service extends AbstractTaFormTSService<TaFormTS0424Vo, TaFormTs0424Hdr>  {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TaFormTS0424Service.class);
+	
 	@Autowired
 	private TaFormTSSequenceService taFormTSSequenceService;
 	@Autowired
@@ -51,33 +52,34 @@ public class TaFormTS0424Service extends AbstractTaFormTSService<TaFormTS0424Vo,
 	}
 
 	@Override
-	public byte[] processFormTS(TaFormTS0424Vo taFormTS0424Vo) throws Exception {
+	public byte[] processFormTS(TaFormTS0424Vo formTS0424Vo) throws Exception {
 		logger.info("processFormTS");
 
-		saveFormTS(taFormTS0424Vo);
-		byte[] reportFile = generateReport(taFormTS0424Vo);
+		saveFormTS(formTS0424Vo);
+		byte[] reportFile = generateReport(formTS0424Vo);
 
 		return reportFile;
 	}
+	
 	@Transactional(rollbackOn = { Exception.class })
 	@Override
-	public void saveFormTS(TaFormTS0424Vo taFormTS0424Vo) {
+	public void saveFormTS(TaFormTS0424Vo formTS0424Vo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
-		logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, taFormTS0424Vo.getFormTsNumber());
+		logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS0424Vo.getFormTsNumber());
 
 		TaFormTs0424Hdr formTS0424Hdr = null;
 		TaFormTs0424Dtl formTS0424Dtl = null;
 		List<TaFormTs0424Dtl> formTs0424DtlList = null;
-		if (StringUtils.isNotBlank(taFormTS0424Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(taFormTS0424Vo.getFormTsNumber())) {
+		if (StringUtils.isNotBlank(formTS0424Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0424Vo.getFormTsNumber())) {
 			// Case Update FormTS
 
 			// Update Header
-			formTS0424Hdr = taFormTs0424HdrRepository.findByFormTsNumber(taFormTS0424Vo.getFormTsNumber());
-			toEntity(formTS0424Hdr, taFormTS0424Vo);
+			formTS0424Hdr = taFormTs0424HdrRepository.findByFormTsNumber(formTS0424Vo.getFormTsNumber());
+			toEntity(formTS0424Hdr, formTS0424Vo);
 
 			// Update Detail
-			formTs0424DtlList = taFormTs0424DtlRepository.findByFormTsNumber(taFormTS0424Vo.getFormTsNumber());
+			formTs0424DtlList = taFormTs0424DtlRepository.findByFormTsNumber(formTS0424Vo.getFormTsNumber());
 
 			// Update isDeleted = 'Y' for Default
 			formTs0424DtlList.forEach(e -> {
@@ -86,9 +88,9 @@ public class TaFormTS0424Service extends AbstractTaFormTSService<TaFormTS0424Vo,
 			});
 
 			// Set Detail Record
-			if (taFormTS0424Vo.getTaFormTS0424DtlVoList() != null) {
+			if (formTS0424Vo.getTaFormTS0424DtlVoList() != null) {
 				int i = 1;
-				for (TaFormTS0424DtlVo formTS0424DtlVo : taFormTS0424Vo.getTaFormTS0424DtlVoList()) {
+				for (TaFormTS0424DtlVo formTS0424DtlVo : formTS0424Vo.getTaFormTS0424DtlVoList()) {
 					formTS0424Dtl = getEntityById(formTs0424DtlList, formTS0424DtlVo.getFormTs0424DtlId());
 					if (formTS0424Dtl != null) {
 						// Exist Page
@@ -99,7 +101,7 @@ public class TaFormTS0424Service extends AbstractTaFormTSService<TaFormTS0424Vo,
 						// New Page
 						formTS0424Dtl = new TaFormTs0424Dtl();
 						toEntityDtl(formTS0424Dtl, formTS0424DtlVo);
-						formTS0424Dtl.setFormTsNumber(taFormTS0424Vo.getFormTsNumber());
+						formTS0424Dtl.setFormTsNumber(formTS0424Vo.getFormTsNumber());
 						formTS0424Dtl.setRecNo(String.valueOf(i));
 						formTs0424DtlList.add(formTS0424Dtl);
 					}
@@ -113,7 +115,7 @@ public class TaFormTS0424Service extends AbstractTaFormTSService<TaFormTS0424Vo,
 
 			// Set Header Record
 			formTS0424Hdr = new TaFormTs0424Hdr();
-			toEntity(formTS0424Hdr, taFormTS0424Vo);
+			toEntity(formTS0424Hdr, formTS0424Vo);
 			formTS0424Hdr.setOfficeCode(officeCode);
 			formTS0424Hdr.setBudgetYear(budgetYear);
 			formTS0424Hdr.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
@@ -121,7 +123,7 @@ public class TaFormTS0424Service extends AbstractTaFormTSService<TaFormTS0424Vo,
 			// Set Detail Record
 			formTs0424DtlList = new ArrayList<>();
 			int i = 1;
-			for (TaFormTS0424DtlVo formTS0424DtlVo : taFormTS0424Vo.getTaFormTS0424DtlVoList()) {
+			for (TaFormTS0424DtlVo formTS0424DtlVo : formTS0424Vo.getTaFormTS0424DtlVoList()) {
 				formTS0424Dtl = new TaFormTs0424Dtl();
 				toEntityDtl(formTS0424Dtl, formTS0424DtlVo);
 				formTS0424Dtl.setFormTsNumber(formTS0424Hdr.getFormTsNumber());
@@ -186,7 +188,6 @@ public class TaFormTS0424Service extends AbstractTaFormTSService<TaFormTS0424Vo,
 			formTS0424DtlVo.setNettaxAmt(formTs0424Dtl.getNettaxAmt());
 			formTS0424DtlVo.setResidueNum(formTs0424Dtl.getResidueNum());
 			formTS0424DtlVo.setOfficerComment(StringUtils.defaultString(formTs0424Dtl.getOfficerComment()));
-			
 			formTS0424DtlVoList.add(formTS0424DtlVo);
 		}
 		formTS0424Vo.setTaFormTS0424DtlVoList(formTS0424DtlVoList);
@@ -208,7 +209,6 @@ public class TaFormTS0424Service extends AbstractTaFormTSService<TaFormTS0424Vo,
 		params.put("factoryName",taFormTS0424Vo.getFactoryName());
 		params.put("auditMonthStart", StringUtils.isNotEmpty(taFormTS0424Vo.getAuditMonthStart()) ? ApplicationCache.getParamInfoByCode("MONTH_LIST", taFormTS0424Vo.getAuditMonthStart()).getValue1() : null);
 		params.put("auditMonthEnd",StringUtils.isNoneEmpty(taFormTS0424Vo.getAuditMonthEnd()) ? ApplicationCache.getParamInfoByCode("MONTH_LIST", taFormTS0424Vo.getAuditMonthEnd()).getValue1() : null);
-		
 		params.put("auditYear",taFormTS0424Vo.getAuditYear());
 		
         JRDataSource dataSource = new JRBeanCollectionDataSource(taFormTS0424Vo.getTaFormTS0424DtlVoList());
@@ -219,9 +219,5 @@ public class TaFormTS0424Service extends AbstractTaFormTSService<TaFormTS0424Vo,
 		
 		return reportFile;
 	}
-
-
-
 	
-
 }

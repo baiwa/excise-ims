@@ -10,6 +10,7 @@ import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRe
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0302Dtl;
 
 public interface TaFormTs0302DtlRepository extends CommonJpaCrudRepository<TaFormTs0302Dtl, Long> {
+
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.formTsNumber = :formTsNumber")
 	public List<TaFormTs0302Dtl> findByFormTsNumber(@Param("formTsNumber") String formTsNumber);
 
