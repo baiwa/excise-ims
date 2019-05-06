@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +28,6 @@ public class AnalysisTaxRetailPriceService {
 		logger.info("newRegId={}", request.getNewRegId());
 		
 		FactoryVo factoryVo = taWsReg4000Repository.findByNewRegId(request.getNewRegId());
-		System.out.println(ToStringBuilder.reflectionToString(factoryVo, ToStringStyle.MULTI_LINE_STYLE));
 		
 		int total = 0;
 		DataTableAjax<PaperBasicAnalysisD2Vo> dataTableAjax = new DataTableAjax<PaperBasicAnalysisD2Vo>();
@@ -47,18 +44,8 @@ public class AnalysisTaxRetailPriceService {
 			dataList = getData0101();
 		} else if("0201".equals(dutyCode)) {
 			dataList = getData0201();
-		} else if("0401".equals(dutyCode)) {
-			dataList = getData0401();
-		} else if("0501".equals(dutyCode)) {
-			dataList = getData0501();
-		} else if("0601".equals(dutyCode)) {
-			dataList = getData0601();
-		} else if("0701".equals(dutyCode)) {
-			dataList = getData0701();
-		} else if("0901".equals(dutyCode)) {
-			dataList = getData0901();
-		} else if("1001".equals(dutyCode)) {
-			dataList = getData1001();
+		} else {
+			getDataMock();
 		}
 
 		return dataList;
@@ -72,59 +59,73 @@ public class AnalysisTaxRetailPriceService {
 		data.setGoodsDesc("น้ำมันดีเซลที่มีปริมาณกำมะถันไม่เกินร้อยละ 0.005 โดยน้ำหนัก");
 		data.setTaxInformPrice(new BigDecimal(0));
 		data.setInformPrice(new BigDecimal(0));
-		data.setDiffTaxInformPrice(new BigDecimal(0));
+		data.setDiffTaxInformPrice(data.getInformPrice().subtract(data.getTaxInformPrice()));
 		dataList.add(data);
 
 		data = new PaperBasicAnalysisD2Vo();
 		data.setGoodsDesc("น้ำมันแก๊สโซฮอล์ E10 แก๊สโซฮอล์ออกเทน 91");
 		data.setTaxInformPrice(new BigDecimal(0));
 		data.setInformPrice(new BigDecimal(0));
-		data.setDiffTaxInformPrice(new BigDecimal(0));
+		data.setDiffTaxInformPrice(data.getInformPrice().subtract(data.getTaxInformPrice()));
 		dataList.add(data);
 
 		data = new PaperBasicAnalysisD2Vo();
 		data.setGoodsDesc("น้ำมันแก๊สโซฮอล์ E20");
 		data.setTaxInformPrice(new BigDecimal(0));
-		data.setInformPrice(new BigDecimal(0));
-		data.setDiffTaxInformPrice(new BigDecimal(0));
+		data.setInformPrice(new BigDecimal(5));
+		data.setDiffTaxInformPrice(data.getInformPrice().subtract(data.getTaxInformPrice()));
 		dataList.add(data);
 
 		data = new PaperBasicAnalysisD2Vo();
 		data.setGoodsDesc("น้ำมันแก๊สโซฮอล์ E10 แก๊สโซฮอล์ออกเทน 95");
 		data.setTaxInformPrice(new BigDecimal(27.45));
-		data.setInformPrice(new BigDecimal(27.45));
-		data.setDiffTaxInformPrice(new BigDecimal(0));
+		data.setInformPrice(new BigDecimal(25.45));
+		data.setDiffTaxInformPrice(data.getInformPrice().subtract(data.getTaxInformPrice()));
 		dataList.add(data);
 
 		return dataList;
 	}
 	
 	private List<PaperBasicAnalysisD2Vo> getData0201() {
-		return null;
+		List<PaperBasicAnalysisD2Vo> dataList = new ArrayList<PaperBasicAnalysisD2Vo>();
+		PaperBasicAnalysisD2Vo data = null;
+
+		data = new PaperBasicAnalysisD2Vo();
+		data.setGoodsDesc("น้ำแร่และน้ำอัดลมที่เติมน้ำตาลหรือสารที่ทำให้หวานอื่นที่มีปริมาณน้ำตาลเกิน 10 กรัม แต่ไม่เกิน 14 กรัม ต่อ 100 มิลลิลิตร โออิชิ ชาคูลล์ซ่า");
+		data.setTaxInformPrice(new BigDecimal(13.32));
+		data.setInformPrice(new BigDecimal(10.32));
+		data.setDiffTaxInformPrice(data.getInformPrice().subtract(data.getTaxInformPrice()));
+		dataList.add(data);
+
+		data = new PaperBasicAnalysisD2Vo();
+		data.setGoodsDesc("น้ำผลไม้ (รวมถึงเกรปมัสต์) และน้ำพืชผักที่ไม่ได้หมักและไม่เติมสุรา ไม่ว่าจะเติมน้ำตาล หรือสารทำให้หวานอื่น ๆหรือไม่ก็ตามที่มีปริมาณน้ำตาลเกิน 10 กรัม แต่ไม่เกิน 14 กรัม ต่อ 100 มิลลิลิตร ฟาร์มเมอรี่");
+		data.setTaxInformPrice(new BigDecimal(327.10));
+		data.setInformPrice(new BigDecimal(330.10));
+		data.setDiffTaxInformPrice(data.getInformPrice().subtract(data.getTaxInformPrice()));
+		dataList.add(data);
+
+		return dataList;
 	}
 	
-	private List<PaperBasicAnalysisD2Vo> getData0401() {
-		return null;
-	}
-	
-	private List<PaperBasicAnalysisD2Vo> getData0501() {
-		return null;
-	}
-	
-	private List<PaperBasicAnalysisD2Vo> getData0601() {
-		return null;
-	}
-	
-	private List<PaperBasicAnalysisD2Vo> getData0701() {
-		return null;
-	}
-	
-	private List<PaperBasicAnalysisD2Vo> getData0901() {
-		return null;
-	}
-	
-	private List<PaperBasicAnalysisD2Vo> getData1001() {
-		return null;
+	private List<PaperBasicAnalysisD2Vo> getDataMock() {
+		List<PaperBasicAnalysisD2Vo> dataList = new ArrayList<PaperBasicAnalysisD2Vo>();
+		PaperBasicAnalysisD2Vo data = null;
+
+		data = new PaperBasicAnalysisD2Vo();
+		data.setGoodsDesc("สินค้าทดสอบ");
+		data.setTaxInformPrice(new BigDecimal(327.10));
+		data.setInformPrice(new BigDecimal(330.10));
+		data.setDiffTaxInformPrice(data.getInformPrice().subtract(data.getTaxInformPrice()));
+		dataList.add(data);
+
+		data = new PaperBasicAnalysisD2Vo();
+		data.setGoodsDesc("สินค้าทดสอบ");
+		data.setTaxInformPrice(new BigDecimal(13.32));
+		data.setInformPrice(new BigDecimal(10.32));
+		data.setDiffTaxInformPrice(data.getInformPrice().subtract(data.getTaxInformPrice()));
+		dataList.add(data);
+
+		return dataList;
 	}
 	
 }

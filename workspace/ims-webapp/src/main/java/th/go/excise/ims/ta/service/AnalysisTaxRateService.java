@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +28,6 @@ public class AnalysisTaxRateService {
 		logger.info("newRegId={}", request.getNewRegId());
 
 		FactoryVo factoryVo = taWsReg4000Repository.findByNewRegId(request.getNewRegId());
-		System.out.println(ToStringBuilder.reflectionToString(factoryVo, ToStringStyle.MULTI_LINE_STYLE));
 
 		int total = 0;
 		DataTableAjax<PaperBasicAnalysisD4Vo> dataTableAjax = new DataTableAjax<PaperBasicAnalysisD4Vo>();
@@ -47,18 +44,8 @@ public class AnalysisTaxRateService {
 			dataList = getData0101();
 		} else if("0201".equals(dutyCode)) {
 			dataList = getData0201();
-		} else if("0401".equals(dutyCode)) {
-			dataList = getData0401();
-		} else if("0501".equals(dutyCode)) {
-			dataList = getData0501();
-		} else if("0601".equals(dutyCode)) {
-			dataList = getData0601();
-		} else if("0701".equals(dutyCode)) {
-			dataList = getData0701();
-		} else if("0901".equals(dutyCode)) {
-			dataList = getData0901();
-		} else if("1001".equals(dutyCode)) {
-			dataList = getData1001();
+		} else {
+			dataList = getDataMock();
 		}
 
 		return dataList;
@@ -74,8 +61,8 @@ public class AnalysisTaxRateService {
 		data.setTaxRateByQty(new BigDecimal(5.8500));
 		data.setAnaTaxRateByPrice(new BigDecimal(0));
 		data.setAnaTaxRateByQty(new BigDecimal(5.8500));
-		data.setDiffTaxRateByPrice(new BigDecimal(0));
-		data.setDiffTaxRateByQty(new BigDecimal(0));
+		data.setDiffTaxRateByPrice(data.getAnaTaxRateByPrice().subtract(data.getTaxRateByPrice()));
+		data.setDiffTaxRateByQty(data.getAnaTaxRateByQty().subtract(data.getTaxRateByQty()));
 		dataList.add(data);
 		
 		data = new PaperBasicAnalysisD4Vo();
@@ -84,8 +71,8 @@ public class AnalysisTaxRateService {
 		data.setTaxRateByQty(new BigDecimal(5.8500));
 		data.setAnaTaxRateByPrice(new BigDecimal(0));
 		data.setAnaTaxRateByQty(new BigDecimal(5.8500));
-		data.setDiffTaxRateByPrice(new BigDecimal(0));
-		data.setDiffTaxRateByQty(new BigDecimal(0));
+		data.setDiffTaxRateByPrice(data.getAnaTaxRateByPrice().subtract(data.getTaxRateByPrice()));
+		data.setDiffTaxRateByQty(data.getAnaTaxRateByQty().subtract(data.getTaxRateByQty()));
 		dataList.add(data);
 		
 		data = new PaperBasicAnalysisD4Vo();
@@ -94,8 +81,8 @@ public class AnalysisTaxRateService {
 		data.setTaxRateByQty(new BigDecimal(5.2000));
 		data.setAnaTaxRateByPrice(new BigDecimal(0));
 		data.setAnaTaxRateByQty(new BigDecimal(5.2000));
-		data.setDiffTaxRateByPrice(new BigDecimal(0));
-		data.setDiffTaxRateByQty(new BigDecimal(0));
+		data.setDiffTaxRateByPrice(data.getAnaTaxRateByPrice().subtract(data.getTaxRateByPrice()));
+		data.setDiffTaxRateByQty(data.getAnaTaxRateByQty().subtract(data.getTaxRateByQty()));
 		dataList.add(data);
 		
 		data = new PaperBasicAnalysisD4Vo();
@@ -104,39 +91,65 @@ public class AnalysisTaxRateService {
 		data.setTaxRateByQty(new BigDecimal(5.8500));
 		data.setAnaTaxRateByPrice(new BigDecimal(0));
 		data.setAnaTaxRateByQty(new BigDecimal(5.8500));
-		data.setDiffTaxRateByPrice(new BigDecimal(0));
-		data.setDiffTaxRateByQty(new BigDecimal(0));
+		data.setDiffTaxRateByPrice(data.getAnaTaxRateByPrice().subtract(data.getTaxRateByPrice()));
+		data.setDiffTaxRateByQty(data.getAnaTaxRateByQty().subtract(data.getTaxRateByQty()));
 		dataList.add(data);
 
 		return dataList;
 	}
 
 	private List<PaperBasicAnalysisD4Vo> getData0201() {
-		return null;
+		List<PaperBasicAnalysisD4Vo> dataList = new ArrayList<PaperBasicAnalysisD4Vo>();
+		PaperBasicAnalysisD4Vo data = null;
+
+		data = new PaperBasicAnalysisD4Vo();
+		data.setGoodsDesc("น้ำแร่และน้ำอัดลมที่เติมน้ำตาลหรือสารที่ทำให้หวานอื่นที่มีปริมาณน้ำตาลเกิน 10 กรัม แต่ไม่เกิน 14 กรัม ต่อ 100 มิลลิลิตร โออิชิ ชาคูลล์ซ่า");
+		data.setTaxRateByPrice(new BigDecimal(14.0000));
+		data.setTaxRateByQty(new BigDecimal(0.5000));
+		data.setAnaTaxRateByPrice(new BigDecimal(14.0000));
+		data.setAnaTaxRateByQty(new BigDecimal(0.5000));
+		data.setDiffTaxRateByPrice(data.getAnaTaxRateByPrice().subtract(data.getTaxRateByPrice()));
+		data.setDiffTaxRateByQty(data.getAnaTaxRateByQty().subtract(data.getTaxRateByQty()));
+		dataList.add(data);
+		
+		data = new PaperBasicAnalysisD4Vo();
+		data.setGoodsDesc("น้ำผลไม้ (รวมถึงเกรปมัสต์) และน้ำพืชผักที่ไม่ได้หมักและไม่เติมสุรา ไม่ว่าจะเติมน้ำตาล หรือสารทำให้หวานอื่น ๆหรือไม่ก็ตามที่มีปริมาณน้ำตาลเกิน 10 กรัม แต่ไม่เกิน 14 กรัม ต่อ 100 มิลลิลิตร ฟาร์มเมอรี่");
+		data.setTaxRateByPrice(new BigDecimal(0));
+		data.setTaxRateByQty(new BigDecimal(0.5000));
+		data.setAnaTaxRateByPrice(new BigDecimal(0));
+		data.setAnaTaxRateByQty(new BigDecimal(0.5000));
+		data.setDiffTaxRateByPrice(data.getAnaTaxRateByPrice().subtract(data.getTaxRateByPrice()));
+		data.setDiffTaxRateByQty(data.getAnaTaxRateByQty().subtract(data.getTaxRateByQty()));
+		dataList.add(data);
+
+		return dataList;
 	}
 
-	private List<PaperBasicAnalysisD4Vo> getData0401() {
-		return null;
-	}
+	private List<PaperBasicAnalysisD4Vo> getDataMock() {
+		List<PaperBasicAnalysisD4Vo> dataList = new ArrayList<PaperBasicAnalysisD4Vo>();
+		PaperBasicAnalysisD4Vo data = null;
 
-	private List<PaperBasicAnalysisD4Vo> getData0501() {
-		return null;
-	}
+		data = new PaperBasicAnalysisD4Vo();
+		data.setGoodsDesc("สินค้าทดสอบ");
+		data.setTaxRateByPrice(new BigDecimal(0));
+		data.setTaxRateByQty(new BigDecimal(5.8500));
+		data.setAnaTaxRateByPrice(new BigDecimal(0));
+		data.setAnaTaxRateByQty(new BigDecimal(5.8500));
+		data.setDiffTaxRateByPrice(data.getAnaTaxRateByPrice().subtract(data.getTaxRateByPrice()));
+		data.setDiffTaxRateByQty(data.getAnaTaxRateByQty().subtract(data.getTaxRateByQty()));
+		dataList.add(data);
+		
+		data = new PaperBasicAnalysisD4Vo();
+		data.setGoodsDesc("สินค้าทดสอบ");
+		data.setTaxRateByPrice(new BigDecimal(0));
+		data.setTaxRateByQty(new BigDecimal(5.8500));
+		data.setAnaTaxRateByPrice(new BigDecimal(0));
+		data.setAnaTaxRateByQty(new BigDecimal(5.8500));
+		data.setDiffTaxRateByPrice(data.getAnaTaxRateByPrice().subtract(data.getTaxRateByPrice()));
+		data.setDiffTaxRateByQty(data.getAnaTaxRateByQty().subtract(data.getTaxRateByQty()));
+		dataList.add(data);
 
-	private List<PaperBasicAnalysisD4Vo> getData0601() {
-		return null;
-	}
-
-	private List<PaperBasicAnalysisD4Vo> getData0701() {
-		return null;
-	}
-
-	private List<PaperBasicAnalysisD4Vo> getData0901() {
-		return null;
-	}
-
-	private List<PaperBasicAnalysisD4Vo> getData1001() {
-		return null;
+		return dataList;
 	}
 
 }

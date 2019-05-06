@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.vo.AnalysisFormVo;
 import th.go.excise.ims.ta.vo.FactoryVo;
 import th.go.excise.ims.ta.vo.PaperBasicAnalysisD1Vo;
-
 
 @Service
 public class AnalysisTaxQtyService {
@@ -31,7 +28,6 @@ public class AnalysisTaxQtyService {
 		logger.info("newRegId={}", request.getNewRegId());
 		
 		FactoryVo factoryVo = taWsReg4000Repository.findByNewRegId(request.getNewRegId());
-		System.out.println(ToStringBuilder.reflectionToString(factoryVo, ToStringStyle.MULTI_LINE_STYLE));
 		
 		int total = 0;
 		DataTableAjax<PaperBasicAnalysisD1Vo> dataTableAjax = new DataTableAjax<PaperBasicAnalysisD1Vo>();
@@ -48,18 +44,8 @@ public class AnalysisTaxQtyService {
 			dataList = getData0101();
 		} else if("0201".equals(dutyCode)) {
 			dataList = getData0201();
-		} else if("0401".equals(dutyCode)) {
-			dataList = getData0401();
-		} else if("0501".equals(dutyCode)) {
-			dataList = getData0501();
-		} else if("0601".equals(dutyCode)) {
-			dataList = getData0601();
-		} else if("0701".equals(dutyCode)) {
-			dataList = getData0701();
-		} else if("0901".equals(dutyCode)) {
-			dataList = getData0901();
-		} else if("1001".equals(dutyCode)) {
-			dataList = getData1001();
+		} else {
+			getDataMock();
 		}
 
 		return dataList;
@@ -69,36 +55,32 @@ public class AnalysisTaxQtyService {
 		List<PaperBasicAnalysisD1Vo> dataList = new ArrayList<PaperBasicAnalysisD1Vo>();
 		PaperBasicAnalysisD1Vo data = null;
 		
-		// 1
 		data = new PaperBasicAnalysisD1Vo();
 		data.setGoodsDesc("น้ำมันดีเซลที่มีปริมาณกำมะถันไม่เกินร้อยละ 0.005 โดยน้ำหนัก");
 		data.setTaxQty(new BigDecimal(3166175.0000));
 		data.setMonthStatementTaxQty(new BigDecimal(3166175.0000));
-		data.setDiffTaxQty(new BigDecimal("0"));
+		data.setDiffTaxQty(data.getMonthStatementTaxQty().subtract(data.getTaxQty()));
 		dataList.add(data);
 		
-		// 2
 		data = new PaperBasicAnalysisD1Vo();
 		data.setGoodsDesc("น้ำมันแก๊สโซฮอล์ E10 แก๊สโซฮอล์ออกเทน 91");
 		data.setTaxQty(new BigDecimal(1878440.0000));
 		data.setMonthStatementTaxQty(new BigDecimal(1878460.0000));
-		data.setDiffTaxQty(new BigDecimal("20"));
+		data.setDiffTaxQty(data.getMonthStatementTaxQty().subtract(data.getTaxQty()));
 		dataList.add(data);
 		
-		// 3
 		data = new PaperBasicAnalysisD1Vo();
 		data.setGoodsDesc("น้ำมันแก๊สโซฮอล์ E20");
 		data.setTaxQty(new BigDecimal(1287414.0000));
 		data.setMonthStatementTaxQty(new BigDecimal(1287414.0000));
-		data.setDiffTaxQty(new BigDecimal("0"));
+		data.setDiffTaxQty(data.getMonthStatementTaxQty().subtract(data.getTaxQty()));
 		dataList.add(data);
 		
-		// 4
 		data = new PaperBasicAnalysisD1Vo();
 		data.setGoodsDesc("น้ำมันแก๊สโซฮอล์ E10 แก๊สโซฮอล์ออกเทน 95");
 		data.setTaxQty(new BigDecimal(196510.0000));
 		data.setMonthStatementTaxQty(new BigDecimal(196520.0000));
-		data.setDiffTaxQty(new BigDecimal("10"));
+		data.setDiffTaxQty(data.getMonthStatementTaxQty().subtract(data.getTaxQty()));
 		dataList.add(data);
 		
 		return dataList;
@@ -108,270 +90,39 @@ public class AnalysisTaxQtyService {
 		List<PaperBasicAnalysisD1Vo> dataList = new ArrayList<PaperBasicAnalysisD1Vo>();
 		PaperBasicAnalysisD1Vo data = null;
 		
-		// 1
 		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
+		data.setGoodsDesc("น้ำแร่และน้ำอัดลมที่เติมน้ำตาลหรือสารที่ทำให้หวานอื่นที่มีปริมาณน้ำตาลเกิน 10 กรัม แต่ไม่เกิน 14 กรัม ต่อ 100 มิลลิลิตร โออิชิ ชาคูลล์ซ่า");
+		data.setTaxQty(new BigDecimal(1356996.0000));
+		data.setMonthStatementTaxQty(new BigDecimal(1356996.0000));
+		data.setDiffTaxQty(data.getMonthStatementTaxQty().subtract(data.getTaxQty()));
 		dataList.add(data);
 		
-		// 2
 		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		// 3
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		// 4
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
+		data.setGoodsDesc("น้ำผลไม้ (รวมถึงเกรปมัสต์) และน้ำพืชผักที่ไม่ได้หมักและไม่เติมสุรา ไม่ว่าจะเติมน้ำตาล หรือสารทำให้หวานอื่น ๆหรือไม่ก็ตามที่มีปริมาณน้ำตาลเกิน 10 กรัม แต่ไม่เกิน 14 กรัม ต่อ 100 มิลลิลิตร ฟาร์มเมอรี่");
+		data.setTaxQty(new BigDecimal(403.0000));
+		data.setMonthStatementTaxQty(new BigDecimal(400));
+		data.setDiffTaxQty(data.getMonthStatementTaxQty().subtract(data.getTaxQty()));
 		dataList.add(data);
 		
 		return dataList;
 	}
 	
-	private List<PaperBasicAnalysisD1Vo> getData0401() {
+	private List<PaperBasicAnalysisD1Vo> getDataMock() {
 		List<PaperBasicAnalysisD1Vo> dataList = new ArrayList<PaperBasicAnalysisD1Vo>();
 		PaperBasicAnalysisD1Vo data = null;
 		
-		// 1
 		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
+		data.setGoodsDesc("สินค้าทดสอบ");
+		data.setTaxQty(new BigDecimal(100));
+		data.setMonthStatementTaxQty(new BigDecimal(120));
+		data.setDiffTaxQty(data.getMonthStatementTaxQty().subtract(data.getTaxQty()));
 		dataList.add(data);
 		
-		// 2
 		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		// 3
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		// 4
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		return dataList;
-	}
-	
-	private List<PaperBasicAnalysisD1Vo> getData0501() {
-		List<PaperBasicAnalysisD1Vo> dataList = new ArrayList<PaperBasicAnalysisD1Vo>();
-		PaperBasicAnalysisD1Vo data = null;
-		
-		// 1
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		// 2
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		// 3
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		// 4
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		return dataList;
-	}
-	
-	private List<PaperBasicAnalysisD1Vo> getData0601() {
-		List<PaperBasicAnalysisD1Vo> dataList = new ArrayList<PaperBasicAnalysisD1Vo>();
-		PaperBasicAnalysisD1Vo data = null;
-		
-		// 1
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		// 2
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		// 3
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		// 4
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		return dataList;
-	}
-	
-	private List<PaperBasicAnalysisD1Vo> getData0701() {
-		List<PaperBasicAnalysisD1Vo> dataList = new ArrayList<PaperBasicAnalysisD1Vo>();
-		PaperBasicAnalysisD1Vo data = null;
-		
-		// 1
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		// 2
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		// 3
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		// 4
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		return dataList;
-	}
-	
-	private List<PaperBasicAnalysisD1Vo> getData0901() {
-		List<PaperBasicAnalysisD1Vo> dataList = new ArrayList<PaperBasicAnalysisD1Vo>();
-		PaperBasicAnalysisD1Vo data = null;
-		
-		// 1
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		// 2
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		// 3
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		// 4
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		return dataList;
-	}
-	
-	private List<PaperBasicAnalysisD1Vo> getData1001() {
-		List<PaperBasicAnalysisD1Vo> dataList = new ArrayList<PaperBasicAnalysisD1Vo>();
-		PaperBasicAnalysisD1Vo data = null;
-		
-		// 1
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		// 2
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		// 3
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
-		dataList.add(data);
-		
-		// 4
-		data = new PaperBasicAnalysisD1Vo();
-		data.setGoodsDesc("");
-		data.setTaxQty(new BigDecimal(""));
-		data.setMonthStatementTaxQty(new BigDecimal(""));
-		data.setDiffTaxQty(new BigDecimal(""));
+		data.setGoodsDesc("สินค้าทดสอบ");
+		data.setTaxQty(new BigDecimal(100));
+		data.setMonthStatementTaxQty(new BigDecimal(80));
+		data.setDiffTaxQty(data.getMonthStatementTaxQty().subtract(data.getTaxQty()));
 		dataList.add(data);
 		
 		return dataList;

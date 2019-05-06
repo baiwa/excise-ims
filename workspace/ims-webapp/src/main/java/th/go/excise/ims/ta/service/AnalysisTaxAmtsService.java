@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +28,6 @@ public class AnalysisTaxAmtsService {
 		logger.info("newRegId={}", request.getNewRegId());
 		
 		FactoryVo factoryVo = taWsReg4000Repository.findByNewRegId(request.getNewRegId());
-		System.out.println(ToStringBuilder.reflectionToString(factoryVo, ToStringStyle.MULTI_LINE_STYLE));
 
 		int total = 0;
 		DataTableAjax<PaperBasicAnalysisD5Vo> dataTableAjax = new DataTableAjax<PaperBasicAnalysisD5Vo>();
@@ -47,18 +44,8 @@ public class AnalysisTaxAmtsService {
 			dataList = getData0101();
 		} else if ("0201".equals(dutyCode)) {
 			dataList = getData0201();
-		} else if ("0401".equals(dutyCode)) {
-			dataList = getData0401();
-		} else if ("0501".equals(dutyCode)) {
-			dataList = getData0501();
-		} else if ("0601".equals(dutyCode)) {
-			dataList = getData0601();
-		} else if ("0701".equals(dutyCode)) {
-			dataList = getData0701();
-		} else if ("0901".equals(dutyCode)) {
-			dataList = getData0901();
-		} else if ("1001".equals(dutyCode)) {
-			dataList = getData1001();
+		} else {
+			dataList = getDataMock();
 		}
 
 		return dataList;
@@ -76,9 +63,9 @@ public class AnalysisTaxAmtsService {
 		data.setAnaTaxByValAmt(new BigDecimal(0));
 		data.setAnaTaxByQtyAmt(new BigDecimal(18522123.7500));
 		data.setSumAnaTaxAmt(data.getAnaTaxByValAmt().add(data.getAnaTaxByQtyAmt()));
-		data.setDiffTaxByValAmt(data.getTaxByValAmt().subtract(data.getAnaTaxByValAmt()));
-		data.setDiffTaxByQtyAmt(data.getTaxByQtyAmt().subtract(data.getAnaTaxByQtyAmt()));
-		data.setDiffSumTaxAmt(data.getSumTaxAmt().subtract(data.getSumAnaTaxAmt()));
+		data.setDiffTaxByValAmt(data.getAnaTaxByValAmt().subtract(data.getTaxByValAmt()));
+		data.setDiffTaxByQtyAmt(data.getAnaTaxByQtyAmt().subtract(data.getTaxByQtyAmt()));
+		data.setDiffSumTaxAmt(data.getSumAnaTaxAmt().subtract(data.getSumTaxAmt()));
 		datalist.add(data);
 
 		data = new PaperBasicAnalysisD5Vo();
@@ -89,9 +76,9 @@ public class AnalysisTaxAmtsService {
 		data.setAnaTaxByValAmt(new BigDecimal(0));
 		data.setAnaTaxByQtyAmt(new BigDecimal(10988991.0000));
 		data.setSumAnaTaxAmt(data.getAnaTaxByValAmt().add(data.getAnaTaxByQtyAmt()));
-		data.setDiffTaxByValAmt(data.getTaxByValAmt().subtract(data.getAnaTaxByValAmt()));
-		data.setDiffTaxByQtyAmt(data.getTaxByQtyAmt().subtract(data.getAnaTaxByQtyAmt()));
-		data.setDiffSumTaxAmt(data.getSumTaxAmt().subtract(data.getSumAnaTaxAmt()));
+		data.setDiffTaxByValAmt(data.getAnaTaxByValAmt().subtract(data.getTaxByValAmt()));
+		data.setDiffTaxByQtyAmt(data.getAnaTaxByQtyAmt().subtract(data.getTaxByQtyAmt()));
+		data.setDiffSumTaxAmt(data.getSumAnaTaxAmt().subtract(data.getSumTaxAmt()));
 		datalist.add(data);
 
 		data = new PaperBasicAnalysisD5Vo();
@@ -102,9 +89,9 @@ public class AnalysisTaxAmtsService {
 		data.setAnaTaxByValAmt(new BigDecimal(0));
 		data.setAnaTaxByQtyAmt(new BigDecimal(6694552.8000));
 		data.setSumAnaTaxAmt(data.getAnaTaxByValAmt().add(data.getAnaTaxByQtyAmt()));
-		data.setDiffTaxByValAmt(data.getTaxByValAmt().subtract(data.getAnaTaxByValAmt()));
-		data.setDiffTaxByQtyAmt(data.getTaxByQtyAmt().subtract(data.getAnaTaxByQtyAmt()));
-		data.setDiffSumTaxAmt(data.getSumTaxAmt().subtract(data.getSumAnaTaxAmt()));
+		data.setDiffTaxByValAmt(data.getAnaTaxByValAmt().subtract(data.getTaxByValAmt()));
+		data.setDiffTaxByQtyAmt(data.getAnaTaxByQtyAmt().subtract(data.getTaxByQtyAmt()));
+		data.setDiffSumTaxAmt(data.getSumAnaTaxAmt().subtract(data.getSumTaxAmt()));
 		datalist.add(data);
 
 		data = new PaperBasicAnalysisD5Vo();
@@ -115,47 +102,78 @@ public class AnalysisTaxAmtsService {
 		data.setAnaTaxByValAmt(new BigDecimal(0));
 		data.setAnaTaxByQtyAmt(new BigDecimal(1149583.5000));
 		data.setSumAnaTaxAmt(data.getAnaTaxByValAmt().add(data.getAnaTaxByQtyAmt()));
-		data.setDiffTaxByValAmt(data.getTaxByValAmt().subtract(data.getAnaTaxByValAmt()));
-		data.setDiffTaxByQtyAmt(data.getTaxByQtyAmt().subtract(data.getAnaTaxByQtyAmt()));
-		data.setDiffSumTaxAmt(data.getSumTaxAmt().subtract(data.getSumAnaTaxAmt()));
+		data.setDiffTaxByValAmt(data.getAnaTaxByValAmt().subtract(data.getTaxByValAmt()));
+		data.setDiffTaxByQtyAmt(data.getAnaTaxByQtyAmt().subtract(data.getTaxByQtyAmt()));
+		data.setDiffSumTaxAmt(data.getSumAnaTaxAmt().subtract(data.getSumTaxAmt()));
 		datalist.add(data);
 
 		return datalist;
 	}
 
 	private List<PaperBasicAnalysisD5Vo> getData0201() {
-		return null;
+		List<PaperBasicAnalysisD5Vo> datalist = new ArrayList<PaperBasicAnalysisD5Vo>();
+		PaperBasicAnalysisD5Vo data = null;
 
+		data = new PaperBasicAnalysisD5Vo();
+		data.setGoodsDesc("น้ำแร่และน้ำอัดลมที่เติมน้ำตาลหรือสารที่ทำให้หวานอื่นที่มีปริมาณน้ำตาลเกิน 10 กรัม แต่ไม่เกิน 14 กรัม ต่อ 100 มิลลิลิตร โออิชิ ชาคูลล์ซ่า");
+		data.setTaxByValAmt(new BigDecimal(2530526.1408));
+		data.setTaxByQtyAmt(new BigDecimal(217119.3600));
+		data.setSumTaxAmt(data.getTaxByValAmt().add(data.getTaxByQtyAmt()));
+		data.setAnaTaxByValAmt(new BigDecimal(2530526.1408));
+		data.setAnaTaxByQtyAmt(new BigDecimal(217119.3600));
+		data.setSumAnaTaxAmt(data.getAnaTaxByValAmt().add(data.getAnaTaxByQtyAmt()));
+		data.setDiffTaxByValAmt(data.getAnaTaxByValAmt().subtract(data.getTaxByValAmt()));
+		data.setDiffTaxByQtyAmt(data.getAnaTaxByQtyAmt().subtract(data.getTaxByQtyAmt()));
+		data.setDiffSumTaxAmt(data.getSumAnaTaxAmt().subtract(data.getSumTaxAmt()));
+		datalist.add(data);
+
+		data = new PaperBasicAnalysisD5Vo();
+		data.setGoodsDesc("น้ำผลไม้ (รวมถึงเกรปมัสต์) และน้ำพืชผักที่ไม่ได้หมักและไม่เติมสุรา ไม่ว่าจะเติมน้ำตาล หรือสารทำให้หวานอื่น ๆหรือไม่ก็ตามที่มีปริมาณน้ำตาลเกิน 10 กรัม แต่ไม่เกิน 14 กรัม ต่อ 100 มิลลิลิตร ฟาร์มเมอรี่");
+		data.setTaxByValAmt(new BigDecimal(0.0000));
+		data.setTaxByQtyAmt(new BigDecimal(100.7500));
+		data.setSumTaxAmt(data.getTaxByValAmt().add(data.getTaxByQtyAmt()));
+		data.setAnaTaxByValAmt(new BigDecimal(0.0000));
+		data.setAnaTaxByQtyAmt(new BigDecimal(100.7500));
+		data.setSumAnaTaxAmt(data.getAnaTaxByValAmt().add(data.getAnaTaxByQtyAmt()));
+		data.setDiffTaxByValAmt(data.getAnaTaxByValAmt().subtract(data.getTaxByValAmt()));
+		data.setDiffTaxByQtyAmt(data.getAnaTaxByQtyAmt().subtract(data.getTaxByQtyAmt()));
+		data.setDiffSumTaxAmt(data.getSumAnaTaxAmt().subtract(data.getSumTaxAmt()));
+		datalist.add(data);
+
+		return datalist;
 	}
 
-	private List<PaperBasicAnalysisD5Vo> getData0401() {
-		return null;
+	private List<PaperBasicAnalysisD5Vo> getDataMock() {
+		List<PaperBasicAnalysisD5Vo> datalist = new ArrayList<PaperBasicAnalysisD5Vo>();
+		PaperBasicAnalysisD5Vo data = null;
 
-	}
+		data = new PaperBasicAnalysisD5Vo();
+		data.setGoodsDesc("สินค้าทดสอบ");
+		data.setTaxByValAmt(new BigDecimal(0));
+		data.setTaxByQtyAmt(new BigDecimal(6694552.8000));
+		data.setSumTaxAmt(data.getTaxByValAmt().add(data.getTaxByQtyAmt()));
+		data.setAnaTaxByValAmt(new BigDecimal(0));
+		data.setAnaTaxByQtyAmt(new BigDecimal(6694552.8000));
+		data.setSumAnaTaxAmt(data.getAnaTaxByValAmt().add(data.getAnaTaxByQtyAmt()));
+		data.setDiffTaxByValAmt(data.getAnaTaxByValAmt().subtract(data.getTaxByValAmt()));
+		data.setDiffTaxByQtyAmt(data.getAnaTaxByQtyAmt().subtract(data.getTaxByQtyAmt()));
+		data.setDiffSumTaxAmt(data.getSumAnaTaxAmt().subtract(data.getSumTaxAmt()));
+		datalist.add(data);
 
-	private List<PaperBasicAnalysisD5Vo> getData0501() {
-		return null;
+		data = new PaperBasicAnalysisD5Vo();
+		data.setGoodsDesc("สินค้าทดสอบ");
+		data.setTaxByValAmt(new BigDecimal(0));
+		data.setTaxByQtyAmt(new BigDecimal(1149583.5000));
+		data.setSumTaxAmt(data.getTaxByValAmt().add(data.getTaxByQtyAmt()));
+		data.setAnaTaxByValAmt(new BigDecimal(0));
+		data.setAnaTaxByQtyAmt(new BigDecimal(1149583.5000));
+		data.setSumAnaTaxAmt(data.getAnaTaxByValAmt().add(data.getAnaTaxByQtyAmt()));
+		data.setDiffTaxByValAmt(data.getAnaTaxByValAmt().subtract(data.getTaxByValAmt()));
+		data.setDiffTaxByQtyAmt(data.getAnaTaxByQtyAmt().subtract(data.getTaxByQtyAmt()));
+		data.setDiffSumTaxAmt(data.getSumAnaTaxAmt().subtract(data.getSumTaxAmt()));
+		datalist.add(data);
 
-	}
-
-	private List<PaperBasicAnalysisD5Vo> getData0601() {
-		return null;
-
-	}
-
-	private List<PaperBasicAnalysisD5Vo> getData0701() {
-		return null;
-
-	}
-
-	private List<PaperBasicAnalysisD5Vo> getData0901() {
-		return null;
-
-	}
-
-	private List<PaperBasicAnalysisD5Vo> getData1001() {
-		return null;
-
+		return datalist;
 	}
 
 }
