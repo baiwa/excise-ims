@@ -8,6 +8,7 @@ public class FactoryVo {
 	private String facAddress;
 	private String secDesc;
 	private String areaDesc;
+	private String dutyCode;
 	private String dutyDesc;
 	private String auditType;
 	private String auditStartDate;
@@ -59,6 +60,14 @@ public class FactoryVo {
 
 	public void setAreaDesc(String areaDesc) {
 		this.areaDesc = areaDesc;
+	}
+
+	public String getDutyCode() {
+		return dutyCode;
+	}
+
+	public void setDutyCode(String dutyCode) {
+		this.dutyCode = dutyCode;
 	}
 
 	public String getDutyDesc() {

@@ -4,15 +4,12 @@ import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 
 public class AnalysisFormVo extends DataTableRequest {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4962250628414975351L;
+
 	private String newRegId;
 	private String startDate;
 	private String endDate;
 
-	
 	public String getNewRegId() {
 		return newRegId;
 	}

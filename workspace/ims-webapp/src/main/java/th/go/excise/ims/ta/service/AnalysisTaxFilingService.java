@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.ta.vo.AnalysisFormVo;
 import th.go.excise.ims.ta.vo.PaperBasicAnalysisD6Vo;
+
 @Service
 public class AnalysisTaxFilingService {
+	
 	public DataTableAjax<PaperBasicAnalysisD6Vo> GetAnalysisTaxFiling( AnalysisFormVo request) {
 		int total = 0;
 		DataTableAjax<PaperBasicAnalysisD6Vo> dataTableAjax = new DataTableAjax<PaperBasicAnalysisD6Vo>();

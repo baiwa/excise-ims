@@ -309,6 +309,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 						factoryVo.setFacAddress(rs.getString("fac_address"));
 						factoryVo.setSecDesc(rs.getString("sec_desc"));
 						factoryVo.setAreaDesc(rs.getString("area_desc"));
+						factoryVo.setDutyCode(rs.getString("duty_code"));
 						factoryVo.setDutyDesc(ExciseUtils.getDutyDesc(rs.getString("duty_code")));
 						factoryVo.setAuditType(rs.getString("AUDIT_TYPE"));
 						factoryVo.setAuditStartDate(ConvertDateUtils.formatDateToString(rs.getDate("AUDIT_START_DATE"), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));

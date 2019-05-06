@@ -62,7 +62,7 @@ public class BasicAnlysisController {
 
 		DataTableAjax<PaperBasicAnalysisD1Vo> response = new DataTableAjax<>();
 		try {
-			response = analysisTaxQtyService.GetAnalysisTaxQty(request);
+			response = analysisTaxQtyService.getAnalysisTaxQty(request);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
