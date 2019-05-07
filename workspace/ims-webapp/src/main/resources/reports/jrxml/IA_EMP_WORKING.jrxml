@@ -11,13 +11,25 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="userLogin" class="java.lang.String"/>
+	<parameter name="userName" class="java.lang.String"/>
+	<parameter name="userPosition" class="java.lang.String"/>
+	<parameter name="userOffcode" class="java.lang.String"/>
+	<parameter name="workingDate" class="java.util.Date"/>
+	<parameter name="workingFlag" class="java.lang.String"/>
+	<parameter name="workingDesc" class="java.lang.String"/>
+	<parameter name="workingRemark" class="java.lang.String"/>
+	<parameter name="reimburseExpFlag" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
+	<field name="workingFlag" class="java.lang.String"/>
+	<field name="workingDesc" class="java.lang.String"/>
+	<field name="workingRemark" class="java.lang.String"/>
 	<pageHeader>
 		<band height="731" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="94" width="330" height="22" uuid="97980d75-769b-4817-af88-5f38b111f9a6"/>
+				<reportElement x="0" y="94" width="190" height="22" uuid="97980d75-769b-4817-af88-5f38b111f9a6"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
@@ -38,27 +50,28 @@
 				<textFieldExpression><![CDATA["ส.ส. ๒/๑"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="150" y="50" width="140" height="22" uuid="613c5bde-43ea-4adb-9fe8-06b49edf07ce"/>
+				<reportElement x="150" y="50" width="59" height="22" uuid="613c5bde-43ea-4adb-9fe8-06b49edf07ce"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA["ประจำเดือน พ.ศ."]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ประจำเดือน"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="72" width="400" height="22" uuid="663dbb02-daec-4bf4-91f1-77747fcdc9d9"/>
+				<reportElement x="0" y="72" width="68" height="22" uuid="663dbb02-daec-4bf4-91f1-77747fcdc9d9"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA["ชื่อผู้ปฏิบัติงาน ตำแหน่ง "]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ชื่อผู้ปฏิบัติงาน "]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="340" y="138" width="120" height="22" uuid="cf29a7c5-c006-4ca3-9748-01155d37b0d8"/>
 				<box>
 					<pen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Left">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[" "+$F{workingRemark}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="116" width="40" height="22" uuid="a772732d-a4d2-4ce0-be0b-4e782c7258b8"/>
@@ -78,6 +91,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$F{workingFlag}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="40" y="116" width="300" height="22" uuid="c5faff90-d39a-4fba-89fb-7fe5333ff016"/>
@@ -107,6 +121,56 @@
 				<textElement textAlignment="Left">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[" "+$F{workingDesc}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="209" y="50" width="81" height="22" uuid="78bf55ef-2cf5-49b3-b37f-dbf10b4c51ed"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="TH Sarabun New" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{workingDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="50" width="27" height="22" uuid="62ac2934-564f-4e2f-b24a-2cf62be79728"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="TH Sarabun New" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA["พ.ศ."]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="317" y="50" width="81" height="22" uuid="d2c1c0b3-6f41-4e0e-8a35-91b00ca0f0e0"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="TH Sarabun New" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{workingDate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="68" y="72" width="152" height="22" uuid="b9b20a73-7574-45b3-b2a0-095f7c7eeb17"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="TH Sarabun New" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{userName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="260" y="72" width="179" height="22" uuid="009b5150-2207-4839-86da-c1aead287f6f"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="TH Sarabun New" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{userPosition}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="72" width="40" height="22" uuid="5209eaef-4047-4927-a3a5-341a729e3c9f"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="TH Sarabun New" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ตำแหน่ง"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="190" y="94" width="249" height="22" uuid="da1e8d59-989f-42f5-90f9-b9d8e2ff107a"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="TH Sarabun New" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{userOffcode}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
