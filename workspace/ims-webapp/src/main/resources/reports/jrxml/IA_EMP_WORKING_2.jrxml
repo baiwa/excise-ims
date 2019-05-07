@@ -11,11 +11,36 @@
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="userLogin" class="java.lang.String"/>
+	<parameter name="userName" class="java.lang.String"/>
+	<parameter name="userPosition" class="java.lang.String"/>
+	<parameter name="userOffcode" class="java.lang.String"/>
+	<parameter name="workingMonth" class="java.lang.String"/>
+	<parameter name="ownerCaseSpirits" class="java.math.BigDecimal"/>
+	<parameter name="asstCaseSpirits" class="java.math.BigDecimal"/>
+	<parameter name="remarkCaseSpirits" class="java.lang.String"/>
+	<parameter name="ownerCaseTobacco" class="java.math.BigDecimal"/>
+	<parameter name="asstCaseTobacco" class="java.math.BigDecimal"/>
+	<parameter name="remarkCaseTobacco" class="java.lang.String"/>
+	<parameter name="ownerCaseCard" class="java.math.BigDecimal"/>
+	<parameter name="asstCaseCard" class="java.math.BigDecimal"/>
+	<parameter name="remarkCaseCard" class="java.lang.String"/>
+	<parameter name="ownerCaseEdtax" class="java.math.BigDecimal"/>
+	<parameter name="asstCaseEdtax" class="java.math.BigDecimal"/>
+	<parameter name="remarkCaseEdtax" class="java.lang.String"/>
+	<parameter name="ownerCaseSpiritsFw" class="java.math.BigDecimal"/>
+	<parameter name="asstCaseSpiritsFw" class="java.math.BigDecimal"/>
+	<parameter name="ownerCaseTobaccoFw" class="java.math.BigDecimal"/>
+	<parameter name="asstCaseTobaccoFw" class="java.math.BigDecimal"/>
+	<parameter name="ownerCaseCardFw" class="java.math.BigDecimal"/>
+	<parameter name="asstCaseCardFw" class="java.math.BigDecimal"/>
+	<parameter name="ownerCaseEdtaxFw" class="java.lang.String"/>
+	<parameter name="asstCaseEdtaxFw" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
 	<pageHeader>
-		<band height="731" splitType="Stretch">
+		<band height="730" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="460" height="22" uuid="80674438-19a1-4168-8063-152f22d44af0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -41,6 +66,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{remarkCaseSpirits}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="340" y="29" width="120" height="68" uuid="65b9c781-85f6-4ddd-94bd-1913d20f2eaa"/>
@@ -150,6 +176,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{ownerCaseSpirits}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="180" y="97" width="60" height="22" uuid="ac8ad7ef-3c80-4d41-97a7-65e782847688"/>
@@ -159,6 +186,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{asstCaseSpirits}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="240" y="97" width="40" height="22" uuid="41d61f6e-a7ec-4991-9c98-46afed89978d"/>
@@ -168,6 +196,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{ownerCaseSpiritsFw}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="280" y="97" width="60" height="22" uuid="fb371c09-a700-4b7d-a306-dece8521a17c"/>
@@ -177,6 +206,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{asstCaseSpiritsFw}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="30" y="119" width="110" height="22" uuid="900e3d83-2a43-4d0f-bf6b-eb12b66d9b71"/>
@@ -196,6 +226,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{asstCaseTobaccoFw}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="340" y="119" width="120" height="22" uuid="ba65c0ed-b672-4896-904e-b2c4a2870c21"/>
@@ -205,6 +236,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{remarkCaseTobacco}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="180" y="119" width="60" height="22" uuid="54b52d9f-4b76-43be-b4a3-04421d132707"/>
@@ -214,6 +246,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{asstCaseTobacco}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="119" width="30" height="22" uuid="d33c44d7-09ed-4d74-bb8e-eb2620426362"/>
@@ -233,6 +266,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{ownerCaseTobaccoFw}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="140" y="119" width="40" height="22" uuid="17b6c671-d47b-4ac7-ba9b-8a6fda4d011c"/>
@@ -242,6 +276,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{ownerCaseTobacco}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="30" y="141" width="110" height="22" uuid="252fde92-731c-44da-be70-ecf17916248a"/>
@@ -261,6 +296,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{asstCaseCardFw}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="340" y="141" width="120" height="22" uuid="434953a6-fe05-4e50-8d49-ccef443d0275"/>
@@ -270,6 +306,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{remarkCaseCard}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="180" y="141" width="60" height="22" uuid="db192ba5-1dbe-4b1b-b5f1-66841605b754"/>
@@ -279,6 +316,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{asstCaseCard}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="141" width="30" height="22" uuid="4800ceda-84d3-4ccb-bbf8-f3040fd7147b"/>
@@ -298,6 +336,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{ownerCaseCardFw}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="140" y="141" width="40" height="22" uuid="1ba6156b-5f43-4f35-85fc-2bb299c6c61e"/>
@@ -307,6 +346,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{ownerCaseCard}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="280" y="163" width="60" height="22" uuid="5421b74f-212c-427e-902f-c652e9767dd7"/>
@@ -316,6 +356,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{asstCaseEdtaxFw}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="180" y="185" width="60" height="22" uuid="fe3106d7-e39f-4b7d-b2b6-687dda853ba2"/>
@@ -334,6 +375,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{ownerCaseEdtax}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="280" y="185" width="60" height="22" uuid="d88eb684-c2fe-4395-838c-c0ab5db2fc50"/>
@@ -370,6 +412,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{ownerCaseEdtaxFw}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="30" y="185" width="110" height="22" uuid="2966ac5c-c0e1-4537-9e1b-7ca484e19b3c"/>
@@ -417,6 +460,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{remarkCaseEdtax}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="180" y="163" width="60" height="22" uuid="42458057-b769-400e-b12c-45119fcb7ac4"/>
@@ -426,6 +470,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{asstCaseEdtax}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="163" width="30" height="22" uuid="26598f34-296d-4b8c-8338-bb1cf3ce2287"/>
@@ -496,6 +541,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{userName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="370" y="351" width="55" height="22" uuid="50388c17-144f-4407-bcff-c6d66dec68a9"/>
@@ -509,6 +555,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$P{userPosition}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="430" width="460" height="1" uuid="9f0b0b20-8425-4477-98e4-724eaed9a4b2"/>
