@@ -44,6 +44,15 @@ public class TaxOperatorDatatableVo {
 	private String condSubCapitalDesc;
 	private String condSubRiskDesc;
 	private String condSubNoAuditDesc;
+	private String lastAuditYear;
+
+	public String getLastAuditYear() {
+		return lastAuditYear;
+	}
+
+	public void setLastAuditYear(String lastAuditYear) {
+		this.lastAuditYear = lastAuditYear;
+	}
 
 	public String getCondSubCapitalDesc() {
 		return condSubCapitalDesc;

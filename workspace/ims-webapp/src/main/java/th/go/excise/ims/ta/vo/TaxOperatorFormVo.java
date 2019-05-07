@@ -33,6 +33,8 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	private String flagPage;
 	private String condSubNoAuditFlag;
 
+	private String taxAuditLast;
+
 	public String getDateStart() {
 		return dateStart;
 	}
@@ -231,6 +233,14 @@ public class TaxOperatorFormVo extends DataTableRequest {
 
 	public void setCondSubNoAuditFlag(String condSubNoAuditFlag) {
 		this.condSubNoAuditFlag = condSubNoAuditFlag;
+	}
+
+	public String getTaxAuditLast() {
+		return taxAuditLast;
+	}
+
+	public void setTaxAuditLast(String taxAuditLast) {
+		this.taxAuditLast = taxAuditLast;
 	}
 
 }
