@@ -31,6 +31,9 @@ public class ReportConstants {
 
 	// Report Name of JasperReports
 	public static final class REPORT_NAME {
+		public static final String IA_EMP_WORKING = "IA_EMP_WORKING";
+		public static final String IA_EMP_WORKING_2 = "IA_EMP_WORKING_2";
+		
 		public static final String TA_FORM_TS01_01 = "TA_FORM_TS01_01";
 		public static final String TA_FORM_TS01_02 = "TA_FORM_TS01_02";
 		public static final String TA_FORM_TS01_03 = "TA_FORM_TS01_03";
