@@ -14,11 +14,12 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESS
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD1;
+import th.go.excise.ims.ia.persistence.entity.IaAuditIncD2;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD3;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncH;
 import th.go.excise.ims.ia.service.Int0601Service;
-import th.go.excise.ims.ia.vo.IaAuditIncD3DatatableDtlVo;
 import th.go.excise.ims.ia.vo.IaAuditIncD2Vo;
+import th.go.excise.ims.ia.vo.IaAuditIncD3DatatableDtlVo;
 import th.go.excise.ims.ia.vo.Int0601RequestVo;
 import th.go.excise.ims.ia.vo.Int0601SaveVo;
 import th.go.excise.ims.ws.persistence.entity.WsIncfri8020Inc;
@@ -61,7 +62,7 @@ public class Int0601Controller {
 		}
 		return response;
 	}
-	
+
 	@PostMapping("/find-all-data-header")
 	@ResponseBody
 	public ResponseData<List<IaAuditIncH>> findAllDataHeader() {
@@ -76,7 +77,7 @@ public class Int0601Controller {
 		}
 		return response;
 	}
-	
+
 	@PostMapping("/find-tab2")
 	@ResponseBody
 	public ResponseData<List<IaAuditIncD2Vo>> findTab2(@RequestBody Int0601RequestVo request) {
@@ -92,7 +93,7 @@ public class Int0601Controller {
 		}
 		return response;
 	}
-	
+
 	@PostMapping("/find-tab3-dtl")
 	@ResponseBody
 	public ResponseData<IaAuditIncD3DatatableDtlVo> findTab2Dtl(@RequestBody Int0601RequestVo request) {
@@ -108,9 +109,7 @@ public class Int0601Controller {
 		}
 		return response;
 	}
-	
-	
-	
+
 	@PostMapping("/find-tab1-by-auditnumber")
 	@ResponseBody
 	public ResponseData<List<IaAuditIncD1>> findIaAuditIncD1ByAuditIncNo(@RequestBody String auditIncNo) {
@@ -126,10 +125,42 @@ public class Int0601Controller {
 		}
 		return response;
 	}
-	
+
+	@PostMapping("/find-tab2-by-auditnumber")
+	@ResponseBody
+	public ResponseData<List<IaAuditIncD2>> findIaAuditIncD2ByAuditIncNo(@RequestBody String auditIncNo) {
+		ResponseData<List<IaAuditIncD2>> response = new ResponseData<List<IaAuditIncD2>>();
+		try {
+			response.setData(int0601Service.findIaAuditIncD2ByAuditIncNo(auditIncNo));
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+
+	@PostMapping("/find-tab3-by-auditnumber")
+	@ResponseBody
+	public ResponseData<List<IaAuditIncD3>> findIaAuditIncD3ByAuditIncNo(@RequestBody String auditIncNo) {
+		ResponseData<List<IaAuditIncD3>> response = new ResponseData<List<IaAuditIncD3>>();
+		try {
+			response.setData(int0601Service.findIaAuditIncD3ByAuditIncNo(auditIncNo));
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+
 	@PostMapping("/find-tab3")
 	@ResponseBody
-	public ResponseData<List<IaAuditIncD3>> findTab3 (@RequestBody Int0601RequestVo request) {
+	public ResponseData<List<IaAuditIncD3>> findTab3(@RequestBody Int0601RequestVo request) {
 		ResponseData<List<IaAuditIncD3>> response = new ResponseData<List<IaAuditIncD3>>();
 		try {
 			response.setData(int0601Service.findIaAuditIncD3ByCriteria(request));
