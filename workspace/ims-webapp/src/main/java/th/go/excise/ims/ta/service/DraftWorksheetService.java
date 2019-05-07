@@ -115,6 +115,8 @@ public class DraftWorksheetService {
 			auditPlanMap = taPlanWorksheetHisRepository.findAuditPlanCodeByOfficeCodeAndBudgetYearList(officeCode,
 					budgetYearList);
 		}
+		
+		Map<String, String> maxYearMap = taPlanWorksheetHisRepository.findMaxTaxAuditYear();
 
 		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findByCriteria(formVo);
 		Map<String, List<TaWsInc8000M>> wsInc8000MMap = taWsInc8000MRepository.findByMonthRange(ymStart, ymEnd);
@@ -140,6 +142,9 @@ public class DraftWorksheetService {
 			taxAmountList = new ArrayList<>();
 
 			detailVo = new TaxOperatorDetailVo();
+			
+			detailVo.setLastAuditYear(maxYearMap.get(wsReg4000.getNewRegId()));
+			
 			detailVo.setDutyCode(wsReg4000.getDutyCode());
 			detailVo.setDutyName(ExciseUtils.getDutyDesc(wsReg4000.getDutyCode()));
 			detailVo.setNewRegId(wsReg4000.getNewRegId());
@@ -509,6 +514,8 @@ public class DraftWorksheetService {
 			worksheetDtl.setCreatedBy(UserLoginUtils.getCurrentUsername());
 			worksheetDtl.setCreatedDate(LocalDateTime.now());
 
+			worksheetDtl.setLastAuditYear(detailVo.getLastAuditYear());
+			
 			worksheetfDtlList.add(worksheetDtl);
 		}
 

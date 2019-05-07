@@ -58,6 +58,7 @@ public class TaxAuditUtils {
 				taxOperatorDatatableVo.setCondSubCapitalDesc(taxOperatorDetailVo.getCondSubCapitalDesc());
 				taxOperatorDatatableVo.setCondSubRiskDesc(taxOperatorDetailVo.getCondSubRiskDesc());
 				taxOperatorDatatableVo.setCondSubNoAuditDesc(taxOperatorDetailVo.getCondSubNoAuditDesc());
+				taxOperatorDatatableVo.setLastAuditYear(taxOperatorDetailVo.getLastAuditYear());
 			}
 			
 			taxAmtList = new ArrayList<>();
