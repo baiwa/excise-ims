@@ -29,6 +29,8 @@ public class IaAuditIncD3 extends BaseEntity {
 	@SequenceGenerator(name = "IA_AUDIT_INC_D3_GEN", sequenceName = "IA_AUDIT_INC_D3_SEQ", allocationSize = 1)
 	@Column(name = "IA_AUDIT_INC_D3_ID")
 	private Long iaAuditIncD3Id;
+	@Column(name = "AUDIT_INC_NO")
+	private String auditIncNo;
 	@Column(name = "TAX_CODE")
 	private String taxCode;
 	@Column(name = "TAX_NAME")
@@ -41,7 +43,6 @@ public class IaAuditIncD3 extends BaseEntity {
 	private String auditCheck;
 	@Column(name = "REMARK")
 	private String remark;
-	
 
 	public Long getIaAuditIncD3Id() {
 		return iaAuditIncD3Id;
@@ -49,6 +50,14 @@ public class IaAuditIncD3 extends BaseEntity {
 
 	public void setIaAuditIncD3Id(Long iaAuditIncD3Id) {
 		this.iaAuditIncD3Id = iaAuditIncD3Id;
+	}
+
+	public String getAuditIncNo() {
+		return auditIncNo;
+	}
+
+	public void setAuditIncNo(String auditIncNo) {
+		this.auditIncNo = auditIncNo;
 	}
 
 	public String getTaxCode() {
@@ -98,8 +107,6 @@ public class IaAuditIncD3 extends BaseEntity {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-
-	
 
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);

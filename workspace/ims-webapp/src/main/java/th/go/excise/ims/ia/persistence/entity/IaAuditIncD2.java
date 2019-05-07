@@ -24,6 +24,8 @@ public class IaAuditIncD2 extends BaseEntity {
 	@SequenceGenerator(name = "IA_AUDIT_INC_D2_GEN", sequenceName = "IA_AUDIT_INC_D2_SEQ", allocationSize = 1)
 	@Column(name = "IA_AUDIT_INC_D2_ID")
 	private BigDecimal iaAuditIncD2Id;
+	@Column(name = "AUDIT_INC_NO")
+	private String auditIncNo;
 	@Column(name = "RECEIPT_DATE")
 	private Date receiptDate;
 	@Column(name = "AMOUNT")
@@ -35,13 +37,20 @@ public class IaAuditIncD2 extends BaseEntity {
 	@Column(name = "REMARK")
 	private String remark;
 
-
 	public BigDecimal getIaAuditIncD2Id() {
 		return iaAuditIncD2Id;
 	}
 
 	public void setIaAuditIncD2Id(BigDecimal iaAuditIncD2Id) {
 		this.iaAuditIncD2Id = iaAuditIncD2Id;
+	}
+
+	public String getAuditIncNo() {
+		return auditIncNo;
+	}
+
+	public void setAuditIncNo(String auditIncNo) {
+		this.auditIncNo = auditIncNo;
 	}
 
 	public Date getReceiptDate() {
@@ -84,6 +93,4 @@ public class IaAuditIncD2 extends BaseEntity {
 		this.remark = remark;
 	}
 
-
-	
 }
