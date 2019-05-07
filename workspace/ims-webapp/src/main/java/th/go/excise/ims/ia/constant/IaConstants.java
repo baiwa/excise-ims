@@ -168,4 +168,51 @@ public class IaConstants {
 		public static final String VALUE_1_DESC_III = "ส่งคืน";
 
 	}
+	
+//	************************* IA_UTILITY_BILL *************************
+	
+	public class UTILITY_BILL_REASON {
+
+		public static final String PARAM_GROUP_CODE = "IA_UTILITY_BILL_REASON";
+
+		public static final String PARAM_CODE_I = "1";
+		public static final String VALUE_1_DESC_I = "ยังไม่ได้รับใบแจ้งหนี้";
+
+		public static final String PARAM_CODE_II = "2";
+		public static final String VALUE_1_DESC_II = "รอจัดสรรงบประมาณ";
+		
+		public static final String PARAM_CODE_III = "3";
+		public static final String VALUE_1_DESC_III = "อยู่ระหว่างอนุมัติสั่งจ่าย";
+		
+		public static final String PARAM_CODE_IV = "4";
+		public static final String VALUE_1_DESC_IV = "รอเบิกจ่ายพร้อมกัน";
+		
+		public static final String PARAM_CODE_V = "5";
+		public static final String VALUE_1_DESC_V = "อื่นๆ";
+
+	}
+	
+	public class UTILITY_BILL_TYPE {
+		
+		public static final String PARAM_GROUP_CODE = "IA_UTILITY_BILL_TYPE";
+		
+		public static final String PARAM_CODE_I = "1";
+		public static final String VALUE_1_DESC_I = "ค่าไฟฟ้า";
+		
+		public static final String PARAM_CODE_II = "2";
+		public static final String VALUE_1_DESC_II = "ค่าน้ำประปา";
+		
+		public static final String PARAM_CODE_III = "3";
+		public static final String VALUE_1_DESC_III = "ค่าโทรศัพท์";
+		
+		public static final String PARAM_CODE_IV = "4";
+		public static final String VALUE_1_DESC_IV = "ค่าโทรศัพท์เคลื่อนที่";
+		
+		public static final String PARAM_CODE_V = "5";
+		public static final String VALUE_1_DESC_V = "ค่าบริการไปรษณีย์โทรเลข";
+		
+		public static final String PARAM_CODE_VI = "6";
+		public static final String VALUE_1_DESC_VI = "ค่าบริการสื่อสารและโทรคมนาคม";
+		
+	}
 }
