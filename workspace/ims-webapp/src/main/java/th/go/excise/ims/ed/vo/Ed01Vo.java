@@ -8,6 +8,7 @@ public class Ed01Vo {
 	private String title;
 	private String officeCode;
 	private String departmentName;
+	private String edPersonId;
 
 	public String getUsername() {
 		return username;
@@ -55,6 +56,14 @@ public class Ed01Vo {
 
 	public void setDepartmentName(String departmentName) {
 		this.departmentName = departmentName;
+	}
+
+	public String getEdPersonId() {
+		return edPersonId;
+	}
+
+	public void setEdPersonId(String edPersonId) {
+		this.edPersonId = edPersonId;
 	}
 
 }

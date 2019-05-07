@@ -17,7 +17,11 @@ public class ExcisePerson
     extends BaseEntity
 {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2432734262647195857L;
+	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EXCISE_PERSON_GEN")
     @SequenceGenerator(name = "EXCISE_PERSON_GEN", sequenceName = "EXCISE_PERSON_SEQ", allocationSize = 1)
     @Column(name = "ED_PERSON_SEQ")

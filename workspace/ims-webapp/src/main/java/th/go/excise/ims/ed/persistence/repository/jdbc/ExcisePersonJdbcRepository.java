@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.go.excise.ims.ed.vo.Ed01Vo;
 import th.go.excise.ims.ed.vo.Ed02Vo;
 
 @Repository
@@ -35,4 +37,17 @@ public class ExcisePersonJdbcRepository {
 			return vo;
 		}
 	};
+	
+	public List<Ed01Vo> getIdCard(String username) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT * FROM EXCISE_PERSON WHERE ED_LOGIN = ? AND IS_DELETED ='N' ");
+		params.add(username);
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		List<Ed01Vo> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(),
+				new BeanPropertyRowMapper(Ed01Vo.class));
+		return datas;
+	}
+	
+	
 }
