@@ -1,5 +1,6 @@
 package th.go.excise.ims.ed.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -26,11 +27,14 @@ public class Ed01Service {
 	@Transactional
 	public void saveUserProfile(Ed01FormVo form) {
 		ExcisePerson entity = new ExcisePerson();
+		BigDecimal positionnum = new BigDecimal(form.getPositionSeq()); 
 		entity.setEdLogin(form.getUsername());
 		entity.setEdPersonName(form.getName());
+		entity.setEdPositionSeq(positionnum);
 		entity.setEdPositionName(form.getPosition());
 		entity.setEdOffcode(form.getOfficeCode());
 		entity.setEdPersonId(form.getIdCardNumber());
+		
 		excisePersonRepository.save(entity);
 	}
 	

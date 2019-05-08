@@ -34,6 +34,7 @@ public class ExcisePersonJdbcRepository {
 			vo.setEdPersonId(rs.getString("ED_PERSON_ID"));
 			vo.setEdPersonName(rs.getString("ED_PERSON_NAME"));
 			vo.setEdPositionName(rs.getString("ED_POSITION_NAME"));
+			vo.setEdOffcode(rs.getString("ED_OFFCODE"));
 			return vo;
 		}
 	};
