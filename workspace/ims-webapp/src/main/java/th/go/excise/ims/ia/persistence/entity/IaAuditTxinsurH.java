@@ -20,7 +20,11 @@ public class IaAuditTxinsurH
     extends BaseEntity
 {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -9069958473959875230L;
+	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_AUDIT_TXINSUR_H_GEN")
     @SequenceGenerator(name = "IA_AUDIT_TXINSUR_H_GEN", sequenceName = "IA_AUDIT_TXINSUR_H_SEQ", allocationSize = 1)
     @Column(name = "IA_AUDIT_TXINSUR_H_ID")
