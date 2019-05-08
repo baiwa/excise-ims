@@ -48,7 +48,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 						"TAX_AMT_G1_M12", "TAX_AMT_G2_M1", "TAX_AMT_G2_M2", "TAX_AMT_G2_M3", "TAX_AMT_G2_M4",
 						"TAX_AMT_G2_M5", "TAX_AMT_G2_M6", "TAX_AMT_G2_M7", "TAX_AMT_G2_M8", "TAX_AMT_G2_M9",
 						"TAX_AMT_G2_M10", "TAX_AMT_G2_M11", "TAX_AMT_G2_M12", "COND_MAIN_GRP", "COND_SUB_CAPITAL",
-						"COND_SUB_RISK", "CREATED_BY", "CREATED_DATE"),
+						"COND_SUB_RISK", "CREATED_BY", "CREATED_DATE", "LAST_AUDIT_YEAR"),
 				"TA_WORKSHEET_DTL_SEQ");
 
 		commonJdbcTemplate.batchUpdate(sql, worksheetDtlList, 1000,
@@ -99,6 +99,8 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 						paramList.add(worksheetDtl.getCondSubRisk());
 						paramList.add(worksheetDtl.getCreatedBy());
 						paramList.add(worksheetDtl.getCreatedDate());
+						
+						paramList.add(worksheetDtl.getLastAuditYear());
 						commonJdbcTemplate.preparePs(ps, paramList.toArray());
 					}
 				});
@@ -200,7 +202,19 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			sql.append("AND COND_SUB_NO_AUDIT=? ");
 			params.add(formVo.getCondSubNoAuditFlag());
 		}     
+		if(StringUtils.isNotBlank(formVo.getNewRegId())) {
+			sql.append("   AND ta_w_dtl.NEW_REG_ID like ? or r4000.CUS_FULLNAME like ? ");
+			params.add(StringUtils.trim("%" + StringUtils.trim(formVo.getNewRegId()) + "%"));
+			params.add(StringUtils.trim("%" + StringUtils.trim(formVo.getNewRegId()) + "%"));
+		}
 		                      
+		if(StringUtils.isNotBlank(formVo.getTaxAuditLast())) {
+			sql.append("    AND ta_w_dtl.LAST_AUDIT_YEAR < ? ");
+			int lastYear = Integer.valueOf(formVo.getTaxAuditLast());
+			int budgetYear = Integer.valueOf(formVo.getBudgetYear());
+			int rs = budgetYear - lastYear;
+			params.add(rs);
+		}
 
 		sql.append(" AND R4000.OFFICE_CODE LIKE ? ");
 		params.add(ExciseUtils.whereInLocalOfficeCode(officeCode));
@@ -211,7 +225,8 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		List<Object> params = new ArrayList<>();
 		buildByCriteriaQuery(sql, params, formVo);
 
-		sql.append(" ORDER BY R4000.DUTY_CODE, R4000.OFFICE_CODE, TA_W_DTL.NEW_REG_ID ");
+		sql.append(" ORDER BY TA_W_DTL.COND_MAIN_GRP DESC, R4000.DUTY_CODE ASC, R4000.OFFICE_CODE ASC, TA_W_DTL.NEW_REG_ID ASC ");
+		
 
 		return commonJdbcTemplate.query(
 				OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(),

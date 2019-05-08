@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD1;
+import th.go.excise.ims.ia.persistence.entity.IaAuditIncD2;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD3;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncH;
 import th.go.excise.ims.ia.persistence.repository.IaAuditIncD1Repository;
@@ -30,29 +31,29 @@ import th.go.excise.ims.ws.persistence.entity.WsIncfri8020Inc;
 
 @Service
 public class Int0601Service {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(Int0601Service.class);
-	
+
 	@Autowired
 	private Int0601JdbcRepository int0601JdbcRepository;
-	
+
 	@Autowired
 	private IaAuditIncHRepository iaAuditIncHRepository;
 
 	@Autowired
 	private IaAuditIncD1Repository iaAuditIncD1Repository;
-	
+
 	@Autowired
 	private IaAuditIncD2Repository iaAuditIncD2Repository;
-	
+
 	@Autowired
 	private IaAuditIncD3Repository iaAuditIncD3Repository;
 
-	public List<WsIncfri8020Inc> findTab1ByCriteria(Int0601RequestVo int0601Vo){
+	public List<WsIncfri8020Inc> findTab1ByCriteria(Int0601RequestVo int0601Vo) {
 		logger.info("findByCriterai");
 		return int0601JdbcRepository.findByCriteria(int0601Vo);
 	}
-	
+
 	public IaAuditIncH createIaAuditInc(Int0601SaveVo int0601SaveVo) throws IllegalAccessException, InvocationTargetException {
 		logger.info("insert IaAuditIncH");
 		IaAuditIncH iaAuditIncH = int0601SaveVo.getIaAuditIncH();
@@ -80,7 +81,7 @@ public class Int0601Service {
 					d1.setDocCtlNo(vo.getDocCtlNo());
 					d1.setReceiptNo(vo.getReceiptNo());
 					d1.setRunCheck(vo.getRunCheck());
-					d1.setReceiptDate(ConvertDateUtils.parseStringToDate(vo.getReceiptDate(), ConvertDateUtils.YYYY_MM_DD , ConvertDateUtils.LOCAL_TH));
+					d1.setReceiptDate(ConvertDateUtils.parseStringToDate(vo.getReceiptDate(), ConvertDateUtils.YYYY_MM_DD, ConvertDateUtils.LOCAL_TH));
 					d1.setTaxName(vo.getTaxName());
 					d1.setTaxCode(vo.getTaxCode());
 					d1.setAmount(vo.getAmount());
@@ -92,9 +93,9 @@ public class Int0601Service {
 					d1.setCheckTax0307(vo.getCheckTax0307());
 					d1.setRemarkTax(vo.getRemarkTax());
 
-					if(d1.getIaAuditIncDId() == null) {
+					if (d1.getIaAuditIncDId() == null) {
 						entitySaveList.add(d1);
-					}else {
+					} else {
 						entityUpdateList.add(d1);
 					}
 				}
@@ -114,23 +115,32 @@ public class Int0601Service {
 
 		return iaAuditIncH;
 	}
-	
-	public List<IaAuditIncH> findAllIaAuditIncH(){
+
+	public List<IaAuditIncH> findAllIaAuditIncH() {
 		return iaAuditIncHRepository.findByIsDeletedOrderByAuditIncNoAsc(FLAG.N_FLAG);
 	}
-	
-	public List<IaAuditIncD2Vo> findIaAuditIncD2ByCriteria(Int0601RequestVo criteria){
+
+	public List<IaAuditIncD2Vo> findIaAuditIncD2ByCriteria(Int0601RequestVo criteria) {
 		return int0601JdbcRepository.findDataTab2(criteria);
 	}
-	
-	public List<IaAuditIncD1> findIaAuditIncD1ByAuditIncNo(String  auditIncNo){
+
+	public List<IaAuditIncD1> findIaAuditIncD1ByAuditIncNo(String auditIncNo) {
 		return iaAuditIncD1Repository.findByAuditIncNoOrderByReceiptNo(auditIncNo);
-	} 
-	
-	public List<IaAuditIncD3> findIaAuditIncD3ByCriteria(Int0601RequestVo criteria){
+	}
+
+	public List<IaAuditIncD2> findIaAuditIncD2ByAuditIncNo(String auditIncNo) {
+		return iaAuditIncD2Repository.findByAuditIncNoOrderByReceiptDate(auditIncNo);
+	}
+
+	public List<IaAuditIncD3> findIaAuditIncD3ByAuditIncNo(String auditIncNo) {
+		return iaAuditIncD3Repository.findByAuditIncNoOrderByTaxCode(auditIncNo);
+	}
+
+	public List<IaAuditIncD3> findIaAuditIncD3ByCriteria(Int0601RequestVo criteria) {
 		return int0601JdbcRepository.findDataTab3(criteria);
 	}
-	public IaAuditIncD3DatatableDtlVo findTab3Dtl(Int0601RequestVo criteria){
+
+	public IaAuditIncD3DatatableDtlVo findTab3Dtl(Int0601RequestVo criteria) {
 		IaAuditIncD3DatatableDtlVo iaAuditIncD3DatatableDtlVo = new IaAuditIncD3DatatableDtlVo();
 		List<WsIncfri8020Inc> wsIncfri8020IncList = int0601JdbcRepository.findByCriteria(criteria);
 		BigDecimal sumAmt = BigDecimal.ZERO;
@@ -141,9 +151,5 @@ public class Int0601Service {
 		iaAuditIncD3DatatableDtlVo.setSumAmt(sumAmt);
 		return iaAuditIncD3DatatableDtlVo;
 	}
-	
-	
-	
-	
-	
+
 }

@@ -20,10 +20,11 @@ public class TaPlanWorksheetHisRepositoryImpl implements TaPlanWorksheetHisRepos
 	private CommonJdbcTemplate commonJdbcTemplate;
 
 	@Override
-	public Map<String, String> findAuditPlanCodeByOfficeCodeAndBudgetYearList(String officeCode, List<String> budgetYearList) {
+	public Map<String, String> findAuditPlanCodeByOfficeCodeAndBudgetYearList(String officeCode,
+			List<String> budgetYearList) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
-		
+
 		sql.append(" SELECT PLAN_HIS.BUDGET_YEAR ");
 		sql.append("   ,PLAN_HIS.NEW_REG_ID ");
 		sql.append("   ,PLAN_HIS.OFFICE_CODE ");
@@ -31,7 +32,7 @@ public class TaPlanWorksheetHisRepositoryImpl implements TaPlanWorksheetHisRepos
 		sql.append(" FROM TA_PLAN_WORKSHEET_HIS PLAN_HIS ");
 		sql.append(" WHERE PLAN_HIS.OFFICE_CODE LIKE ? ");
 		params.add(ExciseUtils.whereInLocalOfficeCode(officeCode));
-		
+
 		sql.append("   AND PLAN_HIS.BUDGET_YEAR IN (");
 		for (String budgetYear : budgetYearList) {
 			sql.append("?,");
@@ -39,19 +40,44 @@ public class TaPlanWorksheetHisRepositoryImpl implements TaPlanWorksheetHisRepos
 		}
 		sql.deleteCharAt(sql.length() - 1);
 		sql.append(") ");
-		
-		Map<String, String> resultMap = commonJdbcTemplate.query(sql.toString(), params.toArray(), new ResultSetExtractor<Map<String, String>>() {
-			@Override
-			public Map<String, String> extractData(ResultSet rs) throws SQLException, DataAccessException {
-				Map<String, String> resultMap = new HashMap<>();
-				while (rs.next()) {
-					resultMap.put(rs.getString("BUDGET_YEAR") + rs.getString("NEW_REG_ID"), rs.getString("AUDIT_PLAN_CODE"));
-				}
-				return resultMap;
-			}
-		});
-		
+
+		Map<String, String> resultMap = commonJdbcTemplate.query(sql.toString(), params.toArray(),
+				new ResultSetExtractor<Map<String, String>>() {
+					@Override
+					public Map<String, String> extractData(ResultSet rs) throws SQLException, DataAccessException {
+						Map<String, String> resultMap = new HashMap<>();
+						while (rs.next()) {
+							resultMap.put(rs.getString("BUDGET_YEAR") + rs.getString("NEW_REG_ID"),
+									rs.getString("AUDIT_PLAN_CODE"));
+						}
+						return resultMap;
+					}
+				});
+
 		return resultMap;
 	}
-	
+
+	@Override
+	public Map<String, String> findMaxTaxAuditYear() {
+		StringBuilder sql = new StringBuilder();
+
+		sql.append(" SELECT NEW_REG_ID, MAX(BUDGET_YEAR) MAX_YEAR ");
+		sql.append(" FROM ta_plan_worksheet_his ");
+		sql.append(" group by NEW_REG_ID ");
+
+		Map<String, String> resultMap = commonJdbcTemplate.query(sql.toString(),
+				new ResultSetExtractor<Map<String, String>>() {
+					@Override
+					public Map<String, String> extractData(ResultSet rs) throws SQLException, DataAccessException {
+						Map<String, String> resultMap = new HashMap<>();
+						while (rs.next()) {
+							resultMap.put(rs.getString("NEW_REG_ID"), rs.getString("MAX_YEAR"));
+						}
+						return resultMap;
+					}
+				});
+
+		return resultMap;
+	}
+
 }

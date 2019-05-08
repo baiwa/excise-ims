@@ -103,6 +103,16 @@ public class TaWorksheetDtl extends BaseEntity {
 	private String condSubRisk;
 	@Column(name = "COND_SUB_NO_AUDIT")
 	private String condSubNoAudit;
+	@Column(name = "LAST_AUDIT_YEAR")
+	private String lastAuditYear;
+
+	public String getLastAuditYear() {
+		return lastAuditYear;
+	}
+
+	public void setLastAuditYear(String lastAuditYear) {
+		this.lastAuditYear = lastAuditYear;
+	}
 
 	public Long getWorksheetDtlId() {
 		return worksheetDtlId;

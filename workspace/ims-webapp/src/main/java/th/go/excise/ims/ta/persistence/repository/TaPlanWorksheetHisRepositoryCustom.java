@@ -6,5 +6,5 @@ import java.util.Map;
 public interface TaPlanWorksheetHisRepositoryCustom {
 
 	public Map<String, String> findAuditPlanCodeByOfficeCodeAndBudgetYearList(String officeCode, List<String> budgetYearList);
-
+	public Map<String, String> findMaxTaxAuditYear();
 }

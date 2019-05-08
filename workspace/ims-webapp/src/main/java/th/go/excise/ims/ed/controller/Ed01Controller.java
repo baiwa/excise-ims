@@ -1,12 +1,16 @@
 package th.go.excise.ims.ed.controller;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.security.domain.UserBean;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
@@ -21,7 +26,6 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ed.service.Ed01Service;
 import th.go.excise.ims.ed.vo.Ed01FormVo;
 import th.go.excise.ims.ed.vo.Ed01Vo;
-import th.go.excise.ims.ia.service.Int0301Service;
 
 @Controller
 @RequestMapping("/api/ed/ed01")
@@ -31,9 +35,7 @@ public class Ed01Controller {
 	
 	@Autowired
 	private Ed01Service ed01Service;
-	
-	
-	
+		
 	@PostMapping("/userProfile")
 	@ResponseBody
 	public ResponseData<Ed01Vo> getUserProfile() {
@@ -69,7 +71,26 @@ public class Ed01Controller {
 		return response;
 	}
 	
+	@GetMapping("/getIdCard/{username}")
+	@ResponseBody
+	public ResponseData<List<Ed01Vo>> getIdCard(@PathVariable("username") String username) {
+		ResponseData<List<Ed01Vo>> responseData = new ResponseData<List<Ed01Vo>>();
+		List<Ed01Vo> data = new ArrayList<Ed01Vo>();
+		try {
+			data = ed01Service.getIdCard(username);
+			responseData.setData(data);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+			responseData.setMessage(RESPONSE_MESSAGE.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Int1101Controller findConcludeFollowHdrDetailList : ", e);
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+		}
+		return responseData;
+	}
 	
 	
-
+	
+	
+	
 }
