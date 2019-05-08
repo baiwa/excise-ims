@@ -17,7 +17,7 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 public class ExciseDutyGroup extends BaseEntity {
 
 	private static final long serialVersionUID = -3940642654634322984L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EXCISE_DUTY_GROUP_GEN")
 	@SequenceGenerator(name = "EXCISE_DUTY_GROUP_GEN", sequenceName = "EXCISE_DUTY_GROUP_SEQ", allocationSize = 1)
@@ -35,6 +35,16 @@ public class ExciseDutyGroup extends BaseEntity {
 	private String regStatus;
 	@Column(name = "BEGIN_DATE")
 	private LocalDate beginDate;
+	@Column(name = "DUTY_GROUP_TYPE")
+	private String dutyGroupType;
+
+	public String getDutyGroupType() {
+		return dutyGroupType;
+	}
+
+	public void setDutyGroupType(String dutyGroupType) {
+		this.dutyGroupType = dutyGroupType;
+	}
 
 	public Long getDutyGroupId() {
 		return dutyGroupId;

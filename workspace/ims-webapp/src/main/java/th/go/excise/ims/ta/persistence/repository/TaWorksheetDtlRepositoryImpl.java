@@ -225,7 +225,8 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		List<Object> params = new ArrayList<>();
 		buildByCriteriaQuery(sql, params, formVo);
 
-		sql.append(" ORDER BY R4000.DUTY_CODE, R4000.OFFICE_CODE, TA_W_DTL.NEW_REG_ID ");
+		sql.append(" ORDER BY TA_W_DTL.COND_MAIN_GRP DESC, R4000.DUTY_CODE ASC, R4000.OFFICE_CODE ASC, TA_W_DTL.NEW_REG_ID ASC ");
+		
 
 		return commonJdbcTemplate.query(
 				OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(),
