@@ -43,7 +43,9 @@ import th.co.baiwa.buckwaframework.support.domain.Message;
 import th.co.baiwa.buckwaframework.support.domain.ParamGroup;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.preferences.persistence.entity.ExciseDepartment;
+import th.go.excise.ims.preferences.persistence.entity.ExciseDutyGroup;
 import th.go.excise.ims.preferences.persistence.repository.ExciseDepartmentRepository;
+import th.go.excise.ims.preferences.persistence.repository.ExciseDutyGroupRepository;
 import th.go.excise.ims.preferences.vo.ExciseDepartmentVo;
 
 @Component
@@ -59,6 +61,7 @@ public class ApplicationCache {
 	private GeoProvinceRepository geoProvinceRepository;
 	private GeoAmphurRepository geoAmphurRepository;
 	private GeoDistrictRepository geoDistrictRepository;
+	private ExciseDutyGroupRepository exciseDutyGroupRepository;
 	
 	private static final ConcurrentHashMap<String, ParamGroupWrapper> PARAM_GROUP_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, Message> MESSAGE_MAP = new ConcurrentHashMap<>();
@@ -76,6 +79,7 @@ public class ApplicationCache {
 	private static final ConcurrentHashMap<String, List<GeoAmphur>> GEO_AMPHUR_MAPPER = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, List<GeoDistrict>> GEO_DISTRICT_MAPPER = new ConcurrentHashMap<>();
 
+	private static final ConcurrentHashMap<String, ExciseDutyGroup> EXCISE_DUTY_GROUP = new ConcurrentHashMap<>();
 	@Autowired
 	public ApplicationCache(
 			ParameterGroupRepository parameterGroupRepository,
@@ -85,7 +89,8 @@ public class ApplicationCache {
 			GeoSectorRepository geoSectorRepository,
 			GeoProvinceRepository geoProvinceRepository,
 			GeoAmphurRepository geoAmphurRepository,
-			GeoDistrictRepository geoDistrictRepository) {
+			GeoDistrictRepository geoDistrictRepository,
+			ExciseDutyGroupRepository exciseDutyGroupRepository) {
 		this.parameterGroupRepository = parameterGroupRepository;
 		this.parameterInfoRepository = parameterInfoRepository;
 		this.messageRepository = messageRepository;
@@ -94,6 +99,7 @@ public class ApplicationCache {
 		this.geoProvinceRepository = geoProvinceRepository;
 		this.geoAmphurRepository = geoAmphurRepository;
 		this.geoDistrictRepository = geoDistrictRepository;
+		this.exciseDutyGroupRepository = exciseDutyGroupRepository;
 	}
 	
 	/** Reload */
@@ -104,6 +110,7 @@ public class ApplicationCache {
 		loadMessage();
 		loadExciseDepartment();
 		loadGeography();
+		loadExciseDutyGroup();
 		logger.info("ApplicationCache Reloaded");
 	}
 
@@ -222,6 +229,10 @@ public class ApplicationCache {
 	
 	public static List<GeoDistrict> getGeoDistrictList(String amphurCode) {
 		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(GEO_DISTRICT_MAPPER.get(amphurCode), new ArrayList<>()));
+	}
+	
+	public static ExciseDutyGroup getExciseDutyGroup(String dutyCode) {
+		return EXCISE_DUTY_GROUP.get(dutyCode);
 	}
 	/********************* Method for Get Cache - End *********************/
 
@@ -426,6 +437,13 @@ public class ApplicationCache {
 			GEO_DISTRICT_MAPPER.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getDistrictCode().compareTo(p2.getDistrictCode())));
 		} catch (Exception e) {
 			logger.warn(e.getMessage());
+		}
+	}
+	
+	private void loadExciseDutyGroup() {
+		List<ExciseDutyGroup> exciseDutyGroupList = exciseDutyGroupRepository.findAll();
+		for (ExciseDutyGroup exciseDutyGroup : exciseDutyGroupList) {
+			EXCISE_DUTY_GROUP.put(exciseDutyGroup.getDutyGroupCode(), exciseDutyGroup);
 		}
 	}
 
