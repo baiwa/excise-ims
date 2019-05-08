@@ -1,7 +1,9 @@
 package th.go.excise.ims.ia.controller;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -12,16 +14,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import th.co.baiwa.buckwaframework.common.bean.ReportJsonBean;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
+import th.co.baiwa.buckwaframework.common.rest.adapter.BigDecimalTypeAdapter;
+import th.co.baiwa.buckwaframework.common.rest.adapter.DateThaiTypeAdapter;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaEmpWorkingDtl;
 import th.go.excise.ims.ia.service.Int090102Service;
@@ -33,6 +42,8 @@ import th.go.excise.ims.ia.vo.IaEmpWorkingHdrVo;
 @RequestMapping("/api/ia/int090102")
 public class Int090102Controller {
 	private static final Logger logger = LoggerFactory.getLogger(Int090102Controller.class);
+	
+	private Gson gson = new Gson();
 	
 	@Autowired
 	private Int090102Service int090102Service;
@@ -117,9 +128,10 @@ public class Int090102Controller {
 	}
 	
 	@PostMapping("/pdf/emp-working")
-	public void generatePdfReportEmpWorking(@RequestBody IaEmpWorkingHdrVo formVo, HttpServletResponse response) throws Exception {
+	public void generatePdfReportEmpWorking(@ModelAttribute ReportJsonBean reportJsonBean, HttpServletResponse response) throws Exception {
 		logger.info("generatePdfReportEmpWorking");
 		
+		IaEmpWorkingHdrVo formVo = gson.fromJson(reportJsonBean.getJson(), IaEmpWorkingHdrVo.class);
 		byte[] reportFile = int090102Service.generateReport(formVo);
 
 		String filename = String.format(REPORT_NAME.IA_EMP_WORKING + "_%s." + FILE_EXTENSION.PDF, DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now()));

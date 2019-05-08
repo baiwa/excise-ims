@@ -201,11 +201,10 @@ public class Int090102Service {
 		logger.info("generateReport");
 		
 		List<IaEmpWorkingDtl> emp = empWorkingDtlRepository.findByMonth(formVo.getWorkingMonth());
-		IaEmpWorkingDtlReportFieldVo workingDtl = new IaEmpWorkingDtlReportFieldVo();
 		ArrayList<IaEmpWorkingDtlReportFieldVo> workingDtlList = new ArrayList<IaEmpWorkingDtlReportFieldVo>();
 
 		Map<String, Object> params = new HashMap<>();
-		String userName = UserLoginUtils.getCurrentUserBean().getUserThaiName() + UserLoginUtils.getCurrentUserBean().getUserThaiSurname();
+		String userName = UserLoginUtils.getCurrentUserBean().getUserThaiName() + " " + UserLoginUtils.getCurrentUserBean().getUserThaiSurname();
 		ExciseDept userOffcode = ApplicationCache.getExciseDept(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 		int workingFlag1Total = 0;
 		int workingFlag3Total = 0;
@@ -217,36 +216,53 @@ public class Int090102Service {
 		params.put("userOffcode", userOffcode.getDeptName());
 		params.put("workingDate", ConvertDateUtils.parseStringToDate(formVo.getWorkingMonth(), ConvertDateUtils.DD_MM_YYYY));
 		
-		int year = ConvertDateUtils.parseStringToLocalDate(formVo.getWorkingMonth(), ConvertDateUtils.DD_MM_YYYY).getYear();
-		int month = ConvertDateUtils.parseStringToLocalDate(formVo.getWorkingMonth(), ConvertDateUtils.DD_MM_YYYY).getMonthValue();
+		int year = ConvertDateUtils.parseStringToLocalDate(formVo.getWorkingMonth(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN).getYear();
+		int month = ConvertDateUtils.parseStringToLocalDate(formVo.getWorkingMonth(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN).getMonthValue() - 1;
 		Calendar cal = new GregorianCalendar(year, month, 1);
+		int index = 0;
+		boolean haveEvent = false;
 		do {
+			haveEvent = false;
+			IaEmpWorkingDtlReportFieldVo workingDtl = new IaEmpWorkingDtlReportFieldVo();
 		    // get the day of the week for the current day
-		    int day = cal.get(Calendar.DAY_OF_WEEK);
-		    // check if it is a Saturday or Sunday
-		    if (day == Calendar.SATURDAY || day == Calendar.SUNDAY) {
-		        
-		    }
+		    int dayWk = cal.get(Calendar.DAY_OF_WEEK);
+		    
+		    for (int i = 0; i < emp.size(); i++) {
+				IaEmpWorkingDtl em = emp.get(i);
+				int toDay = ConvertDateUtils.parseStringToLocalDate(formVo.getWorkingMonth(), ConvertDateUtils.DD_MM_YYYY).getDayOfMonth();
+				if (cal.get(Calendar.DAY_OF_MONTH) == toDay) {
+					haveEvent = true;
+					workingDtl.setWorkingDesc(em.getWorkingDesc());
+					workingDtl.setWorkingRemark(em.getWorkingRemark());
+					if ("1".equals(em.getWorkingFlag())) {
+						workingFlag1Total = workingFlag1Total+1;
+					} else if ("3".equals(em.getWorkingFlag())) {
+						workingFlag3Total = workingFlag3Total+1;
+					} else if ("5".equals(em.getWorkingFlag())) {
+						workingFlag5Total = workingFlag5Total+1;
+					} else if ("6".equals(em.getWorkingFlag())) {
+						workingFlag6Total = workingFlag6Total+1;
+					}
+				}
+			}
+		    if (!haveEvent) {
+		    	if (dayWk == Calendar.SATURDAY) {
+			    	// check if it is a Saturday
+					workingDtl.setWorkingDesc("หยุดราชการวันเสาร์");
+		    	} else if (dayWk == Calendar.SUNDAY) {
+			    	// check if it is a Sunday
+			    	workingDtl.setWorkingDesc("หยุดราชการวันอาทิตย์");
+			    }
+			}
+		    
+		    workingDtl.setNumber(String.valueOf(index+1));
+		    workingDtlList.add(workingDtl);
+		    
 		    // advance to the next day
 		    cal.add(Calendar.DAY_OF_YEAR, 1);
+		    index++;
 		}  while (cal.get(Calendar.MONTH) == month);
 		// stop when we reach the start of the next month
-		for (int i = 0; i < emp.size(); i++) {
-			IaEmpWorkingDtl em = emp.get(i);
-			workingDtl.setNumber(Long.valueOf(i+1));
-			workingDtl.setWorkingDesc(em.getWorkingDesc());
-			workingDtl.setWorkingRemark(em.getWorkingRemark());
-			workingDtlList.add(workingDtl);
-			if ("1".equals(em.getWorkingFlag())) {
-				workingFlag1Total = workingFlag1Total+1;
-			} else if ("3".equals(em.getWorkingFlag())) {
-				workingFlag3Total = workingFlag3Total+1;
-			} else if ("5".equals(em.getWorkingFlag())) {
-				workingFlag5Total = workingFlag5Total+1;
-			} else if ("6".equals(em.getWorkingFlag())) {
-				workingFlag6Total = workingFlag6Total+1;
-			}
-		}
 
 		logger.info("export IA_EMP_WORKING_2");
 		params.put("userName", userName);
@@ -275,11 +291,11 @@ public class Int090102Service {
 		params.put("asstTotal", formVo.getAsstTotal());
 		params.put("ownerEdtaxTotal", formVo.getOwnerEdtaxTotal());
 		params.put("asstEdtaxTotal", formVo.getAsstEdtaxTotal());
-		params.put("workingFlag1Total", workingFlag1Total);
-		params.put("workingFlag3Total", workingFlag3Total);
-		params.put("workingFlag5Total", workingFlag5Total);
-		params.put("workingFlag6Total", workingFlag6Total);
-		params.put("noWorkingTotal", noWorkingTotal);
+		params.put("workingFlag1Total", new BigDecimal(workingFlag1Total));
+		params.put("workingFlag3Total", new BigDecimal(workingFlag3Total));
+		params.put("workingFlag5Total", new BigDecimal(workingFlag5Total));
+		params.put("workingFlag6Total", new BigDecimal(workingFlag6Total));
+		params.put("noWorkingTotal", new BigDecimal(noWorkingTotal));
 
 		JRDataSource dataSource = new JRBeanCollectionDataSource(workingDtlList);
 

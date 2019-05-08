@@ -2,14 +2,14 @@ package th.go.excise.ims.ia.vo;
 
 public class IaEmpWorkingDtlReportFieldVo {
 
-	private Long number;
+	private String number;
 	private String workingDesc;
 	private String workingRemark;
 	
-	public Long getNumber() {
+	public String getNumber() {
 		return number;
 	}
-	public void setNumber(Long number) {
+	public void setNumber(String number) {
 		this.number = number;
 	}
 	public String getWorkingDesc() {
