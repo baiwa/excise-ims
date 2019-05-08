@@ -97,7 +97,7 @@ public class Int091304Service {
 			/* total sum month Q3 */
 			sumApr = sumApr.add(calculateNull(obj.getQ3Apr(), null, null));
 			sumMay = sumMay.add(calculateNull(obj.getQ3May(), null, null));
-			sumJun = sumMar.add(calculateNull(obj.getQ3Jun(), null, null));
+			sumJun = sumJun.add(calculateNull(obj.getQ3Jun(), null, null));
 			
 			/* ________________ Q4 ________________ */
 			obj.setQ4Jul(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q4[0]));
@@ -105,9 +105,9 @@ public class Int091304Service {
 			obj.setQ4Sep(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q4[2]));
 			obj.setQ4Total(calculateNull(obj.getQ4Jul(), obj.getQ4Aug(), obj.getQ4Sep()));
 			/* total sum month Q4 */
-			sumJul= sumApr.add(calculateNull(obj.getQ4Jul(), null, null));
-			sumAug = sumMay.add(calculateNull(obj.getQ4Aug(), null, null));
-			sumSep = sumMar.add(calculateNull(obj.getQ4Sep(), null, null));
+			sumJul= sumJul.add(calculateNull(obj.getQ4Jul(), null, null));
+			sumAug = sumAug.add(calculateNull(obj.getQ4Aug(), null, null));
+			sumSep = sumSep.add(calculateNull(obj.getQ4Sep(), null, null));
 
 			dataList.add(obj);
 		}
