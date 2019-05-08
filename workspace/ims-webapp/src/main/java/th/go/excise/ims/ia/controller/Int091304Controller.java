@@ -1,7 +1,5 @@
 package th.go.excise.ims.ia.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +25,7 @@ public class Int091304Controller {
 	private Int091304Service int091304Service;
 	@PostMapping("/filter/budget-year")
 	@ResponseBody
-	public ResponseData<Int091304Vo> saveInspectionPlanParams(@RequestBody Int091304SearchVo formVo) {
+	public ResponseData<Int091304Vo> findQuarter(@RequestBody Int091304SearchVo formVo) {
 		logger.info("budgetYear: {}",formVo.getBudgetYear());
 		
 		ResponseData<Int091304Vo> response = new ResponseData<Int091304Vo>();

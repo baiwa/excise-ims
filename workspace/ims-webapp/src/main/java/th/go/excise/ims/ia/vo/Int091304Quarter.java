@@ -3,6 +3,7 @@ package th.go.excise.ims.ia.vo;
 import java.math.BigDecimal;
 
 public class Int091304Quarter {
+	private String ubillTypeStr;
 	private String ubillType;
 	/* Quarter1 */
 	private BigDecimal Q1Oct;
@@ -162,6 +163,14 @@ public class Int091304Quarter {
 
 	public void setUbillType(String ubillType) {
 		this.ubillType = ubillType;
+	}
+
+	public String getUbillTypeStr() {
+		return ubillTypeStr;
+	}
+
+	public void setUbillTypeStr(String ubillTypeStr) {
+		this.ubillTypeStr = ubillTypeStr;
 	}
 
 }
