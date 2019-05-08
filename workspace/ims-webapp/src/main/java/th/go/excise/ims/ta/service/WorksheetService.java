@@ -12,6 +12,7 @@ import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_MAIN_COND_RANGE;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_SUB_COND_CAPITAL;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
 import th.go.excise.ims.common.util.ExciseUtils;
@@ -322,6 +323,16 @@ public class WorksheetService {
             vo.setTaxMonthEnd(t.getTaxMonthEnd());
             vo.setRangeStart(t.getRangeStart());
             vo.setRangeEnd(t.getRangeEnd());
+            vo.setRiskLevel(t.getRiskLevel() == null ? null : Integer.valueOf(t.getRiskLevel()));
+            String dutyName = null;
+            try {
+				
+            	dutyName = ApplicationCache.getParamInfoByCode("TA_RISK_LEVEL",t.getRiskLevel().toString()).getValue1();
+			} catch (Exception e) {
+				// TODO: handle exception
+				dutyName = "";
+			}
+            vo.setRiskLevelDesc(dutyName);
             return vo;
         }).collect(Collectors.toList());
     }
@@ -344,6 +355,7 @@ public class WorksheetService {
             vo.setCount(0L);
         } else {
             List<TaxOperatorDetailVo> list = taWorksheetDtlRepository.findByCriteria(formVo);
+            formVo.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
             vo.setDatas(TaxAuditUtils.prepareTaxOperatorDatatable(list, formVo));
             vo.setCount(taWorksheetDtlRepository.countByCriteria(formVo));
         }
