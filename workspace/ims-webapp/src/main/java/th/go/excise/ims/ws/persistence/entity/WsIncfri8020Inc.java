@@ -80,6 +80,8 @@ public class WsIncfri8020Inc extends BaseEntity {
 	private String cusName;
 	@Column(name = "FAC_NAME")
 	private String facName;
+	@Column(name = "OFFLINE_STATUS")
+	private String offlineStatus;
 	@Column(name = "IS_DELETED")
 	private String isDeleted;
 	@Column(name = "VERSION")
@@ -327,6 +329,14 @@ public class WsIncfri8020Inc extends BaseEntity {
 
 	public void setIncCtlNo(String incCtlNo) {
 		this.incCtlNo = incCtlNo;
+	}
+
+	public String getOfflineStatus() {
+		return offlineStatus;
+	}
+
+	public void setOfflineStatus(String offlineStatus) {
+		this.offlineStatus = offlineStatus;
 	}
 
 }

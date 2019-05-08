@@ -7,6 +7,7 @@ public class Ed01FormVo {
 	private String position;
 	private String officeCode;
 	private String idCardNumber;
+	private String positionSeq;
 
 	public String getUsername() {
 		return username;
@@ -46,6 +47,14 @@ public class Ed01FormVo {
 
 	public void setIdCardNumber(String idCardNumber) {
 		this.idCardNumber = idCardNumber;
+	}
+
+	public String getPositionSeq() {
+		return positionSeq;
+	}
+
+	public void setPositionSeq(String positionSeq) {
+		this.positionSeq = positionSeq;
 	}
 
 }

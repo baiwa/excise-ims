@@ -14,6 +14,15 @@ public class CondGroupVo {
 	private BigDecimal rangeEnd;
 	private Integer riskLevel;
 	private String analysisNumber;
+	private String riskLevelDesc;
+
+	public String getRiskLevelDesc() {
+		return riskLevelDesc;
+	}
+
+	public void setRiskLevelDesc(String riskLevelDesc) {
+		this.riskLevelDesc = riskLevelDesc;
+	}
 
 	public String getAnalysisNumber() {
 		return analysisNumber;

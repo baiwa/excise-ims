@@ -1,10 +1,15 @@
 package th.go.excise.ims.ed.vo;
 
+import th.go.excise.ims.ia.vo.ExciseDepartmentVo;
+
 public class Ed02Vo {
 
 	private String edPersonName;
 	private String edPositionName;
 	private String edPersonId;
+	private String edOffcode;
+
+	ExciseDepartmentVo exciseDepartmentVo;
 
 	public String getEdPersonName() {
 		return edPersonName;
@@ -29,5 +34,22 @@ public class Ed02Vo {
 	public void setEdPersonId(String edPersonId) {
 		this.edPersonId = edPersonId;
 	}
+	
+	public String getEdOffcode() {
+		return edOffcode;
+	}
+
+	public void setEdOffcode(String edOffcode) {
+		this.edOffcode = edOffcode;
+	}
+
+	public ExciseDepartmentVo getExciseDepartmentVo() {
+		return exciseDepartmentVo;
+	}
+
+	public void setExciseDepartmentVo(ExciseDepartmentVo exciseDepartmentVo) {
+		this.exciseDepartmentVo = exciseDepartmentVo;
+	}
+	
 
 }
