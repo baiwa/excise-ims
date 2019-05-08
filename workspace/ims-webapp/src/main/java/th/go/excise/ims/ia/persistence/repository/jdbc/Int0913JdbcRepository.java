@@ -49,13 +49,11 @@ public class Int0913JdbcRepository {
 		}
 		if(StringUtils.isNoneBlank(vo.getBudgetYear())) {
 			int year = Integer.parseInt(vo.getBudgetYear());
-			sql.append("--where by buggetyear");
 			sql.append(" AND U.MONTH_WD_PAY >= ? ");
 			paramList.add((year-1)+ProjectConstants.QUARTER.Q1[0]);
 			
 			sql.append(" AND U.MONTH_WD_PAY <= ? ");
 			paramList.add((year)+ProjectConstants.QUARTER.Q4[2]);
-			sql.append("--End where by buggetyear");
 		}
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), int091301Mapping);
 	}
