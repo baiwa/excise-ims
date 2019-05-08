@@ -32,6 +32,7 @@ import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
+import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.persistence.entity.IaEmpWorkingDtl;
 import th.go.excise.ims.ia.persistence.entity.IaEmpWorkingH;
 import th.go.excise.ims.ia.persistence.repository.IaEmpWorkingDtlRepository;
@@ -210,11 +211,11 @@ public class Int090102Service {
 		int workingFlag3Total = 0;
 		int workingFlag5Total = 0;
 		int workingFlag6Total = 0;
-		int noWorkingTotal = 0;
+		int numWeekend = 0;
 		params.put("userName", userName);
 		params.put("userPosition", UserLoginUtils.getCurrentUserBean().getTitle());
 		params.put("userOffcode", userOffcode.getDeptName());
-		params.put("workingDate", ConvertDateUtils.parseStringToDate(formVo.getWorkingMonth(), ConvertDateUtils.DD_MM_YYYY));
+		params.put("workingDate", ConvertDateUtils.parseStringToDate(formVo.getWorkingMonth(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
 		
 		int year = ConvertDateUtils.parseStringToLocalDate(formVo.getWorkingMonth(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN).getYear();
 		int month = ConvertDateUtils.parseStringToLocalDate(formVo.getWorkingMonth(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN).getMonthValue() - 1;
@@ -229,7 +230,8 @@ public class Int090102Service {
 		    
 		    for (int i = 0; i < emp.size(); i++) {
 				IaEmpWorkingDtl em = emp.get(i);
-				int toDay = ConvertDateUtils.parseStringToLocalDate(formVo.getWorkingMonth(), ConvertDateUtils.DD_MM_YYYY).getDayOfMonth();
+				String toDayStr = ConvertDateUtils.formatDateToString(em.getWorkingDate(), ConvertDateUtils.DD_MM_YYYY);
+				int toDay = ConvertDateUtils.parseStringToLocalDate(toDayStr, ConvertDateUtils.DD_MM_YYYY).getDayOfMonth();
 				if (cal.get(Calendar.DAY_OF_MONTH) == toDay) {
 					haveEvent = true;
 					workingDtl.setWorkingDesc(em.getWorkingDesc());
@@ -249,9 +251,11 @@ public class Int090102Service {
 		    	if (dayWk == Calendar.SATURDAY) {
 			    	// check if it is a Saturday
 					workingDtl.setWorkingDesc("หยุดราชการวันเสาร์");
+					numWeekend += 1;
 		    	} else if (dayWk == Calendar.SUNDAY) {
 			    	// check if it is a Sunday
 			    	workingDtl.setWorkingDesc("หยุดราชการวันอาทิตย์");
+			    	numWeekend += 1;
 			    }
 			}
 		    
@@ -295,7 +299,9 @@ public class Int090102Service {
 		params.put("workingFlag3Total", new BigDecimal(workingFlag3Total));
 		params.put("workingFlag5Total", new BigDecimal(workingFlag5Total));
 		params.put("workingFlag6Total", new BigDecimal(workingFlag6Total));
-		params.put("noWorkingTotal", new BigDecimal(noWorkingTotal));
+		params.put("noWorkingTotal", new BigDecimal(numWeekend+workingFlag3Total));
+		params.put("sector", userOffcode.getDeptName());
+		params.put("area", userOffcode.getDeptName());
 
 		JRDataSource dataSource = new JRBeanCollectionDataSource(workingDtlList);
 
