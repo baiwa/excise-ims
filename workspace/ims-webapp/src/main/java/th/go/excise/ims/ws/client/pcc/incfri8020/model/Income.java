@@ -112,6 +112,10 @@ public class Income {
 	@SerializedName("FacName")
 	@Expose
 	private String facName;
+	
+	@SerializedName("OfflineStatus")
+	@Expose
+	private String offlineStatus;
 
 	public String getReceiptDate() {
 		return receiptDate;
@@ -327,6 +331,14 @@ public class Income {
 
 	public void setFacName(String facName) {
 		this.facName = facName;
+	}
+
+	public String getOfflineStatus() {
+		return offlineStatus;
+	}
+
+	public void setOfflineStatus(String offlineStatus) {
+		this.offlineStatus = offlineStatus;
 	}
 
 }
