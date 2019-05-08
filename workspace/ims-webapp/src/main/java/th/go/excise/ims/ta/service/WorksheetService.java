@@ -354,8 +354,8 @@ public class WorksheetService {
             vo.setDatas(new ArrayList<>());
             vo.setCount(0L);
         } else {
+        	formVo.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
             List<TaxOperatorDetailVo> list = taWorksheetDtlRepository.findByCriteria(formVo);
-            formVo.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
             vo.setDatas(TaxAuditUtils.prepareTaxOperatorDatatable(list, formVo));
             vo.setCount(taWorksheetDtlRepository.countByCriteria(formVo));
         }

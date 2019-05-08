@@ -1,9 +1,18 @@
 package th.go.excise.ims.ta.persistence.repository;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
+
 import th.co.baiwa.buckwaframework.common.bean.LabelValueBean;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
@@ -23,14 +32,6 @@ import th.go.excise.ims.ta.util.TaxAuditUtils;
 import th.go.excise.ims.ta.vo.TaxDraftVo;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCustom {
 
@@ -162,6 +163,12 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE = CONCAT ( SUBSTR(R4000.OFFICE_CODE, 0, 4) ,'00' ) ");
 		sql.append("   AND ED_AREA.IS_DELETED = 'N' ");
 		sql.append(" LEFT JOIN TA_PLAN_WORKSHEET_SELECT TA_PW_SEL ON TA_PW_SEL.NEW_REG_ID = TA_W_DTL.NEW_REG_ID ");
+		
+		if(ExciseUtils.isCentral(formVo.getOfficeCode())) {
+			sql.append(" inner join EXCISE_CTRL_DUTY cd on cd.duty_group_code = r4000.duty_code  AND cd.res_offcode = ?");
+			params.add(formVo.getOfficeCode());
+		}
+		
 		sql.append("   AND TA_PW_SEL.IS_DELETED = 'N' ");
 		sql.append("   AND TA_PW_SEL.BUDGET_YEAR = ? ");
 		sql.append(" WHERE 1 = 1 ");
@@ -208,7 +215,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			params.add(StringUtils.trim("%" + StringUtils.trim(formVo.getNewRegId()) + "%"));
 		}
 		                      
-		if(StringUtils.isNotBlank(formVo.getTaxAuditLast())) {
+		if(StringUtils.isNotBlank(formVo.getTaxAuditLast()) && !"0".equals(formVo.getTaxAuditLast())) {
 			sql.append("    AND ta_w_dtl.LAST_AUDIT_YEAR < ? ");
 			int lastYear = Integer.valueOf(formVo.getTaxAuditLast());
 			int budgetYear = Integer.valueOf(formVo.getBudgetYear());
@@ -216,8 +223,10 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			params.add(rs);
 		}
 
-		sql.append(" AND R4000.OFFICE_CODE LIKE ? ");
-		params.add(ExciseUtils.whereInLocalOfficeCode(officeCode));
+		if (!ExciseUtils.isCentral(formVo.getOfficeCode())) {
+			sql.append(" AND R4000.OFFICE_CODE LIKE ? ");
+			params.add(ExciseUtils.whereInLocalOfficeCode(officeCode));			
+		}
 	}
 
 	public List<TaxOperatorDetailVo> findByCriteria(TaxOperatorFormVo formVo) {
