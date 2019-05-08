@@ -42,6 +42,6 @@ public class Int091201Service {
 		dataSave.setAuOfficeCode(res.getBranch());
 		dataSave.setWorkingConditionText(res.getWorkingConditionText());
 		dataSave.setWorkingCriteriaText(res.getWorkingCriteriaText());
-//		iaAuditWorkingHRepository.save(dataSave);
+		iaAuditWorkingHRepository.save(dataSave);
 	}
 }

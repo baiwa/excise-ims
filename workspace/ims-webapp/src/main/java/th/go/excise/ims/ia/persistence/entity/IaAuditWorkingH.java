@@ -16,7 +16,11 @@ public class IaAuditWorkingH
     extends BaseEntity
 {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1263714843976585885L;
+	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_AUDIT_WORKING_H_GEN")
     @SequenceGenerator(name = "IA_AUDIT_WORKING_H_GEN", sequenceName = "IA_AUDIT_WORKING_H_SEQ", allocationSize = 1)
     @Column(name = "IA_AUDIT_WORKING_H_ID")
