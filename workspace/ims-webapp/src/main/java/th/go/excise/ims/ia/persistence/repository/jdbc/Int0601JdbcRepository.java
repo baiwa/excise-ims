@@ -94,6 +94,7 @@ public class Int0601JdbcRepository {
 			vo.setCusName(rs.getString("CUS_NAME"));
 			vo.setFacName(rs.getString("FAC_NAME"));
 			vo.setIncCtlNo(rs.getString("INC_CTL_NO"));
+			vo.setOfflineStatus(rs.getString("OFFLINE_STATUS"));
 			vo.setIsDeleted(rs.getString("IS_DELETED"));
 			vo.setVersion(rs.getInt("VERSION"));
 			vo.setCreatedBy(rs.getString("CREATED_BY"));

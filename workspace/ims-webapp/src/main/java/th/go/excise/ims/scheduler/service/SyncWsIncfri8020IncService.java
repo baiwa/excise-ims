@@ -69,6 +69,7 @@ public class SyncWsIncfri8020IncService {
 					wsInc.setNewRegId(income.getNewRegId());
 					wsInc.setCusName(income.getCusName());
 					wsInc.setFacName(income.getFacName());
+					wsInc.setIncCtlNo(income.getIncCtlNo());
 					wsInc.setOfflineStatus(income.getOfflineStatus());
 					wsIncfri8020IncList.add(wsInc);
 					pageNo++;
