@@ -22,10 +22,15 @@ public class IaUtilityBillJdbcRepository {
 	
 	public List<IaUtilityBill> findQuarter(Int091304SearchVo formVo) {
 		StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT UBILL_TYPE, MONTH_WD_PAY, SUM(REQ_WD_AMT) REQ_WD_AMT FROM IA_UTILITY_BILL ");
+		sql.append(" SELECT UBILL_TYPE, MONTH_WD_PAY, EXCISE_CODE, SUM(REQ_WD_AMT) REQ_WD_AMT FROM IA_UTILITY_BILL ");
 		sql.append(" WHERE IS_DELETED = 'N' ");
 		
 		List<Object> params = new ArrayList<Object>();
+		
+		if (StringUtils.isNotBlank(formVo.getUbillType())) {
+			sql.append("AND UBILL_TYPE = ?  ");
+			params.add(formVo.getUbillType());
+		}
 		
 		if (StringUtils.isNotBlank(formVo.getMonthWdPayFrom())) {
 			sql.append("AND MONTH_WD_PAY >= ?  ");
@@ -37,7 +42,7 @@ public class IaUtilityBillJdbcRepository {
 			params.add(formVo.getMonthWdPayTo());
 		}
 		
-		sql.append(" GROUP BY UBILL_TYPE, MONTH_WD_PAY ");
+		sql.append(" GROUP BY UBILL_TYPE, MONTH_WD_PAY, EXCISE_CODE ");
 		sql.append(" ORDER BY UBILL_TYPE ");
 		
 		List<IaUtilityBill> iaCheckControlRegis = commonJdbcTemplate.query(sql.toString(), params.toArray(), listRowmapper);
@@ -51,6 +56,7 @@ public class IaUtilityBillJdbcRepository {
 			vo.setReqWdAmt(rs.getBigDecimal("REQ_WD_AMT"));
 			vo.setMonthWdPay(rs.getString("MONTH_WD_PAY"));
 			vo.setUbillType(rs.getString("UBILL_TYPE"));
+			vo.setExciseCode(rs.getString("EXCISE_CODE"));
 
 			return vo;
 		}
