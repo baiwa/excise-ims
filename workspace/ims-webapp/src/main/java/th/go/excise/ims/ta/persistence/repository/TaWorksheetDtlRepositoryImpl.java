@@ -223,9 +223,9 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			params.add(rs);
 		}
 
-		if (!ExciseUtils.isCentral(formVo.getOfficeCode())) {
+		if (StringUtils.isNotBlank(formVo.getOfficeCode()) && !ExciseUtils.isCentral(formVo.getOfficeCode())) {
 			sql.append(" AND R4000.OFFICE_CODE LIKE ? ");
-			params.add(ExciseUtils.whereInLocalOfficeCode(officeCode));			
+			params.add(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));			
 		}
 	}
 
