@@ -164,6 +164,10 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		sql.append(
 				" INNER JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE = CONCAT ( SUBSTR(R4000.OFFICE_CODE, 0, 4) ,'00' ) ");
 		sql.append("   AND ED_AREA.IS_DELETED = 'N' ");
+		
+		sql.append(" Left join TA_WORKSHEET_COND_MAIN_DTL T_W_Cond_Dtl on T_W_Cond_Dtl.analysis_number=ta_w_dtl.analysis_number");
+		sql.append(" and ta_w_dtl.COND_MAIN_GRP=t_w_cond_dtl.COND_GROUP ");
+		
 		sql.append(" LEFT JOIN TA_PLAN_WORKSHEET_SELECT TA_PW_SEL ON TA_PW_SEL.NEW_REG_ID = TA_W_DTL.NEW_REG_ID ");
 	
 		if (ApplicationCache.getRoleDutyOffice().indexOf(formVo.getOfficeCode()) > -1) {
@@ -247,7 +251,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		buildByCriteriaQuery(sql, params, formVo);
 
 		sql.append(
-				" ORDER BY TA_W_DTL.COND_MAIN_GRP DESC, R4000.DUTY_CODE ASC, R4000.OFFICE_CODE ASC, TA_W_DTL.NEW_REG_ID ASC ");
+				" ORDER BY NVL(T_W_Cond_Dtl.RISK_LEVEL,0) DESC, R4000.DUTY_CODE ASC, R4000.OFFICE_CODE ASC, TA_W_DTL.NEW_REG_ID ASC ");
 
 		return commonJdbcTemplate.query(
 				OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(),
