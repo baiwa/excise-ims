@@ -2,12 +2,10 @@ package th.co.baiwa.buckwaframework.support;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -83,6 +81,8 @@ public class ApplicationCache {
 	private static final ConcurrentHashMap<String, List<GeoProvince>> GEO_PROVINCE_MAPPER = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, List<GeoAmphur>> GEO_AMPHUR_MAPPER = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, List<GeoDistrict>> GEO_DISTRICT_MAPPER = new ConcurrentHashMap<>();
+	
+	private static final ConcurrentHashMap<String, List<ExciseDutyGroup>> DUTY_GROUP = new ConcurrentHashMap<>();
 
 	private static final ConcurrentHashMap<String, ExciseDutyGroup> EXCISE_DUTY_GROUP = new ConcurrentHashMap<>();
 	private static final List<String> OFFICE_DUTY_ROLE = new ArrayList<>();
@@ -121,6 +121,7 @@ public class ApplicationCache {
 		loadGeography();
 		loadExciseDutyGroup();
 		loadExciseCtrlDuty();
+		loadDutyGroup();
 		logger.info("ApplicationCache Reloaded");
 	}
 
@@ -246,6 +247,9 @@ public class ApplicationCache {
 	
 	public static ExciseDutyGroup getExciseDutyGroup(String dutyCode) {
 		return EXCISE_DUTY_GROUP.get(dutyCode);
+	}
+	public static List<ExciseDutyGroup> getExciseDutyListByType(String type) {
+		return DUTY_GROUP.get(type);
 	}
 	/********************* Method for Get Cache - End *********************/
 
@@ -464,6 +468,21 @@ public class ApplicationCache {
 		List<ExciseCtrlDuty> exciseCtrlDutieList = exciseCtrlDutyRepository.findAll();
 		for (ExciseCtrlDuty exciseCtrlDuty : exciseCtrlDutieList) {
 			OFFICE_DUTY_ROLE.add(exciseCtrlDuty.getId().getResOffcode());
+		}
+	}
+	
+	private void loadDutyGroup() {
+		List<ExciseDutyGroup> exciseDutyGroupList = exciseDutyGroupRepository.findAll();
+		List<ExciseDutyGroup> data = null;
+		for (ExciseDutyGroup exciseDutyGroup : exciseDutyGroupList) {
+			data = new ArrayList<ExciseDutyGroup>();
+			data = DUTY_GROUP.get(exciseDutyGroup.getDutyGroupType());
+			if(data == null ) {
+				data = new ArrayList<ExciseDutyGroup>();
+			}
+			data.add(exciseDutyGroup);
+			
+			DUTY_GROUP.put(exciseDutyGroup.getDutyGroupType(), data);
 		}
 	}
 
