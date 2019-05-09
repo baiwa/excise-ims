@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +16,12 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.ia.persistence.entity.IaAuditWorkingD1;
+import th.go.excise.ims.ia.persistence.entity.IaAuditWorkingH;
 import th.go.excise.ims.ia.service.Int091201Service;
 import th.go.excise.ims.ia.vo.Int091201FormSaveVo;
 import th.go.excise.ims.ia.vo.Int091201FormSearchVo;
+import th.go.excise.ims.ia.vo.Int091201HdrDtlVo;
 import th.go.excise.ims.ia.vo.Int091201Vo;
 
 @Controller
@@ -63,4 +67,39 @@ public class Int091201Controller {
 		
 		return responseData;
 	}
+	
+	@GetMapping("/getAuditWorkingNo")
+	@ResponseBody
+	public ResponseData<List<IaAuditWorkingH>> getAuditWorkingNo() {
+		ResponseData<List<IaAuditWorkingH>> responseData = new ResponseData<List<IaAuditWorkingH>>();
+		try {
+			responseData.setData(int091201Service.findHeaderAll());
+			responseData.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Int091201Controller::getAuditWorkingNo => ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		
+		return responseData;
+	}
+	
+	@PostMapping("/getDtl")
+	@ResponseBody
+	public ResponseData<Int091201HdrDtlVo> getAuditWorkingNo(@RequestBody IaAuditWorkingH res) {
+		ResponseData<Int091201HdrDtlVo> responseData = new ResponseData<Int091201HdrDtlVo>();
+		try {
+			responseData.setData(int091201Service.findDtl(res.getAuditWorkingNo()));
+			responseData.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Int091201Controller::getDtl => ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		
+		return responseData;
+	}
+	
 }
