@@ -70,8 +70,8 @@ public class IaEmpWorkingDtlRepositoryImpl implements IaEmpWorkingDtlRepositoryC
 		sql.append(" WHERE EXTRACT(YEAR FROM HOLIDAY_DATE) = ? ");
 		sql.append(" AND EXTRACT(MONTH FROM HOLIDAY_DATE) = ? ");
 
-		params.add(ConvertDateUtils.parseStringToLocalDate(workingDate, ConvertDateUtils.DD_MM_YYYY).getYear());
-		params.add(ConvertDateUtils.parseStringToLocalDate(workingDate, ConvertDateUtils.DD_MM_YYYY).getMonthValue());
+		params.add(ConvertDateUtils.parseStringToLocalDate(workingDate, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN).getYear());
+		params.add(ConvertDateUtils.parseStringToLocalDate(workingDate, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN).getMonthValue());
 
 		return commonJdbcTemplate.query(sql.toString(), params.toArray(), getHolidayRowMapper);
 	}

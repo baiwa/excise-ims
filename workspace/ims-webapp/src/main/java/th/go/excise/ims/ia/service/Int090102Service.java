@@ -204,6 +204,8 @@ public class Int090102Service {
 		
 		List<IaEmpWorkingDtl> emp = empWorkingDtlRepository.findByMonth(formVo.getWorkingMonth());
 		ArrayList<IaEmpWorkingDtlReportFieldVo> workingDtlList = new ArrayList<IaEmpWorkingDtlReportFieldVo>();
+		List<ExciseHoliday> holiday = empWorkingDtlRepository.getHoliday("01/05/2018");
+//		List<ExciseHoliday> holiday = empWorkingDtlRepository.getHoliday(formVo.getWorkingMonth());
 
 		Map<String, Object> params = new HashMap<>();
 		String userName = UserLoginUtils.getCurrentUserBean().getUserThaiName() + " " + UserLoginUtils.getCurrentUserBean().getUserThaiSurname();
@@ -249,6 +251,14 @@ public class Int090102Service {
 				}
 			}
 		    if (!haveEvent) {
+		    	for (ExciseHoliday hol : holiday) {
+		    		int hday = hol.getHolidayDate().getDayOfMonth();
+		    		if (cal.get(Calendar.DAY_OF_MONTH) == hday) {
+		    			workingDtl.setWorkingDesc("วันหยุดนักขัตฤกษ์");
+		    			numWeekend += 1;
+		    			break;
+		    		}
+				}
 		    	if (dayWk == Calendar.SATURDAY) {
 			    	// check if it is a Saturday
 					workingDtl.setWorkingDesc("หยุดราชการวันเสาร์");
