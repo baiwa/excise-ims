@@ -16,7 +16,8 @@ public interface ExciseDutyGroupRepository extends CommonJpaCrudRepository<Excis
 		value = "UPDATE EXCISE_DUTY_GROUP SET IS_DELETED = '" + FLAG.Y_FLAG + "'",
 		nativeQuery = true
 	)
-	public void ExciseDutyGroup();
+	public void queryUpdateIsDeletedY();
+	public void ExciseDutyGroupY();
 	
 	List<ExciseDutyGroup> findAllByDutyGroupStatus(String status);
 	
