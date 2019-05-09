@@ -3,6 +3,8 @@ package th.go.excise.ims.ia.vo;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class IaAuditIncD1Vo {
 
     private Long iaAuditIncDId;
@@ -20,8 +22,16 @@ public class IaAuditIncD1Vo {
     private String checkStamp;
     private String checkTax0704;
     private String remarkTax;
+    private MultipartFile file;
+    public MultipartFile getFile() {
+		return file;
+	}
 
-    public String getCheckTax0307() {
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+
+	public String getCheckTax0307() {
         return checkTax0307;
     }
 
