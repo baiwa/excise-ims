@@ -55,7 +55,7 @@ public class Int0601JdbcRepository {
 			sql.append(" AND WS.INCOME_CODE = ? ");
 			paramList.add(criteria.getTaxCode());
 		}
-
+		sql.append(" AND WS.RECEIPT_NO IS NOT NULL ");
 		sql.append(" ORDER BY ").append(strOrder);
 
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), tab1RowMapper);
