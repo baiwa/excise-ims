@@ -51,7 +51,7 @@ public class Int0601Service {
 
 	public List<WsIncfri8020Inc> findTab1ByCriteria(Int0601RequestVo int0601Vo) {
 		logger.info("findByCriterai");
-		return int0601JdbcRepository.findByCriteria(int0601Vo);
+		return int0601JdbcRepository.findByCriteria(int0601Vo, "RECEIPT_NO");
 	}
 
 	public IaAuditIncH createIaAuditInc(Int0601SaveVo int0601SaveVo) throws IllegalAccessException, InvocationTargetException {
@@ -142,7 +142,7 @@ public class Int0601Service {
 
 	public IaAuditIncD3DatatableDtlVo findTab3Dtl(Int0601RequestVo criteria) {
 		IaAuditIncD3DatatableDtlVo iaAuditIncD3DatatableDtlVo = new IaAuditIncD3DatatableDtlVo();
-		List<WsIncfri8020Inc> wsIncfri8020IncList = int0601JdbcRepository.findByCriteria(criteria);
+		List<WsIncfri8020Inc> wsIncfri8020IncList = int0601JdbcRepository.findByCriteria(criteria , "INCOME_CODE,RECEIPT_DATE");
 		BigDecimal sumAmt = BigDecimal.ZERO;
 		for (WsIncfri8020Inc wsIncfri8020Inc : wsIncfri8020IncList) {
 			sumAmt = sumAmt.add(wsIncfri8020Inc.getNetTaxAmt());

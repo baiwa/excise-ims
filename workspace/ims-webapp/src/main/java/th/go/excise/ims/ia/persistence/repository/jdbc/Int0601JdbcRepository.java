@@ -30,7 +30,7 @@ public class Int0601JdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
-	public List<WsIncfri8020Inc> findByCriteria(Int0601RequestVo criteria) {
+	public List<WsIncfri8020Inc> findByCriteria(Int0601RequestVo criteria , String strOrder) {
 		logger.info("findTab1ByCriteria");
 
 		List<Object> paramList = new ArrayList<>();
@@ -56,7 +56,7 @@ public class Int0601JdbcRepository {
 			paramList.add(criteria.getTaxCode());
 		}
 
-		sql.append(" ORDER BY RECEIPT_NO ");
+		sql.append(" ORDER BY ").append(strOrder);
 
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), tab1RowMapper);
 	}
