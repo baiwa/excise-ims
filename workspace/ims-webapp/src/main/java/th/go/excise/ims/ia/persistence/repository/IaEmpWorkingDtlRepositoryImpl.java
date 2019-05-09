@@ -2,6 +2,7 @@ package th.go.excise.ims.ia.persistence.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.ia.persistence.entity.IaEmpWorkingDtl;
+import th.go.excise.ims.preferences.persistence.entity.ExciseHoliday;
 
 public class IaEmpWorkingDtlRepositoryImpl implements IaEmpWorkingDtlRepositoryCustom {
 	
@@ -53,6 +56,34 @@ public class IaEmpWorkingDtlRepositoryImpl implements IaEmpWorkingDtlRepositoryC
 			vo.setWorkingDesc(rs.getString("WORKING_DESC"));
 			vo.setWorkingRemark(rs.getString("WORKING_REMARK"));
 			vo.setReimburseExpFlag(rs.getString("REIMBURSE_EXP_FLAG"));
+			return vo;
+		}
+	};
+	
+	@Override
+	public List<ExciseHoliday> getHoliday(String workingDate) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		
+		sql.append(" SELECT * ");
+		sql.append(" FROM EXCISE_HOLIDAY ");
+		sql.append(" WHERE EXTRACT(YEAR FROM HOLIDAY_DATE) = ? ");
+		sql.append(" AND EXTRACT(MONTH FROM HOLIDAY_DATE) = ? ");
+
+		params.add(ConvertDateUtils.parseStringToLocalDate(workingDate, ConvertDateUtils.DD_MM_YYYY).getYear());
+		params.add(ConvertDateUtils.parseStringToLocalDate(workingDate, ConvertDateUtils.DD_MM_YYYY).getMonthValue());
+
+		return commonJdbcTemplate.query(sql.toString(), params.toArray(), getHolidayRowMapper);
+	}
+
+	protected RowMapper<ExciseHoliday> getHolidayRowMapper = new RowMapper<ExciseHoliday>() {
+		@Override
+		public ExciseHoliday mapRow(ResultSet rs, int rowNum) throws SQLException {
+			ExciseHoliday vo = new ExciseHoliday();
+			String dateStr = ConvertDateUtils.formatDateToString(rs.getDate("HOLIDAY_DATE"), ConvertDateUtils.DD_MMM_YYYY_SPAC);
+			LocalDate dateLocal = ConvertDateUtils.parseStringToLocalDate(dateStr, ConvertDateUtils.DD_MMM_YYYY_SPAC);
+			vo.setHolidayId(rs.getLong("HOLIDAY_ID"));
+			vo.setHolidayDate(dateLocal);
 			return vo;
 		}
 	};
