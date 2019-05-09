@@ -25,7 +25,6 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
-import th.go.excise.ims.ia.persistence.repository.IaQuestionnaireHdrRepository;
 import th.go.excise.ims.ia.service.Int020101Service;
 import th.go.excise.ims.ia.service.UpdateStatusQuestionnaireService;
 import th.go.excise.ims.ia.vo.Int020101NameVo;

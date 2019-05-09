@@ -164,7 +164,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		sql.append("   AND ED_AREA.IS_DELETED = 'N' ");
 		sql.append(" LEFT JOIN TA_PLAN_WORKSHEET_SELECT TA_PW_SEL ON TA_PW_SEL.NEW_REG_ID = TA_W_DTL.NEW_REG_ID ");
 		
-		if(ExciseUtils.isCentral(formVo.getOfficeCode())) {
+		if(ApplicationCache.getRoleDutyOffice().indexOf(formVo.getOfficeCode()) > -1) {
 			sql.append(" inner join EXCISE_CTRL_DUTY cd on cd.duty_group_code = r4000.duty_code  AND cd.res_offcode = ?");
 			params.add(formVo.getOfficeCode());
 		}
