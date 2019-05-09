@@ -1,5 +1,7 @@
 package th.go.excise.ims.preferences.persistence.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
@@ -14,6 +16,8 @@ public interface ExciseDutyGroupRepository extends CommonJpaCrudRepository<Excis
 		value = "UPDATE EXCISE_DUTY_GROUP SET IS_DELETED = '" + FLAG.Y_FLAG + "'",
 		nativeQuery = true
 	)
-	public void queryUpdateIsDeletedY();
+	public void ExciseDutyGroup();
+	
+	List<ExciseDutyGroup> findAllByDutyGroupStatus(String status);
 	
 }

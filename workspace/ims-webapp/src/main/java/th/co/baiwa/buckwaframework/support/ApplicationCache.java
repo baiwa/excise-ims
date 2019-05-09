@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.constant.MessageConstants.MESSAGE_LANG;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.GeoAmphurRepository;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.GeoDistrictRepository;
@@ -472,7 +473,7 @@ public class ApplicationCache {
 	}
 	
 	private void loadDutyGroup() {
-		List<ExciseDutyGroup> exciseDutyGroupList = exciseDutyGroupRepository.findAll();
+		List<ExciseDutyGroup> exciseDutyGroupList = exciseDutyGroupRepository.findAllByDutyGroupStatus(FLAG.N_FLAG);
 		List<ExciseDutyGroup> data = null;
 		for (ExciseDutyGroup exciseDutyGroup : exciseDutyGroupList) {
 			data = new ArrayList<ExciseDutyGroup>();
