@@ -255,7 +255,10 @@ public class Int090102Service {
 		    		int hday = hol.getHolidayDate().getDayOfMonth();
 		    		if (cal.get(Calendar.DAY_OF_MONTH) == hday) {
 		    			workingDtl.setWorkingDesc("วันหยุดนักขัตฤกษ์");
-		    			numWeekend += 1;
+		    			if (dayWk != Calendar.SATURDAY && dayWk != Calendar.SUNDAY) {
+					    	// check if it is a Saturday or Sunday
+							numWeekend += 1;
+				    	}
 		    			break;
 		    		}
 				}
