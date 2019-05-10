@@ -1,17 +1,21 @@
 package th.go.excise.ims.ed.persistence.repository.jdbc;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
-import th.go.excise.ims.ed.vo.Ed02DepartmentVo;
-import th.go.excise.ims.ed.vo.Ed02PositionVo;
+import th.go.excise.ims.ed.vo.Ed0101DepartmentVo;
+import th.go.excise.ims.ed.vo.Ed0101PositionVo;
+import th.go.excise.ims.ed.vo.Ed01Vo;
+import th.go.excise.ims.ed.vo.Ed02FormVo;
 import th.go.excise.ims.ed.vo.Ed02Vo;
 
 @Repository
@@ -20,62 +24,104 @@ public class ExcisePositionJdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
-	public List<Ed02PositionVo> listPosition() {
+	public List<Ed0101PositionVo> listPosition() {
 		StringBuilder sqlBuilder = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		sqlBuilder.append(" SELECT * FROM EXCISE_POSITION WHERE IS_DELETED = 'N' ");
-		List<Ed02PositionVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), listPosition);
+		List<Ed0101PositionVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), listPosition);
 		return datas;
 	}
 
-	private RowMapper<Ed02PositionVo> listPosition = new RowMapper<Ed02PositionVo>() {
+	private RowMapper<Ed0101PositionVo> listPosition = new RowMapper<Ed0101PositionVo>() {
 		@Override
-		public Ed02PositionVo mapRow(ResultSet rs, int arg1) throws SQLException {
-			Ed02PositionVo vo = new Ed02PositionVo();
+		public Ed0101PositionVo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Ed0101PositionVo vo = new Ed0101PositionVo();
 			vo.setEdPositionName(rs.getString("ED_POSITION_NAME"));
 			vo.setEdPersonSeq(rs.getBigDecimal("ED_PERSON_SEQ"));
 			return vo;
 		}
 	};
 	
-	public List<Ed02DepartmentVo> listDepartment00() {
+	public List<Ed0101DepartmentVo> listDepartment00() {
 		StringBuilder sqlBuilder = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		sqlBuilder.append(" SELECT * FROM EXCISE_DEPARTMENT WHERE OFF_CODE LIKE '00%' ");
-		List<Ed02DepartmentVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), listDepartment00);
+		List<Ed0101DepartmentVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), listDepartment00);
 		return datas;
 	}
 	
-	private RowMapper<Ed02DepartmentVo> listDepartment00 = new RowMapper<Ed02DepartmentVo>() {
+	private RowMapper<Ed0101DepartmentVo> listDepartment00 = new RowMapper<Ed0101DepartmentVo>() {
 		@Override
-		public Ed02DepartmentVo mapRow(ResultSet rs, int arg1) throws SQLException {
-			Ed02DepartmentVo vo = new Ed02DepartmentVo();
+		public Ed0101DepartmentVo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Ed0101DepartmentVo vo = new Ed0101DepartmentVo();
 			vo.setOffName(rs.getString("OFF_NAME"));
 			vo.setOffCode(rs.getNString("OFF_CODE"));
 			return vo;
 		}
 	};
 	
-	public List<Ed02DepartmentVo> listDepartment01() {
+	public List<Ed0101DepartmentVo> listDepartment01() {
 		StringBuilder sqlBuilder = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		sqlBuilder.append(" SELECT * FROM EXCISE_DEPARTMENT WHERE OFF_CODE NOT LIKE '00%' ");
-		List<Ed02DepartmentVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), listDepartment01);
+		List<Ed0101DepartmentVo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), listDepartment01);
 		return datas;
 	}
 	
-	private RowMapper<Ed02DepartmentVo> listDepartment01 = new RowMapper<Ed02DepartmentVo>() {
+	private RowMapper<Ed0101DepartmentVo> listDepartment01 = new RowMapper<Ed0101DepartmentVo>() {
 		@Override
-		public Ed02DepartmentVo mapRow(ResultSet rs, int arg1) throws SQLException {
-			Ed02DepartmentVo vo = new Ed02DepartmentVo();
+		public Ed0101DepartmentVo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Ed0101DepartmentVo vo = new Ed0101DepartmentVo();
 			vo.setOffName(rs.getString("OFF_NAME"));
 			vo.setOffCode(rs.getNString("OFF_CODE"));
 			return vo;
 		}
 	};
 	
+	public List<Ed02Vo> list(Ed02FormVo form) {
+		List<Ed02Vo> Ed02VoList = new ArrayList<Ed02Vo>();
+		StringBuilder sqlBuilder = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		sqlBuilder.append(" SELECT * FROM EXCISE_POSITION WHERE ED_POSITION_NAME LIKE ? ");
+		
+		params.add("%" +  form.getPosition().replaceAll(" ", "%") + "%");
+		Ed02VoList = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), listRowmapper);
+		return Ed02VoList;
+	}
+	
+	private RowMapper<Ed02Vo> listRowmapper = new RowMapper<Ed02Vo>() {
+		@Override
+		public Ed02Vo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Ed02Vo vo = new Ed02Vo();
+			vo.setEdPersonSeq(rs.getBigDecimal("ED_PERSON_SEQ"));
+			vo.setEdPositionName(rs.getString("ED_POSITION_NAME"));
+			vo.setAllowancesDay(rs.getBigDecimal("ALLOWANCES_DAY"));
+			vo.setAllowancesHalfDay(rs.getBigDecimal("ALLOWANCES_HALF_DAY"));
+			vo.setAccomFeeSingle(rs.getBigDecimal("ACCOM_FEE_SINGLE"));
+			vo.setAccomFeeDouble(rs.getBigDecimal("ACCOM_FEE_DOUBLE"));
+			vo.setAccomFeePackages(rs.getBigDecimal("ACCOM_FEE_PACKAGES"));
+			return vo;
+		}
+	};
+	
+	public void deleteById(Ed02FormVo formvo) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" DELETE FROM EXCISE_POSITION WHERE ED_PERSON_SEQ = ? ");
+		params.add(formvo.getEdPersonSeq());
+		commonJdbcTemplate.update(sql.toString(), params.toArray());
+	}	
 	
 	
 	
-	
+	public List<Ed02Vo> getConfigEdit(BigDecimal edPersonSeq) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT * FROM EXCISE_POSITION WHERE ED_PERSON_SEQ = ? AND IS_DELETED ='N' ");
+		params.add(edPersonSeq);
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		List<Ed02Vo> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(),
+				new BeanPropertyRowMapper(Ed02Vo.class));
+		return datas;
+	}
 }

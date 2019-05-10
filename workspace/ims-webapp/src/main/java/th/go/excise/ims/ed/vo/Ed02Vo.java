@@ -1,22 +1,23 @@
 package th.go.excise.ims.ed.vo;
 
-import th.go.excise.ims.ia.vo.ExciseDepartmentVo;
+import java.math.BigDecimal;
 
 public class Ed02Vo {
 
-	private String edPersonName;
+	private BigDecimal edPersonSeq;
 	private String edPositionName;
-	private String edPersonId;
-	private String edOffcode;
+	private BigDecimal allowancesDay;
+	private BigDecimal allowancesHalfDay;
+	private BigDecimal accomFeeSingle;
+	private BigDecimal accomFeeDouble;
+	private BigDecimal accomFeePackages;
 
-	ExciseDepartmentVo exciseDepartmentVo;
-
-	public String getEdPersonName() {
-		return edPersonName;
+	public BigDecimal getEdPersonSeq() {
+		return edPersonSeq;
 	}
 
-	public void setEdPersonName(String edPersonName) {
-		this.edPersonName = edPersonName;
+	public void setEdPersonSeq(BigDecimal edPersonSeq) {
+		this.edPersonSeq = edPersonSeq;
 	}
 
 	public String getEdPositionName() {
@@ -27,29 +28,44 @@ public class Ed02Vo {
 		this.edPositionName = edPositionName;
 	}
 
-	public String getEdPersonId() {
-		return edPersonId;
+	public BigDecimal getAllowancesDay() {
+		return allowancesDay;
 	}
 
-	public void setEdPersonId(String edPersonId) {
-		this.edPersonId = edPersonId;
-	}
-	
-	public String getEdOffcode() {
-		return edOffcode;
+	public void setAllowancesDay(BigDecimal allowancesDay) {
+		this.allowancesDay = allowancesDay;
 	}
 
-	public void setEdOffcode(String edOffcode) {
-		this.edOffcode = edOffcode;
+	public BigDecimal getAllowancesHalfDay() {
+		return allowancesHalfDay;
 	}
 
-	public ExciseDepartmentVo getExciseDepartmentVo() {
-		return exciseDepartmentVo;
+	public void setAllowancesHalfDay(BigDecimal allowancesHalfDay) {
+		this.allowancesHalfDay = allowancesHalfDay;
 	}
 
-	public void setExciseDepartmentVo(ExciseDepartmentVo exciseDepartmentVo) {
-		this.exciseDepartmentVo = exciseDepartmentVo;
+	public BigDecimal getAccomFeeSingle() {
+		return accomFeeSingle;
 	}
-	
+
+	public void setAccomFeeSingle(BigDecimal accomFeeSingle) {
+		this.accomFeeSingle = accomFeeSingle;
+	}
+
+	public BigDecimal getAccomFeeDouble() {
+		return accomFeeDouble;
+	}
+
+	public void setAccomFeeDouble(BigDecimal accomFeeDouble) {
+		this.accomFeeDouble = accomFeeDouble;
+	}
+
+	public BigDecimal getAccomFeePackages() {
+		return accomFeePackages;
+	}
+
+	public void setAccomFeePackages(BigDecimal accomFeePackages) {
+		this.accomFeePackages = accomFeePackages;
+	}
 
 }

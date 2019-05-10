@@ -1,6 +1,6 @@
 package th.go.excise.ims.ed.vo;
 
-public class Ed02DepartmentVo {
+public class Ed0101DepartmentVo {
 	private String offCode;
 	private String offName;
 

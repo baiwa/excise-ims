@@ -9,6 +9,7 @@ public class Ed01Vo {
 	private String officeCode;
 	private String departmentName;
 	private String edPersonId;
+	private String edLogin;
 
 	public String getUsername() {
 		return username;
@@ -64,6 +65,14 @@ public class Ed01Vo {
 
 	public void setEdPersonId(String edPersonId) {
 		this.edPersonId = edPersonId;
+	}
+
+	public String getEdLogin() {
+		return edLogin;
+	}
+
+	public void setEdLogin(String edLogin) {
+		this.edLogin = edLogin;
 	}
 
 }

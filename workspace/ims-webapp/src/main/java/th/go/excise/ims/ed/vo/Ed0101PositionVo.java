@@ -2,7 +2,7 @@ package th.go.excise.ims.ed.vo;
 
 import java.math.BigDecimal;
 
-public class Ed02PositionVo {
+public class Ed0101PositionVo {
 	private BigDecimal edPersonSeq;
 	private String edPositionName;
 

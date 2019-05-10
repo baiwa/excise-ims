@@ -12,29 +12,30 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.go.excise.ims.ed.vo.Ed01Vo;
-import th.go.excise.ims.ed.vo.Ed02Vo;
+import th.go.excise.ims.ed.vo.Ed0101Vo;
 
 @Repository
 public class ExcisePersonJdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
-	public List<Ed02Vo> listUser() {
+	public List<Ed0101Vo> listUser() {
 		StringBuilder sqlBuilder = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		sqlBuilder.append(" SELECT * FROM EXCISE_PERSON WHERE IS_DELETED = 'N' ORDER BY ED_PERSON_SEQ ASC ");
-		List<Ed02Vo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), listUserRowMapper);
+		List<Ed0101Vo> datas = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), listUserRowMapper);
 		return datas;
 	}
 
-	private RowMapper<Ed02Vo> listUserRowMapper = new RowMapper<Ed02Vo>() {
+	private RowMapper<Ed0101Vo> listUserRowMapper = new RowMapper<Ed0101Vo>() {
 		@Override
-		public Ed02Vo mapRow(ResultSet rs, int arg1) throws SQLException {
-			Ed02Vo vo = new Ed02Vo();
+		public Ed0101Vo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Ed0101Vo vo = new Ed0101Vo();
 			vo.setEdPersonId(rs.getString("ED_PERSON_ID"));
 			vo.setEdPersonName(rs.getString("ED_PERSON_NAME"));
 			vo.setEdPositionName(rs.getString("ED_POSITION_NAME"));
 			vo.setEdOffcode(rs.getString("ED_OFFCODE"));
+			vo.setEdLogin(rs.getString("ED_LOGIN"));
 			return vo;
 		}
 	};
