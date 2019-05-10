@@ -243,17 +243,22 @@ public class WorksheetService {
         }
         
         BigDecimal regCapital = NumberUtils.nullToZero(NumberUtils.toBigDecimal(taxDraftVo.getRegCapital()));
-        if (NumberUtils.isGreaterThan(condSubCapital.getHugeCapitalAmount(), regCapital)) {
-            condSubCapitalCode = TA_SUB_COND_CAPITAL.HUGE_CAPITAL;
-        } else if (NumberUtils.isGreaterThan(condSubCapital.getLargeCapitalAmount(), regCapital)) {
-            condSubCapitalCode = TA_SUB_COND_CAPITAL.LARGE_CAPITAL;
-        } else if (NumberUtils.isGreaterThan(condSubCapital.getMediumCapitalAmount(), regCapital)) {
-            condSubCapitalCode = TA_SUB_COND_CAPITAL.MEDIUM_CAPITAL;
-        } else if (NumberUtils.isLessThanOrEquals(condSubCapital.getSmallCapitalAmount(), regCapital)) {
-            condSubCapitalCode = TA_SUB_COND_CAPITAL.SMALL_CAPITAL;
-        } else {
-            condSubCapitalCode = TA_SUB_COND_CAPITAL.OTHER;
+        if(condSubCapital!=null) {
+        	if (NumberUtils.isGreaterThan(condSubCapital.getHugeCapitalAmount(), regCapital)) {
+                condSubCapitalCode = TA_SUB_COND_CAPITAL.HUGE_CAPITAL;
+            } else if (NumberUtils.isGreaterThan(condSubCapital.getLargeCapitalAmount(), regCapital)) {
+                condSubCapitalCode = TA_SUB_COND_CAPITAL.LARGE_CAPITAL;
+            } else if (NumberUtils.isGreaterThan(condSubCapital.getMediumCapitalAmount(), regCapital)) {
+                condSubCapitalCode = TA_SUB_COND_CAPITAL.MEDIUM_CAPITAL;
+            } else if (NumberUtils.isLessThanOrEquals(condSubCapital.getSmallCapitalAmount(), regCapital)) {
+                condSubCapitalCode = TA_SUB_COND_CAPITAL.SMALL_CAPITAL;
+            } else {
+                condSubCapitalCode = TA_SUB_COND_CAPITAL.OTHER;
+            }
+        }else {
+        	condSubCapitalCode = TA_SUB_COND_CAPITAL.OTHER;
         }
+        
         
         return condSubCapitalCode;
     }
