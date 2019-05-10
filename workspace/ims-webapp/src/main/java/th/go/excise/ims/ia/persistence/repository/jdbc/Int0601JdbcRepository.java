@@ -125,6 +125,7 @@ public class Int0601JdbcRepository {
 			sql.append(" AND WS.RECEIPT_DATE <= ? ");
 			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		}
+		sql.append(" AND WS.RECEIPT_NO IS NOT NULL ");
 		sql.append(" GROUP BY WS.RECEIPT_DATE ");
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), tab2RowMapper);
 	}
@@ -168,6 +169,7 @@ public class Int0601JdbcRepository {
 			sql.append(" AND WS.RECEIPT_DATE <= ? ");
 			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		}
+		sql.append(" AND WS.RECEIPT_NO IS NOT NULL ");
 		sql.append(" GROUP BY ");
 		sql.append(" WS.INCOME_CODE, ");
 		sql.append(" WS.INCOME_NAME ");
