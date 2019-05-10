@@ -51,15 +51,30 @@ public class Int0602JdbcRepository {
 		@Override
 		public WsLicfri6010 mapRow(ResultSet rs, int rowNum) throws SQLException {
 			WsLicfri6010 vo = new WsLicfri6010();
-			
-
+			vo.setWsLicfri6010Id(rs.getLong("WS_LICFRI6010_ID"));
+			vo.setOffcode(rs.getString("OFFCODE"));
+			vo.setLicType(rs.getString("LIC_TYPE"));
+			vo.setLicNo(rs.getString("LIC_NO"));
+			vo.setLicName(rs.getString("LIC_NAME"));
+			vo.setLicFee(rs.getBigDecimal("LIC_FEE"));
+			vo.setLicInterior(rs.getBigDecimal("LIC_INTERIOR"));
+			vo.setLicPrice(rs.getBigDecimal("LIC_PRICE"));
+			vo.setLicDate(rs.getString("LIC_DATE"));
+			vo.setStartDate(rs.getString("START_DATE"));
+			vo.setExpDate(rs.getString("EXP_DATE"));
+			vo.setSendDate(rs.getString("SEND_DATE"));
+			vo.setPrintCode(rs.getString("PRINT_CODE"));
+			vo.setNid(rs.getString("NID"));
+			vo.setNewRegId(rs.getString("NEW_REG_ID"));
+			vo.setCusFullname(rs.getString("CUS_FULLNAME"));
+			vo.setFacFullname(rs.getString("FAC_FULLNAME"));
+			vo.setIncCode(rs.getString("INC_CODE"));
 			vo.setIsDeleted(rs.getString("IS_DELETED"));
 			vo.setVersion(rs.getInt("VERSION"));
 			vo.setCreatedBy(rs.getString("CREATED_BY"));
 			vo.setCreatedDate(LocalDateTimeConverter.convertToEntityAttribute(rs.getTimestamp("CREATED_DATE")));
 			vo.setUpdatedBy(rs.getString("UPDATED_BY"));
 			vo.setUpdatedDate(LocalDateTimeConverter.convertToEntityAttribute(rs.getTimestamp("UPDATED_DATE")));
-
 			return vo;
 		}
 	};

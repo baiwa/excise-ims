@@ -44,7 +44,6 @@ public class IaGfmovementAccountService {
 			for (Row r : sheet) {
 				iaGfmovementAccount = new IaGfmovementAccount();
 				try {
-
 					for (Cell c : r) {
 						valueExc = "'" + ExcelUtils.getCellValueAsString(c) + "':" + c.getColumnIndex();
 						String lineData = ExcelUtils.getCellValueAsString(c);
@@ -55,8 +54,8 @@ public class IaGfmovementAccountService {
 						} else if (c.getColumnIndex() == 3 && KEY_FILTER[1].equals(lineData.split(":")[0].trim())) {
 							accNo = lineData.split(":")[1].trim().split(" ")[0];
 						} else {
-							
-							if (!(KEY_FILTER[2].equals(ExcelUtils.getCellValueAsString(r.getCell(9)))) 
+							System.out.print(r.getLastCellNum());
+							if (r.getLastCellNum() > 15 && r.getCell(4) != null && r.getCell(6) != null && !(KEY_FILTER[2].equals(ExcelUtils.getCellValueAsString(r.getCell(9)))) 
 									&& !( KEY_FILTER[3].equals(ExcelUtils.getCellValueAsString(r.getCell(0))) )
 									&&! (KEY_FILTER[4].equals(ExcelUtils.getCellValueAsString(r.getCell(0))))
  									&&!( r.getCell(0) != null  ? ExcelUtils.getCellValueAsString(r.getCell(0)).indexOf(KEY_FILTER[5]) >-1 : false

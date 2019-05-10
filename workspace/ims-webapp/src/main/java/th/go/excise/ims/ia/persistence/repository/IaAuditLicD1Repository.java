@@ -1,0 +1,12 @@
+
+package th.go.excise.ims.ia.persistence.repository;
+
+import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRepository;
+import th.go.excise.ims.ia.persistence.entity.IaAuditLicD1;
+
+public interface IaAuditLicD1Repository
+    extends CommonJpaCrudRepository<IaAuditLicD1, Long>
+{
+
+
+}
