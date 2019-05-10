@@ -30,7 +30,7 @@ public class Int0913Service {
 		List<Int091301ResultSearchVo> dataFilter = int0913JdbcRepository.findIaUtilityBillByCriteria(int091301SearchVo);
 		if(dataFilter.size() > 0) {
 			for (Int091301ResultSearchVo vo : dataFilter) {
-				vo.setLatePayCause(ApplicationCache.getParamInfoByCode(IaConstants.UTILITY_BILL_REASON.PARAM_GROUP_CODE, vo.getLatePayCause()).getValue1());
+				vo.setLatePayCauseStr(ApplicationCache.getParamInfoByCode(IaConstants.UTILITY_BILL_REASON.PARAM_GROUP_CODE, vo.getLatePayCause()).getValue1());
 				/* change format YYYYMM to MM/YYYY */	
 				vo.setMonthWdPay(formatYYYYMMToMM_YYYY(vo.getMonthWdPay()));
 				vo.setInvoiceMonth(formatYYYYMMToMM_YYYY(vo.getInvoiceMonth()));

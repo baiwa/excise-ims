@@ -1,9 +1,7 @@
 package th.go.excise.ims.ia.controller;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import th.co.baiwa.buckwaframework.common.bean.ReportJsonBean;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
@@ -29,14 +26,13 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESS
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
-import th.co.baiwa.buckwaframework.common.rest.adapter.BigDecimalTypeAdapter;
-import th.co.baiwa.buckwaframework.common.rest.adapter.DateThaiTypeAdapter;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaEmpWorkingDtl;
 import th.go.excise.ims.ia.service.Int090102Service;
 import th.go.excise.ims.ia.vo.IaEmpWorkingDtlSaveVo;
 import th.go.excise.ims.ia.vo.IaEmpWorkingHdrFormVo;
 import th.go.excise.ims.ia.vo.IaEmpWorkingHdrVo;
+import th.go.excise.ims.preferences.persistence.entity.ExciseHoliday;
 
 @Controller
 @RequestMapping("/api/ia/int090102")
@@ -74,6 +70,7 @@ public class Int090102Controller {
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
+			responseData.setMessage(RESPONSE_MESSAGE.ERROR500);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -122,6 +119,7 @@ public class Int090102Controller {
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
+			responseData.setMessage(RESPONSE_MESSAGE.ERROR500);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -139,5 +137,21 @@ public class Int090102Controller {
 		response.setContentType("application/octet-stream");
 
 		FileCopyUtils.copy(reportFile, response.getOutputStream());
+	}
+	
+	@PostMapping("/get-holiday")
+	@ResponseBody
+	public ResponseData<List<ExciseHoliday>> getHoliday(@RequestBody IaEmpWorkingDtlSaveVo request) {
+		logger.info("get-by-month -> Int090102");
+		ResponseData<List<ExciseHoliday>> responseData = new ResponseData<List<ExciseHoliday>>();
+		try {
+			responseData.setData(int090102Service.getHoliday(request.getWorkingDate()));
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			responseData.setMessage(RESPONSE_MESSAGE.ERROR500);
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
 	}
 }

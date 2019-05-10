@@ -32,7 +32,6 @@ import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
-import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.persistence.entity.IaEmpWorkingDtl;
 import th.go.excise.ims.ia.persistence.entity.IaEmpWorkingH;
 import th.go.excise.ims.ia.persistence.repository.IaEmpWorkingDtlRepository;
@@ -41,6 +40,7 @@ import th.go.excise.ims.ia.vo.IaEmpWorkingDtlReportFieldVo;
 import th.go.excise.ims.ia.vo.IaEmpWorkingDtlSaveVo;
 import th.go.excise.ims.ia.vo.IaEmpWorkingHdrFormVo;
 import th.go.excise.ims.ia.vo.IaEmpWorkingHdrVo;
+import th.go.excise.ims.preferences.persistence.entity.ExciseHoliday;
 
 @Service
 public class Int090102Service {
@@ -61,6 +61,7 @@ public class Int090102Service {
 		emp.setUserLogin(UserLoginUtils.getCurrentUserBean().getUserThaiId());
 		String userName = UserLoginUtils.getCurrentUserBean().getUserThaiName() + " " + UserLoginUtils.getCurrentUserBean().getUserThaiSurname();
 		emp.setUserName(userName);
+		emp.setUserPosition(UserLoginUtils.getCurrentUserBean().getTitle());
 		emp.setUserOffcode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 		emp.setWorkingDate(ConvertDateUtils.parseStringToDate(formVo.getWorkingDate(), ConvertDateUtils.DD_MM_YYYY));
 		emp.setWorkingFlag(formVo.getWorkingFlag());
@@ -203,6 +204,8 @@ public class Int090102Service {
 		
 		List<IaEmpWorkingDtl> emp = empWorkingDtlRepository.findByMonth(formVo.getWorkingMonth());
 		ArrayList<IaEmpWorkingDtlReportFieldVo> workingDtlList = new ArrayList<IaEmpWorkingDtlReportFieldVo>();
+		List<ExciseHoliday> holiday = empWorkingDtlRepository.getHoliday("01/05/2018");
+//		List<ExciseHoliday> holiday = empWorkingDtlRepository.getHoliday(formVo.getWorkingMonth());
 
 		Map<String, Object> params = new HashMap<>();
 		String userName = UserLoginUtils.getCurrentUserBean().getUserThaiName() + " " + UserLoginUtils.getCurrentUserBean().getUserThaiSurname();
@@ -248,6 +251,17 @@ public class Int090102Service {
 				}
 			}
 		    if (!haveEvent) {
+		    	for (ExciseHoliday hol : holiday) {
+		    		int hday = hol.getHolidayDate().getDayOfMonth();
+		    		if (cal.get(Calendar.DAY_OF_MONTH) == hday) {
+		    			workingDtl.setWorkingDesc("วันหยุดนักขัตฤกษ์");
+		    			if (dayWk != Calendar.SATURDAY && dayWk != Calendar.SUNDAY) {
+					    	// check if it is a Saturday or Sunday
+							numWeekend += 1;
+				    	}
+		    			break;
+		    		}
+				}
 		    	if (dayWk == Calendar.SATURDAY) {
 			    	// check if it is a Saturday
 					workingDtl.setWorkingDesc("หยุดราชการวันเสาร์");
@@ -323,5 +337,10 @@ public class Int090102Service {
 		ReportUtils.closeResourceFileInputStream(params);
 
 		return content;
+	}
+	
+	public List<ExciseHoliday> getHoliday(String workingDate) {
+		List<ExciseHoliday> holiday = empWorkingDtlRepository.getHoliday(workingDate);
+		return holiday;
 	}
 }

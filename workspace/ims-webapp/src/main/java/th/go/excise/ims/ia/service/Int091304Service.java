@@ -28,21 +28,21 @@ public class Int091304Service {
 		Int091304Quarter obj = null;
 		/* __________ default variable __________ */
 		/* Q1 */
-		BigDecimal sumOct = new BigDecimal(0);
-		BigDecimal sumNov = new BigDecimal(0);
-		BigDecimal sumDec = new BigDecimal(0);
+		BigDecimal sumOct = BigDecimal.ZERO;
+		BigDecimal sumNov = BigDecimal.ZERO;
+		BigDecimal sumDec = BigDecimal.ZERO;
 		/* Q2 */
-		BigDecimal sumJan = new BigDecimal(0);
-		BigDecimal sumFeb = new BigDecimal(0);
-		BigDecimal sumMar = new BigDecimal(0);
+		BigDecimal sumJan = BigDecimal.ZERO;
+		BigDecimal sumFeb = BigDecimal.ZERO;
+		BigDecimal sumMar = BigDecimal.ZERO;
 		/* Q3 */
-		BigDecimal sumApr = new BigDecimal(0);
-		BigDecimal sumMay = new BigDecimal(0);
-		BigDecimal sumJun = new BigDecimal(0);
+		BigDecimal sumApr = BigDecimal.ZERO;
+		BigDecimal sumMay = BigDecimal.ZERO;
+		BigDecimal sumJun = BigDecimal.ZERO;
 		/* Q4 */
-		BigDecimal sumJul = new BigDecimal(0);
-		BigDecimal sumAug = new BigDecimal(0);
-		BigDecimal sumSep = new BigDecimal(0);
+		BigDecimal sumJul = BigDecimal.ZERO;
+		BigDecimal sumAug = BigDecimal.ZERO;
+		BigDecimal sumSep = BigDecimal.ZERO;
 		
 		String[] ubillTypeList = { 
 				IaConstants.UTILITY_BILL_TYPE.VALUE_1_DESC_I,
@@ -57,64 +57,67 @@ public class Int091304Service {
 		formVo.setMonthWdPayTo(formVo.getBudgetYear() + ProjectConstants.QUARTER.Q4[2]);
 		List<IaUtilityBill> dataFind = iaUtilityBillJdbcRepository.findQuarter(formVo);
 
-		Map<String, BigDecimal> mapValue = new HashMap<>();
-		for (IaUtilityBill value : dataFind) {
-			mapValue.put(value.getUbillType() + value.getMonthWdPay(), value.getReqWdAmt());
-		}
+		if(dataFind.size() > 0) {
+			Map<String, BigDecimal> mapValue = new HashMap<>();
+			for (IaUtilityBill value : dataFind) {
+				mapValue.put(value.getUbillType() + value.getMonthWdPay(), value.getReqWdAmt());
+			}
 
-		for (int i = 1; i <= 6; i++) {
-			obj = new Int091304Quarter();
-			/* ______ set type ______ */
-			obj.setUbillType(ubillTypeList[i-1]);
-			/* ________________ Q1 ________________ */
-			obj.setQ1Oct(
-					mapValue.get(i + "" + (Integer.parseInt(formVo.getBudgetYear()) - 1) + ProjectConstants.QUARTER.Q1[0]));
-			obj.setQ1Nov(
-					mapValue.get(i + "" + (Integer.parseInt(formVo.getBudgetYear()) - 1) + ProjectConstants.QUARTER.Q1[1]));
-			obj.setQ1Dec(
-					mapValue.get(i + "" + (Integer.parseInt(formVo.getBudgetYear()) - 1) + ProjectConstants.QUARTER.Q1[2]));
-			obj.setQ1Total(calculateNull(obj.getQ1Oct(), obj.getQ1Nov(), obj.getQ1Dec()));
-			/* total sum month Q1 */
-			sumOct = sumOct.add(calculateNull(obj.getQ1Oct(), null, null));
-			sumNov = sumNov.add(calculateNull(obj.getQ1Nov(), null, null));
-			sumDec = sumDec.add(calculateNull(obj.getQ1Dec(), null, null));
+			for (int i = 1; i <= 6; i++) {
+				obj = new Int091304Quarter();
+				/* ______ set type ______ */
+				obj.setUbillType(dataFind.get(i).getUbillType());
+				obj.setUbillTypeStr(ubillTypeList[i-1]);
+				/* ________________ Q1 ________________ */
+				obj.setQ1Oct(
+						mapValue.get(i + "" + (Integer.parseInt(formVo.getBudgetYear()) - 1) + ProjectConstants.QUARTER.Q1[0]));
+				obj.setQ1Nov(
+						mapValue.get(i + "" + (Integer.parseInt(formVo.getBudgetYear()) - 1) + ProjectConstants.QUARTER.Q1[1]));
+				obj.setQ1Dec(
+						mapValue.get(i + "" + (Integer.parseInt(formVo.getBudgetYear()) - 1) + ProjectConstants.QUARTER.Q1[2]));
+				obj.setQ1Total(calculateNull(obj.getQ1Oct(), obj.getQ1Nov(), obj.getQ1Dec()));
+				/* total sum month Q1 */
+				sumOct = sumOct.add(calculateNull(obj.getQ1Oct(), null, null));
+				sumNov = sumNov.add(calculateNull(obj.getQ1Nov(), null, null));
+				sumDec = sumDec.add(calculateNull(obj.getQ1Dec(), null, null));
 
-			/* ________________ Q2 ________________ */
-			obj.setQ2Jan(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q2[0]));
-			obj.setQ2Feb(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q2[1]));
-			obj.setQ2Mar(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q2[2]));
-			obj.setQ2Total(calculateNull(obj.getQ2Jan(), obj.getQ2Feb(), obj.getQ2Mar()));
-			/* total sum month Q2 */
-			sumJan = sumJan.add(calculateNull(obj.getQ2Jan(), null, null));
-			sumFeb = sumFeb.add(calculateNull(obj.getQ2Feb(), null, null));
-			sumMar = sumMar.add(calculateNull(obj.getQ2Mar(), null, null));
+				/* ________________ Q2 ________________ */
+				obj.setQ2Jan(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q2[0]));
+				obj.setQ2Feb(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q2[1]));
+				obj.setQ2Mar(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q2[2]));
+				obj.setQ2Total(calculateNull(obj.getQ2Jan(), obj.getQ2Feb(), obj.getQ2Mar()));
+				/* total sum month Q2 */
+				sumJan = sumJan.add(calculateNull(obj.getQ2Jan(), null, null));
+				sumFeb = sumFeb.add(calculateNull(obj.getQ2Feb(), null, null));
+				sumMar = sumMar.add(calculateNull(obj.getQ2Mar(), null, null));
 
-			/* ________________ Q3 ________________ */
-			obj.setQ3Apr(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q3[0]));
-			obj.setQ3May(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q3[1]));
-			obj.setQ3Jun(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q3[2]));
-			obj.setQ3Total(calculateNull(obj.getQ3Apr(), obj.getQ3May(), obj.getQ3Jun()));
-			/* total sum month Q3 */
-			sumApr = sumApr.add(calculateNull(obj.getQ3Apr(), null, null));
-			sumMay = sumMay.add(calculateNull(obj.getQ3May(), null, null));
-			sumJun = sumJun.add(calculateNull(obj.getQ3Jun(), null, null));
-			
-			/* ________________ Q4 ________________ */
-			obj.setQ4Jul(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q4[0]));
-			obj.setQ4Aug(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q4[1]));
-			obj.setQ4Sep(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q4[2]));
-			obj.setQ4Total(calculateNull(obj.getQ4Jul(), obj.getQ4Aug(), obj.getQ4Sep()));
-			/* total sum month Q4 */
-			sumJul= sumJul.add(calculateNull(obj.getQ4Jul(), null, null));
-			sumAug = sumAug.add(calculateNull(obj.getQ4Aug(), null, null));
-			sumSep = sumSep.add(calculateNull(obj.getQ4Sep(), null, null));
+				/* ________________ Q3 ________________ */
+				obj.setQ3Apr(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q3[0]));
+				obj.setQ3May(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q3[1]));
+				obj.setQ3Jun(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q3[2]));
+				obj.setQ3Total(calculateNull(obj.getQ3Apr(), obj.getQ3May(), obj.getQ3Jun()));
+				/* total sum month Q3 */
+				sumApr = sumApr.add(calculateNull(obj.getQ3Apr(), null, null));
+				sumMay = sumMay.add(calculateNull(obj.getQ3May(), null, null));
+				sumJun = sumJun.add(calculateNull(obj.getQ3Jun(), null, null));
+				
+				/* ________________ Q4 ________________ */
+				obj.setQ4Jul(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q4[0]));
+				obj.setQ4Aug(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q4[1]));
+				obj.setQ4Sep(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q4[2]));
+				obj.setQ4Total(calculateNull(obj.getQ4Jul(), obj.getQ4Aug(), obj.getQ4Sep()));
+				/* total sum month Q4 */
+				sumJul= sumJul.add(calculateNull(obj.getQ4Jul(), null, null));
+				sumAug = sumAug.add(calculateNull(obj.getQ4Aug(), null, null));
+				sumSep = sumSep.add(calculateNull(obj.getQ4Sep(), null, null));
 
-			dataList.add(obj);
+				dataList.add(obj);
+			}
 		}
 		
 //		footer summary month
 		obj = new Int091304Quarter();
-		 obj.setUbillType("รวม");
+		 obj.setUbillTypeStr("รวม");
 		 /* footer Q1 */
 		 obj.setQ1Oct(sumOct);
 		 obj.setQ1Nov(sumNov);
@@ -145,13 +148,13 @@ public class Int091304Service {
 
 	private BigDecimal calculateNull(BigDecimal value1, BigDecimal value2, BigDecimal value3) {
 		if (value1 == null) {
-			value1 = new BigDecimal(0);
+			value1 = BigDecimal.ZERO;
 		}
 		if (value2 == null) {
-			value2 = new BigDecimal(0);
+			value2 = BigDecimal.ZERO;
 		}
 		if (value3 == null) {
-			value3 = new BigDecimal(0);
+			value3 = BigDecimal.ZERO;
 		}
 		return value1.add(value2).add(value3);
 	}

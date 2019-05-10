@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.constant.MessageConstants.MESSAGE_LANG;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.GeoAmphurRepository;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.GeoDistrictRepository;
@@ -42,6 +43,8 @@ import th.co.baiwa.buckwaframework.support.domain.GeoSector;
 import th.co.baiwa.buckwaframework.support.domain.Message;
 import th.co.baiwa.buckwaframework.support.domain.ParamGroup;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
+import th.go.excise.ims.ed.persistence.entity.ExciseCtrlDuty;
+import th.go.excise.ims.ed.persistence.repository.ExciseCtrlDutyRepository;
 import th.go.excise.ims.preferences.persistence.entity.ExciseDepartment;
 import th.go.excise.ims.preferences.persistence.entity.ExciseDutyGroup;
 import th.go.excise.ims.preferences.persistence.repository.ExciseDepartmentRepository;
@@ -62,6 +65,7 @@ public class ApplicationCache {
 	private GeoAmphurRepository geoAmphurRepository;
 	private GeoDistrictRepository geoDistrictRepository;
 	private ExciseDutyGroupRepository exciseDutyGroupRepository;
+	private ExciseCtrlDutyRepository exciseCtrlDutyRepository;
 	
 	private static final ConcurrentHashMap<String, ParamGroupWrapper> PARAM_GROUP_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, Message> MESSAGE_MAP = new ConcurrentHashMap<>();
@@ -78,8 +82,11 @@ public class ApplicationCache {
 	private static final ConcurrentHashMap<String, List<GeoProvince>> GEO_PROVINCE_MAPPER = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, List<GeoAmphur>> GEO_AMPHUR_MAPPER = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, List<GeoDistrict>> GEO_DISTRICT_MAPPER = new ConcurrentHashMap<>();
+	
+	private static final ConcurrentHashMap<String, List<ExciseDutyGroup>> DUTY_GROUP = new ConcurrentHashMap<>();
 
 	private static final ConcurrentHashMap<String, ExciseDutyGroup> EXCISE_DUTY_GROUP = new ConcurrentHashMap<>();
+	private static final List<String> OFFICE_DUTY_ROLE = new ArrayList<>();
 	@Autowired
 	public ApplicationCache(
 			ParameterGroupRepository parameterGroupRepository,
@@ -90,7 +97,8 @@ public class ApplicationCache {
 			GeoProvinceRepository geoProvinceRepository,
 			GeoAmphurRepository geoAmphurRepository,
 			GeoDistrictRepository geoDistrictRepository,
-			ExciseDutyGroupRepository exciseDutyGroupRepository) {
+			ExciseDutyGroupRepository exciseDutyGroupRepository,
+			ExciseCtrlDutyRepository exciseCtrlDutyRepository) {
 		this.parameterGroupRepository = parameterGroupRepository;
 		this.parameterInfoRepository = parameterInfoRepository;
 		this.messageRepository = messageRepository;
@@ -100,6 +108,8 @@ public class ApplicationCache {
 		this.geoAmphurRepository = geoAmphurRepository;
 		this.geoDistrictRepository = geoDistrictRepository;
 		this.exciseDutyGroupRepository = exciseDutyGroupRepository;
+		this.exciseCtrlDutyRepository = exciseCtrlDutyRepository;
+		
 	}
 	
 	/** Reload */
@@ -111,6 +121,8 @@ public class ApplicationCache {
 		loadExciseDepartment();
 		loadGeography();
 		loadExciseDutyGroup();
+		loadExciseCtrlDuty();
+		loadDutyGroup();
 		logger.info("ApplicationCache Reloaded");
 	}
 
@@ -126,6 +138,9 @@ public class ApplicationCache {
 	
 	public static ParamGroup getParamGroupByCode(String paramGroupCode) {
 		return PARAM_GROUP_MAP.get(paramGroupCode).getParamGroup();
+	}
+	public static List<String> getRoleDutyOffice() {
+		return OFFICE_DUTY_ROLE;
 	}
 	
 	public static ParamInfo getParamInfoByCode(String paramGroupCode, String paramInfoCode) {
@@ -233,6 +248,9 @@ public class ApplicationCache {
 	
 	public static ExciseDutyGroup getExciseDutyGroup(String dutyCode) {
 		return EXCISE_DUTY_GROUP.get(dutyCode);
+	}
+	public static List<ExciseDutyGroup> getExciseDutyListByType(String type) {
+		return DUTY_GROUP.get(type);
 	}
 	/********************* Method for Get Cache - End *********************/
 
@@ -444,6 +462,28 @@ public class ApplicationCache {
 		List<ExciseDutyGroup> exciseDutyGroupList = exciseDutyGroupRepository.findAll();
 		for (ExciseDutyGroup exciseDutyGroup : exciseDutyGroupList) {
 			EXCISE_DUTY_GROUP.put(exciseDutyGroup.getDutyGroupCode(), exciseDutyGroup);
+		}
+	}
+	
+	private void loadExciseCtrlDuty() {
+		List<ExciseCtrlDuty> exciseCtrlDutieList = exciseCtrlDutyRepository.findAll();
+		for (ExciseCtrlDuty exciseCtrlDuty : exciseCtrlDutieList) {
+			OFFICE_DUTY_ROLE.add(exciseCtrlDuty.getId().getResOffcode());
+		}
+	}
+	
+	private void loadDutyGroup() {
+		List<ExciseDutyGroup> exciseDutyGroupList = exciseDutyGroupRepository.findAllByDutyGroupStatus(FLAG.N_FLAG);
+		List<ExciseDutyGroup> data = null;
+		for (ExciseDutyGroup exciseDutyGroup : exciseDutyGroupList) {
+			data = new ArrayList<ExciseDutyGroup>();
+			data = DUTY_GROUP.get(exciseDutyGroup.getDutyGroupType());
+			if(data == null ) {
+				data = new ArrayList<ExciseDutyGroup>();
+			}
+			data.add(exciseDutyGroup);
+			
+			DUTY_GROUP.put(exciseDutyGroup.getDutyGroupType(), data);
 		}
 	}
 

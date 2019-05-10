@@ -6,4 +6,5 @@ import th.go.excise.ims.ia.persistence.entity.IaAuditWorkingH;
 
 public interface IaAuditWorkingHRepository extends CommonJpaCrudRepository<IaAuditWorkingH, Long> {
 
+	public IaAuditWorkingH findByAuditWorkingNo(String auditWorkingNo);
 }

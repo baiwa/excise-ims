@@ -30,7 +30,7 @@ public class Int0601JdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
-	public List<WsIncfri8020Inc> findByCriteria(Int0601RequestVo criteria) {
+	public List<WsIncfri8020Inc> findByCriteria(Int0601RequestVo criteria , String strOrder) {
 		logger.info("findTab1ByCriteria");
 
 		List<Object> paramList = new ArrayList<>();
@@ -55,8 +55,8 @@ public class Int0601JdbcRepository {
 			sql.append(" AND WS.INCOME_CODE = ? ");
 			paramList.add(criteria.getTaxCode());
 		}
-
-		sql.append(" ORDER BY RECEIPT_NO ");
+		sql.append(" AND WS.RECEIPT_NO IS NOT NULL ");
+		sql.append(" ORDER BY ").append(strOrder);
 
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), tab1RowMapper);
 	}
@@ -94,6 +94,7 @@ public class Int0601JdbcRepository {
 			vo.setCusName(rs.getString("CUS_NAME"));
 			vo.setFacName(rs.getString("FAC_NAME"));
 			vo.setIncCtlNo(rs.getString("INC_CTL_NO"));
+			vo.setOfflineStatus(rs.getString("OFFLINE_STATUS"));
 			vo.setIsDeleted(rs.getString("IS_DELETED"));
 			vo.setVersion(rs.getInt("VERSION"));
 			vo.setCreatedBy(rs.getString("CREATED_BY"));

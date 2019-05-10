@@ -3,6 +3,7 @@ package th.go.excise.ims.ia.vo;
 import java.math.BigDecimal;
 
 public class Int091301ResultSearchVo {
+	
 	private Long utilityBillSeq;
 	private String exciseCode;
 	private String ubillType;
@@ -22,7 +23,9 @@ public class Int091301ResultSearchVo {
 	private String reqPayNo;
 	private String reqReceiptDate;
 	private String latePayCause;
+	private String latePayCauseStr;
 	private String ubillRemark;
+	
 	public Long getUtilityBillSeq() {
 		return utilityBillSeq;
 	}
@@ -142,6 +145,12 @@ public class Int091301ResultSearchVo {
 	}
 	public void setUbillRemark(String ubillRemark) {
 		this.ubillRemark = ubillRemark;
+	}
+	public String getLatePayCauseStr() {
+		return latePayCauseStr;
+	}
+	public void setLatePayCauseStr(String latePayCauseStr) {
+		this.latePayCauseStr = latePayCauseStr;
 	}
 	
 	

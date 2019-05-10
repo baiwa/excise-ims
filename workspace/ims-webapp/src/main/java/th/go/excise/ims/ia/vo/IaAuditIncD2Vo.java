@@ -2,6 +2,8 @@ package th.go.excise.ims.ia.vo;
 
 import java.math.BigDecimal;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class IaAuditIncD2Vo {
 
     private String id;
@@ -11,8 +13,19 @@ public class IaAuditIncD2Vo {
     private BigDecimal printPerDay;
     private String auditCheck;
     private String remark;
+    private MultipartFile file;
+    
+    
 
-    public String getId() {
+    public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+
+	public String getId() {
         return id;
     }
 

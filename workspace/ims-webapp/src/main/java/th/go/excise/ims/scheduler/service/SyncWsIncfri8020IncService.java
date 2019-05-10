@@ -30,7 +30,7 @@ public class SyncWsIncfri8020IncService {
 	private WsIncfri8020IncRepository wsIncfri8020IncRepository;
 	
 	public void syncData(RequestData requestData) {
-		int pageNo = 0;
+		int pageNo = 1;
 		List<Income> incomeList;
 		List<WsIncfri8020Inc> wsIncfri8020IncList;
 		WsIncfri8020Inc wsInc = null;
@@ -69,10 +69,11 @@ public class SyncWsIncfri8020IncService {
 					wsInc.setNewRegId(income.getNewRegId());
 					wsInc.setCusName(income.getCusName());
 					wsInc.setFacName(income.getFacName());
+					wsInc.setIncCtlNo(income.getIncCtlNo());
 					wsInc.setOfflineStatus(income.getOfflineStatus());
 					wsIncfri8020IncList.add(wsInc);
-					pageNo++;
 				}
+				pageNo++;
 				wsIncfri8020IncRepository.batchInsert(wsIncfri8020IncList);
 			} while (WS_DATA_SIZE == incomeList.size());
 		} catch (Exception e) {

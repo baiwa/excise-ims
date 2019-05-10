@@ -1,9 +1,18 @@
 package th.go.excise.ims.ta.persistence.repository;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
+
 import th.co.baiwa.buckwaframework.common.bean.LabelValueBean;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
@@ -23,14 +32,6 @@ import th.go.excise.ims.ta.util.TaxAuditUtils;
 import th.go.excise.ims.ta.vo.TaxDraftVo;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCustom {
 
@@ -99,7 +100,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 						paramList.add(worksheetDtl.getCondSubRisk());
 						paramList.add(worksheetDtl.getCreatedBy());
 						paramList.add(worksheetDtl.getCreatedDate());
-						
+
 						paramList.add(worksheetDtl.getLastAuditYear());
 						commonJdbcTemplate.preparePs(ps, paramList.toArray());
 					}
@@ -157,11 +158,23 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		sql.append("   AND TA_W_DTL.IS_DELETED = 'N' ");
 		sql.append(" INNER JOIN TA_WS_REG4000 R4000 ON R4000.NEW_REG_ID = TA_W_DTL.NEW_REG_ID ");
 		sql.append("   AND R4000.IS_DELETED = 'N' ");
-		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_SECTOR ON ED_SECTOR.OFF_CODE = CONCAT ( SUBSTR(R4000.OFFICE_CODE, 0, 2) ,'0000') ");
+		sql.append(
+				" INNER JOIN EXCISE_DEPARTMENT ED_SECTOR ON ED_SECTOR.OFF_CODE = CONCAT ( SUBSTR(R4000.OFFICE_CODE, 0, 2) ,'0000') ");
 		sql.append("   AND ED_SECTOR.IS_DELETED = 'N' ");
-		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE = CONCAT ( SUBSTR(R4000.OFFICE_CODE, 0, 4) ,'00' ) ");
+		sql.append(
+				" INNER JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE = CONCAT ( SUBSTR(R4000.OFFICE_CODE, 0, 4) ,'00' ) ");
 		sql.append("   AND ED_AREA.IS_DELETED = 'N' ");
+		
+		sql.append(" Left join TA_WORKSHEET_COND_MAIN_DTL T_W_Cond_Dtl on T_W_Cond_Dtl.analysis_number=ta_w_dtl.analysis_number");
+		sql.append(" and ta_w_dtl.COND_MAIN_GRP=t_w_cond_dtl.COND_GROUP ");
+		
 		sql.append(" LEFT JOIN TA_PLAN_WORKSHEET_SELECT TA_PW_SEL ON TA_PW_SEL.NEW_REG_ID = TA_W_DTL.NEW_REG_ID ");
+	
+		if (ApplicationCache.getRoleDutyOffice().indexOf(formVo.getOfficeCode()) > -1) {
+			sql.append("  inner join EXCISE_CTRL_DUTY cd on cd.duty_group_code = r4000.duty_code  AND cd.res_offcode = ?");
+			params.add(formVo.getOfficeCode());
+		}
+
 		sql.append("   AND TA_PW_SEL.IS_DELETED = 'N' ");
 		sql.append("   AND TA_PW_SEL.BUDGET_YEAR = ? ");
 		sql.append(" WHERE 1 = 1 ");
@@ -171,6 +184,16 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		params.add(formVo.getBudgetYear());
 		params.add(formVo.getAnalysisNumber());
 
+		// DUTY GROUP
+		if (StringUtils.isNotBlank(formVo.getFacType())) {
+			sql.append(" AND r4000.FAC_TYPE = ?");
+			params.add(formVo.getFacType());
+		}
+		// DUTY
+		if (StringUtils.isNotBlank(formVo.getDutyCode())) {
+			sql.append(" AND r4000.duty_code = ?");
+			params.add(formVo.getDutyCode());
+		}
 		if (StringUtils.isNotBlank(formVo.getCond())) {
 			sql.append(" AND TA_W_DTL.COND_MAIN_GRP = ? ");
 			params.add(formVo.getCond());
@@ -201,14 +224,14 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		if (StringUtils.isNotBlank(formVo.getCondSubNoAuditFlag())) {
 			sql.append("AND COND_SUB_NO_AUDIT=? ");
 			params.add(formVo.getCondSubNoAuditFlag());
-		}     
-		if(StringUtils.isNotBlank(formVo.getNewRegId())) {
+		}
+		if (StringUtils.isNotBlank(formVo.getNewRegId())) {
 			sql.append("   AND ta_w_dtl.NEW_REG_ID like ? or r4000.CUS_FULLNAME like ? ");
 			params.add(StringUtils.trim("%" + StringUtils.trim(formVo.getNewRegId()) + "%"));
 			params.add(StringUtils.trim("%" + StringUtils.trim(formVo.getNewRegId()) + "%"));
 		}
-		                      
-		if(StringUtils.isNotBlank(formVo.getTaxAuditLast())) {
+
+		if (StringUtils.isNotBlank(formVo.getTaxAuditLast()) && !"0".equals(formVo.getTaxAuditLast())) {
 			sql.append("    AND ta_w_dtl.LAST_AUDIT_YEAR < ? ");
 			int lastYear = Integer.valueOf(formVo.getTaxAuditLast());
 			int budgetYear = Integer.valueOf(formVo.getBudgetYear());
@@ -216,8 +239,10 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			params.add(rs);
 		}
 
-		sql.append(" AND R4000.OFFICE_CODE LIKE ? ");
-		params.add(ExciseUtils.whereInLocalOfficeCode(officeCode));
+		if (StringUtils.isNotBlank(formVo.getOfficeCode()) && !ExciseUtils.isCentral(formVo.getOfficeCode())) {
+			sql.append(" AND R4000.OFFICE_CODE LIKE ? ");
+			params.add(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
+		}
 	}
 
 	public List<TaxOperatorDetailVo> findByCriteria(TaxOperatorFormVo formVo) {
@@ -225,8 +250,8 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		List<Object> params = new ArrayList<>();
 		buildByCriteriaQuery(sql, params, formVo);
 
-		sql.append(" ORDER BY TA_W_DTL.COND_MAIN_GRP DESC, R4000.DUTY_CODE ASC, R4000.OFFICE_CODE ASC, TA_W_DTL.NEW_REG_ID ASC ");
-		
+		sql.append(
+				" ORDER BY NVL(T_W_Cond_Dtl.RISK_LEVEL,0) DESC, R4000.DUTY_CODE ASC, R4000.OFFICE_CODE ASC, TA_W_DTL.NEW_REG_ID ASC ");
 
 		return commonJdbcTemplate.query(
 				OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(),
@@ -252,17 +277,19 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			vo.setCondSubCapital(rs.getString("COND_SUB_CAPITAL"));
 			vo.setCondSubRisk(rs.getString("COND_SUB_RISK"));
 			vo.setCondSubNoAudit(rs.getString("COND_SUB_NO_AUDIT"));
-			
+
 			try {
-				vo.setCondSubCapitalDesc(ApplicationCache.getParamInfoByCode("TA_SUB_COND_CAPITAL", rs.getString("COND_SUB_CAPITAL")).getValue1());
-				vo.setCondSubRiskDesc(ApplicationCache.getParamInfoByCode("TA_RISK_LEVEL", rs.getString("COND_SUB_RISK")).getValue1());
+				vo.setCondSubCapitalDesc(ApplicationCache
+						.getParamInfoByCode("TA_SUB_COND_CAPITAL", rs.getString("COND_SUB_CAPITAL")).getValue1());
+				vo.setCondSubRiskDesc(ApplicationCache
+						.getParamInfoByCode("TA_RISK_LEVEL", rs.getString("COND_SUB_RISK")).getValue1());
 				vo.setCondSubNoAuditDesc(rs.getString("COND_SUB_NO_AUDIT"));
 			} catch (Exception e) {
 				vo.setCondSubCapitalDesc("");
 				vo.setCondSubRiskDesc("");
 				vo.setCondSubNoAuditDesc("");
 			}
-								
+
 			vo.setRegCapital(rs.getString("REG_CAPITAL"));
 			vo.setRegStatus(rs.getString("REG_STATUS") + " " + ConvertDateUtils
 					.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_TH));

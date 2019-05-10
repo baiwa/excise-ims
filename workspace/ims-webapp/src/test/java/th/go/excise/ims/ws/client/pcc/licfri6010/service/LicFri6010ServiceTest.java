@@ -20,10 +20,10 @@ import th.go.excise.ims.ws.client.pcc.licfri6010.model.RequestData;
 import th.go.excise.ims.ws.client.pcc.licfri6010.model.ResponseData;
 import th.go.excise.ims.ws.client.service.RestfulClientService;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest(classes = Application.class)
-//@WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
-//@ActiveProfiles(value = PROFILE.UNITTEST)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Application.class)
+@WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
+@ActiveProfiles(value = PROFILE.UNITTEST)
 public class LicFri6010ServiceTest {
 
 	@Autowired
@@ -45,7 +45,7 @@ public class LicFri6010ServiceTest {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void test_execute_Manual() {
 		String url = "http://webtest.excise.go.th/EDAuditServicesUAT/lic/LicFri6010";
 		LicFri6010Service licFri6010Service = new LicFri6010Service(url, PccServiceTestUtils.getPccServiceProperties(), new RestfulClientService(), new Gson());
@@ -62,6 +62,10 @@ public class LicFri6010ServiceTest {
 		} catch (PccRestfulException e) {
 			e.printStackTrace();
 		}
+	}
+	@Test
+	public void load() {
+		licFri6010Service.syncDataLicFri6010ToExciseTable("100300", "201801", "201802");
 	}
 	
 }

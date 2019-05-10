@@ -16,6 +16,10 @@ public class License {
 	@SerializedName("LicCode")
 	@Expose
 	private String licCode;
+	
+	@SerializedName("LicNo")
+	@Expose
+	private String licNo;
 
 	@SerializedName("LicName")
 	@Expose
@@ -68,6 +72,10 @@ public class License {
 	@SerializedName("FacFullName")
 	@Expose
 	private String facFullName;
+	
+	@SerializedName("IncCode")
+	@Expose
+	private String incCode;
 
 	public String getOffcode() {
 		return Offcode;
@@ -195,6 +203,22 @@ public class License {
 
 	public void setFacFullName(String facFullName) {
 		this.facFullName = facFullName;
+	}
+
+	public String getLicNo() {
+		return licNo;
+	}
+
+	public void setLicNo(String licNo) {
+		this.licNo = licNo;
+	}
+
+	public String getIncCode() {
+		return incCode;
+	}
+
+	public void setIncCode(String incCode) {
+		this.incCode = incCode;
 	}
 
 }
