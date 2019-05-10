@@ -17,7 +17,7 @@ public interface ExciseDutyGroupRepository extends CommonJpaCrudRepository<Excis
 		nativeQuery = true
 	)
 	public void queryUpdateIsDeletedY();
-	public void ExciseDutyGroupY();
+	//public void ExciseDutyGroupY();
 	
 	List<ExciseDutyGroup> findAllByDutyGroupStatus(String status);
 	
