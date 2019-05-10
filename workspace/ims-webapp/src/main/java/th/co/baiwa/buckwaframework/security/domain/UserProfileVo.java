@@ -13,6 +13,15 @@ public class UserProfileVo {
 	private List<String> authorityList;
 	private String subdeptCode;
 	private String subdeptLevel;
+	private Boolean isCentral;
+
+	public Boolean getIsCentral() {
+		return isCentral;
+	}
+
+	public void setIsCentral(Boolean isCentral) {
+		this.isCentral = isCentral;
+	}
 
 	public String getDepartmentName() {
 		return departmentName;
