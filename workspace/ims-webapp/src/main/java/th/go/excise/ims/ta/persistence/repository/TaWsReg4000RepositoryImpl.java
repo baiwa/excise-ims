@@ -3,7 +3,6 @@ package th.go.excise.ims.ta.persistence.repository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,10 +17,8 @@ import org.springframework.jdbc.core.RowMapper;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
-import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
-import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
@@ -38,43 +35,133 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 	private CommonJdbcTemplate commonJdbcTemplate;
 
 	@Override
-	public void batchInsert(List<TaWsReg4000> wsReg4000List) {
-		String sql = SqlGeneratorUtils.genSqlInsert("TA_WS_REG4000",
-				Arrays.asList("WS_REG4000_ID", "NEW_REG_ID", "CUS_ID", "CUS_FULLNAME", "CUS_ADDRESS", "CUS_TELNO",
-						"CUS_EMAIL", "CUS_URL", "FAC_ID", "FAC_FULLNAME", "FAC_ADDRESS", "FAC_TELNO", "FAC_EMAIL",
-						"FAC_URL", "OFFICE_CODE", "ACTIVE_FLAG", "DUTY_CODE", "CREATED_BY", "CREATED_DATE"),
-				"TA_WS_REG4000_SEQ");
-
-		commonJdbcTemplate.batchUpdate(sql, wsReg4000List, 1000,
-				new ParameterizedPreparedStatementSetter<TaWsReg4000>() {
-					public void setValues(PreparedStatement ps, TaWsReg4000 wsReg4000) throws SQLException {
-						List<Object> paramList = new ArrayList<Object>();
-						paramList.add(wsReg4000.getNewRegId());
-						paramList.add(wsReg4000.getCusId());
-						paramList.add(wsReg4000.getCusFullname());
-						paramList.add(wsReg4000.getCusAddress());
-						paramList.add(wsReg4000.getCusTelno());
-						paramList.add(wsReg4000.getCusEmail());
-						paramList.add(wsReg4000.getCusUrl());
-						paramList.add(wsReg4000.getFacId());
-						paramList.add(wsReg4000.getFacFullname());
-						paramList.add(wsReg4000.getFacAddress());
-						paramList.add(wsReg4000.getFacTelno());
-						paramList.add(wsReg4000.getFacEmail());
-						paramList.add(wsReg4000.getFacUrl());
-						paramList.add(wsReg4000.getOfficeCode());
-						paramList.add(wsReg4000.getActiveFlag());
-						paramList.add(wsReg4000.getDutyCode());
-						paramList.add(SYSTEM_USER.BATCH);
-						paramList.add(LocalDateTime.now());
-						commonJdbcTemplate.preparePs(ps, paramList.toArray());
-					}
-				});
-	}
-
-	@Override
-	public void truncateTaWsReg4000() {
-		commonJdbcTemplate.update("TRUNCATE TABLE TA_WS_REG4000");
+	public void batchMerge(List<TaWsReg4000> taWsReg4000List) {
+		logger.info("batchMerge taWsReg4000List.size()={}", taWsReg4000List.size());
+		
+		final int BATCH_SIZE = 1000;
+		
+		List<String> updateColumnNames = new ArrayList<>(Arrays.asList(
+			"REG4000.CUS_ID = ?",
+			"REG4000.CUS_FULLNAME = ?",
+			"REG4000.CUS_ADDRESS = ?",
+			"REG4000.CUS_TELNO = ?",
+			"REG4000.CUS_EMAIL = ?",
+			"REG4000.CUS_URL = ?",
+			"REG4000.FAC_ID = ?",
+			"REG4000.FAC_FULLNAME = ?",
+			"REG4000.FAC_ADDRESS = ?",
+			"REG4000.FAC_TELNO = ?",
+			"REG4000.FAC_EMAIL = ?",
+			"REG4000.FAC_URL = ?",
+			"REG4000.FAC_TYPE = ?",
+			"REG4000.REG_ID = ?",
+			"REG4000.REG_STATUS = ?",
+			"REG4000.REG_DATE = ?",
+			"REG4000.REG_CAPITAL = ?",
+			"REG4000.OFFICE_CODE = ?",
+			"REG4000.ACTIVE_FLAG = ?",
+			"REG4000.IS_DELETED = ?",
+			"REG4000.UPDATED_BY = ?",
+			"REG4000.UPDATED_DATE = ?"
+		));
+		
+		List<String> insertColumnNames = new ArrayList<>(Arrays.asList(
+			"REG4000.WS_REG4000_ID",
+			"REG4000.NEW_REG_ID",
+			"REG4000.CUS_ID",
+			"REG4000.CUS_FULLNAME",
+			"REG4000.CUS_ADDRESS",
+			"REG4000.CUS_TELNO",
+			"REG4000.CUS_EMAIL",
+			"REG4000.CUS_URL",
+			"REG4000.FAC_ID",
+			"REG4000.FAC_FULLNAME",
+			"REG4000.FAC_ADDRESS",
+			"REG4000.FAC_TELNO",
+			"REG4000.FAC_EMAIL",
+			"REG4000.FAC_URL",
+			"REG4000.FAC_TYPE",
+			"REG4000.REG_ID",
+			"REG4000.REG_STATUS",
+			"REG4000.REG_DATE",
+			"REG4000.REG_CAPITAL",
+			"REG4000.OFFICE_CODE",
+			"REG4000.ACTIVE_FLAG",
+			"REG4000.DUTY_CODE",
+			"REG4000.CREATED_BY",
+			"REG4000.CREATED_DATE"
+		));
+		
+		StringBuilder sql = new StringBuilder();
+		sql.append(" MERGE INTO TA_WS_REG4000 REG4000 ");
+		sql.append(" USING DUAL ");
+		sql.append(" ON ( ");
+		sql.append("   REG4000.NEW_REG_ID = ? ");
+		sql.append("   AND REG4000.DUTY_CODE = ? ");
+		sql.append(" ) ");
+		sql.append(" WHEN MATCHED THEN ");
+		sql.append("   UPDATE SET ");
+		sql.append(org.springframework.util.StringUtils.collectionToDelimitedString(updateColumnNames, ","));
+		sql.append(" WHEN NOT MATCHED THEN ");
+		sql.append("   INSERT (" + org.springframework.util.StringUtils.collectionToDelimitedString(insertColumnNames, ",") + ") ");
+		sql.append("   VALUES (TA_WS_REG4000_SEQ.NEXTVAL" + org.apache.commons.lang3.StringUtils.repeat(",?", insertColumnNames.size() - 1) + ") ");
+		
+		commonJdbcTemplate.batchUpdate(sql.toString(), taWsReg4000List, BATCH_SIZE, new ParameterizedPreparedStatementSetter<TaWsReg4000>() {
+			public void setValues(PreparedStatement ps, TaWsReg4000 wsReg4000) throws SQLException {
+				List<Object> paramList = new ArrayList<>();
+				// Using Condition
+				paramList.add(wsReg4000.getNewRegId());
+				paramList.add(wsReg4000.getDutyCode());
+				// Update Statement
+				paramList.add(wsReg4000.getCusId());
+				paramList.add(wsReg4000.getCusFullname());
+				paramList.add(wsReg4000.getCusAddress());
+				paramList.add(wsReg4000.getCusTelno());
+				paramList.add(wsReg4000.getCusEmail());
+				paramList.add(wsReg4000.getCusUrl());
+				paramList.add(wsReg4000.getFacId());
+				paramList.add(wsReg4000.getFacFullname());
+				paramList.add(wsReg4000.getFacAddress());
+				paramList.add(wsReg4000.getFacTelno());
+				paramList.add(wsReg4000.getFacEmail());
+				paramList.add(wsReg4000.getFacUrl());
+				paramList.add(wsReg4000.getFacType());
+				paramList.add(wsReg4000.getRegId());
+				paramList.add(wsReg4000.getRegStatus());
+				paramList.add(wsReg4000.getRegDate());
+				paramList.add(wsReg4000.getRegCapital());
+				paramList.add(wsReg4000.getOfficeCode());
+				paramList.add(wsReg4000.getActiveFlag());
+				paramList.add(FLAG.N_FLAG);
+				paramList.add(wsReg4000.getUpdatedBy());
+				paramList.add(wsReg4000.getUpdatedDate());
+				// Insert Statement
+				paramList.add(wsReg4000.getNewRegId());
+				paramList.add(wsReg4000.getCusId());
+				paramList.add(wsReg4000.getCusFullname());
+				paramList.add(wsReg4000.getCusAddress());
+				paramList.add(wsReg4000.getCusTelno());
+				paramList.add(wsReg4000.getCusEmail());
+				paramList.add(wsReg4000.getCusUrl());
+				paramList.add(wsReg4000.getFacId());
+				paramList.add(wsReg4000.getFacFullname());
+				paramList.add(wsReg4000.getFacAddress());
+				paramList.add(wsReg4000.getFacTelno());
+				paramList.add(wsReg4000.getFacEmail());
+				paramList.add(wsReg4000.getFacUrl());
+				paramList.add(wsReg4000.getFacType());
+				paramList.add(wsReg4000.getRegId());
+				paramList.add(wsReg4000.getRegStatus());
+				paramList.add(wsReg4000.getRegDate());
+				paramList.add(wsReg4000.getRegCapital());
+				paramList.add(wsReg4000.getOfficeCode());
+				paramList.add(wsReg4000.getActiveFlag());
+				paramList.add(wsReg4000.getDutyCode());
+				paramList.add(wsReg4000.getCreatedBy());
+				paramList.add(wsReg4000.getCreatedDate());
+				commonJdbcTemplate.preparePs(ps, paramList.toArray());
+			}
+		});
 	}
 
 	private void buildByCriteriaQuery(StringBuilder sql, List<Object> params, TaxOperatorFormVo formVo) {
