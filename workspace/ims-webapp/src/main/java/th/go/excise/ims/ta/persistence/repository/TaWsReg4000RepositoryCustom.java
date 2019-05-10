@@ -10,9 +10,7 @@ import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 
 public interface TaWsReg4000RepositoryCustom {
 
-	public void batchInsert(List<TaWsReg4000> wsReg4000List);
-
-	public void truncateTaWsReg4000();
+	public void batchMerge(List<TaWsReg4000> taWsReg4000List);
 
 	public List<TaWsReg4000> findByCriteria(TaxOperatorFormVo formVo);
 
