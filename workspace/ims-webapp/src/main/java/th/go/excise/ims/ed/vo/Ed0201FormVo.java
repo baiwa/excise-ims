@@ -1,10 +1,8 @@
 package th.go.excise.ims.ed.vo;
 
-import java.math.BigDecimal;
-
 public class Ed0201FormVo {
 
-	private BigDecimal edPersonSeq;
+	private Long edPersonSeq;
 	private String edPositionName;
 	private String allowancesHalfDay;
 	private String allowancesDay;
@@ -12,11 +10,11 @@ public class Ed0201FormVo {
 	private String accomFeeDouble;
 	private String accomFeePackages;
 
-	public BigDecimal getEdPersonSeq() {
+	public Long getEdPersonSeq() {
 		return edPersonSeq;
 	}
 
-	public void setEdPersonSeq(BigDecimal edPersonSeq) {
+	public void setEdPersonSeq(Long edPersonSeq) {
 		this.edPersonSeq = edPersonSeq;
 	}
 

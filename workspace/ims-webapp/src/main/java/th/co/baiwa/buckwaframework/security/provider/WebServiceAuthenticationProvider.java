@@ -19,6 +19,8 @@ import th.co.baiwa.buckwaframework.security.domain.UserDetails;
 import th.co.baiwa.ims.ws.userldap.LoginLdap;
 import th.co.baiwa.ims.ws.userldap.Response;
 import th.co.baiwa.ims.ws.userldap.Role;
+import th.go.excise.ims.ed.persistence.entity.ExcisePerson;
+import th.go.excise.ims.ed.persistence.repository.ExcisePersonRepository;
 
 @Component("wsAuthenticationProvider")
 public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
@@ -33,6 +35,9 @@ public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthent
 
 	@Autowired
 	private LoginLdap loginLdapProxy;
+	
+	@Autowired
+	private ExcisePersonRepository excisePersonRepository;
 	
 	@Override
 	protected void additionalAuthenticationChecks(org.springframework.security.core.userdetails.UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
@@ -85,12 +90,21 @@ public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthent
 				userDetails.setUserThaiSurname(response.getUserThaiSurname());
 				userDetails.setTitle(response.getTitle());
 				userDetails.setOfficeCode(response.getOfficeCode());
+				addAdditionalInfo(userDetails);
 			} else {
 				throw new BadCredentialsException(response.getDescription());
 			}
 		}
 		
 		return userDetails;
+	}
+	
+	private void addAdditionalInfo(UserDetails userDetails) {
+		ExcisePerson excisePerson = excisePersonRepository.findByEdLogin(userDetails.getUsername());
+		if (excisePerson != null) {
+			userDetails.setSubdeptCode(excisePerson.getAuSubdeptCode());
+			userDetails.setSubdeptLevel(excisePerson.getAuSubdeptLevel());
+		}
 	}
 
 }

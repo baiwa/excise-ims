@@ -22,6 +22,8 @@ public interface UserBean extends UserDetails {
 	public String getTelephoneNo();
 	public String getOfficeCode();
 	public String getAccessAttr();
+	public String getSubdeptCode();
+	public String getSubdeptLevel();
 	
 	public Collection<GrantedAuthority> getAuthorities();
 	

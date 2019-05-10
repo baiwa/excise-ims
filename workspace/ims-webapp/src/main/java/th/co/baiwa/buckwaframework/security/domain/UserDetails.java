@@ -25,6 +25,9 @@ public class UserDetails extends User implements UserBean {
 	private String officeCode;
 	private String accessAttr;
 	private List<String> authorityList;
+	// Excise Person
+	private String subdeptCode;
+	private String subdeptLevel;
 
 	// Constructor
 	public UserDetails(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
@@ -141,6 +144,22 @@ public class UserDetails extends User implements UserBean {
 
 	public void setAuthorityList(List<String> authorityList) {
 		this.authorityList = authorityList;
+	}
+
+	public String getSubdeptCode() {
+		return subdeptCode;
+	}
+
+	public void setSubdeptCode(String subdeptCode) {
+		this.subdeptCode = subdeptCode;
+	}
+
+	public String getSubdeptLevel() {
+		return subdeptLevel;
+	}
+
+	public void setSubdeptLevel(String subdeptLevel) {
+		this.subdeptLevel = subdeptLevel;
 	}
 
 }

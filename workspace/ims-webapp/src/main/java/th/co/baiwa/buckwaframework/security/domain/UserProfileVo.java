@@ -11,6 +11,8 @@ public class UserProfileVo {
 	private String officeCode;
 	private String departmentName;
 	private List<String> authorityList;
+	private String subdeptCode;
+	private String subdeptLevel;
 
 	public String getDepartmentName() {
 		return departmentName;
@@ -66,6 +68,22 @@ public class UserProfileVo {
 
 	public void setAuthorityList(List<String> authorityList) {
 		this.authorityList = authorityList;
+	}
+
+	public String getSubdeptCode() {
+		return subdeptCode;
+	}
+
+	public void setSubdeptCode(String subdeptCode) {
+		this.subdeptCode = subdeptCode;
+	}
+
+	public String getSubdeptLevel() {
+		return subdeptLevel;
+	}
+
+	public void setSubdeptLevel(String subdeptLevel) {
+		this.subdeptLevel = subdeptLevel;
 	}
 
 }

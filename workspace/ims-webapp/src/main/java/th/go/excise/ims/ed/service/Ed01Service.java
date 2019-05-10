@@ -1,6 +1,5 @@
 package th.go.excise.ims.ed.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -13,7 +12,6 @@ import th.go.excise.ims.ed.persistence.repository.ExcisePersonRepository;
 import th.go.excise.ims.ed.persistence.repository.jdbc.ExcisePersonJdbcRepository;
 import th.go.excise.ims.ed.vo.Ed01FormVo;
 import th.go.excise.ims.ed.vo.Ed01Vo;
-import th.go.excise.ims.ia.vo.Int1101Vo;
 
 @Service
 public class Ed01Service {
@@ -27,10 +25,9 @@ public class Ed01Service {
 	@Transactional
 	public void saveUserProfile(Ed01FormVo form) {
 		ExcisePerson entity = new ExcisePerson();
-		BigDecimal positionnum = new BigDecimal(form.getPositionSeq()); 
 		entity.setEdLogin(form.getUsername());
 		entity.setEdPersonName(form.getName());
-		entity.setEdPositionSeq(positionnum);
+		entity.setEdPositionSeq(Long.parseLong(form.getPositionSeq()));
 		entity.setEdPositionName(form.getPosition());
 		entity.setEdOffcode(form.getOfficeCode());
 		entity.setEdPersonId(form.getIdCardNumber());
