@@ -43,6 +43,14 @@ public class TaPlanWorksheetDtl extends BaseEntity {
 	private LocalDate auditStartDate;
 	@Column(name = "AUDIT_END_DATE")
 	private LocalDate auditEndDate;
+	@Column(name = "AUDIT_PLAN_CODE")
+	private String auditPlanCode;
+	@Column(name = "PLAN_STATUS")
+	private String planStatus;
+	@Column(name = "AU_SUBDEPT_CODE")
+	private String auSubdeptCode;
+	@Column(name = "AU_JOB_RESP")
+	private String auJobResp;
 
 	public Long getPlanWorksheetDtlId() {
 		return planWorksheetDtlId;
@@ -130,6 +138,38 @@ public class TaPlanWorksheetDtl extends BaseEntity {
 
 	public void setAuditEndDate(LocalDate auditEndDate) {
 		this.auditEndDate = auditEndDate;
+	}
+
+	public String getAuditPlanCode() {
+		return auditPlanCode;
+	}
+
+	public void setAuditPlanCode(String auditPlanCode) {
+		this.auditPlanCode = auditPlanCode;
+	}
+
+	public String getPlanStatus() {
+		return planStatus;
+	}
+
+	public void setPlanStatus(String planStatus) {
+		this.planStatus = planStatus;
+	}
+
+	public String getAuSubdeptCode() {
+		return auSubdeptCode;
+	}
+
+	public void setAuSubdeptCode(String auSubdeptCode) {
+		this.auSubdeptCode = auSubdeptCode;
+	}
+
+	public String getAuJobResp() {
+		return auJobResp;
+	}
+
+	public void setAuJobResp(String auJobResp) {
+		this.auJobResp = auJobResp;
 	}
 
 	public String toString() {
