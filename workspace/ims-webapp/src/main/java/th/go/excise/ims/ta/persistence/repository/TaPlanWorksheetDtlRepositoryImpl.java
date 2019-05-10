@@ -104,6 +104,8 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 			vo.setAnalysisNumber(rs.getString("ANALYSIS_NUMBER"));
 			vo.setNewRegId(rs.getString("NEW_REG_ID"));
 			vo.setAuditStatus(rs.getString("AUDIT_STATUS"));
+			vo.setAuSubdeptCode(rs.getString("AU_SUBDEPT_CODE"));
+			vo.setAuJobResp(rs.getString("AU_JOB_RESP"));
 			String auditType = "-";
 			if (StringUtils.isNotEmpty(rs.getString("AUDIT_TYPE"))) {
 				auditType = ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_AUDIT_TYPE, rs.getString("AUDIT_TYPE")).getValue1();

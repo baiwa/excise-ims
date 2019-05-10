@@ -200,6 +200,13 @@ public class PlanWorksheetService {
 				planDtl.setOfficeCode(officeCode);
 				planDtl.setNewRegId(newRegId);
 				planDtl.setAuditStatus("I"); // FIXME
+				
+				String subdeptCode = UserLoginUtils.getCurrentUserBean().getSubdeptCode();
+				if (StringUtils.isNotBlank(subdeptCode)) {
+					
+					planDtl.setAuSubdeptCode(subdeptCode);
+				}
+				//planDtl.setAuJobResp(UserLoginUtils.getCurrentUsername());
 				taPlanWorksheetDtlRepository.save(planDtl);
 
 				updateFlagWorksheetSelect(budgetYear, newRegId, officeCode, FLAG.Y_FLAG, LocalDate.now());

@@ -20,6 +20,24 @@ public class PlanWorksheetDatatableVo {
 	private String auditStatusDesc;
 	private String auditType;
 	private String auditDate;
+	private String auSubdeptCode;
+	private String auJobResp;
+
+	public String getAuSubdeptCode() {
+		return auSubdeptCode;
+	}
+
+	public void setAuSubdeptCode(String auSubdeptCode) {
+		this.auSubdeptCode = auSubdeptCode;
+	}
+
+	public String getAuJobResp() {
+		return auJobResp;
+	}
+
+	public void setAuJobResp(String auJobResp) {
+		this.auJobResp = auJobResp;
+	}
 
 	public String getCusFullname() {
 		return cusFullname;
