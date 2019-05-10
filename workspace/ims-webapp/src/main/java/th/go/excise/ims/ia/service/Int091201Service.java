@@ -69,7 +69,7 @@ public class Int091201Service {
 		String dateStr = ConvertDateUtils.formatDateToString(date, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 
 		String auditIncNo = iaEmpWorkingDtlJdbcRepository.generateAuditIncNo();
-		auditIncNo = res.getBranch() + "/" + auditIncNo;
+		auditIncNo = offCode + "/" + auditIncNo;
 		dataSave.setAuditWorkingNo(auditIncNo);
 		dataSave.setAuWorkingMonth(dateStr);
 		dataSave.setAuPetitionNo(res.getAuPetitionNo());
