@@ -41,93 +41,92 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 	@Override
 	public void batchInsert(List<TaWorksheetDtl> worksheetDtlList) {
 		String sql = SqlGeneratorUtils.genSqlInsert("TA_WORKSHEET_DTL",
-				Arrays.asList("WORKSHEET_DTL_ID", "ANALYSIS_NUMBER", "NEW_REG_ID", "SUM_TAX_AMT_G1", "SUM_TAX_AMT_G2",
-						"TAX_AMT_CHN_PNT", "TAX_MONTH_NO", "TAX_AUDIT_LAST3", "TAX_AUDIT_LAST2", "TAX_AUDIT_LAST1",
-						"TAX_AMT_SD", "TAX_AMT_MEAN", "TAX_AMT_MAX_PNT", "TAX_AMT_MIN_PNT", "TAX_AMT_G1_M1",
-						"TAX_AMT_G1_M2", "TAX_AMT_G1_M3", "TAX_AMT_G1_M4", "TAX_AMT_G1_M5", "TAX_AMT_G1_M6",
-						"TAX_AMT_G1_M7", "TAX_AMT_G1_M8", "TAX_AMT_G1_M9", "TAX_AMT_G1_M10", "TAX_AMT_G1_M11",
-						"TAX_AMT_G1_M12", "TAX_AMT_G2_M1", "TAX_AMT_G2_M2", "TAX_AMT_G2_M3", "TAX_AMT_G2_M4",
-						"TAX_AMT_G2_M5", "TAX_AMT_G2_M6", "TAX_AMT_G2_M7", "TAX_AMT_G2_M8", "TAX_AMT_G2_M9",
-						"TAX_AMT_G2_M10", "TAX_AMT_G2_M11", "TAX_AMT_G2_M12", "COND_MAIN_GRP", "COND_SUB_CAPITAL",
-						"COND_SUB_RISK", "CREATED_BY", "CREATED_DATE", "LAST_AUDIT_YEAR"),
-				"TA_WORKSHEET_DTL_SEQ");
+			Arrays.asList("WORKSHEET_DTL_ID", "ANALYSIS_NUMBER", "NEW_REG_ID", "SUM_TAX_AMT_G1", "SUM_TAX_AMT_G2",
+					"TAX_AMT_CHN_PNT", "TAX_MONTH_NO", "TAX_AUDIT_LAST3", "TAX_AUDIT_LAST2", "TAX_AUDIT_LAST1",
+					"TAX_AMT_SD", "TAX_AMT_MEAN", "TAX_AMT_MAX_PNT", "TAX_AMT_MIN_PNT", "TAX_AMT_G1_M1",
+					"TAX_AMT_G1_M2", "TAX_AMT_G1_M3", "TAX_AMT_G1_M4", "TAX_AMT_G1_M5", "TAX_AMT_G1_M6",
+					"TAX_AMT_G1_M7", "TAX_AMT_G1_M8", "TAX_AMT_G1_M9", "TAX_AMT_G1_M10", "TAX_AMT_G1_M11",
+					"TAX_AMT_G1_M12", "TAX_AMT_G2_M1", "TAX_AMT_G2_M2", "TAX_AMT_G2_M3", "TAX_AMT_G2_M4",
+					"TAX_AMT_G2_M5", "TAX_AMT_G2_M6", "TAX_AMT_G2_M7", "TAX_AMT_G2_M8", "TAX_AMT_G2_M9",
+					"TAX_AMT_G2_M10", "TAX_AMT_G2_M11", "TAX_AMT_G2_M12", "COND_MAIN_GRP", "COND_SUB_CAPITAL",
+					"COND_SUB_RISK", "CREATED_BY", "CREATED_DATE", "LAST_AUDIT_YEAR"),
+			"TA_WORKSHEET_DTL_SEQ");
 
-		commonJdbcTemplate.batchUpdate(sql, worksheetDtlList, 1000,
-				new ParameterizedPreparedStatementSetter<TaWorksheetDtl>() {
-					public void setValues(PreparedStatement ps, TaWorksheetDtl worksheetDtl) throws SQLException {
-						List<Object> paramList = new ArrayList<Object>();
-						paramList.add(worksheetDtl.getAnalysisNumber());
-						paramList.add(worksheetDtl.getNewRegId());
+		commonJdbcTemplate.batchUpdate(sql, worksheetDtlList, 1000, new ParameterizedPreparedStatementSetter<TaWorksheetDtl>() {
+			public void setValues(PreparedStatement ps, TaWorksheetDtl worksheetDtl) throws SQLException {
+				List<Object> paramList = new ArrayList<Object>();
+				paramList.add(worksheetDtl.getAnalysisNumber());
+				paramList.add(worksheetDtl.getNewRegId());
 
-						paramList.add(worksheetDtl.getSumTaxAmtG1());
-						paramList.add(worksheetDtl.getSumTaxAmtG2());
-						paramList.add(worksheetDtl.getTaxAmtChnPnt());
-						paramList.add(worksheetDtl.getTaxMonthNo());
-						paramList.add(worksheetDtl.getTaxAuditLast3());
-						paramList.add(worksheetDtl.getTaxAuditLast2());
-						paramList.add(worksheetDtl.getTaxAuditLast1());
-						paramList.add(worksheetDtl.getTaxAmtSd());
-						paramList.add(worksheetDtl.getTaxAmtMean());
-						paramList.add(worksheetDtl.getTaxAmtMaxPnt());
-						paramList.add(worksheetDtl.getTaxAmtMinPnt());
-						paramList.add(worksheetDtl.getTaxAmtG1M1());
-						paramList.add(worksheetDtl.getTaxAmtG1M2());
-						paramList.add(worksheetDtl.getTaxAmtG1M3());
-						paramList.add(worksheetDtl.getTaxAmtG1M4());
-						paramList.add(worksheetDtl.getTaxAmtG1M5());
-						paramList.add(worksheetDtl.getTaxAmtG1M6());
-						paramList.add(worksheetDtl.getTaxAmtG1M7());
-						paramList.add(worksheetDtl.getTaxAmtG1M8());
-						paramList.add(worksheetDtl.getTaxAmtG1M9());
-						paramList.add(worksheetDtl.getTaxAmtG1M10());
-						paramList.add(worksheetDtl.getTaxAmtG1M11());
-						paramList.add(worksheetDtl.getTaxAmtG1M12());
-						paramList.add(worksheetDtl.getTaxAmtG2M1());
-						paramList.add(worksheetDtl.getTaxAmtG2M2());
-						paramList.add(worksheetDtl.getTaxAmtG2M3());
-						paramList.add(worksheetDtl.getTaxAmtG2M4());
-						paramList.add(worksheetDtl.getTaxAmtG2M5());
-						paramList.add(worksheetDtl.getTaxAmtG2M6());
-						paramList.add(worksheetDtl.getTaxAmtG2M7());
-						paramList.add(worksheetDtl.getTaxAmtG2M8());
-						paramList.add(worksheetDtl.getTaxAmtG2M9());
-						paramList.add(worksheetDtl.getTaxAmtG2M10());
-						paramList.add(worksheetDtl.getTaxAmtG2M11());
-						paramList.add(worksheetDtl.getTaxAmtG2M12());
+				paramList.add(worksheetDtl.getSumTaxAmtG1());
+				paramList.add(worksheetDtl.getSumTaxAmtG2());
+				paramList.add(worksheetDtl.getTaxAmtChnPnt());
+				paramList.add(worksheetDtl.getTaxMonthNo());
+				paramList.add(worksheetDtl.getTaxAuditLast3());
+				paramList.add(worksheetDtl.getTaxAuditLast2());
+				paramList.add(worksheetDtl.getTaxAuditLast1());
+				paramList.add(worksheetDtl.getTaxAmtSd());
+				paramList.add(worksheetDtl.getTaxAmtMean());
+				paramList.add(worksheetDtl.getTaxAmtMaxPnt());
+				paramList.add(worksheetDtl.getTaxAmtMinPnt());
+				paramList.add(worksheetDtl.getTaxAmtG1M1());
+				paramList.add(worksheetDtl.getTaxAmtG1M2());
+				paramList.add(worksheetDtl.getTaxAmtG1M3());
+				paramList.add(worksheetDtl.getTaxAmtG1M4());
+				paramList.add(worksheetDtl.getTaxAmtG1M5());
+				paramList.add(worksheetDtl.getTaxAmtG1M6());
+				paramList.add(worksheetDtl.getTaxAmtG1M7());
+				paramList.add(worksheetDtl.getTaxAmtG1M8());
+				paramList.add(worksheetDtl.getTaxAmtG1M9());
+				paramList.add(worksheetDtl.getTaxAmtG1M10());
+				paramList.add(worksheetDtl.getTaxAmtG1M11());
+				paramList.add(worksheetDtl.getTaxAmtG1M12());
+				paramList.add(worksheetDtl.getTaxAmtG2M1());
+				paramList.add(worksheetDtl.getTaxAmtG2M2());
+				paramList.add(worksheetDtl.getTaxAmtG2M3());
+				paramList.add(worksheetDtl.getTaxAmtG2M4());
+				paramList.add(worksheetDtl.getTaxAmtG2M5());
+				paramList.add(worksheetDtl.getTaxAmtG2M6());
+				paramList.add(worksheetDtl.getTaxAmtG2M7());
+				paramList.add(worksheetDtl.getTaxAmtG2M8());
+				paramList.add(worksheetDtl.getTaxAmtG2M9());
+				paramList.add(worksheetDtl.getTaxAmtG2M10());
+				paramList.add(worksheetDtl.getTaxAmtG2M11());
+				paramList.add(worksheetDtl.getTaxAmtG2M12());
 
-						paramList.add(worksheetDtl.getCondMainGrp());
-						paramList.add(worksheetDtl.getCondSubCapital());
-						paramList.add(worksheetDtl.getCondSubRisk());
-						paramList.add(worksheetDtl.getCreatedBy());
-						paramList.add(worksheetDtl.getCreatedDate());
+				paramList.add(worksheetDtl.getCondMainGrp());
+				paramList.add(worksheetDtl.getCondSubCapital());
+				paramList.add(worksheetDtl.getCondSubRisk());
+				paramList.add(worksheetDtl.getCreatedBy());
+				paramList.add(worksheetDtl.getCreatedDate());
 
-						paramList.add(worksheetDtl.getLastAuditYear());
-						commonJdbcTemplate.preparePs(ps, paramList.toArray());
-					}
-				});
+				paramList.add(worksheetDtl.getLastAuditYear());
+				commonJdbcTemplate.preparePs(ps, paramList.toArray());
+			}
+		});
 	}
 
 	@Override
 	public void batchUpdate(List<TaWorksheetDtl> taWorksheetDtlList) {
 		String sql = SqlGeneratorUtils.genSqlUpdate("TA_WORKSHEET_DTL",
-				Arrays.asList("COND_MAIN_GRP", "COND_SUB_CAPITAL", "COND_SUB_RISK", "COND_SUB_NO_AUDIT"),
-				Arrays.asList("ANALYSIS_NUMBER", "NEW_REG_ID"));
+			Arrays.asList("COND_MAIN_GRP", "COND_SUB_CAPITAL", "COND_SUB_RISK", "COND_SUB_NO_AUDIT"),
+			Arrays.asList("ANALYSIS_NUMBER", "NEW_REG_ID"));
 
 		commonJdbcTemplate.batchUpdate(sql, taWorksheetDtlList, 1000,
-				new ParameterizedPreparedStatementSetter<TaWorksheetDtl>() {
-					public void setValues(PreparedStatement ps, TaWorksheetDtl worksheetDtl) throws SQLException {
-						List<Object> paramList = new ArrayList<>();
-
-						paramList.add(worksheetDtl.getCondMainGrp());
-						paramList.add(worksheetDtl.getCondSubCapital());
-						paramList.add(worksheetDtl.getCondSubRisk());
-						paramList.add(worksheetDtl.getCondSubNoAudit());
-
-						paramList.add(worksheetDtl.getAnalysisNumber());
-						paramList.add(worksheetDtl.getNewRegId());
-						commonJdbcTemplate.preparePs(ps, paramList.toArray());
-					}
-				});
+			new ParameterizedPreparedStatementSetter<TaWorksheetDtl>() {
+				public void setValues(PreparedStatement ps, TaWorksheetDtl worksheetDtl) throws SQLException {
+					List<Object> paramList = new ArrayList<>();
+	
+					paramList.add(worksheetDtl.getCondMainGrp());
+					paramList.add(worksheetDtl.getCondSubCapital());
+					paramList.add(worksheetDtl.getCondSubRisk());
+					paramList.add(worksheetDtl.getCondSubNoAudit());
+	
+					paramList.add(worksheetDtl.getAnalysisNumber());
+					paramList.add(worksheetDtl.getNewRegId());
+					commonJdbcTemplate.preparePs(ps, paramList.toArray());
+				}
+			});
 	}
 
 	private void buildByCriteriaQuery(StringBuilder sql, List<Object> params, TaxOperatorFormVo formVo) {
@@ -158,25 +157,21 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		sql.append("   AND TA_W_DTL.IS_DELETED = 'N' ");
 		sql.append(" INNER JOIN TA_WS_REG4000 R4000 ON R4000.NEW_REG_ID = TA_W_DTL.NEW_REG_ID ");
 		sql.append("   AND R4000.IS_DELETED = 'N' ");
-		sql.append(
-				" INNER JOIN EXCISE_DEPARTMENT ED_SECTOR ON ED_SECTOR.OFF_CODE = CONCAT ( SUBSTR(R4000.OFFICE_CODE, 0, 2) ,'0000') ");
+		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_SECTOR ON ED_SECTOR.OFF_CODE = CONCAT ( SUBSTR(R4000.OFFICE_CODE, 0, 2) ,'0000') ");
 		sql.append("   AND ED_SECTOR.IS_DELETED = 'N' ");
-		sql.append(
-				" INNER JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE = CONCAT ( SUBSTR(R4000.OFFICE_CODE, 0, 4) ,'00' ) ");
+		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE = CONCAT ( SUBSTR(R4000.OFFICE_CODE, 0, 4) ,'00' ) ");
 		sql.append("   AND ED_AREA.IS_DELETED = 'N' ");
-		
-		sql.append(" Left join TA_WORKSHEET_COND_MAIN_DTL T_W_Cond_Dtl on T_W_Cond_Dtl.analysis_number=ta_w_dtl.analysis_number");
-		sql.append(" and ta_w_dtl.COND_MAIN_GRP=t_w_cond_dtl.COND_GROUP ");
-		
+		sql.append(" LEFT JOIN TA_WORKSHEET_COND_MAIN_DTL T_W_COND_DTL ON T_W_COND_DTL.ANALYSIS_NUMBER = TA_W_DTL.ANALYSIS_NUMBER ");
+		sql.append("   AND TA_W_DTL.COND_MAIN_GRP = T_W_COND_DTL.COND_GROUP ");
 		sql.append(" LEFT JOIN TA_PLAN_WORKSHEET_SELECT TA_PW_SEL ON TA_PW_SEL.NEW_REG_ID = TA_W_DTL.NEW_REG_ID ");
+		sql.append("   AND TA_PW_SEL.IS_DELETED = 'N' ");
+		sql.append("   AND TA_PW_SEL.BUDGET_YEAR = ? ");
 	
-		if (ApplicationCache.getRoleDutyOffice().indexOf(formVo.getOfficeCode()) > -1) {
-			sql.append("  inner join EXCISE_CTRL_DUTY cd on cd.duty_group_code = r4000.duty_code  AND cd.res_offcode = ?");
+		if (ApplicationCache.isCtrlDutyGroupByOfficeCode(formVo.getOfficeCode())) {
+			sql.append(" INNER JOIN EXCISE_CTRL_DUTY CD ON CD.DUTY_GROUP_CODE = R4000.DUTY_CODE  AND CD.RES_OFFCODE = ? ");
 			params.add(formVo.getOfficeCode());
 		}
 
-		sql.append("   AND TA_PW_SEL.IS_DELETED = 'N' ");
-		sql.append("   AND TA_PW_SEL.BUDGET_YEAR = ? ");
 		sql.append(" WHERE 1 = 1 ");
 		sql.append(" AND TA_W_DTL.ANALYSIS_NUMBER = ? ");
 		sql.append(" AND TA_W_HDR.IS_DELETED = 'N' ");
@@ -214,25 +209,25 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		}
 
 		if (StringUtils.isNotBlank(formVo.getCapital())) {
-			sql.append("AND COND_SUB_CAPITAL=? ");
+			sql.append(" AND COND_SUB_CAPITAL = ? ");
 			params.add(formVo.getCapital());
 		}
 		if (StringUtils.isNotBlank(formVo.getRisk())) {
-			sql.append("AND COND_SUB_RISK=? ");
+			sql.append(" AND COND_SUB_RISK = ? ");
 			params.add(formVo.getRisk());
 		}
 		if (StringUtils.isNotBlank(formVo.getCondSubNoAuditFlag())) {
-			sql.append("AND COND_SUB_NO_AUDIT=? ");
+			sql.append(" AND COND_SUB_NO_AUDIT = ? ");
 			params.add(formVo.getCondSubNoAuditFlag());
 		}
 		if (StringUtils.isNotBlank(formVo.getNewRegId())) {
-			sql.append("   AND ta_w_dtl.NEW_REG_ID like ? or r4000.CUS_FULLNAME like ? ");
-			params.add(StringUtils.trim("%" + StringUtils.trim(formVo.getNewRegId()) + "%"));
-			params.add(StringUtils.trim("%" + StringUtils.trim(formVo.getNewRegId()) + "%"));
+			sql.append(" AND TA_W_DTL.NEW_REG_ID LIKE ? OR R4000.CUS_FULLNAME LIKE ? ");
+			params.add("%" + StringUtils.trim(formVo.getNewRegId()) + "%");
+			params.add("%" + StringUtils.trim(formVo.getNewRegId()) + "%");
 		}
 
 		if (StringUtils.isNotBlank(formVo.getTaxAuditLast()) && !"0".equals(formVo.getTaxAuditLast())) {
-			sql.append("    AND ta_w_dtl.LAST_AUDIT_YEAR < ? ");
+			sql.append(" AND TA_W_DTL.LAST_AUDIT_YEAR < ? ");
 			int lastYear = Integer.valueOf(formVo.getTaxAuditLast());
 			int budgetYear = Integer.valueOf(formVo.getBudgetYear());
 			int rs = budgetYear - lastYear;
@@ -250,12 +245,12 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		List<Object> params = new ArrayList<>();
 		buildByCriteriaQuery(sql, params, formVo);
 
-		sql.append(
-				" ORDER BY NVL(T_W_Cond_Dtl.RISK_LEVEL,0) DESC, R4000.DUTY_CODE ASC, R4000.OFFICE_CODE ASC, TA_W_DTL.NEW_REG_ID ASC ");
+		sql.append(" ORDER BY NVL(T_W_Cond_Dtl.RISK_LEVEL,0) DESC, R4000.DUTY_CODE ASC, R4000.OFFICE_CODE ASC, TA_W_DTL.NEW_REG_ID ASC ");
 
 		return commonJdbcTemplate.query(
-				OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(),
-				worksheetRowMapper);
+			OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()),
+			params.toArray(),
+			worksheetRowMapper);
 	}
 
 	public Long countByCriteria(TaxOperatorFormVo formVo) {
@@ -263,8 +258,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		List<Object> params = new ArrayList<>();
 		buildByCriteriaQuery(sql, params, formVo);
 
-		return commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), params.toArray(),
-				Long.class);
+		return commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), params.toArray(), Long.class);
 	}
 
 	private static final RowMapper<TaxOperatorDetailVo> worksheetRowMapper = new RowMapper<TaxOperatorDetailVo>() {
@@ -279,10 +273,8 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			vo.setCondSubNoAudit(rs.getString("COND_SUB_NO_AUDIT"));
 
 			try {
-				vo.setCondSubCapitalDesc(ApplicationCache
-						.getParamInfoByCode("TA_SUB_COND_CAPITAL", rs.getString("COND_SUB_CAPITAL")).getValue1());
-				vo.setCondSubRiskDesc(ApplicationCache
-						.getParamInfoByCode("TA_RISK_LEVEL", rs.getString("COND_SUB_RISK")).getValue1());
+				vo.setCondSubCapitalDesc(ApplicationCache.getParamInfoByCode("TA_SUB_COND_CAPITAL", rs.getString("COND_SUB_CAPITAL")).getValue1());
+				vo.setCondSubRiskDesc(ApplicationCache.getParamInfoByCode("TA_RISK_LEVEL", rs.getString("COND_SUB_RISK")).getValue1());
 				vo.setCondSubNoAuditDesc(rs.getString("COND_SUB_NO_AUDIT"));
 			} catch (Exception e) {
 				vo.setCondSubCapitalDesc("");
@@ -291,8 +283,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			}
 
 			vo.setRegCapital(rs.getString("REG_CAPITAL"));
-			vo.setRegStatus(rs.getString("REG_STATUS") + " " + ConvertDateUtils
-					.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_TH));
+			vo.setRegStatus(rs.getString("REG_STATUS") + " " + ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_TH));
 
 			vo.setCentralSelFlag(rs.getString("CENTRAL_SEL_FLAG"));
 			if (FLAG.Y_FLAG.equals(vo.getCentralSelFlag())) {
@@ -314,8 +305,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			vo.setAreaSelFlag(rs.getString("AREA_SEL_FLAG"));
 			if (FLAG.Y_FLAG.equals(vo.getAreaSelFlag())) {
 				LocalDate localDate = LocalDateConverter.convertToEntityAttribute(rs.getDate("AREA_SEL_DATE"));
-				vo.setAreaSelDate(ConvertDateUtils.formatLocalDateToString(localDate, ConvertDateUtils.DD_MM_YYYY,
-						ConvertDateUtils.LOCAL_TH));
+				vo.setAreaSelDate(ConvertDateUtils.formatLocalDateToString(localDate, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 				vo.setAreaSelOfficeCode(rs.getString("AREA_SEL_OFFICE_CODE"));
 				if (StringUtils.isNotBlank(vo.getAreaSelOfficeCode())) {
 					vo.setSelectBy(ApplicationCache.getExciseDepartment(vo.getAreaSelOfficeCode()).getDeptShortName());

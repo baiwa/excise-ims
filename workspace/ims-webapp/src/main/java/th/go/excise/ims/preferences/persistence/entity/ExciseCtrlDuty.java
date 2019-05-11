@@ -1,4 +1,3 @@
-
 package th.go.excise.ims.preferences.persistence.entity;
 
 import javax.persistence.EmbeddedId;
@@ -14,6 +13,7 @@ import th.go.excise.ims.preferences.persistence.entity.ExciseCtrlDutyPK;
 public class ExciseCtrlDuty extends BaseEntity {
 
 	private static final long serialVersionUID = 7015514453033674519L;
+	
 	@EmbeddedId
 	private ExciseCtrlDutyPK id;
 

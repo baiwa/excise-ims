@@ -19,7 +19,6 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_OFFICE_CODE;
 import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.preferences.vo.ExciseSubdept;
-import th.go.excise.ims.preferences.vo.ExciseSubdeptVo;
 
 @RestController
 @RequestMapping("/api/preferences/department")
@@ -139,32 +138,16 @@ public class ExciseDepartmentController {
 	public ResponseData<List<ExciseSubdept>> getSubdeptListByOfficeCode(@PathVariable("officeCode") String officeCode) {
 		logger.info("getBranchListByAreaCode officeCode={}", officeCode);
 		
-		List<ExciseSubdept> subdeptList = new ArrayList<>();
-		{
-			ExciseSubdeptVo subdept = new ExciseSubdeptVo();
-			subdept.setOfficeCode(EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR1);
-			subdept.setSubdeptCode("2001");
-			subdept.setSubdeptShortName("ฝ่ายฯ 1");
-			subdeptList.add(subdept);
-		}
-		{
-			ExciseSubdeptVo subdept = new ExciseSubdeptVo();
-			subdept.setOfficeCode(EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR1);
-			subdept.setSubdeptCode("2002");
-			subdept.setSubdeptShortName("ฝ่ายฯ 2");
-			subdeptList.add(subdept);
-		}
-		{
-			ExciseSubdeptVo subdept = new ExciseSubdeptVo();
-			subdept.setOfficeCode(EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR1);
-			subdept.setSubdeptCode("2003");
-			subdept.setSubdeptShortName("ฝ่ายฯ 3");
-			subdeptList.add(subdept);
-		}
+		List<ExciseSubdept> subdeptList = ApplicationCache.getExciseSubdeptList(officeCode);
 		
 		ResponseData<List<ExciseSubdept>> response = new ResponseData<>();
-		response.setData(subdeptList);
-		response.setStatus(RESPONSE_STATUS.SUCCESS);
+		if (!CollectionUtils.isEmpty(subdeptList)) {
+			response.setData(subdeptList);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} else {
+			response.setMessage("Excise Sub-Department Not Found");
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
 		
 		return response;
 	}

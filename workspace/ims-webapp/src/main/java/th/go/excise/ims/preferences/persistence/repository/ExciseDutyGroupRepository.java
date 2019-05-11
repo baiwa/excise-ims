@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRepository;
@@ -17,8 +18,8 @@ public interface ExciseDutyGroupRepository extends CommonJpaCrudRepository<Excis
 		nativeQuery = true
 	)
 	public void queryUpdateIsDeletedY();
-	//public void ExciseDutyGroupY();
 	
-	List<ExciseDutyGroup> findAllByDutyGroupStatus(String status);
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.dutyGroupStatus = :dutyGroupStatus")
+	public List<ExciseDutyGroup> findAllByDutyGroupStatus(@Param("dutyGroupStatus") String dutyGroupStatus);
 	
 }

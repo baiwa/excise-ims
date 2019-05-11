@@ -1,4 +1,3 @@
-
 package th.go.excise.ims.preferences.persistence.repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRepository;

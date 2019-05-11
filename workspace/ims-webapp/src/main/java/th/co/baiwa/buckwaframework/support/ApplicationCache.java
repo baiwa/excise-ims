@@ -7,12 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,13 +40,19 @@ import th.co.baiwa.buckwaframework.support.domain.GeoSector;
 import th.co.baiwa.buckwaframework.support.domain.Message;
 import th.co.baiwa.buckwaframework.support.domain.ParamGroup;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
-import th.go.excise.ims.preferences.persistence.entity.ExciseCtrlDuty;
-import th.go.excise.ims.preferences.persistence.entity.ExciseDutyGroup;
+import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.preferences.persistence.repository.ExciseCtrlDutyRepository;
 import th.go.excise.ims.preferences.persistence.repository.ExciseDepartmentRepository;
 import th.go.excise.ims.preferences.persistence.repository.ExciseDutyGroupRepository;
+import th.go.excise.ims.preferences.persistence.repository.ExciseSubdeptRepository;
+import th.go.excise.ims.preferences.vo.ExciseCtrlDuty;
+import th.go.excise.ims.preferences.vo.ExciseCtrlDutyVo;
 import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.preferences.vo.ExciseDepartmentVo;
+import th.go.excise.ims.preferences.vo.ExciseDutyGroup;
+import th.go.excise.ims.preferences.vo.ExciseDutyGroupVo;
+import th.go.excise.ims.preferences.vo.ExciseSubdept;
+import th.go.excise.ims.preferences.vo.ExciseSubdeptVo;
 
 @Component
 public class ApplicationCache {
@@ -66,6 +70,7 @@ public class ApplicationCache {
 	private GeoDistrictRepository geoDistrictRepository;
 	// Excise Master Data
 	private ExciseDepartmentRepository exciseDepartmentRepository;
+	private ExciseSubdeptRepository exciseSubdeptRepository;
 	private ExciseDutyGroupRepository exciseDutyGroupRepository;
 	private ExciseCtrlDutyRepository exciseCtrlDutyRepository;
 	
@@ -85,10 +90,10 @@ public class ApplicationCache {
 	private static final ConcurrentHashMap<String, ExciseDepartment> EXCISE_SECTOR_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, List<ExciseDepartment>> EXCISE_AREA_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, List<ExciseDepartment>> EXCISE_BRANCH_MAP = new ConcurrentHashMap<>();
-	private static final ConcurrentHashMap<String, List<ExciseDutyGroup>> DUTY_GROUP = new ConcurrentHashMap<>();
-
-	private static final ConcurrentHashMap<String, ExciseDutyGroup> EXCISE_DUTY_GROUP = new ConcurrentHashMap<>();
-	private static final List<String> OFFICE_DUTY_ROLE = new ArrayList<>();
+	private static final ConcurrentHashMap<String, List<ExciseSubdept>> EXCISE_SUBDEPT_MAP = new ConcurrentHashMap<>();
+	private static final ConcurrentHashMap<String, List<ExciseDutyGroup>> EXCISE_DUTY_GROUP_BY_TYPE_MAP = new ConcurrentHashMap<>();
+	private static final ConcurrentHashMap<String, ExciseDutyGroup> EXCISE_DUTY_GROUP_MAP = new ConcurrentHashMap<>();
+	private static final ConcurrentHashMap<String, List<ExciseCtrlDuty>> EXCISE_CTRL_DUTY_MAP = new ConcurrentHashMap<>();
 	
 	
 	@Autowired
@@ -101,6 +106,7 @@ public class ApplicationCache {
 			GeoAmphurRepository geoAmphurRepository,
 			GeoDistrictRepository geoDistrictRepository,
 			ExciseDepartmentRepository exciseDepartmentRepository,
+			ExciseSubdeptRepository exciseSubdeptRepository,
 			ExciseDutyGroupRepository exciseDutyGroupRepository,
 			ExciseCtrlDutyRepository exciseCtrlDutyRepository) {
 		this.parameterGroupRepository = parameterGroupRepository;
@@ -111,6 +117,7 @@ public class ApplicationCache {
 		this.geoAmphurRepository = geoAmphurRepository;
 		this.geoDistrictRepository = geoDistrictRepository;
 		this.exciseDepartmentRepository = exciseDepartmentRepository;
+		this.exciseSubdeptRepository = exciseSubdeptRepository;
 		this.exciseDutyGroupRepository = exciseDutyGroupRepository;
 		this.exciseCtrlDutyRepository = exciseCtrlDutyRepository;
 	}
@@ -121,11 +128,11 @@ public class ApplicationCache {
 		logger.info("ApplicationCache Reloading...");
 		loadParameter();
 		loadMessage();
-		loadExciseDepartment();
 		loadGeography();
+		loadExciseDepartment();
+		loadExciseSubdept();
 		loadExciseDutyGroup();
 		loadExciseCtrlDuty();
-		loadDutyGroup();
 		logger.info("ApplicationCache Reloaded");
 	}
 
@@ -245,17 +252,23 @@ public class ApplicationCache {
 	public static List<ExciseDepartment> getExciseBranchList(String officeCode) {
 		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_BRANCH_MAP.get(officeCode), new ArrayList<>()));
 	}
-
-	public static List<String> getRoleDutyOffice() {
-		return OFFICE_DUTY_ROLE;
+	
+	public static List<ExciseSubdept> getExciseSubdeptList(String officeCode) {
+		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_SUBDEPT_MAP.get(officeCode), new ArrayList<>()));
+	}
+	
+	public static List<ExciseDutyGroup> getExciseDutyGroupListByType(String dutyGroupType) {
+		List<ExciseDutyGroup> resultList = EXCISE_DUTY_GROUP_BY_TYPE_MAP.get(dutyGroupType);
+		resultList.sort((p1, p2) -> p1.getDutyGroupCode().compareTo(p2.getDutyGroupCode()));
+		return Collections.unmodifiableList(resultList);
+	}
+	
+	public static ExciseDutyGroup getExciseDutyGroup(String dutyGroupCode) {
+		return EXCISE_DUTY_GROUP_MAP.get(dutyGroupCode);
 	}
 
-	public static List<ExciseDutyGroup> getExciseDutyListByType(String type) {
-		return DUTY_GROUP.get(type);
-	}
-
-	public static ExciseDutyGroup getExciseDutyGroup(String dutyCode) {
-		return EXCISE_DUTY_GROUP.get(dutyCode);
+	public static boolean isCtrlDutyGroupByOfficeCode(String officeCode) {
+		return EXCISE_CTRL_DUTY_MAP.containsKey(officeCode);
 	}
 	/********************* Method for Get Cache - End *********************/
 
@@ -271,21 +284,27 @@ public class ApplicationCache {
 		ParameterGroupVo paramGroupVo = null;
 		ParameterInfoVo paramInfoVo = null;
 		
-		try {
-			for (th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterGroup paramGroup : paramGroupList) {
-				paramInfoVoList = new ArrayList<>();
-				for (th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo paramInfo : paramInfoList) {
-					if (paramGroup.getParamGroupCode().equals(paramInfo.getParamGroupCode())) {
-						paramInfoVo = new ParameterInfoVo();
-						BeanUtils.copyProperties(paramInfoVo, paramInfo);
-						paramInfoVoList.add(paramInfoVo);
-					}
+		for (th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterGroup paramGroup : paramGroupList) {
+			paramInfoVoList = new ArrayList<>();
+			for (th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo paramInfo : paramInfoList) {
+				if (paramGroup.getParamGroupCode().equals(paramInfo.getParamGroupCode())) {
+					paramInfoVo = new ParameterInfoVo();
+					paramInfoVo.setParamInfoId(paramInfo.getParamInfoId());
+					paramInfoVo.setParamGroupCode(paramInfo.getParamGroupCode());
+					paramInfoVo.setParamCode(paramInfo.getParamCode());
+					paramInfoVo.setValue1(paramInfo.getValue1());
+					paramInfoVo.setValue2(paramInfo.getValue2());
+					paramInfoVo.setValue3(paramInfo.getValue3());
+					paramInfoVo.setValue4(paramInfo.getValue4());
+					paramInfoVo.setValue5(paramInfo.getValue5());
+					paramInfoVo.setValue6(paramInfo.getValue6());
+					paramInfoVo.setSortingOrder(paramInfo.getSortingOrder());
+					paramInfoVo.setIsDefault(paramInfo.getIsDefault());
+					paramInfoVoList.add(paramInfoVo);
 				}
-				paramInfoVoList.sort((p1, p2) -> p1.getSortingOrder() - p2.getSortingOrder());
-				PARAM_GROUP_MAP.put(paramGroup.getParamGroupCode(), new ParamGroupWrapper(paramGroupVo, paramInfoVoList));
 			}
-		} catch (Exception e) {
-			logger.warn(e.getMessage(), e);
+			paramInfoVoList.sort((p1, p2) -> p1.getSortingOrder() - p2.getSortingOrder());
+			PARAM_GROUP_MAP.put(paramGroup.getParamGroupCode(), new ParamGroupWrapper(paramGroupVo, paramInfoVoList));
 		}
 
 		logger.info("load Paramter loaded [{}]", PARAM_GROUP_MAP.size());
@@ -299,17 +318,100 @@ public class ApplicationCache {
 		List<th.co.baiwa.buckwaframework.preferences.persistence.entity.Message> messageList = messageRepository.findAll();
 		
 		MessageVo messageVo = null;
+		for (th.co.baiwa.buckwaframework.preferences.persistence.entity.Message message : messageList) {
+			messageVo = new MessageVo();
+			messageVo.setMessageId(message.getMessageId());
+			messageVo.setMessageCode(message.getMessageCode());
+			messageVo.setMessageEn(message.getMessageEn());
+			messageVo.setMessageTh(message.getMessageTh());
+			messageVo.setMessageType (message.getMessageType());
+			MESSAGE_MAP.put(messageVo.getMessageCode(), messageVo);
+		}
+		
+		logger.info("load Message loaded [{}]", MESSAGE_MAP.size());
+	}
+	
+	private void loadGeography() {
+		logger.info("load Geography loading...");
+		GEO_SECTOR_LIST.clear();
+		GEO_PROVINCE_MAPPER.clear();
+		GEO_AMPHUR_MAPPER.clear();
+		GEO_DISTRICT_MAPPER.clear();
+		
+		/** Geography */
+		List<th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoSector> geoSectorList = geoSectorRepository.findAll();
+		GeoSectorVo sectorVo = null;
+		for (th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoSector sector : geoSectorList) {
+			sectorVo = new GeoSectorVo();
+			sectorVo.setSectorCode(sector.getSectorCode());
+			sectorVo.setSectorName(sector.getSectorName());
+			GEO_SECTOR_LIST.add(sectorVo);
+		}
+		GEO_SECTOR_LIST.sort((p1, p2) -> p1.getSectorCode().compareTo(p2.getSectorCode()));
+		
+		/** Province */
+		List<th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoProvince> geoProvinceList = geoProvinceRepository.findAll();
+		List<GeoProvince> provinceList = null;
+		GeoProvinceVo provinceVo = null;
 		try {
-			for (th.co.baiwa.buckwaframework.preferences.persistence.entity.Message message : messageList) {
-				messageVo = new MessageVo();
-				BeanUtils.copyProperties(messageVo, message);
-				MESSAGE_MAP.put(messageVo.getMessageCode(), messageVo);
+			for (th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoProvince province : geoProvinceList) {
+				provinceList = GEO_PROVINCE_MAPPER.get(province.getSectorCode());
+				if (provinceList == null) {
+					provinceList = new ArrayList<GeoProvince>();
+				}
+				provinceVo = new GeoProvinceVo();
+				provinceVo.setSectorCode(province.getSectorCode());
+				provinceVo.setProvinceCode(province.getProvinceCode());
+				provinceVo.setProvinceName(province.getProvinceName());
+				provinceList.add(provinceVo);
+				GEO_PROVINCE_LIST.add(provinceVo);
+				GEO_PROVINCE_MAPPER.put(provinceVo.getSectorCode(), provinceList);
 			}
+			GEO_PROVINCE_LIST.sort((p1, p2) -> p1.getProvinceCode().compareTo(p2.getProvinceCode()));
+			GEO_PROVINCE_MAPPER.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getProvinceCode().compareTo(p2.getProvinceCode())));
 		} catch (Exception e) {
 			logger.warn(e.getMessage());
 		}
 		
-		logger.info("load Message loaded [{}]", MESSAGE_MAP.size());
+		/** Amphur */
+		List<th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoAmphur> geoAmphurList = geoAmphurRepository.findAll();
+		List<GeoAmphur> amphurList = null;
+		GeoAmphurVo amphurVo = null;
+		for (th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoAmphur amphur : geoAmphurList) {
+			amphurList = GEO_AMPHUR_MAPPER.get(amphur.getAmphurCode().substring(0, 2));
+			if (amphurList == null) {
+				amphurList = new ArrayList<GeoAmphur>();
+			}
+			amphurVo = new GeoAmphurVo();
+			amphurVo.setAmphurCode(amphur.getAmphurCode());
+			amphurVo.setAmphurName(amphur.getAmphurName());
+			amphurList.add(amphurVo);
+			GEO_AMPHUR_LIST.add(amphurVo);
+			GEO_AMPHUR_MAPPER.put(amphurVo.getAmphurCode().substring(0, 2), amphurList);
+		}
+		GEO_AMPHUR_LIST.sort((p1, p2) -> p1.getAmphurCode().compareTo(p2.getAmphurCode()));
+		GEO_AMPHUR_MAPPER.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getAmphurCode().compareTo(p2.getAmphurCode())));
+		
+		/** District */
+		List<th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoDistrict> geoDistricList = geoDistrictRepository.findAll();
+		List<GeoDistrict> districtList = null;
+		GeoDistrictVo districtVo = null;
+		for (th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoDistrict district : geoDistricList) {
+			districtList = GEO_DISTRICT_MAPPER.get(district.getDistrictCode().substring(0, 4));
+			if (districtList == null) {
+				districtList = new ArrayList<GeoDistrict>();
+			}
+			districtVo = new GeoDistrictVo();
+			districtVo.setDistrictCode(district.getDistrictCode());
+			districtVo.setDistrictName(district.getDistrictName());
+			districtList.add(districtVo);
+			GEO_DISTRICT_LIST.add(districtVo);
+			GEO_DISTRICT_MAPPER.put(districtVo.getDistrictCode().substring(0, 4), districtList);
+		}
+		GEO_DISTRICT_LIST.sort((p1, p2) -> p1.getDistrictCode().compareTo(p2.getDistrictCode()));
+		GEO_DISTRICT_MAPPER.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getDistrictCode().compareTo(p2.getDistrictCode())));
+		
+		logger.info("load Geography loaded Sector[{}], Province[{}], Amphur[{}], District[{}]", GEO_SECTOR_LIST.size(), GEO_PROVINCE_LIST.size(), GEO_AMPHUR_LIST.size(), GEO_DISTRICT_LIST.size());
 	}
 	
 	private void loadExciseDepartment() {
@@ -327,37 +429,31 @@ public class ApplicationCache {
 		List<ExciseDepartment> branchList = null;
 		for (th.go.excise.ims.preferences.persistence.entity.ExciseDepartment exciseDepartment : exciseDepartmentList) {
 			deptVo = new ExciseDepartmentVo();
-			toDeptVo(deptVo, exciseDepartment);
+			toExciseDepartmentVo(deptVo, exciseDepartment);
 			EXCISE_DEPARTMENT_MAP.put(deptVo.getOfficeCode(), deptVo);
 			
-			if (Pattern.matches("^.{2}0{4}$", exciseDepartment.getOffCode())) {
+			if (ExciseUtils.isCentral(exciseDepartment.getOffCode()) || ExciseUtils.isSector(exciseDepartment.getOffCode())) {
 				deptVo = new ExciseDepartmentVo();
-				toDeptVo(deptVo, exciseDepartment);
+				toExciseDepartmentVo(deptVo, exciseDepartment);
 				EXCISE_SECTOR_MAP.put(deptVo.getOfficeCode(), deptVo);
-			} else if (Pattern.matches(exciseDepartment.getOffCode().substring(0, 2) + "([0-9]{1}[1-9]{1}|[1-9][0-9])00", exciseDepartment.getOffCode())) {
+			} else if (ExciseUtils.isArea(exciseDepartment.getOffCode())) {
 				areaList = EXCISE_AREA_MAP.get(exciseDepartment.getOffCode().substring(0, 2) + "0000");
 				deptVo = new ExciseDepartmentVo();
-				toDeptVo(deptVo, exciseDepartment);
+				toExciseDepartmentVo(deptVo, exciseDepartment);
 				if (areaList == null) {
 					areaList = new ArrayList<>();
-					areaList.add(deptVo);
-				} else {
-					areaList.add(deptVo);
 				}
+				areaList.add(deptVo);
 				EXCISE_AREA_MAP.put(deptVo.getOfficeCode().substring(0, 2) + "0000", areaList);
-
-			} else if (Pattern.matches(exciseDepartment.getOffCode().substring(0, 4) + "([0-9]{1}[1-9]{1}|[1-9][0-9])", exciseDepartment.getOffCode())) {
+			} else if (ExciseUtils.isBranch(exciseDepartment.getOffCode())) {
 				branchList = EXCISE_BRANCH_MAP.get(exciseDepartment.getOffCode().substring(0, 4) + "00");
 				deptVo = new ExciseDepartmentVo();
-				toDeptVo(deptVo, exciseDepartment);
+				toExciseDepartmentVo(deptVo, exciseDepartment);
 				if (branchList == null) {
 					branchList = new ArrayList<>();
-					branchList.add(deptVo);
-				} else {
-					branchList.add(deptVo);
 				}
+				branchList.add(deptVo);
 				EXCISE_BRANCH_MAP.put(deptVo.getOfficeCode().substring(0, 4) + "00", branchList);
-
 			} else {
 				logger.warn("This officeCode is not match, [{}]", exciseDepartment.getOffCode());
 			}
@@ -367,128 +463,84 @@ public class ApplicationCache {
 		EXCISE_AREA_MAP.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getOfficeCode().compareTo(p2.getOfficeCode())));
 		EXCISE_BRANCH_MAP.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getOfficeCode().compareTo(p2.getOfficeCode())));
 		
-		logger.info("load ExciseDepartment Sector={}, Area={}, Branch={}", EXCISE_SECTOR_MAP.size(), EXCISE_AREA_MAP.size(), EXCISE_BRANCH_MAP.size());
+		logger.info("load ExciseDepartment Sector[{}], Area[{}], Branch[{}]", EXCISE_SECTOR_MAP.size(), EXCISE_AREA_MAP.size(), EXCISE_BRANCH_MAP.size());
 	}
 	
-	private void toDeptVo(ExciseDepartmentVo deptVo, th.go.excise.ims.preferences.persistence.entity.ExciseDepartment exciseDepartment) {
+	private void toExciseDepartmentVo(ExciseDepartmentVo deptVo, th.go.excise.ims.preferences.persistence.entity.ExciseDepartment exciseDepartment) {
 		deptVo.setOfficeCode(exciseDepartment.getOffCode());
 		deptVo.setDeptName(exciseDepartment.getOffName());
 		deptVo.setDeptShortName(exciseDepartment.getOffShortName());
 	}
-
-	private void loadGeography() {
-		GEO_SECTOR_LIST.clear();
-		GEO_PROVINCE_MAPPER.clear();
-		GEO_AMPHUR_MAPPER.clear();
-		GEO_DISTRICT_MAPPER.clear();
+	
+	private void loadExciseSubdept() {
+		logger.info("load ExciseSubdept loading...");
 		
-		/** Geography */
-		List<th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoSector> geoSectorList = geoSectorRepository.findAll();
-		GeoSectorVo sectorVo = null;
-		try {
-			for (th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoSector sector : geoSectorList) {
-				sectorVo = new GeoSectorVo();
-				BeanUtils.copyProperties(sectorVo, sector);
-				GEO_SECTOR_LIST.add(sectorVo);
-			}
-			GEO_SECTOR_LIST.sort((p1, p2) -> p1.getSectorCode().compareTo(p2.getSectorCode()));
-		} catch (Exception e) {
-			logger.warn(e.getMessage());
-		}
+		EXCISE_SUBDEPT_MAP.clear();
 		
-		/** Province */
-		List<th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoProvince> geoProvinceList = geoProvinceRepository.findAll();
-		List<GeoProvince> provinceList = null;
-		GeoProvinceVo provinceVo = null;
-		try {
-			for (th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoProvince province : geoProvinceList) {
-				provinceList = GEO_PROVINCE_MAPPER.get(province.getSectorCode());
-				if (provinceList == null) {
-					provinceList = new ArrayList<GeoProvince>();
-				}
-				provinceVo = new GeoProvinceVo();
-				BeanUtils.copyProperties(provinceVo, province);
-				provinceList.add(provinceVo);
-				GEO_PROVINCE_LIST.add(provinceVo);
-				GEO_PROVINCE_MAPPER.put(provinceVo.getSectorCode(), provinceList);
-			}
-			GEO_PROVINCE_LIST.sort((p1, p2) -> p1.getProvinceCode().compareTo(p2.getProvinceCode()));
-			GEO_PROVINCE_MAPPER.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getProvinceCode().compareTo(p2.getProvinceCode())));
-		} catch (Exception e) {
-			logger.warn(e.getMessage());
-		}
+		List<th.go.excise.ims.preferences.persistence.entity.ExciseSubdept> exciseSubdeptList = exciseSubdeptRepository.findAll();
 		
-		/** Amphur */
-		List<th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoAmphur> geoAmphurList = geoAmphurRepository.findAll();
-		List<GeoAmphur> amphurList = null;
-		GeoAmphurVo amphurVo = null;
-		try {
-			for (th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoAmphur amphur : geoAmphurList) {
-				amphurList = GEO_AMPHUR_MAPPER.get(amphur.getAmphurCode().substring(0, 2));
-				if (amphurList == null) {
-					amphurList = new ArrayList<GeoAmphur>();
-				}
-				amphurVo = new GeoAmphurVo();
-				BeanUtils.copyProperties(amphurVo, amphur);
-				amphurList.add(amphurVo);
-				GEO_AMPHUR_LIST.add(amphurVo);
-				GEO_AMPHUR_MAPPER.put(amphurVo.getAmphurCode().substring(0, 2), amphurList);
+		ExciseSubdeptVo subdeptVo = null;
+		List<ExciseSubdept> subdeptList = null;
+		for (th.go.excise.ims.preferences.persistence.entity.ExciseSubdept exciseSubdept : exciseSubdeptList) {
+			subdeptList = EXCISE_SUBDEPT_MAP.get(exciseSubdept.getOffCode());
+			if (subdeptList == null) {
+				subdeptList = new ArrayList<>();
 			}
-			GEO_AMPHUR_LIST.sort((p1, p2) -> p1.getAmphurCode().compareTo(p2.getAmphurCode()));
-			GEO_AMPHUR_MAPPER.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getAmphurCode().compareTo(p2.getAmphurCode())));
-		} catch (Exception e) {
-			logger.warn(e.getMessage());
-		}
-		
-		/** District */
-		List<th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoDistrict> geoDistricList = geoDistrictRepository.findAll();
-		List<GeoDistrict> districtList = null;
-		GeoDistrictVo districtVo = null;
-		try {
-			for (th.co.baiwa.buckwaframework.preferences.persistence.entity.GeoDistrict district : geoDistricList) {
-				districtList = GEO_DISTRICT_MAPPER.get(district.getDistrictCode().substring(0, 4));
-				if (districtList == null) {
-					districtList = new ArrayList<GeoDistrict>();
-				}
-				districtVo = new GeoDistrictVo();
-				BeanUtils.copyProperties(districtVo, district);
-				districtList.add(districtVo);
-				GEO_DISTRICT_LIST.add(districtVo);
-				GEO_DISTRICT_MAPPER.put(districtVo.getDistrictCode().substring(0, 4), districtList);
-			}
-			GEO_DISTRICT_LIST.sort((p1, p2) -> p1.getDistrictCode().compareTo(p2.getDistrictCode()));
-			GEO_DISTRICT_MAPPER.entrySet().forEach(e -> e.getValue().sort((p1, p2) -> p1.getDistrictCode().compareTo(p2.getDistrictCode())));
-		} catch (Exception e) {
-			logger.warn(e.getMessage());
+			subdeptVo = new ExciseSubdeptVo();
+			subdeptVo.setOfficeCode(exciseSubdept.getOffCode());
+			subdeptVo.setSubdeptCode(exciseSubdept.getSubdeptCode());
+			subdeptVo.setSubdeptName(exciseSubdept.getSubdeptName());
+			subdeptVo.setSubdeptShortName(exciseSubdept.getSubdeptShortName());
+			subdeptList.add(subdeptVo);
+			EXCISE_SUBDEPT_MAP.put(exciseSubdept.getOffCode(), subdeptList);
 		}
 	}
 	
 	private void loadExciseDutyGroup() {
-		List<ExciseDutyGroup> exciseDutyGroupList = exciseDutyGroupRepository.findAll();
-		for (ExciseDutyGroup exciseDutyGroup : exciseDutyGroupList) {
-			EXCISE_DUTY_GROUP.put(exciseDutyGroup.getDutyGroupCode(), exciseDutyGroup);
+		logger.info("load ExciseDutyGroup loading...");
+		
+		EXCISE_DUTY_GROUP_BY_TYPE_MAP.clear();
+		EXCISE_DUTY_GROUP_MAP.clear();
+		
+		List<th.go.excise.ims.preferences.persistence.entity.ExciseDutyGroup> exciseDutyGroupList = exciseDutyGroupRepository.findAllByDutyGroupStatus(FLAG.N_FLAG);
+		
+		ExciseDutyGroupVo dutyGroupVo = null;
+		List<ExciseDutyGroup> dutyGroupList = null;
+		for (th.go.excise.ims.preferences.persistence.entity.ExciseDutyGroup exciseDutyGroup : exciseDutyGroupList) {
+			dutyGroupList = EXCISE_DUTY_GROUP_BY_TYPE_MAP.get(exciseDutyGroup.getDutyGroupType());
+			if (dutyGroupList == null) {
+				dutyGroupList = new ArrayList<>();
+			}
+			dutyGroupVo = new ExciseDutyGroupVo();
+			dutyGroupVo.setDutyGroupCode(exciseDutyGroup.getDutyGroupCode());
+			dutyGroupVo.setDutyGroupName(exciseDutyGroup.getDutyGroupName());
+			dutyGroupVo.setDutyGroupType(exciseDutyGroup.getDutyGroupType());
+			dutyGroupList.add(dutyGroupVo);
+			EXCISE_DUTY_GROUP_BY_TYPE_MAP.put(exciseDutyGroup.getDutyGroupType(), dutyGroupList);
+			EXCISE_DUTY_GROUP_MAP.put(exciseDutyGroup.getDutyGroupCode(), dutyGroupVo);
 		}
 	}
 	
 	private void loadExciseCtrlDuty() {
-		List<ExciseCtrlDuty> exciseCtrlDutieList = exciseCtrlDutyRepository.findAll();
-		for (ExciseCtrlDuty exciseCtrlDuty : exciseCtrlDutieList) {
-			OFFICE_DUTY_ROLE.add(exciseCtrlDuty.getId().getResOffcode());
-		}
-	}
-	
-	private void loadDutyGroup() {
-		List<ExciseDutyGroup> exciseDutyGroupList = exciseDutyGroupRepository.findAllByDutyGroupStatus(FLAG.N_FLAG);
-		List<ExciseDutyGroup> data = null;
-		for (ExciseDutyGroup exciseDutyGroup : exciseDutyGroupList) {
-			data = new ArrayList<ExciseDutyGroup>();
-			data = DUTY_GROUP.get(exciseDutyGroup.getDutyGroupType());
-			if(data == null ) {
-				data = new ArrayList<ExciseDutyGroup>();
+		logger.info("load ExciseCtrlDuty loading...");
+		
+		EXCISE_CTRL_DUTY_MAP.clear();
+		
+		List<th.go.excise.ims.preferences.persistence.entity.ExciseCtrlDuty> exciseCtrlDutyList = exciseCtrlDutyRepository.findAll();
+		
+		ExciseCtrlDutyVo ctrlDutyVo = null;
+		List<ExciseCtrlDuty> ctrlDutyList = null;
+		for (th.go.excise.ims.preferences.persistence.entity.ExciseCtrlDuty exciseCtrlDuty : exciseCtrlDutyList) {
+			ctrlDutyList = EXCISE_CTRL_DUTY_MAP.get(exciseCtrlDuty.getId().getResOffcode());
+			if (ctrlDutyList == null) {
+				ctrlDutyList = new ArrayList<>();
 			}
-			data.add(exciseDutyGroup);
-			
-			DUTY_GROUP.put(exciseDutyGroup.getDutyGroupType(), data);
+			ctrlDutyVo = new ExciseCtrlDutyVo();
+			ctrlDutyVo.setResOffcode(exciseCtrlDuty.getId().getResOffcode());
+			ctrlDutyVo.setDutyGroupCode(exciseCtrlDuty.getId().getDutyGroupCode());
+			ctrlDutyVo.setDutyGroupName(exciseCtrlDuty.getId().getDutyGroupName());
+			ctrlDutyList.add(ctrlDutyVo);
+			EXCISE_CTRL_DUTY_MAP.put(exciseCtrlDuty.getId().getResOffcode(), ctrlDutyList);
 		}
 	}
 

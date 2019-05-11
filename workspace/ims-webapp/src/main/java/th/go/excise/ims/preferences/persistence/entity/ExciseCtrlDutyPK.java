@@ -1,4 +1,3 @@
-
 package th.go.excise.ims.preferences.persistence.entity;
 
 import java.io.Serializable;
@@ -11,9 +10,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 @Embeddable
 public class ExciseCtrlDutyPK implements Serializable {
-	
+
 	private static final long serialVersionUID = 9076467808415736509L;
-	
+
 	@Column(name = "DUTY_GROUP_CODE")
 	private String dutyGroupCode;
 	@Column(name = "DUTY_GROUP_NAME")
