@@ -7,6 +7,8 @@ import th.go.excise.ims.ia.persistence.entity.IaAuditTxinsurH;
 public interface IaAuditTxinsurHRepository
     extends CommonJpaCrudRepository<IaAuditTxinsurH, Long>
 {
+	
+	IaAuditTxinsurH findByAuditTxinsurNo(String auditTxinsurNo);
 
 
 }

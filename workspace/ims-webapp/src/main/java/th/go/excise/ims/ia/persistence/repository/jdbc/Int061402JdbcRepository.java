@@ -42,9 +42,9 @@ public class Int061402JdbcRepository {
 			params.add(ConvertDateUtils.parseStringToDate(request.getRegDateEnd(), ConvertDateUtils.DD_MM_YYYY));
 		}
 		
-//		if (StringUtils.isNotBlank(request.getPaperNo())) {
-//			sql.append(" AND  = ? ");
-//			params.add(request.getPaperNo());
+//		if (StringUtils.isNotBlank(request.getAuditTxinsurNo())) {
+//			sql.append(" AND r.AUDIT_TXINSUR_NO  != ? ");
+//			params.add(request.getAuditTxinsurNo());
 //		}
 
 		sql.append(" ORDER BY r.REG_DATE DESC");
@@ -81,13 +81,22 @@ public class Int061402JdbcRepository {
 			params.add(ConvertDateUtils.parseStringToDate(request.getRegDateEnd(), ConvertDateUtils.DD_MM_YYYY));
 		}
 		
-//		if (StringUtils.isNotBlank(request.getPaperNo())) {
-//			sql.append(" AND  = ? ");
-//			params.add(request.getPaperNo());
+//		if (StringUtils.isNotBlank(request.getAuditTxinsurNo())) {
+//			sql.append(" AND r.AUDIT_TXINSUR_NO  != ? ");
+//			params.add(request.getAuditTxinsurNo());
 //		}
+		
 		String sqlCount = OracleUtils.countForDataTable(sql.toString());
 		Integer count = this.commonJdbcTemplate.queryForObject(sqlCount, params.toArray(), Integer.class);
 
+		return count;
+	}
+	
+	public String getSeqTxinsurNo() {
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT AUDIT_TXINSUR_NO_SEQ.nextval FROM DUAL ");
+		
+		String count = this.commonJdbcTemplate.queryForObject(sql.toString(), String.class);
 		return count;
 	}
 

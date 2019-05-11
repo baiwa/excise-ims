@@ -16,150 +16,148 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "IA_AUDIT_TXINSUR_D1")
-public class IaAuditTxinsurD1
-    extends BaseEntity
-{
+public class IaAuditTxinsurD1 extends BaseEntity {
 
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6176015466467732369L;
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_AUDIT_TXINSUR_D1_GEN")
-    @SequenceGenerator(name = "IA_AUDIT_TXINSUR_D1_GEN", sequenceName = "IA_AUDIT_TXINSUR_D1_SEQ", allocationSize = 1)
-    @Column(name = "IA_AUDIT_TXINSUR_D1_ID")
-    private Long iaAuditTxinsurD1Id;
-    @Column(name = "AUDIT_TXINSUR_NO")
-    private BigDecimal auditTxinsurNo;
-    @Column(name = "OFFICE_CODE")
-    private String officeCode;
-    @Column(name = "NEW_REG_ID")
-    private String newRegId;
-    @Column(name = "RESULT_SEQ")
-    private BigDecimal resultSeq;
-    @Column(name = "BANK_GUARANTEE_DATE")
-    private Date bankGuaranteeDate;
-    @Column(name = "BANK_GUARANTEE_NO")
-    private String bankGuaranteeNo;
-    @Column(name = "BANK_GUARANTEE_AMT")
-    private BigDecimal bankGuaranteeAmt;
-    @Column(name = "BANK_GUARANTEE_RESULT")
-    private String bankGuaranteeResult;
-    @Column(name = "CASH_GUARANTEE_DATE")
-    private Date cashGuaranteeDate;
-    @Column(name = "CASH_RECEIPT_NO")
-    private String cashReceiptNo;
-    @Column(name = "CASH_GUARANTEE_AMT")
-    private BigDecimal cashGuaranteeAmt;
-    @Column(name = "CASH_GUARANTEE_RESULT")
-    private String cashGuaranteeResult;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_AUDIT_TXINSUR_D1_GEN")
+	@SequenceGenerator(name = "IA_AUDIT_TXINSUR_D1_GEN", sequenceName = "IA_AUDIT_TXINSUR_D1_SEQ", allocationSize = 1)
+	@Column(name = "IA_AUDIT_TXINSUR_D1_ID")
+	private Long iaAuditTxinsurD1Id;
+	@Column(name = "AUDIT_TXINSUR_NO")
+	private String auditTxinsurNo;
+	@Column(name = "OFFICE_CODE")
+	private String officeCode;
+	@Column(name = "NEW_REG_ID")
+	private String newRegId;
+	@Column(name = "RESULT_SEQ")
+	private BigDecimal resultSeq;
+	@Column(name = "BANK_GUARANTEE_DATE")
+	private Date bankGuaranteeDate;
+	@Column(name = "BANK_GUARANTEE_NO")
+	private String bankGuaranteeNo;
+	@Column(name = "BANK_GUARANTEE_AMT")
+	private BigDecimal bankGuaranteeAmt;
+	@Column(name = "BANK_GUARANTEE_RESULT")
+	private String bankGuaranteeResult;
+	@Column(name = "CASH_GUARANTEE_DATE")
+	private Date cashGuaranteeDate;
+	@Column(name = "CASH_RECEIPT_NO")
+	private String cashReceiptNo;
+	@Column(name = "CASH_GUARANTEE_AMT")
+	private BigDecimal cashGuaranteeAmt;
+	@Column(name = "CASH_GUARANTEE_RESULT")
+	private String cashGuaranteeResult;
 
-    public Long getIaAuditTxinsurD1Id() {
-        return iaAuditTxinsurD1Id;
-    }
+	public Long getIaAuditTxinsurD1Id() {
+		return iaAuditTxinsurD1Id;
+	}
 
-    public void setIaAuditTxinsurD1Id(Long iaAuditTxinsurD1Id) {
-        this.iaAuditTxinsurD1Id = iaAuditTxinsurD1Id;
-    }
+	public void setIaAuditTxinsurD1Id(Long iaAuditTxinsurD1Id) {
+		this.iaAuditTxinsurD1Id = iaAuditTxinsurD1Id;
+	}
 
-    public BigDecimal getAuditTxinsurNo() {
-        return auditTxinsurNo;
-    }
+	public String getOfficeCode() {
+		return officeCode;
+	}
 
-    public void setAuditTxinsurNo(BigDecimal auditTxinsurNo) {
-        this.auditTxinsurNo = auditTxinsurNo;
-    }
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
+	}
 
-    public String getOfficeCode() {
-        return officeCode;
-    }
+	public String getNewRegId() {
+		return newRegId;
+	}
 
-    public void setOfficeCode(String officeCode) {
-        this.officeCode = officeCode;
-    }
+	public void setNewRegId(String newRegId) {
+		this.newRegId = newRegId;
+	}
 
-    public String getNewRegId() {
-        return newRegId;
-    }
+	public BigDecimal getResultSeq() {
+		return resultSeq;
+	}
 
-    public void setNewRegId(String newRegId) {
-        this.newRegId = newRegId;
-    }
+	public void setResultSeq(BigDecimal resultSeq) {
+		this.resultSeq = resultSeq;
+	}
 
-    public BigDecimal getResultSeq() {
-        return resultSeq;
-    }
+	public Date getBankGuaranteeDate() {
+		return bankGuaranteeDate;
+	}
 
-    public void setResultSeq(BigDecimal resultSeq) {
-        this.resultSeq = resultSeq;
-    }
+	public void setBankGuaranteeDate(Date bankGuaranteeDate) {
+		this.bankGuaranteeDate = bankGuaranteeDate;
+	}
 
-    public Date getBankGuaranteeDate() {
-        return bankGuaranteeDate;
-    }
+	public String getBankGuaranteeNo() {
+		return bankGuaranteeNo;
+	}
 
-    public void setBankGuaranteeDate(Date bankGuaranteeDate) {
-        this.bankGuaranteeDate = bankGuaranteeDate;
-    }
+	public void setBankGuaranteeNo(String bankGuaranteeNo) {
+		this.bankGuaranteeNo = bankGuaranteeNo;
+	}
 
-    public String getBankGuaranteeNo() {
-        return bankGuaranteeNo;
-    }
+	public BigDecimal getBankGuaranteeAmt() {
+		return bankGuaranteeAmt;
+	}
 
-    public void setBankGuaranteeNo(String bankGuaranteeNo) {
-        this.bankGuaranteeNo = bankGuaranteeNo;
-    }
+	public void setBankGuaranteeAmt(BigDecimal bankGuaranteeAmt) {
+		this.bankGuaranteeAmt = bankGuaranteeAmt;
+	}
 
-    public BigDecimal getBankGuaranteeAmt() {
-        return bankGuaranteeAmt;
-    }
+	public String getBankGuaranteeResult() {
+		return bankGuaranteeResult;
+	}
 
-    public void setBankGuaranteeAmt(BigDecimal bankGuaranteeAmt) {
-        this.bankGuaranteeAmt = bankGuaranteeAmt;
-    }
+	public void setBankGuaranteeResult(String bankGuaranteeResult) {
+		this.bankGuaranteeResult = bankGuaranteeResult;
+	}
 
-    public String getBankGuaranteeResult() {
-        return bankGuaranteeResult;
-    }
+	public Date getCashGuaranteeDate() {
+		return cashGuaranteeDate;
+	}
 
-    public void setBankGuaranteeResult(String bankGuaranteeResult) {
-        this.bankGuaranteeResult = bankGuaranteeResult;
-    }
+	public void setCashGuaranteeDate(Date cashGuaranteeDate) {
+		this.cashGuaranteeDate = cashGuaranteeDate;
+	}
 
-    public Date getCashGuaranteeDate() {
-        return cashGuaranteeDate;
-    }
+	public String getCashReceiptNo() {
+		return cashReceiptNo;
+	}
 
-    public void setCashGuaranteeDate(Date cashGuaranteeDate) {
-        this.cashGuaranteeDate = cashGuaranteeDate;
-    }
+	public void setCashReceiptNo(String cashReceiptNo) {
+		this.cashReceiptNo = cashReceiptNo;
+	}
 
-    public String getCashReceiptNo() {
-        return cashReceiptNo;
-    }
+	public BigDecimal getCashGuaranteeAmt() {
+		return cashGuaranteeAmt;
+	}
 
-    public void setCashReceiptNo(String cashReceiptNo) {
-        this.cashReceiptNo = cashReceiptNo;
-    }
+	public void setCashGuaranteeAmt(BigDecimal cashGuaranteeAmt) {
+		this.cashGuaranteeAmt = cashGuaranteeAmt;
+	}
 
-    public BigDecimal getCashGuaranteeAmt() {
-        return cashGuaranteeAmt;
-    }
+	public String getCashGuaranteeResult() {
+		return cashGuaranteeResult;
+	}
 
-    public void setCashGuaranteeAmt(BigDecimal cashGuaranteeAmt) {
-        this.cashGuaranteeAmt = cashGuaranteeAmt;
-    }
+	public void setCashGuaranteeResult(String cashGuaranteeResult) {
+		this.cashGuaranteeResult = cashGuaranteeResult;
+	}
 
-    public String getCashGuaranteeResult() {
-        return cashGuaranteeResult;
-    }
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
 
-    public void setCashGuaranteeResult(String cashGuaranteeResult) {
-        this.cashGuaranteeResult = cashGuaranteeResult;
-    }
+	public String getAuditTxinsurNo() {
+		return auditTxinsurNo;
+	}
 
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
+	public void setAuditTxinsurNo(String auditTxinsurNo) {
+		this.auditTxinsurNo = auditTxinsurNo;
+	}
 
 }

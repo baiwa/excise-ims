@@ -1,8 +1,8 @@
 
 package th.go.excise.ims.ia.persistence.entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
@@ -30,7 +32,7 @@ public class IaAuditTxinsurH
     @Column(name = "IA_AUDIT_TXINSUR_H_ID")
     private Long iaAuditTxinsurHId;
     @Column(name = "AUDIT_TXINSUR_NO")
-    private BigDecimal auditTxinsurNo;
+    private String auditTxinsurNo;
     @Column(name = "OFFICE_CODE")
     private String officeCode;
     @Column(name = "REGIST_DATE_START")
@@ -52,14 +54,6 @@ public class IaAuditTxinsurH
 
     public void setIaAuditTxinsurHId(Long iaAuditTxinsurHId) {
         this.iaAuditTxinsurHId = iaAuditTxinsurHId;
-    }
-
-    public BigDecimal getAuditTxinsurNo() {
-        return auditTxinsurNo;
-    }
-
-    public void setAuditTxinsurNo(BigDecimal auditTxinsurNo) {
-        this.auditTxinsurNo = auditTxinsurNo;
     }
 
     public String getOfficeCode() {
@@ -121,5 +115,13 @@ public class IaAuditTxinsurH
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
     }
+
+	public String getAuditTxinsurNo() {
+		return auditTxinsurNo;
+	}
+
+	public void setAuditTxinsurNo(String auditTxinsurNo) {
+		this.auditTxinsurNo = auditTxinsurNo;
+	}
 
 }
