@@ -116,7 +116,8 @@ public class TaFormTS0121Service extends AbstractTaFormTSService<TaFormTS0121Vo,
 
 	@Override
 	public List<String> getFormTsNumberList() {
-		return taFormTs0121Repository.findFormTsNumber();
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		return taFormTs0121Repository.findFormTsNumberByOfficeCode(officeCode);
 	}
 
 	@Override
