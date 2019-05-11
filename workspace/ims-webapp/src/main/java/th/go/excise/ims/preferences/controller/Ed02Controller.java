@@ -1,4 +1,4 @@
-package th.go.excise.ims.ed.controller;
+package th.go.excise.ims.preferences.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +16,11 @@ import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
-import th.go.excise.ims.ed.service.Ed02Service;
-import th.go.excise.ims.ed.vo.Ed01Vo;
-import th.go.excise.ims.ed.vo.Ed02FormVo;
-import th.go.excise.ims.ed.vo.Ed02Vo;
 import th.go.excise.ims.ia.vo.Int120101FormVo;
+import th.go.excise.ims.preferences.service.Ed02Service;
+import th.go.excise.ims.preferences.vo.Ed01Vo;
+import th.go.excise.ims.preferences.vo.Ed02FormVo;
+import th.go.excise.ims.preferences.vo.Ed02Vo;
 
 @Controller
 @RequestMapping("/api/ed/ed02")

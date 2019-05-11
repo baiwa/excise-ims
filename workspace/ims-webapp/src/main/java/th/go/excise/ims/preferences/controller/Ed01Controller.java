@@ -1,4 +1,4 @@
-package th.go.excise.ims.ed.controller;
+package th.go.excise.ims.preferences.controller;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -23,9 +23,9 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STAT
 import th.co.baiwa.buckwaframework.security.domain.UserBean;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.ed.service.Ed01Service;
-import th.go.excise.ims.ed.vo.Ed01FormVo;
-import th.go.excise.ims.ed.vo.Ed01Vo;
+import th.go.excise.ims.preferences.service.Ed01Service;
+import th.go.excise.ims.preferences.vo.Ed01FormVo;
+import th.go.excise.ims.preferences.vo.Ed01Vo;
 
 @Controller
 @RequestMapping("/api/ed/ed01")

@@ -1,4 +1,4 @@
-package th.go.excise.ims.ed.vo;
+package th.go.excise.ims.preferences.vo;
 
 import java.math.BigDecimal;
 

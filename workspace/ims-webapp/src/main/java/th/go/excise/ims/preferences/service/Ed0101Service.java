@@ -1,4 +1,4 @@
-package th.go.excise.ims.ed.service;
+package th.go.excise.ims.preferences.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,13 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.go.excise.ims.ed.persistence.repository.jdbc.ExcisePersonJdbcRepository;
-import th.go.excise.ims.ed.persistence.repository.jdbc.ExcisePositionJdbcRepository;
-import th.go.excise.ims.ed.vo.Ed0101DepartmentVo;
-import th.go.excise.ims.ed.vo.Ed0101PositionVo;
-import th.go.excise.ims.ed.vo.Ed0101Vo;
 import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
 import th.go.excise.ims.ia.vo.ExciseDepartmentVo;
+import th.go.excise.ims.preferences.persistence.repository.jdbc.ExcisePersonJdbcRepository;
+import th.go.excise.ims.preferences.persistence.repository.jdbc.ExcisePositionJdbcRepository;
+import th.go.excise.ims.preferences.vo.Ed0101DepartmentVo;
+import th.go.excise.ims.preferences.vo.Ed0101PositionVo;
+import th.go.excise.ims.preferences.vo.Ed0101Vo;
 
 @Service
 public class Ed0101Service {

@@ -1,4 +1,4 @@
-package th.go.excise.ims.ed.controller;
+package th.go.excise.ims.preferences.controller;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -21,13 +21,13 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.ed.service.Ed0201Service;
-import th.go.excise.ims.ed.vo.Ed01Vo;
-import th.go.excise.ims.ed.vo.Ed0201FormVo;
-import th.go.excise.ims.ed.vo.Ed02Vo;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireSide;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
 import th.go.excise.ims.ia.vo.Int110101FormVo;
+import th.go.excise.ims.preferences.service.Ed0201Service;
+import th.go.excise.ims.preferences.vo.Ed01Vo;
+import th.go.excise.ims.preferences.vo.Ed0201FormVo;
+import th.go.excise.ims.preferences.vo.Ed02Vo;
 
 @Controller
 @RequestMapping("/api/ed/ed02/01")

@@ -1,4 +1,4 @@
-package th.go.excise.ims.ed.persistence.repository.jdbc;
+package th.go.excise.ims.preferences.persistence.repository.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,8 +11,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
-import th.go.excise.ims.ed.vo.Ed01Vo;
-import th.go.excise.ims.ed.vo.Ed0101Vo;
+import th.go.excise.ims.preferences.vo.Ed0101Vo;
+import th.go.excise.ims.preferences.vo.Ed01Vo;
 
 @Repository
 public class ExcisePersonJdbcRepository {

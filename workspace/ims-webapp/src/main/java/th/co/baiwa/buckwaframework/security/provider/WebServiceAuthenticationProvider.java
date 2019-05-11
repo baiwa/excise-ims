@@ -19,8 +19,8 @@ import th.co.baiwa.buckwaframework.security.domain.UserDetails;
 import th.co.baiwa.ims.ws.userldap.LoginLdap;
 import th.co.baiwa.ims.ws.userldap.Response;
 import th.co.baiwa.ims.ws.userldap.Role;
-import th.go.excise.ims.ed.persistence.entity.ExcisePerson;
-import th.go.excise.ims.ed.persistence.repository.ExcisePersonRepository;
+import th.go.excise.ims.preferences.persistence.entity.ExcisePerson;
+import th.go.excise.ims.preferences.persistence.repository.ExcisePersonRepository;
 
 @Component("wsAuthenticationProvider")
 public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {

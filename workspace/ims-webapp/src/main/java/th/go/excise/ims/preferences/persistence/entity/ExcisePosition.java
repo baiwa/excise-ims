@@ -1,22 +1,46 @@
-package th.go.excise.ims.ed.vo;
+package th.go.excise.ims.preferences.persistence.entity;
 
 import java.math.BigDecimal;
 
-public class Ed02Vo {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
-	private BigDecimal edPersonSeq;
+import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
+
+@Entity
+@Table(name = "EXCISE_POSITION")
+public class ExcisePosition extends BaseEntity {
+
+	private static final long serialVersionUID = 7382008618718656380L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EXCISE_POSITION_GEN")
+	@SequenceGenerator(name = "EXCISE_POSITION_GEN", sequenceName = "EXCISE_POSITION_SEQ", allocationSize = 1)
+	@Column(name = "ED_PERSON_SEQ")
+	private Long edPersonSeq;
+	@Column(name = "ED_POSITION_NAME")
 	private String edPositionName;
+	@Column(name = "ALLOWANCES_DAY")
 	private BigDecimal allowancesDay;
+	@Column(name = "ALLOWANCES_HALF_DAY")
 	private BigDecimal allowancesHalfDay;
+	@Column(name = "ACCOM_FEE_SINGLE")
 	private BigDecimal accomFeeSingle;
+	@Column(name = "ACCOM_FEE_DOUBLE")
 	private BigDecimal accomFeeDouble;
+	@Column(name = "ACCOM_FEE_PACKAGES")
 	private BigDecimal accomFeePackages;
 
-	public BigDecimal getEdPersonSeq() {
+	public Long getEdPersonSeq() {
 		return edPersonSeq;
 	}
 
-	public void setEdPersonSeq(BigDecimal edPersonSeq) {
+	public void setEdPersonSeq(Long edPersonSeq) {
 		this.edPersonSeq = edPersonSeq;
 	}
 

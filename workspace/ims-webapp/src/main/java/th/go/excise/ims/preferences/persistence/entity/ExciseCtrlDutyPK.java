@@ -1,5 +1,5 @@
 
-package th.go.excise.ims.ed.persistence.entity;
+package th.go.excise.ims.preferences.persistence.entity;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package th.go.excise.ims.ed.persistence.repository.jdbc;
+package th.go.excise.ims.preferences.persistence.repository.jdbc;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -12,11 +12,11 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
-import th.go.excise.ims.ed.vo.Ed0101DepartmentVo;
-import th.go.excise.ims.ed.vo.Ed0101PositionVo;
-import th.go.excise.ims.ed.vo.Ed01Vo;
-import th.go.excise.ims.ed.vo.Ed02FormVo;
-import th.go.excise.ims.ed.vo.Ed02Vo;
+import th.go.excise.ims.preferences.vo.Ed0101DepartmentVo;
+import th.go.excise.ims.preferences.vo.Ed0101PositionVo;
+import th.go.excise.ims.preferences.vo.Ed01Vo;
+import th.go.excise.ims.preferences.vo.Ed02FormVo;
+import th.go.excise.ims.preferences.vo.Ed02Vo;
 
 @Repository
 public class ExcisePositionJdbcRepository {

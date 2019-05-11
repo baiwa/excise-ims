@@ -1,5 +1,5 @@
 
-package th.go.excise.ims.ed.persistence.entity;
+package th.go.excise.ims.preferences.persistence.entity;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
-import th.go.excise.ims.ed.persistence.entity.ExciseCtrlDutyPK;
+import th.go.excise.ims.preferences.persistence.entity.ExciseCtrlDutyPK;
 
 @Entity
 @Table(name = "EXCISE_CTRL_DUTY")

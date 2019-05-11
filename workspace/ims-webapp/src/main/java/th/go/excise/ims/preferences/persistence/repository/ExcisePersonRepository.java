@@ -1,11 +1,11 @@
-package th.go.excise.ims.ed.persistence.repository;
+package th.go.excise.ims.preferences.persistence.repository;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRepository;
-import th.go.excise.ims.ed.persistence.entity.ExcisePerson;
+import th.go.excise.ims.preferences.persistence.entity.ExcisePerson;
 
 public interface ExcisePersonRepository extends CommonJpaCrudRepository<ExcisePerson, Long> {
 	

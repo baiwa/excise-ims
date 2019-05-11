@@ -1,4 +1,4 @@
-package th.go.excise.ims.ed.service;
+package th.go.excise.ims.preferences.service;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -8,14 +8,14 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.go.excise.ims.ed.persistence.entity.ExcisePosition;
-import th.go.excise.ims.ed.persistence.repository.ExcisePositionRepository;
-import th.go.excise.ims.ed.persistence.repository.jdbc.ExcisePositionJdbcRepository;
-import th.go.excise.ims.ed.vo.Ed0201FormVo;
-import th.go.excise.ims.ed.vo.Ed02Vo;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfigAll;
 import th.go.excise.ims.ia.vo.Int0301FormVo;
+import th.go.excise.ims.preferences.persistence.entity.ExcisePosition;
+import th.go.excise.ims.preferences.persistence.repository.ExcisePositionRepository;
+import th.go.excise.ims.preferences.persistence.repository.jdbc.ExcisePositionJdbcRepository;
+import th.go.excise.ims.preferences.vo.Ed0201FormVo;
+import th.go.excise.ims.preferences.vo.Ed02Vo;
 
 @Service
 public class Ed0201Service {
