@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.persistence.entity.IaRiskBudgetProject;
 import th.go.excise.ims.ia.persistence.entity.IaRiskSelectCase;
@@ -18,13 +17,14 @@ import th.go.excise.ims.ia.persistence.repository.jdbc.IaRiskBudgetProjectJdbcRe
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int030405JdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0401JdbcRepository;
 import th.go.excise.ims.ia.vo.Int030405Vo;
+import th.go.excise.ims.preferences.vo.ExciseDepartment;
 
 @Service
 public class IntSetProjectAndSystemAndExciseService {
-	
+
 	@Autowired
 	private Int030405JdbcRepository int030405JdbcRepository;
-	
+
 	@Autowired
 	private IaRiskBudgetProjectJdbcRepository iaRiskBudgetProjectJdbcRepository;
 
@@ -33,12 +33,11 @@ public class IntSetProjectAndSystemAndExciseService {
 
 	@Autowired
 	private Int0401JdbcRepository int0401JdbcRepository;
-	
+
 	public List<IaRiskSelectCase> setProjectAndSystemAndExcise() {
 		List<IaRiskSelectCase> selectCases = new ArrayList<>();
 		for (int i = 3; i <= 5; i++) {
-			long count = int0401JdbcRepository.findCountRowWithoutStatus(ExciseUtils.getCurrentBudgetYear(),
-					new BigDecimal(i));
+			long count = int0401JdbcRepository.findCountRowWithoutStatus(ExciseUtils.getCurrentBudgetYear(), new BigDecimal(i));
 			if (count == 0) {
 				selectCases = saveDataList(ExciseUtils.getCurrentBudgetYear(), new BigDecimal(i));
 			}
@@ -54,9 +53,9 @@ public class IntSetProjectAndSystemAndExciseService {
 		if (inspectionWork.compareTo(new BigDecimal(3)) == 0) {
 			selectCases = new ArrayList<>();
 			IaRiskSelectCase selectCase = new IaRiskSelectCase();
-			
+
 			List<IaRiskBudgetProject> project = iaRiskBudgetProjectJdbcRepository.getProjectByYear(new Date());
-			
+
 			for (IaRiskBudgetProject vo : project) {
 				selectCase = new IaRiskSelectCase();
 				selectCase.setProjectCode(vo.getProjectid());
@@ -70,9 +69,9 @@ public class IntSetProjectAndSystemAndExciseService {
 		} else if (inspectionWork.compareTo(new BigDecimal(4)) == 0) {
 			selectCases = new ArrayList<>();
 			IaRiskSelectCase selectCase = new IaRiskSelectCase();
-			
+
 			List<Int030405Vo> system = int030405JdbcRepository.getSystemByYear(new Date());
-			
+
 			for (Int030405Vo int030405Vo : system) {
 				selectCase = new IaRiskSelectCase();
 				selectCase.setSystemCode(int030405Vo.getSystemCode());
@@ -82,27 +81,24 @@ public class IntSetProjectAndSystemAndExciseService {
 				selectCase.setStatus("C");
 				selectCases.add(selectCase);
 			}
-			
+
 			selectCases = (List<IaRiskSelectCase>) iaRiskSelectCaseRep.saveAll(selectCases);
 		} else if (inspectionWork.compareTo(new BigDecimal(5)) == 0) {
 			selectCases = new ArrayList<>();
-			List<ExciseDept> exciseSectorList = ApplicationCache.getExciseSectorList();
-			
+			List<ExciseDepartment> exciseSectorList = ApplicationCache.getExciseSectorList();
 			IaRiskSelectCase selectCase = new IaRiskSelectCase();
-			
-			for (ExciseDept exciseDept : exciseSectorList) {
 
-//	************* Insert Sactor ************* 
+			for (ExciseDepartment exciseDept : exciseSectorList) {
+
+				// ************* Insert Sector *************
 				selectCase = new IaRiskSelectCase();
-				ExciseDept sector = ApplicationCache.getExciseDept(exciseDept.getOfficeCode().substring(0, 2) + "0000");
+				ExciseDepartment sector = ApplicationCache.getExciseDepartment(exciseDept.getOfficeCode().substring(0, 2) + "0000");
 				selectCase.setExciseCode(exciseDept.getOfficeCode());
 				selectCase.setSector(sector.getDeptName());
 
 				if (!"0000".equals(exciseDept.getOfficeCode().substring(2, 6))) {
-
-					ExciseDept area = ApplicationCache.getExciseDept(exciseDept.getOfficeCode());
+					ExciseDepartment area = ApplicationCache.getExciseDepartment(exciseDept.getOfficeCode());
 					selectCase.setArea(area.getDeptName());
-
 				} else {
 					selectCase.setArea("");
 				}
@@ -111,19 +107,17 @@ public class IntSetProjectAndSystemAndExciseService {
 				selectCase.setStatus("C");
 				selectCases.add(selectCase);
 
-//	************* Insert Area ************* 
-				List<ExciseDept> exciseAreaList = ApplicationCache.getExciseAreaList(exciseDept.getOfficeCode());
-				for (ExciseDept exciseDeptArea : exciseAreaList) {
+				// ************* Insert Area *************
+				List<ExciseDepartment> exciseAreaList = ApplicationCache.getExciseAreaList(exciseDept.getOfficeCode());
+				for (ExciseDepartment exciseDeptArea : exciseAreaList) {
 					selectCase = new IaRiskSelectCase();
-					ExciseDept sectorArea = ApplicationCache.getExciseDept(exciseDeptArea.getOfficeCode().substring(0, 2) + "0000");
+					ExciseDepartment sectorArea = ApplicationCache.getExciseDepartment(exciseDeptArea.getOfficeCode().substring(0, 2) + "0000");
 					selectCase.setExciseCode(exciseDeptArea.getOfficeCode());
 					selectCase.setSector(sectorArea.getDeptName());
 
 					if (!"0000".equals(exciseDeptArea.getOfficeCode().substring(2, 6))) {
-
-						ExciseDept area2 = ApplicationCache.getExciseDept(exciseDeptArea.getOfficeCode());
+						ExciseDepartment area2 = ApplicationCache.getExciseDepartment(exciseDeptArea.getOfficeCode());
 						selectCase.setArea(area2.getDeptName());
-
 					} else {
 						selectCase.setArea("");
 					}
@@ -132,11 +126,11 @@ public class IntSetProjectAndSystemAndExciseService {
 					selectCase.setStatus("C");
 					selectCases.add(selectCase);
 				}
-
 			}
 
 			selectCases = (List<IaRiskSelectCase>) iaRiskSelectCaseRep.saveAll(selectCases);
 		}
+
 		return selectCases;
 	}
 

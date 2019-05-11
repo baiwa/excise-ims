@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_OFFICE_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.preferences.vo.ExciseDepartmentVo;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetSendRepository;
@@ -32,8 +32,8 @@ public class PlanWorkSheetSendService {
 		logger.info("getPlanWorkSheetSend");
 		
 		List<PlanWorkSheetSendVo> planWorkSheetSendVoList = new ArrayList<>();
-		List<ExciseDept> sectorList = null;
-		List<ExciseDept> areaList = null;
+		List<ExciseDepartment> sectorList = null;
+		List<ExciseDepartment> areaList = null;
 
 		String userLoginOfficeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		List<TaPlanWorksheetSend> planWorksheetSendList = planWorksheetSendRepository.findByOfficeCodeAndBudgetYearAll(ExciseUtils.whereInLocalOfficeCode(userLoginOfficeCode), ExciseUtils.getCurrentBudgetYear());
@@ -44,13 +44,13 @@ public class PlanWorkSheetSendService {
 			planWorkSheetSendVoList.add(buildPlanWorkSheetSendVo(EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR2, planWorksheetSendList));
 			
 			sectorList = ApplicationCache.getExciseSectorList();
-			for (ExciseDept sector : sectorList) {
+			for (ExciseDepartment sector : sectorList) {
 				if (ExciseUtils.isCentral(sector.getOfficeCode())) {
 					continue;
 				}
 				planWorkSheetSendVoList.add(buildPlanWorkSheetSendVo(sector.getOfficeCode(), planWorksheetSendList));
 				areaList = ApplicationCache.getExciseAreaList(sector.getOfficeCode());
-				for (ExciseDept area : areaList) {
+				for (ExciseDepartment area : areaList) {
 					planWorkSheetSendVoList.add(buildPlanWorkSheetSendVo(area.getOfficeCode(), planWorksheetSendList));
 				}
 			}
@@ -58,7 +58,7 @@ public class PlanWorkSheetSendService {
 			// Sector
 			planWorkSheetSendVoList.add(buildPlanWorkSheetSendVo(userLoginOfficeCode, planWorksheetSendList));
 			areaList = ApplicationCache.getExciseAreaList(userLoginOfficeCode);
-			for (ExciseDept area : areaList) {
+			for (ExciseDepartment area : areaList) {
 				planWorkSheetSendVoList.add(buildPlanWorkSheetSendVo(area.getOfficeCode(), planWorksheetSendList));
 			}
 		} else {
@@ -72,11 +72,11 @@ public class PlanWorkSheetSendService {
 	private PlanWorkSheetSendVo buildPlanWorkSheetSendVo(String officeCode, List<TaPlanWorksheetSend> planWorksheetSendList) {
 		PlanWorkSheetSendVo planWorkSheetSendVo = new PlanWorkSheetSendVo();
 		if (ExciseUtils.isCentral(officeCode) || ExciseUtils.isSector(officeCode)) {
-			planWorkSheetSendVo.setSector(ApplicationCache.getExciseDept(officeCode));
+			planWorkSheetSendVo.setSector(ApplicationCache.getExciseDepartment(officeCode));
 			planWorkSheetSendVo.setArea(new ExciseDepartmentVo());
 		} else if (ExciseUtils.isArea(officeCode)) {
 			planWorkSheetSendVo.setSector(new ExciseDepartmentVo());
-			planWorkSheetSendVo.setArea(ApplicationCache.getExciseDept(officeCode));
+			planWorkSheetSendVo.setArea(ApplicationCache.getExciseDepartment(officeCode));
 		}
 		planWorkSheetSendVo.setPlanWorksheetSend(getPlanWorksheetSendByOfficeCode(officeCode, planWorksheetSendList));
 		planWorkSheetSendVo.setTotalFacNum(getTotalFacNum(planWorkSheetSendVo.getPlanWorksheetSend()));

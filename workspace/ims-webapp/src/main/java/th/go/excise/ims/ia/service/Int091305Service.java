@@ -69,8 +69,8 @@ public class Int091305Service {
 		for (int i = 1; i <= dataFind.size(); i++) {
 			obj = new Int091305QuarterVo();
 			/* _________ set department _________ */
-			obj.setOfficeCode(ApplicationCache.getExciseDept(dataFind.get(i-1).getExciseCode()).getOfficeCode());
-			obj.setDepartment(ApplicationCache.getExciseDept(dataFind.get(i-1).getExciseCode()).getDeptName());
+			obj.setOfficeCode(ApplicationCache.getExciseDepartment(dataFind.get(i-1).getExciseCode()).getOfficeCode());
+			obj.setDepartment(ApplicationCache.getExciseDepartment(dataFind.get(i-1).getExciseCode()).getDeptName());
 			
 			/* ________________ Q1 ________________ */
 			obj.setQ1Oct(

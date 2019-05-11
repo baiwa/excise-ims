@@ -44,7 +44,7 @@ public class Ed01Controller {
 			UserBean userBean = UserLoginUtils.getCurrentUserBean();
 			Ed01Vo userProfileVo = new Ed01Vo();
 			BeanUtils.copyProperties(userProfileVo, userBean);
-			userProfileVo.setDepartmentName(ApplicationCache.getExciseDept(userProfileVo.getOfficeCode()).getDeptShortName());
+			userProfileVo.setDepartmentName(ApplicationCache.getExciseDepartment(userProfileVo.getOfficeCode()).getDeptShortName());
 			respData.setData(userProfileVo);
 			respData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (IllegalAccessException | InvocationTargetException e) {

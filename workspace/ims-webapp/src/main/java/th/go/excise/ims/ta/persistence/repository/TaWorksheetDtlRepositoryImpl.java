@@ -299,7 +299,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 				vo.setCentralSelDate(""); // FIXME
 				vo.setCentralSelOfficeCode(rs.getString("CENTRAL_SEL_OFFICE_CODE"));
 				if (StringUtils.isNotBlank(vo.getCentralSelOfficeCode())) {
-					vo.setSelectBy(ApplicationCache.getExciseDept(vo.getCentralSelOfficeCode()).getDeptShortName());
+					vo.setSelectBy(ApplicationCache.getExciseDepartment(vo.getCentralSelOfficeCode()).getDeptShortName());
 				}
 
 			}
@@ -308,7 +308,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 				vo.setSectorSelDate("");
 				vo.setSectorSelOfficeCode(rs.getString("SECTOR_SEL_OFFICE_CODE"));
 				if (StringUtils.isNotBlank(vo.getSectorSelOfficeCode())) {
-					vo.setSelectBy(ApplicationCache.getExciseDept(vo.getSectorSelOfficeCode()).getDeptShortName());
+					vo.setSelectBy(ApplicationCache.getExciseDepartment(vo.getSectorSelOfficeCode()).getDeptShortName());
 				}
 			}
 			vo.setAreaSelFlag(rs.getString("AREA_SEL_FLAG"));
@@ -318,7 +318,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 						ConvertDateUtils.LOCAL_TH));
 				vo.setAreaSelOfficeCode(rs.getString("AREA_SEL_OFFICE_CODE"));
 				if (StringUtils.isNotBlank(vo.getAreaSelOfficeCode())) {
-					vo.setSelectBy(ApplicationCache.getExciseDept(vo.getAreaSelOfficeCode()).getDeptShortName());
+					vo.setSelectBy(ApplicationCache.getExciseDepartment(vo.getAreaSelOfficeCode()).getDeptShortName());
 				}
 			}
 

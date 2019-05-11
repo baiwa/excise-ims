@@ -37,15 +37,11 @@ import th.go.excise.ims.oa.persistence.entity.OaLubricantsCompare;
 import th.go.excise.ims.oa.persistence.entity.OaLubricantsCust;
 import th.go.excise.ims.oa.persistence.entity.OaLubricantsDtl;
 import th.go.excise.ims.oa.persistence.repository.OaCustomerLicenDetailRepository;
-import th.go.excise.ims.oa.persistence.repository.OaCustomerLicenRepository;
-import th.go.excise.ims.oa.persistence.repository.OaHydrocarbDtlRepository;
 import th.go.excise.ims.oa.persistence.repository.OaLubricantsCompareRepository;
 import th.go.excise.ims.oa.persistence.repository.OaLubricantsDtlRepository;
-import th.go.excise.ims.oa.persistence.repository.jdbc.Oa020106JdbcRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0201JdbcRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0206JdbcRepository;
 import th.go.excise.ims.oa.utils.OaOfficeCode;
-import th.go.excise.ims.oa.vo.Oa0106SolventVo;
 import th.go.excise.ims.oa.vo.Oa020103Vo;
 import th.go.excise.ims.oa.vo.Oa020106DtlVo;
 import th.go.excise.ims.oa.vo.Oa0206CustomersVo;
@@ -58,9 +54,6 @@ public class Oa0206Service {
 
 	@Autowired
 	private Oa0206JdbcRepository oa0206JdbcRepo;
-
-	@Autowired
-	private OaHydrocarbDtlRepository oaHydrocarbDtlRepo;
 
 	@Autowired
 	private OaLubricantsDtlRepository oaLubricantsDtlRepo;
@@ -79,12 +72,6 @@ public class Oa0206Service {
 
 	@Autowired
 	private OaLubricantsCompareRepository lubricantsComapreRepo;
-
-	@Autowired
-	private OaCustomerLicenRepository oaCustomerLicense;
-
-	@Autowired
-	private Oa020106JdbcRepository buttonRepo;
 	
 	@Autowired
 	private Oa0201JdbcRepository oa0201JdbcRep;
@@ -396,7 +383,7 @@ public class Oa0206Service {
 			params.put("myname", data.getUserThaiName());
 			params.put("myposition", data.getTitle());
 			params.put("mylicense", data.getUserThaiId());
-			params.put("underby", ApplicationCache.getExciseDept(data.getOfficeCode()).getDeptName());
+			params.put("underby", ApplicationCache.getExciseDepartment(data.getOfficeCode()).getDeptName());
 		}
 		params.put("soi", null);
 		params.put("road", null);

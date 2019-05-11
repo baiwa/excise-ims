@@ -35,7 +35,6 @@ import th.co.baiwa.buckwaframework.preferences.vo.GeoSectorVo;
 import th.co.baiwa.buckwaframework.preferences.vo.MessageVo;
 import th.co.baiwa.buckwaframework.preferences.vo.ParameterGroupVo;
 import th.co.baiwa.buckwaframework.preferences.vo.ParameterInfoVo;
-import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.co.baiwa.buckwaframework.support.domain.GeoAmphur;
 import th.co.baiwa.buckwaframework.support.domain.GeoDistrict;
 import th.co.baiwa.buckwaframework.support.domain.GeoProvince;
@@ -44,11 +43,11 @@ import th.co.baiwa.buckwaframework.support.domain.Message;
 import th.co.baiwa.buckwaframework.support.domain.ParamGroup;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.preferences.persistence.entity.ExciseCtrlDuty;
-import th.go.excise.ims.preferences.persistence.entity.ExciseDepartment;
 import th.go.excise.ims.preferences.persistence.entity.ExciseDutyGroup;
 import th.go.excise.ims.preferences.persistence.repository.ExciseCtrlDutyRepository;
 import th.go.excise.ims.preferences.persistence.repository.ExciseDepartmentRepository;
 import th.go.excise.ims.preferences.persistence.repository.ExciseDutyGroupRepository;
+import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.preferences.vo.ExciseDepartmentVo;
 
 @Component
@@ -56,25 +55,24 @@ public class ApplicationCache {
 
 	private static final Logger logger = LoggerFactory.getLogger(ApplicationCache.class);
 	
+	// Parameter and Message
 	private ParameterGroupRepository parameterGroupRepository;
 	private ParameterInfoRepository parameterInfoRepository;
 	private MessageRepository messageRepository;
-	private ExciseDepartmentRepository exciseDepartmentRepository;
+	// Geography
 	private GeoSectorRepository geoSectorRepository;
 	private GeoProvinceRepository geoProvinceRepository;
 	private GeoAmphurRepository geoAmphurRepository;
 	private GeoDistrictRepository geoDistrictRepository;
+	// Excise Master Data
+	private ExciseDepartmentRepository exciseDepartmentRepository;
 	private ExciseDutyGroupRepository exciseDutyGroupRepository;
 	private ExciseCtrlDutyRepository exciseCtrlDutyRepository;
 	
+	// Parameter and Message
 	private static final ConcurrentHashMap<String, ParamGroupWrapper> PARAM_GROUP_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, Message> MESSAGE_MAP = new ConcurrentHashMap<>();
-
-	private static final ConcurrentHashMap<String, ExciseDept> EXCISE_DEPT_MAP = new ConcurrentHashMap<>();
-	private static final ConcurrentHashMap<String, ExciseDept> EXCISE_SECTOR_MAP = new ConcurrentHashMap<>();
-	private static final ConcurrentHashMap<String, List<ExciseDept>> EXCISE_AREA_MAP = new ConcurrentHashMap<>();
-	private static final ConcurrentHashMap<String, List<ExciseDept>> EXCISE_BRANCH_MAP = new ConcurrentHashMap<>();
-
+	// Geography
 	private static final List<GeoSector> GEO_SECTOR_LIST = new ArrayList<>();
 	private static final List<GeoProvince> GEO_PROVINCE_LIST = new ArrayList<>();
 	private static final List<GeoAmphur> GEO_AMPHUR_LIST = new ArrayList<>();
@@ -82,34 +80,39 @@ public class ApplicationCache {
 	private static final ConcurrentHashMap<String, List<GeoProvince>> GEO_PROVINCE_MAPPER = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, List<GeoAmphur>> GEO_AMPHUR_MAPPER = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, List<GeoDistrict>> GEO_DISTRICT_MAPPER = new ConcurrentHashMap<>();
-	
+	// Excise Master Data
+	private static final ConcurrentHashMap<String, ExciseDepartment> EXCISE_DEPARTMENT_MAP = new ConcurrentHashMap<>();
+	private static final ConcurrentHashMap<String, ExciseDepartment> EXCISE_SECTOR_MAP = new ConcurrentHashMap<>();
+	private static final ConcurrentHashMap<String, List<ExciseDepartment>> EXCISE_AREA_MAP = new ConcurrentHashMap<>();
+	private static final ConcurrentHashMap<String, List<ExciseDepartment>> EXCISE_BRANCH_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, List<ExciseDutyGroup>> DUTY_GROUP = new ConcurrentHashMap<>();
 
 	private static final ConcurrentHashMap<String, ExciseDutyGroup> EXCISE_DUTY_GROUP = new ConcurrentHashMap<>();
 	private static final List<String> OFFICE_DUTY_ROLE = new ArrayList<>();
+	
+	
 	@Autowired
 	public ApplicationCache(
 			ParameterGroupRepository parameterGroupRepository,
 			ParameterInfoRepository parameterInfoRepository,
 			MessageRepository messageRepository,
-			ExciseDepartmentRepository exciseDepartmentRepository,
 			GeoSectorRepository geoSectorRepository,
 			GeoProvinceRepository geoProvinceRepository,
 			GeoAmphurRepository geoAmphurRepository,
 			GeoDistrictRepository geoDistrictRepository,
+			ExciseDepartmentRepository exciseDepartmentRepository,
 			ExciseDutyGroupRepository exciseDutyGroupRepository,
 			ExciseCtrlDutyRepository exciseCtrlDutyRepository) {
 		this.parameterGroupRepository = parameterGroupRepository;
 		this.parameterInfoRepository = parameterInfoRepository;
 		this.messageRepository = messageRepository;
-		this.exciseDepartmentRepository = exciseDepartmentRepository;
 		this.geoSectorRepository = geoSectorRepository;
 		this.geoProvinceRepository = geoProvinceRepository;
 		this.geoAmphurRepository = geoAmphurRepository;
 		this.geoDistrictRepository = geoDistrictRepository;
+		this.exciseDepartmentRepository = exciseDepartmentRepository;
 		this.exciseDutyGroupRepository = exciseDutyGroupRepository;
 		this.exciseCtrlDutyRepository = exciseCtrlDutyRepository;
-		
 	}
 	
 	/** Reload */
@@ -138,9 +141,6 @@ public class ApplicationCache {
 	
 	public static ParamGroup getParamGroupByCode(String paramGroupCode) {
 		return PARAM_GROUP_MAP.get(paramGroupCode).getParamGroup();
-	}
-	public static List<String> getRoleDutyOffice() {
-		return OFFICE_DUTY_ROLE;
 	}
 	
 	public static ParamInfo getParamInfoByCode(String paramGroupCode, String paramInfoCode) {
@@ -198,25 +198,6 @@ public class ApplicationCache {
 		return msgDesc;
 	}
 	
-	/** Excise Department */
-	public static ExciseDept getExciseDept(String officeCode) {
-		return EXCISE_DEPT_MAP.get(officeCode);
-	}
-	
-	public static List<ExciseDept> getExciseSectorList() {
-		List<ExciseDept> resultList = EXCISE_SECTOR_MAP.values().stream().collect(Collectors.toList());
-		resultList.sort((p1, p2) -> p1.getOfficeCode().compareTo(p2.getOfficeCode()));
-		return Collections.unmodifiableList(resultList);
-	}
-
-	public static List<ExciseDept> getExciseAreaList(String officeCode) {
-		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_AREA_MAP.get(officeCode), new ArrayList<>()));
-	}
-
-	public static List<ExciseDept> getExciseBranchList(String officeCode) {
-		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_BRANCH_MAP.get(officeCode), new ArrayList<>()));
-	}
-	
 	/** Geography */
 	public static List<GeoSector> getGeoSectorList() {
 		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(GEO_SECTOR_LIST, new ArrayList<>()));
@@ -246,11 +227,35 @@ public class ApplicationCache {
 		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(GEO_DISTRICT_MAPPER.get(amphurCode), new ArrayList<>()));
 	}
 	
-	public static ExciseDutyGroup getExciseDutyGroup(String dutyCode) {
-		return EXCISE_DUTY_GROUP.get(dutyCode);
+	/** Excise Master Data */
+	public static ExciseDepartment getExciseDepartment(String officeCode) {
+		return EXCISE_DEPARTMENT_MAP.get(officeCode);
 	}
+
+	public static List<ExciseDepartment> getExciseSectorList() {
+		List<ExciseDepartment> resultList = EXCISE_SECTOR_MAP.values().stream().collect(Collectors.toList());
+		resultList.sort((p1, p2) -> p1.getOfficeCode().compareTo(p2.getOfficeCode()));
+		return Collections.unmodifiableList(resultList);
+	}
+
+	public static List<ExciseDepartment> getExciseAreaList(String officeCode) {
+		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_AREA_MAP.get(officeCode), new ArrayList<>()));
+	}
+
+	public static List<ExciseDepartment> getExciseBranchList(String officeCode) {
+		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_BRANCH_MAP.get(officeCode), new ArrayList<>()));
+	}
+
+	public static List<String> getRoleDutyOffice() {
+		return OFFICE_DUTY_ROLE;
+	}
+
 	public static List<ExciseDutyGroup> getExciseDutyListByType(String type) {
 		return DUTY_GROUP.get(type);
+	}
+
+	public static ExciseDutyGroup getExciseDutyGroup(String dutyCode) {
+		return EXCISE_DUTY_GROUP.get(dutyCode);
 	}
 	/********************* Method for Get Cache - End *********************/
 
@@ -310,7 +315,7 @@ public class ApplicationCache {
 	private void loadExciseDepartment() {
 		logger.info("load ExciseDepartment loading...");
 		
-		EXCISE_DEPT_MAP.clear();
+		EXCISE_DEPARTMENT_MAP.clear();
 		EXCISE_SECTOR_MAP.clear();
 		EXCISE_AREA_MAP.clear();
 		EXCISE_BRANCH_MAP.clear();
@@ -318,12 +323,12 @@ public class ApplicationCache {
 		List<th.go.excise.ims.preferences.persistence.entity.ExciseDepartment> exciseDepartmentList = exciseDepartmentRepository.findAll();
 		
 		ExciseDepartmentVo deptVo = null;
-		List<ExciseDept> areaList = null;
-		List<ExciseDept> branchList = null;
+		List<ExciseDepartment> areaList = null;
+		List<ExciseDepartment> branchList = null;
 		for (th.go.excise.ims.preferences.persistence.entity.ExciseDepartment exciseDepartment : exciseDepartmentList) {
 			deptVo = new ExciseDepartmentVo();
 			toDeptVo(deptVo, exciseDepartment);
-			EXCISE_DEPT_MAP.put(deptVo.getOfficeCode(), deptVo);
+			EXCISE_DEPARTMENT_MAP.put(deptVo.getOfficeCode(), deptVo);
 			
 			if (Pattern.matches("^.{2}0{4}$", exciseDepartment.getOffCode())) {
 				deptVo = new ExciseDepartmentVo();
@@ -365,7 +370,7 @@ public class ApplicationCache {
 		logger.info("load ExciseDepartment Sector={}, Area={}, Branch={}", EXCISE_SECTOR_MAP.size(), EXCISE_AREA_MAP.size(), EXCISE_BRANCH_MAP.size());
 	}
 	
-	private void toDeptVo(ExciseDepartmentVo deptVo, ExciseDepartment exciseDepartment) {
+	private void toDeptVo(ExciseDepartmentVo deptVo, th.go.excise.ims.preferences.persistence.entity.ExciseDepartment exciseDepartment) {
 		deptVo.setOfficeCode(exciseDepartment.getOffCode());
 		deptVo.setDeptName(exciseDepartment.getOffName());
 		deptVo.setDeptShortName(exciseDepartment.getOffShortName());

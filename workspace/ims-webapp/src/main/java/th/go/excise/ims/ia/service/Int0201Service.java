@@ -16,7 +16,6 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireMade;
@@ -34,6 +33,7 @@ import th.go.excise.ims.ia.vo.Int02010101Vo;
 import th.go.excise.ims.ia.vo.Int0201FormVo;
 import th.go.excise.ims.ia.vo.Int0201FormVo2;
 import th.go.excise.ims.ia.vo.Int0201Vo;
+import th.go.excise.ims.preferences.vo.ExciseDepartment;
 
 @Service
 public class Int0201Service {
@@ -227,13 +227,13 @@ public class Int0201Service {
 			/* find id of Questionnaire Header */
 			if (request.getIdHead() != null) {
 				Optional<IaQuestionnaireHdr> hdrRes = iaQuestionnaireHdrRepository.findById(request.getIdHead());
-				List<ExciseDept> sectors = ApplicationCache.getExciseSectorList();
-				List<ExciseDept> areas = new ArrayList<>();
+				List<ExciseDepartment> sectors = ApplicationCache.getExciseSectorList();
+				List<ExciseDepartment> areas = new ArrayList<>();
 				List<String> officeCodes = new ArrayList<>();
-				for (ExciseDept sector : sectors) {
+				for (ExciseDepartment sector : sectors) {
 					areas = ApplicationCache.getExciseAreaList(sector.getOfficeCode());
 					officeCodes.add(sector.getOfficeCode());
-					for (ExciseDept area : areas) {
+					for (ExciseDepartment area : areas) {
 						officeCodes.add(area.getOfficeCode());
 					}
 				}

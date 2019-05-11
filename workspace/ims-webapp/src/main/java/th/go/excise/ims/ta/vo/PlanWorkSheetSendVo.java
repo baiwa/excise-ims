@@ -1,28 +1,28 @@
 package th.go.excise.ims.ta.vo;
 
-import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
+import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
 
 public class PlanWorkSheetSendVo {
 
-	private ExciseDept sector;
-	private ExciseDept area;
+	private ExciseDepartment sector;
+	private ExciseDepartment area;
 	private TaPlanWorksheetSend planWorksheetSend;
 	private Integer totalFacNum;
 
-	public ExciseDept getSector() {
+	public ExciseDepartment getSector() {
 		return sector;
 	}
 
-	public void setSector(ExciseDept sector) {
+	public void setSector(ExciseDepartment sector) {
 		this.sector = sector;
 	}
 
-	public ExciseDept getArea() {
+	public ExciseDepartment getArea() {
 		return area;
 	}
 
-	public void setArea(ExciseDept area) {
+	public void setArea(ExciseDepartment area) {
 		this.area = area;
 	}
 

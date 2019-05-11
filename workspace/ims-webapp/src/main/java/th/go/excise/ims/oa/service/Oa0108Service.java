@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.oa.persistence.entity.OaHydrocarb;
 import th.go.excise.ims.oa.persistence.entity.OaHydrocarbDtl;
 import th.go.excise.ims.oa.persistence.entity.OaLicensePlan;
@@ -27,6 +26,7 @@ import th.go.excise.ims.oa.vo.Oa010801FormVo;
 import th.go.excise.ims.oa.vo.Oa010801Vo;
 import th.go.excise.ims.oa.vo.Oa0108ApproveVo;
 import th.go.excise.ims.oa.vo.Oa0108Vo;
+import th.go.excise.ims.preferences.vo.ExciseDepartment;
 
 @Service
 public class Oa0108Service {
@@ -116,8 +116,8 @@ public class Oa0108Service {
 	}
 
 	private static String findSectorName(String officeCode) {
-		List<ExciseDept> sectors = ApplicationCache.getExciseSectorList();
-		for (ExciseDept sector : sectors) {
+		List<ExciseDepartment> sectors = ApplicationCache.getExciseSectorList();
+		for (ExciseDepartment sector : sectors) {
 			if (StringUtils.isNotBlank(sector.getOfficeCode())) {
 				if (sector.getOfficeCode().trim().substring(0, 2).equals(officeCode.trim().substring(0, 2))) {
 					return sector.getDeptName();
@@ -128,7 +128,7 @@ public class Oa0108Service {
 	}
 
 	private static String findAreaName(String officeCode) {
-		return ApplicationCache.getExciseDept(officeCode).getDeptName();
+		return ApplicationCache.getExciseDepartment(officeCode).getDeptName();
 	}
 
 }

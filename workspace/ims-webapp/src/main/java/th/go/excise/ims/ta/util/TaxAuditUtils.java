@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_OFFICE_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
@@ -183,11 +183,11 @@ public class TaxAuditUtils {
 		vo.setDutyName(ExciseUtils.getDutyDesc(rs.getString("DUTY_CODE")));
 	}
 	
-	public static List<ExciseDept> getExciseSectorList() {
-		List<ExciseDept> taSectorList = new ArrayList<>();
-		taSectorList.add(ApplicationCache.getExciseDept(EXCISE_OFFICE_CODE.TA_CENTRAL));
-		List<ExciseDept> sectorList = ApplicationCache.getExciseSectorList();
-		for (ExciseDept exciseDept : sectorList) {
+	public static List<ExciseDepartment> getExciseSectorList() {
+		List<ExciseDepartment> taSectorList = new ArrayList<>();
+		taSectorList.add(ApplicationCache.getExciseDepartment(EXCISE_OFFICE_CODE.TA_CENTRAL));
+		List<ExciseDepartment> sectorList = ApplicationCache.getExciseSectorList();
+		for (ExciseDepartment exciseDept : sectorList) {
 			if (EXCISE_OFFICE_CODE.CENTRAL.equals(exciseDept.getOfficeCode())) {
 				continue;
 			}

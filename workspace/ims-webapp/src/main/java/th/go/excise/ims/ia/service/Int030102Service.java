@@ -3,7 +3,6 @@ package th.go.excise.ims.ia.service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,31 +10,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
-import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
-import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.constant.IaConstants;
-import th.go.excise.ims.ia.persistence.entity.IaRiskBudgetProject;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactors;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsConfig;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMasCon;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsMaster;
 import th.go.excise.ims.ia.persistence.entity.IaRiskFactorsStatus;
-import th.go.excise.ims.ia.persistence.entity.IaRiskSelectCase;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsConfigRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsMasConRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsMasterRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsRepository;
 import th.go.excise.ims.ia.persistence.repository.IaRiskFactorsStatusRepository;
-import th.go.excise.ims.ia.persistence.repository.IaRiskSelectCaseRepository;
-import th.go.excise.ims.ia.persistence.repository.jdbc.IaRiskBudgetProjectJdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaRiskFactosMasterJdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int030102JdbcRepository;
-import th.go.excise.ims.ia.persistence.repository.jdbc.Int030405JdbcRepository;
-import th.go.excise.ims.ia.persistence.repository.jdbc.Int0401JdbcRepository;
 import th.go.excise.ims.ia.vo.Int030102FormVo;
 import th.go.excise.ims.ia.vo.Int030102Vo;
-import th.go.excise.ims.ia.vo.Int030405Vo;
 
 @Service
 public class Int030102Service {
@@ -60,9 +49,6 @@ public class Int030102Service {
 	
 	@Autowired
 	private IntSetProjectAndSystemAndExciseService intSetProjectAndSystemAndExciseService;
-	
-	@Autowired
-	private Int0401JdbcRepository int0401JdbcRepository;
 
 	@Autowired
 	private IaRiskFactorsMasConRepository iaRiskFactorsMasConRepository;

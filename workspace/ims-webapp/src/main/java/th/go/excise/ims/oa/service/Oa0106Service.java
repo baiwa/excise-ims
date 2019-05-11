@@ -26,7 +26,6 @@ import net.sf.jasperreports.export.SimpleExporterInputItem;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants;
-import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
@@ -35,11 +34,9 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.oa.persistence.entity.OaHydCustomerLicenDtl;
 import th.go.excise.ims.oa.persistence.entity.OaHydrocarbCompare;
 import th.go.excise.ims.oa.persistence.entity.OaHydrocarbDtl;
-import th.go.excise.ims.oa.persistence.entity.OaPersonAuditPlan;
 import th.go.excise.ims.oa.persistence.repository.OaHydCustomerLicenDtlRepository;
 import th.go.excise.ims.oa.persistence.repository.OaHydrocarbCompareRepository;
 import th.go.excise.ims.oa.persistence.repository.OaHydrocarbDtlRepository;
-import th.go.excise.ims.oa.persistence.repository.OaPersonAuditPlanRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0106JdbcRepository;
 import th.go.excise.ims.oa.persistence.repository.jdbc.Oa0201JdbcRepository;
 import th.go.excise.ims.oa.utils.OaOfficeCode;
@@ -297,7 +294,7 @@ public class Oa0106Service {
 			params.put("myname", data.getUserThaiName());
 			params.put("myposition", data.getTitle());
 			params.put("mylicense", data.getUserThaiId());
-			params.put("underby", ApplicationCache.getExciseDept(data.getOfficeCode()).getDeptName());
+			params.put("underby", ApplicationCache.getExciseDepartment(data.getOfficeCode()).getDeptName());
 		}
 		params.put("soi", null);
 		params.put("road", null);

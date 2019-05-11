@@ -3,9 +3,7 @@ package th.go.excise.ims.preferences.vo;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
-
-public class ExciseDepartmentVo implements ExciseDept {
+public class ExciseDepartmentVo implements ExciseDepartment {
 
 	private String officeCode;
 	private String deptName;

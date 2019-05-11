@@ -1,6 +1,6 @@
-package th.co.baiwa.buckwaframework.support.domain;
+package th.go.excise.ims.preferences.vo;
 
-public interface ExciseDept {
+public interface ExciseDepartment {
 	
 	public String getOfficeCode();
 

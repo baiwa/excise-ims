@@ -18,11 +18,11 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_OFFICE_CODE;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
 import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSelect;
@@ -114,10 +114,10 @@ public class PlanWorksheetService {
 				planSend.setSendDate(LocalDate.now());
 				planSendList.add(planSend);
 			}
-			List<ExciseDept> sectorList = ApplicationCache.getExciseSectorList();
-			List<ExciseDept> areaList = null;
+			List<ExciseDepartment> sectorList = ApplicationCache.getExciseSectorList();
+			List<ExciseDepartment> areaList = null;
 			// Sector
-			for (ExciseDept sector : sectorList) {
+			for (ExciseDepartment sector : sectorList) {
 				planSend = new TaPlanWorksheetSend();
 				planSend.setBudgetYear(formVo.getBudgetYear());
 				planSend.setPlanNumber(planNumber);
@@ -126,7 +126,7 @@ public class PlanWorksheetService {
 				planSendList.add(planSend);
 				// Area
 				areaList = ApplicationCache.getExciseAreaList(sector.getOfficeCode());
-				for (ExciseDept area : areaList) {
+				for (ExciseDepartment area : areaList) {
 					planSend = new TaPlanWorksheetSend();
 					planSend.setBudgetYear(formVo.getBudgetYear());
 					planSend.setPlanNumber(planNumber);
@@ -321,8 +321,8 @@ public class PlanWorksheetService {
 
 		if (FLAG.N_FLAG.equalsIgnoreCase(planHdr.getSendAllFlag())) {
 			if (ExciseUtils.isCentral(officeCode)) {
-				List<ExciseDept> sectorList = ApplicationCache.getExciseSectorList();
-				for (ExciseDept sector : sectorList) {
+				List<ExciseDepartment> sectorList = ApplicationCache.getExciseSectorList();
+				for (ExciseDepartment sector : sectorList) {
 					if (ExciseUtils.isCentral(sector.getOfficeCode())) {
 						continue;
 					}
@@ -330,8 +330,8 @@ public class PlanWorksheetService {
 				}
 			}
 			if (ExciseUtils.isSector(officeCode)) {
-				List<ExciseDept> areaList = ApplicationCache.getExciseAreaList(officeCode);
-				for (ExciseDept area : areaList) {
+				List<ExciseDepartment> areaList = ApplicationCache.getExciseAreaList(officeCode);
+				for (ExciseDepartment area : areaList) {
 					saveObjectTaPlanWorksheetSend(formVo, area.getOfficeCode());
 				}
 			}

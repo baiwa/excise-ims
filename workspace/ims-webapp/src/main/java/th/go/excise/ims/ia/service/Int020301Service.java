@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaQuestionnaireHdr;
@@ -42,6 +41,7 @@ import th.go.excise.ims.ia.vo.Int020301HeaderVo;
 import th.go.excise.ims.ia.vo.Int020301InfoVo;
 import th.go.excise.ims.ia.vo.IntCalculateCriteriaVo;
 import th.go.excise.ims.preferences.vo.ExcelHeaderNameVo;
+import th.go.excise.ims.preferences.vo.ExciseDepartment;
 
 @Service
 public class Int020301Service {
@@ -192,16 +192,16 @@ public class Int020301Service {
 			}
 			data.setAvgRisk(new BigDecimal(Math.round(avg)));
 			// Finding Sector and Area Name
-			List<ExciseDept> exciseDepts = ApplicationCache.getExciseSectorList();
+			List<ExciseDepartment> exciseDepts = ApplicationCache.getExciseSectorList();
 			data.setStatusText(ApplicationCache
 					.getParamInfoByCode(IaConstants.IA_STATUS_REPLY_QTN.PARAM_GROUP_CODE, data.getStatusText())
 					.getValue1());
-			for (ExciseDept exciseDept : exciseDepts) {
+			for (ExciseDepartment exciseDept : exciseDepts) {
 				if (exciseDept.getOfficeCode().substring(0, 2).equals(data.getSectorName().substring(0, 2))) {
 					data.setSectorName(exciseDept.getDeptName());
 				}
 			}
-			ExciseDept area = ApplicationCache.getExciseDept(data.getAreaName());
+			ExciseDepartment area = ApplicationCache.getExciseDepartment(data.getAreaName());
 			if (!"0000".equals(area.getOfficeCode().substring(2, 6))) {
 				data.setAreaName(area.getDeptName());
 			} else {
@@ -306,15 +306,15 @@ public class Int020301Service {
 				data.setRiskText(risk.getTranslatingRisk());
 				data.setRiskNum(risk.getRiskRate());
 				// Finding Sector and Area Name
-				List<ExciseDept> exciseDepts = ApplicationCache.getExciseSectorList();
+				List<ExciseDepartment> exciseDepts = ApplicationCache.getExciseSectorList();
 				data.setStatusText(ApplicationCache
 						.getParamInfoByCode(IaConstants.IA_STATUS.PARAM_GROUP_CODE, data.getStatusText()).getValue1());
-				for (ExciseDept exciseDept : exciseDepts) {
+				for (ExciseDepartment exciseDept : exciseDepts) {
 					if (exciseDept.getOfficeCode().substring(0, 2).equals(data.getSectorName().substring(0, 2))) {
 						data.setSectorName(exciseDept.getDeptName());
 					}
 				}
-				ExciseDept area = ApplicationCache.getExciseDept(data.getAreaName());
+				ExciseDepartment area = ApplicationCache.getExciseDepartment(data.getAreaName());
 				if (!"0000".equals(area.getOfficeCode().substring(2, 6))) {
 					data.setAreaName(area.getDeptName());
 				} else {

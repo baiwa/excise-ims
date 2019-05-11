@@ -31,7 +31,6 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.ia.persistence.entity.IaEmpWorkingDtl;
 import th.go.excise.ims.ia.persistence.entity.IaEmpWorkingH;
 import th.go.excise.ims.ia.persistence.repository.IaEmpWorkingDtlRepository;
@@ -41,6 +40,7 @@ import th.go.excise.ims.ia.vo.IaEmpWorkingDtlSaveVo;
 import th.go.excise.ims.ia.vo.IaEmpWorkingHdrFormVo;
 import th.go.excise.ims.ia.vo.IaEmpWorkingHdrVo;
 import th.go.excise.ims.preferences.persistence.entity.ExciseHoliday;
+import th.go.excise.ims.preferences.vo.ExciseDepartment;
 
 @Service
 public class Int090102Service {
@@ -209,7 +209,7 @@ public class Int090102Service {
 
 		Map<String, Object> params = new HashMap<>();
 		String userName = UserLoginUtils.getCurrentUserBean().getUserThaiName() + " " + UserLoginUtils.getCurrentUserBean().getUserThaiSurname();
-		ExciseDept userOffcode = ApplicationCache.getExciseDept(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+		ExciseDepartment userOffcode = ApplicationCache.getExciseDepartment(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 		int workingFlag1Total = 0;
 		int workingFlag3Total = 0;
 		int workingFlag5Total = 0;

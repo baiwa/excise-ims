@@ -20,7 +20,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
+import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainDtl;
@@ -60,11 +60,11 @@ public class TaxOperatorController {
     // TODO Common
     @PostMapping("/sector-list")
     @ResponseBody
-    public ResponseData<List<ExciseDept>> getAllTaSectorList() {
+    public ResponseData<List<ExciseDepartment>> getAllTaSectorList() {
         logger.info("getAllTaSectorList");
 
-        ResponseData<List<ExciseDept>> response = new ResponseData<>();
-        List<ExciseDept> exciseSectorList = TaxAuditUtils.getExciseSectorList();
+        ResponseData<List<ExciseDepartment>> response = new ResponseData<>();
+        List<ExciseDepartment> exciseSectorList = TaxAuditUtils.getExciseSectorList();
         if (!CollectionUtils.isEmpty(exciseSectorList)) {
             response.setData(exciseSectorList);
             response.setStatus(RESPONSE_STATUS.SUCCESS);

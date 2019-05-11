@@ -105,7 +105,7 @@ public class AuthenController {
 			UserProfileVo userProfileVo = new UserProfileVo();
 			BeanUtils.copyProperties(userProfileVo, userBean);
 			userProfileVo.setAuthorityList(UserLoginUtils.getGrantedAuthorityList());
-			userProfileVo.setDepartmentName(ApplicationCache.getExciseDept(userProfileVo.getOfficeCode()).getDeptShortName());
+			userProfileVo.setDepartmentName(ApplicationCache.getExciseDepartment(userProfileVo.getOfficeCode()).getDeptShortName());
 			userProfileVo.setIsCentral(ExciseUtils.isCentral(UserLoginUtils.getCurrentUserBean().getOfficeCode()));
 			respData.setData(userProfileVo);
 			respData.setStatus(RESPONSE_STATUS.SUCCESS);

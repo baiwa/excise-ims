@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.oa.persistence.entity.OaAchCustomerLicen;
 import th.go.excise.ims.oa.persistence.entity.OaAchCustomerLicenDtl;
 import th.go.excise.ims.oa.persistence.repository.OaAchCustomerLicenDtlRepository;
@@ -22,6 +21,7 @@ import th.go.excise.ims.oa.vo.Oa0107CodeVo;
 import th.go.excise.ims.oa.vo.Oa020106FormVo;
 import th.go.excise.ims.oa.vo.Oa040106FormVo;
 import th.go.excise.ims.oa.vo.Oa0412Vo;
+import th.go.excise.ims.preferences.vo.ExciseDepartment;
 
 @Service
 public class Oa0412Service {
@@ -46,7 +46,7 @@ public class Oa0412Service {
 				}
 			}
 		}
-		List<ExciseDept> exciseDepts = ApplicationCache.getExciseSectorList();
+		List<ExciseDepartment> exciseDepts = ApplicationCache.getExciseSectorList();
 		List<Oa020106FormVo> realDataAgain = new ArrayList<Oa020106FormVo>();
 		for (OaAchCustomerLicen real : realData) {
 			Oa020106FormVo realD = new Oa020106FormVo();
@@ -64,12 +64,12 @@ public class Oa0412Service {
 			realD.setIdentifyType(real.getIdentifyType());
 			realD.setAddress(real.getLicenseAddress());
 			realD.setOffCode(real.getOffCode());
-			for (ExciseDept exciseDept : exciseDepts) {
+			for (ExciseDepartment exciseDept : exciseDepts) {
 				if (exciseDept.getOfficeCode().substring(0, 2).equals(real.getOffCode().substring(0, 2))) {
 					realD.setSectorName(exciseDept.getDeptName());
 				}
 			}
-			ExciseDept area = ApplicationCache.getExciseDept(real.getOffCode());
+			ExciseDepartment area = ApplicationCache.getExciseDepartment(real.getOffCode());
 			if (!"0000".equals(area.getOfficeCode().substring(2, 6))) {
 				realD.setAreaName(area.getDeptName());
 			} else {

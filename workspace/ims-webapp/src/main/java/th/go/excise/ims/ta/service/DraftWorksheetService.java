@@ -1,5 +1,15 @@
 package th.go.excise.ims.ta.service;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.transaction.Transactional;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.math3.stat.StatUtils;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
@@ -8,27 +18,49 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.buckwaframework.support.domain.ExciseDept;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
 import th.go.excise.ims.common.util.ExciseUtils;
-import th.go.excise.ims.ta.persistence.entity.*;
-import th.go.excise.ims.ta.persistence.repository.*;
+import th.go.excise.ims.preferences.vo.ExciseDepartment;
+import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
+import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
+import th.go.excise.ims.ta.persistence.entity.TaMasCondSubCapital;
+import th.go.excise.ims.ta.persistence.entity.TaMasCondSubNoAudit;
+import th.go.excise.ims.ta.persistence.entity.TaMasCondSubRisk;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainDtl;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainHdr;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondSubCapital;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondSubNoAudit;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondSubRisk;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetDtl;
+import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
+import th.go.excise.ims.ta.persistence.entity.TaWsInc8000M;
+import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
+import th.go.excise.ims.ta.persistence.repository.TaMasCondMainDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaMasCondMainHdrRepository;
+import th.go.excise.ims.ta.persistence.repository.TaMasCondSubCapitalRepository;
+import th.go.excise.ims.ta.persistence.repository.TaMasCondSubNoAuditRepository;
+import th.go.excise.ims.ta.persistence.repository.TaMasCondSubRiskRepository;
+import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetHisRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondMainDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondMainHdrRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondSubCapitalRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondSubNoAuditRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondSubRiskRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetDtlRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWorksheetHdrRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWsInc8000MRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.util.TaxAuditUtils;
-import th.go.excise.ims.ta.vo.*;
-
-import javax.transaction.Transactional;
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
+import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
+import th.go.excise.ims.ta.vo.TaxOperatorVo;
+import th.go.excise.ims.ta.vo.YearMonthVo;
 
 @Service
 public class DraftWorksheetService {
@@ -124,8 +156,8 @@ public class DraftWorksheetService {
 		BigDecimal sumTaxAmtG1 = null;
 		BigDecimal sumTaxAmtG2 = null;
 		BigDecimal taxAmtChnPnt = null;
-		ExciseDept exciseDeptSector = null;
-		ExciseDept exciseDeptArea = null;
+		ExciseDepartment exciseDeptSector = null;
+		ExciseDepartment exciseDeptArea = null;
 		String taxAmount = null;
 		List<Double> taxAmountList = null;
 
@@ -158,13 +190,13 @@ public class DraftWorksheetService {
 			detailVo.setTaxAuditLast1(auditPlanMap.get(String.valueOf(lastYear1) + wsReg4000.getNewRegId()));
 			detailVo.setTaxAuditLast2(auditPlanMap.get(String.valueOf(lastYear2) + wsReg4000.getNewRegId()));
 			detailVo.setTaxAuditLast3(auditPlanMap.get(String.valueOf(lastYear3) + wsReg4000.getNewRegId()));
-			exciseDeptSector = ApplicationCache.getExciseDept(wsReg4000.getOfficeCode().substring(0, 2) + "0000");
+			exciseDeptSector = ApplicationCache.getExciseDepartment(wsReg4000.getOfficeCode().substring(0, 2) + "0000");
 
 			if (exciseDeptSector != null) {
 				detailVo.setSecCode(exciseDeptSector.getOfficeCode());
 				detailVo.setSecDesc(exciseDeptSector.getDeptShortName());
 			}
-			exciseDeptArea = ApplicationCache.getExciseDept(wsReg4000.getOfficeCode().substring(0, 4) + "00");
+			exciseDeptArea = ApplicationCache.getExciseDepartment(wsReg4000.getOfficeCode().substring(0, 4) + "00");
 
 			if (exciseDeptArea != null) {
 				detailVo.setAreaCode(exciseDeptArea.getOfficeCode());
