@@ -1,5 +1,9 @@
 package th.go.excise.ims.ta.persistence.entity;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,6 +29,46 @@ public class TaWorksheetDtl extends BaseEntity {
 	private String analysisNumber;
 	@Column(name = "NEW_REG_ID")
 	private String newRegId;
+	@Column(name = "CUS_ID")
+	private String cusId;
+	@Column(name = "CUS_FULLNAME")
+	private String cusFullname;
+	@Column(name = "CUS_ADDRESS")
+	private String cusAddress;
+	@Column(name = "CUS_TELNO")
+	private String cusTelno;
+	@Column(name = "CUS_EMAIL")
+	private String cusEmail;
+	@Column(name = "CUS_URL")
+	private String cusUrl;
+	@Column(name = "FAC_ID")
+	private String facId;
+	@Column(name = "FAC_FULLNAME")
+	private String facFullname;
+	@Column(name = "FAC_ADDRESS")
+	private String facAddress;
+	@Column(name = "FAC_TELNO")
+	private String facTelno;
+	@Column(name = "FAC_EMAIL")
+	private String facEmail;
+	@Column(name = "FAC_URL")
+	private String facUrl;
+	@Column(name = "FAC_TYPE")
+	private String facType;
+	@Column(name = "REG_ID")
+	private String regId;
+	@Column(name = "REG_STATUS")
+	private String regStatus;
+	@Column(name = "REG_DATE")
+	private LocalDate regDate;
+	@Column(name = "REG_CAPITAL")
+	private BigDecimal regCapital;
+	@Column(name = "OFFICE_CODE")
+	private String officeCode;
+	@Column(name = "DUTY_GROUP_ID")
+	private String dutyGroupId;
+	@Column(name = "SYNC_DATE")
+	private LocalDateTime syncDate;
 	@Column(name = "SUM_TAX_AMT_G1")
 	private String sumTaxAmtG1;
 	@Column(name = "SUM_TAX_AMT_G2")
@@ -106,14 +150,6 @@ public class TaWorksheetDtl extends BaseEntity {
 	@Column(name = "LAST_AUDIT_YEAR")
 	private String lastAuditYear;
 
-	public String getLastAuditYear() {
-		return lastAuditYear;
-	}
-
-	public void setLastAuditYear(String lastAuditYear) {
-		this.lastAuditYear = lastAuditYear;
-	}
-
 	public Long getWorksheetDtlId() {
 		return worksheetDtlId;
 	}
@@ -136,6 +172,166 @@ public class TaWorksheetDtl extends BaseEntity {
 
 	public void setNewRegId(String newRegId) {
 		this.newRegId = newRegId;
+	}
+
+	public String getCusId() {
+		return cusId;
+	}
+
+	public void setCusId(String cusId) {
+		this.cusId = cusId;
+	}
+
+	public String getCusFullname() {
+		return cusFullname;
+	}
+
+	public void setCusFullname(String cusFullname) {
+		this.cusFullname = cusFullname;
+	}
+
+	public String getCusAddress() {
+		return cusAddress;
+	}
+
+	public void setCusAddress(String cusAddress) {
+		this.cusAddress = cusAddress;
+	}
+
+	public String getCusTelno() {
+		return cusTelno;
+	}
+
+	public void setCusTelno(String cusTelno) {
+		this.cusTelno = cusTelno;
+	}
+
+	public String getCusEmail() {
+		return cusEmail;
+	}
+
+	public void setCusEmail(String cusEmail) {
+		this.cusEmail = cusEmail;
+	}
+
+	public String getCusUrl() {
+		return cusUrl;
+	}
+
+	public void setCusUrl(String cusUrl) {
+		this.cusUrl = cusUrl;
+	}
+
+	public String getFacId() {
+		return facId;
+	}
+
+	public void setFacId(String facId) {
+		this.facId = facId;
+	}
+
+	public String getFacFullname() {
+		return facFullname;
+	}
+
+	public void setFacFullname(String facFullname) {
+		this.facFullname = facFullname;
+	}
+
+	public String getFacAddress() {
+		return facAddress;
+	}
+
+	public void setFacAddress(String facAddress) {
+		this.facAddress = facAddress;
+	}
+
+	public String getFacTelno() {
+		return facTelno;
+	}
+
+	public void setFacTelno(String facTelno) {
+		this.facTelno = facTelno;
+	}
+
+	public String getFacEmail() {
+		return facEmail;
+	}
+
+	public void setFacEmail(String facEmail) {
+		this.facEmail = facEmail;
+	}
+
+	public String getFacUrl() {
+		return facUrl;
+	}
+
+	public void setFacUrl(String facUrl) {
+		this.facUrl = facUrl;
+	}
+
+	public String getFacType() {
+		return facType;
+	}
+
+	public void setFacType(String facType) {
+		this.facType = facType;
+	}
+
+	public String getRegId() {
+		return regId;
+	}
+
+	public void setRegId(String regId) {
+		this.regId = regId;
+	}
+
+	public String getRegStatus() {
+		return regStatus;
+	}
+
+	public void setRegStatus(String regStatus) {
+		this.regStatus = regStatus;
+	}
+
+	public LocalDate getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(LocalDate regDate) {
+		this.regDate = regDate;
+	}
+
+	public BigDecimal getRegCapital() {
+		return regCapital;
+	}
+
+	public void setRegCapital(BigDecimal regCapital) {
+		this.regCapital = regCapital;
+	}
+
+	public String getOfficeCode() {
+		return officeCode;
+	}
+
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
+	}
+
+	public String getDutyGroupId() {
+		return dutyGroupId;
+	}
+
+	public void setDutyGroupId(String dutyGroupId) {
+		this.dutyGroupId = dutyGroupId;
+	}
+
+	public LocalDateTime getSyncDate() {
+		return syncDate;
+	}
+
+	public void setSyncDate(LocalDateTime syncDate) {
+		this.syncDate = syncDate;
 	}
 
 	public String getSumTaxAmtG1() {
@@ -448,6 +644,14 @@ public class TaWorksheetDtl extends BaseEntity {
 
 	public void setCondSubNoAudit(String condSubNoAudit) {
 		this.condSubNoAudit = condSubNoAudit;
+	}
+
+	public String getLastAuditYear() {
+		return lastAuditYear;
+	}
+
+	public void setLastAuditYear(String lastAuditYear) {
+		this.lastAuditYear = lastAuditYear;
 	}
 
 }

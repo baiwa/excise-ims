@@ -36,7 +36,7 @@ public class WsRegfri4000RepositoryTest {
 		regfri4000Vo.setStart(0);
 		regfri4000Vo.setLength(count.intValue());
 		
-		List<WsRegfri4000Vo> regfri4000VoList = wsRegfri4000Repository.findByCriteria(regfri4000Vo);
+		List<WsRegfri4000Vo> regfri4000VoList = wsRegfri4000Repository.findByCriteria(regfri4000Vo, true);
 		regfri4000VoList.forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
 	}
 	

@@ -61,9 +61,8 @@ public class WorksheetService {
     private TaPlanWorksheetHisRepository taPlanWorksheetHisRepository;
 
     @Transactional(rollbackOn = Exception.class)
-    public void saveWorksheet(String draftNumber, String budgetYear) throws Exception {
+    public void saveWorksheet(String analysisNumber, String budgetYear) throws Exception {
         String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-        String analysisNumber = draftNumber;
         logger.info("saveWorksheet budgetYear={}, analysisNumber={}", budgetYear, analysisNumber);
 
         // ==> Update WorksheetHdr

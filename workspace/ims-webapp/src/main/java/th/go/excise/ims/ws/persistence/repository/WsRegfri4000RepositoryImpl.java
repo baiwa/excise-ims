@@ -220,18 +220,19 @@ public class WsRegfri4000RepositoryImpl implements WsRegfri4000RepositoryCustom 
 	}
 
 	@Override
-	public List<WsRegfri4000Vo> findByCriteria(WsRegfri4000Vo regfri4000Vo) {
+	public List<WsRegfri4000Vo> findByCriteria(WsRegfri4000Vo regfri4000Vo, boolean isPaging) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		buildByCriteriaQuery(sql, params, regfri4000Vo);
-
+		
 		sql.append(" ORDER BY R4000D.GROUP_ID, R4000.OFFICE_CODE, R4000.NEW_REG_ID ");
-
-		return this.commonJdbcTemplate.query(
-			OracleUtils.limitForDatable(sql.toString(), regfri4000Vo.getStart(), regfri4000Vo.getLength()),
-			params.toArray(),
-			WsRegfri4000VoRowMapper.getInstance()
-		);
+		
+		if (isPaging) {
+			String sqlPaging = OracleUtils.limitForDatable(sql.toString(), regfri4000Vo.getStart(), regfri4000Vo.getLength());
+			return this.commonJdbcTemplate.query(sqlPaging, params.toArray(), WsRegfri4000VoRowMapper.getInstance());
+		} else {
+			return this.commonJdbcTemplate.query(sql.toString(), params.toArray(), WsRegfri4000VoRowMapper.getInstance());
+		}
 	}
 
 	@Override

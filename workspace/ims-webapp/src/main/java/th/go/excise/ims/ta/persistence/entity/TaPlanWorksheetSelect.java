@@ -25,6 +25,8 @@ public class TaPlanWorksheetSelect extends BaseEntity {
 	private String budgetYear;
 	@Column(name = "NEW_REG_ID")
 	private String newRegId;
+	@Column(name = "DUTY_GROUP_ID")
+	private String dutyGroupId;
 	@Column(name = "CENTRAL_SEL_FLAG")
 	private String centralSelFlag;
 	@Column(name = "CENTRAL_SEL_DATE")
@@ -66,6 +68,14 @@ public class TaPlanWorksheetSelect extends BaseEntity {
 
 	public void setNewRegId(String newRegId) {
 		this.newRegId = newRegId;
+	}
+
+	public String getDutyGroupId() {
+		return dutyGroupId;
+	}
+
+	public void setDutyGroupId(String dutyGroupId) {
+		this.dutyGroupId = dutyGroupId;
 	}
 
 	public String getCentralSelFlag() {

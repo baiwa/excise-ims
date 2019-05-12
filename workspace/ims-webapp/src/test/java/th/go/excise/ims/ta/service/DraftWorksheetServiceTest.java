@@ -27,7 +27,7 @@ public class DraftWorksheetServiceTest {
 	@Autowired
 	private DraftWorksheetService draftWorksheetService;
 	
-	@Test
+//	@Test
 	public void test_getPreviewData() {
 		long start = System.currentTimeMillis();
 		
@@ -47,22 +47,22 @@ public class DraftWorksheetServiceTest {
 		System.out.println("Process Success, using " + ((float) (end - start) / 1000F) + " seconds");
 	}
 	
-//	@Test
+	@Test
 	public void test_saveDraft() {
 		long start = System.currentTimeMillis();
 		
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
 		formVo.setBudgetYear("2562");
-		formVo.setOfficeCode("000000");
-		formVo.setDateStart("05/2558");
-		formVo.setDateEnd("04/2560");
-		formVo.setDateRange(24);
+		formVo.setOfficeCode("001401");
+		formVo.setDateStart("01/2561");
+		formVo.setDateEnd("12/2561");
+		formVo.setDateRange(12);
 		formVo.setStart(0);
 		formVo.setLength(0);
-		formVo.setCondNumber("000000-2562-01");
-		formVo.setCondSub1(FLAG.Y_FLAG);
-		formVo.setCondSub2(FLAG.Y_FLAG);
-		formVo.setCondSub3(FLAG.Y_FLAG);
+		formVo.setCondNumber("001401-2562-03");
+		formVo.setCondSub1(FLAG.N_FLAG);
+		formVo.setCondSub2(FLAG.N_FLAG);
+		formVo.setCondSub3(FLAG.N_FLAG);
 		
 		try {
 			draftWorksheetService.saveDraftWorksheet(formVo);
