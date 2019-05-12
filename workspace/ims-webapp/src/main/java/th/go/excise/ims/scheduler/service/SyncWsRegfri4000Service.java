@@ -86,12 +86,12 @@ public class SyncWsRegfri4000Service {
 					regfri4000.setRegCapital(null); // TODO Assign value
 					regfri4000.setOfficeCode(regMaster60.getOffcode());
 					regfri4000.setActiveFlag(regMaster60.getActiveFlag());
+					regfri4000.setSyncDate(LocalDateTime.now());
 					regfri4000.setCreatedBy(SYSTEM_USER.BATCH);
 					regfri4000.setCreatedDate(LocalDateTime.now());
 					regfri4000.setUpdatedBy(SYSTEM_USER.BATCH);
 					regfri4000.setUpdatedDate(LocalDateTime.now());
 					if (regMaster60.getRegDutyList() != null && regMaster60.getRegDutyList().size() > 0) {
-						regfri4000.setDutyCode(regMaster60.getRegDutyList().get(0).getGroupId());
 						for (RegDuty regDuty : regMaster60.getRegDutyList()) {
 							regfri4000Duty = new WsRegfri4000Duty();
 							regfri4000Duty.setNewRegId(regMaster60.getNewregId());

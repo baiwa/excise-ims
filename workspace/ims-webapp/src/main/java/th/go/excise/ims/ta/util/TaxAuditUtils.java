@@ -180,7 +180,7 @@ public class TaxAuditUtils {
 		vo.setTaxAmtMean(rs.getString("TAX_AMT_MEAN"));
 		vo.setTaxAmtMaxPnt(rs.getString("TAX_AMT_MAX_PNT"));
 		vo.setTaxAmtMinPnt(rs.getString("TAX_AMT_MIN_PNT"));
-		vo.setDutyName(ExciseUtils.getDutyDesc(rs.getString("DUTY_CODE")));
+		vo.setDutyName(ExciseUtils.getDutyGroupDesc(rs.getString("DUTY_CODE")));
 	}
 	
 	public static List<ExciseDepartment> getExciseSectorList() {

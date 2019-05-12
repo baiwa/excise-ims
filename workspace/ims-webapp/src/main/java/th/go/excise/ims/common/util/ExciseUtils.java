@@ -16,6 +16,7 @@ import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
+import th.go.excise.ims.preferences.vo.ExciseDutyGroup;
 import th.go.excise.ims.ws.client.pcc.regfri4000.model.RegMaster60;
 
 public class ExciseUtils {
@@ -74,7 +75,8 @@ public class ExciseUtils {
 		}
 		return String.valueOf(budgetYear);
 	}
-
+	
+	@Deprecated
 	public static String getDutyDesc(String dutyCode) {
 		for (ParamInfo paramInfo : paramInfoList) {
 			if (paramInfo.getParamCode().equals(dutyCode)) {
@@ -82,6 +84,11 @@ public class ExciseUtils {
 			}
 		}
 		return null;
+	}
+	
+	public static String getDutyGroupDesc(String dutyGroupId) {
+		ExciseDutyGroup dutyGroup = ApplicationCache.getExciseDutyGroup(dutyGroupId);
+		return dutyGroup != null ? dutyGroup.getDutyGroupName() : null;
 	}
 
 	public static List<ParamInfo> getProductTypeAndServiceType() {

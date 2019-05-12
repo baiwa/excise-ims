@@ -95,7 +95,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 			vo.setFacAddress(rs.getString("FAC_ADDRESS"));
 			vo.setOfficeCodeR4000(rs.getString("OFFICE_CODE_R4000"));
 			vo.setDutyCode(rs.getString("DUTY_CODE"));
-			vo.setDutyDesc(ExciseUtils.getDutyDesc(rs.getString("DUTY_CODE")));
+			vo.setDutyDesc(ExciseUtils.getDutyGroupDesc(rs.getString("DUTY_CODE")));
 			vo.setSecCode(rs.getString("SEC_CODE"));
 			vo.setSecDesc(rs.getString("SEC_DESC"));
 			vo.setAreaCode(rs.getString("AREA_CODE"));

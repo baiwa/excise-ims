@@ -2,6 +2,8 @@ package th.go.excise.ims.ta.service;
 
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,19 +27,21 @@ public class DraftWorksheetServiceTest {
 	@Autowired
 	private DraftWorksheetService draftWorksheetService;
 	
-	//@Test
+	@Test
 	public void test_getPreviewData() {
 		long start = System.currentTimeMillis();
 		
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
-		formVo.setDateStart("05/2558");
-		formVo.setDateEnd("04/2560");
-		formVo.setDateRange(24);
+		formVo.setDateStart("01/2561");
+		formVo.setDateEnd("12/2561");
+		formVo.setDateRange(12);
 		formVo.setStart(0);
 		formVo.setLength(20);
 		
 		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = draftWorksheetService.getPreviewData(formVo).getDatas();
-		taxOperatorDatatableVoList.forEach(System.out::println);
+		taxOperatorDatatableVoList.forEach(e -> {
+			System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE));
+		});
 		
 		long end = System.currentTimeMillis();
 		System.out.println("Process Success, using " + ((float) (end - start) / 1000F) + " seconds");
@@ -70,7 +74,7 @@ public class DraftWorksheetServiceTest {
 		System.out.println("Process Success, using " + ((float) (end - start) / 1000F) + " seconds");
 	}
 
-	@Test
+	//@Test
 	public void test_findAllAnalysisNumber() {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
 		formVo.setBudgetYear("2562");

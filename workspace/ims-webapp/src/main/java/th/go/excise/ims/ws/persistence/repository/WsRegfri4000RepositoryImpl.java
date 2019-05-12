@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,11 @@ import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
+import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ws.persistence.entity.WsRegfri4000;
+import th.go.excise.ims.ws.persistence.rowmapper.WsRegfri4000VoRowMapper;
+import th.go.excise.ims.ws.vo.WsRegfri4000Vo;
 
 public class WsRegfri4000RepositoryImpl implements WsRegfri4000RepositoryCustom {
 	
@@ -48,7 +53,7 @@ public class WsRegfri4000RepositoryImpl implements WsRegfri4000RepositoryCustom 
 			"WREG4000.REG_CAPITAL = ?",
 			"WREG4000.OFFICE_CODE = ?",
 			"WREG4000.ACTIVE_FLAG = ?",
-			"WREG4000.DUTY_CODE = ?",
+			"WREG4000.SYNC_DATE = ?",
 			"WREG4000.IS_DELETED = ?",
 			"WREG4000.UPDATED_BY = ?",
 			"WREG4000.UPDATED_DATE = ?"
@@ -76,7 +81,7 @@ public class WsRegfri4000RepositoryImpl implements WsRegfri4000RepositoryCustom 
 			"WREG4000.REG_CAPITAL",
 			"WREG4000.OFFICE_CODE",
 			"WREG4000.ACTIVE_FLAG",
-			"WREG4000.DUTY_CODE",
+			"WREG4000.SYNC_DATE",
 			"WREG4000.CREATED_BY",
 			"WREG4000.CREATED_DATE"
 		));
@@ -117,7 +122,7 @@ public class WsRegfri4000RepositoryImpl implements WsRegfri4000RepositoryCustom 
 				paramList.add(regfri4000.getRegCapital());
 				paramList.add(regfri4000.getOfficeCode());
 				paramList.add(regfri4000.getActiveFlag());
-				paramList.add(regfri4000.getDutyCode());
+				paramList.add(regfri4000.getSyncDate());
 				paramList.add(FLAG.N_FLAG);
 				paramList.add(regfri4000.getUpdatedBy());
 				paramList.add(regfri4000.getUpdatedDate());
@@ -142,12 +147,100 @@ public class WsRegfri4000RepositoryImpl implements WsRegfri4000RepositoryCustom 
 				paramList.add(regfri4000.getRegCapital());
 				paramList.add(regfri4000.getOfficeCode());
 				paramList.add(regfri4000.getActiveFlag());
-				paramList.add(regfri4000.getDutyCode());
+				paramList.add(regfri4000.getSyncDate());
 				paramList.add(regfri4000.getCreatedBy());
 				paramList.add(regfri4000.getCreatedDate());
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
 			}
 		});
+	}
+	
+	private void buildByCriteriaQuery(StringBuilder sql, List<Object> params, WsRegfri4000Vo regfri4000Vo) {
+		sql.append(" SELECT R4000.NEW_REG_ID ");
+		sql.append(" ,R4000.CUS_ID ");
+		sql.append(" ,R4000.CUS_FULLNAME ");
+		sql.append(" ,R4000.CUS_ADDRESS ");
+		sql.append(" ,R4000.CUS_TELNO ");
+		sql.append(" ,R4000.CUS_EMAIL ");
+		sql.append(" ,R4000.CUS_URL ");
+		sql.append(" ,R4000.FAC_ID ");
+		sql.append(" ,R4000.FAC_FULLNAME ");
+		sql.append(" ,R4000.FAC_ADDRESS ");
+		sql.append(" ,R4000.FAC_TELNO ");
+		sql.append(" ,R4000.FAC_EMAIL ");
+		sql.append(" ,R4000.FAC_URL ");
+		sql.append(" ,R4000.FAC_TYPE ");
+		sql.append(" ,R4000.REG_ID ");
+		sql.append(" ,R4000.REG_STATUS ");
+		sql.append(" ,R4000.REG_DATE ");
+		sql.append(" ,R4000.REG_CAPITAL ");
+		sql.append(" ,R4000.OFFICE_CODE ");
+		sql.append(" ,R4000.SYNC_DATE ");
+		sql.append(" ,R4000D.GROUP_ID ");
+		sql.append(" FROM WS_REGFRI4000 R4000 ");
+		sql.append(" INNER JOIN WS_REGFRI4000_DUTY R4000D ON R4000D.NEW_REG_ID = R4000.NEW_REG_ID ");
+		sql.append(" WHERE R4000.IS_DELETED = 'N' ");
+		sql.append("   AND R4000D.IS_DELETED = 'N' ");
+
+		// Factory Type
+		if (StringUtils.isNotBlank(regfri4000Vo.getFacType())) {
+			sql.append(" AND R4000.FAC_TYPE = ?");
+			params.add(regfri4000Vo.getFacType());
+		}
+
+		// Duty Code
+		if (StringUtils.isNotBlank(regfri4000Vo.getDutyGroupId())) {
+			sql.append(" AND R4000D.GROUP_ID = ?");
+			params.add(regfri4000Vo.getDutyGroupId());
+		}
+
+		// Office Code
+		if (StringUtils.isNotBlank(regfri4000Vo.getOfficeCode())) {
+			sql.append(" AND R4000.OFFICE_CODE LIKE ?");
+			params.add(ExciseUtils.whereInLocalOfficeCode(regfri4000Vo.getOfficeCode()));
+		}
+
+		// Factory Fullname
+		if (StringUtils.isNotBlank(regfri4000Vo.getFacFullname())) {
+			sql.append(" AND R4000.FAC_FULLNAME LIKE ?");
+			params.add("%" + StringUtils.trim(regfri4000Vo.getFacFullname()) + "%");
+		}
+
+		// Customer Fullname
+		if (StringUtils.isNotBlank(regfri4000Vo.getCusFullname())) {
+			sql.append(" AND R4000.CUS_FULLNAME LIKE ?");
+			params.add("%" + StringUtils.trim(regfri4000Vo.getCusFullname()) + "%");
+		}
+		
+		// newRegId
+		if(StringUtils.isNotBlank(regfri4000Vo.getNewRegId())) {
+			sql.append(" AND R4000.NEW_REG_ID = ?");
+			params.add(regfri4000Vo.getNewRegId());
+		}
+	}
+
+	@Override
+	public List<WsRegfri4000Vo> findByCriteria(WsRegfri4000Vo regfri4000Vo) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		buildByCriteriaQuery(sql, params, regfri4000Vo);
+
+		sql.append(" ORDER BY R4000D.GROUP_ID, R4000.OFFICE_CODE, R4000.NEW_REG_ID ");
+
+		return this.commonJdbcTemplate.query(
+			OracleUtils.limitForDatable(sql.toString(), regfri4000Vo.getStart(), regfri4000Vo.getLength()),
+			params.toArray(),
+			WsRegfri4000VoRowMapper.getInstance()
+		);
+	}
+
+	@Override
+	public Long countByCriteria(WsRegfri4000Vo regfri4000Vo) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		buildByCriteriaQuery(sql, params, regfri4000Vo);
+
+		return this.commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), params.toArray(), Long.class);
 	}
 	
 }

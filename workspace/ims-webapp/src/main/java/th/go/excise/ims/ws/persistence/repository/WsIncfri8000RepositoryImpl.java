@@ -19,8 +19,8 @@ import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
 import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
-import th.go.excise.ims.scheduler.vo.WsIncfri8000MVo;
 import th.go.excise.ims.ws.persistence.entity.WsIncfri8000;
+import th.go.excise.ims.ws.vo.WsIncfri8000MVo;
 
 public class WsIncfri8000RepositoryImpl implements WsIncfri8000RepositoryCustom {
 	
@@ -112,11 +112,11 @@ public class WsIncfri8000RepositoryImpl implements WsIncfri8000RepositoryCustom 
 	}
 
 	@Override
-	public List<WsIncfri8000MVo> findByDateType(String dateType, String dateStart, String dateEnd) {
-		logger.info("findByDateType dateType={}, dateStart={}, dateEnd={}", dateType, dateStart, dateEnd);
+	public List<WsIncfri8000MVo> findFor8000M(String dateType, String dateStart, String dateEnd) {
+		logger.info("findFor8000M dateType={}, dateStart={}, dateEnd={}", dateType, dateStart, dateEnd);
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT REG_ID, NEW_REG_ID, SUM(TAX_AMOUNT) AS SUM_TAX_AMOUNT ");
+		sql.append(" SELECT REG_ID, NEW_REG_ID, DUTY_GROUP_ID, SUM(TAX_AMOUNT) AS SUM_TAX_AMOUNT ");
 		sql.append(" FROM WS_INCFRI8000 ");
 		sql.append(" WHERE IS_DELETED = 'N' ");
 		sql.append("   AND DATE_TYPE = ? ");
@@ -124,11 +124,13 @@ public class WsIncfri8000RepositoryImpl implements WsIncfri8000RepositoryCustom 
 		sql.append("     TRUNC(" + getColumnTypeByDateType(dateType) + ") >= TO_DATE(?,'YYYYMMDD') ");
 		sql.append("     AND TRUNC(" + getColumnTypeByDateType(dateType) + ") <= TO_DATE(?,'YYYYMMDD') ");
 		sql.append("   ) ");
-		sql.append("   AND ( ");
-		sql.append("     REG_ID IS NOT NULL ");
-		sql.append("     OR NEW_REG_ID IS NOT NULL ");
-		sql.append("   ) ");
-		sql.append(" GROUP BY REG_ID, NEW_REG_ID ");
+		//sql.append("   AND ( ");
+		//sql.append("     REG_ID IS NOT NULL ");
+		//sql.append("     OR NEW_REG_ID IS NOT NULL ");
+		//sql.append("   ) ");
+		sql.append("   AND NEW_REG_ID IS NOT NULL ");
+		sql.append("   AND DUTY_GROUP_ID IS NOT NULL ");
+		sql.append(" GROUP BY REG_ID, NEW_REG_ID, DUTY_GROUP_ID ");
 		
 		List<WsIncfri8000MVo> incfri8000MVoList = commonJdbcTemplate.query(
 			sql.toString(),
@@ -143,6 +145,7 @@ public class WsIncfri8000RepositoryImpl implements WsIncfri8000RepositoryCustom 
 					WsIncfri8000MVo vo = new WsIncfri8000MVo();
 					vo.setRegId(rs.getString("REG_ID"));
 					vo.setNewRegId(rs.getString("NEW_REG_ID"));
+					vo.setDutyGroupId(rs.getString("DUTY_GROUP_ID"));
 					vo.setSumTaxAmount(rs.getBigDecimal("SUM_TAX_AMOUNT"));
 					return vo;
 				}

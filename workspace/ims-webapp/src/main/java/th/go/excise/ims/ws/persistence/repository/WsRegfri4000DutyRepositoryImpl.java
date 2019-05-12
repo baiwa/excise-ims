@@ -29,7 +29,6 @@ public class WsRegfri4000DutyRepositoryImpl implements WsRegfri4000DutyRepositor
 		final int BATCH_SIZE = 1000;
 		
 		List<String> updateColumnNames = new ArrayList<>(Arrays.asList(
-			"WREG4000D.GROUP_ID = ?",
 			"WREG4000D.GROUP_NAME = ?",
 			"WREG4000D.IS_DELETED = ?",
 			"WREG4000D.UPDATED_BY = ?",
@@ -48,7 +47,10 @@ public class WsRegfri4000DutyRepositoryImpl implements WsRegfri4000DutyRepositor
 		StringBuilder sql = new StringBuilder();
 		sql.append(" MERGE INTO WS_REGFRI4000_DUTY WREG4000D ");
 		sql.append(" USING DUAL ");
-		sql.append(" ON (WREG4000D.NEW_REG_ID = ?) ");
+		sql.append(" ON ( ");
+		sql.append("   WREG4000D.NEW_REG_ID = ? ");
+		sql.append("   AND WREG4000D.GROUP_ID = ? ");
+		sql.append(" ) ");
 		sql.append(" WHEN MATCHED THEN ");
 		sql.append("   UPDATE SET ");
 		sql.append(org.springframework.util.StringUtils.collectionToDelimitedString(updateColumnNames, ","));
@@ -61,8 +63,8 @@ public class WsRegfri4000DutyRepositoryImpl implements WsRegfri4000DutyRepositor
 				List<Object> paramList = new ArrayList<>();
 				// Using Condition
 				paramList.add(regfri4000Duty.getNewRegId());
-				// Update Statement
 				paramList.add(regfri4000Duty.getGroupId());
+				// Update Statement
 				paramList.add(regfri4000Duty.getGroupName());
 				paramList.add(FLAG.N_FLAG);
 				paramList.add(regfri4000Duty.getUpdatedBy());

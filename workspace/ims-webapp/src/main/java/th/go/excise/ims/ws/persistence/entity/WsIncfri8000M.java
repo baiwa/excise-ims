@@ -29,6 +29,8 @@ public class WsIncfri8000M extends BaseEntity {
 	private String regId;
 	@Column(name = "NEW_REG_ID")
 	private String newRegId;
+	@Column(name = "DUTY_GROUP_ID")
+	private String dutyGroupId;
 	@Column(name = "TAX_YEAR")
 	private String taxYear;
 	@Column(name = "TAX_MONTH")
@@ -66,6 +68,14 @@ public class WsIncfri8000M extends BaseEntity {
 
 	public void setNewRegId(String newRegId) {
 		this.newRegId = newRegId;
+	}
+
+	public String getDutyGroupId() {
+		return dutyGroupId;
+	}
+
+	public void setDutyGroupId(String dutyGroupId) {
+		this.dutyGroupId = dutyGroupId;
 	}
 
 	public String getTaxYear() {

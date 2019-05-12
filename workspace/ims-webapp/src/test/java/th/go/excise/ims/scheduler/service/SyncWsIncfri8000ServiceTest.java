@@ -2,11 +2,8 @@ package th.go.excise.ims.scheduler.service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
+import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
 import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
@@ -38,7 +36,7 @@ public class SyncWsIncfri8000ServiceTest {
 		LocalDate dateStart = LocalDate.of(2018, 1, 1);
 		LocalDate dateEnd = LocalDate.of(2019, 3, 1);
 		
-		List<LocalDate> dateList = getLocalDateRange(dateStart, dateEnd);
+		List<LocalDate> dateList = LocalDateUtils.getLocalDateRange(dateStart, dateEnd);
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMM", Locale.US);
 		
 		for (LocalDate localDate : dateList) {
@@ -49,19 +47,6 @@ public class SyncWsIncfri8000ServiceTest {
 			requestData.setYearMonthTo(formatter.format(localDate));
 			syncWsIncfri8000Service.syncData(requestData);
 		}
-	}
-	
-	private List<LocalDate> getLocalDateRange(LocalDate dateStart, LocalDate dateEnd) {
-		long numOfDaysBetween = ChronoUnit.DAYS.between(dateStart, dateEnd);
-		List<LocalDate> dateList = IntStream.iterate(0, i -> i + 1)
-		    .limit(numOfDaysBetween + 1)
-		    .mapToObj(i -> {
-		        LocalDate nextLocalDate = dateStart.plusDays(i);
-		        return LocalDate.of(nextLocalDate.getYear(), nextLocalDate.getMonth(), 1); 
-		    })
-		    .distinct()
-		    .collect(Collectors.toList());
-		return dateList;
 	}
 	
 }

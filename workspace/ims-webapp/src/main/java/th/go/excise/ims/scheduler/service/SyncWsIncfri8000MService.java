@@ -14,11 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.go.excise.ims.common.util.ExciseUtils;
-import th.go.excise.ims.scheduler.vo.WsIncfri8000MVo;
 import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
 import th.go.excise.ims.ws.persistence.entity.WsIncfri8000M;
 import th.go.excise.ims.ws.persistence.repository.WsIncfri8000MRepository;
 import th.go.excise.ims.ws.persistence.repository.WsIncfri8000Repository;
+import th.go.excise.ims.ws.vo.WsIncfri8000MVo;
 
 @Service
 public class SyncWsIncfri8000MService {
@@ -42,7 +42,7 @@ public class SyncWsIncfri8000MService {
 		String taxYear = String.valueOf(localDate.getYear());
 		String taxMonth = String.valueOf(localDate.getMonthValue());
 		
-		List<WsIncfri8000MVo> incfri8000MVoList = wsIncfri8000Repository.findByDateType(dateTypeCode, dateStart, dateEnd);
+		List<WsIncfri8000MVo> incfri8000MVoList = wsIncfri8000Repository.findFor8000M(dateTypeCode, dateStart, dateEnd);
 		
 		WsIncfri8000M incfri8000M = null;
 		List<WsIncfri8000M> incfri8000MList = new ArrayList<>();
@@ -51,6 +51,7 @@ public class SyncWsIncfri8000MService {
 			incfri8000M.setDateType(dateTypeCode);
 			incfri8000M.setRegId(incfri8000MVo.getRegId());
 			incfri8000M.setNewRegId(incfri8000MVo.getNewRegId());
+			incfri8000M.setDutyGroupId(incfri8000MVo.getDutyGroupId());
 			incfri8000M.setTaxAmount(incfri8000MVo.getSumTaxAmount());
 			incfri8000M.setTaxYear(taxYear);
 			incfri8000M.setTaxMonth(taxMonth);

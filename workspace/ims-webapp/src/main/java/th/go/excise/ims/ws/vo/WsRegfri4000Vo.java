@@ -1,79 +1,37 @@
-package th.go.excise.ims.ws.persistence.entity;
+package th.go.excise.ims.ws.vo;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 
-@Entity
-@Table(name = "WS_REGFRI4000")
-public class WsRegfri4000 extends BaseEntity {
+public class WsRegfri4000Vo extends DataTableRequest {
 
-	private static final long serialVersionUID = -7048262812422174478L;
+	private static final long serialVersionUID = 3466765526713547321L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WS_REGFRI4000_GEN")
-	@SequenceGenerator(name = "WS_REGFRI4000_GEN", sequenceName = "WS_REGFRI4000_SEQ", allocationSize = 1)
-	@Column(name = "REGFRI4000_ID")
-	private Long regfri4000Id;
-	@Column(name = "NEW_REG_ID")
 	private String newRegId;
-	@Column(name = "CUS_ID")
 	private String cusId;
-	@Column(name = "CUS_FULLNAME")
 	private String cusFullname;
-	@Column(name = "CUS_ADDRESS")
 	private String cusAddress;
-	@Column(name = "CUS_TELNO")
 	private String cusTelno;
-	@Column(name = "CUS_EMAIL")
 	private String cusEmail;
-	@Column(name = "CUS_URL")
 	private String cusUrl;
-	@Column(name = "FAC_ID")
 	private String facId;
-	@Column(name = "FAC_FULLNAME")
 	private String facFullname;
-	@Column(name = "FAC_ADDRESS")
 	private String facAddress;
-	@Column(name = "FAC_TELNO")
 	private String facTelno;
-	@Column(name = "FAC_EMAIL")
 	private String facEmail;
-	@Column(name = "FAC_URL")
 	private String facUrl;
-	@Column(name = "FAC_TYPE")
 	private String facType;
-	@Column(name = "REG_ID")
 	private String regId;
-	@Column(name = "REG_STATUS")
 	private String regStatus;
-	@Column(name = "REG_DATE")
 	private LocalDate regDate;
-	@Column(name = "REG_CAPITAL")
 	private BigDecimal regCapital;
-	@Column(name = "OFFICE_CODE")
 	private String officeCode;
-	@Column(name = "ACTIVE_FLAG")
 	private String activeFlag;
-	@Column(name = "SYNC_DATE")
 	private LocalDateTime syncDate;
-
-	public Long getRegfri4000Id() {
-		return regfri4000Id;
-	}
-
-	public void setRegfri4000Id(Long regfri4000Id) {
-		this.regfri4000Id = regfri4000Id;
-	}
+	private String dutyGroupId;
 
 	public String getNewRegId() {
 		return newRegId;
@@ -241,6 +199,14 @@ public class WsRegfri4000 extends BaseEntity {
 
 	public void setSyncDate(LocalDateTime syncDate) {
 		this.syncDate = syncDate;
+	}
+
+	public String getDutyGroupId() {
+		return dutyGroupId;
+	}
+
+	public void setDutyGroupId(String dutyGroupId) {
+		this.dutyGroupId = dutyGroupId;
 	}
 
 }
