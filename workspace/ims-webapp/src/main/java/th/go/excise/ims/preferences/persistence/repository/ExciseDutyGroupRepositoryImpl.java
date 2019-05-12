@@ -2,9 +2,7 @@ package th.go.excise.ims.preferences.persistence.repository;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +15,7 @@ import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
-import th.go.excise.ims.ws.client.pcc.inquirydutygroup.model.DutyGroup;
+import th.go.excise.ims.preferences.persistence.entity.ExciseDutyGroup;
 
 public class ExciseDutyGroupRepositoryImpl implements ExciseDutyGroupRepositoryCustom {
 	
@@ -27,7 +25,7 @@ public class ExciseDutyGroupRepositoryImpl implements ExciseDutyGroupRepositoryC
 	private CommonJdbcTemplate commonJdbcTemplate;
 	
 	@Override
-	public void batchMerge(List<DutyGroup> dutyGroupList) {
+	public void batchMerge(List<ExciseDutyGroup> dutyGroupList) {
 		logger.info("batchMerge dutyGroupList.size()={}", dutyGroupList.size());
 		
 		final int BATCH_SIZE = 1000;
@@ -36,6 +34,7 @@ public class ExciseDutyGroupRepositoryImpl implements ExciseDutyGroupRepositoryC
 			"EDG.DUTY_GROUP_NAME = ?",
 			"EDG.DUTY_GROUP_STATUS = ?",
 			"EDG.SUP_DUTY_GROUP_CODE = ?",
+			"EDG.DUTY_GROUP_TYPE = ?",
 			"EDG.REG_STATUS = ?",
 			"EDG.IS_DELETED = ?",
 			"EDG.UPDATED_BY = ?",
@@ -48,6 +47,7 @@ public class ExciseDutyGroupRepositoryImpl implements ExciseDutyGroupRepositoryC
 			"EDG.DUTY_GROUP_NAME",
 			"EDG.DUTY_GROUP_STATUS",
 			"EDG.SUP_DUTY_GROUP_CODE",
+			"EDG.DUTY_GROUP_TYPE",
 			"EDG.REG_STATUS",
 			"EDG.BEGIN_DATE",
 			"EDG.CREATED_BY",
@@ -65,26 +65,28 @@ public class ExciseDutyGroupRepositoryImpl implements ExciseDutyGroupRepositoryC
 		sql.append("   INSERT (" + org.springframework.util.StringUtils.collectionToDelimitedString(insertColumnNames, ",") + ") ");
 		sql.append("   VALUES (EXCISE_DUTY_GROUP_SEQ.NEXTVAL" + org.apache.commons.lang3.StringUtils.repeat(",?", insertColumnNames.size() - 1) + ") ");
 		
-		commonJdbcTemplate.batchUpdate(sql.toString(), dutyGroupList, BATCH_SIZE, new ParameterizedPreparedStatementSetter<DutyGroup>() {
-			public void setValues(PreparedStatement ps, DutyGroup dutyGroup) throws SQLException {
+		commonJdbcTemplate.batchUpdate(sql.toString(), dutyGroupList, BATCH_SIZE, new ParameterizedPreparedStatementSetter<ExciseDutyGroup>() {
+			public void setValues(PreparedStatement ps, ExciseDutyGroup dutyGroup) throws SQLException {
 				List<Object> paramList = new ArrayList<Object>();
 				// Using Condition
-				paramList.add(dutyGroup.getGroupId());
+				paramList.add(dutyGroup.getDutyGroupCode());
 				// Update Statement
-				paramList.add(dutyGroup.getGroupName());
-				paramList.add(dutyGroup.getGroupStatus());
-				paramList.add(dutyGroup.getSupGroupId());
+				paramList.add(dutyGroup.getDutyGroupName());
+				paramList.add(dutyGroup.getDutyGroupStatus());
+				paramList.add(dutyGroup.getSupDutyGroupCode());
+				paramList.add(dutyGroup.getDutyGroupType());
 				paramList.add(dutyGroup.getRegStatus());
 				paramList.add(FLAG.N_FLAG);
 				paramList.add(SYSTEM_USER.BATCH);
 				paramList.add(LocalDateTime.now());
 				// Insert Statement
-				paramList.add(dutyGroup.getGroupId());
-				paramList.add(dutyGroup.getGroupName());
-				paramList.add(dutyGroup.getGroupStatus());
-				paramList.add(dutyGroup.getSupGroupId());
+				paramList.add(dutyGroup.getDutyGroupCode());
+				paramList.add(dutyGroup.getDutyGroupName());
+				paramList.add(dutyGroup.getDutyGroupStatus());
+				paramList.add(dutyGroup.getSupDutyGroupCode());
+				paramList.add(dutyGroup.getDutyGroupType());
 				paramList.add(dutyGroup.getRegStatus());
-				paramList.add(LocalDate.parse(dutyGroup.getBeginDate(), DateTimeFormatter.BASIC_ISO_DATE));
+				paramList.add(dutyGroup.getBeginDate());
 				paramList.add(SYSTEM_USER.BATCH);
 				paramList.add(LocalDateTime.now());
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());

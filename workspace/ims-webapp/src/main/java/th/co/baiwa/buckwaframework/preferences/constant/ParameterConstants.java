@@ -5,15 +5,19 @@ public class ParameterConstants {
 	// All Parameter Group
 	public static final class PARAM_GROUP {
 		public static final String SYSTEM_CONFIG = "SYSTEM_CONFIG";
+		// Excise Master Data
 		public static final String EXCISE_TAX_TYPE = "EXCISE_TAX_TYPE";
 		public static final String EXCISE_PRODUCT_TYPE = "EXCISE_PRODUCT_TYPE";
 		public static final String EXCISE_SERVICE_TYPE = "EXCISE_SERVICE_TYPE";
 		public static final String EXCISE_FACTORY_TYPE = "EXCISE_FACTORY_TYPE";
+		public static final String ED_DUTY_GROUP = "ED_DUTY_GROUP";
+		// Internal Audit
+		public static final String IA_RISK_COLOR = "IA_RISK_COLOR";
+		// Tax Audit
 		public static final String TA_MAS_COND_MAIN_DESC = "TA_MAS_COND_MAIN_DESC";
 		public static final String TA_AUDIT_STATUS = "TA_AUDIT_STATUS";
 		public static final String TA_CONFIG = "TA_CONFIG";
 		public static final String TA_MAIN_COND_RANGE = "TA_MAIN_COND_RANGE";
-		public static final String IA_RISK_COLOR = "IA_RISK_COLOR";
 		public static final String TA_AUDIT_TYPE = "TA_AUDIT_TYPE";
 		public static final String TA_MAIN_COND_FREQ_TYPE = "TA_MAIN_COND_FREQ_TYPE";
 	}
@@ -30,14 +34,14 @@ public class ParameterConstants {
 		public static final String IMPORT = "3";
 	}
 	
-	// Parameter Group: 
+	// Parameter Group: TA_CONFIG
 	public class TA_CONFIG {
 		public static final String SEE_FLAG = "SEE_FLAG";
 		public static final String SELECT_FLAG = "SELECT_FLAG";
 		public static final String SEND_ALL_FLAG = "SEND_ALL_FLAG";
 	}
 	
-	// Parameter Group: 
+	// Parameter Group: TA_MAIN_COND_RANGE
 	public class TA_MAIN_COND_RANGE {
 		public static final String GREATER_THAN = "1";
 		public static final String GREATER_THAN_OR_EQUALS = "2";
@@ -46,7 +50,7 @@ public class ParameterConstants {
 		public static final String LESS_THAN = "5";
 	}
 	
-	// Parameter Group: 
+	// Parameter Group: TA_SUB_COND_CAPITAL
 	public class TA_SUB_COND_CAPITAL {
 		public static final String HUGE_CAPITAL = "1";
 		public static final String LARGE_CAPITAL = "2";
