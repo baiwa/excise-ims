@@ -166,7 +166,8 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		sql.append(" LEFT JOIN TA_PLAN_WORKSHEET_SELECT TA_PW_SEL ON TA_PW_SEL.NEW_REG_ID = TA_W_DTL.NEW_REG_ID ");
 		sql.append("   AND TA_PW_SEL.IS_DELETED = 'N' ");
 		sql.append("   AND TA_PW_SEL.BUDGET_YEAR = ? ");
-	
+		params.add(formVo.getBudgetYear());
+
 		if (ApplicationCache.isCtrlDutyGroupByOfficeCode(formVo.getOfficeCode())) {
 			sql.append(" INNER JOIN EXCISE_CTRL_DUTY CD ON CD.DUTY_GROUP_CODE = R4000.DUTY_CODE  AND CD.RES_OFFCODE = ? ");
 			params.add(formVo.getOfficeCode());
@@ -176,7 +177,6 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		sql.append(" AND TA_W_DTL.ANALYSIS_NUMBER = ? ");
 		sql.append(" AND TA_W_HDR.IS_DELETED = 'N' ");
 
-		params.add(formVo.getBudgetYear());
 		params.add(formVo.getAnalysisNumber());
 
 		// DUTY GROUP
@@ -287,7 +287,8 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 
 			vo.setCentralSelFlag(rs.getString("CENTRAL_SEL_FLAG"));
 			if (FLAG.Y_FLAG.equals(vo.getCentralSelFlag())) {
-				vo.setCentralSelDate(""); // FIXME
+				LocalDate localDate = LocalDateConverter.convertToEntityAttribute(rs.getDate("CENTRAL_SEL_DATE"));
+				vo.setCentralSelDate(ConvertDateUtils.formatLocalDateToString(localDate, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 				vo.setCentralSelOfficeCode(rs.getString("CENTRAL_SEL_OFFICE_CODE"));
 				if (StringUtils.isNotBlank(vo.getCentralSelOfficeCode())) {
 					vo.setSelectBy(ApplicationCache.getExciseDepartment(vo.getCentralSelOfficeCode()).getDeptShortName());
@@ -296,7 +297,8 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			}
 			vo.setSectorSelFlag(rs.getString("SECTOR_SEL_FLAG"));
 			if (StringUtils.isNotBlank(vo.getSectorSelFlag())) {
-				vo.setSectorSelDate("");
+				LocalDate localDate = LocalDateConverter.convertToEntityAttribute(rs.getDate("SECTOR_SEL_DATE"));
+				vo.setSectorSelDate(ConvertDateUtils.formatLocalDateToString(localDate, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 				vo.setSectorSelOfficeCode(rs.getString("SECTOR_SEL_OFFICE_CODE"));
 				if (StringUtils.isNotBlank(vo.getSectorSelOfficeCode())) {
 					vo.setSelectBy(ApplicationCache.getExciseDepartment(vo.getSectorSelOfficeCode()).getDeptShortName());

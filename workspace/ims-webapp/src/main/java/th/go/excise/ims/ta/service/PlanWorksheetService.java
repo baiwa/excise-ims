@@ -3,6 +3,7 @@ package th.go.excise.ims.ta.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -95,71 +96,56 @@ public class PlanWorksheetService {
 		List<TaPlanWorksheetSend> planSendList = new ArrayList<>();
 		TaPlanWorksheetSend planSend = null;
 		if (FLAG.Y_FLAG.equals(formVo.getSendAllFlag())) {
-			// FIXME IF Send All, check TA CENTRAL Office Code
-			// OfficeCode 001402
-			{
-				planSend = new TaPlanWorksheetSend();
-				planSend.setBudgetYear(formVo.getBudgetYear());
-				planSend.setPlanNumber(planNumber);
-				planSend.setOfficeCode(EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR1);
-				planSend.setSendDate(LocalDate.now());
-				planSendList.add(planSend);
-			}
-			// OfficeCode 001403
-			{
-				planSend = new TaPlanWorksheetSend();
-				planSend.setBudgetYear(formVo.getBudgetYear());
-				planSend.setPlanNumber(planNumber);
-				planSend.setOfficeCode(EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR2);
-				planSend.setSendDate(LocalDate.now());
-				planSendList.add(planSend);
-			}
+			assignCentralOfficeCode(planSendList, formVo.getBudgetYear(), planNumber);
+			
 			List<ExciseDepartment> sectorList = ApplicationCache.getExciseSectorList();
 			List<ExciseDepartment> areaList = null;
 			// Sector
 			for (ExciseDepartment sector : sectorList) {
-				planSend = new TaPlanWorksheetSend();
-				planSend.setBudgetYear(formVo.getBudgetYear());
-				planSend.setPlanNumber(planNumber);
-				planSend.setOfficeCode(sector.getOfficeCode());
-				planSend.setSendDate(LocalDate.now());
-				planSendList.add(planSend);
-				// Area
-				areaList = ApplicationCache.getExciseAreaList(sector.getOfficeCode());
-				for (ExciseDepartment area : areaList) {
+				if (!ExciseUtils.isCentral(sector.getOfficeCode())) {
 					planSend = new TaPlanWorksheetSend();
 					planSend.setBudgetYear(formVo.getBudgetYear());
 					planSend.setPlanNumber(planNumber);
-					planSend.setOfficeCode(area.getOfficeCode());
+					planSend.setOfficeCode(sector.getOfficeCode());
 					planSend.setSendDate(LocalDate.now());
 					planSendList.add(planSend);
+					// Area
+					areaList = ApplicationCache.getExciseAreaList(sector.getOfficeCode());
+					for (ExciseDepartment area : areaList) {
+						planSend = new TaPlanWorksheetSend();
+						planSend.setBudgetYear(formVo.getBudgetYear());
+						planSend.setPlanNumber(planNumber);
+						planSend.setOfficeCode(area.getOfficeCode());
+						planSend.setSendDate(LocalDate.now());
+						planSendList.add(planSend);
+					}
 				}
 			}
 		} else {
-			// OfficeCode 001402
-			{
-				planSend = new TaPlanWorksheetSend();
-				planSend.setBudgetYear(formVo.getBudgetYear());
-				planSend.setPlanNumber(planNumber);
-				planSend.setOfficeCode(EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR1);
-				planSend.setSendDate(LocalDate.now());
-				planSendList.add(planSend);
-			}
-			// OfficeCode 001403
-			{
-				planSend = new TaPlanWorksheetSend();
-				planSend.setBudgetYear(formVo.getBudgetYear());
-				planSend.setPlanNumber(planNumber);
-				planSend.setOfficeCode(EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR2);
-				planSend.setSendDate(LocalDate.now());
-				planSendList.add(planSend);
-			}
+			assignCentralOfficeCode(planSendList, formVo.getBudgetYear(), planNumber);
 		}
 		taPlanWorksheetSendRepository.saveAll(planSendList);
 
 		// Initial Data for PlanWorksheetSelect
 		List<String> newRegIdList = taWorksheetDtlRepository.findNewRegIdByAnalysisNumber(formVo.getAnalysisNumber());
 		taPlanWorksheetSelectRepository.batchInsert(formVo.getBudgetYear(), newRegIdList);
+	}
+	
+	private void assignCentralOfficeCode(List<TaPlanWorksheetSend> planSendList, String budgetYear, String planNumber) {
+		List<String> centralOfficeCodeList = new ArrayList<>(Arrays.asList(
+			EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR1,
+			EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR2
+		));
+		
+		TaPlanWorksheetSend planSend = null;
+		for (String centralOfficeCode : centralOfficeCodeList) {
+			planSend = new TaPlanWorksheetSend();
+			planSend.setBudgetYear(budgetYear);
+			planSend.setPlanNumber(planNumber);
+			planSend.setOfficeCode(centralOfficeCode);
+			planSend.setSendDate(LocalDate.now());
+			planSendList.add(planSend);
+		}
 	}
 
 	@Transactional
@@ -199,7 +185,7 @@ public class PlanWorksheetService {
 				planDtl.setAnalysisNumber(formVo.getAnalysisNumber());
 				planDtl.setOfficeCode(officeCode);
 				planDtl.setNewRegId(newRegId);
-				planDtl.setAuditStatus("I"); // FIXME
+				planDtl.setAuditStatus("I"); // FIXME AuditStatus
 				
 				String subdeptCode = UserLoginUtils.getCurrentUserBean().getSubdeptCode();
 				if (StringUtils.isNotBlank(subdeptCode)) {
