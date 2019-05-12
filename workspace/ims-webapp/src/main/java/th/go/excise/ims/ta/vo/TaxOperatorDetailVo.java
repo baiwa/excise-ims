@@ -1,5 +1,11 @@
 package th.go.excise.ims.ta.vo;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -80,6 +86,24 @@ public class TaxOperatorDetailVo {
 	private String condSubNoAuditDesc;
 	private String lastAuditYear;
 	private String riskLevelDesc;
+	
+	//new endtity by pavit 12/05/2019
+	private Long worksheetDtlId;
+	private String cusId;
+	private String cusAddress;
+	private String cusTelno;
+	private String cusEmail;
+	private String cusUrl;
+	private String facId;
+	private String facTelno;
+	private String facEmail;
+	private String facUrl;
+	private String facType;
+	private String regId;
+	private LocalDate regDate;
+	private String dutyGroupId;
+	private LocalDateTime syncDate;
+	private String condMainGrp;
 
 	public String getRiskLevelDesc() {
 		return riskLevelDesc;
@@ -684,6 +708,134 @@ public class TaxOperatorDetailVo {
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+	public Long getWorksheetDtlId() {
+		return worksheetDtlId;
+	}
+
+	public void setWorksheetDtlId(Long worksheetDtlId) {
+		this.worksheetDtlId = worksheetDtlId;
+	}
+
+	public String getCusId() {
+		return cusId;
+	}
+
+	public void setCusId(String cusId) {
+		this.cusId = cusId;
+	}
+
+	public String getCusAddress() {
+		return cusAddress;
+	}
+
+	public void setCusAddress(String cusAddress) {
+		this.cusAddress = cusAddress;
+	}
+
+	public String getCusTelno() {
+		return cusTelno;
+	}
+
+	public void setCusTelno(String cusTelno) {
+		this.cusTelno = cusTelno;
+	}
+
+	public String getCusEmail() {
+		return cusEmail;
+	}
+
+	public void setCusEmail(String cusEmail) {
+		this.cusEmail = cusEmail;
+	}
+
+	public String getCusUrl() {
+		return cusUrl;
+	}
+
+	public void setCusUrl(String cusUrl) {
+		this.cusUrl = cusUrl;
+	}
+
+	public String getFacId() {
+		return facId;
+	}
+
+	public void setFacId(String facId) {
+		this.facId = facId;
+	}
+
+	public String getFacTelno() {
+		return facTelno;
+	}
+
+	public void setFacTelno(String facTelno) {
+		this.facTelno = facTelno;
+	}
+
+	public String getFacEmail() {
+		return facEmail;
+	}
+
+	public void setFacEmail(String facEmail) {
+		this.facEmail = facEmail;
+	}
+
+	public String getFacUrl() {
+		return facUrl;
+	}
+
+	public void setFacUrl(String facUrl) {
+		this.facUrl = facUrl;
+	}
+
+	public String getFacType() {
+		return facType;
+	}
+
+	public void setFacType(String facType) {
+		this.facType = facType;
+	}
+
+	public String getRegId() {
+		return regId;
+	}
+
+	public void setRegId(String regId) {
+		this.regId = regId;
+	}
+
+	public LocalDate getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(LocalDate regDate) {
+		this.regDate = regDate;
+	}
+
+	public String getDutyGroupId() {
+		return dutyGroupId;
+	}
+
+	public void setDutyGroupId(String dutyGroupId) {
+		this.dutyGroupId = dutyGroupId;
+	}
+
+	public LocalDateTime getSyncDate() {
+		return syncDate;
+	}
+
+	public void setSyncDate(LocalDateTime syncDate) {
+		this.syncDate = syncDate;
+	}
+
+	public String getCondMainGrp() {
+		return condMainGrp;
+	}
+
+	public void setCondMainGrp(String condMainGrp) {
+		this.condMainGrp = condMainGrp;
 	}
 
 }

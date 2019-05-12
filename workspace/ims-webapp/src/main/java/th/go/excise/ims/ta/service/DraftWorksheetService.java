@@ -201,6 +201,24 @@ public class DraftWorksheetService {
 			detailVo.setTaxAuditLast1(auditPlanMap.get(String.valueOf(lastYear1) + regfri4000.getNewRegId()));
 			detailVo.setTaxAuditLast2(auditPlanMap.get(String.valueOf(lastYear2) + regfri4000.getNewRegId()));
 			detailVo.setTaxAuditLast3(auditPlanMap.get(String.valueOf(lastYear3) + regfri4000.getNewRegId()));
+			
+			detailVo.setCusId(regfri4000.getCusId());
+			detailVo.setCusAddress(regfri4000.getCusAddress());
+			detailVo.setCusTelno(regfri4000.getCusTelno());
+			detailVo.setCusEmail(regfri4000.getCusEmail());
+			detailVo.setCusUrl(regfri4000.getCusUrl());
+			detailVo.setFacId(regfri4000.getFacId());
+			detailVo.setFacTelno(regfri4000.getFacTelno());
+			detailVo.setFacEmail(regfri4000.getFacEmail());
+			detailVo.setFacUrl(regfri4000.getFacUrl());
+			detailVo.setFacType(String.valueOf(regfri4000.getNewRegId().charAt(13)));
+			detailVo.setRegId(regfri4000.getRegId());
+			detailVo.setRegDate(regfri4000.getRegDate());
+			detailVo.setDutyGroupId(regfri4000.getDutyGroupId());
+			detailVo.setSyncDate(regfri4000.getSyncDate());
+			
+			
+			
 			exciseDeptSector = ApplicationCache.getExciseDepartment(regfri4000.getOfficeCode().substring(0, 2) + "0000");
 
 			if (exciseDeptSector != null) {
@@ -455,26 +473,26 @@ public class DraftWorksheetService {
 			worksheetDtl = new TaWorksheetDtl();
 			worksheetDtl.setAnalysisNumber(analysisNumber);
 			worksheetDtl.setNewRegId(detailVo.getNewRegId());
-			//worksheetDtl.setCusId((detailVo.get);
+			worksheetDtl.setCusId(detailVo.getCusId());
 			worksheetDtl.setCusFullname(detailVo.getCusFullname());
-			//worksheetDtl.setCusAddress((detailVo.get);
-			//worksheetDtl.setCusTelno(detailVo.get);
-			//worksheetDtl.setCusEmail((detailVo.get);
-			//worksheetDtl.setCusUrl(detailVo.get);
-			//worksheetDtl.setFacId(detailVo.get);
-			//worksheetDtl.setFacFullname(detailVo.get);
+			worksheetDtl.setCusAddress(detailVo.getCusAddress());
+			worksheetDtl.setCusTelno(detailVo.getCusTelno());
+			worksheetDtl.setCusEmail(detailVo.getCusEmail());
+			worksheetDtl.setCusUrl(detailVo.getCusUrl());
+			worksheetDtl.setFacId(detailVo.getFacId());
+			worksheetDtl.setFacFullname(detailVo.getFacFullname());
 			worksheetDtl.setFacAddress(detailVo.getFacAddress());
-			//worksheetDtl.setFacTelno(detailVo.get);
-			//worksheetDtl.setFacEmail(detailVo.get);
-			//worksheetDtl.setFacUrl(detailVo.get);
-			//worksheetDtl.setFacType(detailVo.getfac);
+			worksheetDtl.setFacTelno(detailVo.getFacTelno());
+			worksheetDtl.setFacEmail(detailVo.getFacEmail());
+			worksheetDtl.setFacUrl(detailVo.getFacUrl());
+			worksheetDtl.setFacType(detailVo.getFacType());
 			worksheetDtl.setRegId(detailVo.getOldRegId());
 			worksheetDtl.setRegStatus(detailVo.getRegStatus());
-			//worksheetDtl.setRegDate(detailVo.getre);
-			//worksheetDtl.setRegCapital(detailVo.getRegCapital());
+			worksheetDtl.setRegDate(detailVo.getRegDate());
+			worksheetDtl.setRegCapital(NumberUtils.toBigDecimal(detailVo.getRegCapital()));
 			worksheetDtl.setOfficeCode(detailVo.getOfficeCode());
 			worksheetDtl.setDutyGroupId(detailVo.getDutyCode());
-			//worksheetDtl.setSyncDate(detailVo.get);
+			worksheetDtl.setSyncDate(detailVo.getSyncDate());
 			worksheetDtl.setSumTaxAmtG1(NO_TAX_AMOUNT.equals(detailVo.getSumTaxAmtG1()) ? null : detailVo.getSumTaxAmtG1());
 			worksheetDtl.setSumTaxAmtG2(NO_TAX_AMOUNT.equals(detailVo.getSumTaxAmtG2()) ? null : detailVo.getSumTaxAmtG2());
 			worksheetDtl.setTaxAmtChnPnt(NO_TAX_AMOUNT.equals(detailVo.getTaxAmtChnPnt()) ? null : detailVo.getTaxAmtChnPnt());
