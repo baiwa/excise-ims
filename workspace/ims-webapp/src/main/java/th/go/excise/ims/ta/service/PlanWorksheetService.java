@@ -127,6 +127,7 @@ public class PlanWorksheetService {
 		taPlanWorksheetSendRepository.saveAll(planSendList);
 
 		// Initial Data for PlanWorksheetSelect
+		// FIXME Require select DutyGroupId for insert?
 		List<String> newRegIdList = taWorksheetDtlRepository.findNewRegIdByAnalysisNumber(formVo.getAnalysisNumber());
 		taPlanWorksheetSelectRepository.batchInsert(formVo.getBudgetYear(), newRegIdList);
 	}

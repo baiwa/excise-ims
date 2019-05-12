@@ -17,6 +17,7 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
+import th.go.excise.ims.ta.vo.TaxOperatorVo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
@@ -47,7 +48,7 @@ public class DraftWorksheetServiceTest {
 		System.out.println("Process Success, using " + ((float) (end - start) / 1000F) + " seconds");
 	}
 	
-	@Test
+//	@Test
 	public void test_saveDraft() {
 		long start = System.currentTimeMillis();
 		
@@ -74,13 +75,31 @@ public class DraftWorksheetServiceTest {
 		System.out.println("Process Success, using " + ((float) (end - start) / 1000F) + " seconds");
 	}
 
-	//@Test
+//	@Test
 	public void test_findAllAnalysisNumber() {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
 		formVo.setBudgetYear("2562");
 		
 		List<String> draftNumberList = draftWorksheetService.findAllAnalysisNumber(formVo);
 		draftNumberList.forEach(System.out::println);
+	}
+	
+	@Test
+	public void test_getDraftWorksheet() {
+		long start = System.currentTimeMillis();
+		
+		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
+		formVo.setBudgetYear("2562");
+		formVo.setDraftNumber("000000-2562-000033");
+		formVo.setOfficeCode("001402");
+		formVo.setStart(0);
+		formVo.setLength(10);
+		
+		TaxOperatorVo vo = draftWorksheetService.getDraftWorksheet(formVo);
+		vo.getDatas().forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
+		
+		long end = System.currentTimeMillis();
+		System.out.println("Process Success, using " + ((float) (end - start) / 1000F) + " seconds");
 	}
 	
 }

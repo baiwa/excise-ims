@@ -212,9 +212,8 @@ public class DraftWorksheetService {
 			detailVo.setFacEmail(regfri4000.getFacEmail());
 			detailVo.setFacUrl(regfri4000.getFacUrl());
 			detailVo.setFacType(String.valueOf(regfri4000.getNewRegId().charAt(13)));
-			detailVo.setRegId(regfri4000.getRegId());
+			detailVo.setOldRegId(regfri4000.getRegId());
 			detailVo.setRegDate(regfri4000.getRegDate());
-			detailVo.setDutyGroupId(regfri4000.getDutyGroupId());
 			detailVo.setSyncDate(regfri4000.getSyncDate());
 			
 			

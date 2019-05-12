@@ -1,22 +1,65 @@
 package th.go.excise.ims.ta.vo;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
-import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
+public class TaxDraftVo {
 
-public class TaxDraftVo extends TaWsReg4000 {
-
-	private static final long serialVersionUID = 6016709334408153017L;
-
-	private Integer taxMonthNo;
+	private String newRegId;
+	private String dutyCode;
+	private String facType;
+	private LocalDate regDate;
+	private String regCapital;
+	private String officeCode;
 	private BigDecimal taxAmtChnPnt;
+	private Integer taxMonthNo;
 
-	public Integer getTaxMonthNo() {
-		return taxMonthNo;
+	public String getNewRegId() {
+		return newRegId;
 	}
 
-	public void setTaxMonthNo(Integer taxMonthNo) {
-		this.taxMonthNo = taxMonthNo;
+	public void setNewRegId(String newRegId) {
+		this.newRegId = newRegId;
+	}
+
+	public String getDutyCode() {
+		return dutyCode;
+	}
+
+	public void setDutyCode(String dutyCode) {
+		this.dutyCode = dutyCode;
+	}
+
+	public String getFacType() {
+		return facType;
+	}
+
+	public void setFacType(String facType) {
+		this.facType = facType;
+	}
+
+	public LocalDate getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(LocalDate regDate) {
+		this.regDate = regDate;
+	}
+
+	public String getRegCapital() {
+		return regCapital;
+	}
+
+	public void setRegCapital(String regCapital) {
+		this.regCapital = regCapital;
+	}
+
+	public String getOfficeCode() {
+		return officeCode;
+	}
+
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
 	}
 
 	public BigDecimal getTaxAmtChnPnt() {
@@ -25,6 +68,14 @@ public class TaxDraftVo extends TaWsReg4000 {
 
 	public void setTaxAmtChnPnt(BigDecimal taxAmtChnPnt) {
 		this.taxAmtChnPnt = taxAmtChnPnt;
+	}
+
+	public Integer getTaxMonthNo() {
+		return taxMonthNo;
+	}
+
+	public void setTaxMonthNo(Integer taxMonthNo) {
+		this.taxMonthNo = taxMonthNo;
 	}
 
 }

@@ -1,10 +1,7 @@
 package th.go.excise.ims.ta.vo;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import javax.persistence.Column;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -99,11 +96,8 @@ public class TaxOperatorDetailVo {
 	private String facEmail;
 	private String facUrl;
 	private String facType;
-	private String regId;
 	private LocalDate regDate;
-	private String dutyGroupId;
 	private LocalDateTime syncDate;
-	private String condMainGrp;
 
 	public String getRiskLevelDesc() {
 		return riskLevelDesc;
@@ -798,14 +792,6 @@ public class TaxOperatorDetailVo {
 		this.facType = facType;
 	}
 
-	public String getRegId() {
-		return regId;
-	}
-
-	public void setRegId(String regId) {
-		this.regId = regId;
-	}
-
 	public LocalDate getRegDate() {
 		return regDate;
 	}
@@ -814,28 +800,12 @@ public class TaxOperatorDetailVo {
 		this.regDate = regDate;
 	}
 
-	public String getDutyGroupId() {
-		return dutyGroupId;
-	}
-
-	public void setDutyGroupId(String dutyGroupId) {
-		this.dutyGroupId = dutyGroupId;
-	}
-
 	public LocalDateTime getSyncDate() {
 		return syncDate;
 	}
 
 	public void setSyncDate(LocalDateTime syncDate) {
 		this.syncDate = syncDate;
-	}
-
-	public String getCondMainGrp() {
-		return condMainGrp;
-	}
-
-	public void setCondMainGrp(String condMainGrp) {
-		this.condMainGrp = condMainGrp;
 	}
 
 }
