@@ -16,8 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
 import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.preferences.vo.ExciseIncMast;
 import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
 import th.go.excise.ims.ws.client.pcc.incfri8000.model.Credit;
 import th.go.excise.ims.ws.client.pcc.incfri8000.model.Income;
@@ -56,6 +58,7 @@ public class SyncWsIncfri8000Service {
 		
 		List<Income> incomeList = null;
 		WsIncfri8000 incfri8000 = null;
+		ExciseIncMast incMast = null;
 		List<WsIncfri8000> incfri8000List = new ArrayList<>();
 		WsIncfri8000Credit incfri8000Credit = null;
 		List<WsIncfri8000Credit> incfri8000CreditList = new ArrayList<>();
@@ -82,6 +85,13 @@ public class SyncWsIncfri8000Service {
 					incfri8000.setSendDate(StringUtils.isNotBlank(income.getSendDate()) ? ConvertDateUtils.parseStringToLocalDate(income.getSendDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_TH) : null);
 					incfri8000.setIncomeCode(income.getIncomeCode());
 					incfri8000.setIncomeType(income.getIncomeType());
+					
+					// Assign DutyGroupId
+					incMast = ApplicationCache.getExciseIncMastByIncCode(income.getIncomeCode());
+					if (incMast != null && StringUtils.isNotEmpty(incMast.getGroupId())) {
+						incfri8000.setDutyGroupId(incMast.getGroupId());
+					}
+					
 					if (income.getCreditList() != null && income.getCreditList().size() > 0) {
 						for (Credit credit : income.getCreditList()) {
 							incfri8000Credit = new WsIncfri8000Credit();

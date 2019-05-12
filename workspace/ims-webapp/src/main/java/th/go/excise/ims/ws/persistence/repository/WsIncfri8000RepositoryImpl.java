@@ -74,6 +74,7 @@ public class WsIncfri8000RepositoryImpl implements WsIncfri8000RepositoryCustom 
 			"SEND_DATE",
 			"INCOME_CODE",
 			"INCOME_TYPE",
+			"DUTY_GROUP_ID",
 			"IS_DELETED",
 			"CREATED_BY",
 			"CREATED_DATE"
@@ -101,6 +102,7 @@ public class WsIncfri8000RepositoryImpl implements WsIncfri8000RepositoryCustom 
 				paramList.add(incfri8000.getSendDate());
 				paramList.add(incfri8000.getIncomeCode());
 				paramList.add(incfri8000.getIncomeType());
+				paramList.add(incfri8000.getDutyGroupId());
 				paramList.add(FLAG.N_FLAG);
 				paramList.add(SYSTEM_USER.BATCH);
 				paramList.add(LocalDateTime.now());

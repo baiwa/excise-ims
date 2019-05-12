@@ -54,6 +54,8 @@ public class WsIncfri8000 extends BaseEntity {
 	private String incomeCode;
 	@Column(name = "INCOME_TYPE")
 	private String incomeType;
+	@Column(name = "DUTY_GROUP_ID")
+	private String dutyGroupId;
 
 	public Long getIncfri8000Id() {
 		return incfri8000Id;
@@ -189,6 +191,14 @@ public class WsIncfri8000 extends BaseEntity {
 
 	public void setIncomeType(String incomeType) {
 		this.incomeType = incomeType;
+	}
+
+	public String getDutyGroupId() {
+		return dutyGroupId;
+	}
+
+	public void setDutyGroupId(String dutyGroupId) {
+		this.dutyGroupId = dutyGroupId;
 	}
 
 }

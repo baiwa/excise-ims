@@ -44,6 +44,7 @@ import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.preferences.persistence.repository.ExciseCtrlDutyRepository;
 import th.go.excise.ims.preferences.persistence.repository.ExciseDepartmentRepository;
 import th.go.excise.ims.preferences.persistence.repository.ExciseDutyGroupRepository;
+import th.go.excise.ims.preferences.persistence.repository.ExciseIncMastRepository;
 import th.go.excise.ims.preferences.persistence.repository.ExciseSubdeptRepository;
 import th.go.excise.ims.preferences.vo.ExciseCtrlDuty;
 import th.go.excise.ims.preferences.vo.ExciseCtrlDutyVo;
@@ -51,6 +52,8 @@ import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.preferences.vo.ExciseDepartmentVo;
 import th.go.excise.ims.preferences.vo.ExciseDutyGroup;
 import th.go.excise.ims.preferences.vo.ExciseDutyGroupVo;
+import th.go.excise.ims.preferences.vo.ExciseIncMast;
+import th.go.excise.ims.preferences.vo.ExciseIncMastVo;
 import th.go.excise.ims.preferences.vo.ExciseSubdept;
 import th.go.excise.ims.preferences.vo.ExciseSubdeptVo;
 
@@ -73,6 +76,7 @@ public class ApplicationCache {
 	private ExciseSubdeptRepository exciseSubdeptRepository;
 	private ExciseDutyGroupRepository exciseDutyGroupRepository;
 	private ExciseCtrlDutyRepository exciseCtrlDutyRepository;
+	private ExciseIncMastRepository exciseIncMastRepository;
 	
 	// Parameter and Message
 	private static final ConcurrentHashMap<String, ParamGroupWrapper> PARAM_GROUP_MAP = new ConcurrentHashMap<>();
@@ -94,6 +98,7 @@ public class ApplicationCache {
 	private static final ConcurrentHashMap<String, List<ExciseDutyGroup>> EXCISE_DUTY_GROUP_BY_TYPE_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, ExciseDutyGroup> EXCISE_DUTY_GROUP_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, List<ExciseCtrlDuty>> EXCISE_CTRL_DUTY_MAP = new ConcurrentHashMap<>();
+	private static final ConcurrentHashMap<String, ExciseIncMast> EXCISE_INC_MAST_MAP = new ConcurrentHashMap<>();
 	
 	
 	@Autowired
@@ -108,7 +113,8 @@ public class ApplicationCache {
 			ExciseDepartmentRepository exciseDepartmentRepository,
 			ExciseSubdeptRepository exciseSubdeptRepository,
 			ExciseDutyGroupRepository exciseDutyGroupRepository,
-			ExciseCtrlDutyRepository exciseCtrlDutyRepository) {
+			ExciseCtrlDutyRepository exciseCtrlDutyRepository,
+			ExciseIncMastRepository exciseIncMastRepository) {
 		this.parameterGroupRepository = parameterGroupRepository;
 		this.parameterInfoRepository = parameterInfoRepository;
 		this.messageRepository = messageRepository;
@@ -120,6 +126,7 @@ public class ApplicationCache {
 		this.exciseSubdeptRepository = exciseSubdeptRepository;
 		this.exciseDutyGroupRepository = exciseDutyGroupRepository;
 		this.exciseCtrlDutyRepository = exciseCtrlDutyRepository;
+		this.exciseIncMastRepository = exciseIncMastRepository;
 	}
 	
 	/** Reload */
@@ -133,6 +140,7 @@ public class ApplicationCache {
 		loadExciseSubdept();
 		loadExciseDutyGroup();
 		loadExciseCtrlDuty();
+		loadExciseIncMast();
 		logger.info("ApplicationCache Reloaded");
 	}
 
@@ -269,6 +277,10 @@ public class ApplicationCache {
 
 	public static boolean isCtrlDutyGroupByOfficeCode(String officeCode) {
 		return EXCISE_CTRL_DUTY_MAP.containsKey(officeCode);
+	}
+	
+	public static ExciseIncMast getExciseIncMastByIncCode(String incCode) {
+		return EXCISE_INC_MAST_MAP.get(incCode);
 	}
 	/********************* Method for Get Cache - End *********************/
 
@@ -541,6 +553,42 @@ public class ApplicationCache {
 			ctrlDutyVo.setDutyGroupName(exciseCtrlDuty.getId().getDutyGroupName());
 			ctrlDutyList.add(ctrlDutyVo);
 			EXCISE_CTRL_DUTY_MAP.put(exciseCtrlDuty.getId().getResOffcode(), ctrlDutyList);
+		}
+	}
+	
+	private void loadExciseIncMast() {
+		logger.info("load loadExciseIncMast loading...");
+		
+		EXCISE_INC_MAST_MAP.clear();
+		
+		List<th.go.excise.ims.preferences.persistence.entity.ExciseIncMast> exciseIncMastList = exciseIncMastRepository.findAll();
+		
+		ExciseIncMastVo incMastVo = null;
+		for (th.go.excise.ims.preferences.persistence.entity.ExciseIncMast exciseIncMast : exciseIncMastList) {
+			incMastVo = new ExciseIncMastVo();
+			incMastVo.setIncCode(exciseIncMast.getIncCode());
+			incMastVo.setIncType(exciseIncMast.getIncType());
+			incMastVo.setIncName(exciseIncMast.getIncName());
+			incMastVo.setIncNamePrint(exciseIncMast.getIncNamePrint());
+			incMastVo.setIncFlag(exciseIncMast.getIncFlag());
+			incMastVo.setAccsendCode(exciseIncMast.getAccsendCode());
+			incMastVo.setAccCode(exciseIncMast.getAccCode());
+			incMastVo.setCdFlag(exciseIncMast.getCdFlag());
+			incMastVo.setFormCode(exciseIncMast.getFormCode());
+			incMastVo.setGroupId(exciseIncMast.getGroupId());
+			incMastVo.setInccodCd(exciseIncMast.getInccodCd());
+			incMastVo.setInccodExp(exciseIncMast.getInccodExp());
+			incMastVo.setInccodFlag(exciseIncMast.getInccodFlag());
+			incMastVo.setInccodOth(exciseIncMast.getInccodOth());
+			incMastVo.setInccodPrnstamp(exciseIncMast.getInccodPrnstamp());
+			incMastVo.setIncgrpCode(exciseIncMast.getIncgrpCode());
+			incMastVo.setIncgrpFlag(exciseIncMast.getIncgrpFlag());
+			incMastVo.setLoctypFlag(exciseIncMast.getLoctypFlag());
+			incMastVo.setLocFlag(exciseIncMast.getLocFlag());
+			incMastVo.setMoneyType(exciseIncMast.getMoneyType());
+			incMastVo.setPrnstampFlag(exciseIncMast.getPrnstampFlag());
+			incMastVo.setRecFlag(exciseIncMast.getRecFlag());
+			EXCISE_INC_MAST_MAP.put(incMastVo.getIncCode(), incMastVo);
 		}
 	}
 
