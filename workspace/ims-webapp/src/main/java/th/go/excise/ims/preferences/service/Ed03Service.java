@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
 import th.go.excise.ims.ia.vo.ExciseDepartmentVo;
 import th.go.excise.ims.preferences.persistence.entity.ExciseCtrlDuty;
@@ -34,29 +37,51 @@ public class Ed03Service {
 		return resList;
 	}
 
-	public boolean saveExciseCtrlDuty(Ed03FormVo form) {
-		boolean check = exciseCtrlDutyJdbcRepository.checkByDutyGroupName(form);
-		if (check) {
+	public ResponseData<String> saveExciseCtrlDuty(Ed03FormVo form) {
+//		boolean check = exciseCtrlDutyJdbcRepository.checkByDutyGroupName(form);
+		ResponseData<String> response = new ResponseData<String>();
+		if(!exciseCtrlDutyJdbcRepository.checkByDutyGroupName(form)) {
+			response.setStatus(RESPONSE_STATUS.FAILED);
+			response.setData("Have Repeat");
+//			Duplicstion Data
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			return response;
+		} else if(exciseCtrlDutyJdbcRepository.checkByDutyGroupName(form)) {
 			ExciseCtrlDuty data = new ExciseCtrlDuty();
 			data.setDutyGroupCode(form.getDutyGroupCode());
 			data.setDutyGroupName(form.getDutyGroupName());
 			data.setResOffcode(form.getResOffcode());
 			exciseCtrlDutyRepository.save(data);
+			
+			response.setData("SUCCESS");
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		}
-		return check;
+		return response;
 
 	}
 
-	public boolean editExciseCtrlDuty(Long id, Ed03FormVo form) {
-		boolean check = exciseCtrlDutyJdbcRepository.checkByDutyGroupName(form);
-		if (check) {
+	public ResponseData<String> editExciseCtrlDuty(Long id, Ed03FormVo form) {
+		ResponseData<String> response = new ResponseData<String>();
+		
+		if(!exciseCtrlDutyJdbcRepository.checkByDutyGroupName(form)) {
+			response.setStatus(RESPONSE_STATUS.FAILED);
+			response.setData("Have Repeat");
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			return response;
+		} else if(exciseCtrlDutyJdbcRepository.checkByDutyGroupName(form)) {
 			ExciseCtrlDuty data = exciseCtrlDutyRepository.findById(id).get();
 			data.setDutyGroupCode(form.getDutyGroupCode());
 			data.setDutyGroupName(form.getDutyGroupName());
 			data.setResOffcode(form.getResOffcode());
 			exciseCtrlDutyRepository.save(data);
+			
+			response.setData("SUCCESS");
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		}
-		return check;
+		
+		return response;
 	}
 
 	public void deleteExciseCtrlDuty(Long id) {

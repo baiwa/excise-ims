@@ -57,16 +57,7 @@ public class Ed03Controller {
 	public ResponseData<String> saveExciseCtrlDuty(@RequestBody Ed03FormVo form) {
 		ResponseData<String> response = new ResponseData<String>();
 		try {
-			boolean check = ed03Service.saveExciseCtrlDuty(form);
-			if (check) {
-				response.setData("SUCCESS");
-				response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
-				response.setStatus(RESPONSE_STATUS.SUCCESS);
-			} else {
-				response.setMessage("Have Repeat");
-				response.setStatus(RESPONSE_STATUS.FAILED);
-			}
-
+			response = ed03Service.saveExciseCtrlDuty(form);
 		} catch (Exception e) {
 			logger.error("Error Ed03Controller saveExciseCtrlDuty : ", e);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
@@ -80,15 +71,7 @@ public class Ed03Controller {
 	public ResponseData<String> editExciseCtrlDuty(@PathVariable("id") Long id, @RequestBody Ed03FormVo form) {
 		ResponseData<String> response = new ResponseData<String>();
 		try {
-			boolean check = ed03Service.editExciseCtrlDuty(id, form);
-			if (check) {
-				response.setData("SUCCESS");
-				response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
-				response.setStatus(RESPONSE_STATUS.SUCCESS);
-			} else {
-				response.setMessage("Have Repeat");
-				response.setStatus(RESPONSE_STATUS.FAILED);
-			}
+			response = ed03Service.editExciseCtrlDuty(id, form);
 		} catch (Exception e) {
 			logger.error("Error Ed03Controller saveExciseCtrlDuty : ", e);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
