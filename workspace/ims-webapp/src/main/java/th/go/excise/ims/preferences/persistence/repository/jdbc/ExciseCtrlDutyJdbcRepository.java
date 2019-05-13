@@ -20,7 +20,7 @@ public class ExciseCtrlDutyJdbcRepository {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 		sql.append(" SELECT * FROM EXCISE_CTRL_DUTY WHERE DUTY_GROUP_NAME LIKE ? AND IS_DELETED ='N' ");
-		params.add("%" +  form.getDutyGroupCode().replaceAll(" ", "%") + "%");
+		params.add("%" +  form.getDutyGroupName().replaceAll(" ", "%") + "%");
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<Ed03Vo> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(),
 				new BeanPropertyRowMapper(Ed03Vo.class));
