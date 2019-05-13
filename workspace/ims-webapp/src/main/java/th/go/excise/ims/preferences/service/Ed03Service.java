@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
+import th.go.excise.ims.ia.vo.ExciseDepartmentVo;
 import th.go.excise.ims.preferences.persistence.entity.ExciseCtrlDuty;
 import th.go.excise.ims.preferences.persistence.repository.ExciseCtrlDutyRepository;
 import th.go.excise.ims.preferences.persistence.repository.jdbc.ExciseCtrlDutyJdbcRepository;
@@ -21,14 +23,21 @@ public class Ed03Service {
 	
 	
 	public List<Ed03Vo> findByDutyGroupName(Ed03FormVo form) {
-		return exciseCtrlDutyJdbcRepository.findByDutyGroupName(form);
+		List<Ed03Vo> resList = exciseCtrlDutyJdbcRepository.findByDutyGroupName(form);
+		for (Ed03Vo ed03Vo : resList) {
+			if (ed03Vo.getResOffcode() != null) {
+				ExciseDepartmentVo exciseDepartmentVo = ExciseDepartmentUtil.getExciseDepartment(ed03Vo.getResOffcode());
+				ed03Vo.setExciseDepartmentVo(exciseDepartmentVo);
+			}
+		}
+		return resList;
 	}
 	
 	public void saveExciseCtrlDuty(Ed03FormVo form) {
 		ExciseCtrlDuty data = new ExciseCtrlDuty();
-		data.getId().setDutyGroupCode(form.getDutyGroupCode());
-		data.getId().setDutyGroupName(form.getDutyGroupName());
-		data.getId().setResOffcode(form.getResOffcode());
+		data.setDutyGroupCode(form.getDutyGroupCode());
+		data.setDutyGroupName(form.getDutyGroupName());
+		data.setResOffcode(form.getResOffcode());
 		exciseCtrlDutyRepository.save(data);
 	}
 }

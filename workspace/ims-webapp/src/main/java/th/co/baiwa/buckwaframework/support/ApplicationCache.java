@@ -41,12 +41,12 @@ import th.co.baiwa.buckwaframework.support.domain.Message;
 import th.co.baiwa.buckwaframework.support.domain.ParamGroup;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.preferences.persistence.entity.ExciseCtrlDuty;
 import th.go.excise.ims.preferences.persistence.repository.ExciseCtrlDutyRepository;
 import th.go.excise.ims.preferences.persistence.repository.ExciseDepartmentRepository;
 import th.go.excise.ims.preferences.persistence.repository.ExciseDutyGroupRepository;
 import th.go.excise.ims.preferences.persistence.repository.ExciseIncMastRepository;
 import th.go.excise.ims.preferences.persistence.repository.ExciseSubdeptRepository;
-import th.go.excise.ims.preferences.vo.ExciseCtrlDuty;
 import th.go.excise.ims.preferences.vo.ExciseCtrlDutyVo;
 import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.preferences.vo.ExciseDepartmentVo;
@@ -98,7 +98,7 @@ public class ApplicationCache {
 	private static final ConcurrentHashMap<String, List<ExciseSubdept>> EXCISE_SUBDEPT_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, List<ExciseDutyGroup>> EXCISE_DUTY_GROUP_BY_TYPE_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, ExciseDutyGroup> EXCISE_DUTY_GROUP_MAP = new ConcurrentHashMap<>();
-	private static final ConcurrentHashMap<String, List<ExciseCtrlDuty>> EXCISE_CTRL_DUTY_MAP = new ConcurrentHashMap<>();
+	private static final ConcurrentHashMap<String, List<ExciseCtrlDutyVo>> EXCISE_CTRL_DUTY_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, ExciseIncMast> EXCISE_INC_MAST_MAP = new ConcurrentHashMap<>();
 	
 	
@@ -547,21 +547,21 @@ public class ApplicationCache {
 		
 		EXCISE_CTRL_DUTY_MAP.clear();
 		
-		List<th.go.excise.ims.preferences.persistence.entity.ExciseCtrlDuty> exciseCtrlDutyList = exciseCtrlDutyRepository.findAll();
+		List<ExciseCtrlDuty> exciseCtrlDutyList = exciseCtrlDutyRepository.findAll();
 		
 		ExciseCtrlDutyVo ctrlDutyVo = null;
-		List<ExciseCtrlDuty> ctrlDutyList = null;
-		for (th.go.excise.ims.preferences.persistence.entity.ExciseCtrlDuty exciseCtrlDuty : exciseCtrlDutyList) {
-			ctrlDutyList = EXCISE_CTRL_DUTY_MAP.get(exciseCtrlDuty.getId().getResOffcode());
+		List<ExciseCtrlDutyVo> ctrlDutyList = null;
+		for (ExciseCtrlDuty	 exciseCtrlDuty : exciseCtrlDutyList) {
+			ctrlDutyList = EXCISE_CTRL_DUTY_MAP.get(exciseCtrlDuty.getResOffcode());
 			if (ctrlDutyList == null) {
 				ctrlDutyList = new ArrayList<>();
 			}
 			ctrlDutyVo = new ExciseCtrlDutyVo();
-			ctrlDutyVo.setResOffcode(exciseCtrlDuty.getId().getResOffcode());
-			ctrlDutyVo.setDutyGroupCode(exciseCtrlDuty.getId().getDutyGroupCode());
-			ctrlDutyVo.setDutyGroupName(exciseCtrlDuty.getId().getDutyGroupName());
+			ctrlDutyVo.setResOffcode(exciseCtrlDuty.getResOffcode());
+			ctrlDutyVo.setDutyGroupCode(exciseCtrlDuty.getDutyGroupCode());
+			ctrlDutyVo.setDutyGroupName(exciseCtrlDuty.getDutyGroupName());
 			ctrlDutyList.add(ctrlDutyVo);
-			EXCISE_CTRL_DUTY_MAP.put(exciseCtrlDuty.getId().getResOffcode(), ctrlDutyList);
+			EXCISE_CTRL_DUTY_MAP.put(exciseCtrlDuty.getResOffcode(), ctrlDutyList);
 		}
 	}
 	

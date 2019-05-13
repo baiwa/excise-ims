@@ -1,8 +1,6 @@
 package th.go.excise.ims.preferences.vo;
-import
-th.go.excise.ims.preferences.persistence.entity.ExciseCtrlDuty;
 
-public class Ed03FormVo extends ExciseCtrlDuty {
+public class Ed03FormVo {
 	private String dutyGroupCode;
 	private String dutyGroupName;
 	private String resOffcode;
