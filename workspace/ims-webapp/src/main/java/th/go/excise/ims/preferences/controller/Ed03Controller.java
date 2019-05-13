@@ -75,7 +75,7 @@ public class Ed03Controller {
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 
 		} catch (Exception e) {
-			logger.error("Ed0201Controller updateConfigposition : ", e);
+			logger.error("Error Ed03Controller saveExciseCtrlDuty : ", e);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
@@ -93,7 +93,7 @@ public class Ed03Controller {
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 
 		} catch (Exception e) {
-			logger.error("Ed0201Controller updateConfigposition : ", e);
+			logger.error("Error Ed03Controller  deleteExciseCtrlDuty : ", e);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.FAILED);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}

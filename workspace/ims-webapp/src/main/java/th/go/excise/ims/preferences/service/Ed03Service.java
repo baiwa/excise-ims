@@ -23,10 +23,10 @@ public class Ed03Service {
 
 	public List<Ed03Vo> findByDutyGroupName(Ed03FormVo form) {
 		List<Ed03Vo> resList = exciseCtrlDutyJdbcRepository.findByDutyGroupName(form);
+		ExciseDepartmentVo exciseDepartmentVo = null;
 		for (Ed03Vo ed03Vo : resList) {
 			if (ed03Vo.getResOffcode() != null) {
-				ExciseDepartmentVo exciseDepartmentVo = ExciseDepartmentUtil
-						.getExciseDepartment(ed03Vo.getResOffcode());
+				exciseDepartmentVo = ExciseDepartmentUtil.getExciseDepartment(ed03Vo.getResOffcode());
 				ed03Vo.setExciseDepartmentVo(exciseDepartmentVo);
 			}
 		}
@@ -34,11 +34,15 @@ public class Ed03Service {
 	}
 
 	public void saveExciseCtrlDuty(Ed03FormVo form) {
-		ExciseCtrlDuty data = new ExciseCtrlDuty();
-		data.setDutyGroupCode(form.getDutyGroupCode());
-		data.setDutyGroupName(form.getDutyGroupName());
-		data.setResOffcode(form.getResOffcode());
-		exciseCtrlDutyRepository.save(data);
+		boolean check = exciseCtrlDutyJdbcRepository.checkByDutyGroupName(form);
+		if (check) {
+			ExciseCtrlDuty data = new ExciseCtrlDuty();
+			data.setDutyGroupCode(form.getDutyGroupCode());
+			data.setDutyGroupName(form.getDutyGroupName());
+			data.setResOffcode(form.getResOffcode());
+			exciseCtrlDutyRepository.save(data);
+		}
+
 	}
 
 	public void editExciseCtrlDuty(Long id, Ed03FormVo form) {
@@ -48,7 +52,7 @@ public class Ed03Service {
 		data.setResOffcode(form.getResOffcode());
 		exciseCtrlDutyRepository.save(data);
 	}
-	
+
 	public void deleteExciseCtrlDuty(Long id) {
 		exciseCtrlDutyRepository.deleteById(id);
 	}
