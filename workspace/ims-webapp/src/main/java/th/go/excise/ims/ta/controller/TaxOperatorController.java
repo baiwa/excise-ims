@@ -538,5 +538,22 @@ public class TaxOperatorController {
         }
         return response;
     }
+    
+    @PostMapping("/update-plan-worksheetDtl")
+    @ResponseBody
+    public ResponseData<TaPlanWorksheetDtl> updatePlanWorksheetDtl(@RequestBody PlanWorksheetDatatableVo formVo) {
+        ResponseData<TaPlanWorksheetDtl> response = new ResponseData<>();
+
+        try {
+            response.setData(planWorksheetService.savePlanWorksheetDtlByAssing(formVo));
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.FAILED);
+        }
+        return response;
+    }
 
 }

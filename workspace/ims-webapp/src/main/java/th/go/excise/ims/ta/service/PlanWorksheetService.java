@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -416,6 +417,22 @@ public class PlanWorksheetService {
 		dtlCus.setRegCapital(reg4000.getRegCapital());
 		dtlCus.setDutyCodeDesc(ApplicationCache.getParamInfoByCode(PARAM_GROUP.EXCISE_PRODUCT_TYPE, reg4000.getDutyCode()).getValue1());
 		return dtlCus;
+	}
+	
+	@Transactional
+	public TaPlanWorksheetDtl savePlanWorksheetDtlByAssing(PlanWorksheetDatatableVo formVo) {
+		Optional<TaPlanWorksheetDtl> taPlanOpt = taPlanWorksheetDtlRepository.findById(formVo.getPlanWorksheetDtlId());
+		TaPlanWorksheetDtl planDtl = new TaPlanWorksheetDtl();
+		if (taPlanOpt.isPresent()) {
+			planDtl = taPlanOpt.get();
+			// TODO SET SOMETHING
+			planDtl.setAuSubdeptCode(formVo.getAuSubdeptCode());
+			planDtl.setOfficeCode(formVo.getOfficeCode());
+			planDtl = taPlanWorksheetDtlRepository.save(planDtl);
+
+		}
+		
+		return planDtl;
 	}
 
 }

@@ -22,6 +22,36 @@ public class PlanWorksheetDatatableVo {
 	private String auditDate;
 	private String auSubdeptCode;
 	private String auJobResp;
+	private String officeCode;
+	private Long planWorksheetDtlId;
+    private String deptShortName;
+    private String subdeptShortName;
+    private String personName;
+    
+   
+	public String getPersonName() {
+		return personName;
+	}
+
+	public void setPersonName(String personName) {
+		this.personName = personName;
+	}
+
+	public String getOfficeCode() {
+		return officeCode;
+	}
+
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
+	}
+
+	public Long getPlanWorksheetDtlId() {
+		return planWorksheetDtlId;
+	}
+
+	public void setPlanWorksheetDtlId(Long planWorksheetDtlId) {
+		this.planWorksheetDtlId = planWorksheetDtlId;
+	}
 
 	public String getAuSubdeptCode() {
 		return auSubdeptCode;
@@ -182,5 +212,22 @@ public class PlanWorksheetDatatableVo {
 	public void setAuditDate(String auditDate) {
 		this.auditDate = auditDate;
 	}
+
+	public String getDeptShortName() {
+		return deptShortName;
+	}
+
+	public void setDeptShortName(String deptShortName) {
+		this.deptShortName = deptShortName;
+	}
+
+	public String getSubdeptShortName() {
+		return subdeptShortName;
+	}
+
+	public void setSubdeptShortName(String subdeptShortName) {
+		this.subdeptShortName = subdeptShortName;
+	}
+	
 
 }
