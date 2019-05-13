@@ -94,6 +94,7 @@ public class ApplicationCache {
 	private static final ConcurrentHashMap<String, ExciseDepartment> EXCISE_SECTOR_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, List<ExciseDepartment>> EXCISE_AREA_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, List<ExciseDepartment>> EXCISE_BRANCH_MAP = new ConcurrentHashMap<>();
+	private static final ConcurrentHashMap<String, List<ExciseDepartment>> EXCISE_CENTRAL_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, List<ExciseSubdept>> EXCISE_SUBDEPT_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, List<ExciseDutyGroup>> EXCISE_DUTY_GROUP_BY_TYPE_MAP = new ConcurrentHashMap<>();
 	private static final ConcurrentHashMap<String, ExciseDutyGroup> EXCISE_DUTY_GROUP_MAP = new ConcurrentHashMap<>();
@@ -439,6 +440,7 @@ public class ApplicationCache {
 		ExciseDepartmentVo deptVo = null;
 		List<ExciseDepartment> areaList = null;
 		List<ExciseDepartment> branchList = null;
+		List<ExciseDepartment> cenList = null;
 		for (th.go.excise.ims.preferences.persistence.entity.ExciseDepartment exciseDepartment : exciseDepartmentList) {
 			deptVo = new ExciseDepartmentVo();
 			toExciseDepartmentVo(deptVo, exciseDepartment);
@@ -467,7 +469,14 @@ public class ApplicationCache {
 				branchList.add(deptVo);
 				EXCISE_BRANCH_MAP.put(deptVo.getOfficeCode().substring(0, 4) + "00", branchList);
 			} else {
-				logger.warn("This officeCode is not match, [{}]", exciseDepartment.getOffCode());
+				cenList = EXCISE_CENTRAL_MAP.get(exciseDepartment.getOffCode().substring(0, 4) + "00");
+				deptVo = new ExciseDepartmentVo();
+				toExciseDepartmentVo(deptVo, exciseDepartment);
+				if (cenList == null) {
+					cenList = new ArrayList<>();
+				}
+				cenList.add(deptVo);
+				EXCISE_CENTRAL_MAP.put(deptVo.getOfficeCode().substring(0, 4) + "00", cenList);
 			}
 		}
 		
