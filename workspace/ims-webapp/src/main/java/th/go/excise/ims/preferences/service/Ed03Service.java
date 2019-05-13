@@ -10,6 +10,7 @@ import th.go.excise.ims.ia.vo.ExciseDepartmentVo;
 import th.go.excise.ims.preferences.persistence.entity.ExciseCtrlDuty;
 import th.go.excise.ims.preferences.persistence.repository.ExciseCtrlDutyRepository;
 import th.go.excise.ims.preferences.persistence.repository.jdbc.ExciseCtrlDutyJdbcRepository;
+import th.go.excise.ims.preferences.vo.Ed0101DepartmentVo;
 import th.go.excise.ims.preferences.vo.Ed03FormVo;
 import th.go.excise.ims.preferences.vo.Ed03Vo;
 
@@ -33,7 +34,7 @@ public class Ed03Service {
 		return resList;
 	}
 
-	public void saveExciseCtrlDuty(Ed03FormVo form) {
+	public boolean saveExciseCtrlDuty(Ed03FormVo form) {
 		boolean check = exciseCtrlDutyJdbcRepository.checkByDutyGroupName(form);
 		if (check) {
 			ExciseCtrlDuty data = new ExciseCtrlDuty();
@@ -42,18 +43,28 @@ public class Ed03Service {
 			data.setResOffcode(form.getResOffcode());
 			exciseCtrlDutyRepository.save(data);
 		}
+		return check;
 
 	}
 
-	public void editExciseCtrlDuty(Long id, Ed03FormVo form) {
-		ExciseCtrlDuty data = exciseCtrlDutyRepository.findById(id).get();
-		data.setDutyGroupCode(form.getDutyGroupCode());
-		data.setDutyGroupName(form.getDutyGroupName());
-		data.setResOffcode(form.getResOffcode());
-		exciseCtrlDutyRepository.save(data);
+	public boolean editExciseCtrlDuty(Long id, Ed03FormVo form) {
+		boolean check = exciseCtrlDutyJdbcRepository.checkByDutyGroupName(form);
+		if (check) {
+			ExciseCtrlDuty data = exciseCtrlDutyRepository.findById(id).get();
+			data.setDutyGroupCode(form.getDutyGroupCode());
+			data.setDutyGroupName(form.getDutyGroupName());
+			data.setResOffcode(form.getResOffcode());
+			exciseCtrlDutyRepository.save(data);
+		}
+		return check;
 	}
 
 	public void deleteExciseCtrlDuty(Long id) {
 		exciseCtrlDutyRepository.deleteById(id);
+	}
+
+	public List<Ed0101DepartmentVo> listDepartment0014() {
+		List<Ed0101DepartmentVo> dataList = exciseCtrlDutyJdbcRepository.listDepartment0014();
+		return dataList;
 	}
 }

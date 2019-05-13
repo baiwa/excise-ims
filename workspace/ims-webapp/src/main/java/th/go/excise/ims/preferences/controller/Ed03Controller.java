@@ -1,5 +1,6 @@
 package th.go.excise.ims.preferences.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -7,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,8 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.preferences.service.Ed01Service;
 import th.go.excise.ims.preferences.service.Ed03Service;
+import th.go.excise.ims.preferences.vo.Ed0101DepartmentVo;
 import th.go.excise.ims.preferences.vo.Ed03FormVo;
 import th.go.excise.ims.preferences.vo.Ed03Vo;
 
@@ -51,10 +57,15 @@ public class Ed03Controller {
 	public ResponseData<String> saveExciseCtrlDuty(@RequestBody Ed03FormVo form) {
 		ResponseData<String> response = new ResponseData<String>();
 		try {
-			ed03Service.saveExciseCtrlDuty(form);
-			response.setData("SUCCESS");
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
-			response.setStatus(RESPONSE_STATUS.SUCCESS);
+			boolean check = ed03Service.saveExciseCtrlDuty(form);
+			if (check) {
+				response.setData("SUCCESS");
+				response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+				response.setStatus(RESPONSE_STATUS.SUCCESS);
+			} else {
+				response.setMessage("Have Repeat");
+				response.setStatus(RESPONSE_STATUS.FAILED);
+			}
 
 		} catch (Exception e) {
 			logger.error("Error Ed03Controller saveExciseCtrlDuty : ", e);
@@ -69,11 +80,15 @@ public class Ed03Controller {
 	public ResponseData<String> editExciseCtrlDuty(@PathVariable("id") Long id, @RequestBody Ed03FormVo form) {
 		ResponseData<String> response = new ResponseData<String>();
 		try {
-			ed03Service.editExciseCtrlDuty(id, form);
-			response.setData("SUCCESS");
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
-			response.setStatus(RESPONSE_STATUS.SUCCESS);
-
+			boolean check = ed03Service.editExciseCtrlDuty(id, form);
+			if (check) {
+				response.setData("SUCCESS");
+				response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+				response.setStatus(RESPONSE_STATUS.SUCCESS);
+			} else {
+				response.setMessage("Have Repeat");
+				response.setStatus(RESPONSE_STATUS.FAILED);
+			}
 		} catch (Exception e) {
 			logger.error("Error Ed03Controller saveExciseCtrlDuty : ", e);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
@@ -98,5 +113,22 @@ public class Ed03Controller {
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
+	}
+
+	@GetMapping("/listDepartment0014")
+	@ResponseBody
+	public ResponseData<List<Ed0101DepartmentVo>> listDepartment0014() {
+		ResponseData<List<Ed0101DepartmentVo>> responseData = new ResponseData<List<Ed0101DepartmentVo>>();
+		List<Ed0101DepartmentVo> data = new ArrayList<>();
+		try {
+			data = ed03Service.listDepartment0014();
+			responseData.setData(data);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Ed02Controller : listUser  ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
 	}
 }
