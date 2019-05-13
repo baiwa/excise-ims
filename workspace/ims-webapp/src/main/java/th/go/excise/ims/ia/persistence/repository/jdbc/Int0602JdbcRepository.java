@@ -30,7 +30,7 @@ public class Int0602JdbcRepository {
 
 		if (StringUtils.isNotBlank(vo.getOfficeCode())) {
 			sql.append(" AND WS.OFFCODE LIKE '100300' ");
-			paramList.add(vo.getOfficeCode());
+//			paramList.add(vo.getOfficeCode());
 		}
 		if (StringUtils.isNotBlank(vo.getLicDateFrom())) {
 			sql.append(" AND WS.LIC_DATE > ? ");
