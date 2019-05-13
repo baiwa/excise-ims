@@ -50,7 +50,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 
 		params.add(formVo.getPlanNumber());
 		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
-			sql.append("   AND PLAN_DTL.OFFICE_CODE = ? ");
+			sql.append("   AND PLAN_DTL.OFFICE_CODE LIKE ? ");
 			params.add(formVo.getOfficeCode());
 		}
 	}

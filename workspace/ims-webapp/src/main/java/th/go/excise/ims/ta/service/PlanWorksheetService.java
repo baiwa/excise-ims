@@ -259,7 +259,15 @@ public class PlanWorksheetService {
 	}
 
 	public DataTableAjax<PlanWorksheetDatatableVo> planDtlDatatable(PlanWorksheetVo formVo) {
-		formVo.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+		logger.info("planDtlDatatable budgetYear={}, officeCOde={}", formVo.getBudgetYear(), formVo.getOfficeCode());
+		if (StringUtils.isEmpty(formVo.getOfficeCode())) {
+			String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+			if (EXCISE_OFFICE_CODE.TA_CENTRAL_SELECTOR.equals(officeCode)) {
+				formVo.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(officeCode));
+			} else {
+				formVo.setOfficeCode(officeCode);
+			}
+		}
 
 		DataTableAjax<PlanWorksheetDatatableVo> dataTableAjax = new DataTableAjax<>();
 		dataTableAjax.setData(taPlanWorksheetDtlRepository.findByCriteria(formVo));
