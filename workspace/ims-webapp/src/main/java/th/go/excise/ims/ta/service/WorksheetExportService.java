@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
@@ -38,6 +37,7 @@ import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondMainDtlReposito
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondMainHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetHdrRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.util.TaxAuditUtils;
 import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
@@ -51,6 +51,8 @@ public class WorksheetExportService {
 	private static final String NO_TAX_AMOUNT = "-";
 	private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMM yyyy", ConvertDateUtils.LOCAL_TH);
 	
+	@Autowired
+	private TaWsReg4000Repository taWsReg4000Repository;
 	@Autowired
 	private DraftWorksheetService draftWorksheetService;
 	
@@ -70,7 +72,8 @@ public class WorksheetExportService {
 		
 		// Prepare Data for Export
 		formVo.setOfficeCode(officeCode);
-		formVo.setFlagPage(FLAG.N_FLAG);
+		formVo.setStart(0);
+		formVo.setLength(taWsReg4000Repository.countByCriteria(formVo).intValue());
 		List<TaxOperatorDetailVo> previewVoList = draftWorksheetService.prepareTaxOperatorDetailVoList(formVo);
 		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = TaxAuditUtils.prepareTaxOperatorDatatable(previewVoList, formVo);
 		
