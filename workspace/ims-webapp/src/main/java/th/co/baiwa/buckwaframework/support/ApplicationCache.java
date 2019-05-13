@@ -446,7 +446,7 @@ public class ApplicationCache {
 			toExciseDepartmentVo(deptVo, exciseDepartment);
 			EXCISE_DEPARTMENT_MAP.put(deptVo.getOfficeCode(), deptVo);
 			
-			if (ExciseUtils.isCentral(exciseDepartment.getOffCode()) || ExciseUtils.isSector(exciseDepartment.getOffCode())) {
+			if ( ExciseUtils.isSector(exciseDepartment.getOffCode())) {
 				deptVo = new ExciseDepartmentVo();
 				toExciseDepartmentVo(deptVo, exciseDepartment);
 				EXCISE_SECTOR_MAP.put(deptVo.getOfficeCode(), deptVo);
