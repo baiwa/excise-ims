@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
@@ -116,10 +117,20 @@ public class Int0601Service {
 			}
 			if (int0601SaveVo.getIaAuditIncD2List() != null && int0601SaveVo.getIaAuditIncD2List().size() > 0) {
 				logger.info("insert Drtail : 2 ");
+				for (IaAuditIncD2Vo tab2Data : int0601SaveVo.getIaAuditIncD2List()) {
+					if(StringUtils.isBlank(tab2Data.getAuditIncNo())) {
+						tab2Data.setAuditIncNo(iaAuditIncH.getAuditIncNo());
+					}
+				}
 				iaAuditIncD2Repository.batchInsert(int0601SaveVo.getIaAuditIncD2List());
 			}
 			if (int0601SaveVo.getIaAuditIncD3List() != null && int0601SaveVo.getIaAuditIncD3List().size() > 0) {
 				logger.info("insert Drtail : 3 ");
+				for (IaAuditIncD3Vo tab3Data : int0601SaveVo.getIaAuditIncD3List()) {
+					if(StringUtils.isBlank(tab3Data.getAuditIncNo())) {
+						tab3Data.setAuditIncNo(iaAuditIncH.getAuditIncNo());
+					}
+				}
 				iaAuditIncD3Repository.batchInsert(int0601SaveVo.getIaAuditIncD3List());
 			}
 		} else {

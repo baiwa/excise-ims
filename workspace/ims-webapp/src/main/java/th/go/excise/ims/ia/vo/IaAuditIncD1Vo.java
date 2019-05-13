@@ -1,7 +1,6 @@
 package th.go.excise.ims.ia.vo;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import org.springframework.web.multipart.MultipartFile;
 

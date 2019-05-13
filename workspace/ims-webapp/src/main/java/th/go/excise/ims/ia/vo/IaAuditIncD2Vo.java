@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class IaAuditIncD2Vo {
 
     private String id;
+    private String auditIncNo;
     private String iaAuditIncD2Id;
     private String receiptDate;
     private BigDecimal amount;
@@ -80,4 +81,12 @@ public class IaAuditIncD2Vo {
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
+	public String getAuditIncNo() {
+		return auditIncNo;
+	}
+
+	public void setAuditIncNo(String auditIncNo) {
+		this.auditIncNo = auditIncNo;
+	}
 }

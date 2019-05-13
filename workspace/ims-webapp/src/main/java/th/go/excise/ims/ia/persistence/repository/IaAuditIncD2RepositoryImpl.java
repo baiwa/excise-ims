@@ -25,6 +25,7 @@ public class IaAuditIncD2RepositoryImpl implements IaAuditIncD2RepositoryCustom{
 		String sql = SqlGeneratorUtils.genSqlInsert("IA_AUDIT_INC_D2", Arrays.asList("IA_AUDIT_INC_D2_ID"
 				,"RECEIPT_DATE"
 				,"AMOUNT"
+				,"AUDIT_INC_NO"
 				,"PRINT_PER_DAY"
 				,"AUDIT_CHECK"
 				,"REMARK","CREATED_BY"), "IA_AUDIT_INC_D2_SEQ");
@@ -36,6 +37,7 @@ public class IaAuditIncD2RepositoryImpl implements IaAuditIncD2RepositoryCustom{
 				List<Object> paramList = new ArrayList<Object>();
 				paramList.add(ConvertDateUtils.parseStringToDate(iaAuditInc.getReceiptDate(), ConvertDateUtils.YYYY_MM_DD, ConvertDateUtils.LOCAL_EN));
 				paramList.add(iaAuditInc.getAmount());
+				paramList.add(iaAuditInc.getAuditIncNo());
 				paramList.add(iaAuditInc.getPrintPerDay());
 				paramList.add(iaAuditInc.getAuditCheck());
 				paramList.add(iaAuditInc.getRemark());

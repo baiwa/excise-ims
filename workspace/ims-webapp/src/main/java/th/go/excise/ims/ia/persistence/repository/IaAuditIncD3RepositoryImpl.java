@@ -23,6 +23,7 @@ public class IaAuditIncD3RepositoryImpl implements IaAuditIncD3RepositoryCustom 
 	public void batchInsert(List<IaAuditIncD3Vo> iaAuditIncD3List) {
 		String sql = SqlGeneratorUtils.genSqlInsert("IA_AUDIT_INC_D3", Arrays.asList(
 				"IA_AUDIT_INC_D3_ID"
+				,"AUDIT_INC_NO"
 				,"TAX_CODE"
 				,"TAX_NAME"
 				,"AMOUNT"
@@ -35,6 +36,7 @@ public class IaAuditIncD3RepositoryImpl implements IaAuditIncD3RepositoryCustom 
 		commonJdbcTemplate.batchUpdate(sql, iaAuditIncD3List, 1000, new ParameterizedPreparedStatementSetter<IaAuditIncD3Vo>() {
 			public void setValues(PreparedStatement ps, IaAuditIncD3Vo iaAuditInc) throws SQLException {
 				List<Object> paramList = new ArrayList<Object>();
+				paramList.add(iaAuditInc.getAuditIncNo());
 				paramList.add(iaAuditInc.getTaxCode());
 				paramList.add(iaAuditInc.getTaxName());
 				paramList.add(iaAuditInc.getAmount());
