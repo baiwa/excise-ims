@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
 import th.go.excise.ims.ia.vo.Int0602FormVo;
-import th.go.excise.ims.ws.persistence.entity.WsIncfri8020Inc;
 import th.go.excise.ims.ws.persistence.entity.WsLicfri6010;
 
 @Repository
@@ -22,7 +21,7 @@ public class Int0602JdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
-	public void findByCriteria(Int0602FormVo vo) {
+	public List<WsLicfri6010> findByCriteria(Int0602FormVo vo) {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT * ");
@@ -43,7 +42,7 @@ public class Int0602JdbcRepository {
 		}
 
 		sql.append(" ORDER BY LIC_NO ");
-		commonJdbcTemplate.query(sql.toString(),paramList.toArray() ,tab1RowMapper );
+		return commonJdbcTemplate.query(sql.toString(),paramList.toArray() ,tab1RowMapper );
 
 	}
 	
