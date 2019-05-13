@@ -17,27 +17,39 @@ import th.go.excise.ims.preferences.vo.Ed03Vo;
 public class Ed03Service {
 	@Autowired
 	private ExciseCtrlDutyJdbcRepository exciseCtrlDutyJdbcRepository;
-	
+
 	@Autowired
 	private ExciseCtrlDutyRepository exciseCtrlDutyRepository;
-	
-	
+
 	public List<Ed03Vo> findByDutyGroupName(Ed03FormVo form) {
 		List<Ed03Vo> resList = exciseCtrlDutyJdbcRepository.findByDutyGroupName(form);
 		for (Ed03Vo ed03Vo : resList) {
 			if (ed03Vo.getResOffcode() != null) {
-				ExciseDepartmentVo exciseDepartmentVo = ExciseDepartmentUtil.getExciseDepartment(ed03Vo.getResOffcode());
+				ExciseDepartmentVo exciseDepartmentVo = ExciseDepartmentUtil
+						.getExciseDepartment(ed03Vo.getResOffcode());
 				ed03Vo.setExciseDepartmentVo(exciseDepartmentVo);
 			}
 		}
 		return resList;
 	}
-	
+
 	public void saveExciseCtrlDuty(Ed03FormVo form) {
 		ExciseCtrlDuty data = new ExciseCtrlDuty();
 		data.setDutyGroupCode(form.getDutyGroupCode());
 		data.setDutyGroupName(form.getDutyGroupName());
 		data.setResOffcode(form.getResOffcode());
 		exciseCtrlDutyRepository.save(data);
+	}
+
+	public void editExciseCtrlDuty(Long id, Ed03FormVo form) {
+		ExciseCtrlDuty data = exciseCtrlDutyRepository.findById(id).get();
+		data.setDutyGroupCode(form.getDutyGroupCode());
+		data.setDutyGroupName(form.getDutyGroupName());
+		data.setResOffcode(form.getResOffcode());
+		exciseCtrlDutyRepository.save(data);
+	}
+	
+	public void deleteExciseCtrlDuty(Long id) {
+		exciseCtrlDutyRepository.deleteById(id);
 	}
 }
