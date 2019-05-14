@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
 import th.go.excise.ims.ia.vo.ExciseDepartmentVo;
 import th.go.excise.ims.preferences.persistence.entity.ExciseCtrlDuty;
@@ -41,10 +42,10 @@ public class Ed03Service {
 //		boolean check = exciseCtrlDutyJdbcRepository.checkByDutyGroupName(form);
 		ResponseData<String> response = new ResponseData<String>();
 		if(!exciseCtrlDutyJdbcRepository.checkByDutyGroupName(form)) {
-			response.setStatus(RESPONSE_STATUS.FAILED);
-			response.setData("Have Repeat");
 //			Duplicstion Data
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setData("Duplicstion Data");
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.FAILED);
 			return response;
 		} else if(exciseCtrlDutyJdbcRepository.checkByDutyGroupName(form)) {
 			ExciseCtrlDuty data = new ExciseCtrlDuty();
@@ -54,7 +55,7 @@ public class Ed03Service {
 			exciseCtrlDutyRepository.save(data);
 			
 			response.setData("SUCCESS");
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		}
 		return response;
@@ -65,9 +66,9 @@ public class Ed03Service {
 		ResponseData<String> response = new ResponseData<String>();
 		
 		if(!exciseCtrlDutyJdbcRepository.checkByDutyGroupName(form)) {
+			response.setData("Duplicstion Data");
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
-			response.setData("Have Repeat");
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			return response;
 		} else if(exciseCtrlDutyJdbcRepository.checkByDutyGroupName(form)) {
 			ExciseCtrlDuty data = exciseCtrlDutyRepository.findById(id).get();
@@ -77,7 +78,7 @@ public class Ed03Service {
 			exciseCtrlDutyRepository.save(data);
 			
 			response.setData("SUCCESS");
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		}
 		

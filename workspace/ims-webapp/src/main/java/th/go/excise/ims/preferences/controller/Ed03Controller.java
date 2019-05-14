@@ -46,7 +46,7 @@ public class Ed03Controller {
 
 		} catch (Exception e) {
 			logger.error("Ed0201Controller updateConfigposition : ", e);
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -60,7 +60,7 @@ public class Ed03Controller {
 			response = ed03Service.saveExciseCtrlDuty(form);
 		} catch (Exception e) {
 			logger.error("Error Ed03Controller saveExciseCtrlDuty : ", e);
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -74,7 +74,7 @@ public class Ed03Controller {
 			response = ed03Service.editExciseCtrlDuty(id, form);
 		} catch (Exception e) {
 			logger.error("Error Ed03Controller saveExciseCtrlDuty : ", e);
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -87,12 +87,12 @@ public class Ed03Controller {
 		try {
 			ed03Service.deleteExciseCtrlDuty(id);
 			response.setData("SUCCESS");
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.SUCCESS);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 
 		} catch (Exception e) {
 			logger.error("Error Ed03Controller  deleteExciseCtrlDuty : ", e);
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.FAILED);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.FAILED_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
