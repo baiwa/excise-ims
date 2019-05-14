@@ -24,7 +24,8 @@ public class ExciseCtrlDutyJdbcRepository {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 		sql.append(" SELECT * FROM EXCISE_CTRL_DUTY WHERE DUTY_GROUP_NAME LIKE ? AND IS_DELETED ='N' ");
-		params.add("%" + form.getDutyGroupName().replaceAll(" ", "%") + "%");
+		params.add("%" + form.getDutyGroupName().replaceAll(" ", "%") + "%" ); 
+		sql.append(" ORDER BY EXCISE_CTRL_DUTY_ID DESC ");
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<Ed03Vo> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(),
 				new BeanPropertyRowMapper(Ed03Vo.class));
