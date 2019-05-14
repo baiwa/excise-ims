@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
@@ -37,8 +35,6 @@ public class TaPlanWorksheetDtl extends BaseEntity {
 	private String systemType;
 	@Column(name = "PLAN_TYPE")
 	private String planType;
-	@Column(name = "PLAN_STATUS")
-	private String planStatus;
 	@Column(name = "AUDIT_STATUS")
 	private String auditStatus;
 	@Column(name = "AUDIT_TYPE")
@@ -65,10 +61,14 @@ public class TaPlanWorksheetDtl extends BaseEntity {
 	private String receivedBy;
 	@Column(name = "RECEIVED_DATE")
 	private LocalDateTime receivedDate;
-	@Column(name = "ASSIGNED_BY")
-	private String assignedBy;
-	@Column(name = "ASSIGNED_DATE")
-	private LocalDateTime assignedDate;
+	@Column(name = "ASSIGNED_SUBDEPT_BY")
+	private String assignedSubdeptBy;
+	@Column(name = "ASSIGNED_SUBDEPT_DATE")
+	private LocalDateTime assignedSubdeptDate;
+	@Column(name = "ASSIGNED_OFFICER_BY")
+	private String assignedOfficerBy;
+	@Column(name = "ASSIGNED_OFFICER_DATE")
+	private LocalDateTime assignedOfficerDate;
 
 	public Long getPlanWorksheetDtlId() {
 		return planWorksheetDtlId;
@@ -124,14 +124,6 @@ public class TaPlanWorksheetDtl extends BaseEntity {
 
 	public void setPlanType(String planType) {
 		this.planType = planType;
-	}
-
-	public String getPlanStatus() {
-		return planStatus;
-	}
-
-	public void setPlanStatus(String planStatus) {
-		this.planStatus = planStatus;
 	}
 
 	public String getAuditStatus() {
@@ -238,20 +230,36 @@ public class TaPlanWorksheetDtl extends BaseEntity {
 		this.receivedDate = receivedDate;
 	}
 
-	public String getAssignedBy() {
-		return assignedBy;
+	public String getAssignedSubdeptBy() {
+		return assignedSubdeptBy;
 	}
 
-	public void setAssignedBy(String assignedBy) {
-		this.assignedBy = assignedBy;
+	public void setAssignedSubdeptBy(String assignedSubdeptBy) {
+		this.assignedSubdeptBy = assignedSubdeptBy;
 	}
 
-	public LocalDateTime getAssignedDate() {
-		return assignedDate;
+	public LocalDateTime getAssignedSubdeptDate() {
+		return assignedSubdeptDate;
 	}
 
-	public void setAssignedDate(LocalDateTime assignedDate) {
-		this.assignedDate = assignedDate;
+	public void setAssignedSubdeptDate(LocalDateTime assignedSubdeptDate) {
+		this.assignedSubdeptDate = assignedSubdeptDate;
+	}
+
+	public String getAssignedOfficerBy() {
+		return assignedOfficerBy;
+	}
+
+	public void setAssignedOfficerBy(String assignedOfficerBy) {
+		this.assignedOfficerBy = assignedOfficerBy;
+	}
+
+	public LocalDateTime getAssignedOfficerDate() {
+		return assignedOfficerDate;
+	}
+
+	public void setAssignedOfficerDate(LocalDateTime assignedOfficerDate) {
+		this.assignedOfficerDate = assignedOfficerDate;
 	}
 
 }
