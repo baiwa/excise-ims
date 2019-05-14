@@ -1,6 +1,8 @@
 package th.go.excise.ims.ta.persistence.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,22 +37,38 @@ public class TaPlanWorksheetDtl extends BaseEntity {
 	private String systemType;
 	@Column(name = "PLAN_TYPE")
 	private String planType;
+	@Column(name = "PLAN_STATUS")
+	private String planStatus;
 	@Column(name = "AUDIT_STATUS")
 	private String auditStatus;
 	@Column(name = "AUDIT_TYPE")
 	private String auditType;
+	@Column(name = "AUDIT_PLAN_CODE")
+	private String auditPlanCode;
 	@Column(name = "AUDIT_START_DATE")
 	private LocalDate auditStartDate;
 	@Column(name = "AUDIT_END_DATE")
 	private LocalDate auditEndDate;
-	@Column(name = "AUDIT_PLAN_CODE")
-	private String auditPlanCode;
-	@Column(name = "PLAN_STATUS")
-	private String planStatus;
 	@Column(name = "AU_SUBDEPT_CODE")
 	private String auSubdeptCode;
 	@Column(name = "AU_JOB_RESP")
 	private String auJobResp;
+	@Column(name = "APPROVED_BY")
+	private String approvedBy;
+	@Column(name = "APPROVED_DATE")
+	private LocalDateTime approvedDate;
+	@Column(name = "APPROVED_COMMENT")
+	private String approvedComment;
+	@Column(name = "APPROVED_NUMBER")
+	private String approvedNumber;
+	@Column(name = "RECEIVED_BY")
+	private String receivedBy;
+	@Column(name = "RECEIVED_DATE")
+	private LocalDateTime receivedDate;
+	@Column(name = "ASSIGNED_BY")
+	private String assignedBy;
+	@Column(name = "ASSIGNED_DATE")
+	private LocalDateTime assignedDate;
 
 	public Long getPlanWorksheetDtlId() {
 		return planWorksheetDtlId;
@@ -108,6 +126,14 @@ public class TaPlanWorksheetDtl extends BaseEntity {
 		this.planType = planType;
 	}
 
+	public String getPlanStatus() {
+		return planStatus;
+	}
+
+	public void setPlanStatus(String planStatus) {
+		this.planStatus = planStatus;
+	}
+
 	public String getAuditStatus() {
 		return auditStatus;
 	}
@@ -122,6 +148,14 @@ public class TaPlanWorksheetDtl extends BaseEntity {
 
 	public void setAuditType(String auditType) {
 		this.auditType = auditType;
+	}
+
+	public String getAuditPlanCode() {
+		return auditPlanCode;
+	}
+
+	public void setAuditPlanCode(String auditPlanCode) {
+		this.auditPlanCode = auditPlanCode;
 	}
 
 	public LocalDate getAuditStartDate() {
@@ -140,22 +174,6 @@ public class TaPlanWorksheetDtl extends BaseEntity {
 		this.auditEndDate = auditEndDate;
 	}
 
-	public String getAuditPlanCode() {
-		return auditPlanCode;
-	}
-
-	public void setAuditPlanCode(String auditPlanCode) {
-		this.auditPlanCode = auditPlanCode;
-	}
-
-	public String getPlanStatus() {
-		return planStatus;
-	}
-
-	public void setPlanStatus(String planStatus) {
-		this.planStatus = planStatus;
-	}
-
 	public String getAuSubdeptCode() {
 		return auSubdeptCode;
 	}
@@ -172,8 +190,68 @@ public class TaPlanWorksheetDtl extends BaseEntity {
 		this.auJobResp = auJobResp;
 	}
 
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	public String getApprovedBy() {
+		return approvedBy;
+	}
+
+	public void setApprovedBy(String approvedBy) {
+		this.approvedBy = approvedBy;
+	}
+
+	public LocalDateTime getApprovedDate() {
+		return approvedDate;
+	}
+
+	public void setApprovedDate(LocalDateTime approvedDate) {
+		this.approvedDate = approvedDate;
+	}
+
+	public String getApprovedComment() {
+		return approvedComment;
+	}
+
+	public void setApprovedComment(String approvedComment) {
+		this.approvedComment = approvedComment;
+	}
+
+	public String getApprovedNumber() {
+		return approvedNumber;
+	}
+
+	public void setApprovedNumber(String approvedNumber) {
+		this.approvedNumber = approvedNumber;
+	}
+
+	public String getReceivedBy() {
+		return receivedBy;
+	}
+
+	public void setReceivedBy(String receivedBy) {
+		this.receivedBy = receivedBy;
+	}
+
+	public LocalDateTime getReceivedDate() {
+		return receivedDate;
+	}
+
+	public void setReceivedDate(LocalDateTime receivedDate) {
+		this.receivedDate = receivedDate;
+	}
+
+	public String getAssignedBy() {
+		return assignedBy;
+	}
+
+	public void setAssignedBy(String assignedBy) {
+		this.assignedBy = assignedBy;
+	}
+
+	public LocalDateTime getAssignedDate() {
+		return assignedDate;
+	}
+
+	public void setAssignedDate(LocalDateTime assignedDate) {
+		this.assignedDate = assignedDate;
 	}
 
 }
