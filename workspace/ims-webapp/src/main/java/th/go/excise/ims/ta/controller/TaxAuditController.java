@@ -18,7 +18,6 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
-import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ta.service.RecordMessageService;
 import th.go.excise.ims.ta.service.TaxAuditService;
@@ -28,9 +27,7 @@ import th.go.excise.ims.ta.vo.FactoryVo;
 import th.go.excise.ims.ta.vo.FormDocTypeVo;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanVo;
-import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
-import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 import th.go.excise.ims.ta.vo.WsRegfri4000FormVo;
 
 @Controller
@@ -62,13 +59,6 @@ public class TaxAuditController {
 		}
 
 		return response;
-	}
-
-	@PostMapping("/get-plan-dtl")
-	@ResponseBody
-	public DataTableAjax<PlanWorksheetDatatableVo> getPlanWorksheetDtl(@RequestBody PlanWorksheetVo formVo) {
-		formVo.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
-		return taxAuditService.getPlanWorksheetDtl(formVo);
 	}
 
 	@PostMapping("/get-audit-type")

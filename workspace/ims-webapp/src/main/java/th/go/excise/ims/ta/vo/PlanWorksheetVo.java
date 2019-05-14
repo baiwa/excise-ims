@@ -7,8 +7,8 @@ import java.util.List;
 public class PlanWorksheetVo extends DataTableRequest {
 
 	private static final long serialVersionUID = -2970785224520638999L;
-	private List<String> ids;
 
+	private List<String> ids;
 	private String budgetYear;
 	private String analysisNumber;
 	private String planNumber;
@@ -17,30 +17,16 @@ public class PlanWorksheetVo extends DataTableRequest {
 	private String planComment;
 	private String sendAllFlag;
 	private String officeCode;
+	private String subdeptCode;
+	private String userLoginId;
 	private List<String> budgetYearList;
 
-	public List<String> getBudgetYearList() {
-		return budgetYearList;
+	public List<String> getIds() {
+		return ids;
 	}
 
-	public void setBudgetYearList(List<String> budgetYearList) {
-		this.budgetYearList = budgetYearList;
-	}
-
-	public String getOfficeCode() {
-		return officeCode;
-	}
-
-	public void setOfficeCode(String officeCode) {
-		this.officeCode = officeCode;
-	}
-
-	public String getSendAllFlag() {
-		return sendAllFlag;
-	}
-
-	public void setSendAllFlag(String sendAllFlag) {
-		this.sendAllFlag = sendAllFlag;
+	public void setIds(List<String> ids) {
+		this.ids = ids;
 	}
 
 	public String getBudgetYear() {
@@ -91,11 +77,44 @@ public class PlanWorksheetVo extends DataTableRequest {
 		this.planComment = planComment;
 	}
 
-	public List<String> getIds() {
-		return ids;
+	public String getSendAllFlag() {
+		return sendAllFlag;
 	}
 
-	public void setIds(List<String> ids) {
-		this.ids = ids;
+	public void setSendAllFlag(String sendAllFlag) {
+		this.sendAllFlag = sendAllFlag;
 	}
+
+	public String getOfficeCode() {
+		return officeCode;
+	}
+
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
+	}
+
+	public String getSubdeptCode() {
+		return subdeptCode;
+	}
+
+	public void setSubdeptCode(String subdeptCode) {
+		this.subdeptCode = subdeptCode;
+	}
+
+	public String getUserLoginId() {
+		return userLoginId;
+	}
+
+	public void setUserLoginId(String userLoginId) {
+		this.userLoginId = userLoginId;
+	}
+
+	public List<String> getBudgetYearList() {
+		return budgetYearList;
+	}
+
+	public void setBudgetYearList(List<String> budgetYearList) {
+		this.budgetYearList = budgetYearList;
+	}
+
 }

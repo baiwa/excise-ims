@@ -39,15 +39,13 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		sql.append("   ,ED_SECTOR.OFF_SHORT_NAME SEC_DESC ");
 		sql.append("   ,ED_AREA.OFF_CODE AREA_CODE ");
 		sql.append("   ,ED_AREA.OFF_SHORT_NAME AREA_DESC ");
-		sql.append("   ,PLAN_DTL.*, ");
-//		sql.append("     ED_AREA.OFF_NAME DEPTSHORTNAME, ");
-		sql.append(" 	 ED_SUBDEPT.SUBDEPT_SHORT_NAME SUBDEPTSHORTNAME,	");
-		sql.append(" 	 ED_PERSON.ED_PERSON_NAME  PERSON_NAME ");
+		sql.append("   ,PLAN_DTL.* ");
+		sql.append("   ,ED_SUBDEPT.SUBDEPT_SHORT_NAME SUBDEPTSHORTNAME ");
+		sql.append("   ,ED_PERSON.ED_PERSON_NAME PERSON_NAME ");
 		sql.append(" FROM TA_PLAN_WORKSHEET_DTL PLAN_DTL ");
 		sql.append(" INNER JOIN TA_WS_REG4000 R4000 ON R4000.NEW_REG_ID = PLAN_DTL.NEW_REG_ID ");
-		sql.append(" left JOIN EXCISE_DEPARTMENT ED_SECTOR ON ED_SECTOR.OFF_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000') ");
-		sql.append(" left JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
-//		sql.append(" LEFT JOIN EXCISE_DEPARTMENT  ED_DEPT ON ED_AREA.OFF_CODE = PLAN_DTL.OFFICE_CODE " );
+		sql.append(" LEFT JOIN EXCISE_DEPARTMENT ED_SECTOR ON ED_SECTOR.OFF_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000') ");
+		sql.append(" LEFT JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
 		sql.append(" LEFT JOIN EXCISE_SUBDEPT ED_SUBDEPT ON PLAN_DTL.AU_SUBDEPT_CODE = ED_SUBDEPT.SUBDEPT_CODE " );
 		sql.append(" LEFT JOIN EXCISE_PERSON ED_PERSON ON PLAN_DTL.CREATED_BY = ED_PERSON.ED_LOGIN ");
 		sql.append(" WHERE PLAN_DTL.IS_DELETED = 'N' ");
@@ -58,6 +56,16 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
 			sql.append("   AND PLAN_DTL.OFFICE_CODE LIKE ? ");
 			params.add(formVo.getOfficeCode());
+		}
+		
+		if (StringUtils.isNotEmpty(formVo.getSubdeptCode())) {
+			sql.append("   AND PLAN_DTL.AU_SUBDEPT_CODE = ? ");
+			params.add(formVo.getSubdeptCode());
+		}
+		
+		if (StringUtils.isNotEmpty(formVo.getUserLoginId())) {
+			sql.append("   AND PLAN_DTL.AU_JOB_RESP LIKE ? ");
+			params.add("%" + formVo.getUserLoginId() + "%");
 		}
 	}
 	

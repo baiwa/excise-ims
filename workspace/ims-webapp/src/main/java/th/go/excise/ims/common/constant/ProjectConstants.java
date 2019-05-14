@@ -15,6 +15,12 @@ public class ProjectConstants {
 		public static final String TA_CENTRAL_OPERATOR2 = "001403";
 	}
 	
+	public class EXCISE_SUBDEPT_LEVEL {
+		public static final String LV1 = "1";
+		public static final String LV2 = "2";
+		public static final String LV3 = "3";
+	}
+	
 	public class TA_WORKSHEET_STATUS {
 		public static final String DRAFT = "D";
 		public static final String CONDITION = "C";
@@ -22,11 +28,13 @@ public class ProjectConstants {
 	}
 	
 	public class TA_PLAN_STATUS {
-		public static final String INITIAL = "I";
-		public static final String WAIT_APPROVE = "W";
-		public static final String REJECT = "R";
-		public static final String PROCESS = "P";
-		public static final String SUCCESS = "S";
+		public static final String CODE_0100 = "0100";
+		public static final String CODE_0200 = "0200";
+	}
+	
+	public class TA_AUDIT_STATUS {
+		public static final String CODE_0100 = "0100";
+		public static final String CODE_0200 = "0200";
 	}
 	
 	public static class QUARTER {

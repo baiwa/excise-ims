@@ -18,10 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
+import th.co.baiwa.buckwaframework.security.domain.UserBean;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_OFFICE_CODE;
+import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_SUBDEPT_LEVEL;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_AUDIT_STATUS;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.preferences.vo.ExciseDepartment;
@@ -152,7 +155,8 @@ public class PlanWorksheetService {
 
 	@Transactional
 	public void savePlanWorksheetDtl(PlanWorksheetVo formVo) {
-		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		UserBean userBean = UserLoginUtils.getCurrentUserBean();
+		String officeCode = userBean.getOfficeCode();
 		String budgetYear = formVo.getBudgetYear();
 		logger.info("savePlanWorkSheetDtl officeCode={}, budgetYear={}, planNumber={}, analysisNumber={}, newRegIds={}", officeCode, budgetYear, formVo.getPlanNumber(), formVo.getAnalysisNumber(), org.springframework.util.StringUtils.collectionToCommaDelimitedString(formVo.getIds()));
 
@@ -187,14 +191,8 @@ public class PlanWorksheetService {
 				planDtl.setAnalysisNumber(formVo.getAnalysisNumber());
 				planDtl.setOfficeCode(officeCode);
 				planDtl.setNewRegId(newRegId);
-				planDtl.setAuditStatus("I"); // FIXME AuditStatus
-				
-				String subdeptCode = UserLoginUtils.getCurrentUserBean().getSubdeptCode();
-				if (StringUtils.isNotBlank(subdeptCode)) {
-					
-					planDtl.setAuSubdeptCode(subdeptCode);
-				}
-				//planDtl.setAuJobResp(UserLoginUtils.getCurrentUsername());
+				planDtl.setAuditStatus(TA_AUDIT_STATUS.CODE_0100);
+				planDtl.setAuSubdeptCode(userBean.getSubdeptCode());
 				taPlanWorksheetDtlRepository.save(planDtl);
 
 				updateFlagWorksheetSelect(budgetYear, newRegId, officeCode, FLAG.Y_FLAG, LocalDate.now());
@@ -261,13 +259,24 @@ public class PlanWorksheetService {
 
 	public DataTableAjax<PlanWorksheetDatatableVo> planDtlDatatable(PlanWorksheetVo formVo) {
 		logger.info("planDtlDatatable budgetYear={}, officeCOde={}", formVo.getBudgetYear(), formVo.getOfficeCode());
+		
+		UserBean userBean = UserLoginUtils.getCurrentUserBean();
+		// Assign OfficeCode
 		if (StringUtils.isEmpty(formVo.getOfficeCode())) {
-			String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+			String officeCode = userBean.getOfficeCode();
 			if (EXCISE_OFFICE_CODE.TA_CENTRAL_SELECTOR.equals(officeCode)) {
 				formVo.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(officeCode));
 			} else {
 				formVo.setOfficeCode(officeCode);
 			}
+		}
+		// Assign SubdeptCode
+		if (StringUtils.isNotEmpty(userBean.getSubdeptCode())) {
+			formVo.setSubdeptCode(userBean.getSubdeptCode());
+		}
+		// Assign SubdeptLevel
+		if (EXCISE_SUBDEPT_LEVEL.LV3.equals(userBean.getSubdeptLevel())) {
+			formVo.setUserLoginId(userBean.getUsername());
 		}
 
 		DataTableAjax<PlanWorksheetDatatableVo> dataTableAjax = new DataTableAjax<>();

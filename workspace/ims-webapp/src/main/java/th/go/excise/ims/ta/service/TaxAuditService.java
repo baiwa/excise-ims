@@ -26,9 +26,7 @@ import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
 import th.go.excise.ims.ta.vo.FactoryVo;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanVo;
-import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
-import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 import th.go.excise.ims.ta.vo.WsRegfri4000FormVo;
 import th.go.excise.ims.ws.client.pcc.regfri4000.model.RegMaster60;
 import th.go.excise.ims.ws.client.pcc.regfri4000.model.RequestData;
@@ -47,19 +45,6 @@ public class TaxAuditService {
 	
 	@Autowired
 	private RegFri4000Service regFri4000Service;
-
-	public DataTableAjax<PlanWorksheetDatatableVo> getPlanWorksheetDtl(PlanWorksheetVo formVo) {
-
-		DataTableAjax<PlanWorksheetDatatableVo> dataTableAjax = new DataTableAjax<>();
-
-		dataTableAjax.setData(taPlanWorksheetDtlRepository.findByCriteria(formVo));
-		dataTableAjax.setDraw(formVo.getDraw() + 1);
-		int count = taPlanWorksheetDtlRepository.countByCriteria(formVo).intValue();
-		dataTableAjax.setRecordsFiltered(count);
-		dataTableAjax.setRecordsTotal(count);
-
-		return dataTableAjax;
-	}
 
 	public DataTableAjax<OutsidePlanVo> outsidePlan(OutsidePlanFormVo formVo) {
 
