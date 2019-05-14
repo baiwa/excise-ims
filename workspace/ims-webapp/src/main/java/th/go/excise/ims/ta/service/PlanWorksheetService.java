@@ -435,6 +435,7 @@ public class PlanWorksheetService {
 		if (taPlanOpt.isPresent()) {
 			planDtl = taPlanOpt.get();
 			// TODO SET SOMETHING
+			planDtl.setAuJobResp(formVo.getAuJobResp());
 			planDtl.setAuSubdeptCode(formVo.getAuSubdeptCode());
 			planDtl.setOfficeCode(formVo.getOfficeCode());
 			planDtl = taPlanWorksheetDtlRepository.save(planDtl);

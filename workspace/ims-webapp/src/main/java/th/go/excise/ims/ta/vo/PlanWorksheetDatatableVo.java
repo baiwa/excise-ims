@@ -1,5 +1,11 @@
 package th.go.excise.ims.ta.vo;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import th.go.excise.ims.preferences.persistence.entity.ExcisePerson;
+import th.go.excise.ims.preferences.vo.ExcisePersonVoSelect;
+
 public class PlanWorksheetDatatableVo {
 
 	private String cusFullname;
@@ -27,6 +33,7 @@ public class PlanWorksheetDatatableVo {
     private String deptShortName;
     private String subdeptShortName;
     private String personName;
+    private List<ExcisePersonVoSelect> personAssingList;
     
    
 	public String getPersonName() {
@@ -228,6 +235,15 @@ public class PlanWorksheetDatatableVo {
 	public void setSubdeptShortName(String subdeptShortName) {
 		this.subdeptShortName = subdeptShortName;
 	}
+
+	public List<ExcisePersonVoSelect> getPersonAssingList() {
+		return personAssingList;
+	}
+
+	public void setPersonAssingList(List<ExcisePersonVoSelect> personAssingList) {
+		this.personAssingList = personAssingList;
+	}
+	
 	
 
 }
