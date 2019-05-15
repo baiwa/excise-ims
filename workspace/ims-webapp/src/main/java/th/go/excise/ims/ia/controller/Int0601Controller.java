@@ -183,8 +183,10 @@ public class Int0601Controller {
 	@GetMapping("/export/{auditIncNo}")
 	public void export(@PathVariable("auditIncNo") String auditIncNo, HttpServletResponse response) throws Exception {
 		String fileName = URLEncoder.encode("ตรวจสอบใบเสร็จรับเงินภาษีสรรพสามิต ", "UTF-8");
+		String replaceString=auditIncNo.replace('_','/');
+		
 		// write it as an excel attachment
-		byte[] outByteStream = int0601Service.export(auditIncNo);
+		byte[] outByteStream = int0601Service.export(replaceString);
 		response.setContentType("application/octet-stream");
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
 		OutputStream outStream = response.getOutputStream();
