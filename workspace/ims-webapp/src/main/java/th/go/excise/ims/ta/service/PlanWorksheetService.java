@@ -270,13 +270,11 @@ public class PlanWorksheetService {
 				formVo.setOfficeCode(officeCode);
 			}
 		}
-		// Assign SubdeptCode
-		if (StringUtils.isNotEmpty(userBean.getSubdeptCode())) {
-			formVo.setSubdeptCode(userBean.getSubdeptCode());
-		}
-		// Assign SubdeptLevel
+		// If User have SubdeptLevel = "3" Then Assign SubdeptLevel, Else Assign SubdeptCode
 		if (EXCISE_SUBDEPT_LEVEL.LV3.equals(userBean.getSubdeptLevel())) {
 			formVo.setUserLoginId(userBean.getUsername());
+		} else {
+			formVo.setSubdeptCode(userBean.getSubdeptCode());
 		}
 
 		DataTableAjax<PlanWorksheetDatatableVo> dataTableAjax = new DataTableAjax<>();
