@@ -18,6 +18,7 @@ import th.go.excise.ims.preferences.vo.ExciseDepartmentVo;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetSendRepository;
 import th.go.excise.ims.ta.vo.PlanWorkSheetSendVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 
 @Service
 public class PlanWorkSheetSendService {
@@ -27,16 +28,15 @@ public class PlanWorkSheetSendService {
 	@Autowired
 	private TaPlanWorksheetSendRepository planWorksheetSendRepository;
 	
-	// FIXME Send budgetYear
-	public List<PlanWorkSheetSendVo> getPlanWorkSheetSend() {
-		logger.info("getPlanWorkSheetSend");
+	public List<PlanWorkSheetSendVo> getPlanWorkSheetSend(PlanWorksheetVo formVo) {
+		String userLoginOfficeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		logger.info("getPlanWorkSheetSend officeCode={}, budgetYear={}", userLoginOfficeCode, formVo.getBudgetYear());
 		
 		List<PlanWorkSheetSendVo> planWorkSheetSendVoList = new ArrayList<>();
 		List<ExciseDepartment> sectorList = null;
 		List<ExciseDepartment> areaList = null;
 
-		String userLoginOfficeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		List<TaPlanWorksheetSend> planWorksheetSendList = planWorksheetSendRepository.findByOfficeCodeAndBudgetYearAll(ExciseUtils.whereInLocalOfficeCode(userLoginOfficeCode), ExciseUtils.getCurrentBudgetYear());
+		List<TaPlanWorksheetSend> planWorksheetSendList = planWorksheetSendRepository.findByOfficeCodeAndBudgetYearAll(ExciseUtils.whereInLocalOfficeCode(userLoginOfficeCode), formVo.getBudgetYear());
 		
 		if (ExciseUtils.isCentral(userLoginOfficeCode)) {
 			// Central
