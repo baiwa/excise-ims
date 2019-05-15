@@ -1,13 +1,12 @@
 package th.go.excise.ims.ta.vo;
 
 import th.go.excise.ims.preferences.vo.ExciseDepartment;
-import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
 
 public class PlanWorkSheetSendVo {
 
 	private ExciseDepartment sector;
 	private ExciseDepartment area;
-	private TaPlanWorksheetSend planWorksheetSend;
+	private PlanWorkSheetSendDetailVo planWorksheetSend;
 	private Integer totalFacNum;
 
 	public ExciseDepartment getSector() {
@@ -26,11 +25,11 @@ public class PlanWorkSheetSendVo {
 		this.area = area;
 	}
 
-	public TaPlanWorksheetSend getPlanWorksheetSend() {
+	public PlanWorkSheetSendDetailVo getPlanWorksheetSend() {
 		return planWorksheetSend;
 	}
 
-	public void setPlanWorksheetSend(TaPlanWorksheetSend planWorksheetSend) {
+	public void setPlanWorksheetSend(PlanWorkSheetSendDetailVo planWorksheetSend) {
 		this.planWorksheetSend = planWorksheetSend;
 	}
 

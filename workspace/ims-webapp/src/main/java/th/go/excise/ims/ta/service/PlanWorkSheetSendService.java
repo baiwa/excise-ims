@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_OFFICE_CODE;
@@ -17,6 +18,7 @@ import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.preferences.vo.ExciseDepartmentVo;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetSendRepository;
+import th.go.excise.ims.ta.vo.PlanWorkSheetSendDetailVo;
 import th.go.excise.ims.ta.vo.PlanWorkSheetSendVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 
@@ -84,24 +86,30 @@ public class PlanWorkSheetSendService {
 		return planWorkSheetSendVo;
 	}
 	
-	private TaPlanWorksheetSend getPlanWorksheetSendByOfficeCode(String officeCode, List<TaPlanWorksheetSend> planWorksheetSendList) {
-		TaPlanWorksheetSend planWorksheetSend = null;
+	private PlanWorkSheetSendDetailVo getPlanWorksheetSendByOfficeCode(String officeCode, List<TaPlanWorksheetSend> planWorksheetSendList) {
+		PlanWorkSheetSendDetailVo planWorksheetSend = null;
 		
 		for (TaPlanWorksheetSend taPlanWorksheetSend : planWorksheetSendList) {
 			if (officeCode.equals(taPlanWorksheetSend.getOfficeCode())) {
-				planWorksheetSend = taPlanWorksheetSend;
+				planWorksheetSend = new PlanWorkSheetSendDetailVo();
+				planWorksheetSend.setOfficeCode(taPlanWorksheetSend.getOfficeCode());
+				planWorksheetSend.setSendDate(ConvertDateUtils.formatLocalDateToString(taPlanWorksheetSend.getSendDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+				planWorksheetSend.setSubmitDate(ConvertDateUtils.formatLocalDateToString(taPlanWorksheetSend.getSubmitDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+				planWorksheetSend.setFacInNum(taPlanWorksheetSend.getFacInNum());
+				planWorksheetSend.setFacOutNum(taPlanWorksheetSend.getFacOutNum());
+				break;
 			}
 		}
 		
 		if (planWorksheetSend == null) {
-			planWorksheetSend = new TaPlanWorksheetSend();
+			planWorksheetSend = new PlanWorkSheetSendDetailVo();
 			planWorksheetSend.setOfficeCode(officeCode);
 		}
 		
 		return planWorksheetSend;
 	}
 	
-	private Integer getTotalFacNum(TaPlanWorksheetSend planWorksheetSend) {
+	private Integer getTotalFacNum(PlanWorkSheetSendDetailVo planWorksheetSend) {
 		return ObjectUtils.defaultIfNull(planWorksheetSend.getFacInNum(), 0) + ObjectUtils.defaultIfNull(planWorksheetSend.getFacOutNum(), 0);
 	}
 	
