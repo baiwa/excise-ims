@@ -397,11 +397,11 @@ public class WorksheetExportService {
 				headerText1List.add("");
 			}
 		}
-		headerText1List.add("พิกัดอื่นๆ");
-		headerText1List.add("กลุ่มของการชำระภาษี");
-		headerText1List.add("ขนาดทุนจดทะเบียน");
-		headerText1List.add("ระดับความเสี่ยง");
-		headerText1List.add("ผู้ประกอบการที่ไม่มีการตรวจสอบภาษีในระยะเวลาที่กำหนด");
+//		headerText1List.add("พิกัดอื่นๆ");
+//		headerText1List.add("กลุ่มของการชำระภาษี");
+//		headerText1List.add("ขนาดทุนจดทะเบียน");
+//		headerText1List.add("ระดับความเสี่ยง");
+//		headerText1List.add("ผู้ประกอบการที่ไม่มีการตรวจสอบภาษีในระยะเวลาที่กำหนด");
 		
 		int cellNum = 0;
 		for (String headerText : headerText1List) {
@@ -439,7 +439,7 @@ public class WorksheetExportService {
 			""
 		));
 		headerText2List.addAll(generateDateString(formVo.getDateStart(), formVo.getDateRange()));
-		headerText2List.add("");
+//		headerText2List.add("");
 	
 		int cellNum = 0;
 		for (String headerText : headerText2List) {
@@ -570,30 +570,30 @@ public class WorksheetExportService {
 				cell.setCellValue(taxAmtFormat(taxAmt, decimalFormatTwoDigits));
 				cell.setCellStyle(cellRight);
 			}
-			// พิกัดอื่นๆ
-			cell = row.createCell(cellNum++);
-			cell.setCellValue(taxVo.getOtherDutyName());
-			cell.setCellStyle(cellLeft);
-			
-			//กลุ่มของการชำระภาษี
-			cell = row.createCell(cellNum++);
-			cell.setCellValue(taxVo.getCondTaxGrp());
-			cell.setCellStyle(cellLeft);
-			
-			//ขนาดทุนจดทะเบียน
-			cell = row.createCell(cellNum++);
-			cell.setCellValue(taxVo.getCondSubCapitalDesc());
-			cell.setCellStyle(cellLeft);
-			
-			//ระดับความเสี่ยง
-			cell = row.createCell(cellNum++);
-			cell.setCellValue(taxVo.getCondSubRiskDesc());
-			cell.setCellStyle(cellLeft);
-			
-			//ผู้ประกอบการที่ไม่มีการตรวจสอบภาษีในระยะเวลาที่กำหนด
-			cell = row.createCell(cellNum++);
-			cell.setCellValue(taxVo.getCondSubNoAuditDesc());
-			cell.setCellStyle(cellLeft);
+//			// พิกัดอื่นๆ
+//			cell = row.createCell(cellNum++);
+//			cell.setCellValue(taxVo.getOtherDutyName());
+//			cell.setCellStyle(cellLeft);
+//			
+//			//กลุ่มของการชำระภาษี
+//			cell = row.createCell(cellNum++);
+//			cell.setCellValue(taxVo.getCondTaxGrp());
+//			cell.setCellStyle(cellLeft);
+//			
+//			//ขนาดทุนจดทะเบียน
+//			cell = row.createCell(cellNum++);
+//			cell.setCellValue(taxVo.getCondSubCapitalDesc());
+//			cell.setCellStyle(cellLeft);
+//			
+//			//ระดับความเสี่ยง
+//			cell = row.createCell(cellNum++);
+//			cell.setCellValue(taxVo.getCondSubRiskDesc());
+//			cell.setCellStyle(cellLeft);
+//			
+//			//ผู้ประกอบการที่ไม่มีการตรวจสอบภาษีในระยะเวลาที่กำหนด
+//			cell = row.createCell(cellNum++);
+//			cell.setCellValue(taxVo.getCondSubNoAuditDesc());
+//			cell.setCellStyle(cellLeft);
 			
 			no++;
 			rowNum++;
@@ -623,12 +623,17 @@ public class WorksheetExportService {
 		sheet.setColumnWidth(colIndex++, 15 * 256); // การตรวจสอบภาษีย้อนหลัง 3 ปีงบประมาณ
 		sheet.setColumnWidth(colIndex++, 15 * 256); // การตรวจสอบภาษีย้อนหลัง 2 ปีงบประมาณ
 		sheet.setColumnWidth(colIndex++, 15 * 256); // การตรวจสอบภาษีย้อนหลัง 1 ปีงบประมาณ
-		sheet.setColumnWidth(colIndex++, 40 * 256); // พิกัด
-		sheet.setColumnWidth(colIndex++, 28 * 256); // เลขทะเบียนสรรพสามิตเก่า
-		sheet.setColumnWidth(colIndex++, 15 * 256); // สถานะ/วันที่
-		sheet.setColumnWidth(colIndex++, 15 * 256); // ค่าเฉลี่ยภาษี
-		sheet.setColumnWidth(colIndex++, 15 * 256); // ค่าร้อยละสูงสุด
-		sheet.setColumnWidth(colIndex++, 15 * 256); // ค่าร้อยละต่ำสุด
+		sheet.setColumnWidth(colIndex++, 15 * 256); // เดือน
+		sheet.setColumnWidth(colIndex++, 15 * 256); // เดือน
+		sheet.setColumnWidth(colIndex++, 15 * 256); // เดือน
+		sheet.setColumnWidth(colIndex++, 15 * 256); // เดือน
+		sheet.setColumnWidth(colIndex++, 15 * 256);
+//		sheet.setColumnWidth(colIndex++, 40 * 256); // พิกัด
+//		sheet.setColumnWidth(colIndex++, 28 * 256); // เลขทะเบียนสรรพสามิตเก่า
+//		sheet.setColumnWidth(colIndex++, 15 * 256); // สถานะ/วันที่
+//		sheet.setColumnWidth(colIndex++, 15 * 256); // ค่าเฉลี่ยภาษี
+//		sheet.setColumnWidth(colIndex++, 15 * 256); // ค่าร้อยละสูงสุด
+//		sheet.setColumnWidth(colIndex++, 15 * 256); // ค่าร้อยละต่ำสุด
 		for (int i = 0; i < dateRange; i++) {
 			sheet.setColumnWidth(colIndex++, 15 * 256); // การชำระภาษี X เดือนแรก และ X เดือนหลัง
 		}
@@ -652,12 +657,12 @@ public class WorksheetExportService {
 		int halfDataRange = dateRange / 2;
 		sheet.addMergedRegion(new CellRangeAddress(0, 0, startTaxAmtIndex, startTaxAmtIndex + halfDataRange - 1));
 		sheet.addMergedRegion(new CellRangeAddress(0, 0, startTaxAmtIndex + halfDataRange, startTaxAmtIndex + dateRange - 1));
-		int startAfterTaxAmtIndex = startTaxAmtIndex + dateRange;
-		sheet.addMergedRegion(new CellRangeAddress(0, 1, startAfterTaxAmtIndex, startAfterTaxAmtIndex));
-		sheet.addMergedRegion(new CellRangeAddress(0, 1, startAfterTaxAmtIndex+1, startAfterTaxAmtIndex+1));
-		sheet.addMergedRegion(new CellRangeAddress(0, 1, startAfterTaxAmtIndex+2, startAfterTaxAmtIndex+2));
-		sheet.addMergedRegion(new CellRangeAddress(0, 1, startAfterTaxAmtIndex+3, startAfterTaxAmtIndex+3));
-		sheet.addMergedRegion(new CellRangeAddress(0, 1, startAfterTaxAmtIndex+4, startAfterTaxAmtIndex+4));
+//		int startAfterTaxAmtIndex = startTaxAmtIndex + dateRange;
+//		sheet.addMergedRegion(new CellRangeAddress(0, 1, startAfterTaxAmtIndex, startAfterTaxAmtIndex));
+//		sheet.addMergedRegion(new CellRangeAddress(0, 1, startAfterTaxAmtIndex+1, startAfterTaxAmtIndex+1));
+//		sheet.addMergedRegion(new CellRangeAddress(0, 1, startAfterTaxAmtIndex+2, startAfterTaxAmtIndex+2));
+//		sheet.addMergedRegion(new CellRangeAddress(0, 1, startAfterTaxAmtIndex+3, startAfterTaxAmtIndex+3));
+//		sheet.addMergedRegion(new CellRangeAddress(0, 1, startAfterTaxAmtIndex+4, startAfterTaxAmtIndex+4));
 	}
 	
 	private void setMergeCellCondition(Sheet sheet, int dateRange) {
@@ -678,8 +683,8 @@ public class WorksheetExportService {
 		int halfDataRange = dateRange / 2;
 		sheet.addMergedRegion(new CellRangeAddress(1, 1, startTaxAmtIndex, startTaxAmtIndex + halfDataRange - 1));
 		sheet.addMergedRegion(new CellRangeAddress(1, 1, startTaxAmtIndex + halfDataRange, startTaxAmtIndex + dateRange - 1));
-		int startAfterTaxAmtIndex = startTaxAmtIndex + dateRange;
-		sheet.addMergedRegion(new CellRangeAddress(1, 2, startAfterTaxAmtIndex, startAfterTaxAmtIndex));
+//		int startAfterTaxAmtIndex = startTaxAmtIndex + dateRange;
+//		sheet.addMergedRegion(new CellRangeAddress(1, 2, startAfterTaxAmtIndex, startAfterTaxAmtIndex));
 	}
 	
 }
