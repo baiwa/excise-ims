@@ -35,4 +35,10 @@ public interface TaPlanWorksheetDtlRepository extends CommonJpaCrudRepository<Ta
 	
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode and e.newRegId = :newRegId")
 	public TaPlanWorksheetDtl findByOfficeCodeAndNewRegId(@Param("officeCode") String officeCode, @Param("newRegId") String newRegId);
+	
+	@Modifying
+//	@Query(value = "update TA_PLAN_WORKSHEET_DTL set AUDIT_STATUS = :auditStatus where PLAN_NUMBER	= :planNumber ", nativeQuery = true)
+	@Query("update #{#entityName} e set e.auditStatus = :auditStatus where e.planNumber = :planNumber ")
+	public void updateAuditStatusByPlanNumber(@Param("auditStatus") String auditStatus, @Param("planNumber") String planNumber);
+	
 }

@@ -20,6 +20,8 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.common.constant.ProjectConstants;
+import th.go.excise.ims.preferences.persistence.entity.ExcisePerson;
 import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
@@ -546,6 +548,40 @@ public class TaxOperatorController {
 
         try {
             response.setData(planWorksheetService.savePlanWorksheetDtlByAssing(formVo));
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.FAILED);
+        }
+        return response;
+    }
+    
+    @PostMapping("/update-receive-plan-worksheetDtl")
+    @ResponseBody
+    public ResponseData<TaPlanWorksheetDtl> updateReceivePlanWorksheetDtl(@RequestBody ExcisePerson formVo) {
+        ResponseData<TaPlanWorksheetDtl> response = new ResponseData<>();
+
+        try {
+        	planWorksheetService.saveStatusPlanWorksheetDtlByAssing(formVo,ProjectConstants.TA_AUDIT_STATUS.CODE_0301);
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.FAILED);
+        }
+        return response;
+    }
+
+    @PostMapping("/update-assign-plan-worksheetDtl")
+    @ResponseBody
+    public ResponseData<TaPlanWorksheetDtl> updateAssignPlanWorksheetDtl(@RequestBody ExcisePerson formVo) {
+        ResponseData<TaPlanWorksheetDtl> response = new ResponseData<>();
+
+        try {
+        	planWorksheetService.saveStatusPlanWorksheetDtlByAssing(formVo,ProjectConstants.TA_AUDIT_STATUS.CODE_0400);
             response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {

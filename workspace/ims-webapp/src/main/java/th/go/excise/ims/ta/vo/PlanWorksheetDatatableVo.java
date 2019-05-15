@@ -1,9 +1,7 @@
 package th.go.excise.ims.ta.vo;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import th.go.excise.ims.preferences.persistence.entity.ExcisePerson;
 import th.go.excise.ims.preferences.vo.ExcisePersonVoSelect;
 
 public class PlanWorksheetDatatableVo {

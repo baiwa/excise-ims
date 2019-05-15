@@ -3,6 +3,7 @@ package th.go.excise.ims.ta.persistence.repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +18,9 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.common.constant.ProjectConstants;
 import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.preferences.persistence.entity.ExcisePerson;
 import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
@@ -265,5 +268,33 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
             return vo;
         }
     };
+
+	@Override
+	public void updateStatusPlanWorksheetDtl(ExcisePerson formVo,String status) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		sql.append(" UPDATE TA_PLAN_WORKSHEET_DTL SET AUDIT_STATUS = ? , ");
+		if (ProjectConstants.TA_AUDIT_STATUS.CODE_0301.equals(status)) {
+			sql.append("  RECEIVED_BY = ? , RECEIVED_DATE = ?  ");
+			
+		}else if (ProjectConstants.TA_AUDIT_STATUS.CODE_0400.equals(status)) {
+			sql.append("  ASSIGNED_SUBDEPT_BY = ? , ASSIGNED_SUBDEPT_DATE = ?  ");
+		}
+		
+		sql.append(" WHERE OFFICE_CODE = ? ");
+		
+		params.add(status);
+		params.add(formVo.getEdLogin());
+		params.add(new Date());
+		params.add(formVo.getEdOffcode());
+//		if (StringUtils.isNotBlank(formVo.getAuSubdeptCode())) {
+//			sql.append(" AND AU_SUBDEPT_CODE = ? ");
+//			params.add(formVo.getAuSubdeptCode());
+//		}
+		
+		commonJdbcTemplate.update(sql.toString(),params.toArray());
+		
+	}
+
     
 }
