@@ -10,6 +10,10 @@ public class PccRestfulException extends Exception {
 		super("ResponseCode: " + response.getResponseCode() + ", ResponseMessage: " + response.getResponseMessage());
 	}
 
+	public PccRestfulException(String message) {
+		super(message);
+	}
+
 	public PccRestfulException(String message, Throwable cause) {
 		super(message, cause);
 	}
