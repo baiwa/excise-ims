@@ -39,7 +39,7 @@ public class Int0602Service {
 
 	public List<Int0602ResultTab1Vo> findByCriteria(Int0602FormVo int0602FormVo) {
 		logger.info("findByCriterai");
-		List<WsLicfri6010> wsLicfri6010List = int0602JdbcRepository.findByCriteria(int0602FormVo);
+		List<WsLicfri6010> wsLicfri6010List = int0602JdbcRepository.findByCriteria(int0602FormVo, "LIC_NO");
 		List<Int0602ResultTab1Vo> int0602ResultTab1Vo = new ArrayList<>();
 		Int0602ResultTab1Vo intiData = null;
 		if (wsLicfri6010List != null && wsLicfri6010List.size() > 0) {

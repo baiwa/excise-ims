@@ -23,7 +23,7 @@ public class Int0602JdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
-	public List<WsLicfri6010> findByCriteria(Int0602FormVo vo) {
+	public List<WsLicfri6010> findByCriteria(Int0602FormVo vo, String strOrder) {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT * ");
@@ -44,7 +44,7 @@ public class Int0602JdbcRepository {
 			Date date = ConvertDateUtils.parseStringToDate(vo.getLicDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH);
 			paramList.add(ConvertDateUtils.formatDateToString(date, ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_EN));
 		}
-		sql.append(" ORDER BY LIC_NO ");
+		sql.append(" ORDER BY ").append(strOrder);
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), tab1RowMapper);
 
 	}
