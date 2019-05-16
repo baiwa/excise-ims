@@ -50,7 +50,7 @@ public class WsLicfri6010 extends BaseEntity {
 	@Column(name = "SEND_DATE")
 	private String sendDate;
 	@Column(name = "PRINT_COUNT")
-	private String printCount;
+	private BigDecimal printCount;
 	@Column(name = "NID")
 	private String nid;
 	@Column(name = "NEW_REG_ID")
@@ -162,11 +162,11 @@ public class WsLicfri6010 extends BaseEntity {
 		this.sendDate = sendDate;
 	}
 
-	public String getPrintCount() {
+	public BigDecimal getPrintCount() {
 		return printCount;
 	}
 
-	public void setPrintCount(String printCount) {
+	public void setPrintCount(BigDecimal printCount) {
 		this.printCount = printCount;
 	}
 

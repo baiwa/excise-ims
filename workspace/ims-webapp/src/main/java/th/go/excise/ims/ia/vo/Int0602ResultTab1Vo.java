@@ -15,7 +15,7 @@ public class Int0602ResultTab1Vo {
 	private String startDate;
 	private String expDate;
 	private String sendDate;
-	private String printCode;
+	private String printCount;
 	private String nid;
 	private String newRegId;
 	private String cusFullname;
@@ -87,12 +87,7 @@ public class Int0602ResultTab1Vo {
 	public void setSendDate(String sendDate) {
 		this.sendDate = sendDate;
 	}
-	public String getPrintCode() {
-		return printCode;
-	}
-	public void setPrintCode(String printCode) {
-		this.printCode = printCode;
-	}
+	
 	public String getNid() {
 		return nid;
 	}
@@ -122,6 +117,12 @@ public class Int0602ResultTab1Vo {
 	}
 	public void setIncCode(String incCode) {
 		this.incCode = incCode;
+	}
+	public String getPrintCount() {
+		return printCount;
+	}
+	public void setPrintCount(String printCount) {
+		this.printCount = printCount;
 	}
 	
 	

@@ -9,7 +9,7 @@ public class AuditLicD1Vo {
 	private String auditLicNo;
 	private String licType;
 	private String licNo;
-	private String printCode;
+	private String printCount;
 	private String licDateStr;
 	private String sendDateStr;
 	private String licName;
@@ -42,13 +42,24 @@ public class AuditLicD1Vo {
 	public void setLicNo(String licNo) {
 		this.licNo = licNo;
 	}
-	public String getPrintCode() {
-		return printCode;
+	public String getPrintCount() {
+		return printCount;
 	}
-	public void setPrintCode(String printCode) {
-		this.printCode = printCode;
+	public void setPrintCount(String printCount) {
+		this.printCount = printCount;
 	}
-	
+	public String getLicDateStr() {
+		return licDateStr;
+	}
+	public void setLicDateStr(String licDateStr) {
+		this.licDateStr = licDateStr;
+	}
+	public String getSendDateStr() {
+		return sendDateStr;
+	}
+	public void setSendDateStr(String sendDateStr) {
+		this.sendDateStr = sendDateStr;
+	}
 	public String getLicName() {
 		return licName;
 	}
@@ -85,19 +96,6 @@ public class AuditLicD1Vo {
 	public void setLicRemark(String licRemark) {
 		this.licRemark = licRemark;
 	}
-	public String getLicDateStr() {
-		return licDateStr;
-	}
-	public void setLicDateStr(String licDateStr) {
-		this.licDateStr = licDateStr;
-	}
-	public String getSendDateStr() {
-		return sendDateStr;
-	}
-	public void setSendDateStr(String sendDateStr) {
-		this.sendDateStr = sendDateStr;
-	}
-	
 	
 
 }
