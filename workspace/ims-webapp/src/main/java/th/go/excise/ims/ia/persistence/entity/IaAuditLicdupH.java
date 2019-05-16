@@ -2,6 +2,7 @@
 package th.go.excise.ims.ia.persistence.entity;
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,8 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
@@ -19,7 +22,11 @@ public class IaAuditLicdupH
     extends BaseEntity
 {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5990722632022271026L;
+	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_AUDIT_LICDUP_H_GEN")
     @SequenceGenerator(name = "IA_AUDIT_LICDUP_H_GEN", sequenceName = "IA_AUDIT_LICDUP_H_SEQ", allocationSize = 1)
     @Column(name = "AUDIT_LICDUP_SEQ")
