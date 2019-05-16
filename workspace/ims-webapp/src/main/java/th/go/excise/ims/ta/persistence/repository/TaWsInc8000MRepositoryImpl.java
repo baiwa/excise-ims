@@ -49,6 +49,7 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 			public Map<String, List<TaWsInc8000M>> extractData(ResultSet rs) throws SQLException, DataAccessException {
 				Map<String, List<TaWsInc8000M>> dataMap = new HashMap<>();
 				List<TaWsInc8000M> dataList = null;
+				int i = 0;
 				while (rs.next()) {
 					dataList = dataMap.get(rs.getString(TaWsInc8000M.Field.NEW_REG_ID));
 					if (dataList == null) {

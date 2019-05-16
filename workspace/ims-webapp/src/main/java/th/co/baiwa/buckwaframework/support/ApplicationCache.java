@@ -253,6 +253,10 @@ public class ApplicationCache {
 		resultList.sort((p1, p2) -> p1.getOfficeCode().compareTo(p2.getOfficeCode()));
 		return Collections.unmodifiableList(resultList);
 	}
+	
+	public static List<ExciseDepartment> getExciseCentralList(String officeCode) {
+		 return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_CENTRAL_MAP.get(officeCode), new ArrayList<>()));
+	}
 
 	public static List<ExciseDepartment> getExciseAreaList(String officeCode) {
 		return Collections.unmodifiableList(ObjectUtils.defaultIfNull(EXCISE_AREA_MAP.get(officeCode), new ArrayList<>()));

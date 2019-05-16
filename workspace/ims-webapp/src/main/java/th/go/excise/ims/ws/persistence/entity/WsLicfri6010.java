@@ -49,8 +49,8 @@ public class WsLicfri6010 extends BaseEntity {
 	private String expDate;
 	@Column(name = "SEND_DATE")
 	private String sendDate;
-	@Column(name = "PRINT_CODE")
-	private String printCode;
+	@Column(name = "PRINT_COUNT")
+	private String printCount;
 	@Column(name = "NID")
 	private String nid;
 	@Column(name = "NEW_REG_ID")
@@ -162,12 +162,12 @@ public class WsLicfri6010 extends BaseEntity {
 		this.sendDate = sendDate;
 	}
 
-	public String getPrintCode() {
-		return printCode;
+	public String getPrintCount() {
+		return printCount;
 	}
 
-	public void setPrintCode(String printCode) {
-		this.printCode = printCode;
+	public void setPrintCount(String printCount) {
+		this.printCount = printCount;
 	}
 
 	public String getNid() {
@@ -209,5 +209,6 @@ public class WsLicfri6010 extends BaseEntity {
 	public void setIncCode(String incCode) {
 		this.incCode = incCode;
 	}
+
 
 }

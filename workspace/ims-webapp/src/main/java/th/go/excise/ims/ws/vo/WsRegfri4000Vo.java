@@ -32,6 +32,7 @@ public class WsRegfri4000Vo extends DataTableRequest {
 	private String activeFlag;
 	private LocalDateTime syncDate;
 	private String dutyGroupId;
+	private String condMainGrp;
 
 	public String getNewRegId() {
 		return newRegId;
@@ -207,6 +208,14 @@ public class WsRegfri4000Vo extends DataTableRequest {
 
 	public void setDutyGroupId(String dutyGroupId) {
 		this.dutyGroupId = dutyGroupId;
+	}
+
+	public String getCondMainGrp() {
+		return condMainGrp;
+	}
+
+	public void setCondMainGrp(String condMainGrp) {
+		this.condMainGrp = condMainGrp;
 	}
 
 }

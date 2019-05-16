@@ -3,6 +3,7 @@ package th.go.excise.ims.ia.persistence.repository.jdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -11,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
 import th.go.excise.ims.ia.vo.Int0602FormVo;
 import th.go.excise.ims.ws.persistence.entity.WsLicfri6010;
@@ -29,23 +31,24 @@ public class Int0602JdbcRepository {
 		sql.append(" WHERE WS.IS_DELETED = 'N' ");
 
 		if (StringUtils.isNotBlank(vo.getOfficeCode())) {
-			sql.append(" AND WS.OFFCODE LIKE '100300' ");
-//			paramList.add(vo.getOfficeCode());
+			sql.append(" AND WS.OFFCODE LIKE ? ");
+			paramList.add(vo.getOfficeCode());
 		}
 		if (StringUtils.isNotBlank(vo.getLicDateFrom())) {
 			sql.append(" AND WS.LIC_DATE > ? ");
-			paramList.add(vo.getLicDateFrom());
+			Date date = ConvertDateUtils.parseStringToDate(vo.getLicDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH);
+			paramList.add(ConvertDateUtils.formatDateToString(date, ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_EN));
 		}
 		if (StringUtils.isNotBlank(vo.getLicDateTo())) {
 			sql.append(" AND WS.LIC_DATE < ? ");
-			paramList.add(vo.getLicDateTo());
+			Date date = ConvertDateUtils.parseStringToDate(vo.getLicDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH);
+			paramList.add(ConvertDateUtils.formatDateToString(date, ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_EN));
 		}
-
 		sql.append(" ORDER BY LIC_NO ");
-		return commonJdbcTemplate.query(sql.toString(),paramList.toArray() ,tab1RowMapper );
+		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), tab1RowMapper);
 
 	}
-	
+
 	private RowMapper<WsLicfri6010> tab1RowMapper = new RowMapper<WsLicfri6010>() {
 		@Override
 		public WsLicfri6010 mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -62,7 +65,7 @@ public class Int0602JdbcRepository {
 			vo.setStartDate(rs.getString("START_DATE"));
 			vo.setExpDate(rs.getString("EXP_DATE"));
 			vo.setSendDate(rs.getString("SEND_DATE"));
-			vo.setPrintCode(rs.getString("PRINT_CODE"));
+			vo.setPrintCount(rs.getString("PRINT_COUNT"));
 			vo.setNid(rs.getString("NID"));
 			vo.setNewRegId(rs.getString("NEW_REG_ID"));
 			vo.setCusFullname(rs.getString("CUS_FULLNAME"));

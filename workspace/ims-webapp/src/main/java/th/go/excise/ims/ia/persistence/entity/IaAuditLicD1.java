@@ -18,7 +18,11 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 @Table(name = "IA_AUDIT_LIC_D1")
 public class IaAuditLicD1 extends BaseEntity {
 
-	private static final long serialVersionUID = -120039908610168722L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4955096941724105831L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_AUDIT_LIC_D1_GEN")
 	@SequenceGenerator(name = "IA_AUDIT_LIC_D1_GEN", sequenceName = "IA_AUDIT_LIC_D1_SEQ", allocationSize = 1)

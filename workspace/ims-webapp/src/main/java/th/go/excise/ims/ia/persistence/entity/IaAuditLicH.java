@@ -1,8 +1,8 @@
 
 package th.go.excise.ims.ia.persistence.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,25 +10,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "IA_AUDIT_LIC_H")
 public class IaAuditLicH extends BaseEntity {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3440310923980191787L;
+	private static final long serialVersionUID = 4218105301058730469L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_AUDIT_LIC_H_GEN")
 	@SequenceGenerator(name = "IA_AUDIT_LIC_H_GEN", sequenceName = "IA_AUDIT_LIC_H_SEQ", allocationSize = 1)
 	@Column(name = "AUDIT_LIC_SEQ")
-	private Long auditLicSeq;
+	private BigDecimal auditLicSeq;
 	@Column(name = "OFFICE_CODE")
 	private String officeCode;
 	@Column(name = "LIC_DATE_FROM")
@@ -56,11 +52,11 @@ public class IaAuditLicH extends BaseEntity {
 	@Column(name = "D4_CRITERIA_TEXT")
 	private String d4CriteriaText;
 
-	public Long getAuditLicSeq() {
+	public BigDecimal getAuditLicSeq() {
 		return auditLicSeq;
 	}
 
-	public void setAuditLicSeq(Long auditLicSeq) {
+	public void setAuditLicSeq(BigDecimal auditLicSeq) {
 		this.auditLicSeq = auditLicSeq;
 	}
 

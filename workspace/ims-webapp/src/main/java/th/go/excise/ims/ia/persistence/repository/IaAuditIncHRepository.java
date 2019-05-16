@@ -16,4 +16,6 @@ public interface IaAuditIncHRepository extends CommonJpaCrudRepository<IaAuditIn
 
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.auditIncNo = :auditIncNo")
 	public IaAuditIncH findByAuditIncNo(@Param("auditIncNo") String auditIncNo);
+
+	public List<IaAuditIncH> findByIsDeletedOrderByAuditIncNoDesc(String isDelete);
 }

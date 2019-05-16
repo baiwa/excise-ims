@@ -81,7 +81,7 @@ public class LicFri6010Service extends AbstractPccRestfulService<RequestData, Re
 					wsLicfri6010.setStartDate(license.getStartDate());
 					wsLicfri6010.setExpDate(license.getExpDate());
 					wsLicfri6010.setSendDate(license.getSendDate());
-					wsLicfri6010.setPrintCode(license.getPrintCount());
+					wsLicfri6010.setPrintCount(license.getPrintCount());
 					wsLicfri6010.setNid(license.getNid());
 					wsLicfri6010.setNewRegId(license.getNewregId());
 					wsLicfri6010.setCusFullname(license.getCusFullName());

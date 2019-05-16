@@ -43,7 +43,7 @@ public class WsLicfri6010RepositoryImpl implements WsLicfri6010RepositoryCustom 
 				paramList.add(entity.getStartDate());
 				paramList.add(entity.getExpDate());
 				paramList.add(entity.getSendDate());
-				paramList.add(entity.getPrintCode());
+				paramList.add(entity.getPrintCount());
 				paramList.add(entity.getNid());
 				paramList.add(entity.getNewRegId());
 				paramList.add(entity.getCusFullname());
