@@ -34,6 +34,10 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	private String condSubNoAuditFlag;
 
 	private String taxAuditLast;
+	
+	private String sector;
+	private String area;
+	
 
 	public String getDateStart() {
 		return dateStart;
@@ -242,5 +246,22 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	public void setTaxAuditLast(String taxAuditLast) {
 		this.taxAuditLast = taxAuditLast;
 	}
+
+	public String getSector() {
+		return sector;
+	}
+
+	public void setSector(String sector) {
+		this.sector = sector;
+	}
+
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+	
 
 }

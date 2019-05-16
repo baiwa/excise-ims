@@ -36,6 +36,7 @@ import th.go.excise.ims.ta.vo.CondGroupVo;
 import th.go.excise.ims.ta.vo.PlanWorkSheetSendVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlCusVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetSendTableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetStatus;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
@@ -590,6 +591,42 @@ public class TaxOperatorController {
             response.setStatus(RESPONSE_STATUS.FAILED);
         }
         return response;
+    }
+    
+    @PostMapping("/find-all-analysis-number-head")
+    @ResponseBody
+    public ResponseData<List<TaWorksheetHdr>> findAllAnalysisNumberHead(@RequestBody TaxOperatorFormVo formVo) {
+        ResponseData<List<TaWorksheetHdr>> response = new ResponseData<>();
+
+        try {
+            response.setData(worksheetService.findAllAnalysisNumberHead(formVo));
+            response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+            response.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
+            response.setStatus(RESPONSE_STATUS.FAILED);
+        }
+
+        return response;
+    }
+    
+    @PostMapping("/get-plan-ws-send-approve")
+    @ResponseBody
+    public ResponseData<List<PlanWorksheetSendTableVo>> findPlanWSSendApprove(@RequestBody PlanWorksheetVo formVo) {
+        ResponseData<List<PlanWorksheetSendTableVo>> responseData = new ResponseData<>();
+
+        try {
+            responseData.setData(planWorkSheetSendService.getPlanWorkSheetSendToArea(formVo));
+            responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+            responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+            responseData.setStatus(RESPONSE_STATUS.FAILED);
+        }
+
+        return responseData;
     }
 
 }

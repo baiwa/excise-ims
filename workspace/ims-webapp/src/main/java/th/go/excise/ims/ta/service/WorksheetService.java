@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.bean.LabelValueBean;
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
@@ -13,6 +14,7 @@ import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_MA
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_SUB_COND_CAPITAL;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.common.constant.ProjectConstants;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
 import th.go.excise.ims.common.util.ExciseUtils;
@@ -57,8 +59,10 @@ public class WorksheetService {
 
     @Autowired
     private TaPlanWorksheetSendRepository taPlanWorksheetSendRepository;
+    
     @Autowired
     private TaPlanWorksheetHisRepository taPlanWorksheetHisRepository;
+    
 
     @Transactional(rollbackOn = Exception.class)
     public void saveWorksheet(String draftNumber, String budgetYear) throws Exception {
@@ -352,6 +356,7 @@ public class WorksheetService {
             formVo.setAnalysisNumber("");
         }
 
+
         TaxOperatorVo vo = new TaxOperatorVo();
 
         TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository.findByOfficeCodeAndBudgetYear(officeCode, budgetYear);
@@ -359,7 +364,14 @@ public class WorksheetService {
             vo.setDatas(new ArrayList<>());
             vo.setCount(0L);
         } else {
-        	formVo.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+
+            if (StringUtils.isNotBlank(formVo.getArea()) && !CommonConstants.JsonStatus.SUCCESS.equals(formVo.getArea())) {
+            	formVo.setOfficeCode(formVo.getArea());
+            }else if (StringUtils.isNotBlank(formVo.getSector()) && !CommonConstants.JsonStatus.SUCCESS.equals(formVo.getSector())) {
+            	formVo.setOfficeCode(formVo.getSector());
+            }else {
+            	formVo.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+            }
             List<TaxOperatorDetailVo> list = taWorksheetDtlRepository.findByCriteria(formVo);
             vo.setDatas(TaxAuditUtils.prepareTaxOperatorDatatable(list, formVo));
             vo.setCount(taWorksheetDtlRepository.countByCriteria(formVo));
@@ -388,4 +400,15 @@ public class WorksheetService {
     public TaWorksheetHdr checkEvaluateCondition(TaxOperatorFormVo formVo) {
         return taWorksheetHdrRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
     }
+    
+    public List<TaWorksheetHdr> findAllAnalysisNumberHead(TaxOperatorFormVo formVo) {
+        String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+        String budgetYear = formVo.getBudgetYear();
+        if (StringUtils.isEmpty(budgetYear)) {
+            budgetYear = ExciseUtils.getCurrentBudgetYear();
+        }
+        logger.info("findAllAnalysisNumberHead officeCode={}, budgetYear={}", officeCode, budgetYear);
+        return taWorksheetHdrRepository.findAllAnalysisNumberHead(officeCode, budgetYear);
+    }
+    
 }

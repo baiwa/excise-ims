@@ -14,8 +14,6 @@ import io.swagger.annotations.ApiOperation;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.DocumentConstants.MODULE_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
-import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
-import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.preferences.service.ExcisePersonService;
 import th.go.excise.ims.preferences.vo.ExcisePersonVoSelect;
 
@@ -37,8 +35,7 @@ public class ExcisePersonController {
 	)
 	public ResponseData<List<ExcisePersonVoSelect>> getPersonList(@PathVariable("name") String name) {
 		ResponseData<List<ExcisePersonVoSelect>> response = new ResponseData<>();
-		String officeCode =  UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		List<ExcisePersonVoSelect> exciseSectorList = excisePersonService.findPersonByName(officeCode,name);
+		List<ExcisePersonVoSelect> exciseSectorList = excisePersonService.findPersonByName(name);
 		if (exciseSectorList.size() > 0) {
 			response.setData(exciseSectorList);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
@@ -57,8 +54,7 @@ public class ExcisePersonController {
 	)
 	public ResponseData<List<ExcisePersonVoSelect>> getPersonListByEdLogin(@PathVariable("edlogin") String edlogin) {
 		ResponseData<List<ExcisePersonVoSelect>> response = new ResponseData<>();
-		String officeCode =  UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		List<ExcisePersonVoSelect> exciseSectorList = excisePersonService.findPersonByName(officeCode,edlogin);
+		List<ExcisePersonVoSelect> exciseSectorList = excisePersonService.findPersonByName(edlogin);
 		if (exciseSectorList.size() > 0) {
 			response.setData(exciseSectorList);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);

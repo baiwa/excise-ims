@@ -21,7 +21,7 @@ public class ExcisePersonService {
 	private ExcisePersonRepository excisePersonRepo;
 	
 	@Transactional
-	public List<ExcisePersonVoSelect> findPersonByName (String officeCode ,String name) {
+	public List<ExcisePersonVoSelect> findPersonByName ( String name) {
 		String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		List<ExcisePersonVoSelect> resList = excisePersonRepositoryCus.findByName(offCode,name);
 		return resList;

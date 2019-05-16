@@ -17,9 +17,11 @@ import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.preferences.vo.ExciseDepartmentVo;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetSend;
+import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetSendRepository;
 import th.go.excise.ims.ta.vo.PlanWorkSheetSendDetailVo;
 import th.go.excise.ims.ta.vo.PlanWorkSheetSendVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetSendTableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 
 @Service
@@ -29,6 +31,9 @@ public class PlanWorkSheetSendService {
 
 	@Autowired
 	private TaPlanWorksheetSendRepository planWorksheetSendRepository;
+	
+	@Autowired
+	private TaPlanWorksheetDtlRepository planWorksheetDtlRepository;
 	
 	public List<PlanWorkSheetSendVo> getPlanWorkSheetSend(PlanWorksheetVo formVo) {
 		String userLoginOfficeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
@@ -111,6 +116,16 @@ public class PlanWorkSheetSendService {
 	
 	private Integer getTotalFacNum(PlanWorkSheetSendDetailVo planWorksheetSend) {
 		return ObjectUtils.defaultIfNull(planWorksheetSend.getFacInNum(), 0) + ObjectUtils.defaultIfNull(planWorksheetSend.getFacOutNum(), 0);
+	}
+	
+	public List<PlanWorksheetSendTableVo> getPlanWorkSheetSendToArea(PlanWorksheetVo formVo) {
+		
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		String offcode = officeCode.substring(0, 2) +"%"+officeCode.substring(4,6);
+		formVo.setOfficeCode(offcode);
+		
+		return planWorksheetDtlRepository.findPlanWorksheetByDtl(formVo);
+		
 	}
 	
 }

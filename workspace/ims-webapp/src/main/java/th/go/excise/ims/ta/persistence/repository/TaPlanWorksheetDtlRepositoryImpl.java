@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.criteria.From;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -25,6 +27,7 @@ import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetSendTableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 
 public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepositoryCustom {
@@ -295,6 +298,41 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		commonJdbcTemplate.update(sql.toString(),params.toArray());
 		
 	}
+
+	@Override
+	public List<PlanWorksheetSendTableVo> findPlanWorksheetByDtl(PlanWorksheetVo formVo) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		sql.append( " SELECT COUNT(AUDIT_STATUS) COUNT_PLAN ,DPT.OFF_NAME,DPT.OFF_CODE OFFICE_CODE,SEND.SUBMIT_DATE ");
+		sql.append( " ,SEND.SEND_DATE,DTL.AUDIT_STATUS FROM EXCISE_DEPARTMENT DPT ");
+		sql.append( " LEFT JOIN TA_PLAN_WORKSHEET_DTL DTL ON DTL.OFFICE_CODE = DPT.OFF_CODE " );
+		sql.append( " LEFT JOIN TA_PLAN_WORKSHEET_SEND SEND ON SEND.OFFICE_CODE = DPT.OFF_CODE AND SEND.BUDGET_YEAR =  ?  " );
+		sql.append( " WHERE DPT.OFF_CODE LIKE ?  " );
+		sql.append( " GROUP BY DPT.OFF_CODE,DPT.OFF_NAME,SEND.SUBMIT_DATE,SEND.SEND_DATE,DTL.AUDIT_STATUS " );
+		sql.append( " ORDER BY DPT.OFF_CODE ASC ");
+		params.add(formVo.getBudgetYear());
+		params.add(formVo.getOfficeCode());
+
+		
+		return commonJdbcTemplate.query(sql.toString(), params.toArray(), taPlanWorksheetDtlSendRowMapper);
+	}
+	
+	private static final RowMapper<PlanWorksheetSendTableVo> taPlanWorksheetDtlSendRowMapper = new RowMapper<PlanWorksheetSendTableVo>() {
+        public PlanWorksheetSendTableVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+        	PlanWorksheetSendTableVo vo = new PlanWorksheetSendTableVo();
+        	vo.setCountPlan(rs.getInt("COUNT_PLAN"));
+        	vo.setOfficeName(rs.getString("OFF_NAME"));
+        	vo.setOfficeCode(rs.getString("OFFICE_CODE"));
+        	vo.setSendDate(rs.getDate("SEND_DATE"));
+        	vo.setSubmitDate(rs.getDate("SUBMIT_DATE"));
+        	vo.setAuditStatus(rs.getString("AUDIT_STATUS"));
+//            vo.setAuditStartDate(ConvertDateUtils.formatDateToString(rs.getDate("AUDIT_START_DATE"), "yyyy-MM-dd", ConvertDateUtils.LOCAL_TH));
+//            vo.setAuditEndDate(ConvertDateUtils.formatDateToString(rs.getDate("AUDIT_END_DATE"), "yyyy-MM-dd", ConvertDateUtils.LOCAL_TH));
+            return vo;
+        }
+    };
+	
+	
 
     
 }

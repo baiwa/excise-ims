@@ -6,6 +6,7 @@ import th.go.excise.ims.preferences.persistence.entity.ExcisePerson;
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetSendTableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 
 public interface TaPlanWorksheetDtlRepositoryCustom {
@@ -20,5 +21,5 @@ public interface TaPlanWorksheetDtlRepositoryCustom {
 	
 	public void updateStatusPlanWorksheetDtl(ExcisePerson formVo,String status);
 	
-
+	public List<PlanWorksheetSendTableVo> findPlanWorksheetByDtl(PlanWorksheetVo formVo);
 }
