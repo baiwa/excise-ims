@@ -16,6 +16,22 @@ public class ReceiveDoc {
 	@Expose
 	private String signDate;
 
+	public String getSignBy() {
+		return signBy;
+	}
+
+	public void setSignBy(String signBy) {
+		this.signBy = signBy;
+	}
+
+	public String getSignDate() {
+		return signDate;
+	}
+
+	public void setSignDate(String signDate) {
+		this.signDate = signDate;
+	}
+
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);

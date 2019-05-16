@@ -57,6 +57,11 @@ public class ProjectConstants {
 			public static final String DATE_TYPE_RECEIPT_CODE = "R";
 			public static final String DATE_TYPE_INCOME_CODE = "I";
 		}
+		
+		public class OASFRI0100 {
+			public static final String DATA_TYPE_MATERIAL_CODE = "M";
+			public static final String DATA_TYPE_PRODUCT_CODE = "P";
+		}
 	}
 	
 }
