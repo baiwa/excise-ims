@@ -92,7 +92,7 @@ private static final Logger logger = LoggerFactory.getLogger(SyncWsRegfri4000Ser
 		String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
 		
 		wsLicfri6010Repository.forceDeleteByOfficeCodeAndLicDate(requestData.getOffcode(), dateStart, dateEnd);
-		wsLicfri6010Repository.batchInsert(licfri6010List);
+		wsLicfri6010Repository.saveAll(licfri6010List);
 		logger.info("Batch Insert WS_INCFRI8000 Success");
 		
 		long end = System.currentTimeMillis();
