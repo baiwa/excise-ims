@@ -1,4 +1,4 @@
-package th.go.excise.ims.ws.client.summit.systemunworking.model;
+package th.go.excise.ims.ws.client.pm.systemunworking.model;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

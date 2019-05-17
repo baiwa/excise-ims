@@ -8,19 +8,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import th.go.excise.ims.ws.client.summit.systemunworking.model.RequestData;
-import th.go.excise.ims.ws.client.summit.systemunworking.model.ResponseData;
-import th.go.excise.ims.ws.client.summit.systemunworking.service.SystemUnworkingService;
+import th.go.excise.ims.ws.client.pm.systemunworking.model.RequestData;
+import th.go.excise.ims.ws.client.pm.systemunworking.model.ResponseData;
+import th.go.excise.ims.ws.client.pm.systemunworking.service.PmSystemUnworkingService;
 
-public class SyncWsSystemUnworkingService {
+public class SyncWsPmSystemUnworkingService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(SyncWsSystemUnworkingService.class);
+	private static final Logger logger = LoggerFactory.getLogger(SyncWsPmSystemUnworkingService.class);
 	
 //	@Autowired
 //	private IaRiskSystemUnworkingRepository iaRiskSystemUnworkingRepository;
 	
 	@Autowired
-	private SystemUnworkingService systemUnworkingService;
+	private PmSystemUnworkingService pmSystemUnworkingService;
 	
 	public void syncData() throws IOException {
 		logger.info("syncData SystemUnworking Start");
@@ -34,7 +34,7 @@ public class SyncWsSystemUnworkingService {
 		requestData.setMonth(month);
 		requestData.setYear(year);
 		
-		ResponseData responseData = systemUnworkingService.execute(requestData);
+		ResponseData responseData = pmSystemUnworkingService.execute(requestData);
 //		IaRiskSystemUnworking entity = new IaRiskSystemUnworking();
 //		if(req!=null&&req.getData().size()>0) {
 //			for (DataList element : req.getData()) {

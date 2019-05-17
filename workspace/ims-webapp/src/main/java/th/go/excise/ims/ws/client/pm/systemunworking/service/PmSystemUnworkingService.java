@@ -1,4 +1,4 @@
-package th.go.excise.ims.ws.client.summit.systemunworking.service;
+package th.go.excise.ims.ws.client.pm.systemunworking.service;
 
 import java.io.IOException;
 
@@ -9,19 +9,19 @@ import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
 
 import okhttp3.HttpUrl;
+import th.go.excise.ims.ws.client.pm.systemunworking.model.RequestData;
+import th.go.excise.ims.ws.client.pm.systemunworking.model.ResponseData;
 import th.go.excise.ims.ws.client.service.RestfulClientService;
-import th.go.excise.ims.ws.client.summit.systemunworking.model.RequestData;
-import th.go.excise.ims.ws.client.summit.systemunworking.model.ResponseData;
 
 @Service
-public class SystemUnworkingService {
+public class PmSystemUnworkingService {
 	
 	private String url;
 	private RestfulClientService restfulClientService;
 	private Gson gson;
 	
 	@Autowired
-	public SystemUnworkingService(
+	public PmSystemUnworkingService(
 			@Value("${ws.excise.endpoint.pm.system-unworking}") String url,
 			RestfulClientService restfulClientService,
 			Gson gson) {
