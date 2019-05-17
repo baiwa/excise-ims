@@ -3,6 +3,8 @@ package th.go.excise.ims.ia.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +23,8 @@ public class IaGfdrawAccountService {
 
 	private final String KEY_FILTER[] = { "รหัสหน่วยเบิกจ่าย", "วันที่บันทึก", "วันที่รายงาน", "กรณีจ่ายตรงผู้ขาย", "กรณีจ่ายผ่านส่วนราชการ", "ผลรวม" };
 
+	private Logger logger = LoggerFactory.getLogger(IaGfdrawAccountService.class);
+	
 //	public void addDataByExcel(File file) {
 //		try {
 //			List<List<String>> ex = ExcelUtils.readExcel(file);
@@ -87,7 +91,8 @@ public class IaGfdrawAccountService {
 						iaGfDrawAccount.setNetAmt(NumberUtils.toBigDecimal(line.get(12)));
 						iaGfDrawAccountList.add(iaGfDrawAccount);
 					} catch (Exception e) {
-						System.out.println(e.getLocalizedMessage());
+						e.printStackTrace();
+						System.out.println(e.getStackTrace());
 					}
 
 				}
