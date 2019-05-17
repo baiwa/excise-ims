@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.ia.vo.Int0602FormVo;
@@ -62,10 +63,10 @@ public class Int0602JdbcRepository {
 			vo.setLicFee(rs.getBigDecimal("LIC_FEE"));
 			vo.setLicInterior(rs.getBigDecimal("LIC_INTERIOR"));
 			vo.setLicPrice(rs.getBigDecimal("LIC_PRICE"));
-			vo.setLicDate(rs.getString("LIC_DATE"));
-			vo.setStartDate(rs.getString("START_DATE"));
-			vo.setExpDate(rs.getString("EXP_DATE"));
-			vo.setSendDate(rs.getString("SEND_DATE"));
+			vo.setLicDate(LocalDateConverter.convertToEntityAttribute(rs.getDate("LIC_DATE")));
+			vo.setStartDate(LocalDateConverter.convertToEntityAttribute(rs.getDate("START_DATE")));
+			vo.setExpDate(LocalDateConverter.convertToEntityAttribute(rs.getDate("EXP_DATE")));
+			vo.setSendDate(LocalDateConverter.convertToEntityAttribute(rs.getDate("SEND_DATE")));
 			vo.setPrintCount(NumberUtils.toBigDecimal(rs.getString("PRINT_COUNT")));
 			vo.setNid(rs.getString("NID"));
 			vo.setNewRegId(rs.getString("NEW_REG_ID"));

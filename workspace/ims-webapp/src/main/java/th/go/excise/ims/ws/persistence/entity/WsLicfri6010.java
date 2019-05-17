@@ -1,7 +1,7 @@
-
 package th.go.excise.ims.ws.persistence.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,17 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "WS_LICFRI6010")
 public class WsLicfri6010 extends BaseEntity {
 
-	 
 	private static final long serialVersionUID = -4710798706189415508L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WS_LICFRI6010_GEN")
 	@SequenceGenerator(name = "WS_LICFRI6010_GEN", sequenceName = "WS_LICFRI6010_SEQ", allocationSize = 1)
@@ -42,29 +39,33 @@ public class WsLicfri6010 extends BaseEntity {
 	@Column(name = "LIC_PRICE")
 	private BigDecimal licPrice;
 	@Column(name = "LIC_DATE")
-	private String licDate;
+	private LocalDate licDate;
 	@Column(name = "START_DATE")
-	private String startDate;
+	private LocalDate startDate;
 	@Column(name = "EXP_DATE")
-	private String expDate;
+	private LocalDate expDate;
 	@Column(name = "SEND_DATE")
-	private String sendDate;
+	private LocalDate sendDate;
 	@Column(name = "PRINT_COUNT")
 	private BigDecimal printCount;
 	@Column(name = "NID")
 	private String nid;
 	@Column(name = "NEW_REG_ID")
 	private String newRegId;
+	@Column(name = "CUS_ID")
+	private String cusId;
+	@Column(name = "CUS_ADDRSEQ")
+	private String cusAddrseq;
 	@Column(name = "CUS_FULLNAME")
 	private String cusFullname;
+	@Column(name = "FAC_ID")
+	private String facId;
+	@Column(name = "FAC_ADDRSEQ")
+	private String facAddrseq;
 	@Column(name = "FAC_FULLNAME")
 	private String facFullname;
 	@Column(name = "INC_CODE")
 	private String incCode;
-
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-	}
 
 	public Long getWsLicfri6010Id() {
 		return wsLicfri6010Id;
@@ -130,35 +131,35 @@ public class WsLicfri6010 extends BaseEntity {
 		this.licPrice = licPrice;
 	}
 
-	public String getLicDate() {
+	public LocalDate getLicDate() {
 		return licDate;
 	}
 
-	public void setLicDate(String licDate) {
+	public void setLicDate(LocalDate licDate) {
 		this.licDate = licDate;
 	}
 
-	public String getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(String startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
-	public String getExpDate() {
+	public LocalDate getExpDate() {
 		return expDate;
 	}
 
-	public void setExpDate(String expDate) {
+	public void setExpDate(LocalDate expDate) {
 		this.expDate = expDate;
 	}
 
-	public String getSendDate() {
+	public LocalDate getSendDate() {
 		return sendDate;
 	}
 
-	public void setSendDate(String sendDate) {
+	public void setSendDate(LocalDate sendDate) {
 		this.sendDate = sendDate;
 	}
 
@@ -186,12 +187,44 @@ public class WsLicfri6010 extends BaseEntity {
 		this.newRegId = newRegId;
 	}
 
+	public String getCusId() {
+		return cusId;
+	}
+
+	public void setCusId(String cusId) {
+		this.cusId = cusId;
+	}
+
+	public String getCusAddrseq() {
+		return cusAddrseq;
+	}
+
+	public void setCusAddrseq(String cusAddrseq) {
+		this.cusAddrseq = cusAddrseq;
+	}
+
 	public String getCusFullname() {
 		return cusFullname;
 	}
 
 	public void setCusFullname(String cusFullname) {
 		this.cusFullname = cusFullname;
+	}
+
+	public String getFacId() {
+		return facId;
+	}
+
+	public void setFacId(String facId) {
+		this.facId = facId;
+	}
+
+	public String getFacAddrseq() {
+		return facAddrseq;
+	}
+
+	public void setFacAddrseq(String facAddrseq) {
+		this.facAddrseq = facAddrseq;
 	}
 
 	public String getFacFullname() {
@@ -209,6 +242,5 @@ public class WsLicfri6010 extends BaseEntity {
 	public void setIncCode(String incCode) {
 		this.incCode = incCode;
 	}
-
 
 }

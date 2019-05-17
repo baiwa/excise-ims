@@ -16,7 +16,7 @@ public class License {
 	@SerializedName("LicCode")
 	@Expose
 	private String licCode;
-	
+
 	@SerializedName("LicNo")
 	@Expose
 	private String licNo;
@@ -65,14 +65,30 @@ public class License {
 	@Expose
 	private String newregId;
 
+	@SerializedName("CusId")
+	@Expose
+	private String cusId;
+
+	@SerializedName("CusAddrseq")
+	@Expose
+	private String cusAddrseq;
+
 	@SerializedName("CusFullName")
 	@Expose
 	private String cusFullName;
 
+	@SerializedName("FacId")
+	@Expose
+	private String facId;
+
+	@SerializedName("FacAddrseq")
+	@Expose
+	private String facAddrseq;
+
 	@SerializedName("FacFullName")
 	@Expose
 	private String facFullName;
-	
+
 	@SerializedName("IncCode")
 	@Expose
 	private String incCode;
@@ -189,6 +205,30 @@ public class License {
 		this.newregId = newregId;
 	}
 
+	public String getLicNo() {
+		return licNo;
+	}
+
+	public void setLicNo(String licNo) {
+		this.licNo = licNo;
+	}
+
+	public String getCusId() {
+		return cusId;
+	}
+
+	public void setCusId(String cusId) {
+		this.cusId = cusId;
+	}
+
+	public String getCusAddrseq() {
+		return cusAddrseq;
+	}
+
+	public void setCusAddrseq(String cusAddrseq) {
+		this.cusAddrseq = cusAddrseq;
+	}
+
 	public String getCusFullName() {
 		return cusFullName;
 	}
@@ -197,20 +237,28 @@ public class License {
 		this.cusFullName = cusFullName;
 	}
 
+	public String getFacId() {
+		return facId;
+	}
+
+	public void setFacId(String facId) {
+		this.facId = facId;
+	}
+
+	public String getFacAddrseq() {
+		return facAddrseq;
+	}
+
+	public void setFacAddrseq(String facAddrseq) {
+		this.facAddrseq = facAddrseq;
+	}
+
 	public String getFacFullName() {
 		return facFullName;
 	}
 
 	public void setFacFullName(String facFullName) {
 		this.facFullName = facFullName;
-	}
-
-	public String getLicNo() {
-		return licNo;
-	}
-
-	public void setLicNo(String licNo) {
-		this.licNo = licNo;
 	}
 
 	public String getIncCode() {

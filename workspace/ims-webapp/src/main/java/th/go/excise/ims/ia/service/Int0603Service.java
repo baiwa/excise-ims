@@ -1,10 +1,8 @@
 package th.go.excise.ims.ia.service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,21 +37,17 @@ public class Int0603Service {
 			for (WsLicfri6010 wsLicfri6010 : wsLicfri6010List) {
 				intiData = new Int0602ResultTab1Vo();
 				try {
-					if (StringUtils.isNoneBlank(wsLicfri6010.getSendDate())) {
-						Date date = ConvertDateUtils.parseStringToDate(wsLicfri6010.getSendDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_EN);
-						intiData.setSendDate(ConvertDateUtils.formatDateToString(date, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+					if (wsLicfri6010.getSendDate() != null) {
+						intiData.setSendDate(ConvertDateUtils.formatLocalDateToString(wsLicfri6010.getSendDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 					}
-					if (StringUtils.isNoneBlank(wsLicfri6010.getExpDate())) {
-						Date date = ConvertDateUtils.parseStringToDate(wsLicfri6010.getExpDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_EN);
-						intiData.setExpDate(ConvertDateUtils.formatDateToString(date, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+					if (wsLicfri6010.getExpDate() != null) {
+						intiData.setExpDate(ConvertDateUtils.formatLocalDateToString(wsLicfri6010.getExpDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 					}
-					if (StringUtils.isNoneBlank(wsLicfri6010.getStartDate())) {
-						Date date = ConvertDateUtils.parseStringToDate(wsLicfri6010.getStartDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_EN);
-						intiData.setStartDate(ConvertDateUtils.formatDateToString(date, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+					if (wsLicfri6010.getStartDate() != null) {
+						intiData.setStartDate(ConvertDateUtils.formatLocalDateToString(wsLicfri6010.getStartDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 					}
-					if (StringUtils.isNoneBlank(wsLicfri6010.getLicDate())) {
-						Date date = ConvertDateUtils.parseStringToDate(wsLicfri6010.getLicDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_EN);
-						intiData.setLicDate(ConvertDateUtils.formatDateToString(date, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+					if (wsLicfri6010.getLicDate() != null) {
+						intiData.setLicDate(ConvertDateUtils.formatLocalDateToString(wsLicfri6010.getLicDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 					}
 					intiData.setOffcode(wsLicfri6010.getOffcode());
 					intiData.setLicType(wsLicfri6010.getLicType());
