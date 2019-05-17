@@ -1,9 +1,6 @@
 package th.go.excise.ims.ia.service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +12,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.monitorjbl.xlsx.StreamingReader;
 
@@ -35,11 +33,10 @@ public class IaGfmovementAccountService {
 			, "User name     :"  
 			, "ตั้งแต่"};
 
-	public void addDataByExcel(File file) throws FileNotFoundException {
+	public void addDataByExcel(MultipartFile file) throws IOException {
 		List<IaGfmovementAccount> iaGfmovementAccountList = new ArrayList<>();
 		IaGfmovementAccount iaGfmovementAccount = new IaGfmovementAccount();
-		InputStream is = new FileInputStream(file);
-		Workbook workbook = StreamingReader.builder().rowCacheSize(100).bufferSize(4096).open(is);
+		Workbook workbook = StreamingReader.builder().rowCacheSize(100).bufferSize(4096).open(file.getInputStream());
 		String valueExc = "";
 		for (Sheet sheet : workbook) {
 			String accTypeNo = "";

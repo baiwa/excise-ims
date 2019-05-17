@@ -1,7 +1,6 @@
 package th.go.excise.ims.ia.vo;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 public class AuditLicD1Vo {
 
@@ -10,6 +9,7 @@ public class AuditLicD1Vo {
 	private String licType;
 	private String licNo;
 	private String printCount;
+	private String runCheck;
 	private String licDateStr;
 	private String sendDateStr;
 	private String licName;
@@ -95,6 +95,12 @@ public class AuditLicD1Vo {
 	}
 	public void setLicRemark(String licRemark) {
 		this.licRemark = licRemark;
+	}
+	public String getRunCheck() {
+		return runCheck;
+	}
+	public void setRunCheck(String runCheck) {
+		this.runCheck = runCheck;
 	}
 	
 

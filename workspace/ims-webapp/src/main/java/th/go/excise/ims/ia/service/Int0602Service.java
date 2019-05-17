@@ -73,7 +73,7 @@ public class Int0602Service {
 	}
 
 	public AuditLicHVo saveLicListService(Int0602SaveVo vo) {
-		logger.info("saveLicListService : {} " , vo.getAuditLicH().getAuditLicNo());
+		logger.info("saveLicListService : {} ", vo.getAuditLicH().getAuditLicNo());
 		IaAuditLicH licH = null;
 		if (StringUtils.isNotBlank(vo.getAuditLicH().getAuditLicNo())) {
 			licH = iaAuditLicHRepository.findByAuditLicNoAndIsDeletedOrderByAuditLicSeqDesc(vo.getAuditLicH().getAuditLicNo(), FLAG.N_FLAG);
@@ -81,37 +81,49 @@ public class Int0602Service {
 			try {
 				licH = new IaAuditLicH();
 				BeanUtils.copyProperties(licH, vo.getAuditLicH());
-				licH.setAuditLicNo(vo.getAuditLicH().getOfficeCode()+"/"+iaAuditLicHRepository.generateAuditLicNo());
-				licH.setLicDateTo(ConvertDateUtils.parseStringToDate( vo.getAuditLicH().getLicDateToStr(), ConvertDateUtils.YYYYMMDD , ConvertDateUtils.LOCAL_TH));
-				licH.setLicDateFrom(ConvertDateUtils.parseStringToDate( vo.getAuditLicH().getLicDateFromStr() , ConvertDateUtils.YYYYMMDD , ConvertDateUtils.LOCAL_TH));
+				licH.setAuditLicNo(vo.getAuditLicH().getOfficeCode() + "/" + iaAuditLicHRepository.generateAuditLicNo());
+				licH.setLicDateTo(ConvertDateUtils.parseStringToDate(vo.getAuditLicH().getLicDateToStr(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_TH));
+				licH.setLicDateFrom(ConvertDateUtils.parseStringToDate(vo.getAuditLicH().getLicDateFromStr(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_TH));
 				licH = iaAuditLicHRepository.save(licH);
 				vo.getAuditLicH().setAuditLicSeq(licH.getAuditLicSeq());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		if (vo.getAuditLicD1List() != null && vo.getAuditLicD1List().size()>0) {
+		if (vo.getAuditLicD1List() != null && vo.getAuditLicD1List().size() > 0) {
 			IaAuditLicD1 val = null;
 			List<IaAuditLicD1> iaAuditLicD1List = new ArrayList<>();
 			for (AuditLicD1Vo auditLicD1Vo : vo.getAuditLicD1List()) {
 				val = new IaAuditLicD1();
-				try {
-					BeanUtils.copyProperties(val, auditLicD1Vo);
-					val.setLicDate(ConvertDateUtils.parseStringToDate(auditLicD1Vo.getLicDateStr() , ConvertDateUtils.DD_MM_YYYY , ConvertDateUtils.LOCAL_TH));
-					val.setSendDate(ConvertDateUtils.parseStringToDate( auditLicD1Vo.getSendDateStr()  , ConvertDateUtils.DD_MM_YYYY , ConvertDateUtils.LOCAL_TH));
-				} catch (Exception e) {
-					e.printStackTrace();
+				if (auditLicD1Vo.getAuditLicD1Seq() != null) {
+					val = iaAuditLicD1Repository.findById(auditLicD1Vo.getAuditLicD1Seq()).get();
+					try {
+						BeanUtils.copyProperties(val, auditLicD1Vo);
+						val.setLicDate(ConvertDateUtils.parseStringToDate(auditLicD1Vo.getLicDateStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+						val.setSendDate(ConvertDateUtils.parseStringToDate(auditLicD1Vo.getSendDateStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+						val = iaAuditLicD1Repository.save(val);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else {
+					try {
+						BeanUtils.copyProperties(val, auditLicD1Vo);
+						val.setLicDate(ConvertDateUtils.parseStringToDate(auditLicD1Vo.getLicDateStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+						val.setSendDate(ConvertDateUtils.parseStringToDate(auditLicD1Vo.getSendDateStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					val.setAuditLicNo(licH.getAuditLicNo());
+					iaAuditLicD1List.add(val);
 				}
-				val.setAuditLicNo(licH.getAuditLicNo());
-				iaAuditLicD1List.add(val);
+				
 			}
 			iaAuditLicD1Repository.saveAll(iaAuditLicD1List);
 		}
-		
+
 		return vo.getAuditLicH();
 	}
-	
-	
+
 	public List<AuditLicHVo> findAuditLicHVoList() {
 		List<IaAuditLicH> iaAuditLicHList = iaAuditLicHRepository.findIaAuditLicHAllDataActive();
 		AuditLicHVo auditLicHVo = null;
@@ -119,27 +131,27 @@ public class Int0602Service {
 		for (IaAuditLicH iaAuditLicH : iaAuditLicHList) {
 			auditLicHVo = new AuditLicHVo();
 			try {
-				
+
 				BeanUtils.copyProperties(auditLicHVo, iaAuditLicH);
-				
+				auditLicHVo.setLicDateFromStr(ConvertDateUtils.formatDateToString(iaAuditLicH.getLicDateFrom(), ConvertDateUtils.DD_MM_YYYY , ConvertDateUtils.LOCAL_TH));
+				auditLicHVo.setLicDateToStr(ConvertDateUtils.formatDateToString(iaAuditLicH.getLicDateTo(), ConvertDateUtils.DD_MM_YYYY , ConvertDateUtils.LOCAL_TH));
 			} catch (Exception e) {
 				e.printStackTrace();
-			} 
+			}
 			auditLicHVoList.add(auditLicHVo);
 		}
 		return auditLicHVoList;
 	}
-	
-	
-	public List<AuditLicD1Vo> findAuditLicD1ByAuditLicNo( String auditLicNo) throws Exception{
+
+	public List<AuditLicD1Vo> findAuditLicD1ByAuditLicNo(String auditLicNo) throws Exception {
 		List<AuditLicD1Vo> auditLicD1VoList = new ArrayList<>();
 		AuditLicD1Vo auditLicD1Vo = new AuditLicD1Vo();
-		List<IaAuditLicD1> iaAuditLicD1List = iaAuditLicD1Repository.findByAuditLicNo(auditLicNo );
+		List<IaAuditLicD1> iaAuditLicD1List = iaAuditLicD1Repository.findByAuditLicNoOrderByRunCheck(auditLicNo);
 		for (IaAuditLicD1 iaAuditLicD1 : iaAuditLicD1List) {
 			auditLicD1Vo = new AuditLicD1Vo();
 			BeanUtils.copyProperties(auditLicD1Vo, iaAuditLicD1);
-			auditLicD1Vo.setLicDateStr(ConvertDateUtils.formatDateToString(iaAuditLicD1.getLicDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_TH));
-			auditLicD1Vo.setSendDateStr(ConvertDateUtils.formatDateToString(iaAuditLicD1.getSendDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_TH));
+			auditLicD1Vo.setLicDateStr(ConvertDateUtils.formatDateToString(iaAuditLicD1.getLicDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			auditLicD1Vo.setSendDateStr(ConvertDateUtils.formatDateToString(iaAuditLicD1.getSendDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 			auditLicD1VoList.add(auditLicD1Vo);
 		}
 		return auditLicD1VoList;

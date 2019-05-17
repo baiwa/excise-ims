@@ -34,8 +34,8 @@ public class IaAuditLicD1 extends BaseEntity {
 	private String licType;
 	@Column(name = "LIC_NO")
 	private String licNo;
-	@Column(name = "PRINT_COUNT")
-	private String printCount;
+	@Column(name = "RUN_CHECK")
+	private Long runCheck;
 	@Column(name = "LIC_DATE")
 	private Date licDate;
 	@Column(name = "SEND_DATE")
@@ -155,12 +155,14 @@ public class IaAuditLicD1 extends BaseEntity {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
-	public String getPrintCount() {
-		return printCount;
+	public Long getRunCheck() {
+		return runCheck;
 	}
 
-	public void setPrintCount(String printCount) {
-		this.printCount = printCount;
+	public void setRunCheck(Long runCheck) {
+		this.runCheck = runCheck;
 	}
+
+	
 
 }

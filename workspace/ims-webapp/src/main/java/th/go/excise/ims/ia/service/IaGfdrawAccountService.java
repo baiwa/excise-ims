@@ -1,11 +1,11 @@
 package th.go.excise.ims.ia.service;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
@@ -35,7 +35,7 @@ public class IaGfdrawAccountService {
 //		}
 //	}
 
-	public void addDataByExcel(File file) {
+	public void addDataByExcel(MultipartFile file) {
 		try {
 			String departmentCode = "";
 			String periodFrom = "";

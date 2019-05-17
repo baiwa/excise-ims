@@ -21,6 +21,9 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.monitorjbl.xlsx.StreamingReader;
 
 public abstract class ExcelUtils {
 
@@ -208,9 +211,9 @@ public abstract class ExcelUtils {
 		return fontBold;
 	}
 
-	public static List<List<String>> readExcel(File file) throws Exception {
+	public static List<List<String>> readExcel(MultipartFile file) throws Exception {
 		List<List<String>> excelData = new ArrayList<>();
-		Workbook workbook = WorkbookFactory.create(file);
+		Workbook workbook = StreamingReader.builder().rowCacheSize(100).bufferSize(4096).open(file.getInputStream());
 		Sheet sheet = workbook.getSheetAt(0);
 		DataFormatter dataFormatter = new DataFormatter();
 		sheet.forEach(row -> {

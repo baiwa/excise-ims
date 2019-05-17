@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
@@ -34,7 +35,7 @@ public class IaGftrialBalanceService {
 //		}
 //	}
 
-	public void addDataByExcel(File file) {
+	public void addDataByExcel(MultipartFile file) {
 		try {
 			String departmentCode = "";
 			String periodFrom = "";

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.ia.vo.Int0602FormVo;
 import th.go.excise.ims.ws.persistence.entity.WsLicfri6010;
 
@@ -65,7 +66,7 @@ public class Int0602JdbcRepository {
 			vo.setStartDate(rs.getString("START_DATE"));
 			vo.setExpDate(rs.getString("EXP_DATE"));
 			vo.setSendDate(rs.getString("SEND_DATE"));
-			vo.setPrintCount(rs.getBigDecimal("PRINT_COUNT"));
+			vo.setPrintCount(NumberUtils.toBigDecimal(rs.getString("PRINT_COUNT")));
 			vo.setNid(rs.getString("NID"));
 			vo.setNewRegId(rs.getString("NEW_REG_ID"));
 			vo.setCusFullname(rs.getString("CUS_FULLNAME"));
