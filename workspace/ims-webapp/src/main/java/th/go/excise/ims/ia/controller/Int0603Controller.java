@@ -13,6 +13,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ia.service.Int0603Service;
+import th.go.excise.ims.ia.vo.AuditLicdupHVo;
 import th.go.excise.ims.ia.vo.Int0602FormVo;
 import th.go.excise.ims.ia.vo.Int0602ResultTab1Vo;
 
@@ -33,6 +34,21 @@ public class Int0603Controller {
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+
+	@PostMapping("/find-all-data-header")
+	@ResponseBody
+	public ResponseData<List<AuditLicdupHVo>> findAllDataHeader() {
+		ResponseData<List<AuditLicdupHVo>> response = new ResponseData<List<AuditLicdupHVo>>();
+		try {
+			response.setData(int0603Service.findAuditLicdupHList());
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
 			response.setMessage(RESPONSE_MESSAGE.ERROR500);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}

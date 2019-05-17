@@ -15,7 +15,7 @@ public class Int0602ResultTab1Vo {
 	private String startDate;
 	private String expDate;
 	private String sendDate;
-	private String printCount;
+	private BigDecimal printCount;
 	private String nid;
 	private String newRegId;
 	private String cusFullname;
@@ -118,10 +118,10 @@ public class Int0602ResultTab1Vo {
 	public void setIncCode(String incCode) {
 		this.incCode = incCode;
 	}
-	public String getPrintCount() {
+	public BigDecimal getPrintCount() {
 		return printCount;
 	}
-	public void setPrintCount(String printCount) {
+	public void setPrintCount(BigDecimal printCount) {
 		this.printCount = printCount;
 	}
 	
