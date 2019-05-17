@@ -85,6 +85,7 @@ public class ExcisePositionJdbcRepository {
 		sqlBuilder.append(" SELECT * FROM EXCISE_POSITION WHERE ED_POSITION_NAME LIKE ? ");
 		
 		params.add("%" +  form.getPosition().replaceAll(" ", "%") + "%");
+		sqlBuilder.append(" ORDER BY ED_PERSON_SEQ DESC ");
 		Ed02VoList = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), listRowmapper);
 		return Ed02VoList;
 	}
