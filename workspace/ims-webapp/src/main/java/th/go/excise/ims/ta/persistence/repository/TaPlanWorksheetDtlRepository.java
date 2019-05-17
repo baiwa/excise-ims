@@ -41,4 +41,7 @@ public interface TaPlanWorksheetDtlRepository extends CommonJpaCrudRepository<Ta
 	@Query("update #{#entityName} e set e.auditStatus = :auditStatus where e.planNumber = :planNumber ")
 	public void updateAuditStatusByPlanNumber(@Param("auditStatus") String auditStatus, @Param("planNumber") String planNumber);
 	
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode LIKE :officeCode and e.planNumber = :planNumber")
+	public List<TaPlanWorksheetDtl> findByOfficeCodeAndPlanNumberLike(@Param("officeCode") String officeCode, @Param("planNumber") String planNumber);
+	
 }

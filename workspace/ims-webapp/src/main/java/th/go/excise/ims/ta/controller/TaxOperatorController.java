@@ -472,7 +472,7 @@ public class TaxOperatorController {
         ResponseData<?> responseData = new ResponseData<>();
 
         try {
-            planWorksheetService.savePlanWorksheetSend(formVo);
+            planWorksheetService.savePlanWorksheetSendToArea(formVo);
             responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
             responseData.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
@@ -623,6 +623,25 @@ public class TaxOperatorController {
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+            responseData.setStatus(RESPONSE_STATUS.FAILED);
+        }
+
+        return responseData;
+    }
+    
+    @PostMapping("/save-plan-worksheet-send-approve")
+    @ResponseBody
+    public ResponseData<?> savePlanWorksheetSendApprove(@RequestBody PlanWorksheetVo formVo) {
+
+        ResponseData<?> responseData = new ResponseData<>();
+
+        try {
+            planWorksheetService.savePlanWorksheetSend(formVo);
+            responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+            responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
             responseData.setStatus(RESPONSE_STATUS.FAILED);
         }
 

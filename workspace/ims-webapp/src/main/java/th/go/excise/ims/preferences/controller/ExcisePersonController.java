@@ -47,6 +47,25 @@ public class ExcisePersonController {
 		return response;
 	}
 	
+	@GetMapping("/person-list")
+	@ApiOperation(
+		tags = MODULE_NAME.PREFERENCES,
+		value = "Get Excise Sector List"
+	)
+	public ResponseData<List<ExcisePersonVoSelect>> getPersonListAll() {
+		ResponseData<List<ExcisePersonVoSelect>> response = new ResponseData<>();
+		List<ExcisePersonVoSelect> exciseSectorList = excisePersonService.findPersonByName("");
+		if (exciseSectorList.size() > 0) {
+			response.setData(exciseSectorList);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} else {
+			response.setMessage("Excise Sector List Not Found");
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		
+		return response;
+	}
+	
 	@GetMapping("/person-list-edlogin/{edlogin}")
 	@ApiOperation(
 		tags = MODULE_NAME.PREFERENCES,

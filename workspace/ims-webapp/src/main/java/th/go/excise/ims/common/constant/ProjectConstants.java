@@ -34,6 +34,7 @@ public class ProjectConstants {
 	
 	public class TA_AUDIT_STATUS {
 		public static final String CODE_0100 = "0100";
+		public static final String CODE_0101 = "0101";
 		public static final String CODE_0200 = "0200";
 		public static final String CODE_0300 = "0300";
 		public static final String CODE_0301 = "0301";

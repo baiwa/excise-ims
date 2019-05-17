@@ -45,6 +45,7 @@ import th.go.excise.ims.ta.persistence.repository.TaWorksheetHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlCusVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetSendTableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetStatus;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 
@@ -275,10 +276,11 @@ public class PlanWorksheetService {
 		// Assign OfficeCode
 		if (StringUtils.isEmpty(formVo.getOfficeCode())) {
 			String officeCode = userBean.getOfficeCode();
-			if (EXCISE_OFFICE_CODE.TA_CENTRAL_SELECTOR.equals(officeCode)) {
-				formVo.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(officeCode));
-			} else {
+			if (EXCISE_OFFICE_CODE.TA_CENTRAL_SELECTOR.equals(officeCode) || EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR1.equals(officeCode) 
+					|| EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR2.equals(officeCode) ) {
 				formVo.setOfficeCode(officeCode);
+			}else {
+				formVo.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(officeCode));
 			}
 		}
 		// If User have SubdeptLevel = "3" Then Assign SubdeptLevel, Else Assign
@@ -353,9 +355,53 @@ public class PlanWorksheetService {
 				}
 			}
 		}
+		
+		List<TaPlanWorksheetDtl> planDtl = this.taPlanWorksheetDtlRepository.findByOfficeCodeAndPlanNumberLike(ExciseUtils.whereInLocalOfficeCode(officeCode), formVo.getPlanNumber());
+		for(TaPlanWorksheetDtl dtl:planDtl) {
+			dtl.setAuditStatus(ProjectConstants.TA_AUDIT_STATUS.CODE_0200);
+			this.taPlanWorksheetDtlRepository.save(dtl);
+		}
+	
 	}
+	
+	public void savePlanWorksheetSendToArea(PlanWorksheetVo formVo) {
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		formVo.setOfficeCode(officeCode);
+		TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository
+				.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), officeCode);
+		Long count = taPlanWorksheetDtlRepository.countByCriteria(formVo);
+		planSend.setFacInNum(new Integer(count.intValue()));
+		planSend.setSubmitDate(LocalDate.now());
+		taPlanWorksheetSendRepository.save(planSend);
 
-	private void saveObjectTaPlanWorksheetSend(PlanWorksheetVo formVo, String officeCode) {
+		TaPlanWorksheetHdr planHdr = this.taPlanWorksheetHdrRepository.findByPlanNumber(formVo.getPlanNumber());
+
+		if (FLAG.N_FLAG.equalsIgnoreCase(planHdr.getSendAllFlag())) {
+			if (ExciseUtils.isCentral(officeCode)) {
+				List<ExciseDepartment> sectorList = ApplicationCache.getExciseSectorList();
+				for (ExciseDepartment sector : sectorList) {
+					if (ExciseUtils.isCentral(sector.getOfficeCode())) {
+						continue;
+					}
+					saveObjectTaPlanWorksheetSendToArea(formVo, sector.getOfficeCode());
+				}
+			}
+			if (ExciseUtils.isSector(officeCode)) {
+				List<ExciseDepartment> areaList = ApplicationCache.getExciseAreaList(officeCode);
+				for (ExciseDepartment area : areaList) {
+					saveObjectTaPlanWorksheetSendToArea(formVo, area.getOfficeCode());
+				}
+			}
+		}
+		
+		List<TaPlanWorksheetDtl> planDtl = this.taPlanWorksheetDtlRepository.findByOfficeCodeAndPlanNumberLike(ExciseUtils.whereInLocalOfficeCode(officeCode), formVo.getPlanNumber());
+		for(TaPlanWorksheetDtl dtl:planDtl) {
+			dtl.setAuditStatus(ProjectConstants.TA_AUDIT_STATUS.CODE_0101);
+			this.taPlanWorksheetDtlRepository.save(dtl);
+		}
+	}
+	
+	private void saveObjectTaPlanWorksheetSendToArea(PlanWorksheetVo formVo, String officeCode) {
 		TaPlanWorksheetSend planSendStampDate = taPlanWorksheetSendRepository
 				.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), officeCode);
 		if (planSendStampDate == null) {
@@ -366,6 +412,29 @@ public class PlanWorksheetService {
 			planSendStampDate.setSendDate(LocalDate.now());
 			taPlanWorksheetSendRepository.save(planSendStampDate);
 		}
+	}
+
+	private void saveObjectTaPlanWorksheetSend(PlanWorksheetVo formVo, String officeCode) {
+		TaPlanWorksheetSend planSendStampDate = taPlanWorksheetSendRepository
+				.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), officeCode);
+		
+		formVo.setOfficeCode(officeCode);
+		List<PlanWorksheetSendTableVo> planCount = taPlanWorksheetDtlRepository.findPlanWorksheetByDtl(formVo);
+		planSendStampDate.setBudgetYear(formVo.getBudgetYear());
+		planSendStampDate.setPlanNumber(formVo.getPlanNumber());
+		planSendStampDate.setOfficeCode(officeCode);
+		planSendStampDate.setSubmitDate(LocalDate.now());
+		planSendStampDate.setFacInNum(planCount.get(0).getCountPlan());
+		taPlanWorksheetSendRepository.save(planSendStampDate);
+//		if (planSendStampDate == null) {
+//			planSendStampDate = new TaPlanWorksheetSend();
+//			planSendStampDate.setBudgetYear(formVo.getBudgetYear());
+//			planSendStampDate.setPlanNumber(formVo.getPlanNumber());
+//			planSendStampDate.setOfficeCode(officeCode);
+//			planSendStampDate.setSubmitDate(LocalDate.now());
+//			planSendStampDate.setFacInNum(planCount.get(0).getCountPlan());
+//			taPlanWorksheetSendRepository.save(planSendStampDate);
+//		}
 	}
 
 	public PlanWorksheetStatus getPlanHeaderStatus(PlanWorksheetVo formVo) {
