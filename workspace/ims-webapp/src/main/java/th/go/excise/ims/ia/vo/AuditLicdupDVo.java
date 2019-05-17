@@ -1,50 +1,17 @@
-
-package th.go.excise.ims.ia.persistence.entity;
+package th.go.excise.ims.ia.vo;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+public class AuditLicdupDVo {
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
-import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
-
-@Entity
-@Table(name = "IA_AUDIT_LICDUP_D")
-public class IaAuditLicdupD extends BaseEntity {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5039499202625132608L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_AUDIT_LICDUP_D_GEN")
-	@SequenceGenerator(name = "IA_AUDIT_LICDUP_D_GEN", sequenceName = "IA_AUDIT_LICDUP_D_SEQ", allocationSize = 1)
-	@Column(name = "AUDIT_LICDUP_D_SEQ")
 	private Long auditLicdupDSeq;
-	@Column(name = "AUDIT_LICDUP_NO")
 	private String auditLicdupNo;
-	@Column(name = "NEW_REG_ID")
 	private String newRegId;
-	@Column(name = "CUS_FULLNAME")
 	private String cusFullname;
-	@Column(name = "LIC_TYPE")
 	private String licType;
-	@Column(name = "RUN_CHECK")
 	private Integer runCheck;
-	@Column(name = "LIC_NO")
 	private String licNo;
-	@Column(name = "LIC_DATE")
-	private Date licDate;
-	@Column(name = "PRINT_COUNT")
+	private String licDate;
 	private BigDecimal printCount;
 
 	public Long getAuditLicdupDSeq() {
@@ -103,11 +70,11 @@ public class IaAuditLicdupD extends BaseEntity {
 		this.licNo = licNo;
 	}
 
-	public Date getLicDate() {
+	public String getLicDate() {
 		return licDate;
 	}
 
-	public void setLicDate(Date licDate) {
+	public void setLicDate(String licDate) {
 		this.licDate = licDate;
 	}
 
@@ -117,10 +84,6 @@ public class IaAuditLicdupD extends BaseEntity {
 
 	public void setPrintCount(BigDecimal printCount) {
 		this.printCount = printCount;
-	}
-
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
 }
