@@ -1,6 +1,7 @@
 package th.go.excise.ims.ta.persistence.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,6 +26,14 @@ public class TaWsReg4000 extends BaseEntity {
 	private Long wsReg4000Id;
 	@Column(name = "NEW_REG_ID")
 	private String newRegId;
+	@Column(name = "REG_ID")
+	private String regId;
+	@Column(name = "REG_STATUS")
+	private String regStatus;
+	@Column(name = "REG_STATUS_DESC")
+	private String regStatusDesc;
+	@Column(name = "REG_STATUS_DATE")
+	private LocalDate regStatusDate;
 	@Column(name = "CUS_ID")
 	private String cusId;
 	@Column(name = "CUS_FULLNAME")
@@ -51,20 +60,18 @@ public class TaWsReg4000 extends BaseEntity {
 	private String facUrl;
 	@Column(name = "FAC_TYPE")
 	private String facType;
-	@Column(name = "REG_ID")
-	private String regId;
-	@Column(name = "REG_STATUS")
-	private String regStatus;
-	@Column(name = "REG_DATE")
-	private LocalDate regDate;
 	@Column(name = "REG_CAPITAL")
 	private String regCapital;
+	@Column(name = "REG_DATE")
+	private LocalDate regDate;
+	@Column(name = "DUTY_CODE")
+	private String dutyCode;
 	@Column(name = "OFFICE_CODE")
 	private String officeCode;
 	@Column(name = "ACTIVE_FLAG")
 	private String activeFlag;
-	@Column(name = "DUTY_CODE")
-	private String dutyCode;
+	@Column(name = "SYNC_DATE")
+	private LocalDateTime syncDate;
 
 	public Long getWsReg4000Id() {
 		return wsReg4000Id;
@@ -80,6 +87,38 @@ public class TaWsReg4000 extends BaseEntity {
 
 	public void setNewRegId(String newRegId) {
 		this.newRegId = newRegId;
+	}
+
+	public String getRegId() {
+		return regId;
+	}
+
+	public void setRegId(String regId) {
+		this.regId = regId;
+	}
+
+	public String getRegStatus() {
+		return regStatus;
+	}
+
+	public void setRegStatus(String regStatus) {
+		this.regStatus = regStatus;
+	}
+
+	public String getRegStatusDesc() {
+		return regStatusDesc;
+	}
+
+	public void setRegStatusDesc(String regStatusDesc) {
+		this.regStatusDesc = regStatusDesc;
+	}
+
+	public LocalDate getRegStatusDate() {
+		return regStatusDate;
+	}
+
+	public void setRegStatusDate(LocalDate regStatusDate) {
+		this.regStatusDate = regStatusDate;
 	}
 
 	public String getCusId() {
@@ -178,6 +217,38 @@ public class TaWsReg4000 extends BaseEntity {
 		this.facUrl = facUrl;
 	}
 
+	public String getFacType() {
+		return facType;
+	}
+
+	public void setFacType(String facType) {
+		this.facType = facType;
+	}
+
+	public String getRegCapital() {
+		return regCapital;
+	}
+
+	public void setRegCapital(String regCapital) {
+		this.regCapital = regCapital;
+	}
+
+	public LocalDate getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(LocalDate regDate) {
+		this.regDate = regDate;
+	}
+
+	public String getDutyCode() {
+		return dutyCode;
+	}
+
+	public void setDutyCode(String dutyCode) {
+		this.dutyCode = dutyCode;
+	}
+
 	public String getOfficeCode() {
 		return officeCode;
 	}
@@ -194,52 +265,12 @@ public class TaWsReg4000 extends BaseEntity {
 		this.activeFlag = activeFlag;
 	}
 
-	public String getDutyCode() {
-		return dutyCode;
+	public LocalDateTime getSyncDate() {
+		return syncDate;
 	}
 
-	public void setDutyCode(String dutyCode) {
-		this.dutyCode = dutyCode;
-	}
-
-	public String getFacType() {
-		return facType;
-	}
-
-	public void setFacType(String facType) {
-		this.facType = facType;
-	}
-
-	public String getRegId() {
-		return regId;
-	}
-
-	public void setRegId(String regId) {
-		this.regId = regId;
-	}
-
-	public String getRegStatus() {
-		return regStatus;
-	}
-
-	public void setRegStatus(String regStatus) {
-		this.regStatus = regStatus;
-	}
-
-	public LocalDate getRegDate() {
-		return regDate;
-	}
-
-	public void setRegDate(LocalDate regDate) {
-		this.regDate = regDate;
-	}
-
-	public String getRegCapital() {
-		return regCapital;
-	}
-
-	public void setRegCapital(String regCapital) {
-		this.regCapital = regCapital;
+	public void setSyncDate(LocalDateTime syncDate) {
+		this.syncDate = syncDate;
 	}
 
 }
