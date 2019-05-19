@@ -21,6 +21,7 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.constant.ProjectConstants;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_AUDIT_STATUS;
 import th.go.excise.ims.preferences.persistence.entity.ExcisePerson;
 import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
@@ -485,9 +486,16 @@ public class TaxOperatorController {
     }
 
     // TODO Approval
+    @PostMapping("/plan-selected-dtl-central-approve")
+    @ResponseBody
+    public DataTableAjax<PlanWorksheetDatatableVo> planDtlDatatableCentralApprove(@RequestBody PlanWorksheetVo formVo) {
+    	formVo.setAuditStatus(TA_AUDIT_STATUS.CODE_0200);
+    	return planWorksheetService.planDtlDatatable(formVo);
+    }
+    
     @PostMapping("/plan-selected-dtl-approve")
     @ResponseBody
-    public DataTableAjax<PlanWorksheetDatatableVo> planDtlDatatableApprive(@RequestBody PlanWorksheetVo formVo) {
+    public DataTableAjax<PlanWorksheetDatatableVo> planDtlDatatableApprove(@RequestBody PlanWorksheetVo formVo) {
         return planWorksheetService.planDtlDatatable(formVo);
     }
 

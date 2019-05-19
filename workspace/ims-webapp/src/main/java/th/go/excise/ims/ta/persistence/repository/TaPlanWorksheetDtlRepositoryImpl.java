@@ -7,8 +7,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.criteria.From;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -72,6 +70,11 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		if (StringUtils.isNotEmpty(formVo.getUserLoginId())) {
 			sql.append("   AND PLAN_DTL.AU_JOB_RESP LIKE ? ");
 			params.add("%" + formVo.getUserLoginId() + "%");
+		}
+		
+		if (StringUtils.isNotEmpty(formVo.getAuditStatus())) {
+			sql.append("   AND PLAN_DTL.AUDIT_STATUS >= ? ");
+			params.add(formVo.getAuditStatus());
 		}
 	}
 	

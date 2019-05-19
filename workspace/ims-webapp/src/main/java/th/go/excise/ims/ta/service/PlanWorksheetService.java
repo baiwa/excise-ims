@@ -3,7 +3,6 @@ package th.go.excise.ims.ta.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.swagger.annotations.Authorization;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
@@ -24,7 +22,6 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.constant.ProjectConstants;
-import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_OFFICE_CODE;
 import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_SUBDEPT_LEVEL;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_AUDIT_STATUS;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
@@ -282,14 +279,7 @@ public class PlanWorksheetService {
 		UserBean userBean = UserLoginUtils.getCurrentUserBean();
 		// Assign OfficeCode
 		if (StringUtils.isEmpty(formVo.getOfficeCode())) {
-			String officeCode = userBean.getOfficeCode();
-			if (EXCISE_OFFICE_CODE.TA_CENTRAL_SELECTOR.equals(officeCode)
-					|| EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR1.equals(officeCode)
-					|| EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR2.equals(officeCode)) {
-				formVo.setOfficeCode(officeCode);
-			} else {
-				formVo.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(officeCode));
-			}
+			formVo.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(userBean.getOfficeCode()));
 		}
 		// If User have SubdeptLevel = "3" Then Assign SubdeptLevel, Else Assign
 		// SubdeptCode

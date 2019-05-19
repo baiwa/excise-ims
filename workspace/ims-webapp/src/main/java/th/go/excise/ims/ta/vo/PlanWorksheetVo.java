@@ -19,6 +19,7 @@ public class PlanWorksheetVo extends DataTableRequest {
 	private String officeCode;
 	private String subdeptCode;
 	private String userLoginId;
+	private String auditStatus;
 	private List<String> budgetYearList;
 
 	public List<String> getIds() {
@@ -107,6 +108,14 @@ public class PlanWorksheetVo extends DataTableRequest {
 
 	public void setUserLoginId(String userLoginId) {
 		this.userLoginId = userLoginId;
+	}
+
+	public String getAuditStatus() {
+		return auditStatus;
+	}
+
+	public void setAuditStatus(String auditStatus) {
+		this.auditStatus = auditStatus;
 	}
 
 	public List<String> getBudgetYearList() {
