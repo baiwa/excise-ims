@@ -444,19 +444,21 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		sql.append(" SELECT R4000.* ");
 		sql.append(" FROM TA_WS_REG4000 R4000 ");
 		sql.append(" INNER JOIN ( ");
-		sql.append("   SELECT NEW_REG_ID ");
-		sql.append("   FROM TA_WS_INC8000_M ");
-		sql.append("   WHERE IS_DELETED = 'N' ");
-		sql.append("     AND (TAX_YEAR >= ? AND TAX_MONTH >= ?) ");
-		sql.append("     AND (TAX_YEAR <= ? AND TAX_MONTH <= ?) ");
-		sql.append("   GROUP BY NEW_REG_ID ");
-		sql.append(" ) I8000 ON I8000.NEW_REG_ID = R4000.NEW_REG_ID ");
+		sql.append("   SELECT I.NEW_REG_ID, I.DUTY_CODE ");
+		sql.append("   FROM ( ");
+		sql.append("     SELECT NEW_REG_ID, DUTY_CODE, TAX_YEAR || DECODE(LENGTH(TAX_MONTH), 2 ,TAX_MONTH , '0' || TAX_MONTH) YEAR_MONTH ");
+		sql.append("     FROM TA_WS_INC8000_M ");
+		sql.append("     WHERE IS_DELETED = 'N' ");
+		sql.append("   ) I ");
+		sql.append("   WHERE 1=1 ");
+		sql.append("     AND I.YEAR_MONTH >= ? ");
+		sql.append("     AND I.YEAR_MONTH <= ? ");
+		sql.append("   GROUP BY I.NEW_REG_ID, I.DUTY_CODE ");
+		sql.append(" ) I8000 ON I8000.NEW_REG_ID = R4000.NEW_REG_ID AND I8000.DUTY_CODE = R4000.DUTY_CODE ");
 		sql.append(" WHERE R4000.IS_DELETED = 'N' ");
 
-		params.add(startMonth.substring(0, 4));
-		params.add(String.valueOf(Integer.parseInt(startMonth.substring(4, 6))));
-		params.add(endMonth.substring(0, 4));
-		params.add(String.valueOf(Integer.parseInt(endMonth.substring(4, 6))));
+		params.add(startMonth);
+		params.add(endMonth);
 		
 		if (ApplicationCache.isCtrlDutyGroupByOfficeCode(formVo.getOfficeCode())) {
 			sql.append("   AND R4000.DUTY_CODE IN (SELECT DUTY_GROUP_CODE FROM EXCISE_CTRL_DUTY WHERE IS_DELETED = 'N' AND RES_OFFCODE = ?) ");

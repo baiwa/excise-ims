@@ -74,7 +74,7 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 	}
 	
 	@Override
-	public Map<String, Map<String, BigDecimal>> findByMonthRangeDuty(String officeCode, String startMonth, String endMonth) {
+	public Map<String, Map<String, BigDecimal>> findByMonthRangeDuty(String officeCode, String startMonth, String endMonth, List<String> newRegIdList) {
 		logger.info("findByMonthRange officeCode={}, startMonth={}, endMonth={}", officeCode, startMonth, endMonth);
 
 		StringBuilder sql = new StringBuilder();
@@ -84,23 +84,26 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 		sql.append(" SELECT NEW_REG_ID, DUTY_CODE, TAX_AMOUNT, TAX_YEAR || DECODE(LENGTH(TAX_MONTH), 2 ,TAX_MONTH , '0' || TAX_MONTH) YEAR_MONTH ");
 		sql.append(" FROM TA_WS_INC8000_M ");
 		sql.append(" WHERE IS_DELETED = 'N' ");
+		if (newRegIdList != null && newRegIdList.size() > 0) {
+			sql.append("  AND NEW_REG_ID IN (" + StringUtils.repeat("?", ",", newRegIdList.size()) + ") ");
+			paramList.addAll(newRegIdList);
+		}
 		if (ApplicationCache.isCtrlDutyGroupByOfficeCode(officeCode)) {
 			sql.append("   AND DUTY_CODE IN (SELECT DUTY_GROUP_CODE FROM EXCISE_CTRL_DUTY WHERE IS_DELETED = 'N' AND RES_OFFCODE = ?) ");
 			paramList.add(officeCode);
 		} else {
 			List<String> dutyGroupIdList = ExciseUtils.getDutyGroupIdListByType(DUTY_GROUP_TYPE.PRODUCT, DUTY_GROUP_TYPE.SERVICE);
-			sql.append("   AND DUTY_CODE IN (" + StringUtils.repeat("?", ",", dutyGroupIdList.size()) + ")");
+			sql.append("   AND DUTY_CODE IN (" + StringUtils.repeat("?", ",", dutyGroupIdList.size()) + ") ");
 			paramList.addAll(dutyGroupIdList);
 		}
-		sql.append("   AND (TAX_YEAR >= ? AND TAX_MONTH >= ?) ");
-		sql.append("   AND (TAX_YEAR <= ? AND TAX_MONTH <= ?) ");
 		sql.append(" ) INC ");
+		sql.append(" WHERE 1=1 ");
+		sql.append("   AND INC.YEAR_MONTH >= ? ");
+		sql.append("   AND INC.YEAR_MONTH <= ? ");
 		sql.append(" ORDER BY INC.NEW_REG_ID, INC.DUTY_CODE, INC.YEAR_MONTH ");
 
-		paramList.add(startMonth.substring(0, 4));
-		paramList.add(String.valueOf(Integer.parseInt(startMonth.substring(4, 6))));
-		paramList.add(endMonth.substring(0, 4));
-		paramList.add(String.valueOf(Integer.parseInt(endMonth.substring(4, 6))));
+		paramList.add(startMonth);
+		paramList.add(endMonth);
 
 		Map<String, Map<String, BigDecimal>> incfri8000MMap = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), new ResultSetExtractor<Map<String, Map<String, BigDecimal>>>() {
 			public Map<String, Map<String, BigDecimal>> extractData(ResultSet rs) throws SQLException, DataAccessException {

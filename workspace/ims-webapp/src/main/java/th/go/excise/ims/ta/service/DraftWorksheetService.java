@@ -150,7 +150,8 @@ public class DraftWorksheetService {
 		List<LocalDate> localDateList = LocalDateUtils.getLocalDateRange(localDateStart, localDateEnd);
 
 		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findByCriteriaDuty(formVo, ymStart, ymEnd);
-		Map<String, Map<String, BigDecimal>> wsInc8000MMap = taWsInc8000MRepository.findByMonthRangeDuty(officeCode, ymStart, ymEnd);
+		List<String> newRegIdList = transform2StringList(wsReg4000List);
+		Map<String, Map<String, BigDecimal>> wsInc8000MMap = taWsInc8000MRepository.findByMonthRangeDuty(officeCode, ymStart, ymEnd, newRegIdList);
 		Map<String, BigDecimal> incomeMap = null;
 		BigDecimal sumTaxAmtG1 = null;
 		BigDecimal sumTaxAmtG2 = null;
@@ -278,6 +279,14 @@ public class DraftWorksheetService {
 		}
 
 		return detailVoList;
+	}
+	
+	private List<String> transform2StringList(List<TaWsReg4000> wsReg4000List) {
+		List<String> keyList = new ArrayList<>();
+		for (TaWsReg4000 wsReg4000 : wsReg4000List) {
+			keyList.add(wsReg4000.getNewRegId());
+		}
+		return keyList;
 	}
 	
 	private void setTaxAmount(TaxOperatorDetailVo detailVo, String groupMonthNo, String taxAmount) {
