@@ -46,6 +46,7 @@ public class TaxOperatorDatatableVo {
 	private String condSubNoAuditDesc;
 	private String lastAuditYear;
 	private String riskLevelDesc;
+	private String regDate;
 
 	public String getRiskLevelDesc() {
 		return riskLevelDesc;
@@ -357,6 +358,13 @@ public class TaxOperatorDatatableVo {
 
 	public void setTaxAmtList(List<String> taxAmtList) {
 		this.taxAmtList = taxAmtList;
+	}
+	public String getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
 	}
 
 	@Override

@@ -80,6 +80,7 @@ public class TaxOperatorDetailVo {
 	private String condSubNoAuditDesc;
 	private String lastAuditYear;
 	private String riskLevelDesc;
+	private String regDate;
 
 	public String getRiskLevelDesc() {
 		return riskLevelDesc;
@@ -679,6 +680,13 @@ public class TaxOperatorDetailVo {
 
 	public void setSelectBy(String selectBy) {
 		this.selectBy = selectBy;
+	}
+	public String getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
 	}
 
 	@Override

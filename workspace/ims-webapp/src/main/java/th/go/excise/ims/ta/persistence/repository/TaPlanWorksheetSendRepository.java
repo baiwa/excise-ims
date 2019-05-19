@@ -26,4 +26,5 @@ public interface TaPlanWorksheetSendRepository extends CommonJpaCrudRepository<T
 	@Query(value = "DELETE FROM TA_PLAN_WORKSHEET_SEND WHERE BUDGET_YEAR = :budgetYear", nativeQuery = true)
 	public void forceDeleteByBudgetYear(@Param("budgetYear") String budgetYear);
 	
+	
 }

@@ -60,6 +60,8 @@ public class TaxAuditUtils {
 				taxOperatorDatatableVo.setCondSubNoAuditDesc(taxOperatorDetailVo.getCondSubNoAuditDesc());
 				taxOperatorDatatableVo.setLastAuditYear(taxOperatorDetailVo.getLastAuditYear());
 				taxOperatorDatatableVo.setRiskLevelDesc(taxOperatorDetailVo.getRiskLevelDesc());
+				taxOperatorDatatableVo.setRegDate(taxOperatorDetailVo.getRegDate());
+				
 			}
 			
 			taxAmtList = new ArrayList<>();

@@ -29,6 +29,8 @@ public class ExciseSubdept extends BaseEntity {
 	private String subdeptName;
 	@Column(name = "SUBDEPT_SHORT_NAME")
 	private String subdeptShortName;
+	@Column(name = "AUDIT_SELECT_FLAG")
+	private String auditSelectFlag;
 
 	public Long getEdSubdeptSeq() {
 		return edSubdeptSeq;
@@ -69,5 +71,14 @@ public class ExciseSubdept extends BaseEntity {
 	public void setSubdeptShortName(String subdeptShortName) {
 		this.subdeptShortName = subdeptShortName;
 	}
+
+	public String getAuditSelectFlag() {
+		return auditSelectFlag;
+	}
+
+	public void setAuditSelectFlag(String auditSelectFlag) {
+		this.auditSelectFlag = auditSelectFlag;
+	}
+	
 
 }

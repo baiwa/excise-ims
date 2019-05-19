@@ -6,4 +6,6 @@ public interface TaPlanWorksheetSelectRepositoryCustom {
 	
 	public void batchInsert(String budgetYear, List<String> newRegIdList);
 	
+	public Integer findCentalAllSend();
+	
 }

@@ -10,9 +10,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.constant.ProjectConstants;
 
 public class TaPlanWorksheetSelectRepositoryImpl implements TaPlanWorksheetSelectRepositoryCustom {
 	
@@ -42,6 +44,24 @@ public class TaPlanWorksheetSelectRepositoryImpl implements TaPlanWorksheetSelec
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
 			}
 		});
+	}
+
+	@Override
+	public Integer findCentalAllSend() {
+		StringBuilder sql = new StringBuilder();
+		List<Object> paramList = new ArrayList<Object>();
+		
+		sql.append( " SELECT  COUNT(1) COUNT_SUBMIT FROM TA_PLAN_WORKSHEET_SEND SEND   " );     
+		sql.append( " INNER JOIN EXCISE_SUBDEPT SUBD ON " );
+		sql.append( " SUBD.OFF_CODE = SEND.OFFICE_CODE     " );                   
+		sql.append( " WHERE SUBD.SUBDEPT_CODE IS NULL AND SUBD.AUDIT_SELECT_FLAG = ? AND SEND.SUBMIT_DATE IS NULL " );
+		
+		paramList.add(FLAG.Y_FLAG);
+//		paramList.add(ProjectConstants.EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR1);
+//		paramList.add(ProjectConstants.EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR2);
+//		paramList.add(ProjectConstants.EXCISE_OFFICE_CODE.TA_CENTRAL_SELECTOR);
+		
+		return commonJdbcTemplate.queryForObject(sql.toString(), paramList.toArray(), Integer.class);
 	}
 
 }
