@@ -150,7 +150,10 @@ public class DraftWorksheetService {
 		List<LocalDate> localDateList = LocalDateUtils.getLocalDateRange(localDateStart, localDateEnd);
 
 		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findByCriteriaDuty(formVo, ymStart, ymEnd);
-		List<String> newRegIdList = transform2StringList(wsReg4000List);
+		List<String> newRegIdList = null;
+		if (StringUtils.isNotBlank(formVo.getFlagPage())) {
+			newRegIdList = transform2StringList(wsReg4000List);
+		}
 		Map<String, Map<String, BigDecimal>> wsInc8000MMap = taWsInc8000MRepository.findByMonthRangeDuty(officeCode, ymStart, ymEnd, newRegIdList);
 		Map<String, BigDecimal> incomeMap = null;
 		BigDecimal sumTaxAmtG1 = null;
