@@ -37,10 +37,10 @@ public class Int0602Service {
 
 	@Autowired
 	private IaAuditLicHRepository iaAuditLicHRepository;
-	
+
 	@Autowired
 	private IaAuditLicD1Repository iaAuditLicD1Repository;
-	
+
 	@Autowired
 	private IaAuditLicD2Repository iaAuditLicD2Repository;
 
@@ -78,10 +78,9 @@ public class Int0602Service {
 	public AuditLicHVo saveLicListService(Int0602SaveVo vo) {
 		logger.info("saveLicListService : {} ", vo.getAuditLicH().getAuditLicNo());
 		IaAuditLicH licH = null;
-		if (StringUtils.isNotBlank(vo.getAuditLicH().getAuditLicNo())) {
-			licH = iaAuditLicHRepository.findByAuditLicNoAndIsDeletedOrderByAuditLicSeqDesc(vo.getAuditLicH().getAuditLicNo(), FLAG.N_FLAG);
-		} else {
-			try {
+		try {
+			if (StringUtils.isNotBlank(vo.getAuditLicH().getAuditLicNo())) {
+				licH = iaAuditLicHRepository.findByAuditLicNoAndIsDeletedOrderByAuditLicSeqDesc(vo.getAuditLicH().getAuditLicNo(), FLAG.N_FLAG);
 				licH = new IaAuditLicH();
 				BeanUtils.copyProperties(licH, vo.getAuditLicH());
 				licH.setAuditLicNo(vo.getAuditLicH().getOfficeCode() + "/" + iaAuditLicHRepository.generateAuditLicNo());
@@ -89,9 +88,18 @@ public class Int0602Service {
 				licH.setLicDateFrom(ConvertDateUtils.parseStringToDate(vo.getAuditLicH().getLicDateFromStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 				licH = iaAuditLicHRepository.save(licH);
 				vo.getAuditLicH().setAuditLicSeq(licH.getAuditLicSeq());
-			} catch (Exception e) {
-				e.printStackTrace();
+			} else {
+
+				licH = new IaAuditLicH();
+				BeanUtils.copyProperties(licH, vo.getAuditLicH());
+				licH.setAuditLicNo(vo.getAuditLicH().getOfficeCode() + "/" + iaAuditLicHRepository.generateAuditLicNo());
+				licH.setLicDateTo(ConvertDateUtils.parseStringToDate(vo.getAuditLicH().getLicDateToStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+				licH.setLicDateFrom(ConvertDateUtils.parseStringToDate(vo.getAuditLicH().getLicDateFromStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+				licH = iaAuditLicHRepository.save(licH);
+				vo.getAuditLicH().setAuditLicSeq(licH.getAuditLicSeq());
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		if (vo.getAuditLicD1List() != null && vo.getAuditLicD1List().size() > 0) {
 			IaAuditLicD1 val = null;
@@ -188,6 +196,7 @@ public class Int0602Service {
 	public List<Int0602ResultTab2Vo> findTab2Criteria(Int0602FormVo int0602FormVo) {
 		return int0602JdbcRepository.findTab2Criteria(int0602FormVo);
 	}
+
 	public List<AuditLicD2Vo> findAuditLicD2ByAuditLicNo(String auditLicNo) throws Exception {
 		List<AuditLicD2Vo> auditLicD2VoList = new ArrayList<>();
 		AuditLicD2Vo auditLicD2Vo = new AuditLicD2Vo();

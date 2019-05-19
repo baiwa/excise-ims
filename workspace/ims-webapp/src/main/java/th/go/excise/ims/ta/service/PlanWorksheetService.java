@@ -22,7 +22,6 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.constant.ProjectConstants;
-import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_SUBDEPT_LEVEL;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_AUDIT_STATUS;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
 import th.go.excise.ims.common.util.ExciseUtils;
@@ -275,19 +274,6 @@ public class PlanWorksheetService {
 
 	public DataTableAjax<PlanWorksheetDatatableVo> planDtlDatatable(PlanWorksheetVo formVo) {
 		logger.info("planDtlDatatable budgetYear={}, officeCOde={}", formVo.getBudgetYear(), formVo.getOfficeCode());
-
-		UserBean userBean = UserLoginUtils.getCurrentUserBean();
-		// Assign OfficeCode
-		if (StringUtils.isEmpty(formVo.getOfficeCode())) {
-			formVo.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(userBean.getOfficeCode()));
-		}
-		// If User have SubdeptLevel = "3" Then Assign SubdeptLevel, Else Assign
-		// SubdeptCode
-		if (EXCISE_SUBDEPT_LEVEL.LV3.equals(userBean.getSubdeptLevel())) {
-			formVo.setUserLoginId(userBean.getUsername());
-		} else {
-			formVo.setSubdeptCode(userBean.getSubdeptCode());
-		}
 
 		DataTableAjax<PlanWorksheetDatatableVo> dataTableAjax = new DataTableAjax<>();
 		dataTableAjax.setData(taPlanWorksheetDtlRepository.findByCriteria(formVo));

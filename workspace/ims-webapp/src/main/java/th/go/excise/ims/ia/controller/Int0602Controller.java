@@ -61,7 +61,7 @@ public class Int0602Controller {
 
 	@PostMapping("/save-lic-data")
 	@ResponseBody
-	public ResponseData<AuditLicHVo> findByCriteria(@RequestBody Int0602SaveVo request) {
+	public ResponseData<AuditLicHVo> saveLic(@RequestBody Int0602SaveVo request) {
 		ResponseData<AuditLicHVo> response = new ResponseData<>();
 		try {
 			response.setData(int0602Service.saveLicListService(request));

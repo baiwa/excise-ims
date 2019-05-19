@@ -162,7 +162,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		sql.append("     ED_SECTOR.OFF_CODE SEC_CODE, ");
 		sql.append("     ED_SECTOR.OFF_SHORT_NAME SEC_DESC, ");
 		sql.append("     ED_AREA.OFF_CODE AREA_CODE, ");
-		sql.append("     ED_AREA.OFF_SHORT_NAME AREA_DESC ");
+		sql.append("     ED_AREA.OFF_SHORT_NAME AREA_DESC, ");
 		sql.append("     ED_AREA.OFF_NAME DEPTSHORTNAME, ");
 		sql.append(" 	 ED_SUBDEPT.SUBDEPT_SHORT_NAME SUBDEPTSHORTNAME	");
 		sql.append(" FROM TA_PLAN_WORKSHEET_DTL PLAN_DTL ");
