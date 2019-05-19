@@ -21,4 +21,9 @@ public interface TaWsReg4000RepositoryCustom {
 	public Long countOutsidePlan(OutsidePlanFormVo formVo);
 
 	public FactoryVo findByNewRegId(String newRegId);
+	
+	public List<TaWsReg4000> findByCriteriaDuty(TaxOperatorFormVo formVo, String startMonth, String endMonth);
+
+	public Long countByCriteriaDuty(TaxOperatorFormVo formVo);
+	
 }

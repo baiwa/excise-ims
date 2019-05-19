@@ -35,6 +35,21 @@ public class UserDetailServiceTest implements org.springframework.security.core.
 		UserDetails userDetailsAdmin2 = new UserDetails("admin2", "password", getGrantedAuthorities(ROLE.USER, ROLE.ADMIN, ROLE.IA, ROLE.TA));
 		userDetailsAdmin2.setOfficeCode("000000");
 		DB_BASED_USER_MAPPING.put("admin2", userDetailsAdmin2);
+		
+		// ta001401
+		UserDetails userDetailsTa001401 = new UserDetails("ta001401", "password", getGrantedAuthorities(ROLE.USER, ROLE.TA));
+		userDetailsTa001401.setOfficeCode("001401");
+		DB_BASED_USER_MAPPING.put("ta001401", userDetailsTa001401);
+		
+		// ta001402
+		UserDetails userDetailsTa001402 = new UserDetails("ta001402", "password", getGrantedAuthorities(ROLE.USER, ROLE.TA));
+		userDetailsTa001402.setOfficeCode("001402");
+		DB_BASED_USER_MAPPING.put("ta001402", userDetailsTa001402);
+		
+		// ta001403
+		UserDetails userDetailsTa001403 = new UserDetails("ta001403", "password", getGrantedAuthorities(ROLE.USER, ROLE.TA));
+		userDetailsTa001403.setOfficeCode("001403");
+		DB_BASED_USER_MAPPING.put("ta001403", userDetailsTa001403);
 	}
 
 	private static List<GrantedAuthority> getGrantedAuthorities(String... roles) {

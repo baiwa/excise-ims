@@ -4,6 +4,7 @@ public class ExciseDutyGroupVo implements ExciseDutyGroup {
 
 	private String dutyGroupCode;
 	private String dutyGroupName;
+	private String dutyGroupStatus;
 	private String dutyGroupType;
 
 	public String getDutyGroupCode() {
@@ -20,6 +21,14 @@ public class ExciseDutyGroupVo implements ExciseDutyGroup {
 
 	public void setDutyGroupName(String dutyGroupName) {
 		this.dutyGroupName = dutyGroupName;
+	}
+
+	public String getDutyGroupStatus() {
+		return dutyGroupStatus;
+	}
+
+	public void setDutyGroupStatus(String dutyGroupStatus) {
+		this.dutyGroupStatus = dutyGroupStatus;
 	}
 
 	public String getDutyGroupType() {

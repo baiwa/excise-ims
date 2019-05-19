@@ -21,23 +21,23 @@ import th.go.excise.ims.ta.vo.TaxOperatorVo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
-@WithUserDetails(value = "admin", userDetailsServiceBeanName = "userDetailService")
+@WithUserDetails(value = "ta001401", userDetailsServiceBeanName = "userDetailService")
 @ActiveProfiles(value = PROFILE.UNITTEST)
 public class DraftWorksheetServiceTest {
 	
 	@Autowired
 	private DraftWorksheetService draftWorksheetService;
 	
-//	@Test
+	@Test
 	public void test_getPreviewData() {
 		long start = System.currentTimeMillis();
 		
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
-		formVo.setDateStart("01/2561");
-		formVo.setDateEnd("12/2561");
+		formVo.setDateStart("01/2560");
+		formVo.setDateEnd("12/2560");
 		formVo.setDateRange(12);
 		formVo.setStart(0);
-		formVo.setLength(20);
+		formVo.setLength(10);
 		
 		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = draftWorksheetService.getPreviewData(formVo).getDatas();
 		taxOperatorDatatableVoList.forEach(e -> {
@@ -84,7 +84,7 @@ public class DraftWorksheetServiceTest {
 		draftNumberList.forEach(System.out::println);
 	}
 	
-	@Test
+//	@Test
 	public void test_getDraftWorksheet() {
 		long start = System.currentTimeMillis();
 		

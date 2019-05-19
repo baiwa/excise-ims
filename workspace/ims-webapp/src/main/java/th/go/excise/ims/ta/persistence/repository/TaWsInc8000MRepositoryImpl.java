@@ -1,5 +1,6 @@
 package th.go.excise.ims.ta.persistence.repository;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,6 +18,9 @@ import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.common.constant.ProjectConstants.DUTY_GROUP_TYPE;
+import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaWsInc8000M;
 import th.go.excise.ims.ta.vo.AnalysisFormVo;
 
@@ -49,7 +53,6 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 			public Map<String, List<TaWsInc8000M>> extractData(ResultSet rs) throws SQLException, DataAccessException {
 				Map<String, List<TaWsInc8000M>> dataMap = new HashMap<>();
 				List<TaWsInc8000M> dataList = null;
-				int i = 0;
 				while (rs.next()) {
 					dataList = dataMap.get(rs.getString(TaWsInc8000M.Field.NEW_REG_ID));
 					if (dataList == null) {
@@ -68,6 +71,59 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 		});
 
 		return wsInc8000MMap;
+	}
+	
+	@Override
+	public Map<String, Map<String, BigDecimal>> findByMonthRangeDuty(String officeCode, String startMonth, String endMonth) {
+		logger.info("findByMonthRange officeCode={}, startMonth={}, endMonth={}", officeCode, startMonth, endMonth);
+
+		StringBuilder sql = new StringBuilder();
+		List<Object> paramList = new ArrayList<>();
+		
+		sql.append(" SELECT INC.* FROM ( ");
+		sql.append(" SELECT NEW_REG_ID, DUTY_CODE, TAX_AMOUNT, TAX_YEAR || DECODE(LENGTH(TAX_MONTH), 2 ,TAX_MONTH , '0' || TAX_MONTH) YEAR_MONTH ");
+		sql.append(" FROM TA_WS_INC8000_M ");
+		sql.append(" WHERE IS_DELETED = 'N' ");
+		if (ApplicationCache.isCtrlDutyGroupByOfficeCode(officeCode)) {
+			sql.append("   AND DUTY_CODE IN (SELECT DUTY_GROUP_CODE FROM EXCISE_CTRL_DUTY WHERE IS_DELETED = 'N' AND RES_OFFCODE = ?) ");
+			paramList.add(officeCode);
+		} else {
+			List<String> dutyGroupIdList = ExciseUtils.getDutyGroupIdListByType(DUTY_GROUP_TYPE.PRODUCT, DUTY_GROUP_TYPE.SERVICE);
+			sql.append("   AND DUTY_CODE IN (" + StringUtils.repeat("?", ",", dutyGroupIdList.size()) + ")");
+			paramList.addAll(dutyGroupIdList);
+		}
+		sql.append("   AND (TAX_YEAR >= ? AND TAX_MONTH >= ?) ");
+		sql.append("   AND (TAX_YEAR <= ? AND TAX_MONTH <= ?) ");
+		sql.append(" ) INC ");
+		sql.append(" ORDER BY INC.NEW_REG_ID, INC.DUTY_CODE, INC.YEAR_MONTH ");
+
+		paramList.add(startMonth.substring(0, 4));
+		paramList.add(String.valueOf(Integer.parseInt(startMonth.substring(4, 6))));
+		paramList.add(endMonth.substring(0, 4));
+		paramList.add(String.valueOf(Integer.parseInt(endMonth.substring(4, 6))));
+
+		Map<String, Map<String, BigDecimal>> incfri8000MMap = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), new ResultSetExtractor<Map<String, Map<String, BigDecimal>>>() {
+			public Map<String, Map<String, BigDecimal>> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				Map<String, Map<String, BigDecimal>> newRegIdMap = new HashMap<>();
+				Map<String, BigDecimal> incomeMap = null;
+				String mainKey = null;
+				while (rs.next()) {
+					if (rs.getString("NEW_REG_ID") == null) {
+						continue;
+					}
+					mainKey = rs.getString("NEW_REG_ID") + "|" + rs.getString("DUTY_CODE");
+					incomeMap = newRegIdMap.get(mainKey);
+					if (incomeMap == null) {
+						incomeMap = new HashMap<>();
+					}
+					incomeMap.put(rs.getString("YEAR_MONTH"), rs.getBigDecimal("TAX_AMOUNT"));
+					newRegIdMap.put(mainKey, incomeMap);
+				}
+				return newRegIdMap;
+			}
+		});
+
+		return incfri8000MMap;
 	}
 
 	private void buildByAnalyzeCompareOldYearQuery(StringBuilder sql, List<Object> params, AnalysisFormVo formVo) {

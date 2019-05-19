@@ -539,6 +539,7 @@ public class ApplicationCache {
 			dutyGroupVo = new ExciseDutyGroupVo();
 			dutyGroupVo.setDutyGroupCode(exciseDutyGroup.getDutyGroupCode());
 			dutyGroupVo.setDutyGroupName(exciseDutyGroup.getDutyGroupName());
+			dutyGroupVo.setDutyGroupStatus(exciseDutyGroup.getDutyGroupStatus());
 			dutyGroupVo.setDutyGroupType(exciseDutyGroup.getDutyGroupType());
 			dutyGroupList.add(dutyGroupVo);
 			EXCISE_DUTY_GROUP_BY_TYPE_MAP.put(exciseDutyGroup.getDutyGroupType(), dutyGroupList);

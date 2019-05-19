@@ -12,10 +12,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
+import th.go.excise.ims.preferences.vo.ExciseDutyGroup;
 import th.go.excise.ims.ws.client.pcc.regfri4000.model.RegMaster60;
 
 public class ExciseUtils {
@@ -248,6 +250,20 @@ public class ExciseUtils {
 		} else {
 			return null;
 		}
+	}
+	
+	public static List<String> getDutyGroupIdListByType(String... dutyGroupTypes) {
+		List<String> dutyGroupIdList = new ArrayList<>();
+		List<ExciseDutyGroup> dutyGroupList = null;
+		for (String dutyGroupType : dutyGroupTypes) {
+			dutyGroupList = ApplicationCache.getExciseDutyGroupListByType(dutyGroupType);
+			for (ExciseDutyGroup dutyGroup : dutyGroupList) {
+				if (FLAG.N_FLAG.equals(dutyGroup.getDutyGroupStatus())) {
+					dutyGroupIdList.add(dutyGroup.getDutyGroupCode());
+				}
+			}
+		}
+		return dutyGroupIdList;
 	}
 	
 }

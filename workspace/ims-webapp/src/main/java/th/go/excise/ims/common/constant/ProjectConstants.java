@@ -65,4 +65,11 @@ public class ProjectConstants {
 		}
 	}
 	
+	public static class DUTY_GROUP_TYPE {
+		public static final String PRODUCT = "1";
+		public static final String SERVICE = "2";
+		public static final String OTHER = "3";
+		public static final String SURA = "4";
+	}
+	
 }
