@@ -20,8 +20,6 @@ import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
-import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.common.constant.ProjectConstants.DUTY_GROUP_TYPE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
 import th.go.excise.ims.ta.vo.FactoryVo;
@@ -446,7 +444,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		sql.append(" INNER JOIN ( ");
 		sql.append("   SELECT I.NEW_REG_ID, I.DUTY_CODE ");
 		sql.append("   FROM ( ");
-		sql.append("     SELECT NEW_REG_ID, DUTY_CODE, TAX_YEAR || DECODE(LENGTH(TAX_MONTH), 2 ,TAX_MONTH , '0' || TAX_MONTH) YEAR_MONTH ");
+		sql.append("     SELECT NEW_REG_ID, DUTY_CODE, TAX_YEAR||LPAD(TAX_MONTH ,2 ,'0') AS YEAR_MONTH ");
 		sql.append("     FROM TA_WS_INC8000_M ");
 		sql.append("     WHERE IS_DELETED = 'N' ");
 		sql.append("   ) I ");
@@ -460,14 +458,14 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		params.add(startMonth);
 		params.add(endMonth);
 		
-		if (ApplicationCache.isCtrlDutyGroupByOfficeCode(formVo.getOfficeCode())) {
-			sql.append("   AND R4000.DUTY_CODE IN (SELECT DUTY_GROUP_CODE FROM EXCISE_CTRL_DUTY WHERE IS_DELETED = 'N' AND RES_OFFCODE = ?) ");
-			params.add(formVo.getOfficeCode());
-		} else {
-			List<String> dutyGroupIdList = ExciseUtils.getDutyGroupIdListByType(DUTY_GROUP_TYPE.PRODUCT, DUTY_GROUP_TYPE.SERVICE);
-			sql.append("   AND R4000.DUTY_CODE IN (" + StringUtils.repeat("?", ",", dutyGroupIdList.size()) + ")");
-			params.addAll(dutyGroupIdList);
-		}
+//		if (ApplicationCache.isCtrlDutyGroupByOfficeCode(formVo.getOfficeCode())) {
+//			sql.append("   AND R4000.DUTY_CODE IN (SELECT DUTY_GROUP_CODE FROM EXCISE_CTRL_DUTY WHERE IS_DELETED = 'N' AND RES_OFFCODE = ?) ");
+//			params.add(formVo.getOfficeCode());
+//		} else {
+//			List<String> dutyGroupIdList = ExciseUtils.getDutyGroupIdListByType(DUTY_GROUP_TYPE.PRODUCT, DUTY_GROUP_TYPE.SERVICE);
+//			sql.append("   AND R4000.DUTY_CODE IN (" + StringUtils.repeat("?", ",", dutyGroupIdList.size()) + ")");
+//			params.addAll(dutyGroupIdList);
+//		}
 		
 		// Factory Type
 		if (StringUtils.isNotBlank(formVo.getFacType())) {
@@ -483,19 +481,19 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 
 		// Office Code
 		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
-			sql.append(" AND R4000.OFFICE_CODE like ?");
+			sql.append(" AND R4000.OFFICE_CODE LIKE ?");
 			params.add(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
 		}
 
 		// Fac fullname
 		if (StringUtils.isNotBlank(formVo.getFacFullname())) {
-			sql.append(" AND R4000.FAC_FULLNAME like ?");
+			sql.append(" AND R4000.FAC_FULLNAME LIKE ?");
 			params.add("%" + StringUtils.trim(formVo.getFacFullname()) + "%");
 		}
 
 		// Cus fullname
 		if (StringUtils.isNotBlank(formVo.getCusFullname())) {
-			sql.append(" AND R4000.R4000.CUS_FULLNAME like ?");
+			sql.append(" AND R4000.R4000.CUS_FULLNAME LIKE ?");
 			params.add("%" + StringUtils.trim(formVo.getCusFullname()) + "%");
 		}
 		

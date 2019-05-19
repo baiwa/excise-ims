@@ -18,9 +18,6 @@ import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
-import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.common.constant.ProjectConstants.DUTY_GROUP_TYPE;
-import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaWsInc8000M;
 import th.go.excise.ims.ta.vo.AnalysisFormVo;
 
@@ -81,21 +78,21 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 		List<Object> paramList = new ArrayList<>();
 		
 		sql.append(" SELECT INC.* FROM ( ");
-		sql.append(" SELECT NEW_REG_ID, DUTY_CODE, TAX_AMOUNT, TAX_YEAR || DECODE(LENGTH(TAX_MONTH), 2 ,TAX_MONTH , '0' || TAX_MONTH) YEAR_MONTH ");
+		sql.append(" SELECT NEW_REG_ID, DUTY_CODE, TAX_AMOUNT, TAX_YEAR||LPAD(TAX_MONTH ,2 ,'0') AS YEAR_MONTH ");
 		sql.append(" FROM TA_WS_INC8000_M ");
 		sql.append(" WHERE IS_DELETED = 'N' ");
 		if (newRegIdList != null && newRegIdList.size() > 0) {
 			sql.append("  AND NEW_REG_ID IN (" + StringUtils.repeat("?", ",", newRegIdList.size()) + ") ");
 			paramList.addAll(newRegIdList);
 		}
-		if (ApplicationCache.isCtrlDutyGroupByOfficeCode(officeCode)) {
-			sql.append("   AND DUTY_CODE IN (SELECT DUTY_GROUP_CODE FROM EXCISE_CTRL_DUTY WHERE IS_DELETED = 'N' AND RES_OFFCODE = ?) ");
-			paramList.add(officeCode);
-		} else {
-			List<String> dutyGroupIdList = ExciseUtils.getDutyGroupIdListByType(DUTY_GROUP_TYPE.PRODUCT, DUTY_GROUP_TYPE.SERVICE);
-			sql.append("   AND DUTY_CODE IN (" + StringUtils.repeat("?", ",", dutyGroupIdList.size()) + ") ");
-			paramList.addAll(dutyGroupIdList);
-		}
+//		if (ApplicationCache.isCtrlDutyGroupByOfficeCode(officeCode)) {
+//			sql.append("   AND DUTY_CODE IN (SELECT DUTY_GROUP_CODE FROM EXCISE_CTRL_DUTY WHERE IS_DELETED = 'N' AND RES_OFFCODE = ?) ");
+//			paramList.add(officeCode);
+//		} else {
+//			List<String> dutyGroupIdList = ExciseUtils.getDutyGroupIdListByType(DUTY_GROUP_TYPE.PRODUCT, DUTY_GROUP_TYPE.SERVICE);
+//			sql.append("   AND DUTY_CODE IN (" + StringUtils.repeat("?", ",", dutyGroupIdList.size()) + ") ");
+//			paramList.addAll(dutyGroupIdList);
+//		}
 		sql.append(" ) INC ");
 		sql.append(" WHERE 1=1 ");
 		sql.append("   AND INC.YEAR_MONTH >= ? ");
