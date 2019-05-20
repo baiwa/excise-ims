@@ -3,15 +3,15 @@ package th.go.excise.ims.ia.vo;
 import java.util.List;
 
 public class Int0603SaveVo {
-	private AuditLicdupHVo auditLicdupHVo;
+	private AuditLicdupHVo auditLicdupH;
 	private List<AuditLicdupDVo> auditLicdupDList;
 
-	public AuditLicdupHVo getAuditLicdupHVo() {
-		return auditLicdupHVo;
+	public AuditLicdupHVo getAuditLicdupH() {
+		return auditLicdupH;
 	}
 
-	public void setAuditLicdupHVo(AuditLicdupHVo auditLicdupHVo) {
-		this.auditLicdupHVo = auditLicdupHVo;
+	public void setAuditLicdupH(AuditLicdupHVo auditLicdupH) {
+		this.auditLicdupH = auditLicdupH;
 	}
 
 	public List<AuditLicdupDVo> getAuditLicdupDList() {
