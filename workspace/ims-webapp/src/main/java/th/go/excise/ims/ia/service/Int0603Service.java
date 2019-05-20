@@ -3,18 +3,23 @@ package th.go.excise.ims.ia.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.go.excise.ims.ia.persistence.entity.IaAuditLicdupD;
 import th.go.excise.ims.ia.persistence.entity.IaAuditLicdupH;
+import th.go.excise.ims.ia.persistence.repository.IaAuditLicdupDRepository;
 import th.go.excise.ims.ia.persistence.repository.IaAuditLicdupHRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0602JdbcRepository;
+import th.go.excise.ims.ia.vo.AuditLicdupDVo;
 import th.go.excise.ims.ia.vo.AuditLicdupHVo;
 import th.go.excise.ims.ia.vo.Int0602FormVo;
 import th.go.excise.ims.ia.vo.Int0602ResultTab1Vo;
+import th.go.excise.ims.ia.vo.Int0603SaveVo;
 import th.go.excise.ims.ws.persistence.entity.WsLicfri6010;
 
 @Service
@@ -27,6 +32,9 @@ public class Int0603Service {
 
 	@Autowired
 	private IaAuditLicdupHRepository iaAuditLicdupHRepository;
+
+	@Autowired
+	private IaAuditLicdupDRepository iaAuditLicdupDRepository;
 
 	public List<Int0602ResultTab1Vo> findByCriteria(Int0602FormVo int0602FormVo) {
 		logger.info("findByCriterai");
@@ -94,6 +102,70 @@ public class Int0603Service {
 
 		}
 		return auditLicdupHVosList;
+	}
+
+	public AuditLicdupHVo saveLicdupH(Int0603SaveVo vo) {
+		logger.info("saveLicListService : {} ", vo.getAuditLicdupH().getAuditLicdupNo());
+		IaAuditLicdupH licH = null;
+		if (StringUtils.isNotBlank(vo.getAuditLicdupH().getAuditLicdupNo())) {
+			licH = iaAuditLicdupHRepository.findByAuditLicdupNo(vo.getAuditLicdupH().getAuditLicdupNo());
+		} else {
+			try {
+				licH = new IaAuditLicdupH();
+				licH.setOfficeCode(vo.getAuditLicdupH().getOfficeCode());
+				licH.setLicDateTo(ConvertDateUtils.parseStringToDate(vo.getAuditLicdupH().getLicDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+				licH.setLicDateFrom(ConvertDateUtils.parseStringToDate(vo.getAuditLicdupH().getLicDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+				licH.setAuditLicdupNo(vo.getAuditLicdupH().getOfficeCode() + "/" + iaAuditLicdupHRepository.generateAuditLicdupNo());
+				licH.setAuditFlag(vo.getAuditLicdupH().getAuditFlag());
+				licH.setConditionText(vo.getAuditLicdupH().getConditionText());
+				licH.setCriteriaText(vo.getAuditLicdupH().getCriteriaText());
+				licH = iaAuditLicdupHRepository.save(licH);
+				vo.getAuditLicdupH().setAuditLicdupSeq(licH.getAuditLicdupSeq());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (vo.getAuditLicdupDList() != null && vo.getAuditLicdupDList().size() > 0) {
+			IaAuditLicdupD val = null;
+			List<IaAuditLicdupD> iaAuditLicdupDList = new ArrayList<>();
+			for (AuditLicdupDVo auditLicdupDVo : vo.getAuditLicdupDList()) {
+				val = new IaAuditLicdupD();
+				if (auditLicdupDVo.getAuditLicdupDSeq() != null) {
+					val = iaAuditLicdupDRepository.findById(auditLicdupDVo.getAuditLicdupDSeq()).get();
+					try {
+						val.setAuditLicdupNo(auditLicdupDVo.getAuditLicdupNo());
+						val.setNewRegId(auditLicdupDVo.getNewRegId());
+						val.setCusFullname(auditLicdupDVo.getCusFullname());
+						val.setLicType(auditLicdupDVo.getLicType());
+						val.setRunCheck(auditLicdupDVo.getRunCheck());
+						val.setLicNo(auditLicdupDVo.getLicNo());
+						val.setPrintCount(auditLicdupDVo.getPrintCount());
+						val.setLicDate(ConvertDateUtils.parseStringToDate(auditLicdupDVo.getLicDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+						val = iaAuditLicdupDRepository.save(val);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else {
+					try {
+						val.setNewRegId(auditLicdupDVo.getNewRegId());
+						val.setCusFullname(auditLicdupDVo.getCusFullname());
+						val.setLicType(auditLicdupDVo.getLicType());
+						val.setRunCheck(auditLicdupDVo.getRunCheck());
+						val.setLicNo(auditLicdupDVo.getLicNo());
+						val.setPrintCount(auditLicdupDVo.getPrintCount());
+						val.setLicDate(ConvertDateUtils.parseStringToDate(auditLicdupDVo.getLicDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					val.setAuditLicdupNo(licH.getAuditLicdupNo());
+					iaAuditLicdupDList.add(val);
+				}
+
+			}
+			iaAuditLicdupDRepository.saveAll(iaAuditLicdupDList);
+		}
+
+		return vo.getAuditLicdupH();
 	}
 
 }
