@@ -352,12 +352,14 @@ public class PlanWorksheetService {
 	public void savePlanWorksheetSendToArea(PlanWorksheetVo formVo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		formVo.setOfficeCode(officeCode);
-		TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository
-				.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), officeCode);
-		Long count = taPlanWorksheetDtlRepository.countByCriteria(formVo);
-		planSend.setFacInNum(new Integer(count.intValue()));
-		planSend.setSubmitDate(LocalDate.now());
-		taPlanWorksheetSendRepository.save(planSend);
+		if (!ExciseUtils.isSector(officeCode)) {
+			TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository
+					.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), officeCode);
+			Long count = taPlanWorksheetDtlRepository.countByCriteria(formVo);
+			planSend.setFacInNum(new Integer(count.intValue()));
+			planSend.setSubmitDate(LocalDate.now());
+			taPlanWorksheetSendRepository.save(planSend);
+		}
 
 		TaPlanWorksheetHdr planHdr = this.taPlanWorksheetHdrRepository.findByPlanNumber(formVo.getPlanNumber());
 
