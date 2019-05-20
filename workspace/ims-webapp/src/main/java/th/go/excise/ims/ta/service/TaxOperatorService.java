@@ -3,6 +3,7 @@ package th.go.excise.ims.ta.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,15 @@ public class TaxOperatorService {
 	// TODO DRAFT
 	public TaxOperatorVo getPreviewData(TaxOperatorFormVo formVo) {
 		logger.info("Tax  Operator 2 getPreviewData");
+	
+		if(StringUtils.isNotBlank(formVo.getBudgetYear())) {
+			if(StringUtils.isEmpty(formVo.getDateStart()) && StringUtils.isEmpty(formVo.getDateEnd())) {
+				formVo.setDateStart("01/"+formVo.getBudgetYear());
+				formVo.setDateEnd("12/"+formVo.getBudgetYear());
+			}
+		}
+	
+		
 		TaxOperatorVo draft = draftWorksheetService.getPreviewData(formVo);
 
 		List<TaxOperatorDatatableVo> list = draft.getDatas();

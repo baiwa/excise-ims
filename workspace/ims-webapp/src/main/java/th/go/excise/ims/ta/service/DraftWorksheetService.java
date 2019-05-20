@@ -165,7 +165,7 @@ public class DraftWorksheetService {
 		String tmpYearMonth = null;
 		BigDecimal tmpTaxAmount = null;
 		for (TaWsReg4000 wsReg4000 : wsReg4000List) {
-			logger.debug("wsReg4000.newRegId={}", wsReg4000.getNewRegId());
+			//logger.debug("wsReg4000.newRegId={}", wsReg4000.getNewRegId());
 
 			int countTaxMonthNo = 0;
 			int countG1 = 0;

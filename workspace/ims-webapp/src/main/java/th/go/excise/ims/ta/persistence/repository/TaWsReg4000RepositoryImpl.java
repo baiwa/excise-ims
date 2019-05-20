@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +21,8 @@ import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.common.constant.ProjectConstants.DUTY_GROUP_TYPE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
 import th.go.excise.ims.ta.vo.FactoryVo;
@@ -414,7 +417,6 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		buildByCriteriaDutyQuery(sql, params, formVo, startMonth, endMonth);
 
 		sql.append(" ORDER BY R4000.DUTY_CODE, R4000.OFFICE_CODE, R4000.NEW_REG_ID ");
-
 		if (StringUtils.isNotBlank(formVo.getFlagPage())) {
 			return this.commonJdbcTemplate.query(sql.toString(), params.toArray(), wsReg4000RowMapper);
 
@@ -463,9 +465,13 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 //			params.add(formVo.getOfficeCode());
 //		} else {
 //			List<String> dutyGroupIdList = ExciseUtils.getDutyGroupIdListByType(DUTY_GROUP_TYPE.PRODUCT, DUTY_GROUP_TYPE.SERVICE);
-//			sql.append("   AND R4000.DUTY_CODE IN (" + StringUtils.repeat("?", ",", dutyGroupIdList.size()) + ")");
+//			sql.append("   AND R4000.DUTY_CODE NOT IN (" + StringUtils.repeat("?", ",", dutyGroupIdList.size()) + ")");
 //			params.addAll(dutyGroupIdList);
 //		}
+		
+		List<String> dutyGroupIdList = ExciseUtils.getDutyGroupIdListByType(DUTY_GROUP_TYPE.PRODUCT, DUTY_GROUP_TYPE.SERVICE);
+		sql.append("   AND R4000.DUTY_CODE NOT IN (" + StringUtils.repeat("?", ",", dutyGroupIdList.size()) + ")");
+		params.addAll(dutyGroupIdList);
 		
 		// Factory Type
 		if (StringUtils.isNotBlank(formVo.getFacType())) {
