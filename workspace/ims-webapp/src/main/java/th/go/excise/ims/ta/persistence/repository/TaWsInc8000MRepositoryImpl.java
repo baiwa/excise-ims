@@ -71,7 +71,7 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 	}
 	
 	@Override
-	public Map<String, Map<String, BigDecimal>> findByMonthRangeDuty(String officeCode, String startMonth, String endMonth, List<String> newRegIdList) {
+	public Map<String, Map<String, BigDecimal>> findByMonthRangeDuty(String officeCode, String startMonth, String endMonth) {
 		logger.info("findByMonthRange officeCode={}, startMonth={}, endMonth={}", officeCode, startMonth, endMonth);
 
 		StringBuilder sql = new StringBuilder();
@@ -81,10 +81,6 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 		sql.append(" SELECT NEW_REG_ID, DUTY_CODE, TAX_AMOUNT, TAX_YEAR||LPAD(TAX_MONTH ,2 ,'0') AS YEAR_MONTH ");
 		sql.append(" FROM TA_WS_INC8000_M ");
 		sql.append(" WHERE IS_DELETED = 'N' ");
-		if (newRegIdList != null && newRegIdList.size() > 0) {
-			sql.append("  AND NEW_REG_ID IN (" + StringUtils.repeat("?", ",", newRegIdList.size()) + ") ");
-			paramList.addAll(newRegIdList);
-		}
 //		if (ApplicationCache.isCtrlDutyGroupByOfficeCode(officeCode)) {
 //			sql.append("   AND DUTY_CODE IN (SELECT DUTY_GROUP_CODE FROM EXCISE_CTRL_DUTY WHERE IS_DELETED = 'N' AND RES_OFFCODE = ?) ");
 //			paramList.add(officeCode);
