@@ -556,6 +556,18 @@ public class TaxOperatorController {
 		}
 		return planWorksheetService.planDtlDatatable(formVo);
 	}
+	@PostMapping("/plan-selected-by-offcode-assign")
+	@ResponseBody
+	public DataTableAjax<PlanWorksheetDatatableVo> planDtlByOffCodeAssign(@RequestBody PlanWorksheetVo formVo) {
+		UserBean userBean = UserLoginUtils.getCurrentUserBean();
+		formVo.setOfficeCode(userBean.getOfficeCode());
+//		if (EXCISE_SUBDEPT_LEVEL.LV3.equals(userBean.getSubdeptLevel())) {
+//			formVo.setUserLoginId(userBean.getUsername());
+//		} else {
+//			formVo.setSubdeptCode(userBean.getSubdeptCode());
+//		}
+		return planWorksheetService.planDtlDatatable(formVo);
+	}
 
 	@PostMapping("/get-plan-status")
 	@ResponseBody
