@@ -469,7 +469,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 //			params.addAll(dutyGroupIdList);
 //		}
 		
-		List<String> dutyGroupIdList = ExciseUtils.getDutyGroupIdListByType(DUTY_GROUP_TYPE.PRODUCT, DUTY_GROUP_TYPE.SERVICE);
+		List<String> dutyGroupIdList = ExciseUtils.getDutyGroupIdListByType(DUTY_GROUP_TYPE.OTHER);
 		sql.append("   AND R4000.DUTY_CODE NOT IN (" + StringUtils.repeat("?", ",", dutyGroupIdList.size()) + ")");
 		params.addAll(dutyGroupIdList);
 		
