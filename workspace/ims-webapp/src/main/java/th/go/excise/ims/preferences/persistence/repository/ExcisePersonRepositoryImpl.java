@@ -7,10 +7,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.thymeleaf.util.LoggingUtils;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.preferences.vo.ExcisePersonVoSelect;
 
@@ -78,12 +80,21 @@ public class ExcisePersonRepositoryImpl implements ExcisePersonRepositoryCustom 
 	public List<ExcisePersonVoSelect> findAllForAssign(DataTableRequest quest) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
-		sql.append(" SELECT  PERSON.*,DPT.OFF_NAME ,SUBDPT.SUBDEPT_NAME ,SUBDPT.SUBDEPT_CODE FROM EXCISE_PERSON PERSON  ");
+		sql.append(" SELECT  PERSON.*,DPT.OFF_SHORT_NAME OFF_NAME ,SUBDPT.SUBDEPT_NAME ,SUBDPT.SUBDEPT_CODE FROM EXCISE_PERSON PERSON  ");
 		sql.append(" LEFT JOIN EXCISE_DEPARTMENT DPT ON PERSON.ED_OFFCODE = DPT.OFF_CODE  ");
 		sql.append(" LEFT JOIN EXCISE_SUBDEPT SUBDPT ON PERSON.AU_SUBDEPT_CODE = SUBDPT.SUBDEPT_CODE  ");
-		sql.append(" WHERE PERSON.IS_DELETED = 'N' ");
+		sql.append(" WHERE PERSON.IS_DELETED = 'N' AND DPT.OFF_CODE LIKE  ? ");
+		String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		if (ExciseUtils.isCentral(offCode)) {
+			offCode = "__"+offCode.substring(2, 4)+"__";
+		} else if (ExciseUtils.isSector(offCode)) {
+			offCode = offCode.substring(0, 2) + "____";
+		} else if (ExciseUtils.isArea(offCode)) {
+			offCode = offCode.substring(0, 4) + "__";
+		}
+		params.add(offCode);
 
-		return commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), quest.getStart(), quest.getLength()), edPersonRowMapperAssing);
+		return commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), quest.getStart(), quest.getLength()),params.toArray(), edPersonRowMapperAssing);
 	}
 	
 	private static final RowMapper<ExcisePersonVoSelect> edPersonRowMapperAssing = new RowMapper<ExcisePersonVoSelect>() {
