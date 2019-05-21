@@ -13,7 +13,7 @@ public class IaAuditLicdupHRepositoryImpl implements IaAuditLicdupHRepositoryCus
 	@Override
 	public String generateAuditLicdupNo() {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT IA_AUDIT_LICDUP_H_SEQ.NEXTVAL FROM DUAL");
+		sql.append("SELECT AUDIT_LICDUP_NO_SEQ.NEXTVAL FROM DUAL");
 		String dataRes = commonJdbcTemplate.queryForObject(sql.toString(), String.class);
 		return StringUtils.leftPad(dataRes, 8, "0");
 	}

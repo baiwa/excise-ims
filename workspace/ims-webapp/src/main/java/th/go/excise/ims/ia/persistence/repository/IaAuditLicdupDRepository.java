@@ -12,6 +12,6 @@ import th.go.excise.ims.ia.persistence.entity.IaAuditLicdupD;
 
 public interface IaAuditLicdupDRepository extends CommonJpaCrudRepository<IaAuditLicdupD, Long> {
 
-	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.auditLicdupNo = :auditLicdupNo order by e.printCount ")
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.auditLicdupNo = :auditLicdupNo order by e.printCount , e.runCheck ")
 	public List<IaAuditLicdupD> findByAuditLicdupNoOrderByPrintCount(@Param("auditLicdupNo") String auditLicdupNo);
 }
