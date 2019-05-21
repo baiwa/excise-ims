@@ -1,8 +1,5 @@
 package th.go.excise.ims.ta.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 public class TaxOperatorDetailVo {
 
 	private String cusFullname;
@@ -43,6 +40,12 @@ public class TaxOperatorDetailVo {
 	private String taxAmtG1M10;
 	private String taxAmtG1M11;
 	private String taxAmtG1M12;
+	private String taxAmtG1M13;
+	private String taxAmtG1M14;
+	private String taxAmtG1M15;
+	private String taxAmtG1M16;
+	private String taxAmtG1M17;
+	private String taxAmtG1M18;
 	private String taxAmtG2M1;
 	private String taxAmtG2M2;
 	private String taxAmtG2M3;
@@ -55,6 +58,12 @@ public class TaxOperatorDetailVo {
 	private String taxAmtG2M10;
 	private String taxAmtG2M11;
 	private String taxAmtG2M12;
+	private String taxAmtG2M13;
+	private String taxAmtG2M14;
+	private String taxAmtG2M15;
+	private String taxAmtG2M16;
+	private String taxAmtG2M17;
+	private String taxAmtG2M18;
 	private String condTaxGrp;
 	private String dutyCode;
 	private String dutyName;
@@ -81,78 +90,6 @@ public class TaxOperatorDetailVo {
 	private String lastAuditYear;
 	private String riskLevelDesc;
 	private String regDate;
-
-	public String getRiskLevelDesc() {
-		return riskLevelDesc;
-	}
-
-	public void setRiskLevelDesc(String riskLevelDesc) {
-		this.riskLevelDesc = riskLevelDesc;
-	}
-
-	public String getLastAuditYear() {
-		return lastAuditYear;
-	}
-
-	public void setLastAuditYear(String lastAuditYear) {
-		this.lastAuditYear = lastAuditYear;
-	}
-
-	public String getCondSubCapitalDesc() {
-		return condSubCapitalDesc;
-	}
-
-	public void setCondSubCapitalDesc(String condSubCapitalDesc) {
-		this.condSubCapitalDesc = condSubCapitalDesc;
-	}
-
-	public String getCondSubRiskDesc() {
-		return condSubRiskDesc;
-	}
-
-	public void setCondSubRiskDesc(String condSubRiskDesc) {
-		this.condSubRiskDesc = condSubRiskDesc;
-	}
-
-	public String getCondSubNoAuditDesc() {
-		return condSubNoAuditDesc;
-	}
-
-	public void setCondSubNoAuditDesc(String condSubNoAuditDesc) {
-		this.condSubNoAuditDesc = condSubNoAuditDesc;
-	}
-
-	public String getCondSubCapital() {
-		return condSubCapital;
-	}
-
-	public void setCondSubCapital(String condSubCapital) {
-		this.condSubCapital = condSubCapital;
-	}
-
-	public String getCondSubRisk() {
-		return condSubRisk;
-	}
-
-	public void setCondSubRisk(String condSubRisk) {
-		this.condSubRisk = condSubRisk;
-	}
-
-	public String getCondSubNoAudit() {
-		return condSubNoAudit;
-	}
-
-	public void setCondSubNoAudit(String condSubNoAudit) {
-		this.condSubNoAudit = condSubNoAudit;
-	}
-
-	public String getRegCapital() {
-		return regCapital;
-	}
-
-	public void setRegCapital(String regCapital) {
-		this.regCapital = regCapital;
-	}
 
 	public String getCusFullname() {
 		return cusFullname;
@@ -458,6 +395,54 @@ public class TaxOperatorDetailVo {
 		this.taxAmtG1M12 = taxAmtG1M12;
 	}
 
+	public String getTaxAmtG1M13() {
+		return taxAmtG1M13;
+	}
+
+	public void setTaxAmtG1M13(String taxAmtG1M13) {
+		this.taxAmtG1M13 = taxAmtG1M13;
+	}
+
+	public String getTaxAmtG1M14() {
+		return taxAmtG1M14;
+	}
+
+	public void setTaxAmtG1M14(String taxAmtG1M14) {
+		this.taxAmtG1M14 = taxAmtG1M14;
+	}
+
+	public String getTaxAmtG1M15() {
+		return taxAmtG1M15;
+	}
+
+	public void setTaxAmtG1M15(String taxAmtG1M15) {
+		this.taxAmtG1M15 = taxAmtG1M15;
+	}
+
+	public String getTaxAmtG1M16() {
+		return taxAmtG1M16;
+	}
+
+	public void setTaxAmtG1M16(String taxAmtG1M16) {
+		this.taxAmtG1M16 = taxAmtG1M16;
+	}
+
+	public String getTaxAmtG1M17() {
+		return taxAmtG1M17;
+	}
+
+	public void setTaxAmtG1M17(String taxAmtG1M17) {
+		this.taxAmtG1M17 = taxAmtG1M17;
+	}
+
+	public String getTaxAmtG1M18() {
+		return taxAmtG1M18;
+	}
+
+	public void setTaxAmtG1M18(String taxAmtG1M18) {
+		this.taxAmtG1M18 = taxAmtG1M18;
+	}
+
 	public String getTaxAmtG2M1() {
 		return taxAmtG2M1;
 	}
@@ -552,6 +537,54 @@ public class TaxOperatorDetailVo {
 
 	public void setTaxAmtG2M12(String taxAmtG2M12) {
 		this.taxAmtG2M12 = taxAmtG2M12;
+	}
+
+	public String getTaxAmtG2M13() {
+		return taxAmtG2M13;
+	}
+
+	public void setTaxAmtG2M13(String taxAmtG2M13) {
+		this.taxAmtG2M13 = taxAmtG2M13;
+	}
+
+	public String getTaxAmtG2M14() {
+		return taxAmtG2M14;
+	}
+
+	public void setTaxAmtG2M14(String taxAmtG2M14) {
+		this.taxAmtG2M14 = taxAmtG2M14;
+	}
+
+	public String getTaxAmtG2M15() {
+		return taxAmtG2M15;
+	}
+
+	public void setTaxAmtG2M15(String taxAmtG2M15) {
+		this.taxAmtG2M15 = taxAmtG2M15;
+	}
+
+	public String getTaxAmtG2M16() {
+		return taxAmtG2M16;
+	}
+
+	public void setTaxAmtG2M16(String taxAmtG2M16) {
+		this.taxAmtG2M16 = taxAmtG2M16;
+	}
+
+	public String getTaxAmtG2M17() {
+		return taxAmtG2M17;
+	}
+
+	public void setTaxAmtG2M17(String taxAmtG2M17) {
+		this.taxAmtG2M17 = taxAmtG2M17;
+	}
+
+	public String getTaxAmtG2M18() {
+		return taxAmtG2M18;
+	}
+
+	public void setTaxAmtG2M18(String taxAmtG2M18) {
+		this.taxAmtG2M18 = taxAmtG2M18;
 	}
 
 	public String getCondTaxGrp() {
@@ -681,6 +714,79 @@ public class TaxOperatorDetailVo {
 	public void setSelectBy(String selectBy) {
 		this.selectBy = selectBy;
 	}
+
+	public String getRegCapital() {
+		return regCapital;
+	}
+
+	public void setRegCapital(String regCapital) {
+		this.regCapital = regCapital;
+	}
+
+	public String getCondSubCapital() {
+		return condSubCapital;
+	}
+
+	public void setCondSubCapital(String condSubCapital) {
+		this.condSubCapital = condSubCapital;
+	}
+
+	public String getCondSubRisk() {
+		return condSubRisk;
+	}
+
+	public void setCondSubRisk(String condSubRisk) {
+		this.condSubRisk = condSubRisk;
+	}
+
+	public String getCondSubNoAudit() {
+		return condSubNoAudit;
+	}
+
+	public void setCondSubNoAudit(String condSubNoAudit) {
+		this.condSubNoAudit = condSubNoAudit;
+	}
+
+	public String getCondSubCapitalDesc() {
+		return condSubCapitalDesc;
+	}
+
+	public void setCondSubCapitalDesc(String condSubCapitalDesc) {
+		this.condSubCapitalDesc = condSubCapitalDesc;
+	}
+
+	public String getCondSubRiskDesc() {
+		return condSubRiskDesc;
+	}
+
+	public void setCondSubRiskDesc(String condSubRiskDesc) {
+		this.condSubRiskDesc = condSubRiskDesc;
+	}
+
+	public String getCondSubNoAuditDesc() {
+		return condSubNoAuditDesc;
+	}
+
+	public void setCondSubNoAuditDesc(String condSubNoAuditDesc) {
+		this.condSubNoAuditDesc = condSubNoAuditDesc;
+	}
+
+	public String getLastAuditYear() {
+		return lastAuditYear;
+	}
+
+	public void setLastAuditYear(String lastAuditYear) {
+		this.lastAuditYear = lastAuditYear;
+	}
+
+	public String getRiskLevelDesc() {
+		return riskLevelDesc;
+	}
+
+	public void setRiskLevelDesc(String riskLevelDesc) {
+		this.riskLevelDesc = riskLevelDesc;
+	}
+
 	public String getRegDate() {
 		return regDate;
 	}
@@ -688,10 +794,4 @@ public class TaxOperatorDetailVo {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
-
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-	}
-
 }

@@ -71,6 +71,19 @@ public class TaWorksheetDtl extends BaseEntity {
 	private String taxAmtG1M11;
 	@Column(name = "TAX_AMT_G1_M12")
 	private String taxAmtG1M12;
+	@Column(name = "TAX_AMT_G1_M13")
+	private String taxAmtG1M13;
+	@Column(name = "TAX_AMT_G1_M14")
+	private String taxAmtG1M14;
+	@Column(name = "TAX_AMT_G1_M15")
+	private String taxAmtG1M15;
+	@Column(name = "TAX_AMT_G1_M16")
+	private String taxAmtG1M16;
+	@Column(name = "TAX_AMT_G1_M17")
+	private String taxAmtG1M17;
+	@Column(name = "TAX_AMT_G1_M18")
+	private String taxAmtG1M18;
+
 	@Column(name = "TAX_AMT_G2_M1")
 	private String taxAmtG2M1;
 	@Column(name = "TAX_AMT_G2_M2")
@@ -95,7 +108,18 @@ public class TaWorksheetDtl extends BaseEntity {
 	private String taxAmtG2M11;
 	@Column(name = "TAX_AMT_G2_M12")
 	private String taxAmtG2M12;
-	@Column(name = "COND_MAIN_GRP")
+	@Column(name = "TAX_AMT_G2_M13")
+	private String taxAmtG2M13;
+	@Column(name = "TAX_AMT_G2_M14")
+	private String taxAmtG2M14;
+	@Column(name = "TAX_AMT_G2_M15")
+	private String taxAmtG2M15;
+	@Column(name = "TAX_AMT_G2_M16")
+	private String taxAmtG2M16;
+	@Column(name = "TAX_AMT_G2_M17")
+	private String taxAmtG2M17;
+	@Column(name = "TAX_AMT_G2_M18")
+	private String taxAmtG2M18;
 	private String condMainGrp;
 	@Column(name = "COND_SUB_CAPITAL")
 	private String condSubCapital;
@@ -105,14 +129,6 @@ public class TaWorksheetDtl extends BaseEntity {
 	private String condSubNoAudit;
 	@Column(name = "LAST_AUDIT_YEAR")
 	private String lastAuditYear;
-
-	public String getLastAuditYear() {
-		return lastAuditYear;
-	}
-
-	public void setLastAuditYear(String lastAuditYear) {
-		this.lastAuditYear = lastAuditYear;
-	}
 
 	public Long getWorksheetDtlId() {
 		return worksheetDtlId;
@@ -322,6 +338,54 @@ public class TaWorksheetDtl extends BaseEntity {
 		this.taxAmtG1M12 = taxAmtG1M12;
 	}
 
+	public String getTaxAmtG1M13() {
+		return taxAmtG1M13;
+	}
+
+	public void setTaxAmtG1M13(String taxAmtG1M13) {
+		this.taxAmtG1M13 = taxAmtG1M13;
+	}
+
+	public String getTaxAmtG1M14() {
+		return taxAmtG1M14;
+	}
+
+	public void setTaxAmtG1M14(String taxAmtG1M14) {
+		this.taxAmtG1M14 = taxAmtG1M14;
+	}
+
+	public String getTaxAmtG1M15() {
+		return taxAmtG1M15;
+	}
+
+	public void setTaxAmtG1M15(String taxAmtG1M15) {
+		this.taxAmtG1M15 = taxAmtG1M15;
+	}
+
+	public String getTaxAmtG1M16() {
+		return taxAmtG1M16;
+	}
+
+	public void setTaxAmtG1M16(String taxAmtG1M16) {
+		this.taxAmtG1M16 = taxAmtG1M16;
+	}
+
+	public String getTaxAmtG1M17() {
+		return taxAmtG1M17;
+	}
+
+	public void setTaxAmtG1M17(String taxAmtG1M17) {
+		this.taxAmtG1M17 = taxAmtG1M17;
+	}
+
+	public String getTaxAmtG1M18() {
+		return taxAmtG1M18;
+	}
+
+	public void setTaxAmtG1M18(String taxAmtG1M18) {
+		this.taxAmtG1M18 = taxAmtG1M18;
+	}
+
 	public String getTaxAmtG2M1() {
 		return taxAmtG2M1;
 	}
@@ -418,6 +482,54 @@ public class TaWorksheetDtl extends BaseEntity {
 		this.taxAmtG2M12 = taxAmtG2M12;
 	}
 
+	public String getTaxAmtG2M13() {
+		return taxAmtG2M13;
+	}
+
+	public void setTaxAmtG2M13(String taxAmtG2M13) {
+		this.taxAmtG2M13 = taxAmtG2M13;
+	}
+
+	public String getTaxAmtG2M14() {
+		return taxAmtG2M14;
+	}
+
+	public void setTaxAmtG2M14(String taxAmtG2M14) {
+		this.taxAmtG2M14 = taxAmtG2M14;
+	}
+
+	public String getTaxAmtG2M15() {
+		return taxAmtG2M15;
+	}
+
+	public void setTaxAmtG2M15(String taxAmtG2M15) {
+		this.taxAmtG2M15 = taxAmtG2M15;
+	}
+
+	public String getTaxAmtG2M16() {
+		return taxAmtG2M16;
+	}
+
+	public void setTaxAmtG2M16(String taxAmtG2M16) {
+		this.taxAmtG2M16 = taxAmtG2M16;
+	}
+
+	public String getTaxAmtG2M17() {
+		return taxAmtG2M17;
+	}
+
+	public void setTaxAmtG2M17(String taxAmtG2M17) {
+		this.taxAmtG2M17 = taxAmtG2M17;
+	}
+
+	public String getTaxAmtG2M18() {
+		return taxAmtG2M18;
+	}
+
+	public void setTaxAmtG2M18(String taxAmtG2M18) {
+		this.taxAmtG2M18 = taxAmtG2M18;
+	}
+
 	public String getCondMainGrp() {
 		return condMainGrp;
 	}
@@ -450,4 +562,11 @@ public class TaWorksheetDtl extends BaseEntity {
 		this.condSubNoAudit = condSubNoAudit;
 	}
 
+	public String getLastAuditYear() {
+		return lastAuditYear;
+	}
+
+	public void setLastAuditYear(String lastAuditYear) {
+		this.lastAuditYear = lastAuditYear;
+	}
 }

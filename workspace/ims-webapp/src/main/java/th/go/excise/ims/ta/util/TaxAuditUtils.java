@@ -21,10 +21,11 @@ import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 
 @Component
 public class TaxAuditUtils {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(TaxAuditUtils.class);
-	
-	public static List<TaxOperatorDatatableVo> prepareTaxOperatorDatatable(List<TaxOperatorDetailVo> taxOperatorDetailVoList, TaxOperatorFormVo formVo) {
+
+	public static List<TaxOperatorDatatableVo> prepareTaxOperatorDatatable(
+			List<TaxOperatorDetailVo> taxOperatorDetailVoList, TaxOperatorFormVo formVo) {
 		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = new ArrayList<>();
 		TaxOperatorDatatableVo taxOperatorDatatableVo = null;
 		List<String> taxAmtList = null;
@@ -61,9 +62,9 @@ public class TaxAuditUtils {
 				taxOperatorDatatableVo.setLastAuditYear(taxOperatorDetailVo.getLastAuditYear());
 				taxOperatorDatatableVo.setRiskLevelDesc(taxOperatorDetailVo.getRiskLevelDesc());
 				taxOperatorDatatableVo.setRegDate(taxOperatorDetailVo.getRegDate());
-				
+
 			}
-			
+
 			taxAmtList = new ArrayList<>();
 			for (int i = 0; i < formVo.getDateRange(); i++) {
 				taxAmtList.add(getTaxAmtByField(taxOperatorDetailVo, i, formVo.getDateRange()));
@@ -103,6 +104,18 @@ public class TaxAuditUtils {
 				taxAmt = taxOperatorDetailVo.getTaxAmtG1M11();
 			} else if (i + 1 == 12) {
 				taxAmt = taxOperatorDetailVo.getTaxAmtG1M12();
+			} else if (i + 1 == 13) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG1M13();
+			} else if (i + 1 == 14) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG1M14();
+			} else if (i + 1 == 15) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG1M15();
+			} else if (i + 1 == 16) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG1M16();
+			} else if (i + 1 == 17) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG1M17();
+			} else if (i + 1 == 18) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG1M18();
 			}
 		} else {
 			if (i + 1 - (dataRange / 2) == 1) {
@@ -129,12 +142,24 @@ public class TaxAuditUtils {
 				taxAmt = taxOperatorDetailVo.getTaxAmtG2M11();
 			} else if (i + 1 - (dataRange / 2) == 12) {
 				taxAmt = taxOperatorDetailVo.getTaxAmtG2M12();
+			} else if (i + 1 - (dataRange / 2) == 13) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG2M13();
+			} else if (i + 1 - (dataRange / 2) == 14) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG2M14();
+			} else if (i + 1 - (dataRange / 2) == 15) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG2M15();
+			} else if (i + 1 - (dataRange / 2) == 16) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG2M16();
+			} else if (i + 1 - (dataRange / 2) == 17) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG2M17();
+			} else if (i + 1 - (dataRange / 2) == 18) {
+				taxAmt = taxOperatorDetailVo.getTaxAmtG2M18();
 			}
 		}
 
 		return taxAmt;
 	}
-	
+
 	public static void commonSelectionWorksheetRowMapper(TaxOperatorDetailVo vo, ResultSet rs) throws SQLException {
 		vo.setNewRegId(rs.getString("NEW_REG_ID"));
 		vo.setCusFullname(rs.getString("CUS_FULLNAME"));
@@ -145,11 +170,11 @@ public class TaxAuditUtils {
 		vo.setSecDesc(rs.getString("SEC_DESC"));
 		vo.setAreaCode(rs.getString("AREA_CODE"));
 		vo.setAreaDesc(rs.getString("AREA_DESC"));
-		
+
 		vo.setTaxAuditLast1(rs.getString("TAX_AUDIT_LAST1"));
 		vo.setTaxAuditLast2(rs.getString("TAX_AUDIT_LAST2"));
 		vo.setTaxAuditLast3(rs.getString("TAX_AUDIT_LAST3"));
-		
+
 		vo.setSumTaxAmtG1(rs.getString("SUM_TAX_AMT_G1"));
 		vo.setSumTaxAmtG2(rs.getString("SUM_TAX_AMT_G2"));
 		vo.setTaxAmtChnPnt(rs.getString("TAX_AMT_CHN_PNT"));
@@ -166,6 +191,12 @@ public class TaxAuditUtils {
 		vo.setTaxAmtG1M10(rs.getString("TAX_AMT_G1_M10"));
 		vo.setTaxAmtG1M11(rs.getString("TAX_AMT_G1_M11"));
 		vo.setTaxAmtG1M12(rs.getString("TAX_AMT_G1_M12"));
+		vo.setTaxAmtG1M13(rs.getString("TAX_AMT_G1_M13"));
+		vo.setTaxAmtG1M14(rs.getString("TAX_AMT_G1_M14"));
+		vo.setTaxAmtG1M15(rs.getString("TAX_AMT_G1_M15"));
+		vo.setTaxAmtG1M16(rs.getString("TAX_AMT_G1_M16"));
+		vo.setTaxAmtG1M17(rs.getString("TAX_AMT_G1_M17"));
+		vo.setTaxAmtG1M18(rs.getString("TAX_AMT_G1_M18"));
 		vo.setTaxAmtG2M1(rs.getString("TAX_AMT_G2_M1"));
 		vo.setTaxAmtG2M2(rs.getString("TAX_AMT_G2_M2"));
 		vo.setTaxAmtG2M3(rs.getString("TAX_AMT_G2_M3"));
@@ -178,13 +209,19 @@ public class TaxAuditUtils {
 		vo.setTaxAmtG2M10(rs.getString("TAX_AMT_G2_M10"));
 		vo.setTaxAmtG2M11(rs.getString("TAX_AMT_G2_M11"));
 		vo.setTaxAmtG2M12(rs.getString("TAX_AMT_G2_M12"));
+		vo.setTaxAmtG2M13(rs.getString("TAX_AMT_G2_M13"));
+		vo.setTaxAmtG2M14(rs.getString("TAX_AMT_G2_M14"));
+		vo.setTaxAmtG2M15(rs.getString("TAX_AMT_G2_M15"));
+		vo.setTaxAmtG2M16(rs.getString("TAX_AMT_G2_M16"));
+		vo.setTaxAmtG2M17(rs.getString("TAX_AMT_G2_M17"));
+		vo.setTaxAmtG2M18(rs.getString("TAX_AMT_G2_M18"));
 		vo.setTaxAmtSd(rs.getString("TAX_AMT_SD"));
 		vo.setTaxAmtMean(rs.getString("TAX_AMT_MEAN"));
 		vo.setTaxAmtMaxPnt(rs.getString("TAX_AMT_MAX_PNT"));
 		vo.setTaxAmtMinPnt(rs.getString("TAX_AMT_MIN_PNT"));
 		vo.setDutyName(ExciseUtils.getDutyDesc(rs.getString("DUTY_CODE")));
 	}
-	
+
 	public static List<ExciseDepartment> getExciseSectorList() {
 		List<ExciseDepartment> taSectorList = new ArrayList<>();
 		taSectorList.add(ApplicationCache.getExciseDepartment(EXCISE_OFFICE_CODE.TA_CENTRAL));
@@ -195,8 +232,8 @@ public class TaxAuditUtils {
 			}
 			taSectorList.add(exciseDept);
 		}
-		
+
 		return taSectorList;
 	}
-	
+
 }

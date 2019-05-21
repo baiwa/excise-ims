@@ -282,6 +282,7 @@ public class DraftWorksheetService {
 	
 	private void setTaxAmount(TaxOperatorDetailVo detailVo, String groupMonthNo, String taxAmount) {
 		try {
+			System.out.println(groupMonthNo);
 			Method method = TaxOperatorDetailVo.class.getDeclaredMethod("setTaxAmt" + groupMonthNo, String.class);
 			method.invoke(detailVo, taxAmount);
 		} catch (Exception e) {
@@ -399,13 +400,13 @@ public class DraftWorksheetService {
 		}
 
 		// ==> Save WorksheetCondSubNoAudit
-		if (StringUtils.isNotBlank(formVo.getCondSub3())) {
+		//if (StringUtils.isNotBlank(formVo.getCondSub3())) {
 			TaMasCondSubNoAudit masCondSubNoAudit = taMasCondSubNoAuditRepository.findByBudgetYearAndOfficeCode(budgetYear, officeCode);
 			TaWorksheetCondSubNoAudit worksheetCondSubNoAudit = new TaWorksheetCondSubNoAudit();
 			worksheetCondSubNoAudit.setAnalysisNumber(analysisNumber);
 			worksheetCondSubNoAudit.setNoTaxAuditYearNum(masCondSubNoAudit.getNoTaxAuditYearNum());
 			taWorksheetCondSubNoAuditRepository.save(worksheetCondSubNoAudit);
-		}
+		//}
 
 		// ==> Save WorksheetHdr
 		TaWorksheetHdr worksheetHdr = new TaWorksheetHdr();
@@ -455,6 +456,12 @@ public class DraftWorksheetService {
 			worksheetDtl.setTaxAmtG1M10(detailVo.getTaxAmtG1M10());
 			worksheetDtl.setTaxAmtG1M11(detailVo.getTaxAmtG1M11());
 			worksheetDtl.setTaxAmtG1M12(detailVo.getTaxAmtG1M12());
+			worksheetDtl.setTaxAmtG1M13(detailVo.getTaxAmtG1M13());
+			worksheetDtl.setTaxAmtG1M14(detailVo.getTaxAmtG1M14());
+			worksheetDtl.setTaxAmtG1M15(detailVo.getTaxAmtG1M15());
+			worksheetDtl.setTaxAmtG1M16(detailVo.getTaxAmtG1M16());
+			worksheetDtl.setTaxAmtG1M17(detailVo.getTaxAmtG1M17());
+			worksheetDtl.setTaxAmtG1M18(detailVo.getTaxAmtG1M18());
 
 			worksheetDtl.setTaxAmtG2M1(detailVo.getTaxAmtG2M1());
 			worksheetDtl.setTaxAmtG2M2(detailVo.getTaxAmtG2M2());
@@ -468,6 +475,12 @@ public class DraftWorksheetService {
 			worksheetDtl.setTaxAmtG2M10(detailVo.getTaxAmtG2M10());
 			worksheetDtl.setTaxAmtG2M11(detailVo.getTaxAmtG2M11());
 			worksheetDtl.setTaxAmtG2M12(detailVo.getTaxAmtG2M12());
+			worksheetDtl.setTaxAmtG2M13(detailVo.getTaxAmtG2M13());
+			worksheetDtl.setTaxAmtG2M14(detailVo.getTaxAmtG2M14());
+			worksheetDtl.setTaxAmtG2M15(detailVo.getTaxAmtG2M15());
+			worksheetDtl.setTaxAmtG2M16(detailVo.getTaxAmtG2M16());
+			worksheetDtl.setTaxAmtG2M17(detailVo.getTaxAmtG2M17());
+			worksheetDtl.setTaxAmtG2M18(detailVo.getTaxAmtG2M18());
 
 			worksheetDtl.setTaxAmtSd(NO_TAX_AMOUNT.equals(detailVo.getTaxAmtSd()) ? null : detailVo.getTaxAmtSd());
 			worksheetDtl.setTaxAmtMean(NO_TAX_AMOUNT.equals(detailVo.getTaxAmtMean()) ? null : detailVo.getTaxAmtMean());

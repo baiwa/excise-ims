@@ -13,6 +13,15 @@ public class TaxDraftVo {
 	private String officeCode;
 	private BigDecimal taxAmtChnPnt;
 	private Integer taxMonthNo;
+	private String lastAuditYear;
+
+	public String getLastAuditYear() {
+		return lastAuditYear;
+	}
+
+	public void setLastAuditYear(String lastAuditYear) {
+		this.lastAuditYear = lastAuditYear;
+	}
 
 	public String getNewRegId() {
 		return newRegId;
