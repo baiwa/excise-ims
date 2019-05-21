@@ -352,6 +352,9 @@ public class WorksheetService {
 				ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN), ConvertDateUtils.MM_YYYY,
 				ConvertDateUtils.LOCAL_TH);
 
+		TaWorksheetCondSubNoAudit subNoAudit = taWorksheetCondSubNoAuditRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
+
+		obj.setYearCondSubNoAudit(subNoAudit.getNoTaxAuditYearNum().toString());
 		obj.setYearMonthStart(ymStart);
 		obj.setYearMonthEnd(ymEnd);
 

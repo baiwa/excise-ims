@@ -10,6 +10,15 @@ public class YearMonthVo {
     private String condSubRiskFlag;
     private String condSubNoAuditFlag;
     private String worksheetStatus;
+    private String yearCondSubNoAudit;
+
+    public String getYearCondSubNoAudit() {
+        return yearCondSubNoAudit;
+    }
+
+    public void setYearCondSubNoAudit(String yearCondSubNoAudit) {
+        this.yearCondSubNoAudit = yearCondSubNoAudit;
+    }
 
     public String getWorksheetStatus() {
         return worksheetStatus;
