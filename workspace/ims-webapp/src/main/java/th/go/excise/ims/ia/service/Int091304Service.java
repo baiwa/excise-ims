@@ -9,6 +9,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.constant.ProjectConstants;
 import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaUtilityBill;
@@ -44,14 +46,8 @@ public class Int091304Service {
 		BigDecimal sumAug = BigDecimal.ZERO;
 		BigDecimal sumSep = BigDecimal.ZERO;
 		
-		String[] ubillTypeList = { 
-				IaConstants.UTILITY_BILL_TYPE.VALUE_1_DESC_I,
-				IaConstants.UTILITY_BILL_TYPE.VALUE_1_DESC_II,
-				IaConstants.UTILITY_BILL_TYPE.VALUE_1_DESC_III,
-				IaConstants.UTILITY_BILL_TYPE.VALUE_1_DESC_IV,
-				IaConstants.UTILITY_BILL_TYPE.VALUE_1_DESC_V,
-				IaConstants.UTILITY_BILL_TYPE.VALUE_1_DESC_VI
-				};
+		
+		List<ParamInfo> ubillTypeList = ApplicationCache.getParamInfoListByGroupCode(IaConstants.UTILITY_BILL_TYPE.PARAM_GROUP_CODE);
 
 		formVo.setMonthWdPayFrom((Integer.parseInt(formVo.getBudgetYear()) - 1) + ProjectConstants.QUARTER.Q1[0]);
 		formVo.setMonthWdPayTo(formVo.getBudgetYear() + ProjectConstants.QUARTER.Q4[2]);
@@ -63,18 +59,18 @@ public class Int091304Service {
 				mapValue.put(value.getUbillType() + value.getMonthWdPay(), value.getReqWdAmt());
 			}
 
-			for (int i = 1; i <= 6; i++) {
+			for (ParamInfo paramGroup : ubillTypeList) {
 				obj = new Int091304Quarter();
 				/* ______ set type ______ */
-				obj.setUbillType(dataFind.get(i).getUbillType());
-				obj.setUbillTypeStr(ubillTypeList[i-1]);
+				obj.setUbillType(paramGroup.getParamCode());
+				obj.setUbillTypeStr(paramGroup.getValue1());
 				/* ________________ Q1 ________________ */
 				obj.setQ1Oct(
-						mapValue.get(i + "" + (Integer.parseInt(formVo.getBudgetYear()) - 1) + ProjectConstants.QUARTER.Q1[0]));
+						mapValue.get(paramGroup.getParamCode() + (Integer.parseInt(formVo.getBudgetYear()) - 1) + ProjectConstants.QUARTER.Q1[0]));
 				obj.setQ1Nov(
-						mapValue.get(i + "" + (Integer.parseInt(formVo.getBudgetYear()) - 1) + ProjectConstants.QUARTER.Q1[1]));
+						mapValue.get(paramGroup.getParamCode() + (Integer.parseInt(formVo.getBudgetYear()) - 1) + ProjectConstants.QUARTER.Q1[1]));
 				obj.setQ1Dec(
-						mapValue.get(i + "" + (Integer.parseInt(formVo.getBudgetYear()) - 1) + ProjectConstants.QUARTER.Q1[2]));
+						mapValue.get(paramGroup.getParamCode() + (Integer.parseInt(formVo.getBudgetYear()) - 1) + ProjectConstants.QUARTER.Q1[2]));
 				obj.setQ1Total(calculateNull(obj.getQ1Oct(), obj.getQ1Nov(), obj.getQ1Dec()));
 				/* total sum month Q1 */
 				sumOct = sumOct.add(calculateNull(obj.getQ1Oct(), null, null));
@@ -82,9 +78,9 @@ public class Int091304Service {
 				sumDec = sumDec.add(calculateNull(obj.getQ1Dec(), null, null));
 
 				/* ________________ Q2 ________________ */
-				obj.setQ2Jan(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q2[0]));
-				obj.setQ2Feb(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q2[1]));
-				obj.setQ2Mar(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q2[2]));
+				obj.setQ2Jan(mapValue.get(paramGroup.getParamCode() + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q2[0]));
+				obj.setQ2Feb(mapValue.get(paramGroup.getParamCode() + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q2[1]));
+				obj.setQ2Mar(mapValue.get(paramGroup.getParamCode() + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q2[2]));
 				obj.setQ2Total(calculateNull(obj.getQ2Jan(), obj.getQ2Feb(), obj.getQ2Mar()));
 				/* total sum month Q2 */
 				sumJan = sumJan.add(calculateNull(obj.getQ2Jan(), null, null));
@@ -92,9 +88,9 @@ public class Int091304Service {
 				sumMar = sumMar.add(calculateNull(obj.getQ2Mar(), null, null));
 
 				/* ________________ Q3 ________________ */
-				obj.setQ3Apr(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q3[0]));
-				obj.setQ3May(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q3[1]));
-				obj.setQ3Jun(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q3[2]));
+				obj.setQ3Apr(mapValue.get(paramGroup.getParamCode() + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q3[0]));
+				obj.setQ3May(mapValue.get(paramGroup.getParamCode() + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q3[1]));
+				obj.setQ3Jun(mapValue.get(paramGroup.getParamCode() + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q3[2]));
 				obj.setQ3Total(calculateNull(obj.getQ3Apr(), obj.getQ3May(), obj.getQ3Jun()));
 				/* total sum month Q3 */
 				sumApr = sumApr.add(calculateNull(obj.getQ3Apr(), null, null));
@@ -102,9 +98,9 @@ public class Int091304Service {
 				sumJun = sumJun.add(calculateNull(obj.getQ3Jun(), null, null));
 				
 				/* ________________ Q4 ________________ */
-				obj.setQ4Jul(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q4[0]));
-				obj.setQ4Aug(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q4[1]));
-				obj.setQ4Sep(mapValue.get(i + "" + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q4[2]));
+				obj.setQ4Jul(mapValue.get(paramGroup.getParamCode() + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q4[0]));
+				obj.setQ4Aug(mapValue.get(paramGroup.getParamCode() + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q4[1]));
+				obj.setQ4Sep(mapValue.get(paramGroup.getParamCode() + formVo.getBudgetYear() + ProjectConstants.QUARTER.Q4[2]));
 				obj.setQ4Total(calculateNull(obj.getQ4Jul(), obj.getQ4Aug(), obj.getQ4Sep()));
 				/* total sum month Q4 */
 				sumJul= sumJul.add(calculateNull(obj.getQ4Jul(), null, null));
