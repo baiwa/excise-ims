@@ -73,6 +73,7 @@ public class Int0603Service {
 
 					int0602ResultTab1Vo.add(intiData);
 				} catch (Exception e) {
+					e.printStackTrace();
 					logger.error(e.getMessage());
 				}
 			}
@@ -97,6 +98,7 @@ public class Int0603Service {
 				auditLicdupHVo.setCriteriaText(iaAuditLicdupH.getCriteriaText());
 				auditLicdupHVosList.add(auditLicdupHVo);
 			} catch (Exception e) {
+				e.printStackTrace();
 				logger.error(e.getMessage());
 			}
 
@@ -121,8 +123,10 @@ public class Int0603Service {
 				licH.setCriteriaText(vo.getAuditLicdupH().getCriteriaText());
 				licH = iaAuditLicdupHRepository.save(licH);
 				vo.getAuditLicdupH().setAuditLicdupSeq(licH.getAuditLicdupSeq());
+				vo.getAuditLicdupH().setAuditLicdupNo(licH.getAuditLicdupNo());
 			} catch (Exception e) {
 				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 		}
 		if (vo.getAuditLicdupDList() != null && vo.getAuditLicdupDList().size() > 0) {
@@ -144,6 +148,7 @@ public class Int0603Service {
 						val = iaAuditLicdupDRepository.save(val);
 					} catch (Exception e) {
 						e.printStackTrace();
+						logger.error(e.getMessage());
 					}
 				} else {
 					try {
@@ -168,4 +173,47 @@ public class Int0603Service {
 		return vo.getAuditLicdupH();
 	}
 
+	public List<AuditLicdupDVo> findAuditLicdupDByAuditLicdupNo(String auditLicdupNo) throws Exception {
+		List<AuditLicdupDVo> iaAuditLicdupDVoList = new ArrayList<>();
+		AuditLicdupDVo auditLicdupDVo = null;
+		List<IaAuditLicdupD> auditLicdupDList = iaAuditLicdupDRepository.findByAuditLicdupNoOrderByPrintCount(auditLicdupNo);
+		for (IaAuditLicdupD auditLicdupD : auditLicdupDList) {
+			auditLicdupDVo = new AuditLicdupDVo();
+			auditLicdupDVo.setAuditLicdupDSeq(auditLicdupD.getAuditLicdupDSeq());
+			auditLicdupDVo.setAuditLicdupNo(auditLicdupD.getAuditLicdupNo());
+			auditLicdupDVo.setCusFullname(auditLicdupD.getCusFullname());
+			auditLicdupDVo.setLicDate(ConvertDateUtils.formatDateToString(auditLicdupD.getLicDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			auditLicdupDVo.setLicNo(auditLicdupD.getLicNo());
+			auditLicdupDVo.setLicType(auditLicdupD.getLicType());
+			auditLicdupDVo.setNewRegId(auditLicdupD.getNewRegId());
+			auditLicdupDVo.setPrintCount(auditLicdupD.getPrintCount());
+			auditLicdupDVo.setRunCheck(auditLicdupD.getRunCheck());
+			iaAuditLicdupDVoList.add(auditLicdupDVo);
+		}
+		return iaAuditLicdupDVoList;
+	}
+
+	public AuditLicdupHVo findByAuditLicdupNo(String auditLicdupNo) {
+		AuditLicdupHVo auditLicdupHVo = null;
+		IaAuditLicdupH licH = null;
+		licH = iaAuditLicdupHRepository.findByAuditLicdupNo(auditLicdupNo);
+
+		try {
+			auditLicdupHVo=new AuditLicdupHVo();
+			auditLicdupHVo.setAuditLicdupSeq(licH.getAuditLicdupSeq());
+			auditLicdupHVo.setAuditFlag(licH.getAuditFlag());
+			auditLicdupHVo.setAuditLicdupNo(licH.getAuditLicdupNo());
+			auditLicdupHVo.setConditionText(licH.getConditionText());
+			auditLicdupHVo.setCriteriaText(licH.getCriteriaText());
+			auditLicdupHVo.setLicDateFrom(ConvertDateUtils.formatDateToString(licH.getLicDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			auditLicdupHVo.setLicDateTo(ConvertDateUtils.formatDateToString(licH.getLicDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			auditLicdupHVo.setOfficeCode(licH.getOfficeCode());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+
+		return auditLicdupHVo;
+	}
 }

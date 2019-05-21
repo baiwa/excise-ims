@@ -14,6 +14,7 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESS
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.service.Int0603Service;
+import th.go.excise.ims.ia.vo.AuditLicdupDVo;
 import th.go.excise.ims.ia.vo.AuditLicdupHVo;
 import th.go.excise.ims.ia.vo.Int0602FormVo;
 import th.go.excise.ims.ia.vo.Int0602ResultTab1Vo;
@@ -42,7 +43,7 @@ public class Int0603Controller {
 		return response;
 	}
 
-	@PostMapping("/find-all-data-header")
+	@PostMapping("/find-all-audit-lic-dup-no")
 	@ResponseBody
 	public ResponseData<List<AuditLicdupHVo>> findAllDataHeader() {
 		ResponseData<List<AuditLicdupHVo>> response = new ResponseData<List<AuditLicdupHVo>>();
@@ -68,6 +69,38 @@ public class Int0603Controller {
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+
+	@PostMapping("/find-data-by-audit-lic-dup-no")
+	@ResponseBody
+	public ResponseData<List<AuditLicdupDVo>> findAuditLicdupDByAuditLicdupNo(@RequestBody String auditLicdupNo) {
+		ResponseData<List<AuditLicdupDVo>> response = new ResponseData<List<AuditLicdupDVo>>();
+		try {
+			response.setData(int0603Service.findAuditLicdupDByAuditLicdupNo(auditLicdupNo));
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	@PostMapping("/find-header-by-audit-lic-dup-no")
+	@ResponseBody
+	public ResponseData<AuditLicdupHVo> findAuditLicdupHByAuditLicdupNo(@RequestBody String auditLicdupNo) {
+		ResponseData<AuditLicdupHVo> response = new ResponseData<AuditLicdupHVo>();
+		try {
+			response.setData(int0603Service.findByAuditLicdupNo(auditLicdupNo));
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
