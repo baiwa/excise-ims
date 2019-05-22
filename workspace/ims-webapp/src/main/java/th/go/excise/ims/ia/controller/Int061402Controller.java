@@ -5,8 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +15,8 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.ia.persistence.entity.IaAuditTxinsurH;
 import th.go.excise.ims.ia.service.Int061402Service;
+import th.go.excise.ims.ia.vo.AuditTxinsurHVo;
 import th.go.excise.ims.ia.vo.Int061402FilterVo;
 import th.go.excise.ims.ia.vo.Int061402FormVo;
 import th.go.excise.ims.ia.vo.Ws_Reg4000Vo;
@@ -67,9 +65,9 @@ public class Int061402Controller {
 	
 	@PostMapping("/get-data-header")
 	@ResponseBody
-	public ResponseData<IaAuditTxinsurH> getDataHeader(@RequestBody String auditTxinsurNo){
+	public ResponseData<AuditTxinsurHVo> getDataHeader(@RequestBody String auditTxinsurNo){
 		
-		ResponseData<IaAuditTxinsurH> response = new ResponseData<IaAuditTxinsurH>();
+		ResponseData<AuditTxinsurHVo> response = new ResponseData<AuditTxinsurHVo>();
 		try {
 			response.setData(int061402Service.findHeader(auditTxinsurNo));
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
