@@ -36,6 +36,7 @@ public class PmPy2Service {
 		urlBuilder.addQueryParameter("oCode", requestData.getOfficeCode());
 		
 		String respJson = restfulClientService.get(urlBuilder.build().toString());
+		respJson = respJson.replaceAll("\n", "");
 		ResponseData responseData = gson.fromJson(respJson, ResponseData.class);
 		
 		return responseData;
