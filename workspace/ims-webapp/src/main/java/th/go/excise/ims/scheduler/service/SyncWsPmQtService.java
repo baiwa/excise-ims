@@ -72,6 +72,7 @@ public class SyncWsPmQtService {
 				pmQtD = new WsPmQtD();
 				pmQtD.setOffCode(data.getOffCode());
 				pmQtD.setFormCode(data.getFormCode());
+				pmQtD.setTopicLevel(topicDetail.getTopicLevel());
 				pmQtD.setTopicCode(topicDetail.getTopicCode());
 				pmQtD.setTopicName(topicDetail.getTopicName());
 				pmQtD.setTopicAnswer(topicDetail.getTopicAnswer());

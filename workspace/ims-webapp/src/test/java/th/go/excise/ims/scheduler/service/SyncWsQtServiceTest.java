@@ -27,10 +27,10 @@ public class SyncWsQtServiceTest {
 	@Test
 	public void test_syncData() throws IOException {
 		RequestData requestData = new RequestData();
-		requestData.setOfficeCode("020000");
+		requestData.setOfficeCode("011000");
 		requestData.setYear("2561");
 		
-		wsPmQtService.syncData(requestData);;
+		wsPmQtService.syncData(requestData);
 	}
 	
 }
