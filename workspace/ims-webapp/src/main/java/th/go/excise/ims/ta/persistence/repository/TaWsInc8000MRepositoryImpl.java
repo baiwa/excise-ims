@@ -18,6 +18,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ta.persistence.entity.TaWsInc8000M;
 import th.go.excise.ims.ta.vo.AnalysisFormVo;
 
@@ -97,6 +98,9 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 
 		paramList.add(startMonth);
 		paramList.add(endMonth);
+		
+		//==> Check Tax , NetTax
+		String value = ApplicationCache.getParamInfoByCode("TA_CONFIG", "INCOME_TYPE").getValue1();
 
 		Map<String, Map<String, BigDecimal>> incfri8000MMap = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), new ResultSetExtractor<Map<String, Map<String, BigDecimal>>>() {
 			public Map<String, Map<String, BigDecimal>> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -112,7 +116,13 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 					if (incomeMap == null) {
 						incomeMap = new HashMap<>();
 					}
-					incomeMap.put(rs.getString("YEAR_MONTH"), rs.getBigDecimal("TAX_AMOUNT"));
+					if(value.equals("TAX")) {
+						
+						incomeMap.put(rs.getString("YEAR_MONTH"), rs.getBigDecimal("TAX_AMOUNT"));
+					}else {
+						
+						incomeMap.put(rs.getString("YEAR_MONTH"), rs.getBigDecimal("NET_TAX_AMOUNT"));
+					}
 					newRegIdMap.put(mainKey, incomeMap);
 				}
 				return newRegIdMap;
