@@ -17,6 +17,7 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_OFFICE_CODE;
+import th.go.excise.ims.common.constant.ProjectConstants.TAX_COMPARE_TYPE;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
@@ -53,6 +54,7 @@ public class MasterConditionMainService {
         hdr.setMonthNum(form.getMonthNum());
         hdr.setCondGroupNum(form.getCondGroupNum());
         hdr.setNewFacFlag(form.getNewFacFlag());
+        hdr.setTaxCompareType(getTaxCompareType(form.getMonthNum()));
         taMasCondMainHdrRepository.save(hdr);
     }
 
@@ -65,6 +67,7 @@ public class MasterConditionMainService {
         hdr.setMonthNum(form.getMonthNum());
         hdr.setCondGroupNum(form.getCondGroupNum());
         hdr.setNewFacFlag(form.getNewFacFlag());
+        hdr.setTaxCompareType(getTaxCompareType(form.getMonthNum()));
         taMasCondMainHdrRepository.save(hdr);
     }
 
@@ -314,6 +317,15 @@ public class MasterConditionMainService {
     	
         List<ParamInfo> list = ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.TA_MAIN_COND_FREQ_TYPE);
         return list;
+    }
+    
+    private String getTaxCompareType(int monthNum) {
+    	final int MONTH_NUM = 24;
+    	if (monthNum >= MONTH_NUM) {
+    		return TAX_COMPARE_TYPE.HALF;
+    	} else {
+    		return TAX_COMPARE_TYPE.MONTH;
+    	}
     }
 
 }

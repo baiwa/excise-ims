@@ -33,13 +33,17 @@ public class DraftWorksheetServiceTest {
 		long start = System.currentTimeMillis();
 		
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
-		formVo.setDateStart("01/2560");
-		formVo.setDateEnd("12/2560");
-		formVo.setDateRange(12);
+		formVo.setDateStart("05/2558");
+		formVo.setDateEnd("04/2560");
+		formVo.setDateRange(24);
+		formVo.setBudgetYear("2562");
+		formVo.setCondNumber("001401-2562-01");
 		formVo.setStart(0);
 		formVo.setLength(10);
 		
-		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = draftWorksheetService.getPreviewData(formVo).getDatas();
+		TaxOperatorVo taxOperatorVo = draftWorksheetService.getPreviewData(formVo);
+		System.out.println("count=" + taxOperatorVo.getCount());
+		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = taxOperatorVo.getDatas();
 		taxOperatorDatatableVoList.forEach(e -> {
 			System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE));
 		});

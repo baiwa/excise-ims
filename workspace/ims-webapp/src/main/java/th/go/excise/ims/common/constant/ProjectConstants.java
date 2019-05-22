@@ -21,6 +21,11 @@ public class ProjectConstants {
 		public static final String LV3 = "3";
 	}
 	
+	public class TAX_COMPARE_TYPE {
+		public static final String HALF = "1";
+		public static final String MONTH = "2";
+	}
+	
 	public class TA_WORKSHEET_STATUS {
 		public static final String DRAFT = "D";
 		public static final String CONDITION = "C";

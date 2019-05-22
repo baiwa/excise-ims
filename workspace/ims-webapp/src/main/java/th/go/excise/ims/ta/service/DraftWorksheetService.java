@@ -5,6 +5,9 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.chrono.ThaiBuddhistDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +29,7 @@ import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.common.constant.ProjectConstants.TAX_COMPARE_TYPE;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.preferences.vo.ExciseDepartment;
@@ -121,23 +125,58 @@ public class DraftWorksheetService {
 
 	public List<TaxOperatorDetailVo> prepareTaxOperatorDetailVoList(TaxOperatorFormVo formVo) {
 		logger.info("prepareTaxOperatorDetailVoList startDate={}, endDate={}, dateRange={}", formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
-
+		
 		final int MAX_MONTH = 36; // 3 years
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		String ymStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateStart(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
-		String ymEnd = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateEnd(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
-
+		String budgetYear = formVo.getBudgetYear();
+		String taxCompareType = (taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYearAndCondNumber(officeCode, budgetYear, formVo.getCondNumber())).getTaxCompareType();
 		formVo.setOfficeCode(officeCode);
-
+		
+		String ymStartReg4000 = null;
+		String ymEndReg4000 = null;
+		String ymStartInc8000M = null;
+		String ymEndInc8000M = null;
+		List<LocalDate> subLocalDateList1 = null;
+		List<LocalDate> subLocalDateList2 = null;
+		if (TAX_COMPARE_TYPE.HALF.equals(taxCompareType)) {
+			LocalDate localDateStart = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getDateStart().split("/")[1]), Integer.parseInt(formVo.getDateStart().split("/")[0]), 1));
+			LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getDateEnd().split("/")[1]), Integer.parseInt(formVo.getDateEnd().split("/")[0]), 1));
+			ymStartReg4000 = localDateStart.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM));
+			ymEndReg4000 = localDateEnd.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM));
+			ymStartInc8000M = localDateStart.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM));
+			ymEndInc8000M = localDateEnd.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM));
+			List<LocalDate> localDateList = LocalDateUtils.getLocalDateRange(localDateStart, localDateEnd);
+			subLocalDateList1 = localDateList.subList(0, localDateList.size() / 2);
+			subLocalDateList2 = localDateList.subList(localDateList.size() / 2, localDateList.size());
+		} else {
+			int dateRange = formVo.getDateRange() / 2;
+			dateRange = dateRange > 1 ? dateRange - 1 : dateRange;
+			LocalDate localDateStart = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getDateStart().split("/")[1]), Integer.parseInt(formVo.getDateStart().split("/")[0]), 1));
+			LocalDate localDateEnd = localDateStart.plus(dateRange, ChronoUnit.MONTHS);
+			ymStartReg4000 = localDateStart.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM));
+			ymEndReg4000 = localDateEnd.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM));
+			LocalDate localDateStart2 = localDateStart.minus(1, ChronoUnit.YEARS);
+			LocalDate localDateEnd2 = localDateEnd.minus(1, ChronoUnit.YEARS);
+			ymStartInc8000M = localDateStart2.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM));
+			ymEndInc8000M = localDateEnd.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM));
+			subLocalDateList1 = new ArrayList<>();
+			subLocalDateList2 = new ArrayList<>();
+			subLocalDateList1.addAll(LocalDateUtils.getLocalDateRange(localDateStart2, localDateEnd2));
+			subLocalDateList2.addAll(LocalDateUtils.getLocalDateRange(localDateStart, localDateEnd));
+		}
+		logger.debug("taxCompareType={}, ymStartReg4000={}, ymEndReg4000={}, ymStartInc8000M={}, ymEndInc8000M={}", taxCompareType, ymStartReg4000, ymEndReg4000, ymStartInc8000M, ymEndInc8000M);
+		logger.debug("subLocalDateList1.size()={}, subLocalDateList1={}", subLocalDateList1.size(), org.springframework.util.StringUtils.collectionToCommaDelimitedString(subLocalDateList1));
+		logger.debug("subLocalDateList2.size()={}, subLocalDateList2={}", subLocalDateList2.size(), org.springframework.util.StringUtils.collectionToCommaDelimitedString(subLocalDateList2));
+		
 		Map<String, String> auditPlanMap = new HashMap<>();
 		int lastYear1 = 0;
 		int lastYear2 = 0;
 		int lastYear3 = 0;
-		if (StringUtils.isNotBlank(formVo.getBudgetYear())) {
+		if (StringUtils.isNotBlank(budgetYear)) {
 			List<String> budgetYearList = new ArrayList<>();
-			lastYear1 = Integer.valueOf(formVo.getBudgetYear()) - 1;
-			lastYear2 = Integer.valueOf(formVo.getBudgetYear()) - 2;
-			lastYear3 = Integer.valueOf(formVo.getBudgetYear()) - 3;
+			lastYear1 = Integer.valueOf(budgetYear) - 1;
+			lastYear2 = Integer.valueOf(budgetYear) - 2;
+			lastYear3 = Integer.valueOf(budgetYear) - 3;
 			budgetYearList.add(String.valueOf(lastYear1));
 			budgetYearList.add(String.valueOf(lastYear2));
 			budgetYearList.add(String.valueOf(lastYear3));
@@ -145,12 +184,8 @@ public class DraftWorksheetService {
 		}
 
 		Map<String, String> maxYearMap = taPlanWorksheetHisRepository.findMaxTaxAuditYear();
-		
-		LocalDate localDateStart = LocalDate.of(Integer.parseInt(ymStart.substring(0, 4)), Integer.parseInt(ymStart.substring(4, 6)), 1);
-		LocalDate localDateEnd = LocalDate.of(Integer.parseInt(ymEnd.substring(0, 4)), Integer.parseInt(ymEnd.substring(4, 6)), 1);
-		List<LocalDate> localDateList = LocalDateUtils.getLocalDateRange(localDateStart, localDateEnd);
 
-		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findByCriteriaDuty(formVo, ymStart, ymEnd);
+		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findByCriteriaDuty(formVo, ymStartReg4000, ymEndReg4000);
 		Map<String, BigDecimal> incomeMap = null;
 		BigDecimal sumTaxAmtG1 = null;
 		BigDecimal sumTaxAmtG2 = null;
@@ -203,7 +238,7 @@ public class DraftWorksheetService {
 				detailVo.setAreaDesc(exciseDeptArea.getDeptShortName());
 			}
 
-			incomeMap = taWsInc8000MRepository.findByMonthRangeDuty(wsReg4000.getNewRegId(), wsReg4000.getDutyCode(), ymStart, ymEnd);
+			incomeMap = taWsInc8000MRepository.findByMonthRangeDuty(wsReg4000.getNewRegId(), wsReg4000.getDutyCode(), ymStartInc8000M, ymEndInc8000M);
 			if (incomeMap == null) {
 				// Set Default Value
 				taxAmount = NO_TAX_AMOUNT;
@@ -225,35 +260,35 @@ public class DraftWorksheetService {
 				continue;
 			}
 
-			for (LocalDate localDate : localDateList) {
+			// Group 1
+			for (LocalDate localDate : subLocalDateList1) {
 				tmpYearMonth = String.valueOf(localDate.getYear()) + StringUtils.leftPad(String.valueOf(localDate.getMonthValue()), 2, "0");
-				if (countG1 < formVo.getDateRange() / 2) {
-					// Group 1
-					tmpTaxAmount = incomeMap.get(tmpYearMonth);
-					if (tmpTaxAmount != null) {
-						taxAmount = tmpTaxAmount.toString();
-						taxAmountList.add(tmpTaxAmount.doubleValue());
-						sumTaxAmtG1 = sumTaxAmtG1.add(tmpTaxAmount);
-						countTaxMonthNo++;
-					} else {
-						taxAmount = NO_TAX_AMOUNT;
-					}
-					countG1++;
-					setTaxAmount(detailVo, "G1M" + countG1, taxAmount);
+				tmpTaxAmount = incomeMap.get(tmpYearMonth);
+				if (tmpTaxAmount != null) {
+					taxAmount = tmpTaxAmount.toString();
+					taxAmountList.add(tmpTaxAmount.doubleValue());
+					sumTaxAmtG1 = sumTaxAmtG1.add(tmpTaxAmount);
+					countTaxMonthNo++;
 				} else {
-					// Group 2
-					tmpTaxAmount = incomeMap.get(tmpYearMonth);
-					if (tmpTaxAmount != null) {
-						taxAmount = tmpTaxAmount.toString();
-						taxAmountList.add(tmpTaxAmount.doubleValue());
-						sumTaxAmtG2 = sumTaxAmtG2.add(tmpTaxAmount);
-						countTaxMonthNo++;
-					} else {
-						taxAmount = NO_TAX_AMOUNT;
-					}
-					countG2++;
-					setTaxAmount(detailVo, "G2M" + countG2, taxAmount);
+					taxAmount = NO_TAX_AMOUNT;
 				}
+				countG1++;
+				setTaxAmount(detailVo, "G1M" + countG1, taxAmount);
+			}
+			// Group 2
+			for (LocalDate localDate : subLocalDateList2) {
+				tmpYearMonth = String.valueOf(localDate.getYear()) + StringUtils.leftPad(String.valueOf(localDate.getMonthValue()), 2, "0");
+				tmpTaxAmount = incomeMap.get(tmpYearMonth);
+				if (tmpTaxAmount != null) {
+					taxAmount = tmpTaxAmount.toString();
+					taxAmountList.add(tmpTaxAmount.doubleValue());
+					sumTaxAmtG2 = sumTaxAmtG2.add(tmpTaxAmount);
+					countTaxMonthNo++;
+				} else {
+					taxAmount = NO_TAX_AMOUNT;
+				}
+				countG2++;
+				setTaxAmount(detailVo, "G2M" + countG2, taxAmount);
 			}
 
 			detailVo.setSumTaxAmtG1((sumTaxAmtG1.setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
