@@ -1,25 +1,16 @@
 package th.go.excise.ims.scheduler.service;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
-import th.co.baiwa.buckwaframework.common.util.NumberUtils;
-import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
-import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
 import th.go.excise.ims.ws.client.pm.py1.model.Data;
 import th.go.excise.ims.ws.client.pm.py1.model.RequestData;
 import th.go.excise.ims.ws.client.pm.py1.model.ResponseData;
