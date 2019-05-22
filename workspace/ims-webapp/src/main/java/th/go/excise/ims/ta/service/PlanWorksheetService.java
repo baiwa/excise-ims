@@ -42,6 +42,7 @@ import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetSendRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
+import th.go.excise.ims.ta.vo.PersonAssignForm;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlCusVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetSendTableVo;
@@ -552,6 +553,11 @@ public class PlanWorksheetService {
 	@Transactional
 	public void saveStatusPlanWorksheetDtlByAssing(ExcisePerson formVo, String status) {
 		taPlanWorksheetDtlRepository.updateStatusPlanWorksheetDtl(formVo, status);
+	}
+	
+	public void savePlanWorksheetDtlByAssingList(PersonAssignForm formVo, String status) {
+		taPlanWorksheetDtlRepository.updateStatusPlanWorksheetDtlByList(formVo , status);
+
 	}
 
 }

@@ -1,5 +1,7 @@
 package th.go.excise.ims.ta.controller;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -40,6 +42,7 @@ import th.go.excise.ims.ta.service.PlanWorksheetService;
 import th.go.excise.ims.ta.service.WorksheetService;
 import th.go.excise.ims.ta.util.TaxAuditUtils;
 import th.go.excise.ims.ta.vo.CondGroupVo;
+import th.go.excise.ims.ta.vo.PersonAssignForm;
 import th.go.excise.ims.ta.vo.PlanWorkSheetSendVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlCusVo;
@@ -568,7 +571,8 @@ public class TaxOperatorController {
 //		}
 		return planWorksheetService.planDtlDatatable(formVo);
 	}
-
+	
+	
 	@PostMapping("/get-plan-status")
 	@ResponseBody
 	public ResponseData<PlanWorksheetStatus> getPlanStatus(@RequestBody PlanWorksheetVo formVo) {
@@ -636,6 +640,23 @@ public class TaxOperatorController {
 		}
 		return response;
 	}
+	
+	@PostMapping("/update-plan-worksheetDtl-list")
+	@ResponseBody
+	public ResponseData<TaPlanWorksheetDtl> updateListPlanWorksheetDtl(@RequestBody PersonAssignForm formVo) {
+		ResponseData<TaPlanWorksheetDtl> response = new ResponseData<>();
+
+		try {
+			planWorksheetService.savePlanWorksheetDtlByAssingList(formVo, ProjectConstants.TA_AUDIT_STATUS.CODE_0301);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
 
 	@PostMapping("/update-receive-plan-worksheetDtl")
 	@ResponseBody
@@ -671,6 +692,8 @@ public class TaxOperatorController {
 		return response;
 	}
 
+
+	
 	@PostMapping("/find-all-analysis-number-head")
 	@ResponseBody
 	public ResponseData<List<TaWorksheetHdr>> findAllAnalysisNumberHead(@RequestBody TaxOperatorFormVo formVo) {

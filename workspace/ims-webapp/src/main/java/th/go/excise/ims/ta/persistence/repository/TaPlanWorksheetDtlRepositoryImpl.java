@@ -2,6 +2,7 @@ package th.go.excise.ims.ta.persistence.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +24,7 @@ import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.preferences.persistence.entity.ExcisePerson;
 import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
+import th.go.excise.ims.ta.vo.PersonAssignForm;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetSendTableVo;
@@ -334,6 +336,36 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
             return vo;
         }
     };
+
+	@Override
+	public void updateStatusPlanWorksheetDtlByList(PersonAssignForm formVo, String status) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		sql.append(" UPDATE TA_PLAN_WORKSHEET_DTL SET AUDIT_STATUS = ? , ");
+		sql.append( " AU_SUBDEPT_CODE = ? ,ASSIGNED_OFFICER_BY = ? ,ASSIGNED_OFFICER_DATE = ? ");
+		sql.append(" WHERE PLAN_WORKSHEET_DTL_ID IN  ( ");
+		
+		for (int i = 0; i < formVo.getListCompany().size() ; i++) {
+			if (i == formVo.getListCompany().size() - 1) {
+				sql.append(" ? ");
+			}else {
+				sql.append(" ?, ");
+			}
+			
+		}
+		sql.append( " ) "); 
+		
+		params.add(ProjectConstants.TA_AUDIT_STATUS.CODE_0400);
+		params.add(formVo.getAuSubdeptCode());
+		params.add(UserLoginUtils.getCurrentUserBean().getUsername());
+		params.add(new Date());
+		
+		for (int i = 0; i < formVo.getListCompany().size(); i++) {
+			params.add(formVo.getListCompany().get(i).getPlanWorksheetDtlId());
+		}
+		commonJdbcTemplate.update(sql.toString(),params.toArray());
+		
+	}
 	
 	
 

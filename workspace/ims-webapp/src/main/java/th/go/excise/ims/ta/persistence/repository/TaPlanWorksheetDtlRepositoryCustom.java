@@ -4,6 +4,7 @@ import java.util.List;
 
 import th.go.excise.ims.preferences.persistence.entity.ExcisePerson;
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
+import th.go.excise.ims.ta.vo.PersonAssignForm;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetSendTableVo;
@@ -20,6 +21,8 @@ public interface TaPlanWorksheetDtlRepositoryCustom {
 	public List<PlanWorksheetDtlVo> findByCriteria(AuditCalendarCriteriaFormVo formVo);
 	
 	public void updateStatusPlanWorksheetDtl(ExcisePerson formVo,String status);
+	
+	public void updateStatusPlanWorksheetDtlByList(PersonAssignForm formVo,String status);
 	
 	public List<PlanWorksheetSendTableVo> findPlanWorksheetByDtl(PlanWorksheetVo formVo);
 }
