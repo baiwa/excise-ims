@@ -1,7 +1,5 @@
 package th.go.excise.ims.ta.controller;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -641,13 +639,14 @@ public class TaxOperatorController {
 		return response;
 	}
 	
+	
 	@PostMapping("/update-plan-worksheetDtl-list")
 	@ResponseBody
 	public ResponseData<TaPlanWorksheetDtl> updateListPlanWorksheetDtl(@RequestBody PersonAssignForm formVo) {
 		ResponseData<TaPlanWorksheetDtl> response = new ResponseData<>();
 
 		try {
-			planWorksheetService.savePlanWorksheetDtlByAssingList(formVo, ProjectConstants.TA_AUDIT_STATUS.CODE_0301);
+			planWorksheetService.savePlanWorksheetDtlByAssingList(formVo);
 			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

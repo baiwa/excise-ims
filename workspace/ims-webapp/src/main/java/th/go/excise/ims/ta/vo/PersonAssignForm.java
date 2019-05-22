@@ -12,6 +12,8 @@ public class PersonAssignForm {
 	private String edPersonId;
 	private String auSubdeptCode;
 	private String auSubdeptLevel;
+	private String auJobResp;
+	private String auditStatus;
 	private List<PlanWorksheetDatatableVo> listCompany;
 	
 	public Long getEdPersonSeq() {
@@ -74,9 +76,17 @@ public class PersonAssignForm {
 	public void setListCompany(List<PlanWorksheetDatatableVo> listCompany) {
 		this.listCompany = listCompany;
 	}
+	public String getAuJobResp() {
+		return auJobResp;
+	}
+	public void setAuJobResp(String auJobResp) {
+		this.auJobResp = auJobResp;
+	}
+	public String getAuditStatus() {
+		return auditStatus;
+	}
+	public void setAuditStatus(String auditStatus) {
+		this.auditStatus = auditStatus;
+	}
 	
-	
-	
-	
-
 }

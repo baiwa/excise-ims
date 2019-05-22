@@ -555,8 +555,8 @@ public class PlanWorksheetService {
 		taPlanWorksheetDtlRepository.updateStatusPlanWorksheetDtl(formVo, status);
 	}
 	
-	public void savePlanWorksheetDtlByAssingList(PersonAssignForm formVo, String status) {
-		taPlanWorksheetDtlRepository.updateStatusPlanWorksheetDtlByList(formVo , status);
+	public void savePlanWorksheetDtlByAssingList(PersonAssignForm formVo) {
+		taPlanWorksheetDtlRepository.updateStatusPlanWorksheetDtlByList(formVo);
 
 	}
 
