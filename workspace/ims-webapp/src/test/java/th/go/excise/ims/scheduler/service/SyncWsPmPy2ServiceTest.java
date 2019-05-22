@@ -26,7 +26,7 @@ public class SyncWsPmPy2ServiceTest {
 	@Test
 	public void test_syncData() throws IOException {
 		RequestData requestData = new RequestData();
-		requestData.setOfficeCode("010000");
+		requestData.setOfficeCode("011000");
 		requestData.setYear("2561");
 		
 		syncWsPmPy2Service.syncData(requestData);
