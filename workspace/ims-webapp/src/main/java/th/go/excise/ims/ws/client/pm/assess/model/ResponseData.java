@@ -8,8 +8,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import th.go.excise.ims.ws.client.pm.qt.model.Data;
-
 public class ResponseData {
 	
 	@SerializedName("data")
