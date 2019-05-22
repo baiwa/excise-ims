@@ -1,4 +1,3 @@
-
 package th.go.excise.ims.ws.persistence.entity;
 
 import javax.persistence.Column;
@@ -8,16 +7,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "WS_PM_PY1_D")
 public class WsPmPy1D extends BaseEntity {
 
+	private static final long serialVersionUID = 506608583377558071L;
 
-	private static final long serialVersionUID = -1506971233110248914L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WS_PM_PY1_D_GEN")
 	@SequenceGenerator(name = "WS_PM_PY1_D_GEN", sequenceName = "WS_PM_PY1_D_SEQ", allocationSize = 1)
@@ -90,10 +87,6 @@ public class WsPmPy1D extends BaseEntity {
 
 	public void setTopicAnswer(String topicAnswer) {
 		this.topicAnswer = topicAnswer;
-	}
-
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
 }

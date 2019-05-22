@@ -1,7 +1,6 @@
-
 package th.go.excise.ims.ws.persistence.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,16 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "WS_PM_PY2_D")
 public class WsPmPy2D extends BaseEntity {
 
-	private static final long serialVersionUID = 6135243224394816006L;
-	
+	private static final long serialVersionUID = 9192757260593603562L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WS_PM_PY2_D_GEN")
 	@SequenceGenerator(name = "WS_PM_PY2_D_GEN", sequenceName = "WS_PM_PY2_D_SEQ", allocationSize = 1)
@@ -39,7 +36,7 @@ public class WsPmPy2D extends BaseEntity {
 	@Column(name = "PROCESS_POSITION")
 	private String processPosition;
 	@Column(name = "PROCESS_DATE")
-	private Date processDate;
+	private LocalDate processDate;
 	@Column(name = "PY2_TOPIC_SEQ")
 	private String py2TopicSeq;
 	@Column(name = "PY2_TOPIC_NAME")
@@ -123,11 +120,11 @@ public class WsPmPy2D extends BaseEntity {
 		this.processPosition = processPosition;
 	}
 
-	public Date getProcessDate() {
+	public LocalDate getProcessDate() {
 		return processDate;
 	}
 
-	public void setProcessDate(Date processDate) {
+	public void setProcessDate(LocalDate processDate) {
 		this.processDate = processDate;
 	}
 
@@ -201,10 +198,6 @@ public class WsPmPy2D extends BaseEntity {
 
 	public void setPy2Topic7Remark(String py2Topic7Remark) {
 		this.py2Topic7Remark = py2Topic7Remark;
-	}
-
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
 }

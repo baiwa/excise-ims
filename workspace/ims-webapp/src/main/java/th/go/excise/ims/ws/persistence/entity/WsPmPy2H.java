@@ -1,4 +1,3 @@
-
 package th.go.excise.ims.ws.persistence.entity;
 
 import javax.persistence.Column;
@@ -8,14 +7,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "WS_PM_PY2_H")
 public class WsPmPy2H extends BaseEntity {
-	private static final long serialVersionUID = -564731228268092918L;
+
+	private static final long serialVersionUID = 4031935511630938897L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WS_PM_PY2_H_GEN")
 	@SequenceGenerator(name = "WS_PM_PY2_H_GEN", sequenceName = "WS_PM_PY2_H_SEQ", allocationSize = 1)
@@ -108,10 +107,6 @@ public class WsPmPy2H extends BaseEntity {
 
 	public void setFormStatusDesc(String formStatusDesc) {
 		this.formStatusDesc = formStatusDesc;
-	}
-
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
 }

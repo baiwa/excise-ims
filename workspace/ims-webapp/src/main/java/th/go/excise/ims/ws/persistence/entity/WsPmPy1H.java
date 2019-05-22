@@ -1,8 +1,6 @@
-
 package th.go.excise.ims.ws.persistence.entity;
 
-import java.util.Date;
-
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,18 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "WS_PM_PY1_H")
 public class WsPmPy1H extends BaseEntity {
 
-	
-	private static final long serialVersionUID = -6217333353585269112L;
+	private static final long serialVersionUID = -3816735715497810780L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WS_PM_PY1_H_GEN")
 	@SequenceGenerator(name = "WS_PM_PY1_H_GEN", sequenceName = "WS_PM_PY1_H_SEQ", allocationSize = 1)
@@ -50,7 +44,7 @@ public class WsPmPy1H extends BaseEntity {
 	@Column(name = "PROCESS_POSITION")
 	private String processPosition;
 	@Column(name = "PROCESS_DATE")
-	private Date processDate;
+	private LocalDate processDate;
 
 	public Long getPmPy1HSeq() {
 		return pmPy1HSeq;
@@ -148,16 +142,12 @@ public class WsPmPy1H extends BaseEntity {
 		this.processPosition = processPosition;
 	}
 
-	public Date getProcessDate() {
+	public LocalDate getProcessDate() {
 		return processDate;
 	}
 
-	public void setProcessDate(Date processDate) {
+	public void setProcessDate(LocalDate processDate) {
 		this.processDate = processDate;
-	}
-
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
 }

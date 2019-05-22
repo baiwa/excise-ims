@@ -1,4 +1,4 @@
-package th.go.excise.ims.ws.client.pm.systemunworking.service;
+package th.go.excise.ims.ws.client.pm.assess.service;
 
 import java.io.IOException;
 
@@ -9,26 +9,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.Gson;
 
-import th.go.excise.ims.ws.client.pm.systemunworking.model.RequestData;
-import th.go.excise.ims.ws.client.pm.systemunworking.model.ResponseData;
+import th.go.excise.ims.ws.client.pm.assess.model.RequestData;
+import th.go.excise.ims.ws.client.pm.assess.model.ResponseData;
 import th.go.excise.ims.ws.client.service.RestfulClientService;
 
 //@RunWith(SpringRunner.class)
 //@SpringBootTest(classes = Application.class)
 //@WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
 //@ActiveProfiles(value = PROFILE.UNITTEST)
-public class PmSystemUnworkingServiceTest {
+public class PmAssessServiceTest {
 	
 	@Autowired
-	private PmSystemUnworkingService pmSystemUnworkingService;
+	private PmAccessService pmAccessService;
 	
 //	@Test
 	public void test_execute() {
 		try {
 			RequestData requestData = new RequestData();
-			requestData.setYear("2560");
-			requestData.setMonth("10");
-			ResponseData responseData = pmSystemUnworkingService.execute(requestData);
+			requestData.setYear("2561");
+			requestData.setOfficeCode("010000");
+			ResponseData responseData = pmAccessService.execute(requestData);
 			responseData.getData().forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -37,14 +37,14 @@ public class PmSystemUnworkingServiceTest {
 	
 	@Test
 	public void test_execute_Manual() {
-		String url = "http://192.168.48.36:8080/oper-report-uat/rest/getJsonSystem";
-		PmSystemUnworkingService pmSystemUnworkingService = new PmSystemUnworkingService(url, new RestfulClientService(), new Gson());
+		String url = "http://192.168.48.36:8080/excise-pm/rest/getJsonAssess";
+		PmAccessService pmAccessService = new PmAccessService(url, new RestfulClientService(), new Gson());
 		
 		try {
 			RequestData requestData = new RequestData();
 			requestData.setYear("2561");
-			requestData.setMonth("10");
-			ResponseData responseData = pmSystemUnworkingService.execute(requestData);
+			requestData.setOfficeCode("010000");
+			ResponseData responseData = pmAccessService.execute(requestData);
 			responseData.getData().forEach(e -> System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE)));
 		} catch (IOException e) {
 			e.printStackTrace();
