@@ -63,6 +63,11 @@ public class ProjectConstants {
 			public static final String DATA_TYPE_MATERIAL_CODE = "M";
 			public static final String DATA_TYPE_PRODUCT_CODE = "P";
 		}
+		
+		public class ANAFRI0001 {
+			public static final String FORM_CODE_PS0307 = "ภส0307";
+			public static final String FORM_CODE_PS0308 = "ภส0308";
+		}
 	}
 	
 	public static class DUTY_GROUP_TYPE {
