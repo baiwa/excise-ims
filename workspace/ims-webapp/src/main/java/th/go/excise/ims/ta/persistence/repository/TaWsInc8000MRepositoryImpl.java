@@ -18,6 +18,8 @@ import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CONFIG;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ta.persistence.entity.TaWsInc8000M;
 import th.go.excise.ims.ta.vo.AnalysisFormVo;
@@ -72,16 +74,18 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 	}
 	
 	@Override
-	public Map<String, Map<String, BigDecimal>> findByMonthRangeDuty(String officeCode, String startMonth, String endMonth) {
-		logger.info("findByMonthRange officeCode={}, startMonth={}, endMonth={}", officeCode, startMonth, endMonth);
+	public Map<String, BigDecimal> findByMonthRangeDuty(String newRegId, String dutyCode, String startMonth, String endMonth) {
+		logger.info("findByMonthRange newRegId={}, dutyCode={}, startMonth={}, endMonth={}", newRegId, dutyCode, startMonth, endMonth);
 
 		StringBuilder sql = new StringBuilder();
 		List<Object> paramList = new ArrayList<>();
 		
 		sql.append(" SELECT INC.* FROM ( ");
-		sql.append(" SELECT NEW_REG_ID, DUTY_CODE, TAX_AMOUNT, TAX_YEAR||LPAD(TAX_MONTH ,2 ,'0') AS YEAR_MONTH ");
-		sql.append(" FROM TA_WS_INC8000_M ");
-		sql.append(" WHERE IS_DELETED = 'N' ");
+		sql.append("   SELECT NEW_REG_ID, DUTY_CODE, TAX_YEAR||LPAD(TAX_MONTH ,2 ,'0') AS YEAR_MONTH, TAX_AMOUNT, NET_TAX_AMOUNT ");
+		sql.append("   FROM TA_WS_INC8000_M ");
+		sql.append("   WHERE IS_DELETED = 'N' ");
+		sql.append("     AND NEW_REG_ID = ? ");
+		sql.append("     AND DUTY_CODE = ? ");
 //		if (ApplicationCache.isCtrlDutyGroupByOfficeCode(officeCode)) {
 //			sql.append("   AND DUTY_CODE IN (SELECT DUTY_GROUP_CODE FROM EXCISE_CTRL_DUTY WHERE IS_DELETED = 'N' AND RES_OFFCODE = ?) ");
 //			paramList.add(officeCode);
@@ -91,41 +95,30 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 //			paramList.addAll(dutyGroupIdList);
 //		}
 		sql.append(" ) INC ");
-		sql.append(" WHERE 1=1 ");
+		sql.append(" WHERE 1 = 1 ");
 		sql.append("   AND INC.YEAR_MONTH >= ? ");
 		sql.append("   AND INC.YEAR_MONTH <= ? ");
 		sql.append(" ORDER BY INC.NEW_REG_ID, INC.DUTY_CODE, INC.YEAR_MONTH ");
 
+		paramList.add(newRegId);
+		paramList.add(dutyCode);
 		paramList.add(startMonth);
 		paramList.add(endMonth);
 		
-		//==> Check Tax , NetTax
-		String value = ApplicationCache.getParamInfoByCode("TA_CONFIG", "INCOME_TYPE").getValue1();
+		//==> Check TAX, NET
+		String value = ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.INCOME_TYPE).getValue1();
 
-		Map<String, Map<String, BigDecimal>> incfri8000MMap = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), new ResultSetExtractor<Map<String, Map<String, BigDecimal>>>() {
-			public Map<String, Map<String, BigDecimal>> extractData(ResultSet rs) throws SQLException, DataAccessException {
-				Map<String, Map<String, BigDecimal>> newRegIdMap = new HashMap<>();
-				Map<String, BigDecimal> incomeMap = null;
-				String mainKey = null;
+		Map<String, BigDecimal> incfri8000MMap = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), new ResultSetExtractor<Map<String, BigDecimal>>() {
+			public Map<String, BigDecimal> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				Map<String, BigDecimal> incomeMap = new HashMap<>();
 				while (rs.next()) {
-					if (rs.getString("NEW_REG_ID") == null) {
-						continue;
-					}
-					mainKey = rs.getString("NEW_REG_ID") + "|" + rs.getString("DUTY_CODE");
-					incomeMap = newRegIdMap.get(mainKey);
-					if (incomeMap == null) {
-						incomeMap = new HashMap<>();
-					}
-					if(value.equals("TAX")) {
-						
+					if (TA_CONFIG.INCOME_TYPE_TAX.equals(value)) {
 						incomeMap.put(rs.getString("YEAR_MONTH"), rs.getBigDecimal("TAX_AMOUNT"));
-					}else {
-						
+					} else {
 						incomeMap.put(rs.getString("YEAR_MONTH"), rs.getBigDecimal("NET_TAX_AMOUNT"));
 					}
-					newRegIdMap.put(mainKey, incomeMap);
 				}
-				return newRegIdMap;
+				return incomeMap;
 			}
 		});
 

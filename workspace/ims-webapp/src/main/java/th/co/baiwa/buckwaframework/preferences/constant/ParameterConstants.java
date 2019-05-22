@@ -39,6 +39,11 @@ public class ParameterConstants {
 		public static final String SEE_FLAG = "SEE_FLAG";
 		public static final String SELECT_FLAG = "SELECT_FLAG";
 		public static final String SEND_ALL_FLAG = "SEND_ALL_FLAG";
+		public static final String INCOME_TYPE = "INCOME_TYPE";
+		
+		// INCOME_TYPE
+		public static final String INCOME_TYPE_TAX = "TAX";
+		public static final String INCOME_TYPE_NET = "NET";
 	}
 	
 	// Parameter Group: TA_MAIN_COND_RANGE

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
-import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
@@ -68,10 +66,6 @@ public class TaxAuditConfigureController {
 		ResponseData<Map<String, String>> response = new ResponseData<>();
 		
 		try {
-			if (StringUtils.isBlank(paramCode) || (!FLAG.N_FLAG.equals(value1) && !FLAG.Y_FLAG.equals(value1))) {
-				throw new Exception("Wrong Parameter paramCode=" + paramCode + ", value1=" + value1);
-			}
-			
 			ParamInfo paramInfo = ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_CONFIG, paramCode);
 			if (paramInfo == null) {
 				throw new Exception("paramCode=" + paramCode + " Not Found");

@@ -122,6 +122,7 @@ public class DraftWorksheetService {
 	public List<TaxOperatorDetailVo> prepareTaxOperatorDetailVoList(TaxOperatorFormVo formVo) {
 		logger.info("prepareTaxOperatorDetailVoList startDate={}, endDate={}, dateRange={}", formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
 
+		final int MAX_MONTH = 36; // 3 years
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String ymStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateStart(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		String ymEnd = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateEnd(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
@@ -150,7 +151,6 @@ public class DraftWorksheetService {
 		List<LocalDate> localDateList = LocalDateUtils.getLocalDateRange(localDateStart, localDateEnd);
 
 		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findByCriteriaDuty(formVo, ymStart, ymEnd);
-		Map<String, Map<String, BigDecimal>> wsInc8000MMap = taWsInc8000MRepository.findByMonthRangeDuty(officeCode, ymStart, ymEnd);
 		Map<String, BigDecimal> incomeMap = null;
 		BigDecimal sumTaxAmtG1 = null;
 		BigDecimal sumTaxAmtG2 = null;
@@ -203,14 +203,14 @@ public class DraftWorksheetService {
 				detailVo.setAreaDesc(exciseDeptArea.getDeptShortName());
 			}
 
-			incomeMap = wsInc8000MMap.get(wsReg4000.getNewRegId() + "|" + wsReg4000.getDutyCode());
+			incomeMap = taWsInc8000MRepository.findByMonthRangeDuty(wsReg4000.getNewRegId(), wsReg4000.getDutyCode(), ymStart, ymEnd);
 			if (incomeMap == null) {
 				// Set Default Value
 				taxAmount = NO_TAX_AMOUNT;
-				for (int i = 1; i <= 12; i++) {
+				for (int i = 1; i <= MAX_MONTH; i++) {
 					setTaxAmount(detailVo, "G1M" + i, taxAmount);
 				}
-				for (int i = 1; i <= 12; i++) {
+				for (int i = 1; i <= MAX_MONTH; i++) {
 					setTaxAmount(detailVo, "G2M" + i, taxAmount);
 				}
 				detailVo.setSumTaxAmtG1(taxAmount);
@@ -282,7 +282,6 @@ public class DraftWorksheetService {
 	
 	private void setTaxAmount(TaxOperatorDetailVo detailVo, String groupMonthNo, String taxAmount) {
 		try {
-			System.out.println(groupMonthNo);
 			Method method = TaxOperatorDetailVo.class.getDeclaredMethod("setTaxAmt" + groupMonthNo, String.class);
 			method.invoke(detailVo, taxAmount);
 		} catch (Exception e) {
