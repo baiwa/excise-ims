@@ -22,7 +22,7 @@ public interface TaPlanWorksheetDtlRepositoryCustom {
 	
 	public void updateStatusPlanWorksheetDtl(ExcisePerson formVo,String status);
 	
-	public void updateStatusPlanWorksheetDtlByList(PersonAssignForm formVo,String status);
+	public void updateStatusPlanWorksheetDtlByList(PersonAssignForm formVo);
 	
 	public List<PlanWorksheetSendTableVo> findPlanWorksheetByDtl(PlanWorksheetVo formVo);
 }

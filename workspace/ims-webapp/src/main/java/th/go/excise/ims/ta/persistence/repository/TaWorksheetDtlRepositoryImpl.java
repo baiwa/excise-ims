@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import th.co.baiwa.buckwaframework.common.bean.LabelValueBean;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
@@ -23,6 +24,7 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CONFIG;
+import th.co.baiwa.buckwaframework.security.constant.SecurityConstants;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
@@ -254,10 +256,13 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			params.add(rs);
 		}
 
-		if (StringUtils.isNotBlank(formVo.getOfficeCode()) && !ExciseUtils.isCentral(formVo.getOfficeCode())) {
-			sql.append(" AND R4000.OFFICE_CODE LIKE ? ");
-			params.add(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
+		if (!UserLoginUtils.getGrantedAuthorityList().contains(new SimpleGrantedAuthority(SecurityConstants.ROLE.ADMIN))){
+			if (StringUtils.isNotBlank(formVo.getOfficeCode()) && !ExciseUtils.isCentral(formVo.getOfficeCode())) {
+				sql.append(" AND R4000.OFFICE_CODE LIKE ? ");
+				params.add(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
+			}
 		}
+
 	}
 
 	public List<TaxOperatorDetailVo> findByCriteria(TaxOperatorFormVo formVo) {
