@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ws.client.pm.py1.model.Data;
 import th.go.excise.ims.ws.client.pm.py1.model.RequestData;
 import th.go.excise.ims.ws.client.pm.py1.model.ResponseData;
@@ -61,9 +62,9 @@ public class SyncWsPmPy1Service {
 			pmPy1H.setSummary(data.getSummary());
 			pmPy1H.setProcessBy(data.getProcessBy());
 			pmPy1H.setProcessPosition(data.getProcessPosition());
-			//pmPy1H.setProcessDate(data.getProcessDate());
-			wsPmPy1HRepository.save(pmPy1H);
-//			pmPy1HList.add(pmPy1H);
+			pmPy1H.setProcessDate(ConvertDateUtils.parseStringToLocalDate(data.getProcessDate(), ConvertDateUtils.DD_MM_YYYY,ConvertDateUtils.LOCAL_TH));
+//			wsPmPy1HRepository.save(pmPy1H);
+			pmPy1HList.add(pmPy1H);
 			for (TopicDetail topicDetail : data.getTopicDetail()) {
 				pmPy1D = new WsPmPy1D();
 				pmPy1D.setOffCode(data.getOffCode());
@@ -72,10 +73,16 @@ public class SyncWsPmPy1Service {
 				pmPy1D.setTopicName(topicDetail.getTopicName());
 				pmPy1D.setTopicDesc(topicDetail.getTopicDesc());
 				pmPy1D.setTopicAnswer(topicDetail.getTopicAnswer());
-				wsPmPy1DRepository.save(pmPy1D);
-//				pmPy1DList.add(pmPy1D);
+//				wsPmPy1DRepository.save(pmPy1D);
+				pmPy1DList.add(pmPy1D);
 			}
 		}
+		
+		wsPmPy1HRepository.batchMerge(pmPy1HList);
+		logger.info("Batch Merge WsPmAssessH Success");
+				
+		wsPmPy1DRepository.batchMerge(pmPy1DList);
+		logger.info("Batch Merge WsPmAssessD Success");
 		
 		long end = System.currentTimeMillis();
 		logger.info("syncData PmPy1 Success, using {} seconds", (float) (end - start) / 1000F);
