@@ -196,10 +196,14 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		}
 
 		sql.append(" WHERE 1 = 1 ");
-		sql.append(" AND TA_W_DTL.ANALYSIS_NUMBER = ? ");
+		if (StringUtils.isNotBlank(formVo.getAnalysisNumber())) {
+			sql.append(" AND TA_W_DTL.ANALYSIS_NUMBER = ? ");
+			params.add(formVo.getAnalysisNumber());
+		}
+
 		sql.append(" AND TA_W_HDR.IS_DELETED = 'N' ");
 
-		params.add(formVo.getAnalysisNumber());
+
 
 		// DUTY GROUP
 		if (StringUtils.isNotBlank(formVo.getFacType())) {

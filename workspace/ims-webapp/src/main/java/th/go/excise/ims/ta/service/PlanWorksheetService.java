@@ -43,6 +43,7 @@ import th.go.excise.ims.ta.persistence.repository.TaWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.vo.PersonAssignForm;
+import th.go.excise.ims.ta.vo.PlanWorksheetAssignVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlCusVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetSendTableVo;
@@ -242,6 +243,7 @@ public class PlanWorksheetService {
 			}
 		}
 	}
+	
 
 	private void updateFlagWorksheetSelect(String budgetYear, String newRegId, String officeCode, String selFlag,
 			LocalDate selDate) {
@@ -558,6 +560,97 @@ public class PlanWorksheetService {
 	public void savePlanWorksheetDtlByAssingList(PersonAssignForm formVo) {
 		taPlanWorksheetDtlRepository.updateStatusPlanWorksheetDtlByList(formVo);
 
+	}
+	
+	@Transactional
+	public void savePlanWorksheetDtlAndAssign(PlanWorksheetAssignVo formVo) {
+		UserBean userBean = UserLoginUtils.getCurrentUserBean();
+		String officeCode = userBean.getOfficeCode();
+		String budgetYear = formVo.getBudgetYear();
+		logger.info("savePlanWorkSheetDtl officeCode={}, budgetYear={}, planNumber={}, analysisNumber={}, newRegIds={}",
+				officeCode, budgetYear, formVo.getPlanNumber(), formVo.getAnalysisNumber(),
+				org.springframework.util.StringUtils.collectionToCommaDelimitedString(formVo.getIds()));
+
+		List<String> planNewRegIdList = taPlanWorksheetDtlRepository.findNewRegIdByOfficeCodeAndPlanNumber(officeCode,
+				formVo.getPlanNumber());
+		List<String> planNewRegIdFlagNList = taPlanWorksheetDtlRepository
+				.findNewRegIdByOfficeCodeAndPlanNumberAndIsDeletedFlagN(officeCode, formVo.getPlanNumber());
+		List<String> selectNewRegIdList = formVo.getIds();
+
+		// Keep New and Delete newRegId list
+		TaPlanWorksheetDtl planDtl = null;
+		List<String> insertNewRegIdList = new ArrayList<>();
+		List<String> updateNewRegIdList = new ArrayList<>();
+
+		// Loop selectNewRegIdList for Insert NewRegId
+		for (String selNewRegId : selectNewRegIdList) {
+			if (!planNewRegIdList.contains(selNewRegId)) {
+				insertNewRegIdList.add(selNewRegId);
+			}
+		}
+
+		// Loop planWorksheetDtlNewRegIdList for Update NewRegId
+		for (String planRewRegId : planNewRegIdList) {
+			if (!selectNewRegIdList.contains(planRewRegId)) {
+				updateNewRegIdList.add(planRewRegId);
+			}
+		}
+		String assingOfficeCode = formVo.getSector();
+		if (ExciseUtils.isCentral(formVo.getSector())) {
+			assingOfficeCode = formVo.getSector();
+		}else if (ExciseUtils.isArea(formVo.getArea())) {
+			assingOfficeCode = formVo.getArea();
+		}
+		
+
+		// Insert newRegId to planWorksheetDtl
+		if (CollectionUtils.isNotEmpty(insertNewRegIdList)) {
+			for (String newRegId : insertNewRegIdList) {
+				planDtl = new TaPlanWorksheetDtl();
+				planDtl.setPlanNumber(formVo.getPlanNumber());
+				planDtl.setAnalysisNumber(formVo.getAnalysisNumber());
+				planDtl.setOfficeCode(assingOfficeCode);
+				planDtl.setNewRegId(newRegId);
+				planDtl.setAuditStatus(TA_AUDIT_STATUS.CODE_0300);
+//				planDtl.setAuSubdeptCode(userBean.getSubdeptCode());
+				taPlanWorksheetDtlRepository.save(planDtl);
+
+				updateFlagWorksheetSelect(budgetYear, newRegId, officeCode, FLAG.Y_FLAG, LocalDate.now());
+			}
+		}
+
+		// Update newRegId from planWorksheetDtl
+		String isDeletedPlanDtl = null;
+		String selFlag = null;
+		LocalDate selDate = null;
+		if (CollectionUtils.isNotEmpty(updateNewRegIdList)) {
+			for (String newRegId : updateNewRegIdList) {
+				if (selectNewRegIdList.contains(newRegId)) {
+					isDeletedPlanDtl = FLAG.N_FLAG;
+					selFlag = FLAG.Y_FLAG;
+					selDate = LocalDate.now();
+
+				} else {
+					isDeletedPlanDtl = FLAG.Y_FLAG;
+					selFlag = null;
+					selDate = null;
+				}
+				taPlanWorksheetDtlRepository.updateIsDeletedByPlanNumberAndNewRegId(isDeletedPlanDtl,
+						formVo.getPlanNumber(), newRegId);
+				updateFlagWorksheetSelect(budgetYear, newRegId, officeCode, selFlag, selDate);
+			}
+		} else {
+			for (String selecNewRegId : selectNewRegIdList) {
+				if (!planNewRegIdFlagNList.contains(selecNewRegId)) {
+					isDeletedPlanDtl = FLAG.N_FLAG;
+					selFlag = FLAG.Y_FLAG;
+					selDate = LocalDate.now();
+					taPlanWorksheetDtlRepository.updateIsDeletedByPlanNumberAndNewRegId(isDeletedPlanDtl,
+							formVo.getPlanNumber(), selecNewRegId);
+					updateFlagWorksheetSelect(budgetYear, selecNewRegId, officeCode, selFlag, selDate);
+				}
+			}
+		}
 	}
 
 }

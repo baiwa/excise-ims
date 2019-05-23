@@ -42,6 +42,7 @@ import th.go.excise.ims.ta.util.TaxAuditUtils;
 import th.go.excise.ims.ta.vo.CondGroupVo;
 import th.go.excise.ims.ta.vo.PersonAssignForm;
 import th.go.excise.ims.ta.vo.PlanWorkSheetSendVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetAssignVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlCusVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetSendTableVo;
@@ -394,6 +395,25 @@ public class TaxOperatorController {
 
 		return response;
 	}
+	
+	@PostMapping("/save-plan-work-sheet-dtl-assing")
+	@ResponseBody
+	public ResponseData<?> savePlanWorkSheetDtlAndAssing(@RequestBody PlanWorksheetAssignVo formVo) {
+		ResponseData<?> response = new ResponseData<>();
+
+		try {
+			planWorksheetService.savePlanWorksheetDtlAndAssign(formVo);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+
+		return response;
+	}
+
 
 	@PostMapping("/find-plan-worksheet-dtl")
 	@ResponseBody
@@ -746,6 +766,23 @@ public class TaxOperatorController {
 		}
 
 		return responseData;
+	}
+	@PostMapping("/worksheet-for-assing")
+	@ResponseBody
+	public ResponseData<TaxOperatorVo> getOperatorAssign(@RequestBody TaxOperatorFormVo formVo) {
+		ResponseData<TaxOperatorVo> response = new ResponseData<>();
+
+		try {
+			response.setData(worksheetService.getWorksheetForAssign(formVo));
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+
+		return response;
 	}
 
 }
