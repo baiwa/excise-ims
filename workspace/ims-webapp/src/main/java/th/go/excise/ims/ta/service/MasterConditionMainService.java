@@ -54,7 +54,7 @@ public class MasterConditionMainService {
         hdr.setMonthNum(form.getMonthNum());
         hdr.setCondGroupNum(form.getCondGroupNum());
         hdr.setNewFacFlag(form.getNewFacFlag());
-        hdr.setTaxCompareType(getTaxCompareType(form.getMonthNum()));
+        hdr.setCompType(getTaxCompareType(form.getMonthNum()));
         taMasCondMainHdrRepository.save(hdr);
     }
 
@@ -67,7 +67,7 @@ public class MasterConditionMainService {
         hdr.setMonthNum(form.getMonthNum());
         hdr.setCondGroupNum(form.getCondGroupNum());
         hdr.setNewFacFlag(form.getNewFacFlag());
-        hdr.setTaxCompareType(getTaxCompareType(form.getMonthNum()));
+        hdr.setCompType(getTaxCompareType(form.getMonthNum()));
         taMasCondMainHdrRepository.save(hdr);
     }
 

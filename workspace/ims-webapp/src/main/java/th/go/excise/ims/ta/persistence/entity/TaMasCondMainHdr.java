@@ -36,8 +36,8 @@ public class TaMasCondMainHdr extends BaseEntity {
 	private Integer condGroupNum;
 	@Column(name = "NEW_FAC_FLAG")
 	private String newFacFlag;
-	@Column(name = "TAX_COMPARE_TYPE")
-	private String taxCompareType;
+	@Column(name = "COMP_TYPE")
+	private String compType;
 
 	public Long getMasCondMainHdrId() {
 		return masCondMainHdrId;
@@ -103,12 +103,12 @@ public class TaMasCondMainHdr extends BaseEntity {
 		this.newFacFlag = newFacFlag;
 	}
 
-	public String getTaxCompareType() {
-		return taxCompareType;
+	public String getCompType() {
+		return compType;
 	}
 
-	public void setTaxCompareType(String taxCompareType) {
-		this.taxCompareType = taxCompareType;
+	public void setCompType(String compType) {
+		this.compType = compType;
 	}
 
 	public String toString() {

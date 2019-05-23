@@ -35,6 +35,8 @@ public class TaWorksheetCondMainHdr extends BaseEntity {
 	private String condGroupNum;
 	@Column(name = "NEW_FAC_FLAG")
 	private String newFacFlag;
+	@Column(name = "COMP_TYPE")
+	private String compType;
 
 	public Long getWorksheetCondMainHdrId() {
 		return worksheetCondMainHdrId;
@@ -98,6 +100,14 @@ public class TaWorksheetCondMainHdr extends BaseEntity {
 
 	public void setNewFacFlag(String newFacFlag) {
 		this.newFacFlag = newFacFlag;
+	}
+
+	public String getCompType() {
+		return compType;
+	}
+
+	public void setCompType(String compType) {
+		this.compType = compType;
 	}
 
 }
