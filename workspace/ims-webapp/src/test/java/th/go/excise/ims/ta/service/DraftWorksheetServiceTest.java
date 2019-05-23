@@ -32,14 +32,22 @@ public class DraftWorksheetServiceTest {
 	public void test_getPreviewData() {
 		long start = System.currentTimeMillis();
 		
+		// 2019 - 2562
+		// 2018 - 2561
+		// 2017 - 2560
+		// 2016 - 2559
+		// 2015 - 2558
+		
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
 		formVo.setDateStart("05/2558");
-		formVo.setDateEnd("04/2560");
-		formVo.setDateRange(24);
+		formVo.setDateEnd("05/2558");
+		formVo.setDateRange(2);
 		formVo.setBudgetYear("2562");
 		formVo.setCondNumber("001401-2562-01");
 		formVo.setStart(0);
 		formVo.setLength(10);
+		
+		formVo.setNewRegId("01005150424621001");
 		
 		TaxOperatorVo taxOperatorVo = draftWorksheetService.getPreviewData(formVo);
 		System.out.println("count=" + taxOperatorVo.getCount());
