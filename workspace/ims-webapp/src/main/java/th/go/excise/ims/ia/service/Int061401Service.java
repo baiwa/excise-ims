@@ -14,23 +14,25 @@ import th.go.excise.ims.ia.vo.Ws_Reg4000Vo;
 
 @Service
 public class Int061401Service {
-	
+
 	@Autowired
 	private IaAuditTxinsurHJdbcRepository iaAuditTxinsurHJdbcRepository;
-	
+
 	public List<IaAuditTxinsurH> getgetAudittxInsurNoList() {
 		return iaAuditTxinsurHJdbcRepository.getAudittxInsurNoList();
 	}
-	
+
 	public DataTableAjax<Ws_Reg4000Vo> filter(Int061401FilterVo formVo) {
 		List<Ws_Reg4000Vo> data = new ArrayList<Ws_Reg4000Vo>();
-			data = iaAuditTxinsurHJdbcRepository.getDataFilter(formVo);
-
 		DataTableAjax<Ws_Reg4000Vo> dataTableAjax = new DataTableAjax<Ws_Reg4000Vo>();
+
+		if (formVo.getFlagSearch()) {
+			data = iaAuditTxinsurHJdbcRepository.getDataFilter(formVo);
+			dataTableAjax.setRecordsTotal(iaAuditTxinsurHJdbcRepository.countDatafilter(formVo));
+			dataTableAjax.setRecordsFiltered(iaAuditTxinsurHJdbcRepository.countDatafilter(formVo));
+		}
 		// dataTableAjax.setDraw(formVo.getDraw() + 1);
 		dataTableAjax.setData(data);
-		dataTableAjax.setRecordsTotal(iaAuditTxinsurHJdbcRepository.countDatafilter(formVo));
-		dataTableAjax.setRecordsFiltered(iaAuditTxinsurHJdbcRepository.countDatafilter(formVo));
 
 		return dataTableAjax;
 	}

@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Ws_Reg4000Vo {
 	
+	/* entity */
 	private Long wsReg4000Id;
 	private String newRegId;
 	private String cusId;
