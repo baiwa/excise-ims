@@ -13,7 +13,8 @@ import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
-import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.preferences.persistence.entity.ExciseDutyGroup;
+import th.go.excise.ims.preferences.persistence.repository.ExciseDutyGroupRepository;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondSubCapital;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondSubNoAudit;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondSubRisk;
@@ -37,6 +38,9 @@ public class MasterConditionSubService {
 	@Autowired
 	private TaMasCondSubRiskRepository riskRepository;
 
+	@Autowired
+	private ExciseDutyGroupRepository dutyGroupRepository; 
+	
 	public void insertCapital(MasCondSubCapitalFormVo form) {
 		TaMasCondSubCapital capital = null;
 		TaMasCondSubCapital oldCapital = null;
@@ -101,29 +105,28 @@ public class MasterConditionSubService {
 		return capitalList;
 	}
 	
-	public List<ParamInfo> getCapitalWithoutOld(TaMasCondSubCapital form) {
+	public List<ExciseDutyGroup> getCapitalWithoutOld(TaMasCondSubCapital form) {
 		List<TaMasCondSubCapital> capitalOld = new ArrayList<>();
-		List<ParamInfo> productService = null;
-		List<ParamInfo> remove = new ArrayList<>();
-		productService = new ArrayList<>();
-		productService.addAll(ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.EXCISE_PRODUCT_TYPE));
-		productService.addAll(ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.EXCISE_SERVICE_TYPE));
+		List<ExciseDutyGroup> remove = new ArrayList<>();
+		//get ExciseDutyGroup
+		List<ExciseDutyGroup> dutyGroupList = dutyGroupRepository.findAllByDutyGroupStatus(FLAG.N_FLAG);
 		capitalOld = capitalRepository.findByOfficeCodeAndBudgetYearNotTotal(UserLoginUtils.getCurrentUserBean().getOfficeCode(), form.getBudgetYear());
-		for (int i = 0; i < productService.size(); i++) {
-			String paramCode = productService.get(i).getParamCode();
+		for (int i = 0; i < dutyGroupList.size(); i++) {
+			String dutyGroupCode = dutyGroupList.get(i).getDutyGroupCode();
 			for (TaMasCondSubCapital old : capitalOld) {
-				if (paramCode.equals(old.getDutyCode())) {
-					remove.add(productService.get(i));
+				if (dutyGroupCode.equals(old.getDutyCode())) {
+					remove.add(dutyGroupList.get(i));
 				}
 			}
 		}
-		productService.removeAll(remove);
-		return productService;
+		dutyGroupList.removeAll(remove);
+		return dutyGroupList;
 	}
 
 	public TaMasCondSubCapital getCapitalByDutyCode(TaMasCondSubCapital form) {
 		TaMasCondSubCapital capital = new TaMasCondSubCapital();
-		if ("null".equals(form.getDutyCode())) {
+		String NULL = "null";
+		if (NULL.equals(form.getDutyCode())) {
 			capital = capitalRepository.findByOfficeCodeAndBudgetYearTotal(UserLoginUtils.getCurrentUserBean().getOfficeCode(), form.getBudgetYear());
 		} else {
 			capital = capitalRepository.findByOfficeCodeAndBudgetYearAndDutyCode(UserLoginUtils.getCurrentUserBean().getOfficeCode(), form.getBudgetYear(), form.getDutyCode());			
@@ -165,24 +168,21 @@ public class MasterConditionSubService {
 	
 	public List<MasCondSubRiskVo> getRiskByBudgetYear(TaMasCondSubRisk form) {
 		List<TaMasCondSubRisk> riskList = new ArrayList<>();
-		List<ParamInfo> riskInfo= new ArrayList<>();
 		List<MasCondSubRiskVo> riskListNew = new ArrayList<>();
-		//get EXCISE_PRODUCT_TYPE and EXCISE_SERVICE_TYPE
-		List<ParamInfo> paramInfoList = null;
-		paramInfoList = new ArrayList<>();
-		paramInfoList.addAll(ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.EXCISE_PRODUCT_TYPE));
-		paramInfoList.addAll(ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.EXCISE_SERVICE_TYPE));
+		//get ExciseDutyGroup
+		List<ExciseDutyGroup> dutyGroupList = dutyGroupRepository.findAllByDutyGroupStatus(FLAG.N_FLAG);
 		
 		MasCondSubRiskVo risk = null;
 		riskList = riskRepository.findByBudgetYearAndOfficeCode(form.getBudgetYear(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
-		if (CollectionUtils.isNotEmpty(riskList)) {
+		int zero = 0;
+		if (zero < riskList.size()) {
 			for (int i = 0; i < riskList.size(); i++) {
 				risk = new MasCondSubRiskVo();
 				risk.setDutyCode(riskList.get(i).getDutyCode());
 				risk.setRiskLevel(riskList.get(i).getRiskLevel());
-				for (ParamInfo paramInfo : paramInfoList) {
-					if (paramInfo.getParamCode().equals(risk.getDutyCode())) {
-						risk.setRiskDesc(paramInfo.getValue1());
+				for (ExciseDutyGroup dutyGroup : dutyGroupList) {
+					if (dutyGroup.getDutyGroupCode().equals(risk.getDutyCode())) {
+						risk.setRiskDesc(dutyGroup.getDutyGroupName());
 						break;
 					}
 				}
@@ -190,16 +190,10 @@ public class MasterConditionSubService {
 				riskListNew.add(risk);
 			}
 		} else {
-			riskInfo = ExciseUtils.getProductTypeAndServiceType();
-			for (int i = 0; i < riskInfo.size(); i++) {
+			for (ExciseDutyGroup dutyGroup : dutyGroupList) {
 				risk = new MasCondSubRiskVo();
-				risk.setDutyCode(riskInfo.get(i).getParamCode());
-				for (ParamInfo paramInfo : paramInfoList) {
-					if (paramInfo.getParamCode().equals(risk.getDutyCode())) {
-						risk.setRiskDesc(paramInfo.getValue1());
-						break;		
-					}
-				}
+				risk.setDutyCode(dutyGroup.getDutyGroupCode());
+				risk.setRiskDesc(dutyGroup.getDutyGroupName());
 				riskListNew.add(risk);
 			}
 		}
