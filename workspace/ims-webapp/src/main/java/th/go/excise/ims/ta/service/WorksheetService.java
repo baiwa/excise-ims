@@ -204,7 +204,7 @@ public class WorksheetService {
 			worksheetDtl.setUpdatedDate(LocalDateTime.now());
 
 			worksheetDtl.setLastAuditYear(taxDraftVo.getLastAuditYear());
-			if (StringUtils.isNotBlank(worksheetDtl.getLastAuditYear())) {
+			if (StringUtils.isNotBlank(worksheetDtl.getLastAuditYear()) && condSubNoAudit != null) {
 				int year = Integer.valueOf(worksheetHdr.getBudgetYear())
 						- Integer.valueOf(worksheetDtl.getLastAuditYear());
 				if (year >= Integer.valueOf(condSubNoAudit.getNoTaxAuditYearNum())) {
@@ -355,7 +355,12 @@ public class WorksheetService {
 		TaWorksheetCondSubNoAudit subNoAudit = taWorksheetCondSubNoAuditRepository
 				.findByAnalysisNumber(formVo.getAnalysisNumber());
 
-		obj.setYearCondSubNoAudit(subNoAudit.getNoTaxAuditYearNum().toString());
+		if (subNoAudit != null) {
+
+			obj.setYearCondSubNoAudit(subNoAudit.getNoTaxAuditYearNum().toString());
+		} else {
+			obj.setYearCondSubNoAudit("0");
+		}
 		obj.setYearMonthStart(ymStart);
 		obj.setYearMonthEnd(ymEnd);
 
@@ -488,6 +493,17 @@ public class WorksheetService {
 		vo.setCount(taWorksheetDtlRepository.countByCriteria(formVo));
 
 		return vo;
+	public List<String> getBudgetYearList() {
+
+		List<TaWorksheetHdr> entities = taWorksheetHdrRepository.findAll();
+		List<String> strList = new ArrayList<String>();
+		if (entities != null) {
+			for (TaWorksheetHdr entity : entities) {
+				strList.add(entity.getBudgetYear());
+			}
+		}
+
+		return strList;
 	}
 
 }

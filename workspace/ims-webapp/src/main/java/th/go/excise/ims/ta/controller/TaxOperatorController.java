@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -349,11 +350,13 @@ public class TaxOperatorController {
 
 		try {
 			planWorksheetService.savePlanWorksheetHdr(formVo);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 
@@ -371,7 +374,8 @@ public class TaxOperatorController {
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 
@@ -385,11 +389,13 @@ public class TaxOperatorController {
 
 		try {
 			planWorksheetService.savePlanWorksheetDtl(formVo);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 
@@ -426,7 +432,8 @@ public class TaxOperatorController {
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 
@@ -444,7 +451,8 @@ public class TaxOperatorController {
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 
@@ -458,7 +466,9 @@ public class TaxOperatorController {
 		// Assign OfficeCode
 		if (StringUtils.isEmpty(formVo.getOfficeCode())) {
 			String officeCode = userBean.getOfficeCode();
-			if (EXCISE_OFFICE_CODE.TA_CENTRAL_SELECTOR.equals(officeCode) || EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR1.equals(officeCode) || EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR2.equals(officeCode)) {
+			if (EXCISE_OFFICE_CODE.TA_CENTRAL_SELECTOR.equals(officeCode)
+					|| EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR1.equals(officeCode)
+					|| EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR2.equals(officeCode)) {
 				formVo.setOfficeCode(officeCode);
 			} else {
 				formVo.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(officeCode));
@@ -485,7 +495,8 @@ public class TaxOperatorController {
 			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 
@@ -500,10 +511,12 @@ public class TaxOperatorController {
 
 		try {
 			planWorksheetService.deletePlanWorksheetDlt(id);
-			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.SUCCESS_CODE).getMessageTh());
+			responseData.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.FAILED_CODE).getMessageTh());
+			responseData.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 
@@ -518,11 +531,13 @@ public class TaxOperatorController {
 
 		try {
 			planWorksheetService.savePlanWorksheetSendToArea(formVo);
-			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			responseData.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			responseData.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 
@@ -534,11 +549,11 @@ public class TaxOperatorController {
 	@ResponseBody
 	public DataTableAjax<PlanWorksheetDatatableVo> planDtlDatatableCentralApprove(@RequestBody PlanWorksheetVo formVo) {
 		UserBean userBean = UserLoginUtils.getCurrentUserBean();
-		if(ExciseUtils.isCentral(userBean.getOfficeCode())) {
+		if (ExciseUtils.isCentral(userBean.getOfficeCode())) {
 			formVo.setAuditStatus(TA_AUDIT_STATUS.CODE_0200);
 		}
 		if (StringUtils.isEmpty(formVo.getOfficeCode())) {
-				formVo.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(userBean.getOfficeCode()));
+			formVo.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(userBean.getOfficeCode()));
 		}
 		return planWorksheetService.planDtlDatatable(formVo);
 	}
@@ -550,7 +565,9 @@ public class TaxOperatorController {
 		// Assign OfficeCode
 		if (StringUtils.isEmpty(formVo.getOfficeCode())) {
 			String officeCode = userBean.getOfficeCode();
-			if (EXCISE_OFFICE_CODE.TA_CENTRAL_SELECTOR.equals(officeCode) || EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR1.equals(officeCode) || EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR2.equals(officeCode)) {
+			if (EXCISE_OFFICE_CODE.TA_CENTRAL_SELECTOR.equals(officeCode)
+					|| EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR1.equals(officeCode)
+					|| EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR2.equals(officeCode)) {
 				formVo.setOfficeCode(officeCode);
 			} else {
 				formVo.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(officeCode));
@@ -565,6 +582,7 @@ public class TaxOperatorController {
 		}
 		return planWorksheetService.planDtlDatatable(formVo);
 	}
+
 	@PostMapping("/plan-selected-by-offcode")
 	@ResponseBody
 	public DataTableAjax<PlanWorksheetDatatableVo> planDtlByOffCode(@RequestBody PlanWorksheetVo formVo) {
@@ -577,6 +595,7 @@ public class TaxOperatorController {
 		}
 		return planWorksheetService.planDtlDatatable(formVo);
 	}
+
 	@PostMapping("/plan-selected-by-offcode-assign")
 	@ResponseBody
 	public DataTableAjax<PlanWorksheetDatatableVo> planDtlByOffCodeAssign(@RequestBody PlanWorksheetVo formVo) {
@@ -589,8 +608,7 @@ public class TaxOperatorController {
 //		}
 		return planWorksheetService.planDtlDatatable(formVo);
 	}
-	
-	
+
 	@PostMapping("/get-plan-status")
 	@ResponseBody
 	public ResponseData<PlanWorksheetStatus> getPlanStatus(@RequestBody PlanWorksheetVo formVo) {
@@ -601,7 +619,8 @@ public class TaxOperatorController {
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 
@@ -615,11 +634,13 @@ public class TaxOperatorController {
 
 		try {
 			planWorksheetService.insertComment(formVo);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -636,7 +657,8 @@ public class TaxOperatorController {
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -649,17 +671,18 @@ public class TaxOperatorController {
 
 		try {
 			response.setData(planWorksheetService.savePlanWorksheetDtlByAssing(formVo));
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
 	}
-	
-	
+
 	@PostMapping("/update-plan-worksheetDtl-list")
 	@ResponseBody
 	public ResponseData<TaPlanWorksheetDtl> updateListPlanWorksheetDtl(@RequestBody PersonAssignForm formVo) {
@@ -667,11 +690,13 @@ public class TaxOperatorController {
 
 		try {
 			planWorksheetService.savePlanWorksheetDtlByAssingList(formVo);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -684,11 +709,13 @@ public class TaxOperatorController {
 
 		try {
 			planWorksheetService.saveStatusPlanWorksheetDtlByAssing(formVo, ProjectConstants.TA_AUDIT_STATUS.CODE_0301);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -701,18 +728,18 @@ public class TaxOperatorController {
 
 		try {
 			planWorksheetService.saveStatusPlanWorksheetDtlByAssing(formVo, ProjectConstants.TA_AUDIT_STATUS.CODE_0400);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
 	}
 
-
-	
 	@PostMapping("/find-all-analysis-number-head")
 	@ResponseBody
 	public ResponseData<List<TaWorksheetHdr>> findAllAnalysisNumberHead(@RequestBody TaxOperatorFormVo formVo) {
@@ -742,7 +769,8 @@ public class TaxOperatorController {
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 
@@ -757,11 +785,32 @@ public class TaxOperatorController {
 
 		try {
 			planWorksheetService.savePlanWorksheetSend(formVo);
-			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			responseData.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			responseData.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+
+		return responseData;
+	}
+
+	@GetMapping("/budgetYearList")
+	@ResponseBody
+	public ResponseData<List<String>> getBudgetYearList() {
+
+		ResponseData<List<String>> responseData = new ResponseData<>();
+
+		try {
+			responseData.setData(worksheetService.getBudgetYearList());
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 

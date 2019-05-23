@@ -434,10 +434,13 @@ public class DraftWorksheetService {
 		// ==> Save WorksheetCondSubNoAudit
 		//if (StringUtils.isNotBlank(formVo.getCondSub3())) {
 			TaMasCondSubNoAudit masCondSubNoAudit = taMasCondSubNoAuditRepository.findByBudgetYearAndOfficeCode(budgetYear, officeCode);
-			TaWorksheetCondSubNoAudit worksheetCondSubNoAudit = new TaWorksheetCondSubNoAudit();
-			worksheetCondSubNoAudit.setAnalysisNumber(analysisNumber);
-			worksheetCondSubNoAudit.setNoTaxAuditYearNum(masCondSubNoAudit.getNoTaxAuditYearNum());
-			taWorksheetCondSubNoAuditRepository.save(worksheetCondSubNoAudit);
+			if(masCondSubNoAudit!=null) {
+				
+				TaWorksheetCondSubNoAudit worksheetCondSubNoAudit = new TaWorksheetCondSubNoAudit();
+				worksheetCondSubNoAudit.setAnalysisNumber(analysisNumber);
+				worksheetCondSubNoAudit.setNoTaxAuditYearNum(masCondSubNoAudit.getNoTaxAuditYearNum());
+				taWorksheetCondSubNoAuditRepository.save(worksheetCondSubNoAudit);
+			}
 		//}
 
 		// ==> Save WorksheetHdr

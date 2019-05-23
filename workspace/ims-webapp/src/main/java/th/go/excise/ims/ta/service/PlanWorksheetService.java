@@ -75,7 +75,7 @@ public class PlanWorksheetService {
 
 	@Autowired
 	private TaWsReg4000Repository reg4000Repository;
-	
+
 	@Autowired
 	private ExciseSubdeptRepository exciseSubdeptRepository;
 
@@ -374,7 +374,7 @@ public class PlanWorksheetService {
 						continue;
 					}
 //					saveObjectTaPlanWorksheetSendToArea(formVo, sector.getOfficeCode());
-					saveObjectTaPlanWorksheetSendToSector(formVo,sector.getOfficeCode());
+					saveObjectTaPlanWorksheetSendToSector(formVo, sector.getOfficeCode());
 				}
 			}
 			if (ExciseUtils.isSector(officeCode)) {
@@ -556,7 +556,7 @@ public class PlanWorksheetService {
 	public void saveStatusPlanWorksheetDtlByAssing(ExcisePerson formVo, String status) {
 		taPlanWorksheetDtlRepository.updateStatusPlanWorksheetDtl(formVo, status);
 	}
-	
+
 	public void savePlanWorksheetDtlByAssingList(PersonAssignForm formVo) {
 		taPlanWorksheetDtlRepository.updateStatusPlanWorksheetDtlByList(formVo);
 

@@ -147,6 +147,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 				});
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	private void buildByCriteriaQuery(StringBuilder sql, List<Object> params, TaxOperatorFormVo formVo) {
 		sql.append(" SELECT R4000.CUS_FULLNAME , ");
 		sql.append("   R4000.FAC_FULLNAME , ");
