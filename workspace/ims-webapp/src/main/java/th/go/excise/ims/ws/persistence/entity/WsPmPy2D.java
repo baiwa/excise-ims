@@ -38,7 +38,7 @@ public class WsPmPy2D extends BaseEntity {
 	@Column(name = "PROCESS_DATE")
 	private LocalDate processDate;
 	@Column(name = "PY2_TOPIC_SEQ")
-	private String py2TopicSeq;
+	private Integer py2TopicSeq;
 	@Column(name = "PY2_TOPIC_NAME")
 	private String py2TopicName;
 	@Column(name = "PY2_TOPIC1_MAIN")
@@ -128,11 +128,11 @@ public class WsPmPy2D extends BaseEntity {
 		this.processDate = processDate;
 	}
 
-	public String getPy2TopicSeq() {
+	public Integer getPy2TopicSeq() {
 		return py2TopicSeq;
 	}
 
-	public void setPy2TopicSeq(String py2TopicSeq) {
+	public void setPy2TopicSeq(Integer py2TopicSeq) {
 		this.py2TopicSeq = py2TopicSeq;
 	}
 

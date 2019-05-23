@@ -10,7 +10,7 @@ public class Py2Detail {
 
 	@SerializedName("py2TopicSeq")
 	@Expose
-	private String py2TopicSeq;
+	private Integer py2TopicSeq;
 
 	@SerializedName("py2TopicName")
 	@Expose
@@ -44,11 +44,11 @@ public class Py2Detail {
 	@Expose
 	private String py2Topic7Remark;
 
-	public String getPy2TopicSeq() {
+	public Integer getPy2TopicSeq() {
 		return py2TopicSeq;
 	}
 
-	public void setPy2TopicSeq(String py2TopicSeq) {
+	public void setPy2TopicSeq(Integer py2TopicSeq) {
 		this.py2TopicSeq = py2TopicSeq;
 	}
 
