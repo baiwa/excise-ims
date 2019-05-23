@@ -15,7 +15,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
+import th.go.excise.ims.preferences.persistence.entity.ExciseDutyGroup;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondSubCapital;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondSubNoAudit;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondSubRisk;
@@ -52,8 +52,8 @@ public class MasterConditionSubController {
 	
 	@PostMapping("/get-capital-without-old")
 	@ResponseBody
-	public ResponseData<List<ParamInfo>> getCapitalWithoutOld(@RequestBody TaMasCondSubCapital form) {
-		ResponseData<List<ParamInfo>> response = new ResponseData<>();
+	public ResponseData<List<ExciseDutyGroup>> getCapitalWithoutOld(@RequestBody TaMasCondSubCapital form) {
+		ResponseData<List<ExciseDutyGroup>> response = new ResponseData<>();
 		try {
 			response.setData(masterConditionSubService.getCapitalWithoutOld(form));
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
