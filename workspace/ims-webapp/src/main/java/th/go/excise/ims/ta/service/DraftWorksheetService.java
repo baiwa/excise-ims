@@ -129,7 +129,7 @@ public class DraftWorksheetService {
 		final int MAX_MONTH = 36; // 3 years
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = formVo.getBudgetYear();
-		String taxCompareType = (taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYearAndCondNumber(officeCode, budgetYear, formVo.getCondNumber())).getTaxCompareType();
+		String compareType = (taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYearAndCondNumber(officeCode, budgetYear, formVo.getCondNumber())).getCompType();
 		formVo.setOfficeCode(officeCode);
 		
 		String ymStartReg4000 = null;
@@ -138,7 +138,7 @@ public class DraftWorksheetService {
 		String ymEndInc8000M = null;
 		List<LocalDate> subLocalDateList1 = new ArrayList<>();
 		List<LocalDate> subLocalDateList2 = new ArrayList<>();
-		if (TAX_COMPARE_TYPE.HALF.equals(taxCompareType)) {
+		if (TAX_COMPARE_TYPE.HALF.equals(compareType)) {
 			int dateRange = (formVo.getDateRange() / 2) - 1;
 			LocalDate localDateG1Start = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getDateStart().split("/")[1]), Integer.parseInt(formVo.getDateStart().split("/")[0]), 1));
 			LocalDate localDateG1End = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getDateEnd().split("/")[1]), Integer.parseInt(formVo.getDateEnd().split("/")[0]), 1));
@@ -162,7 +162,7 @@ public class DraftWorksheetService {
 			subLocalDateList1.addAll(LocalDateUtils.getLocalDateRange(localDateG1Start, localDateG1End));
 			subLocalDateList2.addAll(LocalDateUtils.getLocalDateRange(localDateG2Start, localDateG2End));
 		}
-		logger.debug("taxCompareType={}, ymStartReg4000={}, ymEndReg4000={}, ymStartInc8000M={}, ymEndInc8000M={}", taxCompareType, ymStartReg4000, ymEndReg4000, ymStartInc8000M, ymEndInc8000M);
+		logger.debug("taxCompareType={}, ymStartReg4000={}, ymEndReg4000={}, ymStartInc8000M={}, ymEndInc8000M={}", compareType, ymStartReg4000, ymEndReg4000, ymStartInc8000M, ymEndInc8000M);
 		logger.debug("subLocalDateList1.size()={}, subLocalDateList1={}", subLocalDateList1.size(), org.springframework.util.StringUtils.collectionToCommaDelimitedString(subLocalDateList1));
 		logger.debug("subLocalDateList2.size()={}, subLocalDateList2={}", subLocalDateList2.size(), org.springframework.util.StringUtils.collectionToCommaDelimitedString(subLocalDateList2));
 		
@@ -379,6 +379,7 @@ public class DraftWorksheetService {
 		conMainHdr.setYearMonthEnd(dateEnd);
 		conMainHdr.setCondGroupNum(String.valueOf(masCondMainHdr.getCondGroupNum()));
 		conMainHdr.setNewFacFlag(masCondMainHdr.getNewFacFlag());
+		conMainHdr.setCompType(masCondMainHdr.getCompType());
 		taWorksheetCondMainHdrRepository.save(conMainHdr);
 
 		// ==> Save WorksheetMainCondDtl
@@ -434,10 +435,13 @@ public class DraftWorksheetService {
 		// ==> Save WorksheetCondSubNoAudit
 		//if (StringUtils.isNotBlank(formVo.getCondSub3())) {
 			TaMasCondSubNoAudit masCondSubNoAudit = taMasCondSubNoAuditRepository.findByBudgetYearAndOfficeCode(budgetYear, officeCode);
-			TaWorksheetCondSubNoAudit worksheetCondSubNoAudit = new TaWorksheetCondSubNoAudit();
-			worksheetCondSubNoAudit.setAnalysisNumber(analysisNumber);
-			worksheetCondSubNoAudit.setNoTaxAuditYearNum(masCondSubNoAudit.getNoTaxAuditYearNum());
-			taWorksheetCondSubNoAuditRepository.save(worksheetCondSubNoAudit);
+			if(masCondSubNoAudit!=null) {
+				
+				TaWorksheetCondSubNoAudit worksheetCondSubNoAudit = new TaWorksheetCondSubNoAudit();
+				worksheetCondSubNoAudit.setAnalysisNumber(analysisNumber);
+				worksheetCondSubNoAudit.setNoTaxAuditYearNum(masCondSubNoAudit.getNoTaxAuditYearNum());
+				taWorksheetCondSubNoAuditRepository.save(worksheetCondSubNoAudit);
+			}
 		//}
 
 		// ==> Save WorksheetHdr

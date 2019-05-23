@@ -204,7 +204,7 @@ public class WorksheetService {
 			worksheetDtl.setUpdatedDate(LocalDateTime.now());
 
 			worksheetDtl.setLastAuditYear(taxDraftVo.getLastAuditYear());
-			if (StringUtils.isNotBlank(worksheetDtl.getLastAuditYear())) {
+			if (StringUtils.isNotBlank(worksheetDtl.getLastAuditYear()) && condSubNoAudit != null) {
 				int year = Integer.valueOf(worksheetHdr.getBudgetYear())
 						- Integer.valueOf(worksheetDtl.getLastAuditYear());
 				if (year >= Integer.valueOf(condSubNoAudit.getNoTaxAuditYearNum())) {
@@ -352,9 +352,15 @@ public class WorksheetService {
 				ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN), ConvertDateUtils.MM_YYYY,
 				ConvertDateUtils.LOCAL_TH);
 
-		TaWorksheetCondSubNoAudit subNoAudit = taWorksheetCondSubNoAuditRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
+		TaWorksheetCondSubNoAudit subNoAudit = taWorksheetCondSubNoAuditRepository
+				.findByAnalysisNumber(formVo.getAnalysisNumber());
 
-		obj.setYearCondSubNoAudit(subNoAudit.getNoTaxAuditYearNum().toString());
+		if (subNoAudit != null) {
+
+			obj.setYearCondSubNoAudit(subNoAudit.getNoTaxAuditYearNum().toString());
+		} else {
+			obj.setYearCondSubNoAudit("0");
+		}
 		obj.setYearMonthStart(ymStart);
 		obj.setYearMonthEnd(ymEnd);
 
@@ -459,6 +465,47 @@ public class WorksheetService {
 		}
 		logger.info("findAllAnalysisNumberHead officeCode={}, budgetYear={}", officeCode, budgetYear);
 		return taWorksheetHdrRepository.findAllAnalysisNumberHead(officeCode, budgetYear);
+	}
+
+	public TaxOperatorVo getWorksheetForAssign(TaxOperatorFormVo formVo) {
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		String budgetYear = ExciseUtils.getCurrentBudgetYear();
+		formVo.setBudgetYear(budgetYear);
+		logger.info("getWorksheet officeCode={}, budgetYear={}, analysisNumber={}", officeCode, budgetYear,
+				formVo.getAnalysisNumber());
+
+		if (StringUtils.isBlank(formVo.getAnalysisNumber())) {
+			formVo.setAnalysisNumber("");
+		}
+
+		TaxOperatorVo vo = new TaxOperatorVo();
+
+		if (StringUtils.isNotBlank(formVo.getArea()) && !CommonConstants.JsonStatus.SUCCESS.equals(formVo.getArea())) {
+			formVo.setOfficeCode(formVo.getArea());
+		} else if (StringUtils.isNotBlank(formVo.getSector())
+				&& !CommonConstants.JsonStatus.SUCCESS.equals(formVo.getSector())) {
+			formVo.setOfficeCode(formVo.getSector());
+		} else {
+			formVo.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+		}
+		List<TaxOperatorDetailVo> list = taWorksheetDtlRepository.findByCriteria(formVo);
+		vo.setDatas(TaxAuditUtils.prepareTaxOperatorDatatable(list, formVo));
+		vo.setCount(taWorksheetDtlRepository.countByCriteria(formVo));
+
+		return vo;
+	}
+
+	public List<String> getBudgetYearList() {
+
+		List<TaWorksheetHdr> entities = taWorksheetHdrRepository.findAll();
+		List<String> strList = new ArrayList<String>();
+		if (entities != null) {
+			for (TaWorksheetHdr entity : entities) {
+				strList.add(entity.getBudgetYear());
+			}
+		}
+
+		return strList;
 	}
 
 }

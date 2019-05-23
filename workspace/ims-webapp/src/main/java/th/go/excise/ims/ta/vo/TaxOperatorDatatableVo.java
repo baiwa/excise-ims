@@ -45,96 +45,9 @@ public class TaxOperatorDatatableVo {
 	private String condSubRiskDesc;
 	private String condSubNoAuditDesc;
 	private String lastAuditYear;
+	private String riskLevel;
 	private String riskLevelDesc;
 	private String regDate;
-
-	public String getRiskLevelDesc() {
-		return riskLevelDesc;
-	}
-
-	public void setRiskLevelDesc(String riskLevelDesc) {
-		this.riskLevelDesc = riskLevelDesc;
-	}
-
-	public String getLastAuditYear() {
-		return lastAuditYear;
-	}
-
-	public void setLastAuditYear(String lastAuditYear) {
-		this.lastAuditYear = lastAuditYear;
-	}
-
-	public String getCondSubCapitalDesc() {
-		return condSubCapitalDesc;
-	}
-
-	public void setCondSubCapitalDesc(String condSubCapitalDesc) {
-		this.condSubCapitalDesc = condSubCapitalDesc;
-	}
-
-	public String getCondSubRiskDesc() {
-		return condSubRiskDesc;
-	}
-
-	public void setCondSubRiskDesc(String condSubRiskDesc) {
-		this.condSubRiskDesc = condSubRiskDesc;
-	}
-
-	public String getCondSubNoAuditDesc() {
-		return condSubNoAuditDesc;
-	}
-
-	public void setCondSubNoAuditDesc(String condSubNoAuditDesc) {
-		this.condSubNoAuditDesc = condSubNoAuditDesc;
-	}
-
-	public String getCondSubCapital() {
-		return condSubCapital;
-	}
-
-	public void setCondSubCapital(String condSubCapital) {
-		this.condSubCapital = condSubCapital;
-	}
-
-	public String getCondSubRisk() {
-		return condSubRisk;
-	}
-
-	public void setCondSubRisk(String condSubRisk) {
-		this.condSubRisk = condSubRisk;
-	}
-
-	public String getCondSubNoAudit() {
-		return condSubNoAudit;
-	}
-
-	public void setCondSubNoAudit(String condSubNoAudit) {
-		this.condSubNoAudit = condSubNoAudit;
-	}
-
-	public String getRegCapital() {
-		return regCapital;
-	}
-
-	public void setRegCapital(String regCapital) {
-		this.regCapital = regCapital;
-	}
-
-	public String getCondTaxGrp() {
-		return condTaxGrp;
-	}
-
-	public void setCondTaxGrp(String condTaxGrp) {
-		this.condTaxGrp = condTaxGrp;
-	}
-
-	public String getSelectBy() {
-		return selectBy;
-	}
-
-	public void setSelectBy(String selectBy) {
-		this.selectBy = selectBy;
-	}
 
 	public String getCusFullname() {
 		return cusFullname;
@@ -359,6 +272,103 @@ public class TaxOperatorDatatableVo {
 	public void setTaxAmtList(List<String> taxAmtList) {
 		this.taxAmtList = taxAmtList;
 	}
+
+	public String getSelectBy() {
+		return selectBy;
+	}
+
+	public void setSelectBy(String selectBy) {
+		this.selectBy = selectBy;
+	}
+
+	public String getCondTaxGrp() {
+		return condTaxGrp;
+	}
+
+	public void setCondTaxGrp(String condTaxGrp) {
+		this.condTaxGrp = condTaxGrp;
+	}
+
+	public String getRegCapital() {
+		return regCapital;
+	}
+
+	public void setRegCapital(String regCapital) {
+		this.regCapital = regCapital;
+	}
+
+	public String getCondSubCapital() {
+		return condSubCapital;
+	}
+
+	public void setCondSubCapital(String condSubCapital) {
+		this.condSubCapital = condSubCapital;
+	}
+
+	public String getCondSubRisk() {
+		return condSubRisk;
+	}
+
+	public void setCondSubRisk(String condSubRisk) {
+		this.condSubRisk = condSubRisk;
+	}
+
+	public String getCondSubNoAudit() {
+		return condSubNoAudit;
+	}
+
+	public void setCondSubNoAudit(String condSubNoAudit) {
+		this.condSubNoAudit = condSubNoAudit;
+	}
+
+	public String getCondSubCapitalDesc() {
+		return condSubCapitalDesc;
+	}
+
+	public void setCondSubCapitalDesc(String condSubCapitalDesc) {
+		this.condSubCapitalDesc = condSubCapitalDesc;
+	}
+
+	public String getCondSubRiskDesc() {
+		return condSubRiskDesc;
+	}
+
+	public void setCondSubRiskDesc(String condSubRiskDesc) {
+		this.condSubRiskDesc = condSubRiskDesc;
+	}
+
+	public String getCondSubNoAuditDesc() {
+		return condSubNoAuditDesc;
+	}
+
+	public void setCondSubNoAuditDesc(String condSubNoAuditDesc) {
+		this.condSubNoAuditDesc = condSubNoAuditDesc;
+	}
+
+	public String getLastAuditYear() {
+		return lastAuditYear;
+	}
+
+	public void setLastAuditYear(String lastAuditYear) {
+		this.lastAuditYear = lastAuditYear;
+	}
+
+	public String getRiskLevel() {
+		return riskLevel;
+	}
+
+	public void setRiskLevel(String riskLevel) {
+		this.riskLevel = riskLevel;
+	}
+
+	public String getRiskLevelDesc() {
+		return riskLevelDesc;
+	}
+
+	public void setRiskLevelDesc(String riskLevelDesc) {
+		this.riskLevelDesc = riskLevelDesc;
+	}
+
 	public String getRegDate() {
 		return regDate;
 	}
