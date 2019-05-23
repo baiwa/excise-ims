@@ -26,7 +26,7 @@ public class WsPmPy2D extends BaseEntity {
 	@Column(name = "FORM_CODE")
 	private String formCode;
 	@Column(name = "DIV_SEQ")
-	private String divSeq;
+	private Integer divSeq;
 	@Column(name = "DIV_NAME")
 	private String divName;
 	@Column(name = "JOB_NAME")
@@ -80,13 +80,7 @@ public class WsPmPy2D extends BaseEntity {
 		this.formCode = formCode;
 	}
 
-	public String getDivSeq() {
-		return divSeq;
-	}
 
-	public void setDivSeq(String divSeq) {
-		this.divSeq = divSeq;
-	}
 
 	public String getDivName() {
 		return divName;
@@ -198,6 +192,14 @@ public class WsPmPy2D extends BaseEntity {
 
 	public void setPy2Topic7Remark(String py2Topic7Remark) {
 		this.py2Topic7Remark = py2Topic7Remark;
+	}
+
+	public Integer getDivSeq() {
+		return divSeq;
+	}
+
+	public void setDivSeq(Integer divSeq) {
+		this.divSeq = divSeq;
 	}
 
 }

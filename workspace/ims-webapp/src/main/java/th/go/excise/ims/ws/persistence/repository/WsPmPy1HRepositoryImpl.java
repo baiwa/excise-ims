@@ -15,7 +15,6 @@ import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
-import th.go.excise.ims.ws.persistence.entity.WsPmPy1D;
 import th.go.excise.ims.ws.persistence.entity.WsPmPy1H;
 
 public class WsPmPy1HRepositoryImpl implements WsPmPy1HRepositoryCustom {

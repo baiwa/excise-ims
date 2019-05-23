@@ -12,7 +12,7 @@ public class DivDetail {
 
 	@SerializedName("divSeq")
 	@Expose
-	private String divSeq;
+	private Integer divSeq;
 
 	@SerializedName("divName")
 	@Expose
@@ -22,13 +22,7 @@ public class DivDetail {
 	@Expose
 	private List<JobDetail> jobDetail;
 
-	public String getDivSeq() {
-		return divSeq;
-	}
-
-	public void setDivSeq(String divSeq) {
-		this.divSeq = divSeq;
-	}
+	
 
 	public String getDivName() {
 		return divName;
@@ -50,5 +44,14 @@ public class DivDetail {
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
 	}
+
+	public Integer getDivSeq() {
+		return divSeq;
+	}
+
+	public void setDivSeq(Integer divSeq) {
+		this.divSeq = divSeq;
+	}
+
 
 }
