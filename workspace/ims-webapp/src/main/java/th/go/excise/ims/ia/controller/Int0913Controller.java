@@ -15,6 +15,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.service.Int0913Service;
 import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
 import th.go.excise.ims.ia.vo.ExciseDepartmentVo;
@@ -52,11 +53,11 @@ public class Int0913Controller {
 		ResponseData response = new ResponseData();
 		try {
 			int0913Service.saveIaUtilityBill(request);
-			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -67,11 +68,11 @@ public class Int0913Controller {
 		ResponseData response = new ResponseData();
 		try {
 			int0913Service.deleteIaUtilityBillById(id);
-			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.DELETE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.DELETE.FAILED_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
