@@ -13,8 +13,11 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 @Table(name = "WS_PM_PY1_D")
 public class WsPmPy1D extends BaseEntity {
 
-	private static final long serialVersionUID = 506608583377558071L;
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 506608583377558071L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WS_PM_PY1_D_GEN")
 	@SequenceGenerator(name = "WS_PM_PY1_D_GEN", sequenceName = "WS_PM_PY1_D_SEQ", allocationSize = 1)

@@ -19,17 +19,26 @@ import th.go.excise.ims.ws.client.pm.py1.model.RequestData;
 @WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
 @ActiveProfiles(value = PROFILE.UNITTEST)
 public class SyncWsPmPy1ServiceTest {
-	
+
 	@Autowired
 	private SyncWsPmPy1Service syncWsPmPy1Service;
-	
+
 	@Test
-	public void test_syncData() throws IOException {
-		RequestData requestData = new RequestData();
-		requestData.setOfficeCode("020000");
-		requestData.setYear("2561");
-		
-		syncWsPmPy1Service.syncData(requestData);
+	public void test_syncData() throws IOException  {
+		String[] oCodeList = { "010000", "010100", "010200", "010300", "010400", "010500",  "010600", "010700", "010800", "010900", "011000" };
+//		String[] oCodeList = { "010600" };
+
+		for (String oCode : oCodeList) {
+			RequestData requestData = new RequestData();
+			requestData.setOfficeCode(oCode);
+			requestData.setYear("2561");
+
+//			try {
+				syncWsPmPy1Service.syncData(requestData);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+		}
 	}
-	
+
 }

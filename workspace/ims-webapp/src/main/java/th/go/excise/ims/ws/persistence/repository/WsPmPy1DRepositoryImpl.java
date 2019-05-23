@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +49,8 @@ public class WsPmPy1DRepositoryImpl implements WsPmPy1DRepositoryCustom {
 			"PY1D.TOPIC_NAME",
 			"PY1D.TOPIC_DESC",
 			"PY1D.TOPIC_ANSWER",
-			"PY1D.CREATED_BY",
-			"PY1D.CREATED_DATE"
+			"PY1D.CREATED_BY"
+//			"PY1D.CREATED_DATE"
 		));
 		
 		StringBuilder sql = new StringBuilder();
@@ -61,7 +62,7 @@ public class WsPmPy1DRepositoryImpl implements WsPmPy1DRepositoryCustom {
 		sql.append(org.springframework.util.StringUtils.collectionToDelimitedString(updateColumnNames, ","));
 		sql.append(" WHEN NOT MATCHED THEN ");
 		sql.append("   INSERT (" + org.springframework.util.StringUtils.collectionToDelimitedString(insertColumnNames, ",") + ") ");
-		sql.append("   VALUES (WS_PM_PY1_D_SEQ.NEXTVAL" + org.apache.commons.lang3.StringUtils.repeat(",?", insertColumnNames.size() - 1) + ") ");
+		sql.append("   VALUES (WS_PM_PY1_D_SEQ.NEXTVAL" + StringUtils.repeat(",?", insertColumnNames.size() - 1) + ") ");
 		
 		commonJdbcTemplate.batchUpdate(sql.toString(), pmPy1D, BATCH_SIZE, new ParameterizedPreparedStatementSetter<WsPmPy1D>() {
 			public void setValues(PreparedStatement ps, WsPmPy1D wsPmPy1D) throws SQLException {
@@ -72,6 +73,7 @@ public class WsPmPy1DRepositoryImpl implements WsPmPy1DRepositoryCustom {
 				paramList.add(wsPmPy1D.getTopicCode());
 				// Update Statement
 				paramList.add(wsPmPy1D.getTopicName());
+				
 				paramList.add(wsPmPy1D.getTopicDesc());
 				paramList.add(wsPmPy1D.getTopicAnswer());
 				paramList.add(FLAG.N_FLAG);
@@ -85,7 +87,7 @@ public class WsPmPy1DRepositoryImpl implements WsPmPy1DRepositoryCustom {
 				paramList.add(wsPmPy1D.getTopicDesc());
 				paramList.add(wsPmPy1D.getTopicAnswer());
 				paramList.add(SYSTEM_USER.BATCH);
-				paramList.add(LocalDateTime.now());
+//				paramList.add(LocalDateTime.now());
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
 			}
 		});
