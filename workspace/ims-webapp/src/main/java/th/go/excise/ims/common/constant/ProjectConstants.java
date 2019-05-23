@@ -82,4 +82,12 @@ public class ProjectConstants {
 		public static final String SURA = "4";
 	}
 	
+	public static class TA_RISK_LEVEL {
+		public static final String LOWER = "2";
+		public static final String LOW = "3";
+		public static final String MEDIUM = "4";
+		public static final String HIGH = "5";
+		public static final String HIGHER = "6";
+	}
+	
 }

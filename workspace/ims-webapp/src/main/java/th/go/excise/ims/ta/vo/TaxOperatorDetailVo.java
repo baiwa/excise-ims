@@ -88,6 +88,7 @@ public class TaxOperatorDetailVo {
 	private String condSubRiskDesc;
 	private String condSubNoAuditDesc;
 	private String lastAuditYear;
+	private String riskLevel;
 	private String riskLevelDesc;
 	private String regDate;
 
@@ -779,6 +780,14 @@ public class TaxOperatorDetailVo {
 		this.lastAuditYear = lastAuditYear;
 	}
 
+	public String getRiskLevel() {
+		return riskLevel;
+	}
+
+	public void setRiskLevel(String riskLevel) {
+		this.riskLevel = riskLevel;
+	}
+
 	public String getRiskLevelDesc() {
 		return riskLevelDesc;
 	}
@@ -794,4 +803,5 @@ public class TaxOperatorDetailVo {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
+
 }

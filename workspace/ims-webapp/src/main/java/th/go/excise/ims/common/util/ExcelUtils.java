@@ -1,6 +1,5 @@
 package th.go.excise.ims.common.util;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +14,6 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
-//import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -28,7 +25,11 @@ import com.monitorjbl.xlsx.StreamingReader;
 public abstract class ExcelUtils {
 
 	private static final String defaultDatePattern = "dd/MM/yyyy HH:mm:ss";
-
+	
+	public static final class FONT_NAME {
+		public static final String TH_SARABUN_PSK = "TH SarabunPSK";
+	}
+	
 	/**
 	 * This method for the type of data in the cell, extracts the data and returns
 	 * it as a string.

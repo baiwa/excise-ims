@@ -1,15 +1,12 @@
 package th.go.excise.ims.ta.util;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_OFFICE_CODE;
@@ -19,52 +16,59 @@ import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 
-@Component
 public class TaxAuditUtils {
 
 	private static final Logger logger = LoggerFactory.getLogger(TaxAuditUtils.class);
 
-	public static List<TaxOperatorDatatableVo> prepareTaxOperatorDatatable(
-			List<TaxOperatorDetailVo> taxOperatorDetailVoList, TaxOperatorFormVo formVo) {
+	public static List<TaxOperatorDatatableVo> prepareTaxOperatorDatatable(List<TaxOperatorDetailVo> taxOperatorDetailVoList, TaxOperatorFormVo formVo) {
+		logger.info("prepareTaxOperatorDatatable");
+		
 		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = new ArrayList<>();
 		TaxOperatorDatatableVo taxOperatorDatatableVo = null;
 		List<String> taxAmtList = null;
 		for (TaxOperatorDetailVo taxOperatorDetailVo : taxOperatorDetailVoList) {
 			taxOperatorDatatableVo = new TaxOperatorDatatableVo();
-			try {
-				BeanUtils.copyProperties(taxOperatorDatatableVo, taxOperatorDetailVo);
-			} catch (IllegalAccessException | InvocationTargetException e) {
-				logger.warn(e.getMessage());
-				taxOperatorDatatableVo.setCusFullname(taxOperatorDetailVo.getCusFullname());
-				taxOperatorDatatableVo.setFacFullname(taxOperatorDetailVo.getFacFullname());
-				taxOperatorDatatableVo.setFacAddress(taxOperatorDetailVo.getFacAddress());
-				taxOperatorDatatableVo.setOfficeCode(taxOperatorDetailVo.getOfficeCode());
-				taxOperatorDatatableVo.setSecCode(taxOperatorDetailVo.getSecCode());
-				taxOperatorDatatableVo.setSecDesc(taxOperatorDetailVo.getSecDesc());
-				taxOperatorDatatableVo.setAreaCode(taxOperatorDetailVo.getAreaCode());
-				taxOperatorDatatableVo.setAreaDesc(taxOperatorDetailVo.getAreaDesc());
-				taxOperatorDatatableVo.setWorksheetHdrId(taxOperatorDetailVo.getWorksheetHdrId());
-				taxOperatorDatatableVo.setDraftNumber(taxOperatorDetailVo.getDraftNumber());
-				taxOperatorDatatableVo.setNewRegId(taxOperatorDetailVo.getNewRegId());
-				taxOperatorDatatableVo.setSumTaxAmtG1(taxOperatorDetailVo.getSumTaxAmtG1());
-				taxOperatorDatatableVo.setSumTaxAmtG2(taxOperatorDetailVo.getSumTaxAmtG2());
-				taxOperatorDatatableVo.setTaxAmtChnPnt(taxOperatorDetailVo.getTaxAmtChnPnt());
-				taxOperatorDatatableVo.setTaxMonthNo(taxOperatorDetailVo.getTaxMonthNo());
-				taxOperatorDatatableVo.setSelectBy(taxOperatorDetailVo.getSelectBy());
-				taxOperatorDatatableVo.setCondTaxGrp(taxOperatorDetailVo.getCondTaxGrp());
-				taxOperatorDatatableVo.setRegCapital(taxOperatorDetailVo.getRegCapital());
-				taxOperatorDatatableVo.setCondSubCapital(taxOperatorDetailVo.getCondSubCapital());
-				taxOperatorDatatableVo.setCondSubRisk(taxOperatorDetailVo.getCondSubRisk());
-				taxOperatorDatatableVo.setCondSubNoAudit(taxOperatorDetailVo.getCondSubNoAudit());
-				taxOperatorDatatableVo.setCondSubCapitalDesc(taxOperatorDetailVo.getCondSubCapitalDesc());
-				taxOperatorDatatableVo.setCondSubRiskDesc(taxOperatorDetailVo.getCondSubRiskDesc());
-				taxOperatorDatatableVo.setCondSubNoAuditDesc(taxOperatorDetailVo.getCondSubNoAuditDesc());
-				taxOperatorDatatableVo.setLastAuditYear(taxOperatorDetailVo.getLastAuditYear());
-				taxOperatorDatatableVo.setRiskLevelDesc(taxOperatorDetailVo.getRiskLevelDesc());
-				taxOperatorDatatableVo.setRegDate(taxOperatorDetailVo.getRegDate());
-
-			}
-
+			taxOperatorDatatableVo.setCusFullname(taxOperatorDetailVo.getCusFullname());
+			taxOperatorDatatableVo.setFacFullname(taxOperatorDetailVo.getFacFullname());
+			taxOperatorDatatableVo.setFacAddress(taxOperatorDetailVo.getFacAddress());
+			taxOperatorDatatableVo.setOfficeCode(taxOperatorDetailVo.getOfficeCode());
+			taxOperatorDatatableVo.setSecCode(taxOperatorDetailVo.getSecCode());
+			taxOperatorDatatableVo.setSecDesc(taxOperatorDetailVo.getSecDesc());
+			taxOperatorDatatableVo.setAreaCode(taxOperatorDetailVo.getAreaCode());
+			taxOperatorDatatableVo.setAreaDesc(taxOperatorDetailVo.getAreaDesc());
+			taxOperatorDatatableVo.setWorksheetHdrId(taxOperatorDetailVo.getWorksheetHdrId());
+			taxOperatorDatatableVo.setDraftNumber(taxOperatorDetailVo.getDraftNumber());
+			taxOperatorDatatableVo.setNewRegId(taxOperatorDetailVo.getNewRegId());
+			taxOperatorDatatableVo.setSumTaxAmtG1(taxOperatorDetailVo.getSumTaxAmtG1());
+			taxOperatorDatatableVo.setSumTaxAmtG2(taxOperatorDetailVo.getSumTaxAmtG2());
+			taxOperatorDatatableVo.setTaxAmtChnPnt(taxOperatorDetailVo.getTaxAmtChnPnt());
+			taxOperatorDatatableVo.setTaxAmtSd(taxOperatorDetailVo.getTaxAmtSd());
+			taxOperatorDatatableVo.setTaxMonthNo(taxOperatorDetailVo.getTaxMonthNo());
+			taxOperatorDatatableVo.setTaxAuditLast3(taxOperatorDetailVo.getTaxAuditLast3());
+			taxOperatorDatatableVo.setTaxAuditLast2(taxOperatorDetailVo.getTaxAuditLast2());
+			taxOperatorDatatableVo.setTaxAuditLast1(taxOperatorDetailVo.getTaxAuditLast1());
+			taxOperatorDatatableVo.setOldRegId(taxOperatorDetailVo.getOldRegId());
+			taxOperatorDatatableVo.setLastedStatus(taxOperatorDetailVo.getLastedStatus());
+			taxOperatorDatatableVo.setRegStatus(taxOperatorDetailVo.getRegStatus());
+			taxOperatorDatatableVo.setTaxAmtMean(taxOperatorDetailVo.getTaxAmtMean());
+			taxOperatorDatatableVo.setTaxAmtMaxPnt(taxOperatorDetailVo.getTaxAmtMaxPnt());
+			taxOperatorDatatableVo.setTaxAmtMinPnt(taxOperatorDetailVo.getTaxAmtMinPnt());
+			taxOperatorDatatableVo.setDutyName(taxOperatorDetailVo.getDutyName());
+			taxOperatorDatatableVo.setOtherDutyName(taxOperatorDetailVo.getOtherDutyName());
+			taxOperatorDatatableVo.setSelectBy(taxOperatorDetailVo.getSelectBy());
+			taxOperatorDatatableVo.setCondTaxGrp(taxOperatorDetailVo.getCondTaxGrp());
+			taxOperatorDatatableVo.setRegCapital(taxOperatorDetailVo.getRegCapital());
+			taxOperatorDatatableVo.setCondSubCapital(taxOperatorDetailVo.getCondSubCapital());
+			taxOperatorDatatableVo.setCondSubRisk(taxOperatorDetailVo.getCondSubRisk());
+			taxOperatorDatatableVo.setCondSubNoAudit(taxOperatorDetailVo.getCondSubNoAudit());
+			taxOperatorDatatableVo.setCondSubCapitalDesc(taxOperatorDetailVo.getCondSubCapitalDesc());
+			taxOperatorDatatableVo.setCondSubRiskDesc(taxOperatorDetailVo.getCondSubRiskDesc());
+			taxOperatorDatatableVo.setCondSubNoAuditDesc(taxOperatorDetailVo.getCondSubNoAuditDesc());
+			taxOperatorDatatableVo.setLastAuditYear(taxOperatorDetailVo.getLastAuditYear());
+			taxOperatorDatatableVo.setRiskLevel(taxOperatorDetailVo.getRiskLevel());
+			taxOperatorDatatableVo.setRiskLevelDesc(taxOperatorDetailVo.getRiskLevelDesc());
+			taxOperatorDatatableVo.setRegDate(taxOperatorDetailVo.getRegDate());
+			
 			taxAmtList = new ArrayList<>();
 			for (int i = 0; i < formVo.getDateRange(); i++) {
 				taxAmtList.add(getTaxAmtByField(taxOperatorDetailVo, i, formVo.getDateRange()));

@@ -30,10 +30,11 @@ public class WorksheetExportServiceTest {
 	
 	//@Test
 	public void test_exportPreviewWorksheet() {
+		long start = System.currentTimeMillis();
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
 		formVo.setBudgetYear("2562");
-		formVo.setDateStart("05/2558");
-		formVo.setDateEnd("04/2560");
+		formVo.setDateStart("01/2560");
+		formVo.setDateEnd("12/2561");
 		formVo.setDateRange(24);
 		
 		String fileName = "previewWorksheet" + LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE) + ".xlsx";
@@ -45,6 +46,9 @@ public class WorksheetExportServiceTest {
 		} catch (IOException e) {
 			e.printStackTrace(System.out);
 		}
+		
+		long end = System.currentTimeMillis();
+		System.out.println("Process Success, using " + ((float) (end - start) / 1000F) + " seconds");
 	}
 	
 	//@Test
@@ -63,10 +67,10 @@ public class WorksheetExportServiceTest {
 		}
 	}
 	
-	//@Test
+	@Test
 	public void test_exportWorksheet() {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
-		formVo.setAnalysisNumber("000000-2562-000031");
+		formVo.setAnalysisNumber("001401-2562-000001");
 		
 		String fileName = "worksheet" + LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE) + ".xlsx";
 		
@@ -79,7 +83,7 @@ public class WorksheetExportServiceTest {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void exportCondSubWorksheet() {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
 		formVo.setAnalysisNumber("000000-2562-000031");
