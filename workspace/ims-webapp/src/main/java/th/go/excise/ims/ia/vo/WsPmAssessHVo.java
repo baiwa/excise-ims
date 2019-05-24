@@ -3,8 +3,6 @@ package th.go.excise.ims.ia.vo;
 import java.time.LocalDate;
 import java.util.List;
 
-import th.go.excise.ims.ws.persistence.entity.WsPmAssessD;
-
 public class WsPmAssessHVo {
 	/* entity */
 	private Long pmAssessHSeq;
@@ -23,7 +21,7 @@ public class WsPmAssessHVo {
 
 	/* custom */
 	private String processDateStr;
-	private List<WsPmAssessD> detail;
+	private List<WsPmAssessDVo> detail;
 
 	public Long getPmAssessHSeq() {
 		return pmAssessHSeq;
@@ -137,11 +135,11 @@ public class WsPmAssessHVo {
 		this.processDateStr = processDateStr;
 	}
 
-	public List<WsPmAssessD> getDetail() {
+	public List<WsPmAssessDVo> getDetail() {
 		return detail;
 	}
 
-	public void setDetail(List<WsPmAssessD> detail) {
+	public void setDetail(List<WsPmAssessDVo> detail) {
 		this.detail = detail;
 	}
 
