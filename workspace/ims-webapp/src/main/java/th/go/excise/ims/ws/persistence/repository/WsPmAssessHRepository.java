@@ -4,5 +4,5 @@ import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRe
 import th.go.excise.ims.ws.persistence.entity.WsPmAssessH;
 
 public interface WsPmAssessHRepository extends CommonJpaCrudRepository<WsPmAssessH, Long>, WsPmAssessHRepositoryCustom {
-
+	
 }
