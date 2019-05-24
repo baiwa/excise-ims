@@ -206,4 +206,9 @@ public class CommonJdbcTemplate extends JdbcTemplate {
 		return result;
 	}
 	
+	public long findOracleSeqBySeqName(String seqName) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT ").append(seqName).append(".NEXTVAL FROM DUAL");
+		return queryForObject(sql.toString(), Long.class);
+	}
 }
