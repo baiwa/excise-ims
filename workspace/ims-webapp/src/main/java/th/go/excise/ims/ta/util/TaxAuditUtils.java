@@ -2,19 +2,27 @@ package th.go.excise.ims.ta.util;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.chrono.ThaiBuddhistDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_OFFICE_CODE;
+import th.go.excise.ims.common.constant.ProjectConstants.TAX_COMPARE_TYPE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
+import th.go.excise.ims.ta.vo.WorksheetDateRangeVo;
 
 public class TaxAuditUtils {
 
@@ -238,6 +246,49 @@ public class TaxAuditUtils {
 		}
 
 		return taSectorList;
+	}
+	
+	/**
+	 * 
+	 * @param dateStart format MM/yyyy in ThaiBuddhist
+	 * @param dateEnd format MM/yyyy in ThaiBuddhist
+	 * @param dateRange
+	 * @param compType
+	 * @return
+	 */
+	public static WorksheetDateRangeVo getWorksheetDateRangeVo(String dateStart, String dateEnd, int dateRange, String compType) {
+		logger.debug("getWorksheetDateRangeVo dateStart={}, dateEnd={}, dateRange={}, compType={}", dateStart, dateEnd, dateRange, compType);
+		
+		WorksheetDateRangeVo vo = new WorksheetDateRangeVo();
+		LocalDate localDateG1Start = null;
+		LocalDate localDateG1End = null;
+		LocalDate localDateG2Start = null;
+		LocalDate localDateG2End = null;
+		if (TAX_COMPARE_TYPE.HALF.equals(compType)) {
+			int range = (dateRange / 2) - 1;
+			localDateG2Start = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(dateStart.split("/")[1]), Integer.parseInt(dateStart.split("/")[0]), 1));
+			localDateG2End = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(dateEnd.split("/")[1]), Integer.parseInt(dateEnd.split("/")[0]), 1));
+			localDateG1End = localDateG2Start.minus(1, ChronoUnit.MONTHS);
+			localDateG1Start = localDateG1End.minus(range, ChronoUnit.MONTHS);
+		} else {
+			localDateG2Start = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(dateStart.split("/")[1]), Integer.parseInt(dateStart.split("/")[0]), 1));
+			localDateG2End = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(dateEnd.split("/")[1]), Integer.parseInt(dateEnd.split("/")[0]), 1));
+			localDateG1Start = localDateG2Start.minus(1, ChronoUnit.YEARS);
+			localDateG1End = localDateG2End.minus(1, ChronoUnit.YEARS);
+		}
+		vo.setYmStartInc8000M(localDateG1Start.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
+		vo.setYmEndInc8000M(localDateG2End.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
+		vo.setSubLocalDateG1List(LocalDateUtils.getLocalDateRange(localDateG1Start, localDateG1End));
+		vo.setSubLocalDateG2List(LocalDateUtils.getLocalDateRange(localDateG2Start, localDateG2End));
+		logger.debug("localDateG1Start={}", localDateG1Start);
+		logger.debug("localDateG1End  ={}", localDateG1End);
+		logger.debug("localDateG2Start={}", localDateG2Start);
+		logger.debug("localDateG2End  ={}", localDateG2End);
+		logger.debug("taxCompareType={}, ymStartReg4000={}, ymEndReg4000={}, ymStartInc8000M={}, ymEndInc8000M={}", compType, vo.getYmStartReg4000(), vo.getYmEndReg4000(), vo.getYmStartInc8000M(), vo.getYmEndInc8000M());
+		logger.debug("subLocalDateList1.size()={}, subLocalDateList1={}", vo.getSubLocalDateG1List().size(), org.springframework.util.StringUtils.collectionToCommaDelimitedString(vo.getSubLocalDateG1List()));
+		logger.debug("subLocalDateList2.size()={}, subLocalDateList2={}", vo.getSubLocalDateG2List().size(), org.springframework.util.StringUtils.collectionToCommaDelimitedString(vo.getSubLocalDateG2List()));
+		
+		return vo;
 	}
 
 }

@@ -30,6 +30,9 @@ public abstract class ExcelUtils {
 		public static final String TH_SARABUN_PSK = "TH SarabunPSK";
 	}
 	
+	public static final int COLUMN_WIDTH_UNIT = 256;
+	public static final int COLUMN_HEIGHT_UNIT = 20;
+	
 	/**
 	 * This method for the type of data in the cell, extracts the data and returns
 	 * it as a string.
@@ -110,8 +113,8 @@ public abstract class ExcelUtils {
 		return tdStyle;
 	}
 
-	public static XSSFCellStyle createCenterCellStyle(XSSFWorkbook workbook) {
-		XSSFCellStyle cellCenter = workbook.createCellStyle();
+	public static XSSFCellStyle createCenterCellStyle(Workbook workbook) {
+		XSSFCellStyle cellCenter = (XSSFCellStyle) workbook.createCellStyle();
 		cellCenter.setAlignment(HorizontalAlignment.CENTER);
 		cellCenter.setVerticalAlignment(VerticalAlignment.TOP);
 		cellCenter.setBorderBottom(BorderStyle.THIN);
@@ -122,8 +125,8 @@ public abstract class ExcelUtils {
 		return cellCenter;
 	}
 
-	public static XSSFCellStyle createRightCellStyle(XSSFWorkbook workbook) {
-		XSSFCellStyle cellRight = workbook.createCellStyle();
+	public static XSSFCellStyle createRightCellStyle(Workbook workbook) {
+		XSSFCellStyle cellRight = (XSSFCellStyle) workbook.createCellStyle();
 		cellRight.setAlignment(HorizontalAlignment.RIGHT);
 		cellRight.setVerticalAlignment(VerticalAlignment.TOP);
 		cellRight.setBorderBottom(BorderStyle.THIN);
@@ -134,8 +137,8 @@ public abstract class ExcelUtils {
 		return cellRight;
 	}
 
-	public static XSSFCellStyle createLeftCellStyle(XSSFWorkbook workbook) {
-		XSSFCellStyle cellLeft = workbook.createCellStyle();
+	public static XSSFCellStyle createLeftCellStyle(Workbook workbook) {
+		XSSFCellStyle cellLeft = (XSSFCellStyle) workbook.createCellStyle();
 		cellLeft.setAlignment(HorizontalAlignment.LEFT);
 		cellLeft.setVerticalAlignment(VerticalAlignment.TOP);
 		cellLeft.setBorderBottom(BorderStyle.THIN);
@@ -146,8 +149,9 @@ public abstract class ExcelUtils {
 		return cellLeft;
 	}
 
-	public static XSSFCellStyle createThColorStyle(XSSFWorkbook workbook, XSSFColor color) {
-		XSSFCellStyle thColor = workbook.createCellStyle();
+	public static XSSFCellStyle createThColorStyle(Workbook workbook, XSSFColor color) {
+		XSSFCellStyle thColor = null;
+		thColor = (XSSFCellStyle) workbook.createCellStyle();
 		thColor.setFillForegroundColor(color);
 		thColor.setAlignment(HorizontalAlignment.CENTER);
 		thColor.setVerticalAlignment(VerticalAlignment.CENTER);
