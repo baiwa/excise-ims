@@ -47,7 +47,7 @@ public class Int1302Controller {
 		ResponseData<String> response = new ResponseData<String>();
 		try {
 //			response.setData(int1302Service.list(form));
-			int1302Service.saveData(form);
+//			int1302Service.saveData(form);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
