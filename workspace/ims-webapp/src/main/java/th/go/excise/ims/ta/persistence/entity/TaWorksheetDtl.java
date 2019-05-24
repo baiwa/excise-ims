@@ -83,7 +83,6 @@ public class TaWorksheetDtl extends BaseEntity {
 	private String taxAmtG1M17;
 	@Column(name = "TAX_AMT_G1_M18")
 	private String taxAmtG1M18;
-
 	@Column(name = "TAX_AMT_G2_M1")
 	private String taxAmtG2M1;
 	@Column(name = "TAX_AMT_G2_M2")
@@ -129,6 +128,22 @@ public class TaWorksheetDtl extends BaseEntity {
 	private String condSubNoAudit;
 	@Column(name = "LAST_AUDIT_YEAR")
 	private String lastAuditYear;
+	@Column(name = "COND_G1")
+	private String condG1;
+	@Column(name = "COND_G2")
+	private String condG2;
+	@Column(name = "COND_G3")
+	private String condG3;
+	@Column(name = "COND_G4")
+	private String condG4;
+	@Column(name = "COND_G5")
+	private String condG5;
+	@Column(name = "COND_G6")
+	private String condG6;
+	@Column(name = "COND_REG_DATE")
+	private String condRegDate;
+	@Column(name = "COND_SORTING")
+	private Integer condSorting;
 
 	public Long getWorksheetDtlId() {
 		return worksheetDtlId;
@@ -569,4 +584,69 @@ public class TaWorksheetDtl extends BaseEntity {
 	public void setLastAuditYear(String lastAuditYear) {
 		this.lastAuditYear = lastAuditYear;
 	}
+
+	public String getCondG1() {
+		return condG1;
+	}
+
+	public void setCondG1(String condG1) {
+		this.condG1 = condG1;
+	}
+
+	public String getCondG2() {
+		return condG2;
+	}
+
+	public void setCondG2(String condG2) {
+		this.condG2 = condG2;
+	}
+
+	public String getCondG3() {
+		return condG3;
+	}
+
+	public void setCondG3(String condG3) {
+		this.condG3 = condG3;
+	}
+
+	public String getCondG4() {
+		return condG4;
+	}
+
+	public void setCondG4(String condG4) {
+		this.condG4 = condG4;
+	}
+
+	public String getCondG5() {
+		return condG5;
+	}
+
+	public void setCondG5(String condG5) {
+		this.condG5 = condG5;
+	}
+
+	public String getCondG6() {
+		return condG6;
+	}
+
+	public void setCondG6(String condG6) {
+		this.condG6 = condG6;
+	}
+
+	public String getCondRegDate() {
+		return condRegDate;
+	}
+
+	public void setCondRegDate(String condRegDate) {
+		this.condRegDate = condRegDate;
+	}
+
+	public Integer getCondSorting() {
+		return condSorting;
+	}
+
+	public void setCondSorting(Integer condSorting) {
+		this.condSorting = condSorting;
+	}
+
 }

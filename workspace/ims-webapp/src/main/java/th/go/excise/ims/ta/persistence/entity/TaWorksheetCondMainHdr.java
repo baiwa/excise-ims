@@ -1,5 +1,7 @@
 package th.go.excise.ims.ta.persistence.entity;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,6 +39,10 @@ public class TaWorksheetCondMainHdr extends BaseEntity {
 	private String newFacFlag;
 	@Column(name = "COMP_TYPE")
 	private String compType;
+	@Column(name = "REG_DATE_START")
+	private LocalDate regDateStart;
+	@Column(name = "REG_DATE_END")
+	private LocalDate regDateEnd;
 
 	public Long getWorksheetCondMainHdrId() {
 		return worksheetCondMainHdrId;
@@ -108,6 +114,22 @@ public class TaWorksheetCondMainHdr extends BaseEntity {
 
 	public void setCompType(String compType) {
 		this.compType = compType;
+	}
+
+	public LocalDate getRegDateStart() {
+		return regDateStart;
+	}
+
+	public void setRegDateStart(LocalDate regDateStart) {
+		this.regDateStart = regDateStart;
+	}
+
+	public LocalDate getRegDateEnd() {
+		return regDateEnd;
+	}
+
+	public void setRegDateEnd(LocalDate regDateEnd) {
+		this.regDateEnd = regDateEnd;
 	}
 
 }
