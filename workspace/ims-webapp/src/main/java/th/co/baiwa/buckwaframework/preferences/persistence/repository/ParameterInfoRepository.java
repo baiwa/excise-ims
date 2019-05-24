@@ -14,4 +14,5 @@ public interface ParameterInfoRepository extends CommonJpaPagingAndSortingReposi
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.paramGroupCode = :paramGroupCode order by e.sortingOrder")
 	public List<ParameterInfo> findByParamGroupCode(@Param("paramGroupCode") String paramGroupCode);
 	
+	ParameterInfo findByParamGroupCodeAndParamCode(String paramGroupCode, String paramCode);
 }

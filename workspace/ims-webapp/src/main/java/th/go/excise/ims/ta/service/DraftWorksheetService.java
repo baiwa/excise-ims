@@ -27,6 +27,10 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CONFIG;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.ParameterInfoRepository;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.constant.ProjectConstants.TAX_COMPARE_TYPE;
@@ -235,7 +239,7 @@ public class DraftWorksheetService {
 				detailVo.setAreaCode(exciseDeptArea.getOfficeCode());
 				detailVo.setAreaDesc(exciseDeptArea.getDeptShortName());
 			}
-
+			
 			incomeMap = taWsInc8000MRepository.findByMonthRangeDuty(wsReg4000.getNewRegId(), wsReg4000.getDutyCode(), ymStartInc8000M, ymEndInc8000M);
 			if (incomeMap == null) {
 				// Set Default Value

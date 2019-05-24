@@ -20,6 +20,8 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CONFIG;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.ParameterInfoRepository;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ta.persistence.entity.TaWsInc8000M;
 import th.go.excise.ims.ta.vo.AnalysisFormVo;
@@ -27,9 +29,12 @@ import th.go.excise.ims.ta.vo.AnalysisFormVo;
 public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom {
 
 	private static final Logger logger = LoggerFactory.getLogger(TaWsInc8000MRepositoryImpl.class);
-
+	private static String TYPE = "";
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
+	
+	@Autowired
+	private ParameterInfoRepository parameterInfoRepository;
 
 	@Override
 	public Map<String, List<TaWsInc8000M>> findByMonthRange(String startMonth, String endMonth) {
@@ -106,13 +111,18 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 		paramList.add(endMonth);
 		
 		//==> Check TAX, NET
-		String value = ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.INCOME_TYPE).getValue1();
+		ParameterInfo taxType = parameterInfoRepository.findByParamGroupCodeAndParamCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.INCOME_TYPE);
+		
+		if(taxType != null) {
+			TYPE = taxType.getValue1();
+		}
+		//String value = ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.INCOME_TYPE).getValue1();
 
 		Map<String, BigDecimal> incfri8000MMap = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), new ResultSetExtractor<Map<String, BigDecimal>>() {
 			public Map<String, BigDecimal> extractData(ResultSet rs) throws SQLException, DataAccessException {
 				Map<String, BigDecimal> incomeMap = new HashMap<>();
 				while (rs.next()) {
-					if (TA_CONFIG.INCOME_TYPE_TAX.equals(value)) {
+					if (TA_CONFIG.INCOME_TYPE_TAX.equals(TYPE)) {
 						incomeMap.put(rs.getString("YEAR_MONTH"), rs.getBigDecimal("TAX_AMOUNT"));
 					} else {
 						incomeMap.put(rs.getString("YEAR_MONTH"), rs.getBigDecimal("NET_TAX_AMOUNT"));
