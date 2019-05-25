@@ -1,5 +1,6 @@
 package th.go.excise.ims.ta.service;
 
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -22,6 +23,7 @@ import th.co.baiwa.buckwaframework.common.bean.LabelValueBean;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_MAIN_COND_RANGE;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_SUB_COND_CAPITAL;
@@ -99,8 +101,7 @@ public class WorksheetService {
 		List<TaxDraftVo> taxDraftVoList = taWorksheetDtlRepository.findByAnalysisNumber(analysisNumber);
 		// Main Condition
 		TaWorksheetCondMainHdr condMainHdr = taWorksheetCondMainHdrRepository.findByAnalysisNumber(analysisNumber);
-		List<TaWorksheetCondMainDtl> condMainDtlList = taWorksheetCondMainDtlRepository
-				.findByAnalysisNumber(analysisNumber);
+		List<TaWorksheetCondMainDtl> condMainDtlList = taWorksheetCondMainDtlRepository.findByAnalysisNumber(analysisNumber);
 		String indexLastCondition = null;
 		for (TaWorksheetCondMainDtl condMainDtl : condMainDtlList) {
 			if (TA_MAS_COND_MAIN_TYPE.OTHER.equals(condMainDtl.getCondType())) {
@@ -110,31 +111,29 @@ public class WorksheetService {
 		}
 		// Sub Condition - Capital
 		BigDecimal ONE_MILLION = new BigDecimal(1000000);
-		Map<String, MasCondSubCapitalFormVo> condSubCapitalMap = taWorksheetCondSubCapitalRepository
-				.findByAnalysisNumber(analysisNumber).stream()
-				.collect(Collectors.toMap(e -> StringUtils.defaultIfBlank(e.getDutyCode(), StringUtils.EMPTY), e -> {
-					MasCondSubCapitalFormVo condSubCapitalVo = new MasCondSubCapitalFormVo();
-					condSubCapitalVo.setHugeCapitalAmount(e.getHugeCapitalAmount().multiply(ONE_MILLION));
-					condSubCapitalVo.setLargeCapitalAmount(e.getLargeCapitalAmount().multiply(ONE_MILLION));
-					condSubCapitalVo.setMediumCapitalAmount(e.getMediumCapitalAmount().multiply(ONE_MILLION));
-					condSubCapitalVo.setSmallCapitalAmount(e.getSmallCapitalAmount().multiply(ONE_MILLION));
-					return condSubCapitalVo;
-				}));
+		Map<String, MasCondSubCapitalFormVo> condSubCapitalMap = taWorksheetCondSubCapitalRepository.findByAnalysisNumber(analysisNumber)
+			.stream()
+			.collect(Collectors.toMap(e -> StringUtils.defaultIfBlank(e.getDutyCode(), StringUtils.EMPTY), e -> {
+				MasCondSubCapitalFormVo condSubCapitalVo = new MasCondSubCapitalFormVo();
+				condSubCapitalVo.setHugeCapitalAmount(e.getHugeCapitalAmount().multiply(ONE_MILLION));
+				condSubCapitalVo.setLargeCapitalAmount(e.getLargeCapitalAmount().multiply(ONE_MILLION));
+				condSubCapitalVo.setMediumCapitalAmount(e.getMediumCapitalAmount().multiply(ONE_MILLION));
+				condSubCapitalVo.setSmallCapitalAmount(e.getSmallCapitalAmount().multiply(ONE_MILLION));
+				return condSubCapitalVo;
+			}));
 		// Sub Condition - Risk
-		Map<String, TaWorksheetCondSubRisk> condSubRiskMap = taWorksheetCondSubRiskRepository
-				.findByAnalysisNumber(analysisNumber).stream()
-				.collect(Collectors.toMap(e -> e.getDutyCode(), Function.identity()));
+		Map<String, TaWorksheetCondSubRisk> condSubRiskMap = taWorksheetCondSubRiskRepository.findByAnalysisNumber(analysisNumber)
+			.stream()
+			.collect(Collectors.toMap(e -> e.getDutyCode(), Function.identity()));
 		// Sub Condition - No Audit
-		TaWorksheetCondSubNoAudit condSubNoAudit = taWorksheetCondSubNoAuditRepository
-				.findByAnalysisNumber(analysisNumber);
+		TaWorksheetCondSubNoAudit condSubNoAudit = taWorksheetCondSubNoAuditRepository.findByAnalysisNumber(analysisNumber);
 		List<String> budgetYearList = new ArrayList<>();
 		Map<String, String> condSubNoAuditMap = new HashMap<>();
 		if (condSubNoAudit != null) {
 			for (int i = 0; i < condSubNoAudit.getNoTaxAuditYearNum(); i++) {
 				budgetYearList.add(String.valueOf(Integer.parseInt(budgetYear) - (i + 1)));
 			}
-			condSubNoAuditMap = taPlanWorksheetHisRepository.findAuditPlanCodeByOfficeCodeAndBudgetYearList(officeCode,
-					budgetYearList);
+			condSubNoAuditMap = taPlanWorksheetHisRepository.findAuditPlanCodeByOfficeCodeAndBudgetYearList(officeCode, budgetYearList);
 		}
 
 		// ==> Assessment Condition
@@ -165,8 +164,7 @@ public class WorksheetService {
 				} else {
 					regDate = MAX_DATE;
 				}
-				if (regDate.compareTo(condMainHdr.getYearMonthStart()) >= 0
-						&& regDate.compareTo(condMainHdr.getYearMonthEnd()) <= 0) {
+				if (regDate.compareTo(condMainHdr.getYearMonthStart()) >= 0 && regDate.compareTo(condMainHdr.getYearMonthEnd()) <= 0) {
 					worksheetDtl.setCondMainGrp(indexLastCondition);
 				} else {
 					// Check Case T
@@ -180,8 +178,7 @@ public class WorksheetService {
 					}
 				}
 			}
-			logger.debug("newRegId=" + taxDraftVo.getNewRegId() + "\ttaxAmtChnPnt=" + taxDraftVo.getTaxAmtChnPnt()
-					+ "\tcondMainGrp=" + worksheetDtl.getCondMainGrp());
+			//logger.debug("newRegId=" + taxDraftVo.getNewRegId() + "\ttaxAmtChnPnt=" + taxDraftVo.getTaxAmtChnPnt() + "\tcondMainGrp=" + worksheetDtl.getCondMainGrp());
 
 			// ==> Assessment Sub Condition - Capital
 			if (FLAG.Y_FLAG.equals(worksheetHdr.getCondSubCapitalFlag())) {
@@ -195,22 +192,43 @@ public class WorksheetService {
 			}
 
 			// ==> Assessment Sub Condition - No Audit
-			// if (FLAG.Y_FLAG.equals(worksheetHdr.getCondSubRiskFlag())) {
 			if (FLAG.Y_FLAG.equals(worksheetHdr.getCondSubNoAuditFlag())) {
 				worksheetDtl.setCondSubNoAudit(isConditionSubNoAudit(condSubNoAuditMap, budgetYearList, taxDraftVo));
 			}
 
+			worksheetDtl.setLastAuditYear(taxDraftVo.getLastAuditYear());
 			worksheetDtl.setUpdatedBy(UserLoginUtils.getCurrentUsername());
 			worksheetDtl.setUpdatedDate(LocalDateTime.now());
-
-			worksheetDtl.setLastAuditYear(taxDraftVo.getLastAuditYear());
-			if (StringUtils.isNotBlank(worksheetDtl.getLastAuditYear()) && condSubNoAudit != null) {
-				int year = Integer.valueOf(worksheetHdr.getBudgetYear())
-						- Integer.valueOf(worksheetDtl.getLastAuditYear());
-				if (year >= Integer.valueOf(condSubNoAudit.getNoTaxAuditYearNum())) {
-					worksheetDtl.setCondSubNoAudit(FLAG.Y_FLAG);
+			
+			// Start check new Condition
+			int condSorting = 0;
+			if (LocalDateUtils.isRange(condMainHdr.getRegDateStart(), condMainHdr.getRegDateEnd(), taxDraftVo.getRegDate())) {
+				worksheetDtl.setCondRegDate(FLAG.Y_FLAG);
+			}
+			
+			if (!FLAG.Y_FLAG.equals(worksheetDtl.getCondRegDate())) {
+				if (StringUtils.isNotBlank(worksheetDtl.getLastAuditYear()) && condSubNoAudit != null) {
+					int year = Integer.valueOf(worksheetHdr.getBudgetYear()) - Integer.valueOf(worksheetDtl.getLastAuditYear());
+					if (year >= Integer.valueOf(condSubNoAudit.getNoTaxAuditYearNum())) {
+						worksheetDtl.setCondSubNoAudit(FLAG.Y_FLAG);
+						// Condition G1
+						worksheetDtl.setCondG1(FLAG.Y_FLAG);
+						condSorting++;
+					}
+				}
+				
+				// Condition G2, G3
+				for (TaWorksheetCondMainDtl condMainDtl : condMainDtlList) {
+					if (TA_MAS_COND_MAIN_TYPE.TAX.equals(condMainDtl.getCondType())) {
+						if (isConditionGroup(condMainDtl, taxDraftVo)) {
+							setConnGroup(worksheetDtl, condMainDtl.getCondGroup());
+							condSorting++;
+						}
+					}
 				}
 			}
+			worksheetDtl.setCondSorting(condSorting);
+			
 			worksheetDtlList.add(worksheetDtl);
 		}
 		taWorksheetDtlRepository.batchUpdate(worksheetDtlList);
@@ -226,8 +244,7 @@ public class WorksheetService {
 				if (TA_MAIN_COND_RANGE.LESS_THAN.equals(worksheetCondMainDtl.getRangeTypeEnd())) {
 					condGroup = NumberUtils.isGreaterThan(rangeStart, value) && NumberUtils.isLessThan(rangeEnd, value);
 				} else if (TA_MAIN_COND_RANGE.LESS_THAN_OR_EQUALS.equals(worksheetCondMainDtl.getRangeTypeEnd())) {
-					condGroup = NumberUtils.isGreaterThan(rangeStart, value)
-							&& NumberUtils.isLessThanOrEquals(rangeEnd, value);
+					condGroup = NumberUtils.isGreaterThan(rangeStart, value) && NumberUtils.isLessThanOrEquals(rangeEnd, value);
 				} else {
 					condGroup = NumberUtils.isGreaterThan(rangeStart, value);
 				}
@@ -237,11 +254,9 @@ public class WorksheetService {
 		} else if (TA_MAIN_COND_RANGE.GREATER_THAN_OR_EQUALS.equals(worksheetCondMainDtl.getRangeTypeStart())) {
 			if (rangeEnd != null) {
 				if (TA_MAIN_COND_RANGE.LESS_THAN.equals(worksheetCondMainDtl.getRangeTypeEnd())) {
-					condGroup = NumberUtils.isGreaterThanOrEquals(rangeStart, value)
-							&& NumberUtils.isLessThan(rangeEnd, value);
+					condGroup = NumberUtils.isGreaterThanOrEquals(rangeStart, value) && NumberUtils.isLessThan(rangeEnd, value);
 				} else if (TA_MAIN_COND_RANGE.LESS_THAN_OR_EQUALS.equals(worksheetCondMainDtl.getRangeTypeEnd())) {
-					condGroup = NumberUtils.isGreaterThanOrEquals(rangeStart, value)
-							&& NumberUtils.isLessThanOrEquals(rangeEnd, value);
+					condGroup = NumberUtils.isGreaterThanOrEquals(rangeStart, value) && NumberUtils.isLessThanOrEquals(rangeEnd, value);
 				} else {
 					condGroup = NumberUtils.isGreaterThanOrEquals(rangeStart, value);
 				}
@@ -256,8 +271,8 @@ public class WorksheetService {
 			condGroup = NumberUtils.isLessThan(rangeStart, value);
 		}
 		return taxDratfVo.getTaxMonthNo().intValue() >= worksheetCondMainDtl.getTaxMonthStart().intValue()
-				&& taxDratfVo.getTaxMonthNo().intValue() <= worksheetCondMainDtl.getTaxMonthEnd().intValue()
-				&& condGroup;
+			&& taxDratfVo.getTaxMonthNo().intValue() <= worksheetCondMainDtl.getTaxMonthEnd().intValue()
+			&& condGroup;
 	}
 
 	private BigDecimal floorAndCeilPercentage(BigDecimal amount) {
@@ -273,8 +288,7 @@ public class WorksheetService {
 		}
 	}
 
-	private String isConditionSubCapital(Map<String, MasCondSubCapitalFormVo> condSubCapitalMap,
-			TaxDraftVo taxDraftVo) {
+	private String isConditionSubCapital(Map<String, MasCondSubCapitalFormVo> condSubCapitalMap, TaxDraftVo taxDraftVo) {
 		String condSubCapitalCode = null;
 
 		MasCondSubCapitalFormVo condSubCapital = null;
@@ -314,8 +328,7 @@ public class WorksheetService {
 		return condSubRiskCode;
 	}
 
-	private String isConditionSubNoAudit(Map<String, String> condSubNoAuditMap, List<String> budgetYearList,
-			TaxDraftVo taxDraftVo) {
+	private String isConditionSubNoAudit(Map<String, String> condSubNoAuditMap, List<String> budgetYearList, TaxDraftVo taxDraftVo) {
 		String condSubNoAuditCode = FLAG.Y_FLAG;
 
 		String key = null;
@@ -328,6 +341,15 @@ public class WorksheetService {
 		}
 
 		return condSubNoAuditCode;
+	}
+	
+	private void setConnGroup(TaWorksheetDtl worksheetDtl, String condGroup) {
+		try {
+			Method method = TaWorksheetDtl.class.getDeclaredMethod("setCondG" + condGroup, String.class);
+			method.invoke(worksheetDtl, FLAG.Y_FLAG);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
 	}
 
 	public List<TaWorksheetHdr> findAllAnalysisNumber(TaxOperatorFormVo formVo) {
@@ -345,18 +367,12 @@ public class WorksheetService {
 
 		YearMonthVo obj = taWorksheetCondMainHdrRepository.findMonthStartByAnalysisNumber(formVo.getAnalysisNumber());
 
-		String ymStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(obj.getYearMonthStart(),
-				ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN), ConvertDateUtils.MM_YYYY,
-				ConvertDateUtils.LOCAL_TH);
-		String ymEnd = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(obj.getYearMonthEnd(),
-				ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN), ConvertDateUtils.MM_YYYY,
-				ConvertDateUtils.LOCAL_TH);
+		String ymStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(obj.getYearMonthStart(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
+		String ymEnd = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(obj.getYearMonthEnd(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
 
-		TaWorksheetCondSubNoAudit subNoAudit = taWorksheetCondSubNoAuditRepository
-				.findByAnalysisNumber(formVo.getAnalysisNumber());
+		TaWorksheetCondSubNoAudit subNoAudit = taWorksheetCondSubNoAuditRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
 
 		if (subNoAudit != null) {
-
 			obj.setYearCondSubNoAudit(subNoAudit.getNoTaxAuditYearNum().toString());
 		} else {
 			obj.setYearCondSubNoAudit("0");
@@ -371,8 +387,7 @@ public class WorksheetService {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
 		logger.info("findCondGroupDtl officeCode={}, budgetYear={}", officeCode, budgetYear);
-		TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository.findByOfficeCodeAndBudgetYear(officeCode,
-				budgetYear);
+		TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository.findByOfficeCodeAndBudgetYear(officeCode, budgetYear);
 		if (StringUtils.isNotBlank(formVo.getSeeDataSelect()) && planSend == null) {
 			return new ArrayList<>();
 		}
@@ -385,16 +400,14 @@ public class WorksheetService {
 			vo.setRangeStart(t.getRangeStart());
 			vo.setRangeEnd(t.getRangeEnd());
 			vo.setRiskLevel(t.getRiskLevel() == null ? null : Integer.valueOf(t.getRiskLevel()));
-			String dutyName = null;
+			String riskLevelDesc = null;
 			try {
-
-				dutyName = ApplicationCache.getParamInfoByCode("TA_RISK_LEVEL", t.getRiskLevel().toString())
-						.getValue1();
+				riskLevelDesc = ApplicationCache.getParamInfoByCode("TA_RISK_LEVEL", t.getRiskLevel().toString()).getValue1();
 			} catch (Exception e) {
-				// TODO: handle exception
-				dutyName = "";
+				logger.warn("Not found risLevel={}", t.getRiskLevel());
+				riskLevelDesc = "";
 			}
-			vo.setRiskLevelDesc(dutyName);
+			vo.setRiskLevelDesc(riskLevelDesc);
 			return vo;
 		}).collect(Collectors.toList());
 	}
@@ -403,27 +416,21 @@ public class WorksheetService {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
 		formVo.setBudgetYear(budgetYear);
-		logger.info("getWorksheet officeCode={}, budgetYear={}, analysisNumber={}", officeCode, budgetYear,
-				formVo.getAnalysisNumber());
+		logger.info("getWorksheet officeCode={}, budgetYear={}, analysisNumber={}", officeCode, budgetYear, formVo.getAnalysisNumber());
 
 		if (StringUtils.isBlank(formVo.getAnalysisNumber())) {
 			formVo.setAnalysisNumber("");
 		}
 
 		TaxOperatorVo vo = new TaxOperatorVo();
-
-		TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository.findByOfficeCodeAndBudgetYear(officeCode,
-				budgetYear);
+		TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository.findByOfficeCodeAndBudgetYear(officeCode, budgetYear);
 		if (StringUtils.isNotBlank(formVo.getSeeDataSelect()) && planSend == null) {
 			vo.setDatas(new ArrayList<>());
 			vo.setCount(0L);
 		} else {
-
-			if (StringUtils.isNotBlank(formVo.getArea())
-					&& !CommonConstants.JsonStatus.SUCCESS.equals(formVo.getArea())) {
+			if (StringUtils.isNotBlank(formVo.getArea()) && !CommonConstants.JsonStatus.SUCCESS.equals(formVo.getArea())) {
 				formVo.setOfficeCode(formVo.getArea());
-			} else if (StringUtils.isNotBlank(formVo.getSector())
-					&& !CommonConstants.JsonStatus.SUCCESS.equals(formVo.getSector())) {
+			} else if (StringUtils.isNotBlank(formVo.getSector()) && !CommonConstants.JsonStatus.SUCCESS.equals(formVo.getSector())) {
 				formVo.setOfficeCode(formVo.getSector());
 			} else {
 				formVo.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
@@ -450,7 +457,6 @@ public class WorksheetService {
 		} else {
 			return taWorksheetCondMainDtlRepository.findByAnalysisNumber(formVo.getDraftNumber());
 		}
-
 	}
 
 	public TaWorksheetHdr checkEvaluateCondition(TaxOperatorFormVo formVo) {
@@ -471,23 +477,21 @@ public class WorksheetService {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
 		formVo.setBudgetYear(budgetYear);
-		logger.info("getWorksheet officeCode={}, budgetYear={}, analysisNumber={}", officeCode, budgetYear,
-				formVo.getAnalysisNumber());
+		logger.info("getWorksheet officeCode={}, budgetYear={}, analysisNumber={}", officeCode, budgetYear, formVo.getAnalysisNumber());
 
 		if (StringUtils.isBlank(formVo.getAnalysisNumber())) {
 			formVo.setAnalysisNumber("");
 		}
 
 		TaxOperatorVo vo = new TaxOperatorVo();
-
 		if (StringUtils.isNotBlank(formVo.getArea()) && !CommonConstants.JsonStatus.SUCCESS.equals(formVo.getArea())) {
 			formVo.setOfficeCode(formVo.getArea());
-		} else if (StringUtils.isNotBlank(formVo.getSector())
-				&& !CommonConstants.JsonStatus.SUCCESS.equals(formVo.getSector())) {
+		} else if (StringUtils.isNotBlank(formVo.getSector()) && !CommonConstants.JsonStatus.SUCCESS.equals(formVo.getSector())) {
 			formVo.setOfficeCode(formVo.getSector());
 		} else {
 			formVo.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 		}
+		
 		List<TaxOperatorDetailVo> list = taWorksheetDtlRepository.findByCriteria(formVo);
 		vo.setDatas(TaxAuditUtils.prepareTaxOperatorDatatable(list, formVo));
 		vo.setCount(taWorksheetDtlRepository.countByCriteria(formVo));
@@ -496,7 +500,6 @@ public class WorksheetService {
 	}
 
 	public List<String> getBudgetYearList() {
-
 		List<TaWorksheetHdr> entities = taWorksheetHdrRepository.findAll();
 		List<String> strList = new ArrayList<String>();
 		if (entities != null) {
@@ -504,7 +507,6 @@ public class WorksheetService {
 				strList.add(entity.getBudgetYear());
 			}
 		}
-
 		return strList;
 	}
 

@@ -126,7 +126,22 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 	@Override
 	public void batchUpdate(List<TaWorksheetDtl> taWorksheetDtlList) {
 		String sql = SqlGeneratorUtils.genSqlUpdate("TA_WORKSHEET_DTL",
-			Arrays.asList("COND_MAIN_GRP", "COND_SUB_CAPITAL", "COND_SUB_RISK", "COND_SUB_NO_AUDIT"),
+			Arrays.asList(
+				"COND_MAIN_GRP",
+				"COND_SUB_CAPITAL",
+				"COND_SUB_RISK",
+				"COND_SUB_NO_AUDIT",
+				"COND_G1",
+				"COND_G2",
+				"COND_G3",
+				"COND_G4",
+				"COND_G5",
+				"COND_G6",
+				"COND_REG_DATE",
+				"COND_SORTING",
+				"UPDATED_BY",
+				"UPDATED_DATE"
+			),
 			Arrays.asList("ANALYSIS_NUMBER", "NEW_REG_ID")
 		);
 
@@ -137,6 +152,16 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 				paramList.add(worksheetDtl.getCondSubCapital());
 				paramList.add(worksheetDtl.getCondSubRisk());
 				paramList.add(worksheetDtl.getCondSubNoAudit());
+				paramList.add(worksheetDtl.getCondG1());
+				paramList.add(worksheetDtl.getCondG2());
+				paramList.add(worksheetDtl.getCondG3());
+				paramList.add(worksheetDtl.getCondG4());
+				paramList.add(worksheetDtl.getCondG5());
+				paramList.add(worksheetDtl.getCondG6());
+				paramList.add(worksheetDtl.getCondRegDate());
+				paramList.add(worksheetDtl.getCondSorting());
+				paramList.add(worksheetDtl.getUpdatedBy());
+				paramList.add(worksheetDtl.getUpdatedDate());
 				paramList.add(worksheetDtl.getAnalysisNumber());
 				paramList.add(worksheetDtl.getNewRegId());
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());

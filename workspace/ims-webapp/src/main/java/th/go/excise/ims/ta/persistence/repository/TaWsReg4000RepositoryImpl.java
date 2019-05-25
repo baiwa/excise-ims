@@ -216,12 +216,11 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 
 		if (StringUtils.isNotBlank(formVo.getFlagPage())) {
 			return this.commonJdbcTemplate.query(sql.toString(), params.toArray(), wsReg4000RowMapper);
-
 		} else {
-
 			return this.commonJdbcTemplate.query(
-					OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()),
-					params.toArray(), wsReg4000RowMapper);
+				OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()),
+				params.toArray(),
+				wsReg4000RowMapper);
 		}
 	}
 

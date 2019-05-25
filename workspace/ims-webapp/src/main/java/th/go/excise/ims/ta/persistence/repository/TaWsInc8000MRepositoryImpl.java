@@ -22,7 +22,6 @@ import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CONFIG;
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.ParameterInfoRepository;
-import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ta.persistence.entity.TaWsInc8000M;
 import th.go.excise.ims.ta.vo.AnalysisFormVo;
 
@@ -113,11 +112,10 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 		//==> Check TAX, NET
 		ParameterInfo taxType = parameterInfoRepository.findByParamGroupCodeAndParamCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.INCOME_TYPE);
 		
-		if(taxType != null) {
+		if (taxType != null) {
 			TYPE = taxType.getValue1();
 		}
-		//String value = ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.INCOME_TYPE).getValue1();
-
+		
 		Map<String, BigDecimal> incfri8000MMap = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), new ResultSetExtractor<Map<String, BigDecimal>>() {
 			public Map<String, BigDecimal> extractData(ResultSet rs) throws SQLException, DataAccessException {
 				Map<String, BigDecimal> incomeMap = new HashMap<>();
