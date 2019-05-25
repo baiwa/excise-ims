@@ -8,5 +8,5 @@ import th.go.excise.ims.ws.persistence.entity.WsPmAssessD;
 public interface WsPmAssessDRepositoryCustom {
 	public void batchMerge(List<WsPmAssessD> pmAssessDList);
 
-	public List<WsPmAssessDVo> filterWsPaAssessD(String formCode);
+	public List<WsPmAssessDVo> filterWsPaAssessD(String offCode, String formCode);
 }

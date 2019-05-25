@@ -2,7 +2,7 @@ package th.go.excise.ims.ia.vo;
 
 import java.util.List;
 
-public class Int1301Vo {
+public class Int1301SaveVo {
 	private List<WsPmAssessHVo> header;
 
 	public List<WsPmAssessHVo> getHeader() {

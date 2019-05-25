@@ -93,17 +93,23 @@ public class WsPmAssessDRepositoryImpl implements WsPmAssessDRepositoryCustom{
 	}
 	
 	@Override
-	public List<WsPmAssessDVo> filterWsPaAssessD(String formCode) {
+	public List<WsPmAssessDVo> filterWsPaAssessD(String offCode, String formCode) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 		sql.append(" SELECT * FROM WS_PM_ASSESS_D ");
 		sql.append(" WHERE IS_DELETED = 'N' ");
+		
+		if(StringUtils.isNotBlank(offCode)) {
+			sql.append(" AND OFF_CODE = ? ");
+			params.add(offCode.trim());
+		}
 		
 		if(StringUtils.isNotBlank(formCode)) {
 			sql.append(" AND FORM_CODE = ? ");
 			params.add(formCode.trim());
 		}
 
+		sql.append(" ORDER BY PM_ASSESS_D_SEQ ");
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<WsPmAssessDVo> response = commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper(WsPmAssessDVo.class));
 

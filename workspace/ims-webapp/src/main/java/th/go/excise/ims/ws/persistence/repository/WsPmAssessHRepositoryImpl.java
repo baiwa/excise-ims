@@ -135,6 +135,7 @@ public class WsPmAssessHRepositoryImpl implements WsPmAssessHRepositoryCustom {
 			params.add(request.getOfficeCode());
 		}
 
+		sql.append(" ORDER BY PM_ASSESS_H_SEQ ");
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<WsPmAssessHVo> response = commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper(WsPmAssessHVo.class));
 
