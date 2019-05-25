@@ -108,12 +108,4 @@ public class Int061402JdbcRepository {
 		return count;
 	}
 
-	public String getSeqTxinsurNo() {
-		StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT AUDIT_TXINSUR_NO_SEQ.nextval FROM DUAL ");
-
-		String count = this.commonJdbcTemplate.queryForObject(sql.toString(), String.class);
-		return count;
-	}
-
 }
