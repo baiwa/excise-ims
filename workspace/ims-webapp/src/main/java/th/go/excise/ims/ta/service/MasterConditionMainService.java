@@ -383,7 +383,7 @@ public class MasterConditionMainService {
         hdr.setCompMonthNum(form.getCompMonthNum());
         taMasCondMainHdrRepository.save(hdr);
         // insert condMainDtl
-        int taxMonthStart = 1;
+        int taxMonthStart = 0;
         List<TaMasCondMainDtl> dtlList = new ArrayList<>();
         if (StringUtils.isNotEmpty(form.getCondNumber())) {
         	dtlList = taMasCondMainDtlRepository.findByCondNumber(form.getCondNumber());
@@ -409,7 +409,7 @@ public class MasterConditionMainService {
 				dtl.setCondNumber(hdr.getCondNumber());
 				dtl.setCondGroup(String.valueOf(i+1));
 				dtl.setTaxFreqType(form.getTaxFreqType());
-				dtl.setTaxMonthStart(taxMonthStart--);
+				dtl.setTaxMonthStart(taxMonthStart);
 				dtl.setTaxMonthEnd(monthNum--);
 				dtl.setRangeTypeStart(rangeTypeStart);
 				dtl.setRangeStart(rangeStart);
