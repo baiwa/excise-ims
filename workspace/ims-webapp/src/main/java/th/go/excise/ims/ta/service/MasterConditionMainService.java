@@ -388,8 +388,11 @@ public class MasterConditionMainService {
         if (StringUtils.isNotEmpty(form.getCondNumber())) {
         	dtlList = taMasCondMainDtlRepository.findByCondNumber(form.getCondNumber());
         	for (TaMasCondMainDtl dtl : dtlList) {
-        		dtl.setRangeStart(new BigDecimal(form.getRangeStart()));
-				dtl.setRiskLevel(form.getRiskLevel());
+        		String condGroup = "1";
+        		if (condGroup.equals(dtl.getCondGroup())) {
+        			dtl.setRangeStart(new BigDecimal(form.getRangeStart()));
+        			dtl.setRiskLevel(form.getRiskLevel());					
+				}
 			}
 		} else {
 			for (int i = 0; i < 2; i++) {
