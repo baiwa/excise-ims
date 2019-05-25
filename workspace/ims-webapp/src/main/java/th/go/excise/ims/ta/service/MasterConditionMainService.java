@@ -400,9 +400,18 @@ public class MasterConditionMainService {
 				String rangeTypeStart = form.getRangeTypeStart();
 				BigDecimal rangeStart = new BigDecimal(form.getRangeStart());
 				int num = 1;
+				List<ParamInfo> mainCondRange = ApplicationCache.getParamInfoListByGroupCode("TA_MAIN_COND_RANGE");
+				String condRange = "";
+				for (ParamInfo param : mainCondRange) {
+					if (rangeTypeStart.equals(param.getParamCode())) {
+						condRange = param.getValue1();
+					}
+				}
+				String condDtlDesc = "เปรียบเทียบการชำระภาษีปีนี้กับปีก่อน จำนวน "+form.getCompMonthNum()+" เดือน อัตราการชำระภาษี "+condRange+" ร้อยละ "+rangeStart;
 				if (num == i) {
 					rangeTypeStart = "4";
 					rangeStart = new BigDecimal(100);
+					condDtlDesc = "ผู้ประกอบการชำระภาษีไม่ครบในช่วงทำการวิเคราะห์";
 				}
 				dtl.setOfficeCode(officeCode);
 				dtl.setBudgetYear(form.getBudgetYear());
@@ -415,6 +424,7 @@ public class MasterConditionMainService {
 				dtl.setRangeStart(rangeStart);
 				dtl.setRiskLevel(form.getRiskLevel());
 				dtl.setCondType(form.getCondType());
+				dtl.setCondDtlDesc(condDtlDesc);
 				dtlList.add(dtl);
 			}
 		}
