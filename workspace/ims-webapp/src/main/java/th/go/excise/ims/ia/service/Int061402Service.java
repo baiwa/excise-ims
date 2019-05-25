@@ -39,6 +39,9 @@ public class Int061402Service {
 
 	@Autowired
 	private IaAuditTxinsurHRepository iaAuditTxinsurHRepository;
+	
+	@Autowired
+	private IaCommonService iaCommonService;
 
 	public DataTableAjax<Ws_Reg4000Vo> filter(Int061402FilterVo formVo) {
 		List<Ws_Reg4000Vo> data = new ArrayList<Ws_Reg4000Vo>();
@@ -62,11 +65,10 @@ public class Int061402Service {
 		/* get getSeqTxinsurNo */
 		String seqTxinsurNo = "";
 		if(StringUtils.isBlank(request.getHeader().getAuditTxinsurNo())) {
-			seqTxinsurNo = request.getHeader().getOfficeCode() + "/" + StringUtils.leftPad(int061402JdbcRepository.getSeqTxinsurNo(), 8, "0");
+			seqTxinsurNo = iaCommonService.autoGetRunAuditNoBySeqName( "T", request.getHeader().getOfficeCode(), "AUDIT_TXINSUR_NO_SEQ", 8);
 		} else {
 			seqTxinsurNo = request.getHeader().getAuditTxinsurNo();
 		}
-//		String seqTxinsurNo = String.format("%08d", int061402JdbcRepository.getSeqTxinsurNo());
 
 		/* save header */
 		if(StringUtils.isBlank(request.getHeader().getAuditTxinsurNo())) {
