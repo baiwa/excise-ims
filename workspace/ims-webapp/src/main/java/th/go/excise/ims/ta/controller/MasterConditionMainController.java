@@ -1,10 +1,17 @@
 package th.go.excise.ims.ta.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
@@ -17,8 +24,7 @@ import th.go.excise.ims.ta.vo.ConditionMessageVo;
 import th.go.excise.ims.ta.vo.MasCondMainRequestVo;
 import th.go.excise.ims.ta.vo.MasCondMainResponseVo;
 import th.go.excise.ims.ta.vo.MasterConditionMainHdrDtlVo;
-
-import java.util.List;
+import th.go.excise.ims.ta.vo.Ta010101Vo;
 
 @Controller
 @RequestMapping("/api/ta/master-condition-main")
@@ -249,6 +255,38 @@ public class MasterConditionMainController {
         try {
             response.setData(masterConditionService.getMainCondFreqType());
             response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+            response.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.FAILED);
+        }
+        return response;
+    }
+    
+//    ============= ta010101 ==============
+    @PostMapping("/ta010101-create")
+    @ResponseBody
+    public ResponseData<String> insertCondMain(@RequestBody Ta010101Vo form) {
+        ResponseData<String> response = new ResponseData<String>();
+        try {
+            response.setData(masterConditionService.insertCondMain(form));
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.FAILED);
+        }
+        return response;
+    }
+    
+    @PostMapping("/ta010101-get")
+    @ResponseBody
+    public ResponseData<Ta010101Vo> getCondMain(@RequestBody Ta010101Vo form) {
+        ResponseData<Ta010101Vo> response = new ResponseData<Ta010101Vo>();
+        try {
+            response.setData(masterConditionService.getCondMain(form));
             response.setStatus(RESPONSE_STATUS.SUCCESS);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

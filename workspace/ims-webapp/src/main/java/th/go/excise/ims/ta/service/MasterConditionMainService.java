@@ -1,32 +1,39 @@
 package th.go.excise.ims.ta.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
+import th.go.excise.ims.common.constant.ProjectConstants;
 import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_OFFICE_CODE;
 import th.go.excise.ims.common.constant.ProjectConstants.TAX_COMPARE_TYPE;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_MAS_COND_MAIN_TYPE;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
+import th.go.excise.ims.ta.persistence.entity.TaMasCondSubNoAudit;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondMainDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondMainHdrRepository;
+import th.go.excise.ims.ta.persistence.repository.TaMasCondSubNoAuditRepository;
 import th.go.excise.ims.ta.vo.ConditionMessageVo;
 import th.go.excise.ims.ta.vo.MasCondMainRequestVo;
 import th.go.excise.ims.ta.vo.MasCondMainResponseVo;
 import th.go.excise.ims.ta.vo.MasterConditionMainHdrDtlVo;
+import th.go.excise.ims.ta.vo.Ta010101Vo;
 
 @Service
 public class MasterConditionMainService {
@@ -38,6 +45,9 @@ public class MasterConditionMainService {
 
     @Autowired
     private TaMasCondMainDtlRepository taMasCondMainDtlRepository;
+    
+    @Autowired
+    private TaMasCondSubNoAuditRepository condSubNoAuditRepository;
 
     @Autowired
     private MasterConditionSequenceService masterConditionSequenceService;
@@ -69,6 +79,25 @@ public class MasterConditionMainService {
         hdr.setNewFacFlag(form.getNewFacFlag());
         hdr.setCompType(getTaxCompareType(form.getMonthNum()));
         taMasCondMainHdrRepository.save(hdr);
+        
+        List<TaMasCondMainDtl> dtlList = taMasCondMainDtlRepository.findByBudgetYearAndCondNumberAndCondType(hdr.getBudgetYear(), hdr.getCondNumber(), ProjectConstants.TA_MAS_COND_MAIN_TYPE.TAX);
+        if (hdr.getCondGroupNum() < dtlList.size()) {
+			int numLoop = dtlList.size() - hdr.getCondGroupNum();
+			Collections.sort(dtlList, new Comparator<TaMasCondMainDtl>() {
+                public int compare(TaMasCondMainDtl dtlTax, TaMasCondMainDtl dtlTax2) {
+                    int condGroup = dtlTax.getCondGroup().compareTo(dtlTax2.getCondGroup());
+                    if (condGroup == 0) {
+                        return condGroup;
+                    }
+                    return Long.valueOf(dtlTax.getCondGroup()) > Long.valueOf(dtlTax2.getCondGroup()) ? 1 : Long.valueOf(dtlTax.getCondGroup()) < Long.valueOf(dtlTax2.getCondGroup()) ? -1 : 0;
+                }
+            });
+			for (int i = 0; i < numLoop; i++) {
+				TaMasCondMainDtl dtl = dtlList.get(dtlList.size()-i-1);
+				dtl.setIsDeleted(FLAG.Y_FLAG);
+				taMasCondMainDtlRepository.save(dtl);
+			}
+		}
     }
 
     public void deleteCondMain(TaMasCondMainHdr form) {
@@ -326,6 +355,91 @@ public class MasterConditionMainService {
     	} else {
     		return TAX_COMPARE_TYPE.MONTH;
     	}
+    }
+    
+//    =============== ta010101 =================
+    public String insertCondMain(Ta010101Vo form) {
+    	logger.info("insertCondMainHdr");
+    	// insert condMainHdr
+    	int condGroupNum = 2;
+    	int monthNum = form.getCompMonthNum()*2;
+    	String condGroupDesc = "เปรียบเทียบการชำระภาษีปีนี้กับปีก่อน";
+    	String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+    	TaMasCondMainHdr hdr = new TaMasCondMainHdr();			
+    	if (StringUtils.isNotEmpty(form.getCondNumber())) {
+    		hdr = taMasCondMainHdrRepository.findByCondNumber(form.getCondNumber());
+		} else {
+			hdr.setCondNumber(masterConditionSequenceService.getConditionNumber(officeCode, form.getBudgetYear()));			
+		}
+        hdr.setOfficeCode(officeCode);
+        hdr.setBudgetYear(form.getBudgetYear());
+        hdr.setCondGroupDesc(condGroupDesc);
+        hdr.setMonthNum(monthNum);
+        hdr.setCondGroupNum(condGroupNum);
+        hdr.setNewFacFlag(FLAG.N_FLAG);
+        hdr.setCompType(getTaxCompareType(form.getCompMonthNum()));
+        hdr.setRegDateStart(ConvertDateUtils.parseStringToLocalDate(form.getRegDateStart(), ConvertDateUtils.DD_MM_YYYY));
+        hdr.setRegDateEnd(ConvertDateUtils.parseStringToLocalDate(form.getRegDateEnd(), ConvertDateUtils.DD_MM_YYYY));
+        hdr.setCompMonthNum(form.getCompMonthNum());
+        taMasCondMainHdrRepository.save(hdr);
+        // insert condMainDtl
+        int taxMonthStart = 1;
+        List<TaMasCondMainDtl> dtlList = new ArrayList<>();
+        if (StringUtils.isNotEmpty(form.getCondNumber())) {
+        	dtlList = taMasCondMainDtlRepository.findByCondNumber(form.getCondNumber());
+        	for (TaMasCondMainDtl dtl : dtlList) {
+        		dtl.setRangeStart(new BigDecimal(form.getRangeStart()));
+				dtl.setRiskLevel(form.getRiskLevel());
+			}
+		} else {
+			for (int i = 0; i < 2; i++) {
+				TaMasCondMainDtl dtl = new TaMasCondMainDtl();
+				
+				dtl.setOfficeCode(officeCode);
+				dtl.setBudgetYear(form.getBudgetYear());
+				dtl.setCondNumber(hdr.getCondNumber());
+				dtl.setCondGroup(String.valueOf(i+1));
+				dtl.setTaxFreqType(form.getTaxFreqType());
+				dtl.setTaxMonthStart(taxMonthStart--);
+				dtl.setTaxMonthEnd(monthNum--);
+				dtl.setRangeTypeStart(form.getRangeTypeStart());
+				dtl.setRangeStart(new BigDecimal(form.getRangeStart()));
+				dtl.setRiskLevel(form.getRiskLevel());
+				dtl.setCondType(form.getCondType());
+				dtlList.add(dtl);
+			}
+		}
+        taMasCondMainDtlRepository.saveAll(dtlList);
+        // insert condSubNoAudit
+        TaMasCondSubNoAudit noAudit = new TaMasCondSubNoAudit();
+        if (StringUtils.isNotEmpty(form.getCondNumber())) {
+			noAudit = condSubNoAuditRepository.findByBudgetYearAndOfficeCode(form.getBudgetYear(), officeCode);
+		}
+        noAudit.setBudgetYear(form.getBudgetYear());
+        noAudit.setOfficeCode(officeCode);
+        noAudit.setNoTaxAuditYearNum(form.getNoTaxAuditYearNum());
+        condSubNoAuditRepository.save(noAudit);
+        return hdr.getCondNumber();
+    }
+    
+    public Ta010101Vo getCondMain(Ta010101Vo form) {
+    	String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+    	List<TaMasCondMainHdr> hdr = taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYear(officeCode, form.getBudgetYear());
+    	TaMasCondSubNoAudit noAudit = condSubNoAuditRepository.findByBudgetYearAndOfficeCode(form.getBudgetYear(), officeCode);
+    	Ta010101Vo condForm = new Ta010101Vo();
+    	int zero = 0;
+    	if (zero < hdr.size()) {
+    		List<TaMasCondMainDtl> dtlList = taMasCondMainDtlRepository.findByBudgetYearAndCondNumber(form.getBudgetYear(), hdr.get(0).getCondNumber());
+    		condForm.setBudgetYear(hdr.get(0).getBudgetYear());
+    		condForm.setCondNumber(hdr.get(0).getCondNumber());
+    		condForm.setNoTaxAuditYearNum(noAudit.getNoTaxAuditYearNum());
+    		condForm.setCompMonthNum(hdr.get(0).getCompMonthNum());
+    		condForm.setRangeTypeStart(dtlList.get(0).getRangeTypeStart());
+    		condForm.setRangeStart(dtlList.get(0).getRangeStart().intValueExact());
+    		condForm.setRegDateStart(ConvertDateUtils.formatLocalDateToString(hdr.get(0).getRegDateStart(), ConvertDateUtils.DD_MM_YYYY));
+    		condForm.setRegDateEnd(ConvertDateUtils.formatLocalDateToString(hdr.get(0).getRegDateEnd(), ConvertDateUtils.DD_MM_YYYY));			
+		}
+    	return condForm; 
     }
 
 }
