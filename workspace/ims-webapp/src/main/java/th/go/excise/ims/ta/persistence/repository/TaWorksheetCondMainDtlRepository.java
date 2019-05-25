@@ -14,4 +14,5 @@ public interface TaWorksheetCondMainDtlRepository extends CommonJpaCrudRepositor
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.analysisNumber = :analysisNumber order by e.condGroup")
 	public List<TaWorksheetCondMainDtl> findByAnalysisNumber(@Param("analysisNumber") String analysisNumber);
 
+	Integer countByAnalysisNumber(String analysisNumber);
 }

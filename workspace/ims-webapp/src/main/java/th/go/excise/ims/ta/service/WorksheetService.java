@@ -375,6 +375,7 @@ public class WorksheetService {
 		} else {
 			obj.setYearCondSubNoAudit("0");
 		}
+		obj.setCountGroup(taWorksheetCondMainDtlRepository.countByAnalysisNumber(formVo.getAnalysisNumber()));
 		obj.setYearMonthStart(ymStart);
 		obj.setYearMonthEnd(ymEnd);
 

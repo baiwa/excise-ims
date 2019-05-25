@@ -525,7 +525,8 @@ public class DraftWorksheetService {
 
 		String ymStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(ymVo.getYearMonthStart(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
 		String ymEnd = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(ymVo.getYearMonthEnd(), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
-
+		ymVo.setCountGroup(taWorksheetCondMainDtlRepository.countByAnalysisNumber(formVo.getDraftNumber()));
+		
 		ymVo.setYearMonthStart(ymStart);
 		ymVo.setYearMonthEnd(ymEnd);
 
