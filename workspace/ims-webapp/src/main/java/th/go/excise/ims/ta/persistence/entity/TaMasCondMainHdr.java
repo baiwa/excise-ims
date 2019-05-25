@@ -147,12 +147,4 @@ public class TaMasCondMainHdr extends BaseEntity {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
-	public Integer getCompMonthNum() {
-		return compMonthNum;
-	}
-
-	public void setCompMonthNum(Integer compMonthNum) {
-		this.compMonthNum = compMonthNum;
-	}
-
 }

@@ -432,7 +432,9 @@ public class MasterConditionMainService {
     		List<TaMasCondMainDtl> dtlList = taMasCondMainDtlRepository.findByBudgetYearAndCondNumber(form.getBudgetYear(), hdr.get(0).getCondNumber());
     		condForm.setBudgetYear(hdr.get(0).getBudgetYear());
     		condForm.setCondNumber(hdr.get(0).getCondNumber());
-    		condForm.setNoTaxAuditYearNum(noAudit.getNoTaxAuditYearNum());
+    		if (noAudit != null) {
+    			condForm.setNoTaxAuditYearNum(noAudit.getNoTaxAuditYearNum());
+    		}
     		condForm.setCompMonthNum(hdr.get(0).getCompMonthNum());
     		condForm.setRangeTypeStart(dtlList.get(0).getRangeTypeStart());
     		condForm.setRangeStart(dtlList.get(0).getRangeStart().intValueExact());
