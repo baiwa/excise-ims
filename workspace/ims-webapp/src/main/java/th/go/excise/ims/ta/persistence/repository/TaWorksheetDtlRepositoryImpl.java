@@ -222,12 +222,12 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 
 		// DUTY GROUP
 		if (StringUtils.isNotBlank(formVo.getFacType())) {
-			sql.append(" AND r4000.FAC_TYPE = ?");
+			sql.append(" AND R4000.FAC_TYPE = ?");
 			params.add(formVo.getFacType());
 		}
 		// DUTY
 		if (StringUtils.isNotBlank(formVo.getDutyCode())) {
-			sql.append(" AND r4000.duty_code = ?");
+			sql.append(" AND R4000.duty_code = ?");
 			params.add(formVo.getDutyCode());
 		}
 		if (StringUtils.isNotBlank(formVo.getCond())) {
@@ -289,7 +289,8 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		List<Object> params = new ArrayList<>();
 		buildByCriteriaQuery(sql, params, formVo);
 
-		sql.append(" ORDER BY TA_W_DTL.COND_SUB_NO_AUDIT ASC, NVL(T_W_Cond_Dtl.RISK_LEVEL,0) DESC, R4000.DUTY_CODE ASC, R4000.OFFICE_CODE ASC, TA_W_DTL.NEW_REG_ID ASC ");
+		//sql.append(" ORDER BY TA_W_DTL.COND_SUB_NO_AUDIT ASC, NVL(T_W_COND_DTL.RISK_LEVEL,0) DESC, R4000.DUTY_CODE ASC, R4000.OFFICE_CODE ASC, TA_W_DTL.NEW_REG_ID ASC ");
+		sql.append(" ORDER BY TA_W_DTL.COND_SUB_NO_AUDIT ASC, NVL(TA_W_DTL.COND_SORTING,0) DESC, R4000.DUTY_CODE ASC, R4000.OFFICE_CODE ASC, TA_W_DTL.NEW_REG_ID ASC ");
 
 		return commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(), worksheetRowMapper);
 	}
@@ -313,6 +314,13 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			vo.setCondSubRisk(rs.getString("COND_SUB_RISK"));
 			vo.setCondSubNoAudit(rs.getString("COND_SUB_NO_AUDIT"));
 			vo.setRiskLevel(rs.getString("RISK_LEVEL"));
+			vo.setCondG1(rs.getString("COND_G1"));
+			vo.setCondG2(rs.getString("COND_G2"));
+			vo.setCondG3(rs.getString("COND_G3"));
+			vo.setCondG4(rs.getString("COND_G4"));
+			vo.setCondG5(rs.getString("COND_G5"));
+			vo.setCondG6(rs.getString("COND_G6"));
+			vo.setCondRegDate(rs.getString("COND_REG_DATE"));
 
 			try {
 				vo.setCondSubCapitalDesc(ApplicationCache.getParamInfoByCode("TA_SUB_COND_CAPITAL", rs.getString("COND_SUB_CAPITAL")).getValue1());

@@ -211,8 +211,6 @@ public class WorksheetService {
 					int year = Integer.valueOf(worksheetHdr.getBudgetYear()) - Integer.valueOf(worksheetDtl.getLastAuditYear());
 					if (year >= Integer.valueOf(condSubNoAudit.getNoTaxAuditYearNum())) {
 						worksheetDtl.setCondSubNoAudit(FLAG.Y_FLAG);
-						// Condition G1
-						worksheetDtl.setCondG1(FLAG.Y_FLAG);
 						condSorting++;
 					}
 				}

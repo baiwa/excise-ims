@@ -76,6 +76,13 @@ public class TaxAuditUtils {
 			taxOperatorDatatableVo.setRiskLevel(taxOperatorDetailVo.getRiskLevel());
 			taxOperatorDatatableVo.setRiskLevelDesc(taxOperatorDetailVo.getRiskLevelDesc());
 			taxOperatorDatatableVo.setRegDate(taxOperatorDetailVo.getRegDate());
+			taxOperatorDatatableVo.setCondG1(taxOperatorDetailVo.getCondG1());
+			taxOperatorDatatableVo.setCondG2(taxOperatorDetailVo.getCondG2());
+			taxOperatorDatatableVo.setCondG3(taxOperatorDetailVo.getCondG3());
+			taxOperatorDatatableVo.setCondG4(taxOperatorDetailVo.getCondG4());
+			taxOperatorDatatableVo.setCondG5(taxOperatorDetailVo.getCondG5());
+			taxOperatorDatatableVo.setCondG6(taxOperatorDetailVo.getCondG6());
+			taxOperatorDatatableVo.setCondRegDate(taxOperatorDetailVo.getCondRegDate());
 			
 			taxAmtList = new ArrayList<>();
 			for (int i = 0; i < formVo.getDateRange(); i++) {

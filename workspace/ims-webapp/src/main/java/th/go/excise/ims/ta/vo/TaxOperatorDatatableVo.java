@@ -48,61 +48,13 @@ public class TaxOperatorDatatableVo {
 	private String riskLevel;
 	private String riskLevelDesc;
 	private String regDate;
-
 	private String condG1;
 	private String condG2;
 	private String condG3;
 	private String condG4;
 	private String condG5;
 	private String condG6;
-
-	public String getCondG1() {
-		return condG1;
-	}
-
-	public void setCondG1(String condG1) {
-		this.condG1 = condG1;
-	}
-
-	public String getCondG2() {
-		return condG2;
-	}
-
-	public void setCondG2(String condG2) {
-		this.condG2 = condG2;
-	}
-
-	public String getCondG3() {
-		return condG3;
-	}
-
-	public void setCondG3(String condG3) {
-		this.condG3 = condG3;
-	}
-
-	public String getCondG4() {
-		return condG4;
-	}
-
-	public void setCondG4(String condG4) {
-		this.condG4 = condG4;
-	}
-
-	public String getCondG5() {
-		return condG5;
-	}
-
-	public void setCondG5(String condG5) {
-		this.condG5 = condG5;
-	}
-
-	public String getCondG6() {
-		return condG6;
-	}
-
-	public void setCondG6(String condG6) {
-		this.condG6 = condG6;
-	}
+	private String condRegDate;
 
 	public String getCusFullname() {
 		return cusFullname;
@@ -430,6 +382,62 @@ public class TaxOperatorDatatableVo {
 
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
+	}
+
+	public String getCondG1() {
+		return condG1;
+	}
+
+	public void setCondG1(String condG1) {
+		this.condG1 = condG1;
+	}
+
+	public String getCondG2() {
+		return condG2;
+	}
+
+	public void setCondG2(String condG2) {
+		this.condG2 = condG2;
+	}
+
+	public String getCondG3() {
+		return condG3;
+	}
+
+	public void setCondG3(String condG3) {
+		this.condG3 = condG3;
+	}
+
+	public String getCondG4() {
+		return condG4;
+	}
+
+	public void setCondG4(String condG4) {
+		this.condG4 = condG4;
+	}
+
+	public String getCondG5() {
+		return condG5;
+	}
+
+	public void setCondG5(String condG5) {
+		this.condG5 = condG5;
+	}
+
+	public String getCondG6() {
+		return condG6;
+	}
+
+	public void setCondG6(String condG6) {
+		this.condG6 = condG6;
+	}
+
+	public String getCondRegDate() {
+		return condRegDate;
+	}
+
+	public void setCondRegDate(String condRegDate) {
+		this.condRegDate = condRegDate;
 	}
 
 	@Override
