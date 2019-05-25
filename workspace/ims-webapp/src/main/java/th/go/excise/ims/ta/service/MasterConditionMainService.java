@@ -394,7 +394,13 @@ public class MasterConditionMainService {
 		} else {
 			for (int i = 0; i < 2; i++) {
 				TaMasCondMainDtl dtl = new TaMasCondMainDtl();
-				
+				String rangeTypeStart = form.getRangeTypeStart();
+				BigDecimal rangeStart = new BigDecimal(form.getRangeStart());
+				int num = 1;
+				if (num == i) {
+					rangeTypeStart = "4";
+					rangeStart = new BigDecimal(100);
+				}
 				dtl.setOfficeCode(officeCode);
 				dtl.setBudgetYear(form.getBudgetYear());
 				dtl.setCondNumber(hdr.getCondNumber());
@@ -402,8 +408,8 @@ public class MasterConditionMainService {
 				dtl.setTaxFreqType(form.getTaxFreqType());
 				dtl.setTaxMonthStart(taxMonthStart--);
 				dtl.setTaxMonthEnd(monthNum--);
-				dtl.setRangeTypeStart(form.getRangeTypeStart());
-				dtl.setRangeStart(new BigDecimal(form.getRangeStart()));
+				dtl.setRangeTypeStart(rangeTypeStart);
+				dtl.setRangeStart(rangeStart);
 				dtl.setRiskLevel(form.getRiskLevel());
 				dtl.setCondType(form.getCondType());
 				dtlList.add(dtl);
