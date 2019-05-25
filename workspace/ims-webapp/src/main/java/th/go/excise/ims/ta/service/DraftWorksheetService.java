@@ -129,8 +129,8 @@ public class DraftWorksheetService {
 		formVo.setOfficeCode(officeCode);
 		
 		WorksheetDateRangeVo worksheetDateRangeVo = TaxAuditUtils.getWorksheetDateRangeVo(formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange(), compType);
-		String ymStartReg4000 = worksheetDateRangeVo.getYmStartReg4000();
-		String ymEndReg4000 = worksheetDateRangeVo.getYmEndReg4000();
+		//String ymStartReg4000 = worksheetDateRangeVo.getYmStartReg4000();
+		//String ymEndReg4000 = worksheetDateRangeVo.getYmEndReg4000();
 		String ymStartInc8000M = worksheetDateRangeVo.getYmStartInc8000M();
 		String ymEndInc8000M = worksheetDateRangeVo.getYmEndInc8000M();
 		List<LocalDate> subLocalDateG1List = worksheetDateRangeVo.getSubLocalDateG1List();
@@ -153,7 +153,8 @@ public class DraftWorksheetService {
 
 		Map<String, String> maxYearMap = taPlanWorksheetHisRepository.findMaxTaxAuditYear();
 
-		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findByCriteriaDuty(formVo, ymStartReg4000, ymEndReg4000);
+		//List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findByCriteria(formVo, ymStartReg4000, ymEndReg4000);
+		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findByCriteria(formVo);
 		Map<String, BigDecimal> incomeMap = null;
 		BigDecimal sumTaxAmtG1 = null;
 		BigDecimal sumTaxAmtG2 = null;
@@ -350,6 +351,9 @@ public class DraftWorksheetService {
 		conMainHdr.setCondGroupNum(String.valueOf(masCondMainHdr.getCondGroupNum()));
 		conMainHdr.setNewFacFlag(masCondMainHdr.getNewFacFlag());
 		conMainHdr.setCompType(masCondMainHdr.getCompType());
+		conMainHdr.setRegDateStart(masCondMainHdr.getRegDateStart());
+		conMainHdr.setRegDateEnd(masCondMainHdr.getRegDateEnd());
+		conMainHdr.setCompMonthNum(masCondMainHdr.getCompMonthNum());
 		taWorksheetCondMainHdrRepository.save(conMainHdr);
 
 		// ==> Save WorksheetMainCondDtl
@@ -405,8 +409,7 @@ public class DraftWorksheetService {
 		// ==> Save WorksheetCondSubNoAudit
 		//if (StringUtils.isNotBlank(formVo.getCondSub3())) {
 			TaMasCondSubNoAudit masCondSubNoAudit = taMasCondSubNoAuditRepository.findByBudgetYearAndOfficeCode(budgetYear, officeCode);
-			if(masCondSubNoAudit!=null) {
-				
+			if (masCondSubNoAudit != null) {
 				TaWorksheetCondSubNoAudit worksheetCondSubNoAudit = new TaWorksheetCondSubNoAudit();
 				worksheetCondSubNoAudit.setAnalysisNumber(analysisNumber);
 				worksheetCondSubNoAudit.setNoTaxAuditYearNum(masCondSubNoAudit.getNoTaxAuditYearNum());

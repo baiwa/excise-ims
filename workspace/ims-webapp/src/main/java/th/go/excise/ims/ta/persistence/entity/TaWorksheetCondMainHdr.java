@@ -43,6 +43,8 @@ public class TaWorksheetCondMainHdr extends BaseEntity {
 	private LocalDate regDateStart;
 	@Column(name = "REG_DATE_END")
 	private LocalDate regDateEnd;
+	@Column(name = "COMP_MONTH_NUM")
+	private Integer compMonthNum;
 
 	public Long getWorksheetCondMainHdrId() {
 		return worksheetCondMainHdrId;
@@ -130,6 +132,14 @@ public class TaWorksheetCondMainHdr extends BaseEntity {
 
 	public void setRegDateEnd(LocalDate regDateEnd) {
 		this.regDateEnd = regDateEnd;
+	}
+
+	public Integer getCompMonthNum() {
+		return compMonthNum;
+	}
+
+	public void setCompMonthNum(Integer compMonthNum) {
+		this.compMonthNum = compMonthNum;
 	}
 
 }

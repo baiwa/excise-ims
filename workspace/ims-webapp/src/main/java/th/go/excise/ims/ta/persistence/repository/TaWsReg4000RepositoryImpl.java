@@ -20,7 +20,6 @@ import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
-import th.go.excise.ims.common.constant.ProjectConstants.DUTY_GROUP_TYPE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
 import th.go.excise.ims.ta.vo.FactoryVo;
@@ -168,9 +167,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 	private void buildByCriteriaQuery(StringBuilder sql, List<Object> params, TaxOperatorFormVo formVo) {
 		sql.append(" SELECT * ");
 		sql.append(" FROM TA_WS_REG4000 ");
-		sql.append(" WHERE IS_DELETED = ? ");
-
-		params.add(FLAG.N_FLAG);
+		sql.append(" WHERE IS_DELETED = 'N' ");
 
 		// Factory Type
 		if (StringUtils.isNotBlank(formVo.getFacType())) {
@@ -186,19 +183,19 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 
 		// Office Code
 		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
-			sql.append(" AND OFFICE_CODE like ?");
+			sql.append(" AND OFFICE_CODE LIKE ?");
 			params.add(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
 		}
 
 		// Fac fullname
 		if (StringUtils.isNotBlank(formVo.getFacFullname())) {
-			sql.append(" AND FAC_FULLNAME like ?");
+			sql.append(" AND FAC_FULLNAME LIKE ?");
 			params.add("%" + StringUtils.trim(formVo.getFacFullname()) + "%");
 		}
 
 		// Cus fullname
 		if (StringUtils.isNotBlank(formVo.getCusFullname())) {
-			sql.append(" AND CUS_FULLNAME like ?");
+			sql.append(" AND CUS_FULLNAME LIKE ?");
 			params.add("%" + StringUtils.trim(formVo.getCusFullname()) + "%");
 		}
 		
@@ -497,7 +494,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 
 		// Cus fullname
 		if (StringUtils.isNotBlank(formVo.getCusFullname())) {
-			sql.append(" AND R4000.R4000.CUS_FULLNAME LIKE ?");
+			sql.append(" AND R4000.CUS_FULLNAME LIKE ?");
 			params.add("%" + StringUtils.trim(formVo.getCusFullname()) + "%");
 		}
 		

@@ -44,6 +44,8 @@ public class TaMasCondMainHdr extends BaseEntity {
 	private LocalDate regDateStart;
 	@Column(name = "REG_DATE_END")
 	private LocalDate regDateEnd;
+	@Column(name = "COMP_MONTH_NUM")
+	private Integer compMonthNum;
 
 	public Long getMasCondMainHdrId() {
 		return masCondMainHdrId;
@@ -131,6 +133,14 @@ public class TaMasCondMainHdr extends BaseEntity {
 
 	public void setRegDateEnd(LocalDate regDateEnd) {
 		this.regDateEnd = regDateEnd;
+	}
+
+	public Integer getCompMonthNum() {
+		return compMonthNum;
+	}
+
+	public void setCompMonthNum(Integer compMonthNum) {
+		this.compMonthNum = compMonthNum;
 	}
 
 	public String toString() {
