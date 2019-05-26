@@ -29,15 +29,12 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	private String mainCondFreqType;
 	private Integer taxMonthStart;
 	private Integer taxMonthEnd;
-
+	private Integer taxMonthNo;
 	private String flagPage;
 	private String condSubNoAuditFlag;
-
 	private String taxAuditLast;
-	
 	private String sector;
 	private String area;
-	
 
 	public String getDateStart() {
 		return dateStart;
@@ -223,6 +220,14 @@ public class TaxOperatorFormVo extends DataTableRequest {
 		this.taxMonthEnd = taxMonthEnd;
 	}
 
+	public Integer getTaxMonthNo() {
+		return taxMonthNo;
+	}
+
+	public void setTaxMonthNo(Integer taxMonthNo) {
+		this.taxMonthNo = taxMonthNo;
+	}
+
 	public String getFlagPage() {
 		return flagPage;
 	}
@@ -262,6 +267,5 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	public void setArea(String area) {
 		this.area = area;
 	}
-	
 
 }

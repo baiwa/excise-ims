@@ -83,6 +83,7 @@ public class TaxAuditUtils {
 			taxOperatorDatatableVo.setCondG5(taxOperatorDetailVo.getCondG5());
 			taxOperatorDatatableVo.setCondG6(taxOperatorDetailVo.getCondG6());
 			taxOperatorDatatableVo.setCondRegDate(taxOperatorDetailVo.getCondRegDate());
+			taxOperatorDatatableVo.setNotPayTaxMonthNo(taxOperatorDetailVo.getNotPayTaxMonthNo());
 			
 			taxAmtList = new ArrayList<>();
 			for (int i = 0; i < formVo.getDateRange(); i++) {

@@ -292,7 +292,82 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		//sql.append(" ORDER BY TA_W_DTL.COND_SUB_NO_AUDIT ASC, NVL(T_W_COND_DTL.RISK_LEVEL,0) DESC, R4000.DUTY_CODE ASC, R4000.OFFICE_CODE ASC, TA_W_DTL.NEW_REG_ID ASC ");
 		sql.append(" ORDER BY TA_W_DTL.COND_SUB_NO_AUDIT ASC, NVL(TA_W_DTL.COND_SORTING,0) DESC, R4000.DUTY_CODE ASC, R4000.OFFICE_CODE ASC, TA_W_DTL.NEW_REG_ID ASC ");
 
-		return commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(), worksheetRowMapper);
+		return commonJdbcTemplate.query(
+			OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()),
+			params.toArray(),
+			new RowMapper<TaxOperatorDetailVo>() {
+				@Override
+				public TaxOperatorDetailVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+					TaxOperatorDetailVo vo = new TaxOperatorDetailVo();
+					TaxAuditUtils.commonSelectionWorksheetRowMapper(vo, rs);
+					vo.setDraftNumber(rs.getString("ANALYSIS_NUMBER"));
+					vo.setCondTaxGrp(rs.getString("COND_MAIN_GRP"));
+					vo.setCondSubCapital(rs.getString("COND_SUB_CAPITAL"));
+					vo.setCondSubRisk(rs.getString("COND_SUB_RISK"));
+					vo.setCondSubNoAudit(rs.getString("COND_SUB_NO_AUDIT"));
+					vo.setRiskLevel(rs.getString("RISK_LEVEL"));
+					vo.setCondG1(rs.getString("COND_G1"));
+					vo.setCondG2(rs.getString("COND_G2"));
+					vo.setCondG3(rs.getString("COND_G3"));
+					vo.setCondG4(rs.getString("COND_G4"));
+					vo.setCondG5(rs.getString("COND_G5"));
+					vo.setCondG6(rs.getString("COND_G6"));
+					vo.setCondRegDate(rs.getString("COND_REG_DATE"));
+					
+					int taxMonthNo = Integer.parseInt(rs.getString("TAX_MONTH_NO"));
+					String notPayTaxMonthNo = null;
+					if (formVo.getTaxMonthNo().intValue() == taxMonthNo) {
+						notPayTaxMonthNo = "-";
+					} else {
+						notPayTaxMonthNo = String.valueOf(formVo.getTaxMonthNo().intValue() - taxMonthNo);
+					}
+					vo.setNotPayTaxMonthNo(notPayTaxMonthNo);
+
+					try {
+						vo.setCondSubCapitalDesc(ApplicationCache.getParamInfoByCode("TA_SUB_COND_CAPITAL", rs.getString("COND_SUB_CAPITAL")).getValue1());
+						vo.setCondSubRiskDesc(ApplicationCache.getParamInfoByCode("TA_RISK_LEVEL", rs.getString("COND_SUB_RISK")).getValue1());
+						vo.setCondSubNoAuditDesc(rs.getString("COND_SUB_NO_AUDIT"));
+					} catch (Exception e) {
+						vo.setCondSubCapitalDesc("");
+						vo.setCondSubRiskDesc("");
+						vo.setCondSubNoAuditDesc("");
+					}
+
+					vo.setRegCapital(rs.getString("REG_CAPITAL"));
+					vo.setRegStatus((StringUtils.isNotBlank(rs.getString("REG_STATUS")) ? rs.getString("REG_STATUS") : " ") + " " + ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_TH));
+					vo.setRegDate(ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_TH));
+					vo.setCentralSelFlag(rs.getString("CENTRAL_SEL_FLAG"));
+					if (FLAG.Y_FLAG.equals(vo.getCentralSelFlag())) {
+						LocalDate localDate = LocalDateConverter.convertToEntityAttribute(rs.getDate("CENTRAL_SEL_DATE"));
+						vo.setCentralSelDate(ConvertDateUtils.formatLocalDateToString(localDate, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+						vo.setCentralSelOfficeCode(rs.getString("CENTRAL_SEL_OFFICE_CODE"));
+						if (StringUtils.isNotBlank(vo.getCentralSelOfficeCode())) {
+							vo.setSelectBy(ApplicationCache.getExciseDepartment(vo.getCentralSelOfficeCode()).getDeptShortName());
+						}
+					}
+					vo.setSectorSelFlag(rs.getString("SECTOR_SEL_FLAG"));
+					if (StringUtils.isNotBlank(vo.getSectorSelFlag())) {
+						LocalDate localDate = LocalDateConverter.convertToEntityAttribute(rs.getDate("SECTOR_SEL_DATE"));
+						vo.setSectorSelDate(ConvertDateUtils.formatLocalDateToString(localDate, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+						vo.setSectorSelOfficeCode(rs.getString("SECTOR_SEL_OFFICE_CODE"));
+						if (StringUtils.isNotBlank(vo.getSectorSelOfficeCode())) {
+							vo.setSelectBy(ApplicationCache.getExciseDepartment(vo.getSectorSelOfficeCode()).getDeptShortName());
+						}
+					}
+					vo.setAreaSelFlag(rs.getString("AREA_SEL_FLAG"));
+					if (FLAG.Y_FLAG.equals(vo.getAreaSelFlag())) {
+						LocalDate localDate = LocalDateConverter.convertToEntityAttribute(rs.getDate("AREA_SEL_DATE"));
+						vo.setAreaSelDate(ConvertDateUtils.formatLocalDateToString(localDate, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+						vo.setAreaSelOfficeCode(rs.getString("AREA_SEL_OFFICE_CODE"));
+						if (StringUtils.isNotBlank(vo.getAreaSelOfficeCode())) {
+							vo.setSelectBy(ApplicationCache.getExciseDepartment(vo.getAreaSelOfficeCode()).getDeptShortName());
+						}
+					}
+
+					return vo;
+				}
+			}
+		);
 	}
 
 	public Long countByCriteria(TaxOperatorFormVo formVo) {
@@ -302,70 +377,6 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 
 		return commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), params.toArray(), Long.class);
 	}
-
-	private static final RowMapper<TaxOperatorDetailVo> worksheetRowMapper = new RowMapper<TaxOperatorDetailVo>() {
-		@Override
-		public TaxOperatorDetailVo mapRow(ResultSet rs, int rowNum) throws SQLException {
-			TaxOperatorDetailVo vo = new TaxOperatorDetailVo();
-			TaxAuditUtils.commonSelectionWorksheetRowMapper(vo, rs);
-			vo.setDraftNumber(rs.getString("ANALYSIS_NUMBER"));
-			vo.setCondTaxGrp(rs.getString("COND_MAIN_GRP"));
-			vo.setCondSubCapital(rs.getString("COND_SUB_CAPITAL"));
-			vo.setCondSubRisk(rs.getString("COND_SUB_RISK"));
-			vo.setCondSubNoAudit(rs.getString("COND_SUB_NO_AUDIT"));
-			vo.setRiskLevel(rs.getString("RISK_LEVEL"));
-			vo.setCondG1(rs.getString("COND_G1"));
-			vo.setCondG2(rs.getString("COND_G2"));
-			vo.setCondG3(rs.getString("COND_G3"));
-			vo.setCondG4(rs.getString("COND_G4"));
-			vo.setCondG5(rs.getString("COND_G5"));
-			vo.setCondG6(rs.getString("COND_G6"));
-			vo.setCondRegDate(rs.getString("COND_REG_DATE"));
-
-			try {
-				vo.setCondSubCapitalDesc(ApplicationCache.getParamInfoByCode("TA_SUB_COND_CAPITAL", rs.getString("COND_SUB_CAPITAL")).getValue1());
-				vo.setCondSubRiskDesc(ApplicationCache.getParamInfoByCode("TA_RISK_LEVEL", rs.getString("COND_SUB_RISK")).getValue1());
-				vo.setCondSubNoAuditDesc(rs.getString("COND_SUB_NO_AUDIT"));
-			} catch (Exception e) {
-				vo.setCondSubCapitalDesc("");
-				vo.setCondSubRiskDesc("");
-				vo.setCondSubNoAuditDesc("");
-			}
-
-			vo.setRegCapital(rs.getString("REG_CAPITAL"));
-			vo.setRegStatus((StringUtils.isNotBlank(rs.getString("REG_STATUS")) ? rs.getString("REG_STATUS") : " ") + " " + ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_TH));
-			vo.setRegDate(ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_TH));
-			vo.setCentralSelFlag(rs.getString("CENTRAL_SEL_FLAG"));
-			if (FLAG.Y_FLAG.equals(vo.getCentralSelFlag())) {
-				LocalDate localDate = LocalDateConverter.convertToEntityAttribute(rs.getDate("CENTRAL_SEL_DATE"));
-				vo.setCentralSelDate(ConvertDateUtils.formatLocalDateToString(localDate, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-				vo.setCentralSelOfficeCode(rs.getString("CENTRAL_SEL_OFFICE_CODE"));
-				if (StringUtils.isNotBlank(vo.getCentralSelOfficeCode())) {
-					vo.setSelectBy(ApplicationCache.getExciseDepartment(vo.getCentralSelOfficeCode()).getDeptShortName());
-				}
-			}
-			vo.setSectorSelFlag(rs.getString("SECTOR_SEL_FLAG"));
-			if (StringUtils.isNotBlank(vo.getSectorSelFlag())) {
-				LocalDate localDate = LocalDateConverter.convertToEntityAttribute(rs.getDate("SECTOR_SEL_DATE"));
-				vo.setSectorSelDate(ConvertDateUtils.formatLocalDateToString(localDate, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-				vo.setSectorSelOfficeCode(rs.getString("SECTOR_SEL_OFFICE_CODE"));
-				if (StringUtils.isNotBlank(vo.getSectorSelOfficeCode())) {
-					vo.setSelectBy(ApplicationCache.getExciseDepartment(vo.getSectorSelOfficeCode()).getDeptShortName());
-				}
-			}
-			vo.setAreaSelFlag(rs.getString("AREA_SEL_FLAG"));
-			if (FLAG.Y_FLAG.equals(vo.getAreaSelFlag())) {
-				LocalDate localDate = LocalDateConverter.convertToEntityAttribute(rs.getDate("AREA_SEL_DATE"));
-				vo.setAreaSelDate(ConvertDateUtils.formatLocalDateToString(localDate, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-				vo.setAreaSelOfficeCode(rs.getString("AREA_SEL_OFFICE_CODE"));
-				if (StringUtils.isNotBlank(vo.getAreaSelOfficeCode())) {
-					vo.setSelectBy(ApplicationCache.getExciseDepartment(vo.getAreaSelOfficeCode()).getDeptShortName());
-				}
-			}
-
-			return vo;
-		}
-	};
 
 	@Override
 	public List<TaxDraftVo> findByAnalysisNumber(String analysisNumber) {

@@ -98,6 +98,7 @@ public class TaxOperatorDetailVo {
 	private String condG5;
 	private String condG6;
 	private String condRegDate;
+	private String notPayTaxMonthNo;
 
 	public String getCusFullname() {
 		return cusFullname;
@@ -865,6 +866,14 @@ public class TaxOperatorDetailVo {
 
 	public void setCondRegDate(String condRegDate) {
 		this.condRegDate = condRegDate;
+	}
+
+	public String getNotPayTaxMonthNo() {
+		return notPayTaxMonthNo;
+	}
+
+	public void setNotPayTaxMonthNo(String notPayTaxMonthNo) {
+		this.notPayTaxMonthNo = notPayTaxMonthNo;
 	}
 
 }
