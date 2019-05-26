@@ -16,6 +16,7 @@ public class TaxOperatorDetailVo {
 	private String newRegId;
 	private String sumTaxAmtG1;
 	private String sumTaxAmtG2;
+	private String sumTotalTaxAmt;
 	private String taxAmtChnPnt;
 	private String taxAmtSd;
 	private String taxMonthNo;
@@ -210,6 +211,14 @@ public class TaxOperatorDetailVo {
 
 	public void setSumTaxAmtG2(String sumTaxAmtG2) {
 		this.sumTaxAmtG2 = sumTaxAmtG2;
+	}
+
+	public String getSumTotalTaxAmt() {
+		return sumTotalTaxAmt;
+	}
+
+	public void setSumTotalTaxAmt(String sumTotalTaxAmt) {
+		this.sumTotalTaxAmt = sumTotalTaxAmt;
 	}
 
 	public String getTaxAmtChnPnt() {

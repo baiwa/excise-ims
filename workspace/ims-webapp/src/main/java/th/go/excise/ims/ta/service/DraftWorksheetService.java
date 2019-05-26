@@ -536,7 +536,8 @@ public class DraftWorksheetService {
 		logger.info("getDraftWorksheet analysisNumber = {}", formVo.getAnalysisNumber());
 
 		TaxOperatorVo vo = new TaxOperatorVo();
-		if (StringUtils.isNotEmpty(formVo.getDraftNumber())) {
+		if (StringUtils.isNotEmpty(formVo.getAnalysisNumber())) {
+			formVo.setWorksheetStatus(TA_WORKSHEET_STATUS.DRAFT);
 			List<TaxOperatorDetailVo> draftDtlList = taWorksheetDtlRepository.findByCriteria(formVo);
 			vo.setDatas(TaxAuditUtils.prepareTaxOperatorDatatable(draftDtlList, formVo));
 			vo.setCount(taWorksheetDtlRepository.countByCriteria(formVo));

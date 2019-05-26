@@ -48,6 +48,7 @@ public class TaxAuditUtils {
 			taxOperatorDatatableVo.setNewRegId(taxOperatorDetailVo.getNewRegId());
 			taxOperatorDatatableVo.setSumTaxAmtG1(taxOperatorDetailVo.getSumTaxAmtG1());
 			taxOperatorDatatableVo.setSumTaxAmtG2(taxOperatorDetailVo.getSumTaxAmtG2());
+			taxOperatorDatatableVo.setSumTotalTaxAmt(taxOperatorDetailVo.getSumTotalTaxAmt());
 			taxOperatorDatatableVo.setTaxAmtChnPnt(taxOperatorDetailVo.getTaxAmtChnPnt());
 			taxOperatorDatatableVo.setTaxAmtSd(taxOperatorDetailVo.getTaxAmtSd());
 			taxOperatorDatatableVo.setTaxMonthNo(taxOperatorDetailVo.getTaxMonthNo());

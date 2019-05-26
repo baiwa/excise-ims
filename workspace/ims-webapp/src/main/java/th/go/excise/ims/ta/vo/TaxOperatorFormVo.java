@@ -34,6 +34,8 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	private String taxAuditLast;
 	private String sector;
 	private String area;
+	private String worksheetStatus;
+	private String newRegFlag;
 
 	public String getDateStart() {
 		return dateStart;
@@ -257,6 +259,22 @@ public class TaxOperatorFormVo extends DataTableRequest {
 
 	public void setArea(String area) {
 		this.area = area;
+	}
+
+	public String getWorksheetStatus() {
+		return worksheetStatus;
+	}
+
+	public void setWorksheetStatus(String worksheetStatus) {
+		this.worksheetStatus = worksheetStatus;
+	}
+
+	public String getNewRegFlag() {
+		return newRegFlag;
+	}
+
+	public void setNewRegFlag(String newRegFlag) {
+		this.newRegFlag = newRegFlag;
 	}
 
 }
