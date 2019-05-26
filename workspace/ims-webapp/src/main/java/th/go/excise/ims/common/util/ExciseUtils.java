@@ -77,6 +77,7 @@ public class ExciseUtils {
 		return String.valueOf(budgetYear);
 	}
 
+	@Deprecated
 	public static String getDutyDesc(String dutyCode) {
 		for (ParamInfo paramInfo : paramInfoList) {
 			if (paramInfo.getParamCode().equals(dutyCode)) {

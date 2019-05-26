@@ -43,18 +43,16 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 	@Override
 	public void batchInsert(List<TaWorksheetDtl> worksheetDtlList) {
 		String sql = SqlGeneratorUtils.genSqlInsert("TA_WORKSHEET_DTL",
-			Arrays.asList("WORKSHEET_DTL_ID", "ANALYSIS_NUMBER", "NEW_REG_ID", "SUM_TAX_AMT_G1", "SUM_TAX_AMT_G2",
-				"TAX_AMT_CHN_PNT", "TAX_MONTH_NO", "TAX_AUDIT_LAST3", "TAX_AUDIT_LAST2", "TAX_AUDIT_LAST1",
-				"TAX_AMT_SD", "TAX_AMT_MEAN", "TAX_AMT_MAX_PNT", "TAX_AMT_MIN_PNT", "TAX_AMT_G1_M1",
-				"TAX_AMT_G1_M2", "TAX_AMT_G1_M3", "TAX_AMT_G1_M4", "TAX_AMT_G1_M5", "TAX_AMT_G1_M6",
-				"TAX_AMT_G1_M7", "TAX_AMT_G1_M8", "TAX_AMT_G1_M9", "TAX_AMT_G1_M10", "TAX_AMT_G1_M11",
-				"TAX_AMT_G1_M12", "TAX_AMT_G1_M13", "TAX_AMT_G1_M14", "TAX_AMT_G1_M15", "TAX_AMT_G1_M16",
-				"TAX_AMT_G1_M17", "TAX_AMT_G1_M18", "TAX_AMT_G2_M1", "TAX_AMT_G2_M2", "TAX_AMT_G2_M3",
-				"TAX_AMT_G2_M4", "TAX_AMT_G2_M5", "TAX_AMT_G2_M6", "TAX_AMT_G2_M7", "TAX_AMT_G2_M8",
-				"TAX_AMT_G2_M9", "TAX_AMT_G2_M10", "TAX_AMT_G2_M11", "TAX_AMT_G2_M12", "TAX_AMT_G2_M13",
-				"TAX_AMT_G2_M14", "TAX_AMT_G2_M15", "TAX_AMT_G2_M16", "TAX_AMT_G2_M17", "TAX_AMT_G2_M18",
-				"COND_MAIN_GRP", "COND_SUB_CAPITAL", "COND_SUB_RISK", "CREATED_BY", "CREATED_DATE",
-				"LAST_AUDIT_YEAR"),
+			Arrays.asList("WORKSHEET_DTL_ID", "ANALYSIS_NUMBER", "NEW_REG_ID", "REG_ID", "DUTY_GROUP_ID", "DUTY_GROUP_NAME",
+				"SUM_TAX_AMT_G1", "SUM_TAX_AMT_G2", "TAX_AMT_CHN_PNT", "TAX_MONTH_NO", "TAX_AUDIT_LAST3","TAX_AUDIT_LAST2",
+				"TAX_AUDIT_LAST1", "TAX_AMT_SD", "TAX_AMT_MEAN", "TAX_AMT_MAX_PNT", "TAX_AMT_MIN_PNT", 
+				"TAX_AMT_G1_M1", "TAX_AMT_G1_M2", "TAX_AMT_G1_M3", "TAX_AMT_G1_M4", "TAX_AMT_G1_M5", "TAX_AMT_G1_M6",
+				"TAX_AMT_G1_M7", "TAX_AMT_G1_M8", "TAX_AMT_G1_M9", "TAX_AMT_G1_M10", "TAX_AMT_G1_M11", "TAX_AMT_G1_M12",
+				"TAX_AMT_G1_M13", "TAX_AMT_G1_M14", "TAX_AMT_G1_M15", "TAX_AMT_G1_M16", "TAX_AMT_G1_M17", "TAX_AMT_G1_M18",
+				"TAX_AMT_G2_M1", "TAX_AMT_G2_M2", "TAX_AMT_G2_M3", "TAX_AMT_G2_M4", "TAX_AMT_G2_M5", "TAX_AMT_G2_M6",
+				"TAX_AMT_G2_M7", "TAX_AMT_G2_M8", "TAX_AMT_G2_M9", "TAX_AMT_G2_M10", "TAX_AMT_G2_M11", "TAX_AMT_G2_M12",
+				"TAX_AMT_G2_M13", "TAX_AMT_G2_M14", "TAX_AMT_G2_M15", "TAX_AMT_G2_M16", "TAX_AMT_G2_M17", "TAX_AMT_G2_M18",
+				"COND_MAIN_GRP", "COND_SUB_CAPITAL", "COND_SUB_RISK", "CREATED_BY", "CREATED_DATE", "LAST_AUDIT_YEAR"),
 			"TA_WORKSHEET_DTL_SEQ");
 
 		commonJdbcTemplate.batchUpdate(sql, worksheetDtlList, 1000, new ParameterizedPreparedStatementSetter<TaWorksheetDtl>() {
@@ -62,6 +60,9 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 				List<Object> paramList = new ArrayList<Object>();
 				paramList.add(worksheetDtl.getAnalysisNumber());
 				paramList.add(worksheetDtl.getNewRegId());
+				paramList.add(worksheetDtl.getRegId());
+				paramList.add(worksheetDtl.getDutyGroupId());
+				paramList.add(worksheetDtl.getDutyGroupName());
 
 				paramList.add(worksheetDtl.getSumTaxAmtG1());
 				paramList.add(worksheetDtl.getSumTaxAmtG2());
@@ -170,28 +171,28 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 	}
 
 	private void buildByCriteriaQuery(StringBuilder sql, List<Object> params, TaxOperatorFormVo formVo) {
-		sql.append(" SELECT R4000.CUS_FULLNAME , ");
-		sql.append("   R4000.FAC_FULLNAME , ");
-		sql.append("   R4000.FAC_ADDRESS , ");
-		sql.append("   R4000.DUTY_CODE , ");
-		sql.append("   R4000.OFFICE_CODE OFFICE_CODE_R4000 , ");
-		sql.append("   ED_SECTOR.OFF_CODE SEC_CODE , ");
-		sql.append("   ED_SECTOR.OFF_SHORT_NAME SEC_DESC , ");
-		sql.append("   ED_AREA.OFF_CODE AREA_CODE , ");
-		sql.append("   ED_AREA.OFF_SHORT_NAME AREA_DESC , ");
-		sql.append("   TA_PW_SEL.CENTRAL_SEL_FLAG , ");
-		sql.append("   TA_PW_SEL.CENTRAL_SEL_OFFICE_CODE , ");
-		sql.append("   TA_PW_SEL.CENTRAL_SEL_DATE , ");
-		sql.append("   TA_PW_SEL.SECTOR_SEL_FLAG , ");
-		sql.append("   TA_PW_SEL.SECTOR_SEL_OFFICE_CODE , ");
-		sql.append("   TA_PW_SEL.SECTOR_SEL_DATE , ");
-		sql.append("   TA_PW_SEL.AREA_SEL_FLAG , ");
-		sql.append("   TA_PW_SEL.AREA_SEL_OFFICE_CODE , ");
+		sql.append(" SELECT R4000.CUS_FULLNAME, ");
+		sql.append("   R4000.FAC_FULLNAME, ");
+		sql.append("   R4000.FAC_ADDRESS, ");
+		sql.append("   R4000.OFFICE_CODE OFFICE_CODE_R4000, ");
+		sql.append("   ED_SECTOR.OFF_CODE SEC_CODE, ");
+		sql.append("   ED_SECTOR.OFF_SHORT_NAME SEC_DESC, ");
+		sql.append("   ED_AREA.OFF_CODE AREA_CODE, ");
+		sql.append("   ED_AREA.OFF_SHORT_NAME AREA_DESC, ");
+		sql.append("   TA_PW_SEL.CENTRAL_SEL_FLAG, ");
+		sql.append("   TA_PW_SEL.CENTRAL_SEL_OFFICE_CODE, ");
+		sql.append("   TA_PW_SEL.CENTRAL_SEL_DATE, ");
+		sql.append("   TA_PW_SEL.SECTOR_SEL_FLAG, ");
+		sql.append("   TA_PW_SEL.SECTOR_SEL_OFFICE_CODE, ");
+		sql.append("   TA_PW_SEL.SECTOR_SEL_DATE, ");
+		sql.append("   TA_PW_SEL.AREA_SEL_FLAG, ");
+		sql.append("   TA_PW_SEL.AREA_SEL_OFFICE_CODE, ");
 		sql.append("   TA_PW_SEL.AREA_SEL_DATE, ");
 		sql.append("   R4000.REG_STATUS, ");
 		sql.append("   R4000.REG_DATE, ");
-		sql.append("   R4000.REG_CAPITAL , ");
+		sql.append("   R4000.REG_CAPITAL, ");
 		sql.append("   TA_W_DTL.*, ");
+		sql.append("   T_W_COND_HDR.MONTH_NUM, ");
 		sql.append("   T_W_COND_DTL.RISK_LEVEL ");
 		sql.append(" FROM TA_WORKSHEET_DTL TA_W_DTL ");
 		sql.append(" INNER JOIN TA_WORKSHEET_HDR TA_W_HDR ON TA_W_DTL.ANALYSIS_NUMBER = TA_W_HDR.ANALYSIS_NUMBER ");
@@ -202,7 +203,10 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		sql.append("   AND ED_SECTOR.IS_DELETED = 'N' ");
 		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE = CONCAT ( SUBSTR(R4000.OFFICE_CODE, 0, 4) ,'00' ) ");
 		sql.append("   AND ED_AREA.IS_DELETED = 'N' ");
+		sql.append(" LEFT JOIN TA_WORKSHEET_COND_MAIN_HDR T_W_COND_HDR ON T_W_COND_HDR.ANALYSIS_NUMBER = TA_W_DTL.ANALYSIS_NUMBER ");
+		sql.append("   AND T_W_COND_HDR.IS_DELETED = 'N' ");
 		sql.append(" LEFT JOIN TA_WORKSHEET_COND_MAIN_DTL T_W_COND_DTL ON T_W_COND_DTL.ANALYSIS_NUMBER = TA_W_DTL.ANALYSIS_NUMBER ");
+		sql.append("   AND T_W_COND_DTL.IS_DELETED = 'N' ");
 		sql.append("   AND TA_W_DTL.COND_MAIN_GRP = T_W_COND_DTL.COND_GROUP ");
 		sql.append(" LEFT JOIN TA_PLAN_WORKSHEET_SELECT TA_PW_SEL ON TA_PW_SEL.NEW_REG_ID = TA_W_DTL.NEW_REG_ID ");
 		sql.append("   AND TA_PW_SEL.IS_DELETED = 'N' ");
@@ -291,7 +295,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 
 		//sql.append(" ORDER BY TA_W_DTL.COND_SUB_NO_AUDIT ASC, NVL(T_W_COND_DTL.RISK_LEVEL,0) DESC, R4000.DUTY_CODE ASC, R4000.OFFICE_CODE ASC, TA_W_DTL.NEW_REG_ID ASC ");
 		sql.append(" ORDER BY TA_W_DTL.COND_SUB_NO_AUDIT ASC, NVL(TA_W_DTL.COND_SORTING,0) DESC, R4000.DUTY_CODE ASC, R4000.OFFICE_CODE ASC, TA_W_DTL.NEW_REG_ID ASC ");
-
+		
 		return commonJdbcTemplate.query(
 			OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()),
 			params.toArray(),
@@ -314,12 +318,13 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 					vo.setCondG6(rs.getString("COND_G6"));
 					vo.setCondRegDate(rs.getString("COND_REG_DATE"));
 					
-					int taxMonthNo = Integer.parseInt(rs.getString("TAX_MONTH_NO"));
+					int monthNum = Integer.parseInt(rs.getString("MONTH_NUM"));
+					int taxMonthNo = Integer.parseInt(vo.getTaxMonthNo());
 					String notPayTaxMonthNo = null;
-					if (formVo.getTaxMonthNo().intValue() == taxMonthNo) {
+					if (monthNum == taxMonthNo) {
 						notPayTaxMonthNo = "-";
 					} else {
-						notPayTaxMonthNo = String.valueOf(formVo.getTaxMonthNo().intValue() - taxMonthNo);
+						notPayTaxMonthNo = String.valueOf(monthNum - taxMonthNo);
 					}
 					vo.setNotPayTaxMonthNo(notPayTaxMonthNo);
 

@@ -25,6 +25,12 @@ public class TaWorksheetDtl extends BaseEntity {
 	private String analysisNumber;
 	@Column(name = "NEW_REG_ID")
 	private String newRegId;
+	@Column(name = "REG_ID")
+	private String regId;
+	@Column(name = "DUTY_GROUP_ID")
+	private String dutyGroupId;
+	@Column(name = "DUTY_GROUP_NAME")
+	private String dutyGroupName;
 	@Column(name = "SUM_TAX_AMT_G1")
 	private String sumTaxAmtG1;
 	@Column(name = "SUM_TAX_AMT_G2")
@@ -167,6 +173,30 @@ public class TaWorksheetDtl extends BaseEntity {
 
 	public void setNewRegId(String newRegId) {
 		this.newRegId = newRegId;
+	}
+
+	public String getRegId() {
+		return regId;
+	}
+
+	public void setRegId(String regId) {
+		this.regId = regId;
+	}
+
+	public String getDutyGroupId() {
+		return dutyGroupId;
+	}
+
+	public void setDutyGroupId(String dutyGroupId) {
+		this.dutyGroupId = dutyGroupId;
+	}
+
+	public String getDutyGroupName() {
+		return dutyGroupName;
+	}
+
+	public void setDutyGroupName(String dutyGroupName) {
+		this.dutyGroupName = dutyGroupName;
 	}
 
 	public String getSumTaxAmtG1() {

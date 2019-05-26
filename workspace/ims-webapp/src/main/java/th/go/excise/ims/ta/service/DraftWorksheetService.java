@@ -179,11 +179,8 @@ public class DraftWorksheetService {
 			taxAmountList = new ArrayList<>();
 
 			detailVo = new TaxOperatorDetailVo();
-
-			detailVo.setLastAuditYear(maxYearMap.get(wsReg4000.getNewRegId()));
-
 			detailVo.setDutyCode(wsReg4000.getDutyCode());
-			detailVo.setDutyName(ExciseUtils.getDutyDesc(wsReg4000.getDutyCode()));
+			detailVo.setDutyName(ExciseUtils.getDutyDesc(wsReg4000.getDutyCode())); // FIXME Remove
 			detailVo.setNewRegId(wsReg4000.getNewRegId());
 			detailVo.setCusFullname(wsReg4000.getCusFullname());
 			detailVo.setFacFullname(wsReg4000.getFacFullname());
@@ -194,14 +191,15 @@ public class DraftWorksheetService {
 			detailVo.setTaxAuditLast1(auditPlanMap.get(String.valueOf(lastYear1) + wsReg4000.getNewRegId()));
 			detailVo.setTaxAuditLast2(auditPlanMap.get(String.valueOf(lastYear2) + wsReg4000.getNewRegId()));
 			detailVo.setTaxAuditLast3(auditPlanMap.get(String.valueOf(lastYear3) + wsReg4000.getNewRegId()));
+			detailVo.setLastAuditYear(maxYearMap.get(wsReg4000.getNewRegId()));
+			
 			exciseDeptSector = ApplicationCache.getExciseDepartment(wsReg4000.getOfficeCode().substring(0, 2) + "0000");
-
 			if (exciseDeptSector != null) {
 				detailVo.setSecCode(exciseDeptSector.getOfficeCode());
 				detailVo.setSecDesc(exciseDeptSector.getDeptShortName());
 			}
+			
 			exciseDeptArea = ApplicationCache.getExciseDepartment(wsReg4000.getOfficeCode().substring(0, 4) + "00");
-
 			if (exciseDeptArea != null) {
 				detailVo.setAreaCode(exciseDeptArea.getOfficeCode());
 				detailVo.setAreaDesc(exciseDeptArea.getDeptShortName());
@@ -274,9 +272,6 @@ public class DraftWorksheetService {
 
 			// Calculate S.D.
 			calculateSD(detailVo, taxAmountList);
-
-			// Find DutyCode Description
-			detailVo.setDutyName(ExciseUtils.getDutyDesc(wsReg4000.getDutyCode()));
 
 			detailVoList.add(detailVo);
 		}
@@ -443,6 +438,9 @@ public class DraftWorksheetService {
 			worksheetDtl = new TaWorksheetDtl();
 			worksheetDtl.setAnalysisNumber(analysisNumber);
 			worksheetDtl.setNewRegId(detailVo.getNewRegId());
+			worksheetDtl.setRegId(detailVo.getOldRegId());
+			worksheetDtl.setDutyGroupId(detailVo.getDutyCode());
+			worksheetDtl.setDutyGroupName(detailVo.getDutyName());
 
 			worksheetDtl.setSumTaxAmtG1(NO_TAX_AMOUNT.equals(detailVo.getSumTaxAmtG1()) ? null : detailVo.getSumTaxAmtG1());
 			worksheetDtl.setSumTaxAmtG2(NO_TAX_AMOUNT.equals(detailVo.getSumTaxAmtG2()) ? null : detailVo.getSumTaxAmtG2());

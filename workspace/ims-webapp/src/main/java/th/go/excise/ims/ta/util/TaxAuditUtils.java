@@ -17,7 +17,6 @@ import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_OFFICE_CODE;
 import th.go.excise.ims.common.constant.ProjectConstants.TAX_COMPARE_TYPE;
-import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
@@ -239,7 +238,8 @@ public class TaxAuditUtils {
 		vo.setTaxAmtMean(rs.getString("TAX_AMT_MEAN"));
 		vo.setTaxAmtMaxPnt(rs.getString("TAX_AMT_MAX_PNT"));
 		vo.setTaxAmtMinPnt(rs.getString("TAX_AMT_MIN_PNT"));
-		vo.setDutyName(ExciseUtils.getDutyDesc(rs.getString("DUTY_CODE")));
+		vo.setDutyCode(rs.getString("DUTY_GROUP_ID"));
+		vo.setDutyName(rs.getString("DUTY_GROUP_NAME"));
 	}
 
 	public static List<ExciseDepartment> getExciseSectorList() {

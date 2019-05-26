@@ -435,9 +435,6 @@ public class WorksheetService {
 				formVo.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
 			}
 			
-			TaWorksheetCondMainHdr condMainHdr = taWorksheetCondMainHdrRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
-			formVo.setTaxMonthNo(condMainHdr.getMonthNum());
-			
 			List<TaxOperatorDetailVo> list = taWorksheetDtlRepository.findByCriteria(formVo);
 			vo.setDatas(TaxAuditUtils.prepareTaxOperatorDatatable(list, formVo));
 			vo.setCount(taWorksheetDtlRepository.countByCriteria(formVo));
