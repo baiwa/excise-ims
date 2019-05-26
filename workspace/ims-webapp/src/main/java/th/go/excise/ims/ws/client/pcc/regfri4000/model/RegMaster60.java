@@ -11,6 +11,22 @@ public class RegMaster60 {
 	@Expose
 	private String newregId;
 
+	@SerializedName("RegId")
+	@Expose
+	private String regId;
+
+	@SerializedName("RegStatus")
+	@Expose
+	private String regStatus;
+
+	@SerializedName("RegStatusDesc")
+	@Expose
+	private String regStatusDesc;
+
+	@SerializedName("StatusDate")
+	@Expose
+	private String statusDate;
+
 	@SerializedName("CusId")
 	@Expose
 	private String cusId;
@@ -199,6 +215,10 @@ public class RegMaster60 {
 	@Expose
 	private String offcode;
 
+	@SerializedName("CAPITAL")
+	@Expose
+	private String capital;
+
 	@SerializedName("ActiveFlag")
 	@Expose
 	private String activeFlag;
@@ -213,6 +233,38 @@ public class RegMaster60 {
 
 	public void setNewregId(String newregId) {
 		this.newregId = newregId;
+	}
+
+	public String getRegId() {
+		return regId;
+	}
+
+	public void setRegId(String regId) {
+		this.regId = regId;
+	}
+
+	public String getRegStatus() {
+		return regStatus;
+	}
+
+	public void setRegStatus(String regStatus) {
+		this.regStatus = regStatus;
+	}
+
+	public String getRegStatusDesc() {
+		return regStatusDesc;
+	}
+
+	public void setRegStatusDesc(String regStatusDesc) {
+		this.regStatusDesc = regStatusDesc;
+	}
+
+	public String getStatusDate() {
+		return statusDate;
+	}
+
+	public void setStatusDate(String statusDate) {
+		this.statusDate = statusDate;
 	}
 
 	public String getCusId() {
@@ -589,6 +641,14 @@ public class RegMaster60 {
 
 	public void setOffcode(String offcode) {
 		this.offcode = offcode;
+	}
+
+	public String getCapital() {
+		return capital;
+	}
+
+	public void setCapital(String capital) {
+		this.capital = capital;
 	}
 
 	public String getActiveFlag() {

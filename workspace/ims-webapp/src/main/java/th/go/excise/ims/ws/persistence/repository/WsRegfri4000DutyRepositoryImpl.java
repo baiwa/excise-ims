@@ -29,7 +29,8 @@ public class WsRegfri4000DutyRepositoryImpl implements WsRegfri4000DutyRepositor
 		final int BATCH_SIZE = 1000;
 		
 		List<String> updateColumnNames = new ArrayList<>(Arrays.asList(
-			"WREG4000D.GROUP_NAME = ?",
+			"WREG4000D.DUTY_GROUP_NAME = ?",
+			"WREG4000D.REG_DATE = ?",
 			"WREG4000D.IS_DELETED = ?",
 			"WREG4000D.UPDATED_BY = ?",
 			"WREG4000D.UPDATED_DATE = ?"
@@ -38,8 +39,9 @@ public class WsRegfri4000DutyRepositoryImpl implements WsRegfri4000DutyRepositor
 		List<String> insertColumnNames = new ArrayList<>(Arrays.asList(
 			"WREG4000D.REGFRI4000_DUTY_ID",
 			"WREG4000D.NEW_REG_ID",
-			"WREG4000D.GROUP_ID",
-			"WREG4000D.GROUP_NAME",
+			"WREG4000D.DUTY_GROUP_ID",
+			"WREG4000D.DUTY_GROUP_NAME",
+			"WREG4000D.REG_DATE",
 			"WREG4000D.CREATED_BY",
 			"WREG4000D.CREATED_DATE"
 		));
@@ -49,7 +51,7 @@ public class WsRegfri4000DutyRepositoryImpl implements WsRegfri4000DutyRepositor
 		sql.append(" USING DUAL ");
 		sql.append(" ON ( ");
 		sql.append("   WREG4000D.NEW_REG_ID = ? ");
-		sql.append("   AND WREG4000D.GROUP_ID = ? ");
+		sql.append("   AND WREG4000D.DUTY_GROUP_ID = ? ");
 		sql.append(" ) ");
 		sql.append(" WHEN MATCHED THEN ");
 		sql.append("   UPDATE SET ");
@@ -63,16 +65,18 @@ public class WsRegfri4000DutyRepositoryImpl implements WsRegfri4000DutyRepositor
 				List<Object> paramList = new ArrayList<>();
 				// Using Condition
 				paramList.add(regfri4000Duty.getNewRegId());
-				paramList.add(regfri4000Duty.getGroupId());
+				paramList.add(regfri4000Duty.getDutyGroupId());
 				// Update Statement
-				paramList.add(regfri4000Duty.getGroupName());
+				paramList.add(regfri4000Duty.getDutyGroupName());
+				paramList.add(regfri4000Duty.getRegDate());
 				paramList.add(FLAG.N_FLAG);
 				paramList.add(regfri4000Duty.getUpdatedBy());
 				paramList.add(regfri4000Duty.getUpdatedDate());
 				// Insert Statement
 				paramList.add(regfri4000Duty.getNewRegId());
-				paramList.add(regfri4000Duty.getGroupId());
-				paramList.add(regfri4000Duty.getGroupName());
+				paramList.add(regfri4000Duty.getDutyGroupId());
+				paramList.add(regfri4000Duty.getDutyGroupName());
+				paramList.add(regfri4000Duty.getRegDate());
 				paramList.add(regfri4000Duty.getCreatedBy());
 				paramList.add(regfri4000Duty.getCreatedDate());
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());

@@ -1,7 +1,10 @@
 package th.go.excise.ims.scheduler.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -11,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
@@ -58,6 +62,8 @@ public class SyncWsRegfri4000Service {
 		List<WsRegfri4000> regfri4000List = new ArrayList<>();
 		WsRegfri4000Duty regfri4000Duty = null;
 		List<WsRegfri4000Duty> regfri4000DutyList = new ArrayList<>();
+		LocalDate tmpRegDate = null;
+		List<LocalDate> tmpRegDateList = null;
 		do {
 			indexPage++;
 			requestData.setPageNo(String.valueOf(indexPage));
@@ -67,6 +73,10 @@ public class SyncWsRegfri4000Service {
 				for (RegMaster60 regMaster60 : regMaster60List) {
 					regfri4000 = new WsRegfri4000();
 					regfri4000.setNewRegId(regMaster60.getNewregId());
+					regfri4000.setRegId(regMaster60.getRegId());
+					regfri4000.setRegStatus(regMaster60.getRegStatus());
+					regfri4000.setRegStatusDesc(regMaster60.getRegStatusDesc());
+					regfri4000.setRegStatusDate(LocalDate.parse(regMaster60.getStatusDate(), DateTimeFormatter.BASIC_ISO_DATE));
 					regfri4000.setCusId(regMaster60.getCusId());
 					regfri4000.setCusFullname(regMaster60.getCusFullname());
 					regfri4000.setCusAddress(ExciseUtils.buildCusAddress(regMaster60));
@@ -79,11 +89,8 @@ public class SyncWsRegfri4000Service {
 					regfri4000.setFacTelno(regMaster60.getFacTelno());
 					regfri4000.setFacEmail(regMaster60.getFacEmail());
 					regfri4000.setFacUrl(regMaster60.getFacUrl());
-					regfri4000.setFacType(null); // TODO Assign value
-					regfri4000.setRegId(null); // TODO Assign value
-					regfri4000.setRegStatus(null); // TODO Assign value
-					regfri4000.setRegDate(null); // TODO Assign value
-					regfri4000.setRegCapital(null); // TODO Assign value
+					regfri4000.setFacType(regMaster60.getNewregId().substring(13, 14));
+					regfri4000.setRegCapital(NumberUtils.toBigDecimal(regMaster60.getCapital()));
 					regfri4000.setOfficeCode(regMaster60.getOffcode());
 					regfri4000.setActiveFlag(regMaster60.getActiveFlag());
 					regfri4000.setSyncDate(LocalDateTime.now());
@@ -92,17 +99,22 @@ public class SyncWsRegfri4000Service {
 					regfri4000.setUpdatedBy(SYSTEM_USER.BATCH);
 					regfri4000.setUpdatedDate(LocalDateTime.now());
 					if (regMaster60.getRegDutyList() != null && regMaster60.getRegDutyList().size() > 0) {
+						tmpRegDateList = new ArrayList<>();
 						for (RegDuty regDuty : regMaster60.getRegDutyList()) {
+							tmpRegDate = LocalDate.parse(regDuty.getRegDate().substring(0, 8), DateTimeFormatter.BASIC_ISO_DATE);
+							tmpRegDateList.add(tmpRegDate);
 							regfri4000Duty = new WsRegfri4000Duty();
 							regfri4000Duty.setNewRegId(regMaster60.getNewregId());
-							regfri4000Duty.setGroupId(regDuty.getGroupId());
-							regfri4000Duty.setGroupName(regDuty.getGroupName());
+							regfri4000Duty.setDutyGroupId(regDuty.getGroupId());
+							regfri4000Duty.setDutyGroupName(regDuty.getGroupName());
+							regfri4000Duty.setRegDate(tmpRegDate);
 							regfri4000Duty.setCreatedBy(SYSTEM_USER.BATCH);
 							regfri4000Duty.setCreatedDate(LocalDateTime.now());
 							regfri4000Duty.setUpdatedBy(SYSTEM_USER.BATCH);
 							regfri4000Duty.setUpdatedDate(LocalDateTime.now());
 							regfri4000DutyList.add(regfri4000Duty);
 						}
+						regfri4000.setRegDate(tmpRegDateList.stream().min(Comparator.comparing(LocalDate::toEpochDay)).get());
 					}
 					regfri4000List.add(regfri4000);
 				}

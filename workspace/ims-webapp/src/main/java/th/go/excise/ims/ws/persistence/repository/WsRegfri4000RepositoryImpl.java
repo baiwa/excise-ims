@@ -34,6 +34,10 @@ public class WsRegfri4000RepositoryImpl implements WsRegfri4000RepositoryCustom 
 		final int BATCH_SIZE = 1000;
 		
 		List<String> updateColumnNames = new ArrayList<>(Arrays.asList(
+			"WREG4000.REG_ID = ?",
+			"WREG4000.REG_STATUS = ?",
+			"WREG4000.REG_STATUS_DESC = ?",
+			"WREG4000.REG_STATUS_DATE = ?",
 			"WREG4000.CUS_ID = ?",
 			"WREG4000.CUS_FULLNAME = ?",
 			"WREG4000.CUS_ADDRESS = ?",
@@ -47,10 +51,8 @@ public class WsRegfri4000RepositoryImpl implements WsRegfri4000RepositoryCustom 
 			"WREG4000.FAC_EMAIL = ?",
 			"WREG4000.FAC_URL = ?",
 			"WREG4000.FAC_TYPE = ?",
-			"WREG4000.REG_ID = ?",
-			"WREG4000.REG_STATUS = ?",
-			"WREG4000.REG_DATE = ?",
 			"WREG4000.REG_CAPITAL = ?",
+			"WREG4000.REG_DATE = ?",
 			"WREG4000.OFFICE_CODE = ?",
 			"WREG4000.ACTIVE_FLAG = ?",
 			"WREG4000.SYNC_DATE = ?",
@@ -62,6 +64,10 @@ public class WsRegfri4000RepositoryImpl implements WsRegfri4000RepositoryCustom 
 		List<String> insertColumnNames = new ArrayList<>(Arrays.asList(
 			"WREG4000.REGFRI4000_ID",
 			"WREG4000.NEW_REG_ID",
+			"WREG4000.REG_ID",
+			"WREG4000.REG_STATUS",
+			"WREG4000.REG_STATUS_DESC",
+			"WREG4000.REG_STATUS_DATE",
 			"WREG4000.CUS_ID",
 			"WREG4000.CUS_FULLNAME",
 			"WREG4000.CUS_ADDRESS",
@@ -75,10 +81,8 @@ public class WsRegfri4000RepositoryImpl implements WsRegfri4000RepositoryCustom 
 			"WREG4000.FAC_EMAIL",
 			"WREG4000.FAC_URL",
 			"WREG4000.FAC_TYPE",
-			"WREG4000.REG_ID",
-			"WREG4000.REG_STATUS",
-			"WREG4000.REG_DATE",
 			"WREG4000.REG_CAPITAL",
+			"WREG4000.REG_DATE",
 			"WREG4000.OFFICE_CODE",
 			"WREG4000.ACTIVE_FLAG",
 			"WREG4000.SYNC_DATE",
@@ -103,6 +107,10 @@ public class WsRegfri4000RepositoryImpl implements WsRegfri4000RepositoryCustom 
 				// Using Condition
 				paramList.add(regfri4000.getNewRegId());
 				// Update Statement
+				paramList.add(regfri4000.getRegId());
+				paramList.add(regfri4000.getRegStatus());
+				paramList.add(regfri4000.getRegStatusDesc());
+				paramList.add(regfri4000.getRegStatusDate());
 				paramList.add(regfri4000.getCusId());
 				paramList.add(regfri4000.getCusFullname());
 				paramList.add(regfri4000.getCusAddress());
@@ -116,10 +124,8 @@ public class WsRegfri4000RepositoryImpl implements WsRegfri4000RepositoryCustom 
 				paramList.add(regfri4000.getFacEmail());
 				paramList.add(regfri4000.getFacUrl());
 				paramList.add(regfri4000.getFacType());
-				paramList.add(regfri4000.getRegId());
-				paramList.add(regfri4000.getRegStatus());
-				paramList.add(regfri4000.getRegDate());
 				paramList.add(regfri4000.getRegCapital());
+				paramList.add(regfri4000.getRegDate());
 				paramList.add(regfri4000.getOfficeCode());
 				paramList.add(regfri4000.getActiveFlag());
 				paramList.add(regfri4000.getSyncDate());
@@ -128,6 +134,10 @@ public class WsRegfri4000RepositoryImpl implements WsRegfri4000RepositoryCustom 
 				paramList.add(regfri4000.getUpdatedDate());
 				// Insert Statement
 				paramList.add(regfri4000.getNewRegId());
+				paramList.add(regfri4000.getRegId());
+				paramList.add(regfri4000.getRegStatus());
+				paramList.add(regfri4000.getRegStatusDesc());
+				paramList.add(regfri4000.getRegStatusDate());
 				paramList.add(regfri4000.getCusId());
 				paramList.add(regfri4000.getCusFullname());
 				paramList.add(regfri4000.getCusAddress());
@@ -141,10 +151,8 @@ public class WsRegfri4000RepositoryImpl implements WsRegfri4000RepositoryCustom 
 				paramList.add(regfri4000.getFacEmail());
 				paramList.add(regfri4000.getFacUrl());
 				paramList.add(regfri4000.getFacType());
-				paramList.add(regfri4000.getRegId());
-				paramList.add(regfri4000.getRegStatus());
-				paramList.add(regfri4000.getRegDate());
 				paramList.add(regfri4000.getRegCapital());
+				paramList.add(regfri4000.getRegDate());
 				paramList.add(regfri4000.getOfficeCode());
 				paramList.add(regfri4000.getActiveFlag());
 				paramList.add(regfri4000.getSyncDate());

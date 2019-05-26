@@ -13,6 +13,10 @@ public class RegDuty {
 	@Expose
 	private String groupName;
 
+	@SerializedName("RegDate")
+	@Expose
+	private String regDate;
+
 	public String getGroupId() {
 		return groupId;
 	}
@@ -27,6 +31,14 @@ public class RegDuty {
 
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
+	}
+
+	public String getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
 	}
 
 }
