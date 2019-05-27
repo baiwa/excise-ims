@@ -210,7 +210,7 @@ public class WorksheetService {
 				int condIndex = 1;
 				// Condition G1
 				if (StringUtils.isNotBlank(worksheetDtl.getLastAuditYear()) && condSubNoAudit != null) {
-					int year = Integer.valueOf(worksheetHdr.getBudgetYear()) - Integer.valueOf(worksheetDtl.getLastAuditYear());
+					int year = Integer.valueOf(worksheetHdr.getBudgetYear()) - Integer.valueOf(worksheetDtl.getLastAuditYear()) - 1;
 					if (year >= Integer.valueOf(condSubNoAudit.getNoTaxAuditYearNum())) {
 						worksheetDtl.setCondSubNoAudit(FLAG.Y_FLAG);
 						setConnGroup(worksheetDtl, String.valueOf(condIndex++));
