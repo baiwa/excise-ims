@@ -196,7 +196,8 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		sql.append("   TA_W_DTL.*, ");
 		sql.append("   T_W_COND_HDR.MONTH_NUM, ");
 		sql.append("   T_W_COND_DTL.RISK_LEVEL, ");
-		sql.append("   (TO_NUMBER(SUM_TAX_AMT_G1) + TO_NUMBER(SUM_TAX_AMT_G2)) AS SUM_TOTAL_TAX_AMT ");
+		sql.append("   (TO_NUMBER(SUM_TAX_AMT_G1) + TO_NUMBER(SUM_TAX_AMT_G2)) AS SUM_TOTAL_TAX_AMT, ");
+		sql.append("   R4000.MULTI_DUTY_FLAG ");
 		sql.append(" FROM TA_WORKSHEET_DTL TA_W_DTL ");
 		sql.append(" INNER JOIN TA_WORKSHEET_HDR TA_W_HDR ON TA_W_DTL.ANALYSIS_NUMBER = TA_W_HDR.ANALYSIS_NUMBER ");
 		sql.append("   AND TA_W_HDR.IS_DELETED = 'N' ");
@@ -341,6 +342,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			vo.setCondG5(rs.getString("COND_G5"));
 			vo.setCondG6(rs.getString("COND_G6"));
 			vo.setCondRegDate(rs.getString("COND_REG_DATE"));
+			vo.setMultiDutyFlag(rs.getString("MULTI_DUTY_FLAG"));
 			
 			DecimalFormat decimalFormat = new DecimalFormat("#.00");
 			vo.setSumTotalTaxAmt(decimalFormat.format(rs.getBigDecimal("SUM_TOTAL_TAX_AMT")));

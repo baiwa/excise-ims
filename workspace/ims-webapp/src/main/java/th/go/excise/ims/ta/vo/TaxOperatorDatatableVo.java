@@ -57,6 +57,7 @@ public class TaxOperatorDatatableVo {
 	private String condG6;
 	private String condRegDate;
 	private String notPayTaxMonthNo;
+	private String multiDutyFlag;
 
 	public String getCusFullname() {
 		return cusFullname;
@@ -456,6 +457,14 @@ public class TaxOperatorDatatableVo {
 
 	public void setNotPayTaxMonthNo(String notPayTaxMonthNo) {
 		this.notPayTaxMonthNo = notPayTaxMonthNo;
+	}
+
+	public String getMultiDutyFlag() {
+		return multiDutyFlag;
+	}
+
+	public void setMultiDutyFlag(String multiDutyFlag) {
+		this.multiDutyFlag = multiDutyFlag;
 	}
 
 	@Override

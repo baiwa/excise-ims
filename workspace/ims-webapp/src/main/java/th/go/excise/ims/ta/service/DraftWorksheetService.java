@@ -223,6 +223,7 @@ public class DraftWorksheetService {
 			detailVo.setTaxAuditLast2(auditPlanMap.get(String.valueOf(lastYear2) + wsReg4000.getNewRegId()));
 			detailVo.setTaxAuditLast3(auditPlanMap.get(String.valueOf(lastYear3) + wsReg4000.getNewRegId()));
 			detailVo.setLastAuditYear(maxYearMap.get(wsReg4000.getNewRegId()));
+			detailVo.setMultiDutyFlag(wsReg4000.getMultiDutyFlag());
 			
 			exciseDeptSector = ApplicationCache.getExciseDepartment(wsReg4000.getOfficeCode().substring(0, 2) + "0000");
 			if (exciseDeptSector != null) {
