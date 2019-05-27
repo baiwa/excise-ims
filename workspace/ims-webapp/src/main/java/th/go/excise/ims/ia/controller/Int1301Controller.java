@@ -70,11 +70,11 @@ public class Int1301Controller {
 	
 	@PostMapping("/save-ws-pm-assess")
 	@ResponseBody
-	public ResponseData<T> saveWsPmAssess(@RequestBody Int1301SaveVo request){
+	public ResponseData<String> saveWsPmAssess(@RequestBody Int1301SaveVo request){
 		
-		ResponseData<T> response =  new ResponseData<T>();
+		ResponseData<String> response =  new ResponseData<String>();
 		try {
-			int1301Service.saveWsPmAssess(request);
+			response.setData(int1301Service.saveWsPmAssess(request));
 			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

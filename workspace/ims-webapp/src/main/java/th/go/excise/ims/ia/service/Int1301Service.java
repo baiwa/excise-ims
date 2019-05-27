@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
-import th.go.excise.ims.ia.controller.Int1301Controller;
 import th.go.excise.ims.ia.persistence.entity.IaAuditPmassessD;
 import th.go.excise.ims.ia.persistence.entity.IaAuditPmassessH;
 import th.go.excise.ims.ia.persistence.repository.IaAuditPmassessDRepository;
@@ -59,7 +58,7 @@ public class Int1301Service {
 		return response;
 	}
 
-	public void saveWsPmAssess(Int1301SaveVo request) throws Exception {
+	public String saveWsPmAssess(Int1301SaveVo request) throws Exception {
 		IaAuditPmassessH header = null;
 		IaAuditPmassessD detail = null;
 		String auditPmassessNo = iaCommonService.autoGetRunAuditNoBySeqName("P", request.getHeader().get(0).getOffCode(), "AUDIT_PMASSESS_NO_SEQ", 8);
@@ -79,6 +78,8 @@ public class Int1301Service {
 				iaAuditPmassessDRepository.save(detail);
 			}
 		}
+		
+		return auditPmassessNo;
 	}
 
 	public List<IaAuditPmassessH> getAuditPmassessNo() {
