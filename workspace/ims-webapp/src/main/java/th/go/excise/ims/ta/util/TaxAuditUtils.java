@@ -275,18 +275,18 @@ public class TaxAuditUtils {
 		LocalDate localDateG2End = null;
 		if (TAX_COMPARE_TYPE.HALF.equals(compType)) {
 			int range = (dateRange / 2) - 1;
-			localDateG2Start = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(dateStart.split("/")[1]), Integer.parseInt(dateStart.split("/")[0]), 1));
-			localDateG2End = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(dateEnd.split("/")[1]), Integer.parseInt(dateEnd.split("/")[0]), 1));
-			localDateG1End = localDateG2Start.minus(1, ChronoUnit.MONTHS);
-			localDateG1Start = localDateG1End.minus(range, ChronoUnit.MONTHS);
+			localDateG1Start = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(dateStart.split("/")[1]), Integer.parseInt(dateStart.split("/")[0]), 1));
+			localDateG1End = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(dateEnd.split("/")[1]), Integer.parseInt(dateEnd.split("/")[0]), 1));
+			localDateG2End = localDateG1Start.minus(1, ChronoUnit.MONTHS);
+			localDateG2Start = localDateG2End.minus(range, ChronoUnit.MONTHS);
 		} else {
-			localDateG2Start = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(dateStart.split("/")[1]), Integer.parseInt(dateStart.split("/")[0]), 1));
-			localDateG2End = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(dateEnd.split("/")[1]), Integer.parseInt(dateEnd.split("/")[0]), 1));
-			localDateG1Start = localDateG2Start.minus(1, ChronoUnit.YEARS);
-			localDateG1End = localDateG2End.minus(1, ChronoUnit.YEARS);
+			localDateG1Start = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(dateStart.split("/")[1]), Integer.parseInt(dateStart.split("/")[0]), 1));
+			localDateG1End = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(dateEnd.split("/")[1]), Integer.parseInt(dateEnd.split("/")[0]), 1));
+			localDateG2Start = localDateG1Start.minus(1, ChronoUnit.YEARS);
+			localDateG2End = localDateG1End.minus(1, ChronoUnit.YEARS);
 		}
-		vo.setYmStartInc8000M(localDateG1Start.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
-		vo.setYmEndInc8000M(localDateG2End.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
+		vo.setYmStartInc8000M(localDateG2Start.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
+		vo.setYmEndInc8000M(localDateG1End.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
 		vo.setSubLocalDateG1List(LocalDateUtils.getLocalDateRange(localDateG1Start, localDateG1End));
 		vo.setSubLocalDateG2List(LocalDateUtils.getLocalDateRange(localDateG2Start, localDateG2End));
 		logger.debug("localDateG1Start={}", localDateG1Start);

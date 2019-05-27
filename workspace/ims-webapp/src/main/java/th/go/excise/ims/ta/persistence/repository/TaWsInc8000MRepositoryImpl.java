@@ -25,7 +25,6 @@ import th.go.excise.ims.ta.vo.AnalysisFormVo;
 public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom {
 
 	private static final Logger logger = LoggerFactory.getLogger(TaWsInc8000MRepositoryImpl.class);
-	private static String TYPE = "";
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 	
@@ -107,7 +106,7 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 			public Map<String, BigDecimal> extractData(ResultSet rs) throws SQLException, DataAccessException {
 				Map<String, BigDecimal> incomeMap = new HashMap<>();
 				while (rs.next()) {
-					if (TA_CONFIG.INCOME_TYPE_TAX.equals(TYPE)) {
+					if (TA_CONFIG.INCOME_TYPE_TAX.equals(incomeTaxType)) {
 						incomeMap.put(rs.getString("YEAR_MONTH"), rs.getBigDecimal("TAX_AMOUNT"));
 					} else {
 						incomeMap.put(rs.getString("YEAR_MONTH"), rs.getBigDecimal("NET_TAX_AMOUNT"));
