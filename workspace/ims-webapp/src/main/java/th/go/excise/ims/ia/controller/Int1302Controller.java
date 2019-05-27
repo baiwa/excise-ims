@@ -50,8 +50,8 @@ public class Int1302Controller {
 	public ResponseData<String> saveData(@RequestBody Int1302SaveDtlFormVo form) {
 		ResponseData<String> response = new ResponseData<String>();
 		try {
-//			response.setData(int1302Service.list(form));
-			int1302Service.saveData(form);
+//			int1302Service.saveData(form);
+			response.setData(int1302Service.saveData(form));
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

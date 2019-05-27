@@ -8,6 +8,7 @@ import th.go.excise.ims.ia.persistence.entity.IaAuditPy1H;
 public class Int1302Py1NoVo {
 	private IaAuditPy1H iaAuditPy1H;
 	private List<IaAuditPy1D> iaAuditPy1DList;
+	private ExciseDepartmentVo exciseDepartmentVo;
 
 	public IaAuditPy1H getIaAuditPy1H() {
 		return iaAuditPy1H;
@@ -23,6 +24,14 @@ public class Int1302Py1NoVo {
 
 	public void setIaAuditPy1DList(List<IaAuditPy1D> iaAuditPy1DList) {
 		this.iaAuditPy1DList = iaAuditPy1DList;
+	}
+
+	public ExciseDepartmentVo getExciseDepartmentVo() {
+		return exciseDepartmentVo;
+	}
+
+	public void setExciseDepartmentVo(ExciseDepartmentVo exciseDepartmentVo) {
+		this.exciseDepartmentVo = exciseDepartmentVo;
 	}
 
 }

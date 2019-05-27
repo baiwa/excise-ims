@@ -31,7 +31,13 @@ public class IaAuditPy1H
     private String buggetYear;
     @Column(name = "OVERALL_RESULES")
     private String overallResules;
-
+    @Column(name = "AUDIT_RESULT")
+    private String auditResult;
+    @Column(name = "CONDITION_TEXT")
+    private String conditionText;
+    @Column(name = "CRITERIA_TEXT")
+    private String criteriaText;
+    
     public Long getIaAuditPy1HId() {
         return iaAuditPy1HId;
     }
@@ -76,4 +82,28 @@ public class IaAuditPy1H
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
     }
 
+	public String getAuditResult() {
+		return auditResult;
+	}
+
+	public void setAuditResult(String auditResult) {
+		this.auditResult = auditResult;
+	}
+
+	public String getConditionText() {
+		return conditionText;
+	}
+
+	public void setConditionText(String conditionText) {
+		this.conditionText = conditionText;
+	}
+
+	public String getCriteriaText() {
+		return criteriaText;
+	}
+
+	public void setCriteriaText(String criteriaText) {
+		this.criteriaText = criteriaText;
+	}
+    
 }
