@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,9 +36,7 @@ public class Int1302Controller {
 	public ResponseData<Int1302Vo> findData(@RequestBody Int1302FormVo form) {
 		ResponseData<Int1302Vo> response = new ResponseData<Int1302Vo>();
 		try {
-			response.setData(int1302Service.list(form));
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
-			response.setStatus(RESPONSE_STATUS.SUCCESS);
+			response = int1302Service.list(form);
 		} catch (Exception e) {
 			logger.error("Int1101Controller updateSentStatus : ", e);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
@@ -54,19 +52,20 @@ public class Int1302Controller {
 		try {
 //			response.setData(int1302Service.list(form));
 			int1302Service.saveData(form);
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("Int1101Controller updateSentStatus : ", e);
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
 	}
-	
-	@PostMapping("/find-by-py1No/{py1No}")
+
+	@PostMapping("/find-by-py1No")
 	@ResponseBody
-	public ResponseData<Int1302Py1NoVo> findByPy1No(@PathVariable("py1No") String py1No) {
+	public ResponseData<Int1302Py1NoVo> findByPy1No(@RequestBody String py1No) {
+//		public ResponseData<Int1302Py1NoVo> findByPy1No(@PathVariable("py1No") String py1No) {
 		ResponseData<Int1302Py1NoVo> response = new ResponseData<Int1302Py1NoVo>();
 		try {
 			response.setData(int1302Service.findByPy1No(py1No));
@@ -79,7 +78,7 @@ public class Int1302Controller {
 		}
 		return response;
 	}
-	
+
 	@GetMapping("/getPy1NoList")
 	@ResponseBody
 	public ResponseData<List<IaAuditPy1H>> getPy1NoList() {
@@ -96,6 +95,21 @@ public class Int1302Controller {
 		}
 		return response;
 	}
-	
-	
+
+	@PutMapping("/editData")
+	@ResponseBody
+	public ResponseData<String> editData(@RequestBody Int1302SaveDtlFormVo form) {
+		ResponseData<String> response = new ResponseData<String>();
+		try {
+//			response.setData(int1302Service.list(form));
+			int1302Service.editData(form);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Int1101Controller updateSentStatus : ", e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
 }

@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ia.persistence.entity.IaAuditPy1D;
 import th.go.excise.ims.ia.persistence.entity.IaAuditPy1H;
 import th.go.excise.ims.ia.persistence.repository.IaAuditPy1DRepository;
@@ -32,22 +35,37 @@ public class Int1302Service {
 	@Autowired
 	private IaAuditPy1DRepository iaAuditPy1DRepository;
 
-	public Int1302Vo list(Int1302FormVo form) {
+	@Autowired
+	private IaCommonService iaCommonService;
+
+	public ResponseData<Int1302Vo> list(Int1302FormVo form) {
+		ResponseData<Int1302Vo> response = new ResponseData<Int1302Vo>();
+
 		form.setArea("010000");
 		Int1302Vo int1302Vo = new Int1302Vo();
 		WsPmPy1H wsPmPy1H = wsPmPy1HRepository.findByOffCodeByFormYear(form.getArea(), form.getBudgetYear());
-		List<WsPmPy1D> wsPmPy1DList = wsPmPy1DRepository.findByFormCodeByOffCode(wsPmPy1H.getFormCode(),
-				form.getArea());
-		int1302Vo.setWsPmPy1H(wsPmPy1H);
-		int1302Vo.setWsPmPy1DList(wsPmPy1DList);
-		return int1302Vo;
+		List<WsPmPy1D> wsPmPy1DList = null;
+		if (wsPmPy1H == null) {
+			response.setMessage("ไม่พบข้อมูลที่ค้นหา");
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		} else if (wsPmPy1H != null) {
+			wsPmPy1DList = wsPmPy1DRepository.findByFormCodeByOffCode(wsPmPy1H.getFormCode(), form.getArea());
+			int1302Vo.setWsPmPy1H(wsPmPy1H);
+			int1302Vo.setWsPmPy1DList(wsPmPy1DList);
+			response.setData(int1302Vo);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		}
+
+		return response;
 	}
 
 	public void saveData(Int1302SaveDtlFormVo form) {
 		IaAuditPy1H dataHdrSave = new IaAuditPy1H();
 		IaAuditPy1D dataDtlSave = null;
-		String py1No = "PY1 ";
-		
+//		String py1No = "PY1 ";
+		String py1No = iaCommonService.autoGetRunAuditNoBySeqName("PY1", form.getOfficeCode(), "IA_AUDIT_PY1_D_SEQ", 8);
+
 		dataHdrSave.setAuditPy1No(py1No);
 		dataHdrSave.setBuggetYear(form.getBuggetYear());
 		dataHdrSave.setOfficeCode(form.getOfficeCode());
@@ -62,7 +80,7 @@ public class Int1302Service {
 			iaAuditPy1DRepository.save(dataDtlSave);
 		}
 	}
-	
+
 	public Int1302Py1NoVo findByPy1No(String py1No) {
 		Int1302Py1NoVo dataRes = new Int1302Py1NoVo();
 		IaAuditPy1H py1Hdr = iaAuditPy1HRepository.findByAuditPy1No(py1No);
@@ -71,8 +89,19 @@ public class Int1302Service {
 		dataRes.setIaAuditPy1DList(py1DtlList);
 		return dataRes;
 	}
-	
+
 	public List<IaAuditPy1H> getPy1NoList() {
 		return iaAuditPy1HRepository.getAuditPy1NoList();
+	}
+
+	public void editData(Int1302SaveDtlFormVo form) {
+		// get data to edit
+		IaAuditPy1D dataDtledit = null;
+		// loop for edit Detail
+		for (IaAuditPy1D dataDtl : form.getIaAuditPy1DList()) {
+			dataDtledit = iaAuditPy1DRepository.findById(dataDtl.getAuditPy1DId()).get();
+			dataDtledit.setAuditResult(dataDtl.getAuditResult());
+			iaAuditPy1DRepository.save(dataDtledit);
+		}
 	}
 }
