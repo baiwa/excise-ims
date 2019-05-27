@@ -133,7 +133,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 			vo.setPlanWorksheetDtlId(rs.getLong("PLAN_WORKSHEET_DTL_ID"));
 			vo.setOfficeCode(rs.getString("OFFICE_CODE"));
 //            vo.setDeptShortName(rs.getString("DEPTSHORTNAME"));
-			vo.setDeptShortName(ApplicationCache.getExciseDepartment(vo.getOfficeCode()).getDeptShortName());
+			vo.setDeptShortName(vo.getOfficeCode()!= null ? ApplicationCache.getExciseDepartment(vo.getOfficeCode()).getDeptShortName():"");
             vo.setSubdeptShortName(rs.getString("SUBDEPTSHORTNAME"));
             vo.setPersonName(rs.getString("PERSON_NAME"));
 			String auditType = "-";
@@ -309,7 +309,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		List<Object> params = new ArrayList<>();
 		sql.append( " SELECT COUNT(AUDIT_STATUS) COUNT_PLAN ,DPT.OFF_NAME,DPT.OFF_CODE OFFICE_CODE,SEND.SUBMIT_DATE ");
 		sql.append( " ,SEND.SEND_DATE,DTL.AUDIT_STATUS FROM EXCISE_DEPARTMENT DPT ");
-		sql.append( " LEFT JOIN TA_PLAN_WORKSHEET_DTL DTL ON DTL.OFFICE_CODE = DPT.OFF_CODE " );
+		sql.append( " LEFT JOIN TA_PLAN_WORKSHEET_DTL DTL ON DTL.OFFICE_CODE = DPT.OFF_CODE AND dtl.is_deleted = '"+FLAG.N_FLAG+ "' " );
 		sql.append( " LEFT JOIN TA_PLAN_WORKSHEET_SEND SEND ON SEND.OFFICE_CODE = DPT.OFF_CODE AND SEND.BUDGET_YEAR =  ?  " );
 		sql.append( " WHERE DPT.OFF_CODE LIKE ?  " );
 		sql.append( " GROUP BY DPT.OFF_CODE,DPT.OFF_NAME,SEND.SUBMIT_DATE,SEND.SEND_DATE,DTL.AUDIT_STATUS " );
