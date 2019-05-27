@@ -72,6 +72,8 @@ public class TaWsReg4000 extends BaseEntity {
 	private String activeFlag;
 	@Column(name = "SYNC_DATE")
 	private LocalDateTime syncDate;
+	@Column(name = "MULTI_DUTY_FLAG")
+	private String multiDutyFlag;
 
 	public Long getWsReg4000Id() {
 		return wsReg4000Id;
@@ -271,6 +273,14 @@ public class TaWsReg4000 extends BaseEntity {
 
 	public void setSyncDate(LocalDateTime syncDate) {
 		this.syncDate = syncDate;
+	}
+
+	public String getMultiDutyFlag() {
+		return multiDutyFlag;
+	}
+
+	public void setMultiDutyFlag(String multiDutyFlag) {
+		this.multiDutyFlag = multiDutyFlag;
 	}
 
 }

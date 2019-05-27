@@ -168,6 +168,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		sql.append(" SELECT * ");
 		sql.append(" FROM TA_WS_REG4000 ");
 		sql.append(" WHERE IS_DELETED = 'N' ");
+		sql.append("   AND REG_STATUS = '1' "); // REG_STATUS = '1' is Active
 
 		// Factory Type
 		if (StringUtils.isNotBlank(formVo.getFacType())) {
@@ -258,6 +259,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 			vo.setOfficeCode(rs.getString("OFFICE_CODE"));
 			vo.setActiveFlag(rs.getString("ACTIVE_FLAG"));
 			vo.setDutyCode(rs.getString("DUTY_CODE"));
+			vo.setMultiDutyFlag(rs.getString("MUTI_DUTY_FLAG"));
 			return vo;
 		}
 	};

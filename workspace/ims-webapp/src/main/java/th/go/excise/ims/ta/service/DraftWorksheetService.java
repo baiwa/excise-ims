@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -31,6 +32,8 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
 import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.preferences.persistence.entity.ExciseDutyGroup;
+import th.go.excise.ims.preferences.persistence.repository.ExciseDutyGroupRepository;
 import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
@@ -113,6 +116,9 @@ public class DraftWorksheetService {
 	
 	@Autowired
 	private ParameterInfoRepository parameterInfoRepository;
+	
+	@Autowired
+	private ExciseDutyGroupRepository exciseDutyGroupRepository;
 
 	public TaxOperatorVo getPreviewData(TaxOperatorFormVo formVo) {
 		TaxOperatorVo vo = new TaxOperatorVo();
@@ -135,6 +141,15 @@ public class DraftWorksheetService {
 		String budgetYear = formVo.getBudgetYear();
 		String compType = (taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYearAndCondNumber(officeCode, budgetYear, formVo.getCondNumber())).getCompType();
 		formVo.setOfficeCode(officeCode);
+		
+		//=> Excise Duty Group
+		List<ExciseDutyGroup> dutyGorups = exciseDutyGroupRepository.findAll();
+		Map<String, String> result = new HashMap<String, String>();
+		if (!dutyGorups.isEmpty()) {
+			result = dutyGorups.stream().collect(
+	                Collectors.toMap(ExciseDutyGroup::getDutyGroupCode, ExciseDutyGroup::getDutyGroupName));
+		}
+		 
 		
 		WorksheetDateRangeVo worksheetDateRangeVo = TaxAuditUtils.getWorksheetDateRangeVo(formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange(), compType);
 		//String ymStartReg4000 = worksheetDateRangeVo.getYmStartReg4000();
@@ -195,7 +210,8 @@ public class DraftWorksheetService {
 
 			detailVo = new TaxOperatorDetailVo();
 			detailVo.setDutyCode(wsReg4000.getDutyCode());
-			detailVo.setDutyName(ExciseUtils.getDutyDesc(wsReg4000.getDutyCode())); // FIXME Remove
+//			detailVo.setDutyName(ExciseUtils.getDutyDesc(wsReg4000.getDutyCode())); // FIXME Remove
+			detailVo.setDutyName(result.get(wsReg4000.getDutyCode())); // FIXME Remove
 			detailVo.setNewRegId(wsReg4000.getNewRegId());
 			detailVo.setCusFullname(wsReg4000.getCusFullname());
 			detailVo.setFacFullname(wsReg4000.getFacFullname());
@@ -207,6 +223,7 @@ public class DraftWorksheetService {
 			detailVo.setTaxAuditLast2(auditPlanMap.get(String.valueOf(lastYear2) + wsReg4000.getNewRegId()));
 			detailVo.setTaxAuditLast3(auditPlanMap.get(String.valueOf(lastYear3) + wsReg4000.getNewRegId()));
 			detailVo.setLastAuditYear(maxYearMap.get(wsReg4000.getNewRegId()));
+			detailVo.setMultiDutyFlag(wsReg4000.getMultiDutyFlag());
 			
 			exciseDeptSector = ApplicationCache.getExciseDepartment(wsReg4000.getOfficeCode().substring(0, 2) + "0000");
 			if (exciseDeptSector != null) {

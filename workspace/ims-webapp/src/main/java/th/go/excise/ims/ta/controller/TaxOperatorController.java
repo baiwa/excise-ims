@@ -20,6 +20,7 @@ import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.LabelValueBean;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.security.domain.UserBean;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
@@ -522,6 +523,26 @@ public class TaxOperatorController {
 
 		return responseData;
 	}
+	
+	@DeleteMapping("/delete-plan-worksheet-assign-dtl/{id}/{officeCode}")
+	@ResponseBody
+	public ResponseData<?> deletePlanWorksheetAssingDlt(@PathVariable("id") String id,@PathVariable("officeCode") String officeCode) {
+
+		ResponseData<?> responseData = new ResponseData<>();
+
+		try {
+			planWorksheetService.deletePlanWorksheetAssingDlt(id,officeCode);
+			responseData.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.SUCCESS_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			responseData.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.FAILED_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+
+		return responseData;
+	}
 
 	@PostMapping("/save-plan-worksheet-send")
 	@ResponseBody
@@ -600,7 +621,12 @@ public class TaxOperatorController {
 	@ResponseBody
 	public DataTableAjax<PlanWorksheetDatatableVo> planDtlByOffCodeAssign(@RequestBody PlanWorksheetVo formVo) {
 		UserBean userBean = UserLoginUtils.getCurrentUserBean();
-		formVo.setOfficeCode(userBean.getOfficeCode());
+		if (FLAG.N_FLAG.equals(formVo.getSendAllFlag())){
+			formVo.setOfficeCode(userBean.getOfficeCode());
+		}else {
+			formVo.setOfficeCode(null);
+		}
+		
 //		if (EXCISE_SUBDEPT_LEVEL.LV3.equals(userBean.getSubdeptLevel())) {
 //			formVo.setUserLoginId(userBean.getUsername());
 //		} else {

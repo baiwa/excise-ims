@@ -100,6 +100,7 @@ public class TaxOperatorDetailVo {
 	private String condG6;
 	private String condRegDate;
 	private String notPayTaxMonthNo;
+	private String multiDutyFlag;
 
 	public String getCusFullname() {
 		return cusFullname;
@@ -883,6 +884,14 @@ public class TaxOperatorDetailVo {
 
 	public void setNotPayTaxMonthNo(String notPayTaxMonthNo) {
 		this.notPayTaxMonthNo = notPayTaxMonthNo;
+	}
+
+	public String getMultiDutyFlag() {
+		return multiDutyFlag;
+	}
+
+	public void setMultiDutyFlag(String multiDutyFlag) {
+		this.multiDutyFlag = multiDutyFlag;
 	}
 
 }
