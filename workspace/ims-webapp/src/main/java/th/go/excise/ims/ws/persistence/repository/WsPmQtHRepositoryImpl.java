@@ -138,6 +138,7 @@ public class WsPmQtHRepositoryImpl implements WsPmQtHRepositoryCustom  {
 			params.add(request.getOfficeCode());
 		}
 
+		sql.append(" ORDER BY PM_QT_H_SEQ ");
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<WsPmQtHVo> response = commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper(WsPmQtHVo.class));
 

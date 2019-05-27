@@ -18,7 +18,11 @@ public class IaAuditPy1D
     extends BaseEntity
 {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8470084181373785546L;
+	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_AUDIT_PY1_D_GEN")
     @SequenceGenerator(name = "IA_AUDIT_PY1_D_GEN", sequenceName = "IA_AUDIT_PY1_D_SEQ", allocationSize = 1)
     @Column(name = "AUDIT_PY1_D_ID")

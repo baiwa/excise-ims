@@ -25,10 +25,14 @@ public class SyncWsPmPy2ServiceTest {
 	
 	@Test
 	public void test_syncData() throws IOException {
-		RequestData requestData = new RequestData();
-		requestData.setOfficeCode("011000");
-		requestData.setYear("2561");
+		String[] oCodeList = { "010000", "010100", "010200", "010300", "010400", "010500",  "010600", "010700", "010800", "010900", "011000" };
 		
-		syncWsPmPy2Service.syncData(requestData);
+		for (String ocode : oCodeList) {
+			RequestData requestData = new RequestData();
+			requestData.setOfficeCode(ocode);
+			requestData.setYear("2561");
+			
+			syncWsPmPy2Service.syncData(requestData);
+		}
 	}
 }

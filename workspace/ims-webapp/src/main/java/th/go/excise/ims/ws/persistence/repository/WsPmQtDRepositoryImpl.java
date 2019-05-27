@@ -98,15 +98,23 @@ public class WsPmQtDRepositoryImpl implements WsPmQtDRepositoryCustom {
 	}
 	
 	@Override
-	public List<WsPmQtDVo> filterWsPmQtD(String formCode) {
+	public List<WsPmQtDVo> filterWsPmQtD(String offCode ,String formCode ) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 		sql.append(" SELECT * FROM WS_PM_QT_D ");
 		sql.append(" WHERE IS_DELETED = 'N' ");
+		
+		if(StringUtils.isNotBlank(offCode)) {
+			sql.append(" AND OFF_CODE = ? ");
+			params.add(offCode.trim());
+		}
+		
 		if(StringUtils.isNotBlank(formCode)) {
 			sql.append(" AND FORM_CODE = ? ");
 			params.add(formCode.trim());
 		}
+		
+		sql.append(" ORDER BY PM_QT_D_SEQ ");
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<WsPmQtDVo> response = commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper(WsPmQtDVo.class));
 		return response; 

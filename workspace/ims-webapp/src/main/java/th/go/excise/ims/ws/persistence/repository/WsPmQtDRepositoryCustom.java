@@ -8,6 +8,6 @@ import th.go.excise.ims.ws.persistence.entity.WsPmQtD;
 public interface WsPmQtDRepositoryCustom {
 	public void batchMerge(List<WsPmQtD> pmQtDList);
 	
-	List<WsPmQtDVo> filterWsPmQtD(String formCode);
+	List<WsPmQtDVo> filterWsPmQtD(String formCode , String offCode);
 	
 }
