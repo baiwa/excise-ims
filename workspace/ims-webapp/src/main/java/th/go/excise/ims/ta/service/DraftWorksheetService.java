@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -32,8 +31,6 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
 import th.go.excise.ims.common.util.ExciseUtils;
-import th.go.excise.ims.preferences.persistence.entity.ExciseDutyGroup;
-import th.go.excise.ims.preferences.persistence.repository.ExciseDutyGroupRepository;
 import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
@@ -47,7 +44,6 @@ import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondSubNoAudit;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondSubRisk;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
-import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondMainDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondMainHdrRepository;
 import th.go.excise.ims.ta.persistence.repository.TaMasCondSubCapitalRepository;
@@ -68,6 +64,7 @@ import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 import th.go.excise.ims.ta.vo.TaxOperatorVo;
 import th.go.excise.ims.ta.vo.WorksheetDateRangeVo;
+import th.go.excise.ims.ta.vo.WsReg4000Vo;
 import th.go.excise.ims.ta.vo.YearMonthVo;
 
 @Service
@@ -116,9 +113,6 @@ public class DraftWorksheetService {
 	
 	@Autowired
 	private ParameterInfoRepository parameterInfoRepository;
-	
-	@Autowired
-	private ExciseDutyGroupRepository exciseDutyGroupRepository;
 
 	public TaxOperatorVo getPreviewData(TaxOperatorFormVo formVo) {
 		TaxOperatorVo vo = new TaxOperatorVo();
@@ -141,15 +135,6 @@ public class DraftWorksheetService {
 		String budgetYear = formVo.getBudgetYear();
 		String compType = (taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYearAndCondNumber(officeCode, budgetYear, formVo.getCondNumber())).getCompType();
 		formVo.setOfficeCode(officeCode);
-		
-		//=> Excise Duty Group
-		List<ExciseDutyGroup> dutyGorups = exciseDutyGroupRepository.findAll();
-		Map<String, String> result = new HashMap<String, String>();
-		if (!dutyGorups.isEmpty()) {
-			result = dutyGorups.stream().collect(
-	                Collectors.toMap(ExciseDutyGroup::getDutyGroupCode, ExciseDutyGroup::getDutyGroupName));
-		}
-		 
 		
 		WorksheetDateRangeVo worksheetDateRangeVo = TaxAuditUtils.getWorksheetDateRangeVo(formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange(), compType);
 		//String ymStartReg4000 = worksheetDateRangeVo.getYmStartReg4000();
@@ -184,7 +169,7 @@ public class DraftWorksheetService {
 		}
 
 		//List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findByCriteria(formVo, ymStartReg4000, ymEndReg4000);
-		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findByCriteria(formVo);
+		List<WsReg4000Vo> wsReg4000List = taWsReg4000Repository.findByCriteria(formVo);
 		Map<String, BigDecimal> incomeMap = null;
 		BigDecimal sumTaxAmtG1 = null;
 		BigDecimal sumTaxAmtG2 = null;
@@ -198,7 +183,7 @@ public class DraftWorksheetService {
 		List<TaxOperatorDetailVo> detailVoList = new ArrayList<>();
 		String tmpYearMonth = null;
 		BigDecimal tmpTaxAmount = null;
-		for (TaWsReg4000 wsReg4000 : wsReg4000List) {
+		for (WsReg4000Vo wsReg4000 : wsReg4000List) {
 			//logger.debug("wsReg4000.newRegId={}", wsReg4000.getNewRegId());
 
 			int countTaxMonthNo = 0;
@@ -209,9 +194,8 @@ public class DraftWorksheetService {
 			taxAmountList = new ArrayList<>();
 
 			detailVo = new TaxOperatorDetailVo();
-			detailVo.setDutyCode(wsReg4000.getDutyCode());
-//			detailVo.setDutyName(ExciseUtils.getDutyDesc(wsReg4000.getDutyCode())); // FIXME Remove
-			detailVo.setDutyName(result.get(wsReg4000.getDutyCode())); // FIXME Remove
+			detailVo.setDutyCode(wsReg4000.getDutyGroupId());
+			detailVo.setDutyName(wsReg4000.getDutyGroupDesc());
 			detailVo.setNewRegId(wsReg4000.getNewRegId());
 			detailVo.setCusFullname(wsReg4000.getCusFullname());
 			detailVo.setFacFullname(wsReg4000.getFacFullname());
@@ -237,7 +221,7 @@ public class DraftWorksheetService {
 				detailVo.setAreaDesc(exciseDeptArea.getDeptShortName());
 			}
 
-			incomeMap = taWsInc8000MRepository.findByMonthRangeDuty(wsReg4000.getNewRegId(), wsReg4000.getDutyCode(), ymStartInc8000M, ymEndInc8000M, incomeTaxType);
+			incomeMap = taWsInc8000MRepository.findByMonthRangeDuty(wsReg4000.getNewRegId(), wsReg4000.getDutyGroupId(), ymStartInc8000M, ymEndInc8000M, incomeTaxType);
 			if (incomeMap == null) {
 				// Set Default Value
 				taxAmount = NO_TAX_AMOUNT;
