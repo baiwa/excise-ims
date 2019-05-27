@@ -18,10 +18,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
-import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CONFIG;
-import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo;
-import th.co.baiwa.buckwaframework.preferences.persistence.repository.ParameterInfoRepository;
 import th.go.excise.ims.ta.persistence.entity.TaWsInc8000M;
 import th.go.excise.ims.ta.vo.AnalysisFormVo;
 
@@ -32,9 +29,6 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 	
-	@Autowired
-	private ParameterInfoRepository parameterInfoRepository;
-
 	@Override
 	public Map<String, List<TaWsInc8000M>> findByMonthRange(String startMonth, String endMonth) {
 		logger.info("findByMonthRange startMonth={}, endMonth={}", startMonth, endMonth);
@@ -78,8 +72,8 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 	}
 	
 	@Override
-	public Map<String, BigDecimal> findByMonthRangeDuty(String newRegId, String dutyCode, String startMonth, String endMonth) {
-		logger.info("findByMonthRange newRegId={}, dutyCode={}, startMonth={}, endMonth={}", newRegId, dutyCode, startMonth, endMonth);
+	public Map<String, BigDecimal> findByMonthRangeDuty(String newRegId, String dutyCode, String startMonth, String endMonth, String incomeTaxType) {
+		logger.info("findByMonthRange newRegId={}, dutyCode={}, startMonth={}, endMonth={}, incomeTaxType={}", newRegId, dutyCode, startMonth, endMonth, incomeTaxType);
 
 		StringBuilder sql = new StringBuilder();
 		List<Object> paramList = new ArrayList<>();
@@ -108,13 +102,6 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 		paramList.add(dutyCode);
 		paramList.add(startMonth);
 		paramList.add(endMonth);
-		
-		//==> Check TAX, NET
-		ParameterInfo taxType = parameterInfoRepository.findByParamGroupCodeAndParamCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.INCOME_TYPE);
-		
-		if (taxType != null) {
-			TYPE = taxType.getValue1();
-		}
 		
 		Map<String, BigDecimal> incfri8000MMap = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), new ResultSetExtractor<Map<String, BigDecimal>>() {
 			public Map<String, BigDecimal> extractData(ResultSet rs) throws SQLException, DataAccessException {

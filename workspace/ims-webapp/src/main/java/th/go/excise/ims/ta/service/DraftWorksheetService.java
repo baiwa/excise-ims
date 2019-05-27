@@ -23,6 +23,10 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CONFIG;
+import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo;
+import th.co.baiwa.buckwaframework.preferences.persistence.repository.ParameterInfoRepository;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
@@ -106,13 +110,16 @@ public class DraftWorksheetService {
 	private TaWorksheetHdrRepository taWorksheetHdrRepository;
 	@Autowired
 	private TaWorksheetDtlRepository taWorksheetDtlRepository;
+	
+	@Autowired
+	private ParameterInfoRepository parameterInfoRepository;
 
 	public TaxOperatorVo getPreviewData(TaxOperatorFormVo formVo) {
 		TaxOperatorVo vo = new TaxOperatorVo();
 		try {
 			List<TaxOperatorDetailVo> taxOperatorDetailVoList = prepareTaxOperatorDetailVoList(formVo);
 			vo.setDatas(TaxAuditUtils.prepareTaxOperatorDatatable(taxOperatorDetailVoList, formVo));
-			vo.setCount(taWsReg4000Repository.countByCriteriaDuty(formVo));
+			vo.setCount(taWsReg4000Repository.countByCriteria(formVo));
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
@@ -121,6 +128,7 @@ public class DraftWorksheetService {
 
 	public List<TaxOperatorDetailVo> prepareTaxOperatorDetailVoList(TaxOperatorFormVo formVo) {
 		logger.info("prepareTaxOperatorDetailVoList startDate={}, endDate={}, dateRange={}", formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
+		long start = System.currentTimeMillis();
 		
 		final int MAX_MONTH = 36; // 3 years
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
@@ -152,6 +160,13 @@ public class DraftWorksheetService {
 		}
 
 		Map<String, String> maxYearMap = taPlanWorksheetHisRepository.findMaxTaxAuditYear();
+		
+		//==> Check TAX, NET
+		String incomeTaxType = null;
+		ParameterInfo taxType = parameterInfoRepository.findByParamGroupCodeAndParamCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.INCOME_TYPE);
+		if (taxType != null) {
+			incomeTaxType = taxType.getValue1();
+		}
 
 		//List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findByCriteria(formVo, ymStartReg4000, ymEndReg4000);
 		List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findByCriteria(formVo);
@@ -205,7 +220,7 @@ public class DraftWorksheetService {
 				detailVo.setAreaDesc(exciseDeptArea.getDeptShortName());
 			}
 
-			incomeMap = taWsInc8000MRepository.findByMonthRangeDuty(wsReg4000.getNewRegId(), wsReg4000.getDutyCode(), ymStartInc8000M, ymEndInc8000M);
+			incomeMap = taWsInc8000MRepository.findByMonthRangeDuty(wsReg4000.getNewRegId(), wsReg4000.getDutyCode(), ymStartInc8000M, ymEndInc8000M, incomeTaxType);
 			if (incomeMap == null) {
 				// Set Default Value
 				taxAmount = NO_TAX_AMOUNT;
@@ -275,6 +290,9 @@ public class DraftWorksheetService {
 
 			detailVoList.add(detailVo);
 		}
+		
+		long end = System.currentTimeMillis();
+		System.out.println("Process prepareTaxOperatorDetailVoList Success, using " + ((float) (end - start) / 1000F) + " seconds");
 
 		return detailVoList;
 	}

@@ -207,10 +207,13 @@ public class WorksheetService {
 			}
 			
 			if (!FLAG.Y_FLAG.equals(worksheetDtl.getCondRegDate())) {
+				int condIndex = 1;
+				// Condition G1
 				if (StringUtils.isNotBlank(worksheetDtl.getLastAuditYear()) && condSubNoAudit != null) {
 					int year = Integer.valueOf(worksheetHdr.getBudgetYear()) - Integer.valueOf(worksheetDtl.getLastAuditYear());
 					if (year >= Integer.valueOf(condSubNoAudit.getNoTaxAuditYearNum())) {
 						worksheetDtl.setCondSubNoAudit(FLAG.Y_FLAG);
+						setConnGroup(worksheetDtl, String.valueOf(condIndex++));
 						condSorting++;
 					}
 				}
@@ -219,7 +222,7 @@ public class WorksheetService {
 				for (TaWorksheetCondMainDtl condMainDtl : condMainDtlList) {
 					if (TA_MAS_COND_MAIN_TYPE.TAX.equals(condMainDtl.getCondType())) {
 						if (isConditionGroup(condMainDtl, taxDraftVo)) {
-							setConnGroup(worksheetDtl, condMainDtl.getCondGroup());
+							setConnGroup(worksheetDtl, String.valueOf(condIndex++));
 							condSorting++;
 						}
 					}
