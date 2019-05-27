@@ -7,17 +7,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
+import th.go.excise.ims.ia.vo.Int1301Filter;
+import th.go.excise.ims.ia.vo.Int1304FormVo;
+import th.go.excise.ims.ia.vo.WsPmAssessHVo;
+import th.go.excise.ims.ia.vo.WsPmQtHVo;
 import th.go.excise.ims.ws.persistence.entity.WsPmQtH;
 
-public class WsPmQtHRepositoryImpl implements WsPmQtHRepositoryCustom {
+public class WsPmQtHRepositoryImpl implements WsPmQtHRepositoryCustom  {
 	
 	private static final Logger logger = LoggerFactory.getLogger(WsPmQtHRepositoryImpl.class);
 
@@ -113,6 +119,29 @@ public class WsPmQtHRepositoryImpl implements WsPmQtHRepositoryCustom {
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
 			}
 		});
+	}
+	
+	@Override
+	public List<WsPmQtHVo> filterWsPmQt(Int1304FormVo request) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT * FROM WS_PM_QT_H ");
+		sql.append(" WHERE IS_DELETED = 'N' ");
+		
+		if(StringUtils.isNotBlank(request.getBudgetYear())) {
+			sql.append(" AND FORM_YEAR = ? ");
+			params.add(request.getBudgetYear());
+		}
+		
+		if(StringUtils.isNotBlank(request.getOfficeCode())) {
+			sql.append(" AND OFF_CODE = ? ");
+			params.add(request.getOfficeCode());
+		}
+
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		List<WsPmQtHVo> response = commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper(WsPmQtHVo.class));
+
+		return response; 
 	}
 
 }

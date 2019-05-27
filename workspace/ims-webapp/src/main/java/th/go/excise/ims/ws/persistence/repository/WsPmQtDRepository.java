@@ -4,5 +4,6 @@ import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRe
 import th.go.excise.ims.ws.persistence.entity.WsPmQtD;
 
 public interface WsPmQtDRepository extends CommonJpaCrudRepository<WsPmQtD, Long> , WsPmQtDRepositoryCustom {
+	
 
 }
