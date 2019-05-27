@@ -21,9 +21,10 @@ public class IaAuditPmassessHRepositoryImpl implements IaAuditPmassessHRepositor
 	@Override
 	public List<IaAuditPmassessH> getAuditPmassessNoList() {
 		StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT DISTINCT AUDIT_PMASSESS_NO ");
+		sql.append(" SELECT AUDIT_PMASSESS_NO ");
 		sql.append(" FROM IA_AUDIT_PMASSESS_H ");
-		sql.append(" ORDER BY AUDIT_PMASSESS_NO ");
+		sql.append(" GROUP BY AUDIT_PMASSESS_NO  ");
+		sql.append(" ORDER BY MIN(AUDIT_PMASSESS_H_ID) ");
 
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<IaAuditPmassessH> dropdownList = this.commonJdbcTemplate.query(sql.toString(),
