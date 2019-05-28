@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -557,16 +558,18 @@ public class ApplicationCache {
 		ExciseCtrlDutyVo ctrlDutyVo = null;
 		List<ExciseCtrlDuty> ctrlDutyList = null;
 		for (th.go.excise.ims.preferences.persistence.entity.ExciseCtrlDuty exciseCtrlDuty : exciseCtrlDutyList) {
-			ctrlDutyList = EXCISE_CTRL_DUTY_MAP.get(exciseCtrlDuty.getResOffcode());
-			if (ctrlDutyList == null) {
-				ctrlDutyList = new ArrayList<>();
+			if (StringUtils.isNotEmpty(exciseCtrlDuty.getResOffcode())) {
+				ctrlDutyList = EXCISE_CTRL_DUTY_MAP.get(exciseCtrlDuty.getResOffcode());
+				if (ctrlDutyList == null) {
+					ctrlDutyList = new ArrayList<>();
+				}
+				ctrlDutyVo = new ExciseCtrlDutyVo();
+				ctrlDutyVo.setResOffcode(exciseCtrlDuty.getResOffcode());
+				ctrlDutyVo.setDutyGroupCode(exciseCtrlDuty.getDutyGroupCode());
+				ctrlDutyVo.setDutyGroupName(exciseCtrlDuty.getDutyGroupName());
+				ctrlDutyList.add(ctrlDutyVo);
+				EXCISE_CTRL_DUTY_MAP.put(exciseCtrlDuty.getResOffcode(), ctrlDutyList);
 			}
-			ctrlDutyVo = new ExciseCtrlDutyVo();
-			ctrlDutyVo.setResOffcode(exciseCtrlDuty.getResOffcode());
-			ctrlDutyVo.setDutyGroupCode(exciseCtrlDuty.getDutyGroupCode());
-			ctrlDutyVo.setDutyGroupName(exciseCtrlDuty.getDutyGroupName());
-			ctrlDutyList.add(ctrlDutyVo);
-			EXCISE_CTRL_DUTY_MAP.put(exciseCtrlDuty.getResOffcode(), ctrlDutyList);
 		}
 	}
 	
