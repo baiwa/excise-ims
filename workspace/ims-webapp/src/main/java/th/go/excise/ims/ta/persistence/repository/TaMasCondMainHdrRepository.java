@@ -19,5 +19,8 @@ public interface TaMasCondMainHdrRepository extends CommonJpaCrudRepository<TaMa
 
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.condNumber = :condNumber")
 	public TaMasCondMainHdr findByCondNumber(@Param("condNumber") String condNumber);
+	
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode")
+	public List<TaMasCondMainHdr> findByOfficeCode(@Param("officeCode") String officeCode);
 
 }

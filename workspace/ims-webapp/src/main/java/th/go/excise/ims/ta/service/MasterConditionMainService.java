@@ -462,5 +462,36 @@ public class MasterConditionMainService {
 		}
     	return condForm; 
     }
+    
+    public Ta010101Vo getLastBudgetYear() {
+    	String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+    	List<TaMasCondMainHdr> hdr = taMasCondMainHdrRepository.findByOfficeCode(officeCode);
+    	Ta010101Vo condForm = new Ta010101Vo();
+    	int zero = 0;
+    	if (zero < hdr.size()) {
+    		Collections.sort(hdr, new Comparator<TaMasCondMainHdr>() {
+    			public int compare(TaMasCondMainHdr hdr1, TaMasCondMainHdr hdr2) {
+    				int condGroup = hdr1.getBudgetYear().compareTo(hdr2.getBudgetYear());
+    				if (condGroup == 0) {
+    					return condGroup;
+    				}
+    				return Long.valueOf(hdr2.getBudgetYear()) > Long.valueOf(hdr1.getBudgetYear()) ? 1 : Long.valueOf(hdr2.getBudgetYear()) < Long.valueOf(hdr1.getBudgetYear()) ? -1 : 0;
+    			}
+    		});
+    		TaMasCondSubNoAudit noAudit = condSubNoAuditRepository.findByBudgetYearAndOfficeCode(hdr.get(0).getBudgetYear(), officeCode);
+    		List<TaMasCondMainDtl> dtlList = taMasCondMainDtlRepository.findByBudgetYearAndCondNumber(hdr.get(0).getBudgetYear(), hdr.get(0).getCondNumber());
+    		condForm.setBudgetYear(hdr.get(0).getBudgetYear());
+    		condForm.setCondNumber(hdr.get(0).getCondNumber());
+    		if (noAudit != null) {
+    			condForm.setNoTaxAuditYearNum(noAudit.getNoTaxAuditYearNum());
+    		}
+    		condForm.setCompMonthNum(hdr.get(0).getCompMonthNum());
+    		condForm.setRangeTypeStart(dtlList.get(0).getRangeTypeStart());
+    		condForm.setRangeStart(dtlList.get(0).getRangeStart().intValueExact());
+    		condForm.setRegDateStart(ConvertDateUtils.formatLocalDateToString(hdr.get(0).getRegDateStart(), ConvertDateUtils.DD_MM_YYYY));
+    		condForm.setRegDateEnd(ConvertDateUtils.formatLocalDateToString(hdr.get(0).getRegDateEnd(), ConvertDateUtils.DD_MM_YYYY));			
+		}
+    	return condForm; 
+    }
 
 }

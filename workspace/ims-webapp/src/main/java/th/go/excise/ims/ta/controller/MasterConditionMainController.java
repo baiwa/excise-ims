@@ -295,5 +295,20 @@ public class MasterConditionMainController {
         }
         return response;
     }
+    
+    @GetMapping("/ta010101-get-last-budget-year")
+    @ResponseBody
+    public ResponseData<Ta010101Vo> getLastBudgetYear() {
+    	ResponseData<Ta010101Vo> response = new ResponseData<Ta010101Vo>();
+        try {
+            response.setData(masterConditionService.getLastBudgetYear());
+            response.setStatus(RESPONSE_STATUS.SUCCESS);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+            response.setStatus(RESPONSE_STATUS.FAILED);
+        }
+        return response;
+    }
 
 }
