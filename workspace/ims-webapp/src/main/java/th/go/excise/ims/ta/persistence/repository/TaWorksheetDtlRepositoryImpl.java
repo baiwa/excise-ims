@@ -247,9 +247,16 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			sql.append(" AND TA_W_DTL.DUTY_GROUP_ID = ?");
 			params.add(formVo.getDutyCode());
 		}
-		if (StringUtils.isNotBlank(formVo.getCond())) {
-			sql.append(" AND TA_W_DTL.COND_MAIN_GRP = ? ");
-			params.add(formVo.getCond());
+		if (!formVo.getCond().isEmpty()) {
+			sql.append(" AND TA_W_DTL.COND_MAIN_GRP in ( ");
+			for (int i=0; i<formVo.getCond().size(); i++) {
+				sql.append(" ? ");
+				params.add(formVo.getCond().get(i));
+				if (i != (formVo.getCond().size() -1)) {					
+					sql.append(" ,");
+				}
+			}
+			sql.append(" ) ");
 		}
 
 		// TODO Check allow see Factory that selected by other with

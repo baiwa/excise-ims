@@ -1,5 +1,8 @@
 package th.go.excise.ims.ta.vo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 
 public class TaxOperatorFormVo extends DataTableRequest {
@@ -15,7 +18,7 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	private String dutyCode;
 	private String officeCode;
 	private String analysisNumber;
-	private String cond;
+	private List<String> cond = new ArrayList<String>();
 	private String seeDataSelect;
 	private String condNumber;
 	private String condSub1;
@@ -109,11 +112,11 @@ public class TaxOperatorFormVo extends DataTableRequest {
 		this.analysisNumber = analysisNumber;
 	}
 
-	public String getCond() {
+	public List<String> getCond() {
 		return cond;
 	}
 
-	public void setCond(String cond) {
+	public void setCond(List<String> cond) {
 		this.cond = cond;
 	}
 
