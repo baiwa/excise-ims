@@ -4,10 +4,7 @@ import java.util.List;
 
 public class Int1301UpdateVo {
 	private List<IaAuditPmassessHVo> header;
-
-	private ExciseDepartmentVo exciseDepartmentVo;
-	
-	private String  BudgetYear;
+	private List<IaAuditPmassessDVo> detail;
 
 	public List<IaAuditPmassessHVo> getHeader() {
 		return header;
@@ -17,20 +14,12 @@ public class Int1301UpdateVo {
 		this.header = header;
 	}
 
-	public ExciseDepartmentVo getExciseDepartmentVo() {
-		return exciseDepartmentVo;
+	public List<IaAuditPmassessDVo> getDetail() {
+		return detail;
 	}
 
-	public void setExciseDepartmentVo(ExciseDepartmentVo exciseDepartmentVo) {
-		this.exciseDepartmentVo = exciseDepartmentVo;
-	}
-
-	public String getBudgetYear() {
-		return BudgetYear;
-	}
-
-	public void setBudgetYear(String budgetYear) {
-		BudgetYear = budgetYear;
+	public void setDetail(List<IaAuditPmassessDVo> detail) {
+		this.detail = detail;
 	}
 
 }

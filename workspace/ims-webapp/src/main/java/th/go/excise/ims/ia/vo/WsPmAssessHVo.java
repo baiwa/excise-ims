@@ -18,6 +18,9 @@ public class WsPmAssessHVo {
 	private String processBy;
 	private String processPosition;
 	private LocalDate processDate;
+	private String pmaAuditResult;
+	private String pmaAuditEvident;
+	private String pmaAuditSuggestion;
 
 	/* custom */
 	private String processDateStr;
@@ -141,6 +144,30 @@ public class WsPmAssessHVo {
 
 	public void setDetail(List<WsPmAssessDVo> detail) {
 		this.detail = detail;
+	}
+
+	public String getPmaAuditResult() {
+		return pmaAuditResult;
+	}
+
+	public void setPmaAuditResult(String pmaAuditResult) {
+		this.pmaAuditResult = pmaAuditResult;
+	}
+
+	public String getPmaAuditEvident() {
+		return pmaAuditEvident;
+	}
+
+	public void setPmaAuditEvident(String pmaAuditEvident) {
+		this.pmaAuditEvident = pmaAuditEvident;
+	}
+
+	public String getPmaAuditSuggestion() {
+		return pmaAuditSuggestion;
+	}
+
+	public void setPmaAuditSuggestion(String pmaAuditSuggestion) {
+		this.pmaAuditSuggestion = pmaAuditSuggestion;
 	}
 
 }

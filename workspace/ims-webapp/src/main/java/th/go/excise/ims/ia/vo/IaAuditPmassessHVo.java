@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+
 public class IaAuditPmassessHVo {
 	/* entity */
 	private Long auditPmassessHId;
@@ -21,6 +23,9 @@ public class IaAuditPmassessHVo {
 	private String processBy;
 	private String processPosition;
 	private Date processDate;
+	private String pmaAuditResult;
+	private String pmaAuditEvident;
+	private String pmaAuditSuggestion;
 
 	/* custom */
 	private String processDateStr;
@@ -160,6 +165,30 @@ public class IaAuditPmassessHVo {
 
 	public void setDetail(List<IaAuditPmassessDVo> detail) {
 		this.detail = detail;
+	}
+
+	public String getPmaAuditResult() {
+		return pmaAuditResult;
+	}
+
+	public void setPmaAuditResult(String pmaAuditResult) {
+		this.pmaAuditResult = pmaAuditResult;
+	}
+
+	public String getPmaAuditEvident() {
+		return pmaAuditEvident;
+	}
+
+	public void setPmaAuditEvident(String pmaAuditEvident) {
+		this.pmaAuditEvident = pmaAuditEvident;
+	}
+
+	public String getPmaAuditSuggestion() {
+		return pmaAuditSuggestion;
+	}
+
+	public void setPmaAuditSuggestion(String pmaAuditSuggestion) {
+		this.pmaAuditSuggestion = pmaAuditSuggestion;
 	}
 
 }

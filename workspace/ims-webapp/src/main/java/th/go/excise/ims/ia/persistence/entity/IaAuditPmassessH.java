@@ -55,6 +55,12 @@ public class IaAuditPmassessH extends BaseEntity {
 	private String processPosition;
 	@Column(name = "PROCESS_DATE")
 	private Date processDate;
+	@Column(name = "PMA_AUDIT_RESULT")
+	private String pmaAuditResult;
+	@Column(name = "PMA_AUDIT_EVIDENT")
+	private String pmaAuditEvident;
+	@Column(name = "PMA_AUDIT_SUGGESTION")
+	private String pmaAuditSuggestion;
 
 	public Long getAuditPmassessHId() {
 		return auditPmassessHId;
@@ -174,6 +180,30 @@ public class IaAuditPmassessH extends BaseEntity {
 
 	public void setProcessDate(Date processDate) {
 		this.processDate = processDate;
+	}
+
+	public String getPmaAuditResult() {
+		return pmaAuditResult;
+	}
+
+	public void setPmaAuditResult(String pmaAuditResult) {
+		this.pmaAuditResult = pmaAuditResult;
+	}
+
+	public String getPmaAuditEvident() {
+		return pmaAuditEvident;
+	}
+
+	public void setPmaAuditEvident(String pmaAuditEvident) {
+		this.pmaAuditEvident = pmaAuditEvident;
+	}
+
+	public String getPmaAuditSuggestion() {
+		return pmaAuditSuggestion;
+	}
+
+	public void setPmaAuditSuggestion(String pmaAuditSuggestion) {
+		this.pmaAuditSuggestion = pmaAuditSuggestion;
 	}
 
 }
