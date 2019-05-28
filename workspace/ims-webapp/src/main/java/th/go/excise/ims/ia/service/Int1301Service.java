@@ -20,6 +20,7 @@ import th.go.excise.ims.ia.vo.IaAuditPmassessHVo;
 import th.go.excise.ims.ia.vo.Int1301Filter;
 import th.go.excise.ims.ia.vo.Int1301SaveVo;
 import th.go.excise.ims.ia.vo.Int1301UpdateVo;
+import th.go.excise.ims.ia.vo.Int1301Vo;
 import th.go.excise.ims.ia.vo.WsPmAssessDVo;
 import th.go.excise.ims.ia.vo.WsPmAssessHVo;
 import th.go.excise.ims.ws.persistence.repository.WsPmAssessDRepository;
@@ -86,8 +87,8 @@ public class Int1301Service {
 		return iaAuditPmassessHRepository.getAuditPmassessNoList();
 	}
 
-	public Int1301UpdateVo getIaPmAssess(String auditPmassessNo) {
-		Int1301UpdateVo response = new Int1301UpdateVo();
+	public Int1301Vo getIaPmAssess(String auditPmassessNo) {
+		Int1301Vo response = new Int1301Vo();
 		/* find header by auditPmassessNo */
 		List<IaAuditPmassessHVo> resHeader = iaAuditPmassessHRepository.filterIaPaAssessByAuditPmassessNo(auditPmassessNo);
 		for (IaAuditPmassessHVo header : resHeader) {

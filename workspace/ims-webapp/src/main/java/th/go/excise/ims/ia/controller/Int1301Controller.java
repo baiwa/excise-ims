@@ -22,7 +22,7 @@ import th.go.excise.ims.ia.service.Int1301Service;
 import th.go.excise.ims.ia.vo.IaAuditPmassessDVo;
 import th.go.excise.ims.ia.vo.Int1301Filter;
 import th.go.excise.ims.ia.vo.Int1301SaveVo;
-import th.go.excise.ims.ia.vo.Int1301UpdateVo;
+import th.go.excise.ims.ia.vo.Int1301Vo;
 
 @Controller
 @RequestMapping("/api/ia/int1302")
@@ -52,9 +52,9 @@ public class Int1301Controller {
 	
 	@PostMapping("/get-ia-pm-assess")
 	@ResponseBody
-	public ResponseData<Int1301UpdateVo> getIaPmAssess(@RequestBody String auditPmassessNo){
+	public ResponseData<Int1301Vo> getIaPmAssess(@RequestBody String auditPmassessNo){
 		
-		ResponseData<Int1301UpdateVo> response =  new ResponseData<Int1301UpdateVo>();
+		ResponseData<Int1301Vo> response =  new ResponseData<Int1301Vo>();
 		try {
 			response.setData(int1301Service.getIaPmAssess(auditPmassessNo));
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
