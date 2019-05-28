@@ -54,7 +54,7 @@ public class Int1301Service {
 			header.setDetail(wsPmAssessDRepository.filterWsPaAssessD(header.getOffCode(), header.getFormCode()));
 			header.setProcessDateStr(ConvertDateUtils.formatLocalDateToString(header.getProcessDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
 		}
-		response.setHeader(resHeader);
+		response.setPmAssessData(resHeader);
 
 		return response;
 	}
@@ -62,13 +62,17 @@ public class Int1301Service {
 	public String saveWsPmAssess(Int1301SaveVo request) throws Exception {
 		IaAuditPmassessH header = null;
 		IaAuditPmassessD detail = null;
-		String auditPmassessNo = iaCommonService.autoGetRunAuditNoBySeqName("P", request.getHeader().get(0).getOffCode(), "AUDIT_PMASSESS_NO_SEQ", 8);
-		for (WsPmAssessHVo requestHdr :  request.getHeader()) {
+		String auditPmassessNo = iaCommonService.autoGetRunAuditNoBySeqName("P", request.getPmAssessData().get(0).getOffCode(), "AUDIT_PMASSESS_NO_SEQ", 8);
+		for (WsPmAssessHVo requestHdr :  request.getPmAssessData()) {
 			header = new IaAuditPmassessH();
 			requestHdr.setProcessDate(null);
 			BeanUtils.copyProperties(header, requestHdr);
 			header.setProcessDate(ConvertDateUtils.parseStringToDate(requestHdr.getProcessDateStr(), ConvertDateUtils.DD_MM_YYYY));
 			header.setAuditPmassessNo(auditPmassessNo);
+			/* set form header (id same id = same data) */
+			header.setPmaAuditResult(request.getFormHeader().getPmaAuditResult());
+			header.setPmaAuditSuggestion(request.getFormHeader().getPmaAuditSuggestion());
+			header.setPmaAuditEvident(request.getFormHeader().getPmaAuditEvident());
 			iaAuditPmassessHRepository.save(header);
 			
 			for (WsPmAssessDVo requestDtl : requestHdr.getDetail()) {
@@ -108,9 +112,18 @@ public class Int1301Service {
 		return response;
 	}
 	
-	public void updateIaPmAssess(List<IaAuditPmassessDVo> request) {
-		/* loop for update */
-		for (IaAuditPmassessDVo iaAuditPmassessDVo : request) {
+	public void updateIaPmAssess(Int1301UpdateVo request) {
+		/* loop for update headers */
+		List<IaAuditPmassessH> dataHeaderList = iaAuditPmassessHRepository.findByAuditPmassessNoAndIsDeleted(request.getHeader().getAuditPmassessNo(), "N");
+		for (IaAuditPmassessH entity : dataHeaderList) {
+			entity.setPmaAuditSuggestion(request.getHeader().getPmaAuditSuggestion());
+			entity.setPmaAuditResult(request.getHeader().getPmaAuditResult());
+			entity.setPmaAuditEvident(request.getHeader().getPmaAuditEvident());
+			iaAuditPmassessHRepository.save(entity);
+		}
+		
+		/* loop for update details */
+		for (IaAuditPmassessDVo iaAuditPmassessDVo : request.getDetail()){
 			IaAuditPmassessD dataDetail = iaAuditPmassessDRepository.findById(iaAuditPmassessDVo.getAuditPmDId()).get();
 			dataDetail.setAuditResult(iaAuditPmassessDVo.getAuditResult());
 			iaAuditPmassessDRepository.save(dataDetail);
