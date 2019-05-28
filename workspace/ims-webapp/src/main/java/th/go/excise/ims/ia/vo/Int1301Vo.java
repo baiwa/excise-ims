@@ -4,10 +4,8 @@ import java.util.List;
 
 public class Int1301Vo {
 	private List<IaAuditPmassessHVo> header;
-
 	private ExciseDepartmentVo exciseDepartmentVo;
-	
-	private String  BudgetYear;
+	private String BudgetYear;
 
 	public List<IaAuditPmassessHVo> getHeader() {
 		return header;
