@@ -243,16 +243,36 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			params.add(formVo.getDutyCode());
 		}
 		if(!formVo.getCond().contains("all")){
-			if (!formVo.getCond().isEmpty()) {
-				sql.append(" AND TA_W_DTL.COND_MAIN_GRP in ( ");
-				for (int i = 0; i < formVo.getCond().size(); i++) {
-					sql.append(" ? ");
-					params.add(formVo.getCond().get(i));
-					if (i != (formVo.getCond().size() - 1)) {
-						sql.append(" ,");
+			
+			if(formVo.getCond().contains("0")) {
+				sql.append("  and ta_w_dtl.COND_G1!='Y' ");
+				sql.append("  and ta_w_dtl.COND_G2!='Y' ");
+				sql.append("  and ta_w_dtl.COND_G3!='Y' ");
+				sql.append("  and ta_w_dtl.COND_G4!='Y' ");
+				sql.append("  and ta_w_dtl.COND_G5!='Y' ");
+				sql.append("  and ta_w_dtl.COND_G6!='Y' ");
+			}else {
+				
+				if (!formVo.getCond().isEmpty()) {				
+					if (formVo.getCond().contains("1")) {
+						sql.append("  and ta_w_dtl.COND_G1='Y' ");
 					}
+					if (formVo.getCond().contains("2")) {
+						sql.append("  and ta_w_dtl.COND_G2='Y' ");
+					}
+					if (formVo.getCond().contains("3")) {
+						sql.append("  and ta_w_dtl.COND_G3='Y' ");
+					}
+					if (formVo.getCond().contains("4")) {
+						sql.append("  and ta_w_dtl.COND_G4='Y' ");
+					}
+					if (formVo.getCond().contains("5")) {
+						sql.append("  and ta_w_dtl.COND_G5='Y' ");
+					}
+					if (formVo.getCond().contains("6")) {
+						sql.append("  and ta_w_dtl.COND_G6='Y' ");
+					}				
 				}
-				sql.append(" ) ");
 			}
 		}		
 
