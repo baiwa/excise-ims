@@ -215,6 +215,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		sql.append("   AND T_W_COND_DTL.IS_DELETED = 'N' ");
 		sql.append("   AND TA_W_DTL.COND_MAIN_GRP = T_W_COND_DTL.COND_GROUP ");
 		sql.append(" LEFT JOIN TA_PLAN_WORKSHEET_SELECT TA_PW_SEL ON TA_PW_SEL.NEW_REG_ID = TA_W_DTL.NEW_REG_ID ");
+		sql.append("   AND TA_PW_SEL.DUTY_GROUP_ID = TA_W_DTL.DUTY_GROUP_ID ");
 		sql.append("   AND TA_PW_SEL.IS_DELETED = 'N' ");
 		sql.append("   AND TA_PW_SEL.BUDGET_YEAR = ? ");
 		sql.append(" LEFT JOIN EXCISE_DUTY_GROUP ECDG ON ECDG.DUTY_GROUP_CODE=TA_W_DTL.DUTY_GROUP_ID ");
@@ -408,11 +409,10 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 	public List<TaxDraftVo> findByAnalysisNumber(String analysisNumber) {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT T.*, D.TAX_AMT_CHN_PNT, D.TAX_MONTH_NO, D.LAST_AUDIT_YEAR LAST_AUDIT_YEAR");
+		sql.append(" SELECT T.*, D.TAX_AMT_CHN_PNT, D.TAX_MONTH_NO, D.LAST_AUDIT_YEAR, D.DUTY_GROUP_ID");
 		sql.append(" FROM TA_WORKSHEET_DTL D ");
 		sql.append(" INNER JOIN TA_WS_REG4000 T ON T.NEW_REG_ID = D.NEW_REG_ID ");
-		sql.append(" WHERE T.IS_DELETED = 'N' ");
-		sql.append("   AND D.IS_DELETED = 'N' ");
+		sql.append(" WHERE D.IS_DELETED = 'N' ");
 		sql.append("   AND D.ANALYSIS_NUMBER = ? ");
 		paramList.add(analysisNumber);
 		return this.commonJdbcTemplate.query(sql.toString(), paramList.toArray(), taxDraftVoRowMapper);
@@ -429,7 +429,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			vo.setTaxAmtChnPnt(rs.getBigDecimal("TAX_AMT_CHN_PNT"));
 			vo.setTaxMonthNo(rs.getInt("TAX_MONTH_NO"));
 			vo.setRegCapital(rs.getString("REG_CAPITAL"));
-			vo.setDutyCode(rs.getString("DUTY_CODE"));
+			vo.setDutyCode(rs.getString("DUTY_GROUP_ID"));
 			vo.setLastAuditYear(rs.getString("LAST_AUDIT_YEAR"));
 			return vo;
 		}

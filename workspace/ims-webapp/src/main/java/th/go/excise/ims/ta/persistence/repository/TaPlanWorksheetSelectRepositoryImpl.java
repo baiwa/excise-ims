@@ -14,7 +14,7 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
-import th.go.excise.ims.common.constant.ProjectConstants;
+import th.go.excise.ims.ta.vo.TaxDraftVo;
 
 public class TaPlanWorksheetSelectRepositoryImpl implements TaPlanWorksheetSelectRepositoryCustom {
 	
@@ -22,11 +22,11 @@ public class TaPlanWorksheetSelectRepositoryImpl implements TaPlanWorksheetSelec
 	private CommonJdbcTemplate commonJdbcTemplate;
 	
 	@Override
-	public void batchInsert(String budgetYear, List<String> newRegIdList) {
+	public void batchInsert(String budgetYear, List<TaxDraftVo> taxDraftVoList) {
 		String sql = SqlGeneratorUtils.genSqlInsert(
 			"TA_PLAN_WORKSHEET_SELECT",
 			Arrays.asList(
-				"PLAN_WORKSHEET_SELECT_ID", "BUDGET_YEAR", "NEW_REG_ID", "CREATED_BY", "CREATED_DATE"
+				"PLAN_WORKSHEET_SELECT_ID", "BUDGET_YEAR", "NEW_REG_ID", "DUTY_GROUP_ID", "CREATED_BY", "CREATED_DATE"
 			),
 			"TA_PLAN_WORKSHEET_SELECT_SEQ"
 		);
@@ -34,11 +34,12 @@ public class TaPlanWorksheetSelectRepositoryImpl implements TaPlanWorksheetSelec
 		String username = UserLoginUtils.getCurrentUsername();
 		LocalDate createdDate = LocalDate.now();
 
-		commonJdbcTemplate.batchUpdate(sql, newRegIdList, 1000, new ParameterizedPreparedStatementSetter<String>() {
-			public void setValues(PreparedStatement ps, String newRegId) throws SQLException {
+		commonJdbcTemplate.batchUpdate(sql, taxDraftVoList, 1000, new ParameterizedPreparedStatementSetter<TaxDraftVo>() {
+			public void setValues(PreparedStatement ps, TaxDraftVo taxDraftVo) throws SQLException {
 				List<Object> paramList = new ArrayList<Object>();
 				paramList.add(budgetYear);
-				paramList.add(newRegId);
+				paramList.add(taxDraftVo.getNewRegId());
+				paramList.add(taxDraftVo.getDutyCode());
 				paramList.add(username);
 				paramList.add(createdDate);
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());

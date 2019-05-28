@@ -11,14 +11,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
-import th.co.baiwa.buckwaframework.security.constant.SecurityConstants;
 import th.co.baiwa.buckwaframework.security.domain.UserBean;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
@@ -51,6 +49,7 @@ import th.go.excise.ims.ta.vo.PlanWorksheetDtlCusVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetSendTableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetStatus;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
+import th.go.excise.ims.ta.vo.TaxDraftVo;
 
 @Service
 public class PlanWorksheetService {
@@ -141,9 +140,8 @@ public class PlanWorksheetService {
 		taPlanWorksheetSendRepository.saveAll(planSendList);
 
 		// Initial Data for PlanWorksheetSelect
-		// FIXME Require select DutyGroupId for insert?
-		List<String> newRegIdList = taWorksheetDtlRepository.findNewRegIdByAnalysisNumber(formVo.getAnalysisNumber());
-		taPlanWorksheetSelectRepository.batchInsert(formVo.getBudgetYear(), newRegIdList);
+		List<TaxDraftVo> taxDraftVoList = taWorksheetDtlRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
+		taPlanWorksheetSelectRepository.batchInsert(formVo.getBudgetYear(), taxDraftVoList);
 	}
 
 	private void assignCentralOfficeCode(List<TaPlanWorksheetSend> planSendList, String budgetYear, String planNumber) {
