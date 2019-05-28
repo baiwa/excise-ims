@@ -309,7 +309,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			if (FLAG.Y_FLAG.equals(formVo.getNewRegFlag())) {
 				sql.append(" ORDER BY SUM_TOTAL_TAX_AMT DESC ");
 			} else {
-				sql.append(" ORDER BY NVL(TA_W_DTL.COND_SORTING,0) DESC, TA_W_DTL.COND_SUB_NO_AUDIT ASC, TA_W_DTL.TAX_AMT_CHN_PNT ASC, SUM_TOTAL_TAX_AMT DESC ");
+				sql.append(" ORDER BY NVL(TA_W_DTL.COND_SORTING,0) DESC, TA_W_DTL.COND_SUB_NO_AUDIT ASC, TO_NUMBER(TA_W_DTL.TAX_AMT_CHN_PNT) ASC, SUM_TOTAL_TAX_AMT DESC ");
 			}
 		}
 		
