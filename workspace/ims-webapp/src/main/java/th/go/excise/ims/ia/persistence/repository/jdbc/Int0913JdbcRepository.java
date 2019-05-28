@@ -27,13 +27,13 @@ public class Int0913JdbcRepository {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT * FROM IA_UTILITY_BILL U WHERE U.IS_DELETED = 'N' ");
-		if(vo.getUtilityBillSeq()!=null) {
+		if(vo.getUtilityBillSeq() != null) {
 			sql.append(" AND UTILITY_BILL_SEQ = ? ");
 			paramList.add(vo.getUtilityBillSeq());
 		}
-		if (StringUtils.isNoneBlank(vo.getUbillType())) {
+		if (StringUtils.isNotBlank(vo.getUbillType())) {
 			sql.append(" AND U.UBILL_TYPE = ? ");
-			paramList.add(vo.getUbillType());
+			paramList.add(Long.valueOf(vo.getUbillType()));
 		}
 		if (StringUtils.isNoneBlank(vo.getOfficeCode())) {
 			sql.append(" AND U.EXCISE_CODE LIKE ? ");
@@ -55,6 +55,8 @@ public class Int0913JdbcRepository {
 			sql.append(" AND U.MONTH_WD_PAY <= ? ");
 			paramList.add((year)+ProjectConstants.QUARTER.Q4[2]);
 		}
+		
+		sql.append(" ORDER BY UTILITY_BILL_SEQ DESC ");
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), int091301Mapping);
 	}
 

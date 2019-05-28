@@ -2,6 +2,7 @@ package th.go.excise.ims.ia.service;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,10 @@ public class Int0913Service {
 		List<Int091301ResultSearchVo> dataFilter = int0913JdbcRepository.findIaUtilityBillByCriteria(int091301SearchVo);
 		if(dataFilter.size() > 0) {
 			for (Int091301ResultSearchVo vo : dataFilter) {
-				vo.setLatePayCauseStr(ApplicationCache.getParamInfoByCode(IaConstants.UTILITY_BILL_REASON.PARAM_GROUP_CODE, vo.getLatePayCause()).getValue1());
+				if(StringUtils.isNotBlank(vo.getLatePayCause())) {
+					vo.setLatePayCauseStr(ApplicationCache.getParamInfoByCode(IaConstants.UTILITY_BILL_REASON.PARAM_GROUP_CODE, vo.getLatePayCause()).getValue1());
+				}
+				
 				/* change format YYYYMM to MM/YYYY */	
 				vo.setMonthWdPay(formatYYYYMMToMM_YYYY(vo.getMonthWdPay()));
 				vo.setInvoiceMonth(formatYYYYMMToMM_YYYY(vo.getInvoiceMonth()));

@@ -6,8 +6,16 @@ public class Int091301SearchVo {
 	private String officeCode;
 	private String monthWdPayFrom;
 	private String monthWdPayTo;
-	private Long utilityBillSeq;
+	private String utilityBillSeq;
 	private String budgetYear;
+
+	public String getUbillType() {
+		return ubillType;
+	}
+
+	public void setUbillType(String ubillType) {
+		this.ubillType = ubillType;
+	}
 
 	public String getOfficeCode() {
 		return officeCode;
@@ -33,19 +41,11 @@ public class Int091301SearchVo {
 		this.monthWdPayTo = monthWdPayTo;
 	}
 
-	public String getUbillType() {
-		return ubillType;
-	}
-
-	public void setUbillType(String ubillType) {
-		this.ubillType = ubillType;
-	}
-
-	public Long getUtilityBillSeq() {
+	public String getUtilityBillSeq() {
 		return utilityBillSeq;
 	}
 
-	public void setUtilityBillSeq(Long utilityBillSeq) {
+	public void setUtilityBillSeq(String utilityBillSeq) {
 		this.utilityBillSeq = utilityBillSeq;
 	}
 
