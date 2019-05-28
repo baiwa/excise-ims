@@ -65,7 +65,7 @@ public class Int1302Service {
 		IaAuditPy1H dataHdrSave = new IaAuditPy1H();
 		IaAuditPy1D dataDtlSave = null;
 //		String py1No = "PY1 ";
-		String py1No = iaCommonService.autoGetRunAuditNoBySeqName("PY1", form.getOfficeCode(), "IA_AUDIT_PY1_D_SEQ", 8);
+		String py1No = iaCommonService.autoGetRunAuditNoBySeqName("PY1", form.getOfficeCode(), "AUDIT_PM_PY1_NO_SEQ", 8);
 
 		dataHdrSave.setAuditPy1No(py1No);
 		dataHdrSave.setBuggetYear(form.getBuggetYear());
