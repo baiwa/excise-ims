@@ -1,5 +1,6 @@
 package th.go.excise.ims.ta.vo;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,24 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	private String area;
 	private String worksheetStatus;
 	private String newRegFlag;
+	private BigDecimal sumTaxAmStart;
+	private BigDecimal sumTaxAmEnd;
+
+	public BigDecimal getSumTaxAmStart() {
+		return sumTaxAmStart;
+	}
+
+	public void setSumTaxAmStart(BigDecimal sumTaxAmStart) {
+		this.sumTaxAmStart = sumTaxAmStart;
+	}
+
+	public BigDecimal getSumTaxAmEnd() {
+		return sumTaxAmEnd;
+	}
+
+	public void setSumTaxAmEnd(BigDecimal sumTaxAmEnd) {
+		this.sumTaxAmEnd = sumTaxAmEnd;
+	}
 
 	public String getDateStart() {
 		return dateStart;
