@@ -2,15 +2,26 @@ package th.go.excise.ims.ia.vo;
 
 import java.util.List;
 
-public class Int1301SaveVo {
-	private List<WsPmAssessHVo> header;
+import th.go.excise.ims.ia.persistence.entity.IaAuditPmassessH;
 
-	public List<WsPmAssessHVo> getHeader() {
-		return header;
+public class Int1301SaveVo {
+	private List<WsPmAssessHVo> pmAssessData;
+	private IaAuditPmassessH formHeader;
+
+	public List<WsPmAssessHVo> getPmAssessData() {
+		return pmAssessData;
 	}
 
-	public void setHeader(List<WsPmAssessHVo> header) {
-		this.header = header;
+	public void setPmAssessData(List<WsPmAssessHVo> pmAssessData) {
+		this.pmAssessData = pmAssessData;
+	}
+
+	public IaAuditPmassessH getFormHeader() {
+		return formHeader;
+	}
+
+	public void setFormHeader(IaAuditPmassessH formHeader) {
+		this.formHeader = formHeader;
 	}
 
 }

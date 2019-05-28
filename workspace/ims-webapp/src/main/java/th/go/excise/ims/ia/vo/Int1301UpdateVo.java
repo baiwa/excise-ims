@@ -3,14 +3,14 @@ package th.go.excise.ims.ia.vo;
 import java.util.List;
 
 public class Int1301UpdateVo {
-	private List<IaAuditPmassessHVo> header;
+	private IaAuditPmassessHVo header;
 	private List<IaAuditPmassessDVo> detail;
 
-	public List<IaAuditPmassessHVo> getHeader() {
+	public IaAuditPmassessHVo getHeader() {
 		return header;
 	}
 
-	public void setHeader(List<IaAuditPmassessHVo> header) {
+	public void setHeader(IaAuditPmassessHVo header) {
 		this.header = header;
 	}
 
