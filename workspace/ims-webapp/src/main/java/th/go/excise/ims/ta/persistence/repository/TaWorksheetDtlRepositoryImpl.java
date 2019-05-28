@@ -197,7 +197,8 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		sql.append("   T_W_COND_HDR.MONTH_NUM, ");
 		sql.append("   T_W_COND_DTL.RISK_LEVEL, ");
 		sql.append("   (TO_NUMBER(SUM_TAX_AMT_G1) + TO_NUMBER(SUM_TAX_AMT_G2)) AS SUM_TOTAL_TAX_AMT, ");
-		sql.append("   R4000.MULTI_DUTY_FLAG ");
+		sql.append("   R4000.MULTI_DUTY_FLAG, ");
+		sql.append("   ECDG.DUTY_GROUP_TYPE ");		
 		sql.append(" FROM TA_WORKSHEET_DTL TA_W_DTL ");
 		sql.append(" INNER JOIN TA_WORKSHEET_HDR TA_W_HDR ON TA_W_DTL.ANALYSIS_NUMBER = TA_W_HDR.ANALYSIS_NUMBER ");
 		sql.append("   AND TA_W_HDR.IS_DELETED = 'N' ");
@@ -216,6 +217,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		sql.append(" LEFT JOIN TA_PLAN_WORKSHEET_SELECT TA_PW_SEL ON TA_PW_SEL.NEW_REG_ID = TA_W_DTL.NEW_REG_ID ");
 		sql.append("   AND TA_PW_SEL.IS_DELETED = 'N' ");
 		sql.append("   AND TA_PW_SEL.BUDGET_YEAR = ? ");
+		sql.append(" LEFT JOIN EXCISE_DUTY_GROUP ECDG ON ECDG.DUTY_GROUP_CODE=TA_W_DTL.DUTY_GROUP_ID ");
 		params.add(formVo.getBudgetYear());
 
 		if (ApplicationCache.isCtrlDutyGroupByOfficeCode(formVo.getOfficeCode())) {
@@ -236,7 +238,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		
 		// DUTY GROUP
 		if (StringUtils.isNotBlank(formVo.getFacType())) {
-			sql.append(" AND R4000.FAC_TYPE = ?");
+			sql.append(" AND ECDG.DUTY_GROUP_TYPE = ?");
 			params.add(formVo.getFacType());
 		}
 		// DUTY
