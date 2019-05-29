@@ -7,14 +7,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
+import th.go.excise.ims.ia.vo.Int1303FilterVo;
+import th.go.excise.ims.ia.vo.WsPmPy2HVo;
 import th.go.excise.ims.ws.persistence.entity.WsPmPy2H;
 
 public class WsPmPy2HRepositoryImpl implements WsPmPy2HRepositoryCustom {
@@ -99,6 +103,30 @@ public class WsPmPy2HRepositoryImpl implements WsPmPy2HRepositoryCustom {
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
 			}
 		});
+	}
+	
+	@Override
+	public List<WsPmPy2HVo> filterWsPaPy2H(Int1303FilterVo request) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT * FROM WS_PM_PY2_H ");
+		sql.append(" WHERE IS_DELETED = 'N' ");
+		
+		if(StringUtils.isNotBlank(request.getBudgetYear())) {
+			sql.append(" AND FORM_YEAR = ? ");
+			params.add(request.getBudgetYear());
+		}
+		
+		if(StringUtils.isNotBlank(request.getOfficeCode())) {
+			sql.append(" AND OFF_CODE = ? ");
+			params.add(request.getOfficeCode());
+		}
+
+		sql.append(" ORDER BY PM_PY2_H_SEQ ");
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		List<WsPmPy2HVo> response = commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper(WsPmPy2HVo.class));
+
+		return response; 
 	}
 
 }

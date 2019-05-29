@@ -7,15 +7,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
 import th.go.excise.ims.ws.persistence.entity.WsPmPy2D;
+import th.go.excise.ims.ws.persistence.entity.WsPmPy2DVo;
 
 public class WsPmPy2DRepositoryImpl implements WsPmPy2DRepositoryCustom {
 
@@ -135,5 +138,27 @@ public class WsPmPy2DRepositoryImpl implements WsPmPy2DRepositoryCustom {
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
 			}
 		});
+	}
+	
+	@Override
+	public List<WsPmPy2DVo> filterWsPaPy2D(String formCode, String offCode) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" SELECT * FROM WS_PM_PY2_D ");
+		sql.append(" WHERE IS_DELETED = 'N' ");
+		
+		if(StringUtils.isNotBlank(formCode.trim())) {
+			sql.append(" AND FORM_CODE = ? ");
+			params.add(formCode);
+		}
+		
+		if(StringUtils.isNotBlank(offCode.trim())) {
+			sql.append(" AND OFF_CODE = ? ");
+			params.add(offCode);
+		}
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		List<WsPmPy2DVo> response = commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper(WsPmPy2DVo.class));
+
+		return response; 
 	}
 }
