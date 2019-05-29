@@ -34,7 +34,7 @@ public class IaAuditPmassessHRepositoryImpl implements IaAuditPmassessHRepositor
 	}
 	
 	@Override
-	public List<IaAuditPmassessHVo> filterIaPaAssessByAuditPmassessNo(String auditPmassessNo) {
+	public List<IaAuditPmassessHVo> filterIaPmAssessByAuditPmassessNo(String auditPmassessNo) {
 		logger.debug("auditPmassessNo: {}", auditPmassessNo);
 		
 		StringBuilder sql = new StringBuilder();

@@ -9,6 +9,6 @@ public interface IaAuditPmassessHRepositoryCustom {
 
 	public List<IaAuditPmassessH> getAuditPmassessNoList();
 
-	public List<IaAuditPmassessHVo> filterIaPaAssessByAuditPmassessNo(String auditPmassessNo);
+	public List<IaAuditPmassessHVo> filterIaPmAssessByAuditPmassessNo(String auditPmassessNo);
 
 }
