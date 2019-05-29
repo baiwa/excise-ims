@@ -21,14 +21,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants;
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CONFIG;
-import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo;
-import th.co.baiwa.buckwaframework.preferences.persistence.repository.ParameterInfoRepository;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.preferences.vo.ExciseDepartment;
@@ -110,10 +110,8 @@ public class DraftWorksheetService {
 	private TaWorksheetHdrRepository taWorksheetHdrRepository;
 	@Autowired
 	private TaWorksheetDtlRepository taWorksheetDtlRepository;
-	
-	@Autowired
-	private ParameterInfoRepository parameterInfoRepository;
 
+	@Deprecated
 	public TaxOperatorVo getPreviewData(TaxOperatorFormVo formVo) {
 		TaxOperatorVo vo = new TaxOperatorVo();
 		try {
@@ -130,19 +128,15 @@ public class DraftWorksheetService {
 		logger.info("prepareTaxOperatorDetailVoList startDate={}, endDate={}, dateRange={}", formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
 		long start = System.currentTimeMillis();
 		
-		final int MAX_MONTH = 36; // 3 years
+		final int MAX_MONTH = 18; // 3 years
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		String budgetYear = formVo.getBudgetYear();
-		String compType = (taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYearAndCondNumber(officeCode, budgetYear, formVo.getCondNumber())).getCompType();
 		formVo.setOfficeCode(officeCode);
+		String budgetYear = formVo.getBudgetYear();
 		
-		WorksheetDateRangeVo worksheetDateRangeVo = TaxAuditUtils.getWorksheetDateRangeVo(formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange(), compType);
-		//String ymStartReg4000 = worksheetDateRangeVo.getYmStartReg4000();
-		//String ymEndReg4000 = worksheetDateRangeVo.getYmEndReg4000();
-		String ymStartInc8000M = worksheetDateRangeVo.getYmStartInc8000M();
-		String ymEndInc8000M = worksheetDateRangeVo.getYmEndInc8000M();
-		List<LocalDate> subLocalDateG1List = worksheetDateRangeVo.getSubLocalDateG1List();
-		List<LocalDate> subLocalDateG2List = worksheetDateRangeVo.getSubLocalDateG2List();
+		TaMasCondMainHdr condMainHdr = taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYearAndCondNumber(officeCode, budgetYear, formVo.getCondNumber());
+		WorksheetDateRangeVo dateRangeVo = TaxAuditUtils.getWorksheetDateRangeVo(formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange(), condMainHdr.getCompType());
+		List<LocalDate> subLocalDateG1List = dateRangeVo.getSubLocalDateG1List();
+		List<LocalDate> subLocalDateG2List = dateRangeVo.getSubLocalDateG2List();
 		
 		Map<String, String> auditPlanMap = new HashMap<>();
 		int lastYear1 = 0;
@@ -163,12 +157,13 @@ public class DraftWorksheetService {
 		
 		//==> Check TAX, NET
 		String incomeTaxType = null;
-		ParameterInfo taxType = parameterInfoRepository.findByParamGroupCodeAndParamCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.INCOME_TYPE);
+		ParamInfo taxType = ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.INCOME_TYPE);
 		if (taxType != null) {
 			incomeTaxType = taxType.getValue1();
+		} else {
+			incomeTaxType = TA_CONFIG.INCOME_TYPE_TAX;
 		}
 
-		//List<TaWsReg4000> wsReg4000List = taWsReg4000Repository.findByCriteria(formVo, ymStartReg4000, ymEndReg4000);
 		List<WsReg4000Vo> wsReg4000List = taWsReg4000Repository.findByCriteria(formVo);
 		Map<String, BigDecimal> incomeMap = null;
 		BigDecimal sumTaxAmtG1 = null;
@@ -178,6 +173,7 @@ public class DraftWorksheetService {
 		ExciseDepartment exciseDeptArea = null;
 		String taxAmount = null;
 		List<Double> taxAmountList = null;
+		Map<String, Integer> incMultiDutyMap = new HashMap<>();
 
 		TaxOperatorDetailVo detailVo = null;
 		List<TaxOperatorDetailVo> detailVoList = new ArrayList<>();
@@ -185,7 +181,14 @@ public class DraftWorksheetService {
 		BigDecimal tmpTaxAmount = null;
 		for (WsReg4000Vo wsReg4000 : wsReg4000List) {
 			//logger.debug("wsReg4000.newRegId={}", wsReg4000.getNewRegId());
-
+			
+			// Check RegDate first
+			// Check Inc8000M will payment
+//			incomeMap = taWsInc8000MRepository.findByMonthRangeDuty(wsReg4000.getNewRegId(), wsReg4000.getDutyGroupId(), ymStartInc8000M, ymEndInc8000M, incomeTaxType);
+//			if (incomeMap == null && !LocalDateUtils.isRange(condMainHdr.getRegDateStart(), condMainHdr.getRegDateEnd(), wsReg4000.getRegDate())) {
+//				continue;
+//			}
+//			
 			int countTaxMonthNo = 0;
 			int countG1 = 0;
 			int countG2 = 0;
@@ -220,9 +223,15 @@ public class DraftWorksheetService {
 				detailVo.setAreaCode(exciseDeptArea.getOfficeCode());
 				detailVo.setAreaDesc(exciseDeptArea.getDeptShortName());
 			}
+			
+			// Initial incMultiDutyCount
+			int incMultiDutyCount = 0;
+			if (!incMultiDutyMap.containsKey(wsReg4000.getNewRegId())) {
+				incMultiDutyMap.put(wsReg4000.getNewRegId(), incMultiDutyCount);
+			}
 
-			incomeMap = taWsInc8000MRepository.findByMonthRangeDuty(wsReg4000.getNewRegId(), wsReg4000.getDutyGroupId(), ymStartInc8000M, ymEndInc8000M, incomeTaxType);
-			if (incomeMap == null) {
+			incomeMap = taWsInc8000MRepository.findByMonthRangeDuty(wsReg4000.getNewRegId(), wsReg4000.getDutyGroupId(), dateRangeVo, incomeTaxType);
+			if (incomeMap.size() == 0) {
 				// Set Default Value
 				taxAmount = NO_TAX_AMOUNT;
 				for (int i = 1; i <= MAX_MONTH; i++) {
@@ -242,6 +251,11 @@ public class DraftWorksheetService {
 				detailVoList.add(detailVo);
 				continue;
 			}
+			
+			// Count incMultiDuty
+			incMultiDutyCount = incMultiDutyMap.get(wsReg4000.getNewRegId()).intValue();
+			incMultiDutyCount++;
+			incMultiDutyMap.put(wsReg4000.getNewRegId(), incMultiDutyCount);
 
 			// Group 1
 			for (LocalDate localDate : subLocalDateG1List) {
@@ -296,12 +310,14 @@ public class DraftWorksheetService {
 			detailVoList.add(detailVo);
 		}
 		
+		calculateIncMultiDuty(detailVoList, incMultiDutyMap);
+		
 		long end = System.currentTimeMillis();
 		System.out.println("Process prepareTaxOperatorDetailVoList Success, using " + ((float) (end - start) / 1000F) + " seconds");
 
 		return detailVoList;
 	}
-	
+
 	private void setTaxAmount(TaxOperatorDetailVo detailVo, String groupMonthNo, String taxAmount) {
 		try {
 			Method method = TaxOperatorDetailVo.class.getDeclaredMethod("setTaxAmt" + groupMonthNo, String.class);
@@ -344,6 +360,15 @@ public class DraftWorksheetService {
 			detailVo.setTaxAmtMaxPnt(decimalFormat.format(taxAmtMinPnt));
 		} else {
 			detailVo.setTaxAmtMaxPnt(NO_TAX_AMOUNT);
+		}
+	}
+	
+	private void calculateIncMultiDuty(List<TaxOperatorDetailVo> detailVoList, Map<String, Integer> incMultiDutyMap) {
+		for (TaxOperatorDetailVo detailVo : detailVoList) {
+			int incMultiDutyCount = incMultiDutyMap.get(detailVo.getNewRegId());
+			if (incMultiDutyCount > 1) {
+				detailVo.setIncMultiDutyFlag(FLAG.Y_FLAG);
+			}
 		}
 	}
 
@@ -521,6 +546,7 @@ public class DraftWorksheetService {
 			worksheetDtl.setCreatedDate(LocalDateTime.now());
 
 			worksheetDtl.setLastAuditYear(detailVo.getLastAuditYear());
+			worksheetDtl.setIncMultiDutyFlag(detailVo.getIncMultiDutyFlag());
 
 			worksheetfDtlList.add(worksheetDtl);
 		}

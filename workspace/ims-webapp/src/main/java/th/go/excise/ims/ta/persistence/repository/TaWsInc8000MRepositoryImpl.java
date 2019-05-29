@@ -21,6 +21,7 @@ import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CONFIG;
 import th.go.excise.ims.ta.persistence.entity.TaWsInc8000M;
 import th.go.excise.ims.ta.vo.AnalysisFormVo;
+import th.go.excise.ims.ta.vo.WorksheetDateRangeVo;
 
 public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom {
 
@@ -71,8 +72,8 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 	}
 	
 	@Override
-	public Map<String, BigDecimal> findByMonthRangeDuty(String newRegId, String dutyCode, String startMonth, String endMonth, String incomeTaxType) {
-		logger.info("findByMonthRange newRegId={}, dutyCode={}, startMonth={}, endMonth={}, incomeTaxType={}", newRegId, dutyCode, startMonth, endMonth, incomeTaxType);
+	public Map<String, BigDecimal> findByMonthRangeDuty(String newRegId, String dutyCode, WorksheetDateRangeVo dateRangeVo, String incomeTaxType) {
+		logger.info("findByMonthRange newRegId={}, dutyCode={}, incomeTaxType={}", newRegId, dutyCode, incomeTaxType);
 
 		StringBuilder sql = new StringBuilder();
 		List<Object> paramList = new ArrayList<>();
@@ -83,24 +84,21 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 		sql.append("   WHERE IS_DELETED = 'N' ");
 		sql.append("     AND NEW_REG_ID = ? ");
 		sql.append("     AND DUTY_CODE = ? ");
-//		if (ApplicationCache.isCtrlDutyGroupByOfficeCode(officeCode)) {
-//			sql.append("   AND DUTY_CODE IN (SELECT DUTY_GROUP_CODE FROM EXCISE_CTRL_DUTY WHERE IS_DELETED = 'N' AND RES_OFFCODE = ?) ");
-//			paramList.add(officeCode);
-//		} else {
-//			List<String> dutyGroupIdList = ExciseUtils.getDutyGroupIdListByType(DUTY_GROUP_TYPE.PRODUCT, DUTY_GROUP_TYPE.SERVICE);
-//			sql.append("   AND DUTY_CODE IN (" + StringUtils.repeat("?", ",", dutyGroupIdList.size()) + ") ");
-//			paramList.addAll(dutyGroupIdList);
-//		}
 		sql.append(" ) INC ");
 		sql.append(" WHERE 1 = 1 ");
-		sql.append("   AND INC.YEAR_MONTH >= ? ");
-		sql.append("   AND INC.YEAR_MONTH <= ? ");
+		sql.append("   AND ( ");
+		sql.append("     (INC.YEAR_MONTH >= ? AND INC.YEAR_MONTH <= ?) ");
+		sql.append("     OR ");
+		sql.append("     (INC.YEAR_MONTH >= ? AND INC.YEAR_MONTH <= ?) ");
+		sql.append("   ) ");
 		sql.append(" ORDER BY INC.NEW_REG_ID, INC.DUTY_CODE, INC.YEAR_MONTH ");
 
 		paramList.add(newRegId);
 		paramList.add(dutyCode);
-		paramList.add(startMonth);
-		paramList.add(endMonth);
+		paramList.add(dateRangeVo.getYmG1StartInc8000M());
+		paramList.add(dateRangeVo.getYmG1EndInc8000M());
+		paramList.add(dateRangeVo.getYmG2StartInc8000M());
+		paramList.add(dateRangeVo.getYmG2EndInc8000M());
 		
 		Map<String, BigDecimal> incfri8000MMap = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), new ResultSetExtractor<Map<String, BigDecimal>>() {
 			public Map<String, BigDecimal> extractData(ResultSet rs) throws SQLException, DataAccessException {

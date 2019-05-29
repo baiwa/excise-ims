@@ -58,6 +58,7 @@ public class TaxOperatorDatatableVo {
 	private String condRegDate;
 	private String notPayTaxMonthNo;
 	private String multiDutyFlag;
+	private String incMultiDutyFlag;
 
 	public String getCusFullname() {
 		return cusFullname;
@@ -465,6 +466,14 @@ public class TaxOperatorDatatableVo {
 
 	public void setMultiDutyFlag(String multiDutyFlag) {
 		this.multiDutyFlag = multiDutyFlag;
+	}
+
+	public String getIncMultiDutyFlag() {
+		return incMultiDutyFlag;
+	}
+
+	public void setIncMultiDutyFlag(String incMultiDutyFlag) {
+		this.incMultiDutyFlag = incMultiDutyFlag;
 	}
 
 	@Override

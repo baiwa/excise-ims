@@ -150,6 +150,8 @@ public class TaWorksheetDtl extends BaseEntity {
 	private String condRegDate;
 	@Column(name = "COND_SORTING")
 	private Integer condSorting;
+	@Column(name = "INC_MULTI_DUTY_FLAG")
+	private String incMultiDutyFlag;
 
 	public Long getWorksheetDtlId() {
 		return worksheetDtlId;
@@ -677,6 +679,14 @@ public class TaWorksheetDtl extends BaseEntity {
 
 	public void setCondSorting(Integer condSorting) {
 		this.condSorting = condSorting;
+	}
+
+	public String getIncMultiDutyFlag() {
+		return incMultiDutyFlag;
+	}
+
+	public void setIncMultiDutyFlag(String incMultiDutyFlag) {
+		this.incMultiDutyFlag = incMultiDutyFlag;
 	}
 
 }

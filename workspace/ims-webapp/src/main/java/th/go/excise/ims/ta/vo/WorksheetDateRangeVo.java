@@ -7,8 +7,10 @@ public class WorksheetDateRangeVo {
 
 	private String ymStartReg4000;
 	private String ymEndReg4000;
-	private String ymStartInc8000M;
-	private String ymEndInc8000M;
+	private String ymG1StartInc8000M;
+	private String ymG1EndInc8000M;
+	private String ymG2StartInc8000M;
+	private String ymG2EndInc8000M;
 	private List<LocalDate> subLocalDateG1List;
 	private List<LocalDate> subLocalDateG2List;
 
@@ -28,20 +30,36 @@ public class WorksheetDateRangeVo {
 		this.ymEndReg4000 = ymEndReg4000;
 	}
 
-	public String getYmStartInc8000M() {
-		return ymStartInc8000M;
+	public String getYmG1StartInc8000M() {
+		return ymG1StartInc8000M;
 	}
 
-	public void setYmStartInc8000M(String ymStartInc8000M) {
-		this.ymStartInc8000M = ymStartInc8000M;
+	public void setYmG1StartInc8000M(String ymG1StartInc8000M) {
+		this.ymG1StartInc8000M = ymG1StartInc8000M;
 	}
 
-	public String getYmEndInc8000M() {
-		return ymEndInc8000M;
+	public String getYmG1EndInc8000M() {
+		return ymG1EndInc8000M;
 	}
 
-	public void setYmEndInc8000M(String ymEndInc8000M) {
-		this.ymEndInc8000M = ymEndInc8000M;
+	public void setYmG1EndInc8000M(String ymG1EndInc8000M) {
+		this.ymG1EndInc8000M = ymG1EndInc8000M;
+	}
+
+	public String getYmG2StartInc8000M() {
+		return ymG2StartInc8000M;
+	}
+
+	public void setYmG2StartInc8000M(String ymG2StartInc8000M) {
+		this.ymG2StartInc8000M = ymG2StartInc8000M;
+	}
+
+	public String getYmG2EndInc8000M() {
+		return ymG2EndInc8000M;
+	}
+
+	public void setYmG2EndInc8000M(String ymG2EndInc8000M) {
+		this.ymG2EndInc8000M = ymG2EndInc8000M;
 	}
 
 	public List<LocalDate> getSubLocalDateG1List() {
