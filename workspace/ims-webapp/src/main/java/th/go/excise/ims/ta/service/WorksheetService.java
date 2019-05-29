@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.transaction.Transactional;
 
@@ -455,18 +456,45 @@ public class WorksheetService {
 			.map(e -> e.getNewRegId())
 			.collect(Collectors.toList());
 		
+		List<String> budgetYearList = IntStream.rangeClosed(1, 3)
+			.map(i -> -i).sorted().map(i -> -i)
+			.map(i -> Integer.parseInt(budgetYear) - i)
+			.boxed().map(i -> String.valueOf(i))
+			.collect(Collectors.toList());
+		
 		Map<String, List<String>> dutyMap = null;
+		Map<String, List<String>> auditPlanMap = null;
 		if (newRegIdList != null && newRegIdList.size() > 0) {
 			dutyMap = taWsReg4000Repository.findDutyByNewRegId(newRegIdList);
+			auditPlanMap = taPlanWorksheetHisRepository.findAuditPlanCodeByNewRegId(newRegIdList, budgetYearList);
 		}
-		//taPlanWorksheetHisRepository.findAuditPlanByNewRegId
 		
-		String multiDutyDesc = null;
+		List<String> auditPlanList = null;
 		for (TaxOperatorDatatableVo vo : taxOperatorVoList) {
 			// Check Multiple Duty Group
 			if (FLAG.Y_FLAG.equals(vo.getMultiDutyFlag())) {
-				multiDutyDesc = org.springframework.util.StringUtils.collectionToCommaDelimitedString(dutyMap.get(vo.getNewRegId()));
-				vo.setMultiDutyDesc(multiDutyDesc);
+				vo.setMultiDutyDesc(org.springframework.util.StringUtils.collectionToCommaDelimitedString(dutyMap.get(vo.getNewRegId())));
+			}
+			// Check Last Audit Plan
+			int i = 1;
+			for (String auditYear : budgetYearList) {
+				auditPlanList = auditPlanMap.get(auditYear + vo.getNewRegId());
+				if (auditPlanList != null && auditPlanList.size() > 1) {
+					if (i == 1) {
+						// Last 3 Year
+						vo.setTaxAuditLast3MultiFlag(FLAG.Y_FLAG);
+						vo.setTaxAuditLast3MultiDesc(org.springframework.util.StringUtils.collectionToCommaDelimitedString(auditPlanList));
+					} else if (i == 2) {
+						// Last 2 Year
+						vo.setTaxAuditLast2MultiFlag(FLAG.Y_FLAG);
+						vo.setTaxAuditLast2MultiDesc(org.springframework.util.StringUtils.collectionToCommaDelimitedString(auditPlanList));
+					} else if (i == 3) {
+						// Last 1 Year
+						vo.setTaxAuditLast1MultiFlag(FLAG.Y_FLAG);
+						vo.setTaxAuditLast1MultiDesc(org.springframework.util.StringUtils.collectionToCommaDelimitedString(auditPlanList));
+					}
+				}
+				i++;
 			}
 		}
 	}
