@@ -138,7 +138,15 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 			vo.setPlanWorksheetDtlId(rs.getLong("PLAN_WORKSHEET_DTL_ID"));
 			vo.setOfficeCode(rs.getString("OFFICE_CODE"));
 //            vo.setDeptShortName(rs.getString("DEPTSHORTNAME"));
-			vo.setDeptShortName(vo.getOfficeCode()!= null ? ApplicationCache.getExciseDepartment(vo.getOfficeCode()).getDeptShortName():"");
+			if(vo.getOfficeCode()!= null) {
+				try {
+					vo.setDeptShortName(ApplicationCache.getExciseDepartment(vo.getOfficeCode()).getDeptShortName());
+				} catch (Exception e) {
+					// TODO: handle exception
+					vo.setDeptShortName("");
+				}
+			}
+			//vo.setDeptShortName(vo.getOfficeCode()!= null ? ApplicationCache.getExciseDepartment(vo.getOfficeCode()).getDeptShortName():"");
             vo.setSubdeptShortName(rs.getString("SUBDEPTSHORTNAME"));
             vo.setPersonName(rs.getString("PERSON_NAME"));
 			String auditType = "-";

@@ -258,18 +258,20 @@ public class MasterConditionMainService {
     	String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
     	TaMasCondMainHdr condhdr = taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYearAndCondNumber(officeCode, hdr.getBudgetYear(), hdr.getCondNumber());
     	TaMasCondMainHdrForm newCondHdr = new TaMasCondMainHdrForm();
-		newCondHdr.setMasCondMainHdrId(condhdr.getMasCondMainHdrId());
-		newCondHdr.setOfficeCode(condhdr.getOfficeCode());
-		newCondHdr.setBudgetYear(condhdr.getBudgetYear());
-		newCondHdr.setCondNumber(condhdr.getCondNumber());
-		newCondHdr.setCondGroupDesc(condhdr.getCondGroupDesc());
-		newCondHdr.setMonthNum(condhdr.getMonthNum());
-		newCondHdr.setCondGroupNum(condhdr.getCondGroupNum());
-		newCondHdr.setNewFacFlag(condhdr.getNewFacFlag());
-		newCondHdr.setCompType(condhdr.getCompType());
-		newCondHdr.setRegDateStart(ConvertDateUtils.formatLocalDateToString(condhdr.getRegDateStart(), ConvertDateUtils.DD_MM_YYYY));
-		newCondHdr.setRegDateEnd(ConvertDateUtils.formatLocalDateToString(condhdr.getRegDateEnd(), ConvertDateUtils.DD_MM_YYYY));
-		newCondHdr.setCompMonthNum(condhdr.getCompMonthNum());
+		if(condhdr != null) {
+			newCondHdr.setMasCondMainHdrId(condhdr.getMasCondMainHdrId());
+			newCondHdr.setOfficeCode(condhdr.getOfficeCode());
+			newCondHdr.setBudgetYear(condhdr.getBudgetYear());
+			newCondHdr.setCondNumber(condhdr.getCondNumber());
+			newCondHdr.setCondGroupDesc(condhdr.getCondGroupDesc());
+			newCondHdr.setMonthNum(condhdr.getMonthNum());
+			newCondHdr.setCondGroupNum(condhdr.getCondGroupNum());
+			newCondHdr.setNewFacFlag(condhdr.getNewFacFlag());
+			newCondHdr.setCompType(condhdr.getCompType());
+			newCondHdr.setRegDateStart(ConvertDateUtils.formatLocalDateToString(condhdr.getRegDateStart(), ConvertDateUtils.DD_MM_YYYY));
+			newCondHdr.setRegDateEnd(ConvertDateUtils.formatLocalDateToString(condhdr.getRegDateEnd(), ConvertDateUtils.DD_MM_YYYY));
+			newCondHdr.setCompMonthNum(condhdr.getCompMonthNum());
+		}
     	return newCondHdr;
     }
 
