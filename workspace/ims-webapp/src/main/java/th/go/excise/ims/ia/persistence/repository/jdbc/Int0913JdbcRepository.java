@@ -56,7 +56,7 @@ public class Int0913JdbcRepository {
 			paramList.add((year)+ProjectConstants.QUARTER.Q4[2]);
 		}
 		
-		sql.append(" ORDER BY RECEIVE_INV_DATE ");
+		sql.append(" ORDER BY MONTH_WD_PAY DESC ");
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), int091301Mapping);
 	}
 
