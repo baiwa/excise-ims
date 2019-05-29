@@ -16,14 +16,17 @@ public class IaCommonService {
 		return iaJdbcRepository.findOracleSeqBySeqName(seqName);
 	}
 
-	/** example 
-	 * prefix = "P" or "p"
-	 * OfficeCode = "010100"
-	 * seqName = "AUDIT_TXINSUR_NO_SEQ"
-	 * length = 8 (length of leftpad 0)
+	/**
+	 *********************** example *************************
+	 * prefix = "P" or "p" 
+	 * OfficeCode = "010100" 
+	 * seqName = "YOUR_SEQUENCE_SEQ" 
+	 * length = 8 (length of leftpad default 0)
+	 ************** result after call method ***************** 
+	 * P-010100/00000001
 	 **/
 	public String autoGetRunAuditNoBySeqName(String prefix, String OfficeCode, String seqName, int length) {
-		return  StringUtils.upperCase(prefix) + OfficeCode + "/"
-				+ StringUtils.leftPad(String.valueOf(iaJdbcRepository.findOracleSeqBySeqName(seqName)), length, "0");
+		return StringUtils.upperCase(prefix).concat("-").concat(OfficeCode).concat("/").concat(
+				StringUtils.leftPad(String.valueOf(iaJdbcRepository.findOracleSeqBySeqName(seqName)), length, "0"));
 	}
 }
