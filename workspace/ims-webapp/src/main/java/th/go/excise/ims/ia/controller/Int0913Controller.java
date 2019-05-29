@@ -2,6 +2,7 @@ package th.go.excise.ims.ia.controller;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -78,12 +79,15 @@ public class Int0913Controller {
 		return response;
 	}
 	
-	@GetMapping("/get-091301-department")
+	@GetMapping("/get-091301-department/{officeCode}")
 	@ResponseBody
-	public ResponseData<ExciseDepartmentVo> getDepartment() {
+	public ResponseData<ExciseDepartmentVo> getDepartment(@PathVariable("officeCode") String officeCode) {
 		ResponseData<ExciseDepartmentVo> response = new ResponseData<ExciseDepartmentVo>();
+		if (StringUtils.isBlank(officeCode)) {
+			officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		}
 		try {
-			response.setData(ExciseDepartmentUtil.getExciseDepartment(UserLoginUtils.getCurrentUserBean().getOfficeCode()));
+			response.setData(ExciseDepartmentUtil.getExciseDepartment(officeCode));
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

@@ -8,6 +8,7 @@ public class Int091301SearchVo {
 	private String monthWdPayTo;
 	private String utilityBillSeq;
 	private String budgetYear;
+	private String flagSearch;
 
 	public String getUbillType() {
 		return ubillType;
@@ -55,6 +56,14 @@ public class Int091301SearchVo {
 
 	public void setBudgetYear(String budgetYear) {
 		this.budgetYear = budgetYear;
+	}
+
+	public String getFlagSearch() {
+		return flagSearch;
+	}
+
+	public void setFlagSearch(String flagSearch) {
+		this.flagSearch = flagSearch;
 	}
 
 }

@@ -1,5 +1,6 @@
 package th.go.excise.ims.ia.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -27,17 +28,18 @@ public class Int0913Service {
 	private IaUtilityBillRepository iaUtilityBillRepository;
 	
 	public List<Int091301ResultSearchVo> findIaUtilityBill(Int091301SearchVo int091301SearchVo){
-		
-		List<Int091301ResultSearchVo> dataFilter = int0913JdbcRepository.findIaUtilityBillByCriteria(int091301SearchVo);
-		if(dataFilter.size() > 0) {
-			for (Int091301ResultSearchVo vo : dataFilter) {
-				if(StringUtils.isNotBlank(vo.getLatePayCause())) {
-					vo.setLatePayCauseStr(ApplicationCache.getParamInfoByCode(IaConstants.UTILITY_BILL_REASON.PARAM_GROUP_CODE, vo.getLatePayCause()).getValue1());
+		List<Int091301ResultSearchVo> dataFilter = new ArrayList<Int091301ResultSearchVo>();
+		if ("Y".equals(int091301SearchVo.getFlagSearch())) {
+			dataFilter = int0913JdbcRepository.findIaUtilityBillByCriteria(int091301SearchVo);
+			if(dataFilter.size() > 0) {
+				for (Int091301ResultSearchVo vo : dataFilter) {
+					if(StringUtils.isNotBlank(vo.getLatePayCause())) {
+						vo.setLatePayCauseStr(ApplicationCache.getParamInfoByCode(IaConstants.UTILITY_BILL_REASON.PARAM_GROUP_CODE, vo.getLatePayCause()).getValue1());
+					}
+					/* change format YYYYMM to MM/YYYY */	
+					vo.setMonthWdPay(formatYYYYMMToMM_YYYY(vo.getMonthWdPay()));
+					vo.setInvoiceMonth(formatYYYYMMToMM_YYYY(vo.getInvoiceMonth()));
 				}
-				
-				/* change format YYYYMM to MM/YYYY */	
-				vo.setMonthWdPay(formatYYYYMMToMM_YYYY(vo.getMonthWdPay()));
-				vo.setInvoiceMonth(formatYYYYMMToMM_YYYY(vo.getInvoiceMonth()));
 			}
 		}
 		return dataFilter;
