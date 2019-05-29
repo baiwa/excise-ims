@@ -112,7 +112,7 @@ public class Int090102Controller {
 	@PostMapping("/get-by-month-hdr")
 	@ResponseBody
 	public ResponseData<IaEmpWorkingHdrVo> getByMonth(@RequestBody IaEmpWorkingHdrFormVo request) {
-		logger.info("get-by-month -> Int090102");
+		logger.info("get-by-month-hdr -> Int090102");
 		ResponseData<IaEmpWorkingHdrVo> responseData = new ResponseData<IaEmpWorkingHdrVo>();
 		try {
 			responseData.setData(int090102Service.getByMonthHdr(request));
@@ -142,7 +142,7 @@ public class Int090102Controller {
 	@PostMapping("/get-holiday")
 	@ResponseBody
 	public ResponseData<List<ExciseHoliday>> getHoliday(@RequestBody IaEmpWorkingDtlSaveVo request) {
-		logger.info("get-by-month -> Int090102");
+		logger.info("get-holiday -> Int090102");
 		ResponseData<List<ExciseHoliday>> responseData = new ResponseData<List<ExciseHoliday>>();
 		try {
 			responseData.setData(int090102Service.getHoliday(request.getWorkingDate()));
