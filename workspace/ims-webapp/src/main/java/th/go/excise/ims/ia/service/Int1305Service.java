@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import th.go.excise.ims.ia.persistence.entity.IaAuditPmcommitH;
 import th.go.excise.ims.ia.persistence.repository.IaAuditPmcommitHRepository;
+import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
+import th.go.excise.ims.ia.vo.ExciseDepartmentVo;
 import th.go.excise.ims.ia.vo.IaAuditPmcommitHVo;
 
 @Service
@@ -22,7 +24,7 @@ public class Int1305Service {
 
 	@Autowired
 	private IaCommonService iaCommonService;
-	
+
 	public IaAuditPmcommitHVo save(IaAuditPmcommitHVo vo) {
 		IaAuditPmcommitH h = null;
 		try {
@@ -39,7 +41,7 @@ public class Int1305Service {
 				h = new IaAuditPmcommitH();
 				h.setOfficeCode(vo.getOfficeCode());
 				h.setBudgetYear(vo.getBudgetYear());
-				h.setAuditPmcommitNo(iaCommonService.autoGetRunAuditNoBySeqName( "PMC", vo.getOfficeCode(), "AUDIT_PMCOMMIT_NO_SEQ", 8));
+				h.setAuditPmcommitNo(iaCommonService.autoGetRunAuditNoBySeqName("PMC", vo.getOfficeCode(), "AUDIT_PMCOMMIT_NO_SEQ", 8));
 				h.setUrlLink(vo.getUrlLink());
 				h.setAuditFlag(vo.getAuditFlag());
 				h.setConditionText(vo.getConditionText());
@@ -83,6 +85,7 @@ public class Int1305Service {
 	public IaAuditPmcommitHVo findByAuditPmcommitNo(String auditPmcommitNo) {
 		IaAuditPmcommitHVo data = null;
 		IaAuditPmcommitH h = null;
+		ExciseDepartmentVo excise = null;
 		h = iaAuditPmcommitHRepository.findByAuditPmcommitNo(auditPmcommitNo);
 		try {
 			data = new IaAuditPmcommitHVo();
@@ -94,6 +97,12 @@ public class Int1305Service {
 			data.setAuditFlag(h.getAuditFlag());
 			data.setConditionText(h.getConditionText());
 			data.setCriteriaText(h.getCriteriaText());
+
+			excise = ExciseDepartmentUtil.getExciseDepartmentFull(h.getOfficeCode());
+			data.setArea(excise.getArea());
+			data.setSector(excise.getSector());
+			data.setBranch(excise.getBranch());
+
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
