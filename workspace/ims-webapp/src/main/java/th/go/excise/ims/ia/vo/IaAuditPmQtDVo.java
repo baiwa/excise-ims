@@ -1,7 +1,13 @@
 package th.go.excise.ims.ia.vo;
 
-public class WsPmQtDVo {
-	private Long pmQtDSeq;
+import java.math.BigDecimal;
+
+public class IaAuditPmQtDVo {
+
+	private BigDecimal auditPmqtDId;
+	private String auditPmqtNo;
+	private String auditResult;
+	private BigDecimal pmQtDSeq;
 	private String offCode;
 	private String formCode;
 	private String topicLevel;
@@ -10,14 +16,35 @@ public class WsPmQtDVo {
 	private String topicAnswer;
 	private String topicResult;
 
-	/* custom */
-	private String auditResult;
+	public BigDecimal getAuditPmqtDId() {
+		return auditPmqtDId;
+	}
 
-	public Long getPmQtDSeq() {
+	public void setAuditPmqtDId(BigDecimal auditPmqtDId) {
+		this.auditPmqtDId = auditPmqtDId;
+	}
+
+	public String getAuditPmqtNo() {
+		return auditPmqtNo;
+	}
+
+	public void setAuditPmqtNo(String auditPmqtNo) {
+		this.auditPmqtNo = auditPmqtNo;
+	}
+
+	public String getAuditResult() {
+		return auditResult;
+	}
+
+	public void setAuditResult(String auditResult) {
+		this.auditResult = auditResult;
+	}
+
+	public BigDecimal getPmQtDSeq() {
 		return pmQtDSeq;
 	}
 
-	public void setPmQtDSeq(Long pmQtDSeq) {
+	public void setPmQtDSeq(BigDecimal pmQtDSeq) {
 		this.pmQtDSeq = pmQtDSeq;
 	}
 
@@ -75,14 +102,6 @@ public class WsPmQtDVo {
 
 	public void setTopicResult(String topicResult) {
 		this.topicResult = topicResult;
-	}
-
-	public String getAuditResult() {
-		return auditResult;
-	}
-
-	public void setAuditResult(String auditResult) {
-		this.auditResult = auditResult;
 	}
 
 }

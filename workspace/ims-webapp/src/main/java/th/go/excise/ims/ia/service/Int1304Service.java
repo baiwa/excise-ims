@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,12 @@ import th.go.excise.ims.ia.persistence.entity.IaAuditPmqtD;
 import th.go.excise.ims.ia.persistence.entity.IaAuditPmqtH;
 import th.go.excise.ims.ia.persistence.repository.IaAuditPmqtDRepository;
 import th.go.excise.ims.ia.persistence.repository.IaAuditPmqtHRepository;
+import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
+import th.go.excise.ims.ia.vo.IaAuditPmQtHVo;
+import th.go.excise.ims.ia.vo.IaAuditPmassessHVo;
+import th.go.excise.ims.ia.vo.Int1301Filter;
 import th.go.excise.ims.ia.vo.Int1301SaveVo;
+import th.go.excise.ims.ia.vo.Int1301Vo;
 import th.go.excise.ims.ia.vo.Int1304FormVo;
 import th.go.excise.ims.ia.vo.Int1304SaveVo;
 import th.go.excise.ims.ia.vo.Int1304Vo;
@@ -27,6 +34,8 @@ import th.go.excise.ims.ws.persistence.repository.WsPmQtHRepository;
 
 @Service
 public class Int1304Service {
+	
+	private Logger logger = LoggerFactory.getLogger(Int1304Service.class);
 	
 	@Autowired
 	private WsPmQtHRepository wsPmQtHRepository;
@@ -44,30 +53,34 @@ public class Int1304Service {
 	private IaAuditPmqtDRepository iaAuditPmqtDRepository ;
 	
 	
-	public Int1304Vo getWsQt(Int1304FormVo request) {
-		Int1304Vo response = new Int1304Vo();
-		
+	
+	public Int1304SaveVo getWsQt(Int1304FormVo request) {
+		Int1304SaveVo response = new Int1304SaveVo();
 		/* find header */
 		List<WsPmQtHVo> resHeader = wsPmQtHRepository.filterWsPmQt(request);
-		for (WsPmQtHVo wsPmQtHVo : resHeader) {
+		for (WsPmQtHVo header : resHeader) {
 			/* find and set data detail */
-			wsPmQtHVo.setDetail(wsPmQtDRepository.filterWsPmQtD(wsPmQtHVo.getOffCode(),wsPmQtHVo.getFormCode()));
-			wsPmQtHVo.setProcessDateStr(ConvertDateUtils.formatLocalDateToString(wsPmQtHVo.getProcessDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+			header.setDetail(wsPmQtDRepository.filterWsPmQtD(header.getOffCode(),header.getFormCode()));
+			header.setProcessDateStr(ConvertDateUtils.formatLocalDateToString(header.getProcessDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
 		}
-		response.setHeader(resHeader);
+		response.setPmQtData(resHeader);
 		return response;
-	}
+	}	
 	
-	public void saveWsQt(Int1304SaveVo request) throws Exception {
+	public String saveWsQt(Int1304SaveVo request) throws Exception {
 		IaAuditPmqtH header = null;
 		IaAuditPmqtD detail = null;
-		String auditQtNo = iaCommonService.autoGetRunAuditNoBySeqName("p", request.getHeader().get(0).getOffCode(), "AUDIT_PMQT_NO_SEQ", 8);
-		for (WsPmQtHVo requestHdr :  request.getHeader()) {
+		String auditQtNo = iaCommonService.autoGetRunAuditNoBySeqName("P", request.getPmQtData().get(0).getOffCode(), "AUDIT_PMQT_NO_SEQ", 8);
+		for (WsPmQtHVo requestHdr :  request.getPmQtData()) {
 			header = new IaAuditPmqtH();
 			requestHdr.setProcessDate(null);
 			BeanUtils.copyProperties(header, requestHdr);
 			header.setProcessDate(ConvertDateUtils.parseStringToDate(requestHdr.getProcessDateStr(), ConvertDateUtils.DD_MM_YYYY));
 			header.setAuditPmqtNo(auditQtNo);
+			/* set form header (id same id = same data) */
+			header.setQtAuditResult(request.getFormHeader().getQtAuditResult());
+			header.setQtAuditSuggestion(request.getFormHeader().getQtAuditSuggestion());
+			header.setQtAuditEvident(request.getFormHeader().getQtAuditEvident());
 			iaAuditPmqtHRepository.save(header);
 			
 			for (WsPmQtDVo requestDtl : requestHdr.getDetail()) {
@@ -78,7 +91,38 @@ public class Int1304Service {
 				iaAuditPmqtDRepository.save(detail);
 			}
 		}
+		return auditQtNo;
 	}
+	
+	
+	public List<IaAuditPmqtH> getAuditPmQtNo() {
+		return iaAuditPmqtHRepository.getAuditPmQtNoList();
+	}
+	
+	public Int1304Vo getIaPmQt(String auditPmQtNo) {
+		Int1304Vo response = new Int1304Vo();
+		/* find header by auditPmassessNo */
+		List<IaAuditPmQtHVo> resHeader = iaAuditPmqtHRepository.filterIaPmQtByAuditPmQtNo(auditPmQtNo);
+		for (IaAuditPmQtHVo header : resHeader) {
+			/* find and set data detail */
+			header.setDetail(iaAuditPmqtDRepository.filterIaPmQtDByAuditPmQtNo(auditPmQtNo, header.getFormCode()));
+			header.setProcessDateStr(ConvertDateUtils.formatDateToString(header.getProcessDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+		}
+		response.setHeader(resHeader);
+		response.setBudgetYear(resHeader.get(0).getFormYear());
+		
+		/* set ExciseDepartmentVo */
+		logger.info(resHeader.get(0).getOffCode());
+		if(resHeader.get(0).getOffCode() != null) {
+			response.setExciseDepartmentVo(ExciseDepartmentUtil.getExciseDepartment(resHeader.get(0).getOffCode()));
+		}
+
+		return response;
+	}
+	
+	
+	
+	
 	
 	
 }

@@ -6,8 +6,9 @@ import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRe
 import th.go.excise.ims.ia.persistence.entity.IaAuditPmqtH;
 
 public interface IaAuditPmqtHRepository
-    extends CommonJpaCrudRepository<IaAuditPmqtH, BigDecimal>
+    extends CommonJpaCrudRepository<IaAuditPmqtH, BigDecimal> , IaAuditPmqtHRepositoryCustom
 {
-
+	
+	
 
 }
