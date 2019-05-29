@@ -62,7 +62,7 @@ public class Int1301Service {
 	public String saveWsPmAssess(Int1301SaveVo request) throws Exception {
 		IaAuditPmassessH header = null;
 		IaAuditPmassessD detail = null;
-		String auditPmassessNo = iaCommonService.autoGetRunAuditNoBySeqName("P", request.getPmAssessData().get(0).getOffCode(), "AUDIT_PMASSESS_NO_SEQ", 8);
+		String auditPmassessNo = iaCommonService.autoGetRunAuditNoBySeqName("PMA", request.getPmAssessData().get(0).getOffCode(), "AUDIT_PMASSESS_NO_SEQ", 8);
 		for (WsPmAssessHVo requestHdr :  request.getPmAssessData()) {
 			header = new IaAuditPmassessH();
 			requestHdr.setProcessDate(null);
