@@ -350,8 +350,10 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 			params.add(new Date());
 			
 		}else if (ProjectConstants.TA_AUDIT_STATUS.CODE_0401.equals(formVo.getAuditStatus())) {
-			sql.append("  ASSIGNED_SUBDEPT_BY = ? , ASSIGNED_SUBDEPT_DATE = ?  ");
+			sql.append(" AU_JOB_RESP = ? , ASSIGNED_SUBDEPT_BY = ? , ASSIGNED_SUBDEPT_DATE = ?  ");
+			
 			params.add(ProjectConstants.TA_AUDIT_STATUS.CODE_0401);
+			params.add(formVo.getAuJobResp());
 //			params.add(formVo.getAuSubdeptCode());
 			params.add(UserLoginUtils.getCurrentUserBean().getUsername());
 			params.add(new Date());
