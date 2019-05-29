@@ -14,6 +14,9 @@ import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CO
 import th.co.baiwa.buckwaframework.preferences.persistence.entity.ParameterInfo;
 import th.co.baiwa.buckwaframework.preferences.persistence.repository.ParameterInfoRepository;
 import th.go.excise.ims.Application;
+import th.go.excise.ims.common.constant.ProjectConstants.TAX_COMPARE_TYPE;
+import th.go.excise.ims.ta.util.TaxAuditUtils;
+import th.go.excise.ims.ta.vo.WorksheetDateRangeVo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
@@ -30,8 +33,12 @@ public class TaWsInc8000MRepositoryImplTest {
 	public void test_findByMonthRangeDuty() {
 		String newRegId = "01075470007111001";
 		String dutyCode = "0101";
-		String startMonth = "201505";
-		String endMonth = "201704";
+		
+		String dateStart = "05/2559";
+		String dateEnd = "04/2560";
+		int dateRange = 24;
+		String compType = TAX_COMPARE_TYPE.HALF;
+		WorksheetDateRangeVo dateRangeVo = TaxAuditUtils.getWorksheetDateRangeVo(dateStart, dateEnd, dateRange, compType);
 		
 		//==> Check TAX, NET
 		String incomeTaxType = null;
@@ -41,7 +48,7 @@ public class TaWsInc8000MRepositoryImplTest {
 		}
 		
 		long start = System.currentTimeMillis();
-		taWsInc8000MRepository.findByMonthRangeDuty(newRegId, dutyCode, startMonth, endMonth, incomeTaxType);
+		taWsInc8000MRepository.findByMonthRangeDuty(newRegId, dutyCode, dateRangeVo, incomeTaxType);
 		long end = System.currentTimeMillis();
 		System.out.println(String.format("Process Success, using %s seconds", (float) (end - start) / 1000F));
 	}

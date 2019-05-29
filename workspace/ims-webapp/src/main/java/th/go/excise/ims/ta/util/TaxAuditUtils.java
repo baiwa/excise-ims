@@ -86,6 +86,7 @@ public class TaxAuditUtils {
 			taxOperatorDatatableVo.setCondRegDate(taxOperatorDetailVo.getCondRegDate());
 			taxOperatorDatatableVo.setNotPayTaxMonthNo(taxOperatorDetailVo.getNotPayTaxMonthNo());
 			taxOperatorDatatableVo.setMultiDutyFlag(taxOperatorDetailVo.getMultiDutyFlag());
+			taxOperatorDatatableVo.setIncMultiDutyFlag(taxOperatorDetailVo.getIncMultiDutyFlag());
 			
 			taxAmtList = new ArrayList<>();
 			for (int i = 0; i < formVo.getDateRange(); i++) {
@@ -287,8 +288,10 @@ public class TaxAuditUtils {
 			localDateG2Start = localDateG1Start.minus(1, ChronoUnit.YEARS);
 			localDateG2End = localDateG1End.minus(1, ChronoUnit.YEARS);
 		}
-		vo.setYmStartInc8000M(localDateG2End.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
-		vo.setYmEndInc8000M(localDateG1Start.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
+		vo.setYmG1StartInc8000M(localDateG1End.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
+		vo.setYmG1EndInc8000M(localDateG1Start.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
+		vo.setYmG2StartInc8000M(localDateG2End.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
+		vo.setYmG2EndInc8000M(localDateG2Start.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
 		List<LocalDate> subLocalDateG1List = LocalDateUtils.getLocalDateRange(localDateG1End, localDateG1Start);
 		List<LocalDate> subLocalDateG2List = LocalDateUtils.getLocalDateRange(localDateG2End, localDateG2Start);
 		Collections.reverse(subLocalDateG1List);
@@ -299,7 +302,7 @@ public class TaxAuditUtils {
 		logger.debug("localDateG1End  ={}", localDateG1End);
 		logger.debug("localDateG2Start={}", localDateG2Start);
 		logger.debug("localDateG2End  ={}", localDateG2End);
-		logger.debug("taxCompareType={}, ymStartInc8000M={}, ymEndInc8000M={}", compType, vo.getYmStartInc8000M(), vo.getYmEndInc8000M());
+		logger.debug("taxCompareType={}, ymG1StartInc8000M={}, ymG1EndInc8000M={}, ymG2StartInc8000M={}, ymG2EndInc8000M={}", compType, vo.getYmG1StartInc8000M(), vo.getYmG1EndInc8000M(), vo.getYmG2StartInc8000M(), vo.getYmG2EndInc8000M());
 		logger.debug("subLocalDateList1.size()={}, subLocalDateList1={}", vo.getSubLocalDateG1List().size(), org.springframework.util.StringUtils.collectionToCommaDelimitedString(vo.getSubLocalDateG1List()));
 		logger.debug("subLocalDateList2.size()={}, subLocalDateList2={}", vo.getSubLocalDateG2List().size(), org.springframework.util.StringUtils.collectionToCommaDelimitedString(vo.getSubLocalDateG2List()));
 		
