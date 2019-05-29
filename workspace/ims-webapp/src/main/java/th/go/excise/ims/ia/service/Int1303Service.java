@@ -1,8 +1,11 @@
 package th.go.excise.ims.ia.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +14,11 @@ import th.go.excise.ims.ia.persistence.entity.IaAuditPy2D;
 import th.go.excise.ims.ia.persistence.entity.IaAuditPy2H;
 import th.go.excise.ims.ia.persistence.repository.IaAuditPy2DRepository;
 import th.go.excise.ims.ia.persistence.repository.IaAuditPy2HRepository;
+import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
+import th.go.excise.ims.ia.vo.IaAuditPy2DVo;
+import th.go.excise.ims.ia.vo.IaAuditPy2HVo;
 import th.go.excise.ims.ia.vo.Int1303FilterVo;
+import th.go.excise.ims.ia.vo.Int1303UpdateVo;
 import th.go.excise.ims.ia.vo.Int1303Vo;
 import th.go.excise.ims.ia.vo.WsPmPy2HVo;
 import th.go.excise.ims.ws.persistence.entity.WsPmPy2DVo;
@@ -20,6 +27,7 @@ import th.go.excise.ims.ws.persistence.repository.WsPmPy2HRepository;
 
 @Service
 public class Int1303Service {
+	private Logger logger = LoggerFactory.getLogger(Int1303Service.class);
 	
 	@Autowired
 	private WsPmPy2DRepository wsPmPy2DRepository;
@@ -73,6 +81,40 @@ public class Int1303Service {
 
 	public List<IaAuditPy2H> findAuditPy2NoList() {
 		return iaAuditPy2HRepository.getAuditPy2NoList();
+	}
+	
+	public Int1303UpdateVo getIaPmPy2(String auditPy2No) throws Exception {
+		Int1303UpdateVo response = new Int1303UpdateVo();
+		List<IaAuditPy2DVo> details = new ArrayList<IaAuditPy2DVo>();
+		IaAuditPy2HVo header = iaAuditPy2HRepository.filterIaPmPy2ByAuditPy2No(auditPy2No).get(0);
+		response.setHeaders(header);
+		response.setDetails(iaAuditPy2DRepository.findByAuditPy2No(auditPy2No));
+		
+		/* set ExciseDepartmentVo */
+		logger.debug(header.getOfficeCode());
+		if(header.getOfficeCode() != null) {
+			response.setExciseDepartmentVo(ExciseDepartmentUtil.getExciseDepartmentFull(header.getOfficeCode()));
+		}
+		return response;
+	}
+
+	public void updateIaPmPy2(Int1303UpdateVo request) {
+		/* update header */
+		IaAuditPy2H header = iaAuditPy2HRepository.findById(request.getHeaders().getIaAuditPy2HId()).get();
+		header.setPy2AuditSuggestion(request.getHeaders().getPy2AuditSuggestion());
+		header.setPy2AuditResult(request.getHeaders().getPy2AuditResult());
+		header.setPy2ActivityResult(request.getHeaders().getPy2ActivityResult());
+		header.setPy2AuditEvident(request.getHeaders().getPy2AuditEvident());
+		iaAuditPy2HRepository.save(header);
+		
+		/* update details */
+		IaAuditPy2D detail = null;
+		for (IaAuditPy2DVo d : request.getDetails()) {
+			detail = new IaAuditPy2D();
+			detail = iaAuditPy2DRepository.findById(d.getAuditPy2DId()).get();
+			detail.setPy2AuditResult(d.getPy2AuditResult());
+			iaAuditPy2DRepository.save(detail);
+		}
 	}
 
 }
