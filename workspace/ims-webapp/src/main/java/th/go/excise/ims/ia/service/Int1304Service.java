@@ -17,13 +17,17 @@ import th.go.excise.ims.ia.persistence.entity.IaAuditPmqtH;
 import th.go.excise.ims.ia.persistence.repository.IaAuditPmqtDRepository;
 import th.go.excise.ims.ia.persistence.repository.IaAuditPmqtHRepository;
 import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
+import th.go.excise.ims.ia.vo.IaAuditPmQtDVo;
 import th.go.excise.ims.ia.vo.IaAuditPmQtHVo;
+import th.go.excise.ims.ia.vo.IaAuditPmassessDVo;
 import th.go.excise.ims.ia.vo.IaAuditPmassessHVo;
 import th.go.excise.ims.ia.vo.Int1301Filter;
 import th.go.excise.ims.ia.vo.Int1301SaveVo;
+import th.go.excise.ims.ia.vo.Int1301UpdateVo;
 import th.go.excise.ims.ia.vo.Int1301Vo;
 import th.go.excise.ims.ia.vo.Int1304FormVo;
 import th.go.excise.ims.ia.vo.Int1304SaveVo;
+import th.go.excise.ims.ia.vo.Int1304UpdateVo;
 import th.go.excise.ims.ia.vo.Int1304Vo;
 import th.go.excise.ims.ia.vo.WsPmAssessDVo;
 import th.go.excise.ims.ia.vo.WsPmAssessHVo;
@@ -119,6 +123,25 @@ public class Int1304Service {
 
 		return response;
 	}
+	
+	public void updateIaPmQt(Int1304UpdateVo request) {
+		/* loop for update headers */
+		List<IaAuditPmqtH> dataHeaderList = iaAuditPmqtHRepository.findByAuditPmqtNoAndIsDeleted(request.getHeader().getAuditPmqtNo(), "N");
+		for (IaAuditPmqtH entity : dataHeaderList) {
+			entity.setQtAuditSuggestion(request.getHeader().getQtAuditSuggestion());
+			entity.setQtAuditResult(request.getHeader().getQtAuditResult());
+			entity.setQtAuditEvident(request.getHeader().getQtAuditEvident());
+			iaAuditPmqtHRepository.save(entity);
+		}	
+		/* loop for update details */
+		for (IaAuditPmQtDVo iaAuditPmQtDVo : request.getDetail()){
+			IaAuditPmqtD dataDetail = iaAuditPmqtDRepository.findById(iaAuditPmQtDVo.getAuditPmqtDId()).get();
+			dataDetail.setAuditResult(iaAuditPmQtDVo.getAuditResult());
+			iaAuditPmqtDRepository.save(dataDetail);
+		}
+	}
+	
+	
 	
 	
 	

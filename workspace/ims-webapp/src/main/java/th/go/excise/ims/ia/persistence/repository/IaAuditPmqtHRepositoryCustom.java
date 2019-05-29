@@ -9,6 +9,6 @@ public interface IaAuditPmqtHRepositoryCustom {
 	
 	public List<IaAuditPmqtH> getAuditPmQtNoList();
 	
-	public List<IaAuditPmQtHVo> filterIaPmQtByAuditPmQtNo(String auditPmQtNo);
+	public List<IaAuditPmQtHVo> filterIaPmQtByAuditPmQtNo(String auditPmqtNo);
 
 }

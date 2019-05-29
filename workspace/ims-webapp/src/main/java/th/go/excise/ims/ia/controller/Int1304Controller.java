@@ -2,6 +2,7 @@ package th.go.excise.ims.ia.controller;
 
 import java.util.List;
 
+import org.apache.poi.ss.formula.functions.T;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,10 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STAT
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaAuditPmqtH;
 import th.go.excise.ims.ia.service.Int1304Service;
+import th.go.excise.ims.ia.vo.Int1301UpdateVo;
 import th.go.excise.ims.ia.vo.Int1304FormVo;
 import th.go.excise.ims.ia.vo.Int1304SaveVo;
+import th.go.excise.ims.ia.vo.Int1304UpdateVo;
 import th.go.excise.ims.ia.vo.Int1304Vo;
 
 @Controller
@@ -98,6 +101,24 @@ public class Int1304Controller {
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+
+		return response;
+	}
+	
+	@PostMapping("/update-ia-pm-qt")
+	@ResponseBody
+	public ResponseData<T> updateIaPmQt(@RequestBody Int1304UpdateVo request) {
+
+		ResponseData<T> response = new ResponseData<T>();
+		try {
+			int1304Service.updateIaPmQt(request);
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 
