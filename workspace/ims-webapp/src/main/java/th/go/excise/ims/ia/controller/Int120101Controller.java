@@ -94,7 +94,7 @@ public class Int120101Controller {
 	public ResponseData<ExciseDepartmentVo> getDepartment() {
 		ResponseData<ExciseDepartmentVo> response = new ResponseData<ExciseDepartmentVo>();
 		try {
-			response.setData(ExciseDepartmentUtil.getExciseDepartment(UserLoginUtils.getCurrentUserBean().getOfficeCode()));
+			response.setData(ExciseDepartmentUtil.getExciseDepartmentFull(UserLoginUtils.getCurrentUserBean().getOfficeCode()));
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

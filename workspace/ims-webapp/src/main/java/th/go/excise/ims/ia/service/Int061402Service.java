@@ -115,7 +115,7 @@ public class Int061402Service {
 		/* set ExciseDepartmentVo */
 		logger.info(header.getOfficeCode());
 		if(header.getOfficeCode() != null) {
-			response.setExciseDepartmentVo(ExciseDepartmentUtil.getExciseDepartment(header.getOfficeCode()));
+			response.setExciseDepartmentVo(ExciseDepartmentUtil.getExciseDepartmentFull(header.getOfficeCode()));
 		}
 		return response;
 	}

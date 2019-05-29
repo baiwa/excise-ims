@@ -94,7 +94,7 @@ public class Int1301Service {
 	public Int1301Vo getIaPmAssess(String auditPmassessNo) {
 		Int1301Vo response = new Int1301Vo();
 		/* find header by auditPmassessNo */
-		List<IaAuditPmassessHVo> resHeader = iaAuditPmassessHRepository.filterIaPaAssessByAuditPmassessNo(auditPmassessNo);
+		List<IaAuditPmassessHVo> resHeader = iaAuditPmassessHRepository.filterIaPmAssessByAuditPmassessNo(auditPmassessNo);
 		for (IaAuditPmassessHVo header : resHeader) {
 			/* find and set data detail */
 			header.setDetail(iaAuditPmassessDRepository.filterIaPaAssessDByAuditPmassessNo(auditPmassessNo, header.getFormCode()));
@@ -106,7 +106,7 @@ public class Int1301Service {
 		/* set ExciseDepartmentVo */
 		logger.info(resHeader.get(0).getOffCode());
 		if(resHeader.get(0).getOffCode() != null) {
-			response.setExciseDepartmentVo(ExciseDepartmentUtil.getExciseDepartment(resHeader.get(0).getOffCode()));
+			response.setExciseDepartmentVo(ExciseDepartmentUtil.getExciseDepartmentFull(resHeader.get(0).getOffCode()));
 		}
 
 		return response;
