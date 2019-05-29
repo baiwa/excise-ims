@@ -42,6 +42,16 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	private String newRegFlag;
 	private BigDecimal sumTaxAmStart;
 	private BigDecimal sumTaxAmEnd;
+	private Boolean isDisabled = true;
+	
+
+	public Boolean getIsDisabled() {
+		return isDisabled;
+	}
+
+	public void setIsDisabled(Boolean isDisabled) {
+		this.isDisabled = isDisabled;
+	}
 
 	public BigDecimal getSumTaxAmStart() {
 		return sumTaxAmStart;

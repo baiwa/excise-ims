@@ -244,26 +244,29 @@ public class PlanWorksheetService {
 		}
 	}
 
+	// TODO updateFlagWorksheetSelect 
 	private void updateFlagWorksheetSelect(String budgetYear, String newRegId, String officeCode, String selFlag,
 			LocalDate selDate) {
 		logger.info("updateFlagWorksheetSelect budgetYear={}, newRegId={}, officeCode={}, selFlag={}, selDate={}",
 				budgetYear, newRegId, officeCode, selFlag, selDate);
-		TaPlanWorksheetSelect planWorksheetSel = taPlanWorksheetSelectRepository.findByBudgetYearAndNewRegId(budgetYear,
+		 List<TaPlanWorksheetSelect> planWorksheetSelList = taPlanWorksheetSelectRepository.findByBudgetYearAndNewRegId(budgetYear,
 				newRegId);
-		if (ExciseUtils.isCentral(officeCode)) {
-			planWorksheetSel.setCentralSelFlag(selFlag);
-			planWorksheetSel.setCentralSelDate(selDate);
-			planWorksheetSel.setCentralSelOfficeCode(officeCode);
-		} else if (ExciseUtils.isSector(officeCode)) {
-			planWorksheetSel.setSectorSelFlag(selFlag);
-			planWorksheetSel.setSectorSelDate(selDate);
-			planWorksheetSel.setSectorSelOfficeCode(officeCode);
-		} else if (ExciseUtils.isArea(officeCode)) {
-			planWorksheetSel.setAreaSelFlag(selFlag);
-			planWorksheetSel.setAreaSelDate(selDate);
-			planWorksheetSel.setAreaSelOfficeCode(officeCode);
+		 for (TaPlanWorksheetSelect planWorksheetSel : planWorksheetSelList) {
+			 if (ExciseUtils.isCentral(officeCode)) {
+					planWorksheetSel.setCentralSelFlag(selFlag);
+					planWorksheetSel.setCentralSelDate(selDate);
+					planWorksheetSel.setCentralSelOfficeCode(officeCode);
+				} else if (ExciseUtils.isSector(officeCode)) {
+					planWorksheetSel.setSectorSelFlag(selFlag);
+					planWorksheetSel.setSectorSelDate(selDate);
+					planWorksheetSel.setSectorSelOfficeCode(officeCode);
+				} else if (ExciseUtils.isArea(officeCode)) {
+					planWorksheetSel.setAreaSelFlag(selFlag);
+					planWorksheetSel.setAreaSelDate(selDate);
+					planWorksheetSel.setAreaSelOfficeCode(officeCode);
+				}
+			 taPlanWorksheetSelectRepository.save(planWorksheetSel);
 		}
-		taPlanWorksheetSelectRepository.save(planWorksheetSel);
 	}
 
 	public List<TaPlanWorksheetDtl> findPlanWorksheetDtl(PlanWorksheetVo formVo) {
@@ -272,7 +275,13 @@ public class PlanWorksheetService {
 
 		List<TaPlanWorksheetDtl> list = null;
 		if (FLAG.N_FLAG.equals(formVo.getSendAllFlag())) {
-			list = taPlanWorksheetDtlRepository.findByOfficeCodeAndPlanNumber(officeCode, formVo.getPlanNumber());
+			if (ExciseUtils.isCentral(officeCode)) {
+				
+				list = taPlanWorksheetDtlRepository.findByOfficeCodeAndPlanNumberForCentral(formVo.getPlanNumber(), officeCode);
+			}else {
+				
+				list = taPlanWorksheetDtlRepository.findByOfficeCodeAndPlanNumber(officeCode, formVo.getPlanNumber());
+			}
 		} else {
 			list = taPlanWorksheetDtlRepository.findByPlanNumber(formVo.getPlanNumber());
 		}

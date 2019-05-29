@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
@@ -21,6 +22,7 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.constant.ProjectConstants;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.preferences.persistence.entity.ExcisePerson;
+import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
 import th.go.excise.ims.ta.vo.PersonAssignForm;
@@ -384,6 +386,17 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		}
 		commonJdbcTemplate.update(sql.toString(),params.toArray());
 		
+	}
+
+	@Override
+	public List<TaPlanWorksheetDtl> findByOfficeCodeAndPlanNumberForCentral(String planNumber ,String officeCode) {
+		// TODO Auto-generated method stub
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append("SELECT * from TA_PLAN_WORKSHEET_DTL WHERE PLAN_NUMBER= ? AND OFFICE_CODE like ? ");
+		params.add(planNumber);
+		params.add(ExciseUtils.whereInLocalOfficeCode(officeCode));
+		return commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper<TaPlanWorksheetDtl>(TaPlanWorksheetDtl.class));
 	}
 	
 	
