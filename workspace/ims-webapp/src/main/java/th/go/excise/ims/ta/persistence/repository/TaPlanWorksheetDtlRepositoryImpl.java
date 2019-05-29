@@ -47,12 +47,15 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		sql.append("   ,PLAN_DTL.* ");
 		sql.append("   ,ED_SUBDEPT.SUBDEPT_SHORT_NAME SUBDEPTSHORTNAME ");
 		sql.append("   ,ED_PERSON.ED_PERSON_NAME PERSON_NAME ");
+		sql.append("   ,WK_DTL.DUTY_GROUP_NAME  DUTY_GROUP_NAME ");
 		sql.append(" FROM TA_PLAN_WORKSHEET_DTL PLAN_DTL ");
 		sql.append(" INNER JOIN TA_WS_REG4000 R4000 ON R4000.NEW_REG_ID = PLAN_DTL.NEW_REG_ID ");
 		sql.append(" LEFT JOIN EXCISE_DEPARTMENT ED_SECTOR ON ED_SECTOR.OFF_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000') ");
 		sql.append(" LEFT JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
 		sql.append(" LEFT JOIN EXCISE_SUBDEPT ED_SUBDEPT ON PLAN_DTL.AU_SUBDEPT_CODE = ED_SUBDEPT.SUBDEPT_CODE " );
 		sql.append(" LEFT JOIN EXCISE_PERSON ED_PERSON ON PLAN_DTL.CREATED_BY = ED_PERSON.ED_LOGIN ");
+		sql.append(" LEFT JOIN TA_WORKSHEET_DTL WK_DTL ON PLAN_DTL.NEW_REG_ID = WK_DTL.NEW_REG_ID ");
+	    
 		sql.append(" WHERE PLAN_DTL.IS_DELETED = 'N' ");
 		sql.append("   AND R4000.IS_DELETED = 'N' ");
 		sql.append("   AND PLAN_DTL.PLAN_NUMBER = ? ");
@@ -119,7 +122,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 			vo.setFacAddress(rs.getString("FAC_ADDRESS"));
 			vo.setOfficeCodeR4000(rs.getString("OFFICE_CODE_R4000"));
 			vo.setDutyCode(rs.getString("DUTY_CODE"));
-			vo.setDutyDesc(ExciseUtils.getDutyDesc(rs.getString("DUTY_CODE")));
+			vo.setDutyDesc(rs.getString("DUTY_GROUP_NAME"));
 			vo.setSecCode(rs.getString("SEC_CODE"));
 			vo.setSecDesc(rs.getString("SEC_DESC"));
 			vo.setAreaCode(rs.getString("AREA_CODE"));
