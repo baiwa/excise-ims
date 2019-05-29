@@ -3,17 +3,16 @@ package th.go.excise.ims.ta.vo;
 import java.util.List;
 
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
-import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
 
 public class MasterConditionMainHdrDtlVo {
 	
-	private TaMasCondMainHdr header;
+	private TaMasCondMainHdrForm header;
 	private List<TaMasCondMainDtl> detail;
 	
-	public TaMasCondMainHdr getHeader() {
+	public TaMasCondMainHdrForm getHeader() {
 		return header;
 	}
-	public void setHeader(TaMasCondMainHdr header) {
+	public void setHeader(TaMasCondMainHdrForm header) {
 		this.header = header;
 	}
 	public List<TaMasCondMainDtl> getDetail() {

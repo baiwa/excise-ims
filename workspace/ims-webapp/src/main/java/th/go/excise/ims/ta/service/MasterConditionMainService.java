@@ -34,6 +34,7 @@ import th.go.excise.ims.ta.vo.MasCondMainRequestVo;
 import th.go.excise.ims.ta.vo.MasCondMainResponseVo;
 import th.go.excise.ims.ta.vo.MasterConditionMainHdrDtlVo;
 import th.go.excise.ims.ta.vo.Ta010101Vo;
+import th.go.excise.ims.ta.vo.TaMasCondMainHdrForm;
 
 @Service
 public class MasterConditionMainService {
@@ -52,7 +53,7 @@ public class MasterConditionMainService {
     @Autowired
     private MasterConditionSequenceService masterConditionSequenceService;
 
-    public void insertCondMainHdr(TaMasCondMainHdr form) {
+    public void insertCondMainHdr(TaMasCondMainHdrForm form) {
     	logger.info("insertCondMainHdr");
     	
     	String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
@@ -65,10 +66,13 @@ public class MasterConditionMainService {
         hdr.setCondGroupNum(form.getCondGroupNum());
         hdr.setNewFacFlag(form.getNewFacFlag());
         hdr.setCompType(getTaxCompareType(form.getMonthNum()));
+        hdr.setRegDateStart(ConvertDateUtils.parseStringToLocalDate(form.getRegDateStart(), ConvertDateUtils.DD_MM_YYYY));
+        hdr.setRegDateEnd(ConvertDateUtils.parseStringToLocalDate(form.getRegDateEnd(), ConvertDateUtils.DD_MM_YYYY));
+        hdr.setCompMonthNum(form.getMonthNum());
         taMasCondMainHdrRepository.save(hdr);
     }
 
-    public void updateCondMainHdr(TaMasCondMainHdr form) {
+    public void updateCondMainHdr(TaMasCondMainHdrForm form) {
     	logger.info("updateCondMainHdr");
     	
         TaMasCondMainHdr hdr = taMasCondMainHdrRepository.findByCondNumber(form.getCondNumber());
@@ -78,6 +82,9 @@ public class MasterConditionMainService {
         hdr.setCondGroupNum(form.getCondGroupNum());
         hdr.setNewFacFlag(form.getNewFacFlag());
         hdr.setCompType(getTaxCompareType(form.getMonthNum()));
+        hdr.setRegDateStart(ConvertDateUtils.parseStringToLocalDate(form.getRegDateStart(), ConvertDateUtils.DD_MM_YYYY));
+        hdr.setRegDateEnd(ConvertDateUtils.parseStringToLocalDate(form.getRegDateEnd(), ConvertDateUtils.DD_MM_YYYY));
+        hdr.setCompMonthNum(form.getMonthNum());
         taMasCondMainHdrRepository.save(hdr);
         
         List<TaMasCondMainDtl> dtlList = taMasCondMainDtlRepository.findByBudgetYearAndCondNumberAndCondType(hdr.getBudgetYear(), hdr.getCondNumber(), ProjectConstants.TA_MAS_COND_MAIN_TYPE.TAX);
@@ -120,7 +127,7 @@ public class MasterConditionMainService {
     	
         TaMasCondMainDtl dtl = null;
         List<TaMasCondMainDtl> dtlList = new ArrayList<>();
-        TaMasCondMainHdr header = formVo.getHeader();
+        TaMasCondMainHdrForm header = formVo.getHeader();
         if (header.getBudgetYear() != null) {
             for (TaMasCondMainDtl obj : formVo.getDetail()) {
                 dtl = new TaMasCondMainDtl();
@@ -160,7 +167,7 @@ public class MasterConditionMainService {
     	String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
         TaMasCondMainDtl dtl = null;
         List<TaMasCondMainDtl> dtlList = new ArrayList<>();
-        TaMasCondMainHdr header = formVo.getHeader();
+        TaMasCondMainHdrForm header = formVo.getHeader();
         if (header.getBudgetYear() != null) {
             List<TaMasCondMainDtl> list = taMasCondMainDtlRepository.findByBudgetYearAndCondNumberAndCondTypeAndOfficeCode(formVo.getHeader().getBudgetYear(), formVo.getHeader().getCondNumber(), TA_MAS_COND_MAIN_TYPE.TAX, officeCode);
 //			List<TaMasCondDtlTax> listY = taMasCondDtlTaxRepository.findByBudgetYearAndIsDeleted(formVo.getHeader().getBudgetYear(), FLAG.Y_FLAG);
@@ -241,18 +248,50 @@ public class MasterConditionMainService {
         }
     }
 
-    public TaMasCondMainHdr findHdr(TaMasCondMainHdr hdr) {
+    public TaMasCondMainHdrForm findHdr(TaMasCondMainHdrForm hdr) {
     	logger.info("findHdr");
     	
     	String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-        return taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYearAndCondNumber(officeCode, hdr.getBudgetYear(), hdr.getCondNumber());
+    	TaMasCondMainHdr condhdr = taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYearAndCondNumber(officeCode, hdr.getBudgetYear(), hdr.getCondNumber());
+    	TaMasCondMainHdrForm newCondHdr = new TaMasCondMainHdrForm();
+		newCondHdr.setMasCondMainHdrId(condhdr.getMasCondMainHdrId());
+		newCondHdr.setOfficeCode(condhdr.getOfficeCode());
+		newCondHdr.setBudgetYear(condhdr.getBudgetYear());
+		newCondHdr.setCondNumber(condhdr.getCondNumber());
+		newCondHdr.setCondGroupDesc(condhdr.getCondGroupDesc());
+		newCondHdr.setMonthNum(condhdr.getMonthNum());
+		newCondHdr.setCondGroupNum(condhdr.getCondGroupNum());
+		newCondHdr.setNewFacFlag(condhdr.getNewFacFlag());
+		newCondHdr.setCompType(condhdr.getCompType());
+		newCondHdr.setRegDateStart(ConvertDateUtils.formatLocalDateToString(condhdr.getRegDateStart(), ConvertDateUtils.DD_MM_YYYY));
+		newCondHdr.setRegDateEnd(ConvertDateUtils.formatLocalDateToString(condhdr.getRegDateEnd(), ConvertDateUtils.DD_MM_YYYY));
+		newCondHdr.setCompMonthNum(condhdr.getCompMonthNum());
+    	return newCondHdr;
     }
 
-    public List<TaMasCondMainHdr> findHdrAll(TaMasCondMainHdr hdr) {
+    public List<TaMasCondMainHdrForm> findHdrAll(TaMasCondMainHdrForm hdr) {
     	logger.info("findHdrAll");
     	
     	String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-        return taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYear(officeCode, hdr.getBudgetYear());
+    	List<TaMasCondMainHdrForm> newHdrList = new ArrayList<>();
+    	List<TaMasCondMainHdr> hdrList = taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYear(officeCode, hdr.getBudgetYear());
+    	for (TaMasCondMainHdr condHdr : hdrList) {
+    		TaMasCondMainHdrForm newHdr = new TaMasCondMainHdrForm();
+    		newHdr.setMasCondMainHdrId(condHdr.getMasCondMainHdrId());
+    		newHdr.setOfficeCode(condHdr.getOfficeCode());
+    		newHdr.setBudgetYear(condHdr.getBudgetYear());
+    		newHdr.setCondNumber(condHdr.getCondNumber());
+    		newHdr.setCondGroupDesc(condHdr.getCondGroupDesc());
+    		newHdr.setMonthNum(condHdr.getMonthNum());
+    		newHdr.setCondGroupNum(condHdr.getCondGroupNum());
+    		newHdr.setNewFacFlag(condHdr.getNewFacFlag());
+    		newHdr.setCompType(condHdr.getCompType());
+    		newHdr.setRegDateStart(ConvertDateUtils.formatLocalDateToString(condHdr.getRegDateStart(), ConvertDateUtils.DD_MM_YYYY));
+    		newHdr.setRegDateEnd(ConvertDateUtils.formatLocalDateToString(condHdr.getRegDateEnd(), ConvertDateUtils.DD_MM_YYYY));
+    		newHdr.setCompMonthNum(condHdr.getCompMonthNum());
+    		newHdrList.add(newHdr);
+		}
+        return newHdrList;
     }
 
     public List<TaMasCondMainDtl> findDtl(TaMasCondMainDtl dtl) {
@@ -376,7 +415,7 @@ public class MasterConditionMainService {
         hdr.setCondGroupDesc(condGroupDesc);
         hdr.setMonthNum(monthNum);
         hdr.setCondGroupNum(condGroupNum);
-        hdr.setNewFacFlag(FLAG.N_FLAG);
+        hdr.setNewFacFlag(FLAG.Y_FLAG);
         hdr.setCompType(getTaxCompareType(form.getCompMonthNum()));
         hdr.setRegDateStart(ConvertDateUtils.parseStringToLocalDate(form.getRegDateStart(), ConvertDateUtils.DD_MM_YYYY));
         hdr.setRegDateEnd(ConvertDateUtils.parseStringToLocalDate(form.getRegDateEnd(), ConvertDateUtils.DD_MM_YYYY));

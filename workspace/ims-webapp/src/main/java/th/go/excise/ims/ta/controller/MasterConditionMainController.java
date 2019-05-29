@@ -25,6 +25,7 @@ import th.go.excise.ims.ta.vo.MasCondMainRequestVo;
 import th.go.excise.ims.ta.vo.MasCondMainResponseVo;
 import th.go.excise.ims.ta.vo.MasterConditionMainHdrDtlVo;
 import th.go.excise.ims.ta.vo.Ta010101Vo;
+import th.go.excise.ims.ta.vo.TaMasCondMainHdrForm;
 
 @Controller
 @RequestMapping("/api/ta/master-condition-main")
@@ -37,7 +38,7 @@ public class MasterConditionMainController {
 
     @PostMapping("/create-hdr")
     @ResponseBody
-    public ResponseData<TaMasCondMainHdr> insertCondMainHdr(@RequestBody TaMasCondMainHdr form) {
+    public ResponseData<TaMasCondMainHdr> insertCondMainHdr(@RequestBody TaMasCondMainHdrForm form) {
         ResponseData<TaMasCondMainHdr> response = new ResponseData<TaMasCondMainHdr>();
         try {
             masterConditionService.insertCondMainHdr(form);
@@ -54,7 +55,7 @@ public class MasterConditionMainController {
 
     @PostMapping("/update-hdr")
     @ResponseBody
-    public ResponseData<TaMasCondMainHdr> updateCondMainHdr(@RequestBody TaMasCondMainHdr form) {
+    public ResponseData<TaMasCondMainHdr> updateCondMainHdr(@RequestBody TaMasCondMainHdrForm form) {
         ResponseData<TaMasCondMainHdr> response = new ResponseData<TaMasCondMainHdr>();
         try {
             masterConditionService.updateCondMainHdr(form);
@@ -122,8 +123,8 @@ public class MasterConditionMainController {
 
     @PostMapping("/find-hdr")
     @ResponseBody
-    public ResponseData<TaMasCondMainHdr> findHdr(@RequestBody TaMasCondMainHdr formVo) {
-        ResponseData<TaMasCondMainHdr> responseData = new ResponseData<TaMasCondMainHdr>();
+    public ResponseData<TaMasCondMainHdrForm> findHdr(@RequestBody TaMasCondMainHdrForm formVo) {
+        ResponseData<TaMasCondMainHdrForm> responseData = new ResponseData<TaMasCondMainHdrForm>();
         try {
             responseData.setData(masterConditionService.findHdr(formVo));
             responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
@@ -138,8 +139,8 @@ public class MasterConditionMainController {
 
     @PostMapping("/find-hdr-all")
     @ResponseBody
-    public ResponseData<List<TaMasCondMainHdr>> findHdrAll(@RequestBody TaMasCondMainHdr formVo) {
-        ResponseData<List<TaMasCondMainHdr>> responseData = new ResponseData<List<TaMasCondMainHdr>>();
+    public ResponseData<List<TaMasCondMainHdrForm>> findHdrAll(@RequestBody TaMasCondMainHdrForm formVo) {
+        ResponseData<List<TaMasCondMainHdrForm>> responseData = new ResponseData<List<TaMasCondMainHdrForm>>();
         try {
             responseData.setData(masterConditionService.findHdrAll(formVo));
             responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
