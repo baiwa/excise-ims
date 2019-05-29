@@ -19,7 +19,6 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STAT
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaAuditPy2H;
 import th.go.excise.ims.ia.service.Int1303Service;
-import th.go.excise.ims.ia.vo.Int1301UpdateVo;
 import th.go.excise.ims.ia.vo.Int1303FilterVo;
 import th.go.excise.ims.ia.vo.Int1303UpdateVo;
 import th.go.excise.ims.ia.vo.Int1303Vo;
