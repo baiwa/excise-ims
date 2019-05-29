@@ -5,13 +5,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
@@ -105,7 +109,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		sql.append(org.springframework.util.StringUtils.collectionToDelimitedString(updateColumnNames, ","));
 		sql.append(" WHEN NOT MATCHED THEN ");
 		sql.append("   INSERT (" + org.springframework.util.StringUtils.collectionToDelimitedString(insertColumnNames, ",") + ") ");
-		sql.append("   VALUES (TA_WS_REG4000_SEQ.NEXTVAL" + org.apache.commons.lang3.StringUtils.repeat(",?", insertColumnNames.size() - 1) + ") ");
+		sql.append("   VALUES (TA_WS_REG4000_SEQ.NEXTVAL" + StringUtils.repeat(",?", insertColumnNames.size() - 1) + ") ");
 		
 		commonJdbcTemplate.batchUpdate(sql.toString(), taWsReg4000List, BATCH_SIZE, new ParameterizedPreparedStatementSetter<TaWsReg4000>() {
 			public void setValues(PreparedStatement ps, TaWsReg4000 wsReg4000) throws SQLException {
@@ -503,6 +507,38 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 			sql.append(" AND R4000.NEW_REG_ID = ?");
 			params.add(StringUtils.trim(formVo.getNewRegId()));
 		}
+	}
+
+	@Override
+	public Map<String, List<String>> findDutyByNewRegId(List<String> newRegIdList) {
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT NEWREG_ID, REG_ID, GROUP_ID, GROUP_NAME ");
+		sql.append(" FROM TA_WS_REG4000_DUTY ");
+		sql.append(" WHERE NEWREG_ID IN ( ");
+		sql.append(StringUtils.repeat("?", ",", newRegIdList.size()));
+		sql.append(" ) ");
+		sql.append(" ORDER BY NEWREG_ID, GROUP_ID ");
+		
+		List<Object> paramList = new ArrayList<>();
+		paramList.addAll(newRegIdList);
+		
+		Map<String, List<String>> dutyMap = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), new ResultSetExtractor<Map<String, List<String>>>() {
+			public Map<String, List<String>> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				Map<String, List<String>> tmpDutyMap = new HashMap<>();
+				List<String> dutyGroupList = null;
+				while (rs.next()) {
+					dutyGroupList = tmpDutyMap.get(rs.getString("NEWREG_ID"));
+					if (dutyGroupList == null) {
+						dutyGroupList = new ArrayList<>();
+					}
+					dutyGroupList.add(rs.getString("GROUP_NAME"));
+					tmpDutyMap.put(rs.getString("NEWREG_ID"), dutyGroupList);
+				}
+				return tmpDutyMap;
+			}
+		});
+
+		return dutyMap;
 	}
 	
 }

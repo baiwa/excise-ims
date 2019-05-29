@@ -1,6 +1,7 @@
 package th.go.excise.ims.ta.persistence.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
 import th.go.excise.ims.ta.vo.FactoryVo;
@@ -26,5 +27,7 @@ public interface TaWsReg4000RepositoryCustom {
 	public List<WsReg4000Vo> findByCriteriaDuty(TaxOperatorFormVo formVo, String startMonth, String endMonth);
 
 	public Long countByCriteriaDuty(TaxOperatorFormVo formVo);
+	
+	public Map<String, List<String>> findDutyByNewRegId(List<String> newRegIdList);
 	
 }

@@ -48,10 +48,12 @@ import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondSubNoAuditRepos
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondSubRiskRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetHdrRepository;
+import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.util.TaxAuditUtils;
 import th.go.excise.ims.ta.vo.CondGroupVo;
 import th.go.excise.ims.ta.vo.MasCondSubCapitalFormVo;
 import th.go.excise.ims.ta.vo.TaxDraftVo;
+import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 import th.go.excise.ims.ta.vo.TaxOperatorVo;
@@ -85,6 +87,8 @@ public class WorksheetService {
 
 	@Autowired
 	private TaPlanWorksheetHisRepository taPlanWorksheetHisRepository;
+	@Autowired
+	private TaWsReg4000Repository taWsReg4000Repository;
 
 	@Transactional(rollbackOn = Exception.class)
 	public void saveWorksheet(String draftNumber, String budgetYear) throws Exception {
@@ -436,11 +440,35 @@ public class WorksheetService {
 			}
 			
 			List<TaxOperatorDetailVo> list = taWorksheetDtlRepository.findByCriteria(formVo);
-			vo.setDatas(TaxAuditUtils.prepareTaxOperatorDatatable(list, formVo));
+			List<TaxOperatorDatatableVo> datatableVoList = TaxAuditUtils.prepareTaxOperatorDatatable(list, formVo);
+			prepareAdditionalData(budgetYear, datatableVoList);
+			vo.setDatas(datatableVoList);
 			vo.setCount(taWorksheetDtlRepository.countByCriteria(formVo));
 		}
 
 		return vo;
+	}
+
+	private void prepareAdditionalData(String budgetYear, List<TaxOperatorDatatableVo> taxOperatorVoList) {
+		List<String> newRegIdList = taxOperatorVoList
+			.stream()
+			.map(e -> e.getNewRegId())
+			.collect(Collectors.toList());
+		
+		Map<String, List<String>> dutyMap = null;
+		if (newRegIdList != null && newRegIdList.size() > 0) {
+			dutyMap = taWsReg4000Repository.findDutyByNewRegId(newRegIdList);
+		}
+		//taPlanWorksheetHisRepository.findAuditPlanByNewRegId
+		
+		String multiDutyDesc = null;
+		for (TaxOperatorDatatableVo vo : taxOperatorVoList) {
+			// Check Multiple Duty Group
+			if (FLAG.Y_FLAG.equals(vo.getMultiDutyFlag())) {
+				multiDutyDesc = org.springframework.util.StringUtils.collectionToCommaDelimitedString(dutyMap.get(vo.getNewRegId()));
+				vo.setMultiDutyDesc(multiDutyDesc);
+			}
+		}
 	}
 
 	public List<LabelValueBean> groupCondSubCapital(String analysisNumber) {
