@@ -207,22 +207,19 @@ public class WorksheetService {
 			}
 			
 			if (!FLAG.Y_FLAG.equals(worksheetDtl.getCondRegDate())) {
-				int condIndex = 1;
-				// Condition G1
 				if (StringUtils.isNotBlank(worksheetDtl.getLastAuditYear()) && condSubNoAudit != null) {
 					int year = Integer.valueOf(worksheetHdr.getBudgetYear()) - Integer.valueOf(worksheetDtl.getLastAuditYear()) - 1;
 					if (year >= Integer.valueOf(condSubNoAudit.getNoTaxAuditYearNum())) {
 						worksheetDtl.setCondSubNoAudit(FLAG.Y_FLAG);
-						setConnGroup(worksheetDtl, String.valueOf(condIndex++));
 						condSorting++;
 					}
 				}
 				
-				// Condition G2, G3
+				// Condition G1, G2
 				for (TaWorksheetCondMainDtl condMainDtl : condMainDtlList) {
 					if (TA_MAS_COND_MAIN_TYPE.TAX.equals(condMainDtl.getCondType())) {
 						if (isConditionGroup(condMainDtl, taxDraftVo)) {
-							setConnGroup(worksheetDtl, String.valueOf(condIndex++));
+							setConnGroup(worksheetDtl, condMainDtl.getCondGroup());
 							condSorting++;
 						}
 					}
