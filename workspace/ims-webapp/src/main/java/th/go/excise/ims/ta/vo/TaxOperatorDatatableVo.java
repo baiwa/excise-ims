@@ -59,6 +59,13 @@ public class TaxOperatorDatatableVo {
 	private String notPayTaxMonthNo;
 	private String multiDutyFlag;
 	private String incMultiDutyFlag;
+	private String multiDutyDesc;
+	private String taxAuditLast3MultiFlag;
+	private String taxAuditLast3MultiDesc;
+	private String taxAuditLast2MultiFlag;
+	private String taxAuditLast2MultiDesc;
+	private String taxAuditLast1MultiFlag;
+	private String taxAuditLast1MultiDesc;
 
 	public String getCusFullname() {
 		return cusFullname;
@@ -474,6 +481,62 @@ public class TaxOperatorDatatableVo {
 
 	public void setIncMultiDutyFlag(String incMultiDutyFlag) {
 		this.incMultiDutyFlag = incMultiDutyFlag;
+	}
+
+	public String getMultiDutyDesc() {
+		return multiDutyDesc;
+	}
+
+	public void setMultiDutyDesc(String multiDutyDesc) {
+		this.multiDutyDesc = multiDutyDesc;
+	}
+
+	public String getTaxAuditLast3MultiFlag() {
+		return taxAuditLast3MultiFlag;
+	}
+
+	public void setTaxAuditLast3MultiFlag(String taxAuditLast3MultiFlag) {
+		this.taxAuditLast3MultiFlag = taxAuditLast3MultiFlag;
+	}
+
+	public String getTaxAuditLast3MultiDesc() {
+		return taxAuditLast3MultiDesc;
+	}
+
+	public void setTaxAuditLast3MultiDesc(String taxAuditLast3MultiDesc) {
+		this.taxAuditLast3MultiDesc = taxAuditLast3MultiDesc;
+	}
+
+	public String getTaxAuditLast2MultiFlag() {
+		return taxAuditLast2MultiFlag;
+	}
+
+	public void setTaxAuditLast2MultiFlag(String taxAuditLast2MultiFlag) {
+		this.taxAuditLast2MultiFlag = taxAuditLast2MultiFlag;
+	}
+
+	public String getTaxAuditLast2MultiDesc() {
+		return taxAuditLast2MultiDesc;
+	}
+
+	public void setTaxAuditLast2MultiDesc(String taxAuditLast2MultiDesc) {
+		this.taxAuditLast2MultiDesc = taxAuditLast2MultiDesc;
+	}
+
+	public String getTaxAuditLast1MultiFlag() {
+		return taxAuditLast1MultiFlag;
+	}
+
+	public void setTaxAuditLast1MultiFlag(String taxAuditLast1MultiFlag) {
+		this.taxAuditLast1MultiFlag = taxAuditLast1MultiFlag;
+	}
+
+	public String getTaxAuditLast1MultiDesc() {
+		return taxAuditLast1MultiDesc;
+	}
+
+	public void setTaxAuditLast1MultiDesc(String taxAuditLast1MultiDesc) {
+		this.taxAuditLast1MultiDesc = taxAuditLast1MultiDesc;
 	}
 
 	@Override
