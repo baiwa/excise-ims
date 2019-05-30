@@ -37,6 +37,7 @@ public class TaxOperatorDatatableVo {
 	private String otherDutyName;
 	private List<String> taxAmtList;
 	private String selectBy;
+	private String selectByOfCode;
 	private String condTaxGrp;
 	private String regCapital;
 	private String condSubCapital;
@@ -66,6 +67,15 @@ public class TaxOperatorDatatableVo {
 	private String taxAuditLast2MultiDesc;
 	private String taxAuditLast1MultiFlag;
 	private String taxAuditLast1MultiDesc;
+
+	
+	public String getSelectByOfCode() {
+		return selectByOfCode;
+	}
+
+	public void setSelectByOfCode(String selectByOfCode) {
+		this.selectByOfCode = selectByOfCode;
+	}
 
 	public String getCusFullname() {
 		return cusFullname;

@@ -65,6 +65,8 @@ public class TaxAuditUtils {
 			taxOperatorDatatableVo.setDutyName(taxOperatorDetailVo.getDutyName());
 			taxOperatorDatatableVo.setOtherDutyName(taxOperatorDetailVo.getOtherDutyName());
 			taxOperatorDatatableVo.setSelectBy(taxOperatorDetailVo.getSelectBy());
+			taxOperatorDatatableVo.setSelectByOfCode(taxOperatorDetailVo.getSelectByOfCode());
+			
 			taxOperatorDatatableVo.setCondTaxGrp(taxOperatorDetailVo.getCondTaxGrp());
 			taxOperatorDatatableVo.setRegCapital(taxOperatorDetailVo.getRegCapital());
 			taxOperatorDatatableVo.setCondSubCapital(taxOperatorDetailVo.getCondSubCapital());

@@ -12,6 +12,15 @@ public class YearMonthVo {
 	private String worksheetStatus;
 	private String yearCondSubNoAudit;
 	private Integer countGroup;
+	private Boolean isDisabled = true;
+
+	public Boolean getIsDisabled() {
+		return isDisabled;
+	}
+
+	public void setIsDisabled(Boolean isDisabled) {
+		this.isDisabled = isDisabled;
+	}
 
 	public Integer getCountGroup() {
 		return countGroup;

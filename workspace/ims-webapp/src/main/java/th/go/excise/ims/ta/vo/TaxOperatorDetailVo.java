@@ -81,6 +81,7 @@ public class TaxOperatorDetailVo {
 	private String areaSelDate;
 	private String areaSelOfficeCode;
 	private String selectBy;
+	private String selectByOfCode;
 	private String regCapital;
 	private String condSubCapital;
 	private String condSubRisk;
@@ -102,6 +103,14 @@ public class TaxOperatorDetailVo {
 	private String notPayTaxMonthNo;
 	private String multiDutyFlag;
 	private String incMultiDutyFlag;
+
+	public String getSelectByOfCode() {
+		return selectByOfCode;
+	}
+
+	public void setSelectByOfCode(String selectByOfCode) {
+		this.selectByOfCode = selectByOfCode;
+	}
 
 	public String getCusFullname() {
 		return cusFullname;
