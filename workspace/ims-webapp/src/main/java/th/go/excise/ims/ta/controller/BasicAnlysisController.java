@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.ta.service.AnalysisIncomeCompareLastMonthService;
 import th.go.excise.ims.ta.service.AnalysisIncomeCompareLastYearService;
-import th.go.excise.ims.ta.service.AnalysisTaxAmtsService;
+import th.go.excise.ims.ta.service.AnalysisTaxAmtService;
 import th.go.excise.ims.ta.service.AnalysisTaxFilingService;
 import th.go.excise.ims.ta.service.AnalysisTaxQtyService;
 import th.go.excise.ims.ta.service.AnalysisTaxRateService;
@@ -20,76 +20,87 @@ import th.go.excise.ims.ta.service.AnalysisTaxRetailPriceService;
 import th.go.excise.ims.ta.service.AnalysisTaxValueService;
 import th.go.excise.ims.ta.vo.AnalysisFormVo;
 import th.go.excise.ims.ta.vo.AnalysisIncomeCompareLastMonthVo;
-import th.go.excise.ims.ta.vo.AnalyzeCompareOldYearVo;
-import th.go.excise.ims.ta.vo.PaperBasicAnalysisD1Vo;
-import th.go.excise.ims.ta.vo.PaperBasicAnalysisD2Vo;
-import th.go.excise.ims.ta.vo.PaperBasicAnalysisD3Vo;
-import th.go.excise.ims.ta.vo.PaperBasicAnalysisD4Vo;
-import th.go.excise.ims.ta.vo.PaperBasicAnalysisD5Vo;
-import th.go.excise.ims.ta.vo.PaperBasicAnalysisD6Vo;
+import th.go.excise.ims.ta.vo.AnalysisIncomeCompareLastYearVo;
+import th.go.excise.ims.ta.vo.AnalysisTaxAmtVo;
+import th.go.excise.ims.ta.vo.AnalysisTaxFilingVo;
+import th.go.excise.ims.ta.vo.AnalysisTaxQtyVo;
+import th.go.excise.ims.ta.vo.AnalysisTaxRateVo;
+import th.go.excise.ims.ta.vo.AnalysisTaxRetailPriceVo;
+import th.go.excise.ims.ta.vo.AnalysisTaxValueVo;
 
 @Controller
 @RequestMapping("/api/ta/basic-anlysis")
 public class BasicAnlysisController {
+	
 	private static final Logger logger = LoggerFactory.getLogger(BasicAnlysisController.class);
+	
 	private AnalysisTaxQtyService analysisTaxQtyService;
-	private AnalysisTaxRetailPriceService analysisTaxQuRetailPriceService;
+	private AnalysisTaxRetailPriceService analysisTaxRetailPriceService;
 	private AnalysisTaxValueService analysisTaxValueService;
 	private AnalysisTaxRateService analysisTaxRateService;
-	private AnalysisTaxAmtsService analysisTaxAmtsService;
+	private AnalysisTaxAmtService analysisTaxAmtService;
 	private AnalysisTaxFilingService analysisTaxFilingService;
 	private AnalysisIncomeCompareLastMonthService analysisIncomeCompareLastMonthService;
 	private AnalysisIncomeCompareLastYearService analysisIncomeCompareLastYearService;
 
 	@Autowired
-	public BasicAnlysisController(AnalysisTaxQtyService analysisTaxQtyService, AnalysisTaxRetailPriceService analysisTaxQuRetailPriceService, AnalysisTaxRateService analysisTaxRateService, AnalysisTaxAmtsService analysisTaxAmtsService, AnalysisTaxFilingService analysisTaxFilingService,
-			AnalysisIncomeCompareLastMonthService analysisIncomeCompareLastMonthService, AnalysisIncomeCompareLastYearService analysisIncomeCompareLastYearService,AnalysisTaxValueService analysisTaxValueService) {
+	public BasicAnlysisController(
+			AnalysisTaxQtyService analysisTaxQtyService,
+			AnalysisTaxRetailPriceService analysisTaxRetailPriceService,
+			AnalysisTaxRateService analysisTaxRateService,
+			AnalysisTaxAmtService analysisTaxAmtService,
+			AnalysisTaxFilingService analysisTaxFilingService,
+			AnalysisIncomeCompareLastMonthService analysisIncomeCompareLastMonthService,
+			AnalysisIncomeCompareLastYearService analysisIncomeCompareLastYearService,
+			AnalysisTaxValueService analysisTaxValueService) {
 		this.analysisTaxQtyService = analysisTaxQtyService;
-		this.analysisTaxQuRetailPriceService = analysisTaxQuRetailPriceService;
+		this.analysisTaxRetailPriceService = analysisTaxRetailPriceService;
 		this.analysisTaxRateService = analysisTaxRateService;
 		this.analysisTaxValueService = analysisTaxValueService;
-		this.analysisTaxAmtsService = analysisTaxAmtsService;
+		this.analysisTaxAmtService = analysisTaxAmtService;
 		this.analysisTaxFilingService = analysisTaxFilingService;
 		this.analysisIncomeCompareLastMonthService = analysisIncomeCompareLastMonthService;
 		this.analysisIncomeCompareLastYearService = analysisIncomeCompareLastYearService;
 	}
 
 	// TODO 1
-	@PostMapping("/analysis-tax-qty-data")
+	@PostMapping("/tax-qty-data")
 	@ResponseBody
-	public DataTableAjax<PaperBasicAnalysisD1Vo> listAnalysisTaxQty(@RequestBody AnalysisFormVo request) {
-		logger.info("analysisTaxQtyService");
+	public DataTableAjax<AnalysisTaxQtyVo> taxQtyData(@RequestBody AnalysisFormVo request) {
+		logger.info("taxQtyData");
 
-		DataTableAjax<PaperBasicAnalysisD1Vo> response = new DataTableAjax<>();
+		DataTableAjax<AnalysisTaxQtyVo> response = new DataTableAjax<>();
 		try {
 			response = analysisTaxQtyService.getAnalysisTaxQty(request);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
+		
 		return response;
 	}
 
 	// TODO 2
-	@PostMapping("/analysis-taxQuRetail-price-data")
+	@PostMapping("/tax-retail-price-data")
 	@ResponseBody
-	public DataTableAjax<PaperBasicAnalysisD2Vo> listAnalysisTaxQuRetailPrice(@RequestBody AnalysisFormVo request) {
-		logger.info("analysisTaxQuRetailPriceService");
+	public DataTableAjax<AnalysisTaxRetailPriceVo> taxRetailPriceData(@RequestBody AnalysisFormVo request) {
+		logger.info("taxRetailPriceData");
 
-		DataTableAjax<PaperBasicAnalysisD2Vo> response = new DataTableAjax<>();
+		DataTableAjax<AnalysisTaxRetailPriceVo> response = new DataTableAjax<>();
 		try {
-			response = analysisTaxQuRetailPriceService.GetAnalysisTaxQuRetailPrice(request);
+			response = analysisTaxRetailPriceService.GetAnalysisTaxQuRetailPrice(request);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		return response;
 	}
 	// TODO 3
-	@PostMapping("/analysis-lysisTax-value")
+	@PostMapping("/tax-value-data")
 	@ResponseBody
-	public DataTableAjax<PaperBasicAnalysisD3Vo> listAnalysisTaxValueService(@RequestBody AnalysisFormVo request) {
-		logger.info("listAnalysisTaxValue");
+	public DataTableAjax<AnalysisTaxValueVo> taxValueData(@RequestBody AnalysisFormVo request) {
+		logger.info("taxValueData");
 
-		DataTableAjax<PaperBasicAnalysisD3Vo> response = new DataTableAjax<>();
+		DataTableAjax<AnalysisTaxValueVo> response = new DataTableAjax<>();
 		try {
 			response = analysisTaxValueService.GetAnalysisTaxValue(request);
 		} catch (Exception e) {
@@ -98,12 +109,12 @@ public class BasicAnlysisController {
 		return response;
 	}
 	// TODO 4
-	@PostMapping("/analysis-taxRate-service-data")
+	@PostMapping("/tax-rate-data")
 	@ResponseBody
-	public DataTableAjax<PaperBasicAnalysisD4Vo> listAnalysisTaxRateService(@RequestBody AnalysisFormVo request) {
-		logger.info("listAnalysisTaxRateService");
+	public DataTableAjax<AnalysisTaxRateVo> taxRateData(@RequestBody AnalysisFormVo request) {
+		logger.info("taxRateData");
 
-		DataTableAjax<PaperBasicAnalysisD4Vo> response = new DataTableAjax<>();
+		DataTableAjax<AnalysisTaxRateVo> response = new DataTableAjax<>();
 		try {
 			response = analysisTaxRateService.GetAnalysisTaxRate(request);
 		} catch (Exception e) {
@@ -113,14 +124,14 @@ public class BasicAnlysisController {
 	}
 
 	// TODO 5
-	@PostMapping("/list-analysis-taxAmts-service-data")
+	@PostMapping("/tax-amt-data")
 	@ResponseBody
-	public DataTableAjax<PaperBasicAnalysisD5Vo> listAnalysisTaxAmtsService(@RequestBody AnalysisFormVo request) {
-		logger.info("listAnalysisTaxAmtsService");
+	public DataTableAjax<AnalysisTaxAmtVo> taxAmtData(@RequestBody AnalysisFormVo request) {
+		logger.info("taxAmtData");
 
-		DataTableAjax<PaperBasicAnalysisD5Vo> response = new DataTableAjax<>();
+		DataTableAjax<AnalysisTaxAmtVo> response = new DataTableAjax<>();
 		try {
-			response = analysisTaxAmtsService.GetAnalysisTaxAmt(request);
+			response = analysisTaxAmtService.GetAnalysisTaxAmt(request);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -128,12 +139,12 @@ public class BasicAnlysisController {
 	}
 
 	// TODO 6
-	@PostMapping("/analysis-tax-filing-data")
+	@PostMapping("/tax-filing-data")
 	@ResponseBody
-	public DataTableAjax<PaperBasicAnalysisD6Vo> listAnalysisTaxFilingService(@RequestBody AnalysisFormVo request) {
-		logger.info("listAnalysisTaxFilingService");
+	public DataTableAjax<AnalysisTaxFilingVo> taxFilingData(@RequestBody AnalysisFormVo request) {
+		logger.info("taxFilingData");
 
-		DataTableAjax<PaperBasicAnalysisD6Vo> response = new DataTableAjax<>();
+		DataTableAjax<AnalysisTaxFilingVo> response = new DataTableAjax<>();
 		try {
 			response = analysisTaxFilingService.GetAnalysisTaxFiling(request);
 		} catch (Exception e) {
@@ -143,9 +154,9 @@ public class BasicAnlysisController {
 	}
 
 	// TODO 7
-	@PostMapping("/analysis-income-compareLast-month-data")
+	@PostMapping("/income-compare-last-month-data")
 	@ResponseBody
-	public DataTableAjax<AnalysisIncomeCompareLastMonthVo> listAnalysisIncomeCompareLastMonthService(@RequestBody AnalysisFormVo request) {
+	public DataTableAjax<AnalysisIncomeCompareLastMonthVo> incomeCompareLastMonthData(@RequestBody AnalysisFormVo request) {
 		logger.info("listAnalysisIncomeCompareLastMonthService");
 
 		DataTableAjax<AnalysisIncomeCompareLastMonthVo> response = new DataTableAjax<>();
@@ -158,12 +169,12 @@ public class BasicAnlysisController {
 	}
 
 	// TODO 8
-	@PostMapping("/analysis-income-compareLast-year-data")
+	@PostMapping("/income-compare-last-year-data")
 	@ResponseBody
-	public DataTableAjax<AnalyzeCompareOldYearVo> listAnalysisIncomeCompareLastYearService(@RequestBody AnalysisFormVo request) {
+	public DataTableAjax<AnalysisIncomeCompareLastYearVo> incomeCompareLastYearData(@RequestBody AnalysisFormVo request) {
 		logger.info("listAnalysisIncomeCompareLastYearService");
 
-		DataTableAjax<AnalyzeCompareOldYearVo> response = new DataTableAjax<>();
+		DataTableAjax<AnalysisIncomeCompareLastYearVo> response = new DataTableAjax<>();
 		try {
 			response = analysisIncomeCompareLastYearService.GetAnalysisIncomeCompareLastYear(request);
 		} catch (Exception e) {

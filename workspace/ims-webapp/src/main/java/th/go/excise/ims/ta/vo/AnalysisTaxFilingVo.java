@@ -1,33 +1,48 @@
 package th.go.excise.ims.ta.vo;
 
-public class AnalysisTaxFilingVo {
+import java.util.Date;
+
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
+
+public class AnalysisTaxFilingVo extends DataTableRequest {
+
+	private static final long serialVersionUID = 9133141236206101098L;
+
 	private String taxMonth;
-	private String taxSubmissionDate;
-	private String anaTaxSubmissionDate;
-	private String resultTaxSubmissionDate;
+	private Date taxSubmissionDate;
+	private Date anaTaxSubmissionDate;
+	private Date resultTaxSubmissionDate;
+
 	public String getTaxMonth() {
 		return taxMonth;
 	}
+
 	public void setTaxMonth(String taxMonth) {
 		this.taxMonth = taxMonth;
 	}
-	public String getTaxSubmissionDate() {
+
+	public Date getTaxSubmissionDate() {
 		return taxSubmissionDate;
 	}
-	public void setTaxSubmissionDate(String taxSubmissionDate) {
+
+	public void setTaxSubmissionDate(Date taxSubmissionDate) {
 		this.taxSubmissionDate = taxSubmissionDate;
 	}
-	public String getAnaTaxSubmissionDate() {
+
+	public Date getAnaTaxSubmissionDate() {
 		return anaTaxSubmissionDate;
 	}
-	public void setAnaTaxSubmissionDate(String anaTaxSubmissionDate) {
+
+	public void setAnaTaxSubmissionDate(Date anaTaxSubmissionDate) {
 		this.anaTaxSubmissionDate = anaTaxSubmissionDate;
 	}
-	public String getResultTaxSubmissionDate() {
+
+	public Date getResultTaxSubmissionDate() {
 		return resultTaxSubmissionDate;
 	}
-	public void setResultTaxSubmissionDate(String resultTaxSubmissionDate) {
+
+	public void setResultTaxSubmissionDate(Date resultTaxSubmissionDate) {
 		this.resultTaxSubmissionDate = resultTaxSubmissionDate;
 	}
-	
+
 }

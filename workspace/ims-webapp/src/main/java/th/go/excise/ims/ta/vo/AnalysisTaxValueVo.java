@@ -1,33 +1,48 @@
 package th.go.excise.ims.ta.vo;
 
-public class AnalysisTaxValueVo {
+import java.math.BigDecimal;
+
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
+
+public class AnalysisTaxValueVo extends DataTableRequest {
+
+	private static final long serialVersionUID = 4030578141548018358L;
+
 	private String goodsDescText;
-	private String taxQty;
-	private String informPrice;
-	private String taxValue;
+	private BigDecimal taxQty;
+	private BigDecimal informPrice;
+	private BigDecimal goodsValueAmt;
+
 	public String getGoodsDescText() {
 		return goodsDescText;
 	}
+
 	public void setGoodsDescText(String goodsDescText) {
 		this.goodsDescText = goodsDescText;
 	}
-	public String getTaxQty() {
+
+	public BigDecimal getTaxQty() {
 		return taxQty;
 	}
-	public void setTaxQty(String taxQty) {
+
+	public void setTaxQty(BigDecimal taxQty) {
 		this.taxQty = taxQty;
 	}
-	public String getInformPrice() {
+
+	public BigDecimal getInformPrice() {
 		return informPrice;
 	}
-	public void setInformPrice(String informPrice) {
+
+	public void setInformPrice(BigDecimal informPrice) {
 		this.informPrice = informPrice;
 	}
-	public String getTaxValue() {
-		return taxValue;
+
+	public BigDecimal getGoodsValueAmt() {
+		return goodsValueAmt;
 	}
-	public void setTaxValue(String taxValue) {
-		this.taxValue = taxValue;
+
+	public void setGoodsValueAmt(BigDecimal goodsValueAmt) {
+		this.goodsValueAmt = goodsValueAmt;
 	}
-	
+
 }

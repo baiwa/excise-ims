@@ -2,7 +2,12 @@ package th.go.excise.ims.ta.vo;
 
 import java.math.BigDecimal;
 
-public class AnalysisIncomeCompareLastMonthVo {
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
+
+public class AnalysisIncomeCompareLastMonthVo extends DataTableRequest {
+
+	private static final long serialVersionUID = -3604910343019283741L;
+
 	private String taxMonth;
 	private BigDecimal incomeAmt;
 	private BigDecimal diffIncomeAmt;

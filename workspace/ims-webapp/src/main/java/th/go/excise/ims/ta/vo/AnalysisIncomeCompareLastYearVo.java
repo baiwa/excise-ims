@@ -1,20 +1,16 @@
 package th.go.excise.ims.ta.vo;
 
-public class AnalysisIncomeCompareLastYearVo {
-	private Long id;
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
+
+public class AnalysisIncomeCompareLastYearVo extends DataTableRequest {
+
+	private static final long serialVersionUID = 915242216213450730L;
+
 	private String taxMonth;
-	private String incomeLastYear;
-	private String incomeCurrentYear;
+	private String incomeLastYearAmt;
+	private String incomeCurrentYearAmt;
 	private String diffIncomeAmt;
 	private String diffIncomePnt;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getTaxMonth() {
 		return taxMonth;
@@ -24,20 +20,20 @@ public class AnalysisIncomeCompareLastYearVo {
 		this.taxMonth = taxMonth;
 	}
 
-	public String getIncomeLastYear() {
-		return incomeLastYear;
+	public String getIncomeLastYearAmt() {
+		return incomeLastYearAmt;
 	}
 
-	public void setIncomeLastYear(String incomeLastYear) {
-		this.incomeLastYear = incomeLastYear;
+	public void setIncomeLastYearAmt(String incomeLastYearAmt) {
+		this.incomeLastYearAmt = incomeLastYearAmt;
 	}
 
-	public String getIncomeCurrentYear() {
-		return incomeCurrentYear;
+	public String getIncomeCurrentYearAmt() {
+		return incomeCurrentYearAmt;
 	}
 
-	public void setIncomeCurrentYear(String incomeCurrentYear) {
-		this.incomeCurrentYear = incomeCurrentYear;
+	public void setIncomeCurrentYearAmt(String incomeCurrentYearAmt) {
+		this.incomeCurrentYearAmt = incomeCurrentYearAmt;
 	}
 
 	public String getDiffIncomeAmt() {
@@ -55,4 +51,5 @@ public class AnalysisIncomeCompareLastYearVo {
 	public void setDiffIncomePnt(String diffIncomePnt) {
 		this.diffIncomePnt = diffIncomePnt;
 	}
+
 }

@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.vo.AnalysisFormVo;
+import th.go.excise.ims.ta.vo.AnalysisTaxRateVo;
 import th.go.excise.ims.ta.vo.FactoryVo;
-import th.go.excise.ims.ta.vo.PaperBasicAnalysisD4Vo;
 
 @Service
 public class AnalysisTaxRateService {
@@ -24,21 +24,21 @@ public class AnalysisTaxRateService {
 	@Autowired
 	private TaWsReg4000Repository taWsReg4000Repository;
 
-	public DataTableAjax<PaperBasicAnalysisD4Vo> GetAnalysisTaxRate(AnalysisFormVo request) {
+	public DataTableAjax<AnalysisTaxRateVo> GetAnalysisTaxRate(AnalysisFormVo request) {
 		logger.info("newRegId={}", request.getNewRegId());
 
 		FactoryVo factoryVo = taWsReg4000Repository.findByNewRegId(request.getNewRegId());
 
 		int total = 0;
-		DataTableAjax<PaperBasicAnalysisD4Vo> dataTableAjax = new DataTableAjax<PaperBasicAnalysisD4Vo>();
+		DataTableAjax<AnalysisTaxRateVo> dataTableAjax = new DataTableAjax<AnalysisTaxRateVo>();
 		dataTableAjax.setData(listAnalysisTaxRate(factoryVo.getDutyCode()));
 		dataTableAjax.setRecordsTotal(total);
 		dataTableAjax.setRecordsFiltered(total);
 		return dataTableAjax;
 	}
 
-	public List<PaperBasicAnalysisD4Vo> listAnalysisTaxRate(String dutyCode) {
-		List<PaperBasicAnalysisD4Vo> dataList = null;
+	public List<AnalysisTaxRateVo> listAnalysisTaxRate(String dutyCode) {
+		List<AnalysisTaxRateVo> dataList = null;
 		
 		if ("0101".equals(dutyCode)) {
 			dataList = getData0101();
@@ -51,11 +51,11 @@ public class AnalysisTaxRateService {
 		return dataList;
 	}
 
-	private List<PaperBasicAnalysisD4Vo> getData0101() {
-		List<PaperBasicAnalysisD4Vo> dataList = new ArrayList<PaperBasicAnalysisD4Vo>();
-		PaperBasicAnalysisD4Vo data = null;
+	private List<AnalysisTaxRateVo> getData0101() {
+		List<AnalysisTaxRateVo> dataList = new ArrayList<AnalysisTaxRateVo>();
+		AnalysisTaxRateVo data = null;
 
-		data = new PaperBasicAnalysisD4Vo();
+		data = new AnalysisTaxRateVo();
 		data.setGoodsDesc("น้ำมันดีเซลที่มีปริมาณกำมะถันไม่เกินร้อยละ 0.005 โดยน้ำหนัก");
 		data.setTaxRateByPrice(new BigDecimal(0));
 		data.setTaxRateByQty(new BigDecimal(5.8500));
@@ -65,7 +65,7 @@ public class AnalysisTaxRateService {
 		data.setDiffTaxRateByQty(data.getAnaTaxRateByQty().subtract(data.getTaxRateByQty()));
 		dataList.add(data);
 		
-		data = new PaperBasicAnalysisD4Vo();
+		data = new AnalysisTaxRateVo();
 		data.setGoodsDesc("น้ำมันแก๊สโซฮอล์ E10 แก๊สโซฮอล์ออกเทน 91");
 		data.setTaxRateByPrice(new BigDecimal(0));
 		data.setTaxRateByQty(new BigDecimal(5.8500));
@@ -75,7 +75,7 @@ public class AnalysisTaxRateService {
 		data.setDiffTaxRateByQty(data.getAnaTaxRateByQty().subtract(data.getTaxRateByQty()));
 		dataList.add(data);
 		
-		data = new PaperBasicAnalysisD4Vo();
+		data = new AnalysisTaxRateVo();
 		data.setGoodsDesc("น้ำมันแก๊สโซฮอล์ E20");
 		data.setTaxRateByPrice(new BigDecimal(0));
 		data.setTaxRateByQty(new BigDecimal(5.2000));
@@ -85,7 +85,7 @@ public class AnalysisTaxRateService {
 		data.setDiffTaxRateByQty(data.getAnaTaxRateByQty().subtract(data.getTaxRateByQty()));
 		dataList.add(data);
 		
-		data = new PaperBasicAnalysisD4Vo();
+		data = new AnalysisTaxRateVo();
 		data.setGoodsDesc("น้ำมันแก๊สโซฮอล์ E10 แก๊สโซฮอล์ออกเทน 95");
 		data.setTaxRateByPrice(new BigDecimal(0));
 		data.setTaxRateByQty(new BigDecimal(5.8500));
@@ -98,11 +98,11 @@ public class AnalysisTaxRateService {
 		return dataList;
 	}
 
-	private List<PaperBasicAnalysisD4Vo> getData0201() {
-		List<PaperBasicAnalysisD4Vo> dataList = new ArrayList<PaperBasicAnalysisD4Vo>();
-		PaperBasicAnalysisD4Vo data = null;
+	private List<AnalysisTaxRateVo> getData0201() {
+		List<AnalysisTaxRateVo> dataList = new ArrayList<AnalysisTaxRateVo>();
+		AnalysisTaxRateVo data = null;
 
-		data = new PaperBasicAnalysisD4Vo();
+		data = new AnalysisTaxRateVo();
 		data.setGoodsDesc("น้ำแร่และน้ำอัดลมที่เติมน้ำตาลหรือสารที่ทำให้หวานอื่นที่มีปริมาณน้ำตาลเกิน 10 กรัม แต่ไม่เกิน 14 กรัม ต่อ 100 มิลลิลิตร โออิชิ ชาคูลล์ซ่า");
 		data.setTaxRateByPrice(new BigDecimal(14.0000));
 		data.setTaxRateByQty(new BigDecimal(0.5000));
@@ -112,7 +112,7 @@ public class AnalysisTaxRateService {
 		data.setDiffTaxRateByQty(data.getAnaTaxRateByQty().subtract(data.getTaxRateByQty()));
 		dataList.add(data);
 		
-		data = new PaperBasicAnalysisD4Vo();
+		data = new AnalysisTaxRateVo();
 		data.setGoodsDesc("น้ำผลไม้ (รวมถึงเกรปมัสต์) และน้ำพืชผักที่ไม่ได้หมักและไม่เติมสุรา ไม่ว่าจะเติมน้ำตาล หรือสารทำให้หวานอื่น ๆหรือไม่ก็ตามที่มีปริมาณน้ำตาลเกิน 10 กรัม แต่ไม่เกิน 14 กรัม ต่อ 100 มิลลิลิตร ฟาร์มเมอรี่");
 		data.setTaxRateByPrice(new BigDecimal(0));
 		data.setTaxRateByQty(new BigDecimal(0.5000));
@@ -125,11 +125,11 @@ public class AnalysisTaxRateService {
 		return dataList;
 	}
 
-	private List<PaperBasicAnalysisD4Vo> getDataMock() {
-		List<PaperBasicAnalysisD4Vo> dataList = new ArrayList<PaperBasicAnalysisD4Vo>();
-		PaperBasicAnalysisD4Vo data = null;
+	private List<AnalysisTaxRateVo> getDataMock() {
+		List<AnalysisTaxRateVo> dataList = new ArrayList<AnalysisTaxRateVo>();
+		AnalysisTaxRateVo data = null;
 
-		data = new PaperBasicAnalysisD4Vo();
+		data = new AnalysisTaxRateVo();
 		data.setGoodsDesc("สินค้าทดสอบ");
 		data.setTaxRateByPrice(new BigDecimal(0));
 		data.setTaxRateByQty(new BigDecimal(5.8500));
@@ -139,7 +139,7 @@ public class AnalysisTaxRateService {
 		data.setDiffTaxRateByQty(data.getAnaTaxRateByQty().subtract(data.getTaxRateByQty()));
 		dataList.add(data);
 		
-		data = new PaperBasicAnalysisD4Vo();
+		data = new AnalysisTaxRateVo();
 		data.setGoodsDesc("สินค้าทดสอบ");
 		data.setTaxRateByPrice(new BigDecimal(0));
 		data.setTaxRateByQty(new BigDecimal(5.8500));

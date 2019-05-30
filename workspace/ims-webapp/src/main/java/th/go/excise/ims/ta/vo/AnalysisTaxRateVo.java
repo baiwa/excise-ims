@@ -1,55 +1,75 @@
 package th.go.excise.ims.ta.vo;
 
-public class AnalysisTaxRateVo {
+import java.math.BigDecimal;
+
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
+
+public class AnalysisTaxRateVo extends DataTableRequest {
+
+	private static final long serialVersionUID = 444852248112579508L;
+
 	private String goodsDesc;
-	private String taxRateByPriceAmt;
-	private String taxRateByQtyAmt;
-	private String anaTaxRateByPriceAmt;
-	private String anaTaxRateByQtyAmt;
-	private String diffTaxRateByPriceAmt;
-	private String diffTaxRateByQtyAmt;
-	
+	private BigDecimal taxRateByPrice;
+	private BigDecimal taxRateByQty;
+	private BigDecimal anaTaxRateByPrice;
+	private BigDecimal anaTaxRateByQty;
+	private BigDecimal diffTaxRateByPrice;
+	private BigDecimal diffTaxRateByQty;
+
 	public String getGoodsDesc() {
 		return goodsDesc;
 	}
+
 	public void setGoodsDesc(String goodsDesc) {
 		this.goodsDesc = goodsDesc;
 	}
-	public String getTaxRateByPriceAmt() {
-		return taxRateByPriceAmt;
+
+	public BigDecimal getTaxRateByPrice() {
+		return taxRateByPrice;
 	}
-	public void setTaxRateByPriceAmt(String taxRateByPriceAmt) {
-		this.taxRateByPriceAmt = taxRateByPriceAmt;
+
+	public void setTaxRateByPrice(BigDecimal taxRateByPrice) {
+		this.taxRateByPrice = taxRateByPrice;
 	}
-	public String getTaxRateByQtyAmt() {
-		return taxRateByQtyAmt;
+
+	public BigDecimal getTaxRateByQty() {
+		return taxRateByQty;
 	}
-	public void setTaxRateByQtyAmt(String taxRateByQtyAmt) {
-		this.taxRateByQtyAmt = taxRateByQtyAmt;
+
+	public void setTaxRateByQty(BigDecimal taxRateByQty) {
+		this.taxRateByQty = taxRateByQty;
 	}
-	public String getAnaTaxRateByPriceAmt() {
-		return anaTaxRateByPriceAmt;
+
+	public BigDecimal getAnaTaxRateByPrice() {
+		return anaTaxRateByPrice;
 	}
-	public void setAnaTaxRateByPriceAmt(String anaTaxRateByPriceAmt) {
-		this.anaTaxRateByPriceAmt = anaTaxRateByPriceAmt;
+
+	public void setAnaTaxRateByPrice(BigDecimal anaTaxRateByPrice) {
+		this.anaTaxRateByPrice = anaTaxRateByPrice;
 	}
-	public String getAnaTaxRateByQtyAmt() {
-		return anaTaxRateByQtyAmt;
+
+	public BigDecimal getAnaTaxRateByQty() {
+		return anaTaxRateByQty;
 	}
-	public void setAnaTaxRateByQtyAmt(String anaTaxRateByQtyAmt) {
-		this.anaTaxRateByQtyAmt = anaTaxRateByQtyAmt;
+
+	public void setAnaTaxRateByQty(BigDecimal anaTaxRateByQty) {
+		this.anaTaxRateByQty = anaTaxRateByQty;
 	}
-	public String getDiffTaxRateByPriceAmt() {
-		return diffTaxRateByPriceAmt;
+
+	public BigDecimal getDiffTaxRateByPrice() {
+		return diffTaxRateByPrice;
 	}
-	public void setDiffTaxRateByPriceAmt(String diffTaxRateByPriceAmt) {
-		this.diffTaxRateByPriceAmt = diffTaxRateByPriceAmt;
+
+	public void setDiffTaxRateByPrice(BigDecimal diffTaxRateByPrice) {
+		this.diffTaxRateByPrice = diffTaxRateByPrice;
 	}
-	public String getDiffTaxRateByQtyAmt() {
-		return diffTaxRateByQtyAmt;
+
+	public BigDecimal getDiffTaxRateByQty() {
+		return diffTaxRateByQty;
 	}
-	public void setDiffTaxRateByQtyAmt(String diffTaxRateByQtyAmt) {
-		this.diffTaxRateByQtyAmt = diffTaxRateByQtyAmt;
+
+	public void setDiffTaxRateByQty(BigDecimal diffTaxRateByQty) {
+		this.diffTaxRateByQty = diffTaxRateByQty;
 	}
-	
+
 }
