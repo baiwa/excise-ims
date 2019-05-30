@@ -1,5 +1,6 @@
 package th.go.excise.ims.ia.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -152,17 +153,20 @@ public class Int091201Service {
 				}
 				Int091201ViewValue viewValue = new Int091201ViewValue();
 				viewValue.setFlag("N");
+				int count = 0;
 				for (IaEmpWorkingDtl fieldData : empWorkingDtlList) {
 					Calendar date = Calendar.getInstance();
 					date.setTime(fieldData.getWorkingDate());
 					if (inLineData.getDayOfMonth().equals(date.get(Calendar.DAY_OF_MONTH))) {
 						viewValue.setFlag("Y");
 						viewValue.setType(fieldData.getWorkingFlag());
+						count++;
 						break;
 					}
 				}
 				viewValueList.add(viewValue);
 				lineData.setValue(viewValueList);
+				lineData.setPriceOfMonth(BigDecimal.valueOf(count*240));
 			}
 			lineDetailList.add(lineData);
 		}
