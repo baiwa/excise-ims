@@ -28,8 +28,8 @@ import org.springframework.context.annotation.Configuration;
 import th.go.excise.ims.scheduler.execute.ExecuteIaWs6010Service;
 import th.go.excise.ims.scheduler.service.SyncWsLicfri6010Service;
 
-@Configuration
-@ConditionalOnProperty(name="license.list.job.cronExpressions" , havingValue="" ,matchIfMissing=false)
+//@Configuration
+//@ConditionalOnProperty(name="license.list.job.cronExpressions" , havingValue="" ,matchIfMissing=false)
 public class JobLicFri6010Config {
 
 		
