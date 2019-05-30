@@ -244,60 +244,58 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			sql.append(" AND TA_W_DTL.DUTY_GROUP_ID = ?");
 			params.add(formVo.getDutyCode());
 		}
-		if (!formVo.getCond().contains("all")) {
 
-			if (!formVo.getCond().isEmpty()) {
-				
-				if (formVo.getCond().contains("0")) {
-					sql.append("  AND ( 1=1 ");
-					if (formVo.getCond().contains("1")) {
-						sql.append("  or ta_w_dtl.COND_SUB_NO_AUDIT='Y' ");
-					}
-					if (formVo.getCond().contains("2")) {
-						sql.append("  or ta_w_dtl.COND_G1='Y' ");
-					}
-					if (formVo.getCond().contains("3")) {
-						sql.append("  or ta_w_dtl.COND_G2='Y' ");
-					}
-					if (formVo.getCond().contains("4")) {
-						sql.append("  or ta_w_dtl.COND_G3='Y' ");
-					}
-					if (formVo.getCond().contains("5")) {
-						sql.append("  or ta_w_dtl.COND_G4='Y' ");
-					}
-					if (formVo.getCond().contains("6")) {
-						sql.append("  or ta_w_dtl.COND_G5='Y' ");
-					}
-					if (formVo.getCond().contains("7")) {
-						sql.append("  or ta_w_dtl.COND_G6='Y' ");
-					}
-					sql.append("  ) ");
-				}else {
-					sql.append("  AND (  1=1 ");
-					if (formVo.getCond().contains("1")) {
-						sql.append("  and ta_w_dtl.COND_SUB_NO_AUDIT='Y' ");
-					}
-					if (formVo.getCond().contains("2")) {
-						sql.append("  and ta_w_dtl.COND_G1='Y' ");
-					}
-					if (formVo.getCond().contains("3")) {
-						sql.append("  and ta_w_dtl.COND_G2='Y' ");
-					}
-					if (formVo.getCond().contains("4")) {
-						sql.append("  and ta_w_dtl.COND_G3='Y' ");
-					}
-					if (formVo.getCond().contains("5")) {
-						sql.append("  and ta_w_dtl.COND_G4='Y' ");
-					}
-					if (formVo.getCond().contains("6")) {
-						sql.append("  and ta_w_dtl.COND_G5='Y' ");
-					}
-					if (formVo.getCond().contains("7")) {
-						sql.append("  and ta_w_dtl.COND_G6='Y' ");
-					}
-					sql.append("  ) ");
-				}						
-			}
+		if (!formVo.getCond().isEmpty()) {
+			
+			if (formVo.getCond().contains("0")) {
+				sql.append("  AND ( ta_w_dtl.COND_SORTING = 0 ");
+				if (formVo.getCond().contains("1")) {
+					sql.append("  or ta_w_dtl.COND_SUB_NO_AUDIT='Y' ");
+				}
+				if (formVo.getCond().contains("2")) {
+					sql.append("  or ta_w_dtl.COND_G1='Y' ");
+				}
+				if (formVo.getCond().contains("3")) {
+					sql.append("  or ta_w_dtl.COND_G2='Y' ");
+				}
+				if (formVo.getCond().contains("4")) {
+					sql.append("  or ta_w_dtl.COND_G3='Y' ");
+				}
+				if (formVo.getCond().contains("5")) {
+					sql.append("  or ta_w_dtl.COND_G4='Y' ");
+				}
+				if (formVo.getCond().contains("6")) {
+					sql.append("  or ta_w_dtl.COND_G5='Y' ");
+				}
+				if (formVo.getCond().contains("7")) {
+					sql.append("  or ta_w_dtl.COND_G6='Y' ");
+				}
+				sql.append("  ) ");
+			}else {
+				sql.append("  AND (  1=1 ");
+				if (formVo.getCond().contains("1")) {
+					sql.append("  and ta_w_dtl.COND_SUB_NO_AUDIT='Y' ");
+				}
+				if (formVo.getCond().contains("2")) {
+					sql.append("  and ta_w_dtl.COND_G1='Y' ");
+				}
+				if (formVo.getCond().contains("3")) {
+					sql.append("  and ta_w_dtl.COND_G2='Y' ");
+				}
+				if (formVo.getCond().contains("4")) {
+					sql.append("  and ta_w_dtl.COND_G3='Y' ");
+				}
+				if (formVo.getCond().contains("5")) {
+					sql.append("  and ta_w_dtl.COND_G4='Y' ");
+				}
+				if (formVo.getCond().contains("6")) {
+					sql.append("  and ta_w_dtl.COND_G5='Y' ");
+				}
+				if (formVo.getCond().contains("7")) {
+					sql.append("  and ta_w_dtl.COND_G6='Y' ");
+				}
+				sql.append("  ) ");
+			}						
 		}
 
 		if (formVo.getSumTaxAmStart() != null) {
