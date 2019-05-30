@@ -146,6 +146,7 @@ public class Int091201Service {
 			val.setYearMonth(int091201ViewFullDetailRequstVo.getYearMonth());
 			val.setUserLogin(iaEmpWorkingDtl.getUserLogin());
 			List<IaEmpWorkingDtl> empWorkingDtlList = int091201JdbcRepository.findIaEmpWorkingDtlBy(val);
+			int count = 0;
 			for (Int091201DayDetailVo inLineData : dayDetailList) {
 				List<Int091201ViewValue> viewValueList = lineData.getValue();
 				if (viewValueList == null) {
@@ -153,7 +154,6 @@ public class Int091201Service {
 				}
 				Int091201ViewValue viewValue = new Int091201ViewValue();
 				viewValue.setFlag("N");
-				int count = 0;
 				for (IaEmpWorkingDtl fieldData : empWorkingDtlList) {
 					Calendar date = Calendar.getInstance();
 					date.setTime(fieldData.getWorkingDate());
@@ -166,8 +166,8 @@ public class Int091201Service {
 				}
 				viewValueList.add(viewValue);
 				lineData.setValue(viewValueList);
-				lineData.setPriceOfMonth(BigDecimal.valueOf(count*240));
 			}
+			lineData.setPriceOfMonth(BigDecimal.valueOf(count*240));
 			lineDetailList.add(lineData);
 		}
 		response.setDayList(dayDetailList);

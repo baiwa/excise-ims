@@ -11,8 +11,8 @@ public class Int091201LineDetail {
 	
 	private String username;
 	private String userLogin;
-	private List<Int091201ViewValue> value;
 	private BigDecimal priceOfMonth;
+	private List<Int091201ViewValue> value;
 	
 	
 	public String getUsername() {
