@@ -3,6 +3,7 @@ package th.go.excise.ims.ta.persistence.repository;
 import java.util.List;
 
 import th.go.excise.ims.preferences.persistence.entity.ExcisePerson;
+import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
 import th.go.excise.ims.ta.vo.PersonAssignForm;
 import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
@@ -25,4 +26,6 @@ public interface TaPlanWorksheetDtlRepositoryCustom {
 	public void updateStatusPlanWorksheetDtlByList(PersonAssignForm formVo);
 	
 	public List<PlanWorksheetSendTableVo> findPlanWorksheetByDtl(PlanWorksheetVo formVo);
+	
+	public List<TaPlanWorksheetDtl> findByOfficeCodeAndPlanNumberForCentral(String planNumber, String officeCode);
 }

@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,8 +72,11 @@ public class IaEmpWorkingDtlRepositoryImpl implements IaEmpWorkingDtlRepositoryC
 		sql.append(" WHERE EXTRACT(YEAR FROM HOLIDAY_DATE) = ? ");
 		sql.append(" AND EXTRACT(MONTH FROM HOLIDAY_DATE) = ? ");
 
-		params.add(ConvertDateUtils.parseStringToLocalDate(workingDate, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN).getYear());
-		params.add(ConvertDateUtils.parseStringToLocalDate(workingDate, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN).getMonthValue());
+		Date wkDate = ConvertDateUtils.parseStringToDate(workingDate, ConvertDateUtils.DD_MM_YYYY);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(wkDate);
+		params.add(cal.get(Calendar.YEAR));
+		params.add(cal.get(Calendar.MONTH)+1);
 
 		return commonJdbcTemplate.query(sql.toString(), params.toArray(), getHolidayRowMapper);
 	}

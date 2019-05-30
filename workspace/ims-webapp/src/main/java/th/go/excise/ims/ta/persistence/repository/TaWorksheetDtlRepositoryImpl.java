@@ -247,23 +247,23 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			} else {
 				if (!formVo.getCond().isEmpty()) {
 					if (formVo.getCond().contains("1")) {
-						sql.append(" AND TA_W_DTL.COND_G1 = 'Y' ");
+						sql.append("  and ta_w_dtl.COND_SUB_NO_AUDIT='Y' ");
 					}
 					if (formVo.getCond().contains("2")) {
-						sql.append(" AND TA_W_DTL.COND_G2 = 'Y' ");
+						sql.append("  and ta_w_dtl.COND_G1='Y' ");
 					}
 					if (formVo.getCond().contains("3")) {
-						sql.append(" AND TA_W_DTL.COND_G3 = 'Y' ");
+						sql.append("  and ta_w_dtl.COND_G2='Y' ");
 					}
 					if (formVo.getCond().contains("4")) {
-						sql.append(" AND TA_W_DTL.COND_G4 = 'Y' ");
+						sql.append("  and ta_w_dtl.COND_G3='Y' ");
 					}
 					if (formVo.getCond().contains("5")) {
-						sql.append(" AND TA_W_DTL.COND_G5 = 'Y' ");
+						sql.append("  and ta_w_dtl.COND_G4='Y' ");
 					}
 					if (formVo.getCond().contains("6")) {
-						sql.append(" AND TA_W_DTL.COND_G6 = 'Y' ");
-					}
+						sql.append("  and ta_w_dtl.COND_G5='Y' ");
+					}				
 				}
 			}
 		}
@@ -376,7 +376,10 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			vo.setMultiDutyFlag(rs.getString("MULTI_DUTY_FLAG"));
 
 			DecimalFormat decimalFormat = new DecimalFormat("#.00");
-			vo.setSumTotalTaxAmt(decimalFormat.format(rs.getBigDecimal("SUM_TOTAL_TAX_AMT")));
+			if(rs.getBigDecimal("SUM_TOTAL_TAX_AMT") != null) {
+				
+				vo.setSumTotalTaxAmt(decimalFormat.format(rs.getBigDecimal("SUM_TOTAL_TAX_AMT")));
+			}
 
 			int monthNum = Integer.parseInt(rs.getString("MONTH_NUM"));
 			int taxMonthNo = Integer.parseInt(vo.getTaxMonthNo());

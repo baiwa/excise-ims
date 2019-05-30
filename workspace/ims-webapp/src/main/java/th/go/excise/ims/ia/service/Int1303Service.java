@@ -100,7 +100,7 @@ public class Int1303Service {
 
 	public void updateIaPmPy2(Int1303UpdateVo request) {
 		/* update header */
-		IaAuditPy2H header = iaAuditPy2HRepository.findById(request.getHeaders().getIaAuditPy2HId()).get();
+		IaAuditPy2H header = iaAuditPy2HRepository.findByAuditPy2NoAndIsDeleted(request.getHeaders().getAuditPy2No(), "N");
 		header.setPy2AuditSuggestion(request.getHeaders().getPy2AuditSuggestion());
 		header.setPy2AuditResult(request.getHeaders().getPy2AuditResult());
 		header.setPy2ActivityResult(request.getHeaders().getPy2ActivityResult());

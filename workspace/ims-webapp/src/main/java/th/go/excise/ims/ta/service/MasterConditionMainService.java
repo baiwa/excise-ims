@@ -168,6 +168,7 @@ public class MasterConditionMainService {
         TaMasCondMainDtl dtl = null;
         List<TaMasCondMainDtl> dtlList = new ArrayList<>();
         TaMasCondMainHdrForm header = formVo.getHeader();
+        int ZERO = 0;
         if (header.getBudgetYear() != null) {
             List<TaMasCondMainDtl> list = taMasCondMainDtlRepository.findByBudgetYearAndCondNumberAndCondTypeAndOfficeCode(formVo.getHeader().getBudgetYear(), formVo.getHeader().getCondNumber(), TA_MAS_COND_MAIN_TYPE.TAX, officeCode);
 //			List<TaMasCondDtlTax> listY = taMasCondDtlTaxRepository.findByBudgetYearAndIsDeleted(formVo.getHeader().getBudgetYear(), FLAG.Y_FLAG);
@@ -182,7 +183,7 @@ public class MasterConditionMainService {
                 }
             });
 
-            if (list.size() - formVo.getDetail().size() > 0) {
+            if (ZERO < list.size() - formVo.getDetail().size()) {
                 boolean checkDelete = true;
                 for (TaMasCondMainDtl obj : list) {
                     checkDelete = true;
@@ -241,8 +242,11 @@ public class MasterConditionMainService {
                 dtlList.add(dtl);
 
             }
-            dtl = taMasCondMainDtlRepository.findByBudgetYearAndCondNumberAndCondTypeAndOfficeCode(formVo.getHeader().getBudgetYear(), dtl.getCondNumber(), TA_MAS_COND_MAIN_TYPE.OTHER, officeCode).get(0);
-            dtl.setCondGroup(String.valueOf(formVo.getDetail().size() + 1));
+            List<TaMasCondMainDtl> findDtl = taMasCondMainDtlRepository.findByBudgetYearAndCondNumberAndCondTypeAndOfficeCode(formVo.getHeader().getBudgetYear(), dtl.getCondNumber(), TA_MAS_COND_MAIN_TYPE.OTHER, officeCode);
+            if (ZERO < findDtl.size()) {
+            	dtl = findDtl.get(0);
+            	dtl.setCondGroup(String.valueOf(formVo.getDetail().size() + 1));				
+			}
             dtlList.add(dtl);
             taMasCondMainDtlRepository.saveAll(dtlList);
         }
@@ -254,18 +258,20 @@ public class MasterConditionMainService {
     	String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
     	TaMasCondMainHdr condhdr = taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYearAndCondNumber(officeCode, hdr.getBudgetYear(), hdr.getCondNumber());
     	TaMasCondMainHdrForm newCondHdr = new TaMasCondMainHdrForm();
-		newCondHdr.setMasCondMainHdrId(condhdr.getMasCondMainHdrId());
-		newCondHdr.setOfficeCode(condhdr.getOfficeCode());
-		newCondHdr.setBudgetYear(condhdr.getBudgetYear());
-		newCondHdr.setCondNumber(condhdr.getCondNumber());
-		newCondHdr.setCondGroupDesc(condhdr.getCondGroupDesc());
-		newCondHdr.setMonthNum(condhdr.getMonthNum());
-		newCondHdr.setCondGroupNum(condhdr.getCondGroupNum());
-		newCondHdr.setNewFacFlag(condhdr.getNewFacFlag());
-		newCondHdr.setCompType(condhdr.getCompType());
-		newCondHdr.setRegDateStart(ConvertDateUtils.formatLocalDateToString(condhdr.getRegDateStart(), ConvertDateUtils.DD_MM_YYYY));
-		newCondHdr.setRegDateEnd(ConvertDateUtils.formatLocalDateToString(condhdr.getRegDateEnd(), ConvertDateUtils.DD_MM_YYYY));
-		newCondHdr.setCompMonthNum(condhdr.getCompMonthNum());
+		if(condhdr != null) {
+			newCondHdr.setMasCondMainHdrId(condhdr.getMasCondMainHdrId());
+			newCondHdr.setOfficeCode(condhdr.getOfficeCode());
+			newCondHdr.setBudgetYear(condhdr.getBudgetYear());
+			newCondHdr.setCondNumber(condhdr.getCondNumber());
+			newCondHdr.setCondGroupDesc(condhdr.getCondGroupDesc());
+			newCondHdr.setMonthNum(condhdr.getMonthNum());
+			newCondHdr.setCondGroupNum(condhdr.getCondGroupNum());
+			newCondHdr.setNewFacFlag(condhdr.getNewFacFlag());
+			newCondHdr.setCompType(condhdr.getCompType());
+			newCondHdr.setRegDateStart(ConvertDateUtils.formatLocalDateToString(condhdr.getRegDateStart(), ConvertDateUtils.DD_MM_YYYY));
+			newCondHdr.setRegDateEnd(ConvertDateUtils.formatLocalDateToString(condhdr.getRegDateEnd(), ConvertDateUtils.DD_MM_YYYY));
+			newCondHdr.setCompMonthNum(condhdr.getCompMonthNum());
+		}
     	return newCondHdr;
     }
 

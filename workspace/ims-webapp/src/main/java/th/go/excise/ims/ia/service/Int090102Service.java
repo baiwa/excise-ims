@@ -58,7 +58,7 @@ public class Int090102Service {
 		if (null != formVo.getIaEmpWorkingDtlSeq()) {
 			emp = empWorkingDtlRepository.findByIaEmpWorkingDtlSeq(formVo.getIaEmpWorkingDtlSeq());
 		}
-		emp.setUserLogin(UserLoginUtils.getCurrentUserBean().getUserThaiId());
+		emp.setUserLogin(UserLoginUtils.getCurrentUsername());
 		String userName = UserLoginUtils.getCurrentUserBean().getUserThaiName() + " " + UserLoginUtils.getCurrentUserBean().getUserThaiSurname();
 		emp.setUserName(userName);
 		emp.setUserPosition(UserLoginUtils.getCurrentUserBean().getTitle());
@@ -90,7 +90,7 @@ public class Int090102Service {
 		if (null != formVo.getIaEmpWorkingHSeq()) {
 			emp = empWorkingHRepository.findByIaEmpWorkingHSeq(formVo.getIaEmpWorkingHSeq());
 		}
-		emp.setUserLogin(UserLoginUtils.getCurrentUserBean().getUserThaiId());
+		emp.setUserLogin(UserLoginUtils.getCurrentUsername());
 		String userName = UserLoginUtils.getCurrentUserBean().getUserThaiName() + " " + UserLoginUtils.getCurrentUserBean().getUserThaiSurname();
 		emp.setUserName(userName);
 		emp.setUserPosition(UserLoginUtils.getCurrentUserBean().getTitle());
