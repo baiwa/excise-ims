@@ -2,8 +2,9 @@ package th.go.excise.ims.ia.persistence.repository.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +33,13 @@ public class Int091201JdbcRepository {
 		sql.append(" ORDER BY WORKING_DATE  ");
 		List<Object> paramList = new ArrayList<>();
 		paramList.add(vo.getOfficeCode());
-		Calendar startDate = Calendar.getInstance();
-		Calendar endDate = Calendar.getInstance();
 		int year = Integer.parseInt(vo.getYearMonth().substring(0, 4));
 		int month = Integer.parseInt(vo.getYearMonth().substring(4, 6));
-		startDate.set(year, month-1, 1, 0, 0);
-		endDate.set(year, month, 1 ,0, 0);
-		endDate.add(Calendar.DATE, -1);
-		paramList.add(ConvertDateUtils.formatDateToString(startDate.getTime(), ConvertDateUtils.DD_MM_YYYY));
-		paramList.add(ConvertDateUtils.formatDateToString(endDate.getTime(), ConvertDateUtils.DD_MM_YYYY));
+		LocalDate initial = LocalDate.of(year, month-1, 1);
+		LocalDate start = initial.withDayOfMonth(1);
+		LocalDate end = initial.with(TemporalAdjusters.lastDayOfMonth());
+		paramList.add(ConvertDateUtils.formatLocalDateToString(start, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+		paramList.add(ConvertDateUtils.formatLocalDateToString(end, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
 		paramList.add(vo.getUserLogin());
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), findUserNameAndWorkingDate);
 	}
@@ -67,15 +66,15 @@ public class Int091201JdbcRepository {
 		sql.append(" GROUP BY USER_NAME , USER_LOGIN ");
 		List<Object> paramList = new ArrayList<>();
 		paramList.add(vo.getOfficeCode());
-		Calendar startDate = Calendar.getInstance();
-		Calendar endDate = Calendar.getInstance();
 		int year = Integer.parseInt(vo.getYearMonth().substring(0, 4));
 		int month = Integer.parseInt(vo.getYearMonth().substring(4, 6));
-		startDate.set(year, month-1, 1, 0, 0);
-		endDate.set(year, month, 1 ,0, 0);
-		endDate.add(Calendar.DATE, -1);
-		paramList.add(ConvertDateUtils.formatDateToString(startDate.getTime(), ConvertDateUtils.DD_MM_YYYY));
-		paramList.add(ConvertDateUtils.formatDateToString(endDate.getTime(), ConvertDateUtils.DD_MM_YYYY));
+		LocalDate initial = LocalDate.of(year, month-1, 1);
+		LocalDate start = initial.withDayOfMonth(1);
+		LocalDate end = initial.with(TemporalAdjusters.lastDayOfMonth());
+		paramList.add(ConvertDateUtils.formatLocalDateToString(start, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+		paramList.add(ConvertDateUtils.formatLocalDateToString(end, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+		
+		
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), mapUsernameAndUserLogin);
 	}
 	
