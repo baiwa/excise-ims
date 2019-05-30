@@ -26,8 +26,8 @@ public class Int091201JdbcRepository {
 		sql.append(" SELECT * FROM IA_EMP_WORKING_DTL ");
 		sql.append(" WHERE IS_DELETED = 'N' ");
 		sql.append(" AND USER_OFFCODE = ? ");
-		sql.append(" AND WORKING_DATE > ? ");
-		sql.append(" AND WORKING_DATE < ? ");
+		sql.append(" AND WORKING_DATE >= to_date(? , 'dd/mm/yyyy') ");
+		sql.append(" AND WORKING_DATE <= to_date(? , 'dd/mm/yyyy') ");
 		sql.append(" AND USER_LOGIN =  ? ");
 		sql.append(" ORDER BY WORKING_DATE  ");
 		List<Object> paramList = new ArrayList<>();
@@ -36,12 +36,11 @@ public class Int091201JdbcRepository {
 		Calendar endDate = Calendar.getInstance();
 		int year = Integer.parseInt(vo.getYearMonth().substring(0, 4));
 		int month = Integer.parseInt(vo.getYearMonth().substring(4, 6));
-		startDate.set(year, month, 1);
-		endDate.set(year, month, 1);
-		endDate.add(Calendar.MONTH, 1);
+		startDate.set(year, month-1, 1, 0, 0);
+		endDate.set(year, month, 1 ,0, 0);
 		endDate.add(Calendar.DATE, -1);
-		paramList.add(startDate.getTime());
-		paramList.add(endDate.getTime());
+		paramList.add(ConvertDateUtils.formatDateToString(startDate.getTime(), ConvertDateUtils.DD_MM_YYYY));
+		paramList.add(ConvertDateUtils.formatDateToString(endDate.getTime(), ConvertDateUtils.DD_MM_YYYY));
 		paramList.add(vo.getUserLogin());
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), findUserNameAndWorkingDate);
 	}
@@ -53,6 +52,7 @@ public class Int091201JdbcRepository {
 			IaEmpWorkingDtl vo = new IaEmpWorkingDtl();
 			vo.setUserName(rs.getString("USER_NAME"));
 			vo.setUserLogin(rs.getString("USER_LOGIN"));
+			vo.setWorkingFlag(rs.getString("WORKING_FLAG"));
 			vo.setWorkingDate(rs.getDate("WORKING_DATE"));
 			return vo;
 		}

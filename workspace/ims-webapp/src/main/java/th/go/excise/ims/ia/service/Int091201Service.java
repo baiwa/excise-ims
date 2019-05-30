@@ -150,9 +150,9 @@ public class Int091201Service {
 				for (IaEmpWorkingDtl fieldData : empWorkingDtlList) {
 					Calendar date = Calendar.getInstance();
 					date.setTime(fieldData.getWorkingDate());
-					viewValue.setType(fieldData.getWorkingFlag());
 					if (inLineData.getDayOfMonth().equals(date.get(Calendar.DAY_OF_MONTH))) {
 						viewValue.setFlag("Y");
+						viewValue.setType(fieldData.getWorkingFlag());
 						break;
 					}
 				}
