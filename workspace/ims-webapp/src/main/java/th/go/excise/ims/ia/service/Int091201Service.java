@@ -165,4 +165,24 @@ public class Int091201Service {
 		response.setLineData(lineDetailList);
 		return response;
 	}
+	
+	@Transactional
+	public void editAuditWorking(Int091201FormSaveVo res) {
+		IaAuditWorkingH dataSave = new IaAuditWorkingH();
+		dataSave = iaAuditWorkingHRepository.findByAuditWorkingNo(res.getAuditWorkingNo());
+		dataSave.setWorkingConditionText(res.getWorkingConditionText());
+		dataSave.setWorkingCriteriaText(res.getWorkingCriteriaText());
+		iaAuditWorkingHRepository.save(dataSave);
+		
+		IaAuditWorkingD1 iaAuditWorkingD1Save = null;
+
+		for (IaAuditWorkingD1 iaAuditWorkingD1 : res.getIaAuditWorkingD1List()) {
+			iaAuditWorkingD1Save = iaAuditWorkingD1Repository.findByIaAuditWorkingD1Id(iaAuditWorkingD1.getIaAuditWorkingD1Id().toString());
+			iaAuditWorkingD1Save.setResultAllowanceFlag(iaAuditWorkingD1.getResultAllowanceFlag());
+			iaAuditWorkingD1Save.setResultAccomFeeFlag(iaAuditWorkingD1.getResultAccomFeeFlag());
+			iaAuditWorkingD1Save.setResultTransportFlag(iaAuditWorkingD1.getResultTransportFlag());
+			iaAuditWorkingD1Save.setAuWorkingRemarks(iaAuditWorkingD1.getAuWorkingRemarks());
+			iaAuditWorkingD1Repository.save(iaAuditWorkingD1Save);
+		}
+	}
 }
