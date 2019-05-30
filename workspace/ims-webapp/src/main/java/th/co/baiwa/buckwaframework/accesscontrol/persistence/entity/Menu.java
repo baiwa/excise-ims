@@ -37,6 +37,9 @@ public class Menu extends BaseEntity {
 	@Column(name = "SORTING_ORDER")
 	private String sortingOrder;
 
+	@Column(name = "SUBDEPT_LEVEL")
+	private String subdeptLevel;
+
 	public Long getMenuId() {
 		return menuId;
 	}
@@ -83,6 +86,14 @@ public class Menu extends BaseEntity {
 
 	public void setSortingOrder(String sortingOrder) {
 		this.sortingOrder = sortingOrder;
+	}
+
+	public String getSubdeptLevel() {
+		return subdeptLevel;
+	}
+
+	public void setSubdeptLevel(String subdeptLevel) {
+		this.subdeptLevel = subdeptLevel;
 	}
 
 }
