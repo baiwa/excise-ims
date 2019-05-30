@@ -103,7 +103,7 @@ public class Int0604Service {
 				licexpH.setOfficeCode(vo.getAuditLicexpH().getOfficeCode());
 				licexpH.setLicexpDateFrom(ConvertDateUtils.parseStringToDate(vo.getAuditLicexpH().getLicexpDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 				licexpH.setLicexpDateTo(ConvertDateUtils.parseStringToDate(vo.getAuditLicexpH().getLicexpDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));				
-				licexpH.setAuditLicexpNo(iaCommonService.autoGetRunAuditNoBySeqName("LIC", vo.getAuditLicexpH().getOfficeCode(), "AUDIT_LICEXP_SEQ", 8));	
+				licexpH.setAuditLicexpNo(iaCommonService.autoGetRunAuditNoBySeqName("LIE", vo.getAuditLicexpH().getOfficeCode(), "AUDIT_LICEXP_SEQ", 8));	
 				licexpH.setAuditFlag(vo.getAuditLicexpH().getAuditFlag());
 				licexpH.setConditionText(vo.getAuditLicexpH().getConditionText());
 				licexpH.setCriteriaText(vo.getAuditLicexpH().getCriteriaText());
