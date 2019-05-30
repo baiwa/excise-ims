@@ -1,7 +1,9 @@
 package th.co.baiwa.buckwaframework.accesscontrol.persistence.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,11 +65,13 @@ public class MenuRepositoryImpl implements MenuRepositoryCustom {
 //	}
 
 	@Override
-	public List<MenuVo> findByRoles(List<String> roleList) {
-		logger.info("findByRoles");
+	public List<MenuVo> findByRolesAndSubdeptLevel(List<String> roleList, String subdeptLevel) {
+		logger.info("findByRolesAndSubdeptLevel");
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append(" WITH T1 (MENU_ID, PARENT_ID, LVL, ROOT_ID, MENU_CODE, MENU_NAME, URL, SORTING_ORDER) ");
+		List<Object> paramList = new ArrayList<>();
+		
+		sql.append(" WITH T1 (MENU_ID, PARENT_ID, LVL, ROOT_ID, MENU_CODE, MENU_NAME, URL, SORTING_ORDER, SUBDEPT_LEVEL) ");
 		sql.append(" AS ( ");
 		sql.append("   SELECT AM.MENU_ID ");
 		sql.append("     ,AM.PARENT_ID ");
@@ -77,6 +81,7 @@ public class MenuRepositoryImpl implements MenuRepositoryCustom {
 		sql.append("     ,AM.MENU_NAME ");
 		sql.append("     ,AM.URL ");
 		sql.append("     ,AM.SORTING_ORDER ");
+		sql.append("     ,AM.SUBDEPT_LEVEL ");
 		sql.append("   FROM ADM_MENU AM ");
 		sql.append("   WHERE AM.PARENT_ID IS NULL ");
 		sql.append("    ");
@@ -90,6 +95,7 @@ public class MenuRepositoryImpl implements MenuRepositoryCustom {
 		sql.append("     ,T2.MENU_NAME ");
 		sql.append("     ,T2.URL ");
 		sql.append("     ,T2.SORTING_ORDER ");
+		sql.append("     ,T2.SUBDEPT_LEVEL ");
 		sql.append("   FROM ADM_MENU T2, T1 ");
 		sql.append("   WHERE T2.PARENT_ID = T1.MENU_ID ");
 		sql.append(" ) ");
@@ -102,14 +108,24 @@ public class MenuRepositoryImpl implements MenuRepositoryCustom {
 		sql.append("   ,T1.MENU_NAME ");
 		sql.append("   ,T1.URL ");
 		sql.append("   ,T1.SORTING_ORDER ");
+		sql.append("   ,T1.SUBDEPT_LEVEL ");
 		sql.append(" FROM T1 ");
 		sql.append(" INNER JOIN ADM_ROLE_MENU ARM ON ARM.MENU_CODE = T1.MENU_CODE ");
-		sql.append(" WHERE ARM.ROLE_CODE IN (").append(org.springframework.util.StringUtils.collectionToDelimitedString(roleList, ",", "'", "'")).append(") ");
+		sql.append(" WHERE ARM.ROLE_CODE IN (").append(StringUtils.repeat("?", ",", roleList.size())).append(") ");
+		paramList.addAll(roleList);
 		sql.append("   AND ARM.IS_DELETED = 'N' ");
-		sql.append(" GROUP BY T1.MENU_ID, T1.PARENT_ID, T1.LVL, T1.ROOT_ID, T1.MENU_CODE, T1.MENU_NAME, T1.URL, T1.SORTING_ORDER ");
+		
+		if (StringUtils.isNotEmpty(subdeptLevel)) {
+			sql.append("   AND T1.SUBDEPT_LEVEL LIKE ? ");
+			paramList.add("%" + subdeptLevel + "%");
+		}
+		
+		sql.append(" GROUP BY T1.MENU_ID, T1.PARENT_ID, T1.LVL, T1.ROOT_ID, T1.MENU_CODE, T1.MENU_NAME, T1.URL, T1.SORTING_ORDER, T1.SUBDEPT_LEVEL ");
 		sql.append(" ORDER BY LVL, T1.SORTING_ORDER ");
 		
-		List<MenuVo> menuList = commonJdbcTemplate.query(sql.toString(), new BeanPropertyRowMapper(MenuVo.class));
+		
+		List<MenuVo> menuList = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), new BeanPropertyRowMapper(MenuVo.class));
+		
 		return menuList;
 	}
 

@@ -24,10 +24,11 @@ public class MenuService {
 
 	public List<MenuVo> findByRoles() {
 		List<String> roleList = UserLoginUtils.getGrantedAuthorityList();
-		logger.info("findByRole roleList={}", org.springframework.util.StringUtils.collectionToCommaDelimitedString(roleList));
+		String subdeptLevel = UserLoginUtils.getCurrentUserBean().getSubdeptLevel();
+		logger.info("findByRole roleList={}, subdeptLevel", org.springframework.util.StringUtils.collectionToCommaDelimitedString(roleList), subdeptLevel);
 		
 		// ==> query list menu
-		List<MenuVo> menuList = menuRepository.findByRoles(roleList);
+		List<MenuVo> menuList = menuRepository.findByRolesAndSubdeptLevel(roleList, subdeptLevel);
 		
 		List<MenuVo> roots = menuList.stream().filter(p -> p.getParentId() == null).collect(Collectors.toList());
 		// ==> add root

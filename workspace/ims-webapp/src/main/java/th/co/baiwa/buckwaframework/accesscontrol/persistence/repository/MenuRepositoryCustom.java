@@ -8,6 +8,6 @@ public interface MenuRepositoryCustom {
 
 	//public List<MenuVo> listMenu();
 	
-	public List<MenuVo> findByRoles(List<String> roleList);
+	public List<MenuVo> findByRolesAndSubdeptLevel(List<String> roleList, String subdeptLevel);
 
 }
