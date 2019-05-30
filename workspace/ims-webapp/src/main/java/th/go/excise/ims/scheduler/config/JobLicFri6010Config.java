@@ -1,4 +1,4 @@
-package th.go.excise.ims.ia.jobconfig;
+package th.go.excise.ims.scheduler.config;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -25,19 +25,19 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import th.go.excise.ims.ia.job.JobLicenseList;
-import th.go.excise.ims.ia.service.JobLicenseListService;
+import th.go.excise.ims.scheduler.execute.ExecuteIaWs6010Service;
+import th.go.excise.ims.scheduler.service.SyncWsLicfri6010Service;
 
-//@Configuration
-//@ConditionalOnProperty(name="license.list.job.cronExpressions" , havingValue="" ,matchIfMissing=false)
-public class LicenseListJobSchedulerConfig {
+@Configuration
+@ConditionalOnProperty(name="license.list.job.cronExpressions" , havingValue="" ,matchIfMissing=false)
+public class JobLicFri6010Config {
 
 		
-		private static final Logger log = LoggerFactory.getLogger(LicenseListJobSchedulerConfig.class);
+		private static final Logger log = LoggerFactory.getLogger(JobLicFri6010Config.class);
 
 		
 		@Autowired
-		private JobLicenseListService licenseListService;
+		private SyncWsLicfri6010Service syncWsLicfri6010Service;
 
 		@Value("${license.list.job.cronExpressions}")
 		private String cronExpressions;
@@ -54,24 +54,24 @@ public class LicenseListJobSchedulerConfig {
 		}
 		
 		@Bean
-		public JobDetail licenseListJobDetail() {
+		public JobDetail IaWs6010JobDetail() {
 			JobDataMap newJobDataMap = new JobDataMap();
-			newJobDataMap.put("jobLicenseListService", licenseListService);
-			JobDetail job = JobBuilder.newJob(JobLicenseList.class)
-				      .withIdentity("licenseListJobDetail", "group1") // name "myJob", group "group1"
+			newJobDataMap.put("syncWsLicfri6010Service", syncWsLicfri6010Service);
+			JobDetail job = JobBuilder.newJob(ExecuteIaWs6010Service.class)
+				      .withIdentity("syncWsLicfri6010Service", "group1") 
 				      .usingJobData(newJobDataMap )
 				      .build();
 			return job;
 		}
 		
-		@Bean("licenseListCronTrigger")
-		public Set<CronTrigger> licenseListCronTrigger() {
+		@Bean("IaWs6010CronTrigger")
+		public Set<CronTrigger> IaWs6010CronTrigger() {
 			Set<CronTrigger> cornsets = new HashSet<>();
 			String[] corns = StringUtils.split(cronExpressions,",");
 			int i=0;
 			for (String corn : corns) {
 				CronTrigger trigger = TriggerBuilder.newTrigger()
-					    .withIdentity("licenseListCronTrigger" + i++, "group1")
+					    .withIdentity("IaWs6010CronTrigger" + i++, "group1")
 					    .withSchedule(CronScheduleBuilder.cronSchedule(corn))
 					    .build();
 				cornsets.add(trigger);
@@ -81,17 +81,17 @@ public class LicenseListJobSchedulerConfig {
 		}
 		
 		@Bean
-		public SchedulerFactory  licenseListSchedulerFactory() throws SchedulerException {
+		public SchedulerFactory  IaWs6010SchedulerFactory() throws SchedulerException {
 			SchedulerFactory sf = new StdSchedulerFactory();
 			Scheduler sched = sf.getScheduler();
-			sched.scheduleJob(licenseListJobDetail(), licenseListCronTrigger(),true);
+			sched.scheduleJob(IaWs6010JobDetail(), IaWs6010CronTrigger(),true);
 			sched.start();
 			return sf;
 		}
 		
 		@PreDestroy
 		public void destroy() throws SchedulerException {
-			log.info("licenseListBatchJobSchedulerConfig.. shutdown");
-			licenseListSchedulerFactory().getScheduler().shutdown();
+			log.info("IaWs6010BatchJobSchedulerConfig.. shutdown");
+			IaWs6010SchedulerFactory().getScheduler().shutdown();
 		}
 	}

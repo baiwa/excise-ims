@@ -119,14 +119,19 @@ public class SyncWsLicfri6010ServiceTest {
 			for (String offCode : offCodeList) {
 				try {
 					requestData.setOffcode(offCode);
-					requestData.setYearMonthFrom("201801");
+					requestData.setYearMonthFrom("201501");
 					requestData.setYearMonthTo("201905");
 					syncWsLicfri6010Service.syncData(requestData);
 				} catch (Exception e) {
 					System.out.println(offCode);
 				}
-				
 			}
+	}
+	
+	
+//	@Test 
+	public void syncWs6010ToIaWs6010() {
+		syncWsLicfri6010Service.syncWs6010ToIaWs6010();
 	}
 	
 }

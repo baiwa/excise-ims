@@ -3,7 +3,6 @@ package th.go.excise.ims.ia.service;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URLEncoder;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

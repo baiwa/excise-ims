@@ -64,7 +64,7 @@ private static final Logger logger = LoggerFactory.getLogger(SyncWsPmAssessServi
 			pmAssessH.setProcessBy(data.getProcessBy());
 			pmAssessH.setProcessPosition(data.getProcessPosition());
 			pmAssessH.setProcessDate(ConvertDateUtils.parseStringToLocalDate(data.getProcessDate(), ConvertDateUtils.DD_MM_YYYY,ConvertDateUtils.LOCAL_TH));
-//			wsPmAssessHRepository.save(pmAssessH);
+			wsPmAssessHRepository.save(pmAssessH);
 			pmAssessHList.add(pmAssessH);
 			for (TopicDetail topicDetail : data.getTopicDetail()) {
 				pmAssessD = new WsPmAssessD();
@@ -74,14 +74,14 @@ private static final Logger logger = LoggerFactory.getLogger(SyncWsPmAssessServi
 				pmAssessD.setTopicCode(topicDetail.getTopicCode());
 				pmAssessD.setTopicName(topicDetail.getTopicName());
 				pmAssessD.setTopicAnswer(topicDetail.getTopicAnswer());
-//				wsPmAssessDRepository.save(pmAssessD);
+				wsPmAssessDRepository.save(pmAssessD);
 				pmAssessDList.add(pmAssessD);
 			}
 		}
-		wsPmAssessHRepository.batchMerge(pmAssessHList);
+//		wsPmAssessHRepository.batchMerge(pmAssessHList);
 		logger.info("Batch Merge WsPmAssessH Success");
 		
-		wsPmAssessDRepository.batchMerge(pmAssessDList);
+//		wsPmAssessDRepository.batchMerge(pmAssessDList);
 		logger.info("Batch Merge WsPmAssessD Success");
 		
 		long end = System.currentTimeMillis();

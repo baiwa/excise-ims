@@ -1,6 +1,7 @@
 package th.go.excise.ims.scheduler.service;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,11 +25,30 @@ public class SyncWsPmAssessServiceTest {
 	private SyncWsPmAssessService syncAssessService;
 	
 	@Test
-	public void test_syncData() throws IOException {
-		RequestData requestData = new RequestData();
-		requestData.setOfficeCode("020000");
-		requestData.setYear("2561");
-		syncAssessService.syncData(requestData);
+	public void test_syncData() {
+		try {
+			List<String> offCodeList = new ArrayList<>();
+			offCodeList.add("010000");
+			offCodeList.add("010100");
+			offCodeList.add("010200");
+			offCodeList.add("010300");
+			offCodeList.add("010400");
+			offCodeList.add("010500");
+			offCodeList.add("010600");
+			offCodeList.add("010700");
+			offCodeList.add("010800");
+			offCodeList.add("010900");
+			offCodeList.add("011000");
+			for (String string : offCodeList) {
+				RequestData requestData = new RequestData();
+				requestData.setYear("2561");
+				requestData.setOfficeCode(string);
+				syncAssessService.syncData(requestData);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 }

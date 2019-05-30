@@ -1,7 +1,5 @@
 package th.go.excise.ims.ia.job;
 
-import java.util.Date;
-
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
@@ -9,9 +7,7 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.service.JobLicenseListService;
-import th.go.excise.ims.ia.service.JobSystemUnworkingService;
 
 public class JobLicenseList implements Job {
 

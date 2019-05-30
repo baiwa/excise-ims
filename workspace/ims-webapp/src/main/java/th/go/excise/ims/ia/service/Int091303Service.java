@@ -75,21 +75,21 @@ public class Int091303Service {
 				iVo.setBillType7Amt(BigDecimal.ZERO);
 				iVo.setSumBillAmt(BigDecimal.ZERO);
 			}
-			
+			BigDecimal netAmtValue = int091301ResultSearchVo.getReqNetAmt() != null ? int091301ResultSearchVo.getReqNetAmt() : BigDecimal.ZERO;
 			if ("1".equals(int091301ResultSearchVo.getUbillType())) {
-				iVo.setBillType1Amt(iVo.getBillType1Amt().add(int091301ResultSearchVo.getReqNetAmt()));
+				iVo.setBillType1Amt(iVo.getBillType1Amt().add(netAmtValue));
 			} else if ("2".equals(int091301ResultSearchVo.getUbillType())) {
-				iVo.setBillType2Amt(iVo.getBillType2Amt().add(int091301ResultSearchVo.getReqNetAmt()));
+				iVo.setBillType2Amt(iVo.getBillType2Amt().add(netAmtValue));
 			} else if ("3".equals(int091301ResultSearchVo.getUbillType())) {
-				iVo.setBillType2Amt(iVo.getBillType3Amt().add(int091301ResultSearchVo.getReqNetAmt()));
+				iVo.setBillType2Amt(iVo.getBillType3Amt().add(netAmtValue));
 			} else if ("4".equals(int091301ResultSearchVo.getUbillType())) {
-				iVo.setBillType2Amt(iVo.getBillType4Amt().add(int091301ResultSearchVo.getReqNetAmt()));
+				iVo.setBillType2Amt(iVo.getBillType4Amt().add(netAmtValue));
 			} else if ("5".equals(int091301ResultSearchVo.getUbillType())) {
-				iVo.setBillType2Amt(iVo.getBillType5Amt().add(int091301ResultSearchVo.getReqNetAmt()));
+				iVo.setBillType2Amt(iVo.getBillType5Amt().add(netAmtValue));
 			} else if ("6".equals(int091301ResultSearchVo.getUbillType())) {
-				iVo.setBillType2Amt(iVo.getBillType6Amt().add(int091301ResultSearchVo.getReqNetAmt()));
+				iVo.setBillType2Amt(iVo.getBillType6Amt().add(netAmtValue));
 			} else if ("7".equals(int091301ResultSearchVo.getUbillType())) {
-				iVo.setBillType2Amt(iVo.getBillType7Amt().add(int091301ResultSearchVo.getReqNetAmt()));
+				iVo.setBillType2Amt(iVo.getBillType7Amt().add(netAmtValue));
 			}
 			iVo.setSumBillAmt(int091301ResultSearchVo.getReqNetAmt());
 			map.put(int091301ResultSearchVo.getMonthWdPay(), iVo);

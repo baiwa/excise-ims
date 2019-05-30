@@ -2,15 +2,15 @@ package th.go.excise.ims.ia.vo;
 
 public class Int091201DayDetailVo {
 	
-	private String dayOfMonth;
+	private Integer dayOfMonth;
 	private String dayOfweek;
 	private String isHoliday;
 	
 	
-	public String getDayOfMonth() {
+	public Integer getDayOfMonth() {
 		return dayOfMonth;
 	}
-	public void setDayOfMonth(String dayOfMonth) {
+	public void setDayOfMonth(Integer dayOfMonth) {
 		this.dayOfMonth = dayOfMonth;
 	}
 	public String getDayOfweek() {

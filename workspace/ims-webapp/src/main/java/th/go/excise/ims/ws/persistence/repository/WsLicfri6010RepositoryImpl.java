@@ -41,7 +41,7 @@ public class WsLicfri6010RepositoryImpl implements WsLicfri6010RepositoryCustom 
 			"START_DATE",
 			"EXP_DATE",
 			"SEND_DATE",
-			"PRINT_CODE",
+			"PRINT_COUNT",
 			"NID",
 			"NEW_REG_ID",
 			"CUS_ID",
