@@ -6,14 +6,11 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
-import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.vo.AnalysisFormVo;
 import th.go.excise.ims.ta.vo.AnalysisTaxAmtVo;
-import th.go.excise.ims.ta.vo.FactoryVo;
 
 @Service
 public class AnalysisTaxAmtService {
@@ -21,17 +18,12 @@ public class AnalysisTaxAmtService {
 
 	private static final Logger logger = LoggerFactory.getLogger(AnalysisTaxAmtService.class);
 
-	@Autowired
-	private TaWsReg4000Repository taWsReg4000Repository;
-
-	public DataTableAjax<AnalysisTaxAmtVo> GetAnalysisTaxAmt(AnalysisFormVo request) {
-		logger.info("newRegId={}", request.getNewRegId());
-		
-		FactoryVo factoryVo = taWsReg4000Repository.findByNewRegId(request.getNewRegId());
+	public DataTableAjax<AnalysisTaxAmtVo> GetAnalysisTaxAmt(AnalysisFormVo formVo) {
+		logger.info("newRegId={}", formVo.getNewRegId());
 
 		int total = 0;
 		DataTableAjax<AnalysisTaxAmtVo> dataTableAjax = new DataTableAjax<AnalysisTaxAmtVo>();
-		dataTableAjax.setData(listAnalysisTaxAmt(factoryVo.getDutyCode()));
+		dataTableAjax.setData(listAnalysisTaxAmt(formVo.getDutyGroupId()));
 		dataTableAjax.setRecordsTotal(total);
 		dataTableAjax.setRecordsFiltered(total);
 		return dataTableAjax;

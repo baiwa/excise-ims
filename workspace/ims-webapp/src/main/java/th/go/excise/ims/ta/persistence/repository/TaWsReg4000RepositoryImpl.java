@@ -23,14 +23,14 @@ import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
-import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
-import th.go.excise.ims.ta.vo.FactoryVo;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 import th.go.excise.ims.ta.vo.WsReg4000Vo;
+import th.go.excise.ims.ta.vo.WsRegfri4000FormVo;
+import th.go.excise.ims.ws.client.pcc.regfri4000.model.RegDuty;
 
 public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 
@@ -355,158 +355,59 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		}
 	};
 
-	private void buildFactoryQuery(StringBuilder sql, List<Object> params, String newRegId) {
-		sql.append(
-				" SELECT r.new_reg_id,r.cus_fullname,r.fac_fullname,r.fac_address,r.office_code,r.duty_code,ed_sector.off_short_name AS sec_desc ,ed_area.off_short_name AS area_desc," + 
-				"    plan_worksheet.AUDIT_TYPE AS audit_type," + 
-				"    plan_worksheet.AUDIT_START_DATE AS audit_start_date," + 
-				"    plan_worksheet.AUDIT_END_DATE AS audit_end_date");
-		sql.append(" FROM ta_ws_reg4000  r ");
-		sql.append(" INNER JOIN excise_department  ed_sector ");
-		sql.append(" ON ed_sector.off_code = CONCAT(SUBSTR(r.office_code, 0, 2),'0000') ");
-		sql.append(" INNER JOIN excise_department  ed_area ");
-		sql.append(" ON ed_area.off_code  = CONCAT(SUBSTR(r.office_code, 0, 4),'00') ");
-		sql.append(" INNER JOIN ta_plan_worksheet_dtl plan_worksheet ON plan_worksheet.new_reg_id = r.new_reg_id ");
-		sql.append(" WHERE r.is_deleted = ? ");
-		sql.append(" AND plan_worksheet.OFFICE_CODE = ? ");
-
-		params.add(FLAG.N_FLAG);
-		params.add(UserLoginUtils.getCurrentUserBean().getOfficeCode());
-
-		if (StringUtils.isNotBlank(newRegId)) {
-			sql.append(" AND r.new_reg_id = ? ");
-			params.add(StringUtils.trim(newRegId));
-		}
-
-	}
-
 	@Override
-	public FactoryVo findByNewRegId(String newRegId) {
-		logger.debug("findByNewRegId newRegId={}", newRegId);
+	public WsRegfri4000FormVo findByNewRegId(String newRegId) {
+		logger.info("findByNewRegId newRegId={}", newRegId);
 
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
-		buildFactoryQuery(sql, params, newRegId);
+		
+		sql.append(" SELECT R4000.*, R4000D.GROUP_ID, R4000D.GROUP_NAME ");
+		sql.append(" FROM TA_WS_REG4000 R4000 ");
+		sql.append(" INNER JOIN TA_WS_REG4000_DUTY R4000D ON R4000D.NEWREG_ID = R4000.NEW_REG_ID ");
+		sql.append(" WHERE R4000.IS_DELETED = 'N' ");
+		sql.append("   AND R4000.REG_STATUS IN ('1','2','3','41','51') "); // REG_STATUS = '1' is Active
+		sql.append("   AND R4000.NEW_REG_ID = ? ");
+		params.add(newRegId);
 
-		FactoryVo datas = this.commonJdbcTemplate.queryForObject(sql.toString(), params.toArray(), new RowMapper<FactoryVo>() {
+		WsRegfri4000FormVo result = commonJdbcTemplate.query(sql.toString(), params.toArray(), new ResultSetExtractor<WsRegfri4000FormVo>() {
 			@Override
-			public FactoryVo mapRow(ResultSet rs, int rowNum) throws SQLException {
-				FactoryVo factoryVo = new FactoryVo();
-				factoryVo.setNewRegId(rs.getString("new_reg_id"));
-				factoryVo.setCusFullname(rs.getString("cus_fullname"));
-				factoryVo.setFacFullname(rs.getString("fac_fullname"));
-				factoryVo.setFacAddress(rs.getString("fac_address"));
-				factoryVo.setSecDesc(rs.getString("sec_desc"));
-				factoryVo.setAreaDesc(rs.getString("area_desc"));
-				factoryVo.setDutyCode(rs.getString("duty_code"));
-				factoryVo.setDutyDesc(ExciseUtils.getDutyDesc(rs.getString("duty_code")));
-				factoryVo.setAuditType(rs.getString("AUDIT_TYPE"));
-				factoryVo.setAuditStartDate(ConvertDateUtils.formatDateToString(rs.getDate("AUDIT_START_DATE"), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-				factoryVo.setAuditEndDate(ConvertDateUtils.formatDateToString(rs.getDate("AUDIT_END_DATE"), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-				return factoryVo;
+			public WsRegfri4000FormVo extractData(ResultSet rs) throws SQLException, DataAccessException {
+				WsRegfri4000FormVo vo = new WsRegfri4000FormVo();
+				List<RegDuty> regDutyList = new ArrayList<>();
+				RegDuty regDuty = null;
+				int i = 0;
+				while (rs.next()) {
+					if (i == 0) {
+						vo.setNewregId(rs.getString("NEW_REG_ID"));
+						vo.setNewRegId(rs.getString("NEW_REG_ID"));
+						vo.setRegId(rs.getString("REG_ID"));
+						vo.setRegStatus(rs.getString("REG_STATUS"));
+						vo.setRegStatusDesc(rs.getString("REG_STATUS_DESC"));
+						vo.setStatusDate(rs.getString("REG_STATUS_DATE"));
+						vo.setCusId(rs.getString("CUS_ID"));
+						vo.setCusFullname(rs.getString("CUS_FULLNAME"));
+						vo.setCustomerAddress(rs.getString("CUS_ADDRESS"));
+						vo.setFacId(rs.getString("FAC_ID"));
+						vo.setFacFullname(rs.getString("FAC_FULLNAME"));
+						vo.setFacAddress(rs.getString("FAC_ADDRESS"));
+						vo.setOffcode(rs.getString("OFFICE_CODE"));
+						vo.setCapital(rs.getString("REG_CAPITAL"));
+						vo.setFactoryType(rs.getString("FAC_TYPE"));
+					}
+					regDuty = new RegDuty();
+					regDuty.setGroupId(rs.getString("GROUP_ID"));
+					regDuty.setGroupName(rs.getString("GROUP_NAME"));
+					regDuty.setRegDate("REG_DATE");
+					regDutyList.add(regDuty);
+					i++;
+				}
+				vo.setRegDutyList(regDutyList);
+				return vo;
 			}
 		});
-		return datas;
-	}
-
-	@Override
-	public List<WsReg4000Vo> findByCriteriaDuty(TaxOperatorFormVo formVo, String startMonth, String endMonth) {
-		StringBuilder sql = new StringBuilder();
-		List<Object> params = new ArrayList<>();
-		buildByCriteriaDutyQuery(sql, params, formVo, startMonth, endMonth);
-
-		sql.append(" ORDER BY R4000.DUTY_CODE, R4000.OFFICE_CODE, R4000.NEW_REG_ID ");
-		if (StringUtils.isNotBlank(formVo.getFlagPage())) {
-			return this.commonJdbcTemplate.query(sql.toString(), params.toArray(), wsReg4000RowMapper);
-
-		} else {
-			return this.commonJdbcTemplate.query(
-				OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()),
-				params.toArray(), wsReg4000RowMapper);
-		}
-	}
-
-	@Override
-	public Long countByCriteriaDuty(TaxOperatorFormVo formVo) {
-		StringBuilder sql = new StringBuilder();
-		List<Object> params = new ArrayList<>();
 		
-		String ymStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateStart(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
-		String ymEnd = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateEnd(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
-		
-		buildByCriteriaDutyQuery(sql, params, formVo, ymStart, ymEnd);
-
-		return this.commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), params.toArray(), Long.class);
-	}
-	
-	private void buildByCriteriaDutyQuery(StringBuilder sql, List<Object> params, TaxOperatorFormVo formVo, String startMonth, String endMonth) {
-		sql.append(" SELECT R4000.* ");
-		sql.append(" FROM TA_WS_REG4000 R4000 ");
-		sql.append(" INNER JOIN ( ");
-		sql.append("   SELECT I.NEW_REG_ID, I.DUTY_CODE ");
-		sql.append("   FROM ( ");
-		sql.append("     SELECT NEW_REG_ID, DUTY_CODE, TAX_YEAR||LPAD(TAX_MONTH ,2 ,'0') AS YEAR_MONTH ");
-		sql.append("     FROM TA_WS_INC8000_M ");
-		sql.append("     WHERE IS_DELETED = 'N' ");
-		sql.append("   ) I ");
-		sql.append("   WHERE 1=1 ");
-		sql.append("     AND I.YEAR_MONTH >= ? ");
-		sql.append("     AND I.YEAR_MONTH <= ? ");
-		sql.append("   GROUP BY I.NEW_REG_ID, I.DUTY_CODE ");
-		sql.append(" ) I8000 ON I8000.NEW_REG_ID = R4000.NEW_REG_ID AND I8000.DUTY_CODE = R4000.DUTY_CODE ");
-		sql.append(" WHERE R4000.IS_DELETED = 'N' ");
-
-		params.add(startMonth);
-		params.add(endMonth);
-		
-//		if (ApplicationCache.isCtrlDutyGroupByOfficeCode(formVo.getOfficeCode())) {
-//			sql.append("   AND R4000.DUTY_CODE IN (SELECT DUTY_GROUP_CODE FROM EXCISE_CTRL_DUTY WHERE IS_DELETED = 'N' AND RES_OFFCODE = ?) ");
-//			params.add(formVo.getOfficeCode());
-//		} else {
-//			List<String> dutyGroupIdList = ExciseUtils.getDutyGroupIdListByType(DUTY_GROUP_TYPE.PRODUCT, DUTY_GROUP_TYPE.SERVICE);
-//			sql.append("   AND R4000.DUTY_CODE NOT IN (" + StringUtils.repeat("?", ",", dutyGroupIdList.size()) + ")");
-//			params.addAll(dutyGroupIdList);
-//		}
-		
-//		List<String> dutyGroupIdList = ExciseUtils.getDutyGroupIdListByType(DUTY_GROUP_TYPE.OTHER);
-//		sql.append("   AND R4000.DUTY_CODE NOT IN (" + StringUtils.repeat("?", ",", dutyGroupIdList.size()) + ")");
-//		params.addAll(dutyGroupIdList);
-		
-		// Factory Type
-		if (StringUtils.isNotBlank(formVo.getFacType())) {
-			params.add(formVo.getFacType());
-			sql.append(" AND R4000.FAC_TYPE = ?");
-		}
-
-		// Duty Code
-		if (StringUtils.isNotBlank(formVo.getDutyCode())) {
-			sql.append(" AND R4000.DUTY_CODE = ?");
-			params.add(formVo.getDutyCode());
-		}
-
-		// Office Code
-		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
-			sql.append(" AND R4000.OFFICE_CODE LIKE ?");
-			params.add(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
-		}
-
-		// Fac fullname
-		if (StringUtils.isNotBlank(formVo.getFacFullname())) {
-			sql.append(" AND R4000.FAC_FULLNAME LIKE ?");
-			params.add("%" + StringUtils.trim(formVo.getFacFullname()) + "%");
-		}
-
-		// Cus fullname
-		if (StringUtils.isNotBlank(formVo.getCusFullname())) {
-			sql.append(" AND R4000.CUS_FULLNAME LIKE ?");
-			params.add("%" + StringUtils.trim(formVo.getCusFullname()) + "%");
-		}
-		
-		// newRegId
-		if(StringUtils.isNotBlank(formVo.getNewRegId())) {
-			sql.append(" AND R4000.NEW_REG_ID = ?");
-			params.add(StringUtils.trim(formVo.getNewRegId()));
-		}
+		return result;
 	}
 
 	@Override

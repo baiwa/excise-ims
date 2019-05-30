@@ -43,6 +43,7 @@ public interface TaPlanWorksheetDtlRepository extends CommonJpaCrudRepository<Ta
 	@Query(value = "DELETE FROM TA_PLAN_WORKSHEET_DTL WHERE PLAN_NUMBER IN (SELECT PLAN_NUMBER FROM TA_PLAN_WORKSHEET_HDR WHERE BUDGET_YEAR = :budgetYear)", nativeQuery = true)
 	public void forceDeleteByBudgetYear(@Param("budgetYear") String budgetYear);
 	
+	// FIXME Don't unique
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode and e.newRegId = :newRegId")
 	public TaPlanWorksheetDtl findByOfficeCodeAndNewRegId(@Param("officeCode") String officeCode, @Param("newRegId") String newRegId);
 	

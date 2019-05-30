@@ -23,7 +23,6 @@ import th.go.excise.ims.ta.service.RecordMessageService;
 import th.go.excise.ims.ta.service.TaxAuditService;
 import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
-import th.go.excise.ims.ta.vo.FactoryVo;
 import th.go.excise.ims.ta.vo.FormDocTypeVo;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanVo;
@@ -49,7 +48,7 @@ public class TaxAuditController {
 
 		ResponseData<WsRegfri4000FormVo> response = new ResponseData<>();
 		try {
-			WsRegfri4000FormVo formVo = taxAuditService.getOperatorDetails(wsRegfri4000FormVo);
+			WsRegfri4000FormVo formVo = taxAuditService.getOperatorDetails(wsRegfri4000FormVo.getNewRegId());
 			response.setData(formVo);
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
@@ -118,13 +117,13 @@ public class TaxAuditController {
 
 	@GetMapping("/find-by-new-reg-id/{id}")
 	@ResponseBody
-	public ResponseData<FactoryVo> getFactoryByNewRegId(@PathVariable("id") String idStr) {
-		ResponseData<FactoryVo> responseData = new ResponseData<FactoryVo>();
+	public ResponseData<WsRegfri4000FormVo> getFactoryByNewRegId(@PathVariable("id") String newRegId) {
+		ResponseData<WsRegfri4000FormVo> responseData = new ResponseData<WsRegfri4000FormVo>();
 		try {
-			responseData.setData(taxAuditService.getFactoryByNewRegId(idStr));
+			responseData.setData(taxAuditService.getFactoryAuditDetailByNewRegId(newRegId));
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			logger.error("TaxAuditController::getFactoryByNewRegId ", e);
+			logger.error(e.getMessage(), e);
 			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
