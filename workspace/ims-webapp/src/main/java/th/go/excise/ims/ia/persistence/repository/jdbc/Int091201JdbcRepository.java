@@ -35,7 +35,7 @@ public class Int091201JdbcRepository {
 		paramList.add(vo.getOfficeCode());
 		int year = Integer.parseInt(vo.getYearMonth().substring(0, 4));
 		int month = Integer.parseInt(vo.getYearMonth().substring(4, 6));
-		LocalDate initial = LocalDate.of(year, month-1, 1);
+		LocalDate initial = LocalDate.of(year, month, 1);
 		LocalDate start = initial.withDayOfMonth(1);
 		LocalDate end = initial.with(TemporalAdjusters.lastDayOfMonth());
 		paramList.add(ConvertDateUtils.formatLocalDateToString(start, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
@@ -68,13 +68,12 @@ public class Int091201JdbcRepository {
 		paramList.add(vo.getOfficeCode());
 		int year = Integer.parseInt(vo.getYearMonth().substring(0, 4));
 		int month = Integer.parseInt(vo.getYearMonth().substring(4, 6));
-		LocalDate initial = LocalDate.of(year, month-1, 1);
+		LocalDate initial = LocalDate.of(year, month, 1);
 		LocalDate start = initial.withDayOfMonth(1);
 		LocalDate end = initial.with(TemporalAdjusters.lastDayOfMonth());
 		paramList.add(ConvertDateUtils.formatLocalDateToString(start, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
 		paramList.add(ConvertDateUtils.formatLocalDateToString(end, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
-		
-		
+
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), mapUsernameAndUserLogin);
 	}
 	

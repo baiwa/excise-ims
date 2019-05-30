@@ -80,7 +80,8 @@ public class Int091201Service {
 
 		IaAuditWorkingH dataSave = new IaAuditWorkingH();
 
-		Date date = ConvertDateUtils.parseStringToDate(res.getAuWorkingMonth(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
+		Date date = ConvertDateUtils.parseStringToDate(res.getAuWorkingMonth(), ConvertDateUtils.MM_YYYY,
+				ConvertDateUtils.LOCAL_TH);
 		String dateStr = ConvertDateUtils.formatDateToString(date, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 
 		String auditIncNo = iaEmpWorkingDtlJdbcRepository.generateAuditIncNo();
@@ -108,6 +109,9 @@ public class Int091201Service {
 	}
 
 	public Int091201ViewFullDetailVo viewFulldetail(Int091201ViewFullDetailRequstVo int091201ViewFullDetailRequstVo) {
+		int091201ViewFullDetailRequstVo.setYearMonth(
+				String.valueOf(Integer.parseInt(int091201ViewFullDetailRequstVo.getYearMonth().substring(0, 4)) - 543)
+						+ int091201ViewFullDetailRequstVo.getYearMonth().substring(4, 6));
 		Int091201ViewFullDetailVo response = new Int091201ViewFullDetailVo();
 		List<Int091201DayDetailVo> dayDetailList = new ArrayList<>();
 		List<Int091201LineDetail> lineDetailList = new ArrayList<>();
@@ -117,18 +121,19 @@ public class Int091201Service {
 		Calendar endMonth = Calendar.getInstance();
 		int year = Integer.parseInt(int091201ViewFullDetailRequstVo.getYearMonth().substring(0, 4));
 		int month = Integer.parseInt(int091201ViewFullDetailRequstVo.getYearMonth().substring(4, 6));
-		startMonth.set(year, month-1, 1);
+		startMonth.set(year, month - 1, 1);
 		endMonth.set(year, month, 1);
 		endMonth.add(Calendar.DATE, -1);
 		String[] strDays = new String[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thusday", "Friday", "Saturday" };
 		while (startMonth.compareTo(endMonth) <= 0) {
 			day = new Int091201DayDetailVo();
 			day.setDayOfMonth(startMonth.get(Calendar.DAY_OF_MONTH));
-			day.setDayOfweek(strDays[startMonth.get(Calendar.DAY_OF_WEEK)-1]);
+			day.setDayOfweek(strDays[startMonth.get(Calendar.DAY_OF_WEEK) - 1]);
 			startMonth.add(Calendar.DATE, 1);
 			dayDetailList.add(day);
 		}
-		List<IaEmpWorkingDtl> empList = int091201JdbcRepository.findUsernameWorkByOfficeCodeAndWorkMonth(int091201ViewFullDetailRequstVo);
+		List<IaEmpWorkingDtl> empList = int091201JdbcRepository
+				.findUsernameWorkByOfficeCodeAndWorkMonth(int091201ViewFullDetailRequstVo);
 		Int091201ViewFullDetailRequstVo val;
 		for (IaEmpWorkingDtl iaEmpWorkingDtl : empList) {
 			lineData = new Int091201LineDetail();
@@ -142,7 +147,7 @@ public class Int091201Service {
 			List<IaEmpWorkingDtl> empWorkingDtlList = int091201JdbcRepository.findIaEmpWorkingDtlBy(val);
 			for (Int091201DayDetailVo inLineData : dayDetailList) {
 				List<Int091201ViewValue> viewValueList = lineData.getValue();
-				if(viewValueList == null) {
+				if (viewValueList == null) {
 					viewValueList = new ArrayList<>();
 				}
 				Int091201ViewValue viewValue = new Int091201ViewValue();
@@ -165,7 +170,7 @@ public class Int091201Service {
 		response.setLineData(lineDetailList);
 		return response;
 	}
-	
+
 	@Transactional
 	public void editAuditWorking(Int091201FormSaveVo res) {
 		IaAuditWorkingH dataSave = new IaAuditWorkingH();
@@ -173,11 +178,12 @@ public class Int091201Service {
 		dataSave.setWorkingConditionText(res.getWorkingConditionText());
 		dataSave.setWorkingCriteriaText(res.getWorkingCriteriaText());
 		iaAuditWorkingHRepository.save(dataSave);
-		
+
 		IaAuditWorkingD1 iaAuditWorkingD1Save = null;
 
 		for (IaAuditWorkingD1 iaAuditWorkingD1 : res.getIaAuditWorkingD1List()) {
-			iaAuditWorkingD1Save = iaAuditWorkingD1Repository.findByIaAuditWorkingD1Id(iaAuditWorkingD1.getIaAuditWorkingD1Id().toString());
+			iaAuditWorkingD1Save = iaAuditWorkingD1Repository
+					.findByIaAuditWorkingD1Id(iaAuditWorkingD1.getIaAuditWorkingD1Id().toString());
 			iaAuditWorkingD1Save.setResultAllowanceFlag(iaAuditWorkingD1.getResultAllowanceFlag());
 			iaAuditWorkingD1Save.setResultAccomFeeFlag(iaAuditWorkingD1.getResultAccomFeeFlag());
 			iaAuditWorkingD1Save.setResultTransportFlag(iaAuditWorkingD1.getResultTransportFlag());
