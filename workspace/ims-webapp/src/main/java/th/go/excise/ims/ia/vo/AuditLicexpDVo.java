@@ -8,6 +8,7 @@ public class AuditLicexpDVo {
 	private String cusFullName;
 	private String facFullName;
 	private String licType;
+	private String licName;
 	private String licNo;
 	private String licDate;
 	private String expDate;
@@ -68,6 +69,14 @@ public class AuditLicexpDVo {
 
 	public void setLicType(String licType) {
 		this.licType = licType;
+	}
+
+	public String getLicName() {
+		return licName;
+	}
+
+	public void setLicName(String licName) {
+		this.licName = licName;
 	}
 
 	public String getLicNo() {

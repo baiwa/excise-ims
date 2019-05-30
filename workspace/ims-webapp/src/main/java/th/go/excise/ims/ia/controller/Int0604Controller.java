@@ -23,7 +23,6 @@ import th.go.excise.ims.ia.service.Int0604Service;
 import th.go.excise.ims.ia.vo.AuditLicexpDVo;
 import th.go.excise.ims.ia.vo.AuditLicexpHVo;
 import th.go.excise.ims.ia.vo.Int0602FormVo;
-import th.go.excise.ims.ia.vo.Int0602ResultTab1Vo;
 import th.go.excise.ims.ia.vo.Int0604SaveVo;
 
 @Controller
@@ -35,8 +34,8 @@ public class Int0604Controller {
 
 	@PostMapping("/find-by-criteria")
 	@ResponseBody
-	public ResponseData<List<Int0602ResultTab1Vo>> findByCriteria(@RequestBody Int0602FormVo request) {
-		ResponseData<List<Int0602ResultTab1Vo>> response = new ResponseData<List<Int0602ResultTab1Vo>>();
+	public ResponseData<List<AuditLicexpDVo>> findByCriteria(@RequestBody Int0602FormVo request) {
+		ResponseData<List<AuditLicexpDVo>> response = new ResponseData<List<AuditLicexpDVo>>();
 		try {
 			response.setData(int0604Service.findByCriteria(request));
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
@@ -111,7 +110,7 @@ public class Int0604Controller {
 		}
 		return response;
 	}
-	
+
 	@GetMapping("/export/{auditLicexpNo}")
 	public void export(@PathVariable("auditLicexpNo") String auditLicexpNo, HttpServletResponse response) throws Exception {
 		String fileName = URLEncoder.encode("ตรวจสอบการต่อใบอนุญาต", "UTF-8");
