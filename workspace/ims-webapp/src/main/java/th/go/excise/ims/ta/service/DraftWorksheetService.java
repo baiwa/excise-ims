@@ -293,15 +293,7 @@ public class DraftWorksheetService {
 			detailVo.setTaxMonthNo(String.valueOf(countTaxMonthNo));
 
 			// Calculate Percentage
-			if ((sumTaxAmtG1.compareTo(BigDecimal.ZERO) == 0) && (sumTaxAmtG2.compareTo(BigDecimal.ZERO) == 0)) {
-				taxAmtChnPnt = BigDecimal.ZERO;
-			} else if (sumTaxAmtG2.compareTo(BigDecimal.ZERO) == 0) {
-				taxAmtChnPnt = new BigDecimal("100");
-			} else if (sumTaxAmtG1.compareTo(BigDecimal.ZERO) == 0) {
-				taxAmtChnPnt = new BigDecimal("-100");
-			} else {
-				taxAmtChnPnt = (sumTaxAmtG1.subtract(sumTaxAmtG2)).multiply(new BigDecimal("100")).divide(NumberUtils.ZeroToOne(sumTaxAmtG2), 2, BigDecimal.ROUND_HALF_UP);
-			}
+			taxAmtChnPnt = NumberUtils.calculatePercent(sumTaxAmtG1, sumTaxAmtG2);
 			detailVo.setTaxAmtChnPnt(taxAmtChnPnt.toString());
 
 			// Calculate S.D.

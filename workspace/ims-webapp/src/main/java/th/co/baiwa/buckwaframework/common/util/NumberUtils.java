@@ -42,4 +42,18 @@ public class NumberUtils {
         return compareValue.compareTo(compareBase) < 0;
     }
 	
+	public static BigDecimal calculatePercent(BigDecimal baseBigDecimal, BigDecimal compareBigDecimal) {
+		BigDecimal percent = null;
+		if ((baseBigDecimal.compareTo(BigDecimal.ZERO) == 0) && (compareBigDecimal.compareTo(BigDecimal.ZERO) == 0)) {
+			percent = BigDecimal.ZERO;
+		} else if (compareBigDecimal.compareTo(BigDecimal.ZERO) == 0) {
+			percent = new BigDecimal("100");
+		} else if (baseBigDecimal.compareTo(BigDecimal.ZERO) == 0) {
+			percent = new BigDecimal("-100");
+		} else {
+			percent = (baseBigDecimal.subtract(compareBigDecimal)).multiply(new BigDecimal("100")).divide(NumberUtils.ZeroToOne(compareBigDecimal), 2, BigDecimal.ROUND_HALF_UP);
+		}
+		return percent;
+	}
+	
 }
