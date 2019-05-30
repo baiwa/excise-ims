@@ -47,11 +47,11 @@ public class Int0913Service {
 	
 	public IaUtilityBill saveIaUtilityBill(Int091301SaveVo vo) {
 		IaUtilityBill entity = null;
-		if(vo.getUtilityBillSeq() != null ) {
+		if (vo.getUtilityBillSeq() != null ) {
 			entity = iaUtilityBillRepository.findById(vo.getUtilityBillSeq()).get();
-		}else {
+		} else {
 			entity = new IaUtilityBill();
-			entity.setExciseCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+			entity.setExciseCode(vo.getExciseCode());
 		}
 
 		entity.setUbillType(vo.getUbillType());

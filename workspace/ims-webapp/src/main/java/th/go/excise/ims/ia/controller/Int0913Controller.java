@@ -30,7 +30,7 @@ public class Int0913Controller {
 
 	@Autowired
 	private Int0913Service int0913Service;
-	
+
 	@PostMapping("/find-091301-search")
 	@ResponseBody
 	public ResponseData<List<Int091301ResultSearchVo>> findIaUtilityBill(@RequestBody Int091301SearchVo request) {
@@ -46,8 +46,7 @@ public class Int0913Controller {
 		}
 		return response;
 	}
-	
-	
+
 	@PostMapping("/find-091302-save")
 	@ResponseBody
 	public ResponseData<?> saveIaUtilityBill(@RequestBody Int091301SaveVo request) {
@@ -63,6 +62,7 @@ public class Int0913Controller {
 		}
 		return response;
 	}
+
 	@PostMapping("/find-091302-delete/{id}")
 	@ResponseBody
 	public ResponseData<?> deleteIaUtilityBill(@PathVariable("id") Long id) {
@@ -78,7 +78,7 @@ public class Int0913Controller {
 		}
 		return response;
 	}
-	
+
 	@GetMapping("/get-091301-department/{officeCode}")
 	@ResponseBody
 	public ResponseData<ExciseDepartmentVo> getDepartment(@PathVariable("officeCode") String officeCode) {
@@ -87,7 +87,7 @@ public class Int0913Controller {
 			officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		}
 		try {
-			response.setData(ExciseDepartmentUtil.getExciseDepartment(officeCode));
+			response.setData(ExciseDepartmentUtil.getExciseDepartmentFull(officeCode));
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
