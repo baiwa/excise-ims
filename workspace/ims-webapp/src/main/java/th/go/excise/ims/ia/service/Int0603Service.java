@@ -25,8 +25,10 @@ import th.go.excise.ims.ia.persistence.entity.IaAuditLicdupH;
 import th.go.excise.ims.ia.persistence.repository.IaAuditLicdupDRepository;
 import th.go.excise.ims.ia.persistence.repository.IaAuditLicdupHRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0602JdbcRepository;
+import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
 import th.go.excise.ims.ia.vo.AuditLicdupDVo;
 import th.go.excise.ims.ia.vo.AuditLicdupHVo;
+import th.go.excise.ims.ia.vo.ExciseDepartmentVo;
 import th.go.excise.ims.ia.vo.Int0602FormVo;
 import th.go.excise.ims.ia.vo.Int0602ResultTab1Vo;
 import th.go.excise.ims.ia.vo.Int0603SaveVo;
@@ -39,6 +41,9 @@ public class Int0603Service {
 
 	@Autowired
 	private Int0602JdbcRepository int0602JdbcRepository;
+
+	@Autowired
+	private IaCommonService iaCommonService;
 
 	@Autowired
 	private IaAuditLicdupHRepository iaAuditLicdupHRepository;
@@ -137,7 +142,7 @@ public class Int0603Service {
 				licH.setOfficeCode(vo.getAuditLicdupH().getOfficeCode());
 				licH.setLicDateTo(ConvertDateUtils.parseStringToDate(vo.getAuditLicdupH().getLicDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 				licH.setLicDateFrom(ConvertDateUtils.parseStringToDate(vo.getAuditLicdupH().getLicDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-				licH.setAuditLicdupNo(vo.getAuditLicdupH().getOfficeCode() + "/" + iaAuditLicdupHRepository.generateAuditLicdupNo());
+				licH.setAuditLicdupNo(iaCommonService.autoGetRunAuditNoBySeqName("LID", vo.getAuditLicdupH().getOfficeCode(), "AUDIT_LICDUP_NO_SEQ", 8));
 				licH.setAuditFlag(vo.getAuditLicdupH().getAuditFlag());
 				licH.setConditionText(vo.getAuditLicdupH().getConditionText());
 				licH.setCriteriaText(vo.getAuditLicdupH().getCriteriaText());
@@ -209,6 +214,7 @@ public class Int0603Service {
 	public AuditLicdupHVo findByAuditLicdupNo(String auditLicdupNo) {
 		AuditLicdupHVo auditLicdupHVo = null;
 		IaAuditLicdupH licH = null;
+		ExciseDepartmentVo excise = null;
 		licH = iaAuditLicdupHRepository.findByAuditLicdupNo(auditLicdupNo);
 
 		try {
@@ -221,6 +227,11 @@ public class Int0603Service {
 			auditLicdupHVo.setLicDateFrom(ConvertDateUtils.formatDateToString(licH.getLicDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 			auditLicdupHVo.setLicDateTo(ConvertDateUtils.formatDateToString(licH.getLicDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 			auditLicdupHVo.setOfficeCode(licH.getOfficeCode());
+
+			excise = ExciseDepartmentUtil.getExciseDepartmentFull(licH.getOfficeCode());
+			auditLicdupHVo.setArea(excise.getArea());
+			auditLicdupHVo.setSector(excise.getSector());
+			auditLicdupHVo.setBranch(excise.getBranch());
 
 		} catch (Exception e) {
 			e.printStackTrace();

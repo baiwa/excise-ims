@@ -10,6 +10,9 @@ public class AuditLicdupHVo {
 	private String auditFlag;
 	private String conditionText;
 	private String criteriaText;
+	private String sector;
+	private String area;
+	private String branch;
 
 	public Long getAuditLicdupSeq() {
 		return auditLicdupSeq;
@@ -73,6 +76,30 @@ public class AuditLicdupHVo {
 
 	public void setCriteriaText(String criteriaText) {
 		this.criteriaText = criteriaText;
+	}
+
+	public String getSector() {
+		return sector;
+	}
+
+	public void setSector(String sector) {
+		this.sector = sector;
+	}
+
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+
+	public String getBranch() {
+		return branch;
+	}
+
+	public void setBranch(String branch) {
+		this.branch = branch;
 	}
 
 }
