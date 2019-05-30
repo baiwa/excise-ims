@@ -16,7 +16,7 @@ import th.go.excise.ims.ta.vo.AnalysisIncomeCompareLastMonthVo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
-@WithUserDetails(value = "admin", userDetailsServiceBeanName = "userDetailService")
+@WithUserDetails(value = "ta001402", userDetailsServiceBeanName = "userDetailService")
 @ActiveProfiles(value = PROFILE.UNITTEST)
 public class AnalysisIncomeCompareLastMonthServiceTest {
 
@@ -24,24 +24,21 @@ public class AnalysisIncomeCompareLastMonthServiceTest {
 	private AnalysisIncomeCompareLastMonthService analysisIncomeCompareLastMonthService;
 
 	@Test
-	public void test_CompareLastMonth() {
-		try {
-
-			AnalysisFormVo formVo = new AnalysisFormVo();
-			formVo.setNewRegId("2555024870");
-			formVo.setStartDate("12/2559");
-			formVo.setEndDate("09/2563");
-
-			DataTableAjax<AnalysisIncomeCompareLastMonthVo> datasList = analysisIncomeCompareLastMonthService.getAnalysisIncomeCompareLastMonth(formVo);
-
-			for (AnalysisIncomeCompareLastMonthVo data : datasList.getData()) {
-				System.out.println("TaxMonth: " + data.getTaxMonth() + ", TaxAmount: " + data.getIncomeAmt() + ", DiffIncomeAmt: " + data.getDiffIncomeAmt() + ", DiffIncomePnt: " + data.getDiffIncomePnt());
-			}
-
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
+	public void test_inquiry() {
+		AnalysisFormVo formVo = new AnalysisFormVo();
+		formVo.setNewRegId("07755390005721001");
+		formVo.setDutyGroupId("0201");
+		formVo.setStartDate("01/2561");
+		formVo.setEndDate("06/2561");
+		
+		DataTableAjax<AnalysisIncomeCompareLastMonthVo> dataTable = analysisIncomeCompareLastMonthService.inquiry(formVo);
+		for (AnalysisIncomeCompareLastMonthVo vo : dataTable.getData()) {
+			System.out.println("taxMonth=" + vo.getTaxMonth() +
+				"\tincomeAmt=" + vo.getIncomeAmt() +
+				"\tdiffAmt=" + vo.getDiffIncomeAmt() +
+				"\tdiffPnt=" + vo.getDiffIncomePnt());
 		}
-
+		
 	}
+	
 }

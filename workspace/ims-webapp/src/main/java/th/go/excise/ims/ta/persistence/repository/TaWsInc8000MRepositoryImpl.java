@@ -8,19 +8,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.jdbc.core.RowMapper;
 
-import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CONFIG;
 import th.go.excise.ims.ta.persistence.entity.TaWsInc8000M;
-import th.go.excise.ims.ta.vo.AnalysisFormVo;
 import th.go.excise.ims.ta.vo.WorksheetDateRangeVo;
 
 public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom {
@@ -115,88 +111,6 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 		});
 
 		return incfri8000MMap;
-	}
-
-	private void buildByAnalyzeCompareOldYearQuery(StringBuilder sql, List<Object> params, AnalysisFormVo formVo) {
-		sql.append(" SELECT * ");
-		sql.append(" FROM TA_WS_INC8000_M ");
-		sql.append(" WHERE IS_DELETED = 'N' ");
-		sql.append(" AND NEW_REG_ID = ? ");
-		sql.append(" AND TAX_YEAR || LPAD(TAX_MONTH, 2, 0) ");
-		sql.append(" BETWEEN ? AND ? ");
-		params.add(formVo.getNewRegId());
-		params.add(formVo.getStartDate());
-		params.add(formVo.getEndDate());
-	}
-
-	public List<TaWsInc8000M> findByAnalyzeCompareOldYear(AnalysisFormVo formVo) {
-
-		StringBuilder sql1 = new StringBuilder();
-		List<Object> params1 = new ArrayList<>();
-
-		buildByAnalyzeCompareOldYearQuery(sql1, params1, formVo);
-
-		List<TaWsInc8000M> data = commonJdbcTemplate.query(sql1.toString(), params1.toArray(), taWsInc8000MRowMapper);
-		return data;
-
-	}
-
-	private static final RowMapper<TaWsInc8000M> taWsInc8000MRowMapper = new RowMapper<TaWsInc8000M>() {
-		public TaWsInc8000M mapRow(ResultSet rs, int rowNum) throws SQLException {
-			TaWsInc8000M vo = new TaWsInc8000M();
-			vo.setNewRegId(rs.getString("NEW_REG_ID"));
-			vo.setTaxAmount(rs.getBigDecimal("TAX_AMOUNT"));
-			vo.setTaxMonth(rs.getString("TAX_MONTH"));
-			vo.setTaxYear(rs.getString("TAX_YEAR"));
-			vo.setWsInc8000MId(rs.getLong("WS_INC8000_M_ID"));
-			return vo;
-		}
-	};
-
-	private void buildAnalysisIncomeCompareLastMonthQuery(StringBuilder sql, List<Object> params, AnalysisFormVo formVo) {
-		sql.append(" SELECT * ");
-		sql.append(" FROM ta_ws_inc8000_m ");
-		sql.append(" WHERE is_deleted = ? ");
-
-		params.add(FLAG.N_FLAG);
-
-		if (StringUtils.isNotBlank(formVo.getNewRegId())) {
-			sql.append(" AND new_reg_id = ? ");
-			params.add(formVo.getNewRegId());
-		}
-
-		sql.append(" AND tax_year || LPAD(tax_month, 2, 0) ");
-
-		sql.append(" BETWEEN ? ");
-		params.add(formVo.getStartDate());
-
-		sql.append(" AND ? ");
-		params.add(formVo.getEndDate());
-
-	}
-
-	@Override
-	public List<TaWsInc8000M> findByAnalysisIncomeCompareLastMonth(AnalysisFormVo formVo) {
-		logger.debug("findByCriteria formVo.newregid={}, formVo.startDate={}, formVo.endDate={}", formVo.getNewRegId(), formVo.getStartDate(), formVo.getEndDate());
-		StringBuilder sql = new StringBuilder();
-		List<Object> params = new ArrayList<>();
-		buildAnalysisIncomeCompareLastMonthQuery(sql, params, formVo);
-
-		List<TaWsInc8000M> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(), new RowMapper<TaWsInc8000M>() {
-
-			@Override
-			public TaWsInc8000M mapRow(ResultSet rs, int rowNum) throws SQLException {
-				TaWsInc8000M taWsInc8000M = new TaWsInc8000M();
-				taWsInc8000M.setNewRegId(rs.getString("new_reg_id"));
-				taWsInc8000M.setTaxAmount(rs.getBigDecimal("tax_amount"));
-				taWsInc8000M.setTaxMonth(rs.getString("tax_month"));
-				taWsInc8000M.setTaxYear(rs.getString("tax_year"));
-				taWsInc8000M.setWsInc8000MId(rs.getLong("ws_inc8000_m_id"));
-				return taWsInc8000M;
-			}
-
-		});
-		return datas;
 	}
 
 }

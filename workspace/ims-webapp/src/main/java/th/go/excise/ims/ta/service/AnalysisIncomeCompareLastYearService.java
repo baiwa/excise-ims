@@ -1,12 +1,15 @@
 package th.go.excise.ims.ta.service;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.chrono.ThaiBuddhistDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,95 +17,99 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
-import th.go.excise.ims.ta.persistence.entity.TaWsInc8000M;
+import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CONFIG;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.ta.persistence.repository.TaWsInc8000MRepository;
 import th.go.excise.ims.ta.vo.AnalysisFormVo;
 import th.go.excise.ims.ta.vo.AnalysisIncomeCompareLastYearVo;
+import th.go.excise.ims.ta.vo.WorksheetDateRangeVo;
 
 @Service
-public class AnalysisIncomeCompareLastYearService {
+public class AnalysisIncomeCompareLastYearService extends AbstractBasicAnalysisService<DataTableAjax<AnalysisIncomeCompareLastYearVo>> {
+	
+	private static final Logger logger = LoggerFactory.getLogger(AnalysisIncomeCompareLastYearService.class);
 
 	@Autowired
 	private TaWsInc8000MRepository wsInc8000MRepository;
 
-	private static final Logger logger = LoggerFactory.getLogger(AnalysisIncomeCompareLastYearService.class);
-
-	private static final Integer TOTAL = 17;
-
-	public DataTableAjax<AnalysisIncomeCompareLastYearVo> GetAnalysisIncomeCompareLastYear(AnalysisFormVo formVo) {
-		logger.info("listAnalysisIncomeCompareLastYear");
-
-//		// data compare1 ====================>
-//		// convert year month (mm/yyyy) to yyyymm
-//		Date startDate = ConvertDateUtils.parseStringToDate(formVo.getStartDate(), ConvertDateUtils.MM_YYYY);
-//		Date endDate = ConvertDateUtils.parseStringToDate(formVo.getEndDate(), ConvertDateUtils.MM_YYYY);
-//		String convertStrDate1 = ConvertDateUtils.formatDateToString(startDate, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
-//		String convertEndDate1 = ConvertDateUtils.formatDateToString(endDate, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
-//		// convertStrDate1 = date start, convertEndDate1 = date end
-//		formVo.setStartDate(convertStrDate1);
-//		formVo.setEndDate(convertEndDate1);
-//
-//		List<TaWsInc8000M> data1 = wsInc8000MRepository.findByAnalyzeCompareOldYear(formVo);
-//
-//		// data compare2 =========================>
-//		// convert year month (mm/yyyy) to yyyymm
-//		String convertStrDate2 = ConvertDateUtils.formatDateToString(DateUtils.addYears(startDate, -1), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
-//		String convertEndDate2 = ConvertDateUtils.formatDateToString(DateUtils.addYears(endDate, -1), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
-//		// convertStrDate2 = date start, convertEndDate2 = date end
-//		formVo.setStartDate(convertStrDate2);
-//		formVo.setEndDate(convertEndDate2);
-//
-//		List<TaWsInc8000M> data2 = wsInc8000MRepository.findByAnalyzeCompareOldYear(formVo);
-//		// Union data
-//		List<AnalysisIncomeCompareLastYearVo> dataAll = new ArrayList<>();
-//		for (int i = 0; i < data1.size(); i++) {
-//			Boolean haveTaxAmount = false;
-//			dataAll.add(new AnalysisIncomeCompareLastYearVo());
-//			for (int j = 0; j < data2.size(); j++) {
-//				int year = Integer.parseInt(data2.get(j).getTaxYear());
-//				String convYear = Integer.toString(year + 1);
-//				if (data1.get(i).getTaxYear().equals(convYear) && data1.get(i).getTaxMonth().equals(data2.get(j).getTaxMonth())) {
-//					BigDecimal diff = data1.get(i).getTaxAmount().subtract(data2.get(j).getTaxAmount());
-//					dataAll.get(i).setDiff(diff);
-//					BigDecimal percent = dataAll.get(i).getDiff().divide(data1.get(i).getTaxAmount().max(data2.get(j).getTaxAmount()), 8, RoundingMode.CEILING);
-//					percent = percent.multiply(new BigDecimal(100.00));
-//					dataAll.get(i).setDiffPercent(percent);
-//					dataAll.get(i).setNewRegId(data1.get(i).getNewRegId());
-//					dataAll.get(i).setTaxAmount(data1.get(i).getTaxAmount());
-//					dataAll.get(i).setTaxAmountOld(data2.get(j).getTaxAmount());
-//					dataAll.get(i).setTaxMonth(data1.get(i).getTaxMonth());
-//					Date date = ConvertDateUtils.parseStringToDate(data1.get(i).getTaxYear(), ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_EN);
-//					String dateStr = ConvertDateUtils.formatDateToString(date, ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_TH);
-//					dataAll.get(i).setTaxYear(dateStr);
-//					dataAll.get(i).setWsInc8000MId(data1.get(i).getWsInc8000MId());
-//					dataAll.get(i).setMonthDesc(ConvertDateUtils.getMonthThai(Integer.parseInt(data1.get(i).getTaxMonth()) - 1, ConvertDateUtils.SHORT_MONTH) + " " + dateStr);
-//
-//					haveTaxAmount = true;
-//					break;
-//				}
-//			}
-//			if (!haveTaxAmount) {
-//				dataAll.get(i).setDiff(data1.get(i).getTaxAmount());
-//				dataAll.get(i).setDiffPercent(new BigDecimal(100.00));
-//				dataAll.get(i).setNewRegId(data1.get(i).getNewRegId());
-//				dataAll.get(i).setTaxAmount(data1.get(i).getTaxAmount());
-//				dataAll.get(i).setTaxAmountOld(new BigDecimal(0.00));
-//				dataAll.get(i).setTaxMonth(data1.get(i).getTaxMonth());
-//				Date date = ConvertDateUtils.parseStringToDate(data1.get(i).getTaxYear(), ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_EN);
-//				String dateStr = ConvertDateUtils.formatDateToString(date, ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_TH);
-//				dataAll.get(i).setTaxYear(dateStr);
-//				dataAll.get(i).setMonthDesc(ConvertDateUtils.getMonthThai(Integer.parseInt(data1.get(i).getTaxMonth()) - 1, ConvertDateUtils.SHORT_MONTH) + " " + dateStr);
-//			}
-//		}
-
+	@Override
+	protected DataTableAjax<AnalysisIncomeCompareLastYearVo> inquiryByWs(AnalysisFormVo formVo) {
+		logger.info("inquiryByWs");
+		
+		String incomeTaxType = null;
+		ParamInfo taxType = ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.INCOME_TYPE);
+		if (taxType != null) {
+			incomeTaxType = taxType.getValue1();
+		} else {
+			incomeTaxType = TA_CONFIG.INCOME_TYPE_TAX;
+		}
+		
+		LocalDate localDateG1Start = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]), Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
+		LocalDate localDateG1End = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]), Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
+		LocalDate localDateG2Start = localDateG1Start.minus(1, ChronoUnit.YEARS);
+		LocalDate localDateG2End = localDateG1End.minus(1, ChronoUnit.YEARS);
+		List<LocalDate> subLocalDateG1List = LocalDateUtils.getLocalDateRange(localDateG1Start, localDateG1End);
+		List<LocalDate> subLocalDateG2List = LocalDateUtils.getLocalDateRange(localDateG2Start, localDateG2End);
+		
+		WorksheetDateRangeVo dateRangeVo = new WorksheetDateRangeVo();
+		dateRangeVo.setYmG1StartInc8000M(localDateG1Start.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
+		dateRangeVo.setYmG1EndInc8000M(localDateG1End.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
+		dateRangeVo.setYmG2StartInc8000M(localDateG2Start.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
+		dateRangeVo.setYmG2EndInc8000M(localDateG2End.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
+		
+		logger.debug("localDateG1Start={}", localDateG1Start);
+		logger.debug("localDateG1End  ={}", localDateG1End);
+		logger.debug("localDateG2Start={}", localDateG2Start);
+		logger.debug("localDateG2End  ={}", localDateG2End);
+		logger.debug("ymG1StartInc8000M={}, ymG1EndInc8000M={}, ymG2StartInc8000M={}, ymG2EndInc8000M={}", dateRangeVo.getYmG1StartInc8000M(), dateRangeVo.getYmG1EndInc8000M(), dateRangeVo.getYmG2StartInc8000M(), dateRangeVo.getYmG2EndInc8000M());
+		logger.debug("subLocalDateList1.size()={}, subLocalDateList1={}", subLocalDateG1List.size(), org.springframework.util.StringUtils.collectionToCommaDelimitedString(subLocalDateG1List));
+		logger.debug("subLocalDateList2.size()={}, subLocalDateList2={}", subLocalDateG2List.size(), org.springframework.util.StringUtils.collectionToCommaDelimitedString(subLocalDateG2List));
+		
+		Map<String, BigDecimal> incomeMap = wsInc8000MRepository.findByMonthRangeDuty(formVo.getNewRegId(), formVo.getDutyGroupId(), dateRangeVo, incomeTaxType);
+		
+		List<AnalysisIncomeCompareLastYearVo> voList = new ArrayList<>();
+		AnalysisIncomeCompareLastYearVo vo = null;
+		BigDecimal incomeCurrentYearAmt = null;
+		BigDecimal incomeLastYearAmt = null;
+		BigDecimal diffIncomeAmt = null;
+		BigDecimal diffIncomePnt = null;
+		int dateLength = subLocalDateG1List.size();
+		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+		for (int i = 0; i < dateLength; i++) {
+			vo = new AnalysisIncomeCompareLastYearVo();
+			incomeCurrentYearAmt = incomeMap.get(subLocalDateG1List.get(i).format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
+			if (incomeCurrentYearAmt == null) {
+				incomeCurrentYearAmt = BigDecimal.ZERO;
+			}
+			incomeLastYearAmt = incomeMap.get(subLocalDateG2List.get(i).format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
+			if (incomeLastYearAmt == null) {
+				incomeLastYearAmt = BigDecimal.ZERO;
+			}
+			diffIncomeAmt = incomeCurrentYearAmt.subtract(incomeLastYearAmt);
+			diffIncomePnt = NumberUtils.calculatePercent(incomeCurrentYearAmt, incomeLastYearAmt);
+			
+			vo.setTaxMonth(ThaiBuddhistDate.from(subLocalDateG1List.get(i)).format(DateTimeFormatter.ofPattern("MMM yy", ConvertDateUtils.LOCAL_TH)));
+			vo.setIncomeLastYearAmt(decimalFormat.format(incomeLastYearAmt));
+			vo.setIncomeCurrentYearAmt(decimalFormat.format(incomeCurrentYearAmt));
+			vo.setDiffIncomeAmt(decimalFormat.format(diffIncomeAmt));
+			vo.setDiffIncomePnt(decimalFormat.format(diffIncomePnt));
+			voList.add(vo);
+		}
+		
 		DataTableAjax<AnalysisIncomeCompareLastYearVo> dataTableAjax = new DataTableAjax<>();
-
-//		dataTableAjax.setData(dataAll);
-//		// dataTableAjax.setDraw(formVo.getDraw() + 1);
-//		int count = dataAll.size();
-//		dataTableAjax.setRecordsFiltered(count);
-//		dataTableAjax.setRecordsTotal(count);
+		dataTableAjax.setData(voList);
+		
 		return dataTableAjax;
+	}
+
+	@Override
+	protected DataTableAjax<AnalysisIncomeCompareLastYearVo> inquiryByPaperBaNumber(AnalysisFormVo formVo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

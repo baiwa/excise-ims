@@ -1,7 +1,5 @@
 package th.go.excise.ims.ta.vo;
 
-import java.math.BigDecimal;
-
 import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 
 public class AnalysisIncomeCompareLastMonthVo extends DataTableRequest {
@@ -9,9 +7,9 @@ public class AnalysisIncomeCompareLastMonthVo extends DataTableRequest {
 	private static final long serialVersionUID = -3604910343019283741L;
 
 	private String taxMonth;
-	private BigDecimal incomeAmt;
-	private BigDecimal diffIncomeAmt;
-	private BigDecimal diffIncomePnt;
+	private String incomeAmt;
+	private String diffIncomeAmt;
+	private String diffIncomePnt;
 
 	public String getTaxMonth() {
 		return taxMonth;
@@ -21,27 +19,27 @@ public class AnalysisIncomeCompareLastMonthVo extends DataTableRequest {
 		this.taxMonth = taxMonth;
 	}
 
-	public BigDecimal getIncomeAmt() {
+	public String getIncomeAmt() {
 		return incomeAmt;
 	}
 
-	public void setIncomeAmt(BigDecimal incomeAmt) {
+	public void setIncomeAmt(String incomeAmt) {
 		this.incomeAmt = incomeAmt;
 	}
 
-	public BigDecimal getDiffIncomeAmt() {
+	public String getDiffIncomeAmt() {
 		return diffIncomeAmt;
 	}
 
-	public void setDiffIncomeAmt(BigDecimal diffIncomeAmt) {
+	public void setDiffIncomeAmt(String diffIncomeAmt) {
 		this.diffIncomeAmt = diffIncomeAmt;
 	}
 
-	public BigDecimal getDiffIncomePnt() {
+	public String getDiffIncomePnt() {
 		return diffIncomePnt;
 	}
 
-	public void setDiffIncomePnt(BigDecimal diffIncomePnt) {
+	public void setDiffIncomePnt(String diffIncomePnt) {
 		this.diffIncomePnt = diffIncomePnt;
 	}
 

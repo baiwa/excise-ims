@@ -6,9 +6,19 @@ public class AnalysisFormVo extends DataTableRequest {
 
 	private static final long serialVersionUID = -4962250628414975351L;
 
+	private String paperBaNumber;
 	private String newRegId;
+	private String dutyGroupId;
 	private String startDate;
 	private String endDate;
+
+	public String getPaperBaNumber() {
+		return paperBaNumber;
+	}
+
+	public void setPaperBaNumber(String paperBaNumber) {
+		this.paperBaNumber = paperBaNumber;
+	}
 
 	public String getNewRegId() {
 		return newRegId;
@@ -16,6 +26,14 @@ public class AnalysisFormVo extends DataTableRequest {
 
 	public void setNewRegId(String newRegId) {
 		this.newRegId = newRegId;
+	}
+
+	public String getDutyGroupId() {
+		return dutyGroupId;
+	}
+
+	public void setDutyGroupId(String dutyGroupId) {
+		this.dutyGroupId = dutyGroupId;
 	}
 
 	public String getStartDate() {

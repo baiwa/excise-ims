@@ -66,12 +66,12 @@ public class BasicAnlysisController {
 	// TODO 1
 	@PostMapping("/tax-qty-data")
 	@ResponseBody
-	public DataTableAjax<AnalysisTaxQtyVo> taxQtyData(@RequestBody AnalysisFormVo request) {
+	public DataTableAjax<AnalysisTaxQtyVo> taxQtyData(@RequestBody AnalysisFormVo formVo) {
 		logger.info("taxQtyData");
 
 		DataTableAjax<AnalysisTaxQtyVo> response = new DataTableAjax<>();
 		try {
-			response = analysisTaxQtyService.getAnalysisTaxQty(request);
+			response = analysisTaxQtyService.getAnalysisTaxQty(formVo);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
@@ -82,104 +82,112 @@ public class BasicAnlysisController {
 	// TODO 2
 	@PostMapping("/tax-retail-price-data")
 	@ResponseBody
-	public DataTableAjax<AnalysisTaxRetailPriceVo> taxRetailPriceData(@RequestBody AnalysisFormVo request) {
+	public DataTableAjax<AnalysisTaxRetailPriceVo> taxRetailPriceData(@RequestBody AnalysisFormVo formVo) {
 		logger.info("taxRetailPriceData");
 
 		DataTableAjax<AnalysisTaxRetailPriceVo> response = new DataTableAjax<>();
 		try {
-			response = analysisTaxRetailPriceService.GetAnalysisTaxQuRetailPrice(request);
+			response = analysisTaxRetailPriceService.GetAnalysisTaxQuRetailPrice(formVo);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		
 		return response;
 	}
+	
 	// TODO 3
 	@PostMapping("/tax-value-data")
 	@ResponseBody
-	public DataTableAjax<AnalysisTaxValueVo> taxValueData(@RequestBody AnalysisFormVo request) {
+	public DataTableAjax<AnalysisTaxValueVo> taxValueData(@RequestBody AnalysisFormVo formVo) {
 		logger.info("taxValueData");
 
 		DataTableAjax<AnalysisTaxValueVo> response = new DataTableAjax<>();
 		try {
-			response = analysisTaxValueService.GetAnalysisTaxValue(request);
+			response = analysisTaxValueService.GetAnalysisTaxValue(formVo);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
+		
 		return response;
 	}
+	
 	// TODO 4
 	@PostMapping("/tax-rate-data")
 	@ResponseBody
-	public DataTableAjax<AnalysisTaxRateVo> taxRateData(@RequestBody AnalysisFormVo request) {
+	public DataTableAjax<AnalysisTaxRateVo> taxRateData(@RequestBody AnalysisFormVo formVo) {
 		logger.info("taxRateData");
 
 		DataTableAjax<AnalysisTaxRateVo> response = new DataTableAjax<>();
 		try {
-			response = analysisTaxRateService.GetAnalysisTaxRate(request);
+			response = analysisTaxRateService.GetAnalysisTaxRate(formVo);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
+		
 		return response;
 	}
 
 	// TODO 5
 	@PostMapping("/tax-amt-data")
 	@ResponseBody
-	public DataTableAjax<AnalysisTaxAmtVo> taxAmtData(@RequestBody AnalysisFormVo request) {
+	public DataTableAjax<AnalysisTaxAmtVo> taxAmtData(@RequestBody AnalysisFormVo formVo) {
 		logger.info("taxAmtData");
 
 		DataTableAjax<AnalysisTaxAmtVo> response = new DataTableAjax<>();
 		try {
-			response = analysisTaxAmtService.GetAnalysisTaxAmt(request);
+			response = analysisTaxAmtService.GetAnalysisTaxAmt(formVo);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
+		
 		return response;
 	}
 
 	// TODO 6
 	@PostMapping("/tax-filing-data")
 	@ResponseBody
-	public DataTableAjax<AnalysisTaxFilingVo> taxFilingData(@RequestBody AnalysisFormVo request) {
+	public DataTableAjax<AnalysisTaxFilingVo> taxFilingData(@RequestBody AnalysisFormVo formVo) {
 		logger.info("taxFilingData");
 
 		DataTableAjax<AnalysisTaxFilingVo> response = new DataTableAjax<>();
 		try {
-			response = analysisTaxFilingService.GetAnalysisTaxFiling(request);
+			response = analysisTaxFilingService.GetAnalysisTaxFiling(formVo);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
+		
 		return response;
 	}
 
 	// TODO 7
 	@PostMapping("/income-compare-last-month-data")
 	@ResponseBody
-	public DataTableAjax<AnalysisIncomeCompareLastMonthVo> incomeCompareLastMonthData(@RequestBody AnalysisFormVo request) {
+	public DataTableAjax<AnalysisIncomeCompareLastMonthVo> incomeCompareLastMonthData(@RequestBody AnalysisFormVo formVo) {
 		logger.info("listAnalysisIncomeCompareLastMonthService");
 
 		DataTableAjax<AnalysisIncomeCompareLastMonthVo> response = new DataTableAjax<>();
 		try {
-			response = analysisIncomeCompareLastMonthService.getAnalysisIncomeCompareLastMonth(request);
+			response = analysisIncomeCompareLastMonthService.inquiry(formVo);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
+		
 		return response;
 	}
 
 	// TODO 8
 	@PostMapping("/income-compare-last-year-data")
 	@ResponseBody
-	public DataTableAjax<AnalysisIncomeCompareLastYearVo> incomeCompareLastYearData(@RequestBody AnalysisFormVo request) {
+	public DataTableAjax<AnalysisIncomeCompareLastYearVo> incomeCompareLastYearData(@RequestBody AnalysisFormVo formVo) {
 		logger.info("listAnalysisIncomeCompareLastYearService");
 
 		DataTableAjax<AnalysisIncomeCompareLastYearVo> response = new DataTableAjax<>();
 		try {
-			response = analysisIncomeCompareLastYearService.GetAnalysisIncomeCompareLastYear(request);
+			response = analysisIncomeCompareLastYearService.inquiry(formVo);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
+		
 		return response;
 	}
 
