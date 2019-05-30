@@ -16,12 +16,13 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.ia.persistence.entity.IaAuditWorkingD1;
 import th.go.excise.ims.ia.persistence.entity.IaAuditWorkingH;
 import th.go.excise.ims.ia.service.Int091201Service;
 import th.go.excise.ims.ia.vo.Int091201FormSaveVo;
 import th.go.excise.ims.ia.vo.Int091201FormSearchVo;
 import th.go.excise.ims.ia.vo.Int091201HdrDtlVo;
+import th.go.excise.ims.ia.vo.Int091201ViewFullDetailRequstVo;
+import th.go.excise.ims.ia.vo.Int091201ViewFullDetailVo;
 import th.go.excise.ims.ia.vo.Int091201Vo;
 
 @Controller
@@ -91,6 +92,24 @@ public class Int091201Controller {
 		ResponseData<Int091201HdrDtlVo> responseData = new ResponseData<Int091201HdrDtlVo>();
 		try {
 			responseData.setData(int091201Service.findDtl(res.getAuditWorkingNo()));
+			responseData.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Int091201Controller::getDtl => ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		
+		return responseData;
+	}
+	
+	
+	@PostMapping("/view-data-detail")
+	@ResponseBody
+	public ResponseData<Int091201ViewFullDetailVo> vireDataDetail(@RequestBody Int091201ViewFullDetailRequstVo res) {
+		ResponseData<Int091201ViewFullDetailVo> responseData = new ResponseData<Int091201ViewFullDetailVo>();
+		try {
+			responseData.setData(int091201Service.viewFulldetail(res));
 			responseData.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

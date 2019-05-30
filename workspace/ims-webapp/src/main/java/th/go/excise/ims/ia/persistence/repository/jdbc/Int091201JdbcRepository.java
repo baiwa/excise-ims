@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.persistence.entity.IaEmpWorkingDtl;
 import th.go.excise.ims.ia.vo.Int091201ViewFullDetailRequstVo;
 
@@ -61,8 +62,8 @@ public class Int091201JdbcRepository {
 		sql.append(" SELECT USER_NAME , USER_LOGIN FROM IA_EMP_WORKING_DTL ");
 		sql.append(" WHERE IS_DELETED = 'N' ");
 		sql.append(" AND USER_OFFCODE = ? ");
-		sql.append(" AND WORKING_DATE > ? ");
-		sql.append(" AND WORKING_DATE < ? ");
+		sql.append(" AND WORKING_DATE >= to_date(? , 'dd/mm/yyyy') ");
+		sql.append(" AND WORKING_DATE <= to_date(? , 'dd/mm/yyyy') ");
 		sql.append(" GROUP BY USER_NAME , USER_LOGIN ");
 		List<Object> paramList = new ArrayList<>();
 		paramList.add(vo.getOfficeCode());
@@ -70,12 +71,11 @@ public class Int091201JdbcRepository {
 		Calendar endDate = Calendar.getInstance();
 		int year = Integer.parseInt(vo.getYearMonth().substring(0, 4));
 		int month = Integer.parseInt(vo.getYearMonth().substring(4, 6));
-		startDate.set(year, month, 1);
-		endDate.set(year, month, 1);
-		endDate.add(Calendar.MONTH, 1);
+		startDate.set(year, month-1, 1, 0, 0);
+		endDate.set(year, month, 1 ,0, 0);
 		endDate.add(Calendar.DATE, -1);
-		paramList.add(startDate.getTime());
-		paramList.add(endDate.getTime());
+		paramList.add(ConvertDateUtils.formatDateToString(startDate.getTime(), ConvertDateUtils.DD_MM_YYYY));
+		paramList.add(ConvertDateUtils.formatDateToString(endDate.getTime(), ConvertDateUtils.DD_MM_YYYY));
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), mapUsernameAndUserLogin);
 	}
 	

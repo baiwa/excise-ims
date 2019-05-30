@@ -26,6 +26,7 @@ import th.go.excise.ims.ia.vo.Int091201HdrDtlVo;
 import th.go.excise.ims.ia.vo.Int091201LineDetail;
 import th.go.excise.ims.ia.vo.Int091201ViewFullDetailRequstVo;
 import th.go.excise.ims.ia.vo.Int091201ViewFullDetailVo;
+import th.go.excise.ims.ia.vo.Int091201ViewValue;
 import th.go.excise.ims.ia.vo.Int091201Vo;
 
 @Service
@@ -116,14 +117,15 @@ public class Int091201Service {
 		Calendar endMonth = Calendar.getInstance();
 		int year = Integer.parseInt(int091201ViewFullDetailRequstVo.getYearMonth().substring(0, 4));
 		int month = Integer.parseInt(int091201ViewFullDetailRequstVo.getYearMonth().substring(4, 6));
-		startMonth.set(year, month, 1);
-		endMonth.set(year, month + 1, 1);
+		startMonth.set(year, month-1, 1);
+		endMonth.set(year, month, 1);
 		endMonth.add(Calendar.DATE, -1);
 		String[] strDays = new String[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thusday", "Friday", "Saturday" };
-		while (startMonth.compareTo(endMonth) == -1) {
+		while (startMonth.compareTo(endMonth) <= 0) {
 			day = new Int091201DayDetailVo();
 			day.setDayOfMonth(startMonth.get(Calendar.DAY_OF_MONTH));
-			day.setDayOfweek(strDays[startMonth.get(Calendar.DAY_OF_WEEK)]);
+			day.setDayOfweek(strDays[startMonth.get(Calendar.DAY_OF_WEEK)-1]);
+			startMonth.add(Calendar.DATE, 1);
 			dayDetailList.add(day);
 		}
 		List<IaEmpWorkingDtl> empList = int091201JdbcRepository.findUsernameWorkByOfficeCodeAndWorkMonth(int091201ViewFullDetailRequstVo);
@@ -139,16 +141,28 @@ public class Int091201Service {
 			val.setUserLogin(iaEmpWorkingDtl.getUserLogin());
 			List<IaEmpWorkingDtl> empWorkingDtlList = int091201JdbcRepository.findIaEmpWorkingDtlBy(val);
 			for (Int091201DayDetailVo inLineData : dayDetailList) {
+				List<Int091201ViewValue> viewValueList = lineData.getValue();
+				if(viewValueList == null) {
+					viewValueList = new ArrayList<>();
+				}
+				Int091201ViewValue viewValue = new Int091201ViewValue();
+				viewValue.setFlag("N");
 				for (IaEmpWorkingDtl fieldData : empWorkingDtlList) {
 					Calendar date = Calendar.getInstance();
 					date.setTime(fieldData.getWorkingDate());
+					viewValue.setType(fieldData.getWorkingFlag());
 					if (inLineData.getDayOfMonth().equals(date.get(Calendar.DAY_OF_MONTH))) {
-
+						viewValue.setFlag("Y");
+						break;
 					}
 				}
+				viewValueList.add(viewValue);
+				lineData.setValue(viewValueList);
 			}
+			lineDetailList.add(lineData);
 		}
-
+		response.setDayList(dayDetailList);
+		response.setLineData(lineDetailList);
 		return response;
 	}
 }
