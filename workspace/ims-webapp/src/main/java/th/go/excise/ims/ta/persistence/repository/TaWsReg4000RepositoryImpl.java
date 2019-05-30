@@ -174,7 +174,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		sql.append(" FROM TA_WS_REG4000 R4000 ");
 		sql.append(" INNER JOIN TA_WS_REG4000_DUTY R4000D ON R4000D.NEWREG_ID = R4000.NEW_REG_ID ");
 		sql.append(" WHERE R4000.IS_DELETED = 'N' ");
-		sql.append("   AND R4000.REG_STATUS = '1' "); // REG_STATUS = '1' is Active
+		sql.append("   AND R4000.REG_STATUS IN ('1','2','3','41','51') "); // REG_STATUS = '1' is Active
 
 		// Factory Type
 		if (StringUtils.isNotBlank(formVo.getFacType())) {
