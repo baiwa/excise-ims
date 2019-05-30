@@ -333,7 +333,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		buildByCriteriaQuery(sql, params, formVo);
 
 		if (TA_WORKSHEET_STATUS.DRAFT.equals(formVo.getWorksheetStatus())) {
-			sql.append(" ORDER BY TA_W_DTL.DUTY_GROUP_ID ASC, R4000.OFFICE_CODE ASC, TA_W_DTL.NEW_REG_ID ASC ");
+			sql.append(" ORDER BY TO_NUMBER(TA_W_DTL.TAX_AMT_CHN_PNT) ASC, SUM_TOTAL_TAX_AMT DESC, R4000.OFFICE_CODE ASC, TA_W_DTL.NEW_REG_ID ASC ");
 		} else {
 			if (FLAG.Y_FLAG.equals(formVo.getNewRegFlag())) {
 				sql.append(" ORDER BY SUM_TOTAL_TAX_AMT DESC ");

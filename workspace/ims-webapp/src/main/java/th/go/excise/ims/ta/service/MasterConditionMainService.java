@@ -475,9 +475,11 @@ public class MasterConditionMainService {
 		}
         taMasCondMainDtlRepository.saveAll(dtlList);
         // insert condSubNoAudit
-        TaMasCondSubNoAudit noAudit = new TaMasCondSubNoAudit();
-        if (StringUtils.isNotEmpty(form.getCondNumber())) {
-			noAudit = condSubNoAuditRepository.findByBudgetYearAndOfficeCode(form.getBudgetYear(), officeCode);
+        TaMasCondSubNoAudit noAudit = null;
+        Object NULL = null;
+        noAudit = condSubNoAuditRepository.findByBudgetYearAndOfficeCode(form.getBudgetYear(), officeCode);
+		if (NULL == noAudit) {
+			noAudit = new TaMasCondSubNoAudit();
 		}
         noAudit.setBudgetYear(form.getBudgetYear());
         noAudit.setOfficeCode(officeCode);
