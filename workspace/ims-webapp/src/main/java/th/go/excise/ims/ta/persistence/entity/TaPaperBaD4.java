@@ -14,17 +14,17 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 @Table(name = "TA_PAPER_BA_D4")
 public class TaPaperBaD4 extends BaseEntity {
 
-	private static final long serialVersionUID = -2430210810117597710L;
+	private static final long serialVersionUID = -5708323574322691417L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_PAPER_BA_D4_GEN")
 	@SequenceGenerator(name = "TA_PAPER_BA_D4_GEN", sequenceName = "TA_PAPER_BA_D4_SEQ", allocationSize = 1)
 	@Column(name = "PAPER_BA_D4_SEQ")
 	private Long paperBaD4Seq;
-	@Column(name = "PAPER_BA_CODE")
-	private String paperBaCode;
-	@Column(name = "REC_NO")
-	private String recNo;
+	@Column(name = "PAPER_BA_NUMBER")
+	private String paperBaNumber;
+	@Column(name = "SEQ_NO")
+	private Integer seqNo;
 	@Column(name = "GOODS_DESC")
 	private String goodsDesc;
 	@Column(name = "TAX_RATE_BY_PRICE")
@@ -48,20 +48,20 @@ public class TaPaperBaD4 extends BaseEntity {
 		this.paperBaD4Seq = paperBaD4Seq;
 	}
 
-	public String getPaperBaCode() {
-		return paperBaCode;
+	public String getPaperBaNumber() {
+		return paperBaNumber;
 	}
 
-	public void setPaperBaCode(String paperBaCode) {
-		this.paperBaCode = paperBaCode;
+	public void setPaperBaNumber(String paperBaNumber) {
+		this.paperBaNumber = paperBaNumber;
 	}
 
-	public String getRecNo() {
-		return recNo;
+	public Integer getSeqNo() {
+		return seqNo;
 	}
 
-	public void setRecNo(String recNo) {
-		this.recNo = recNo;
+	public void setSeqNo(Integer seqNo) {
+		this.seqNo = seqNo;
 	}
 
 	public String getGoodsDesc() {
