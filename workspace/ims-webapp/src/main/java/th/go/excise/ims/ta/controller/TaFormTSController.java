@@ -74,77 +74,74 @@ public class TaFormTSController {
 		.registerTypeAdapter(BigDecimal.class, BigDecimalTypeAdapter.getInstance())
 		.create();
 
-	private Map<String, AbstractTaFormTSService> taFormTSMap = new HashMap<>();
+	private Map<String, AbstractTaFormTSService> taFormTSServiceMap = new HashMap<>();
 	
 	@Autowired
 	public TaFormTSController(
-		
-		TaFormTS0101Service taFormTS0101Service,
-		TaFormTS0102Service taFormTS0102Service,
-		TaFormTS0103Service taFormTS0103Service,
-		TaFormTS0104Service taFormTS0104Service,
-		TaFormTS0105Service taFormTS0105Service,
-		TaFormTS0106Service taFormTS0106Service,
-		TaFormTS0107Service taFormTS0107Service,
-		TaFormTS0108Service taFormTS0108Service,
-		TaFormTS0109Service taFormTS0109Service,
-		TaFormTS0110Service taFormTS0110Service,
-		TaFormTS0111Service taFormTS0111Service,
-		TaFormTS0112Service taFormTS0112Service,
-		TaFormTS0113Service taFormTS0113Service,
-		TaFormTS0114Service taFormTS0114Service,
-		TaFormTS01141Service taFormTS01141Service,
-		TaFormTS01142Service taFormTS01142Service,
-		TaFormTS0115Service taFormTS0115Service,
-		TaFormTS0116Service taFormTS0116Service,
-		TaFormTS0117Service taFormTS0117Service,
-		TaFormTS01171Service taFormTS01171Service,
-		TaFormTS0118Service taFormTS0118Service,
-		TaFormTS0119Service taFormTS0119Service,
-		TaFormTS0120Service taFormTS0120Service,
-		TaFormTS0121Service taFormTS0121Service,
-		TaFormTS0302Service taFormTS0302Service,
-		TaFormTS0303Service taFormTS0303Service,
-		TaFormTS0423Service taFormTS0423Service,
-		TaFormTS0424Service taFormTS0424Service
-		) {
-		
-		taFormTSMap.put("ta-form-ts0101", taFormTS0101Service);
-		taFormTSMap.put("ta-form-ts0102", taFormTS0102Service);
-		taFormTSMap.put("ta-form-ts0103", taFormTS0103Service);
-		taFormTSMap.put("ta-form-ts0104", taFormTS0104Service);
-		taFormTSMap.put("ta-form-ts0105", taFormTS0105Service);
-		taFormTSMap.put("ta-form-ts0106", taFormTS0106Service);
-		taFormTSMap.put("ta-form-ts0107", taFormTS0107Service);
-		taFormTSMap.put("ta-form-ts0108", taFormTS0108Service);
-		taFormTSMap.put("ta-form-ts0109", taFormTS0109Service);
-		taFormTSMap.put("ta-form-ts0110", taFormTS0110Service);
-		taFormTSMap.put("ta-form-ts0111", taFormTS0111Service);
-		taFormTSMap.put("ta-form-ts0112", taFormTS0112Service);
-		taFormTSMap.put("ta-form-ts0113", taFormTS0113Service);
-		taFormTSMap.put("ta-form-ts0114", taFormTS0114Service);
-		taFormTSMap.put("ta-form-ts01141", taFormTS01141Service);
-		taFormTSMap.put("ta-form-ts01142", taFormTS01142Service);
-		taFormTSMap.put("ta-form-ts0115", taFormTS0115Service);
-		taFormTSMap.put("ta-form-ts0116", taFormTS0116Service);
-		taFormTSMap.put("ta-form-ts0117", taFormTS0117Service);
-		taFormTSMap.put("ta-form-ts01171", taFormTS01171Service);
-		taFormTSMap.put("ta-form-ts0118", taFormTS0118Service);
-		taFormTSMap.put("ta-form-ts0119", taFormTS0119Service);
-		taFormTSMap.put("ta-form-ts0120", taFormTS0120Service);
-		taFormTSMap.put("ta-form-ts0121", taFormTS0121Service);
-		taFormTSMap.put("ta-form-ts0302", taFormTS0302Service);
-		taFormTSMap.put("ta-form-ts0303", taFormTS0303Service);
-		taFormTSMap.put("ta-form-ts0423", taFormTS0423Service);
-		taFormTSMap.put("ta-form-ts0424", taFormTS0424Service);
+			TaFormTS0101Service taFormTS0101Service,
+			TaFormTS0102Service taFormTS0102Service,
+			TaFormTS0103Service taFormTS0103Service,
+			TaFormTS0104Service taFormTS0104Service,
+			TaFormTS0105Service taFormTS0105Service,
+			TaFormTS0106Service taFormTS0106Service,
+			TaFormTS0107Service taFormTS0107Service,
+			TaFormTS0108Service taFormTS0108Service,
+			TaFormTS0109Service taFormTS0109Service,
+			TaFormTS0110Service taFormTS0110Service,
+			TaFormTS0111Service taFormTS0111Service,
+			TaFormTS0112Service taFormTS0112Service,
+			TaFormTS0113Service taFormTS0113Service,
+			TaFormTS0114Service taFormTS0114Service,
+			TaFormTS01141Service taFormTS01141Service,
+			TaFormTS01142Service taFormTS01142Service,
+			TaFormTS0115Service taFormTS0115Service,
+			TaFormTS0116Service taFormTS0116Service,
+			TaFormTS0117Service taFormTS0117Service,
+			TaFormTS01171Service taFormTS01171Service,
+			TaFormTS0118Service taFormTS0118Service,
+			TaFormTS0119Service taFormTS0119Service,
+			TaFormTS0120Service taFormTS0120Service,
+			TaFormTS0121Service taFormTS0121Service,
+			TaFormTS0302Service taFormTS0302Service,
+			TaFormTS0303Service taFormTS0303Service,
+			TaFormTS0423Service taFormTS0423Service,
+			TaFormTS0424Service taFormTS0424Service) {
+		taFormTSServiceMap.put("ta-form-ts0101", taFormTS0101Service);
+		taFormTSServiceMap.put("ta-form-ts0102", taFormTS0102Service);
+		taFormTSServiceMap.put("ta-form-ts0103", taFormTS0103Service);
+		taFormTSServiceMap.put("ta-form-ts0104", taFormTS0104Service);
+		taFormTSServiceMap.put("ta-form-ts0105", taFormTS0105Service);
+		taFormTSServiceMap.put("ta-form-ts0106", taFormTS0106Service);
+		taFormTSServiceMap.put("ta-form-ts0107", taFormTS0107Service);
+		taFormTSServiceMap.put("ta-form-ts0108", taFormTS0108Service);
+		taFormTSServiceMap.put("ta-form-ts0109", taFormTS0109Service);
+		taFormTSServiceMap.put("ta-form-ts0110", taFormTS0110Service);
+		taFormTSServiceMap.put("ta-form-ts0111", taFormTS0111Service);
+		taFormTSServiceMap.put("ta-form-ts0112", taFormTS0112Service);
+		taFormTSServiceMap.put("ta-form-ts0113", taFormTS0113Service);
+		taFormTSServiceMap.put("ta-form-ts0114", taFormTS0114Service);
+		taFormTSServiceMap.put("ta-form-ts01141", taFormTS01141Service);
+		taFormTSServiceMap.put("ta-form-ts01142", taFormTS01142Service);
+		taFormTSServiceMap.put("ta-form-ts0115", taFormTS0115Service);
+		taFormTSServiceMap.put("ta-form-ts0116", taFormTS0116Service);
+		taFormTSServiceMap.put("ta-form-ts0117", taFormTS0117Service);
+		taFormTSServiceMap.put("ta-form-ts01171", taFormTS01171Service);
+		taFormTSServiceMap.put("ta-form-ts0118", taFormTS0118Service);
+		taFormTSServiceMap.put("ta-form-ts0119", taFormTS0119Service);
+		taFormTSServiceMap.put("ta-form-ts0120", taFormTS0120Service);
+		taFormTSServiceMap.put("ta-form-ts0121", taFormTS0121Service);
+		taFormTSServiceMap.put("ta-form-ts0302", taFormTS0302Service);
+		taFormTSServiceMap.put("ta-form-ts0303", taFormTS0303Service);
+		taFormTSServiceMap.put("ta-form-ts0423", taFormTS0423Service);
+		taFormTSServiceMap.put("ta-form-ts0424", taFormTS0424Service);
 	}
 	
 	@SuppressWarnings("unchecked")
 	@PostMapping("/pdf/{tsNumber}")
 	public void generatePdfReportFormTS(@PathVariable("tsNumber") String tsNumber, @ModelAttribute ReportJsonBean reportJsonBean, HttpServletResponse response) throws Exception {
 		logger.info("generatePdfReportFormTS tsNumber={}", tsNumber);
-		
-		AbstractTaFormTSService taFormTSService = taFormTSMap.get(tsNumber);
+
+		AbstractTaFormTSService taFormTSService = taFormTSServiceMap.get(tsNumber);
 		Object formVo = gson.fromJson(reportJsonBean.getJson(), taFormTSService.getVoClass());
 		byte[] reportFile = taFormTSService.generateReport(formVo);
 
@@ -154,15 +151,15 @@ public class TaFormTSController {
 
 		FileCopyUtils.copy(reportFile, response.getOutputStream());
 	}
-	
+
 	@GetMapping("/form-ts-number/{tsNumber}")
 	@ResponseBody
 	public ResponseData<List<String>> getFormTSNumber(@PathVariable("tsNumber") String tsNumber) {
 		logger.info("getFormTSNumber tsNumber={}", tsNumber);
-		
+
 		ResponseData<List<String>> response = new ResponseData<>();
 		try {
-			AbstractTaFormTSService taFormTSService = taFormTSMap.get(tsNumber);
+			AbstractTaFormTSService taFormTSService = taFormTSServiceMap.get(tsNumber);
 			response.setData(taFormTSService.getFormTsNumberList());
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
@@ -170,17 +167,17 @@ public class TaFormTSController {
 			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
 		}
-		
+
 		return response;
 	}
 
 	@PostMapping("/get-from-ts/{tsNumber}/{formTsNumber}")
 	@ResponseBody
-	public ResponseData<String> getFromTs(@PathVariable("tsNumber") String tsNumber, @PathVariable("formTsNumber") String formTsNumber){
+	public ResponseData<String> getFromTs(@PathVariable("tsNumber") String tsNumber, @PathVariable("formTsNumber") String formTsNumber) {
 		logger.info("getFormTSNumber tsNumber={}", tsNumber);
 		ResponseData<String> response = new ResponseData<>();
 		try {
-			AbstractTaFormTSService taFormTSService = taFormTSMap.get(tsNumber);
+			AbstractTaFormTSService taFormTSService = taFormTSServiceMap.get(tsNumber);
 			response.setData(gson.toJson(taFormTSService.getFormTS(formTsNumber), taFormTSService.getVoClass()));
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
@@ -191,13 +188,14 @@ public class TaFormTSController {
 
 		return response;
 	}
+
 	@PostMapping("/save-from-ts/{tsNumber}")
 	@ResponseBody
-	public ResponseData<?> saveFromTs(@PathVariable("tsNumber") String tsNumber, @RequestBody ReportJsonBean reportJsonBean){
+	public ResponseData<?> saveFromTs(@PathVariable("tsNumber") String tsNumber, @RequestBody ReportJsonBean reportJsonBean) {
 		logger.info("getFormTSNumber tsNumber={}", tsNumber);
 		ResponseData<String> response = new ResponseData<>();
 		try {
-			AbstractTaFormTSService taFormTSService = taFormTSMap.get(tsNumber);
+			AbstractTaFormTSService taFormTSService = taFormTSServiceMap.get(tsNumber);
 			Object formVo = gson.fromJson(reportJsonBean.getJson(), taFormTSService.getVoClass());
 			taFormTSService.saveFormTS(formVo);
 			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
