@@ -1,12 +1,14 @@
 package th.go.excise.ims.ta.service;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 
-import th.go.excise.ims.ta.vo.AnalysisFormVo;
+import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
 
-public abstract class AbstractBasicAnalysisService<VO extends Object> {
+public abstract class AbstractBasicAnalysisService<VO> {
 
-	public VO inquiry(AnalysisFormVo formVo) {
+	public List<VO> inquiry(BasicAnalysisFormVo formVo) {
 		if (StringUtils.isEmpty(formVo.getPaperBaNumber())) {
 			return inquiryByWs(formVo);
 		} else {
@@ -14,8 +16,10 @@ public abstract class AbstractBasicAnalysisService<VO extends Object> {
 		}
 	};
 
-	protected abstract VO inquiryByWs(AnalysisFormVo formVo);
+	protected abstract List<VO> inquiryByWs(BasicAnalysisFormVo formVo);
 
-	protected abstract VO inquiryByPaperBaNumber(AnalysisFormVo formVo);
+	protected abstract List<VO> inquiryByPaperBaNumber(BasicAnalysisFormVo formVo);
+
+	protected abstract void save(BasicAnalysisFormVo formVo);
 
 }

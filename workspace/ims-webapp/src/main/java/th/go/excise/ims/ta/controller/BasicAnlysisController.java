@@ -4,190 +4,63 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
-import th.go.excise.ims.ta.service.AnalysisIncomeCompareLastMonthService;
-import th.go.excise.ims.ta.service.AnalysisIncomeCompareLastYearService;
-import th.go.excise.ims.ta.service.AnalysisTaxAmtService;
-import th.go.excise.ims.ta.service.AnalysisTaxFilingService;
-import th.go.excise.ims.ta.service.AnalysisTaxQtyService;
-import th.go.excise.ims.ta.service.AnalysisTaxRateService;
-import th.go.excise.ims.ta.service.AnalysisTaxRetailPriceService;
-import th.go.excise.ims.ta.service.AnalysisTaxValueService;
-import th.go.excise.ims.ta.vo.AnalysisFormVo;
-import th.go.excise.ims.ta.vo.AnalysisIncomeCompareLastMonthVo;
-import th.go.excise.ims.ta.vo.AnalysisIncomeCompareLastYearVo;
-import th.go.excise.ims.ta.vo.AnalysisTaxAmtVo;
-import th.go.excise.ims.ta.vo.AnalysisTaxFilingVo;
-import th.go.excise.ims.ta.vo.AnalysisTaxQtyVo;
-import th.go.excise.ims.ta.vo.AnalysisTaxRateVo;
-import th.go.excise.ims.ta.vo.AnalysisTaxRetailPriceVo;
-import th.go.excise.ims.ta.vo.AnalysisTaxValueVo;
+import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.ta.service.BasicAnalysisService;
+import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
 
 @Controller
 @RequestMapping("/api/ta/basic-anlysis")
 public class BasicAnlysisController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(BasicAnlysisController.class);
-	
-	private AnalysisTaxQtyService analysisTaxQtyService;
-	private AnalysisTaxRetailPriceService analysisTaxRetailPriceService;
-	private AnalysisTaxValueService analysisTaxValueService;
-	private AnalysisTaxRateService analysisTaxRateService;
-	private AnalysisTaxAmtService analysisTaxAmtService;
-	private AnalysisTaxFilingService analysisTaxFilingService;
-	private AnalysisIncomeCompareLastMonthService analysisIncomeCompareLastMonthService;
-	private AnalysisIncomeCompareLastYearService analysisIncomeCompareLastYearService;
+
+	private BasicAnalysisService basicAnalysisService;
 
 	@Autowired
-	public BasicAnlysisController(
-			AnalysisTaxQtyService analysisTaxQtyService,
-			AnalysisTaxRetailPriceService analysisTaxRetailPriceService,
-			AnalysisTaxRateService analysisTaxRateService,
-			AnalysisTaxAmtService analysisTaxAmtService,
-			AnalysisTaxFilingService analysisTaxFilingService,
-			AnalysisIncomeCompareLastMonthService analysisIncomeCompareLastMonthService,
-			AnalysisIncomeCompareLastYearService analysisIncomeCompareLastYearService,
-			AnalysisTaxValueService analysisTaxValueService) {
-		this.analysisTaxQtyService = analysisTaxQtyService;
-		this.analysisTaxRetailPriceService = analysisTaxRetailPriceService;
-		this.analysisTaxRateService = analysisTaxRateService;
-		this.analysisTaxValueService = analysisTaxValueService;
-		this.analysisTaxAmtService = analysisTaxAmtService;
-		this.analysisTaxFilingService = analysisTaxFilingService;
-		this.analysisIncomeCompareLastMonthService = analysisIncomeCompareLastMonthService;
-		this.analysisIncomeCompareLastYearService = analysisIncomeCompareLastYearService;
+	public BasicAnlysisController(BasicAnalysisService basicAnalysisService) {
+		this.basicAnalysisService = basicAnalysisService;
 	}
 
-	// TODO 1
-	@PostMapping("/tax-qty-data")
+	@PostMapping("/inquiry-{analysisType}-data")
 	@ResponseBody
-	public DataTableAjax<AnalysisTaxQtyVo> taxQtyData(@RequestBody AnalysisFormVo formVo) {
-		logger.info("taxQtyData");
+	public DataTableAjax<?> inquiryData(@PathVariable("analysisType") String analysisType, @RequestBody BasicAnalysisFormVo formVo) {
+		logger.info("inquiryData analysisType={}", analysisType);
 
-		DataTableAjax<AnalysisTaxQtyVo> response = new DataTableAjax<>();
+		DataTableAjax<?> response = new DataTableAjax<>();
 		try {
-			response = analysisTaxQtyService.getAnalysisTaxQty(formVo);
+			response = basicAnalysisService.inquiry(analysisType, formVo);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
-		
+
 		return response;
 	}
 
-	// TODO 2
-	@PostMapping("/tax-retail-price-data")
+	@PostMapping("/save")
 	@ResponseBody
-	public DataTableAjax<AnalysisTaxRetailPriceVo> taxRetailPriceData(@RequestBody AnalysisFormVo formVo) {
-		logger.info("taxRetailPriceData");
+	public ResponseData<String> saveData(@RequestBody BasicAnalysisFormVo formVo) {
+		logger.info("saveData");
 
-		DataTableAjax<AnalysisTaxRetailPriceVo> response = new DataTableAjax<>();
+		ResponseData<String> response = new ResponseData<>();
 		try {
-			response = analysisTaxRetailPriceService.GetAnalysisTaxQuRetailPrice(formVo);
+			basicAnalysisService.save(formVo);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			response.setMessage(e.getMessage());
+			response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
 		}
-		
-		return response;
-	}
-	
-	// TODO 3
-	@PostMapping("/tax-value-data")
-	@ResponseBody
-	public DataTableAjax<AnalysisTaxValueVo> taxValueData(@RequestBody AnalysisFormVo formVo) {
-		logger.info("taxValueData");
 
-		DataTableAjax<AnalysisTaxValueVo> response = new DataTableAjax<>();
-		try {
-			response = analysisTaxValueService.GetAnalysisTaxValue(formVo);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-		}
-		
-		return response;
-	}
-	
-	// TODO 4
-	@PostMapping("/tax-rate-data")
-	@ResponseBody
-	public DataTableAjax<AnalysisTaxRateVo> taxRateData(@RequestBody AnalysisFormVo formVo) {
-		logger.info("taxRateData");
-
-		DataTableAjax<AnalysisTaxRateVo> response = new DataTableAjax<>();
-		try {
-			response = analysisTaxRateService.GetAnalysisTaxRate(formVo);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-		}
-		
-		return response;
-	}
-
-	// TODO 5
-	@PostMapping("/tax-amt-data")
-	@ResponseBody
-	public DataTableAjax<AnalysisTaxAmtVo> taxAmtData(@RequestBody AnalysisFormVo formVo) {
-		logger.info("taxAmtData");
-
-		DataTableAjax<AnalysisTaxAmtVo> response = new DataTableAjax<>();
-		try {
-			response = analysisTaxAmtService.GetAnalysisTaxAmt(formVo);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-		}
-		
-		return response;
-	}
-
-	// TODO 6
-	@PostMapping("/tax-filing-data")
-	@ResponseBody
-	public DataTableAjax<AnalysisTaxFilingVo> taxFilingData(@RequestBody AnalysisFormVo formVo) {
-		logger.info("taxFilingData");
-
-		DataTableAjax<AnalysisTaxFilingVo> response = new DataTableAjax<>();
-		try {
-			response = analysisTaxFilingService.GetAnalysisTaxFiling(formVo);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-		}
-		
-		return response;
-	}
-
-	// TODO 7
-	@PostMapping("/income-compare-last-month-data")
-	@ResponseBody
-	public DataTableAjax<AnalysisIncomeCompareLastMonthVo> incomeCompareLastMonthData(@RequestBody AnalysisFormVo formVo) {
-		logger.info("listAnalysisIncomeCompareLastMonthService");
-
-		DataTableAjax<AnalysisIncomeCompareLastMonthVo> response = new DataTableAjax<>();
-		try {
-			response = analysisIncomeCompareLastMonthService.inquiry(formVo);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-		}
-		
-		return response;
-	}
-
-	// TODO 8
-	@PostMapping("/income-compare-last-year-data")
-	@ResponseBody
-	public DataTableAjax<AnalysisIncomeCompareLastYearVo> incomeCompareLastYearData(@RequestBody AnalysisFormVo formVo) {
-		logger.info("listAnalysisIncomeCompareLastYearService");
-
-		DataTableAjax<AnalysisIncomeCompareLastYearVo> response = new DataTableAjax<>();
-		try {
-			response = analysisIncomeCompareLastYearService.inquiry(formVo);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-		}
-		
 		return response;
 	}
 
