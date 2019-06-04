@@ -19,6 +19,7 @@ import th.go.excise.ims.ta.vo.BasicAnalysisTaxQtyVo;
 import th.go.excise.ims.ta.vo.BasicAnalysisTaxValueVo;
 import th.go.excise.ims.ws.persistence.entity.WsAnafri0001D;
 import th.go.excise.ims.ws.persistence.repository.WsAnafri0001DRepository;
+import th.go.excise.ims.ws.vo.WsAnafri0001Vo;
 
 @Service
 public class BasicAnalysisTaxValueService extends AbstractBasicAnalysisService<BasicAnalysisTaxValueVo> {
@@ -40,13 +41,13 @@ public class BasicAnalysisTaxValueService extends AbstractBasicAnalysisService<B
 		String dateStart = localDateStart.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
 		String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
 		
-		List<WsAnafri0001D> wsAna0001DList = wsAnafri0001DRepository.findProductListByBasicAnalysisFormVo(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
+		List<WsAnafri0001Vo> anafri0001VoList = wsAnafri0001DRepository.findProductList(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
 		BasicAnalysisTaxValueVo dataSet = null;
-		for (WsAnafri0001D wsAna0001D : wsAna0001DList) {
+		for (WsAnafri0001Vo anafri0001Vo : anafri0001VoList) {
 			dataSet = new BasicAnalysisTaxValueVo();
-			dataSet.setGoodsDescText(wsAna0001D.getProductName());
-			dataSet.setTaxQty(wsAna0001D.getProductQty());
-			dataSet.setInformPrice(wsAna0001D.getProductPrice());
+			dataSet.setGoodsDescText(anafri0001Vo.getProductName());
+			dataSet.setTaxQty(anafri0001Vo.getProductQty());
+			dataSet.setInformPrice(anafri0001Vo.getProductPrice());
 			dataSet.setGoodsValueAmt(new BigDecimal(0));
 			voList.add(dataSet);
 		}

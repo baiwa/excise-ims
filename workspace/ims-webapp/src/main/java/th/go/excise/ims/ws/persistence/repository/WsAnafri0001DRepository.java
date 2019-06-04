@@ -1,7 +1,5 @@
 package th.go.excise.ims.ws.persistence.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,19 +22,5 @@ public interface WsAnafri0001DRepository extends CommonJpaCrudRepository<WsAnafr
 		nativeQuery = true
 	)
 	public void forceDeleteByFormCode(@Param("newRegId") String newRegId, @Param("formCode") String formCode, @Param("dateStart") String dateStart, @Param("dateEnd") String dateEnd);
-	
-	@Query(
-		value = " SELECT D.* " +
-				" FROM WS_ANAFRI0001_D D " +
-				" INNER JOIN WS_ANAFRI0001_H H ON H.NEW_REG_ID = D.NEW_REG_ID " +
-				"   AND H.FORM_CODE = D.FORM_CODE " +
-				"   AND H.REG_IN_NO = D.REG_IN_NO " +
-				"   AND H.IS_DELETED = 'N' " +
-				" WHERE D.NEW_REG_ID = :newRegId " +
-				"   AND SUBSTR(D.PRODUCT_CODE,0,4) = :dutyGroupId " +
-				"   AND (TRUNC(H.REG_IN_DATE) >= TO_DATE(:dateStart,'YYYYMMDD') AND TRUNC(H.REG_IN_DATE) <= TO_DATE(:dateEnd,'YYYYMMDD')) ",
-		nativeQuery = true
-	)
-	public List<WsAnafri0001D> findProductListByBasicAnalysisFormVo(@Param("newRegId") String newRegId, @Param("dutyGroupId") String dutyGroupId, @Param("dateStart") String dateStart, @Param("dateEnd") String dateEnd);
 	
 }

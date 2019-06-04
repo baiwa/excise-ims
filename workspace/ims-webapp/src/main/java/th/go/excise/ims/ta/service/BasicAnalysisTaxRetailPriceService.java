@@ -20,6 +20,7 @@ import th.go.excise.ims.ta.vo.BasicAnalysisIncomeCompareLastMonthVo;
 import th.go.excise.ims.ta.vo.BasicAnalysisTaxRetailPriceVo;
 import th.go.excise.ims.ws.persistence.entity.WsAnafri0001D;
 import th.go.excise.ims.ws.persistence.repository.WsAnafri0001DRepository;
+import th.go.excise.ims.ws.vo.WsAnafri0001Vo;
 
 @Service
 public class BasicAnalysisTaxRetailPriceService extends AbstractBasicAnalysisService<BasicAnalysisTaxRetailPriceVo> {
@@ -42,15 +43,15 @@ public class BasicAnalysisTaxRetailPriceService extends AbstractBasicAnalysisSer
 		String dateStart = localDateStart.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
 		String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
 
-		List<WsAnafri0001D> wsAna0001DList = wsAnafri0001DRepository.findProductListByBasicAnalysisFormVo(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
+		List<WsAnafri0001Vo> anafri0001VoList = wsAnafri0001DRepository.findProductList(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
 	
 		List<BasicAnalysisTaxRetailPriceVo> voList = new ArrayList<>();
 		BasicAnalysisTaxRetailPriceVo vo = null;
 		
-		for (WsAnafri0001D wsAnafri0001D : wsAna0001DList) {
+		for (WsAnafri0001Vo anafri0001Vo : anafri0001VoList) {
 			vo = new BasicAnalysisTaxRetailPriceVo();
-			vo.setGoodsDesc(wsAnafri0001D.getProductName());
-			vo.setTaxInformPrice(wsAnafri0001D.getProductPrice());
+			vo.setGoodsDesc(anafri0001Vo.getProductName());
+			vo.setTaxInformPrice(anafri0001Vo.getProductPrice());
 			BigDecimal informPrice = null;
 			vo.setInformPrice(informPrice);
 			BigDecimal diffTaxInformPrice = null;

@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 import th.go.excise.ims.ta.persistence.repository.TaPaperBaD4Repository;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
 import th.go.excise.ims.ta.vo.BasicAnalysisTaxRateVo;
-import th.go.excise.ims.ws.persistence.entity.WsAnafri0001D;
 import th.go.excise.ims.ws.persistence.repository.WsAnafri0001DRepository;
+import th.go.excise.ims.ws.vo.WsAnafri0001Vo;
 
 @Service
 public class BasicAnalysisTaxRateService extends AbstractBasicAnalysisService<BasicAnalysisTaxRateVo> {
@@ -40,20 +40,20 @@ public class BasicAnalysisTaxRateService extends AbstractBasicAnalysisService<Ba
 		String dateStart = localDateStart.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
 		String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
 
-		List<WsAnafri0001D> wsAna0001DList = wsAnafri0001DRepository.findProductListByBasicAnalysisFormVo(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
+		List<WsAnafri0001Vo> anafri0001VoList = wsAnafri0001DRepository.findProductList(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
 	
 		List<BasicAnalysisTaxRateVo> voList = new ArrayList<>();
 		BasicAnalysisTaxRateVo vo = null;
+		BigDecimal anaTaxRateByPrice = null;
+		BigDecimal anaTaxRateByQty = null;
+		BigDecimal diffTaxRateByPrice = null;
+		BigDecimal diffTaxRateByQty = null;
 		
-		for (WsAnafri0001D wsAnafri0001D : wsAna0001DList) {
+		for (WsAnafri0001Vo anafri0001Vo : anafri0001VoList) {
 			vo = new BasicAnalysisTaxRateVo();
-			vo.setGoodsDesc(wsAnafri0001D.getProductName());
-			vo.setTaxRateByPrice(wsAnafri0001D.getValueRate());
-			vo.setTaxRateByQty(wsAnafri0001D.getQtyRate());
-			BigDecimal anaTaxRateByPrice = null;
-			BigDecimal anaTaxRateByQty = null;
-			BigDecimal diffTaxRateByPrice = null;
-			BigDecimal diffTaxRateByQty = null;
+			vo.setGoodsDesc(anafri0001Vo.getProductName());
+			vo.setTaxRateByPrice(anafri0001Vo.getValueRate());
+			vo.setTaxRateByQty(anafri0001Vo.getQtyRate());
 			vo.setAnaTaxRateByPrice(anaTaxRateByPrice);
 			vo.setAnaTaxRateByQty(anaTaxRateByQty);
 			vo.setDiffTaxRateByPrice(diffTaxRateByPrice);

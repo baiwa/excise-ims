@@ -1,6 +1,7 @@
 package th.go.excise.ims.ws.persistence.repository;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,10 +11,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
+import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
+import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.go.excise.ims.ws.persistence.entity.WsAnafri0001D;
+import th.go.excise.ims.ws.vo.WsAnafri0001Vo;
 
 public class WsAnafri0001DRepositoryImpl implements WsAnafri0001DRepositoryCustom {
 	
@@ -92,6 +96,66 @@ public class WsAnafri0001DRepositoryImpl implements WsAnafri0001DRepositoryCusto
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
 			}
 		});
+	}
+
+	@Override
+	public List<WsAnafri0001Vo> findProductList(String newRegId, String dutyGroupId, String dateStart, String dateEnd) {
+		logger.info("findProductListByBasicAnalysisFormVo newRegId={}, dutyGroupId={}, dateStart={}, dateEnd={}", newRegId, dutyGroupId, dateStart, dateEnd);
+		
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT H.REG_IN_DATE, H.PAY_TYPE12, H.RECEIPT_NO, H.RECEIPT_DATE, D.* ");
+		sql.append(" FROM WS_ANAFRI0001_D D ");
+		sql.append(" INNER JOIN WS_ANAFRI0001_H H ON H.NEW_REG_ID = D.NEW_REG_ID ");
+		sql.append("   AND H.FORM_CODE = D.FORM_CODE ");
+		sql.append("   AND H.REG_IN_NO = D.REG_IN_NO ");
+		sql.append("   AND H.IS_DELETED = 'N' ");
+		sql.append(" WHERE D.NEW_REG_ID = ? ");
+		sql.append("   AND SUBSTR(D.PRODUCT_CODE,0,4) = ? ");
+		sql.append("   AND (TRUNC(H.REG_IN_DATE) >= TO_DATE(?,'YYYYMMDD') AND TRUNC(H.REG_IN_DATE) <= TO_DATE(?,'YYYYMMDD')) ");
+		
+		List<Object> paramList = new ArrayList<>();
+		paramList.add(newRegId);
+		paramList.add(dutyGroupId);
+		paramList.add(dateStart);
+		paramList.add(dateEnd);
+		
+		List<WsAnafri0001Vo> voList = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), new RowMapper<WsAnafri0001Vo>() {
+			@Override
+			public WsAnafri0001Vo mapRow(ResultSet rs, int rowNum) throws SQLException {
+				WsAnafri0001Vo vo = new WsAnafri0001Vo();
+				vo.setNewRegId(rs.getString("NEW_REG_ID"));
+				vo.setFormCode(rs.getString("FORM_CODE"));
+				vo.setRegInNo(rs.getString("REG_IN_NO"));
+				vo.setRegInDate(LocalDateConverter.convertToEntityAttribute(rs.getDate("REG_IN_DATE")));
+				vo.setPayType12(rs.getString("PAY_TYPE12"));
+				vo.setReceiptNo(rs.getString("RECEIPT_NO"));
+				vo.setReceiptDate(LocalDateConverter.convertToEntityAttribute(rs.getDate("RECEIPT_DATE")));
+				vo.setGoodsSeq(rs.getString("GOODS_SEQ"));
+				vo.setProductCode(rs.getString("PRODUCT_CODE"));
+				vo.setProductName(rs.getString("PRODUCT_NAME"));
+				vo.setBrandMainCode(rs.getString("BRAND_MAIN_CODE"));
+				vo.setBrandMainName(rs.getString("BRAND_MAIN_NAME"));
+				vo.setBrandSecondCode(rs.getString("BRAND_SECOND_CODE"));
+				vo.setBrandSecondName(rs.getString("BRAND_SECOND_NAME"));
+				vo.setModelCode(rs.getString("MODEL_CODE"));
+				vo.setModelName(rs.getString("MODEL_NAME"));
+				vo.setSizeCode(rs.getString("SIZE_CODE"));
+				vo.setSizeName(rs.getString("SIZE_NAME"));
+				vo.setUnitCode(rs.getString("UNIT_CODE"));
+				vo.setUnitName(rs.getString("UNIT_NAME"));
+				vo.setProductQty(rs.getBigDecimal("PRODUCT_QTY"));
+				vo.setProductPrice(rs.getBigDecimal("PRODUCT_PRICE"));
+				vo.setValueRate(rs.getBigDecimal("VALUE_RATE"));
+				vo.setQtyRate(rs.getBigDecimal("QTY_RATE"));
+				vo.setTaxValueAmt(rs.getBigDecimal("TAX_VALUE_AMT"));
+				vo.setTaxQuantityAmt(rs.getBigDecimal("TAX_QUANTITY_AMT"));
+				vo.setTaxAmt(rs.getBigDecimal("TAX_AMT"));
+				vo.setLocAmt(rs.getBigDecimal("LOC_AMT"));
+				return vo;
+			}
+		});
+		
+		return voList;
 	}
 	
 }

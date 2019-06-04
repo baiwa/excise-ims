@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 import th.go.excise.ims.ta.persistence.repository.TaPaperBaD1Repository;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
 import th.go.excise.ims.ta.vo.BasicAnalysisTaxQtyVo;
-import th.go.excise.ims.ws.persistence.entity.WsAnafri0001D;
 import th.go.excise.ims.ws.persistence.repository.WsAnafri0001DRepository;
+import th.go.excise.ims.ws.vo.WsAnafri0001Vo;
 
 @Service
 public class BasicAnalysisTaxQtyService extends AbstractBasicAnalysisService<BasicAnalysisTaxQtyVo> {
@@ -39,12 +39,12 @@ public class BasicAnalysisTaxQtyService extends AbstractBasicAnalysisService<Bas
 		String dateStart = localDateStart.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
 		String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
 		
-		List<WsAnafri0001D> wsAna0001DList = wsAnafri0001DRepository.findProductListByBasicAnalysisFormVo(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
+		List<WsAnafri0001Vo> anafri0001VoList = wsAnafri0001DRepository.findProductList(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
 		BasicAnalysisTaxQtyVo dataSet = null;
-		for (WsAnafri0001D wsAna0001D : wsAna0001DList) {
+		for (WsAnafri0001Vo anafri0001Vo : anafri0001VoList) {
 			dataSet = new BasicAnalysisTaxQtyVo();
-			dataSet.setGoodsDesc(wsAna0001D.getProductName());
-			dataSet.setTaxQty(wsAna0001D.getProductQty());
+			dataSet.setGoodsDesc(anafri0001Vo.getProductName());
+			dataSet.setTaxQty(anafri0001Vo.getProductQty());
 			dataSet.setMonthStatementTaxQty(null);
 			dataSet.setDiffTaxQty(new BigDecimal(0));
 			voList.add(dataSet);

@@ -1,6 +1,5 @@
 package th.go.excise.ims.ta.service;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
@@ -16,9 +15,8 @@ import org.springframework.stereotype.Service;
 import th.go.excise.ims.ta.persistence.repository.TaPaperBaD5Repository;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
 import th.go.excise.ims.ta.vo.BasicAnalysisTaxAmtVo;
-import th.go.excise.ims.ta.vo.BasicAnalysisTaxValueVo;
-import th.go.excise.ims.ws.persistence.entity.WsAnafri0001D;
 import th.go.excise.ims.ws.persistence.repository.WsAnafri0001DRepository;
+import th.go.excise.ims.ws.vo.WsAnafri0001Vo;
 
 @Service
 public class BasicAnalysisTaxAmtService extends AbstractBasicAnalysisService<BasicAnalysisTaxAmtVo> {
@@ -40,14 +38,14 @@ public class BasicAnalysisTaxAmtService extends AbstractBasicAnalysisService<Bas
 		String dateStart = localDateStart.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
 		String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
 		
-		List<WsAnafri0001D> wsAna0001DList = wsAnafri0001DRepository.findProductListByBasicAnalysisFormVo(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
+		List<WsAnafri0001Vo> anafri0001VoList = wsAnafri0001DRepository.findProductList(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
 		BasicAnalysisTaxAmtVo dataSet = null;
-		for (WsAnafri0001D wsAna0001D : wsAna0001DList) {
+		for (WsAnafri0001Vo anafri0001Vo : anafri0001VoList) {
 			dataSet = new BasicAnalysisTaxAmtVo();
-			dataSet.setGoodsDesc(wsAna0001D.getProductName());
-			dataSet.setAnaTaxByValAmt(wsAna0001D.getTaxValueAmt());
-			dataSet.setAnaTaxByQtyAmt(wsAna0001D.getTaxQuantityAmt());
-			dataSet.setSumAnaTaxAmt(wsAna0001D.getTaxAmt());
+			dataSet.setGoodsDesc(anafri0001Vo.getProductName());
+			dataSet.setAnaTaxByValAmt(anafri0001Vo.getTaxValueAmt());
+			dataSet.setAnaTaxByQtyAmt(anafri0001Vo.getTaxQuantityAmt());
+			dataSet.setSumAnaTaxAmt(anafri0001Vo.getTaxAmt());
 			voList.add(dataSet);
 		}
 		return voList;
