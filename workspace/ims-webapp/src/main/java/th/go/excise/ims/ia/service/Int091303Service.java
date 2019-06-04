@@ -103,8 +103,11 @@ public class Int091303Service {
 	
 	
 	public IaUtilityBudget save(Int091303SaveVo int091303SaveVo) {
+		IaUtilityBudget iaUtilityBudget = null;
+		if(int091303SaveVo.getUtilityBudgetSeq() != null) {
+			iaUtilityBudget = iaUtilityBudgetRepository.findById(int091303SaveVo.getUtilityBudgetSeq()).get();
+		}
 		
-		IaUtilityBudget iaUtilityBudget = iaUtilityBudgetRepository.findById(int091303SaveVo.getUtilityBudgetSeq()).get();
 		if(iaUtilityBudget == null ) {
 			iaUtilityBudget = new IaUtilityBudget();
 		}
