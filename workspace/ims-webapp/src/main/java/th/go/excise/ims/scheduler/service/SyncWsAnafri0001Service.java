@@ -18,7 +18,6 @@ import th.go.excise.ims.ws.client.pcc.anafri0001.model.Form;
 import th.go.excise.ims.ws.client.pcc.anafri0001.model.Goods;
 import th.go.excise.ims.ws.client.pcc.anafri0001.model.RequestData;
 import th.go.excise.ims.ws.client.pcc.anafri0001.service.AnaFri0001Service;
-import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
 import th.go.excise.ims.ws.persistence.entity.WsAnafri0001D;
 import th.go.excise.ims.ws.persistence.entity.WsAnafri0001H;
 import th.go.excise.ims.ws.persistence.repository.WsAnafri0001DRepository;
@@ -41,7 +40,7 @@ public class SyncWsAnafri0001Service {
 	private WsAnafri0001DRepository wsAnafri0001DRepository;
 	
 	@Transactional(rollbackOn = {Exception.class})
-	public void syncData(RequestData requestData) throws PccRestfulException {
+	public void syncData(RequestData requestData) {
 		logger.info("syncData Anafri0001 Start");
 		long start = System.currentTimeMillis();
 		
@@ -56,7 +55,13 @@ public class SyncWsAnafri0001Service {
 		do {
 			indexPage++;
 			requestData.setPageNo(String.valueOf(indexPage));
-			formList = anaFri0001Service.execute(requestData).getFormList();
+			try {
+				formList = anaFri0001Service.execute(requestData).getFormList();
+			} catch (Exception e) {
+				logger.warn("newRegId={}, startDate={}, endDate={}, error={}",
+					requestData.getRegistrationId(), requestData.getStartDate(), requestData.getEndDate(), e.getMessage());
+				continue;
+			}
 			if (formList != null && formList.size() > 0) {
 				logger.info("Restful Post to Anafri0001 Response size: {}", formList.size());
 				for (Form form : formList) {
@@ -116,7 +121,7 @@ public class SyncWsAnafri0001Service {
 			} else {
 				logger.warn("WS AnaFri0001 is empty ResponseData");
 			}
-		} while (formList.size() == WS_DATA_SIZE);
+		} while (formList != null && formList.size() == WS_DATA_SIZE);
 		
 		wsAnafri0001HRepository.forceDeleteByFormCode(requestData.getRegistrationId(), requestData.getFormCode(), requestData.getStartDate(), requestData.getEndDate());
 		wsAnafri0001HRepository.batchInsert(anafri0001HList);
