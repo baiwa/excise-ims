@@ -23,18 +23,13 @@ public class Int1306Service {
 
 	public Int1306Vo findCriteria(Int1306FormVo request) {
 		Int1306Vo response = null;
-		List<Int1306DataVo> int1306List = new ArrayList<Int1306DataVo>();
-		Int1306DataVo data1 = null;
-		Int1306DataVo data2 = null;
-		Int1306DataVo data3 = null;
-		Int1306DataVo data4 = null;
-		Int1306DataVo data5 = null;
 		try {
-			data1 = int1306JdbcRepository.findIaAuditPmassessHByCriteria(request);
-			data2 = int1306JdbcRepository.findIaAuditPmQtHByCriteria(request);
-			data3 = int1306JdbcRepository.findIaAuditPy1HCriteria(request);
-			data4 = int1306JdbcRepository.findIaAuditPy2HCriteria(request);
-			data5 = int1306JdbcRepository.findIaAuditPmCommitHCriteria(request);
+			Int1306DataVo data1 = int1306JdbcRepository.findIaAuditPmassessHByCriteria(request);
+			Int1306DataVo data2 = int1306JdbcRepository.findIaAuditPmQtHByCriteria(request);
+			Int1306DataVo data3 = int1306JdbcRepository.findIaAuditPy1HCriteria(request);
+			Int1306DataVo data4 = int1306JdbcRepository.findIaAuditPy2HCriteria(request);
+			Int1306DataVo data5 = int1306JdbcRepository.findIaAuditPmCommitHCriteria(request);
+			List<Int1306DataVo> int1306List = new ArrayList<Int1306DataVo>();
 			int1306List.add(data1);
 			int1306List.add(data2);
 			int1306List.add(data3);

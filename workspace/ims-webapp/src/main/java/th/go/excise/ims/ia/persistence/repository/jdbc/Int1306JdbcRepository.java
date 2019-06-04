@@ -29,17 +29,17 @@ public class Int1306JdbcRepository {
 		sql.append(" WHERE IS_DELETED = '").append(FLAG.N_FLAG).append("'");
 
 		if (StringUtils.isNotBlank(vo.getOfficeCode())) {
-			sql.append(" AND OFF_CODE LIKE ? ");
+			sql.append(" AND OFF_CODE = ? ");
 			paramList.add(vo.getOfficeCode());
 		}
 
 		if (StringUtils.isNotBlank(vo.getBudgetYear())) {
-			sql.append(" AND FORM_YEAR LIKE ? ");
+			sql.append(" AND FORM_YEAR = ? ");
 			paramList.add(vo.getBudgetYear());
 		}
 
 		if (StringUtils.isNotBlank(vo.getAssessAuditNo())) {
-			sql.append(" AND AUDIT_PMASSESS_NO LIKE ? ");
+			sql.append(" AND AUDIT_PMASSESS_NO = ? ");
 			paramList.add(vo.getAssessAuditNo());
 		}
 		sql.append(" AND ROWNUM <= 1 ");
@@ -51,9 +51,11 @@ public class Int1306JdbcRepository {
 		if (dataList != null && dataList.size() > 0) {
 			data = dataList.get(0);
 			data.setTopic(ApplicationCache.getParamInfoByCode("IA_AUDIT_RESULT", "IA_AUDIT01").getValue1());
+			data.setType(ApplicationCache.getParamInfoByCode("IA_AUDIT_RESULT", "IA_AUDIT01").getValue2());
 		} else {
 			data = new Int1306DataVo();
 			data.setTopic(ApplicationCache.getParamInfoByCode("IA_AUDIT_RESULT", "IA_AUDIT01").getValue1());
+			data.setType(ApplicationCache.getParamInfoByCode("IA_AUDIT_RESULT", "IA_AUDIT01").getValue2());
 		}
 
 		return data;
@@ -80,17 +82,17 @@ public class Int1306JdbcRepository {
 		sql.append(" WHERE IS_DELETED = '").append(FLAG.N_FLAG).append("'");
 
 		if (StringUtils.isNotBlank(vo.getOfficeCode())) {
-			sql.append(" AND OFF_CODE LIKE ? ");
+			sql.append(" AND OFF_CODE = ? ");
 			paramList.add(vo.getOfficeCode());
 		}
 
 		if (StringUtils.isNotBlank(vo.getBudgetYear())) {
-			sql.append(" AND FORM_YEAR LIKE ? ");
+			sql.append(" AND FORM_YEAR = ? ");
 			paramList.add(vo.getBudgetYear());
 		}
 
 		if (StringUtils.isNotBlank(vo.getQtAuditNo())) {
-			sql.append(" AND AUDIT_PMQT_NO LIKE ? ");
+			sql.append(" AND AUDIT_PMQT_NO = ? ");
 			paramList.add(vo.getQtAuditNo());
 		}
 
@@ -103,9 +105,11 @@ public class Int1306JdbcRepository {
 		if (dataList != null && dataList.size() > 0) {
 			data = dataList.get(0);
 			data.setTopic(ApplicationCache.getParamInfoByCode("IA_AUDIT_RESULT", "IA_AUDIT02").getValue1());
+			data.setType(ApplicationCache.getParamInfoByCode("IA_AUDIT_RESULT", "IA_AUDIT02").getValue2());
 		} else {
 			data = new Int1306DataVo();
 			data.setTopic(ApplicationCache.getParamInfoByCode("IA_AUDIT_RESULT", "IA_AUDIT02").getValue1());
+			data.setType(ApplicationCache.getParamInfoByCode("IA_AUDIT_RESULT", "IA_AUDIT02").getValue2());
 		}
 
 		return data;
@@ -132,17 +136,17 @@ public class Int1306JdbcRepository {
 		sql.append(" WHERE IS_DELETED = '").append(FLAG.N_FLAG).append("'");
 
 		if (StringUtils.isNotBlank(vo.getOfficeCode())) {
-			sql.append(" AND OFFICE_CODE LIKE ? ");
+			sql.append(" AND OFFICE_CODE = ? ");
 			paramList.add(vo.getOfficeCode());
 		}
 
 		if (StringUtils.isNotBlank(vo.getBudgetYear())) {
-			sql.append(" AND BUGGET_YEAR LIKE ? ");
+			sql.append(" AND BUGGET_YEAR = ? ");
 			paramList.add(vo.getBudgetYear());
 		}
 
 		if (StringUtils.isNotBlank(vo.getPy1AuditNo())) {
-			sql.append(" AND AUDIT_PY1_NO LIKE ? ");
+			sql.append(" AND AUDIT_PY1_NO = ? ");
 			paramList.add(vo.getPy1AuditNo());
 		}
 
@@ -155,9 +159,11 @@ public class Int1306JdbcRepository {
 		if (dataList != null && dataList.size() > 0) {
 			data = dataList.get(0);
 			data.setTopic(ApplicationCache.getParamInfoByCode("IA_AUDIT_RESULT", "IA_AUDIT03").getValue1());
+			data.setType(ApplicationCache.getParamInfoByCode("IA_AUDIT_RESULT", "IA_AUDIT03").getValue2());
 		} else {
 			data = new Int1306DataVo();
 			data.setTopic(ApplicationCache.getParamInfoByCode("IA_AUDIT_RESULT", "IA_AUDIT03").getValue1());
+			data.setType(ApplicationCache.getParamInfoByCode("IA_AUDIT_RESULT", "IA_AUDIT03").getValue2());
 		}
 
 		return data;
@@ -207,9 +213,11 @@ public class Int1306JdbcRepository {
 		if (dataList != null && dataList.size() > 0) {
 			data = dataList.get(0);
 			data.setTopic(ApplicationCache.getParamInfoByCode("IA_AUDIT_RESULT", "IA_AUDIT04").getValue1());
+			data.setType(ApplicationCache.getParamInfoByCode("IA_AUDIT_RESULT", "IA_AUDIT04").getValue2());
 		} else {
 			data = new Int1306DataVo();
 			data.setTopic(ApplicationCache.getParamInfoByCode("IA_AUDIT_RESULT", "IA_AUDIT04").getValue1());
+			data.setType(ApplicationCache.getParamInfoByCode("IA_AUDIT_RESULT", "IA_AUDIT04").getValue2());
 		}
 		return data;
 	}
@@ -235,17 +243,17 @@ public class Int1306JdbcRepository {
 		sql.append(" WHERE IS_DELETED = '").append(FLAG.N_FLAG).append("'");
 
 		if (StringUtils.isNotBlank(vo.getOfficeCode())) {
-			sql.append(" AND OFFICE_CODE LIKE ? ");
+			sql.append(" AND OFFICE_CODE = ? ");
 			paramList.add(vo.getOfficeCode());
 		}
 
 		if (StringUtils.isNotBlank(vo.getBudgetYear())) {
-			sql.append(" AND BUDGET_YEAR LIKE ? ");
+			sql.append(" AND BUDGET_YEAR = ? ");
 			paramList.add(vo.getBudgetYear());
 		}
 
 		if (StringUtils.isNotBlank(vo.getCommitteeAuditNo())) {
-			sql.append(" AND AUDIT_PMCOMMIT_NO LIKE ? ");
+			sql.append(" AND AUDIT_PMCOMMIT_NO = ? ");
 			paramList.add(vo.getCommitteeAuditNo());
 		}
 
@@ -258,9 +266,11 @@ public class Int1306JdbcRepository {
 		if (dataList != null && dataList.size() > 0) {
 			data = dataList.get(0);
 			data.setTopic(ApplicationCache.getParamInfoByCode("IA_AUDIT_RESULT", "IA_AUDIT05").getValue1());
+			data.setType(ApplicationCache.getParamInfoByCode("IA_AUDIT_RESULT", "IA_AUDIT05").getValue2());
 		} else {
 			data = new Int1306DataVo();
 			data.setTopic(ApplicationCache.getParamInfoByCode("IA_AUDIT_RESULT", "IA_AUDIT05").getValue1());
+			data.setType(ApplicationCache.getParamInfoByCode("IA_AUDIT_RESULT", "IA_AUDIT05").getValue2());
 		}
 
 		return data;

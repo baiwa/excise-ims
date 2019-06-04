@@ -8,6 +8,7 @@ public class Int1306DataVo {
 	private String suggestion;
 	private String result;
 	private String result2;
+	private String type;
 
 	public String getTopic() {
 		return topic;
@@ -55,6 +56,14 @@ public class Int1306DataVo {
 
 	public void setResult2(String result2) {
 		this.result2 = result2;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }
