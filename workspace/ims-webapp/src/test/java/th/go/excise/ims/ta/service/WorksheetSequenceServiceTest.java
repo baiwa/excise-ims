@@ -18,13 +18,12 @@ import th.go.excise.ims.Application;
 @WithMockUser(username = "admin", roles = { "ADMIN", "USER" })
 @ActiveProfiles(value = PROFILE.UNITTEST)
 public class WorksheetSequenceServiceTest {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(WorksheetSequenceServiceTest.class);
-	
+
 	@Autowired
 	private WorksheetSequenceService worksheetSequenceService;
-	
-	
+
 	@Test
 	public void getAnalysisNumber() {
 		logger.info(worksheetSequenceService.getAnalysisNumber("010001", "2561"));
@@ -50,6 +49,14 @@ public class WorksheetSequenceServiceTest {
 		logger.info(worksheetSequenceService.getAnalysisNumber("010000", "2562"));
 		logger.info(worksheetSequenceService.getAnalysisNumber("010000", "2562"));
 		logger.info(worksheetSequenceService.getAnalysisNumber("010000", "2562"));
+		logger.info(worksheetSequenceService.getPlanNumber("010000", "2562"));
+		logger.info(worksheetSequenceService.getPlanNumber("010000", "2562"));
+		logger.info(worksheetSequenceService.getPlanNumber("010000", "2562"));
+		logger.info(worksheetSequenceService.getPlanNumber("010000", "2562"));
+		logger.info(worksheetSequenceService.getPlanNumber("010000", "2562"));
+		logger.info(worksheetSequenceService.getAuditPlanCode("010000", "2562"));
+		logger.info(worksheetSequenceService.getAuditPlanCode("010000", "2562"));
+		logger.info(worksheetSequenceService.getAuditPlanCode("010000", "2562"));
 	}
-	
+
 }
