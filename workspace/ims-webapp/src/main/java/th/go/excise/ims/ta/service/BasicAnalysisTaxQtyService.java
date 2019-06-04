@@ -1,9 +1,11 @@
 package th.go.excise.ims.ta.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -30,7 +32,7 @@ public class BasicAnalysisTaxQtyService extends AbstractBasicAnalysisService<Bas
 	@Override
 	protected List<BasicAnalysisTaxQtyVo> inquiryByWs(BasicAnalysisFormVo formVo) {
 		logger.info("inquiryByWs");
-		
+		List<BasicAnalysisTaxQtyVo> voList = new ArrayList<BasicAnalysisTaxQtyVo>();
 		LocalDate localDateStart = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]), Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
 		LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]), Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
 		
@@ -38,8 +40,16 @@ public class BasicAnalysisTaxQtyService extends AbstractBasicAnalysisService<Bas
 		String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
 		
 		List<WsAnafri0001D> wsAna0001DList = wsAnafri0001DRepository.findProductListByBasicAnalysisFormVo(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
-		
-		return null;
+		BasicAnalysisTaxQtyVo dataSet = null;
+		for (WsAnafri0001D wsAna0001D : wsAna0001DList) {
+			dataSet = new BasicAnalysisTaxQtyVo();
+			dataSet.setGoodsDesc(wsAna0001D.getProductName());
+			dataSet.setTaxQty(wsAna0001D.getProductQty());
+			dataSet.setMonthStatementTaxQty(null);
+			dataSet.setDiffTaxQty(new BigDecimal(0));
+			voList.add(dataSet);
+		}
+		return voList;
 	}
 
 	@Override
