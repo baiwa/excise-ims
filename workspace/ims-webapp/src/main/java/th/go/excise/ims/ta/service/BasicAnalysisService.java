@@ -80,14 +80,14 @@ public class BasicAnalysisService {
 			paperBaH.setDutyGroupId(formVo.getDutyGroupId());
 			//paperBaH.setBaDateStart(formVo.get);
 			//paperBaH.setBaDateEnd(formVo.get);
-			paperBaH.setBaText(formVo.getCommentText());
+			//paperBaH.setBaText(formVo.getCommentText());
 			
 			//formVo.setPaperBaNumber(paperBaNumber);
 			//for (AbstractBasicAnalysisService service : basicAnalysisServiceMap.values()) {
 			//	service.save(formVo);
 			//}
 		} else {
-			paperBaH.setBaText(formVo.getCommentText());
+			//paperBaH.setBaText(formVo.getCommentText());
 		}
 		
 		taPaperBaHRepository.save(paperBaH);
