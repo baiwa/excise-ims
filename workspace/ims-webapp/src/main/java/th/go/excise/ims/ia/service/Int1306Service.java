@@ -8,7 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.go.excise.ims.ia.persistence.entity.IaAuditPmResult;
+import th.go.excise.ims.ia.persistence.repository.IaAuditPmResultRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int1306JdbcRepository;
+import th.go.excise.ims.ia.vo.IaAuditPmResultVo;
 import th.go.excise.ims.ia.vo.Int1306DataVo;
 import th.go.excise.ims.ia.vo.Int1306FormVo;
 import th.go.excise.ims.ia.vo.Int1306Vo;
@@ -20,6 +24,12 @@ public class Int1306Service {
 
 	@Autowired
 	private Int1306JdbcRepository int1306JdbcRepository;
+
+	@Autowired
+	private IaAuditPmResultRepository iaAuditPmResultRepository;
+
+	@Autowired
+	private IaCommonService iaCommonService;
 
 	public Int1306Vo findCriteria(Int1306FormVo request) {
 		Int1306Vo response = null;
@@ -49,6 +59,44 @@ public class Int1306Service {
 		}
 
 		return response;
+	}
+
+	public List<IaAuditPmResultVo> findAuditPmResultList() {
+		List<IaAuditPmResult> auditPmResultsList = iaAuditPmResultRepository.findIaAuditPmResultAllDataActive();
+
+		IaAuditPmResultVo pmResultVo = null;
+		List<IaAuditPmResultVo> pmResultVoList = new ArrayList<>();
+		for (IaAuditPmResult data : auditPmResultsList) {
+			pmResultVo = new IaAuditPmResultVo();
+			try {
+				pmResultVo.setAuditPmresultSeq(data.getAuditPmresultSeq());
+				pmResultVo.setOfficeCode(data.getOfficeCode());
+				pmResultVo.setAuditDateFrom(ConvertDateUtils.formatDateToString(data.getAuditDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+				pmResultVo.setAuditDateTo(ConvertDateUtils.formatDateToString(data.getAuditDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+				pmResultVo.setAuditPmresultNo(data.getAuditPmresultNo());
+				pmResultVo.setBudgetYear(data.getBudgetYear());
+				pmResultVo.setAuditPmassessNo(data.getAuditPmassessNo());
+				pmResultVo.setAuditPmqtNo(data.getAuditPmqtNo());
+				pmResultVo.setAuditPy1No(data.getAuditPy1No());
+				pmResultVo.setAuditPy2No(data.getAuditPy2No());
+				pmResultVo.setAuditPmcommitNo(data.getAuditPmcommitNo());
+				pmResultVo.setDepAuditingSuggestion(data.getDepAuditingSuggestion());
+				pmResultVo.setAuditSummary(data.getAuditSummary());
+				pmResultVo.setAuditSuggestion(data.getAuditSuggestion());
+				pmResultVo.setPersonAudity(data.getPersonAudity());
+				pmResultVo.setPersonAudityPosition(data.getPersonAudityPosition());
+				pmResultVo.setAuditer1(data.getAuditer1());
+				pmResultVo.setAuditer1AudityPosition(data.getAuditer1AudityPosition());
+				pmResultVo.setAuditer2(data.getAuditer2());
+				pmResultVo.setAudite2AudityPosition(data.getAudite2AudityPosition());
+
+				pmResultVoList.add(pmResultVo);
+			} catch (Exception e) {
+				logger.error(e.getMessage(), e);
+			}
+
+		}
+		return pmResultVoList;
 	}
 
 }

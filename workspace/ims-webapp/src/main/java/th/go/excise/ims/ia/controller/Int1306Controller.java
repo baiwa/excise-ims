@@ -1,5 +1,7 @@
 package th.go.excise.ims.ia.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +13,7 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ia.service.Int1306Service;
+import th.go.excise.ims.ia.vo.IaAuditPmResultVo;
 import th.go.excise.ims.ia.vo.Int1306FormVo;
 import th.go.excise.ims.ia.vo.Int1306Vo;
 
@@ -31,6 +34,21 @@ public class Int1306Controller {
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+
+	@PostMapping("/find-all-audit-pmresult-no")
+	@ResponseBody
+	public ResponseData<List<IaAuditPmResultVo>> findAllIaAuditPmResult() {
+		ResponseData<List<IaAuditPmResultVo>> response = new ResponseData<List<IaAuditPmResultVo>>();
+		try {
+			response.setData(int1306Service.findAuditPmResultList());
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
 			response.setMessage(RESPONSE_MESSAGE.ERROR500);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
