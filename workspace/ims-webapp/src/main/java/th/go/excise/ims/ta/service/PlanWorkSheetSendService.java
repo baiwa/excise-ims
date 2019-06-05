@@ -121,8 +121,14 @@ public class PlanWorkSheetSendService {
 	public List<PlanWorksheetSendTableVo> getPlanWorkSheetSendToArea(PlanWorksheetVo formVo) {
 		
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		String offcode = officeCode.substring(0, 2) +"%"+officeCode.substring(4,6);
-		formVo.setOfficeCode(offcode);
+		if (ExciseUtils.isCentral(officeCode)) {
+			String offcode = officeCode.substring(0,4) +"%";
+			formVo.setOfficeCode(offcode);
+		}else {
+			String offcode = officeCode.substring(0, 2) +"%"+officeCode.substring(4,6);
+			formVo.setOfficeCode(offcode);
+		}
+
 		
 		return planWorksheetDtlRepository.findPlanWorksheetByDtl(formVo);
 		

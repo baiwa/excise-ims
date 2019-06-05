@@ -281,20 +281,32 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		sql.append("   ED_AREA.OFF_CODE AREA_CODE , ");
 		sql.append("   ED_AREA.OFF_SHORT_NAME AREA_DESC,  ");
 		sql.append("  	R4000.REG_STATUS	, ");
-		sql.append(" 	R4000.REG_DATE");
+		sql.append(" 	R4000.REG_DATE , ");
+		sql.append(" DUTY.GROUP_NAME DUTY_GROUP_NAME");
 		sql.append(" FROM TA_WS_REG4000 R4000  ");
 		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_SECTOR ");
 		sql.append(" ON ED_SECTOR.OFF_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000') ");
 		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_AREA ");
 		sql.append(" ON ED_AREA.OFF_CODE       = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
-		sql.append(" AND R4000.IS_DELETED      = 'N' ");
-		sql.append(" AND R4000.OFFICE_CODE  like ? ");
-
+		sql.append(" AND R4000.IS_DELETED      = 'N'  AND R4000.OFFICE_CODE  like ? ");
 		params.add(formVo.getOfficeCode());
+		
+//		sql.append(" LEFT JOIN TA_WORKSHEET_DTL WK_DTL " );
+//		sql.append(" ON WK_DTL.NEW_REG_ID = R4000.NEW_REG_ID");
+		
+		sql.append(" LEFT JOIN TA_WS_REG4000_DUTY    DUTY ON DUTY.NEWREG_ID = R4000.NEW_REG_ID");
+		sql.append(" LEFT JOIN EXCISE_DUTY_GROUP ECDG ON ECDG.DUTY_GROUP_CODE = R4000.DUTY_CODE ");
 
+		sql.append(" WHERE 1 = 1 ");
+
+//		if (StringUtils.isNotBlank(formVo.getFacType())) {
+//			params.add(formVo.getFacType());
+//			sql.append("AND R4000.FAC_TYPE = ? ");
+//		}
+		// DUTY GROUP
 		if (StringUtils.isNotBlank(formVo.getFacType())) {
+			sql.append(" AND ECDG.DUTY_GROUP_TYPE = ?");
 			params.add(formVo.getFacType());
-			sql.append("AND R4000.FAC_TYPE = ? ");
 		}
 
 		if (StringUtils.isNotBlank(formVo.getCusFullname())) {
@@ -310,6 +322,21 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		if (StringUtils.isNotBlank(formVo.getDutyCode())) {
 			params.add(formVo.getDutyCode());
 			sql.append(" AND R4000.DUTY_CODE = ? ");
+		}
+		
+		if (StringUtils.isNotBlank(formVo.getDutyCode())) {
+			params.add(formVo.getDutyCode());
+			sql.append(" AND R4000.DUTY_CODE = ? ");
+		}
+		
+		if (StringUtils.isNotBlank(formVo.getCusType())) {
+			params.add(formVo.getCusType());
+			sql.append(" AND R4000.CUSCAT_ID = ? ");
+		}
+		
+		if (StringUtils.isNotBlank(formVo.getCusId())) {
+			params.add(formVo.getCusId());
+			sql.append(" AND R4000.PINNIT_ID = ? ");
 		}
 	}
 
@@ -348,7 +375,9 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 			vo.setSecDesc(rs.getString("SEC_DESC"));
 			vo.setAreaCode(rs.getString("AREA_CODE"));
 			vo.setAreaDesc(rs.getString("AREA_DESC"));
-			vo.setDutyDesc(ExciseUtils.getDutyDesc(rs.getString("DUTY_CODE")));
+//			vo.setDutyDesc(ExciseUtils.getDutyDesc(rs.getString("DUTY_CODE")));
+			vo.setDutyDesc(rs.getString("DUTY_GROUP_NAME"));
+			vo.setRegDate(ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY));
 			vo.setRegStatus(rs.getString("REG_STATUS") + " "
 					+ ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY));
 			return vo;

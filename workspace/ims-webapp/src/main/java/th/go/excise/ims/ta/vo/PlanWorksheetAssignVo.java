@@ -2,6 +2,9 @@ package th.go.excise.ims.ta.vo;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
+
 public class PlanWorksheetAssignVo {
 
 	private List<String> ids;
@@ -19,6 +22,7 @@ public class PlanWorksheetAssignVo {
 	private String sector;
 	private String area;
 	private List<String> budgetYearList;
+	private MultipartFile file;
 	
 	public List<String> getIds() {
 		return ids;
@@ -109,6 +113,12 @@ public class PlanWorksheetAssignVo {
 	}
 	public void setBudgetYearList(List<String> budgetYearList) {
 		this.budgetYearList = budgetYearList;
+	}
+	public MultipartFile getFile() {
+		return file;
+	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
 	
 	

@@ -8,11 +8,17 @@ import java.util.Optional;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
@@ -244,28 +250,28 @@ public class PlanWorksheetService {
 		}
 	}
 
-	// TODO updateFlagWorksheetSelect 
+	// TODO updateFlagWorksheetSelect
 	private void updateFlagWorksheetSelect(String budgetYear, String newRegId, String officeCode, String selFlag,
 			LocalDate selDate) {
 		logger.info("updateFlagWorksheetSelect budgetYear={}, newRegId={}, officeCode={}, selFlag={}, selDate={}",
 				budgetYear, newRegId, officeCode, selFlag, selDate);
-		 List<TaPlanWorksheetSelect> planWorksheetSelList = taPlanWorksheetSelectRepository.findByBudgetYearAndNewRegId(budgetYear,
-				newRegId);
-		 for (TaPlanWorksheetSelect planWorksheetSel : planWorksheetSelList) {
-			 if (ExciseUtils.isCentral(officeCode)) {
-					planWorksheetSel.setCentralSelFlag(selFlag);
-					planWorksheetSel.setCentralSelDate(selDate);
-					planWorksheetSel.setCentralSelOfficeCode(officeCode);
-				} else if (ExciseUtils.isSector(officeCode)) {
-					planWorksheetSel.setSectorSelFlag(selFlag);
-					planWorksheetSel.setSectorSelDate(selDate);
-					planWorksheetSel.setSectorSelOfficeCode(officeCode);
-				} else if (ExciseUtils.isArea(officeCode)) {
-					planWorksheetSel.setAreaSelFlag(selFlag);
-					planWorksheetSel.setAreaSelDate(selDate);
-					planWorksheetSel.setAreaSelOfficeCode(officeCode);
-				}
-			 taPlanWorksheetSelectRepository.save(planWorksheetSel);
+		List<TaPlanWorksheetSelect> planWorksheetSelList = taPlanWorksheetSelectRepository
+				.findByBudgetYearAndNewRegId(budgetYear, newRegId);
+		for (TaPlanWorksheetSelect planWorksheetSel : planWorksheetSelList) {
+			if (ExciseUtils.isCentral(officeCode)) {
+				planWorksheetSel.setCentralSelFlag(selFlag);
+				planWorksheetSel.setCentralSelDate(selDate);
+				planWorksheetSel.setCentralSelOfficeCode(officeCode);
+			} else if (ExciseUtils.isSector(officeCode)) {
+				planWorksheetSel.setSectorSelFlag(selFlag);
+				planWorksheetSel.setSectorSelDate(selDate);
+				planWorksheetSel.setSectorSelOfficeCode(officeCode);
+			} else if (ExciseUtils.isArea(officeCode)) {
+				planWorksheetSel.setAreaSelFlag(selFlag);
+				planWorksheetSel.setAreaSelDate(selDate);
+				planWorksheetSel.setAreaSelOfficeCode(officeCode);
+			}
+			taPlanWorksheetSelectRepository.save(planWorksheetSel);
 		}
 	}
 
@@ -276,10 +282,11 @@ public class PlanWorksheetService {
 		List<TaPlanWorksheetDtl> list = null;
 		if (FLAG.N_FLAG.equals(formVo.getSendAllFlag())) {
 			if (ExciseUtils.isCentral(officeCode)) {
-				
-				list = taPlanWorksheetDtlRepository.findByOfficeCodeAndPlanNumberForCentral(formVo.getPlanNumber(), officeCode);
-			}else {
-				
+
+				list = taPlanWorksheetDtlRepository.findByOfficeCodeAndPlanNumberForCentral(formVo.getPlanNumber(),
+						officeCode);
+			} else {
+
 				list = taPlanWorksheetDtlRepository.findByOfficeCodeAndPlanNumber(officeCode, formVo.getPlanNumber());
 			}
 		} else {
@@ -340,7 +347,7 @@ public class PlanWorksheetService {
 					.findByPlanNumberAndOfficeCode(planHdr.getPlanNumber(), officeCode);
 
 			List<String> PlanDtlList = taPlanWorksheetDtlRepository
-					.findNewRegIdByOfficeCodeAndPlanNumberAndIsDeletedFlagN(officeCode,planHdr.getPlanNumber());
+					.findNewRegIdByOfficeCodeAndPlanNumberAndIsDeletedFlagN(officeCode, planHdr.getPlanNumber());
 			if (planSendStampDate != null) {
 //					logger.info(" find plan exist size is {} ",Integer.toString(PlanDtlList.size()));
 				planSendStampDate.setFacInNum(PlanDtlList.size());
@@ -510,6 +517,7 @@ public class PlanWorksheetService {
 	@Transactional
 	public void insertComment(TaPlanWorksheetHdr form) {
 		TaPlanWorksheetHdr comment = taPlanWorksheetHdrRepository.findByBudgetYear(form.getBudgetYear());
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		if (StringUtils.isEmpty(form.getApprovedComment())) {
 			comment.setApprovalBy(UserLoginUtils.getCurrentUsername());
 			comment.setApprovalDate(LocalDateTime.now());
@@ -524,8 +532,9 @@ public class PlanWorksheetService {
 			comment.setPlanStatus(ProjectConstants.TA_AUDIT_STATUS.CODE_0300);
 		}
 		taPlanWorksheetHdrRepository.save(comment);
+		String auditPlanCode = worksheetSequenceService.getAuditPlanCode(officeCode, comment.getBudgetYear());
 
-		taPlanWorksheetDtlRepository.updateAuditStatusByPlanNumber(ProjectConstants.TA_AUDIT_STATUS.CODE_0300,
+		taPlanWorksheetDtlRepository.updateAuditStatusAndAuditPlanCodeByPlanNumber(ProjectConstants.TA_AUDIT_STATUS.CODE_0300,auditPlanCode,
 				comment.getPlanNumber());
 	}
 
@@ -700,6 +709,106 @@ public class PlanWorksheetService {
 			planSendStampDate.setFacInNum(PlanDtlList.size());
 
 			taPlanWorksheetSendRepository.save(planSendStampDate);
+		}
+
+	}
+
+	@Transactional
+	public void uploadAssignPlan(PlanWorksheetAssignVo formVo) throws Exception {
+
+		UserBean userBean = UserLoginUtils.getCurrentUserBean();
+		String officeCode = userBean.getOfficeCode();
+		String budgetYear = formVo.getBudgetYear();
+
+		logger.info("savePlanWorkSheetDtl officeCode={}, budgetYear={}, planNumber={}, analysisNumber={}, newRegIds={}",
+				officeCode, budgetYear, formVo.getPlanNumber(), formVo.getAnalysisNumber(),
+				org.springframework.util.StringUtils.collectionToCommaDelimitedString(formVo.getIds()));
+
+		MultipartFile file = formVo.getFile();
+		Workbook workbook = WorkbookFactory.create(file.getInputStream());
+		List<TaPlanWorksheetDtl> list = new ArrayList<TaPlanWorksheetDtl>();
+		List<String> listCheck = new ArrayList<>();
+		Sheet sheet = workbook.getSheetAt(0);
+		int index = 0;
+		for (Row row : sheet) {
+			TaPlanWorksheetDtl vo = new TaPlanWorksheetDtl();
+			if (index > 0) {
+				Cell cell1 = row.getCell(1);
+				Cell cell2 = row.getCell(2);
+				vo.setNewRegId(cell1.getStringCellValue().trim());
+				vo.setOfficeCode(cell2.getStringCellValue().trim());
+				vo.setAnalysisNumber(formVo.getAnalysisNumber());
+				vo.setPlanNumber(formVo.getPlanNumber());
+				list.add(vo);
+				listCheck.add(cell1.getStringCellValue());
+				System.out.println("read cell at " + Integer.toString(index) + " " + cell1.getStringCellValue() + " : "
+						+ cell2.getStringCellValue());
+			}
+			index++;
+		}
+
+		List<String> planNewRegIdList = taPlanWorksheetDtlRepository.findNewRegIdByPlanNumber(formVo.getPlanNumber());
+		List<String> planNewRegIdFlagNList = taPlanWorksheetDtlRepository
+				.findNewRegIdByPlanNumberAndIsDeletedFlagN(formVo.getPlanNumber());
+//		List<String> selectNewRegIdList = formVo.getIds();
+
+		// Keep New and Delete newRegId list
+		TaPlanWorksheetDtl planDtl = null;
+		List<TaPlanWorksheetDtl> insertNewRegIdList = new ArrayList<>();
+		List<TaPlanWorksheetDtl> updateNewRegIdList = new ArrayList<>();
+
+		// Loop selectNewRegIdList for Insert NewRegId
+		for (TaPlanWorksheetDtl selNewRegId : list) {
+			if (!planNewRegIdList.contains(selNewRegId.getNewRegId())) {
+				insertNewRegIdList.add(selNewRegId);
+			}
+		}
+
+		// Loop planWorksheetDtlNewRegIdList for Update NewRegId\
+		for (TaPlanWorksheetDtl selNewRegId : list) {
+			if (planNewRegIdList.contains(selNewRegId.getNewRegId())) {
+//				insertNewRegIdList.add(selNewRegId);
+				updateNewRegIdList.add(selNewRegId);
+			}
+		}
+
+		String assingOfficeCode = formVo.getSector();
+		if (ExciseUtils.isCentral(formVo.getSector())) {
+			assingOfficeCode = formVo.getSector();
+		} else if (ExciseUtils.isArea(formVo.getArea())) {
+			assingOfficeCode = formVo.getArea();
+		}
+
+		// Insert newRegId to planWorksheetDtl
+		if (CollectionUtils.isNotEmpty(insertNewRegIdList)) {
+			for (TaPlanWorksheetDtl upload : insertNewRegIdList) {
+				planDtl = new TaPlanWorksheetDtl();
+				planDtl.setPlanNumber(upload.getPlanNumber());
+				planDtl.setAnalysisNumber(upload.getAnalysisNumber());
+				planDtl.setOfficeCode(upload.getOfficeCode());
+				planDtl.setNewRegId(upload.getNewRegId());
+				planDtl.setAuditStatus(TA_AUDIT_STATUS.CODE_0100);
+//				planDtl.setAuSubdeptCode(userBean.getSubdeptCode());
+				taPlanWorksheetDtlRepository.save(planDtl);
+
+				updateFlagWorksheetSelect(budgetYear, upload.getNewRegId(), officeCode, FLAG.Y_FLAG, LocalDate.now());
+			}
+		}
+
+		// Update newRegId from planWorksheetDtl
+		String isDeletedPlanDtl = null;
+		String selFlag = null;
+		LocalDate selDate = null;
+		if (CollectionUtils.isNotEmpty(updateNewRegIdList)) {
+			for (TaPlanWorksheetDtl upload : updateNewRegIdList) {
+				isDeletedPlanDtl = FLAG.N_FLAG;
+				selFlag = FLAG.Y_FLAG;
+				selDate = LocalDate.now();
+
+				taPlanWorksheetDtlRepository.updateIsDeletedByPlanNumberAndNewRegId(isDeletedPlanDtl,
+						upload.getPlanNumber(), upload.getNewRegId());
+				updateFlagWorksheetSelect(budgetYear, upload.getNewRegId(), officeCode, selFlag, selDate);
+			}
 		}
 
 	}

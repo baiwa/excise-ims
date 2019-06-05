@@ -1,5 +1,7 @@
 package th.go.excise.ims.ta.vo;
 
+import java.util.Date;
+
 import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 
 public class OutsidePlanFormVo extends DataTableRequest {
@@ -10,6 +12,10 @@ public class OutsidePlanFormVo extends DataTableRequest {
 	private String facFullname;
 	private String dutyCode;
 	private String facType;
+	private Date fromDate;
+	private Date toDate;
+	private String cusType;
+	private String cusId;
 
 	public String getCusFullname() {
 		return cusFullname;
@@ -50,4 +56,37 @@ public class OutsidePlanFormVo extends DataTableRequest {
 	public void setOfficeCode(String officeCode) {
 		this.officeCode = officeCode;
 	}
+
+	public Date getFromDate() {
+		return fromDate;
+	}
+
+	public void setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public Date getToDate() {
+		return toDate;
+	}
+
+	public void setToDate(Date toDate) {
+		this.toDate = toDate;
+	}
+
+	public String getCusType() {
+		return cusType;
+	}
+
+	public void setCusType(String cusType) {
+		this.cusType = cusType;
+	}
+
+	public String getCusId() {
+		return cusId;
+	}
+
+	public void setCusId(String cusId) {
+		this.cusId = cusId;
+	}
+	
 }

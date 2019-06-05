@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -625,7 +626,13 @@ public class TaxOperatorController {
 		if (FLAG.N_FLAG.equals(formVo.getSendAllFlag())){
 			formVo.setOfficeCode(userBean.getOfficeCode());
 		}else {
-			formVo.setOfficeCode(null);
+			if (!StringUtils.isNotBlank(formVo.getOfficeCode())) {
+				formVo.setOfficeCode(null);
+			}else {
+				if (ProjectConstants.EXCISE_OFFICE_CODE.TA_CENTRAL.equals(formVo.getOfficeCode())) {
+					formVo.setOfficeCode("0014__");
+				}
+			}
 		}
 		
 //		if (EXCISE_SUBDEPT_LEVEL.LV3.equals(userBean.getSubdeptLevel())) {
@@ -855,6 +862,24 @@ public class TaxOperatorController {
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+
+		return response;
+	}
+	
+	@PostMapping("/upload-assing-plan")
+	@ResponseBody
+	public ResponseData<?> uploadAssingPlan(@ModelAttribute PlanWorksheetAssignVo formVo) {
+		ResponseData<?> response = new ResponseData<>();
+
+		try {
+			planWorksheetService.uploadAssignPlan(formVo);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 
