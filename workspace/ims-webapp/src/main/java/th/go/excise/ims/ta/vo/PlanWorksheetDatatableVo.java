@@ -32,6 +32,7 @@ public class PlanWorksheetDatatableVo {
     private String subdeptShortName;
     private String personName;
     private List<ExcisePersonVoSelect> personAssingList;
+    private String auditPlanCode;
     
    
 	public String getPersonName() {
@@ -241,7 +242,13 @@ public class PlanWorksheetDatatableVo {
 	public void setPersonAssingList(List<ExcisePersonVoSelect> personAssingList) {
 		this.personAssingList = personAssingList;
 	}
-	
-	
+
+	public String getAuditPlanCode() {
+		return auditPlanCode;
+	}
+
+	public void setAuditPlanCode(String auditPlanCode) {
+		this.auditPlanCode = auditPlanCode;
+	}
 
 }

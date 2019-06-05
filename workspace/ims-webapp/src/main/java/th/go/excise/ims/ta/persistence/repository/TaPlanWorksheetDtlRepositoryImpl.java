@@ -137,6 +137,8 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 			vo.setAuJobResp(rs.getString("AU_JOB_RESP"));
 			vo.setPlanWorksheetDtlId(rs.getLong("PLAN_WORKSHEET_DTL_ID"));
 			vo.setOfficeCode(rs.getString("OFFICE_CODE"));
+			vo.setPlanNumber(rs.getString("PLAN_NUMBER"));
+			vo.setAuditPlanCode(rs.getString("AUDIT_PLAN_CODE"));
 //            vo.setDeptShortName(rs.getString("DEPTSHORTNAME"));
 			if(vo.getOfficeCode()!= null) {
 				try {

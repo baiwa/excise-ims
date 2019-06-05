@@ -17,4 +17,6 @@ public interface TaPaperBaHRepository extends CommonJpaCrudRepository<TaPaperBaH
 	@Query("select new java.lang.String(e.paperBaNumber) from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode order by e.paperBaNumber desc")
 	public List<String> findPaperBaNumberByOfficeCode(@Param("officeCode") String officeCode);
 	
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.newRegId = :newRegId and e.officeCode = :officeCode and e.budgetYear = :budgetYear")
+	public TaPaperBaH findByNewRegIdAndOfficeCodeAndBudgetYear(@Param("newRegId") String newRegId, @Param("officeCode") String officeCode, @Param("budgetYear") String budgetYear);
 }
