@@ -36,10 +36,10 @@ public class PaperBaHService {
 		paperBaH.setAuditPlanCode(form.getAuditPlanCode());
 		paperBaH.setNewRegId(form.getNewRegId());
 		paperBaH.setDutyGroupId(form.getDutyGroupId());
-		paperBaH.setBaDateStart(ConvertDateUtils.parseStringToLocalDate("01/"+form.getBaDateStart(), ConvertDateUtils.DD_MM_YYYY));
-		
-		paperBaH.setBaDateEnd(LocalDate.of(Integer.parseInt(form.getBaDateEnd().substring(3 , 7)), Integer.parseInt(form.getBaDateEnd().substring(0,2)), 1).with(TemporalAdjusters.lastDayOfMonth()));
-		paperBaH.setBaText(form.getBaText());
+//		paperBaH.setBaDateStart(ConvertDateUtils.parseStringToLocalDate("01/"+form.getBaDateStart(), ConvertDateUtils.DD_MM_YYYY));
+//		
+//		paperBaH.setBaDateEnd(LocalDate.of(Integer.parseInt(form.getBaDateEnd().substring(3 , 7)), Integer.parseInt(form.getBaDateEnd().substring(0,2)), 1).with(TemporalAdjusters.lastDayOfMonth()));
+//		paperBaH.setBaText(form.getBaText());
 		
 		paperBaHRepository.save(paperBaH);
 	}
