@@ -1,13 +1,14 @@
 package th.go.excise.ims.ta.service;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,8 @@ import th.go.excise.ims.ta.vo.WorksheetDateRangeVo;
 public class BasicAnalysisIncomeCompareLastMonthService extends AbstractBasicAnalysisService<BasicAnalysisIncomeCompareLastMonthVo> {
 
 	private static final Logger logger = LoggerFactory.getLogger(BasicAnalysisIncomeCompareLastMonthService.class);
+
+	private static final String NO_TAX_AMOUNT = "-";
 
 	@Autowired
 	private TaPaperBaD7Repository taPaperBaD7Repository;
@@ -82,7 +85,6 @@ public class BasicAnalysisIncomeCompareLastMonthService extends AbstractBasicAna
 		BigDecimal diffIncomeAmt = null;
 		BigDecimal diffIncomePnt = null;
 		int dateLength = subLocalDateG1List.size();
-		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
 		for (int i = 0; i < dateLength; i++) {
 			vo = new BasicAnalysisIncomeCompareLastMonthVo();
 			incomeCurrentMonthAmt = incomeMap.get(subLocalDateG1List.get(i).format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
@@ -101,9 +103,9 @@ public class BasicAnalysisIncomeCompareLastMonthService extends AbstractBasicAna
 			diffIncomePnt = NumberUtils.calculatePercent(incomeCurrentMonthAmt, incomePreviousMonthAmt);
 
 			vo.setTaxMonth(ThaiBuddhistDate.from(subLocalDateG1List.get(i)).format(DateTimeFormatter.ofPattern("MMM yy", ConvertDateUtils.LOCAL_TH)));
-			vo.setIncomeAmt(decimalFormat.format(incomeCurrentMonthAmt));
-			vo.setDiffIncomeAmt(i == 0 ? "-" : decimalFormat.format(diffIncomeAmt));
-			vo.setDiffIncomePnt(i == 0 ? "-" : decimalFormat.format(diffIncomePnt));
+			vo.setIncomeAmt(incomeCurrentMonthAmt.toString());
+			vo.setDiffIncomeAmt(i == 0 ? NO_TAX_AMOUNT : diffIncomeAmt.toString());
+			vo.setDiffIncomePnt(i == 0 ? NO_TAX_AMOUNT : diffIncomePnt.toString());
 			voList.add(vo);
 		}
 
@@ -119,7 +121,10 @@ public class BasicAnalysisIncomeCompareLastMonthService extends AbstractBasicAna
 		BasicAnalysisIncomeCompareLastMonthVo vo = null;
 		for (TaPaperBaD7 entity : entityList) {
 			vo = new BasicAnalysisIncomeCompareLastMonthVo();
-			
+			vo.setTaxMonth(entity.getTaxMonth());
+			vo.setIncomeAmt(entity.getIncomeAmt().toString());
+			vo.setDiffIncomeAmt(entity.getDiffIncomeAmt() != null ? entity.getDiffIncomeAmt().toString() : NO_TAX_AMOUNT);
+			vo.setDiffIncomePnt(entity.getDiffIncomePnt() != null ? entity.getDiffIncomePnt().toString() : NO_TAX_AMOUNT);
 			voList.add(vo);
 		}
 		
@@ -127,6 +132,7 @@ public class BasicAnalysisIncomeCompareLastMonthService extends AbstractBasicAna
 	}
 
 	@Override
+	@Transactional
 	protected void save(BasicAnalysisFormVo formVo) {
 		logger.info("save paperBaNumber={}", formVo.getPaperBaNumber());
 		
@@ -139,9 +145,9 @@ public class BasicAnalysisIncomeCompareLastMonthService extends AbstractBasicAna
 			entity.setPaperBaNumber(formVo.getPaperBaNumber());
 			entity.setSeqNo(i);
 			entity.setTaxMonth(vo.getTaxMonth());
-			//entity.setIncomeAmt(vo.getIncomeAmt());
-			//entity.setDiffIncomeAmt();
-			//entity.setDiffIncomePnt();
+			entity.setIncomeAmt(NumberUtils.toBigDecimal(vo.getIncomeAmt()));
+			entity.setDiffIncomeAmt(NO_TAX_AMOUNT.equals(vo.getDiffIncomeAmt()) ? null : NumberUtils.toBigDecimal(vo.getDiffIncomeAmt()));
+			entity.setDiffIncomePnt(NO_TAX_AMOUNT.equals(vo.getDiffIncomePnt()) ? null : NumberUtils.toBigDecimal(vo.getDiffIncomePnt()));
 			entityList.add(entity);
 			i++;
 		}

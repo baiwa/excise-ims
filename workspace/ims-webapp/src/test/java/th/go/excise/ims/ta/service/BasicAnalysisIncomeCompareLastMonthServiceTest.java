@@ -31,6 +31,7 @@ public class BasicAnalysisIncomeCompareLastMonthServiceTest {
 		formVo.setDutyGroupId("0201");
 		formVo.setStartDate("01/2561");
 		formVo.setEndDate("06/2561");
+		formVo.setPaperBaNumber("0100002562000001");
 		
 		List<BasicAnalysisIncomeCompareLastMonthVo> voList = basicAnalysisIncomeCompareLastMonthService.inquiry(formVo);
 		for (BasicAnalysisIncomeCompareLastMonthVo vo : voList) {
@@ -39,7 +40,18 @@ public class BasicAnalysisIncomeCompareLastMonthServiceTest {
 				"\tdiffAmt=" + vo.getDiffIncomeAmt() +
 				"\tdiffPnt=" + vo.getDiffIncomePnt());
 		}
+	}
+	
+	//@Test
+	public void test_save() {
+		BasicAnalysisFormVo formVo = new BasicAnalysisFormVo();
+		formVo.setNewRegId("07755390005721001");
+		formVo.setDutyGroupId("0201");
+		formVo.setStartDate("01/2561");
+		formVo.setEndDate("06/2561");
+		formVo.setPaperBaNumber("0100002562000001");
 		
+		basicAnalysisIncomeCompareLastMonthService.save(formVo);
 	}
 	
 }
