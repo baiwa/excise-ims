@@ -12,10 +12,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.go.excise.ims.ta.persistence.entity.TaPaperBaD4;
 import th.go.excise.ims.ta.persistence.entity.TaPaperBaD5;
 import th.go.excise.ims.ta.persistence.repository.TaPaperBaD5Repository;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
 import th.go.excise.ims.ta.vo.BasicAnalysisTaxAmtVo;
+import th.go.excise.ims.ta.vo.BasicAnalysisTaxRateVo;
 import th.go.excise.ims.ws.persistence.repository.WsAnafri0001DRepository;
 import th.go.excise.ims.ws.vo.WsAnafri0001Vo;
 
@@ -59,8 +61,20 @@ public class BasicAnalysisTaxAmtService extends AbstractBasicAnalysisService<Bas
 
 	@Override
 	protected List<BasicAnalysisTaxAmtVo> inquiryByPaperBaNumber(BasicAnalysisFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("inquiryByPaperBaNumber paperBaNumber={}", formVo.getPaperBaNumber());
+
+		List<TaPaperBaD5> entityList = taPaperBaD5Repository.findByPaperBaNumber(formVo.getPaperBaNumber());
+		List<BasicAnalysisTaxAmtVo> voList = new ArrayList<>();
+		BasicAnalysisTaxAmtVo vo = null;
+		for (TaPaperBaD5 entity : entityList) {
+			vo = new BasicAnalysisTaxAmtVo();
+			vo.setGoodsDesc(entity.getGoodsDesc());	
+			vo.setAnaTaxByValAmt(entity.getAnaTaxByValAmt());
+			vo.setAnaTaxByQtyAmt(entity.getAnaTaxByQtyAmt());
+			vo.setSumAnaTaxAmt(entity.getSumAnaTaxAmt());
+			voList.add(vo);
+		}
+		return voList;
 	}
 
 	@Override

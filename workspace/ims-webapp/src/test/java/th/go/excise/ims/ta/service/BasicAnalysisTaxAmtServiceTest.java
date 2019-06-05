@@ -13,6 +13,7 @@ import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
 import th.go.excise.ims.ta.vo.BasicAnalysisTaxAmtVo;
 import th.go.excise.ims.ta.vo.BasicAnalysisTaxQtyVo;
+import th.go.excise.ims.ta.vo.BasicAnalysisTaxRateVo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
@@ -39,7 +40,7 @@ public class BasicAnalysisTaxAmtServiceTest {
 		}
 	}
 	
-	@Test
+//	@Test
 	public void test_save() {
 		BasicAnalysisFormVo formVo = new BasicAnalysisFormVo();
 		formVo.setNewRegId("01075440001081002");
@@ -49,5 +50,22 @@ public class BasicAnalysisTaxAmtServiceTest {
 		formVo.setEndDate("06/2562");
 		basicAnalysisTaxAmtService.save(formVo);
 		System.out.println("************************Is successfully saved************************");
+	}
+	
+	@Test
+	public void test_inquiryByPaperBaNumber() {
+		BasicAnalysisFormVo formVo = new BasicAnalysisFormVo();
+		formVo.setNewRegId("01075440001081002");
+		formVo.setPaperBaNumber("PaperBaNumber");
+		formVo.setDutyGroupId("0101");
+		formVo.setStartDate("01/2562");
+		formVo.setEndDate("06/2562");
+		List<BasicAnalysisTaxAmtVo> voList = basicAnalysisTaxAmtService.inquiryByPaperBaNumber(formVo);
+		for (BasicAnalysisTaxAmtVo vo : voList) {
+			System.out.println("GoodsDesc=" + vo.getGoodsDesc() +
+				"\tAnaTaxByValAmt=" + vo.getAnaTaxByValAmt() +
+				"\tAnaTaxByQtyAmt=" + vo.getAnaTaxByQtyAmt() +
+				"\tSumAnaTaxAmt=" + vo.getSumAnaTaxAmt());
+		}	
 	}
 }

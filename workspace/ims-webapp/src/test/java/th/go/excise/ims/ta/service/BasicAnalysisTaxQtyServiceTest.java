@@ -40,6 +40,23 @@ public class BasicAnalysisTaxQtyServiceTest {
 	}
 	
 	@Test
+	public void test_inquiryByPaperBaNumber() {
+		BasicAnalysisFormVo formVo = new BasicAnalysisFormVo();
+		formVo.setNewRegId("01075440001081002");
+		formVo.setPaperBaNumber("PaperBaNumber");
+		formVo.setDutyGroupId("0101");
+		formVo.setStartDate("01/2562");
+		formVo.setEndDate("06/2562");
+		List<BasicAnalysisTaxQtyVo> voList = basicAnalysisTaxQtyService.inquiryByPaperBaNumber(formVo);
+		for (BasicAnalysisTaxQtyVo vo : voList) {
+			System.out.println("GoodsDesc=" + vo.getGoodsDesc() +
+				"\tTaxQty=" + vo.getTaxQty() +
+				"\tStatementTaxQty=" + vo.getMonthStatementTaxQty() +
+				"\tDiffTaxQty=" + vo.getDiffTaxQty());
+		}
+	}
+	
+//	@Test
 	public void test_save() {
 		BasicAnalysisFormVo formVo = new BasicAnalysisFormVo();
 		formVo.setNewRegId("01075440001081002");

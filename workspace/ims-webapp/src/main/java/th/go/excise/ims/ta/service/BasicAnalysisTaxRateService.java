@@ -66,8 +66,23 @@ public class BasicAnalysisTaxRateService extends AbstractBasicAnalysisService<Ba
 
 	@Override
 	protected List<BasicAnalysisTaxRateVo> inquiryByPaperBaNumber(BasicAnalysisFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("inquiryByPaperBaNumber paperBaNumber={}", formVo.getPaperBaNumber());
+
+		List<TaPaperBaD4> entityList = taPaperBaD4Repository.findByPaperBaNumber(formVo.getPaperBaNumber());
+		List<BasicAnalysisTaxRateVo> voList = new ArrayList<>();
+		BasicAnalysisTaxRateVo vo = null;
+		for (TaPaperBaD4 entity : entityList) {
+			vo = new BasicAnalysisTaxRateVo();
+			vo.setGoodsDesc(entity.getGoodsDesc());
+			vo.setTaxRateByPrice(entity.getTaxRateByPrice());
+			vo.setTaxRateByQty(entity.getTaxRateByQty());
+			vo.setAnaTaxRateByPrice(entity.getAnaTaxRateByPrice());
+			vo.setAnaTaxRateByQty(entity.getAnaTaxRateByQty());
+			vo.setDiffTaxRateByPrice(entity.getDiffTaxRateByPrice());
+			vo.setDiffTaxRateByQty(entity.getDiffTaxRateByQty());	
+			voList.add(vo);
+		}
+		return voList;
 	}
 
 	@Override
