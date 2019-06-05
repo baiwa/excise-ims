@@ -25,7 +25,7 @@ public class MenuService {
 	public List<MenuVo> findByRoles() {
 		List<String> roleList = UserLoginUtils.getGrantedAuthorityList();
 		String subdeptLevel = UserLoginUtils.getCurrentUserBean().getSubdeptLevel();
-		logger.info("findByRole roleList={}, subdeptLevel", org.springframework.util.StringUtils.collectionToCommaDelimitedString(roleList), subdeptLevel);
+		logger.info("findByRole roleList={}, subdeptLevel={}", org.springframework.util.StringUtils.collectionToCommaDelimitedString(roleList), subdeptLevel);
 		
 		// ==> query list menu
 		List<MenuVo> menuList = menuRepository.findByRolesAndSubdeptLevel(roleList, subdeptLevel);
