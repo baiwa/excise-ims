@@ -11,17 +11,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
+import th.go.excise.ims.ta.vo.BasicAnalysisTaxAmtVo;
 import th.go.excise.ims.ta.vo.BasicAnalysisTaxQtyVo;
-import th.go.excise.ims.ta.vo.BasicAnalysisTaxValueVo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 @WithUserDetails(value = "ta001402", userDetailsServiceBeanName = "userDetailService")
 //@ActiveProfiles(value = PROFILE.UNITTEST)
-public class BasicAnalysisTaxValueServiceTest {
-
+public class BasicAnalysisTaxAmtServiceTest {
 	@Autowired
-	private BasicAnalysisTaxValueService basicAnalysisTaxValueService;
+	private BasicAnalysisTaxAmtService basicAnalysisTaxAmtService;
 	
 //	@Test
 	public void test_inquiryByWs() {
@@ -31,13 +30,13 @@ public class BasicAnalysisTaxValueServiceTest {
 		formVo.setStartDate("01/2562");
 		formVo.setEndDate("06/2562");
 		
-		List<BasicAnalysisTaxValueVo> voList = basicAnalysisTaxValueService.inquiryByWs(formVo);
-		for (BasicAnalysisTaxValueVo vo : voList) {
-			System.out.println("GoodsDescText=" + vo.getGoodsDescText() +
-				"\tTaxQty=" + vo.getTaxQty() +
-				"\tInformPrice=" + vo.getInformPrice() +
-				"\tGoodsValueAmt=" + vo.getGoodsValueAmt());
-		}		
+		List<BasicAnalysisTaxAmtVo> voList = basicAnalysisTaxAmtService.inquiryByWs(formVo);
+		for (BasicAnalysisTaxAmtVo vo : voList) {
+			System.out.println("GoodsDesc=" + vo.getGoodsDesc() +
+				"\tAnaTaxByValAmt=" + vo.getAnaTaxByValAmt() +
+				"\tAnaTaxByQtyAmt=" + vo.getAnaTaxByQtyAmt() +
+				"\tSumAnaTaxAmt=" + vo.getSumAnaTaxAmt());
+		}
 	}
 	
 	@Test
@@ -48,7 +47,7 @@ public class BasicAnalysisTaxValueServiceTest {
 		formVo.setDutyGroupId("0101");
 		formVo.setStartDate("01/2562");
 		formVo.setEndDate("06/2562");
-		basicAnalysisTaxValueService.save(formVo);
+		basicAnalysisTaxAmtService.save(formVo);
 		System.out.println("************************Is successfully saved************************");
 	}
 }

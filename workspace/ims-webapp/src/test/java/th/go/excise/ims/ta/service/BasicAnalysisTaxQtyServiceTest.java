@@ -22,7 +22,7 @@ public class BasicAnalysisTaxQtyServiceTest {
 	@Autowired
 	private BasicAnalysisTaxQtyService basicAnalysisTaxQtyService;
 	
-	@Test
+//	@Test
 	public void test_inquiryByWs() {
 		BasicAnalysisFormVo formVo = new BasicAnalysisFormVo();
 		formVo.setNewRegId("01075440001081002");
@@ -36,6 +36,18 @@ public class BasicAnalysisTaxQtyServiceTest {
 				"\tTaxQty=" + vo.getTaxQty() +
 				"\tStatementTaxQty=" + vo.getMonthStatementTaxQty() +
 				"\tDiffTaxQty=" + vo.getDiffTaxQty());
-		}		
+		}
+	}
+	
+	@Test
+	public void test_save() {
+		BasicAnalysisFormVo formVo = new BasicAnalysisFormVo();
+		formVo.setNewRegId("01075440001081002");
+		formVo.setPaperBaNumber("PaperBaNumber");
+		formVo.setDutyGroupId("0101");
+		formVo.setStartDate("01/2562");
+		formVo.setEndDate("06/2562");
+		basicAnalysisTaxQtyService.save(formVo);
+		System.out.println("************************Is successfully saved************************");
 	}
 }

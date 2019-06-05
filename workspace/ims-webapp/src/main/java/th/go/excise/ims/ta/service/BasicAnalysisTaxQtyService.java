@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.go.excise.ims.ta.persistence.entity.TaPaperBaD1;
 import th.go.excise.ims.ta.persistence.repository.TaPaperBaD1Repository;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
 import th.go.excise.ims.ta.vo.BasicAnalysisTaxQtyVo;
@@ -60,8 +61,20 @@ public class BasicAnalysisTaxQtyService extends AbstractBasicAnalysisService<Bas
 
 	@Override
 	protected void save(BasicAnalysisFormVo formVo) {
-		// TODO Auto-generated method stub
-		
+		List<BasicAnalysisTaxQtyVo> dataSaveList = inquiryByWs(formVo);
+		int i = 1;
+		TaPaperBaD1 entity = null;
+		for (BasicAnalysisTaxQtyVo saveData : dataSaveList) {
+			entity = new TaPaperBaD1();
+			entity.setPaperBaNumber(formVo.getPaperBaNumber());
+			entity.setSeqNo(i);
+			entity.setGoodsDesc(saveData.getGoodsDesc());
+			entity.setTaxQty(saveData.getTaxQty());
+//			entity.setMonthStatementTaxQty(saveData.getMonthStatementTaxQty());
+			entity.setDiffTaxQty(saveData.getDiffTaxQty());
+			taPaperBaD1Repository.save(entity);
+			i++;
+		}
 	}
 
 }

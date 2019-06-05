@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.go.excise.ims.ta.persistence.entity.TaPaperBaD4;
 import th.go.excise.ims.ta.persistence.repository.TaPaperBaD4Repository;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
 import th.go.excise.ims.ta.vo.BasicAnalysisTaxRateVo;
@@ -71,8 +72,23 @@ public class BasicAnalysisTaxRateService extends AbstractBasicAnalysisService<Ba
 
 	@Override
 	protected void save(BasicAnalysisFormVo formVo) {
-		// TODO Auto-generated method stub
-
+		List<BasicAnalysisTaxRateVo> dataSaveList = inquiryByWs(formVo);
+		int i = 1;
+		TaPaperBaD4 entity = null;
+		for (BasicAnalysisTaxRateVo saveData : dataSaveList) {
+			entity = new TaPaperBaD4();
+			entity.setPaperBaNumber(formVo.getPaperBaNumber());
+			entity.setSeqNo(i);
+			entity.setGoodsDesc(saveData.getGoodsDesc());
+			entity.setTaxRateByPrice(saveData.getTaxRateByPrice());
+			entity.setTaxRateByQty(saveData.getTaxRateByQty());
+			entity.setAnaTaxRateByPrice(saveData.getAnaTaxRateByPrice());
+			entity.setAnaTaxRateByQty(saveData.getAnaTaxRateByQty());
+			entity.setDiffTaxRateByPrice(saveData.getDiffTaxRateByPrice());
+			entity.setDiffTaxRateByQty(saveData.getDiffTaxRateByQty());
+			taPaperBaD4Repository.save(entity);
+			i++;
+		}
 	}
 
 }
