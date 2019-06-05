@@ -4,11 +4,11 @@ public class Int1306FormVo {
 
 	private String officeCode;
 	private String budgetYear;
-	private String assessAuditNo;
-	private String qtAuditNo;
-	private String py1AuditNo;
-	private String py2AuditNo;
-	private String committeeAuditNo;
+	private String auditPmassessNo;
+	private String auditPmqtNo;
+	private String auditPy1No;
+	private String auditPy2No;
+	private String auditPmcommitNo;
 
 	public String getOfficeCode() {
 		return officeCode;
@@ -26,44 +26,44 @@ public class Int1306FormVo {
 		this.budgetYear = budgetYear;
 	}
 
-	public String getAssessAuditNo() {
-		return assessAuditNo;
+	public String getAuditPmassessNo() {
+		return auditPmassessNo;
 	}
 
-	public void setAssessAuditNo(String assessAuditNo) {
-		this.assessAuditNo = assessAuditNo;
+	public void setAuditPmassessNo(String auditPmassessNo) {
+		this.auditPmassessNo = auditPmassessNo;
 	}
 
-	public String getQtAuditNo() {
-		return qtAuditNo;
+	public String getAuditPmqtNo() {
+		return auditPmqtNo;
 	}
 
-	public void setQtAuditNo(String qtAuditNo) {
-		this.qtAuditNo = qtAuditNo;
+	public void setAuditPmqtNo(String auditPmqtNo) {
+		this.auditPmqtNo = auditPmqtNo;
 	}
 
-	public String getPy1AuditNo() {
-		return py1AuditNo;
+	public String getAuditPy1No() {
+		return auditPy1No;
 	}
 
-	public void setPy1AuditNo(String py1AuditNo) {
-		this.py1AuditNo = py1AuditNo;
+	public void setAuditPy1No(String auditPy1No) {
+		this.auditPy1No = auditPy1No;
 	}
 
-	public String getPy2AuditNo() {
-		return py2AuditNo;
+	public String getAuditPy2No() {
+		return auditPy2No;
 	}
 
-	public void setPy2AuditNo(String py2AuditNo) {
-		this.py2AuditNo = py2AuditNo;
+	public void setAuditPy2No(String auditPy2No) {
+		this.auditPy2No = auditPy2No;
 	}
 
-	public String getCommitteeAuditNo() {
-		return committeeAuditNo;
+	public String getAuditPmcommitNo() {
+		return auditPmcommitNo;
 	}
 
-	public void setCommitteeAuditNo(String committeeAuditNo) {
-		this.committeeAuditNo = committeeAuditNo;
+	public void setAuditPmcommitNo(String auditPmcommitNo) {
+		this.auditPmcommitNo = auditPmcommitNo;
 	}
 
 }

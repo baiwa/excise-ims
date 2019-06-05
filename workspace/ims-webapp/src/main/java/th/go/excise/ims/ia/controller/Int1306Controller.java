@@ -71,4 +71,20 @@ public class Int1306Controller {
 		}
 		return response;
 	}
+
+	@PostMapping("/find-by-audit-pmresult-no")
+	@ResponseBody
+	public ResponseData<IaAuditPmResultVo> findByAuditPmassessNo(@RequestBody String auditPmresultNo) {
+		ResponseData<IaAuditPmResultVo> response = new ResponseData<IaAuditPmResultVo>();
+		try {
+			response.setData(int1306Service.findByAuditPmResultNo(auditPmresultNo));
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
 }

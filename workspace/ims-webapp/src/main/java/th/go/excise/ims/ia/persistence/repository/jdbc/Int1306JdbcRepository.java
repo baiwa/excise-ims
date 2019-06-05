@@ -38,9 +38,9 @@ public class Int1306JdbcRepository {
 			paramList.add(vo.getBudgetYear());
 		}
 
-		if (StringUtils.isNotBlank(vo.getAssessAuditNo())) {
+		if (StringUtils.isNotBlank(vo.getAuditPmassessNo())) {
 			sql.append(" AND AUDIT_PMASSESS_NO = ? ");
-			paramList.add(vo.getAssessAuditNo());
+			paramList.add(vo.getAuditPmassessNo());
 		}
 		sql.append(" AND ROWNUM <= 1 ");
 		sql.append(" ORDER BY AUDIT_PMASSESS_H_ID DESC ");
@@ -91,9 +91,9 @@ public class Int1306JdbcRepository {
 			paramList.add(vo.getBudgetYear());
 		}
 
-		if (StringUtils.isNotBlank(vo.getQtAuditNo())) {
+		if (StringUtils.isNotBlank(vo.getAuditPmqtNo())) {
 			sql.append(" AND AUDIT_PMQT_NO = ? ");
-			paramList.add(vo.getQtAuditNo());
+			paramList.add(vo.getAuditPmqtNo());
 		}
 
 		sql.append(" AND ROWNUM <= 1 ");
@@ -145,9 +145,9 @@ public class Int1306JdbcRepository {
 			paramList.add(vo.getBudgetYear());
 		}
 
-		if (StringUtils.isNotBlank(vo.getPy1AuditNo())) {
+		if (StringUtils.isNotBlank(vo.getAuditPy1No())) {
 			sql.append(" AND AUDIT_PY1_NO = ? ");
-			paramList.add(vo.getPy1AuditNo());
+			paramList.add(vo.getAuditPy1No());
 		}
 
 		sql.append(" AND ROWNUM <= 1 ");
@@ -199,9 +199,9 @@ public class Int1306JdbcRepository {
 			paramList.add(vo.getBudgetYear());
 		}
 
-		if (StringUtils.isNotBlank(vo.getPy2AuditNo())) {
+		if (StringUtils.isNotBlank(vo.getAuditPy2No())) {
 			sql.append(" AND AUDIT_PY2_NO = ? ");
-			paramList.add(vo.getPy2AuditNo());
+			paramList.add(vo.getAuditPy2No());
 		}
 
 		sql.append(" AND ROWNUM <= 1 ");
@@ -252,9 +252,9 @@ public class Int1306JdbcRepository {
 			paramList.add(vo.getBudgetYear());
 		}
 
-		if (StringUtils.isNotBlank(vo.getCommitteeAuditNo())) {
+		if (StringUtils.isNotBlank(vo.getAuditPmcommitNo())) {
 			sql.append(" AND AUDIT_PMCOMMIT_NO = ? ");
-			paramList.add(vo.getCommitteeAuditNo());
+			paramList.add(vo.getAuditPmcommitNo());
 		}
 
 		sql.append(" AND ROWNUM <= 1 ");

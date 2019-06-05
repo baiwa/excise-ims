@@ -13,6 +13,8 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.persistence.entity.IaAuditPmResult;
 import th.go.excise.ims.ia.persistence.repository.IaAuditPmResultRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int1306JdbcRepository;
+import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
+import th.go.excise.ims.ia.vo.ExciseDepartmentVo;
 import th.go.excise.ims.ia.vo.IaAuditPmResultVo;
 import th.go.excise.ims.ia.vo.Int1306DataVo;
 import th.go.excise.ims.ia.vo.Int1306FormVo;
@@ -149,5 +151,44 @@ public class Int1306Service {
 			logger.error(e.getMessage(), e);
 		}
 		return vo;
+	}
+
+	public IaAuditPmResultVo findByAuditPmResultNo(String auditPmresultNo) {
+		IaAuditPmResultVo data = null;
+		IaAuditPmResult h = null;
+		ExciseDepartmentVo excise = null;
+		h = iaAuditPmResultRepository.findByAuditPmresultNo(auditPmresultNo);
+		try {
+			data = new IaAuditPmResultVo();
+			data.setOfficeCode(h.getOfficeCode());
+			data.setAuditDateFrom(ConvertDateUtils.formatDateToString(h.getAuditDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			data.setAuditDateTo(ConvertDateUtils.formatDateToString(h.getAuditDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			data.setAuditPmresultNo(h.getAuditPmresultNo());
+			data.setBudgetYear(h.getBudgetYear());
+			data.setAuditPmassessNo(h.getAuditPmassessNo());
+			data.setAuditPmqtNo(h.getAuditPmqtNo());
+			data.setAuditPy1No(h.getAuditPy1No());
+			data.setAuditPy2No(h.getAuditPy2No());
+			data.setAuditPmcommitNo(h.getAuditPmcommitNo());
+			data.setDepAuditingSuggestion(h.getDepAuditingSuggestion());
+			data.setAuditSummary(h.getAuditSummary());
+			data.setAuditSuggestion(h.getAuditSuggestion());
+			data.setPersonAudity(h.getPersonAudity());
+			data.setPersonAudityPosition(h.getPersonAudityPosition());
+			data.setAuditer1(h.getAuditer1());
+			data.setAuditer1AudityPosition(h.getAuditer1AudityPosition());
+			data.setAuditer2(h.getAuditer2());
+			data.setAudite2AudityPosition(h.getAudite2AudityPosition());
+
+			excise = ExciseDepartmentUtil.getExciseDepartmentFull(h.getOfficeCode());
+			data.setArea(excise.getArea());
+			data.setSector(excise.getSector());
+			data.setBranch(excise.getBranch());
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return data;
 	}
 }
