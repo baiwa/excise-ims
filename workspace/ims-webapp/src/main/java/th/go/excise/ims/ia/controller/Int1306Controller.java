@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.service.Int1306Service;
 import th.go.excise.ims.ia.vo.IaAuditPmResultVo;
 import th.go.excise.ims.ia.vo.Int1306FormVo;
@@ -50,6 +51,22 @@ public class Int1306Controller {
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+
+	@PostMapping("/save")
+	@ResponseBody
+	public ResponseData<IaAuditPmResultVo> save(@RequestBody IaAuditPmResultVo request) {
+		ResponseData<IaAuditPmResultVo> response = new ResponseData<IaAuditPmResultVo>();
+		try {
+			response.setData(int1306Service.save(request));
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
