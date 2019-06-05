@@ -1,6 +1,6 @@
 package th.go.excise.ims.ta.persistence.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,9 +30,9 @@ public class TaPaperBaD6 extends BaseEntity {
 	@Column(name = "TAX_MONTH")
 	private String taxMonth;
 	@Column(name = "TAX_SUBMISSION_DATE")
-	private Date taxSubmissionDate;
+	private LocalDate taxSubmissionDate;
 	@Column(name = "ANA_TAX_SUBMISSION_DATE")
-	private Date anaTaxSubmissionDate;
+	private LocalDate anaTaxSubmissionDate;
 	@Column(name = "RESULT_TAX_SUBMISSION")
 	private String resultTaxSubmission;
 
@@ -68,19 +68,19 @@ public class TaPaperBaD6 extends BaseEntity {
 		this.taxMonth = taxMonth;
 	}
 
-	public Date getTaxSubmissionDate() {
+	public LocalDate getTaxSubmissionDate() {
 		return taxSubmissionDate;
 	}
 
-	public void setTaxSubmissionDate(Date taxSubmissionDate) {
+	public void setTaxSubmissionDate(LocalDate taxSubmissionDate) {
 		this.taxSubmissionDate = taxSubmissionDate;
 	}
 
-	public Date getAnaTaxSubmissionDate() {
+	public LocalDate getAnaTaxSubmissionDate() {
 		return anaTaxSubmissionDate;
 	}
 
-	public void setAnaTaxSubmissionDate(Date anaTaxSubmissionDate) {
+	public void setAnaTaxSubmissionDate(LocalDate anaTaxSubmissionDate) {
 		this.anaTaxSubmissionDate = anaTaxSubmissionDate;
 	}
 
