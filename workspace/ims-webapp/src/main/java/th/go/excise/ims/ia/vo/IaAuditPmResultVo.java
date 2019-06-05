@@ -21,6 +21,9 @@ public class IaAuditPmResultVo {
 	private String auditer1AudityPosition;
 	private String auditer2;
 	private String audite2AudityPosition;
+	private String sector;
+	private String area;
+	private String branch;
 
 	public Long getAuditPmresultSeq() {
 		return auditPmresultSeq;
@@ -180,6 +183,30 @@ public class IaAuditPmResultVo {
 
 	public void setAudite2AudityPosition(String audite2AudityPosition) {
 		this.audite2AudityPosition = audite2AudityPosition;
+	}
+
+	public String getSector() {
+		return sector;
+	}
+
+	public void setSector(String sector) {
+		this.sector = sector;
+	}
+
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+
+	public String getBranch() {
+		return branch;
+	}
+
+	public void setBranch(String branch) {
+		this.branch = branch;
 	}
 
 }
