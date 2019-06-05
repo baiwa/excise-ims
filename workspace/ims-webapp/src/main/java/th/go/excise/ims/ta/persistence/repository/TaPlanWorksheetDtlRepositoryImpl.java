@@ -57,6 +57,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		sql.append(" LEFT JOIN EXCISE_SUBDEPT ED_SUBDEPT ON PLAN_DTL.AU_SUBDEPT_CODE = ED_SUBDEPT.SUBDEPT_CODE " );
 		sql.append(" LEFT JOIN EXCISE_PERSON ED_PERSON ON PLAN_DTL.CREATED_BY = ED_PERSON.ED_LOGIN ");
 		sql.append(" LEFT JOIN TA_WORKSHEET_DTL WK_DTL ON PLAN_DTL.NEW_REG_ID = WK_DTL.NEW_REG_ID ");
+		sql.append("  AND PLAN_DTL.ANALYSIS_NUMBER = WK_DTL.ANALYSIS_NUMBER");
 	    
 		sql.append(" WHERE PLAN_DTL.IS_DELETED = 'N' ");
 		sql.append("   AND R4000.IS_DELETED = 'N' ");
