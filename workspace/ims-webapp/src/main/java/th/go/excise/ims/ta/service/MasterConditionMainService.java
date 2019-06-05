@@ -436,7 +436,20 @@ public class MasterConditionMainService {
         		String condGroup = "1";
         		if (condGroup.equals(dtl.getCondGroup())) {
         			dtl.setRangeStart(new BigDecimal(form.getRangeStart()));
-        			dtl.setRiskLevel(form.getRiskLevel());					
+        			dtl.setRangeTypeStart(form.getRangeTypeStart());
+        			dtl.setRiskLevel(form.getRiskLevel());
+        			dtl.setTaxMonthEnd(hdr.getMonthNum());
+        			String condRange = "";
+        			List<ParamInfo> mainCondRange = ApplicationCache.getParamInfoListByGroupCode("TA_MAIN_COND_RANGE");
+    				for (ParamInfo param : mainCondRange) {
+    					if (form.getRangeTypeStart().equals(param.getParamCode())) {
+    						condRange = param.getValue1();
+    					}
+    				}
+        			String condDtlDesc = "เปรียบเทียบการชำระภาษีปีนี้กับปีก่อน จำนวน "+form.getCompMonthNum()+" เดือน อัตราการชำระภาษี "+condRange+" ร้อยละ "+dtl.getRangeStart();
+    				dtl.setCondDtlDesc(condDtlDesc);
+				} else {
+					dtl.setTaxMonthEnd(hdr.getMonthNum()-1);
 				}
 			}
 		} else {
