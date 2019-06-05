@@ -3,6 +3,7 @@ package th.go.excise.ims.ia.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,4 +100,54 @@ public class Int1306Service {
 		return pmResultVoList;
 	}
 
+	public IaAuditPmResultVo save(IaAuditPmResultVo vo) {
+		logger.info("saveLicListService : {} ", vo.getAuditPmresultNo());
+		IaAuditPmResult pmResult = null;
+		try {
+
+			if (StringUtils.isNotBlank(vo.getAuditPmresultNo())) {
+				pmResult = iaAuditPmResultRepository.findByAuditPmresultNo(vo.getAuditPmresultNo());
+				pmResult.setDepAuditingSuggestion(vo.getDepAuditingSuggestion());
+				pmResult.setAuditSummary(vo.getAuditSummary());
+				pmResult.setAuditSuggestion(vo.getAuditSuggestion());
+				pmResult.setPersonAudity(vo.getPersonAudity());
+				pmResult.setPersonAudityPosition(vo.getPersonAudityPosition());
+				pmResult.setAuditer1(vo.getAuditer1());
+				pmResult.setAuditer1AudityPosition(vo.getAuditer1AudityPosition());
+				pmResult.setAuditer2(vo.getAuditer2());
+				pmResult.setAudite2AudityPosition(vo.getAudite2AudityPosition());
+
+				pmResult = iaAuditPmResultRepository.save(pmResult);
+				vo.setAuditPmresultNo(pmResult.getAuditPmresultNo());
+			} else {
+				pmResult = new IaAuditPmResult();
+				pmResult.setOfficeCode(vo.getOfficeCode());
+				pmResult.setAuditDateFrom(ConvertDateUtils.parseStringToDate(vo.getAuditDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+				pmResult.setAuditDateTo(ConvertDateUtils.parseStringToDate(vo.getAuditDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+				pmResult.setAuditPmresultNo(iaCommonService.autoGetRunAuditNoBySeqName("PMR", vo.getOfficeCode(), "AUDIT_PMRESULT_NO_SEQ", 8));
+				pmResult.setBudgetYear(vo.getBudgetYear());
+				pmResult.setAuditPmassessNo(vo.getAuditPmassessNo());
+				pmResult.setAuditPmqtNo(vo.getAuditPmqtNo());
+				pmResult.setAuditPy1No(vo.getAuditPy1No());
+				pmResult.setAuditPy2No(vo.getAuditPy2No());
+				pmResult.setAuditPmcommitNo(vo.getAuditPmcommitNo());
+				pmResult.setDepAuditingSuggestion(vo.getDepAuditingSuggestion());
+				pmResult.setAuditSummary(vo.getAuditSummary());
+				pmResult.setAuditSuggestion(vo.getAuditSuggestion());
+				pmResult.setPersonAudity(vo.getPersonAudity());
+				pmResult.setPersonAudityPosition(vo.getPersonAudityPosition());
+				pmResult.setAuditer1(vo.getAuditer1());
+				pmResult.setAuditer1AudityPosition(vo.getAuditer1AudityPosition());
+				pmResult.setAuditer2(vo.getAuditer2());
+				pmResult.setAudite2AudityPosition(vo.getAudite2AudityPosition());
+
+				pmResult = iaAuditPmResultRepository.save(pmResult);
+				vo.setAuditPmresultNo(pmResult.getAuditPmresultNo());
+			}
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+		return vo;
+	}
 }
