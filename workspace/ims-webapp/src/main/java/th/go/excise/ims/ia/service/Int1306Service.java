@@ -1,15 +1,23 @@
 package th.go.excise.ims.ia.service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ia.persistence.entity.IaAuditPmResult;
 import th.go.excise.ims.ia.persistence.repository.IaAuditPmResultRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int1306JdbcRepository;
@@ -22,6 +30,17 @@ import th.go.excise.ims.ia.vo.Int1306Vo;
 
 @Service
 public class Int1306Service {
+
+	public static final String PM_ASSESS_AND_PY1_Y = "เพียงพอ เหมาะสม";
+	public static final String PM_ASSESS_AND_PY1_N = "ไม่เพียงพอ";
+	public static final String PM_QT_Y = "มีการดำเนินการจริง";
+	public static final String PM_QT_N = "ไม่มี/ไม่เพียงพอ";
+	public static final String PM_PY2_Y1 = "กิจกรรมครบ";
+	public static final String PM_PY2_N1 = "กิจกรรมครบไม่ครบ";
+	public static final String PM_PY2_Y2 = "เพียงพอ เหมาะสม";
+	public static final String PM_PY2_N2 = "ไม่เพียงพอ/ไม่บรรลุวัตถุประสงค์";
+	public static final String PM_COMMIT_Y = "มี/ร่วมกันประเมิน";
+	public static final String PM_COMMIT_N = "ไม่มี/ไม่ได้ร่วมกันประเมิน";
 
 	private static final Logger logger = LoggerFactory.getLogger(Int1306Service.class);
 
@@ -190,5 +209,181 @@ public class Int1306Service {
 		}
 
 		return data;
+	}
+
+	public byte[] export(String auditLicdupNo) {
+
+		/* create spreadsheet */
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		Sheet sheet = workbook.createSheet("ประเมินการจัดวางระบบ");
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+
+		/* call style from utils */
+		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
+		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
+		CellStyle wrapText = ExcelUtils.createWrapTextStyle(workbook);
+
+		/* tbTH */
+		String[] tbTH = { "ลำดับ", "แบบรายการ/แนวทางการประเมิน", "ผลการสอบทาน", "ข้อเสนอแนะ", "สรุปผลการตรวจสอบ" };
+		for (int i = 0; i < tbTH.length; i++) {
+			cell = row.createCell(i);
+			cell.setCellValue(tbTH[i]);
+			cell.setCellStyle(thStyle);
+		}
+
+		int colIndex = 0;
+		sheet.setColumnWidth(colIndex++, 10 * 256);
+		sheet.setColumnWidth(colIndex++, 50 * 256);
+		sheet.setColumnWidth(colIndex++, 50 * 256);
+		sheet.setColumnWidth(colIndex++, 50 * 256);
+		sheet.setColumnWidth(colIndex++, 50 * 256);
+
+		IaAuditPmResult h = iaAuditPmResultRepository.findByAuditPmresultNo(auditLicdupNo);
+		Int1306FormVo formVo = new Int1306FormVo();
+		formVo.setOfficeCode(h.getOfficeCode());
+		formVo.setBudgetYear(h.getBudgetYear());
+		formVo.setAuditPmassessNo(h.getAuditPmassessNo());
+		formVo.setAuditPmqtNo(h.getAuditPmqtNo());
+		formVo.setAuditPy1No(h.getAuditPy1No());
+		formVo.setAuditPy2No(h.getAuditPy2No());
+		formVo.setAuditPmcommitNo(h.getAuditPmcommitNo());
+		List<Int1306DataVo> dataList = new ArrayList<>();
+
+		if (findCriteria(formVo).getDataList() != null && findCriteria(formVo).getDataList().size() > 0) {
+			dataList = findCriteria(formVo).getDataList();
+		}
+
+		/* set data */
+		rowNum = 1;
+		cellNum = 0;
+		int no = 1;
+
+		for (Int1306DataVo data : dataList) {
+			row = sheet.createRow(rowNum);
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			if (StringUtils.isNotBlank(data.getTopic())) {
+				cell.setCellValue(data.getTopic());
+			} else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			if (StringUtils.isNotBlank(data.getEvident())) {
+				cell.setCellValue(data.getEvident());
+			} else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			if (StringUtils.isNotBlank(data.getSuggestion())) {
+				cell.setCellValue(data.getSuggestion());
+			} else {
+				cell.setCellValue("-");
+			}
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+
+			if (StringUtils.isNotBlank(data.getType())) {
+				if ("PM_ASSESS".equals(data.getType()) || "PM_PY1".equals(data.getType())) {
+					cell = row.createCell(cellNum);
+					if ("Y".equals(data.getResult())) {
+						cell.setCellValue(PM_ASSESS_AND_PY1_Y);
+					} else if ("N".equals(data.getResult())) {
+						cell.setCellValue(PM_ASSESS_AND_PY1_N);
+					} else {
+						cell.setCellValue("-");
+					}
+					cell.setCellStyle(cellLeft);
+					cellNum++;
+				} else if ("PM_QT".equals(data.getType())) {
+					cell = row.createCell(cellNum);
+					if ("Y".equals(data.getResult())) {
+						cell.setCellValue(PM_QT_Y);
+					} else if ("N".equals(data.getResult())) {
+						cell.setCellValue(PM_QT_N);
+					} else {
+						cell.setCellValue("-");
+					}
+					cell.setCellStyle(cellLeft);
+					cellNum++;
+				} else if ("PM_PY2".equals(data.getType())) {
+					cell = row.createCell(cellNum);
+
+					if ("N".equals(data.getResult()) && "N".equals(data.getResult2())) {
+						cell.setCellValue(PM_PY2_N1 + "\n\n\n" + PM_PY2_N2);
+					} else if ("N".equals(data.getResult()) && "Y".equals(data.getResult2())) {
+						cell.setCellValue(PM_PY2_N1 + "\n\n\n" + PM_PY2_Y2);
+					} else if ("Y".equals(data.getResult()) && "N".equals(data.getResult2())) {
+						cell.setCellValue(PM_PY2_Y1 + "\n\n\n" + PM_PY2_N2);
+					} else if ("Y".equals(data.getResult()) && "Y".equals(data.getResult2())) {
+						cell.setCellValue(PM_PY2_Y1 + "\n\n\n" + PM_PY2_Y2);
+					} else if (StringUtils.isBlank(data.getResult()) && "Y".equals(data.getResult2())) {
+						cell.setCellValue("-" + "\n\n\n" + PM_PY2_Y2);
+					} else if ("Y".equals(data.getResult()) && StringUtils.isBlank(data.getResult2())) {
+						cell.setCellValue(PM_PY2_Y1 + "\n\n\n" + "-");
+					} else if (StringUtils.isBlank(data.getResult()) && "N".equals(data.getResult2())) {
+						cell.setCellValue("-" + "\n\n\n" + PM_PY2_N2);
+					} else if ("N".equals(data.getResult()) && StringUtils.isBlank(data.getResult2())) {
+						cell.setCellValue(PM_PY2_N1 + "\n\n\n" + "-");
+					} else {
+						cell.setCellValue("-" + "\n\n\n" + "-");
+					}
+					cell.setCellStyle(cellLeft);
+					cellNum++;
+
+				} else if ("PM_COMMIT".equals(data.getType())) {
+					cell = row.createCell(cellNum);
+					if ("Y".equals(data.getResult())) {
+						cell.setCellValue(PM_COMMIT_Y);
+					} else if ("N".equals(data.getResult())) {
+						cell.setCellValue(PM_COMMIT_N);
+					} else {
+						cell.setCellValue("-");
+					}
+					cell.setCellStyle(cellLeft);
+					cellNum++;
+				} else {
+					cell = row.createCell(cellNum);
+					cell.setCellValue("-");
+					cell.setCellStyle(cellLeft);
+					cellNum++;
+				}
+
+			} else {
+				cell = row.createCell(cellNum);
+				cell.setCellValue("-");
+				cell.setCellStyle(cellLeft);
+				cellNum++;
+			}
+
+			no++;
+			rowNum++;
+			cellNum = 0;
+		}
+
+		// set output
+		byte[] content = null;
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			workbook.write(outputStream);
+			content = outputStream.toByteArray();
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return content;
 	}
 }

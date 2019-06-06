@@ -24,6 +24,7 @@ public class Int1306JdbcRepository {
 	public Int1306DataVo findIaAuditPmassessHByCriteria(Int1306FormVo vo) {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT * FROM ( ");
 		sql.append(" SELECT AUDIT_PMASSESS_NO,PMA_AUDIT_EVIDENT,PMA_AUDIT_SUGGESTION,PMA_AUDIT_RESULT ");
 		sql.append(" FROM IA_AUDIT_PMASSESS_H ");
 		sql.append(" WHERE IS_DELETED = '").append(FLAG.N_FLAG).append("'");
@@ -42,9 +43,10 @@ public class Int1306JdbcRepository {
 			sql.append(" AND AUDIT_PMASSESS_NO = ? ");
 			paramList.add(vo.getAuditPmassessNo());
 		}
-		sql.append(" AND ROWNUM <= 1 ");
-		sql.append(" ORDER BY AUDIT_PMASSESS_H_ID DESC ");
 
+		sql.append(" ORDER BY AUDIT_PMASSESS_H_ID DESC ");
+		sql.append(" ) ");
+		sql.append(" WHERE  ROWNUM <= 1 ");
 		List<Int1306DataVo> dataList = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), auditPmassessHRowMapper);
 		Int1306DataVo data = null;
 
@@ -77,6 +79,7 @@ public class Int1306JdbcRepository {
 	public Int1306DataVo findIaAuditPmQtHByCriteria(Int1306FormVo vo) {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT * FROM ( ");
 		sql.append(" SELECT AUDIT_PMQT_NO,QT_AUDIT_EVIDENT,QT_AUDIT_SUGGESTION,QT_AUDIT_RESULT ");
 		sql.append(" FROM IA_AUDIT_PMQT_H ");
 		sql.append(" WHERE IS_DELETED = '").append(FLAG.N_FLAG).append("'");
@@ -96,9 +99,9 @@ public class Int1306JdbcRepository {
 			paramList.add(vo.getAuditPmqtNo());
 		}
 
-		sql.append(" AND ROWNUM <= 1 ");
 		sql.append(" ORDER BY AUDIT_PMQT_H_ID DESC ");
-
+		sql.append(" ) ");
+		sql.append(" WHERE  ROWNUM <= 1 ");
 		List<Int1306DataVo> dataList = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), auditPmQtHRowMapper);
 		Int1306DataVo data = null;
 
@@ -131,6 +134,7 @@ public class Int1306JdbcRepository {
 	public Int1306DataVo findIaAuditPy1HCriteria(Int1306FormVo vo) {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT * FROM ( ");
 		sql.append(" SELECT AUDIT_PY1_NO,CONDITION_TEXT,CRITERIA_TEXT,AUDIT_RESULT ");
 		sql.append(" FROM IA_AUDIT_PY1_H ");
 		sql.append(" WHERE IS_DELETED = '").append(FLAG.N_FLAG).append("'");
@@ -150,8 +154,9 @@ public class Int1306JdbcRepository {
 			paramList.add(vo.getAuditPy1No());
 		}
 
-		sql.append(" AND ROWNUM <= 1 ");
 		sql.append(" ORDER BY IA_AUDIT_PY1_H_ID DESC ");
+		sql.append(" ) ");
+		sql.append(" WHERE  ROWNUM <= 1 ");
 
 		List<Int1306DataVo> dataList = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), auditPy1HRowMapper);
 		Int1306DataVo data = null;
@@ -185,6 +190,7 @@ public class Int1306JdbcRepository {
 	public Int1306DataVo findIaAuditPy2HCriteria(Int1306FormVo vo) {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT * FROM ( ");
 		sql.append(" SELECT AUDIT_PY2_NO,PY2_AUDIT_EVIDENT,PY2_AUDIT_SUGGESTION,PY2_AUDIT_RESULT ,PY2_ACTIVITY_RESULT ");
 		sql.append(" FROM IA_AUDIT_PY2_H ");
 		sql.append(" WHERE IS_DELETED = '").append(FLAG.N_FLAG).append("'");
@@ -204,8 +210,9 @@ public class Int1306JdbcRepository {
 			paramList.add(vo.getAuditPy2No());
 		}
 
-		sql.append(" AND ROWNUM <= 1 ");
 		sql.append(" ORDER BY IA_AUDIT_PY2_H_ID DESC ");
+		sql.append(" ) ");
+		sql.append(" WHERE  ROWNUM <= 1 ");
 
 		List<Int1306DataVo> dataList = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), auditPy2HRowMapper);
 		Int1306DataVo data = null;
@@ -238,6 +245,7 @@ public class Int1306JdbcRepository {
 	public Int1306DataVo findIaAuditPmCommitHCriteria(Int1306FormVo vo) {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT * FROM ( ");
 		sql.append(" SELECT AUDIT_PMCOMMIT_NO,CONDITION_TEXT,CRITERIA_TEXT,AUDIT_FLAG ");
 		sql.append(" FROM IA_AUDIT_PMCOMMIT_H ");
 		sql.append(" WHERE IS_DELETED = '").append(FLAG.N_FLAG).append("'");
@@ -257,8 +265,9 @@ public class Int1306JdbcRepository {
 			paramList.add(vo.getAuditPmcommitNo());
 		}
 
-		sql.append(" AND ROWNUM <= 1 ");
 		sql.append(" ORDER BY AUDIT_PMCOMMIT_ID DESC ");
+		sql.append(" ) ");
+		sql.append(" WHERE  ROWNUM <= 1 ");
 
 		List<Int1306DataVo> dataList = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), auditPmCommitHRowMapper);
 		Int1306DataVo data = null;

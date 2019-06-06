@@ -1,9 +1,15 @@
 package th.go.excise.ims.ia.controller;
 
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -86,5 +92,20 @@ public class Int1306Controller {
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
+	}
+	
+	@GetMapping("/export/{auditPmresultNo}")
+	public void export(@PathVariable("auditPmresultNo") String auditPmresultNo, HttpServletResponse response) throws Exception {
+		String fileName = URLEncoder.encode("สรุปผลการตรวจสอบทานการประเมินการจัดวางระบบและการควบคุมภายใน ", "UTF-8");
+		String replaceString = auditPmresultNo.replace('_', '/');
+
+		// write it as an excel attachment
+		byte[] outByteStream = int1306Service.export(replaceString);
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+		OutputStream outStream = response.getOutputStream();
+		outStream.write(outByteStream);
+		outStream.flush();
+		outStream.close();
 	}
 }
