@@ -142,9 +142,15 @@ public class TaxAuditService {
 		}
 		
 		TaPlanWorksheetDtl planDtl = taPlanWorksheetDtlRepository.findByOfficeCodeAndNewRegId(officeCode, newRegId);
-		formVo.setAuditType(planDtl.getAuditType());
-		formVo.setAuditStartDate(ThaiBuddhistDate.from(planDtl.getAuditStartDate()).format(DateTimeFormatter.ofPattern(ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH)));
-		formVo.setAuditEndDate(ThaiBuddhistDate.from(planDtl.getAuditEndDate()).format(DateTimeFormatter.ofPattern(ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH)));
+		if (planDtl != null) {
+			formVo.setAuditType(planDtl.getAuditType());
+			if (planDtl.getAuditStartDate() != null) {
+				formVo.setAuditStartDate(ThaiBuddhistDate.from(planDtl.getAuditStartDate()).format(DateTimeFormatter.ofPattern(ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH)));
+			}
+			if (planDtl.getAuditEndDate() != null) {
+				formVo.setAuditEndDate(ThaiBuddhistDate.from(planDtl.getAuditEndDate()).format(DateTimeFormatter.ofPattern(ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH)));
+			}
+		}
 		
 		return formVo;
 	}
