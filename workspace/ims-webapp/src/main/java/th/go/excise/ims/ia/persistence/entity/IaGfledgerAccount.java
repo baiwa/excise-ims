@@ -17,69 +17,55 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 @Entity
 @Table(name = "IA_GFLEDGER_ACCOUNT")
 public class IaGfledgerAccount extends BaseEntity {
-	
-	private static final long serialVersionUID = 8981228250303210712L;
+
+	private static final long serialVersionUID = -6848090287553250409L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_GFLEDGER_ACCOUNT_GEN")
 	@SequenceGenerator(name = "IA_GFLEDGER_ACCOUNT_GEN", sequenceName = "IA_GFLEDGER_ACCOUNT_SEQ", allocationSize = 1)
 	@Column(name = "IA_GFLEDGER_ACCOUNT_SEQ")
 	private Long iaGfledgerAccountSeq;
-	@Column(name = "ST_CODE")
-	private String stCode;
-	@Column(name = "DETERMINATON")
-	private String determinaton;
-	@Column(name = "DOC_NO")
-	private String docNo;
-	@Column(name = "CODE")
-	private String code;
-	@Column(name = "TYPE")
-	private String type;
-	@Column(name = "DOC_DATE")
-	private String docDate;
-	@Column(name = "PK_CODE")
-	private String pkCode;
-	@Column(name = "CURR_AMT")
-	private BigDecimal currAmt;
-	@Column(name = "SOURCE_MONEY")
-	private String sourceMoney;
-	@Column(name = "KEY_REF_3")
-	private String keyRef3;
+	@Column(name = "GL_ACC_NO")
+	private String glAccNo;
 	@Column(name = "DEP_CODE")
 	private String depCode;
+	@Column(name = "TYPE")
+	private String type;
+	@Column(name = "PERIOD")
+	private BigDecimal period;
+	@Column(name = "DOC_DATE")
+	private Date docDate;
 	@Column(name = "POSTING_DATE")
 	private Date postingDate;
-	@Column(name = "YEAR_MONTH")
-	private String yearMonth;
-	@Column(name = "TAX_AMT")
-	private BigDecimal taxAmt;
-	@Column(name = "TAX_EXRMPT_AMT")
-	private BigDecimal taxExrmptAmt;
+	@Column(name = "DOC_NO")
+	private String docNo;
 	@Column(name = "REF_CODE")
 	private String refCode;
-	@Column(name = "GL_ACC")
-	private String glAcc;
-	@Column(name = "FORWARD_CLEARING_LIST")
-	private String forwardClearingList;
-	@Column(name = "CLG_I")
-	private BigDecimal clgI;
-	@Column(name = "BUDGET_CODE")
-	private String budgetCode;
+	@Column(name = "CURR_AMT")
+	private BigDecimal currAmt;
+	@Column(name = "PK_CODE")
+	private String pkCode;
+	@Column(name = "ROR_KOR")
+	private String rorKor;
+	@Column(name = "DETERMINATON")
+	private String determinaton;
+	@Column(name = "MSG")
+	private String msg;
+	@Column(name = "KEY_REF_3")
+	private String keyRef3;
 	@Column(name = "KEY_REF_1")
 	private String keyRef1;
 	@Column(name = "KEY_REF_2")
 	private String keyRef2;
+	@Column(name = "HLODING_TAXES")
+	private BigDecimal hlodingTaxes;
 	@Column(name = "DEPOSIT_ACC")
 	private String depositAcc;
-	@Column(name = "SUB_ACC")
-	private String subAcc;
-	@Column(name = "DEPOSIT_NAME")
-	private String depositName;
-	@Column(name = "ACC_OWN")
-	private String accOwn;
-	@Column(name = "DOC_HEADER_MSG")
-	private String docHeaderMsg;
-	@Column(name = "TX_CODE")
-	private String txCode;
+	@Column(name = "ACC_TYPE")
+	private String accType;
+	@Column(name = "COST_CENTER")
+	private String costCenter;
+	@Column(name = "DEPT_DISB")
+	private String deptDisb;
 	@Column(name = "CLRNG_DOC")
 	private String clrngDoc;
 
@@ -91,84 +77,12 @@ public class IaGfledgerAccount extends BaseEntity {
 		this.iaGfledgerAccountSeq = iaGfledgerAccountSeq;
 	}
 
-	public String getStCode() {
-		return stCode;
+	public String getGlAccNo() {
+		return glAccNo;
 	}
 
-	public void setStCode(String stCode) {
-		this.stCode = stCode;
-	}
-
-	public String getDeterminaton() {
-		return determinaton;
-	}
-
-	public void setDeterminaton(String determinaton) {
-		this.determinaton = determinaton;
-	}
-
-	public String getDocNo() {
-		return docNo;
-	}
-
-	public void setDocNo(String docNo) {
-		this.docNo = docNo;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getDocDate() {
-		return docDate;
-	}
-
-	public void setDocDate(String docDate) {
-		this.docDate = docDate;
-	}
-
-	public String getPkCode() {
-		return pkCode;
-	}
-
-	public void setPkCode(String pkCode) {
-		this.pkCode = pkCode;
-	}
-
-	public BigDecimal getCurrAmt() {
-		return currAmt;
-	}
-
-	public void setCurrAmt(BigDecimal currAmt) {
-		this.currAmt = currAmt;
-	}
-
-	public String getSourceMoney() {
-		return sourceMoney;
-	}
-
-	public void setSourceMoney(String sourceMoney) {
-		this.sourceMoney = sourceMoney;
-	}
-
-	public String getKeyRef3() {
-		return keyRef3;
-	}
-
-	public void setKeyRef3(String keyRef3) {
-		this.keyRef3 = keyRef3;
+	public void setGlAccNo(String glAccNo) {
+		this.glAccNo = glAccNo;
 	}
 
 	public String getDepCode() {
@@ -179,6 +93,30 @@ public class IaGfledgerAccount extends BaseEntity {
 		this.depCode = depCode;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public BigDecimal getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(BigDecimal period) {
+		this.period = period;
+	}
+
+	public Date getDocDate() {
+		return docDate;
+	}
+
+	public void setDocDate(Date docDate) {
+		this.docDate = docDate;
+	}
+
 	public Date getPostingDate() {
 		return postingDate;
 	}
@@ -187,28 +125,12 @@ public class IaGfledgerAccount extends BaseEntity {
 		this.postingDate = postingDate;
 	}
 
-	public String getYearMonth() {
-		return yearMonth;
+	public String getDocNo() {
+		return docNo;
 	}
 
-	public void setYearMonth(String yearMonth) {
-		this.yearMonth = yearMonth;
-	}
-
-	public BigDecimal getTaxAmt() {
-		return taxAmt;
-	}
-
-	public void setTaxAmt(BigDecimal taxAmt) {
-		this.taxAmt = taxAmt;
-	}
-
-	public BigDecimal getTaxExrmptAmt() {
-		return taxExrmptAmt;
-	}
-
-	public void setTaxExrmptAmt(BigDecimal taxExrmptAmt) {
-		this.taxExrmptAmt = taxExrmptAmt;
+	public void setDocNo(String docNo) {
+		this.docNo = docNo;
 	}
 
 	public String getRefCode() {
@@ -219,36 +141,52 @@ public class IaGfledgerAccount extends BaseEntity {
 		this.refCode = refCode;
 	}
 
-	public String getGlAcc() {
-		return glAcc;
+	public BigDecimal getCurrAmt() {
+		return currAmt;
 	}
 
-	public void setGlAcc(String glAcc) {
-		this.glAcc = glAcc;
+	public void setCurrAmt(BigDecimal currAmt) {
+		this.currAmt = currAmt;
 	}
 
-	public String getForwardClearingList() {
-		return forwardClearingList;
+	public String getPkCode() {
+		return pkCode;
 	}
 
-	public void setForwardClearingList(String forwardClearingList) {
-		this.forwardClearingList = forwardClearingList;
+	public void setPkCode(String pkCode) {
+		this.pkCode = pkCode;
 	}
 
-	public BigDecimal getClgI() {
-		return clgI;
+	public String getRorKor() {
+		return rorKor;
 	}
 
-	public void setClgI(BigDecimal clgI) {
-		this.clgI = clgI;
+	public void setRorKor(String rorKor) {
+		this.rorKor = rorKor;
 	}
 
-	public String getBudgetCode() {
-		return budgetCode;
+	public String getDeterminaton() {
+		return determinaton;
 	}
 
-	public void setBudgetCode(String budgetCode) {
-		this.budgetCode = budgetCode;
+	public void setDeterminaton(String determinaton) {
+		this.determinaton = determinaton;
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+
+	public String getKeyRef3() {
+		return keyRef3;
+	}
+
+	public void setKeyRef3(String keyRef3) {
+		this.keyRef3 = keyRef3;
 	}
 
 	public String getKeyRef1() {
@@ -267,6 +205,14 @@ public class IaGfledgerAccount extends BaseEntity {
 		this.keyRef2 = keyRef2;
 	}
 
+	public BigDecimal getHlodingTaxes() {
+		return hlodingTaxes;
+	}
+
+	public void setHlodingTaxes(BigDecimal hlodingTaxes) {
+		this.hlodingTaxes = hlodingTaxes;
+	}
+
 	public String getDepositAcc() {
 		return depositAcc;
 	}
@@ -275,44 +221,28 @@ public class IaGfledgerAccount extends BaseEntity {
 		this.depositAcc = depositAcc;
 	}
 
-	public String getSubAcc() {
-		return subAcc;
+	public String getAccType() {
+		return accType;
 	}
 
-	public void setSubAcc(String subAcc) {
-		this.subAcc = subAcc;
+	public void setAccType(String accType) {
+		this.accType = accType;
 	}
 
-	public String getDepositName() {
-		return depositName;
+	public String getCostCenter() {
+		return costCenter;
 	}
 
-	public void setDepositName(String depositName) {
-		this.depositName = depositName;
+	public void setCostCenter(String costCenter) {
+		this.costCenter = costCenter;
 	}
 
-	public String getAccOwn() {
-		return accOwn;
+	public String getDeptDisb() {
+		return deptDisb;
 	}
 
-	public void setAccOwn(String accOwn) {
-		this.accOwn = accOwn;
-	}
-
-	public String getDocHeaderMsg() {
-		return docHeaderMsg;
-	}
-
-	public void setDocHeaderMsg(String docHeaderMsg) {
-		this.docHeaderMsg = docHeaderMsg;
-	}
-
-	public String getTxCode() {
-		return txCode;
-	}
-
-	public void setTxCode(String txCode) {
-		this.txCode = txCode;
+	public void setDeptDisb(String deptDisb) {
+		this.deptDisb = deptDisb;
 	}
 
 	public String getClrngDoc() {

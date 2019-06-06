@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.go.excise.ims.preferences.vo.Ed0101DepartmentVo;
 import th.go.excise.ims.preferences.vo.Ed0101PositionVo;
-import th.go.excise.ims.preferences.vo.Ed01Vo;
 import th.go.excise.ims.preferences.vo.Ed02FormVo;
 import th.go.excise.ims.preferences.vo.Ed02Vo;
 

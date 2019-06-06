@@ -1,9 +1,7 @@
 package th.go.excise.ims.ia.service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +10,10 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.monitorjbl.xlsx.StreamingReader;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
@@ -30,149 +27,112 @@ public class IaGfledgerAccountService {
 	@Autowired
 	private IaGfledgerAccountRepository iaGfledgerAccountRepository;
 
+	private final String KEY_FILTER[] = { "เลขที่บัญชี G/L", "รหัสหน่วยงาน", "ประเภท", "*" };
 
-	public void addDataByExcel2(MultipartFile file) {
-		try {
-			List<List<String>> ex = ExcelUtils.readExcel(file);
-			for (List<String> list : ex) {
-				for (int i = 0; i < list.size(); i++) {
-					System.out.print(i + " : " + list.get(i) + "||");
-				}
-				if (list.get(0) != null) {
-
-				}
-				System.out.println();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void addDataByExcel(File file) throws FileNotFoundException {
+	public void addDataByExcel(MultipartFile file) throws Exception {
 		List<IaGfledgerAccount> iaGfledgerAccountList = new ArrayList<>();
 		IaGfledgerAccount iaGfledgerAccount = new IaGfledgerAccount();
-		InputStream is = new FileInputStream(file);
-		Workbook workbook = StreamingReader.builder().rowCacheSize(100).bufferSize(4096).open(is);
+		Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(file.getBytes()));
 		String valueExc = "";
-		for (Sheet sheet : workbook) {
-
-			for (Row r : sheet) {
-				iaGfledgerAccount = new IaGfledgerAccount();
-				try {
-
-					for (Cell c : r) {
-						valueExc = ExcelUtils.getCellValueAsString(c) + " : " + c.getColumnIndex();
-						System.out.print(valueExc +"||");
-						if ("รหัส".indexOf(ExcelUtils.getCellValueAsString(r.getCell(7) ))== -1 && "*".indexOf(ExcelUtils.getCellValueAsString(r.getCell(7) ))== -1 && "สถานะ:".indexOf(ExcelUtils.getCellValueAsString(r.getCell(7) ))== -1  && StringUtils.isNoneBlank(ExcelUtils.getCellValueAsString(r.getCell(7)))) {
+		Sheet sheet = workbook.getSheetAt(0);
+		String glAccNo = "";
+		String depCode = "";
+		for (Row r : sheet) {
+			iaGfledgerAccount = new IaGfledgerAccount();
+			try {
+				
+				String val;
+				for (Cell c : r) {
+					valueExc = ExcelUtils.getCellValueAsString(c) + " : " + c.getColumnIndex();
+					val = ExcelUtils.getCellValueAsString(c);
+					if (StringUtils.isNoneBlank(val)) {
+						if (StringUtils.trim(val).equals(KEY_FILTER[0]) && c.getColumnIndex() == 0) {
+							glAccNo = ExcelUtils.getCellValueAsString(r.getCell(5));
+						} else if (StringUtils.trim(val).equals(KEY_FILTER[1]) && c.getColumnIndex() == 0) {
+							depCode = ExcelUtils.getCellValueAsString(r.getCell(5));
+						} else if (ExcelUtils.getCellValueAsString(r.getCell(1)) == null && ExcelUtils.getCellValueAsString(r.getCell(2)) != null && !StringUtils.trim(ExcelUtils.getCellValueAsString(r.getCell(2))).equals(KEY_FILTER[2])) {
 							switch (c.getColumnIndex()) {
 							case 2:
-								iaGfledgerAccount.setStCode(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setType(val);
 								break;
 							case 3:
-								iaGfledgerAccount.setDeterminaton(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setPeriod(NumberUtils.toBigDecimal(val));
 								break;
-							case 5:
-								iaGfledgerAccount.setDocNo(ExcelUtils.getCellValueAsString(c));
+							case 4:
+								iaGfledgerAccount.setDocDate(ConvertDateUtils.parseStringToDate(val, ConvertDateUtils.DD_MM_YYYY_DOT));
 								break;
-							case 7:
-								iaGfledgerAccount.setCode(ExcelUtils.getCellValueAsString(c));
+							case 6:
+								iaGfledgerAccount.setPostingDate(ConvertDateUtils.parseStringToDate(val, ConvertDateUtils.DD_MM_YYYY_DOT));
 								break;
 							case 8:
-								iaGfledgerAccount.setType(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setDocNo(val);
 								break;
 							case 9:
-								iaGfledgerAccount.setDocDate(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setRefCode(val);
 								break;
 							case 10:
-								iaGfledgerAccount.setPkCode(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setCurrAmt(NumberUtils.toBigDecimal(val));
 								break;
 							case 11:
-								iaGfledgerAccount.setCurrAmt(NumberUtils.toBigDecimal(ExcelUtils.getCellValueAsString(c)));
+								iaGfledgerAccount.setPkCode(val);
+								break;
+							case 12:
+								iaGfledgerAccount.setRorKor(val);
 								break;
 							case 13:
-								iaGfledgerAccount.setSourceMoney(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setDeterminaton(val);
 								break;
 							case 14:
-								iaGfledgerAccount.setKeyRef3(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setMsg(val);
 								break;
 							case 15:
-								iaGfledgerAccount.setDepCode(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setKeyRef3(val);
 								break;
 							case 16:
-								iaGfledgerAccount.setPostingDate(ConvertDateUtils.parseStringToDate(ExcelUtils.getCellValueAsString(c), ConvertDateUtils.DD_MM_YYYY_DOT));
+								iaGfledgerAccount.setKeyRef1(val);
 								break;
 							case 17:
-								iaGfledgerAccount.setYearMonth(ExcelUtils.getCellValueAsString(c) != null ? ExcelUtils.getCellValueAsString(c).replace("/", "") : null);
+								iaGfledgerAccount.setKeyRef2(val);
 								break;
 							case 18:
-								iaGfledgerAccount.setTaxAmt(NumberUtils.toBigDecimal(ExcelUtils.getCellValueAsString(c)));
+								iaGfledgerAccount.setHlodingTaxes(NumberUtils.toBigDecimal(val));
 								break;
 							case 19:
-								iaGfledgerAccount.setTaxExrmptAmt(NumberUtils.toBigDecimal(ExcelUtils.getCellValueAsString(c)));
+								iaGfledgerAccount.setDepositAcc(val);
 								break;
 							case 20:
-								iaGfledgerAccount.setRefCode(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setAccType(val);
 								break;
 							case 21:
-								iaGfledgerAccount.setGlAcc(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setCostCenter(val);
 								break;
 							case 22:
-								iaGfledgerAccount.setForwardClearingList(ExcelUtils.getCellValueAsString(c));
+								iaGfledgerAccount.setDeptDisb(val);
 								break;
 							case 23:
-								iaGfledgerAccount.setClgI(NumberUtils.toBigDecimal(ExcelUtils.getCellValueAsString(c)));
+								iaGfledgerAccount.setClrngDoc(val);
 								break;
-							case 24:
-								iaGfledgerAccount.setBudgetCode(ExcelUtils.getCellValueAsString(c));
-								break;
-							case 25:
-								iaGfledgerAccount.setKeyRef1(ExcelUtils.getCellValueAsString(c));
-								break;
-							case 26:
-								iaGfledgerAccount.setKeyRef2(ExcelUtils.getCellValueAsString(c));
-								break;
-							case 27:
-								iaGfledgerAccount.setDepositAcc(ExcelUtils.getCellValueAsString(c));
-								break;
-							case 28:
-								iaGfledgerAccount.setSubAcc(ExcelUtils.getCellValueAsString(c));
-								break;
-							case 29:
-								iaGfledgerAccount.setDepositName(ExcelUtils.getCellValueAsString(c));
-								break;
-							case 30:
-								iaGfledgerAccount.setAccOwn(ExcelUtils.getCellValueAsString(c));
-								break;
-							case 31:
-								iaGfledgerAccount.setDocHeaderMsg(ExcelUtils.getCellValueAsString(c));
-								break;
-							case 32:
-								iaGfledgerAccount.setTxCode(ExcelUtils.getCellValueAsString(c));
-								break;
-							case 33:
-								iaGfledgerAccount.setClrngDoc(ExcelUtils.getCellValueAsString(c));
-								break;
+								
 
 							default:
 								break;
 							}
 						}
 					}
-					System.out.println("");
-					
-					if(StringUtils.isNoneBlank(iaGfledgerAccount.getDocNo())) {
-						iaGfledgerAccountList.add(iaGfledgerAccount);
-						System.out.println(" iaGfledgerAccountList .size : " + iaGfledgerAccountList.size());
-					}
-
-				} catch (Exception e) {
-					
 				}
+				if (StringUtils.isNoneBlank(iaGfledgerAccount.getDocNo())) {
+					iaGfledgerAccount.setGlAccNo(glAccNo);
+					iaGfledgerAccount.setDepCode(depCode);
+					iaGfledgerAccountList.add(iaGfledgerAccount);
+				}
+			} catch (Exception e) {
+
 			}
 		}
+
 		try {
 			iaGfledgerAccountRepository.insertBatch(iaGfledgerAccountList);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -25,7 +25,7 @@ public class SyncWsLicfri6010ServiceTest {
 	@Autowired
 	private SyncWsLicfri6010Service syncWsLicfri6010Service;
 	
-	@Test
+//	@Test
 	public void test_syncData() throws PccRestfulException {
 		List<String> offCodeList = new ArrayList<>();
 		offCodeList.add("010100");
@@ -115,12 +115,11 @@ public class SyncWsLicfri6010ServiceTest {
 		offCodeList.add("100300");
 		offCodeList.add("100400");
 		RequestData requestData = new RequestData();
-		
 			for (String offCode : offCodeList) {
 				try {
 					requestData.setOffcode(offCode);
-					requestData.setYearMonthFrom("201501");
-					requestData.setYearMonthTo("201905");
+					requestData.setYearMonthFrom("201401");
+					requestData.setYearMonthTo("201912");
 					syncWsLicfri6010Service.syncData(requestData);
 				} catch (Exception e) {
 					System.out.println(offCode);
@@ -129,7 +128,7 @@ public class SyncWsLicfri6010ServiceTest {
 	}
 	
 	
-//	@Test 
+	@Test 
 	public void syncWs6010ToIaWs6010() {
 		syncWsLicfri6010Service.syncWs6010ToIaWs6010();
 	}

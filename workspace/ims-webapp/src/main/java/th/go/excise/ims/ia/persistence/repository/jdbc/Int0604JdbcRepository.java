@@ -32,7 +32,7 @@ public class Int0604JdbcRepository {
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT * FROM WS_LICFRI6010 W ");
 		sql.append(" WHERE 1=1 ");
-		sql.append(" AND NOT EXISTS( SELECT 1 FROM IA_WS_LIC6020 I WHERE I.CURRENT_LIC_ID = W.WS_LICFRI6010_ID ) ");
+		sql.append(" AND NOT EXISTS( SELECT 1 FROM IA_WS_LIC6010 I WHERE I.CURRENT_LIC_ID = W.WS_LICFRI6010_ID ) ");
 		sql.append(" ORDER BY LIC_DATE ");
 		List<Object> paramList = new ArrayList<>();
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), rowMapper);

@@ -18,9 +18,9 @@ import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.go.excise.ims.common.util.ExciseUtils;
 
 public class TaPlanWorksheetHisRepositoryImpl implements TaPlanWorksheetHisRepositoryCustom {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(TaPlanWorksheetHisRepositoryImpl.class);
-	
+
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
@@ -75,12 +75,11 @@ public class TaPlanWorksheetHisRepositoryImpl implements TaPlanWorksheetHisRepos
 
 		return resultMap;
 	}
-	
 
 	@Override
 	public Map<String, List<String>> findAuditPlanCodeByNewRegId(List<String> newRegIdList, List<String> budgetYearList) {
 		logger.info("findAuditPlanCodeByNewRegId");
-		
+
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT BUDGET_YEAR, NEW_REG_ID, AUDIT_PLAN_CODE ");
 		sql.append(" FROM TA_PLAN_WORKSHEET_HIS ");
@@ -92,7 +91,7 @@ public class TaPlanWorksheetHisRepositoryImpl implements TaPlanWorksheetHisRepos
 		sql.append(StringUtils.repeat("?", ",", budgetYearList.size()));
 		sql.append("   ) ");
 		sql.append(" ORDER BY NEW_REG_ID, BUDGET_YEAR, AUDIT_SEQ ");
-		
+
 		List<Object> paramList = new ArrayList<>();
 		paramList.addAll(newRegIdList);
 		paramList.addAll(budgetYearList);
@@ -118,5 +117,6 @@ public class TaPlanWorksheetHisRepositoryImpl implements TaPlanWorksheetHisRepos
 
 		return auditPlanMap;
 	}
+
 
 }

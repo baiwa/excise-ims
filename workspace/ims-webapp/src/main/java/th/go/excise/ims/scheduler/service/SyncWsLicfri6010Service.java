@@ -30,7 +30,7 @@ public class SyncWsLicfri6010Service {
 
 	private static final Logger logger = LoggerFactory.getLogger(SyncWsRegfri4000Service.class);
 
-	private final int WS_DATA_SIZE = 1000;
+	private final int WS_DATA_SIZE = 5000;
 
 	@Autowired
 	private LicFri6010Service licFri6010Service;
@@ -61,6 +61,7 @@ public class SyncWsLicfri6010Service {
 			licenseList = licFri6010Service.execute(requestData).getLicenseList();
 			if (licenseList != null && licenseList.size() > 0) {
 				try {
+					licfri6010List = new ArrayList<>();
 					for (License license : licenseList) {
 						licfri6010 = new WsLicfri6010();
 						licfri6010.setOffcode(license.getOffcode());
@@ -86,13 +87,11 @@ public class SyncWsLicfri6010Service {
 						licfri6010.setIncCode(license.getIncCode());
 						licfri6010.setCreatedBy(SYSTEM_USER.BATCH);
 						licfri6010.setCreatedDate(LocalDateTime.now());
-						wsLicfri6010Repository.save(licfri6010);
-						// licfri6010List.add(licfri6010);
+						licfri6010List.add(licfri6010);
 					}
 
-//					wsLicfri6010Repository.saveAll(licfri6010List);
-//					wsLicfri6010Repository.batchInsert(licfri6010List);
-					licfri6010List = new ArrayList<>();
+					wsLicfri6010Repository.batchInsert(licfri6010List);
+					System.gc();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -118,11 +117,7 @@ public class SyncWsLicfri6010Service {
 			List<WsLicfri6010> wsLicfri6010List = int0604JdbcRepository.findWsLicfri6010Formapping();
 			List<WsLicfri6010> nextLic = null;
 			IaWsLic6010 iaWsLic6010;
-			List<IaWsLic6010> iaWsLic6010List = new ArrayList<>();
 			for (WsLicfri6010 wsLicfri6010 : wsLicfri6010List) {
-				if ("0105547056889".equals(wsLicfri6010.getNid()) && "61M00001".equals(wsLicfri6010.getFacId()) && "ภส.08-02".equals(wsLicfri6010.getLicType())) {
-					System.out.println();
-				}
 				if (StringUtils.isNotBlank(wsLicfri6010.getFacId())) {
 					nextLic = new ArrayList<>();
 					nextLic = int0604JdbcRepository.nextLic(wsLicfri6010);
@@ -133,11 +128,10 @@ public class SyncWsLicfri6010Service {
 						iaWsLic6010.setNewLicId(nextLic.get(0).getWsLicfri6010Id());
 						iaWsLic6010.setNewLicDate(nextLic.get(0).getLicDate());
 						iaWsLic6010.setNewLicNo(nextLic.get(0).getLicNo());
-						iaWsLic6010List.add(iaWsLic6010);
+						iaWsLic6010Repository.save(iaWsLic6010);
 					}
 				}
 			}
-			iaWsLic6010Repository.saveAll(iaWsLic6010List);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
