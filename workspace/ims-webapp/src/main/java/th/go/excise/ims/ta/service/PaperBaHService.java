@@ -25,17 +25,29 @@ public class PaperBaHService {
 		if (StringUtils.isNotEmpty(form.getPaperBaNumber())) {
 			paperBaH = paperBaHRepository.findByPaperBaNumber(form.getPaperBaNumber());
 		}
-		paperBaH.setOfficeCode(officeCode);
-		paperBaH.setBudgetYear(form.getBudgetYear());
-		
 		String paperBaNumber = "";
 		
+		paperBaH.setOfficeCode(officeCode);
+		paperBaH.setBudgetYear(form.getBudgetYear());
 		paperBaH.setPlanNumber(form.getPlanNumber());
 		paperBaH.setAuditPlanCode(form.getAuditPlanCode());
 		paperBaH.setPaperBaNumber(paperBaNumber);
-		paperBaH.setAuditPlanCode(form.getAuditPlanCode());
 		paperBaH.setNewRegId(form.getNewRegId());
 		paperBaH.setDutyGroupId(form.getDutyGroupId());
+//		paperBaH.setStartDate(form.getStartDate());
+//		paperBaH.setEndDate(form.getEndDate());
+		paperBaH.setMonthIncType(form.getMonthIncType());
+		paperBaH.setYearIncType(form.getYearIncType());
+		paperBaH.setYearNum(Integer.parseInt(form.getYearNum()));
+		paperBaH.setAnaResultText1(form.getAnaResultText1());
+		paperBaH.setAnaResultText2(form.getAnaResultText2());
+		paperBaH.setAnaResultText3(form.getAnaResultText3());
+		paperBaH.setAnaResultText4(form.getAnaResultText4());
+		paperBaH.setAnaResultText5(form.getAnaResultText5());
+		paperBaH.setAnaResultText6(form.getAnaResultText6());
+		paperBaH.setAnaResultText7(form.getAnaResultText7());
+		paperBaH.setAnaResultText8(form.getAnaResultText8());
+		
 //		paperBaH.setBaDateStart(ConvertDateUtils.parseStringToLocalDate("01/"+form.getBaDateStart(), ConvertDateUtils.DD_MM_YYYY));
 //		
 //		paperBaH.setBaDateEnd(LocalDate.of(Integer.parseInt(form.getBaDateEnd().substring(3 , 7)), Integer.parseInt(form.getBaDateEnd().substring(0,2)), 1).with(TemporalAdjusters.lastDayOfMonth()));
