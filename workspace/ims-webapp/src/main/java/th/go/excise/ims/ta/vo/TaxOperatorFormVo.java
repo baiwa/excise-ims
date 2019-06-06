@@ -42,6 +42,12 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	private String newRegFlag;
 	private BigDecimal sumTaxAmStart;
 	private BigDecimal sumTaxAmEnd;
+	
+	// new Entity
+	private String cuscatId;
+	private String pinnitId;
+	
+	
 
 	public BigDecimal getSumTaxAmStart() {
 		return sumTaxAmStart;
@@ -297,6 +303,22 @@ public class TaxOperatorFormVo extends DataTableRequest {
 
 	public void setNewRegFlag(String newRegFlag) {
 		this.newRegFlag = newRegFlag;
+	}
+
+	public String getCuscatId() {
+		return cuscatId;
+	}
+
+	public void setCuscatId(String cuscatId) {
+		this.cuscatId = cuscatId;
+	}
+
+	public String getPinnitId() {
+		return pinnitId;
+	}
+
+	public void setPinnitId(String pinnitId) {
+		this.pinnitId = pinnitId;
 	}
 
 }
