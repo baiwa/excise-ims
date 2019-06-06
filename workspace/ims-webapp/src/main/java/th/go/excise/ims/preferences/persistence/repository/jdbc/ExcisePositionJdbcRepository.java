@@ -37,7 +37,7 @@ public class ExcisePositionJdbcRepository {
 		public Ed0101PositionVo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Ed0101PositionVo vo = new Ed0101PositionVo();
 			vo.setEdPositionName(rs.getString("ED_POSITION_NAME"));
-			vo.setEdPersonSeq(rs.getBigDecimal("ED_PERSON_SEQ"));
+			vo.setEdPersonSeq(rs.getBigDecimal("ED_POSITION_SEQ"));
 			return vo;
 		}
 	};
@@ -85,7 +85,7 @@ public class ExcisePositionJdbcRepository {
 		sqlBuilder.append(" SELECT * FROM EXCISE_POSITION WHERE ED_POSITION_NAME LIKE ? ");
 		
 		params.add("%" +  form.getPosition().replaceAll(" ", "%") + "%");
-		sqlBuilder.append(" ORDER BY ED_PERSON_SEQ DESC ");
+		sqlBuilder.append(" ORDER BY ED_POSITION_SEQ DESC ");
 		Ed02VoList = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), listRowmapper);
 		return Ed02VoList;
 	}
@@ -94,7 +94,7 @@ public class ExcisePositionJdbcRepository {
 		@Override
 		public Ed02Vo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Ed02Vo vo = new Ed02Vo();
-			vo.setEdPersonSeq(rs.getBigDecimal("ED_PERSON_SEQ"));
+			vo.setEdPositionSeq(rs.getBigDecimal("ED_POSITION_SEQ"));
 			vo.setEdPositionName(rs.getString("ED_POSITION_NAME"));
 			vo.setAllowancesDay(rs.getBigDecimal("ALLOWANCES_DAY"));
 			vo.setAllowancesHalfDay(rs.getBigDecimal("ALLOWANCES_HALF_DAY"));
@@ -108,7 +108,7 @@ public class ExcisePositionJdbcRepository {
 	public void deleteById(Ed02FormVo formvo) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" DELETE FROM EXCISE_POSITION WHERE ED_PERSON_SEQ = ? ");
+		sql.append(" DELETE FROM EXCISE_POSITION WHERE ED_POSITION_SEQ = ? ");
 		params.add(formvo.getEdPersonSeq());
 		commonJdbcTemplate.update(sql.toString(), params.toArray());
 	}	
@@ -118,7 +118,7 @@ public class ExcisePositionJdbcRepository {
 	public List<Ed02Vo> getConfigEdit(BigDecimal edPersonSeq) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" SELECT * FROM EXCISE_POSITION WHERE ED_PERSON_SEQ = ? AND IS_DELETED ='N' ");
+		sql.append(" SELECT * FROM EXCISE_POSITION WHERE ED_POSITION_SEQ = ? AND IS_DELETED ='N' ");
 		params.add(edPersonSeq);
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<Ed02Vo> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(),

@@ -17,12 +17,12 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 public class ExcisePosition extends BaseEntity {
 
 	private static final long serialVersionUID = 7382008618718656380L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EXCISE_POSITION_GEN")
 	@SequenceGenerator(name = "EXCISE_POSITION_GEN", sequenceName = "EXCISE_POSITION_SEQ", allocationSize = 1)
-	@Column(name = "ED_PERSON_SEQ")
-	private Long edPersonSeq;
+	@Column(name = "ED_POSITION_SEQ")
+	private Long edPositionSeq;
 	@Column(name = "ED_POSITION_NAME")
 	private String edPositionName;
 	@Column(name = "ALLOWANCES_DAY")
@@ -35,14 +35,6 @@ public class ExcisePosition extends BaseEntity {
 	private BigDecimal accomFeeDouble;
 	@Column(name = "ACCOM_FEE_PACKAGES")
 	private BigDecimal accomFeePackages;
-
-	public Long getEdPersonSeq() {
-		return edPersonSeq;
-	}
-
-	public void setEdPersonSeq(Long edPersonSeq) {
-		this.edPersonSeq = edPersonSeq;
-	}
 
 	public String getEdPositionName() {
 		return edPositionName;
@@ -90,6 +82,14 @@ public class ExcisePosition extends BaseEntity {
 
 	public void setAccomFeePackages(BigDecimal accomFeePackages) {
 		this.accomFeePackages = accomFeePackages;
+	}
+
+	public Long getEdPositionSeq() {
+		return edPositionSeq;
+	}
+
+	public void setEdPositionSeq(Long edPositionSeq) {
+		this.edPositionSeq = edPositionSeq;
 	}
 
 }
