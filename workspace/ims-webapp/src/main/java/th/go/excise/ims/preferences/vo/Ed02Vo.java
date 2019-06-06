@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class Ed02Vo {
 
-	private BigDecimal edPersonSeq;
+	private BigDecimal edPositionSeq;
 	private String edPositionName;
 	private BigDecimal allowancesDay;
 	private BigDecimal allowancesHalfDay;
@@ -12,13 +12,7 @@ public class Ed02Vo {
 	private BigDecimal accomFeeDouble;
 	private BigDecimal accomFeePackages;
 
-	public BigDecimal getEdPersonSeq() {
-		return edPersonSeq;
-	}
-
-	public void setEdPersonSeq(BigDecimal edPersonSeq) {
-		this.edPersonSeq = edPersonSeq;
-	}
+	
 
 	public String getEdPositionName() {
 		return edPositionName;
@@ -66,6 +60,14 @@ public class Ed02Vo {
 
 	public void setAccomFeePackages(BigDecimal accomFeePackages) {
 		this.accomFeePackages = accomFeePackages;
+	}
+
+	public BigDecimal getEdPositionSeq() {
+		return edPositionSeq;
+	}
+
+	public void setEdPositionSeq(BigDecimal edPositionSeq) {
+		this.edPositionSeq = edPositionSeq;
 	}
 
 }
