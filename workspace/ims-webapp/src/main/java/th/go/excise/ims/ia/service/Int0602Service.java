@@ -43,6 +43,9 @@ public class Int0602Service {
 
 	@Autowired
 	private IaAuditLicD2Repository iaAuditLicD2Repository;
+	
+	@Autowired
+	private IaCommonService iaCommonService;
 
 	public List<Int0602ResultTab1Vo> findByCriteria(Int0602FormVo int0602FormVo) {
 		logger.info("findByCriterai");
@@ -83,7 +86,6 @@ public class Int0602Service {
 				licH = iaAuditLicHRepository.findByAuditLicNoAndIsDeletedOrderByAuditLicSeqDesc(vo.getAuditLicH().getAuditLicNo(), FLAG.N_FLAG);
 				licH = new IaAuditLicH();
 				BeanUtils.copyProperties(licH, vo.getAuditLicH());
-				licH.setAuditLicNo(vo.getAuditLicH().getOfficeCode() + "/" + iaAuditLicHRepository.generateAuditLicNo());
 				licH.setLicDateTo(ConvertDateUtils.parseStringToDate(vo.getAuditLicH().getLicDateToStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 				licH.setLicDateFrom(ConvertDateUtils.parseStringToDate(vo.getAuditLicH().getLicDateFromStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 				licH = iaAuditLicHRepository.save(licH);
@@ -92,7 +94,8 @@ public class Int0602Service {
 
 				licH = new IaAuditLicH();
 				BeanUtils.copyProperties(licH, vo.getAuditLicH());
-				licH.setAuditLicNo(vo.getAuditLicH().getOfficeCode() + "/" + iaAuditLicHRepository.generateAuditLicNo());
+				
+				licH.setAuditLicNo(iaCommonService.autoGetRunAuditNoBySeqName("AL", vo.getAuditLicH().getOfficeCode(), "AUDIT_LIC_NO_SEQ", 8));
 				licH.setLicDateTo(ConvertDateUtils.parseStringToDate(vo.getAuditLicH().getLicDateToStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 				licH.setLicDateFrom(ConvertDateUtils.parseStringToDate(vo.getAuditLicH().getLicDateFromStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 				licH = iaAuditLicHRepository.save(licH);

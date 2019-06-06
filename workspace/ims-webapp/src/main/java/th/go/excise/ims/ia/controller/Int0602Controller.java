@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.service.Int0602Service;
 import th.go.excise.ims.ia.vo.AuditLicD1Vo;
 import th.go.excise.ims.ia.vo.AuditLicD2Vo;
@@ -65,11 +66,11 @@ public class Int0602Controller {
 		ResponseData<AuditLicHVo> response = new ResponseData<>();
 		try {
 			response.setData(int0602Service.saveLicListService(request));
-			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
