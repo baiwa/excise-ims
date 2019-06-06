@@ -631,6 +631,8 @@ public class TaxOperatorController {
 			}else {
 				if (ProjectConstants.EXCISE_OFFICE_CODE.TA_CENTRAL.equals(formVo.getOfficeCode())) {
 					formVo.setOfficeCode("0014__");
+				}else if (ExciseUtils.isSector(formVo.getOfficeCode())) {
+					formVo.setOfficeCode(formVo.getOfficeCode().substring(0, 2)+"____");
 				}
 			}
 		}

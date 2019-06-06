@@ -386,6 +386,16 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 				params.add(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
 			}
 		}
+		
+		if (StringUtils.isNotBlank(formVo.getCuscatId())) {
+			params.add(formVo.getCuscatId());
+			sql.append(" AND R4000.CUSCAT_ID = ? ");
+		}
+		
+		if (StringUtils.isNotBlank(formVo.getPinnitId())) {
+			params.add(formVo.getPinnitId());
+			sql.append(" AND R4000.PINNIT_ID = ? ");
+		}
 
 	}
 

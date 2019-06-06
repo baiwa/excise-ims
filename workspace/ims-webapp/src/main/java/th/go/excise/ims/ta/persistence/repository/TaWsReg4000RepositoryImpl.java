@@ -348,6 +348,15 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 			params.add(formVo.getCusId());
 			sql.append(" AND R4000.PINNIT_ID = ? ");
 		}
+		if (formVo.getFromDate() != null) {
+			params.add(formVo.getFromDate());
+			sql.append(" AND R4000.REG_DATE > ? ");
+		}
+		
+		if (formVo.getToDate() != null) {
+			params.add(formVo.getToDate());
+			sql.append(" AND R4000.REG_DATE < ? ");
+		}
 	}
 
 	@Override

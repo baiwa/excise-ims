@@ -16,6 +16,8 @@ public class OutsidePlanFormVo extends DataTableRequest {
 	private Date toDate;
 	private String cusType;
 	private String cusId;
+	private String flagOut;
+	private String planNumber;
 
 	public String getCusFullname() {
 		return cusFullname;
@@ -88,5 +90,22 @@ public class OutsidePlanFormVo extends DataTableRequest {
 	public void setCusId(String cusId) {
 		this.cusId = cusId;
 	}
+
+	public String getFlagOut() {
+		return flagOut;
+	}
+
+	public void setFlagOut(String flagOut) {
+		this.flagOut = flagOut;
+	}
+
+	public String getPlanNumber() {
+		return planNumber;
+	}
+
+	public void setPlanNumber(String planNumber) {
+		this.planNumber = planNumber;
+	}
+	
 	
 }
