@@ -45,15 +45,23 @@ public class Int061402Service {
 
 	public DataTableAjax<Ws_Reg4000Vo> filter(Int061402FilterVo formVo) {
 		List<Ws_Reg4000Vo> data = new ArrayList<Ws_Reg4000Vo>();
+		Integer count = null;
+		
 		if ("Y".equals(formVo.getFlagSearch())) {
-			data = int061402JdbcRepository.getDataFilter(formVo);
+			if (StringUtils.isBlank(formVo.getAuditTxinsurNo())) {
+				data = int061402JdbcRepository.getDataFilter(formVo);
+				count = int061402JdbcRepository.countDatafilter(formVo);
+			} else {
+				data = int061402JdbcRepository.findDataNotEqualAuditTxinsurNo(formVo);
+				count = int061402JdbcRepository.countDataNotEqualAuditTxinsurNo(formVo);
+			}
 		}
 
 		DataTableAjax<Ws_Reg4000Vo> dataTableAjax = new DataTableAjax<Ws_Reg4000Vo>();
 		// dataTableAjax.setDraw(formVo.getDraw() + 1);
 		dataTableAjax.setData(data);
-		dataTableAjax.setRecordsTotal(int061402JdbcRepository.countDatafilter(formVo));
-		dataTableAjax.setRecordsFiltered(int061402JdbcRepository.countDatafilter(formVo));
+		dataTableAjax.setRecordsTotal(count);
+		dataTableAjax.setRecordsFiltered(count);
 
 		return dataTableAjax;
 	}
