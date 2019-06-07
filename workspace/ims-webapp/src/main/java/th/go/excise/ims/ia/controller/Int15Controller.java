@@ -1,6 +1,7 @@
 package th.go.excise.ims.ia.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -18,7 +19,14 @@ import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.ia.persistence.entity.IaGfdrawAccount;
+import th.go.excise.ims.ia.persistence.entity.IaGfledgerAccount;
+import th.go.excise.ims.ia.persistence.entity.IaGfmovementAccount;
+import th.go.excise.ims.ia.persistence.entity.IaGftrialBalance;
 import th.go.excise.ims.ia.service.IaGfdrawAccountService;
+import th.go.excise.ims.ia.service.IaGfledgerAccountService;
+import th.go.excise.ims.ia.service.IaGfmovementAccountService;
+import th.go.excise.ims.ia.service.IaGftrialBalanceService;
 import th.go.excise.ims.ia.vo.Int15UploadVo;
 
 @Controller
@@ -29,18 +37,23 @@ public class Int15Controller {
 	@Autowired
 	private IaGfdrawAccountService iaGfdrawAccountService;
 
-	
+	@Autowired
+	private IaGftrialBalanceService iaGftrialBalanceService;
 
-	@PostMapping("/upload-t1")
+	@Autowired
+	private IaGfledgerAccountService iaGfledgerAccountService;
+
+	@Autowired
+	private IaGfmovementAccountService iaGfmovementAccountService;
+
+	@PostMapping("/upload/IA_TYPE_DATA1")
 	@ResponseBody
-	public ResponseData<String> uploadT1(@ModelAttribute Int15UploadVo form) throws EncryptedDocumentException, InvalidFormatException, IOException {
+	public ResponseData<List<IaGfdrawAccount>> uploadT1(@ModelAttribute Int15UploadVo form) throws EncryptedDocumentException, InvalidFormatException, IOException {
 
-		ResponseData<String> responseData = new ResponseData<String>();
+		ResponseData<List<IaGfdrawAccount>> responseData = new ResponseData<List<IaGfdrawAccount>>();
 		try {
 			MultipartFile file = form.getFile();
-			iaGfdrawAccountService.addDataByExcel(file);
-			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
-			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+			responseData = iaGfdrawAccountService.addDataByExcel(file);
 
 		} catch (Exception e) {
 			logger.error("Int030102Controller upload : ", e);
@@ -50,16 +63,16 @@ public class Int15Controller {
 		return responseData;
 	}
 
-	@PostMapping("/upload-t2")
+	@PostMapping("/upload/IA_TYPE_DATA2")
 	@ResponseBody
-	public ResponseData<String> uploadT2(@ModelAttribute Int15UploadVo form) throws EncryptedDocumentException, InvalidFormatException, IOException {
-
-		ResponseData<String> responseData = new ResponseData<String>();
+	public ResponseData<List<IaGftrialBalance>> uploadT2(@ModelAttribute Int15UploadVo form) throws EncryptedDocumentException, InvalidFormatException, IOException {
+//		iaGftrialBalanceService
+		ResponseData<List<IaGftrialBalance>> responseData = new ResponseData<List<IaGftrialBalance>>();
 		try {
 			MultipartFile file = form.getFile();
-			iaGfdrawAccountService.addDataByExcel(file);
-			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
-			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+			responseData = iaGftrialBalanceService.addDataByExcel(file);
+//			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+//			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 
 		} catch (Exception e) {
 			logger.error("Int030102Controller upload : ", e);
@@ -69,16 +82,16 @@ public class Int15Controller {
 		return responseData;
 	}
 
-	@PostMapping("/upload-t3")
+	@PostMapping("/upload/IA_TYPE_DATA3")
 	@ResponseBody
-	public ResponseData<String> uploadT3(@ModelAttribute Int15UploadVo form) throws EncryptedDocumentException, InvalidFormatException, IOException {
-
-		ResponseData<String> responseData = new ResponseData<String>();
+	public ResponseData<List<IaGfledgerAccount>> uploadT3(@ModelAttribute Int15UploadVo form) throws EncryptedDocumentException, InvalidFormatException, IOException {
+//		iaGfledgerAccountService
+		ResponseData<List<IaGfledgerAccount>> responseData = new ResponseData<List<IaGfledgerAccount>>();
 		try {
 			MultipartFile file = form.getFile();
-			iaGfdrawAccountService.addDataByExcel(file);
-			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
-			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+			responseData = iaGfledgerAccountService.addDataByExcel(file);
+//			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+//			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 
 		} catch (Exception e) {
 			logger.error("Int030102Controller upload : ", e);
@@ -87,16 +100,16 @@ public class Int15Controller {
 		}
 		return responseData;
 	}
-	@PostMapping("/upload-t4")
+	@PostMapping("/upload/IA_TYPE_DATA4")
 	@ResponseBody
-	public ResponseData<String> uploadT4(@ModelAttribute Int15UploadVo form) throws EncryptedDocumentException, InvalidFormatException, IOException {
-
-		ResponseData<String> responseData = new ResponseData<String>();
+	public ResponseData<List<IaGfmovementAccount>> uploadT4(@ModelAttribute Int15UploadVo form) throws EncryptedDocumentException, InvalidFormatException, IOException {
+//		iaGfmovementAccountService
+		ResponseData<List<IaGfmovementAccount>> responseData = new ResponseData<List<IaGfmovementAccount>>();
 		try {
 			MultipartFile file = form.getFile();
-			iaGfdrawAccountService.addDataByExcel(file);
-			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
-			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+			responseData = iaGfmovementAccountService.addDataByExcel(file);
+//			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+//			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 
 		} catch (Exception e) {
 			logger.error("Int030102Controller upload : ", e);

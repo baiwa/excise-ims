@@ -8,8 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ia.persistence.entity.IaGfdrawAccount;
 import th.go.excise.ims.ia.persistence.entity.IaGftrialBalance;
 import th.go.excise.ims.ia.persistence.repository.IaGftrialBalanceRepository;
 
@@ -18,8 +23,8 @@ public class IaGftrialBalanceService {
 
 	@Autowired
 	private IaGftrialBalanceRepository iaGftrialBalanceRepository;
-	
-	private final String KEY_FILTER  = "User name     :";
+
+	private final String KEY_FILTER = "User name     :";
 
 //	public void addDataByExcel(File file) {
 //		try {
@@ -35,7 +40,8 @@ public class IaGftrialBalanceService {
 //		}
 //	}
 
-	public void addDataByExcel(MultipartFile file) {
+	public ResponseData<List<IaGftrialBalance>> addDataByExcel(MultipartFile file) {
+		ResponseData<List<IaGftrialBalance>> responseData = new ResponseData<List<IaGftrialBalance>>();
 		try {
 			String departmentCode = "";
 			String periodFrom = "";
@@ -47,12 +53,12 @@ public class IaGftrialBalanceService {
 			for (List<String> line : allLine) {
 				if (line != null && line.size() == 5 && line.get(0) != null && KEY_FILTER.equals(line.get(0).trim())) {
 					departmentCode = line.get(2).trim().split(" ")[1];
-				}else if (line != null && line.size() == 1 && line.get(0).trim().split(" ").length == 6 ) {
+				} else if (line != null && line.size() == 1 && line.get(0).trim().split(" ").length == 6) {
 					String[] periodData = line.get(0).trim().split(" ");
 					periodFrom = periodData[1];
 					periodTo = periodData[3];
 					periodYear = periodData[5];
-				}else if(line != null && line.size() == 6) {
+				} else if (line != null && line.size() == 6) {
 					iaRepDisbPerMonth = new IaGftrialBalance();
 					iaRepDisbPerMonth.setDepartmentCode(departmentCode);
 					iaRepDisbPerMonth.setPeriodFrom(periodFrom);
@@ -67,9 +73,15 @@ public class IaGftrialBalanceService {
 					iaRepDisbPerMonthList.add(iaRepDisbPerMonth);
 				}
 			}
-			iaGftrialBalanceRepository.batchInsert(iaRepDisbPerMonthList);
+//			iaGftrialBalanceRepository.batchInsert(iaRepDisbPerMonthList);
+			responseData.setData(iaRepDisbPerMonthList);
+			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
+		return responseData;
 	}
 }

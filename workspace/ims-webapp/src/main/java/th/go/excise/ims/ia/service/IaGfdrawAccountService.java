@@ -9,8 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ia.persistence.entity.IaGfdrawAccount;
 import th.go.excise.ims.ia.persistence.repository.IaGfdrawAccountRepository;
@@ -39,7 +43,8 @@ public class IaGfdrawAccountService {
 //		}
 //	}
 
-	public void addDataByExcel(MultipartFile file) {
+	public ResponseData<List<IaGfdrawAccount>> addDataByExcel(MultipartFile file) {
+		ResponseData<List<IaGfdrawAccount>> responseData = new ResponseData<List<IaGfdrawAccount>>();
 		try {
 			String departmentCode = "";
 			String periodFrom = "";
@@ -91,17 +96,22 @@ public class IaGfdrawAccountService {
 						iaGfDrawAccount.setNetAmt(NumberUtils.toBigDecimal(line.get(12)));
 						iaGfDrawAccountList.add(iaGfDrawAccount);
 					} catch (Exception e) {
-						e.printStackTrace();
-						System.out.println(e.getStackTrace());
+//						e.printStackTrace();
+//						System.out.println(e.getStackTrace());
 					}
 
 				}
 			}
-
-			iaGfdrawAccountRepository.batchInsert(iaGfDrawAccountList);
+			responseData.setData(iaGfDrawAccountList);
+			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+//			iaGfdrawAccountRepository.batchInsert(iaGfDrawAccountList);
 		} catch (Exception e) {
 			e.printStackTrace();
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
+		return responseData;
 	}
 
 }

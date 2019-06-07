@@ -16,8 +16,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.monitorjbl.xlsx.StreamingReader;
 
+import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ia.persistence.entity.IaGfmovementAccount;
 import th.go.excise.ims.ia.persistence.repository.IaGfmovementAccountRepository;
@@ -33,7 +37,8 @@ public class IaGfmovementAccountService {
 			, "User name     :"  
 			, "ตั้งแต่"};
 
-	public void addDataByExcel(MultipartFile file) throws IOException {
+	public ResponseData<List<IaGfmovementAccount>> addDataByExcel(MultipartFile file) throws IOException {
+		ResponseData<List<IaGfmovementAccount>> responseData = new ResponseData<List<IaGfmovementAccount>>();
 		List<IaGfmovementAccount> iaGfmovementAccountList = new ArrayList<>();
 		IaGfmovementAccount iaGfmovementAccount = new IaGfmovementAccount();
 		Workbook workbook = StreamingReader.builder().rowCacheSize(100).bufferSize(4096).open(file.getInputStream());
@@ -110,13 +115,20 @@ public class IaGfmovementAccountService {
 					}
 					iaGfmovementAccountList.add(iaGfmovementAccount);
 					System.out.println("");
-
+					
+					
 				} catch (Exception e) {
 //					System.out.print(valueExc + "|err|");
 //					e.printStackTrace();
 				}
+				
 			}
 		}
-		iaGfmovementAccountRepository.batchInsert(iaGfmovementAccountList);
+		responseData.setData(iaGfmovementAccountList);
+		responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+		responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		
+//		iaGfmovementAccountRepository.batchInsert(iaGfmovementAccountList);
+		return responseData;
 	}
 }
