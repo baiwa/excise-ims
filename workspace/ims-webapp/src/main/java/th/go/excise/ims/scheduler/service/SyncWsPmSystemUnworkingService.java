@@ -7,11 +7,13 @@ import java.time.temporal.ChronoField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import th.go.excise.ims.ws.client.pm.systemunworking.model.RequestData;
 import th.go.excise.ims.ws.client.pm.systemunworking.model.ResponseData;
 import th.go.excise.ims.ws.client.pm.systemunworking.service.PmSystemUnworkingService;
 
+@Service
 public class SyncWsPmSystemUnworkingService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(SyncWsPmSystemUnworkingService.class);
