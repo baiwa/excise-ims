@@ -10,6 +10,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,7 +111,7 @@ public class Int1306Service {
 				pmResultVo.setAuditer1(data.getAuditer1());
 				pmResultVo.setAuditer1AudityPosition(data.getAuditer1AudityPosition());
 				pmResultVo.setAuditer2(data.getAuditer2());
-				pmResultVo.setAudite2AudityPosition(data.getAudite2AudityPosition());
+				pmResultVo.setAuditer2AudityPosition(data.getAuditer2AudityPosition());
 
 				pmResultVoList.add(pmResultVo);
 			} catch (Exception e) {
@@ -136,7 +137,7 @@ public class Int1306Service {
 				pmResult.setAuditer1(vo.getAuditer1());
 				pmResult.setAuditer1AudityPosition(vo.getAuditer1AudityPosition());
 				pmResult.setAuditer2(vo.getAuditer2());
-				pmResult.setAudite2AudityPosition(vo.getAudite2AudityPosition());
+				pmResult.setAuditer2AudityPosition(vo.getAuditer2AudityPosition());
 
 				pmResult = iaAuditPmResultRepository.save(pmResult);
 				vo.setAuditPmresultNo(pmResult.getAuditPmresultNo());
@@ -160,7 +161,7 @@ public class Int1306Service {
 				pmResult.setAuditer1(vo.getAuditer1());
 				pmResult.setAuditer1AudityPosition(vo.getAuditer1AudityPosition());
 				pmResult.setAuditer2(vo.getAuditer2());
-				pmResult.setAudite2AudityPosition(vo.getAudite2AudityPosition());
+				pmResult.setAuditer2AudityPosition(vo.getAuditer2AudityPosition());
 
 				pmResult = iaAuditPmResultRepository.save(pmResult);
 				vo.setAuditPmresultNo(pmResult.getAuditPmresultNo());
@@ -197,7 +198,7 @@ public class Int1306Service {
 			data.setAuditer1(h.getAuditer1());
 			data.setAuditer1AudityPosition(h.getAuditer1AudityPosition());
 			data.setAuditer2(h.getAuditer2());
-			data.setAudite2AudityPosition(h.getAudite2AudityPosition());
+			data.setAuditer2AudityPosition(h.getAuditer2AudityPosition());
 
 			excise = ExciseDepartmentUtil.getExciseDepartmentFull(h.getOfficeCode());
 			data.setArea(excise.getArea());
@@ -225,7 +226,6 @@ public class Int1306Service {
 		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
 		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
 		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
-		CellStyle wrapText = ExcelUtils.createWrapTextStyle(workbook);
 
 		/* tbTH */
 		String[] tbTH = { "ลำดับ", "แบบรายการ/แนวทางการประเมิน", "ผลการสอบทาน", "ข้อเสนอแนะ", "สรุปผลการตรวจสอบ" };
@@ -235,6 +235,7 @@ public class Int1306Service {
 			cell.setCellStyle(thStyle);
 		}
 
+		// set width column
 		int colIndex = 0;
 		sheet.setColumnWidth(colIndex++, 10 * 256);
 		sheet.setColumnWidth(colIndex++, 50 * 256);
@@ -242,7 +243,21 @@ public class Int1306Service {
 		sheet.setColumnWidth(colIndex++, 50 * 256);
 		sheet.setColumnWidth(colIndex++, 50 * 256);
 
+		// get value form service
 		IaAuditPmResult h = iaAuditPmResultRepository.findByAuditPmresultNo(auditLicdupNo);
+
+		IaAuditPmResultVo pmResultVo = new IaAuditPmResultVo();
+		pmResultVo.setAuditPmresultNo(h.getAuditPmresultNo());
+		pmResultVo.setDepAuditingSuggestion(h.getDepAuditingSuggestion());
+		pmResultVo.setAuditSummary(h.getAuditSummary());
+		pmResultVo.setAuditSuggestion(h.getAuditSuggestion());
+		pmResultVo.setPersonAudity(h.getPersonAudity());
+		pmResultVo.setPersonAudityPosition(h.getPersonAudityPosition());
+		pmResultVo.setAuditer1(h.getAuditer1());
+		pmResultVo.setAuditer1AudityPosition(h.getAuditer1AudityPosition());
+		pmResultVo.setAuditer2(h.getAuditer2());
+		pmResultVo.setAuditer2AudityPosition(h.getAuditer2AudityPosition());
+
 		Int1306FormVo formVo = new Int1306FormVo();
 		formVo.setOfficeCode(h.getOfficeCode());
 		formVo.setBudgetYear(h.getBudgetYear());
@@ -373,6 +388,121 @@ public class Int1306Service {
 			no++;
 			rowNum++;
 			cellNum = 0;
+		}
+
+		/* line button 1 */
+		rowNum++;
+		cellNum = 1;
+		row = sheet.createRow(rowNum);
+		cell = row.createCell(cellNum);
+		cell.setCellValue("ข้อเสนอแนะของหน่วยรับตรวจ :");
+		rowNum++;
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum + 2, 1, 3));
+		cellNum = 1;
+		for (int i = 0; i <= 2; i++) {
+
+			row = sheet.createRow(rowNum);
+			cell = row.createCell(cellNum);
+
+			if (i == 0) {
+				cell.setCellValue(h.getDepAuditingSuggestion());
+			}
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellStyle(cellLeft);
+
+			cellNum = 1;
+			rowNum++;
+		}
+
+		/* line button 2 */
+		rowNum++;
+		cellNum = 1;
+		row = sheet.createRow(rowNum);
+		cell = row.createCell(cellNum);
+		cell.setCellValue("สรุปผลการตรวจสอบ :");
+		rowNum++;
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum + 2, 1, 3));
+		cellNum = 1;
+		for (int i = 0; i <= 2; i++) {
+
+			row = sheet.createRow(rowNum);
+			cell = row.createCell(cellNum);
+
+			if (i == 0) {
+				cell.setCellValue(h.getAuditSummary());
+			}
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellStyle(cellLeft);
+
+			cellNum = 1;
+			rowNum++;
+		}
+
+		/* line button 3 */
+		rowNum++;
+		cellNum = 1;
+		row = sheet.createRow(rowNum);
+		cell = row.createCell(cellNum);
+		cell.setCellValue("ข้อเสนอแนะ  :");
+		rowNum++;
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum + 2, 1, 3));
+		cellNum = 1;
+		for (int i = 0; i <= 2; i++) {
+
+			row = sheet.createRow(rowNum);
+			cell = row.createCell(cellNum);
+
+			if (i == 0) {
+				cell.setCellValue(h.getAuditSuggestion());
+			}
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellStyle(cellLeft);
+
+			cellNum = 1;
+			rowNum++;
+		}
+
+		/* line signature */
+		rowNum++;
+		cellNum = 1;
+		for (int i = 0; i <= 1; i++) {
+
+			row = sheet.createRow(rowNum);
+			cell = row.createCell(cellNum);
+
+			cell.setCellValue(i == 0 ? "ผู้รับการตรวจสอบทาน : " + StringUtils.defaultString(h.getPersonAudity()) : "ตำแหน่ง : " + StringUtils.defaultString(h.getPersonAudityPosition()));
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(i == 0 ? "ผู้สอบทาน : " + StringUtils.defaultString(h.getAuditer1()) : "ตำแหน่ง : " + StringUtils.defaultString(h.getAuditer1AudityPosition()));
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(i == 0 ? "ผู้สอบทาน : " + StringUtils.defaultString(h.getAuditer2()) : "ตำแหน่ง : " + StringUtils.defaultString(h.getAuditer2AudityPosition()));
+
+			cellNum = 1;
+			rowNum++;
 		}
 
 		// set output

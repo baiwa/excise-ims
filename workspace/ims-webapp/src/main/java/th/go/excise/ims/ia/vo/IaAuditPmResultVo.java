@@ -20,7 +20,7 @@ public class IaAuditPmResultVo {
 	private String auditer1;
 	private String auditer1AudityPosition;
 	private String auditer2;
-	private String audite2AudityPosition;
+	private String auditer2AudityPosition;
 	private String sector;
 	private String area;
 	private String branch;
@@ -177,12 +177,12 @@ public class IaAuditPmResultVo {
 		this.auditer2 = auditer2;
 	}
 
-	public String getAudite2AudityPosition() {
-		return audite2AudityPosition;
+	public String getAuditer2AudityPosition() {
+		return auditer2AudityPosition;
 	}
 
-	public void setAudite2AudityPosition(String audite2AudityPosition) {
-		this.audite2AudityPosition = audite2AudityPosition;
+	public void setAuditer2AudityPosition(String auditer2AudityPosition) {
+		this.auditer2AudityPosition = auditer2AudityPosition;
 	}
 
 	public String getSector() {

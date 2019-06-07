@@ -65,8 +65,8 @@ public class IaAuditPmResult extends BaseEntity {
 	private String auditer1AudityPosition;
 	@Column(name = "AUDITER2")
 	private String auditer2;
-	@Column(name = "AUDITE2_AUDITY_POSITION")
-	private String audite2AudityPosition;
+	@Column(name = "AUDITER2_AUDITY_POSITION")
+	private String auditer2AudityPosition;
 
 	public Long getAuditPmresultSeq() {
 		return auditPmresultSeq;
@@ -220,12 +220,12 @@ public class IaAuditPmResult extends BaseEntity {
 		this.auditer2 = auditer2;
 	}
 
-	public String getAudite2AudityPosition() {
-		return audite2AudityPosition;
+	public String getAuditer2AudityPosition() {
+		return auditer2AudityPosition;
 	}
 
-	public void setAudite2AudityPosition(String audite2AudityPosition) {
-		this.audite2AudityPosition = audite2AudityPosition;
+	public void setAuditer2AudityPosition(String auditer2AudityPosition) {
+		this.auditer2AudityPosition = auditer2AudityPosition;
 	}
 
 	public String toString() {
