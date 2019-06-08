@@ -35,6 +35,8 @@ public class TaPlanWorksheetSend extends BaseEntity {
 	private Integer facInNum;
 	@Column(name = "FAC_OUT_NUM")
 	private Integer facOutNum;
+	@Column(name = "RS_NUM")
+	private Integer facRsNum;
 
 	public Long getPlanWorksheetSendId() {
 		return planWorksheetSendId;
@@ -98,6 +100,14 @@ public class TaPlanWorksheetSend extends BaseEntity {
 
 	public void setFacOutNum(Integer facOutNum) {
 		this.facOutNum = facOutNum;
+	}
+
+	public Integer getFacRsNum() {
+		return facRsNum;
+	}
+
+	public void setFacRsNum(Integer facRsNum) {
+		this.facRsNum = facRsNum;
 	}
 
 }

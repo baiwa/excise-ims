@@ -102,6 +102,7 @@ public class PlanWorkSheetSendService {
 				planWorksheetSend.setSubmitDate(ConvertDateUtils.formatLocalDateToString(taPlanWorksheetSend.getSubmitDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 				planWorksheetSend.setFacInNum(taPlanWorksheetSend.getFacInNum());
 				planWorksheetSend.setFacOutNum(taPlanWorksheetSend.getFacOutNum());
+				planWorksheetSend.setFacRsNum(taPlanWorksheetSend.getFacRsNum());
 				break;
 			}
 		}

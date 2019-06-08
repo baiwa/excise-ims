@@ -45,6 +45,7 @@ public class ProjectConstants {
 		public static final String CODE_0301 = "0301";
 		public static final String CODE_0400 = "0400";
 		public static final String CODE_0401 = "0401";
+		public static final String CODE_0900 = "0900";
 	}
 	
 	public static class QUARTER {
@@ -89,5 +90,10 @@ public class ProjectConstants {
 		public static final String HIGH = "5";
 		public static final String HIGHER = "6";
 	}
+	public static class TA_PLAN_WORKSHEET_STATUS {
+		public static final String ONPLAN = "I";
+		public static final String RESERVE = "R";
+	}
+	
 	
 }

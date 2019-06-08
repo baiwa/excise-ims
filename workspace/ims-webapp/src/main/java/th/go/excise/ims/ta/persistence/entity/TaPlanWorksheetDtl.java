@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
@@ -69,6 +70,12 @@ public class TaPlanWorksheetDtl extends BaseEntity {
 	private String assignedOfficerBy;
 	@Column(name = "ASSIGNED_OFFICER_DATE")
 	private LocalDateTime assignedOfficerDate;
+	@Column(name = "PLAN_REPLACE_ID")
+	private Long planReplaceId;
+	@Column(name = "REPLACE_REASON")
+	private String replaceReason;
+	@Column(name = "REPLACE_REG_ID")
+	private String replaceRegId;
 
 	public Long getPlanWorksheetDtlId() {
 		return planWorksheetDtlId;
@@ -261,5 +268,30 @@ public class TaPlanWorksheetDtl extends BaseEntity {
 	public void setAssignedOfficerDate(LocalDateTime assignedOfficerDate) {
 		this.assignedOfficerDate = assignedOfficerDate;
 	}
+
+	public Long getPlanReplaceId() {
+		return planReplaceId;
+	}
+
+	public void setPlanReplaceId(Long planReplaceId) {
+		this.planReplaceId = planReplaceId;
+	}
+
+	public String getReplaceReason() {
+		return replaceReason;
+	}
+
+	public void setReplaceReason(String replaceReason) {
+		this.replaceReason = replaceReason;
+	}
+
+	public String getReplaceRegId() {
+		return replaceRegId;
+	}
+
+	public void setReplaceRegId(String replaceRegId) {
+		this.replaceRegId = replaceRegId;
+	}
+	
 
 }

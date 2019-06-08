@@ -7,6 +7,7 @@ public class PlanWorkSheetSendDetailVo {
 	private String submitDate;
 	private Integer facInNum;
 	private Integer facOutNum;
+	private Integer facRsNum;
 
 	public String getOfficeCode() {
 		return officeCode;
@@ -46,6 +47,14 @@ public class PlanWorkSheetSendDetailVo {
 
 	public void setFacOutNum(Integer facOutNum) {
 		this.facOutNum = facOutNum;
+	}
+
+	public Integer getFacRsNum() {
+		return facRsNum;
+	}
+
+	public void setFacRsNum(Integer facRsNum) {
+		this.facRsNum = facRsNum;
 	}
 
 }

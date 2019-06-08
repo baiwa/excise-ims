@@ -33,6 +33,10 @@ public class PlanWorksheetDatatableVo {
     private String personName;
     private List<ExcisePersonVoSelect> personAssingList;
     private String auditPlanCode;
+    private String planType;
+	private Long planReplaceId;
+	private String replaceReason;
+	private String replaceRegId;
     
    
 	public String getPersonName() {
@@ -249,6 +253,38 @@ public class PlanWorksheetDatatableVo {
 
 	public void setAuditPlanCode(String auditPlanCode) {
 		this.auditPlanCode = auditPlanCode;
+	}
+
+	public String getPlanType() {
+		return planType;
+	}
+
+	public void setPlanType(String planType) {
+		this.planType = planType;
+	}
+
+	public Long getPlanReplaceId() {
+		return planReplaceId;
+	}
+
+	public void setPlanReplaceId(Long planReplaceId) {
+		this.planReplaceId = planReplaceId;
+	}
+
+	public String getReplaceReason() {
+		return replaceReason;
+	}
+
+	public void setReplaceReason(String replaceReason) {
+		this.replaceReason = replaceReason;
+	}
+
+	public String getReplaceRegId() {
+		return replaceRegId;
+	}
+
+	public void setReplaceRegId(String replaceRegId) {
+		this.replaceRegId = replaceRegId;
 	}
 
 }

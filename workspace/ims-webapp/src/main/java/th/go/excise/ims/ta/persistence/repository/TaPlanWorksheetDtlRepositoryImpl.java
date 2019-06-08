@@ -65,8 +65,19 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 
 		params.add(formVo.getPlanNumber());
 		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
-			sql.append("   AND PLAN_DTL.OFFICE_CODE LIKE ? ");
-			params.add(formVo.getOfficeCode());
+			if(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.RESERVE.equals(formVo.getPlanType())) {
+				if (ExciseUtils.isCentral(formVo.getOfficeCode())) {
+					sql.append("   AND PLAN_DTL.OFFICE_CODE LIKE ? ");
+					params.add("0014__");
+				}else {
+					sql.append("   AND PLAN_DTL.OFFICE_CODE LIKE ? ");
+					params.add(formVo.getOfficeCode());
+				}
+			}else {
+				sql.append("   AND PLAN_DTL.OFFICE_CODE LIKE ? ");
+				params.add(formVo.getOfficeCode());
+			}
+
 		}
 		
 		if (StringUtils.isNotEmpty(formVo.getSubdeptCode())) {
@@ -82,6 +93,15 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		if (StringUtils.isNotEmpty(formVo.getAuditStatus())) {
 			sql.append("   AND PLAN_DTL.AUDIT_STATUS >= ? ");
 			params.add(formVo.getAuditStatus());
+		}
+		if (StringUtils.isNotEmpty(formVo.getPlanType())) {
+			sql.append("   AND PLAN_DTL.PLAN_TYPE = ? ");
+			params.add(formVo.getPlanType());
+		}
+		
+		if (StringUtils.isNotEmpty(formVo.getNewRegId())) {
+			sql.append("   AND PLAN_DTL.NEW_REG_ID = ? ");
+			params.add(formVo.getNewRegId());
 		}
 	}
 	
@@ -140,6 +160,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 			vo.setOfficeCode(rs.getString("OFFICE_CODE"));
 			vo.setPlanNumber(rs.getString("PLAN_NUMBER"));
 			vo.setAuditPlanCode(rs.getString("AUDIT_PLAN_CODE"));
+			vo.setPlanType(rs.getString("PLAN_TYPE"));
 //            vo.setDeptShortName(rs.getString("DEPTSHORTNAME"));
 			if(vo.getOfficeCode()!= null) {
 				try {
@@ -303,7 +324,6 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		}else if (ProjectConstants.TA_AUDIT_STATUS.CODE_0400.equals(status)) {
 			sql.append("  ASSIGNED_SUBDEPT_BY = ? , ASSIGNED_SUBDEPT_DATE = ?  ");
 		}
-		
 		sql.append(" WHERE OFFICE_CODE = ? ");
 		
 		params.add(status);
@@ -358,17 +378,20 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		List<Object> params = new ArrayList<>();
 		sql.append(" UPDATE TA_PLAN_WORKSHEET_DTL SET AUDIT_STATUS = ? , ");
 //		sql.append( " AU_SUBDEPT_CODE = ? ,ASSIGNED_OFFICER_BY = ? ,ASSIGNED_OFFICER_DATE = ? ");
+		params.add(formVo.getAuditStatus());
 		if (ProjectConstants.TA_AUDIT_STATUS.CODE_0400.equals(formVo.getAuditStatus())) {
 			sql.append(" AU_SUBDEPT_CODE = ?  , RECEIVED_BY = ? , RECEIVED_DATE = ?  ");
-			params.add(ProjectConstants.TA_AUDIT_STATUS.CODE_0400);
 			params.add(formVo.getAuSubdeptCode());
 			params.add(UserLoginUtils.getCurrentUserBean().getUsername());
 			params.add(new Date());
-			
+			if (StringUtils.isNotEmpty(formVo.getEdOffcode())) {
+				sql.append(", OFFICE_CODE = ? ");
+				params.add(formVo.getEdOffcode());
+			}
 		}else if (ProjectConstants.TA_AUDIT_STATUS.CODE_0401.equals(formVo.getAuditStatus())) {
 			sql.append(" AU_JOB_RESP = ? , ASSIGNED_SUBDEPT_BY = ? , ASSIGNED_SUBDEPT_DATE = ?  ");
 			
-			params.add(ProjectConstants.TA_AUDIT_STATUS.CODE_0401);
+
 			params.add(formVo.getAuJobResp());
 //			params.add(formVo.getAuSubdeptCode());
 			params.add(UserLoginUtils.getCurrentUserBean().getUsername());
