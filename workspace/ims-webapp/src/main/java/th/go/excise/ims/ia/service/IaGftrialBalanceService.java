@@ -84,4 +84,8 @@ public class IaGftrialBalanceService {
 		}
 		return responseData;
 	}
+	
+	public void saveData(List<IaGftrialBalance> form) {
+		iaGftrialBalanceRepository.batchInsert(form);
+	}
 }

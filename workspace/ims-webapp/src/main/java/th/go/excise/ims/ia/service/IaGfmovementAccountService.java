@@ -23,6 +23,7 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ia.persistence.entity.IaGfdrawAccount;
 import th.go.excise.ims.ia.persistence.entity.IaGfmovementAccount;
 import th.go.excise.ims.ia.persistence.repository.IaGfmovementAccountRepository;
 
@@ -130,5 +131,9 @@ public class IaGfmovementAccountService {
 		
 //		iaGfmovementAccountRepository.batchInsert(iaGfmovementAccountList);
 		return responseData;
+	}
+	
+	public void saveData(List<IaGfmovementAccount> form) {
+		iaGfmovementAccountRepository.batchInsert(form);
 	}
 }

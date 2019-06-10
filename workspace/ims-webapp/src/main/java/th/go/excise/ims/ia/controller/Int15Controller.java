@@ -10,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,7 +50,8 @@ public class Int15Controller {
 
 	@PostMapping("/upload/IA_TYPE_DATA1")
 	@ResponseBody
-	public ResponseData<List<IaGfdrawAccount>> uploadT1(@ModelAttribute Int15UploadVo form) throws EncryptedDocumentException, InvalidFormatException, IOException {
+	public ResponseData<List<IaGfdrawAccount>> uploadT1(@ModelAttribute Int15UploadVo form)
+			throws EncryptedDocumentException, InvalidFormatException, IOException {
 
 		ResponseData<List<IaGfdrawAccount>> responseData = new ResponseData<List<IaGfdrawAccount>>();
 		try {
@@ -56,8 +59,8 @@ public class Int15Controller {
 			responseData = iaGfdrawAccountService.addDataByExcel(file);
 
 		} catch (Exception e) {
-			logger.error("Int030102Controller upload : ", e);
-			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			logger.error("Int030102Controller upload1 : ", e);
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -65,7 +68,8 @@ public class Int15Controller {
 
 	@PostMapping("/upload/IA_TYPE_DATA2")
 	@ResponseBody
-	public ResponseData<List<IaGftrialBalance>> uploadT2(@ModelAttribute Int15UploadVo form) throws EncryptedDocumentException, InvalidFormatException, IOException {
+	public ResponseData<List<IaGftrialBalance>> uploadT2(@ModelAttribute Int15UploadVo form)
+			throws EncryptedDocumentException, InvalidFormatException, IOException {
 //		iaGftrialBalanceService
 		ResponseData<List<IaGftrialBalance>> responseData = new ResponseData<List<IaGftrialBalance>>();
 		try {
@@ -75,8 +79,8 @@ public class Int15Controller {
 //			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 
 		} catch (Exception e) {
-			logger.error("Int030102Controller upload : ", e);
-			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			logger.error("Int030102Controller upload2 : ", e);
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
@@ -84,7 +88,8 @@ public class Int15Controller {
 
 	@PostMapping("/upload/IA_TYPE_DATA3")
 	@ResponseBody
-	public ResponseData<List<IaGfledgerAccount>> uploadT3(@ModelAttribute Int15UploadVo form) throws EncryptedDocumentException, InvalidFormatException, IOException {
+	public ResponseData<List<IaGfledgerAccount>> uploadT3(@ModelAttribute Int15UploadVo form)
+			throws EncryptedDocumentException, InvalidFormatException, IOException {
 //		iaGfledgerAccountService
 		ResponseData<List<IaGfledgerAccount>> responseData = new ResponseData<List<IaGfledgerAccount>>();
 		try {
@@ -94,15 +99,17 @@ public class Int15Controller {
 //			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 
 		} catch (Exception e) {
-			logger.error("Int030102Controller upload : ", e);
-			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			logger.error("Int030102Controller upload3 : ", e);
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
 	}
+
 	@PostMapping("/upload/IA_TYPE_DATA4")
 	@ResponseBody
-	public ResponseData<List<IaGfmovementAccount>> uploadT4(@ModelAttribute Int15UploadVo form) throws EncryptedDocumentException, InvalidFormatException, IOException {
+	public ResponseData<List<IaGfmovementAccount>> uploadT4(@ModelAttribute Int15UploadVo form)
+			throws EncryptedDocumentException, InvalidFormatException, IOException {
 //		iaGfmovementAccountService
 		ResponseData<List<IaGfmovementAccount>> responseData = new ResponseData<List<IaGfmovementAccount>>();
 		try {
@@ -112,7 +119,79 @@ public class Int15Controller {
 //			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 
 		} catch (Exception e) {
-			logger.error("Int030102Controller upload : ", e);
+			logger.error("Int030102Controller upload4 : ", e);
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+
+	@PostMapping("/save/IA_TYPE_DATA1")
+	@ResponseBody
+	public ResponseData<String> save1(@RequestBody List<IaGfdrawAccount> form) {
+		ResponseData<String> responseData = new ResponseData<String>();
+		try {
+			iaGfdrawAccountService.saveData(form);
+			responseData.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+
+		} catch (Exception e) {
+			logger.error("Int030102Controller save1 : ", e);
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+
+	@PostMapping("/save/IA_TYPE_DATA2")
+	@ResponseBody
+	public ResponseData<String> save2(@RequestBody List<IaGftrialBalance> form) {
+		ResponseData<String> responseData = new ResponseData<String>();
+		try {
+			iaGftrialBalanceService.saveData(form);
+			responseData.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+
+		} catch (Exception e) {
+			logger.error("Int030102Controller save2 : ", e);
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+
+	@PostMapping("/save/IA_TYPE_DATA3")
+	@ResponseBody
+	public ResponseData<String> save3(@RequestBody List<IaGfledgerAccount> form) {
+		ResponseData<String> responseData = new ResponseData<String>();
+		try {
+			iaGfledgerAccountService.saveData(form);
+			responseData.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+
+		} catch (Exception e) {
+			logger.error("Int030102Controller save3 : ", e);
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+
+	@PostMapping("/save/IA_TYPE_DATA4")
+	@ResponseBody
+	public ResponseData<String> save4(@RequestBody List<IaGfmovementAccount> form) {
+		ResponseData<String> responseData = new ResponseData<String>();
+		try {
+			iaGfmovementAccountService.saveData(form);
+			responseData.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+
+		} catch (Exception e) {
+			logger.error("Int030102Controller save4 : ", e);
 			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}

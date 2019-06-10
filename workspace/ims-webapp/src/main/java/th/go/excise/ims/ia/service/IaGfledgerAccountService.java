@@ -148,4 +148,8 @@ public class IaGfledgerAccountService {
 		}
 		return responseData;
 	}
+	
+	public void saveData(List<IaGfledgerAccount> form) {
+		iaGfledgerAccountRepository.insertBatch(form);
+	}
 }
