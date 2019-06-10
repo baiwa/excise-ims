@@ -290,22 +290,26 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		sql.append("   ED_SECTOR.OFF_SHORT_NAME SEC_DESC , ");
 		sql.append("   ED_AREA.OFF_CODE AREA_CODE , ");
 		sql.append("   ED_AREA.OFF_SHORT_NAME AREA_DESC,  ");
-		sql.append("  	R4000.REG_STATUS	, ");
-		sql.append(" 	R4000.REG_DATE , ");
-		sql.append(" DUTY.GROUP_NAME DUTY_GROUP_NAME");
+		sql.append("   R4000.REG_STATUS	, ");
+		sql.append("   R4000.REG_DATE , ");
+		sql.append("   DUTY_LIST.DUTY_GROUP_NAME ");
 		sql.append(" FROM TA_WS_REG4000 R4000  ");
 		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_SECTOR ");
-		sql.append(" ON ED_SECTOR.OFF_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000') ");
+		sql.append(" ON ED_SECTOR.OFF_CODE = SUBSTR( R4000.OFFICE_CODE,  0, 2  ) || '0000' ");
 		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_AREA ");
-		sql.append(" ON ED_AREA.OFF_CODE       = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
+		sql.append(" ON ED_AREA.OFF_CODE = SUBSTR( R4000.OFFICE_CODE,0,4)||'00' ");
 		sql.append(" AND R4000.IS_DELETED      = 'N'  AND R4000.OFFICE_CODE  like ? ");
 		params.add(formVo.getOfficeCode());
 		
 //		sql.append(" LEFT JOIN TA_WORKSHEET_DTL WK_DTL " );
 //		sql.append(" ON WK_DTL.NEW_REG_ID = R4000.NEW_REG_ID");
 		
-		sql.append(" LEFT JOIN TA_WS_REG4000_DUTY    DUTY ON DUTY.NEWREG_ID = R4000.NEW_REG_ID");
-		sql.append(" LEFT JOIN EXCISE_DUTY_GROUP ECDG ON ECDG.DUTY_GROUP_CODE = R4000.DUTY_CODE ");
+		sql.append(" LEFT JOIN ( ");
+		sql.append("     SELECT DUTY.NEWREG_ID , LISTAGG(DUTY.GROUP_NAME,',') WITHIN GROUP (ORDER BY DUTY.GROUP_NAME) AS DUTY_GROUP_NAME ");
+		sql.append("     FROM TA_WS_REG4000_DUTY DUTY  ");
+		sql.append("     GROUP BY  DUTY.NEWREG_ID ");
+		sql.append(" ) DUTY_LIST ");
+		sql.append(" ON DUTY_LIST.NEWREG_ID = R4000.NEW_REG_ID ");
 
 		sql.append(" WHERE 1 = 1 ");
 
