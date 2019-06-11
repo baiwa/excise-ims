@@ -112,9 +112,8 @@ public class IaGfmovementAccountService {
 					iaGfmovementAccount.setAccNo(accNo);
 					iaGfmovementAccount.setGfDocDate(docDate);
 					if(StringUtils.isNotBlank(iaGfmovementAccount.getGfDocNo())) {
-						;
+						iaGfmovementAccountList.add(iaGfmovementAccount);
 					}
-					iaGfmovementAccountList.add(iaGfmovementAccount);
 					System.out.println("");
 					
 					
