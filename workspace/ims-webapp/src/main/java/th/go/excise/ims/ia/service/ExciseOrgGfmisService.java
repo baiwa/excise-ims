@@ -24,7 +24,7 @@ public class ExciseOrgGfmisService {
 			dat = new ExciseOrgGfDisburseUnitVo();
 			dat.setGfExciseName(exciseOrgGfmis.getGfExciseName());
 			dat.setGfExciseNameAbbr(exciseOrgGfmis.getGfExciseNameAbbr());
-			dat.setGfDisburseUnit(dat.getGfDisburseUnit());
+			dat.setGfDisburseUnit(exciseOrgGfmis.getGfDisburseUnit());
 			resData.add(dat);
 		}
 		return resData;
