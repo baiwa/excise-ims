@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.security.domain.UserBean;
@@ -201,8 +202,10 @@ public class PlanWorksheetService {
 		}
 
 		// Insert newRegId to planWorksheetDtl
+		String planCode = "";
 		if (CollectionUtils.isNotEmpty(insertNewRegIdList)) {
 			for (String newRegId : insertNewRegIdList) {
+				planCode = worksheetSequenceService.getAuditPlanCode(officeCode, budgetYear);
 				planDtl = new TaPlanWorksheetDtl();
 				planDtl.setPlanNumber(formVo.getPlanNumber());
 				planDtl.setAnalysisNumber(formVo.getAnalysisNumber());
@@ -210,6 +213,7 @@ public class PlanWorksheetService {
 				planDtl.setNewRegId(newRegId);
 				planDtl.setAuditStatus(TA_AUDIT_STATUS.CODE_0100);
 				planDtl.setAuSubdeptCode(userBean.getSubdeptCode());
+				planDtl.setAuditPlanCode(planCode);
 				taPlanWorksheetDtlRepository.save(planDtl);
 
 				updateFlagWorksheetSelect(budgetYear, newRegId, officeCode, FLAG.Y_FLAG, LocalDate.now());
@@ -634,7 +638,7 @@ public class PlanWorksheetService {
 			TaPlanWorksheetDtl planResDtl = new TaPlanWorksheetDtl();
 			if (taPlanOpt.isPresent()) {
 				planResDtl = taPlanResOpt.get();
-				planResDtl.setAuditStatus(ProjectConstants.TA_AUDIT_STATUS.CODE_0401);
+				planResDtl.setAuditStatus(ProjectConstants.TA_AUDIT_STATUS.CODE_0900);
 				taPlanWorksheetDtlRepository.save(planResDtl);
 			}
 		}
@@ -693,14 +697,17 @@ public class PlanWorksheetService {
 		}
 
 		// Insert newRegId to planWorksheetDtl
+		String planCode = "";
 		if (CollectionUtils.isNotEmpty(insertNewRegIdList)) {
 			for (String newRegId : insertNewRegIdList) {
+				planCode = worksheetSequenceService.getAuditPlanCode(officeCode, budgetYear);
 				planDtl = new TaPlanWorksheetDtl();
 				planDtl.setPlanNumber(formVo.getPlanNumber());
 				planDtl.setAnalysisNumber(formVo.getAnalysisNumber());
 				planDtl.setOfficeCode(assingOfficeCode);
 				planDtl.setNewRegId(newRegId);
 				planDtl.setAuditStatus(TA_AUDIT_STATUS.CODE_0300);
+				planDtl.setAuditPlanCode(planCode);
 //				planDtl.setAuSubdeptCode(userBean.getSubdeptCode());
 				taPlanWorksheetDtlRepository.save(planDtl);
 
@@ -778,14 +785,14 @@ public class PlanWorksheetService {
 			if (index > 0) {
 				Cell cell1 = row.getCell(1);
 				Cell cell2 = row.getCell(2);
+				Cell cell3 = row.getCell(3);
 				vo.setNewRegId(cell1.getStringCellValue().trim());
 				vo.setOfficeCode(cell2.getStringCellValue().trim());
+				vo.setAuditType(cell3.getStringCellValue().trim());
 				vo.setAnalysisNumber(formVo.getAnalysisNumber());
 				vo.setPlanNumber(formVo.getPlanNumber());
 				list.add(vo);
 				listCheck.add(cell1.getStringCellValue());
-				System.out.println("read cell at " + Integer.toString(index) + " " + cell1.getStringCellValue() + " : "
-						+ cell2.getStringCellValue());
 			}
 			index++;
 		}
@@ -823,14 +830,19 @@ public class PlanWorksheetService {
 		}
 
 		// Insert newRegId to planWorksheetDtl
+		String planCode = "";
 		if (CollectionUtils.isNotEmpty(insertNewRegIdList)) {
 			for (TaPlanWorksheetDtl upload : insertNewRegIdList) {
+				planCode =  worksheetSequenceService.getAuditPlanCode(officeCode, budgetYear);
 				planDtl = new TaPlanWorksheetDtl();
 				planDtl.setPlanNumber(upload.getPlanNumber());
 				planDtl.setAnalysisNumber(upload.getAnalysisNumber());
 				planDtl.setOfficeCode(upload.getOfficeCode());
 				planDtl.setNewRegId(upload.getNewRegId());
 				planDtl.setAuditStatus(TA_AUDIT_STATUS.CODE_0100);
+				planDtl.setPlanType(upload.getAuditType());
+				planDtl.setAuditPlanCode(planCode);
+//				planDtl.setAuditType(upload.getAuditType());
 //				planDtl.setAuSubdeptCode(userBean.getSubdeptCode());
 				taPlanWorksheetDtlRepository.save(planDtl);
 
@@ -855,10 +867,48 @@ public class PlanWorksheetService {
 		}
 	}
 	
+	public List<TaPlanWorksheetDtl> readFileAssignData (PlanWorksheetAssignVo formVo) throws Exception {
+		
+		UserBean userBean = UserLoginUtils.getCurrentUserBean();
+		String officeCode = userBean.getOfficeCode();
+		String budgetYear = formVo.getBudgetYear();
+		
+
+		logger.info("upload plan assign officeCode={}, budgetYear={}, planNumber={}, analysisNumber={}, newRegIds={}",
+				officeCode, budgetYear, formVo.getPlanNumber(), formVo.getAnalysisNumber(),
+				org.springframework.util.StringUtils.collectionToCommaDelimitedString(formVo.getIds()));
+
+		MultipartFile file = formVo.getFile();
+		Workbook workbook = WorkbookFactory.create(file.getInputStream());
+		List<TaPlanWorksheetDtl> list = new ArrayList<TaPlanWorksheetDtl>();
+		List<String> listCheck = new ArrayList<>();
+		Sheet sheet = workbook.getSheetAt(0);
+		int index = 0;
+		for (Row row : sheet) {
+			TaPlanWorksheetDtl vo = new TaPlanWorksheetDtl();
+			if (index > 0) {
+				Cell cell1 = row.getCell(1);
+				Cell cell2 = row.getCell(2);
+				Cell cell3 = row.getCell(3);
+				vo.setNewRegId(cell1.getStringCellValue().trim());
+				vo.setOfficeCode(cell2.getStringCellValue().trim());
+				vo.setAuditType(cell3.getStringCellValue().trim());
+				vo.setAnalysisNumber(formVo.getAnalysisNumber());
+				vo.setPlanNumber(formVo.getPlanNumber());
+				list.add(vo);
+				listCheck.add(cell1.getStringCellValue());
+			}
+			index++;
+		}
+		
+		return list;
+		
+	}
+	
 
 	public void savePlanWorksheetSendByAdmin(PlanWorksheetVo formVo) {
-		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		formVo.setOfficeCode(officeCode);
+//		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+//		formVo.setOfficeCode(officeCode);
 /*		TaPlanWorksheetHdr planHdr = this.taPlanWorksheetHdrRepository.findByPlanNumber(formVo.getPlanNumber());
 
 		if (FLAG.N_FLAG.equalsIgnoreCase(planHdr.getSendAllFlag())) {
@@ -881,32 +931,64 @@ public class PlanWorksheetService {
 		}*/
 
 		List<TaPlanWorksheetDtl> planDtl = this.taPlanWorksheetDtlRepository.findByOfficeCodeAndPlanNumberLike(
-				ExciseUtils.whereInLocalOfficeCode(officeCode), formVo.getPlanNumber());
+				formVo.getOfficeCode(), formVo.getPlanNumber());
 		for (TaPlanWorksheetDtl dtl : planDtl) {
-			dtl.setAuditStatus(ProjectConstants.TA_AUDIT_STATUS.CODE_0300);
-			if (formVo.getIds().contains(dtl.getPlanWorksheetDtlId().toString())) {
-				dtl.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.RESERVE);
-			}else {
-				dtl.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.ONPLAN);
+			if ( Integer.parseInt(dtl.getAuditStatus()) <= Integer.parseInt(ProjectConstants.TA_AUDIT_STATUS.CODE_0300)) {
+				dtl.setAuditStatus(ProjectConstants.TA_AUDIT_STATUS.CODE_0300);
+				if (formVo.getIds().contains(dtl.getPlanWorksheetDtlId().toString())) {
+					dtl.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.RESERVE);
+				}else {
+					dtl.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.ONPLAN);
+				}
+				this.taPlanWorksheetDtlRepository.save(dtl);
 			}
-			this.taPlanWorksheetDtlRepository.save(dtl);
 		}
 		
+		TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository
+				.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), formVo.getOfficeCode());
+		formVo.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.ONPLAN);
+		Long countInNum = taPlanWorksheetDtlRepository.countByCriteria(formVo);
+		formVo.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.RESERVE);
+		Long countReNum = taPlanWorksheetDtlRepository.countByCriteria(formVo);
 		
-		if (!ExciseUtils.isSector(officeCode)) {
-			TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository
-					.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), officeCode);
-//			Long count = taPlanWorksheetDtlRepository.countByCriteria(formVo);
-			formVo.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.ONPLAN);
-			Long countInNum = taPlanWorksheetDtlRepository.countByCriteria(formVo);
-			formVo.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.RESERVE);
-			Long countReNum = taPlanWorksheetDtlRepository.countByCriteria(formVo);
-			
-			planSend.setFacInNum(new Integer(countInNum.intValue()));
-			planSend.setFacRsNum(new Integer(countReNum.intValue()));
-			planSend.setSubmitDate(LocalDate.now());
-			taPlanWorksheetSendRepository.save(planSend);
+		planSend.setFacInNum(new Integer(countInNum.intValue()));
+		planSend.setFacRsNum(new Integer(countReNum.intValue()));
+		planSend.setSubmitDate(LocalDate.now());
+		taPlanWorksheetSendRepository.save(planSend);
+		
+		
+//		if (!ExciseUtils.isSector(formVo.getOfficeCode())) {
+//			TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository
+//					.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), formVo.getOfficeCode());
+////			Long count = taPlanWorksheetDtlRepository.countByCriteria(formVo);
+//			formVo.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.ONPLAN);
+//			Long countInNum = taPlanWorksheetDtlRepository.countByCriteria(formVo);
+//			formVo.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.RESERVE);
+//			Long countReNum = taPlanWorksheetDtlRepository.countByCriteria(formVo);
+//			
+//			planSend.setFacInNum(new Integer(countInNum.intValue()));
+//			planSend.setFacRsNum(new Integer(countReNum.intValue()));
+//			planSend.setSubmitDate(LocalDate.now());
+//			taPlanWorksheetSendRepository.save(planSend);
+//		}
+	}
+	
+	public List<TaPlanWorksheetDtl> findPlanWorksheetDtlByOfficeCode(PlanWorksheetVo formVo) {
+		List<TaPlanWorksheetDtl> list = null;
+		if (!StringUtils.isNotBlank(formVo.getOfficeCode())) {
+			formVo.setOfficeCode(null);
+		}else {
+			if (ProjectConstants.EXCISE_OFFICE_CODE.TA_CENTRAL.equals(formVo.getOfficeCode())) {
+				formVo.setOfficeCode("0014__");
+			}else if (ExciseUtils.isSector(formVo.getOfficeCode())) {
+				formVo.setOfficeCode(formVo.getOfficeCode().substring(0, 2)+"____");
+			}
 		}
+		
+		if (FLAG.N_FLAG.equals(formVo.getSendAllFlag())) {
+				list = taPlanWorksheetDtlRepository.findByOfficeCodeAndPlanNumberLike(formVo.getOfficeCode(), formVo.getPlanNumber());
+		}
+		return list;
 	}
 
 

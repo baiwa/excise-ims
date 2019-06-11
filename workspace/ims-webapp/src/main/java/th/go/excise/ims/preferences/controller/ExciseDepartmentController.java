@@ -120,9 +120,27 @@ public class ExciseDepartmentController {
 		logger.info("getDeptTaxAudit");
 		
 		List<ExciseDepartment> deptList = new ArrayList<>();
-		deptList.add(ApplicationCache.getExciseDepartment(EXCISE_OFFICE_CODE.TA_CENTRAL_SELECTOR));
-		deptList.add(ApplicationCache.getExciseDepartment(EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR1));
-		deptList.add(ApplicationCache.getExciseDepartment(EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR2));
+//		deptList.add(ApplicationCache.getExciseDepartment(EXCISE_OFFICE_CODE.TA_CENTRAL_SELECTOR));
+//		deptList.add(ApplicationCache.getExciseDepartment(EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR1));
+//		deptList.add(ApplicationCache.getExciseDepartment(EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR2));
+
+		String offCodeCenter = EXCISE_OFFICE_CODE.TA_CENTRAL;
+		String findOfficeCode = "";
+		ExciseDepartment department = null;
+		for (int i = 1; i < 99 ; i++) {
+			if (i < 10 ) {
+				findOfficeCode = offCodeCenter.substring(0, 5)+ String.valueOf(i);
+			}else {
+				findOfficeCode = offCodeCenter.substring(0, 4)+ String.valueOf(i);
+			}
+			department = ApplicationCache.getExciseDepartment(findOfficeCode);
+			if (department != null ) {
+				deptList.add(department);
+			}else {
+				break;
+			}
+		}
+		
 		
 		ResponseData<List<ExciseDepartment>> response = new ResponseData<>();
 		response.setData(deptList);

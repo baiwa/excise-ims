@@ -443,6 +443,25 @@ public class TaxOperatorController {
 		return response;
 	}
 
+	@PostMapping("/find-plan-worksheet-dtl-officecode")
+	@ResponseBody
+	public ResponseData<List<TaPlanWorksheetDtl>> findPlanWorkSheetDtlByOfficeCode(@RequestBody PlanWorksheetVo formVo) {
+		ResponseData<List<TaPlanWorksheetDtl>> response = new ResponseData<>();
+
+		try {
+			response.setData(planWorksheetService.findPlanWorksheetDtlByOfficeCode(formVo));
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+
+		return response;
+	}
+	
 	@PostMapping("/get-plan-ws-send")
 	@ResponseBody
 	public ResponseData<List<PlanWorkSheetSendVo>> getPlanWorkSheetSend(@RequestBody PlanWorksheetVo formVo) {
@@ -877,6 +896,23 @@ public class TaxOperatorController {
 
 		try {
 			planWorksheetService.uploadAssignPlan(formVo);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+
+		return response;
+	}
+	
+	@PostMapping("/upload-assing-plan-read")
+	@ResponseBody
+	public ResponseData<List<TaPlanWorksheetDtl>> readFileAssignData(@ModelAttribute PlanWorksheetAssignVo formVo) {
+		ResponseData<List<TaPlanWorksheetDtl>> response = new ResponseData<>();
+		try {
+			response.setData(planWorksheetService.readFileAssignData(formVo));
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
