@@ -10,12 +10,16 @@ import org.springframework.web.multipart.MultipartFile;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ia.persistence.entity.IaGfmovementAccount;
 import th.go.excise.ims.ia.persistence.entity.IaGftrialBalance;
+import th.go.excise.ims.ia.persistence.entity.IaGfuploadH;
 import th.go.excise.ims.ia.persistence.repository.IaGftrialBalanceRepository;
 import th.go.excise.ims.ia.vo.Int15ResponseUploadVo;
+import th.go.excise.ims.ia.vo.Int15SaveVo;
 
 @Service
 public class IaGftrialBalanceService {
@@ -72,7 +76,20 @@ public class IaGftrialBalanceService {
 		return responseData;
 	}
 	
-	public void saveData(List<IaGftrialBalance> form) {
-		iaGftrialBalanceRepository.batchInsert(form);
+	public void saveData(Int15SaveVo form) {
+		IaGfuploadH ia = new IaGfuploadH();
+		ia.setPeriodMonth(form.getPeriod());
+		ia.setPeriodYear(form.getYear());
+		ia.setStartDate(ConvertDateUtils.parseStringToDate(form.getStartDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+		ia.setEndDate(ConvertDateUtils.parseStringToDate(form.getEndDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+		ia.setUploadType(form.getTypeData());
+		ia.setDeptDisb(form.getDisburseMoney());
+		ia.setFileName(form.getFileName());
+		if (form.getFormData2() != null && form.getFormData2().size() > 0) {
+			for (IaGftrialBalance iaGfmovementAccount : form.getFormData2()) {
+				iaGfmovementAccount.setGfuploadHId(ia.getGfuploadHId());
+			}
+		}
+		iaGftrialBalanceRepository.saveAll(form.getFormData2());
 	}
 }

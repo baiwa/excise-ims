@@ -22,14 +22,21 @@ import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ia.persistence.entity.IaGfledgerAccount;
+import th.go.excise.ims.ia.persistence.entity.IaGfmovementAccount;
+import th.go.excise.ims.ia.persistence.entity.IaGfuploadH;
 import th.go.excise.ims.ia.persistence.repository.IaGfledgerAccountRepository;
+import th.go.excise.ims.ia.persistence.repository.IaGfuploadHRepository;
 import th.go.excise.ims.ia.vo.Int15ResponseUploadVo;
+import th.go.excise.ims.ia.vo.Int15SaveVo;
 
 @Service
 public class IaGfledgerAccountService {
 
 	@Autowired
 	private IaGfledgerAccountRepository iaGfledgerAccountRepository;
+
+	@Autowired
+	private IaGfuploadHRepository iaGfuploadHRepository;
 
 	private final String KEY_FILTER[] = { "เลขที่บัญชี G/L", "รหัสหน่วยงาน", "ประเภท", "*" };
 
@@ -44,7 +51,7 @@ public class IaGfledgerAccountService {
 		for (Row r : sheet) {
 			iaGfledgerAccount = new IaGfledgerAccount();
 			try {
-				
+
 				String val;
 				for (Cell c : r) {
 					val = ExcelUtils.getCellValueAsString(c);
@@ -53,7 +60,8 @@ public class IaGfledgerAccountService {
 							glAccNo = ExcelUtils.getCellValueAsString(r.getCell(5));
 						} else if (StringUtils.trim(val).equals(KEY_FILTER[1]) && c.getColumnIndex() == 0) {
 							depCode = ExcelUtils.getCellValueAsString(r.getCell(5));
-						} else if (ExcelUtils.getCellValueAsString(r.getCell(1)) == null && ExcelUtils.getCellValueAsString(r.getCell(2)) != null && !StringUtils.trim(ExcelUtils.getCellValueAsString(r.getCell(2))).equals(KEY_FILTER[2])) {
+						} else if (ExcelUtils.getCellValueAsString(r.getCell(1)) == null && ExcelUtils.getCellValueAsString(r.getCell(2)) != null
+								&& !StringUtils.trim(ExcelUtils.getCellValueAsString(r.getCell(2))).equals(KEY_FILTER[2])) {
 							switch (c.getColumnIndex()) {
 							case 2:
 								iaGfledgerAccount.setType(val);
@@ -115,7 +123,6 @@ public class IaGfledgerAccountService {
 							case 23:
 								iaGfledgerAccount.setClrngDoc(val);
 								break;
-								
 
 							default:
 								break;
@@ -147,8 +154,22 @@ public class IaGfledgerAccountService {
 		}
 		return responseData;
 	}
-	
-	public void saveData(List<IaGfledgerAccount> form) {
-		iaGfledgerAccountRepository.insertBatch(form);
+
+	public void saveData(Int15SaveVo form) {
+		IaGfuploadH ia = new IaGfuploadH();
+		ia.setPeriodMonth(form.getPeriod());
+		ia.setPeriodYear(form.getYear());
+		ia.setStartDate(ConvertDateUtils.parseStringToDate(form.getStartDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+		ia.setEndDate(ConvertDateUtils.parseStringToDate(form.getEndDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+		ia.setUploadType(form.getTypeData());
+		ia.setDeptDisb(form.getDisburseMoney());
+		ia.setFileName(form.getFileName());
+		iaGfuploadHRepository.save(ia);
+		if (form.getFormData3() != null && form.getFormData3().size() > 0) {
+			for (IaGfledgerAccount iaGfmovementAccount : form.getFormData3()) {
+				iaGfmovementAccount.setGfuploadHId(ia.getGfuploadHId());
+			}
+		}
+		iaGfledgerAccountRepository.saveAll(form.getFormData3());
 	}
 }

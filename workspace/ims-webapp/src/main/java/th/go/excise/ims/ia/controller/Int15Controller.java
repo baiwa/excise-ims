@@ -132,7 +132,7 @@ public class Int15Controller {
 
 	@PostMapping("/save/ia-type-data2")
 	@ResponseBody
-	public ResponseData<String> save2(@RequestBody List<IaGftrialBalance> form) {
+	public ResponseData<String> save2(@RequestBody Int15SaveVo form) {
 		ResponseData<String> responseData = new ResponseData<String>();
 		try {
 			iaGftrialBalanceService.saveData(form);
@@ -150,7 +150,7 @@ public class Int15Controller {
 
 	@PostMapping("/save/ia-type-data3")
 	@ResponseBody
-	public ResponseData<String> save3(@RequestBody List<IaGfledgerAccount> form) {
+	public ResponseData<String> save3(@RequestBody Int15SaveVo form) {
 		ResponseData<String> responseData = new ResponseData<String>();
 		try {
 			iaGfledgerAccountService.saveData(form);
@@ -168,7 +168,7 @@ public class Int15Controller {
 
 	@PostMapping("/save/ia-type-data4")
 	@ResponseBody
-	public ResponseData<String> save4(@RequestBody List<IaGfmovementAccount> form) {
+	public ResponseData<String> save4(@RequestBody Int15SaveVo form) {
 		ResponseData<String> responseData = new ResponseData<String>();
 		try {
 			iaGfmovementAccountService.saveData(form);

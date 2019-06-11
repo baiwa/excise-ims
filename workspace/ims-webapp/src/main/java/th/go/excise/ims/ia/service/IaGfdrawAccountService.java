@@ -17,6 +17,8 @@ import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ia.persistence.entity.IaGfdrawAccount;
+import th.go.excise.ims.ia.persistence.entity.IaGftrialBalance;
+import th.go.excise.ims.ia.persistence.entity.IaGfuploadH;
 import th.go.excise.ims.ia.persistence.repository.IaGfdrawAccountRepository;
 import th.go.excise.ims.ia.vo.Int15ResponseUploadVo;
 import th.go.excise.ims.ia.vo.Int15SaveVo;
@@ -120,7 +122,19 @@ public class IaGfdrawAccountService {
 	}
 
 	public void saveData(Int15SaveVo form) {
-		
-//		iaGfdrawAccountRepository.batchInsert(form);
+		IaGfuploadH ia = new IaGfuploadH();
+		ia.setPeriodMonth(form.getPeriod());
+		ia.setPeriodYear(form.getYear());
+		ia.setStartDate(ConvertDateUtils.parseStringToDate(form.getStartDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+		ia.setEndDate(ConvertDateUtils.parseStringToDate(form.getEndDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+		ia.setUploadType(form.getTypeData());
+		ia.setDeptDisb(form.getDisburseMoney());
+		ia.setFileName(form.getFileName());
+		if (form.getFormData1() != null && form.getFormData1().size() > 0) {
+			for (IaGfdrawAccount iaGfmovementAccount : form.getFormData1()) {
+				iaGfmovementAccount.setGfuploadHId(ia.getGfuploadHId());
+			}
+		}
+		iaGfdrawAccountRepository.saveAll(form.getFormData1());
 	}
 }

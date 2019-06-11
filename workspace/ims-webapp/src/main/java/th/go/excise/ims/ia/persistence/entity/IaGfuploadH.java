@@ -15,96 +15,95 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "IA_GFUPLOAD_H")
-public class IaGfuploadH
-    extends BaseEntity
-{
+public class IaGfuploadH extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_GFUPLOAD_H_GEN")
-    @SequenceGenerator(name = "IA_GFUPLOAD_H_GEN", sequenceName = "IA_GFUPLOAD_H_SEQ", allocationSize = 1)
-    @Column(name = "GFUPLOAD_H_ID")
-    private Long gfuploadHId;
-    @Column(name = "UPLOAD_TYPE")
-    private String uploadType;
-    @Column(name = "DEPT_DISB")
-    private String deptDisb;
-    @Column(name = "PERIOD_MONTH")
-    private String periodMonth;
-    @Column(name = "PERIOD_YEAR")
-    private String periodYear;
-    @Column(name = "START_DATE")
-    private Date startDate;
-    @Column(name = "END_DATE")
-    private Date endDate;
-    @Column(name = "FILE_NAME")
-    private String fileName;
+	private static final long serialVersionUID = -1275066896923669008L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_GFUPLOAD_H_GEN")
+	@SequenceGenerator(name = "IA_GFUPLOAD_H_GEN", sequenceName = "IA_GFUPLOAD_H_SEQ", allocationSize = 1)
+	@Column(name = "GFUPLOAD_H_ID")
+	private Long gfuploadHId;
+	@Column(name = "UPLOAD_TYPE")
+	private String uploadType;
+	@Column(name = "DEPT_DISB")
+	private String deptDisb;
+	@Column(name = "PERIOD_MONTH")
+	private String periodMonth;
+	@Column(name = "PERIOD_YEAR")
+	private String periodYear;
+	@Column(name = "START_DATE")
+	private Date startDate;
+	@Column(name = "END_DATE")
+	private Date endDate;
+	@Column(name = "FILE_NAME")
+	private String fileName;
 
-    public Long getGfuploadHId() {
-        return gfuploadHId;
-    }
+	public Long getGfuploadHId() {
+		return gfuploadHId;
+	}
 
-    public void setGfuploadHId(Long gfuploadHId) {
-        this.gfuploadHId = gfuploadHId;
-    }
+	public void setGfuploadHId(Long gfuploadHId) {
+		this.gfuploadHId = gfuploadHId;
+	}
 
-    public String getUploadType() {
-        return uploadType;
-    }
+	public String getUploadType() {
+		return uploadType;
+	}
 
-    public void setUploadType(String uploadType) {
-        this.uploadType = uploadType;
-    }
+	public void setUploadType(String uploadType) {
+		this.uploadType = uploadType;
+	}
 
-    public String getDeptDisb() {
-        return deptDisb;
-    }
+	public String getDeptDisb() {
+		return deptDisb;
+	}
 
-    public void setDeptDisb(String deptDisb) {
-        this.deptDisb = deptDisb;
-    }
+	public void setDeptDisb(String deptDisb) {
+		this.deptDisb = deptDisb;
+	}
 
-    public String getPeriodMonth() {
-        return periodMonth;
-    }
+	public String getPeriodMonth() {
+		return periodMonth;
+	}
 
-    public void setPeriodMonth(String periodMonth) {
-        this.periodMonth = periodMonth;
-    }
+	public void setPeriodMonth(String periodMonth) {
+		this.periodMonth = periodMonth;
+	}
 
-    public String getPeriodYear() {
-        return periodYear;
-    }
+	public String getPeriodYear() {
+		return periodYear;
+	}
 
-    public void setPeriodYear(String periodYear) {
-        this.periodYear = periodYear;
-    }
+	public void setPeriodYear(String periodYear) {
+		this.periodYear = periodYear;
+	}
 
-    public Date getStartDate() {
-        return startDate;
-    }
+	public Date getStartDate() {
+		return startDate;
+	}
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
 
-    public Date getEndDate() {
-        return endDate;
-    }
+	public Date getEndDate() {
+		return endDate;
+	}
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 
-    public String getFileName() {
-        return fileName;
-    }
+	public String getFileName() {
+		return fileName;
+	}
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
 
 }
