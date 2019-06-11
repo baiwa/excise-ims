@@ -53,7 +53,7 @@ public class Int15Controller {
 	@Autowired
 	private ExciseOrgGfmisService exciseOrgGfmisService;
 
-	@PostMapping("/upload/IA_TYPE_DATA1")
+	@PostMapping("/upload/ia-type-data1")
 	@ResponseBody
 	public ResponseData<List<IaGfdrawAccount>> uploadT1(@ModelAttribute Int15UploadVo form)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
@@ -71,7 +71,7 @@ public class Int15Controller {
 		return responseData;
 	}
 
-	@PostMapping("/upload/IA_TYPE_DATA2")
+	@PostMapping("/upload/ia-type-data2")
 	@ResponseBody
 	public ResponseData<List<IaGftrialBalance>> uploadT2(@ModelAttribute Int15UploadVo form)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
@@ -91,7 +91,7 @@ public class Int15Controller {
 		return responseData;
 	}
 
-	@PostMapping("/upload/IA_TYPE_DATA3")
+	@PostMapping("/upload/ia-type-data3")
 	@ResponseBody
 	public ResponseData<List<IaGfledgerAccount>> uploadT3(@ModelAttribute Int15UploadVo form)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
@@ -111,7 +111,7 @@ public class Int15Controller {
 		return responseData;
 	}
 
-	@PostMapping("/upload/IA_TYPE_DATA4")
+	@PostMapping("/upload/ia-type-data4")
 	@ResponseBody
 	public ResponseData<List<IaGfmovementAccount>> uploadT4(@ModelAttribute Int15UploadVo form)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
@@ -131,7 +131,7 @@ public class Int15Controller {
 		return responseData;
 	}
 
-	@PostMapping("/save/IA_TYPE_DATA1")
+	@PostMapping("/save/ia-type-data1")
 	@ResponseBody
 	public ResponseData<String> save1(@RequestBody List<IaGfdrawAccount> form) {
 		ResponseData<String> responseData = new ResponseData<String>();
@@ -149,7 +149,7 @@ public class Int15Controller {
 		return responseData;
 	}
 
-	@PostMapping("/save/IA_TYPE_DATA2")
+	@PostMapping("/save/ia-type-data2")
 	@ResponseBody
 	public ResponseData<String> save2(@RequestBody List<IaGftrialBalance> form) {
 		ResponseData<String> responseData = new ResponseData<String>();
@@ -167,7 +167,7 @@ public class Int15Controller {
 		return responseData;
 	}
 
-	@PostMapping("/save/IA_TYPE_DATA3")
+	@PostMapping("/save/ia-type-data3")
 	@ResponseBody
 	public ResponseData<String> save3(@RequestBody List<IaGfledgerAccount> form) {
 		ResponseData<String> responseData = new ResponseData<String>();
@@ -185,7 +185,7 @@ public class Int15Controller {
 		return responseData;
 	}
 
-	@PostMapping("/save/IA_TYPE_DATA4")
+	@PostMapping("/save/ia-type-data4")
 	@ResponseBody
 	public ResponseData<String> save4(@RequestBody List<IaGfmovementAccount> form) {
 		ResponseData<String> responseData = new ResponseData<String>();
