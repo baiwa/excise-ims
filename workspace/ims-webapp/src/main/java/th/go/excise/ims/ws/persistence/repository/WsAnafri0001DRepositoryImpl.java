@@ -112,6 +112,7 @@ public class WsAnafri0001DRepositoryImpl implements WsAnafri0001DRepositoryCusto
 		sql.append(" WHERE D.NEW_REG_ID = ? ");
 		sql.append("   AND SUBSTR(D.PRODUCT_CODE,0,4) = ? ");
 		sql.append("   AND (TRUNC(H.REG_IN_DATE) >= TO_DATE(?,'YYYYMMDD') AND TRUNC(H.REG_IN_DATE) <= TO_DATE(?,'YYYYMMDD')) ");
+		sql.append(" ORDER BY H.REG_IN_DATE, H.RECEIPT_NO ");
 		
 		List<Object> paramList = new ArrayList<>();
 		paramList.add(newRegId);
