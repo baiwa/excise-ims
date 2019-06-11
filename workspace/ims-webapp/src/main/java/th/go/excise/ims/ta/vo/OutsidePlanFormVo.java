@@ -1,6 +1,7 @@
 package th.go.excise.ims.ta.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 
@@ -16,7 +17,7 @@ public class OutsidePlanFormVo extends DataTableRequest {
 	private Date toDate;
 	private String cusType;
 	private String cusId;
-	private String flagOut;
+	private List<String> regStatus;
 	private String planNumber;
 
 	public String getCusFullname() {
@@ -91,12 +92,12 @@ public class OutsidePlanFormVo extends DataTableRequest {
 		this.cusId = cusId;
 	}
 
-	public String getFlagOut() {
-		return flagOut;
+	public List<String> getRegStatus() {
+		return regStatus;
 	}
 
-	public void setFlagOut(String flagOut) {
-		this.flagOut = flagOut;
+	public void setRegStatus(List<String> flagOut) {
+		this.regStatus = flagOut;
 	}
 
 	public String getPlanNumber() {

@@ -13,6 +13,7 @@ public class OutsidePlanVo {
 	private String areaCode;
 	private String areaDesc;
 	private String regStatus;
+	private String regStatusDesc;
 	private String regDate;
 
 	public String getRegStatus() {
@@ -108,6 +109,14 @@ public class OutsidePlanVo {
 
 	public String getRegDate() {
 		return regDate;
+	}
+
+	public String getRegStatusDesc() {
+		return regStatusDesc;
+	}
+
+	public void setRegStatusDesc(String regStatusDesc) {
+		this.regStatusDesc = regStatusDesc;
 	}
 
 	public void setRegDate(String regDate) {

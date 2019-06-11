@@ -164,4 +164,10 @@ public class TaxAuditService {
 		planWsDtl.setAuditEndDate(ConvertDateUtils.parseStringToLocalDate(formVo.getAuditEndDate(), ConvertDateUtils.DD_MM_YYYY));
 		taPlanWorksheetDtlRepository.save(planWsDtl);
 	}
+	
+	public List<ParamInfo> getRegStatus() {
+		logger.info("getRegStatus");
+		List<ParamInfo> regStatusList = ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.TA_REG_STATUS);
+		return regStatusList;
+	}
 }

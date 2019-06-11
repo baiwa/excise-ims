@@ -291,6 +291,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		sql.append("   ED_AREA.OFF_CODE AREA_CODE , ");
 		sql.append("   ED_AREA.OFF_SHORT_NAME AREA_DESC,  ");
 		sql.append("   R4000.REG_STATUS	, ");
+		sql.append("   R4000.REG_STATUS_DESC , ");
 		sql.append("   R4000.REG_DATE , ");
 		sql.append("   DUTY_LIST.DUTY_GROUP_NAME ");
 		sql.append(" FROM TA_WS_REG4000 R4000  ");
@@ -298,6 +299,8 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		sql.append(" ON ED_SECTOR.OFF_CODE = SUBSTR( R4000.OFFICE_CODE,  0, 2  ) || '0000' ");
 		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_AREA ");
 		sql.append(" ON ED_AREA.OFF_CODE = SUBSTR( R4000.OFFICE_CODE,0,4)||'00' ");
+		sql.append(" INNER JOIN EXCISE_DUTY_GROUP ECDG ");
+		sql.append(" ON ECDG.DUTY_GROUP_CODE = R4000.DUTY_CODE ");
 		sql.append(" AND R4000.IS_DELETED      = 'N'  AND R4000.OFFICE_CODE  like ? ");
 		params.add(formVo.getOfficeCode());
 		
@@ -313,10 +316,19 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 
 		sql.append(" WHERE 1 = 1 ");
 
-//		if (StringUtils.isNotBlank(formVo.getFacType())) {
-//			params.add(formVo.getFacType());
-//			sql.append("AND R4000.FAC_TYPE = ? ");
-//		}
+		// REG STATUS
+		if (null != formVo.getRegStatus() && 0 < formVo.getRegStatus().size()) {
+			sql.append("AND R4000.REG_STATUS IN ( ");
+			for (int i = 0; i < formVo.getRegStatus().size(); i++) {
+				String reg = formVo.getRegStatus().get(i);
+				params.add(reg);
+				if (i == formVo.getRegStatus().size()-1) {
+					sql.append("? )");
+				} else {					
+					sql.append("? ,");
+				}
+			}
+		}
 		// DUTY GROUP
 		if (StringUtils.isNotBlank(formVo.getFacType())) {
 			sql.append(" AND ECDG.DUTY_GROUP_TYPE = ?");
@@ -403,6 +415,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 			vo.setRegDate(ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY));
 			vo.setRegStatus(rs.getString("REG_STATUS") + " "
 					+ ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY));
+			vo.setRegStatusDesc(rs.getString("REG_STATUS_DESC"));
 			return vo;
 		}
 	};
