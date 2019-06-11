@@ -17,9 +17,9 @@ import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ia.persistence.entity.IaGfdrawAccount;
-import th.go.excise.ims.ia.persistence.entity.IaGftrialBalance;
 import th.go.excise.ims.ia.persistence.entity.IaGfuploadH;
 import th.go.excise.ims.ia.persistence.repository.IaGfdrawAccountRepository;
+import th.go.excise.ims.ia.vo.IaGfdrawAccountExcelVo;
 import th.go.excise.ims.ia.vo.Int15ResponseUploadVo;
 import th.go.excise.ims.ia.vo.Int15SaveVo;
 
@@ -48,6 +48,7 @@ public class IaGfdrawAccountService {
 	// }
 
 	public ResponseData<Int15ResponseUploadVo> addDataByExcel(MultipartFile file) {
+		logger.info("addDataByExcel");
 		ResponseData<Int15ResponseUploadVo> responseData = new ResponseData<Int15ResponseUploadVo>();
 		try {
 			String departmentCode = "";
@@ -55,8 +56,8 @@ public class IaGfdrawAccountService {
 			String periodTo = "";
 			String repDate = "";
 			String repType = "";
-			List<IaGfdrawAccount> iaGfDrawAccountList = new ArrayList<>();
-			IaGfdrawAccount iaGfDrawAccount = new IaGfdrawAccount();
+			List<IaGfdrawAccountExcelVo> iaGfDrawAccountList = new ArrayList<>();
+			IaGfdrawAccountExcelVo iaGfDrawAccount = new IaGfdrawAccountExcelVo();
 			List<List<String>> allLine = ExcelUtils.readExcel(file);
 			for (List<String> line : allLine) {
 				if (line != null && line.size() == 2 && line.get(0) != null && KEY_FILTER[0].equals(line.get(0).trim())) {
@@ -79,14 +80,14 @@ public class IaGfdrawAccountService {
 					repType = "";
 				} else if (line != null && line.size() == 13) {
 					try {
-						iaGfDrawAccount = new IaGfdrawAccount();
+						iaGfDrawAccount = new IaGfdrawAccountExcelVo();
 						iaGfDrawAccount.setDepartmentCode(departmentCode);
-						iaGfDrawAccount.setPeriodFrom(ConvertDateUtils.parseStringToDate(periodFrom, ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.LOCAL_TH));
-						iaGfDrawAccount.setPeriodTo(ConvertDateUtils.parseStringToDate(periodTo, ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.LOCAL_TH));
-						iaGfDrawAccount.setRepDate(ConvertDateUtils.parseStringToDate(repDate, ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.LOCAL_TH));
+						iaGfDrawAccount.setPeriodFrom(ConvertDateUtils.changPaettleStringDate(periodFrom, ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN, ConvertDateUtils.LOCAL_TH));
+						iaGfDrawAccount.setPeriodTo(ConvertDateUtils.changPaettleStringDate(periodTo, ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN, ConvertDateUtils.LOCAL_TH));
+						iaGfDrawAccount.setRepDate(ConvertDateUtils.changPaettleStringDate(repDate, ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN, ConvertDateUtils.LOCAL_TH));
 						iaGfDrawAccount.setRepType(repType);
-						iaGfDrawAccount.setRecordDate(ConvertDateUtils.parseStringToDate(line.get(0), ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.LOCAL_TH));
-						iaGfDrawAccount.setRecodeApproveDate(ConvertDateUtils.parseStringToDate(line.get(1), ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.LOCAL_TH));
+						iaGfDrawAccount.setRecordDate(ConvertDateUtils.changPaettleStringDate(line.get(0), ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN, ConvertDateUtils.LOCAL_TH));
+						iaGfDrawAccount.setRecodeApproveDate(ConvertDateUtils.changPaettleStringDate(line.get(1), ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN, ConvertDateUtils.LOCAL_TH));
 						iaGfDrawAccount.setType(line.get(2));
 						iaGfDrawAccount.setDocNo(line.get(3));
 						iaGfDrawAccount.setSellerName(line.get(4));
@@ -100,8 +101,7 @@ public class IaGfdrawAccountService {
 						iaGfDrawAccount.setNetAmt(NumberUtils.toBigDecimal(line.get(12)));
 						iaGfDrawAccountList.add(iaGfDrawAccount);
 					} catch (Exception e) {
-						// e.printStackTrace();
-						// System.out.println(e.getStackTrace());
+						logger.error(e.getMessage(), e);
 					}
 
 				}
@@ -112,9 +112,8 @@ public class IaGfdrawAccountService {
 			responseData.setData(response);
 			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
-			// iaGfdrawAccountRepository.batchInsert(iaGfDrawAccountList);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
@@ -131,10 +130,32 @@ public class IaGfdrawAccountService {
 		ia.setDeptDisb(form.getDisburseMoney());
 		ia.setFileName(form.getFileName());
 		if (form.getFormData1() != null && form.getFormData1().size() > 0) {
-			for (IaGfdrawAccount iaGfmovementAccount : form.getFormData1()) {
-				iaGfmovementAccount.setGfuploadHId(ia.getGfuploadHId());
+			List<IaGfdrawAccount> IaGfdrawAccountList = new ArrayList<>();
+			IaGfdrawAccount iaGfDrawAccount = null;
+			for (IaGfdrawAccountExcelVo vo : form.getFormData1()) {
+				iaGfDrawAccount = new IaGfdrawAccount();
+				iaGfDrawAccount.setGfuploadHId(ia.getGfuploadHId());
+				iaGfDrawAccount.setDepartmentCode(vo.getDepartmentCode());
+				iaGfDrawAccount.setPeriodFrom(ConvertDateUtils.parseStringToDate(vo.getPeriodFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+				iaGfDrawAccount.setPeriodTo(ConvertDateUtils.parseStringToDate(vo.getPeriodTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+				iaGfDrawAccount.setRepDate(ConvertDateUtils.parseStringToDate(vo.getRepDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+				iaGfDrawAccount.setRepType(vo.getRepType());
+				iaGfDrawAccount.setRecordDate(ConvertDateUtils.parseStringToDate(vo.getRecordDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+				iaGfDrawAccount.setRecodeApproveDate(ConvertDateUtils.parseStringToDate(vo.getRecodeApproveDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+				iaGfDrawAccount.setType(vo.getType());
+				iaGfDrawAccount.setDocNo(vo.getDocNo());
+				iaGfDrawAccount.setSellerName(vo.getSellerName());
+				iaGfDrawAccount.setSellerBookBank(vo.getSellerBookBank());
+				iaGfDrawAccount.setReferenceCode(vo.getReferenceCode());
+				iaGfDrawAccount.setBudgetCode(vo.getBudgetCode());
+				iaGfDrawAccount.setDisbAmt(vo.getDisbAmt());
+				iaGfDrawAccount.setTaxAmt(vo.getTaxAmt());
+				iaGfDrawAccount.setMulctAmt(vo.getMulctAmt());
+				iaGfDrawAccount.setFeeAmt(vo.getFeeAmt());
+				iaGfDrawAccount.setNetAmt(vo.getNetAmt());
+				IaGfdrawAccountList.add(iaGfDrawAccount);
 			}
+			iaGfdrawAccountRepository.saveAll(IaGfdrawAccountList);
 		}
-		iaGfdrawAccountRepository.saveAll(form.getFormData1());
 	}
 }

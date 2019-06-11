@@ -22,10 +22,10 @@ import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ia.persistence.entity.IaGfledgerAccount;
-import th.go.excise.ims.ia.persistence.entity.IaGfmovementAccount;
 import th.go.excise.ims.ia.persistence.entity.IaGfuploadH;
 import th.go.excise.ims.ia.persistence.repository.IaGfledgerAccountRepository;
 import th.go.excise.ims.ia.persistence.repository.IaGfuploadHRepository;
+import th.go.excise.ims.ia.vo.IaGfledgerAccountVo;
 import th.go.excise.ims.ia.vo.Int15ResponseUploadVo;
 import th.go.excise.ims.ia.vo.Int15SaveVo;
 
@@ -42,14 +42,14 @@ public class IaGfledgerAccountService {
 
 	public ResponseData<Int15ResponseUploadVo> addDataByExcel(MultipartFile file) throws Exception {
 		ResponseData<Int15ResponseUploadVo> responseData = new ResponseData<Int15ResponseUploadVo>();
-		List<IaGfledgerAccount> iaGfledgerAccountList = new ArrayList<>();
-		IaGfledgerAccount iaGfledgerAccount = new IaGfledgerAccount();
+		List<IaGfledgerAccountVo> iaGfledgerAccountList = new ArrayList<>();
+		IaGfledgerAccountVo iaGfledgerAccount = new IaGfledgerAccountVo();
 		Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(file.getBytes()));
 		Sheet sheet = workbook.getSheetAt(0);
 		String glAccNo = "";
 		String depCode = "";
 		for (Row r : sheet) {
-			iaGfledgerAccount = new IaGfledgerAccount();
+			
 			try {
 
 				String val;
@@ -70,10 +70,10 @@ public class IaGfledgerAccountService {
 								iaGfledgerAccount.setPeriod(NumberUtils.toBigDecimal(val));
 								break;
 							case 4:
-								iaGfledgerAccount.setDocDate(ConvertDateUtils.parseStringToDate(val, ConvertDateUtils.DD_MM_YYYY_DOT));
+								iaGfledgerAccount.setDocDate(ConvertDateUtils.changPaettleStringDate(val, ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN, ConvertDateUtils.LOCAL_TH));
 								break;
 							case 6:
-								iaGfledgerAccount.setPostingDate(ConvertDateUtils.parseStringToDate(val, ConvertDateUtils.DD_MM_YYYY_DOT));
+								iaGfledgerAccount.setPostingDate(ConvertDateUtils.changPaettleStringDate(val, ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN, ConvertDateUtils.LOCAL_TH));
 								break;
 							case 8:
 								iaGfledgerAccount.setDocNo(val);
@@ -134,6 +134,7 @@ public class IaGfledgerAccountService {
 					iaGfledgerAccount.setGlAccNo(glAccNo);
 					iaGfledgerAccount.setDepCode(depCode);
 					iaGfledgerAccountList.add(iaGfledgerAccount);
+					iaGfledgerAccount = new IaGfledgerAccountVo();
 				}
 			} catch (Exception e) {
 
@@ -156,6 +157,7 @@ public class IaGfledgerAccountService {
 	}
 
 	public void saveData(Int15SaveVo form) {
+		List<IaGfledgerAccount> iaGfledgerAccountList = new ArrayList<>();
 		IaGfuploadH ia = new IaGfuploadH();
 		ia.setPeriodMonth(form.getPeriod());
 		ia.setPeriodYear(form.getYear());
@@ -166,10 +168,38 @@ public class IaGfledgerAccountService {
 		ia.setFileName(form.getFileName());
 		iaGfuploadHRepository.save(ia);
 		if (form.getFormData3() != null && form.getFormData3().size() > 0) {
-			for (IaGfledgerAccount iaGfmovementAccount : form.getFormData3()) {
-				iaGfmovementAccount.setGfuploadHId(ia.getGfuploadHId());
+			
+			IaGfledgerAccount iaGfledgerAccount = new IaGfledgerAccount();
+			for (IaGfledgerAccountVo vo : form.getFormData3()) {
+				iaGfledgerAccount = new IaGfledgerAccount();
+				iaGfledgerAccount.setGfuploadHId(ia.getGfuploadHId());
+				iaGfledgerAccount.setIaGfledgerAccountId(vo.getIaGfledgerAccountId());
+				iaGfledgerAccount.setGfuploadHId(vo.getGfuploadHId());
+				iaGfledgerAccount.setGlAccNo(vo.getGlAccNo());
+				iaGfledgerAccount.setDepCode(vo.getDepCode());
+				iaGfledgerAccount.setType(vo.getType());
+				iaGfledgerAccount.setPeriod(vo.getPeriod());
+				iaGfledgerAccount.setDocDate(ConvertDateUtils.parseStringToDate(vo.getDocDate(), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_EN));
+				iaGfledgerAccount.setPostingDate(ConvertDateUtils.parseStringToDate(vo.getPostingDate(), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_EN));
+				iaGfledgerAccount.setDocNo(vo.getDocNo());
+				iaGfledgerAccount.setRefCode(vo.getRefCode());
+				iaGfledgerAccount.setCurrAmt(vo.getCurrAmt());
+				iaGfledgerAccount.setPkCode(vo.getPkCode());
+				iaGfledgerAccount.setRorKor(vo.getRorKor());
+				iaGfledgerAccount.setDeterminaton(vo.getDeterminaton());
+				iaGfledgerAccount.setMsg(vo.getMsg());
+				iaGfledgerAccount.setKeyRef3(vo.getKeyRef3());
+				iaGfledgerAccount.setKeyRef1(vo.getKeyRef1());
+				iaGfledgerAccount.setKeyRef2(vo.getKeyRef2());
+				iaGfledgerAccount.setHlodingTaxes(vo.getHlodingTaxes());
+				iaGfledgerAccount.setDepositAcc(vo.getDepositAcc());
+				iaGfledgerAccount.setAccType(vo.getAccType());
+				iaGfledgerAccount.setCostCenter(vo.getCostCenter());
+				iaGfledgerAccount.setDeptDisb(vo.getDeptDisb());
+				iaGfledgerAccount.setClrngDoc(vo.getClrngDoc());
+				iaGfledgerAccountList.add(iaGfledgerAccount);
 			}
+			iaGfledgerAccountRepository.saveAll(iaGfledgerAccountList);
 		}
-		iaGfledgerAccountRepository.saveAll(form.getFormData3());
 	}
 }

@@ -190,5 +190,10 @@ public class ConvertDateUtils {
 			return "";
 		}
 	}
+	
+	public static String changPaettleStringDate(String strDate , String pattenFrom , String pattenTo , Locale localeFrom , Locale localeTo) {
+		Date date = parseStringToDate(strDate, pattenFrom, localeFrom);
+		return formatDateToString(date, pattenTo, localeTo);
+	}
 
 }

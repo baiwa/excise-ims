@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -220,11 +219,10 @@ public abstract class ExcelUtils {
 		List<List<String>> excelData = new ArrayList<>();
 		Workbook workbook = StreamingReader.builder().rowCacheSize(100).bufferSize(4096).open(file.getInputStream());
 		Sheet sheet = workbook.getSheetAt(0);
-		DataFormatter dataFormatter = new DataFormatter();
 		sheet.forEach(row -> {
 			List<String> listInLine = new ArrayList<>();
 			row.forEach(cell -> {
-				String cellValue = dataFormatter.formatCellValue(cell);
+				String cellValue = ExcelUtils.getCellValueAsString(cell);
 				listInLine.add(cellValue);
 			});
 			excelData.add(listInLine);

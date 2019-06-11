@@ -2,7 +2,6 @@ package th.go.excise.ims.ia.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -27,6 +26,7 @@ import th.go.excise.ims.ia.persistence.entity.IaGfmovementAccount;
 import th.go.excise.ims.ia.persistence.entity.IaGfuploadH;
 import th.go.excise.ims.ia.persistence.repository.IaGfmovementAccountRepository;
 import th.go.excise.ims.ia.persistence.repository.IaGfuploadHRepository;
+import th.go.excise.ims.ia.vo.IaGfmovementAccountVo;
 import th.go.excise.ims.ia.vo.Int15ResponseUploadVo;
 import th.go.excise.ims.ia.vo.Int15SaveVo;
 
@@ -43,17 +43,17 @@ public class IaGfmovementAccountService {
 
 	public ResponseData<Int15ResponseUploadVo> addDataByExcel(MultipartFile file) throws IOException {
 		ResponseData<Int15ResponseUploadVo> responseData = new ResponseData<Int15ResponseUploadVo>();
-		List<IaGfmovementAccount> iaGfmovementAccountList = new ArrayList<>();
-		IaGfmovementAccount iaGfmovementAccount = new IaGfmovementAccount();
+		List<IaGfmovementAccountVo> iaGfmovementAccountList = new ArrayList<>();
+		IaGfmovementAccountVo iaGfmovementAccount = new IaGfmovementAccountVo();
 		Workbook workbook = StreamingReader.builder().rowCacheSize(100).bufferSize(4096).open(file.getInputStream());
 		String valueExc = "";
 		for (Sheet sheet : workbook) {
 			String accTypeNo = "";
 			String accTypeName = "";
 			String accNo = "";
-			Date docDate = null;
+			String docDate = null;
 			for (Row r : sheet) {
-				iaGfmovementAccount = new IaGfmovementAccount();
+				
 				try {
 					for (Cell c : r) {
 						valueExc = "'" + ExcelUtils.getCellValueAsString(c) + "':" + c.getColumnIndex();
@@ -70,9 +70,8 @@ public class IaGfmovementAccountService {
 									&& !(r.getCell(0) != null ? ExcelUtils.getCellValueAsString(r.getCell(0)).indexOf(KEY_FILTER[5]) > -1 : false)) {
 								System.out.print(valueExc + "||");
 								switch (c.getColumnIndex()) {
-
 								case 1:
-									docDate = ConvertDateUtils.parseStringToDate(ExcelUtils.getCellValueAsString(c), ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.LOCAL_EN);
+									docDate = ConvertDateUtils.changPaettleStringDate(ExcelUtils.getCellValueAsString(c), ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN, ConvertDateUtils.LOCAL_TH);
 									break;
 								case 4:
 									iaGfmovementAccount.setGfDocNo(ExcelUtils.getCellValueAsString(c));
@@ -101,7 +100,6 @@ public class IaGfmovementAccountService {
 								case 18:
 									iaGfmovementAccount.setCarryForward(NumberUtils.toBigDecimal(ExcelUtils.getCellValueAsString(c)));
 									break;
-
 								default:
 									break;
 								}
@@ -115,6 +113,7 @@ public class IaGfmovementAccountService {
 					if (StringUtils.isNotBlank(iaGfmovementAccount.getGfDocNo())) {
 						iaGfmovementAccountList.add(iaGfmovementAccount);
 					}
+					iaGfmovementAccount = new IaGfmovementAccountVo();
 					System.out.println("");
 
 				} catch (Exception e) {
@@ -130,8 +129,6 @@ public class IaGfmovementAccountService {
 		responseData.setData(response);
 		responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 		responseData.setStatus(RESPONSE_STATUS.SUCCESS);
-
-		// iaGfmovementAccountRepository.batchInsert(iaGfmovementAccountList);
 		return responseData;
 	}
 
@@ -145,11 +142,31 @@ public class IaGfmovementAccountService {
 		ia.setDeptDisb(form.getDisburseMoney());
 		ia.setFileName(form.getFileName());
 		iaGfuploadHRepository.save(ia);
-		if (form.getFormData3() != null && form.getFormData4().size() > 0) {
-			for (IaGfmovementAccount iaGfmovementAccount : form.getFormData4()) {
+		List<IaGfmovementAccount> iaGfmovementAccountList = new ArrayList<>();
+		if (form.getFormData4() != null && form.getFormData4().size() > 0) {
+			IaGfmovementAccount iaGfmovementAccount = null;
+			for (IaGfmovementAccountVo vo : form.getFormData4()) {
+				iaGfmovementAccount = new IaGfmovementAccount();
 				iaGfmovementAccount.setGfuploadHId(ia.getGfuploadHId());
+				iaGfmovementAccount.setGfmovementAccountId(vo.getGfmovementAccountId());
+				iaGfmovementAccount.setGfuploadHId(vo.getGfuploadHId());
+				iaGfmovementAccount.setAccTypeNo(vo.getAccTypeNo());
+				iaGfmovementAccount.setAccTypeName(vo.getAccTypeName());
+				iaGfmovementAccount.setAccNo(vo.getAccNo());
+				iaGfmovementAccount.setGfAccNo(vo.getGfAccNo());
+				iaGfmovementAccount.setGfDocDate(ConvertDateUtils.parseStringToDate(vo.getGfDocDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+				iaGfmovementAccount.setGfDocNo(vo.getGfDocNo());
+				iaGfmovementAccount.setGfDocTyep(vo.getGfDocTyep());
+				iaGfmovementAccount.setGfRefDoc(vo.getGfRefDoc());
+				iaGfmovementAccount.setCareInstead(vo.getCareInstead());
+				iaGfmovementAccount.setDeterminaton(vo.getDeterminaton());
+				iaGfmovementAccount.setDepCode(vo.getDepCode());
+				iaGfmovementAccount.setDebit(vo.getDebit());
+				iaGfmovementAccount.setCredit(vo.getCredit());
+				iaGfmovementAccount.setCarryForward(vo.getCarryForward());
+				iaGfmovementAccountList.add(iaGfmovementAccount);
 			}
 		}
-		iaGfmovementAccountRepository.saveAll(form.getFormData4());
+		iaGfmovementAccountRepository.saveAll(iaGfmovementAccountList);
 	}
 }
