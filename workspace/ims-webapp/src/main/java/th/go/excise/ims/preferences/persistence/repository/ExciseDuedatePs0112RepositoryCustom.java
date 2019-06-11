@@ -1,11 +1,15 @@
 package th.go.excise.ims.preferences.persistence.repository;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
-import th.go.excise.ims.ws.client.pcc.inquiryduedateps0112.model.DuedatePs0112;
+import th.go.excise.ims.preferences.persistence.entity.ExciseDuedatePs0112;
 
 public interface ExciseDuedatePs0112RepositoryCustom {
 
-	public void batchMerge(List<DuedatePs0112> duedatePs0112List);
+	public void batchMerge(List<ExciseDuedatePs0112> exciseDuedatePs0112List);
+
+	public Map<String, LocalDate> findByMonthRange(String startMonth, String endMonth);
 
 }

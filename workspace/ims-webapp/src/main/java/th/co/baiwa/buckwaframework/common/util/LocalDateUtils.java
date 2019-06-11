@@ -23,7 +23,7 @@ public class LocalDateUtils {
 	
 	public static boolean isRange(LocalDate dateStart, LocalDate dateEnd, LocalDate localDate) {
 		return (localDate.isEqual(dateStart) || localDate.isAfter(dateStart))
-			&& (localDate.equals(dateEnd) || localDate.isBefore(dateEnd));
+			&& (localDate.isEqual(dateEnd) || localDate.isBefore(dateEnd));
 	}
 	
 }
