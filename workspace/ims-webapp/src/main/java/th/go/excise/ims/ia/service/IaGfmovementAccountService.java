@@ -23,9 +23,9 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExcelUtils;
-import th.go.excise.ims.ia.persistence.entity.IaGfdrawAccount;
 import th.go.excise.ims.ia.persistence.entity.IaGfmovementAccount;
 import th.go.excise.ims.ia.persistence.repository.IaGfmovementAccountRepository;
+import th.go.excise.ims.ia.vo.Int15ResponseUploadVo;
 
 @Service
 public class IaGfmovementAccountService {
@@ -38,8 +38,8 @@ public class IaGfmovementAccountService {
 			, "User name     :"  
 			, "ตั้งแต่"};
 
-	public ResponseData<List<IaGfmovementAccount>> addDataByExcel(MultipartFile file) throws IOException {
-		ResponseData<List<IaGfmovementAccount>> responseData = new ResponseData<List<IaGfmovementAccount>>();
+	public ResponseData<Int15ResponseUploadVo> addDataByExcel(MultipartFile file) throws IOException {
+		ResponseData<Int15ResponseUploadVo> responseData = new ResponseData<Int15ResponseUploadVo>();
 		List<IaGfmovementAccount> iaGfmovementAccountList = new ArrayList<>();
 		IaGfmovementAccount iaGfmovementAccount = new IaGfmovementAccount();
 		Workbook workbook = StreamingReader.builder().rowCacheSize(100).bufferSize(4096).open(file.getInputStream());
@@ -124,7 +124,10 @@ public class IaGfmovementAccountService {
 				
 			}
 		}
-		responseData.setData(iaGfmovementAccountList);
+		Int15ResponseUploadVo response = new Int15ResponseUploadVo();
+		response.setFileName(file.getOriginalFilename());
+		response.setFormData4(iaGfmovementAccountList);
+		responseData.setData(response);
 		responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 		responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		

@@ -1,6 +1,5 @@
 package th.go.excise.ims.ia.service;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +13,9 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STAT
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExcelUtils;
-import th.go.excise.ims.ia.persistence.entity.IaGfdrawAccount;
 import th.go.excise.ims.ia.persistence.entity.IaGftrialBalance;
 import th.go.excise.ims.ia.persistence.repository.IaGftrialBalanceRepository;
+import th.go.excise.ims.ia.vo.Int15ResponseUploadVo;
 
 @Service
 public class IaGftrialBalanceService {
@@ -26,22 +25,8 @@ public class IaGftrialBalanceService {
 
 	private final String KEY_FILTER = "User name     :";
 
-//	public void addDataByExcel(File file) {
-//		try {
-//			List<List<String>> ex = ExcelUtils.readExcel(file);
-//			for (List<String> list : ex) {
-//				for (int i = 0; i < list.size(); i++) {
-//					System.out.print(i + " : " + list.get(i) + "\t");
-//				}
-//				System.out.println();
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-
-	public ResponseData<List<IaGftrialBalance>> addDataByExcel(MultipartFile file) {
-		ResponseData<List<IaGftrialBalance>> responseData = new ResponseData<List<IaGftrialBalance>>();
+	public ResponseData<Int15ResponseUploadVo> addDataByExcel(MultipartFile file) {
+		ResponseData<Int15ResponseUploadVo> responseData = new ResponseData<Int15ResponseUploadVo>();
 		try {
 			String departmentCode = "";
 			String periodFrom = "";
@@ -73,8 +58,10 @@ public class IaGftrialBalanceService {
 					iaRepDisbPerMonthList.add(iaRepDisbPerMonth);
 				}
 			}
-//			iaGftrialBalanceRepository.batchInsert(iaRepDisbPerMonthList);
-			responseData.setData(iaRepDisbPerMonthList);
+			Int15ResponseUploadVo response  = new Int15ResponseUploadVo();
+			response.setFileName(file.getOriginalFilename());
+			response.setFormData2(iaRepDisbPerMonthList);
+			responseData.setData(response);
 			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

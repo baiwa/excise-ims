@@ -3,6 +3,7 @@ package th.go.excise.ims.ia.persistence.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,20 +11,32 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "IA_GFLEDGER_ACCOUNT")
 public class IaGfledgerAccount extends BaseEntity {
 
-	private static final long serialVersionUID = -6848090287553250409L;
+	private static final long serialVersionUID = 4716224288678318071L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_GFLEDGER_ACCOUNT_GEN")
 	@SequenceGenerator(name = "IA_GFLEDGER_ACCOUNT_GEN", sequenceName = "IA_GFLEDGER_ACCOUNT_SEQ", allocationSize = 1)
-	@Column(name = "IA_GFLEDGER_ACCOUNT_SEQ")
-	private Long iaGfledgerAccountSeq;
+	@Column(name = "IA_GFLEDGER_ACCOUNT_ID")
+	private Long iaGfledgerAccountId;
+	@Column(name = "GFUPLOAD_H_ID")
+	private Long gfuploadHId;
+	public Long getGfuploadHId() {
+		return gfuploadHId;
+	}
+
+	public void setGfuploadHId(Long gfuploadHId) {
+		this.gfuploadHId = gfuploadHId;
+	}
+
 	@Column(name = "GL_ACC_NO")
 	private String glAccNo;
 	@Column(name = "DEP_CODE")
@@ -61,7 +74,7 @@ public class IaGfledgerAccount extends BaseEntity {
 	@Column(name = "DEPOSIT_ACC")
 	private String depositAcc;
 	@Column(name = "ACC_TYPE")
-	private String accType;
+	private BigDecimal accType;
 	@Column(name = "COST_CENTER")
 	private String costCenter;
 	@Column(name = "DEPT_DISB")
@@ -69,12 +82,12 @@ public class IaGfledgerAccount extends BaseEntity {
 	@Column(name = "CLRNG_DOC")
 	private String clrngDoc;
 
-	public Long getIaGfledgerAccountSeq() {
-		return iaGfledgerAccountSeq;
+	public Long getIaGfledgerAccountId() {
+		return iaGfledgerAccountId;
 	}
 
-	public void setIaGfledgerAccountSeq(Long iaGfledgerAccountSeq) {
-		this.iaGfledgerAccountSeq = iaGfledgerAccountSeq;
+	public void setIaGfledgerAccountId(Long iaGfledgerAccountId) {
+		this.iaGfledgerAccountId = iaGfledgerAccountId;
 	}
 
 	public String getGlAccNo() {
@@ -221,11 +234,11 @@ public class IaGfledgerAccount extends BaseEntity {
 		this.depositAcc = depositAcc;
 	}
 
-	public String getAccType() {
+	public BigDecimal getAccType() {
 		return accType;
 	}
 
-	public void setAccType(String accType) {
+	public void setAccType(BigDecimal accType) {
 		this.accType = accType;
 	}
 

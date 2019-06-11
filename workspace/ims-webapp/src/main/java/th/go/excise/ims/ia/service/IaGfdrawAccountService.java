@@ -18,6 +18,8 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ia.persistence.entity.IaGfdrawAccount;
 import th.go.excise.ims.ia.persistence.repository.IaGfdrawAccountRepository;
+import th.go.excise.ims.ia.vo.Int15ResponseUploadVo;
+import th.go.excise.ims.ia.vo.Int15SaveVo;
 
 @Service
 public class IaGfdrawAccountService {
@@ -25,27 +27,26 @@ public class IaGfdrawAccountService {
 	@Autowired
 	private IaGfdrawAccountRepository iaGfdrawAccountRepository;
 
-	private final String KEY_FILTER[] = { "รหัสหน่วยเบิกจ่าย", "วันที่บันทึก", "วันที่รายงาน", "กรณีจ่ายตรงผู้ขาย",
-			"กรณีจ่ายผ่านส่วนราชการ", "ผลรวม" };
+	private final String KEY_FILTER[] = { "รหัสหน่วยเบิกจ่าย", "วันที่บันทึก", "วันที่รายงาน", "กรณีจ่ายตรงผู้ขาย", "กรณีจ่ายผ่านส่วนราชการ", "ผลรวม" };
 
 	private Logger logger = LoggerFactory.getLogger(IaGfdrawAccountService.class);
 
-//	public void addDataByExcel(File file) {
-//		try {
-//			List<List<String>> ex = ExcelUtils.readExcel(file);
-//			for (List<String> list : ex) {
-//				for (int i = 0; i < list.size(); i++) {
-//					System.out.print(i + " : " + list.get(i) + "||");
-//				}
-//				System.out.println();
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+	// public void addDataByExcel(File file) {
+	// try {
+	// List<List<String>> ex = ExcelUtils.readExcel(file);
+	// for (List<String> list : ex) {
+	// for (int i = 0; i < list.size(); i++) {
+	// System.out.print(i + " : " + list.get(i) + "||");
+	// }
+	// System.out.println();
+	// }
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
 
-	public ResponseData<List<IaGfdrawAccount>> addDataByExcel(MultipartFile file) {
-		ResponseData<List<IaGfdrawAccount>> responseData = new ResponseData<List<IaGfdrawAccount>>();
+	public ResponseData<Int15ResponseUploadVo> addDataByExcel(MultipartFile file) {
+		ResponseData<Int15ResponseUploadVo> responseData = new ResponseData<Int15ResponseUploadVo>();
 		try {
 			String departmentCode = "";
 			String periodFrom = "";
@@ -56,25 +57,19 @@ public class IaGfdrawAccountService {
 			IaGfdrawAccount iaGfDrawAccount = new IaGfdrawAccount();
 			List<List<String>> allLine = ExcelUtils.readExcel(file);
 			for (List<String> line : allLine) {
-				if (line != null && line.size() == 2 && line.get(0) != null
-						&& KEY_FILTER[0].equals(line.get(0).trim())) {
+				if (line != null && line.size() == 2 && line.get(0) != null && KEY_FILTER[0].equals(line.get(0).trim())) {
 					departmentCode = line.get(1);
-				} else if (line != null && line.size() == 2 && line.get(0) != null
-						&& KEY_FILTER[1].equals(line.get(0).trim())) {
+				} else if (line != null && line.size() == 2 && line.get(0) != null && KEY_FILTER[1].equals(line.get(0).trim())) {
 					String[] periodData = line.get(1).trim().split(" ถึง ");
 					periodFrom = periodData[0];
 					periodTo = periodData[1];
-				} else if (line != null && line.size() == 2 && line.get(0) != null
-						&& KEY_FILTER[2].equals(line.get(0).trim())) {
+				} else if (line != null && line.size() == 2 && line.get(0) != null && KEY_FILTER[2].equals(line.get(0).trim())) {
 					repDate = line.get(1).trim();
-				} else if (line != null && line.size() == 1 && line.get(0) != null
-						&& KEY_FILTER[3].equals(line.get(0).trim())) {
+				} else if (line != null && line.size() == 1 && line.get(0) != null && KEY_FILTER[3].equals(line.get(0).trim())) {
 					repType = "1";
-				} else if (line != null && line.size() == 1 && line.get(0) != null
-						&& KEY_FILTER[4].equals(line.get(0).trim())) {
+				} else if (line != null && line.size() == 1 && line.get(0) != null && KEY_FILTER[4].equals(line.get(0).trim())) {
 					repType = "2";
-				} else if (line != null && line.size() == 2 && line.get(0) != null
-						&& KEY_FILTER[5].equals(line.get(0).trim())) {
+				} else if (line != null && line.size() == 2 && line.get(0) != null && KEY_FILTER[5].equals(line.get(0).trim())) {
 					departmentCode = "";
 					periodFrom = "";
 					periodTo = "";
@@ -84,17 +79,12 @@ public class IaGfdrawAccountService {
 					try {
 						iaGfDrawAccount = new IaGfdrawAccount();
 						iaGfDrawAccount.setDepartmentCode(departmentCode);
-						iaGfDrawAccount.setPeriodFrom(ConvertDateUtils.parseStringToDate(periodFrom,
-								ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.LOCAL_TH));
-						iaGfDrawAccount.setPeriodTo(ConvertDateUtils.parseStringToDate(periodTo,
-								ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.LOCAL_TH));
-						iaGfDrawAccount.setRepDate(ConvertDateUtils.parseStringToDate(repDate,
-								ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.LOCAL_TH));
+						iaGfDrawAccount.setPeriodFrom(ConvertDateUtils.parseStringToDate(periodFrom, ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.LOCAL_TH));
+						iaGfDrawAccount.setPeriodTo(ConvertDateUtils.parseStringToDate(periodTo, ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.LOCAL_TH));
+						iaGfDrawAccount.setRepDate(ConvertDateUtils.parseStringToDate(repDate, ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.LOCAL_TH));
 						iaGfDrawAccount.setRepType(repType);
-						iaGfDrawAccount.setRecordDate(ConvertDateUtils.parseStringToDate(line.get(0),
-								ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.LOCAL_TH));
-						iaGfDrawAccount.setRecodeApproveDate(ConvertDateUtils.parseStringToDate(line.get(1),
-								ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.LOCAL_TH));
+						iaGfDrawAccount.setRecordDate(ConvertDateUtils.parseStringToDate(line.get(0), ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.LOCAL_TH));
+						iaGfDrawAccount.setRecodeApproveDate(ConvertDateUtils.parseStringToDate(line.get(1), ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.LOCAL_TH));
 						iaGfDrawAccount.setType(line.get(2));
 						iaGfDrawAccount.setDocNo(line.get(3));
 						iaGfDrawAccount.setSellerName(line.get(4));
@@ -108,17 +98,19 @@ public class IaGfdrawAccountService {
 						iaGfDrawAccount.setNetAmt(NumberUtils.toBigDecimal(line.get(12)));
 						iaGfDrawAccountList.add(iaGfDrawAccount);
 					} catch (Exception e) {
-//						e.printStackTrace();
-//						System.out.println(e.getStackTrace());
+						// e.printStackTrace();
+						// System.out.println(e.getStackTrace());
 					}
 
 				}
 			}
-			responseData.setData(iaGfDrawAccountList);
-			responseData.setMessage(
-					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			Int15ResponseUploadVo response = new Int15ResponseUploadVo();
+			response.setFileName(file.getOriginalFilename());
+			response.setFormData1(iaGfDrawAccountList);
+			responseData.setData(response);
+			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
-//			iaGfdrawAccountRepository.batchInsert(iaGfDrawAccountList);
+			// iaGfdrawAccountRepository.batchInsert(iaGfDrawAccountList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
@@ -127,7 +119,8 @@ public class IaGfdrawAccountService {
 		return responseData;
 	}
 
-	public void saveData(List<IaGfdrawAccount> form) {
-		iaGfdrawAccountRepository.batchInsert(form);
+	public void saveData(Int15SaveVo form) {
+		
+//		iaGfdrawAccountRepository.batchInsert(form);
 	}
 }

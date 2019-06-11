@@ -1,7 +1,6 @@
 package th.go.excise.ims.ia.service;
 
 import java.io.ByteArrayInputStream;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +21,9 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExcelUtils;
-import th.go.excise.ims.ia.persistence.entity.IaGfdrawAccount;
 import th.go.excise.ims.ia.persistence.entity.IaGfledgerAccount;
 import th.go.excise.ims.ia.persistence.repository.IaGfledgerAccountRepository;
+import th.go.excise.ims.ia.vo.Int15ResponseUploadVo;
 
 @Service
 public class IaGfledgerAccountService {
@@ -34,12 +33,11 @@ public class IaGfledgerAccountService {
 
 	private final String KEY_FILTER[] = { "เลขที่บัญชี G/L", "รหัสหน่วยงาน", "ประเภท", "*" };
 
-	public ResponseData<List<IaGfledgerAccount>> addDataByExcel(MultipartFile file) throws Exception {
-		ResponseData<List<IaGfledgerAccount>> responseData = new ResponseData<List<IaGfledgerAccount>>();
+	public ResponseData<Int15ResponseUploadVo> addDataByExcel(MultipartFile file) throws Exception {
+		ResponseData<Int15ResponseUploadVo> responseData = new ResponseData<Int15ResponseUploadVo>();
 		List<IaGfledgerAccount> iaGfledgerAccountList = new ArrayList<>();
 		IaGfledgerAccount iaGfledgerAccount = new IaGfledgerAccount();
 		Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(file.getBytes()));
-		String valueExc = "";
 		Sheet sheet = workbook.getSheetAt(0);
 		String glAccNo = "";
 		String depCode = "";
@@ -49,7 +47,6 @@ public class IaGfledgerAccountService {
 				
 				String val;
 				for (Cell c : r) {
-					valueExc = ExcelUtils.getCellValueAsString(c) + " : " + c.getColumnIndex();
 					val = ExcelUtils.getCellValueAsString(c);
 					if (StringUtils.isNoneBlank(val)) {
 						if (StringUtils.trim(val).equals(KEY_FILTER[0]) && c.getColumnIndex() == 0) {
@@ -107,7 +104,7 @@ public class IaGfledgerAccountService {
 								iaGfledgerAccount.setDepositAcc(val);
 								break;
 							case 20:
-								iaGfledgerAccount.setAccType(val);
+								iaGfledgerAccount.setAccType(NumberUtils.toBigDecimal(val));
 								break;
 							case 21:
 								iaGfledgerAccount.setCostCenter(val);
@@ -137,8 +134,10 @@ public class IaGfledgerAccountService {
 		}
 
 		try {
-//			iaGfledgerAccountRepository.insertBatch(iaGfledgerAccountList);
-			responseData.setData(iaGfledgerAccountList);
+			Int15ResponseUploadVo response = new Int15ResponseUploadVo();
+			response.setFileName(file.getOriginalFilename());
+			response.setFormData3(iaGfledgerAccountList);
+			responseData.setData(response);
 			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

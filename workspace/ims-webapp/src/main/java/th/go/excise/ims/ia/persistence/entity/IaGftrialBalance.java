@@ -2,7 +2,6 @@
 package th.go.excise.ims.ia.persistence.entity;
 
 import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,23 +9,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "IA_GFTRIAL_BALANCE")
 public class IaGftrialBalance extends BaseEntity {
 
+	private static final long serialVersionUID = 1536622124722705683L;
 	
-	private static final long serialVersionUID = -8839341270076938113L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_GFTRIAL_BALANCE_GEN")
 	@SequenceGenerator(name = "IA_GFTRIAL_BALANCE_GEN", sequenceName = "IA_GFTRIAL_BALANCE_SEQ", allocationSize = 1)
 	@Column(name = "IA_GFTRIAL_BALANCE_ID")
 	private Long iaGftrialBalanceId;
+	@Column(name = "GFUPLOAD_H_ID")
+	private Long gfuploadHId;
 	@Column(name = "DEPARTMENT_CODE")
 	private String departmentCode;
 	@Column(name = "PERIOD_FROM")
@@ -54,6 +53,14 @@ public class IaGftrialBalance extends BaseEntity {
 
 	public void setIaGftrialBalanceId(Long iaGftrialBalanceId) {
 		this.iaGftrialBalanceId = iaGftrialBalanceId;
+	}
+
+	public Long getGfuploadHId() {
+		return gfuploadHId;
+	}
+
+	public void setGfuploadHId(Long gfuploadHId) {
+		this.gfuploadHId = gfuploadHId;
 	}
 
 	public String getDepartmentCode() {

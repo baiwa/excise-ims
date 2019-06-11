@@ -4,6 +4,6 @@ package th.go.excise.ims.ia.persistence.repository;
 import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRepository;
 import th.go.excise.ims.ia.persistence.entity.IaGftrialBalance;
 
-public interface IaGftrialBalanceRepository extends CommonJpaCrudRepository<IaGftrialBalance, Long> ,IaGftrialBalanceRepositorCustom  {
+public interface IaGftrialBalanceRepository extends CommonJpaCrudRepository<IaGftrialBalance, Long> ,  IaGftrialBalanceRepositorCustom {
 
 }

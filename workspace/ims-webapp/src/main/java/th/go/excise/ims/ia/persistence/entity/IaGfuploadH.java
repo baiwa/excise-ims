@@ -1,6 +1,7 @@
 
 package th.go.excise.ims.ia.persistence.entity;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,12 +24,18 @@ public class IaGfuploadH
     @SequenceGenerator(name = "IA_GFUPLOAD_H_GEN", sequenceName = "IA_GFUPLOAD_H_SEQ", allocationSize = 1)
     @Column(name = "GFUPLOAD_H_ID")
     private Long gfuploadHId;
+    @Column(name = "UPLOAD_TYPE")
+    private String uploadType;
     @Column(name = "DEPT_DISB")
     private String deptDisb;
     @Column(name = "PERIOD_MONTH")
     private String periodMonth;
     @Column(name = "PERIOD_YEAR")
     private String periodYear;
+    @Column(name = "START_DATE")
+    private Date startDate;
+    @Column(name = "END_DATE")
+    private Date endDate;
     @Column(name = "FILE_NAME")
     private String fileName;
 
@@ -38,6 +45,14 @@ public class IaGfuploadH
 
     public void setGfuploadHId(Long gfuploadHId) {
         this.gfuploadHId = gfuploadHId;
+    }
+
+    public String getUploadType() {
+        return uploadType;
+    }
+
+    public void setUploadType(String uploadType) {
+        this.uploadType = uploadType;
     }
 
     public String getDeptDisb() {
@@ -62,6 +77,22 @@ public class IaGfuploadH
 
     public void setPeriodYear(String periodYear) {
         this.periodYear = periodYear;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public String getFileName() {

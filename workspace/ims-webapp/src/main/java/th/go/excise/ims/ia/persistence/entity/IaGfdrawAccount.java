@@ -3,7 +3,6 @@ package th.go.excise.ims.ia.persistence.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,23 +10,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "IA_GFDRAW_ACCOUNT")
 public class IaGfdrawAccount extends BaseEntity {
 
-	private static final long serialVersionUID = -4242843409848853425L;
-	
+	private static final long serialVersionUID = 3152957676776086885L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_GFDRAW_ACCOUNT_GEN")
 	@SequenceGenerator(name = "IA_GFDRAW_ACCOUNT_GEN", sequenceName = "IA_GFDRAW_ACCOUNT_SEQ", allocationSize = 1)
 	@Column(name = "GFTRIAL_BALANCE_SEQ")
 	private Long gftrialBalanceSeq;
+	@Column(name = "GFUPLOAD_H_ID")
+	private Long gfuploadHId;
 	@Column(name = "DEPARTMENT_CODE")
 	private String departmentCode;
 	@Column(name = "PERIOD_FROM")
@@ -71,6 +69,14 @@ public class IaGfdrawAccount extends BaseEntity {
 
 	public void setGftrialBalanceSeq(Long gftrialBalanceSeq) {
 		this.gftrialBalanceSeq = gftrialBalanceSeq;
+	}
+
+	public Long getGfuploadHId() {
+		return gfuploadHId;
+	}
+
+	public void setGfuploadHId(Long gfuploadHId) {
+		this.gfuploadHId = gfuploadHId;
 	}
 
 	public String getDepartmentCode() {

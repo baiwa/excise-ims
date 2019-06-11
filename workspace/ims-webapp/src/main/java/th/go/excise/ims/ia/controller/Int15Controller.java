@@ -18,19 +18,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
-import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.ia.persistence.entity.IaGfdrawAccount;
 import th.go.excise.ims.ia.persistence.entity.IaGfledgerAccount;
 import th.go.excise.ims.ia.persistence.entity.IaGfmovementAccount;
 import th.go.excise.ims.ia.persistence.entity.IaGftrialBalance;
-import th.go.excise.ims.ia.service.ExciseOrgGfmisService;
 import th.go.excise.ims.ia.service.IaGfdrawAccountService;
 import th.go.excise.ims.ia.service.IaGfledgerAccountService;
 import th.go.excise.ims.ia.service.IaGfmovementAccountService;
 import th.go.excise.ims.ia.service.IaGftrialBalanceService;
-import th.go.excise.ims.ia.vo.ExciseOrgGfDisburseUnitVo;
+import th.go.excise.ims.ia.vo.Int15ResponseUploadVo;
+import th.go.excise.ims.ia.vo.Int15SaveVo;
 import th.go.excise.ims.ia.vo.Int15UploadVo;
 
 @Controller
@@ -49,20 +47,16 @@ public class Int15Controller {
 
 	@Autowired
 	private IaGfmovementAccountService iaGfmovementAccountService;
-	
-	@Autowired
-	private ExciseOrgGfmisService exciseOrgGfmisService;
+
 
 	@PostMapping("/upload/ia-type-data1")
 	@ResponseBody
-	public ResponseData<List<IaGfdrawAccount>> uploadT1(@ModelAttribute Int15UploadVo form)
+	public ResponseData<Int15ResponseUploadVo> uploadT1(@ModelAttribute Int15UploadVo form)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
-
-		ResponseData<List<IaGfdrawAccount>> responseData = new ResponseData<List<IaGfdrawAccount>>();
+		ResponseData<Int15ResponseUploadVo> responseData = new ResponseData<Int15ResponseUploadVo>();
 		try {
 			MultipartFile file = form.getFile();
 			responseData = iaGfdrawAccountService.addDataByExcel(file);
-
 		} catch (Exception e) {
 			logger.error("Int030102Controller upload1 : ", e);
 			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
@@ -73,16 +67,12 @@ public class Int15Controller {
 
 	@PostMapping("/upload/ia-type-data2")
 	@ResponseBody
-	public ResponseData<List<IaGftrialBalance>> uploadT2(@ModelAttribute Int15UploadVo form)
+	public ResponseData<Int15ResponseUploadVo> uploadT2(@ModelAttribute Int15UploadVo form)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
-//		iaGftrialBalanceService
-		ResponseData<List<IaGftrialBalance>> responseData = new ResponseData<List<IaGftrialBalance>>();
+		ResponseData<Int15ResponseUploadVo> responseData = new ResponseData<Int15ResponseUploadVo>();
 		try {
 			MultipartFile file = form.getFile();
 			responseData = iaGftrialBalanceService.addDataByExcel(file);
-//			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
-//			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
-
 		} catch (Exception e) {
 			logger.error("Int030102Controller upload2 : ", e);
 			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
@@ -93,16 +83,12 @@ public class Int15Controller {
 
 	@PostMapping("/upload/ia-type-data3")
 	@ResponseBody
-	public ResponseData<List<IaGfledgerAccount>> uploadT3(@ModelAttribute Int15UploadVo form)
+	public ResponseData<Int15ResponseUploadVo> uploadT3(@ModelAttribute Int15UploadVo form)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
-//		iaGfledgerAccountService
-		ResponseData<List<IaGfledgerAccount>> responseData = new ResponseData<List<IaGfledgerAccount>>();
+		ResponseData<Int15ResponseUploadVo> responseData = new ResponseData<Int15ResponseUploadVo>();
 		try {
 			MultipartFile file = form.getFile();
 			responseData = iaGfledgerAccountService.addDataByExcel(file);
-//			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
-//			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
-
 		} catch (Exception e) {
 			logger.error("Int030102Controller upload3 : ", e);
 			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
@@ -113,16 +99,12 @@ public class Int15Controller {
 
 	@PostMapping("/upload/ia-type-data4")
 	@ResponseBody
-	public ResponseData<List<IaGfmovementAccount>> uploadT4(@ModelAttribute Int15UploadVo form)
+	public ResponseData<Int15ResponseUploadVo> uploadT4(@ModelAttribute Int15UploadVo form)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
-//		iaGfmovementAccountService
-		ResponseData<List<IaGfmovementAccount>> responseData = new ResponseData<List<IaGfmovementAccount>>();
+		ResponseData<Int15ResponseUploadVo> responseData = new ResponseData<Int15ResponseUploadVo>();
 		try {
 			MultipartFile file = form.getFile();
 			responseData = iaGfmovementAccountService.addDataByExcel(file);
-//			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
-//			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
-
 		} catch (Exception e) {
 			logger.error("Int030102Controller upload4 : ", e);
 			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
@@ -133,12 +115,11 @@ public class Int15Controller {
 
 	@PostMapping("/save/ia-type-data1")
 	@ResponseBody
-	public ResponseData<String> save1(@RequestBody List<IaGfdrawAccount> form) {
+	public ResponseData<String> save1(@RequestBody Int15SaveVo form) {
 		ResponseData<String> responseData = new ResponseData<String>();
 		try {
 			iaGfdrawAccountService.saveData(form);
-			responseData.setMessage(
-					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 
 		} catch (Exception e) {

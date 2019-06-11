@@ -3,6 +3,7 @@ package th.go.excise.ims.ia.persistence.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,23 +11,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "IA_GFMOVEMENT_ACCOUNT")
 public class IaGfmovementAccount extends BaseEntity {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7883529601137623142L;
+	private static final long serialVersionUID = -233674781808721659L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_GFMOVEMENT_ACCOUNT_GEN")
 	@SequenceGenerator(name = "IA_GFMOVEMENT_ACCOUNT_GEN", sequenceName = "IA_GFMOVEMENT_ACCOUNT_SEQ", allocationSize = 1)
 	@Column(name = "GFMOVEMENT_ACCOUNT_ID")
 	private Long gfmovementAccountId;
+	@Column(name = "GFUPLOAD_H_ID")
+	private Long gfuploadHId;
 	@Column(name = "ACC_TYPE_NO")
 	private String accTypeNo;
 	@Column(name = "ACC_TYPE_NAME")
@@ -62,6 +64,14 @@ public class IaGfmovementAccount extends BaseEntity {
 
 	public void setGfmovementAccountId(Long gfmovementAccountId) {
 		this.gfmovementAccountId = gfmovementAccountId;
+	}
+
+	public Long getGfuploadHId() {
+		return gfuploadHId;
+	}
+
+	public void setGfuploadHId(Long gfuploadHId) {
+		this.gfuploadHId = gfuploadHId;
 	}
 
 	public String getAccTypeNo() {
