@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaGfdrawAccount;
@@ -31,7 +32,6 @@ import th.go.excise.ims.ia.service.IaGfmovementAccountService;
 import th.go.excise.ims.ia.service.IaGftrialBalanceService;
 import th.go.excise.ims.ia.vo.ExciseOrgGfDisburseUnitVo;
 import th.go.excise.ims.ia.vo.Int15UploadVo;
-import th.go.excise.ims.preferences.persistence.repository.ExciseOrgGfmisRepository;
 
 @Controller
 @RequestMapping("/api/ia/int15/01")
@@ -203,20 +203,4 @@ public class Int15Controller {
 		return responseData;
 	}
 
-	@PostMapping("/find/disburseunit-and-name")
-	@ResponseBody
-	public ResponseData<List<ExciseOrgGfDisburseUnitVo>> findGfDisburseUnitAndName() {
-		ResponseData<List<ExciseOrgGfDisburseUnitVo>> responseData = new ResponseData<List<ExciseOrgGfDisburseUnitVo>>();
-		try {
-			responseData.setData(exciseOrgGfmisService.findGfDisburseUnitAndName());
-			responseData.setMessage( ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS).getMessageTh());
-			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
-		} catch (Exception e) {
-			logger.error("disburseUnitAndName find : ", e);
-			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
-			responseData.setStatus(RESPONSE_STATUS.FAILED);
-		}
-		return responseData;
-	}
-	
 }
