@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,11 +24,14 @@ import th.go.excise.ims.ia.persistence.entity.IaGfdrawAccount;
 import th.go.excise.ims.ia.persistence.entity.IaGfledgerAccount;
 import th.go.excise.ims.ia.persistence.entity.IaGfmovementAccount;
 import th.go.excise.ims.ia.persistence.entity.IaGftrialBalance;
+import th.go.excise.ims.ia.service.ExciseOrgGfmisService;
 import th.go.excise.ims.ia.service.IaGfdrawAccountService;
 import th.go.excise.ims.ia.service.IaGfledgerAccountService;
 import th.go.excise.ims.ia.service.IaGfmovementAccountService;
 import th.go.excise.ims.ia.service.IaGftrialBalanceService;
+import th.go.excise.ims.ia.vo.ExciseOrgGfDisburseUnitVo;
 import th.go.excise.ims.ia.vo.Int15UploadVo;
+import th.go.excise.ims.preferences.persistence.repository.ExciseOrgGfmisRepository;
 
 @Controller
 @RequestMapping("/api/ia/int15/01")
@@ -47,6 +49,9 @@ public class Int15Controller {
 
 	@Autowired
 	private IaGfmovementAccountService iaGfmovementAccountService;
+	
+	@Autowired
+	private ExciseOrgGfmisService exciseOrgGfmisService;
 
 	@PostMapping("/upload/IA_TYPE_DATA1")
 	@ResponseBody
@@ -198,4 +203,20 @@ public class Int15Controller {
 		return responseData;
 	}
 
+	@PostMapping("/find/disburseunit-and-name")
+	@ResponseBody
+	public ResponseData<List<ExciseOrgGfDisburseUnitVo>> findGfDisburseUnitAndName() {
+		ResponseData<List<ExciseOrgGfDisburseUnitVo>> responseData = new ResponseData<List<ExciseOrgGfDisburseUnitVo>>();
+		try {
+			responseData.setData(exciseOrgGfmisService.findGfDisburseUnitAndName());
+			responseData.setMessage( ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("disburseUnitAndName find : ", e);
+			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500);
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
 }
