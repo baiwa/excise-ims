@@ -1,6 +1,8 @@
 package th.go.excise.ims.ta.persistence.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,14 +10,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
 @Table(name = "TA_PAPER_BA_D5")
 public class TaPaperBaD5 extends BaseEntity {
-
+	
 	private static final long serialVersionUID = -3304427831822549201L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_PAPER_BA_D5_GEN")
 	@SequenceGenerator(name = "TA_PAPER_BA_D5_GEN", sequenceName = "TA_PAPER_BA_D5_SEQ", allocationSize = 1)
@@ -27,24 +30,26 @@ public class TaPaperBaD5 extends BaseEntity {
 	private Integer seqNo;
 	@Column(name = "GOODS_DESC")
 	private String goodsDesc;
-	@Column(name = "TAX_BY_VAL_AMT")
-	private BigDecimal taxByValAmt;
-	@Column(name = "TAX_BY_QTY_AMT")
-	private BigDecimal taxByQtyAmt;
-	@Column(name = "SUM_TAX_AMT")
-	private BigDecimal sumTaxAmt;
-	@Column(name = "ANA_TAX_BY_VAL_AMT")
-	private BigDecimal anaTaxByValAmt;
-	@Column(name = "ANA_TAX_BY_QTY_AMT")
-	private BigDecimal anaTaxByQtyAmt;
-	@Column(name = "SUM_ANA_TAX_AMT")
-	private BigDecimal sumAnaTaxAmt;
-	@Column(name = "DIFF_TAX_BY_VAL_AMT")
-	private BigDecimal diffTaxByValAmt;
-	@Column(name = "DIFF_TAX_BY_QTY_AMT")
-	private BigDecimal diffTaxByQtyAmt;
-	@Column(name = "DIFF_SUM_TAX_AMT")
-	private BigDecimal diffSumTaxAmt;
+	@Column(name = "TAX_SUBMISSION_DATE")
+	private LocalDate taxSubmissionDate;
+	@Column(name = "NET_TAX_BY_VALUE")
+	private BigDecimal netTaxByValue;
+	@Column(name = "NET_TAX_BY_QTY")
+	private BigDecimal netTaxByQty;
+	@Column(name = "NET_TAX_AMT")
+	private BigDecimal netTaxAmt;
+	@Column(name = "ANA_NET_TAX_BY_VALUE")
+	private BigDecimal anaNetTaxByValue;
+	@Column(name = "ANA_NET_TAX_BY_QTY")
+	private BigDecimal anaNetTaxByQty;
+	@Column(name = "ANA_NET_TAX_AMT")
+	private BigDecimal anaNetTaxAmt;
+	@Column(name = "DIFF_NET_TAX_BY_VALUE")
+	private BigDecimal diffNetTaxByValue;
+	@Column(name = "DIFF_NET_TAX_BY_QTY")
+	private BigDecimal diffNetTaxByQty;
+	@Column(name = "DIFF_NET_TAX_AMT")
+	private BigDecimal diffNetTaxAmt;
 
 	public Long getPaperBaD5Seq() {
 		return paperBaD5Seq;
@@ -78,76 +83,84 @@ public class TaPaperBaD5 extends BaseEntity {
 		this.goodsDesc = goodsDesc;
 	}
 
-	public BigDecimal getTaxByValAmt() {
-		return taxByValAmt;
+	public LocalDate getTaxSubmissionDate() {
+		return taxSubmissionDate;
 	}
 
-	public void setTaxByValAmt(BigDecimal taxByValAmt) {
-		this.taxByValAmt = taxByValAmt;
+	public void setTaxSubmissionDate(LocalDate taxSubmissionDate) {
+		this.taxSubmissionDate = taxSubmissionDate;
 	}
 
-	public BigDecimal getTaxByQtyAmt() {
-		return taxByQtyAmt;
+	public BigDecimal getNetTaxByValue() {
+		return netTaxByValue;
 	}
 
-	public void setTaxByQtyAmt(BigDecimal taxByQtyAmt) {
-		this.taxByQtyAmt = taxByQtyAmt;
+	public void setNetTaxByValue(BigDecimal netTaxByValue) {
+		this.netTaxByValue = netTaxByValue;
 	}
 
-	public BigDecimal getSumTaxAmt() {
-		return sumTaxAmt;
+	public BigDecimal getNetTaxByQty() {
+		return netTaxByQty;
 	}
 
-	public void setSumTaxAmt(BigDecimal sumTaxAmt) {
-		this.sumTaxAmt = sumTaxAmt;
+	public void setNetTaxByQty(BigDecimal netTaxByQty) {
+		this.netTaxByQty = netTaxByQty;
 	}
 
-	public BigDecimal getAnaTaxByValAmt() {
-		return anaTaxByValAmt;
+	public BigDecimal getNetTaxAmt() {
+		return netTaxAmt;
 	}
 
-	public void setAnaTaxByValAmt(BigDecimal anaTaxByValAmt) {
-		this.anaTaxByValAmt = anaTaxByValAmt;
+	public void setNetTaxAmt(BigDecimal netTaxAmt) {
+		this.netTaxAmt = netTaxAmt;
 	}
 
-	public BigDecimal getAnaTaxByQtyAmt() {
-		return anaTaxByQtyAmt;
+	public BigDecimal getAnaNetTaxByValue() {
+		return anaNetTaxByValue;
 	}
 
-	public void setAnaTaxByQtyAmt(BigDecimal anaTaxByQtyAmt) {
-		this.anaTaxByQtyAmt = anaTaxByQtyAmt;
+	public void setAnaNetTaxByValue(BigDecimal anaNetTaxByValue) {
+		this.anaNetTaxByValue = anaNetTaxByValue;
 	}
 
-	public BigDecimal getSumAnaTaxAmt() {
-		return sumAnaTaxAmt;
+	public BigDecimal getAnaNetTaxByQty() {
+		return anaNetTaxByQty;
 	}
 
-	public void setSumAnaTaxAmt(BigDecimal sumAnaTaxAmt) {
-		this.sumAnaTaxAmt = sumAnaTaxAmt;
+	public void setAnaNetTaxByQty(BigDecimal anaNetTaxByQty) {
+		this.anaNetTaxByQty = anaNetTaxByQty;
 	}
 
-	public BigDecimal getDiffTaxByValAmt() {
-		return diffTaxByValAmt;
+	public BigDecimal getAnaNetTaxAmt() {
+		return anaNetTaxAmt;
 	}
 
-	public void setDiffTaxByValAmt(BigDecimal diffTaxByValAmt) {
-		this.diffTaxByValAmt = diffTaxByValAmt;
+	public void setAnaNetTaxAmt(BigDecimal anaNetTaxAmt) {
+		this.anaNetTaxAmt = anaNetTaxAmt;
 	}
 
-	public BigDecimal getDiffTaxByQtyAmt() {
-		return diffTaxByQtyAmt;
+	public BigDecimal getDiffNetTaxByValue() {
+		return diffNetTaxByValue;
 	}
 
-	public void setDiffTaxByQtyAmt(BigDecimal diffTaxByQtyAmt) {
-		this.diffTaxByQtyAmt = diffTaxByQtyAmt;
+	public void setDiffNetTaxByValue(BigDecimal diffNetTaxByValue) {
+		this.diffNetTaxByValue = diffNetTaxByValue;
 	}
 
-	public BigDecimal getDiffSumTaxAmt() {
-		return diffSumTaxAmt;
+	public BigDecimal getDiffNetTaxByQty() {
+		return diffNetTaxByQty;
 	}
 
-	public void setDiffSumTaxAmt(BigDecimal diffSumTaxAmt) {
-		this.diffSumTaxAmt = diffSumTaxAmt;
+	public void setDiffNetTaxByQty(BigDecimal diffNetTaxByQty) {
+		this.diffNetTaxByQty = diffNetTaxByQty;
+	}
+
+	public BigDecimal getDiffNetTaxAmt() {
+		return diffNetTaxAmt;
+	}
+
+	public void setDiffNetTaxAmt(BigDecimal diffNetTaxAmt) {
+		this.diffNetTaxAmt = diffNetTaxAmt;
 	}
 
 }

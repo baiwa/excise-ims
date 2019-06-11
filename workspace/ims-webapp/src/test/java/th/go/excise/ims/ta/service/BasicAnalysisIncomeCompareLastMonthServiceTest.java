@@ -2,6 +2,8 @@ package th.go.excise.ims.ta.service;
 
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +33,11 @@ public class BasicAnalysisIncomeCompareLastMonthServiceTest {
 		formVo.setDutyGroupId("0201");
 		formVo.setStartDate("01/2561");
 		formVo.setEndDate("06/2561");
-		formVo.setPaperBaNumber("0100002562000001");
+		//formVo.setPaperBaNumber("0100002562000001");
 		
 		List<BasicAnalysisIncomeCompareLastMonthVo> voList = basicAnalysisIncomeCompareLastMonthService.inquiry(formVo);
 		for (BasicAnalysisIncomeCompareLastMonthVo vo : voList) {
-			System.out.println("taxMonth=" + vo.getTaxMonth() +
-				"\tincomeAmt=" + vo.getIncomeAmt() +
-				"\tdiffAmt=" + vo.getDiffIncomeAmt() +
-				"\tdiffPnt=" + vo.getDiffIncomePnt());
+			System.out.println(ToStringBuilder.reflectionToString(vo, ToStringStyle.SHORT_PREFIX_STYLE));
 		}
 	}
 	

@@ -9,15 +9,16 @@ public class BasicAnalysisTaxAmtVo extends DataTableRequest {
 	private static final long serialVersionUID = -6837417994944245251L;
 
 	private String goodsDesc;
-	private BigDecimal taxByValAmt;
-	private BigDecimal taxByQtyAmt;
-	private BigDecimal sumTaxAmt;
-	private BigDecimal anaTaxByValAmt;
-	private BigDecimal anaTaxByQtyAmt;
-	private BigDecimal sumAnaTaxAmt;
-	private BigDecimal diffTaxByValAmt;
-	private BigDecimal diffTaxByQtyAmt;
-	private BigDecimal diffSumTaxAmt;
+	private String taxSubmissionDate;
+	private BigDecimal netTaxByValue;
+	private BigDecimal netTaxByQty;
+	private BigDecimal netTaxAmt;
+	private BigDecimal anaNetTaxByValue;
+	private BigDecimal anaNetTaxByQty;
+	private BigDecimal anaNetTaxAmt;
+	private BigDecimal diffNetTaxByValue;
+	private BigDecimal diffNetTaxByQty;
+	private BigDecimal diffNetTaxAmt;
 
 	public String getGoodsDesc() {
 		return goodsDesc;
@@ -27,76 +28,84 @@ public class BasicAnalysisTaxAmtVo extends DataTableRequest {
 		this.goodsDesc = goodsDesc;
 	}
 
-	public BigDecimal getTaxByValAmt() {
-		return taxByValAmt;
+	public String getTaxSubmissionDate() {
+		return taxSubmissionDate;
 	}
 
-	public void setTaxByValAmt(BigDecimal taxByValAmt) {
-		this.taxByValAmt = taxByValAmt;
+	public void setTaxSubmissionDate(String taxSubmissionDate) {
+		this.taxSubmissionDate = taxSubmissionDate;
 	}
 
-	public BigDecimal getTaxByQtyAmt() {
-		return taxByQtyAmt;
+	public BigDecimal getNetTaxByValue() {
+		return netTaxByValue;
 	}
 
-	public void setTaxByQtyAmt(BigDecimal taxByQtyAmt) {
-		this.taxByQtyAmt = taxByQtyAmt;
+	public void setNetTaxByValue(BigDecimal netTaxByValue) {
+		this.netTaxByValue = netTaxByValue;
 	}
 
-	public BigDecimal getSumTaxAmt() {
-		return sumTaxAmt;
+	public BigDecimal getNetTaxByQty() {
+		return netTaxByQty;
 	}
 
-	public void setSumTaxAmt(BigDecimal sumTaxAmt) {
-		this.sumTaxAmt = sumTaxAmt;
+	public void setNetTaxByQty(BigDecimal netTaxByQty) {
+		this.netTaxByQty = netTaxByQty;
 	}
 
-	public BigDecimal getAnaTaxByValAmt() {
-		return anaTaxByValAmt;
+	public BigDecimal getNetTaxAmt() {
+		return netTaxAmt;
 	}
 
-	public void setAnaTaxByValAmt(BigDecimal anaTaxByValAmt) {
-		this.anaTaxByValAmt = anaTaxByValAmt;
+	public void setNetTaxAmt(BigDecimal netTaxAmt) {
+		this.netTaxAmt = netTaxAmt;
 	}
 
-	public BigDecimal getAnaTaxByQtyAmt() {
-		return anaTaxByQtyAmt;
+	public BigDecimal getAnaNetTaxByValue() {
+		return anaNetTaxByValue;
 	}
 
-	public void setAnaTaxByQtyAmt(BigDecimal anaTaxByQtyAmt) {
-		this.anaTaxByQtyAmt = anaTaxByQtyAmt;
+	public void setAnaNetTaxByValue(BigDecimal anaNetTaxByValue) {
+		this.anaNetTaxByValue = anaNetTaxByValue;
 	}
 
-	public BigDecimal getSumAnaTaxAmt() {
-		return sumAnaTaxAmt;
+	public BigDecimal getAnaNetTaxByQty() {
+		return anaNetTaxByQty;
 	}
 
-	public void setSumAnaTaxAmt(BigDecimal sumAnaTaxAmt) {
-		this.sumAnaTaxAmt = sumAnaTaxAmt;
+	public void setAnaNetTaxByQty(BigDecimal anaNetTaxByQty) {
+		this.anaNetTaxByQty = anaNetTaxByQty;
 	}
 
-	public BigDecimal getDiffTaxByValAmt() {
-		return diffTaxByValAmt;
+	public BigDecimal getAnaNetTaxAmt() {
+		return anaNetTaxAmt;
 	}
 
-	public void setDiffTaxByValAmt(BigDecimal diffTaxByValAmt) {
-		this.diffTaxByValAmt = diffTaxByValAmt;
+	public void setAnaNetTaxAmt(BigDecimal anaNetTaxAmt) {
+		this.anaNetTaxAmt = anaNetTaxAmt;
 	}
 
-	public BigDecimal getDiffTaxByQtyAmt() {
-		return diffTaxByQtyAmt;
+	public BigDecimal getDiffNetTaxByValue() {
+		return diffNetTaxByValue;
 	}
 
-	public void setDiffTaxByQtyAmt(BigDecimal diffTaxByQtyAmt) {
-		this.diffTaxByQtyAmt = diffTaxByQtyAmt;
+	public void setDiffNetTaxByValue(BigDecimal diffNetTaxByValue) {
+		this.diffNetTaxByValue = diffNetTaxByValue;
 	}
 
-	public BigDecimal getDiffSumTaxAmt() {
-		return diffSumTaxAmt;
+	public BigDecimal getDiffNetTaxByQty() {
+		return diffNetTaxByQty;
 	}
 
-	public void setDiffSumTaxAmt(BigDecimal diffSumTaxAmt) {
-		this.diffSumTaxAmt = diffSumTaxAmt;
+	public void setDiffNetTaxByQty(BigDecimal diffNetTaxByQty) {
+		this.diffNetTaxByQty = diffNetTaxByQty;
+	}
+
+	public BigDecimal getDiffNetTaxAmt() {
+		return diffNetTaxAmt;
+	}
+
+	public void setDiffNetTaxAmt(BigDecimal diffNetTaxAmt) {
+		this.diffNetTaxAmt = diffNetTaxAmt;
 	}
 
 }

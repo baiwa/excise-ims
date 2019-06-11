@@ -2,28 +2,31 @@ package th.go.excise.ims.ta.service;
 
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
 import th.go.excise.ims.ta.vo.BasicAnalysisTaxAmtVo;
-import th.go.excise.ims.ta.vo.BasicAnalysisTaxQtyVo;
-import th.go.excise.ims.ta.vo.BasicAnalysisTaxRateVo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 @WithUserDetails(value = "ta001402", userDetailsServiceBeanName = "userDetailService")
-//@ActiveProfiles(value = PROFILE.UNITTEST)
+@ActiveProfiles(value = PROFILE.UNITTEST)
 public class BasicAnalysisTaxAmtServiceTest {
+	
 	@Autowired
 	private BasicAnalysisTaxAmtService basicAnalysisTaxAmtService;
 	
-//	@Test
+	@Test
 	public void test_inquiryByWs() {
 		BasicAnalysisFormVo formVo = new BasicAnalysisFormVo();
 		formVo.setNewRegId("01075440001081002");
@@ -33,10 +36,7 @@ public class BasicAnalysisTaxAmtServiceTest {
 		
 		List<BasicAnalysisTaxAmtVo> voList = basicAnalysisTaxAmtService.inquiryByWs(formVo);
 		for (BasicAnalysisTaxAmtVo vo : voList) {
-			System.out.println("GoodsDesc=" + vo.getGoodsDesc() +
-				"\tAnaTaxByValAmt=" + vo.getAnaTaxByValAmt() +
-				"\tAnaTaxByQtyAmt=" + vo.getAnaTaxByQtyAmt() +
-				"\tSumAnaTaxAmt=" + vo.getSumAnaTaxAmt());
+			System.out.println(ToStringBuilder.reflectionToString(vo, ToStringStyle.SHORT_PREFIX_STYLE));
 		}
 	}
 	
@@ -52,7 +52,7 @@ public class BasicAnalysisTaxAmtServiceTest {
 		System.out.println("************************Is successfully saved************************");
 	}
 	
-	@Test
+//	@Test
 	public void test_inquiryByPaperBaNumber() {
 		BasicAnalysisFormVo formVo = new BasicAnalysisFormVo();
 		formVo.setNewRegId("01075440001081002");
@@ -62,10 +62,8 @@ public class BasicAnalysisTaxAmtServiceTest {
 		formVo.setEndDate("06/2562");
 		List<BasicAnalysisTaxAmtVo> voList = basicAnalysisTaxAmtService.inquiryByPaperBaNumber(formVo);
 		for (BasicAnalysisTaxAmtVo vo : voList) {
-			System.out.println("GoodsDesc=" + vo.getGoodsDesc() +
-				"\tAnaTaxByValAmt=" + vo.getAnaTaxByValAmt() +
-				"\tAnaTaxByQtyAmt=" + vo.getAnaTaxByQtyAmt() +
-				"\tSumAnaTaxAmt=" + vo.getSumAnaTaxAmt());
+			System.out.println(ToStringBuilder.reflectionToString(vo, ToStringStyle.SHORT_PREFIX_STYLE));
 		}	
 	}
+	
 }

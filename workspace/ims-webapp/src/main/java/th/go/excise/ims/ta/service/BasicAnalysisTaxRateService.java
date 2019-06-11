@@ -27,47 +27,41 @@ public class BasicAnalysisTaxRateService extends AbstractBasicAnalysisService<Ba
 
 	@Autowired
 	private TaPaperBaD4Repository taPaperBaD4Repository;
-	
 	@Autowired
 	private WsAnafri0001DRepository wsAnafri0001DRepository;
 
 	@Override
 	protected List<BasicAnalysisTaxRateVo> inquiryByWs(BasicAnalysisFormVo formVo) {
 		logger.info("inquiryByWs");
-
+		
 		LocalDate localDateStart = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]),Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
 		LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]),Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
-
 		String dateStart = localDateStart.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
 		String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
-
+		
 		List<WsAnafri0001Vo> anafri0001VoList = wsAnafri0001DRepository.findProductList(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
-	
+		
 		List<BasicAnalysisTaxRateVo> voList = new ArrayList<>();
 		BasicAnalysisTaxRateVo vo = null;
-		BigDecimal anaTaxRateByPrice = null;
-		BigDecimal anaTaxRateByQty = null;
-		BigDecimal diffTaxRateByPrice = null;
-		BigDecimal diffTaxRateByQty = null;
-		
 		for (WsAnafri0001Vo anafri0001Vo : anafri0001VoList) {
 			vo = new BasicAnalysisTaxRateVo();
 			vo.setGoodsDesc(anafri0001Vo.getProductName());
 			vo.setTaxRateByPrice(anafri0001Vo.getValueRate());
 			vo.setTaxRateByQty(anafri0001Vo.getQtyRate());
-			vo.setAnaTaxRateByPrice(anaTaxRateByPrice);
-			vo.setAnaTaxRateByQty(anaTaxRateByQty);
-			vo.setDiffTaxRateByPrice(diffTaxRateByPrice);
-			vo.setDiffTaxRateByQty(diffTaxRateByQty);	
+			vo.setAnaTaxRateByPrice(BigDecimal.ZERO); // FIXME Find Value
+			vo.setAnaTaxRateByQty(BigDecimal.ZERO); // FIXME Find Value
+			vo.setDiffTaxRateByPrice(vo.getAnaTaxRateByPrice().subtract(vo.getTaxRateByPrice()));
+			vo.setDiffTaxRateByQty(vo.getAnaTaxRateByQty().subtract(vo.getTaxRateByQty()));	
 			voList.add(vo);
 		}
+		
 		return voList;
 	}
 
 	@Override
 	protected List<BasicAnalysisTaxRateVo> inquiryByPaperBaNumber(BasicAnalysisFormVo formVo) {
 		logger.info("inquiryByPaperBaNumber paperBaNumber={}", formVo.getPaperBaNumber());
-
+		
 		List<TaPaperBaD4> entityList = taPaperBaD4Repository.findByPaperBaNumber(formVo.getPaperBaNumber());
 		List<BasicAnalysisTaxRateVo> voList = new ArrayList<>();
 		BasicAnalysisTaxRateVo vo = null;
@@ -82,28 +76,33 @@ public class BasicAnalysisTaxRateService extends AbstractBasicAnalysisService<Ba
 			vo.setDiffTaxRateByQty(entity.getDiffTaxRateByQty());	
 			voList.add(vo);
 		}
+		
 		return voList;
 	}
 
 	@Override
 	protected void save(BasicAnalysisFormVo formVo) {
-		List<BasicAnalysisTaxRateVo> dataSaveList = inquiryByWs(formVo);
-		int i = 1;
+		logger.info("save paperBaNumber={}", formVo.getPaperBaNumber());
+		
+		List<BasicAnalysisTaxRateVo> voList = inquiryByWs(formVo);
+		List<TaPaperBaD4> entityList = new ArrayList<>();
 		TaPaperBaD4 entity = null;
-		for (BasicAnalysisTaxRateVo saveData : dataSaveList) {
+		int i = 1;
+		for (BasicAnalysisTaxRateVo vo : voList) {
 			entity = new TaPaperBaD4();
 			entity.setPaperBaNumber(formVo.getPaperBaNumber());
 			entity.setSeqNo(i);
-			entity.setGoodsDesc(saveData.getGoodsDesc());
-			entity.setTaxRateByPrice(saveData.getTaxRateByPrice());
-			entity.setTaxRateByQty(saveData.getTaxRateByQty());
-			entity.setAnaTaxRateByPrice(saveData.getAnaTaxRateByPrice());
-			entity.setAnaTaxRateByQty(saveData.getAnaTaxRateByQty());
-			entity.setDiffTaxRateByPrice(saveData.getDiffTaxRateByPrice());
-			entity.setDiffTaxRateByQty(saveData.getDiffTaxRateByQty());
-			taPaperBaD4Repository.save(entity);
+			entity.setGoodsDesc(vo.getGoodsDesc());
+			entity.setTaxRateByPrice(vo.getTaxRateByPrice());
+			entity.setTaxRateByQty(vo.getTaxRateByQty());
+			entity.setAnaTaxRateByPrice(vo.getAnaTaxRateByPrice());
+			entity.setAnaTaxRateByQty(vo.getAnaTaxRateByQty());
+			entity.setDiffTaxRateByPrice(vo.getDiffTaxRateByPrice());
+			entity.setDiffTaxRateByQty(vo.getDiffTaxRateByQty());
 			i++;
 		}
+		
+		taPaperBaD4Repository.saveAll(entityList);
 	}
 
 }

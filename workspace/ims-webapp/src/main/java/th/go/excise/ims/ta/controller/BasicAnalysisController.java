@@ -1,11 +1,17 @@
 package th.go.excise.ims.ta.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ta.service.BasicAnalysisService;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
@@ -66,13 +73,13 @@ public class BasicAnalysisController {
 		return response;
 	}
 	
-	@PostMapping("/get-ba-number-list/{auditPlanCode}")
+	@PostMapping("/get-paper-ba-number-list")
 	@ResponseBody
-	public ResponseData<List<String>> getBaNumberList(@PathVariable("auditPlanCode") String auditPlanCode) {
-		logger.info("getBaNumberList auditPlanCode={}", auditPlanCode);
+	public ResponseData<List<String>> getPaperBaNumberList(@RequestBody BasicAnalysisFormVo formVo) {
+		logger.info("getPaperBaNumberList auditPlanCode={}, newRegId={}, dutyGroupId={}", formVo.getAuditPlanCode(), formVo.getNewRegId(), formVo.getDutyGroupId());
 		ResponseData<List<String>> response = new ResponseData<>();
 		try {
-			List<String> baNumberList = basicAnalysisService.getBaNumberList(auditPlanCode);
+			List<String> baNumberList = basicAnalysisService.getPaperBaNumberList(formVo);
 			response.setData(baNumberList);
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
@@ -82,6 +89,19 @@ public class BasicAnalysisController {
 		}
 
 		return response;
+	}
+	
+	@GetMapping("/pdf/{paperBaNumber}")
+	public void generateBasicAnalysisPdfReport(@PathVariable("paperBaNumber") String paperBaNumber, HttpServletResponse response) throws Exception {
+		logger.info("generateBasicAnalysisPdfReport paperBaNumber={}", paperBaNumber);
+
+		byte[] reportFile = null;
+
+		String filename = String.format("ba_report_%s." + FILE_EXTENSION.PDF, DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now()));
+		response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", filename));
+		response.setContentType("application/octet-stream");
+
+		FileCopyUtils.copy(reportFile, response.getOutputStream());
 	}
 
 }

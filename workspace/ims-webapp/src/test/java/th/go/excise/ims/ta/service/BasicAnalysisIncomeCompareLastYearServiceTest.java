@@ -2,7 +2,8 @@ package th.go.excise.ims.ta.service;
 
 import java.util.List;
 
-import org.junit.Test;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +15,6 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
 import th.go.excise.ims.ta.vo.BasicAnalysisIncomeCompareLastYearVo;
-import th.go.excise.ims.ta.vo.BasicAnalysisTaxRateVo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
@@ -32,16 +32,12 @@ public class BasicAnalysisIncomeCompareLastYearServiceTest {
 		formVo.setDutyGroupId("0101");
 		formVo.setStartDate("01/2562");
 		formVo.setEndDate("06/2562");
+		//formVo.setPaperBaNumber("PaperBaNumber");
 		
 		List<BasicAnalysisIncomeCompareLastYearVo> voList = basicAnalysisIncomeCompareLastYearService.inquiry(formVo);
 		for (BasicAnalysisIncomeCompareLastYearVo vo : voList) {
-			System.out.println("taxMonth=" + vo.getTaxMonth() +
-				"\tlast=" + vo.getIncomeLastYearAmt() +
-				"\tcurrent=" + vo.getIncomeCurrentYearAmt() +
-				"\tdiffAmt=" + vo.getDiffIncomeAmt() +
-				"\tdiffPnt=" + vo.getDiffIncomePnt());
+			System.out.println(ToStringBuilder.reflectionToString(vo, ToStringStyle.SHORT_PREFIX_STYLE));
 		}
-		
 	}
 	
 //	@Test
@@ -56,21 +52,4 @@ public class BasicAnalysisIncomeCompareLastYearServiceTest {
 		System.out.println("************************Is successfully saved************************");
 	}
 	
-	@Test
-	public void test_inquiryByPaperBaNumber() {
-		BasicAnalysisFormVo formVo = new BasicAnalysisFormVo();
-		formVo.setNewRegId("01075440001081002");
-		formVo.setPaperBaNumber("PaperBaNumber");
-		formVo.setDutyGroupId("0101");
-		formVo.setStartDate("01/2562");
-		formVo.setEndDate("06/2562");
-		List<BasicAnalysisIncomeCompareLastYearVo> voList = basicAnalysisIncomeCompareLastYearService.inquiryByPaperBaNumber(formVo);
-		for (BasicAnalysisIncomeCompareLastYearVo vo : voList) {
-			System.out.println("taxMonth=" + vo.getTaxMonth() +
-					"\tlast=" + vo.getIncomeLastYearAmt() +
-					"\tcurrent=" + vo.getIncomeCurrentYearAmt() +
-					"\tdiffAmt=" + vo.getDiffIncomeAmt() +
-					"\tdiffPnt=" + vo.getDiffIncomePnt());
-		}	
-	}
 }

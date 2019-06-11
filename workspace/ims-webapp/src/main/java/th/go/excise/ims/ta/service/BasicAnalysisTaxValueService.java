@@ -1,6 +1,6 @@
 package th.go.excise.ims.ta.service;
 
-import java.math.BigDecimal;
+import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
@@ -33,35 +33,32 @@ public class BasicAnalysisTaxValueService extends AbstractBasicAnalysisService<B
 	@Override
 	protected List<BasicAnalysisTaxValueVo> inquiryByWs(BasicAnalysisFormVo formVo) {
 		logger.info("inquiryByWs");
-		List<BasicAnalysisTaxValueVo> voList = new ArrayList<BasicAnalysisTaxValueVo>();
-		LocalDate localDateStart = LocalDate
-				.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]),
-						Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
-		LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]),
-				Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
-
-		String dateStart = localDateStart.with(TemporalAdjusters.firstDayOfMonth())
-				.format(DateTimeFormatter.BASIC_ISO_DATE);
+		
+		LocalDate localDateStart = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]), Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
+		LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]), Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
+		String dateStart = localDateStart.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
 		String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
-
-		List<WsAnafri0001Vo> anafri0001VoList = wsAnafri0001DRepository.findProductList(formVo.getNewRegId(),
-				formVo.getDutyGroupId(), dateStart, dateEnd);
-		BasicAnalysisTaxValueVo dataSet = null;
+		
+		List<WsAnafri0001Vo> anafri0001VoList = wsAnafri0001DRepository.findProductList(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
+		
+		List<BasicAnalysisTaxValueVo> voList = new ArrayList<BasicAnalysisTaxValueVo>();
+		BasicAnalysisTaxValueVo vo = null;
 		for (WsAnafri0001Vo anafri0001Vo : anafri0001VoList) {
-			dataSet = new BasicAnalysisTaxValueVo();
-			dataSet.setGoodsDescText(anafri0001Vo.getProductName());
-			dataSet.setTaxQty(anafri0001Vo.getProductQty());
-			dataSet.setInformPrice(anafri0001Vo.getProductPrice());
-			dataSet.setGoodsValueAmt(new BigDecimal(0));
-			voList.add(dataSet);
+			vo = new BasicAnalysisTaxValueVo();
+			vo.setGoodsDescText(anafri0001Vo.getProductName());
+			vo.setTaxQty(anafri0001Vo.getProductQty());
+			vo.setInformPrice(anafri0001Vo.getProductPrice());
+			vo.setGoodsValueAmt(vo.getTaxQty().multiply(vo.getInformPrice(), MathContext.DECIMAL32));
+			voList.add(vo);
 		}
+		
 		return voList;
 	}
 
 	@Override
 	protected List<BasicAnalysisTaxValueVo> inquiryByPaperBaNumber(BasicAnalysisFormVo formVo) {
 		logger.info("inquiryByPaperBaNumber paperBaNumber={}", formVo.getPaperBaNumber());
-
+		
 		List<TaPaperBaD3> entityList = taPaperBaD3Repository.findByPaperBaNumber(formVo.getPaperBaNumber());
 		List<BasicAnalysisTaxValueVo> voList = new ArrayList<>();
 		BasicAnalysisTaxValueVo vo = null;
@@ -73,24 +70,30 @@ public class BasicAnalysisTaxValueService extends AbstractBasicAnalysisService<B
 			vo.setGoodsValueAmt(entity.getGoodsValueAmt());
 			voList.add(vo);
 		}
+		
 		return voList;
 	}
 
 	@Override
 	protected void save(BasicAnalysisFormVo formVo) {
-		List<BasicAnalysisTaxValueVo> dataSaveList = inquiryByWs(formVo);
-		int i = 1;
+		logger.info("save paperBaNumber={}", formVo.getPaperBaNumber());
+		
+		List<BasicAnalysisTaxValueVo> voList = inquiryByWs(formVo);
+		List<TaPaperBaD3> entityList = new ArrayList<>();
 		TaPaperBaD3 entity = null;
-		for (BasicAnalysisTaxValueVo saveData : dataSaveList) {
+		int i = 1;
+		for (BasicAnalysisTaxValueVo vo : voList) {
 			entity = new TaPaperBaD3();
 			entity.setPaperBaNumber(formVo.getPaperBaNumber());
 			entity.setSeqNo(i);
-			entity.setTaxQty(saveData.getTaxQty());
-			entity.setInformPrice(saveData.getInformPrice());
-			entity.setGoodsValueAmt(saveData.getGoodsValueAmt());
-			taPaperBaD3Repository.save(entity);
+			entity.setTaxQty(vo.getTaxQty());
+			entity.setInformPrice(vo.getInformPrice());
+			entity.setGoodsValueAmt(vo.getGoodsValueAmt());
+			entityList.add(entity);
 			i++;
 		}
+		
+		taPaperBaD3Repository.saveAll(entityList);
 	}
 
 }

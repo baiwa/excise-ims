@@ -14,10 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.go.excise.ims.ta.persistence.entity.TaPaperBaD1;
-import th.go.excise.ims.ta.persistence.entity.TaPaperBaD7;
 import th.go.excise.ims.ta.persistence.repository.TaPaperBaD1Repository;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
-import th.go.excise.ims.ta.vo.BasicAnalysisIncomeCompareLastMonthVo;
 import th.go.excise.ims.ta.vo.BasicAnalysisTaxQtyVo;
 import th.go.excise.ims.ws.persistence.repository.WsAnafri0001DRepository;
 import th.go.excise.ims.ws.vo.WsAnafri0001Vo;
@@ -35,35 +33,32 @@ public class BasicAnalysisTaxQtyService extends AbstractBasicAnalysisService<Bas
 	@Override
 	protected List<BasicAnalysisTaxQtyVo> inquiryByWs(BasicAnalysisFormVo formVo) {
 		logger.info("inquiryByWs");
-		List<BasicAnalysisTaxQtyVo> voList = new ArrayList<BasicAnalysisTaxQtyVo>();
-		LocalDate localDateStart = LocalDate
-				.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]),
-						Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
-		LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]),
-				Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
-
-		String dateStart = localDateStart.with(TemporalAdjusters.firstDayOfMonth())
-				.format(DateTimeFormatter.BASIC_ISO_DATE);
+		
+		LocalDate localDateStart = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]), Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
+		LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]), Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
+		String dateStart = localDateStart.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
 		String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
-
-		List<WsAnafri0001Vo> anafri0001VoList = wsAnafri0001DRepository.findProductList(formVo.getNewRegId(),
-				formVo.getDutyGroupId(), dateStart, dateEnd);
-		BasicAnalysisTaxQtyVo dataSet = null;
+		
+		List<WsAnafri0001Vo> anafri0001VoList = wsAnafri0001DRepository.findProductList(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
+		
+		List<BasicAnalysisTaxQtyVo> voList = new ArrayList<BasicAnalysisTaxQtyVo>();
+		BasicAnalysisTaxQtyVo vo = null;
 		for (WsAnafri0001Vo anafri0001Vo : anafri0001VoList) {
-			dataSet = new BasicAnalysisTaxQtyVo();
-			dataSet.setGoodsDesc(anafri0001Vo.getProductName());
-			dataSet.setTaxQty(anafri0001Vo.getProductQty());
-			dataSet.setMonthStatementTaxQty(null);
-			dataSet.setDiffTaxQty(new BigDecimal(0));
-			voList.add(dataSet);
+			vo = new BasicAnalysisTaxQtyVo();
+			vo.setGoodsDesc(anafri0001Vo.getProductName());
+			vo.setTaxQty(anafri0001Vo.getProductQty());
+			vo.setMonthStatementTaxQty(BigDecimal.ZERO); // FIXME Find Month Statement Tax Qty from WS OASFRI0100
+			vo.setDiffTaxQty(vo.getMonthStatementTaxQty().subtract(vo.getTaxQty()));
+			voList.add(vo);
 		}
+		
 		return voList;
 	}
 
 	@Override
 	protected List<BasicAnalysisTaxQtyVo> inquiryByPaperBaNumber(BasicAnalysisFormVo formVo) {
 		logger.info("inquiryByPaperBaNumber paperBaNumber={}", formVo.getPaperBaNumber());
-
+		
 		List<TaPaperBaD1> entityList = taPaperBaD1Repository.findByPaperBaNumber(formVo.getPaperBaNumber());
 		List<BasicAnalysisTaxQtyVo> voList = new ArrayList<>();
 		BasicAnalysisTaxQtyVo vo = null;
@@ -75,25 +70,31 @@ public class BasicAnalysisTaxQtyService extends AbstractBasicAnalysisService<Bas
 			vo.setDiffTaxQty(entity.getDiffTaxQty());
 			voList.add(vo);
 		}
+		
 		return voList;
 	}
 
 	@Override
 	protected void save(BasicAnalysisFormVo formVo) {
-		List<BasicAnalysisTaxQtyVo> dataSaveList = inquiryByWs(formVo);
-		int i = 1;
+		logger.info("save paperBaNumber={}", formVo.getPaperBaNumber());
+		
+		List<BasicAnalysisTaxQtyVo> voList = inquiryByWs(formVo);
+		List<TaPaperBaD1> entityList = new ArrayList<>();
 		TaPaperBaD1 entity = null;
-		for (BasicAnalysisTaxQtyVo saveData : dataSaveList) {
+		int i = 1;
+		for (BasicAnalysisTaxQtyVo vo : voList) {
 			entity = new TaPaperBaD1();
 			entity.setPaperBaNumber(formVo.getPaperBaNumber());
 			entity.setSeqNo(i);
-			entity.setGoodsDesc(saveData.getGoodsDesc());
-			entity.setTaxQty(saveData.getTaxQty());
-//			entity.setMonthStatementTaxQty(saveData.getMonthStatementTaxQty());
-			entity.setDiffTaxQty(saveData.getDiffTaxQty());
-			taPaperBaD1Repository.save(entity);
+			entity.setGoodsDesc(vo.getGoodsDesc());
+			entity.setTaxQty(vo.getTaxQty());
+			entity.setMonthStmtTaxQty(vo.getMonthStatementTaxQty());
+			entity.setDiffTaxQty(vo.getDiffTaxQty());
+			entityList.add(entity);
 			i++;
 		}
+		
+		taPaperBaD1Repository.saveAll(entityList);
 	}
 
 }
