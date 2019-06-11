@@ -14,7 +14,7 @@ import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD1;
 
-public class IaAuditIncD1RepositoryImpl implements IaAuditIncD1RepositoryCuston {
+public class IaAuditIncD1RepositoryImpl implements IaAuditIncD1RepositoryCustom {
 
     @Autowired
     private CommonJdbcTemplate commonJdbcTemplate;

@@ -23,7 +23,7 @@ public class IaAuditIncD2 extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_AUDIT_INC_D2_GEN")
 	@SequenceGenerator(name = "IA_AUDIT_INC_D2_GEN", sequenceName = "IA_AUDIT_INC_D2_SEQ", allocationSize = 1)
 	@Column(name = "IA_AUDIT_INC_D2_ID")
-	private BigDecimal iaAuditIncD2Id;
+	private Long iaAuditIncD2Id;
 	@Column(name = "AUDIT_INC_NO")
 	private String auditIncNo;
 	@Column(name = "RECEIPT_DATE")
@@ -37,11 +37,11 @@ public class IaAuditIncD2 extends BaseEntity {
 	@Column(name = "REMARK")
 	private String remark;
 
-	public BigDecimal getIaAuditIncD2Id() {
+	public Long getIaAuditIncD2Id() {
 		return iaAuditIncD2Id;
 	}
 
-	public void setIaAuditIncD2Id(BigDecimal iaAuditIncD2Id) {
+	public void setIaAuditIncD2Id(Long iaAuditIncD2Id) {
 		this.iaAuditIncD2Id = iaAuditIncD2Id;
 	}
 

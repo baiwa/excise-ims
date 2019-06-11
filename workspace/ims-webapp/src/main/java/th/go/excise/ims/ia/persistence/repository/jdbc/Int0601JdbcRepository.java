@@ -17,8 +17,8 @@ import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
 import th.go.excise.ims.common.util.ExciseUtils;
-import th.go.excise.ims.ia.persistence.entity.IaAuditIncD3;
 import th.go.excise.ims.ia.vo.IaAuditIncD2Vo;
+import th.go.excise.ims.ia.vo.IaAuditIncD3Vo;
 import th.go.excise.ims.ia.vo.Int0601RequestVo;
 import th.go.excise.ims.ws.persistence.entity.WsIncfri8020Inc;
 
@@ -30,7 +30,7 @@ public class Int0601JdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
-	public List<WsIncfri8020Inc> findByCriteria(Int0601RequestVo criteria , String strOrder) {
+	public List<WsIncfri8020Inc> findByCriteria(Int0601RequestVo criteria, String strOrder) {
 		logger.info("findTab1ByCriteria");
 
 		List<Object> paramList = new ArrayList<>();
@@ -129,20 +129,21 @@ public class Int0601JdbcRepository {
 		sql.append(" GROUP BY WS.RECEIPT_DATE ");
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), tab2RowMapper);
 	}
-	
+
 	private RowMapper<IaAuditIncD2Vo> tab2RowMapper = new RowMapper<IaAuditIncD2Vo>() {
 		@Override
 		public IaAuditIncD2Vo mapRow(ResultSet rs, int rowNum) throws SQLException {
 			IaAuditIncD2Vo vo = new IaAuditIncD2Vo();
-		
-			vo.setReceiptDate(ConvertDateUtils.formatDateToString(rs.getDate("RECEIPT_DATE"), ConvertDateUtils.YYYY_MM_DD, ConvertDateUtils.LOCAL_EN));
+			if (rs.getDate("RECEIPT_DATE") != null) {
+				vo.setReceiptDate(ConvertDateUtils.formatDateToString(rs.getDate("RECEIPT_DATE"), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			}
 			vo.setAmount(rs.getBigDecimal("NET_TAX_AMT"));
 			vo.setPrintPerDay(rs.getBigDecimal("PRINT_PER_DAY"));
 			return vo;
 		}
 	};
-	
-	public List<IaAuditIncD3> findDataTab3(Int0601RequestVo criteria) {
+
+	public List<IaAuditIncD3Vo> findDataTab3(Int0601RequestVo criteria) {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT ");
@@ -152,7 +153,7 @@ public class Int0601JdbcRepository {
 		sql.append(" COUNT(1) COUNT_RECEIPT ");
 		sql.append(" FROM ");
 		sql.append(" WS_INCFRI8020_INC WS ");
-		
+
 		sql.append(" WHERE WS.IS_DELETED = '").append(FLAG.N_FLAG).append("'");
 
 		if (StringUtils.isNoneBlank(criteria.getOfficeReceive())) {
@@ -177,11 +178,11 @@ public class Int0601JdbcRepository {
 		sql.append(" WS.INCOME_CODE ");
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), tab3RowMapper);
 	}
-	
-	private RowMapper<IaAuditIncD3> tab3RowMapper = new RowMapper<IaAuditIncD3>() {
+
+	private RowMapper<IaAuditIncD3Vo> tab3RowMapper = new RowMapper<IaAuditIncD3Vo>() {
 		@Override
-		public IaAuditIncD3 mapRow(ResultSet rs, int rowNum) throws SQLException {
-			IaAuditIncD3 vo = new IaAuditIncD3();
+		public IaAuditIncD3Vo mapRow(ResultSet rs, int rowNum) throws SQLException {
+			IaAuditIncD3Vo vo = new IaAuditIncD3Vo();
 			vo.setTaxCode(rs.getString("TAX_CODE"));
 			vo.setTaxName(rs.getString("TAX_NAME"));
 			vo.setAmount(rs.getBigDecimal("AMOUNT"));
@@ -189,45 +190,5 @@ public class Int0601JdbcRepository {
 			return vo;
 		}
 	};
-	
-//	public List<IaAuditIncD4Vo> findDataTab4(Int0601RequestVo criteria) {
-//		List<Object> paramList = new ArrayList<>();
-//		StringBuilder sql = new StringBuilder(" SELECT WS.RECEIPT_DATE RECEIPT_DATE, SUM(WS.NET_TAX_AMT) NET_TAX_AMT, COUNT(1) PRINT_PER_DAY FROM WS_INCFRI8020_INC WS ");
-//		sql.append(" WHERE WS.IS_DELETED = '").append(FLAG.N_FLAG).append("'");
-//
-//		if (StringUtils.isNoneBlank(criteria.getOfficeReceive())) {
-//			sql.append(" AND WS.OFFICE_RECEIVE like ? ");
-//			paramList.add(ExciseUtils.whereInLocalOfficeCode(criteria.getOfficeReceive()));
-//		}
-//
-//		if (StringUtils.isNotEmpty(criteria.getReceiptDateFrom())) {
-//			sql.append(" AND WS.RECEIPT_DATE >= ? ");
-//			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-//		}
-//
-//		if (StringUtils.isNotEmpty(criteria.getReceiptDateTo())) {
-//			sql.append(" AND WS.RECEIPT_DATE <= ? ");
-//			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-//		}
-//		sql.append(" GROUP BY WS.RECEIPT_DATE ");
-//		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), tab2RowMapper);
-//	}
-//	
-//	private RowMapper<IaAuditIncD2Vo> tab2RowMapper = new RowMapper<IaAuditIncD2Vo>() {
-//		@Override
-//		public IaAuditIncD2Vo mapRow(ResultSet rs, int rowNum) throws SQLException {
-//			IaAuditIncD2Vo vo = new IaAuditIncD2Vo();
-//			RECEIPT_NO
-//			RECEIPT_DATE
-//			INCOME_NAME
-//			INCOME_CODE
-//			NET_TAX_AMT
-//
-//			vo.setReceiptDate(ConvertDateUtils.formatDateToString(rs.getDate("RECEIPT_DATE"), ConvertDateUtils.DD_MM_YYYY));
-//			vo.setAmount(rs.getString("NET_TAX_AMT"));
-//			vo.setPrintPerDay(rs.getString("PRINT_PER_DAY"));
-//			return vo;
-//		}
-//	};
 
 }

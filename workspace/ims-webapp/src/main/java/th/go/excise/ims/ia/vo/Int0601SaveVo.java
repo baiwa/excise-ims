@@ -2,20 +2,18 @@ package th.go.excise.ims.ia.vo;
 
 import java.util.List;
 
-import th.go.excise.ims.ia.persistence.entity.IaAuditIncH;
-
 public class Int0601SaveVo {
 
-	private IaAuditIncH iaAuditIncH;
+	private IaAuditIncHVo iaAuditIncH;
 	private List<IaAuditIncD1Vo> iaAuditIncD1List;
 	private List<IaAuditIncD2Vo> iaAuditIncD2List;
 	private List<IaAuditIncD3Vo> iaAuditIncD3List;
 
-	public IaAuditIncH getIaAuditIncH() {
+	public IaAuditIncHVo getIaAuditIncH() {
 		return iaAuditIncH;
 	}
 
-	public void setIaAuditIncH(IaAuditIncH iaAuditIncH) {
+	public void setIaAuditIncH(IaAuditIncHVo iaAuditIncH) {
 		this.iaAuditIncH = iaAuditIncH;
 	}
 

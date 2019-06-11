@@ -29,11 +29,11 @@ public class Int0601ServiceTest {
 	@Test
 	public void test_PriceServiceVo() throws IOException {
 
-		String fileName ="int0601";
+		String fileName = "int0601";
 		String auditIncNo = "010201/00000128";
 		try {
 			byte[] outArray = int0601Service.export(auditIncNo);
-			FileOutputStream Output = new FileOutputStream(PATH.TEST_PATH + fileName +"."+FILE_EXTENSION.XLSX);
+			FileOutputStream Output = new FileOutputStream(PATH.TEST_PATH + fileName + "." + FILE_EXTENSION.XLSX);
 			Output.write(outArray);
 			Output.close();
 		} catch (FileNotFoundException e) {
