@@ -19,6 +19,7 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.ta.service.RecordMessageService;
 import th.go.excise.ims.ta.service.TaxAuditService;
 import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
@@ -159,6 +160,21 @@ public class TaxAuditController {
 			res.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
 		}
 		return res;
+	}
+	
+	@GetMapping("/get-reg-status")
+	@ResponseBody
+	public ResponseData<List<ParamInfo>> getRegStatus() {
+		ResponseData<List<ParamInfo>> responseData = new ResponseData<List<ParamInfo>>();
+		try {
+			responseData.setData(taxAuditService.getRegStatus());
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
 	}
 
 }

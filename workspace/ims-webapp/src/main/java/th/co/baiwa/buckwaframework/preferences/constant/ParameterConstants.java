@@ -20,6 +20,7 @@ public class ParameterConstants {
 		public static final String TA_MAIN_COND_RANGE = "TA_MAIN_COND_RANGE";
 		public static final String TA_AUDIT_TYPE = "TA_AUDIT_TYPE";
 		public static final String TA_MAIN_COND_FREQ_TYPE = "TA_MAIN_COND_FREQ_TYPE";
+		public static final String TA_REG_STATUS = "TA_REG_STATUS";
 	}
 	
 	// Parameter Group: SYSTEM_CONFIG
