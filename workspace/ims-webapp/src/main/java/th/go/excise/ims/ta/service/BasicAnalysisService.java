@@ -124,5 +124,9 @@ public class BasicAnalysisService {
 		
 		taPaperBaHRepository.save(paperBaH);
 	}
+
+	public List<String> getBaNumberList(String auditPlanCode) {
+		return taPaperBaHRepository.findPaperBaNumberByAuditPlanCode(auditPlanCode);
+	}
 	
 }
