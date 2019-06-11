@@ -3,7 +3,9 @@ package th.go.excise.ims.ia.service;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -17,7 +19,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ia.persistence.entity.IaAuditPmResult;
 import th.go.excise.ims.ia.persistence.repository.IaAuditPmResultRepository;
@@ -515,5 +524,120 @@ public class Int1306Service {
 		}
 
 		return content;
+	}
+
+	public byte[] generateReport(String auditLicdupNo) throws IOException, JRException {
+		logger.info("generateReport");
+		byte[] content = null;
+		try {
+			// get value form service
+			IaAuditPmResult h = iaAuditPmResultRepository.findByAuditPmresultNo(auditLicdupNo);
+
+			ExciseDepartmentVo excise = null;
+			excise = ExciseDepartmentUtil.getExciseDepartmentFull(h.getOfficeCode());
+
+			Map<String, Object> params = new HashMap<>();
+
+			params.put("formNumber", h.getAuditPmresultNo());
+			params.put("budgetYear", h.getBudgetYear());
+			// check officeCode
+			if (StringUtils.isNotBlank(excise.getBranch())) {
+				params.put("officeCode", excise.getBranch());
+			} else {
+				if (StringUtils.isNotBlank(excise.getArea())) {
+					params.put("officeCode", excise.getArea());
+				} else {
+					if (StringUtils.isNotBlank(excise.getSector())) {
+						params.put("officeCode", excise.getSector());
+					} else {
+						params.put("officeCode", "-ไม่มี-");
+					}
+				}
+			}
+			// check auditDate
+			if (h.getAuditDateFrom() != null && h.getAuditDateTo() != null) {
+				String startDate = "";
+				String stopDate = "";
+				startDate = ConvertDateUtils.formatDateToString(h.getAuditDateFrom(), ConvertDateUtils.DD_MMMM_YYYY_SPAC, ConvertDateUtils.LOCAL_TH);
+				stopDate = ConvertDateUtils.formatDateToString(h.getAuditDateFrom(), ConvertDateUtils.DD_MMMM_YYYY_SPAC, ConvertDateUtils.LOCAL_TH);
+				params.put("auditDate", startDate + " - " + stopDate);
+			} else {
+				params.put("auditDate", "-ไม่มี-");
+			}
+
+			// check depAuditingSuggestion
+			if (StringUtils.isNotBlank(h.getDepAuditingSuggestion())) {
+				params.put("depAuditingSuggestion", h.getDepAuditingSuggestion());
+			} else {
+				params.put("depAuditingSuggestion", "-ไม่มี-");
+			}
+
+			// check depAuditingSuggestion
+			if (StringUtils.isNotBlank(h.getAuditSummary())) {
+				params.put("auditSummary", h.getAuditSummary());
+			} else {
+				params.put("auditSummary", "-ไม่มี-");
+			}
+			// check depAuditingSuggestion
+			if (StringUtils.isNotBlank(h.getAuditSuggestion())) {
+				params.put("auditSuggestion", h.getAuditSuggestion());
+			} else {
+				params.put("auditSuggestion", "-ไม่มี-");
+			}
+
+			params.put("personAudity", StringUtils.defaultString("("+h.getPersonAudity()+")" + "\n") + StringUtils.defaultString(h.getPersonAudityPosition() + "\n") + "ผู้รับการสอบทาน ");
+			params.put("auditer1", StringUtils.defaultString("("+h.getAuditer1()+")" + "\n") + StringUtils.defaultString(h.getAuditer1AudityPosition() + "\n") + "ผู้สอบทาน");
+			params.put("auditer2", StringUtils.defaultString("("+h.getAuditer2()+")" + "\n") + StringUtils.defaultString(h.getAuditer2AudityPosition() + "\n") + "ผู้สอบทาน");
+
+			Int1306FormVo formVo = new Int1306FormVo();
+			formVo.setOfficeCode(h.getOfficeCode());
+			formVo.setBudgetYear(h.getBudgetYear());
+			formVo.setAuditPmassessNo(h.getAuditPmassessNo());
+			formVo.setAuditPmqtNo(h.getAuditPmqtNo());
+			formVo.setAuditPy1No(h.getAuditPy1No());
+			formVo.setAuditPy2No(h.getAuditPy2No());
+			formVo.setAuditPmcommitNo(h.getAuditPmcommitNo());
+
+			List<Int1306DataVo> dataList = new ArrayList<>();
+			Int1306DataVo dataVo = null;
+
+			if (findCriteria(formVo).getDataList() != null && findCriteria(formVo).getDataList().size() > 0) {
+				// dataList = findCriteria(formVo).getDataList();
+				int i = 0;
+				for (Int1306DataVo data : findCriteria(formVo).getDataList()) {
+					dataVo = new Int1306DataVo();
+					dataVo.setTopic(String.valueOf(i + 1) + "." + data.getTopic());
+					dataVo.setType(data.getType());
+					if (StringUtils.isNotBlank(data.getEvident())) {
+						dataVo.setEvident(data.getEvident());
+					} else {
+						dataVo.setEvident("-ไม่มี-");
+					}
+					if (StringUtils.isNotBlank(data.getSuggestion())) {
+						dataVo.setSuggestion(data.getSuggestion());
+					} else {
+						dataVo.setSuggestion("-ไม่มี-");
+					}
+
+					dataVo.setResult(data.getResult());
+					dataVo.setResult2(data.getResult2());
+					i++;
+					dataList.add(dataVo);
+				}
+
+			}
+
+			// set output
+			JRDataSource dataSource = new JRBeanCollectionDataSource(dataList);
+			JasperPrint jasperPrint = ReportUtils.getJasperPrint("IA_PMR_01" + "." + FILE_EXTENSION.JASPER, params, dataSource);
+			content = JasperExportManager.exportReportToPdf(jasperPrint);
+			ReportUtils.closeResourceFileInputStream(params);
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return content;
+
 	}
 }

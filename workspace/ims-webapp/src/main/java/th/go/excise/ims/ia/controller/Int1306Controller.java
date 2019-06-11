@@ -2,12 +2,15 @@ package th.go.excise.ims.ia.controller;
 
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.service.Int1306Service;
 import th.go.excise.ims.ia.vo.IaAuditPmResultVo;
@@ -107,5 +111,20 @@ public class Int1306Controller {
 		outStream.write(outByteStream);
 		outStream.flush();
 		outStream.close();
+	}
+	
+	@GetMapping("/pdf/{auditPmresultNo}")
+	public void exportPdf(@PathVariable("auditPmresultNo") String auditPmresultNo, HttpServletResponse response) throws Exception {
+		String name = URLEncoder.encode("PMR", "UTF-8");
+		String replaceString = auditPmresultNo.replace('_', '/');
+
+		// write it as an excel attachment		
+		byte[] reportFile = int1306Service.generateReport(replaceString);
+
+		String filename = String.format(name + "_%s." + FILE_EXTENSION.PDF, DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now()));
+		response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", filename));
+		response.setContentType("application/octet-stream");
+
+		FileCopyUtils.copy(reportFile, response.getOutputStream());
 	}
 }
