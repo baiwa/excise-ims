@@ -13,9 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.service.Int0501Service;
+import th.go.excise.ims.ia.vo.IaAuditIncHVo;
+import th.go.excise.ims.ia.vo.IaEstimateExpHVo;
 import th.go.excise.ims.ia.vo.Int0501FormVo;
+import th.go.excise.ims.ia.vo.Int0501SaveVo;
 import th.go.excise.ims.ia.vo.Int0501Vo;
+import th.go.excise.ims.ia.vo.Int0601SaveVo;
 
 @Controller
 @RequestMapping("/api/ia/int05/01")
@@ -40,5 +48,22 @@ public class Int0501Controller {
 		}
 		return response;
 	}
+	
+	@PostMapping("/save")
+	@ResponseBody
+	public ResponseData<IaEstimateExpHVo> save(@RequestBody Int0501SaveVo request) {
+		ResponseData<IaEstimateExpHVo> response = new ResponseData<IaEstimateExpHVo>();
+		try {
+			response.setData(int0501Service.saveIaEstimateExp(request));
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+
 
 }

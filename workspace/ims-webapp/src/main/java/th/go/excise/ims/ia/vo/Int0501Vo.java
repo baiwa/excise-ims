@@ -4,11 +4,20 @@ import java.math.BigDecimal;
 
 public class Int0501Vo {
 
+	private String edPersonSeq;
 	private String edLogin;
 	private String edPersonName;
 	private String edPositionName;
 	private BigDecimal allowancesDay;
 	private BigDecimal accomFeePackages;
+
+	public String getEdPersonSeq() {
+		return edPersonSeq;
+	}
+
+	public void setEdPersonSeq(String edPersonSeq) {
+		this.edPersonSeq = edPersonSeq;
+	}
 
 	public String getEdLogin() {
 		return edLogin;

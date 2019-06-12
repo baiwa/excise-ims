@@ -59,7 +59,7 @@ public class ExcisePersonJdbcRepository {
 		List<Int0501Vo> Int0501VoList = new ArrayList<Int0501Vo>();
 		StringBuilder sqlBuilder = new StringBuilder();
 		List<Object> params = new ArrayList<>();
-		sqlBuilder.append(" SELECT EP.ED_LOGIN , EP.ED_PERSON_NAME , EP.ED_POSITION_NAME , 2 * PO.ALLOWANCES_DAY as ALLOWANCES_DAY , 2 * PO.ACCOM_FEE_PACKAGES as ACCOM_FEE_PACKAGES ");
+		sqlBuilder.append(" SELECT EP.ED_PERSON_SEQ , EP.ED_LOGIN , EP.ED_PERSON_NAME , EP.ED_POSITION_NAME , 2 * PO.ALLOWANCES_DAY as ALLOWANCES_DAY , 2 * PO.ACCOM_FEE_PACKAGES as ACCOM_FEE_PACKAGES ");
 		sqlBuilder.append(" FROM EXCISE_PERSON EP ");
 		sqlBuilder.append(" LEFT JOIN EXCISE_POSITION PO ");
 		sqlBuilder.append(" ON EP.ED_POSITION_SEQ = PO.ED_POSITION_SEQ ");
@@ -73,6 +73,7 @@ public class ExcisePersonJdbcRepository {
 		@Override
 		public Int0501Vo mapRow(ResultSet rs, int arg1) throws SQLException {
 			Int0501Vo vo = new Int0501Vo();
+			vo.setEdPersonSeq(rs.getString("ED_PERSON_SEQ"));
 			vo.setEdLogin(rs.getString("ED_LOGIN"));
 			vo.setEdPersonName(rs.getString("ED_PERSON_NAME"));
 			vo.setEdPositionName(rs.getString("ED_POSITION_NAME"));		
