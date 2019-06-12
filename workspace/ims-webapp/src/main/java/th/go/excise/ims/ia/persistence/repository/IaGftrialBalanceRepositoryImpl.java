@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
@@ -27,7 +28,7 @@ public class IaGftrialBalanceRepositoryImpl implements IaGftrialBalanceRepositor
 	public void batchInsert(List<IaGftrialBalance> iaGftrialBalances) {
 
 		String sql = SqlGeneratorUtils.genSqlInsert("IA_GFTRIAL_BALANCE",
-				Arrays.asList("IA_GFTRIAL_BALANCE_ID", "DEPARTMENT_CODE", "PERIOD_FROM", "PERIOD_TO", "PERIOD_YEAR",
+				Arrays.asList("IA_GFTRIAL_BALANCE_ID", "DEPT_DISB", "PERIOD_FROM", "PERIOD_TO", "PERIOD_YEAR",
 						"ACC_NO", "ACC_NAME", "CARRY_FORWARD", "BRING_FORWARD", "DEBIT", "CREDIT", "CREATED_BY"),
 				"IA_GFTRIAL_BALANCE_SEQ");
 
@@ -37,7 +38,7 @@ public class IaGftrialBalanceRepositoryImpl implements IaGftrialBalanceRepositor
 				new ParameterizedPreparedStatementSetter<IaGftrialBalance>() {
 					public void setValues(PreparedStatement ps, IaGftrialBalance entity) throws SQLException {
 						List<Object> paramList = new ArrayList<Object>();
-						paramList.add(entity.getDepartmentCode());
+						paramList.add(entity.getDeptDisb());
 						paramList.add(entity.getPeriodFrom());
 						paramList.add(entity.getPeriodTo());
 						paramList.add(entity.getPeriodYear());
@@ -62,7 +63,7 @@ public class IaGftrialBalanceRepositoryImpl implements IaGftrialBalanceRepositor
 		sql.append(" FROM IA_GFTRIAL_BALANCE ");
 		sql.append(" WHERE IS_DELETED = 'N' ");
 
-		sql.append(" AND DEPARTMENT_CODE LIKE ? ");
+		sql.append(" AND DEPT_DISB LIKE ? ");
 		params.add("%".concat(gfDisburseUnit.trim()));
 
 		sql.append(" ORDER BY PERIOD_FROM ");
@@ -80,23 +81,32 @@ public class IaGftrialBalanceRepositoryImpl implements IaGftrialBalanceRepositor
 		sql.append(" 	SUM(G.DEBIT) DEBIT, SUM(G.CREDIT) CREDIT, GA.PK_CODE, sum(GA.CURR_AMT) CURR_AMT ");
 		sql.append(" FROM IA_GFTRIAL_BALANCE G ");
 		sql.append(" LEFT JOIN EXCISE_ORG_GFMIS E ");
-		sql.append(" 	ON G.DEPARTMENT_CODE  = '00000' || E.GF_COST_CENTER ");
+		sql.append(" 	ON G.DEPT_DISB  = '00000' || E.GF_COST_CENTER ");
 		sql.append(" LEFT JOIN IA_GFLEDGER_ACCOUNT GA ");
 		sql.append(" 	ON GA.GL_ACC_NO = G.ACC_NO ");
 		sql.append(" WHERE G.IS_DELETED = 'N' ");
 		sql.append(" 	AND E.IS_DELETED = 'N' ");
 		sql.append(" 	AND GA.IS_DELETED = 'N' ");
-		sql.append(" 	AND G.PERIOD_FROM <= ? ");
-		params.add(reqeust.getPeriodFrom());
-
-		sql.append(" 	AND G.PERIOD_FROM >= ? ");
-		params.add(reqeust.getPeriodFrom());
-
-		sql.append("  	AND E.GF_DISBURSE_UNIT = ? ");
-		params.add(reqeust.getGfDisburseUnit());
 		
-		sql.append("  	AND G.PERIOD_YEAR = ? ");
-		params.add(ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(reqeust.getBudgetYear(), ConvertDateUtils.YYYY), ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_EN));
+		if(StringUtils.isNotBlank(reqeust.getPeriodFrom())) {
+			sql.append(" 	AND G.PERIOD_FROM <= ? ");
+			params.add(reqeust.getPeriodFrom());
+		}
+		
+		if(StringUtils.isNotBlank(reqeust.getPeriodTo())) {
+			sql.append(" 	AND G.PERIOD_FROM >= ? ");
+			params.add(reqeust.getPeriodTo());
+		}
+		
+		if(StringUtils.isNotBlank(reqeust.getGfDisburseUnit())) {
+			sql.append("  	AND E.GF_DISBURSE_UNIT = ? ");
+			params.add(reqeust.getGfDisburseUnit());
+		}
+		
+		if(StringUtils.isNotBlank(reqeust.getBudgetYear())) {
+			sql.append("  	AND G.PERIOD_YEAR = ? ");
+			params.add(ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(reqeust.getBudgetYear(), ConvertDateUtils.YYYY), ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_EN));
+		}
 		
 		sql.append(" GROUP BY G.ACC_NO, G.ACC_NAME, GA.PK_CODE ");
 		sql.append(" ORDER BY G.ACC_NO ");

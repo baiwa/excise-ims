@@ -135,7 +135,7 @@ public class IaGfdrawAccountService {
 			for (IaGfdrawAccountExcelVo vo : form.getFormData1()) {
 				iaGfDrawAccount = new IaGfdrawAccount();
 				iaGfDrawAccount.setGfuploadHId(ia.getGfuploadHId());
-				iaGfDrawAccount.setDepartmentCode(vo.getDepartmentCode());
+				iaGfDrawAccount.setDeptDisb(vo.getDepartmentCode());
 				iaGfDrawAccount.setPeriodFrom(ConvertDateUtils.parseStringToDate(vo.getPeriodFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
 				iaGfDrawAccount.setPeriodTo(ConvertDateUtils.parseStringToDate(vo.getPeriodTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
 				iaGfDrawAccount.setRepDate(ConvertDateUtils.parseStringToDate(vo.getRepDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));

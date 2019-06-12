@@ -18,7 +18,7 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 public class IaGftrialBalance extends BaseEntity {
 
 	private static final long serialVersionUID = 1536622124722705683L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_GFTRIAL_BALANCE_GEN")
 	@SequenceGenerator(name = "IA_GFTRIAL_BALANCE_GEN", sequenceName = "IA_GFTRIAL_BALANCE_SEQ", allocationSize = 1)
@@ -26,8 +26,8 @@ public class IaGftrialBalance extends BaseEntity {
 	private Long iaGftrialBalanceId;
 	@Column(name = "GFUPLOAD_H_ID")
 	private Long gfuploadHId;
-	@Column(name = "DEPARTMENT_CODE")
-	private String departmentCode;
+	@Column(name = "DEPT_DISB")
+	private String deptDisb;
 	@Column(name = "PERIOD_FROM")
 	private String periodFrom;
 	@Column(name = "PERIOD_TO")
@@ -61,14 +61,6 @@ public class IaGftrialBalance extends BaseEntity {
 
 	public void setGfuploadHId(Long gfuploadHId) {
 		this.gfuploadHId = gfuploadHId;
-	}
-
-	public String getDepartmentCode() {
-		return departmentCode;
-	}
-
-	public void setDepartmentCode(String departmentCode) {
-		this.departmentCode = departmentCode;
 	}
 
 	public String getPeriodFrom() {
@@ -145,6 +137,14 @@ public class IaGftrialBalance extends BaseEntity {
 
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+	public String getDeptDisb() {
+		return deptDisb;
+	}
+
+	public void setDeptDisb(String deptDisb) {
+		this.deptDisb = deptDisb;
 	}
 
 }

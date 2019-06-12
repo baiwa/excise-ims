@@ -22,7 +22,7 @@ public class IaGfdrawAccountRepositoryImpl implements IaGfdrawAccountRepositoryC
 	@Override
 	public void batchInsert(List<IaGfdrawAccount> iaGfDrawAccountList) {
 
-		String sql = SqlGeneratorUtils.genSqlInsert("IA_GFDRAW_ACCOUNT", Arrays.asList("GFTRIAL_BALANCE_SEQ", "DEPARTMENT_CODE", "PERIOD_FROM", "PERIOD_TO", "REP_DATE", "REP_TYPE", "RECORD_DATE", "RECODE_APPROVE_DATE", "TYPE", "DOC_NO", "SELLER_NAME", "SELLER_BOOK_BANK", "REFERENCE_CODE",
+		String sql = SqlGeneratorUtils.genSqlInsert("IA_GFDRAW_ACCOUNT", Arrays.asList("GFTRIAL_BALANCE_SEQ", "DEPT_DISB", "PERIOD_FROM", "PERIOD_TO", "REP_DATE", "REP_TYPE", "RECORD_DATE", "RECODE_APPROVE_DATE", "TYPE", "DOC_NO", "SELLER_NAME", "SELLER_BOOK_BANK", "REFERENCE_CODE",
 				"BUDGET_CODE", "DISB_AMT", "TAX_AMT", "MULCT_AMT", "FEE_AMT", "NET_AMT", "CREATED_BY"), "IA_GFDRAW_ACCOUNT_SEQ");
 
 		String username = UserLoginUtils.getCurrentUsername();
@@ -30,7 +30,7 @@ public class IaGfdrawAccountRepositoryImpl implements IaGfdrawAccountRepositoryC
 		commonJdbcTemplate.batchUpdate(sql, iaGfDrawAccountList, 1000, new ParameterizedPreparedStatementSetter<IaGfdrawAccount>() {
 			public void setValues(PreparedStatement ps, IaGfdrawAccount entity) throws SQLException {
 				List<Object> paramList = new ArrayList<Object>();
-				paramList.add(entity.getDepartmentCode());
+				paramList.add(entity.getDeptDisb());
 				paramList.add(entity.getPeriodFrom());
 				paramList.add(entity.getPeriodTo());
 				paramList.add(entity.getRepDate());

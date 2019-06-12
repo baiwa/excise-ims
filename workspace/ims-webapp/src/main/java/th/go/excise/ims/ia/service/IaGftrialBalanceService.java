@@ -49,7 +49,7 @@ public class IaGftrialBalanceService {
 					periodYear = periodData[5];
 				} else if (line != null && line.size() == 6) {
 					iaRepDisbPerMonth = new IaGftrialBalance();
-					iaRepDisbPerMonth.setDepartmentCode(departmentCode);
+					iaRepDisbPerMonth.setDeptDisb(departmentCode);
 					iaRepDisbPerMonth.setPeriodFrom(periodFrom);
 					iaRepDisbPerMonth.setPeriodTo(periodTo);
 					iaRepDisbPerMonth.setPeriodYear(periodYear);

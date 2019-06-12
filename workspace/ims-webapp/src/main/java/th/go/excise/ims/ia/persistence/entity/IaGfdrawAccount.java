@@ -26,8 +26,8 @@ public class IaGfdrawAccount extends BaseEntity {
 	private Long gftrialBalanceSeq;
 	@Column(name = "GFUPLOAD_H_ID")
 	private Long gfuploadHId;
-	@Column(name = "DEPARTMENT_CODE")
-	private String departmentCode;
+	@Column(name = "DEPT_DISB")
+	private String deptDisb;
 	@Column(name = "PERIOD_FROM")
 	private Date periodFrom;
 	@Column(name = "PERIOD_TO")
@@ -77,14 +77,6 @@ public class IaGfdrawAccount extends BaseEntity {
 
 	public void setGfuploadHId(Long gfuploadHId) {
 		this.gfuploadHId = gfuploadHId;
-	}
-
-	public String getDepartmentCode() {
-		return departmentCode;
-	}
-
-	public void setDepartmentCode(String departmentCode) {
-		this.departmentCode = departmentCode;
 	}
 
 	public Date getPeriodFrom() {
@@ -225,6 +217,14 @@ public class IaGfdrawAccount extends BaseEntity {
 
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+	public String getDeptDisb() {
+		return deptDisb;
+	}
+
+	public void setDeptDisb(String deptDisb) {
+		this.deptDisb = deptDisb;
 	}
 
 }
