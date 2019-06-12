@@ -299,10 +299,9 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		sql.append(" ON ED_SECTOR.OFF_CODE = SUBSTR( R4000.OFFICE_CODE,  0, 2  ) || '0000' ");
 		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_AREA ");
 		sql.append(" ON ED_AREA.OFF_CODE = SUBSTR( R4000.OFFICE_CODE,0,4)||'00' ");
-		sql.append(" INNER JOIN EXCISE_DUTY_GROUP ECDG ");
-		sql.append(" ON ECDG.DUTY_GROUP_CODE = R4000.DUTY_CODE ");
-		sql.append(" AND R4000.IS_DELETED      = 'N'  AND R4000.OFFICE_CODE  like ? ");
-		params.add(formVo.getOfficeCode());
+//		sql.append(" INNER JOIN EXCISE_DUTY_GROUP ECDG ");
+//		sql.append(" ON ECDG.DUTY_GROUP_CODE = R4000.DUTY_CODE ");
+		
 		
 //		sql.append(" LEFT JOIN TA_WORKSHEET_DTL WK_DTL " );
 //		sql.append(" ON WK_DTL.NEW_REG_ID = R4000.NEW_REG_ID");
@@ -315,7 +314,8 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		sql.append(" ON DUTY_LIST.NEWREG_ID = R4000.NEW_REG_ID ");
 
 		sql.append(" WHERE 1 = 1 ");
-
+		sql.append(" AND R4000.IS_DELETED      = 'N'  AND R4000.OFFICE_CODE  like ? ");
+		params.add(formVo.getOfficeCode());
 		// REG STATUS
 		if (null != formVo.getRegStatus() && 0 < formVo.getRegStatus().size()) {
 			sql.append("AND R4000.REG_STATUS IN ( ");
