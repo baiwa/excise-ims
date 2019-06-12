@@ -9,6 +9,8 @@ public class WsRegfri4000FormVo extends RegMaster60 {
 	private String facAddress;
 	private String factoryType;
 	private String factoryTypeText;
+	private String secDesc;
+	private String areaDesc;
 
 	public String getNewRegId() {
 		return newRegId;
@@ -48,6 +50,22 @@ public class WsRegfri4000FormVo extends RegMaster60 {
 
 	public void setFactoryTypeText(String factoryTypeText) {
 		this.factoryTypeText = factoryTypeText;
+	}
+
+	public String getSecDesc() {
+		return secDesc;
+	}
+
+	public void setSecDesc(String secDesc) {
+		this.secDesc = secDesc;
+	}
+
+	public String getAreaDesc() {
+		return areaDesc;
+	}
+
+	public void setAreaDesc(String areaDesc) {
+		this.areaDesc = areaDesc;
 	}
 
 }

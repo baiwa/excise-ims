@@ -21,10 +21,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.ta.persistence.entity.TaPaperBaH;
 import th.go.excise.ims.ta.service.BasicAnalysisService;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
+import th.go.excise.ims.ta.vo.TaPaperBaHFormVo;
 
 @Controller
 @RequestMapping("/api/ta/basic-analysis")
@@ -102,6 +105,21 @@ public class BasicAnalysisController {
 		response.setContentType("application/octet-stream");
 
 		FileCopyUtils.copy(reportFile, response.getOutputStream());
+	}
+	
+	@PostMapping("/bah-find")
+	@ResponseBody
+	public ResponseData<TaPaperBaH> findBaH(@RequestBody TaPaperBaHFormVo form) {
+		ResponseData<TaPaperBaH> res = new ResponseData<TaPaperBaH>();
+		try {
+			res.setData(basicAnalysisService.findBaH(form));
+			res.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			res.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return res;
 	}
 
 }

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperBaH;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
@@ -21,6 +22,7 @@ import th.go.excise.ims.ta.persistence.repository.TaPaperBaHRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetHdrRepository;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
+import th.go.excise.ims.ta.vo.TaPaperBaHFormVo;
 
 @Service
 public class BasicAnalysisService {
@@ -127,6 +129,17 @@ public class BasicAnalysisService {
 
 	public List<String> getPaperBaNumberList(BasicAnalysisFormVo formVo) {
 		return taPaperBaHRepository.findPaperBaNumberByAuditPlanCodeAndDutyGroupId(formVo.getAuditPlanCode(), formVo.getDutyGroupId());
+	}
+	
+	public TaPaperBaH findBaH(TaPaperBaHFormVo form) {
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		TaPlanWorksheetDtl planWorksheeetDtl = taPlanWorksheetDtlRepository.findByAuditPlanCode(form.getAuditPlanCode());
+		TaPlanWorksheetHdr planWorksheeetHdr = taPlanWorksheetHdrRepository.findByPlanNumber(planWorksheeetDtl.getPlanNumber());
+		TaPaperBaH paperBaH = taPaperBaHRepository.findByNewRegIdAndOfficeCodeAndBudgetYear(form.getNewRegId(), officeCode, planWorksheeetHdr.getBudgetYear());
+		if (null == paperBaH) {
+			paperBaH = new TaPaperBaH();
+		}
+		return paperBaH;
 	}
 	
 }

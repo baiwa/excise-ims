@@ -119,7 +119,10 @@ public class TaxAuditService {
 				throw new PccRestfulException("NewRegId=" + newRegId + " Not Found");
 			}
 		}
-		
+		String secDesc = ApplicationCache.getExciseDepartment(formVo.getOffcode().substring(0, 2) + "0000").getDeptShortName();
+		String areaDesc = ApplicationCache.getExciseDepartment(formVo.getOffcode().substring(0, 4) + "00").getDeptShortName();
+		formVo.setSecDesc(secDesc);
+		formVo.setAreaDesc(areaDesc);
 		return formVo;
 	}
 	
