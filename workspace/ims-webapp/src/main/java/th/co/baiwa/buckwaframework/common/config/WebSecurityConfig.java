@@ -41,9 +41,14 @@ public class WebSecurityConfig {
 	private AuthenticationProvider webServiceAuthenticationProvider;
 	
 	@Autowired
+	@Qualifier("customAuthenticationProvider")
+	private AuthenticationProvider customAuthenticationProvider;
+	
+	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(webServiceAuthenticationProvider);
-		auth.authenticationProvider(jdbcAuthenticationProvider);
+		auth.authenticationProvider(customAuthenticationProvider);
+		//auth.authenticationProvider(webServiceAuthenticationProvider);
+		//auth.authenticationProvider(jdbcAuthenticationProvider);
 	}
 	
 	@Bean(name = "passwordEncoder")
