@@ -229,9 +229,9 @@
 		</profile>
 		<!-- SIT Environment -->
 		<profile>
-			<id>sit</id>
+			<id>office</id>
 			<properties>
-				<activatedProperties>sit</activatedProperties>
+				<activatedProperties>office</activatedProperties>
 			</properties>
 		</profile>
 		<!-- UAT Environment -->
