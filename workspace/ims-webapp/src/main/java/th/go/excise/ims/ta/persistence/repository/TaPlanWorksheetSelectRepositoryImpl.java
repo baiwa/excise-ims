@@ -3,6 +3,7 @@ package th.go.excise.ims.ta.persistence.repository;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,7 +33,7 @@ public class TaPlanWorksheetSelectRepositoryImpl implements TaPlanWorksheetSelec
 		);
 		
 		String username = UserLoginUtils.getCurrentUsername();
-		LocalDate createdDate = LocalDate.now();
+		LocalDateTime createdDate = LocalDateTime.now();
 
 		commonJdbcTemplate.batchUpdate(sql, taxDraftVoList, 1000, new ParameterizedPreparedStatementSetter<TaxDraftVo>() {
 			public void setValues(PreparedStatement ps, TaxDraftVo taxDraftVo) throws SQLException {
