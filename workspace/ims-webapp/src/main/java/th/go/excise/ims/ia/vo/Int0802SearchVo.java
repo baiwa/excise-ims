@@ -2,9 +2,12 @@ package th.go.excise.ims.ia.vo;
 
 public class Int0802SearchVo {
 	private String gfDisburseUnit;
-	private String BudgetYear;
+	private String fromYear;
+	private String toYear;
 	private String periodFrom;
 	private String periodTo;
+	private String periodFromYear;
+	private String periodToYear;
 	private String flagSearch;
 
 	public String getGfDisburseUnit() {
@@ -15,12 +18,20 @@ public class Int0802SearchVo {
 		this.gfDisburseUnit = gfDisburseUnit;
 	}
 
-	public String getBudgetYear() {
-		return BudgetYear;
+	public String getFromYear() {
+		return fromYear;
 	}
 
-	public void setBudgetYear(String budgetYear) {
-		BudgetYear = budgetYear;
+	public void setFromYear(String fromYear) {
+		this.fromYear = fromYear;
+	}
+
+	public String getToYear() {
+		return toYear;
+	}
+
+	public void setToYear(String toYear) {
+		this.toYear = toYear;
 	}
 
 	public String getPeriodFrom() {
@@ -37,6 +48,22 @@ public class Int0802SearchVo {
 
 	public void setPeriodTo(String periodTo) {
 		this.periodTo = periodTo;
+	}
+
+	public String getPeriodFromYear() {
+		return periodFromYear;
+	}
+
+	public void setPeriodFromYear(String periodFromYear) {
+		this.periodFromYear = periodFromYear;
+	}
+
+	public String getPeriodToYear() {
+		return periodToYear;
+	}
+
+	public void setPeriodToYear(String periodToYear) {
+		this.periodToYear = periodToYear;
 	}
 
 	public String getFlagSearch() {
