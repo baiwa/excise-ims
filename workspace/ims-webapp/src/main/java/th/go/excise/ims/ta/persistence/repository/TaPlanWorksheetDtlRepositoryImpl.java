@@ -41,7 +41,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		sql.append("   ,R4000.FAC_FULLNAME ");
 		sql.append("   ,R4000.FAC_ADDRESS ");
 		sql.append("   ,R4000.OFFICE_CODE OFFICE_CODE_R4000 ");
-		sql.append("   ,R4000.DUTY_CODE ");
+		sql.append("   ,WK_DTL.DUTY_GROUP_ID ");
 		sql.append("   ,ED_SECTOR.OFF_CODE SEC_CODE ");
 		sql.append("   ,ED_SECTOR.OFF_SHORT_NAME SEC_DESC ");
 		sql.append("   ,ED_AREA.OFF_CODE AREA_CODE ");
@@ -111,7 +111,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		List<Object> params = new ArrayList<>();
 		buildByCriteriaQuery(sql, params, formVo);
 
-		sql.append(" ORDER BY R4000.DUTY_CODE, R4000.OFFICE_CODE, R4000.NEW_REG_ID ");
+		sql.append(" ORDER BY WK_DTL.DUTY_GROUP_ID, R4000.OFFICE_CODE, R4000.NEW_REG_ID ");
 
 		return commonJdbcTemplate.query(sql.toString(), params.toArray(), planDtlDatatableRowMapper);
 	}
@@ -122,7 +122,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		List<Object> params = new ArrayList<>();
 		buildByCriteriaQuery(sql, params, formVo);
 
-		sql.append(" ORDER BY R4000.DUTY_CODE, R4000.OFFICE_CODE, R4000.NEW_REG_ID ");
+		sql.append(" ORDER BY WK_DTL.DUTY_GROUP_ID, R4000.OFFICE_CODE, R4000.NEW_REG_ID ");
 
 		return commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(), planDtlDatatableRowMapper);
 	}
@@ -144,7 +144,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 			vo.setFacFullname(rs.getString("FAC_FULLNAME"));
 			vo.setFacAddress(rs.getString("FAC_ADDRESS"));
 			vo.setOfficeCodeR4000(rs.getString("OFFICE_CODE_R4000"));
-			vo.setDutyCode(rs.getString("DUTY_CODE"));
+			vo.setDutyCode(rs.getString("DUTY_GROUP_ID"));
 			vo.setDutyDesc(rs.getString("DUTY_GROUP_NAME"));
 			vo.setSecCode(rs.getString("SEC_CODE"));
 			vo.setSecDesc(rs.getString("SEC_DESC"));
@@ -198,7 +198,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		sql.append("     R4000.CUS_FULLNAME, ");
 		sql.append("     R4000.FAC_FULLNAME, ");
 		sql.append("     R4000.OFFICE_CODE OFFICE_CODE_R4000, ");
-		sql.append("     R4000.DUTY_CODE, ");
+		//sql.append("     R4000.DUTY_CODE, ");
 		sql.append("     ED_SECTOR.OFF_CODE SEC_CODE, ");
 		sql.append("     ED_SECTOR.OFF_SHORT_NAME SEC_DESC, ");
 		sql.append("     ED_AREA.OFF_CODE AREA_CODE, ");
@@ -303,7 +303,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
             vo.setCusFullName(rs.getString("CUS_FULLNAME"));
             vo.setFacFullName(rs.getString("FAC_FULLNAME"));
             vo.setOfficeCodeR4000(rs.getString("OFFICE_CODE_R4000"));
-            vo.setDutyCode(rs.getString("DUTY_CODE"));
+            //vo.setDutyCode(rs.getString("DUTY_CODE"));
             vo.setSecCode(rs.getString("SEC_CODE"));
             vo.setSecDesc(rs.getString("SEC_DESC"));
             vo.setAreaCode(rs.getString("AREA_CODE"));

@@ -213,7 +213,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		params.add(formVo.getBudgetYear());
 
 		if (ApplicationCache.isCtrlDutyGroupByOfficeCode(formVo.getOfficeCode())) {
-			sql.append(" INNER JOIN EXCISE_CTRL_DUTY CD ON CD.DUTY_GROUP_CODE = R4000.DUTY_CODE  AND CD.RES_OFFCODE = ? ");
+			sql.append(" INNER JOIN EXCISE_CTRL_DUTY CD ON CD.DUTY_GROUP_CODE = TA_W_DTL.DUTY_GROUP_ID  AND CD.RES_OFFCODE = ? ");
 			params.add(formVo.getOfficeCode());
 		}
 
