@@ -56,6 +56,7 @@ public class ProductPaperTaxAmtAdditionalService {
 			data.setTaxValue("10,000.00");
 			data.setTaxRateByValue("10.00");
 			data.setTaxRateByQty("1,000.00");
+			data.setTaxAdditional("100.00");
 			data.setPenaltyAmt("500.00");
 			data.setSurchargeAmt("100.00");
 			data.setMoiTaxAmt("100.00");

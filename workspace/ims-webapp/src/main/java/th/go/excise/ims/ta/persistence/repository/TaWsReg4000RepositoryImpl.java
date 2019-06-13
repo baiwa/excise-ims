@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -280,98 +281,102 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 	};
 
 	private void sqlOutsidePlan(StringBuilder sql, List<Object> params, OutsidePlanFormVo formVo) {
-		sql.append(" SELECT R4000.CUS_FULLNAME , ");
-		sql.append("   R4000.NEW_REG_ID , ");
-		sql.append("   R4000.FAC_FULLNAME , ");
-		sql.append("   R4000.FAC_ADDRESS , ");
-		sql.append("   R4000.OFFICE_CODE OFFICE_CODE_R4000 , ");
-		sql.append("   R4000.DUTY_CODE , ");
-		sql.append("   ED_SECTOR.OFF_CODE SEC_CODE , ");
-		sql.append("   ED_SECTOR.OFF_SHORT_NAME SEC_DESC , ");
-		sql.append("   ED_AREA.OFF_CODE AREA_CODE , ");
-		sql.append("   ED_AREA.OFF_SHORT_NAME AREA_DESC,  ");
-		sql.append("   R4000.REG_STATUS	, ");
-		sql.append("   R4000.REG_STATUS_DESC , ");
-		sql.append("   R4000.REG_DATE , ");
-		sql.append("   DUTY_LIST.DUTY_GROUP_NAME ");
+		sql.append(" SELECT R4000.CUS_FULLNAME ");
+		sql.append("   ,R4000.NEW_REG_ID ");
+		sql.append("   ,R4000.FAC_FULLNAME ");
+		sql.append("   ,R4000.FAC_ADDRESS ");
+		sql.append("   ,R4000.OFFICE_CODE OFFICE_CODE_R4000 ");
+		sql.append("   ,ED_SECTOR.OFF_CODE SEC_CODE ");
+		sql.append("   ,ED_SECTOR.OFF_SHORT_NAME SEC_DESC ");
+		sql.append("   ,ED_AREA.OFF_CODE AREA_CODE ");
+		sql.append("   ,ED_AREA.OFF_SHORT_NAME AREA_DESC ");
+		sql.append("   ,R4000.REG_STATUS ");
+		sql.append("   ,R4000.REG_STATUS_DESC ");
+		sql.append("   ,R4000.REG_DATE ");
+		sql.append("   ,DUTY_LIST.DUTY_GROUP_NAME ");
+		sql.append("   ,DUTY_CODE_LIST.DUTY_GROUP_ID ");
+		sql.append("   ,DUTY_TYPE_LIST.DUTY_GROUP_TYPE ");
 		sql.append(" FROM TA_WS_REG4000 R4000  ");
-		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_SECTOR ");
-		sql.append(" ON ED_SECTOR.OFF_CODE = SUBSTR( R4000.OFFICE_CODE,  0, 2  ) || '0000' ");
-		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_AREA ");
-		sql.append(" ON ED_AREA.OFF_CODE = SUBSTR( R4000.OFFICE_CODE,0,4)||'00' ");
-		sql.append(" INNER JOIN EXCISE_DUTY_GROUP ECDG ");
-		sql.append(" ON ECDG.DUTY_GROUP_CODE = R4000.DUTY_CODE ");
-		sql.append(" AND R4000.IS_DELETED      = 'N'  AND R4000.OFFICE_CODE  like ? ");
-		params.add(formVo.getOfficeCode());
-		
-//		sql.append(" LEFT JOIN TA_WORKSHEET_DTL WK_DTL " );
-//		sql.append(" ON WK_DTL.NEW_REG_ID = R4000.NEW_REG_ID");
-		
+		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_SECTOR ON ED_SECTOR.OFF_CODE = SUBSTR( R4000.OFFICE_CODE,  0, 2  ) || '0000' ");
+		sql.append(" INNER JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE = SUBSTR( R4000.OFFICE_CODE,0,4)||'00' ");
 		sql.append(" LEFT JOIN ( ");
-		sql.append("     SELECT DUTY.NEWREG_ID , LISTAGG(DUTY.GROUP_NAME,',') WITHIN GROUP (ORDER BY DUTY.GROUP_NAME) AS DUTY_GROUP_NAME ");
-		sql.append("     FROM TA_WS_REG4000_DUTY DUTY  ");
-		sql.append("     GROUP BY  DUTY.NEWREG_ID ");
+		sql.append("   SELECT DUTY.NEWREG_ID , LISTAGG(DUTY.GROUP_NAME,',') WITHIN GROUP (ORDER BY DUTY.GROUP_ID) AS DUTY_GROUP_NAME ");
+		sql.append("   FROM TA_WS_REG4000_DUTY DUTY ");
+		sql.append("   GROUP BY DUTY.NEWREG_ID ");
 		sql.append(" ) DUTY_LIST ");
 		sql.append(" ON DUTY_LIST.NEWREG_ID = R4000.NEW_REG_ID ");
-
+		sql.append(" LEFT JOIN ( ");
+		sql.append("   SELECT DUTY.NEWREG_ID , LISTAGG(DUTY.GROUP_ID,',') WITHIN GROUP (ORDER BY DUTY.GROUP_ID) AS DUTY_GROUP_ID ");
+		sql.append("   FROM TA_WS_REG4000_DUTY DUTY ");
+		sql.append("   GROUP BY DUTY.NEWREG_ID ");
+		sql.append(" ) DUTY_CODE_LIST ");
+		sql.append(" ON DUTY_CODE_LIST.NEWREG_ID = R4000.NEW_REG_ID ");
+		sql.append(" LEFT JOIN ( ");
+		sql.append("   SELECT DUTY.NEWREG_ID , LISTAGG(EDG.DUTY_GROUP_TYPE,',') WITHIN GROUP (ORDER BY DUTY.GROUP_ID) AS DUTY_GROUP_TYPE ");
+		sql.append("   FROM TA_WS_REG4000_DUTY DUTY ");
+		sql.append("   INNER JOIN EXCISE_DUTY_GROUP EDG ON EDG.DUTY_GROUP_CODE = DUTY.GROUP_ID ");
+		sql.append("   GROUP BY DUTY.NEWREG_ID ");
+		sql.append(" ) DUTY_TYPE_LIST ");
+		sql.append(" ON DUTY_TYPE_LIST.NEWREG_ID = R4000.NEW_REG_ID ");
 		sql.append(" WHERE 1 = 1 ");
-
+		sql.append("   AND R4000.IS_DELETED = 'N' ");
+		sql.append("   AND R4000.OFFICE_CODE LIKE ? ");
+		params.add(formVo.getOfficeCode());
+		
 		// REG STATUS
-		if (null != formVo.getRegStatus() && 0 < formVo.getRegStatus().size()) {
-			sql.append("AND R4000.REG_STATUS IN ( ");
-			for (int i = 0; i < formVo.getRegStatus().size(); i++) {
-				String reg = formVo.getRegStatus().get(i);
-				params.add(reg);
-				if (i == formVo.getRegStatus().size()-1) {
-					sql.append("? )");
-				} else {					
-					sql.append("? ,");
-				}
-			}
+		if (formVo.getRegStatus() != null && formVo.getRegStatus().size() > 0) {
+			sql.append(" AND R4000.REG_STATUS IN ( ");
+			sql.append(StringUtils.repeat("?", ",", formVo.getRegStatus().size()));
+			sql.append(" ) ");
+			params.addAll(formVo.getRegStatus());
 		}
+		
 		// DUTY GROUP
 		if (StringUtils.isNotBlank(formVo.getFacType())) {
-			sql.append(" AND ECDG.DUTY_GROUP_TYPE = ?");
-			params.add(formVo.getFacType());
+			sql.append(" AND DUTY_TYPE_LIST.DUTY_GROUP_TYPE LIKE ? ");
+			params.add("%" + formVo.getFacType() + "%");
 		}
-
+		
+		// CUS FULLNAME
 		if (StringUtils.isNotBlank(formVo.getCusFullname())) {
-			params.add("%" + StringUtils.trim(formVo.getCusFullname()) + "%");
 			sql.append(" AND R4000.CUS_FULLNAME LIKE ? ");
+			params.add("%" + StringUtils.trim(formVo.getCusFullname()) + "%");
 		}
 
+		// FAC FULLNAME
 		if (StringUtils.isNotBlank(formVo.getFacFullname())) {
-			params.add("%" + StringUtils.trim(formVo.getFacFullname()) + "%");
 			sql.append(" AND R4000.FAC_FULLNAME LIKE ? ");
+			params.add("%" + StringUtils.trim(formVo.getFacFullname()) + "%");
 		}
 
+		// DUTY_CODE
 		if (StringUtils.isNotBlank(formVo.getDutyCode())) {
-			params.add(formVo.getDutyCode());
-			sql.append(" AND R4000.DUTY_CODE = ? ");
+			sql.append(" AND DUTY_CODE_LIST.DUTY_GROUP_ID LIKE ? ");
+			params.add("%" + formVo.getDutyCode() + "%");
 		}
 		
-		if (StringUtils.isNotBlank(formVo.getDutyCode())) {
-			params.add(formVo.getDutyCode());
-			sql.append(" AND R4000.DUTY_CODE = ? ");
-		}
-		
+		// CUS TYPE
 		if (StringUtils.isNotBlank(formVo.getCusType())) {
-			params.add(formVo.getCusType());
 			sql.append(" AND R4000.CUSCAT_ID = ? ");
+			params.add(formVo.getCusType());
 		}
 		
+		// CUS ID
 		if (StringUtils.isNotBlank(formVo.getCusId())) {
-			params.add(formVo.getCusId());
 			sql.append(" AND R4000.PINNIT_ID = ? ");
-		}
-		if (formVo.getFromDate() != null) {
-			params.add(formVo.getFromDate());
-			sql.append(" AND R4000.REG_DATE > ? ");
+			params.add(formVo.getCusId());
 		}
 		
+		// REG DATE START
+		if (formVo.getFromDate() != null) {
+			sql.append(" AND R4000.REG_DATE >= TO_DATE(?, 'YYYYMMDD') ");
+			params.add(ConvertDateUtils.formatDateToString(formVo.getFromDate(), ConvertDateUtils.YYYYMMDD, Locale.US));
+		}
+		
+		// REG DATE END
 		if (formVo.getToDate() != null) {
-			params.add(formVo.getToDate());
-			sql.append(" AND R4000.REG_DATE < ? ");
+			sql.append(" AND R4000.REG_DATE <= TO_DATE(?, 'YYYYMMDD') ");
+			params.add(ConvertDateUtils.formatDateToString(formVo.getToDate(), ConvertDateUtils.YYYYMMDD, Locale.US));
 		}
 	}
 
@@ -380,10 +385,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		sqlOutsidePlan(sql, params, formVo);
-		return commonJdbcTemplate.query(
-				OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(),
-				outsidePlanRowMapper);
-
+		return commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(), outsidePlanRowMapper);
 	}
 
 	@Override
@@ -391,30 +393,25 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		sqlOutsidePlan(sql, params, formVo);
-		return this.commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), params.toArray(),
-				Long.class);
+		return this.commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), params.toArray(), Long.class);
 	}
 
 	protected RowMapper<OutsidePlanVo> outsidePlanRowMapper = new RowMapper<OutsidePlanVo>() {
 		@Override
 		public OutsidePlanVo mapRow(ResultSet rs, int rowNum) throws SQLException {
 			OutsidePlanVo vo = new OutsidePlanVo();
-
 			vo.setNewRegId(rs.getString("NEW_REG_ID"));
 			vo.setCusFullname(rs.getString("CUS_FULLNAME"));
 			vo.setFacFullname(rs.getString("FAC_FULLNAME"));
 			vo.setFacAddress(rs.getString("FAC_ADDRESS"));
 			vo.setOfficeCodeR4000(rs.getString("OFFICE_CODE_R4000"));
-			vo.setDutyCode(rs.getString("DUTY_CODE"));
 			vo.setSecCode(rs.getString("SEC_CODE"));
 			vo.setSecDesc(rs.getString("SEC_DESC"));
 			vo.setAreaCode(rs.getString("AREA_CODE"));
 			vo.setAreaDesc(rs.getString("AREA_DESC"));
-//			vo.setDutyDesc(ExciseUtils.getDutyDesc(rs.getString("DUTY_CODE")));
 			vo.setDutyDesc(rs.getString("DUTY_GROUP_NAME"));
 			vo.setRegDate(ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY));
-			vo.setRegStatus(rs.getString("REG_STATUS") + " "
-					+ ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY));
+			vo.setRegStatus(rs.getString("REG_STATUS") + " " + ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY));
 			vo.setRegStatusDesc(rs.getString("REG_STATUS_DESC"));
 			return vo;
 		}

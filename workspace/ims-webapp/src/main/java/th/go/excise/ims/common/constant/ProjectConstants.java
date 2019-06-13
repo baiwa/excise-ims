@@ -66,8 +66,8 @@ public class ProjectConstants {
 		}
 		
 		public class OASFRI0100 {
-			public static final String DATA_TYPE_MATERIAL_CODE = "M";
-			public static final String DATA_TYPE_PRODUCT_CODE = "P";
+			public static final String DATA_TYPE_MATERIAL = "M";
+			public static final String DATA_TYPE_PRODUCT = "P";
 		}
 		
 		public class ANAFRI0001 {
