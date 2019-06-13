@@ -46,26 +46,28 @@ public class SyncWsOasfri0100Service {
 	
 	@Transactional(rollbackOn = {Exception.class})
 	public void syncData(String newRegId, LocalDate localDate) throws PccRestfulException {
-		logger.info("syncData OASFRI0100 Start");
+		logger.info("syncData OASFRI0100 Start, newRegId={}, date={}", newRegId, localDate);
 		long start = System.currentTimeMillis();
 		
 		RequestData requestData = null;
 		ResponseData2 responseData = null;
 		ThaiBuddhistDate thaiDate = null;
 		String taxYear = null;
+		String taxYearTh = null;
 		String taxMonth = null;
 		WsOasfri0100H oasfri0100H = null;
 		List<WsOasfri0100H> oasfri0100HList = new ArrayList<>();
 		WsOasfri0100D oasfri0100D = null;
 		List<WsOasfri0100D> oasfri0100DList = new ArrayList<>();
 		
+		taxYear = String.valueOf(localDate.get(ChronoField.YEAR));
 		thaiDate = ThaiBuddhistDate.from(localDate);
-		taxYear = String.valueOf(thaiDate.get(ChronoField.YEAR));
+		taxYearTh = String.valueOf(thaiDate.get(ChronoField.YEAR));
 		taxMonth = String.valueOf(thaiDate.get(ChronoField.MONTH_OF_YEAR));
 		
 		requestData = new RequestData();
 		requestData.setRegId(newRegId);
-		requestData.setTaxYear(taxYear);
+		requestData.setTaxYear(taxYearTh);
 		requestData.setTaxMonth(taxMonth);
 		responseData = oasFri0100Service.execute(requestData);
 		

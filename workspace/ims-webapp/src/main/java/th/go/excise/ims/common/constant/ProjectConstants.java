@@ -68,6 +68,11 @@ public class ProjectConstants {
 		public class OASFRI0100 {
 			public static final String DATA_TYPE_MATERIAL = "M";
 			public static final String DATA_TYPE_PRODUCT = "P";
+			public static final String PS0704_ACC05 = "รับเดือนนี้";
+			public static final String PS0704_ACC07 = "ผลิตสินค้าตามพิกัดฯ";
+			public static final String PS0704_ACC14 = "รับจากการผลิต";
+			public static final String PS0704_ACC18 = "จำหน่ายในประเทศ";
+			public static final String PS0704_ACC19 = "จำหน่ายต่างประเทศ";
 		}
 		
 		public class ANAFRI0001 {

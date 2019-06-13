@@ -100,7 +100,7 @@ public class WsAnafri0001DRepositoryImpl implements WsAnafri0001DRepositoryCusto
 
 	@Override
 	public List<WsAnafri0001Vo> findProductList(String newRegId, String dutyGroupId, String dateStart, String dateEnd) {
-		logger.info("findProductListByBasicAnalysisFormVo newRegId={}, dutyGroupId={}, dateStart={}, dateEnd={}", newRegId, dutyGroupId, dateStart, dateEnd);
+		logger.info("findProductList newRegId={}, dutyGroupId={}, dateStart={}, dateEnd={}", newRegId, dutyGroupId, dateStart, dateEnd);
 		
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT H.REG_IN_DATE, H.PAY_TYPE12, H.RECEIPT_NO, H.RECEIPT_DATE, D.* ");
