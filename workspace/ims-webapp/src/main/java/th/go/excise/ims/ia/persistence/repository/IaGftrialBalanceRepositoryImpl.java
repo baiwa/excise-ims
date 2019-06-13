@@ -6,14 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
-import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.ia.persistence.entity.IaGftrialBalance;
 import th.go.excise.ims.ia.vo.Int0802SearchVo;
@@ -28,8 +26,8 @@ public class IaGftrialBalanceRepositoryImpl implements IaGftrialBalanceRepositor
 	public void batchInsert(List<IaGftrialBalance> iaGftrialBalances) {
 
 		String sql = SqlGeneratorUtils.genSqlInsert("IA_GFTRIAL_BALANCE",
-				Arrays.asList("IA_GFTRIAL_BALANCE_ID", "DEPT_DISB", "PERIOD_FROM", "PERIOD_TO", "PERIOD_YEAR",
-						"ACC_NO", "ACC_NAME", "CARRY_FORWARD", "BRING_FORWARD", "DEBIT", "CREDIT", "CREATED_BY"),
+				Arrays.asList("IA_GFTRIAL_BALANCE_ID", "DEPT_DISB", "PERIOD_FROM", "PERIOD_TO", "PERIOD_YEAR", "ACC_NO",
+						"ACC_NAME", "CARRY_FORWARD", "BRING_FORWARD", "DEBIT", "CREDIT", "CREATED_BY"),
 				"IA_GFTRIAL_BALANCE_SEQ");
 
 		String username = UserLoginUtils.getCurrentUsername();
@@ -72,45 +70,82 @@ public class IaGftrialBalanceRepositoryImpl implements IaGftrialBalanceRepositor
 				new BeanPropertyRowMapper(IaGftrialBalance.class));
 		return response;
 	}
-	
+
 	@Override
-	public List<Int0802Vo> findDiferrenceByCondition(Int0802SearchVo reqeust) {
+	public List<Int0802Vo> findDiferrenceByConditionTab1(Int0802SearchVo request) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" SELECT G.ACC_NO, G.ACC_NAME, SUM(G.BRING_FORWARD) BRING_FORWARD, SUM(G.CARRY_FORWARD) CARRY_FORWARD, ");
-		sql.append(" 	SUM(G.DEBIT) DEBIT, SUM(G.CREDIT) CREDIT, GA.PK_CODE, sum(GA.CURR_AMT) CURR_AMT ");
-		sql.append(" FROM IA_GFTRIAL_BALANCE G ");
+		sql.append(
+				" SELECT G.ACC_NO, G.ACC_NAME, SUM(G.BRING_FORWARD) BRING_FORWARD, SUM(G.DEBIT) DEBIT, SUM(G.CREDIT) CREDIT, ");
+		sql.append(" 	SUM(G.CARRY_FORWARD) CARRY_FORWARD, GA.PK_CODE, sum(GA.CURR_AMT) CURR_AMT  ");
+		sql.append(" FROM ");
+		sql.append(" 	( ");
+		sql.append(" 	SELECT X.* FROM ");
+		sql.append(" 		( ");
+		sql.append(" 		SELECT CONCAT(G.PERIOD_YEAR, G.PERIOD_FROM) AS YEAR_MONTH, G.* FROM IA_GFTRIAL_BALANCE G ");
+		sql.append(" 		) X WHERE X.IS_DELETED = 'N'");
+
+		sql.append(" 	 AND YEAR_MONTH >= ? AND YEAR_MONTH <= ? ");
+		params.add(request.getPeriodFromYear());
+		params.add(request.getPeriodToYear());
+
+		sql.append(" 	 ) G ");
 		sql.append(" LEFT JOIN EXCISE_ORG_GFMIS E ");
-		sql.append(" 	ON G.DEPT_DISB  = '00000' || E.GF_COST_CENTER ");
+		sql.append(" 	ON G.DEPT_DISB  = '00000' || E.GF_DISBURSE_UNIT ");
+		sql.append(" 	AND E.GF_DISBURSE_UNIT = E.GF_COST_CENTER  ");
+		sql.append(" 	AND E.IS_DELETED = 'N' ");
 		sql.append(" LEFT JOIN IA_GFLEDGER_ACCOUNT GA ");
 		sql.append(" 	ON GA.GL_ACC_NO = G.ACC_NO ");
-		sql.append(" WHERE G.IS_DELETED = 'N' ");
-		sql.append(" 	AND E.IS_DELETED = 'N' ");
 		sql.append(" 	AND GA.IS_DELETED = 'N' ");
-		
-		if(StringUtils.isNotBlank(reqeust.getPeriodFrom())) {
-			sql.append(" 	AND G.PERIOD_FROM <= ? ");
-			params.add(reqeust.getPeriodFrom());
-		}
-		
-		if(StringUtils.isNotBlank(reqeust.getPeriodTo())) {
-			sql.append(" 	AND G.PERIOD_FROM >= ? ");
-			params.add(reqeust.getPeriodTo());
-		}
-		
-		if(StringUtils.isNotBlank(reqeust.getGfDisburseUnit())) {
-			sql.append("  	AND E.GF_DISBURSE_UNIT = ? ");
-			params.add(reqeust.getGfDisburseUnit());
-		}
-		
-		if(StringUtils.isNotBlank(reqeust.getBudgetYear())) {
-			sql.append("  	AND G.PERIOD_YEAR = ? ");
-			params.add(ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(reqeust.getBudgetYear(), ConvertDateUtils.YYYY), ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_EN));
-		}
-		
+
+		sql.append(" WHERE E.GF_DISBURSE_UNIT = ? ");
+		params.add(request.getGfDisburseUnit());
+
 		sql.append(" GROUP BY G.ACC_NO, G.ACC_NAME, GA.PK_CODE ");
 		sql.append(" ORDER BY G.ACC_NO ");
-		
+
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		List<Int0802Vo> response = commonJdbcTemplate.query(sql.toString(), params.toArray(),
+				new BeanPropertyRowMapper(Int0802Vo.class));
+		return response;
+	}
+	
+	@Override
+	public List<Int0802Vo> findDiferrenceByConditionTab2(Int0802SearchVo request) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append(
+				" SELECT G.ACC_NO, G.ACC_NAME, SUM(G.BRING_FORWARD) BRING_FORWARD, SUM(G.DEBIT) DEBIT, SUM(G.CREDIT) CREDIT, ");
+		sql.append(" 	SUM(G.CARRY_FORWARD) CARRY_FORWARD, GA.PK_CODE, sum(GA.CURR_AMT) CURR_AMT, SUM(GFM.DEBIT) DEBIT3, SUM(GFM.CREDIT) CREDIT3 ");
+		sql.append(" FROM ");
+		sql.append(" 	( ");
+		sql.append(" 	SELECT X.* FROM ");
+		sql.append(" 		( ");
+		sql.append(" 		SELECT CONCAT(G.PERIOD_YEAR, G.PERIOD_FROM) AS YEAR_MONTH, G.* FROM IA_GFTRIAL_BALANCE G ");
+		sql.append(" 		) X WHERE X.IS_DELETED = 'N'");
+
+		sql.append(" 	 AND YEAR_MONTH >= ? AND YEAR_MONTH <= ? ");
+		params.add(request.getPeriodFromYear());
+		params.add(request.getPeriodToYear());
+
+		sql.append(" 	 ) G ");
+		sql.append(" LEFT JOIN EXCISE_ORG_GFMIS E ");
+		sql.append(" 	ON G.DEPT_DISB  = '00000' || E.GF_DISBURSE_UNIT ");
+		sql.append(" 	AND E.GF_DISBURSE_UNIT = E.GF_COST_CENTER  ");
+		sql.append(" 	AND E.IS_DELETED = 'N' ");
+		sql.append(" LEFT JOIN IA_GFLEDGER_ACCOUNT GA ");
+		sql.append(" 	ON GA.GL_ACC_NO = G.ACC_NO ");
+		sql.append(" 	AND GA.IS_DELETED = 'N' ");
+		sql.append(" LEFT JOIN IA_GFMOVEMENT_ACCOUNT GFM ");
+		sql.append(" 	ON G.ACC_NO = GFM.ACC_TYPE_NO ");
+		sql.append(" 	AND GFM.IS_DELETED = 'N' ");
+
+		sql.append(" WHERE E.GF_DISBURSE_UNIT = ? ");
+		params.add(request.getGfDisburseUnit());
+
+		sql.append(" GROUP BY G.ACC_NO, G.ACC_NAME, GA.PK_CODE ");
+		sql.append(" ORDER BY G.ACC_NO ");
+
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<Int0802Vo> response = commonJdbcTemplate.query(sql.toString(), params.toArray(),
 				new BeanPropertyRowMapper(Int0802Vo.class));

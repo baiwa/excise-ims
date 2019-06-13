@@ -11,5 +11,7 @@ public interface IaGftrialBalanceRepositorCustom {
 
 	public List<IaGftrialBalance> findByGfDisburseUnit(String gfDisburseUnit);
 
-	public List<Int0802Vo> findDiferrenceByCondition(Int0802SearchVo reqeust);
+	public List<Int0802Vo> findDiferrenceByConditionTab1(Int0802SearchVo request);
+	
+	public List<Int0802Vo> findDiferrenceByConditionTab2(Int0802SearchVo request);
 }
