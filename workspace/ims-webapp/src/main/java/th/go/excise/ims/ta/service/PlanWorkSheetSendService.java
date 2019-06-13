@@ -2,6 +2,7 @@ package th.go.excise.ims.ta.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
@@ -47,8 +48,31 @@ public class PlanWorkSheetSendService {
 		
 		if (ExciseUtils.isCentral(userLoginOfficeCode)) {
 			// Central
-			planWorkSheetSendVoList.add(buildPlanWorkSheetSendVo(EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR1, planWorksheetSendList));
-			planWorkSheetSendVoList.add(buildPlanWorkSheetSendVo(EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR2, planWorksheetSendList));
+//			planWorkSheetSendVoList.add(buildPlanWorkSheetSendVo(EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR1, planWorksheetSendList));
+//			planWorkSheetSendVoList.add(buildPlanWorkSheetSendVo(EXCISE_OFFICE_CODE.TA_CENTRAL_OPERATOR2, planWorksheetSendList));
+
+			String offCodeCenter = EXCISE_OFFICE_CODE.TA_CENTRAL;
+			String findOfficeCode = "";
+			ExciseDepartment department = null;
+			for (int i = 1; i < 99 ; i++) {
+				if (i < 10 ) {
+					findOfficeCode = offCodeCenter.substring(0, 5)+ String.valueOf(i);
+				}else {
+					findOfficeCode = offCodeCenter.substring(0, 4)+ String.valueOf(i);
+				}
+				department = ApplicationCache.getExciseDepartment(findOfficeCode);
+				if (department != null ) {
+					for (int j = 0; j < planWorksheetSendList.size(); j++) {
+						if (planWorksheetSendList.get(j).getOfficeCode().equals(findOfficeCode)) {
+							planWorkSheetSendVoList.add(buildPlanWorkSheetSendVo(findOfficeCode, planWorksheetSendList));
+							break;
+						}
+					}
+				}else {
+					break;
+				}
+			}
+			
 			
 			sectorList = ApplicationCache.getExciseSectorList();
 			for (ExciseDepartment sector : sectorList) {
