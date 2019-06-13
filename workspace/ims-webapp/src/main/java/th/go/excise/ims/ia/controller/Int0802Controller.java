@@ -46,12 +46,28 @@ public class Int0802Controller {
 		return response;
 	}
 
-	@PostMapping("/search")
+	@PostMapping("/search-tab1")
 	@ResponseBody
-	public ResponseData<List<Int0802Vo>> search(@RequestBody Int0802SearchVo reqeust) {
+	public ResponseData<List<Int0802Vo>> searchTab1(@RequestBody Int0802SearchVo reqeust) {
 		ResponseData<List<Int0802Vo>> response = new ResponseData<List<Int0802Vo>>();
 		try {
-			response.setData(int0802Service.getResultByCondition(reqeust));
+			response.setData(int0802Service.getResultByConditionTab1(reqeust));
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	@PostMapping("/search-tab2")
+	@ResponseBody
+	public ResponseData<List<Int0802Vo>> searchTab2(@RequestBody Int0802SearchVo reqeust) {
+		ResponseData<List<Int0802Vo>> response = new ResponseData<List<Int0802Vo>>();
+		try {
+			response.setData(int0802Service.getResultByConditionTab2(reqeust));
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
