@@ -65,31 +65,31 @@ public class Int0802Service {
 				int0802Vo.setDiffDebit(NumberUtils.nullToZero(int0802Vo.getDebit())
 						.subtract(NumberUtils.nullToZero(int0802Vo.getDebit2())));
 
-				/* _______________ summary credit and debit _______________ */
-				sumDebit = NumberUtils.nullToZero(sumDebit.add(NumberUtils.nullToZero(int0802Vo.getDebit())));
-				sumCredit = NumberUtils.nullToZero(sumCredit.add(NumberUtils.nullToZero(int0802Vo.getCredit())));
-
-				/* _______________ summary difference credit and debit _______________ */
-				sumDiffCredit = sumDiffCredit.add(int0802Vo.getDiffCredit());
-				sumDiffDebit = sumDiffDebit.add(int0802Vo.getDiffDebit());
-
-				/* ___________ summary sumBringForward and sumCarryForward ___________ */
-				sumBringForward = sumBringForward.add(NumberUtils.nullToZero(int0802Vo.getBringForward()));
-				sumCarryForward = sumCarryForward.add(NumberUtils.nullToZero(int0802Vo.getCarryForward()));
+//				/* _______________ summary credit and debit _______________ */
+//				sumDebit = NumberUtils.nullToZero(sumDebit.add(NumberUtils.nullToZero(int0802Vo.getDebit())));
+//				sumCredit = NumberUtils.nullToZero(sumCredit.add(NumberUtils.nullToZero(int0802Vo.getCredit())));
+//
+//				/* _______________ summary difference credit and debit _______________ */
+//				sumDiffCredit = sumDiffCredit.add(int0802Vo.getDiffCredit());
+//				sumDiffDebit = sumDiffDebit.add(int0802Vo.getDiffDebit());
+//
+//				/* ___________ summary sumBringForward and sumCarryForward ___________ */
+//				sumBringForward = sumBringForward.add(NumberUtils.nullToZero(int0802Vo.getBringForward()));
+//				sumCarryForward = sumCarryForward.add(NumberUtils.nullToZero(int0802Vo.getCarryForward()));
 			}
 
 			/* _______________ footer _______________ */
-			Int0802Vo footer = new Int0802Vo();
-			footer.setAccName("รวม");
-			footer.setDebit(sumDebit);
-			footer.setCredit(sumCredit);
-			footer.setCredit2(sumCredit2);
-			footer.setDebit2(sumDebit2);
-			footer.setBringForward(sumBringForward);
-			footer.setCarryForward(sumCarryForward);
-			footer.setDiffCredit(sumDiffCredit);
-			footer.setDiffDebit(sumDiffDebit);
-			response.add(footer);
+//			Int0802Vo footer = new Int0802Vo();
+//			footer.setAccName("รวม");
+//			footer.setDebit(sumDebit);
+//			footer.setCredit(sumCredit);
+//			footer.setCredit2(sumCredit2);
+//			footer.setDebit2(sumDebit2);
+//			footer.setBringForward(sumBringForward);
+//			footer.setCarryForward(sumCarryForward);
+//			footer.setDiffCredit(sumDiffCredit);
+//			footer.setDiffDebit(sumDiffDebit);
+//			response.add(footer);
 		}
 		return response;
 	}
@@ -137,35 +137,35 @@ public class Int0802Service {
 				int0802Vo.setDiffDebit(NumberUtils.nullToZero(int0802Vo.getDebit())
 						.subtract(NumberUtils.nullToZero(int0802Vo.getDebit3())));
 
-				/* _______________ summary credit, debit, credit3, debit3 _______________ */
-				sumDebit = NumberUtils.nullToZero(sumDebit.add(NumberUtils.nullToZero(int0802Vo.getDebit())));
-				sumCredit = NumberUtils.nullToZero(sumCredit.add(NumberUtils.nullToZero(int0802Vo.getCredit())));
-				sumDebit3 = NumberUtils.nullToZero(sumDebit3.add(NumberUtils.nullToZero(int0802Vo.getDebit3())));
-				sumDebit3 = NumberUtils.nullToZero(sumCredit3.add(NumberUtils.nullToZero(int0802Vo.getCredit3())));
-
-				/* _______________ summary difference credit2 and debit2 _______________ */
-				sumDiffCredit = sumDiffCredit.add(int0802Vo.getDiffCredit());
-				sumDiffDebit = sumDiffDebit.add(int0802Vo.getDiffDebit());
-
-				/* ___________ summary sumBringForward and sumCarryForward ___________ */
-				sumBringForward = sumBringForward.add(NumberUtils.nullToZero(int0802Vo.getBringForward()));
-				sumCarryForward = sumCarryForward.add(NumberUtils.nullToZero(int0802Vo.getCarryForward()));
+//				/* _______________ summary credit, debit, credit3, debit3 _______________ */
+//				sumDebit = NumberUtils.nullToZero(sumDebit.add(NumberUtils.nullToZero(int0802Vo.getDebit())));
+//				sumCredit = NumberUtils.nullToZero(sumCredit.add(NumberUtils.nullToZero(int0802Vo.getCredit())));
+//				sumDebit3 = NumberUtils.nullToZero(sumDebit3.add(NumberUtils.nullToZero(int0802Vo.getDebit3())));
+//				sumDebit3 = NumberUtils.nullToZero(sumCredit3.add(NumberUtils.nullToZero(int0802Vo.getCredit3())));
+//
+//				/* _______________ summary difference credit2 and debit2 _______________ */
+//				sumDiffCredit = sumDiffCredit.add(int0802Vo.getDiffCredit());
+//				sumDiffDebit = sumDiffDebit.add(int0802Vo.getDiffDebit());
+//
+//				/* ___________ summary sumBringForward and sumCarryForward ___________ */
+//				sumBringForward = sumBringForward.add(NumberUtils.nullToZero(int0802Vo.getBringForward()));
+//				sumCarryForward = sumCarryForward.add(NumberUtils.nullToZero(int0802Vo.getCarryForward()));
 			}
 
 			/* _______________ footer _______________ */
-			Int0802Vo footer = new Int0802Vo();
-			footer.setAccName("รวม");
-			footer.setDebit(sumDebit);
-			footer.setCredit(sumCredit);
-			footer.setCredit2(sumCredit2);
-			footer.setDebit2(sumDebit2);
-			footer.setCredit3(sumCredit3);
-			footer.setDebit3(sumDebit3);
-			footer.setBringForward(sumBringForward);
-			footer.setCarryForward(sumCarryForward);
-			footer.setDiffCredit(sumDiffCredit);
-			footer.setDiffDebit(sumDiffDebit);
-			response.add(footer);
+//			Int0802Vo footer = new Int0802Vo();
+//			footer.setAccName("รวม");
+//			footer.setDebit(sumDebit);
+//			footer.setCredit(sumCredit);
+//			footer.setCredit2(sumCredit2);
+//			footer.setDebit2(sumDebit2);
+//			footer.setCredit3(sumCredit3);
+//			footer.setDebit3(sumDebit3);
+//			footer.setBringForward(sumBringForward);
+//			footer.setCarryForward(sumCarryForward);
+//			footer.setDiffCredit(sumDiffCredit);
+//			footer.setDiffDebit(sumDiffDebit);
+//			response.add(footer);
 		}
 		return response;
 	}
