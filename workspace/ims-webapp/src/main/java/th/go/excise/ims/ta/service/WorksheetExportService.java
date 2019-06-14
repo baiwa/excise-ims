@@ -122,7 +122,7 @@ public class WorksheetExportService {
 		
 		// Column Width
 		setColumnWidth(sheet, 0, formVo.getDateRange());
-		setMergeCell(sheet, formVo.getDateRange());
+//		setMergeCell(sheet, formVo.getDateRange());
 		
 		byte[] content = null;
 		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {

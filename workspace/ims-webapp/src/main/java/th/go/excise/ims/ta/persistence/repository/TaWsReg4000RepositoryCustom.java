@@ -6,6 +6,7 @@ import java.util.Map;
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanVo;
+import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 import th.go.excise.ims.ta.vo.WsReg4000Vo;
 import th.go.excise.ims.ta.vo.WsRegfri4000FormVo;
@@ -26,4 +27,5 @@ public interface TaWsReg4000RepositoryCustom {
 	
 	public Map<String, List<String>> findDutyByNewRegId(List<String> newRegIdList);
 	
+	public List<TaxOperatorDetailVo> findByCriteriaTest(TaxOperatorFormVo formVo , Map<String, String> auditPlanMap ,Map<String, String> maxYearMap , String incomeTaxType);
 }

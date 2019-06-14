@@ -1,6 +1,8 @@
 package th.go.excise.ims.ta.vo;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 public class WsReg4000Vo {
 
@@ -28,6 +30,7 @@ public class WsReg4000Vo {
 	private String dutyGroupId;
 	private String dutyGroupDesc;
 	private String multiDutyFlag;
+	private List<BigDecimal> amtList;
 
 	public String getNewRegId() {
 		return newRegId;
@@ -219,6 +222,14 @@ public class WsReg4000Vo {
 
 	public void setMultiDutyFlag(String multiDutyFlag) {
 		this.multiDutyFlag = multiDutyFlag;
+	}
+
+	public List<BigDecimal> getAmtList() {
+		return amtList;
+	}
+
+	public void setAmtList(List<BigDecimal> amtList) {
+		this.amtList = amtList;
 	}
 
 }

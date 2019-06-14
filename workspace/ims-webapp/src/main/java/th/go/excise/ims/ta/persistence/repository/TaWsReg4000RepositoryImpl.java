@@ -1,7 +1,10 @@
 package th.go.excise.ims.ta.persistence.repository;
 
+import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,10 +27,15 @@ import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CONFIG;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanVo;
+import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 import th.go.excise.ims.ta.vo.WsReg4000Vo;
 import th.go.excise.ims.ta.vo.WsRegfri4000FormVo;
@@ -43,61 +51,18 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 	@Override
 	public void batchMerge(List<TaWsReg4000> taWsReg4000List) {
 		logger.info("batchMerge taWsReg4000List.size()={}", taWsReg4000List.size());
-		
+
 		final int BATCH_SIZE = 1000;
-		
-		List<String> updateColumnNames = new ArrayList<>(Arrays.asList(
-			"REG4000.CUS_ID = ?",
-			"REG4000.CUS_FULLNAME = ?",
-			"REG4000.CUS_ADDRESS = ?",
-			"REG4000.CUS_TELNO = ?",
-			"REG4000.CUS_EMAIL = ?",
-			"REG4000.CUS_URL = ?",
-			"REG4000.FAC_ID = ?",
-			"REG4000.FAC_FULLNAME = ?",
-			"REG4000.FAC_ADDRESS = ?",
-			"REG4000.FAC_TELNO = ?",
-			"REG4000.FAC_EMAIL = ?",
-			"REG4000.FAC_URL = ?",
-			"REG4000.FAC_TYPE = ?",
-			"REG4000.REG_ID = ?",
-			"REG4000.REG_STATUS = ?",
-			"REG4000.REG_DATE = ?",
-			"REG4000.REG_CAPITAL = ?",
-			"REG4000.OFFICE_CODE = ?",
-			"REG4000.ACTIVE_FLAG = ?",
-			"REG4000.IS_DELETED = ?",
-			"REG4000.UPDATED_BY = ?",
-			"REG4000.UPDATED_DATE = ?"
-		));
-		
-		List<String> insertColumnNames = new ArrayList<>(Arrays.asList(
-			"REG4000.WS_REG4000_ID",
-			"REG4000.NEW_REG_ID",
-			"REG4000.CUS_ID",
-			"REG4000.CUS_FULLNAME",
-			"REG4000.CUS_ADDRESS",
-			"REG4000.CUS_TELNO",
-			"REG4000.CUS_EMAIL",
-			"REG4000.CUS_URL",
-			"REG4000.FAC_ID",
-			"REG4000.FAC_FULLNAME",
-			"REG4000.FAC_ADDRESS",
-			"REG4000.FAC_TELNO",
-			"REG4000.FAC_EMAIL",
-			"REG4000.FAC_URL",
-			"REG4000.FAC_TYPE",
-			"REG4000.REG_ID",
-			"REG4000.REG_STATUS",
-			"REG4000.REG_DATE",
-			"REG4000.REG_CAPITAL",
-			"REG4000.OFFICE_CODE",
-			"REG4000.ACTIVE_FLAG",
-			"REG4000.DUTY_CODE",
-			"REG4000.CREATED_BY",
-			"REG4000.CREATED_DATE"
-		));
-		
+
+		List<String> updateColumnNames = new ArrayList<>(Arrays.asList("REG4000.CUS_ID = ?", "REG4000.CUS_FULLNAME = ?", "REG4000.CUS_ADDRESS = ?", "REG4000.CUS_TELNO = ?", "REG4000.CUS_EMAIL = ?", "REG4000.CUS_URL = ?",
+				"REG4000.FAC_ID = ?", "REG4000.FAC_FULLNAME = ?", "REG4000.FAC_ADDRESS = ?", "REG4000.FAC_TELNO = ?", "REG4000.FAC_EMAIL = ?", "REG4000.FAC_URL = ?", "REG4000.FAC_TYPE = ?", "REG4000.REG_ID = ?",
+				"REG4000.REG_STATUS = ?", "REG4000.REG_DATE = ?", "REG4000.REG_CAPITAL = ?", "REG4000.OFFICE_CODE = ?", "REG4000.ACTIVE_FLAG = ?", "REG4000.IS_DELETED = ?", "REG4000.UPDATED_BY = ?",
+				"REG4000.UPDATED_DATE = ?"));
+
+		List<String> insertColumnNames = new ArrayList<>(Arrays.asList("REG4000.WS_REG4000_ID", "REG4000.NEW_REG_ID", "REG4000.CUS_ID", "REG4000.CUS_FULLNAME", "REG4000.CUS_ADDRESS", "REG4000.CUS_TELNO",
+				"REG4000.CUS_EMAIL", "REG4000.CUS_URL", "REG4000.FAC_ID", "REG4000.FAC_FULLNAME", "REG4000.FAC_ADDRESS", "REG4000.FAC_TELNO", "REG4000.FAC_EMAIL", "REG4000.FAC_URL", "REG4000.FAC_TYPE", "REG4000.REG_ID",
+				"REG4000.REG_STATUS", "REG4000.REG_DATE", "REG4000.REG_CAPITAL", "REG4000.OFFICE_CODE", "REG4000.ACTIVE_FLAG", "REG4000.DUTY_CODE", "REG4000.CREATED_BY", "REG4000.CREATED_DATE"));
+
 		StringBuilder sql = new StringBuilder();
 		sql.append(" MERGE INTO TA_WS_REG4000 REG4000 ");
 		sql.append(" USING DUAL ");
@@ -111,7 +76,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		sql.append(" WHEN NOT MATCHED THEN ");
 		sql.append("   INSERT (" + org.springframework.util.StringUtils.collectionToDelimitedString(insertColumnNames, ",") + ") ");
 		sql.append("   VALUES (TA_WS_REG4000_SEQ.NEXTVAL" + StringUtils.repeat(",?", insertColumnNames.size() - 1) + ") ");
-		
+
 		commonJdbcTemplate.batchUpdate(sql.toString(), taWsReg4000List, BATCH_SIZE, new ParameterizedPreparedStatementSetter<TaWsReg4000>() {
 			public void setValues(PreparedStatement ps, TaWsReg4000 wsReg4000) throws SQLException {
 				List<Object> paramList = new ArrayList<>();
@@ -175,7 +140,6 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		sql.append(" FROM TA_WS_REG4000 R4000 ");
 		sql.append(" INNER JOIN TA_WS_REG4000_DUTY R4000D ON R4000D.NEWREG_ID = R4000.NEW_REG_ID ");
 		sql.append(" WHERE R4000.IS_DELETED = 'N' ");
-		
 
 		// Factory Type
 		if (StringUtils.isNotBlank(formVo.getFacType())) {
@@ -206,18 +170,18 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 			sql.append(" AND R4000.CUS_FULLNAME LIKE ?");
 			params.add("%" + StringUtils.trim(formVo.getCusFullname()) + "%");
 		}
-		
+
 		// newRegId
-		if(StringUtils.isNotBlank(formVo.getNewRegId())) {
+		if (StringUtils.isNotBlank(formVo.getNewRegId())) {
 			sql.append(" AND R4000.NEW_REG_ID = ?");
 			params.add(StringUtils.trim(formVo.getNewRegId()));
 		}
-		
-		if(StringUtils.isNotBlank(formVo.getCuscatId())) {
+
+		if (StringUtils.isNotBlank(formVo.getCuscatId())) {
 			sql.append(" AND R4000.CUSCAT_ID = ?");
 			params.add(StringUtils.trim(formVo.getCuscatId()));
 		}
-		if(StringUtils.isNotBlank(formVo.getPinnitId())) {
+		if (StringUtils.isNotBlank(formVo.getPinnitId())) {
 			sql.append(" AND R4000.PINNIT_ID = ?");
 			params.add(StringUtils.trim(formVo.getPinnitId()));
 		}
@@ -235,10 +199,190 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		if (StringUtils.isNotBlank(formVo.getFlagPage())) {
 			return this.commonJdbcTemplate.query(sql.toString(), params.toArray(), wsReg4000RowMapper);
 		} else {
-			return this.commonJdbcTemplate.query(
-				OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()),
-				params.toArray(),
-				wsReg4000RowMapper);
+			return this.commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(), wsReg4000RowMapper);
+		}
+	}
+
+	@Override
+	public List<TaxOperatorDetailVo> findByCriteriaTest(TaxOperatorFormVo formVo, Map<String, String> auditPlanMap, Map<String, String> maxYearMap, String incomeTaxType) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		sql.append(" SELECT DISTINCT R.NEW_REG_ID ");
+		sql.append("   ,D.GROUP_ID ");
+		sql.append("   ,D.GROUP_NAME ");
+		sql.append("   ,R.CUS_FULLNAME ");
+		sql.append("   ,R.FAC_FULLNAME ");
+		sql.append("   ,R.FAC_ADDRESS ");
+		sql.append("   ,R.OFFICE_CODE ");
+		sql.append("   ,R.REG_STATUS ");
+		sql.append("   ,R.REG_STATUS_DESC ");
+		sql.append("   ,R.REG_DATE ");
+		sql.append("   ,R.REG_CAPITAL ");
+		sql.append("   ,R.MULTI_DUTY_FLAG ");
+		sql.append("   ,M.* ");
+		sql.append(" FROM TA_WS_REG4000 R ");
+		sql.append(" LEFT JOIN TA_WS_REG4000_DUTY D ON D.NEWREG_ID = R.NEW_REG_ID ");
+		sql.append(" LEFT JOIN ( ");
+		sql.append("   SELECT * ");
+		sql.append("   FROM ( ");
+		sql.append("     SELECT NEW_REG_ID ");
+		sql.append("       ,DUTY_CODE ");
+		sql.append("       ,TAX_YEAR || TAX_MONTH AS YEAR_MONTH ");
+		if (TA_CONFIG.INCOME_TYPE_TAX.equals(incomeTaxType)) {
+			sql.append("       ,SUM(TAX_AMOUNT) AS TAX_AMOUNT ");
+		} else {
+			sql.append("       ,SUM(NET_TAX_AMOUNT) AS TAX_AMOUNT ");
+		}
+		sql.append("     FROM TA_WS_INC8000_M ");
+		sql.append("     GROUP BY NEW_REG_ID, TAX_YEAR, TAX_MONTH, DUTY_CODE ");
+		sql.append("   ) PIVOT (SUM(TAX_AMOUNT) FOR YEAR_MONTH IN (").append(org.springframework.util.StringUtils.collectionToDelimitedString(formVo.getYearMonthList(), ",")).append(")) ");
+		sql.append(" ) M ON M.NEW_REG_ID = R.NEW_REG_ID ");
+		sql.append("   AND D.GROUP_ID = M.DUTY_CODE ");
+		sql.append(" WHERE R.IS_DELETED = 'N' ");
+		if (StringUtils.isNotBlank(formVo.getFacType())) {
+			params.add(formVo.getFacType());
+			sql.append(" AND R.FAC_TYPE = ?");
+		}
+		if (StringUtils.isNotBlank(formVo.getDutyCode())) {
+			sql.append(" AND R.GROUP_ID = ?");
+			params.add(formVo.getDutyCode());
+		}
+		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
+			sql.append(" AND R.OFFICE_CODE LIKE ?");
+			params.add(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
+		}
+		if (StringUtils.isNotBlank(formVo.getFacFullname())) {
+			sql.append(" AND R.FAC_FULLNAME LIKE ?");
+			params.add("%" + StringUtils.trim(formVo.getFacFullname()) + "%");
+		}
+		if (StringUtils.isNotBlank(formVo.getCusFullname())) {
+			sql.append(" AND R.CUS_FULLNAME LIKE ?");
+			params.add("%" + StringUtils.trim(formVo.getCusFullname()) + "%");
+		}
+		if (StringUtils.isNotBlank(formVo.getNewRegId())) {
+			sql.append(" AND R.NEW_REG_ID = ?");
+			params.add(StringUtils.trim(formVo.getNewRegId()));
+		}
+		if (StringUtils.isNotBlank(formVo.getCuscatId())) {
+			sql.append(" AND R.CUSCAT_ID = ?");
+			params.add(StringUtils.trim(formVo.getCuscatId()));
+		}
+		if (StringUtils.isNotBlank(formVo.getPinnitId())) {
+			sql.append(" AND R.PINNIT_ID = ?");
+			params.add(StringUtils.trim(formVo.getPinnitId()));
+		}
+		sql.append(" AND R.REG_STATUS IN ('1','2','3','41','51') ");
+
+		List<TaxOperatorDetailVo> taxOperatorDetailVoList = commonJdbcTemplate.query(sql.toString(), params.toArray(), new ResultSetExtractor<List<TaxOperatorDetailVo>>() {
+
+			public List<TaxOperatorDetailVo> extractData(ResultSet rs) throws SQLException, DataAccessException {
+
+				int budget = Integer.parseInt(formVo.getBudgetYear());
+				List<TaxOperatorDetailVo> toList = new ArrayList<>();
+				TaxOperatorDetailVo detailVo = null;
+				ResultSetMetaData rsmd = rs.getMetaData();
+				ExciseDepartment exciseDeptSector;
+				ExciseDepartment exciseDeptArea;
+				Map<String, Integer> incMultiDutyMap = new HashMap<>();
+				while (rs.next()) {
+					detailVo = new TaxOperatorDetailVo();
+					detailVo.setNewRegId(rs.getString("NEW_REG_ID"));
+					detailVo.setDutyCode(rs.getString("GROUP_ID"));
+					detailVo.setDutyName(rs.getString("GROUP_NAME"));
+					detailVo.setCusFullname(rs.getString("CUS_FULLNAME"));
+					detailVo.setFacFullname(rs.getString("FAC_FULLNAME"));
+					detailVo.setFacAddress(rs.getString("FAC_ADDRESS"));
+					detailVo.setOfficeCode(rs.getString("OFFICE_CODE"));
+					detailVo.setMultiDutyFlag(rs.getString("MULTI_DUTY_FLAG"));
+					detailVo.setRegStatus(rs.getString("REG_STATUS_DESC") + " " + ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), "dd/MM/yy", ConvertDateUtils.LOCAL_TH));
+					detailVo.setRegCapital(rs.getString("REG_CAPITAL"));
+					detailVo.setTaxAuditLast1(auditPlanMap.get(String.valueOf(budget - 1) + detailVo.getNewRegId()));
+					detailVo.setTaxAuditLast2(auditPlanMap.get(String.valueOf(budget - 2) + detailVo.getNewRegId()));
+					detailVo.setTaxAuditLast3(auditPlanMap.get(String.valueOf(budget - 3) + detailVo.getNewRegId()));
+					detailVo.setLastAuditYear(maxYearMap.get(detailVo.getNewRegId()));
+					BigDecimal sumFirst = new BigDecimal("0");
+					BigDecimal sumLast = new BigDecimal("0");
+					int indKey = 1;
+					int indKey2 = 1;
+					int taxMonthNo = 0;
+					String columnName = "";
+
+					for (int i = 15; i <= rsmd.getColumnCount(); i++) {
+						columnName = rsmd.getColumnName(i);
+						if (columnName.indexOf("G1") >= 2) {
+							if (rs.getString(columnName) != null) {
+								taxMonthNo++;
+								setTaxAmount(detailVo, "G1M" + indKey, rs.getString(columnName));
+								sumFirst = sumFirst.add(NumberUtils.nullToZero(NumberUtils.toBigDecimal(rs.getString(columnName))));
+							} else {
+								setTaxAmount(detailVo, "G1M" + indKey, "-");
+							}
+						} else {
+							if (rs.getString(columnName) != null) {
+								taxMonthNo++;
+								setTaxAmount(detailVo, "G2M" + indKey2, rs.getString(columnName));
+								sumLast = sumLast.add(NumberUtils.nullToZero(NumberUtils.toBigDecimal(rs.getString(columnName))));
+							} else {
+								setTaxAmount(detailVo, "G2M" + indKey2, "-");
+							}
+							indKey2++;
+						}
+						indKey++;
+					}
+
+					detailVo.setTaxMonthNo(String.valueOf(taxMonthNo));
+					exciseDeptSector = ApplicationCache.getExciseDepartment(detailVo.getOfficeCode().substring(0, 2) + "0000");
+					if (exciseDeptSector != null) {
+						detailVo.setSecCode(exciseDeptSector.getOfficeCode());
+						detailVo.setSecDesc(exciseDeptSector.getDeptShortName());
+					}
+
+					exciseDeptArea = ApplicationCache.getExciseDepartment(detailVo.getOfficeCode().substring(0, 4) + "00");
+					if (exciseDeptArea != null) {
+						detailVo.setAreaCode(exciseDeptArea.getOfficeCode());
+						detailVo.setAreaDesc(exciseDeptArea.getDeptShortName());
+					}
+
+					detailVo.setSumTaxAmtG1(BigDecimal.ZERO.equals(sumFirst) ? "-" : (sumFirst.setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
+					detailVo.setSumTaxAmtG2(BigDecimal.ZERO.equals(sumLast) ? "-" : (sumLast.setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
+					BigDecimal percentTax = NumberUtils.calculatePercent(sumFirst, sumLast);
+					detailVo.setTaxAmtChnPnt(BigDecimal.ZERO.equals(percentTax) ? "-" : percentTax.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+					Integer incMultiDutyCount = 0;
+					incMultiDutyCount = incMultiDutyMap.get(detailVo.getNewRegId());
+					if (incMultiDutyCount == null) {
+						incMultiDutyCount = 0;
+					}
+					if (taxMonthNo > 0) {
+						incMultiDutyCount++;
+					}
+					incMultiDutyMap.put(detailVo.getNewRegId(), incMultiDutyCount);
+					toList.add(detailVo);
+
+				}
+				calculateIncMultiDuty(toList, incMultiDutyMap);
+				logger.info("End : {}", toList.size());
+				return toList;
+			}
+		});
+
+		return taxOperatorDetailVoList;
+	}
+
+	private void calculateIncMultiDuty(List<TaxOperatorDetailVo> detailVoList, Map<String, Integer> incMultiDutyMap) {
+		for (TaxOperatorDetailVo detailVo : detailVoList) {
+			int incMultiDutyCount = incMultiDutyMap.get(detailVo.getNewRegId());
+			if (incMultiDutyCount > 1) {
+				detailVo.setIncMultiDutyFlag(FLAG.Y_FLAG);
+			}
+		}
+	}
+
+	private void setTaxAmount(TaxOperatorDetailVo detailVo, String groupMonthNo, String taxAmount) {
+		try {
+			Method method = TaxOperatorDetailVo.class.getDeclaredMethod("setTaxAmt" + groupMonthNo, String.class);
+			method.invoke(detailVo, taxAmount);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 		}
 	}
 
@@ -322,7 +466,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		sql.append("   AND R4000.IS_DELETED = 'N' ");
 		sql.append("   AND R4000.OFFICE_CODE LIKE ? ");
 		params.add(formVo.getOfficeCode());
-		
+
 		// REG STATUS
 		if (formVo.getRegStatus() != null && formVo.getRegStatus().size() > 0) {
 			sql.append(" AND R4000.REG_STATUS IN ( ");
@@ -330,13 +474,13 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 			sql.append(" ) ");
 			params.addAll(formVo.getRegStatus());
 		}
-		
+
 		// DUTY GROUP
 		if (StringUtils.isNotBlank(formVo.getFacType())) {
 			sql.append(" AND DUTY_TYPE_LIST.DUTY_GROUP_TYPE LIKE ? ");
 			params.add("%" + formVo.getFacType() + "%");
 		}
-		
+
 		// CUS FULLNAME
 		if (StringUtils.isNotBlank(formVo.getCusFullname())) {
 			sql.append(" AND R4000.CUS_FULLNAME LIKE ? ");
@@ -354,25 +498,25 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 			sql.append(" AND DUTY_CODE_LIST.DUTY_GROUP_ID LIKE ? ");
 			params.add("%" + formVo.getDutyCode() + "%");
 		}
-		
+
 		// CUS TYPE
 		if (StringUtils.isNotBlank(formVo.getCusType())) {
 			sql.append(" AND R4000.CUSCAT_ID = ? ");
 			params.add(formVo.getCusType());
 		}
-		
+
 		// CUS ID
 		if (StringUtils.isNotBlank(formVo.getCusId())) {
 			sql.append(" AND R4000.PINNIT_ID = ? ");
 			params.add(formVo.getCusId());
 		}
-		
+
 		// REG DATE START
 		if (formVo.getFromDate() != null) {
 			sql.append(" AND R4000.REG_DATE >= TO_DATE(?, 'YYYYMMDD') ");
 			params.add(ConvertDateUtils.formatDateToString(formVo.getFromDate(), ConvertDateUtils.YYYYMMDD, Locale.US));
 		}
-		
+
 		// REG DATE END
 		if (formVo.getToDate() != null) {
 			sql.append(" AND R4000.REG_DATE <= TO_DATE(?, 'YYYYMMDD') ");
@@ -423,7 +567,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
-		
+
 		sql.append(" SELECT R4000.*, R4000D.GROUP_ID, R4000D.GROUP_NAME ");
 		sql.append(" FROM TA_WS_REG4000 R4000 ");
 		sql.append(" INNER JOIN TA_WS_REG4000_DUTY R4000D ON R4000D.NEWREG_ID = R4000.NEW_REG_ID ");
@@ -468,7 +612,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 				return vo;
 			}
 		});
-		
+
 		return result;
 	}
 
@@ -481,10 +625,10 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		sql.append(StringUtils.repeat("?", ",", newRegIdList.size()));
 		sql.append(" ) ");
 		sql.append(" ORDER BY NEWREG_ID, GROUP_ID ");
-		
+
 		List<Object> paramList = new ArrayList<>();
 		paramList.addAll(newRegIdList);
-		
+
 		Map<String, List<String>> dutyMap = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), new ResultSetExtractor<Map<String, List<String>>>() {
 			public Map<String, List<String>> extractData(ResultSet rs) throws SQLException, DataAccessException {
 				Map<String, List<String>> tmpDutyMap = new HashMap<>();
@@ -503,5 +647,5 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 
 		return dutyMap;
 	}
-	
+
 }

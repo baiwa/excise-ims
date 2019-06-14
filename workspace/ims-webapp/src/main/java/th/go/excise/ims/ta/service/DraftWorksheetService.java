@@ -1,7 +1,6 @@
 package th.go.excise.ims.ta.service;
 
 import java.lang.reflect.Method;
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,9 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants;
-import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
-import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CONFIG;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
@@ -31,7 +28,6 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
 import th.go.excise.ims.common.util.ExciseUtils;
-import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainHdr;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondSubCapital;
@@ -64,7 +60,6 @@ import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 import th.go.excise.ims.ta.vo.TaxOperatorVo;
 import th.go.excise.ims.ta.vo.WorksheetDateRangeVo;
-import th.go.excise.ims.ta.vo.WsReg4000Vo;
 import th.go.excise.ims.ta.vo.YearMonthVo;
 
 @Service
@@ -128,7 +123,6 @@ public class DraftWorksheetService {
 		logger.info("prepareTaxOperatorDetailVoList startDate={}, endDate={}, dateRange={}", formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
 		long start = System.currentTimeMillis();
 		
-		final int MAX_MONTH = 18; // 3 years
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		formVo.setOfficeCode(officeCode);
 		String budgetYear = formVo.getBudgetYear();
@@ -137,7 +131,13 @@ public class DraftWorksheetService {
 		WorksheetDateRangeVo dateRangeVo = TaxAuditUtils.getWorksheetDateRangeVo(formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange(), condMainHdr.getCompType());
 		List<LocalDate> subLocalDateG1List = dateRangeVo.getSubLocalDateG1List();
 		List<LocalDate> subLocalDateG2List = dateRangeVo.getSubLocalDateG2List();
-		
+		List<String> monthList = new ArrayList<>();
+		for (int i = 0 ; i < subLocalDateG1List.size() ; i++) {
+			monthList.add("'"+ConvertDateUtils.formatLocalDateToString(subLocalDateG1List.get(i), ConvertDateUtils.YYYYMM , ConvertDateUtils.LOCAL_EN) + "' AS taxAmtG1M"+(i+1));
+		}
+		for (int i = 0 ; i < subLocalDateG2List.size() ; i++) {
+			monthList.add("'"+ConvertDateUtils.formatLocalDateToString(subLocalDateG2List.get(i), ConvertDateUtils.YYYYMM , ConvertDateUtils.LOCAL_EN) + "' AS taxAmtG2M"+(i+1));
+		}
 		Map<String, String> auditPlanMap = new HashMap<>();
 		int lastYear1 = 0;
 		int lastYear2 = 0;
@@ -154,7 +154,6 @@ public class DraftWorksheetService {
 		}
 
 		Map<String, String> maxYearMap = taPlanWorksheetHisRepository.findMaxTaxAuditYear();
-		
 		//==> Check TAX, NET
 		String incomeTaxType = null;
 		ParamInfo taxType = ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.INCOME_TYPE);
@@ -163,147 +162,8 @@ public class DraftWorksheetService {
 		} else {
 			incomeTaxType = TA_CONFIG.INCOME_TYPE_TAX;
 		}
-
-		List<WsReg4000Vo> wsReg4000List = taWsReg4000Repository.findByCriteria(formVo);
-		Map<String, BigDecimal> incomeMap = null;
-		BigDecimal sumTaxAmtG1 = null;
-		BigDecimal sumTaxAmtG2 = null;
-		BigDecimal taxAmtChnPnt = null;
-		ExciseDepartment exciseDeptSector = null;
-		ExciseDepartment exciseDeptArea = null;
-		String taxAmount = null;
-		List<Double> taxAmountList = null;
-		Map<String, Integer> incMultiDutyMap = new HashMap<>();
-
-		TaxOperatorDetailVo detailVo = null;
-		List<TaxOperatorDetailVo> detailVoList = new ArrayList<>();
-		String tmpYearMonth = null;
-		BigDecimal tmpTaxAmount = null;
-		for (WsReg4000Vo wsReg4000 : wsReg4000List) {
-			//logger.debug("wsReg4000.newRegId={}", wsReg4000.getNewRegId());
-			
-			// Check RegDate first
-			// Check Inc8000M will payment
-//			incomeMap = taWsInc8000MRepository.findByMonthRangeDuty(wsReg4000.getNewRegId(), wsReg4000.getDutyGroupId(), ymStartInc8000M, ymEndInc8000M, incomeTaxType);
-//			if (incomeMap == null && !LocalDateUtils.isRange(condMainHdr.getRegDateStart(), condMainHdr.getRegDateEnd(), wsReg4000.getRegDate())) {
-//				continue;
-//			}
-//			
-			int countTaxMonthNo = 0;
-			int countG1 = 0;
-			int countG2 = 0;
-			sumTaxAmtG1 = BigDecimal.ZERO;
-			sumTaxAmtG2 = BigDecimal.ZERO;
-			taxAmountList = new ArrayList<>();
-
-			detailVo = new TaxOperatorDetailVo();
-			detailVo.setDutyCode(wsReg4000.getDutyGroupId());
-			detailVo.setDutyName(wsReg4000.getDutyGroupDesc());
-			detailVo.setNewRegId(wsReg4000.getNewRegId());
-			detailVo.setCusFullname(wsReg4000.getCusFullname());
-			detailVo.setFacFullname(wsReg4000.getFacFullname());
-			detailVo.setFacAddress(wsReg4000.getFacAddress());
-			detailVo.setOfficeCode(wsReg4000.getOfficeCode());
-			detailVo.setRegStatus(wsReg4000.getRegStatusDesc() + " " + ConvertDateUtils.formatLocalDateToString(wsReg4000.getRegDate(), "dd/MM/yy", ConvertDateUtils.LOCAL_TH));
-			detailVo.setRegCapital(wsReg4000.getRegCapital());
-			detailVo.setTaxAuditLast1(auditPlanMap.get(String.valueOf(lastYear1) + wsReg4000.getNewRegId()));
-			detailVo.setTaxAuditLast2(auditPlanMap.get(String.valueOf(lastYear2) + wsReg4000.getNewRegId()));
-			detailVo.setTaxAuditLast3(auditPlanMap.get(String.valueOf(lastYear3) + wsReg4000.getNewRegId()));
-			detailVo.setLastAuditYear(maxYearMap.get(wsReg4000.getNewRegId()));
-			detailVo.setMultiDutyFlag(wsReg4000.getMultiDutyFlag());
-			
-			exciseDeptSector = ApplicationCache.getExciseDepartment(wsReg4000.getOfficeCode().substring(0, 2) + "0000");
-			if (exciseDeptSector != null) {
-				detailVo.setSecCode(exciseDeptSector.getOfficeCode());
-				detailVo.setSecDesc(exciseDeptSector.getDeptShortName());
-			}
-			
-			exciseDeptArea = ApplicationCache.getExciseDepartment(wsReg4000.getOfficeCode().substring(0, 4) + "00");
-			if (exciseDeptArea != null) {
-				detailVo.setAreaCode(exciseDeptArea.getOfficeCode());
-				detailVo.setAreaDesc(exciseDeptArea.getDeptShortName());
-			}
-			
-			// Initial incMultiDutyCount
-			int incMultiDutyCount = 0;
-			if (!incMultiDutyMap.containsKey(wsReg4000.getNewRegId())) {
-				incMultiDutyMap.put(wsReg4000.getNewRegId(), incMultiDutyCount);
-			}
-
-			incomeMap = taWsInc8000MRepository.findByMonthRangeDuty(wsReg4000.getNewRegId(), wsReg4000.getDutyGroupId(), dateRangeVo, incomeTaxType);
-			if (incomeMap.size() == 0) {
-				// Set Default Value
-				taxAmount = NO_TAX_AMOUNT;
-				for (int i = 1; i <= MAX_MONTH; i++) {
-					setTaxAmount(detailVo, "G1M" + i, taxAmount);
-				}
-				for (int i = 1; i <= MAX_MONTH; i++) {
-					setTaxAmount(detailVo, "G2M" + i, taxAmount);
-				}
-				detailVo.setSumTaxAmtG1(taxAmount);
-				detailVo.setSumTaxAmtG2(taxAmount);
-				detailVo.setTaxMonthNo(String.valueOf(BigDecimal.ZERO));
-				detailVo.setTaxAmtChnPnt(taxAmount);
-				detailVo.setTaxAmtSd(taxAmount);
-				detailVo.setTaxAmtMean(taxAmount);
-				detailVo.setTaxAmtMaxPnt(taxAmount);
-				detailVo.setTaxAmtMinPnt(taxAmount);
-				detailVoList.add(detailVo);
-				continue;
-			}
-			
-			// Count incMultiDuty
-			incMultiDutyCount = incMultiDutyMap.get(wsReg4000.getNewRegId()).intValue();
-			incMultiDutyCount++;
-			incMultiDutyMap.put(wsReg4000.getNewRegId(), incMultiDutyCount);
-
-			// Group 1
-			for (LocalDate localDate : subLocalDateG1List) {
-				tmpYearMonth = String.valueOf(localDate.getYear()) + StringUtils.leftPad(String.valueOf(localDate.getMonthValue()), 2, "0");
-				tmpTaxAmount = incomeMap.get(tmpYearMonth);
-				if (tmpTaxAmount != null) {
-					taxAmount = tmpTaxAmount.toString();
-					taxAmountList.add(tmpTaxAmount.doubleValue());
-					sumTaxAmtG1 = sumTaxAmtG1.add(tmpTaxAmount);
-					countTaxMonthNo++;
-				} else {
-					taxAmount = NO_TAX_AMOUNT;
-				}
-				countG1++;
-				setTaxAmount(detailVo, "G1M" + countG1, taxAmount);
-			}
-			// Group 2
-			for (LocalDate localDate : subLocalDateG2List) {
-				tmpYearMonth = String.valueOf(localDate.getYear()) + StringUtils.leftPad(String.valueOf(localDate.getMonthValue()), 2, "0");
-				tmpTaxAmount = incomeMap.get(tmpYearMonth);
-				if (tmpTaxAmount != null) {
-					taxAmount = tmpTaxAmount.toString();
-					taxAmountList.add(tmpTaxAmount.doubleValue());
-					sumTaxAmtG2 = sumTaxAmtG2.add(tmpTaxAmount);
-					countTaxMonthNo++;
-				} else {
-					taxAmount = NO_TAX_AMOUNT;
-				}
-				countG2++;
-				setTaxAmount(detailVo, "G2M" + countG2, taxAmount);
-			}
-
-			detailVo.setSumTaxAmtG1((sumTaxAmtG1.setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
-			detailVo.setSumTaxAmtG2((sumTaxAmtG2.setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
-			detailVo.setTaxMonthNo(String.valueOf(countTaxMonthNo));
-
-			// Calculate Percentage
-			taxAmtChnPnt = NumberUtils.calculatePercent(sumTaxAmtG1, sumTaxAmtG2);
-			detailVo.setTaxAmtChnPnt(taxAmtChnPnt.toString());
-
-			// Calculate S.D.
-			calculateSD(detailVo, taxAmountList);
-
-			detailVoList.add(detailVo);
-		}
-		
-		calculateIncMultiDuty(detailVoList, incMultiDutyMap);
-		
+		formVo.setYearMonthList(monthList);
+		List<TaxOperatorDetailVo> detailVoList = taWsReg4000Repository.findByCriteriaTest(formVo , auditPlanMap , maxYearMap , incomeTaxType);
 		long end = System.currentTimeMillis();
 		System.out.println("Process prepareTaxOperatorDetailVoList Success, using " + ((float) (end - start) / 1000F) + " seconds");
 
@@ -355,14 +215,7 @@ public class DraftWorksheetService {
 		}
 	}
 	
-	private void calculateIncMultiDuty(List<TaxOperatorDetailVo> detailVoList, Map<String, Integer> incMultiDutyMap) {
-		for (TaxOperatorDetailVo detailVo : detailVoList) {
-			int incMultiDutyCount = incMultiDutyMap.get(detailVo.getNewRegId());
-			if (incMultiDutyCount > 1) {
-				detailVo.setIncMultiDutyFlag(FLAG.Y_FLAG);
-			}
-		}
-	}
+	
 
 	@Transactional(rollbackOn = Exception.class)
 	public void saveDraftWorksheet(TaxOperatorFormVo formVo) {

@@ -42,10 +42,13 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	private String newRegFlag;
 	private BigDecimal sumTaxAmStart;
 	private BigDecimal sumTaxAmEnd;
+
 	
 	// new Entity
 	private String cuscatId;
 	private String pinnitId;
+	
+	private List<String> yearMonthList;
 	
 	
 
@@ -319,6 +322,14 @@ public class TaxOperatorFormVo extends DataTableRequest {
 
 	public void setPinnitId(String pinnitId) {
 		this.pinnitId = pinnitId;
+	}
+
+	public List<String> getYearMonthList() {
+		return yearMonthList;
+	}
+
+	public void setYearMonthList(List<String> yearMonthList) {
+		this.yearMonthList = yearMonthList;
 	}
 
 }
