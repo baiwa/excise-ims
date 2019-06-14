@@ -212,7 +212,7 @@ public class WorksheetService {
 			
 			if (!FLAG.Y_FLAG.equals(worksheetDtl.getCondRegDate())) {
 				if (condSubNoAudit != null) {
-					int lastAuditYear = StringUtils.isNotBlank(worksheetDtl.getLastAuditYear()) ? Integer.valueOf(worksheetDtl.getLastAuditYear()) : 0;
+					int lastAuditYear = StringUtils.isNotBlank(taxDraftVo.getLastAuditYear()) ? Integer.valueOf(taxDraftVo.getLastAuditYear()) : 0;
 					int year = Integer.valueOf(worksheetHdr.getBudgetYear()) - lastAuditYear - 1;
 					if (year >= Integer.valueOf(condSubNoAudit.getNoTaxAuditYearNum())) {
 						worksheetDtl.setCondSubNoAudit(FLAG.Y_FLAG);
