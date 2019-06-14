@@ -2,12 +2,14 @@ package th.go.excise.ims.ta.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
@@ -33,7 +36,8 @@ import th.go.excise.ims.ws.vo.WsOasfri0100Vo;
 public class ProductPaperInputMaterialService extends AbstractProductPaperService<ProductPaperInputMaterialVo> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperInputMaterialService.class);
-
+	private static final String DECIMAL_PATTERN = "#,##0.00";
+	DecimalFormat df = new DecimalFormat(DECIMAL_PATTERN);
 	private static final String PRODUCT_PAPER_INPUT_MATERIAL = "ตรวจสอบการรับวัตถุดิบ";
 
 	@Autowired
@@ -199,9 +203,14 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 
 			cell = row.createCell(cellNum);
 			if (EXPORT_TYPE_CREATE.equals(exportType)) {
-				cell.setCellValue(data.getExternalDataQty());
+				cell.setCellValue("");
 			} else {
-				cell.setCellValue(data.getExternalDataQty());
+				if (StringUtils.isNotBlank(data.getExternalDataQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getExternalDataQty())));
+				} else {
+					cell.setCellValue("");
+				}
+
 			}
 			cell.setCellStyle(cellRightBgStyle);
 			cellNum++;
