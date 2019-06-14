@@ -2,6 +2,8 @@
 package th.go.excise.ims.ia.persistence.entity;
 
 import java.math.BigDecimal;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +20,7 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 public class IaExpenses extends BaseEntity {
 
 	private static final long serialVersionUID = -3253860408150851803L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_EXPENSES_GEN")
 	@SequenceGenerator(name = "IA_EXPENSES_GEN", sequenceName = "IA_EXPENSES_SEQ", allocationSize = 1)
@@ -78,6 +80,14 @@ public class IaExpenses extends BaseEntity {
 	private BigDecimal averageFromOut;
 	@Column(name = "AVERAGE_COME_COST_OUT")
 	private String averageComeCostOut;
+	@Column(name = "BUDGET_YEAR")
+	private String budgetYear;
+	@Column(name = "EXPENSE_DATE")
+	private Date expenseDate;
+	@Column(name = "EXPENSE_YEAR")
+	private String expenseYear;
+	@Column(name = "EXPENSE_MONTH")
+	private String expenseMonth;
 
 	public BigDecimal getId() {
 		return id;
@@ -305,6 +315,38 @@ public class IaExpenses extends BaseEntity {
 
 	public void setAverageComeCostOut(String averageComeCostOut) {
 		this.averageComeCostOut = averageComeCostOut;
+	}
+
+	public String getBudgetYear() {
+		return budgetYear;
+	}
+
+	public void setBudgetYear(String budgetYear) {
+		this.budgetYear = budgetYear;
+	}
+
+	public Date getExpenseDate() {
+		return expenseDate;
+	}
+
+	public void setExpenseDate(Date expenseDate) {
+		this.expenseDate = expenseDate;
+	}
+
+	public String getExpenseYear() {
+		return expenseYear;
+	}
+
+	public void setExpenseYear(String expenseYear) {
+		this.expenseYear = expenseYear;
+	}
+
+	public String getExpenseMonth() {
+		return expenseMonth;
+	}
+
+	public void setExpenseMonth(String expenseMonth) {
+		this.expenseMonth = expenseMonth;
 	}
 
 }

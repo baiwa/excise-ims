@@ -7,23 +7,22 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.persistence.entity.IaChartOfAcc;
 import th.go.excise.ims.ia.persistence.entity.IaExpenses;
-import th.go.excise.ims.ia.persistence.repository.IaChartOfAccRepository;
 import th.go.excise.ims.ia.persistence.repository.IaExpensesRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaChartOfAccJdbcRepository;
-import th.go.excise.ims.ia.vo.Int0301FormVo;
-import th.go.excise.ims.ia.vo.Int0301Vo;
+import th.go.excise.ims.ia.vo.Int12040101SaveFormVo;
 
 @Service
 public class Int12040101Service {
 
 //	@Autowired
 //	private IaChartOfAccRepository iaChartOfAccRepository;
-	
+
 	@Autowired
 	private IaExpensesRepository iaExpensesRepository;
-	
+
 	@Autowired
 	private IaChartOfAccJdbcRepository iaChartOfAccJdbcRepository;
 
@@ -40,10 +39,10 @@ public class Int12040101Service {
 		}
 		return data;
 	}
-	
-	public void saveExpenses(IaExpenses form) {
+
+	public void saveExpenses(Int12040101SaveFormVo form) {
 		IaExpenses data = new IaExpenses();
-		if(form.getId() != null) {
+		if (form.getId() != null) {
 			data = iaExpensesRepository.findById(form.getId()).get();
 		}
 		data.setAccountId(form.getAccountId());
@@ -69,15 +68,25 @@ public class Int12040101Service {
 		data.setNote(form.getNote());
 		data.setOfficeCode(form.getOfficeCode());
 		data.setOfficeDesc(form.getOfficeDesc());
-		
+
 		data.setAverageCostOut(form.getAverageCostOut());
 		data.setAverageGiveOut(form.getAverageGiveOut());
 		data.setAverageFromOut(form.getAverageFromOut());
 		data.setAverageComeCostOut(form.getAverageComeCostOut());
+
+		String month = form.getExpenseDateStr().split("/")[0];
+		String year = form.getExpenseDateStr().split("/")[1];
+		data.setExpenseDate(ConvertDateUtils.parseStringToDate(form.getExpenseDateStr(), ConvertDateUtils.MM_YYYY,
+				ConvertDateUtils.LOCAL_TH));
+		if (Long.parseLong(month) > 10) {
+			year = Long.toString(Long.parseLong(year) + 1);
+		}
+		data.setExpenseMonth(month);
+		data.setExpenseYear(year);
 		
 		iaExpensesRepository.save(data);
 	}
-	
+
 	public IaExpenses findExpensesById(BigDecimal id) {
 		IaExpenses dataRes = new IaExpenses();
 		dataRes = iaExpensesRepository.findById(id).get();

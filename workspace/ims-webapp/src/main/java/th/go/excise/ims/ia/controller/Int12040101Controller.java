@@ -22,6 +22,7 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaChartOfAcc;
 import th.go.excise.ims.ia.persistence.entity.IaExpenses;
 import th.go.excise.ims.ia.service.Int12040101Service;
+import th.go.excise.ims.ia.vo.Int12040101SaveFormVo;
 
 @Controller
 @RequestMapping("/api/ia/int02/04/01/01")
@@ -50,7 +51,7 @@ public class Int12040101Controller {
 
 	@PostMapping("/saveExpenses")
 	@ResponseBody
-	public ResponseData<List<IaExpenses>> saveExpenses(@RequestBody IaExpenses expenses) {
+	public ResponseData<List<IaExpenses>> saveExpenses(@RequestBody Int12040101SaveFormVo expenses) {
 		ResponseData<List<IaExpenses>> responseData = new ResponseData<List<IaExpenses>>();
 		List<IaExpenses> data = new ArrayList<>();
 		try {
