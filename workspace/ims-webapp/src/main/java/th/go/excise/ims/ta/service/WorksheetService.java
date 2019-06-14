@@ -201,7 +201,6 @@ public class WorksheetService {
 				worksheetDtl.setCondSubNoAudit(isConditionSubNoAudit(condSubNoAuditMap, budgetYearList, taxDraftVo));
 			}
 
-			worksheetDtl.setLastAuditYear(taxDraftVo.getLastAuditYear());
 			worksheetDtl.setUpdatedBy(UserLoginUtils.getCurrentUsername());
 			worksheetDtl.setUpdatedDate(LocalDateTime.now());
 			

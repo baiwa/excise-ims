@@ -60,6 +60,7 @@ public class TaPlanWorksheetHisRepositoryImpl implements TaPlanWorksheetHisRepos
 
 		sql.append(" SELECT NEW_REG_ID, MAX(BUDGET_YEAR) MAX_YEAR ");
 		sql.append(" FROM TA_PLAN_WORKSHEET_HIS ");
+		sql.append(" WHERE PLAN_FLAG = 'Y' ");
 		sql.append(" GROUP BY NEW_REG_ID ");
 
 		Map<String, String> resultMap = commonJdbcTemplate.query(sql.toString(), new ResultSetExtractor<Map<String, String>>() {
