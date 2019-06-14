@@ -2,21 +2,23 @@ package th.go.excise.ims.ia.vo;
 
 import java.math.BigDecimal;
 
-public class IaEstimateExpD1Vo {
+public class IaEstimateD1VoType {
 
 	private Long estimateExpD1Id;
 	private String estExpNo;
 	private BigDecimal seqNo;
 	private String personTeamCode;
 	private String position;
-	private String allowancesDay;
-	private String allowancesHalfDay;
-	private String accomFeePackages;
-	private String accomFeePackagesDat;
-	private String tranCost;
-	private String sumAmt;
+	private BigDecimal allowancesDay;
+	private BigDecimal allowancesHalfDay;
+	private BigDecimal accomFeePackages;
+	private BigDecimal accomFeePackagesDat;
+	private BigDecimal tranCost;
+	private BigDecimal sumAmt;
 	private String remark;
-	private String otherExpenses;
+	private BigDecimal otherExpenses;
+	private BigDecimal sumAllowances;
+	private BigDecimal sumAccom;
 
 	public Long getEstimateExpD1Id() {
 		return estimateExpD1Id;
@@ -33,7 +35,6 @@ public class IaEstimateExpD1Vo {
 	public void setEstExpNo(String estExpNo) {
 		this.estExpNo = estExpNo;
 	}
-
 
 	public BigDecimal getSeqNo() {
 		return seqNo;
@@ -59,51 +60,51 @@ public class IaEstimateExpD1Vo {
 		this.position = position;
 	}
 
-	public String getAllowancesDay() {
+	public BigDecimal getAllowancesDay() {
 		return allowancesDay;
 	}
 
-	public void setAllowancesDay(String allowancesDay) {
+	public void setAllowancesDay(BigDecimal allowancesDay) {
 		this.allowancesDay = allowancesDay;
 	}
 
-	public String getAllowancesHalfDay() {
+	public BigDecimal getAllowancesHalfDay() {
 		return allowancesHalfDay;
 	}
 
-	public void setAllowancesHalfDay(String allowancesHalfDay) {
+	public void setAllowancesHalfDay(BigDecimal allowancesHalfDay) {
 		this.allowancesHalfDay = allowancesHalfDay;
 	}
 
-	public String getAccomFeePackages() {
+	public BigDecimal getAccomFeePackages() {
 		return accomFeePackages;
 	}
 
-	public void setAccomFeePackages(String accomFeePackages) {
+	public void setAccomFeePackages(BigDecimal accomFeePackages) {
 		this.accomFeePackages = accomFeePackages;
 	}
 
-	public String getAccomFeePackagesDat() {
+	public BigDecimal getAccomFeePackagesDat() {
 		return accomFeePackagesDat;
 	}
 
-	public void setAccomFeePackagesDat(String accomFeePackagesDat) {
+	public void setAccomFeePackagesDat(BigDecimal accomFeePackagesDat) {
 		this.accomFeePackagesDat = accomFeePackagesDat;
 	}
 
-	public String getTranCost() {
+	public BigDecimal getTranCost() {
 		return tranCost;
 	}
 
-	public void setTranCost(String tranCost) {
+	public void setTranCost(BigDecimal tranCost) {
 		this.tranCost = tranCost;
 	}
 
-	public String getSumAmt() {
+	public BigDecimal getSumAmt() {
 		return sumAmt;
 	}
 
-	public void setSumAmt(String sumAmt) {
+	public void setSumAmt(BigDecimal sumAmt) {
 		this.sumAmt = sumAmt;
 	}
 
@@ -115,12 +116,28 @@ public class IaEstimateExpD1Vo {
 		this.remark = remark;
 	}
 
-	public String getOtherExpenses() {
+	public BigDecimal getOtherExpenses() {
 		return otherExpenses;
 	}
 
-	public void setOtherExpenses(String otherExpenses) {
+	public void setOtherExpenses(BigDecimal otherExpenses) {
 		this.otherExpenses = otherExpenses;
+	}
+
+	public BigDecimal getSumAllowances() {
+		return sumAllowances;
+	}
+
+	public void setSumAllowances(BigDecimal sumAllowances) {
+		this.sumAllowances = sumAllowances;
+	}
+
+	public BigDecimal getSumAccom() {
+		return sumAccom;
+	}
+
+	public void setSumAccom(BigDecimal sumAccom) {
+		this.sumAccom = sumAccom;
 	}
 
 }
