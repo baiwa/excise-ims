@@ -121,7 +121,7 @@ public class WsOasfri0100DRepositoryImpl implements WsOasfri0100DRepositoryCusto
 			paramList.add("%" + formVo.getAccountName() + "%");
 		}
 		
-		sql.append(" ORDER BY H.NEW_REG_ID, H.FORMDOC_REC0142_NO, D.DATA_TYPE, D.DATA_SEQ, D.SEQ_NO ");
+		sql.append(" ORDER BY H.YEAR_MONTH, H.FORMDOC_REC0142_NO, D.DATA_SEQ, D.SEQ_NO ");
 		
 		List<WsOasfri0100Vo> voList = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), new RowMapper<WsOasfri0100Vo>() {
 			@Override

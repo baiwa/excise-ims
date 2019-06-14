@@ -22,9 +22,10 @@ import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperBalanceMaterialVo;
+import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 
 @Service
-public class ProductPaperBalanceMaterialService {
+public class ProductPaperBalanceMaterialService extends AbstractProductPaperService<ProductPaperBalanceMaterialVo> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperBalanceMaterialService.class);
 
@@ -206,6 +207,24 @@ public class ProductPaperBalanceMaterialService {
 		}
 
 		return dataList;
+	}
+
+	@Override
+	protected List<ProductPaperBalanceMaterialVo> inquiryByWs(ProductPaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected List<ProductPaperBalanceMaterialVo> inquiryByPaperPrNumber(ProductPaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected byte[] exportData(List<ProductPaperBalanceMaterialVo> voList, String exportType) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

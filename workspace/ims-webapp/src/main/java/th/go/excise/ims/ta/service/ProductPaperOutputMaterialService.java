@@ -23,10 +23,11 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.vo.CreatePaperFormVo;
+import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperOutputMaterialVo;
 
 @Service
-public class ProductPaperOutputMaterialService {
+public class ProductPaperOutputMaterialService extends AbstractProductPaperService<ProductPaperOutputMaterialVo> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperOutputMaterialService.class);
 
@@ -209,6 +210,24 @@ public class ProductPaperOutputMaterialService {
 		}
 
 		return dataList;
+	}
+
+	@Override
+	protected List<ProductPaperOutputMaterialVo> inquiryByWs(ProductPaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected List<ProductPaperOutputMaterialVo> inquiryByPaperPrNumber(ProductPaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected byte[] exportData(List<ProductPaperOutputMaterialVo> voList, String exportType) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
