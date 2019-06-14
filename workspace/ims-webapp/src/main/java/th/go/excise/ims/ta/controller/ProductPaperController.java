@@ -43,18 +43,11 @@ public class ProductPaperController {
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperController.class);
 
 	private Map<String, AbstractProductPaperService> productPaperServiceMap = new HashMap<>();
-	
+
 	@Autowired
-	public ProductPaperController(ProductPaperInputMaterialService productPaperInputMaterialService,
-			ProductPaperOutputMaterialService productPaperOutputMaterialService,
-			ProductPaperBalanceMaterialService productPaperBalanceMaterialService,
-			ProductPaperRelationProducedGoodsService productPaperRelationProducedGoodsService,
-			ProductPaperInputGoodsService productPaperInputGoodsService,
-			ProductPaperOutputGoodsService productPaperOutputGoodsService,
-			ProductPaperReduceTaxService productPaperReduceTaxService,
-			ProductPaperUnitPriceReduceTaxService productPaperUnitPriceReduceTaxService,
-			ProductPaperInformPriceService productPaperInformPriceService,
-			ProductPaperOutputForeignGoodsService productPaperOutputForeignGoodsService,
+	public ProductPaperController(ProductPaperInputMaterialService productPaperInputMaterialService, ProductPaperOutputMaterialService productPaperOutputMaterialService, ProductPaperBalanceMaterialService productPaperBalanceMaterialService,
+			ProductPaperRelationProducedGoodsService productPaperRelationProducedGoodsService, ProductPaperInputGoodsService productPaperInputGoodsService, ProductPaperOutputGoodsService productPaperOutputGoodsService, ProductPaperReduceTaxService productPaperReduceTaxService,
+			ProductPaperUnitPriceReduceTaxService productPaperUnitPriceReduceTaxService, ProductPaperInformPriceService productPaperInformPriceService, ProductPaperOutputForeignGoodsService productPaperOutputForeignGoodsService,
 			ProductPaperTaxAmtAdditionalService productPaperTaxAmtAdditionalService) {
 		productPaperServiceMap.put("input-material", productPaperInputMaterialService);
 		productPaperServiceMap.put("output-material", productPaperOutputMaterialService);
@@ -68,12 +61,12 @@ public class ProductPaperController {
 		productPaperServiceMap.put("output-foreign-goods", productPaperOutputForeignGoodsService);
 		productPaperServiceMap.put("tax-amt-additional", productPaperTaxAmtAdditionalService);
 	}
-	
+
 	@PostMapping("/inquiry-{productPaperType}")
 	@ResponseBody
 	public DataTableAjax<?> inquiryData(@PathVariable("productPaperType") String productPaperType, @RequestBody ProductPaperFormVo formVo) {
 		logger.info("inquiryData productPaperType={}", productPaperType);
-		
+
 		DataTableAjax<Object> dataTableAjax = new DataTableAjax<>();
 		try {
 			AbstractProductPaperService<Object> service = productPaperServiceMap.get(productPaperType);
@@ -82,20 +75,20 @@ public class ProductPaperController {
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
-		
+
 		return dataTableAjax;
 	}
-	
+
 	@PostMapping("/export-{productPaperType}")
 	@ResponseBody
-	public void exportData(@PathVariable("productPaperType") String productPaperType, @PathVariable("paperPrNumber") String paperPrNumber, @ModelAttribute ProductPaperFormVo formVo, HttpServletResponse response) throws IOException {
-		logger.info("exportData productPaperType={}, paperPrNumber={}", productPaperType, paperPrNumber);
+	public void exportData(@PathVariable("productPaperType") String productPaperType, @ModelAttribute ProductPaperFormVo formVo, HttpServletResponse response) throws IOException {
+		logger.info("exportData productPaperType={}, paperPrNumber={}", productPaperType, formVo.getPaperPrNumber());
 
-		//String fileName = URLEncoder.encode("ตรวจสอบการรับวัตถุดิบ", "UTF-8");
+		// String fileName = URLEncoder.encode("ตรวจสอบการรับวัตถุดิบ", "UTF-8");
 		String fileName = "test";
 		AbstractProductPaperService<Object> service = productPaperServiceMap.get(productPaperType);
 		byte[] bytes = service.export(formVo);
-		
+
 		response.setContentType("application/octet-stream");
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
 		OutputStream outStream = response.getOutputStream();
@@ -103,23 +96,22 @@ public class ProductPaperController {
 		outStream.flush();
 		outStream.close();
 	}
-	
+
 	@PostMapping("/upload-{productPaperType}")
 	@ResponseBody
-	public ResponseData<List<ProductPaperInputMaterialVo>> uploadData(
-			@ModelAttribute ProductPaperInputMaterialVo request) {
+	public ResponseData<List<ProductPaperInputMaterialVo>> uploadData(@ModelAttribute ProductPaperInputMaterialVo request) {
 		logger.info("Upload listProductPaperInputMaterial");
 		ResponseData<List<ProductPaperInputMaterialVo>> responseData = new ResponseData<List<ProductPaperInputMaterialVo>>();
-		//try {
-		//	responseData.setData(productPaperInputMaterialService.readFileProductPaperInputMaterial(request));
-		//	responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
-		//	responseData.setStatus(RESPONSE_STATUS.SUCCESS);
-		//} catch (Exception e) {
-		//	logger.error(e.getMessage(), e);
-		//	responseData.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
-		//	responseData.setStatus(RESPONSE_STATUS.FAILED);
-		//}
+		// try {
+		// responseData.setData(productPaperInputMaterialService.readFileProductPaperInputMaterial(request));
+		// responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+		// responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		// } catch (Exception e) {
+		// logger.error(e.getMessage(), e);
+		// responseData.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
+		// responseData.setStatus(RESPONSE_STATUS.FAILED);
+		// }
 		return responseData;
 	}
-	
+
 }
