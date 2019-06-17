@@ -86,7 +86,7 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 		  CellStyle cellRightBgStyle = ExcelUtils.createCellColorStyle(workbook, new XSSFColor(new java.awt.Color(192, 192, 192)), HorizontalAlignment.RIGHT, VerticalAlignment.TOP);
 		/* tbTH */
-		String[] tbTH = { "ลำดับ", "รายการ", "ใบขนสินค้า", "INV", "บัญชีประจำวัน (ภส.๐๗-๐๒)", "งบเดือน (ภส.๐๗-๐๔)", "จากการตรวจสอบ","จำนวนขอยกเว้นหรือคืนภาษี(ภส.๐๕-๐๑)"};
+		String[] tbTH = { "ลำดับ", "รายการ", "ใบขนสินค้า", "INV", "บัญชีประจำวัน (ภส.๐๗-๐๒)", "งบเดือน (ภส.๐๗-๐๔)", "จากการตรวจสอบ","จำนวนขอยกเว้นหรือคืนภาษี(ภส.๐๕-๐๑)", "ผลต่าง"};
 		for (int i = 0; i < tbTH.length; i++) {
 			cell = row.createCell(i);
 			cell.setCellValue(tbTH[i]);
@@ -154,6 +154,11 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getTaxReduceQty());
+			cell.setCellStyle(cellRightBgStyle);
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getDiffOutputQty());
 			cell.setCellStyle(cellRightBgStyle);
 			cellNum++;
 
@@ -235,8 +240,24 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 
 	@Override
 	protected List<ProductPaperOutputForeignGoodsVo> inquiryByWs(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("inquiryByWs");
+		List<ProductPaperOutputForeignGoodsVo> datalist = new ArrayList<>();
+		for (int i = 0; i < 5; i++) {
+			String desc = "จ่ายสินค้าสำเร็จรูปต่างประเทศ";
+			ProductPaperOutputForeignGoodsVo data = new ProductPaperOutputForeignGoodsVo();
+			data = new ProductPaperOutputForeignGoodsVo();
+			data.setId(Long.valueOf(1));
+			data.setGoodsDesc(desc + (i + 1));
+			data.setCargoDocNo("");
+			data.setInvoiceNo("");
+			data.setOutputDailyAccountQty("");
+			data.setOutputMonthStatementQty("");
+			data.setOutputAuditQty("");
+			data.setTaxReduceQty("");
+			data.setDiffOutputQty("");
+			datalist.add(data);
+		}
+		return datalist;
 	}
 
 	@Override
@@ -247,7 +268,13 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 
 	@Override
 	protected byte[] exportData(List<ProductPaperOutputForeignGoodsVo> voList, String exportType) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("exportData");
+		byte[] file = null;
+		try {
+			file = exportPayForeignFinishedGoods();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return file;
 	}
 }

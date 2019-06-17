@@ -272,8 +272,25 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 
 	@Override
 	protected List<ProductPaperReduceTaxVo> inquiryByWs(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("inquiryByWs");
+		String desc = "วัตถุดิบที่ขอลดหย่อนภาษี";
+		List<ProductPaperReduceTaxVo> datalist = new ArrayList<ProductPaperReduceTaxVo>();
+		ProductPaperReduceTaxVo data = null;
+		for (int i = 0; i < 10; i++) {
+			data = new ProductPaperReduceTaxVo();
+			data.setId(Long.valueOf(1));
+			data.setMaterialDesc(desc + (i + 1));
+			data.setTaxReduceAmt("1,000.00");
+			data.setTaxReduceQty("100.00");
+			data.setTaxReducePerUnitAmt("15.00");
+			data.setBillNo("100-23-" + (i + 1));
+			data.setBillTaxAmt("500.00");
+			data.setBillTaxQty("100.00");
+			data.setBillTaxPerUnit("200.00");
+			data.setDiffTaxReduceAmt("400.00");
+			datalist.add(data);
+		}
+		return datalist;
 	}
 
 	@Override
@@ -284,7 +301,13 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 
 	@Override
 	protected byte[] exportData(List<ProductPaperReduceTaxVo> voList, String exportType) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("exportData");
+		byte[] file = null;
+		try {
+			file = exportProductPaperReduceTax();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return file;
 	}
 }

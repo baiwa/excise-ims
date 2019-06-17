@@ -225,8 +225,22 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 
 	@Override
 	protected List<ProductPaperInformPriceVo> inquiryByWs(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		List<ProductPaperInformPriceVo> datalist = new ArrayList<>();
+		ProductPaperInformPriceVo data = null;
+		String desc = "ตรวจสอบด้านราคา";
+		for (int i = 0; i < 5; i++) {
+			data = new ProductPaperInformPriceVo();
+			data.setId(Long.valueOf(1));
+			data.setGoodsDesc(desc + (i + 1));
+			data.setInformPrice("1,000.00");
+			data.setExternalPrice("1,500.00");
+			data.setDeclarePrice("1,400.00");
+			data.setRetailPrice("1,400.00");
+			data.setTaxPrice("1,000.00");
+			data.setDiffPrice("100.00");
+			datalist.add(data);
+		}
+		return datalist;
 	}
 
 	@Override
@@ -237,8 +251,9 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 
 	@Override
 	protected byte[] exportData(List<ProductPaperInformPriceVo> voList, String exportType) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("exportData");
+		byte[] file = exportProductPaperInformPrice();
+		return file;
 	}
 
 }
