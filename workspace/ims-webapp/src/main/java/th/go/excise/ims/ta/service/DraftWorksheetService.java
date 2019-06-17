@@ -221,10 +221,16 @@ public class DraftWorksheetService {
 	public void saveDraftWorksheet(TaxOperatorFormVo formVo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
+		if(StringUtils.isBlank(formVo.getBudgetYear())) {
+			budgetYear = ExciseUtils.getCurrentBudgetYear();
+			formVo.setBudgetYear(ExciseUtils.getCurrentBudgetYear());
+		}else {
+			budgetYear = formVo.getBudgetYear();
+		}
 		String analysisNumber = worksheetSequenceService.getAnalysisNumber(officeCode, budgetYear);
 		logger.info("saveDraftWorksheet officeCode={}, budgetYear={}, condNumber={}, analysisNumber={}", officeCode, budgetYear, formVo.getCondNumber(), analysisNumber);
 
-		formVo.setBudgetYear(ExciseUtils.getCurrentBudgetYear());
+		
 		String dateStart = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateStart(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 		String dateEnd = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(formVo.getDateEnd(), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH), ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN);
 
