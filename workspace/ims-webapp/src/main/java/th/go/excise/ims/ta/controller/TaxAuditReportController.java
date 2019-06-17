@@ -3,7 +3,6 @@ package th.go.excise.ims.ta.controller;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -24,112 +23,92 @@ import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 @RequestMapping("/api/ta/report")
 public class TaxAuditReportController {
 
-    private static final Logger logger = LoggerFactory.getLogger(TaxAuditReportController.class);
+	private static final Logger logger = LoggerFactory.getLogger(TaxAuditReportController.class);
 
-    @Autowired
-    private WorksheetExportService exportService;
+	@Autowired
+	private WorksheetExportService worksheetExportService;
 
-    @Autowired
-    private PlanWorksheetExportService planWorksheetExportService;
+	@Autowired
+	private PlanWorksheetExportService planWorksheetExportService;
 
-    // TODO preview worksheet
-    @GetMapping("/ta-rpt0001")
-    @ResponseBody
-    public void exportPreviewWorksheet(@ModelAttribute TaxOperatorFormVo formVo, HttpServletRequest httpServletRequest, HttpServletResponse response)
-            throws Exception {
+	// TODO preview Worksheet
+	@GetMapping("/ta-rpt0001")
+	@ResponseBody
+	public void exportPreviewWorksheet(@ModelAttribute TaxOperatorFormVo formVo, HttpServletResponse response) throws Exception {
+		logger.info("exportPreviewWorksheet");
+		
+		/*String fileName = URLEncoder.encode("Worksheet", "UTF-8");
+		
+		byte[] bytes = worksheetExportService.exportPreviewWorksheet(formVo);
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+		
+		OutputStream os = response.getOutputStream();
+		os.write(bytes);*/
+	}
 
-        logger.info("listRawMaterialReceive export!!");
+	// TODO Draft Worksheet
+	@GetMapping("/ta-rpt0002")
+	@ResponseBody
+	public void exportDraftWorksheet(@ModelAttribute TaxOperatorFormVo formVo, HttpServletResponse response) throws Exception {
+		logger.info("exportDraftWorksheet");
+		
+		String fileName = URLEncoder.encode("DraftWorksheet", "UTF-8");
+		
+		byte[] bytes = worksheetExportService.exportDraftWorksheet(formVo);
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+		
+		OutputStream os = response.getOutputStream();
+		os.write(bytes);
+	}
 
-        /* set fileName */
-        String fileName = URLEncoder.encode("Worksheet", "UTF-8");
-        /* write it as an excel attachment */
-        byte[] outArray = exportService.exportPreviewWorksheet(formVo);
-        response.setContentType("application/octet-stream");
-        response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+	// TODO Worksheet
+	@GetMapping("/ta-rpt0003")
+	@ResponseBody
+	public void exportWorksheet(@ModelAttribute TaxOperatorFormVo formVo, HttpServletResponse response) throws Exception {
+		logger.info("exportWorksheet");
+		
+		String fileName = URLEncoder.encode("Worksheet", "UTF-8");
+		
+		byte[] bytes = worksheetExportService.exportWorksheet(formVo);
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+		
+		OutputStream os = response.getOutputStream();
+		os.write(bytes);
+	}
 
-        OutputStream outStream = response.getOutputStream();
-        outStream.write(outArray);
+	// TODO Worksheet Sub Condition
+	@GetMapping("/ta-rpt0003-1")
+	@ResponseBody
+	public void exportWorksheetCondSub(@ModelAttribute TaxOperatorFormVo formVo, HttpServletResponse response) throws Exception {
+		logger.info("exportWorksheetCondSub");
+		
+		/*String fileName = URLEncoder.encode("Worksheet Cond sub", "UTF-8");
+		
+		byte[] bytes = worksheetExportService.exportCondSubWorksheet(formVo);
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+		
+		OutputStream os = response.getOutputStream();
+		os.write(bytes);*/
+	}
 
-    }
-
-    // TODO Draft
-    @GetMapping("/ta-rpt0002")
-    @ResponseBody
-    public void exportDraftWorksheet(@ModelAttribute TaxOperatorFormVo formVo, HttpServletRequest httpServletRequest, HttpServletResponse response)
-            throws Exception {
-
-        logger.info("listRawMaterialReceive export!!");
-
-        /* set fileName */
-        String fileName = URLEncoder.encode("DraftWorksheet", "UTF-8");
-        /* write it as an excel attachment */
-        byte[] outArray = exportService.exportDraftWorksheet(formVo);
-        response.setContentType("application/octet-stream");
-        response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-
-        OutputStream outStream = response.getOutputStream();
-        outStream.write(outArray);
-
-    }
-
-    // TODO Worksheet
-    @GetMapping("/ta-rpt0003")
-    @ResponseBody
-    public void exportWorksheet(@ModelAttribute TaxOperatorFormVo formVo, HttpServletRequest httpServletRequest, HttpServletResponse response)
-            throws Exception {
-
-        logger.info("listRawMaterialReceive export!!");
-
-        /* set fileName */
-        String fileName = URLEncoder.encode("Worksheet", "UTF-8");
-        /* write it as an excel attachment */
-        byte[] outArray = exportService.exportWorksheet(formVo);
-        response.setContentType("application/octet-stream");
-        response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-
-        OutputStream outStream = response.getOutputStream();
-        outStream.write(outArray);
-
-    }
-    
- // TODO Worksheet cond sub
-    @GetMapping("/ta-rpt0003-1")
-    @ResponseBody
-    public void exportWorksheetCondSub(@ModelAttribute TaxOperatorFormVo formVo, HttpServletRequest httpServletRequest, HttpServletResponse response)
-            throws Exception {
-
-        logger.info("listRawMaterialReceive export!!");
-
-        /* set fileName */
-        String fileName = URLEncoder.encode("Worksheet Cond sub", "UTF-8");
-        /* write it as an excel attachment */
-        byte[] outArray = exportService.exportCondSubWorksheet(formVo);
-        response.setContentType("application/octet-stream");
-        response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-
-        OutputStream outStream = response.getOutputStream();
-        outStream.write(outArray);
-
-    }
-    
-    // TODO Plan Worksheet  
-    @GetMapping("/export-worksheet-selected")
-    @ResponseBody
-    public void exportPlanWorksheet(@ModelAttribute PlanWorksheetVo formVo, HttpServletRequest httpServletRequest, HttpServletResponse response)
-    		throws Exception {
-    	
-    	logger.info("exportPlanWorksheet export!!");
-    	
-    	/* set fileName */
-    	String fileName = URLEncoder.encode("Plan Worksheet", "UTF-8");
-    	/* write it as an excel attachment */
-    	byte[] outArray = planWorksheetExportService.exportPlanWorksheet(formVo);
-    	response.setContentType("application/octet-stream");
-    	response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
-    	
-    	OutputStream outStream = response.getOutputStream();
-    	outStream.write(outArray);
-    	
-    }
+	// TODO Plan Worksheet
+	@GetMapping("/export-worksheet-selected")
+	@ResponseBody
+	public void exportPlanWorksheet(@ModelAttribute PlanWorksheetVo formVo, HttpServletResponse response) throws Exception {
+		logger.info("exportPlanWorksheet");
+		
+		String fileName = URLEncoder.encode("Plan Worksheet", "UTF-8");
+		
+		byte[] bytes = planWorksheetExportService.exportPlanWorksheet(formVo);
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+		
+		OutputStream os = response.getOutputStream();
+		os.write(bytes);
+	}
 
 }
