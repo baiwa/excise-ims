@@ -36,8 +36,6 @@ import th.go.excise.ims.ws.vo.WsOasfri0100Vo;
 public class ProductPaperInputMaterialService extends AbstractProductPaperService<ProductPaperInputMaterialVo> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperInputMaterialService.class);
-	private static final String DECIMAL_PATTERN = "#,##0.00";
-	DecimalFormat df = new DecimalFormat(DECIMAL_PATTERN);
 	private static final String PRODUCT_PAPER_INPUT_MATERIAL = "ตรวจสอบการรับวัตถุดิบ";
 
 	@Autowired
@@ -133,7 +131,9 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 
 	@Override
 	protected byte[] exportData(List<ProductPaperInputMaterialVo> voList, String exportType) {
-
+		//set format money
+		DecimalFormat df = new DecimalFormat("#,##0.00");
+		
 		/* create spreadsheet */
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(PRODUCT_PAPER_INPUT_MATERIAL);
