@@ -29,18 +29,18 @@ public class TaPaperSv05D extends BaseEntity {
 	private Integer seqNo;
 	@Column(name = "GOODS_DESC")
 	private String goodsDesc;
-	@Column(name = "TAX_QTY")
-	private BigDecimal taxQty;
+	@Column(name = "GOODS_QTY")
+	private BigDecimal goodsQty;
 	@Column(name = "INFORM_PRICE")
 	private BigDecimal informPrice;
-	@Column(name = "TAX_VALUE")
-	private BigDecimal taxValue;
+	@Column(name = "GOODS_VALUE")
+	private BigDecimal goodsValue;
 	@Column(name = "TAX_RATE_BY_VALUE")
 	private BigDecimal taxRateByValue;
 	@Column(name = "TAX_RATE_BY_QTY")
 	private BigDecimal taxRateByQty;
-	@Column(name = "TAX_ADDITIONAL")
-	private BigDecimal taxAdditional;
+	@Column(name = "TAX_ADDITIONAL_AMT")
+	private BigDecimal taxAdditionalAmt;
 	@Column(name = "PENALTY_AMT")
 	private BigDecimal penaltyAmt;
 	@Column(name = "SURCHARGE_AMT")
@@ -82,12 +82,12 @@ public class TaPaperSv05D extends BaseEntity {
 		this.goodsDesc = goodsDesc;
 	}
 
-	public BigDecimal getTaxQty() {
-		return taxQty;
+	public BigDecimal getGoodsQty() {
+		return goodsQty;
 	}
 
-	public void setTaxQty(BigDecimal taxQty) {
-		this.taxQty = taxQty;
+	public void setGoodsQty(BigDecimal goodsQty) {
+		this.goodsQty = goodsQty;
 	}
 
 	public BigDecimal getInformPrice() {
@@ -98,12 +98,12 @@ public class TaPaperSv05D extends BaseEntity {
 		this.informPrice = informPrice;
 	}
 
-	public BigDecimal getTaxValue() {
-		return taxValue;
+	public BigDecimal getGoodsValue() {
+		return goodsValue;
 	}
 
-	public void setTaxValue(BigDecimal taxValue) {
-		this.taxValue = taxValue;
+	public void setGoodsValue(BigDecimal goodsValue) {
+		this.goodsValue = goodsValue;
 	}
 
 	public BigDecimal getTaxRateByValue() {
@@ -122,12 +122,12 @@ public class TaPaperSv05D extends BaseEntity {
 		this.taxRateByQty = taxRateByQty;
 	}
 
-	public BigDecimal getTaxAdditional() {
-		return taxAdditional;
+	public BigDecimal getTaxAdditionalAmt() {
+		return taxAdditionalAmt;
 	}
 
-	public void setTaxAdditional(BigDecimal taxAdditional) {
-		this.taxAdditional = taxAdditional;
+	public void setTaxAdditionalAmt(BigDecimal taxAdditionalAmt) {
+		this.taxAdditionalAmt = taxAdditionalAmt;
 	}
 
 	public BigDecimal getPenaltyAmt() {

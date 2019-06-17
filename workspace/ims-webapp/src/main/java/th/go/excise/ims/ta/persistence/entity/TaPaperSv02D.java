@@ -35,8 +35,8 @@ public class TaPaperSv02D extends BaseEntity {
 	private BigDecimal informPrice;
 	@Column(name = "AUDIT_PRICE")
 	private BigDecimal auditPrice;
-	@Column(name = "TAX_PRICE")
-	private BigDecimal taxPrice;
+	@Column(name = "GOODS_PRICE")
+	private BigDecimal goodsPrice;
 	@Column(name = "DIFF_PRICE")
 	private BigDecimal diffPrice;
 
@@ -96,12 +96,12 @@ public class TaPaperSv02D extends BaseEntity {
 		this.auditPrice = auditPrice;
 	}
 
-	public BigDecimal getTaxPrice() {
-		return taxPrice;
+	public BigDecimal getGoodsPrice() {
+		return goodsPrice;
 	}
 
-	public void setTaxPrice(BigDecimal taxPrice) {
-		this.taxPrice = taxPrice;
+	public void setGoodsPrice(BigDecimal goodsPrice) {
+		this.goodsPrice = goodsPrice;
 	}
 
 	public BigDecimal getDiffPrice() {

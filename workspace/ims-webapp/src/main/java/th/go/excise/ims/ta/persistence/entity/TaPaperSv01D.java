@@ -29,18 +29,18 @@ public class TaPaperSv01D extends BaseEntity {
 	private Integer seqNo;
 	@Column(name = "GOODS_DESC")
 	private String goodsDesc;
-	@Column(name = "SERVICE_DOC_NO")
-	private String serviceDocNo;
-	@Column(name = "INCOME_DAILY_ACCOUNT_AMT")
-	private BigDecimal incomeDailyAccountAmt;
-	@Column(name = "PAYMENT_DOC_NO")
-	private String paymentDocNo;
-	@Column(name = "AUDIT_AMT")
-	private BigDecimal auditAmt;
-	@Column(name = "TAX_AMT")
-	private BigDecimal taxAmt;
-	@Column(name = "DIFF_AMT")
-	private BigDecimal diffAmt;
+	@Column(name = "SERVICE_DOC_NO_QTY")
+	private BigDecimal serviceDocNoQty;
+	@Column(name = "INCOME_DAILY_ACCOUNT_QTY")
+	private BigDecimal incomeDailyAccountQty;
+	@Column(name = "PAYMENT_DOC_NO_QTY")
+	private BigDecimal paymentDocNoQty;
+	@Column(name = "AUDIT_QTY")
+	private BigDecimal auditQty;
+	@Column(name = "GOODS_QTY")
+	private BigDecimal goodsQty;
+	@Column(name = "DIFF_QTY")
+	private BigDecimal diffQty;
 
 	public Long getPaperSv01DSeq() {
 		return paperSv01DSeq;
@@ -74,52 +74,52 @@ public class TaPaperSv01D extends BaseEntity {
 		this.goodsDesc = goodsDesc;
 	}
 
-	public String getServiceDocNo() {
-		return serviceDocNo;
+	public BigDecimal getServiceDocNoQty() {
+		return serviceDocNoQty;
 	}
 
-	public void setServiceDocNo(String serviceDocNo) {
-		this.serviceDocNo = serviceDocNo;
+	public void setServiceDocNoQty(BigDecimal serviceDocNoQty) {
+		this.serviceDocNoQty = serviceDocNoQty;
 	}
 
-	public BigDecimal getIncomeDailyAccountAmt() {
-		return incomeDailyAccountAmt;
+	public BigDecimal getIncomeDailyAccountQty() {
+		return incomeDailyAccountQty;
 	}
 
-	public void setIncomeDailyAccountAmt(BigDecimal incomeDailyAccountAmt) {
-		this.incomeDailyAccountAmt = incomeDailyAccountAmt;
+	public void setIncomeDailyAccountQty(BigDecimal incomeDailyAccountQty) {
+		this.incomeDailyAccountQty = incomeDailyAccountQty;
 	}
 
-	public String getPaymentDocNo() {
-		return paymentDocNo;
+	public BigDecimal getPaymentDocNoQty() {
+		return paymentDocNoQty;
 	}
 
-	public void setPaymentDocNo(String paymentDocNo) {
-		this.paymentDocNo = paymentDocNo;
+	public void setPaymentDocNoQty(BigDecimal paymentDocNoQty) {
+		this.paymentDocNoQty = paymentDocNoQty;
 	}
 
-	public BigDecimal getAuditAmt() {
-		return auditAmt;
+	public BigDecimal getAuditQty() {
+		return auditQty;
 	}
 
-	public void setAuditAmt(BigDecimal auditAmt) {
-		this.auditAmt = auditAmt;
+	public void setAuditQty(BigDecimal auditQty) {
+		this.auditQty = auditQty;
 	}
 
-	public BigDecimal getTaxAmt() {
-		return taxAmt;
+	public BigDecimal getGoodsQty() {
+		return goodsQty;
 	}
 
-	public void setTaxAmt(BigDecimal taxAmt) {
-		this.taxAmt = taxAmt;
+	public void setGoodsQty(BigDecimal goodsQty) {
+		this.goodsQty = goodsQty;
 	}
 
-	public BigDecimal getDiffAmt() {
-		return diffAmt;
+	public BigDecimal getDiffQty() {
+		return diffQty;
 	}
 
-	public void setDiffAmt(BigDecimal diffAmt) {
-		this.diffAmt = diffAmt;
+	public void setDiffQty(BigDecimal diffQty) {
+		this.diffQty = diffQty;
 	}
 
 }
