@@ -151,9 +151,7 @@ public class WorksheetService {
 			worksheetDtl.setNewRegId(taxDraftVo.getNewRegId());
 			worksheetDtl.setAnalysisNumber(analysisNumber);
 			worksheetDtl.setCondMainGrp("0"); // Default Main Group
-			// ==> Assessment Main Condition
 			if (FLAG.Y_FLAG.equals(condMainHdr.getNewFacFlag())) {
-				// Check Case T
 				for (TaWorksheetCondMainDtl condMainDtl : condMainDtlList) {
 					if (TA_MAS_COND_MAIN_TYPE.TAX.equals(condMainDtl.getCondType())) {
 						if (isConditionGroup(condMainDtl, taxDraftVo)) {
@@ -163,7 +161,6 @@ public class WorksheetService {
 					}
 				}
 			} else {
-				// Check Case O
 				if (taxDraftVo.getRegDate() != null) {
 					regDate = taxDraftVo.getRegDate().format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM));
 				} else {
@@ -556,14 +553,8 @@ public class WorksheetService {
 	}
 
 	public List<String> getBudgetYearList() {
-		List<TaWorksheetHdr> entities = taWorksheetHdrRepository.findAll();
-		List<String> strList = new ArrayList<String>();
-		if (entities != null) {
-			for (TaWorksheetHdr entity : entities) {
-				strList.add(entity.getBudgetYear());
-			}
-		}
-		return strList;
+		List<String> entities = taWorksheetHdrRepository.findBudgetYearDistinctOrderByBudgetYearDesc();
+		return entities;
 	}
 
 }

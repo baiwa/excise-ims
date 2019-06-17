@@ -13,8 +13,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
-
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import th.co.baiwa.buckwaframework.common.bean.LabelValueBean;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
@@ -135,7 +135,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			Arrays.asList("COND_MAIN_GRP", "COND_SUB_CAPITAL", "COND_SUB_RISK", "COND_SUB_NO_AUDIT", "COND_G1",
 				"COND_G2", "COND_G3", "COND_G4", "COND_G5", "COND_G6", "COND_REG_DATE", "COND_SORTING",
 				"UPDATED_BY", "UPDATED_DATE"),
-			Arrays.asList("ANALYSIS_NUMBER", "NEW_REG_ID"));
+			Arrays.asList("WORKSHEET_DTL_ID"));
 
 		commonJdbcTemplate.batchUpdate(sql, taWorksheetDtlList, 1000, new ParameterizedPreparedStatementSetter<TaWorksheetDtl>() {
 			public void setValues(PreparedStatement ps, TaWorksheetDtl worksheetDtl) throws SQLException {
@@ -154,8 +154,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 				paramList.add(worksheetDtl.getCondSorting());
 				paramList.add(worksheetDtl.getUpdatedBy());
 				paramList.add(worksheetDtl.getUpdatedDate());
-				paramList.add(worksheetDtl.getAnalysisNumber());
-				paramList.add(worksheetDtl.getNewRegId());
+				paramList.add(worksheetDtl.getWorksheetDtlId());
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
 			}
 		});
@@ -510,7 +509,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 	public List<TaxDraftVo> findByAnalysisNumber(String analysisNumber) {
 		List<Object> paramList = new ArrayList<>();
 		StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT T.*, D.TAX_AMT_CHN_PNT, D.TAX_MONTH_NO, D.LAST_AUDIT_YEAR, D.DUTY_GROUP_ID");
+		sql.append(" SELECT T.*, D.WORKSHEET_DTL_ID, D.TAX_AMT_CHN_PNT, D.TAX_MONTH_NO, D.LAST_AUDIT_YEAR, D.DUTY_GROUP_ID");
 		sql.append(" FROM TA_WORKSHEET_DTL D ");
 		sql.append(" INNER JOIN TA_WS_REG4000 T ON T.NEW_REG_ID = D.NEW_REG_ID ");
 		sql.append(" WHERE D.IS_DELETED = 'N' ");
@@ -523,6 +522,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		@Override
 		public TaxDraftVo mapRow(ResultSet rs, int rowNum) throws SQLException {
 			TaxDraftVo vo = new TaxDraftVo();
+			vo.setWorksheetDtlId(rs.getLong("WORKSHEET_DTL_ID"));
 			vo.setNewRegId(rs.getString("NEW_REG_ID"));
 			vo.setFacType(rs.getString("FAC_TYPE"));
 			vo.setRegDate(LocalDateConverter.convertToEntityAttribute(rs.getDate("REG_DATE")));
