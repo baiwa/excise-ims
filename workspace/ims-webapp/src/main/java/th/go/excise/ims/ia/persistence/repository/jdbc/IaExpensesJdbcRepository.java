@@ -1,20 +1,20 @@
 package th.go.excise.ims.ia.persistence.repository.jdbc;
 
-import java.time.LocalDate;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import javax.persistence.criteria.CriteriaBuilder.In;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
-import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.persistence.entity.IaExpenses;
+import th.go.excise.ims.ia.vo.Int090101CompareFormVo;
+import th.go.excise.ims.ia.vo.Int090101Vo;
 import th.go.excise.ims.ia.vo.Int120401FormVo;
 
 @Repository
@@ -133,4 +133,54 @@ public class IaExpensesJdbcRepository {
 //		}
 //	};
 
+	public List<Int090101Vo> findCompare(Int090101CompareFormVo form) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+
+		sql.append(" SELECT EXP.* FROM IA_EXPENSES EXP WHERE EXP.IS_DELETED='N' ");
+//		params.add(formVo.getAccountId());
+
+		List<Int090101Vo> data = commonJdbcTemplate.query(sql.toString(), params.toArray(), compareRowmapper);
+		return data;
+	}
+
+	private RowMapper<Int090101Vo> compareRowmapper = new RowMapper<Int090101Vo>() {
+		@Override
+		public Int090101Vo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Int090101Vo vo = new Int090101Vo();
+			vo.setAccountId(rs.getString("ACCOUNT_ID"));
+			vo.setAccountName(rs.getString("ACCOUNT_NAME"));
+			vo.setAverageComeCost(rs.getString("AVERAGE_COME_COST"));
+			vo.setAverageComeCostOut(rs.getString("AVERAGE_COME_COST_OUT"));
+			vo.setAverageCost(rs.getBigDecimal("AVERAGE_COST"));
+			vo.setAverageCostOut(rs.getBigDecimal("AVERAGE_COST_OUT"));
+			vo.setAverageFrom(rs.getBigDecimal("AVERAGE_FROM"));
+			vo.setAverageFromOut(rs.getBigDecimal("AVERAGE_FROM_OUT"));
+			vo.setAverageGive(rs.getString("AVERAGE_GIVE"));
+			vo.setAverageGiveOut(rs.getString("AVERAGE_GIVE_OUT"));
+			vo.setBudgetBalance(rs.getBigDecimal("BUDGET_BALANCE"));
+			vo.setBudgetReceive(rs.getBigDecimal("BUDGET_RECEIVE"));
+			vo.setBudgetWithdraw(rs.getBigDecimal("BUDGET_WITHDRAW"));
+			vo.setBudgetYear(rs.getString("BUDGET_YEAR"));
+			vo.setExpenseDate(rs.getDate("EXPENSE_DATE"));
+			vo.setExpenseMonth(rs.getString("EXPENSE_MONTH"));
+			vo.setExpenseYear(rs.getString("EXPENSE_YEAR"));
+			vo.setId(rs.getBigDecimal("ID"));
+			vo.setMoneyBudget(rs.getBigDecimal("MONEY_BUDGET"));
+			vo.setMoneyOut(rs.getBigDecimal("MONEY_OUT"));
+			vo.setNote(rs.getString("NOTE"));
+			vo.setOfficeCode(rs.getString("OFFICE_CODE"));
+			vo.setOfficeDesc(rs.getString("OFFICE_DESC"));
+			vo.setServiceBalance(rs.getBigDecimal("SERVICE_BALANCE"));
+			vo.setServiceReceive(rs.getBigDecimal("SERVICE_RECEIVE"));
+			vo.setServiceWithdraw(rs.getBigDecimal("SERVICE_WITHDRAW"));
+			vo.setSumBalance(rs.getBigDecimal("SUM_BALANCE"));
+			vo.setSumReceive(rs.getBigDecimal("SUM_RECEIVE"));
+			vo.setSumWithdraw(rs.getBigDecimal("SUM_WITHDRAW"));
+			vo.setSuppressBalance(rs.getBigDecimal("SUPPRESS_BALANCE"));
+			vo.setSuppressReceive(rs.getBigDecimal("SUPPRESS_RECEIVE"));
+			vo.setSuppressWithdraw(rs.getBigDecimal("SUPPRESS_WITHDRAW"));
+			return vo;
+		}
+	};
 }
