@@ -1,5 +1,7 @@
 package th.go.excise.ims.ta.service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
@@ -7,11 +9,21 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperSv01D;
 import th.go.excise.ims.ta.persistence.repository.TaPaperSv01DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperSv01HRepository;
@@ -34,35 +46,39 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 	@Autowired
 	private WsAnafri0001DRepository wsAnafri0001DRepository;
 
-	/*public byte[] exportFileQuantityServiceVo() throws IOException {
-
-		List<ServicePaperQtyVo> dataListexportFile = new ArrayList<ServicePaperQtyVo>();
-		dataListexportFile = listQuantityServiceVo(0, 45, 45);
-		logger.info("Data list exportFileQuantityServiceVo {} row", dataListexportFile.size());
+	public byte[] exportFileQuantityServiceVo(List<ServicePaperQtyVo> voList, String exportType) throws IOException {
+		logger.info("Data list exportFileQuantityServiceVo {} row", voList.size());
 
 		XSSFWorkbook workbook = new XSSFWorkbook();
 
 		// call style from utils
 		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle bgKeyIn = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(91, 241, 218)));
+		CellStyle bgCal = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(251, 189, 8)));
 		CellStyle cellRightBgStyle = ExcelUtils.createCellColorStyle(workbook, new XSSFColor(new java.awt.Color(192, 192, 192)), HorizontalAlignment.RIGHT, VerticalAlignment.TOP);
 		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
 		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
 		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
-		Sheet sheet = workbook.createSheet("บันทึกผลการตรวจสอบด้านปริมาณ");
+		Sheet sheet = workbook.createSheet("กระดาษทำการตรวจสอบด้านปริมาณ");
 		int rowNum = 0;
 		int cellNum = 0;
 
 		Row row = sheet.createRow(rowNum);
 		Cell cell = row.createCell(cellNum);
-		String[] tbTH1 = { "ลำดับ", "รายการ", "ใบรอบบริการ", "บัญชีประจำวัน " + "\n" + "แสดงรายรับของสถานบริการ " + "\n" + "(ภส.๐๗-๐๕)", "ใบนำส่งเงิน", "จากการตรวจสอบ", "แบบรายการภาษี (ภส.๐๓-๐๘)" };
+		String[] tbTH1 = { "ลำดับ", "รายการ", "ใบรอบบริการ", "บัญชีประจำวัน " + "\n" + "แสดงรายรับของสถานบริการ " + "\n" + "(ภส.๐๗-๐๕)", "ใบนำส่งเงิน", "จากการตรวจสอบ", "แบบรายการภาษี (ภส.๐๓-๐๘)", "ผลต่าง" };
 
 		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH1[cellNum]);
-			cell.setCellStyle(thStyle);
-		}
-		;
+			if (cellNum > 1 && cellNum < 5) {
+				cell.setCellStyle(bgKeyIn);				
+			} else if (cellNum == 7) {
+				cell.setCellStyle(bgCal);
+			} else {
+				cell.setCellStyle(thStyle);
+			}
+		};
 
 		int colIndex = 0;
 		sheet.setColumnWidth(colIndex++, 10 * 256);
@@ -77,7 +93,7 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 		rowNum++;
 		cellNum = 0;
 		int order = 1;
-		for (ServicePaperQtyVo detail : dataListexportFile) {
+		for (ServicePaperQtyVo detail : voList) {
 			row = sheet.createRow(rowNum);
 			cell = row.createCell(cellNum++);
 			cell.setCellStyle(cellCenter);
@@ -89,23 +105,27 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 
 			cell = row.createCell(cellNum++);
 			cell.setCellStyle(cellRight);
-			cell.setCellValue((StringUtils.isNotBlank(detail.getServiceDocNo())) ? detail.getServiceDocNo() : "");
+			cell.setCellValue((StringUtils.isNotBlank(detail.getServiceDocNoQty())) ? detail.getServiceDocNoQty() : "");
 
 			cell = row.createCell(cellNum++);
 			cell.setCellStyle(cellRight);
-			cell.setCellValue((StringUtils.isNotBlank(detail.getIncomeDailyAccountAmt())) ? detail.getIncomeDailyAccountAmt() : "");
+			cell.setCellValue((StringUtils.isNotBlank(detail.getIncomeDailyAccountQty())) ? detail.getIncomeDailyAccountQty() : "");
 
 			cell = row.createCell(cellNum++);
 			cell.setCellStyle(cellRight);
-			cell.setCellValue((StringUtils.isNotBlank(detail.getPaymentDocNo())) ? detail.getPaymentDocNo() : "");
+			cell.setCellValue((StringUtils.isNotBlank(detail.getPaymentDocNoQty())) ? detail.getPaymentDocNoQty() : "");
 
 			cell = row.createCell(cellNum++);
 			cell.setCellStyle(cellRightBgStyle);
-			cell.setCellValue((StringUtils.isNotBlank(detail.getAuditAmt())) ? detail.getAuditAmt() : "");
+			cell.setCellValue((StringUtils.isNotBlank(detail.getAuditQty())) ? detail.getAuditQty() : "");
 
 			cell = row.createCell(cellNum++);
 			cell.setCellStyle(cellRightBgStyle);
-			cell.setCellValue((StringUtils.isNotBlank(detail.getTaxAmt())) ? detail.getTaxAmt() : "");
+			cell.setCellValue((StringUtils.isNotBlank(detail.getGoodsQty())) ? detail.getGoodsQty() : "");
+			
+			cell = row.createCell(cellNum++);
+			cell.setCellStyle(cellRightBgStyle);
+			cell.setCellValue((StringUtils.isNotBlank(detail.getDiffQty())) ? detail.getDiffQty() : "");
 
 			rowNum++;
 			cellNum = 0;
@@ -119,7 +139,7 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 		return cont;
 
 	}
-
+	/*
 	public List<ServicePaperQtyVo> readFileQuantityServiceVo(ServicePaperQtyVo request) {
 		logger.info("readFileQuantityServiceVo");
 		logger.info("fileName " + request.getFile().getOriginalFilename());
@@ -217,8 +237,14 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 
 	@Override
 	protected byte[] exportData(List<ServicePaperQtyVo> voList, String exportType) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("exportData");
+		byte[] file = null;
+		try {
+			file = exportFileQuantityServiceVo(voList, exportType);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return file;
 	}
 
 }

@@ -1,5 +1,7 @@
 package th.go.excise.ims.ta.service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
@@ -7,11 +9,21 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperSv02D;
 import th.go.excise.ims.ta.persistence.repository.TaPaperSv02DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperSv02HRepository;
@@ -34,14 +46,13 @@ public class ServicePaperPricePerUnitService extends AbstractServicePaperService
 	@Autowired
 	private WsAnafri0001DRepository wsAnafri0001DRepository;
 
-	/*public byte[] exportFilePriceServiceVo() throws IOException {
-
-		List<ServicePaperPricePerUnitVo> dataListexportFile = new ArrayList<ServicePaperPricePerUnitVo>();
-		dataListexportFile = listPriceServiceVo(0, 35, 35);
-		logger.info("Data list exportFilePriceServiceVo {} row", dataListexportFile.size());
+	public byte[] exportFilePriceServiceVo(List<ServicePaperPricePerUnitVo> voList, String exportType) throws IOException {
+		logger.info("Data list exportFilePriceServiceVo {} row", voList.size());
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		// call style from utils
 		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle bgKeyIn = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(91, 241, 218)));
+		CellStyle bgCal = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(251, 189, 8)));
 		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
 		CellStyle cellRightBgStyle = ExcelUtils.createCellColorStyle(workbook, new XSSFColor(new java.awt.Color(192, 192, 192)), HorizontalAlignment.RIGHT, VerticalAlignment.TOP);
 		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
@@ -53,7 +64,7 @@ public class ServicePaperPricePerUnitService extends AbstractServicePaperService
 
 		Row row = sheet.createRow(rowNum);
 		Cell cell = row.createCell(cellNum);
-		String[] tbTH1 = { "ลำดับ", "รายการ", "ราคาตามใบกำกับภาษี", "ราคาบริการตามแบบแจ้ง", "จากการตรวจสอบ", "ราคาที่ยื่นชำระภาษี" };
+		String[] tbTH1 = { "ลำดับ", "รายการ", "ราคาตามใบกำกับภาษี", "ราคาบริการตามแบบแจ้ง", "จากการตรวจสอบ", "ราคาที่ยื่นชำระภาษี", "ผลต่าง" };
 		int colIndex = 0;
 		sheet.setColumnWidth(colIndex++, 10 * 256);
 		sheet.setColumnWidth(colIndex++, 38 * 256);
@@ -61,18 +72,25 @@ public class ServicePaperPricePerUnitService extends AbstractServicePaperService
 		sheet.setColumnWidth(colIndex++, 25 * 256);
 		sheet.setColumnWidth(colIndex++, 23 * 256);
 		sheet.setColumnWidth(colIndex++, 25 * 256);
+		sheet.setColumnWidth(colIndex++, 25 * 256);
 
 		row = sheet.createRow(rowNum);
 		for (cellNum = 0; cellNum < tbTH1.length; cellNum++) {
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH1[cellNum]);
-			cell.setCellStyle(thStyle);
+			if (cellNum > 1 && cellNum < 3) {
+				cell.setCellStyle(bgKeyIn);				
+			} else if (cellNum == 6) {
+				cell.setCellStyle(bgCal);
+			} else {
+				cell.setCellStyle(thStyle);
+			}
 		}
 		;
 		rowNum++;
 		cellNum = 0;
 		int order = 1;
-		for (ServicePaperPricePerUnitVo detail : dataListexportFile) {
+		for (ServicePaperPricePerUnitVo detail : voList) {
 			row = sheet.createRow(rowNum);
 
 			cell = row.createCell(cellNum++);
@@ -97,8 +115,12 @@ public class ServicePaperPricePerUnitService extends AbstractServicePaperService
 
 			cell = row.createCell(cellNum++);
 			cell.setCellStyle(cellRightBgStyle);
-			cell.setCellValue((StringUtils.isNotBlank(detail.getTaxPrice())) ? detail.getTaxPrice() : "");
+			cell.setCellValue((StringUtils.isNotBlank(detail.getGoodsPrice())) ? detail.getGoodsPrice() : "");
 
+			cell = row.createCell(cellNum++);
+			cell.setCellStyle(cellRightBgStyle);
+			cell.setCellValue((StringUtils.isNotBlank(detail.getDiffPrice())) ? detail.getDiffPrice() : "");
+			
 			rowNum++;
 			cellNum = 0;
 		}
@@ -109,7 +131,7 @@ public class ServicePaperPricePerUnitService extends AbstractServicePaperService
 		cont = outByteStream.toByteArray();
 		return cont;
 	}
-
+	/*
 	public List<ServicePaperPricePerUnitVo> readFileServicePaperPricePerUnitVo(ServicePaperPricePerUnitVo request) {
 		logger.info("readFileQuantityServiceVo");
 		logger.info("fileName " + request.getFile().getOriginalFilename());
@@ -203,8 +225,14 @@ public class ServicePaperPricePerUnitService extends AbstractServicePaperService
 
 	@Override
 	protected byte[] exportData(List<ServicePaperPricePerUnitVo> voList, String exportType) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("exportData");
+		byte[] file = null;
+		try {
+			file = exportFilePriceServiceVo(voList, exportType);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return file;
 	}
 	
 }

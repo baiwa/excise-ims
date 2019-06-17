@@ -81,6 +81,8 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 
 		/* call style from Utils */
 		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle bgKeyIn = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(91, 241, 218)));
+		CellStyle bgCal = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(251, 189, 8)));
 		CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(24, 75, 125)));
 		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
 		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
@@ -92,12 +94,13 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 		for (int i = 0; i < tbTH1.length; i++) {
 			cell = row.createCell(i);
 			cell.setCellValue(tbTH1[i]);
-			if (i > 4 && i < 9) {
-				cell.setCellStyle(thColor);
-			} else {
+			if (i >= 0 && i <= 4) {
 				cell.setCellStyle(thStyle);
+			} else if (i >= 5 && i <= 8) {
+				cell.setCellStyle(bgKeyIn);
+			} else {
+				cell.setCellStyle(bgCal);
 			}
-
 		}
 
 		/* tbTH2 */
@@ -109,10 +112,12 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 			if (i > 1) {
 				cell = row.createCell(i);
 				cell.setCellValue(tbTH2[i]);
-				if (i > 4 && i < 9) {
-					cell.setCellStyle(thColor);
-				} else {
+				if (i >= 0 && i <= 3) {
 					cell.setCellStyle(thStyle);
+				} else if (i >= 4 && i <= 7) {
+					cell.setCellStyle(bgKeyIn);
+				} else {
+					cell.setCellStyle(bgCal);
 				}
 			}
 		}
@@ -134,8 +139,8 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 			if (i < 2 || i > 8) {
 				sheet.addMergedRegion(new CellRangeAddress(0, 1, i, i));
 				cell = row.createCell(i);
-				cell.setCellStyle(thStyle);
 			}
+			
 		}
 
 		/* set data */

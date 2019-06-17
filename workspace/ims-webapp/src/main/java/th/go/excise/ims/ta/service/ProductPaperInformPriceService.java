@@ -75,19 +75,23 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 
 		/* call style from utils */
 		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle bgKeyIn = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(91, 241, 218)));
+		CellStyle bgCal = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(251, 189, 8)));
 		CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(24, 75, 125)));
 		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
 		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
 		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
 		/* tbTH */
-		String[] tbTH = { "ลำดับ", "รายการ", "ราคาตามแบบแจ้ง ภส. ๐๒-๐๑", "ราคาจากข้อมูลภายนอก",
-				"ราคาต่อหน่วยตามประกาศกรม", "ราคาขายปลีกแนะนำจาก ภส. ๐๓-๐๗", "แบบรายการภาษี ภส. ๐๓-๐๗	", "ผลต่าง" };
+		String[] tbTH = { "ลำดับ", "ชื่อสินค้า (ภส.๐๓-๐๗)", "ราคาตามแบบแจ้ง ภส. ๐๒-๐๑", "ราคาจากข้อมูลภายนอก",
+				"ราคาต่อหน่วยตามประกาศกรม", "ราคาขายปลีกแนะนำจาก ภส. ๐๓-๐๗", "ผลต่างราคา" };
 		for (int i = 0; i < tbTH.length; i++) {
 			cell = row.createCell(i);
 			cell.setCellValue(tbTH[i]);
-			if (i > 2 && i < 6) {
-				cell.setCellStyle(thColor);
+			if (i > 2 && i < 4) {
+				cell.setCellStyle(bgKeyIn);				
+			} else if (i == 6) {
+				cell.setCellStyle(bgCal);
 			} else {
 				cell.setCellStyle(thStyle);
 			}
@@ -101,7 +105,7 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 		sheet.setColumnWidth(colIndex++, 30 * 256);
 		sheet.setColumnWidth(colIndex++, 30 * 256);
 		sheet.setColumnWidth(colIndex++, 30 * 256);
-		sheet.setColumnWidth(colIndex++, 30 * 256);
+//		sheet.setColumnWidth(colIndex++, 30 * 256);
 		sheet.setColumnWidth(colIndex++, 25 * 256);
 
 		/* set data */
@@ -142,10 +146,10 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getTaxPrice());
-			cell.setCellStyle(cellRight);
-			cellNum++;
+//			cell = row.createCell(cellNum);
+//			cell.setCellValue(data.getTaxPrice());
+//			cell.setCellStyle(cellRight);
+//			cellNum++;
 
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getDiffPrice());

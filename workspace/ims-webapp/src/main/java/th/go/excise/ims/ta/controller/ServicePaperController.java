@@ -70,8 +70,8 @@ public class ServicePaperController {
 	
 	@PostMapping("/export-{servicePaperType}")
 	@ResponseBody
-	public void exportData(@PathVariable("servicePaperType") String servicePaperType, @PathVariable("paperSvNumber") String paperSvNumber, @ModelAttribute ServicePaperFormVo formVo, HttpServletResponse response) throws IOException {
-		logger.info("exportData servicePaperType={}, paperSvNumber={}", servicePaperType, paperSvNumber);
+	public void exportData(@PathVariable("servicePaperType") String servicePaperType, @ModelAttribute ServicePaperFormVo formVo, HttpServletResponse response) throws IOException {
+		logger.info("exportData servicePaperType={}, paperSvNumber={}", servicePaperType, formVo.getPaperSvNumber());
 
 		//String fileName = URLEncoder.encode("ตรวจสอบการรับวัตถุดิบ", "UTF-8");
 		String fileName = "test";

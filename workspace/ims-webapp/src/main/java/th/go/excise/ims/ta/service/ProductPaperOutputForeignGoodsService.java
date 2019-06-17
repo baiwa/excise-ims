@@ -80,6 +80,8 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 
 		/* call style from utils */
 		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle bgKeyIn = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(91, 241, 218)));
+		CellStyle bgCal = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(251, 189, 8)));
 		CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(24, 75, 125)));
 		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
 		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
@@ -90,10 +92,12 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 		for (int i = 0; i < tbTH.length; i++) {
 			cell = row.createCell(i);
 			cell.setCellValue(tbTH[i]);
-			if (i != 2 && i != 3 && i != 6) {
-				cell.setCellStyle(thStyle);
+			if (i > 1 && i < 4) {
+				cell.setCellStyle(bgKeyIn);
+			} else if (i == 8) {
+				cell.setCellStyle(bgCal);
 			} else {
-				cell.setCellStyle(thColor);
+				cell.setCellStyle(thStyle);
 			}
 
 		}

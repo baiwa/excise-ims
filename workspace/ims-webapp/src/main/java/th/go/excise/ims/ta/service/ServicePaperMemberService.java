@@ -1,14 +1,24 @@
 package th.go.excise.ims.ta.service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperSv03D;
 import th.go.excise.ims.ta.persistence.repository.TaPaperSv03DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperSv03HRepository;
@@ -27,16 +37,15 @@ public class ServicePaperMemberService extends AbstractServicePaperService<Servi
 	@Autowired
 	private TaPaperSv03DRepository taPaperSv03DRepository;
 
-	/*public byte[] exportFileMemberStatusServiceVo() throws IOException {
-
-		List<ServicePaperMemberVo> dataListexportFile = new ArrayList<ServicePaperMemberVo>();
-		dataListexportFile = listMemberStatusServiceVo(0, 35, 35);
-		logger.info("Data list exportFilePriceServiceVo {} row", dataListexportFile.size());
+	public byte[] exportFileMemberStatusServiceVo(List<ServicePaperMemberVo> voList, String exportType) throws IOException {
+		logger.info("Data list exportFilePriceServiceVo {} row", voList.size());
 
 		XSSFWorkbook workbook = new XSSFWorkbook();
 
 		// call style from utils
 		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle bgKeyIn = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(91, 241, 218)));
+		CellStyle bgCal = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(251, 189, 8)));
 		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
 		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
 		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
@@ -63,12 +72,19 @@ public class ServicePaperMemberService extends AbstractServicePaperService<Servi
 			cell = row.createCell(cellNum);
 			cell.setCellValue(tbTH1[cellNum]);
 			cell.setCellStyle(thStyle);
+//			if (cellNum > 1 && cellNum < 3) {
+//				cell.setCellStyle(bgKeyIn);				
+//			} else if (cellNum == 6) {
+//				cell.setCellStyle(bgCal);
+//			} else {
+//				cell.setCellStyle(thStyle);
+//			}
 		}
 		;
 		rowNum++;
 		cellNum = 0;
 		int order = 1;
-		for (ServicePaperMemberVo detail : dataListexportFile) {
+		for (ServicePaperMemberVo detail : voList) {
 			row = sheet.createRow(rowNum);
 
 			cell = row.createCell(cellNum++);
@@ -113,7 +129,7 @@ public class ServicePaperMemberService extends AbstractServicePaperService<Servi
 		cont = outByteStream.toByteArray();
 		return cont;
 	}
-
+	/*
 	public List<ServicePaperMemberVo> readFileServicePaperMemberVo(ServicePaperMemberVo request) {
 		logger.info("readFileServicePaperMemberVo");
 		logger.info("fileName " + request.getFile().getOriginalFilename());
@@ -192,8 +208,14 @@ public class ServicePaperMemberService extends AbstractServicePaperService<Servi
 
 	@Override
 	protected byte[] exportData(List<ServicePaperMemberVo> voList, String exportType) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("exportData");
+		byte[] file = null;
+		try {
+			file = exportFileMemberStatusServiceVo(voList, exportType);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return file;
 	}
 
 }

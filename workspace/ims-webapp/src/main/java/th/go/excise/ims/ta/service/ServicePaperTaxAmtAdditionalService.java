@@ -1,13 +1,22 @@
 package th.go.excise.ims.ta.service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperSv05D;
 import th.go.excise.ims.ta.persistence.repository.TaPaperSv05DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperSv05HRepository;
@@ -26,7 +35,7 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 	@Autowired
 	private TaPaperSv05DRepository taPaperSv05DRepository;
 
-	/*public byte[] exportFinishedGoodsReceive() {
+	public byte[] exportServicePaperTaxAmtAdditional(List<ServicePaperTaxAmtAdditionalVo> voList, String exportType) {
 
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet("ตารางการคำนวณภาษีที่ต้องชำระเพิ่ม");
@@ -91,8 +100,7 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 		rowNum = 2;
 		cellNum = 0;
 		int no = 1;
-		List<ServicePaperTaxAmtAdditionalVo> dataList = listServicePaperTaxAmtAdditionalVo(0, 35, 35);
-		for (ServicePaperTaxAmtAdditionalVo data : dataList) {
+		for (ServicePaperTaxAmtAdditionalVo data : voList) {
 			row = sheet.createRow(rowNum);
 
 			cell = row.createCell(cellNum);
@@ -106,7 +114,7 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getTaxQty());
+			cell.setCellValue(data.getGoodsQty());
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
@@ -116,7 +124,7 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getTaxValue());
+			cell.setCellValue(data.getGoodsValue());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
@@ -131,7 +139,7 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getTaxAdditional());
+			cell.setCellValue(data.getTaxAdditionalAmt());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
@@ -171,7 +179,7 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 
 		return content;
 	}
-
+	/*
 	public List<ServicePaperTaxAmtAdditionalVo> readFileServicePaperTaxAmtAdditionalVo(ServicePaperTaxAmtAdditionalVo request) {
 		logger.info("readFileQuantityServiceVo");
 		logger.info("fileName " + request.getFile().getOriginalFilename());
@@ -264,7 +272,9 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 
 	@Override
 	protected byte[] exportData(List<ServicePaperTaxAmtAdditionalVo> voList, String exportType) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("exportData");
+		byte[] file = null;
+		file = exportServicePaperTaxAmtAdditional(voList, exportType);
+		return file;
 	}
 }

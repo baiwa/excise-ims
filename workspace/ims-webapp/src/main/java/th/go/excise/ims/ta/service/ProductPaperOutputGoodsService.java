@@ -78,9 +78,11 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 
 		// call style from utils
 		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle bgKeyIn = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(91, 241, 218)));
+		CellStyle bgCal = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(251, 189, 8)));
 		CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(24, 75, 125)));
 		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
-		  CellStyle cellRightBgStyle = ExcelUtils.createCellColorStyle(workbook, new XSSFColor(new java.awt.Color(192, 192, 192)), HorizontalAlignment.RIGHT, VerticalAlignment.TOP);
+		CellStyle cellRightBgStyle = ExcelUtils.createCellColorStyle(workbook, new XSSFColor(new java.awt.Color(192, 192, 192)), HorizontalAlignment.RIGHT, VerticalAlignment.TOP);
 		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
 		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
@@ -88,14 +90,17 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 		String[] tbTH = { "ลำดับ", "รายการ", "ปริมาณจ่ายสินค้าสำเร็จรูป" + "\n" + "ในใบกำกับภาษีขาย",
 				"ปริมาณจ่ายสินค้าสำเร็จรูป" + "\n" + " (ภส. ๐๗-๐๒)",
 				"ปริมาณจ่ายสินค้าสำเร็จรูป " + "\n" + "จากงบเดือน(ภส. ๐๗-๐๔)",
-				"ปริมาณที่ได้จากการตรวจสอบ" + "\n" + "(1)", "ปริมาณจ่ายสินค้าสำเร็จรูป " + "\n" + "(ภส. ๐๓-๐๗ (2))"};
+				"ปริมาณที่ได้จากการตรวจสอบ" + "\n" + "(1)", "ปริมาณจ่ายสินค้าสำเร็จรูป " + "\n" + "(ภส. ๐๓-๐๗ (2))",
+				"ผลต่าง" + "\n" + "(1-2)"};
 		for (int i = 0; i < tbTH.length; i++) {
 			cell = row.createCell(i);
 			cell.setCellValue(tbTH[i]);
-			if (i != 2 && i != 3) {
-				cell.setCellStyle(thStyle);
+			if (i > 1 && i < 4) {
+				cell.setCellStyle(bgKeyIn);				
+			} else if (i == 7) {
+				cell.setCellStyle(bgCal);
 			} else {
-				cell.setCellStyle(thColor);
+				cell.setCellStyle(thStyle);
 			}
 
 		}
@@ -152,7 +157,10 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 			cell.setCellStyle(cellRightBgStyle);
 			cellNum++;
 
-		
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getDiffQty());
+			cell.setCellStyle(cellRightBgStyle);
+			cellNum++;
 
 			no++;
 			rowNum++;
@@ -228,8 +236,23 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 
 	@Override
 	protected List<ProductPaperOutputGoodsVo> inquiryByWs(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("inquiryByWs");
+		String desc = "ตรวจสอบการจ่ายสินค้าสำเร็จรูป";
+		List<ProductPaperOutputGoodsVo> datalist = new ArrayList<ProductPaperOutputGoodsVo>();
+		ProductPaperOutputGoodsVo data = null;
+		for (int i = 0; i < 5; i++) {
+			data = new ProductPaperOutputGoodsVo();
+			data.setId(Long.valueOf(1));
+			data.setGoodsDesc(desc + (i + 1));
+			data.setOutputGoodsQty("");
+			data.setOutputDailyAccountQty("");
+			data.setOutputMonthStatementQty("");
+			data.setAuditQty("");
+			data.setTaxGoodsQty("");
+			data.setDiffQty("");
+			datalist.add(data);
+		}
+		return datalist;
 	}
 
 	@Override
@@ -240,8 +263,14 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 
 	@Override
 	protected byte[] exportData(List<ProductPaperOutputGoodsVo> voList, String exportType) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("exportData");
+		byte[] file = null;
+		try {
+			file = exportProductPaperOutputGoods();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return file;
 	}
 
 }
