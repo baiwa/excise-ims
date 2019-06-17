@@ -1,6 +1,5 @@
 package th.go.excise.ims.ta.service;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,8 +9,6 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -19,61 +16,107 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.common.util.ExcelUtils;
-import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperRelationProducedGoodsVo;
 
 @Service
 public class ProductPaperRelationProducedGoodsService extends AbstractProductPaperService<ProductPaperRelationProducedGoodsVo> {
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperRelationProducedGoodsService.class);
-
-	private static final Integer TOTAL = 17;
 	private static final String PRODUCT_PAPER_RELATION_PRODUCED_GOODS = "ความสัมพันธ์การเบิกใช้วัตถุดิบ";
 
-	public DataTableAjax<ProductPaperRelationProducedGoodsVo> listProductPaperRelationProducedGoods(
-			CreatePaperFormVo request) {
-		DataTableAjax<ProductPaperRelationProducedGoodsVo> dataTableAjax = new DataTableAjax<ProductPaperRelationProducedGoodsVo>();
-		dataTableAjax.setDraw(request.getDraw() + 1);
-		dataTableAjax.setData(getDataProductPaperRelationProducedGoods(request.getStart(), request.getLength(), TOTAL));
-		dataTableAjax.setRecordsTotal(TOTAL);
-		dataTableAjax.setRecordsFiltered(TOTAL);
-		return dataTableAjax;
+//	public List<ProductPaperRelationProducedGoodsVo> readFileProductPaperRelationProducedGoods(
+//			ProductPaperRelationProducedGoodsVo request) {
+//		logger.info("readFileProductPaperRelationProducedGoods");
+//		logger.info("fileName " + request.getFile().getOriginalFilename());
+//		logger.info("type " + request.getFile().getContentType());
+//
+//		List<ProductPaperRelationProducedGoodsVo> dataList = new ArrayList<>();
+//		ProductPaperRelationProducedGoodsVo data = null;
+//
+//		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(request.getFile().getBytes()))) {
+//			Sheet sheet = workbook.getSheetAt(0);
+//
+//			for (Row row : sheet) {
+//				data = new ProductPaperRelationProducedGoodsVo();
+//				// Skip on first row
+//				if (row.getRowNum() == 0) {
+//					continue;
+//				}
+//				for (Cell cell : row) {
+//
+//					if (cell.getColumnIndex() == 0) {
+//						// Column No.
+//						continue;
+//					} else if (cell.getColumnIndex() == 1) {
+//						// DocNo
+//						data.setDocNo(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 2) {
+//						// MaterialDesc
+//						data.setMaterialDesc(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 3) {
+//						// InputMaterialQty
+//						data.setInputMaterialQty(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 4) {
+//						// FormulaMaterialQty
+//						data.setFormulaMaterialQty(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 5) {
+//						// UsedMaterialQty
+//						data.setUsedMaterialQty(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 6) {
+//						// RealUsedMaterialQty
+//						data.setRealUsedMaterialQty(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 7) {
+//						// DiffMaterialQty
+//						data.setDiffMaterialQty(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 8) {
+//						// MaterialQty
+//						data.setMaterialQty(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 9) {
+//						// GoodsQty
+//						data.setGoodsQty(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 9) {
+//						// DiffGoodsQty
+//						data.setDiffGoodsQty(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 10) {
+//						// WasteGoodsPnt
+//						data.setWasteGoodsPnt(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 11) {
+//						// WasteGoodsQty
+//						data.setWasteGoodsQty(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 12) {
+//						// BalanceGoodsQty
+//						data.setBalanceGoodsQty(ExcelUtils.getCellValueAsString(cell));
+//					}
+//				}
+//				dataList.add(data);
+//			}
+//
+//		} catch (Exception e) {
+//			logger.error(e.getMessage(), e);
+//		}
+//
+//		return dataList;
+//	}
+
+	@Override
+	protected List<ProductPaperRelationProducedGoodsVo> inquiryByWs(ProductPaperFormVo formVo) {
+		logger.info("inquiryByWs");
+		List<ProductPaperRelationProducedGoodsVo> voList = new ArrayList<>();
+		ProductPaperRelationProducedGoodsVo vo = new ProductPaperRelationProducedGoodsVo();
+		voList.add(vo);
+		return voList;
 	}
 
-	public List<ProductPaperRelationProducedGoodsVo> getDataProductPaperRelationProducedGoods(int start, int length,
-			int total) {
-		logger.info("getDataProductPaperRelationProducedGoods");
-//		String desc = "การเบิกใช้วัตถุดิบกับการรับสินค้าสำเร็จรูป";
-		List<ProductPaperRelationProducedGoodsVo> datalist = new ArrayList<ProductPaperRelationProducedGoodsVo>();
-		ProductPaperRelationProducedGoodsVo data = null;
-		for (int i = start; i < (start + length); i++) {
-			if (i >= total) {
-				break;
-			}
-			data = new ProductPaperRelationProducedGoodsVo();
-			data.setId(Long.valueOf(1));
-			data.setDocNo("");
-			data.setMaterialDesc("");
-			data.setInputMaterialQty("");
-			data.setFormulaMaterialQty("");
-			data.setUsedMaterialQty("");
-			data.setRealUsedMaterialQty("");
-			data.setDiffMaterialQty("");
-			data.setMaterialQty("");
-			data.setGoodsQty("");
-			data.setDiffGoodsQty("");
-			data.setWasteGoodsPnt("");
-			data.setWasteGoodsQty("");
-			data.setBalanceGoodsQty("");
-			datalist.add(data);
-		}
-		return datalist;
+	@Override
+	protected List<ProductPaperRelationProducedGoodsVo> inquiryByPaperPrNumber(ProductPaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public byte[] exportProductPaperRelationProducedGoods() {
-
+	@Override
+	protected byte[] exportData(List<ProductPaperRelationProducedGoodsVo> voList, String exportType) {
+		/* create spreadsheet */
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(PRODUCT_PAPER_RELATION_PRODUCED_GOODS);
 		int rowNum = 0;
@@ -83,29 +126,30 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 
 		/* call style from utils */
 		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
-		CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(24, 75, 125)));
+		CellStyle bgKeyIn = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(91, 241, 218)));
+		CellStyle bgCal = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(251, 189, 8)));
 		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
 		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
 		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
 		/* tbTH1 */
-		String[] tbTH1 = { "ลำดับ", "เลขที่ใบสำคัญ", "รายการ", "จำนวนรับ" + "\n" + "(ตามบัญชี ภส. ๐๗-๐๒)",
-				"สูตรจากการผลิต", "เบิกตามสูตร", "เบิกใช้จริง", "ผลต่างวัตถุดิบ", "ผลิตได้ตามสูตร", "",
-				"ผลต่างสินค้าสำเร็จรูป", "หักสูญเสีย", "", "คงเหลือ" };
+		String[] tbTH1 = { "ลำดับ", "เลขที่ใบสำคัญ", "รายการ", "จำนวนรับ" + "\n" + "(ตามบัญชี ภส. ๐๗-๐๒)", "สูตรจากการผลิต", "เบิกตามสูตร", "เบิกใช้จริง", "ผลต่างวัตถุดิบ", "ผลิตได้ตามสูตร", "", "ผลต่างสินค้าสำเร็จรูป", "หักสูญเสีย", "", "คงเหลือ" };
 		for (int i = 0; i < tbTH1.length; i++) {
 			cell = row.createCell(i);
 			cell.setCellValue(tbTH1[i]);
-			if (i != 3 && i != 4 && i != 5) {
+			if (i == 0) {
 				cell.setCellStyle(thStyle);
-			} else {
-				cell.setCellStyle(thColor);
+			} else if (i >= 1 && i <= 4 || i==6) {
+				cell.setCellStyle(bgKeyIn);
+			}else if (i == 5 || i == 7 ) {
+				cell.setCellStyle(bgCal);
+			}else {
+				cell.setCellStyle(thStyle);
 			}
-
 		}
 
 		/* tbTH2 */
-		String[] tbTH2 = { "", "", "", "", "", "", "", "", "แยกตามวัตถุดิบ", "จำนวนสินค้าสำเร็จรูป", "", "เปอร์เซ็นต์",
-				"จำนวน" };
+		String[] tbTH2 = { "", "", "", "", "", "", "", "", "แยกตามวัตถุดิบ", "จำนวนสินค้าสำเร็จรูป", "", "เปอร์เซ็นต์", "จำนวน" };
 		rowNum++;
 		row = sheet.createRow(rowNum);
 		for (int i = 0; i < tbTH2.length; i++) {
@@ -143,8 +187,8 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 		rowNum = 2;
 		cellNum = 0;
 		int no = 1;
-		List<ProductPaperRelationProducedGoodsVo> dataList = getDataProductPaperRelationProducedGoods(0, TOTAL, TOTAL);
-		for (ProductPaperRelationProducedGoodsVo data : dataList) {
+
+		for (ProductPaperRelationProducedGoodsVo data : voList) {
 			row = sheet.createRow(rowNum);
 
 			cell = row.createCell(cellNum);
@@ -232,98 +276,7 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 		}
 
 		return content;
-	}
 
-	public List<ProductPaperRelationProducedGoodsVo> readFileProductPaperRelationProducedGoods(
-			ProductPaperRelationProducedGoodsVo request) {
-		logger.info("readFileProductPaperRelationProducedGoods");
-		logger.info("fileName " + request.getFile().getOriginalFilename());
-		logger.info("type " + request.getFile().getContentType());
-
-		List<ProductPaperRelationProducedGoodsVo> dataList = new ArrayList<>();
-		ProductPaperRelationProducedGoodsVo data = null;
-
-		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(request.getFile().getBytes()))) {
-			Sheet sheet = workbook.getSheetAt(0);
-
-			for (Row row : sheet) {
-				data = new ProductPaperRelationProducedGoodsVo();
-				// Skip on first row
-				if (row.getRowNum() == 0) {
-					continue;
-				}
-				for (Cell cell : row) {
-
-					if (cell.getColumnIndex() == 0) {
-						// Column No.
-						continue;
-					} else if (cell.getColumnIndex() == 1) {
-						// DocNo
-						data.setDocNo(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 2) {
-						// MaterialDesc
-						data.setMaterialDesc(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 3) {
-						// InputMaterialQty
-						data.setInputMaterialQty(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 4) {
-						// FormulaMaterialQty
-						data.setFormulaMaterialQty(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 5) {
-						// UsedMaterialQty
-						data.setUsedMaterialQty(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 6) {
-						// RealUsedMaterialQty
-						data.setRealUsedMaterialQty(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 7) {
-						// DiffMaterialQty
-						data.setDiffMaterialQty(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 8) {
-						// MaterialQty
-						data.setMaterialQty(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 9) {
-						// GoodsQty
-						data.setGoodsQty(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 9) {
-						// DiffGoodsQty
-						data.setDiffGoodsQty(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 10) {
-						// WasteGoodsPnt
-						data.setWasteGoodsPnt(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 11) {
-						// WasteGoodsQty
-						data.setWasteGoodsQty(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 12) {
-						// BalanceGoodsQty
-						data.setBalanceGoodsQty(ExcelUtils.getCellValueAsString(cell));
-					}
-				}
-				dataList.add(data);
-			}
-
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-		}
-
-		return dataList;
-	}
-
-	@Override
-	protected List<ProductPaperRelationProducedGoodsVo> inquiryByWs(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected List<ProductPaperRelationProducedGoodsVo> inquiryByPaperPrNumber(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected byte[] exportData(List<ProductPaperRelationProducedGoodsVo> voList, String exportType) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
