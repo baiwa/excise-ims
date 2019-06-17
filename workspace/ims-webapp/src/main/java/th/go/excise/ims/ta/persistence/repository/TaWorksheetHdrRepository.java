@@ -32,5 +32,9 @@ public interface TaWorksheetHdrRepository extends CommonJpaCrudRepository<TaWork
 	@Query("select DISTINCT new java.lang.String(e.budgetYear) from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' order by e.budgetYear desc")
 	public List<String> findBudgetYearDistinctOrderByBudgetYearDesc();
 	
+	
+	@Query(value ="SELECT * FROM TA_WORKSHEET_HDR WHERE WORKSHEET_STATUS = ?1 AND IS_DELETED = '" + FLAG.N_FLAG + "' ORDER BY WORKSHEET_HDR_ID DESC" ,nativeQuery = true)
+	public List<TaWorksheetHdr> findWorksheetHdrByStatusOrderById(String status);
+	
 	//List<TaWorksheetHdr> findAllOrderByCreatedDate();
 }

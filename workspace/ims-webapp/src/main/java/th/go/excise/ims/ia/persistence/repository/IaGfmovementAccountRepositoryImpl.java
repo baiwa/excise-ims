@@ -40,7 +40,7 @@ public class IaGfmovementAccountRepositoryImpl implements IaGfmovementAccountRep
 				paramList.add(entity.getGfRefDoc());
 				paramList.add(entity.getCareInstead());
 				paramList.add(entity.getDeterminaton());
-				paramList.add(entity.getDepCode());
+				paramList.add(entity.getDeptDisb());
 				paramList.add(entity.getDebit());
 				paramList.add(entity.getCredit());
 				paramList.add(entity.getCarryForward());

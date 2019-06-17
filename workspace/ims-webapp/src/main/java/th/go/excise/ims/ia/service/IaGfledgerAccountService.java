@@ -174,7 +174,6 @@ public class IaGfledgerAccountService {
 				iaGfledgerAccount = new IaGfledgerAccount();
 				iaGfledgerAccount.setGfuploadHId(ia.getGfuploadHId());
 				iaGfledgerAccount.setIaGfledgerAccountId(vo.getIaGfledgerAccountId());
-				iaGfledgerAccount.setGfuploadHId(vo.getGfuploadHId());
 				iaGfledgerAccount.setGlAccNo(vo.getGlAccNo());
 				iaGfledgerAccount.setDepCode(vo.getDepCode());
 				iaGfledgerAccount.setType(vo.getType());
@@ -197,6 +196,7 @@ public class IaGfledgerAccountService {
 				iaGfledgerAccount.setCostCenter(vo.getCostCenter());
 				iaGfledgerAccount.setDeptDisb(vo.getDeptDisb());
 				iaGfledgerAccount.setClrngDoc(vo.getClrngDoc());
+				iaGfledgerAccount.setPeriodYear(form.getYear());
 				iaGfledgerAccountList.add(iaGfledgerAccount);
 			}
 			iaGfledgerAccountRepository.saveAll(iaGfledgerAccountList);

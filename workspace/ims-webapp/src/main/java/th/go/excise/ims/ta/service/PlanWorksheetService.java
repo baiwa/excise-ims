@@ -940,5 +940,16 @@ public class PlanWorksheetService {
 		
 		return list;
 	}
+	
+	
+	public PlanWorksheetVo findWorksheetHdrByStatusOrderById(String status){
+		PlanWorksheetVo planWorksheetVo = new PlanWorksheetVo();
+		List<TaWorksheetHdr> taWorksheetHdrList = taWorksheetHdrRepository.findWorksheetHdrByStatusOrderById(status);
+		if(taWorksheetHdrList != null && taWorksheetHdrList.size()> 0) {
+			planWorksheetVo.setBudgetYear(taWorksheetHdrList.get(0).getBudgetYear());
+			planWorksheetVo.setAnalysisNumber(taWorksheetHdrList.get(0).getAnalysisNumber());
+		}
+		return planWorksheetVo;
+	}
 
 }

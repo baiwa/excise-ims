@@ -29,14 +29,6 @@ public class IaGfledgerAccount extends BaseEntity {
 	private Long iaGfledgerAccountId;
 	@Column(name = "GFUPLOAD_H_ID")
 	private Long gfuploadHId;
-	public Long getGfuploadHId() {
-		return gfuploadHId;
-	}
-
-	public void setGfuploadHId(Long gfuploadHId) {
-		this.gfuploadHId = gfuploadHId;
-	}
-
 	@Column(name = "GL_ACC_NO")
 	private String glAccNo;
 	@Column(name = "DEP_CODE")
@@ -81,6 +73,8 @@ public class IaGfledgerAccount extends BaseEntity {
 	private String deptDisb;
 	@Column(name = "CLRNG_DOC")
 	private String clrngDoc;
+	@Column(name = "PERIOD_YEAR")
+	private String periodYear;
 
 	public Long getIaGfledgerAccountId() {
 		return iaGfledgerAccountId;
@@ -268,6 +262,22 @@ public class IaGfledgerAccount extends BaseEntity {
 
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+	public Long getGfuploadHId() {
+		return gfuploadHId;
+	}
+
+	public void setGfuploadHId(Long gfuploadHId) {
+		this.gfuploadHId = gfuploadHId;
+	}
+
+	public String getPeriodYear() {
+		return periodYear;
+	}
+
+	public void setPeriodYear(String periodYear) {
+		this.periodYear = periodYear;
 	}
 
 }

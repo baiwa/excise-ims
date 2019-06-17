@@ -160,7 +160,7 @@ public class IaGfmovementAccountService {
 				iaGfmovementAccount.setGfRefDoc(vo.getGfRefDoc());
 				iaGfmovementAccount.setCareInstead(vo.getCareInstead());
 				iaGfmovementAccount.setDeterminaton(vo.getDeterminaton());
-				iaGfmovementAccount.setDepCode(vo.getDepCode());
+				iaGfmovementAccount.setDeptDisb(vo.getDepCode());
 				iaGfmovementAccount.setDebit(vo.getDebit());
 				iaGfmovementAccount.setCredit(vo.getCredit());
 				iaGfmovementAccount.setCarryForward(vo.getCarryForward());

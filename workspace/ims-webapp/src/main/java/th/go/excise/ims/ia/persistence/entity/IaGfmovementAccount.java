@@ -49,8 +49,8 @@ public class IaGfmovementAccount extends BaseEntity {
 	private String careInstead;
 	@Column(name = "DETERMINATON")
 	private String determinaton;
-	@Column(name = "DEP_CODE")
-	private String depCode;
+	@Column(name = "DEPT_DISB")
+	private String deptDisb;
 	@Column(name = "DEBIT")
 	private BigDecimal debit;
 	@Column(name = "CREDIT")
@@ -154,14 +154,6 @@ public class IaGfmovementAccount extends BaseEntity {
 		this.determinaton = determinaton;
 	}
 
-	public String getDepCode() {
-		return depCode;
-	}
-
-	public void setDepCode(String depCode) {
-		this.depCode = depCode;
-	}
-
 	public BigDecimal getDebit() {
 		return debit;
 	}
@@ -188,6 +180,14 @@ public class IaGfmovementAccount extends BaseEntity {
 
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+	public String getDeptDisb() {
+		return deptDisb;
+	}
+
+	public void setDeptDisb(String deptDisb) {
+		this.deptDisb = deptDisb;
 	}
 
 }
