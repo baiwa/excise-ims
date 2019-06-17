@@ -76,14 +76,15 @@ public class Int12040101Service {
 
 		String month = form.getExpenseDateStr().split("/")[0];
 		String year = form.getExpenseDateStr().split("/")[1];
+		year = Long.toString(Long.parseLong(year) - 543);
+		data.setExpenseMonth(month);
+		data.setExpenseYear(year);
 		data.setExpenseDate(ConvertDateUtils.parseStringToDate(form.getExpenseDateStr(), ConvertDateUtils.MM_YYYY,
 				ConvertDateUtils.LOCAL_TH));
 		if (Long.parseLong(month) > 10) {
 			year = Long.toString(Long.parseLong(year) + 1);
 		}
-		data.setExpenseMonth(month);
-		data.setExpenseYear(year);
-		
+		data.setBudgetYear(year);
 		iaExpensesRepository.save(data);
 	}
 
