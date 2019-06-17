@@ -131,9 +131,9 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 
 	@Override
 	protected byte[] exportData(List<ProductPaperInputMaterialVo> voList, String exportType) {
-		//set format money
+		// set format money
 		DecimalFormat df = new DecimalFormat("#,##0.00");
-		
+
 		/* create spreadsheet */
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(PRODUCT_PAPER_INPUT_MATERIAL);
@@ -152,13 +152,13 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
 		/* tbTH */
-		String[] tbTH = { "ลำดับ", "รายการ", "ใบกำกับภาษีซื้อ", "บัญชีประจำวัน ภส. ๐๗-๐๑", "งบเดือน (ภส. ๐๗-๐๔)", "ข้อมูลจากภายนอก", };
+		String[] tbTH = { "ลำดับ", "รายการ", "ใบกำกับภาษีซื้อ", "บัญชีประจำวัน ภส. ๐๗-๐๑", "งบเดือน (ภส. ๐๗-๐๔)", "จำนวนรับวัตถุดิบ", "ผลต่างสูงสุด", };
 		for (int i = 0; i < tbTH.length; i++) {
 			cell = row.createCell(i);
 			cell.setCellValue(tbTH[i]);
-			if (i > 1 && i < 4) {
+			if (i == 2 || i == 3 || i == 5) {
 				cell.setCellStyle(bgKeyIn);
-			} else if (i == 5) {
+			} else if (i == 6) {
 				cell.setCellStyle(bgCal);
 			} else {
 				cell.setCellStyle(thStyle);
@@ -217,6 +217,11 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getExternalDataQty());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getMaxDiffQty());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 

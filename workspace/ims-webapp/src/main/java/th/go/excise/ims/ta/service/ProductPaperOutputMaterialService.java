@@ -3,9 +3,14 @@ package th.go.excise.ims.ta.service;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.chrono.ThaiBuddhistDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -18,147 +23,27 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
+import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
 import th.go.excise.ims.common.util.ExcelUtils;
-import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperOutputMaterialVo;
+import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
+import th.go.excise.ims.ws.vo.WsOasfri0100FromVo;
+import th.go.excise.ims.ws.vo.WsOasfri0100Vo;
 
 @Service
 public class ProductPaperOutputMaterialService extends AbstractProductPaperService<ProductPaperOutputMaterialVo> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperOutputMaterialService.class);
 
-	private static final Integer TOTAL = 17;
+	@Autowired
+	private WsOasfri0100DRepository wsOasfri0100DRepository;
+
 	private static final String PRODUCT_PAPER_OUTPUT_MATERIAL = "ตรวจสอบการจ่ายวัตถุดิบ";
-
-	public DataTableAjax<ProductPaperOutputMaterialVo> listProductPaperOutputMaterial(CreatePaperFormVo request) {
-		DataTableAjax<ProductPaperOutputMaterialVo> dataTableAjax = new DataTableAjax<ProductPaperOutputMaterialVo>();
-		dataTableAjax.setDraw(request.getDraw() + 1);
-		dataTableAjax.setData(getDataProductPaperOutputMaterial(request.getStart(), request.getLength(), TOTAL));
-		dataTableAjax.setRecordsTotal(TOTAL);
-		dataTableAjax.setRecordsFiltered(TOTAL);
-		return dataTableAjax;
-	}
-
-	public List<ProductPaperOutputMaterialVo> getDataProductPaperOutputMaterial(int start, int length, int total) {
-		logger.info("getDataProductPaperOutputMaterial");
-		String desc = "ตรวจสอบจ่ายวัตถุดิบ";
-		List<ProductPaperOutputMaterialVo> datalist = new ArrayList<ProductPaperOutputMaterialVo>();
-		ProductPaperOutputMaterialVo data = null;
-		for (int i = start; i < (start + length); i++) {
-			if (i >= total) {
-				break;
-			}
-			data = new ProductPaperOutputMaterialVo();
-			data.setId(Long.valueOf(1));
-			data.setMaterialDesc(desc + (i + 1));
-			data.setOutputMaterialQty("" );
-			data.setDailyAccountQty("");
-			data.setMonthStatementQty("");
-			data.setExternalDataQty("");
-			data.setMaxDiffQty("");
-			datalist.add(data);
-		}
-		return datalist;
-	}
-
-	public byte[] exportProductPaperOutputMaterial() throws IOException {
-
-		/* create spreadsheet */
-		XSSFWorkbook workbook = new XSSFWorkbook();
-		Sheet sheet = workbook.createSheet(PRODUCT_PAPER_OUTPUT_MATERIAL);
-		int rowNum = 0;
-		int cellNum = 0;
-		Row row = sheet.createRow(rowNum);
-		Cell cell = row.createCell(cellNum);
-
-		/* call style from utils */
-		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
-		CellStyle thColor = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(24, 75, 125)));
-		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
-		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
-		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
-		  CellStyle cellRightBgStyle = ExcelUtils.createCellColorStyle(workbook, new XSSFColor(new java.awt.Color(192, 192, 192)), HorizontalAlignment.RIGHT, VerticalAlignment.TOP);
-		/* tbTH */
-		String[] tbTH = { "ลำดับ", "รายการ", "ใบเบิกวัตถุดิบ	", "บัญชีประจำวัน ภส. ๐๗-๐๑", "งบเดือน (ภส. ๐๗-๐๔)",
-				"ข้อมูลจากภายนอก" + "\n" + "(Monthly Report CKD Import CBU car)",  };
-		for (int i = 0; i < tbTH.length; i++) {
-			cell = row.createCell(i);
-			cell.setCellValue(tbTH[i]);
-			if (i > 1 && i < 5) {
-				cell.setCellStyle(thColor);
-			} else {
-				cell.setCellStyle(thStyle);
-			}
-		}
-
-		/* width */
-		for (int i = 0; i < 7; i++) {
-			if (i > 1) {
-				sheet.setColumnWidth(i, 76 * 70);
-			} else if (i == 1) {
-				sheet.setColumnWidth(i, 76 * 100);
-			}
-		}
-
-		/* set data */
-		rowNum = 1;
-		cellNum = 0;
-		int no = 1;
-		List<ProductPaperOutputMaterialVo> dataList = getDataProductPaperOutputMaterial(0, TOTAL, TOTAL);
-		for (ProductPaperOutputMaterialVo data : dataList) {
-			row = sheet.createRow(rowNum);
-
-			cell = row.createCell(cellNum);
-			cell.setCellValue(no);
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getMaterialDesc());
-			cell.setCellStyle(cellLeft);
-			cellNum++;
-
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getOutputMaterialQty());
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getDailyAccountQty());
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getMonthStatementQty());
-			cell.setCellStyle(cellRightBgStyle);
-			cellNum++;
-
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getExternalDataQty());
-			cell.setCellStyle(cellRight);
-			cellNum++;
-
-		
-			no++;
-			rowNum++;
-			cellNum = 0;
-		}
-
-		// set output
-		byte[] content = null;
-		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-			workbook.write(outputStream);
-			content = outputStream.toByteArray();
-		} catch (IOException e) {
-			logger.error(e.getMessage(), e);
-		}
-
-		return content;
-	}
 
 	public List<ProductPaperOutputMaterialVo> readFileProductPaperOutputMaterial(ProductPaperOutputMaterialVo request) {
 		logger.info("readFileProductPaperOutputMaterial");
@@ -214,8 +99,31 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 
 	@Override
 	protected List<ProductPaperOutputMaterialVo> inquiryByWs(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("inquiryByWs");
+
+		LocalDate localDateStart = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]), Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
+		LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]), Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
+
+		WsOasfri0100FromVo wsOasfri0100FormVo = new WsOasfri0100FromVo();
+		wsOasfri0100FormVo.setNewRegId(formVo.getNewRegId());
+		wsOasfri0100FormVo.setDutyGroupId(formVo.getDutyGroupId());
+		wsOasfri0100FormVo.setDataType(WEB_SERVICE.OASFRI0100.DATA_TYPE_MATERIAL);
+		wsOasfri0100FormVo.setYearMonthStart(localDateStart.format(DateTimeFormatter.ofPattern("yyyyMM")));
+		wsOasfri0100FormVo.setYearMonthEnd(localDateEnd.format(DateTimeFormatter.ofPattern("yyyyMM")));
+		wsOasfri0100FormVo.setAccountName(WEB_SERVICE.OASFRI0100.PS0704_ACC07);
+
+		List<WsOasfri0100Vo> wsOasfri0100VoList = wsOasfri0100DRepository.findByCriteria(wsOasfri0100FormVo);
+		List<ProductPaperOutputMaterialVo> voList = new ArrayList<>();
+		ProductPaperOutputMaterialVo vo = null;
+		for (WsOasfri0100Vo wsOasfri0100Vo : wsOasfri0100VoList) {
+			vo = new ProductPaperOutputMaterialVo();
+			vo.setMaterialDesc(wsOasfri0100Vo.getDataName());
+			vo.setMonthStatementQty(wsOasfri0100Vo.getInQty().toString());
+			voList.add(vo);
+		}
+
+		return voList;
+
 	}
 
 	@Override
@@ -226,8 +134,117 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 
 	@Override
 	protected byte[] exportData(List<ProductPaperOutputMaterialVo> voList, String exportType) {
-		// TODO Auto-generated method stub
-		return null;
+		// set format money
+		DecimalFormat df = new DecimalFormat("#,##0.00");
+
+		/* create spreadsheet */
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		Sheet sheet = workbook.createSheet(PRODUCT_PAPER_OUTPUT_MATERIAL);
+		int rowNum = 0;
+		int cellNum = 0;
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+
+		/* call style from utils */
+		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle bgKeyIn = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(91, 241, 218)));
+		CellStyle bgCal = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(251, 189, 8)));
+		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
+		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
+		CellStyle cellRightBgStyle = ExcelUtils.createCellColorStyle(workbook, new XSSFColor(new java.awt.Color(192, 192, 192)), HorizontalAlignment.RIGHT, VerticalAlignment.TOP);
+		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
+
+		/* tbTH */
+		String[] tbTH = { "ลำดับ", "รายการ", "ใบเบิกวัตถุดิบ	", "บัญชีประจำวัน (ภส.๐๗-๐๑)", "งบเดือน (ภส. ๐๗-๐๔)", "จำนวนจ่ายวัตถุดิบ", "ผลต่างสูงสุด" };
+		for (int i = 0; i < tbTH.length; i++) {
+			cell = row.createCell(i);
+			cell.setCellValue(tbTH[i]);
+			if (i == 2 || i == 3 || i == 5) {
+				cell.setCellStyle(bgKeyIn);
+			} else if (i == 6) {
+				cell.setCellStyle(bgCal);
+			} else {
+				cell.setCellStyle(thStyle);
+			}
+		}
+
+		/* width */
+		for (int i = 0; i < 7; i++) {
+			if (i > 1) {
+				sheet.setColumnWidth(i, 76 * 70);
+			} else if (i == 1) {
+				sheet.setColumnWidth(i, 76 * 100);
+			}
+		}
+
+		/* set data */
+		rowNum = 1;
+		cellNum = 0;
+		int no = 1;
+
+		for (ProductPaperOutputMaterialVo data : voList) {
+			row = sheet.createRow(rowNum);
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getMaterialDesc());
+			cell.setCellStyle(cellLeft);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getOutputMaterialQty());
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getDailyAccountQty());
+			cell.setCellStyle(cellCenter);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getExternalDataQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getExternalDataQty())));
+				} else {
+					cell.setCellValue("");
+				}
+
+			}
+			cell.setCellStyle(cellRightBgStyle);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getExternalDataQty());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getMaxDiffQty());
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			no++;
+			rowNum++;
+			cellNum = 0;
+		}
+
+		// set output
+		byte[] content = null;
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			workbook.write(outputStream);
+			content = outputStream.toByteArray();
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return content;
+
 	}
 
 }
