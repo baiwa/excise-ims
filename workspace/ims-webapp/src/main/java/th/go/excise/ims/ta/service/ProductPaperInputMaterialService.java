@@ -204,15 +204,16 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 			cell = row.createCell(cellNum);
 			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+				cell.setCellStyle(thStyle);
 			} else {
 				if (StringUtils.isNotBlank(data.getExternalDataQty())) {
 					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getExternalDataQty())));
 				} else {
 					cell.setCellValue("");
 				}
-
+				cell.setCellStyle(cellRightBgStyle);
 			}
-			cell.setCellStyle(cellRightBgStyle);
+			
 			cellNum++;
 
 			cell = row.createCell(cellNum);
