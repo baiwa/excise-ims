@@ -29,7 +29,6 @@ import th.go.excise.ims.ta.vo.ProductPaperInputMaterialVo;
 public class ProductPaperInputMaterialServiceTest {
 
 	private static final String PRODUCT_PAPER_INPUT_MATERIAL = "product_paper_input_material";
-	private static final String EXPORT_TYPE_CREATE = "001";
 
 	@Autowired
 	private ProductPaperInputMaterialService productPaperInputMaterialService;
@@ -58,11 +57,9 @@ public class ProductPaperInputMaterialServiceTest {
 		formVo.setStartDate("09/2561");
 		formVo.setEndDate("10/2561");
 
-		List<ProductPaperInputMaterialVo> voList = productPaperInputMaterialService.inquiry(formVo);
-
 		// set output
 		try (FileOutputStream Output = new FileOutputStream(PATH.TEST_PATH + PRODUCT_PAPER_INPUT_MATERIAL + "." + FILE_EXTENSION.XLSX)) {
-			byte[] outArray = productPaperInputMaterialService.exportData(voList, EXPORT_TYPE_CREATE);
+			byte[] outArray = productPaperInputMaterialService.export(formVo);
 			Output.write(outArray);
 			System.out.println("Creating excel");
 		} catch (IOException e) {
