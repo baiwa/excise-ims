@@ -17,6 +17,7 @@ public class IaEstimateExpD1Vo {
 	private String sumAmt;
 	private String remark;
 	private String otherExpenses;
+	private String flagNotWithdrawing;
 
 	public Long getEstimateExpD1Id() {
 		return estimateExpD1Id;
@@ -122,5 +123,15 @@ public class IaEstimateExpD1Vo {
 	public void setOtherExpenses(String otherExpenses) {
 		this.otherExpenses = otherExpenses;
 	}
+
+	public String getFlagNotWithdrawing() {
+		return flagNotWithdrawing;
+	}
+
+	public void setFlagNotWithdrawing(String flagNotWithdrawing) {
+		this.flagNotWithdrawing = flagNotWithdrawing;
+	}
+	
+	
 
 }

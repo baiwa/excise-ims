@@ -19,6 +19,7 @@ public class IaEstimateD1VoType {
 	private BigDecimal otherExpenses;
 	private BigDecimal sumAllowances;
 	private BigDecimal sumAccom;
+	private String flagNotWithdrawing;
 
 	public Long getEstimateExpD1Id() {
 		return estimateExpD1Id;
@@ -139,5 +140,15 @@ public class IaEstimateD1VoType {
 	public void setSumAccom(BigDecimal sumAccom) {
 		this.sumAccom = sumAccom;
 	}
+
+	public String getFlagNotWithdrawing() {
+		return flagNotWithdrawing;
+	}
+
+	public void setFlagNotWithdrawing(String flagNotWithdrawing) {
+		this.flagNotWithdrawing = flagNotWithdrawing;
+	}
+	
+	
 
 }

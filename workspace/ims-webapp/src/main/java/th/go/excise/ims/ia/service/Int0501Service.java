@@ -120,6 +120,7 @@ public class Int0501Service {
 						BigDecimal sumAccom = accomFeePackages.multiply(accomFeePackagesDat);
 						val1.setSumAccom(sumAccom);
 						val1.setRemark(data1.getRemark());
+						val1.setFlagNotWithdrawing(data1.getFlagNotWithdrawing());
 						val1 = iaEstimateExpD1Repository.save(val1);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -150,6 +151,7 @@ public class Int0501Service {
 						BigDecimal sumAccom = accomFeePackages.multiply(accomFeePackagesDat);
 						val1.setSumAccom(sumAccom);
 						val1.setRemark(data1.getRemark());
+						val1.setFlagNotWithdrawing(data1.getFlagNotWithdrawing());
 					} catch (Exception e) {
 						e.printStackTrace();
 						logger.error(e.getMessage());
@@ -187,7 +189,8 @@ public class Int0501Service {
 			iaEstimateExpD1Vo.setSumAmt(iaEstimateExpD1.getSumAmt());
 			iaEstimateExpD1Vo.setSumAllowances(iaEstimateExpD1.getSumAllowances());
 			iaEstimateExpD1Vo.setSumAccom(iaEstimateExpD1.getSumAccom());
-			iaEstimateExpD1Vo.setRemark(iaEstimateExpD1.getRemark());		
+			iaEstimateExpD1Vo.setRemark(iaEstimateExpD1.getRemark());
+			iaEstimateExpD1Vo.setFlagNotWithdrawing(iaEstimateExpD1.getFlagNotWithdrawing());
 			iaEstimateExpD1List.add(iaEstimateExpD1Vo);
 		}
 		return iaEstimateExpD1List;

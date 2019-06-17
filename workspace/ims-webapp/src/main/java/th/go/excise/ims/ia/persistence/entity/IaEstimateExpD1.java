@@ -52,6 +52,9 @@ public class IaEstimateExpD1 extends BaseEntity {
 	private BigDecimal sumAllowances;
 	@Column(name = "SUM_ACCOM")
 	private BigDecimal sumAccom;
+	@Column(name = "FLAG_NOT_WITHDRAWING")
+	private String flagNotWithdrawing;
+
 
 	public Long getEstimateExpD1Id() {
 		return estimateExpD1Id;
@@ -173,4 +176,12 @@ public class IaEstimateExpD1 extends BaseEntity {
 		this.sumAccom = sumAccom;
 	}
 
+	public String getFlagNotWithdrawing() {
+		return flagNotWithdrawing;
+	}
+
+	public void setFlagNotWithdrawing(String flagNotWithdrawing) {
+		this.flagNotWithdrawing = flagNotWithdrawing;
+	}
+	
 }
