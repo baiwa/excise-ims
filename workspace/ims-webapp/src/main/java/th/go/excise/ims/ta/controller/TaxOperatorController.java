@@ -72,7 +72,6 @@ public class TaxOperatorController {
 	@Autowired
 	private PlanWorkSheetSendService planWorkSheetSendService;
 
-	// TODO Common
 	@PostMapping("/sector-list")
 	@ResponseBody
 	public ResponseData<List<ExciseDepartment>> getAllTaSectorList() {
@@ -91,7 +90,6 @@ public class TaxOperatorController {
 		return response;
 	}
 
-	// TODO DRAFT
 	@SuppressWarnings("deprecation")
 	@PostMapping("/preview-data")
 	@ResponseBody
