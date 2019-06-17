@@ -1,5 +1,7 @@
 package th.go.excise.ims.ta.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 
 public class ProductPaperFormVo extends DataTableRequest {
@@ -12,6 +14,8 @@ public class ProductPaperFormVo extends DataTableRequest {
 	private String dutyGroupId;
 	private String startDate;
 	private String endDate;
+	private MultipartFile file;
+	private String json;
 
 	public String getAuditPlanCode() {
 		return auditPlanCode;
@@ -59,6 +63,22 @@ public class ProductPaperFormVo extends DataTableRequest {
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+
+	public String getJson() {
+		return json;
+	}
+
+	public void setJson(String json) {
+		this.json = json;
 	}
 
 }
