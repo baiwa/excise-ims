@@ -1,72 +1,32 @@
 package th.go.excise.ims.ta.service;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
-import th.go.excise.ims.common.util.ExcelUtils;
-import th.go.excise.ims.ta.vo.CreatePaperFormVo;
+import th.go.excise.ims.ta.persistence.entity.TaPaperSv05D;
+import th.go.excise.ims.ta.persistence.repository.TaPaperSv05DRepository;
+import th.go.excise.ims.ta.persistence.repository.TaPaperSv05HRepository;
 import th.go.excise.ims.ta.vo.ServicePaperFormVo;
-import th.go.excise.ims.ta.vo.ServicePaperQtyVo;
 import th.go.excise.ims.ta.vo.ServicePaperTaxAmtAdditionalVo;
 
 @Service
 public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperService<ServicePaperTaxAmtAdditionalVo> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ServicePaperTaxAmtAdditionalService.class);
+	
+	private static final String NO_VALUE = "-";
+	
+	@Autowired
+	private TaPaperSv05HRepository taPaperSv05HRepository;
+	@Autowired
+	private TaPaperSv05DRepository taPaperSv05DRepository;
 
-	public DataTableAjax<ServicePaperTaxAmtAdditionalVo> GetlistServicePaperTaxAmtAdditionalVo(CreatePaperFormVo request) {
-		int total = 35;
-		DataTableAjax<ServicePaperTaxAmtAdditionalVo> dataTableAjax = new DataTableAjax<ServicePaperTaxAmtAdditionalVo>();
-		dataTableAjax.setDraw(request.getDraw() + 1);
-		dataTableAjax.setData(listServicePaperTaxAmtAdditionalVo(request.getStart(), request.getLength(), total));
-		dataTableAjax.setRecordsTotal(total);
-		dataTableAjax.setRecordsFiltered(total);
-		return dataTableAjax;
-	}
-
-	public List<ServicePaperTaxAmtAdditionalVo> listServicePaperTaxAmtAdditionalVo(int start, int length, int total) {
-		String excis = "กรมสรรพสามิตภาคที่";
-		List<ServicePaperTaxAmtAdditionalVo> datalist = new ArrayList<ServicePaperTaxAmtAdditionalVo>();
-		ServicePaperTaxAmtAdditionalVo data = null;
-		for (int i = start; i < (start + length); i++) {
-			if (i >= total) {
-				break;
-			}
-			data = new ServicePaperTaxAmtAdditionalVo();
-			data.setGoodsDesc(excis + i);
-			data.setTaxQty("100.00");
-			data.setInformPrice("10000.00");
-			data.setTaxValue("2000.00");
-			data.setTaxRateByValue("40000.00");
-			data.setTaxRateByQty("6000.00");
-			data.setTaxAdditional("50000.00");
-			data.setPenaltyAmt("5000.00");
-			data.setSurchargeAmt("9000.00");
-			data.setMoiTaxAmt("32000.00");
-			data.setNetTaxAmt("5000.00");
-			datalist.add(data);
-		}
-
-		return datalist;
-	}
-
-	public byte[] exportFinishedGoodsReceive() {
+	/*public byte[] exportFinishedGoodsReceive() {
 
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet("ตารางการคำนวณภาษีที่ต้องชำระเพิ่ม");
@@ -75,14 +35,14 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 		Row row = sheet.createRow(rowNum);
 		Cell cell = row.createCell(cellNum);
 
-		/* call style from utils */
+		// call style from utils
 		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
 		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
 		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
 		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 		;
 
-		/* tbTH1 */
+		// tbTH1
 		String[] tbTH1 = { "ลำดับ", "รายการ", "ปริมาณ", "ราคาขายปลีก", "มูลค่า", "อัตราภาษี", "", "ภาษีที่ต้องชำระเพิ่มเติม", "เบี้ยปรับ", "เงินเพิ่ม", "ภาษีเพื่อราชการส่วนท้องถิ่น", "รวม" };
 		for (int i = 0; i < tbTH1.length; i++) {
 			cell = row.createCell(i);
@@ -90,7 +50,7 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 			cell.setCellStyle(thStyle);
 		}
 
-		/* tbTH2 */
+		// tbTH2
 		String[] tbTH2 = { "", "", "", "", "", "ตามมูลค่า", "ตามปริมาณ" };
 		rowNum++;
 		row = sheet.createRow(rowNum);
@@ -102,7 +62,7 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 			}
 		}
 
-		/* width */
+		// width
 		int colIndex = 0;
 		sheet.setColumnWidth(colIndex++, 10 * 256);
 		sheet.setColumnWidth(colIndex++, 38 * 256);
@@ -116,7 +76,7 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 		sheet.setColumnWidth(colIndex++, 25 * 256);
 		sheet.setColumnWidth(colIndex++, 32 * 256);
 		sheet.setColumnWidth(colIndex++, 23 * 256);
-		/* merge(firstRow, lastRow, firstCol, lastCol) */
+		// merge(firstRow, lastRow, firstCol, lastCol)
 		sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 6));
 		//
 		for (int i = 0; i < 12; i++) {
@@ -127,7 +87,7 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 			}
 		}
 
-		/* set data */
+		// set data
 		rowNum = 2;
 		cellNum = 0;
 		int no = 1;
@@ -265,7 +225,7 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 			logger.error(e.getMessage(), e);
 		}
 		return dataList;
-	}
+	}*/
 
 	@Override
 	protected List<ServicePaperTaxAmtAdditionalVo> inquiryByWs(ServicePaperFormVo formVo) {
@@ -278,8 +238,28 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 
 	@Override
 	protected List<ServicePaperTaxAmtAdditionalVo> inquiryByPaperSvNumber(ServicePaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("inquiryByPaperSvNumber paperSvNumber={}", formVo.getPaperSvNumber());
+		
+		List<TaPaperSv05D> entityList = taPaperSv05DRepository.findByPaperSvNumber(formVo.getPaperSvNumber());
+		List<ServicePaperTaxAmtAdditionalVo> voList = new ArrayList<>();
+		ServicePaperTaxAmtAdditionalVo vo = null;
+		for (TaPaperSv05D entity : entityList) {
+			vo = new ServicePaperTaxAmtAdditionalVo();
+			vo.setGoodsDesc(entity.getGoodsDesc());
+			vo.setGoodsQty(entity.getGoodsQty() != null ? entity.getGoodsQty().toString() : NO_VALUE);
+			vo.setInformPrice(entity.getInformPrice() != null ? entity.getInformPrice().toString() : NO_VALUE);
+			vo.setGoodsValue(entity.getGoodsValue() != null ? entity.getGoodsValue().toString() : NO_VALUE);
+			vo.setTaxRateByValue(entity.getTaxRateByValue() != null ? entity.getTaxRateByValue().toString() : NO_VALUE);
+			vo.setTaxRateByQty(entity.getTaxRateByQty() != null ? entity.getTaxRateByQty().toString() : NO_VALUE);
+			vo.setTaxAdditionalAmt(entity.getTaxAdditionalAmt() != null ? entity.getTaxAdditionalAmt().toString() : NO_VALUE);
+			vo.setPenaltyAmt(entity.getPenaltyAmt() != null ? entity.getPenaltyAmt().toString() : NO_VALUE);
+			vo.setSurchargeAmt(entity.getSurchargeAmt() != null ? entity.getSurchargeAmt().toString() : NO_VALUE);
+			vo.setMoiTaxAmt(entity.getMoiTaxAmt() != null ? entity.getMoiTaxAmt().toString() : NO_VALUE);
+			vo.setNetTaxAmt(entity.getNetTaxAmt() != null ? entity.getNetTaxAmt().toString() : NO_VALUE);
+			voList.add(vo);
+		}
+		
+		return voList;
 	}
 
 	@Override

@@ -1,66 +1,32 @@
 package th.go.excise.ims.ta.service;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
-import th.go.excise.ims.common.util.ExcelUtils;
-import th.go.excise.ims.ta.vo.CreatePaperFormVo;
+import th.go.excise.ims.ta.persistence.entity.TaPaperSv04D;
+import th.go.excise.ims.ta.persistence.repository.TaPaperSv04DRepository;
+import th.go.excise.ims.ta.persistence.repository.TaPaperSv04HRepository;
 import th.go.excise.ims.ta.vo.ServicePaperBalanceGoodsVo;
 import th.go.excise.ims.ta.vo.ServicePaperFormVo;
-import th.go.excise.ims.ta.vo.ServicePaperQtyVo;
 
 @Service
 public class ServicePaperBalanceGoodsService extends AbstractServicePaperService<ServicePaperBalanceGoodsVo> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ServicePaperBalanceGoodsService.class);
+	
+	private static final String NO_VALUE = "-";
+	
+	@Autowired
+	private TaPaperSv04HRepository taPaperSv04HRepository;
+	@Autowired
+	private TaPaperSv04DRepository taPaperSv04DRepository;
 
-	public DataTableAjax<ServicePaperBalanceGoodsVo> GetLeftInStockServiceVo(CreatePaperFormVo request) {
-		int total = 35;
-		DataTableAjax<ServicePaperBalanceGoodsVo> dataTableAjax = new DataTableAjax<ServicePaperBalanceGoodsVo>();
-		dataTableAjax.setDraw(request.getDraw() + 1);
-		dataTableAjax.setData(listLeftInStockServiceVo(request.getStart(), request.getLength(), total));
-		dataTableAjax.setRecordsTotal(total);
-		dataTableAjax.setRecordsFiltered(total);
-		return dataTableAjax;
-	}
-
-	public List<ServicePaperBalanceGoodsVo> listLeftInStockServiceVo(int start, int length, int total) {
-		String excise = "รายการสินค้า";
-
-		List<ServicePaperBalanceGoodsVo> datalist = new ArrayList<ServicePaperBalanceGoodsVo>();
-		ServicePaperBalanceGoodsVo data = null;
-		for (int i = start; i < (start + length); i++) {
-			if (i >= total) {
-				break;
-			}
-			data = new ServicePaperBalanceGoodsVo();
-			data.setGoodsDesc(excise + i);
-			data.setBalanceGoodsQty("");
-			data.setAuditBalanceGoodsQty("");
-			data.setDiffBalanceGoodsQty("");
-			datalist.add(data);
-		}
-
-		return datalist;
-	}
-
-	public byte[] exportFileLeftInStockServiceVo() throws IOException {
+	/*public byte[] exportFileLeftInStockServiceVo() throws IOException {
 
 		List<ServicePaperBalanceGoodsVo> dataListexportFile = new ArrayList<ServicePaperBalanceGoodsVo>();
 		dataListexportFile = listLeftInStockServiceVo(0, 35, 35);
@@ -162,7 +128,7 @@ public class ServicePaperBalanceGoodsService extends AbstractServicePaperService
 			logger.error(e.getMessage(), e);
 		}
 		return dataList;
-	}
+	}*/
 
 	@Override
 	protected List<ServicePaperBalanceGoodsVo> inquiryByWs(ServicePaperFormVo formVo) {
@@ -175,8 +141,21 @@ public class ServicePaperBalanceGoodsService extends AbstractServicePaperService
 
 	@Override
 	protected List<ServicePaperBalanceGoodsVo> inquiryByPaperSvNumber(ServicePaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("inquiryByPaperSvNumber paperSvNumber={}", formVo.getPaperSvNumber());
+		
+		List<TaPaperSv04D> entityList = taPaperSv04DRepository.findByPaperSvNumber(formVo.getPaperSvNumber());
+		List<ServicePaperBalanceGoodsVo> voList = new ArrayList<>();
+		ServicePaperBalanceGoodsVo vo = null;
+		for (TaPaperSv04D entity : entityList) {
+			vo = new ServicePaperBalanceGoodsVo();
+			vo.setGoodsDesc(entity.getGoodsDesc());
+			vo.setBalanceGoodsQty(entity.getBalanceGoodsQty() != null ? entity.getBalanceGoodsQty().toString() : NO_VALUE);
+			vo.setAuditBalanceGoodsQty(entity.getAuditBalanceGoodsQty() != null ? entity.getAuditBalanceGoodsQty().toString() : NO_VALUE);
+			vo.setDiffBalanceGoodsQty(entity.getDiffBalanceGoodsQty() != null ? entity.getDiffBalanceGoodsQty().toString() : NO_VALUE);
+			voList.add(vo);
+		}
+		
+		return voList;
 	}
 
 	@Override

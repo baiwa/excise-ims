@@ -1,80 +1,69 @@
 package th.go.excise.ims.ta.vo;
 
-import org.springframework.web.multipart.MultipartFile;
-
-
-public class ServicePaperQtyVo  {
-	private Long id;
-	private String no;
+public class ServicePaperQtyVo {
 
 	private String goodsDesc;
-	private String serviceDocNo;
-	private String incomeDailyAccountAmt;
-	private String paymentDocNo;
-	private String auditAmt;
-	private String taxAmt;
-	private String diffAmt;
-	private MultipartFile file;
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getNo() {
-		return no;
-	}
-	public void setNo(String no) {
-		this.no = no;
-	}
+	private String serviceDocNoQty;
+	private String incomeDailyAccountQty;
+	private String paymentDocNoQty;
+	private String auditQty;
+	private String goodsQty;
+	private String diffQty;
+
 	public String getGoodsDesc() {
 		return goodsDesc;
 	}
+
 	public void setGoodsDesc(String goodsDesc) {
 		this.goodsDesc = goodsDesc;
 	}
-	public String getServiceDocNo() {
-		return serviceDocNo;
+
+	public String getServiceDocNoQty() {
+		return serviceDocNoQty;
 	}
-	public void setServiceDocNo(String serviceDocNo) {
-		this.serviceDocNo = serviceDocNo;
+
+	public void setServiceDocNoQty(String serviceDocNoQty) {
+		this.serviceDocNoQty = serviceDocNoQty;
 	}
-	public String getIncomeDailyAccountAmt() {
-		return incomeDailyAccountAmt;
+
+	public String getIncomeDailyAccountQty() {
+		return incomeDailyAccountQty;
 	}
-	public void setIncomeDailyAccountAmt(String incomeDailyAccountAmt) {
-		this.incomeDailyAccountAmt = incomeDailyAccountAmt;
+
+	public void setIncomeDailyAccountQty(String incomeDailyAccountQty) {
+		this.incomeDailyAccountQty = incomeDailyAccountQty;
 	}
-	public String getPaymentDocNo() {
-		return paymentDocNo;
+
+	public String getPaymentDocNoQty() {
+		return paymentDocNoQty;
 	}
-	public void setPaymentDocNo(String paymentDocNo) {
-		this.paymentDocNo = paymentDocNo;
+
+	public void setPaymentDocNoQty(String paymentDocNoQty) {
+		this.paymentDocNoQty = paymentDocNoQty;
 	}
-	public String getAuditAmt() {
-		return auditAmt;
+
+	public String getAuditQty() {
+		return auditQty;
 	}
-	public void setAuditAmt(String auditAmt) {
-		this.auditAmt = auditAmt;
+
+	public void setAuditQty(String auditQty) {
+		this.auditQty = auditQty;
 	}
-	public String getTaxAmt() {
-		return taxAmt;
+
+	public String getGoodsQty() {
+		return goodsQty;
 	}
-	public void setTaxAmt(String taxAmt) {
-		this.taxAmt = taxAmt;
+
+	public void setGoodsQty(String goodsQty) {
+		this.goodsQty = goodsQty;
 	}
-	public String getDiffAmt() {
-		return diffAmt;
+
+	public String getDiffQty() {
+		return diffQty;
 	}
-	public void setDiffAmt(String diffAmt) {
-		this.diffAmt = diffAmt;
+
+	public void setDiffQty(String diffQty) {
+		this.diffQty = diffQty;
 	}
-	public MultipartFile getFile() {
-		return file;
-	}
-	public void setFile(MultipartFile file) {
-		this.file = file;
-	}
-	
 
 }

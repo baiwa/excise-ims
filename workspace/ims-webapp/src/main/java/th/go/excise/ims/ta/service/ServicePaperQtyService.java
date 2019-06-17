@@ -1,70 +1,40 @@
 package th.go.excise.ims.ta.service;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.time.LocalDate;
+import java.time.chrono.ThaiBuddhistDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.xssf.usermodel.XSSFColor;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
-import th.go.excise.ims.common.util.ExcelUtils;
-import th.go.excise.ims.ta.vo.CreatePaperFormVo;
+import th.go.excise.ims.ta.persistence.entity.TaPaperSv01D;
+import th.go.excise.ims.ta.persistence.repository.TaPaperSv01DRepository;
+import th.go.excise.ims.ta.persistence.repository.TaPaperSv01HRepository;
 import th.go.excise.ims.ta.vo.ServicePaperFormVo;
 import th.go.excise.ims.ta.vo.ServicePaperQtyVo;
+import th.go.excise.ims.ws.persistence.repository.WsAnafri0001DRepository;
+import th.go.excise.ims.ws.vo.WsAnafri0001Vo;
 
 @Service
 public class ServicePaperQtyService extends AbstractServicePaperService<ServicePaperQtyVo> {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ServicePaperQtyService.class);
+	
+	private static final String NO_VALUE = "-";
+	
+	@Autowired
+	private TaPaperSv01HRepository taPaperSv01HRepository;
+	@Autowired
+	private TaPaperSv01DRepository taPaperSv01DRepository;
+	@Autowired
+	private WsAnafri0001DRepository wsAnafri0001DRepository;
 
-	public DataTableAjax<ServicePaperQtyVo> GetQuantityServiceVo(CreatePaperFormVo request) {
-		int total = 45;
-		DataTableAjax<ServicePaperQtyVo> dataTableAjax = new DataTableAjax<ServicePaperQtyVo>();
-		dataTableAjax.setDraw(request.getDraw() + 1);
-		dataTableAjax.setData(listQuantityServiceVo(request.getStart(), request.getLength(), total));
-		dataTableAjax.setRecordsTotal(total);
-		dataTableAjax.setRecordsFiltered(total);
-		return dataTableAjax;
-	}
-
-	public List<ServicePaperQtyVo> listQuantityServiceVo(int start, int length, int total) {
-
-		List<ServicePaperQtyVo> datalist = new ArrayList<ServicePaperQtyVo>();
-		String excise = "รายการบริการ";
-		ServicePaperQtyVo data = null;
-		for (int i = start; i < (start + length); i++) {
-			if (i >= total) {
-				break;
-			}
-			data = new ServicePaperQtyVo();
-			data.setGoodsDesc(excise + i);
-			data.setServiceDocNo("");
-			data.setIncomeDailyAccountAmt("");
-			data.setPaymentDocNo("");
-			data.setAuditAmt("");
-			data.setTaxAmt("");
-			data.setDiffAmt("");
-			datalist.add(data);
-		}
-		return datalist;
-	}
-
-	public byte[] exportFileQuantityServiceVo() throws IOException {
+	/*public byte[] exportFileQuantityServiceVo() throws IOException {
 
 		List<ServicePaperQtyVo> dataListexportFile = new ArrayList<ServicePaperQtyVo>();
 		dataListexportFile = listQuantityServiceVo(0, 45, 45);
@@ -72,7 +42,7 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 
 		XSSFWorkbook workbook = new XSSFWorkbook();
 
-		/* call style from utils */
+		// call style from utils
 		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
 		CellStyle cellRightBgStyle = ExcelUtils.createCellColorStyle(workbook, new XSSFColor(new java.awt.Color(192, 192, 192)), HorizontalAlignment.RIGHT, VerticalAlignment.TOP);
 		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
@@ -141,7 +111,7 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 			cellNum = 0;
 		}
 
-		/* set fileName */
+		// set fileName
 		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
 		byte[] cont = null;
 		workbook.write(outByteStream);
@@ -193,21 +163,56 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 			logger.error(e.getMessage(), e);
 		}
 		return dataList;
-	}
+	}*/
 
 	@Override
 	protected List<ServicePaperQtyVo> inquiryByWs(ServicePaperFormVo formVo) {
 		logger.info("inquiryByWs");
 		
+		LocalDate localDateStart = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]), Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
+		LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]), Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
+		String dateStart = localDateStart.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
+		String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
+		
+		List<WsAnafri0001Vo> anafri0001VoList = wsAnafri0001DRepository.findProductList(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
+		
 		List<ServicePaperQtyVo> voList = new ArrayList<>();
+		ServicePaperQtyVo vo = null;
+		for (WsAnafri0001Vo anafri0001Vo : anafri0001VoList) {
+			vo = new ServicePaperQtyVo();
+			vo.setGoodsDesc(anafri0001Vo.getProductName());
+			vo.setServiceDocNoQty("");
+			vo.setIncomeDailyAccountQty("");
+			vo.setPaymentDocNoQty("");
+			vo.setAuditQty("");
+			vo.setGoodsQty(anafri0001Vo.getProductQty().toString());
+			vo.setDiffQty("");
+			voList.add(vo);
+		}
 		
 		return voList;
 	}
 
 	@Override
 	protected List<ServicePaperQtyVo> inquiryByPaperSvNumber(ServicePaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("inquiryByPaperSvNumber paperSvNumber={}", formVo.getPaperSvNumber());
+		
+		List<TaPaperSv01D> entityList = taPaperSv01DRepository.findByPaperSvNumber(formVo.getPaperSvNumber());
+		List<ServicePaperQtyVo> voList = new ArrayList<>();
+		ServicePaperQtyVo vo = null;
+		for (TaPaperSv01D entity : entityList) {
+			vo = new ServicePaperQtyVo();
+			vo.setGoodsDesc(entity.getGoodsDesc());
+			vo.setServiceDocNoQty(entity.getServiceDocNoQty() != null ? entity.getServiceDocNoQty().toString() : NO_VALUE);
+			vo.setIncomeDailyAccountQty(entity.getIncomeDailyAccountQty() != null ? entity.getIncomeDailyAccountQty().toString() : NO_VALUE);
+			vo.setPaymentDocNoQty(entity.getPaymentDocNoQty() != null ? entity.getPaymentDocNoQty().toString() : NO_VALUE);
+			vo.setAuditQty(entity.getAuditQty() != null ? entity.getAuditQty().toString() : NO_VALUE);
+			vo.setGoodsQty(entity.getGoodsQty() != null ? entity.getGoodsQty().toString() : NO_VALUE);
+			vo.setDiffQty(entity.getDiffQty() != null ? entity.getDiffQty().toString() : NO_VALUE);
+			voList.add(vo);
+		}
+		
+		return voList;
 	}
 
 	@Override
