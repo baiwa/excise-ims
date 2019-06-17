@@ -2,6 +2,8 @@ package th.go.excise.ims.ta.vo;
 
 import java.util.List;
 
+import com.ibm.icu.math.BigDecimal;
+
 import th.go.excise.ims.preferences.vo.ExcisePersonVoSelect;
 
 public class PlanWorksheetDatatableVo {
@@ -37,7 +39,9 @@ public class PlanWorksheetDatatableVo {
 	private Long planReplaceId;
 	private String replaceReason;
 	private String replaceRegId;
-    
+	private String regCapital;
+	private String regDate;
+	private String budgetYear;
    
 	public String getPersonName() {
 		return personName;
@@ -286,5 +290,30 @@ public class PlanWorksheetDatatableVo {
 	public void setReplaceRegId(String replaceRegId) {
 		this.replaceRegId = replaceRegId;
 	}
+
+	public String getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
+
+	public String getRegCapital() {
+		return regCapital;
+	}
+
+	public void setRegCapital(String regCapital) {
+		this.regCapital = regCapital;
+	}
+
+	public String getBudgetYear() {
+		return budgetYear;
+	}
+
+	public void setBudgetYear(String budgetYear) {
+		this.budgetYear = budgetYear;
+	}
+	
 
 }

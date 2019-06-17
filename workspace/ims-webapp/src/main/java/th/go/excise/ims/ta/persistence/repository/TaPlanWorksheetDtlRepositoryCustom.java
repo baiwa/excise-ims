@@ -28,4 +28,8 @@ public interface TaPlanWorksheetDtlRepositoryCustom {
 	public List<PlanWorksheetSendTableVo> findPlanWorksheetByDtl(PlanWorksheetVo formVo);
 	
 	public List<TaPlanWorksheetDtl> findByOfficeCodeAndPlanNumberForCentral(String planNumber, String officeCode);
+	
+	public List<PlanWorksheetDatatableVo> findOutPlanDtl(PlanWorksheetVo formVo);
+	
+	public Long countOutPlanDtl(PlanWorksheetVo formVo);
 }

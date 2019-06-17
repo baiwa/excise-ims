@@ -924,4 +924,37 @@ public class TaxOperatorController {
 		return responseData;
 	}
 
+
+	@PostMapping("/plan-dtl-outplan")
+	@ResponseBody
+	public DataTableAjax<PlanWorksheetDatatableVo> planDtlOutPlan(@RequestBody PlanWorksheetVo formVo) {
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		if (ExciseUtils.isCentral(officeCode)) {
+			formVo.setOfficeCode("%");
+		}else if (ExciseUtils.isSector(officeCode)) {
+			formVo.setOfficeCode(officeCode.substring(0, 4) +"%");
+		}else {
+			formVo.setOfficeCode(officeCode);
+		}
+		return planWorksheetService.planDtlOutPlanDatatable(formVo);
+	}
+	
+	@PostMapping("/update-plan-worksheetdtl-outplan")
+	@ResponseBody
+	public ResponseData<TaPlanWorksheetDtl> updatePlanWorksheetDtlOutPlan(@RequestBody PlanWorksheetDatatableVo formVo) {
+		ResponseData<TaPlanWorksheetDtl> response = new ResponseData<>();
+		try {
+			response.setData(planWorksheetService.savePlanWorksheetDtlOutPlan(formVo));
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(
+					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+
 }

@@ -41,12 +41,15 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		sql.append("   ,R4000.FAC_FULLNAME ");
 		sql.append("   ,R4000.FAC_ADDRESS ");
 		sql.append("   ,R4000.OFFICE_CODE OFFICE_CODE_R4000 ");
+		sql.append("   ,R4000.REG_DATE ");
+		sql.append("   ,R4000.REG_CAPITAL ");
 		sql.append("   ,WK_DTL.DUTY_GROUP_ID ");
 		sql.append("   ,ED_SECTOR.OFF_CODE SEC_CODE ");
 		sql.append("   ,ED_SECTOR.OFF_SHORT_NAME SEC_DESC ");
 		sql.append("   ,ED_AREA.OFF_CODE AREA_CODE ");
 		sql.append("   ,ED_AREA.OFF_SHORT_NAME AREA_DESC ");
 		sql.append("   ,PLAN_DTL.* ");
+		
 		sql.append("   ,ED_SUBDEPT.SUBDEPT_SHORT_NAME SUBDEPTSHORTNAME ");
 		sql.append("   ,ED_PERSON.ED_PERSON_NAME PERSON_NAME ");
 		sql.append("   ,WK_DTL.DUTY_GROUP_NAME  DUTY_GROUP_NAME ");
@@ -164,6 +167,8 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 //            vo.setDeptShortName(rs.getString("DEPTSHORTNAME"));
 			vo.setReplaceReason(rs.getString("REPLACE_REASON"));
 			vo.setReplaceRegId(rs.getString("REPLACE_REG_ID"));
+			vo.setRegDate(ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), "yyyy-MM-dd", ConvertDateUtils.LOCAL_TH));
+			vo.setRegCapital(rs.getString("REG_CAPITAL"));
 			if(vo.getOfficeCode()!= null) {
 				try {
 					vo.setDeptShortName(ApplicationCache.getExciseDepartment(vo.getOfficeCode()).getDeptShortName());
@@ -435,7 +440,85 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		return commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper<TaPlanWorksheetDtl>(TaPlanWorksheetDtl.class));
 	}
 	
+	private void buildOutPlanDtl(StringBuilder sql, List<Object> params, PlanWorksheetVo formVo) {
+		sql.append(" SELECT R4000.CUS_FULLNAME ");
+		sql.append("   ,R4000.FAC_FULLNAME ");
+		sql.append("   ,R4000.FAC_ADDRESS ");
+		sql.append("   ,R4000.OFFICE_CODE OFFICE_CODE_R4000 ");
+		sql.append("   ,R4000.DUTY_CODE ");
+		sql.append("   ,R4000.REG_DATE ");
+		sql.append("   ,R4000.REG_CAPITAL ");
+		sql.append("   ,WK_DTL.DUTY_GROUP_ID ");
+		sql.append("   ,ED_SECTOR.OFF_CODE SEC_CODE ");
+		sql.append("   ,ED_SECTOR.OFF_SHORT_NAME SEC_DESC ");
+		sql.append("   ,ED_AREA.OFF_CODE AREA_CODE ");
+		sql.append("   ,ED_AREA.OFF_SHORT_NAME AREA_DESC ");
+		sql.append("   ,PLAN_DTL.* ");
+		sql.append("   ,ED_SUBDEPT.SUBDEPT_SHORT_NAME SUBDEPTSHORTNAME ");
+		sql.append("   ,ED_PERSON.ED_PERSON_NAME PERSON_NAME ");
+		sql.append("   ,WK_DTL.DUTY_GROUP_NAME  DUTY_GROUP_NAME ");
+		sql.append(" FROM TA_PLAN_WORKSHEET_DTL PLAN_DTL ");
+		sql.append(" INNER JOIN TA_WS_REG4000 R4000 ON R4000.NEW_REG_ID = PLAN_DTL.NEW_REG_ID ");
+		sql.append(" LEFT JOIN EXCISE_DEPARTMENT ED_SECTOR ON ED_SECTOR.OFF_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 2),'0000') ");
+		sql.append(" LEFT JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
+		sql.append(" LEFT JOIN EXCISE_SUBDEPT ED_SUBDEPT ON PLAN_DTL.AU_SUBDEPT_CODE = ED_SUBDEPT.SUBDEPT_CODE " );
+		sql.append(" LEFT JOIN EXCISE_PERSON ED_PERSON ON PLAN_DTL.CREATED_BY = ED_PERSON.ED_LOGIN ");
+		sql.append(" LEFT JOIN TA_WORKSHEET_DTL WK_DTL ON PLAN_DTL.NEW_REG_ID = WK_DTL.NEW_REG_ID ");
+		sql.append("  AND PLAN_DTL.ANALYSIS_NUMBER = WK_DTL.ANALYSIS_NUMBER");
+	    
+		sql.append(" WHERE PLAN_DTL.IS_DELETED = 'N' ");
+		sql.append("   AND R4000.IS_DELETED = 'N' ");
+		
+		if (StringUtils.isNotEmpty(formVo.getPlanNumber())) {
+			sql.append("   AND PLAN_DTL.PLAN_NUMBER = ? ");
+			params.add(formVo.getPlanNumber());
+		}
+		
+		if (StringUtils.isNotEmpty(formVo.getPlanType())) {
+			if (ProjectConstants.TA_PLAN_WORKSHEET_STATUS.ONPLAN.equals(formVo.getPlanType())
+					|| ProjectConstants.TA_PLAN_WORKSHEET_STATUS.RESERVE.equals(formVo.getPlanType()) ) {
+				sql.append("   AND PLAN_DTL.AUDIT_STATUS <= ? ");
+				params.add(ProjectConstants.TA_AUDIT_STATUS.CODE_0401);
+			}
+			
+		}else {
+			if (StringUtils.isNotEmpty(formVo.getAuditStatus())) {
+				sql.append("   AND PLAN_DTL.AUDIT_STATUS LIKE ? ");
+				params.add(formVo.getAuditStatus());
+			}
+		}
+		
+		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
+			sql.append("   AND PLAN_DTL.OFFICE_CODE LIKE ? ");
+			params.add(formVo.getOfficeCode());
+		}
+		if (StringUtils.isNotEmpty(formVo.getPlanType())) {
+			sql.append("   AND PLAN_DTL.PLAN_TYPE = ? ");
+			params.add(formVo.getPlanType());
+		}
+
+	}
 	
+	
+	@Override
+	public List<PlanWorksheetDatatableVo> findOutPlanDtl(PlanWorksheetVo formVo) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		buildOutPlanDtl(sql, params, formVo);
+
+		sql.append(" ORDER BY R4000.DUTY_CODE, R4000.OFFICE_CODE, R4000.NEW_REG_ID ");
+
+		return commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(), planDtlDatatableRowMapper);
+	}
+
+	@Override
+	public Long countOutPlanDtl(PlanWorksheetVo formVo) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		buildOutPlanDtl(sql, params, formVo);
+
+		return commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), params.toArray(), Long.class);
+	}
 
     
 }

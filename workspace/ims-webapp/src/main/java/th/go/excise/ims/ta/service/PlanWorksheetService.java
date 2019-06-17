@@ -951,5 +951,73 @@ public class PlanWorksheetService {
 		}
 		return planWorksheetVo;
 	}
+	
+	public DataTableAjax<PlanWorksheetDatatableVo> planDtlOutPlanDatatable(PlanWorksheetVo formVo) {
+		logger.info("planDtlDatatable budgetYear={}, officeCOde={}", formVo.getBudgetYear(), formVo.getOfficeCode());
+		
+		
+		formVo.setAuditStatus(ProjectConstants.TA_AUDIT_STATUS.CODE_0900.substring(0,2)+"__");
+
+		DataTableAjax<PlanWorksheetDatatableVo> dataTableAjax = new DataTableAjax<>();
+		dataTableAjax.setData(taPlanWorksheetDtlRepository.findOutPlanDtl(formVo));
+		dataTableAjax.setDraw(formVo.getDraw() + 1);
+		int count = taPlanWorksheetDtlRepository.countOutPlanDtl(formVo).intValue();
+		dataTableAjax.setRecordsFiltered(count);
+		dataTableAjax.setRecordsTotal(count);
+
+		return dataTableAjax;
+	}
+	
+	@Transactional
+	public TaPlanWorksheetDtl savePlanWorksheetDtlOutPlan(PlanWorksheetDatatableVo formVo) {
+		
+		TaPlanWorksheetDtl planDtlInsert  = new TaPlanWorksheetDtl();
+		TaPlanWorksheetDtl planDtl = new TaPlanWorksheetDtl();
+		UserBean userBean = UserLoginUtils.getCurrentUserBean();
+		String officeCode = userBean.getOfficeCode();
+		String budgetYear = formVo.getBudgetYear();
+		
+		if (ProjectConstants.TA_PLAN_WORKSHEET_STATUS.OUTPLAN.equals(formVo.getPlanType())) {
+
+			String planCode = worksheetSequenceService.getAuditPlanCode(officeCode, budgetYear);
+//			insert outplan to plan detail
+			planDtlInsert.setPlanNumber(formVo.getPlanNumber());
+			planDtlInsert.setAnalysisNumber(formVo.getAnalysisNumber());
+			planDtlInsert.setOfficeCode(formVo.getOfficeCode());
+			planDtlInsert.setNewRegId(formVo.getReplaceRegId());
+			planDtlInsert.setAuditStatus(TA_AUDIT_STATUS.CODE_0300);
+			planDtlInsert.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.OUTPLAN);
+			planDtlInsert.setAuditPlanCode(planCode);
+			planDtlInsert.setReplaceReason(formVo.getReplaceReason());
+			planDtlInsert = taPlanWorksheetDtlRepository.save(planDtlInsert);
+		}else {
+//			find plan detail by id for replace 
+			Optional<TaPlanWorksheetDtl> taPlanOpt = taPlanWorksheetDtlRepository.findById(formVo.getPlanWorksheetDtlId());
+			if (taPlanOpt.isPresent()) {
+				planDtl = taPlanOpt.get();
+				
+//				insert outplan to plan detail
+				planDtlInsert.setPlanNumber(planDtl.getPlanNumber());
+				planDtlInsert.setAnalysisNumber(planDtl.getAnalysisNumber());
+				planDtlInsert.setOfficeCode(planDtl.getOfficeCode());
+				planDtlInsert.setNewRegId(formVo.getReplaceRegId());
+				planDtlInsert.setAuditStatus(TA_AUDIT_STATUS.CODE_0300);
+				planDtlInsert.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.OUTPLAN);
+				planDtlInsert.setAuditPlanCode(planDtl.getAuditPlanCode());
+				planDtlInsert.setReplaceReason(formVo.getReplaceReason());
+				planDtlInsert = taPlanWorksheetDtlRepository.save(planDtlInsert);
+				
+				planDtl.setReplaceReason(formVo.getReplaceReason());
+				planDtl.setReplaceRegId(formVo.getReplaceRegId());
+				planDtl.setPlanReplaceId(planDtlInsert.getPlanWorksheetDtlId());
+				planDtl.setAuditStatus(ProjectConstants.TA_AUDIT_STATUS.CODE_0900);
+				
+				planDtl = taPlanWorksheetDtlRepository.save(planDtl);
+
+			}
+		}
+
+		return planDtl;
+	}
 
 }

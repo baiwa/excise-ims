@@ -98,6 +98,7 @@ public class ProjectConstants {
 	public static class TA_PLAN_WORKSHEET_STATUS {
 		public static final String ONPLAN = "I";
 		public static final String RESERVE = "R";
+		public static final String OUTPLAN = "E";
 	}
 	
 	

@@ -52,9 +52,19 @@ public class TaxAuditService {
 
 	public DataTableAjax<OutsidePlanVo> outsidePlan(OutsidePlanFormVo formVo) {
 
-		formVo.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
-		String whereOfficeCode = ExciseUtils.whereInLocalOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
-		formVo.setOfficeCode(whereOfficeCode);
+		if (StringUtils.isNotEmpty(formVo.getOfficeCode())) {
+			if (ExciseUtils.isCentral(formVo.getOfficeCode())) {
+				formVo.setOfficeCode("%");
+			}else if (ExciseUtils.isSector(formVo.getOfficeCode())) {
+				formVo.setOfficeCode(formVo.getOfficeCode().substring(0, 2) +"%");
+			}else {
+				formVo.setOfficeCode(formVo.getOfficeCode());
+			}
+		}else {
+			formVo.setOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+			String whereOfficeCode = ExciseUtils.whereInLocalOfficeCode(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+			formVo.setOfficeCode(whereOfficeCode);
+		}
 
 		DataTableAjax<OutsidePlanVo> dataTableAjax = new DataTableAjax<>();
 		dataTableAjax.setData(taWsReg4000Repository.outsidePlan(formVo));
