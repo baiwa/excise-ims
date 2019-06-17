@@ -123,7 +123,7 @@ public class ProductPaperController {
 	
 	@PostMapping("/save-{productPaperType}")
 	@ResponseBody
-	public ResponseData<String> saveData(@PathVariable("productPaperType") String productPaperType, @ModelAttribute ProductPaperFormVo formVo) {
+	public ResponseData<String> saveData(@PathVariable("productPaperType") String productPaperType, @RequestBody ProductPaperFormVo formVo) {
 		logger.info("saveData");
 		ResponseData<String> responseData = new ResponseData<String>();
 		//try {
