@@ -8,29 +8,31 @@ import java.net.URLEncoder;
 import org.junit.Test;
 
 public class ServicePaperMemberServiceTest {
-	 private static final String PATH = "/tmp/";
-	 private static final String TYPE = ".xlsx";
-	 private static final String MATERIAL_RECEIVE = "service";
-	 @Test
-	 public void test_MemberStatusServiceVo() throws IOException {
+	
+	private static final String PATH = "/tmp/";
+	private static final String TYPE = ".xlsx";
+	private static final String MATERIAL_RECEIVE = "service";
 
-	  String fileName = URLEncoder.encode(MATERIAL_RECEIVE, "UTF-8");
+	@Test
+	public void test_MemberStatusServiceVo() throws IOException {
 
-	  ServicePaperMemberService servicePaperMember = new ServicePaperMemberService();
+		String fileName = URLEncoder.encode(MATERIAL_RECEIVE, "UTF-8");
 
-	  try {
-	   byte[] outArray = servicePaperMember.exportFileMemberStatusServiceVo();
-	   FileOutputStream Output = new FileOutputStream(PATH + fileName + TYPE);
-	   Output.write(outArray);
-	   Output.close();
-	  } catch (FileNotFoundException e) {
-	   e.printStackTrace();
-	  } catch (IOException e) {
-	   e.printStackTrace();
-	  }
+		ServicePaperMemberService servicePaperMember = new ServicePaperMemberService();
 
-	  System.out.println("Done");
+//		try {
+//			byte[] outArray = servicePaperMember.exportFileMemberStatusServiceVo();
+//			FileOutputStream Output = new FileOutputStream(PATH + fileName + TYPE);
+//			Output.write(outArray);
+//			Output.close();
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
-	 }
-	 
+		System.out.println("Done");
+
+	}
+
 }

@@ -8,28 +8,30 @@ import java.net.URLEncoder;
 import org.junit.Test;
 
 public class ServicePaperPricePerUnitServiceTest {
-	 private static final String PATH = "/tmp/";
-	 private static final String TYPE = ".xlsx";
-	 private static final String MATERIAL_RECEIVE = "service";
-	 @Test
-	 public void test_GetPriceServiceVo() throws IOException {
+	
+	private static final String PATH = "/tmp/";
+	private static final String TYPE = ".xlsx";
+	private static final String MATERIAL_RECEIVE = "service";
 
-	  String fileName = URLEncoder.encode(MATERIAL_RECEIVE, "UTF-8");
+	@Test
+	public void test_GetPriceServiceVo() throws IOException {
 
-	  ServicePaperPricePerUnitService servicePaperPricePerUnit = new ServicePaperPricePerUnitService();
+		String fileName = URLEncoder.encode(MATERIAL_RECEIVE, "UTF-8");
 
-	  try {
-	   byte[] outArray = servicePaperPricePerUnit.exportFilePriceServiceVo();
-	   FileOutputStream Output = new FileOutputStream(PATH + fileName + TYPE);
-	   Output.write(outArray);
-	   Output.close();
-	  } catch (FileNotFoundException e) {
-	   e.printStackTrace();
-	  } catch (IOException e) {
-	   e.printStackTrace();
-	  }
+		ServicePaperPricePerUnitService servicePaperPricePerUnit = new ServicePaperPricePerUnitService();
 
-	  System.out.println("Done");
+//		try {
+//			byte[] outArray = servicePaperPricePerUnit.exportFilePriceServiceVo();
+//			FileOutputStream Output = new FileOutputStream(PATH + fileName + TYPE);
+//			Output.write(outArray);
+//			Output.close();
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
-	 }
+		System.out.println("Done");
+
+	}
 }
