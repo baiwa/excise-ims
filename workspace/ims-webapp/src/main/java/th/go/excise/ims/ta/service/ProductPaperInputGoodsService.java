@@ -1,5 +1,6 @@
 package th.go.excise.ims.ta.service;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -16,6 +17,8 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -41,43 +44,6 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 
 	@Autowired
 	private WsOasfri0100DRepository wsOasfri0100DRepository;
-
-	/*
-	 * public List<ProductPaperInputGoodsVo>
-	 * readFileProductPaperInputGoods(ProductPaperInputGoodsVo request) {
-	 * logger.info("readFileProductPaperInputGoods"); logger.info("fileName " +
-	 * request.getFile().getOriginalFilename()); logger.info("type " +
-	 * request.getFile().getContentType());
-	 * 
-	 * List<ProductPaperInputGoodsVo> dataList = new ArrayList<>();
-	 * ProductPaperInputGoodsVo data = null;
-	 * 
-	 * try (Workbook workbook = WorkbookFactory.create(new
-	 * ByteArrayInputStream(request.getFile().getBytes()))) { Sheet sheet =
-	 * workbook.getSheetAt(0);
-	 * 
-	 * for (Row row : sheet) { data = new ProductPaperInputGoodsVo(); // Skip on
-	 * first row if (row.getRowNum() == 0) { continue; } for (Cell cell : row) {
-	 * 
-	 * if (cell.getColumnIndex() == 0) { // Column No. continue; } else if
-	 * (cell.getColumnIndex() == 1) { // GoodsDesc
-	 * data.setGoodsDesc(ExcelUtils.getCellValueAsString(cell)); } else if
-	 * (cell.getColumnIndex() == 2) { // nputGoodsQty
-	 * data.setInputGoodsQty(ExcelUtils.getCellValueAsString(cell)); } else if
-	 * (cell.getColumnIndex() == 3) { // InputMonthStatementQty
-	 * data.setInputMonthStatementQty(ExcelUtils.getCellValueAsString(cell)); } else
-	 * if (cell.getColumnIndex() == 4) { // InputDailyAccountQty
-	 * data.setInputDailyAccountQty(ExcelUtils.getCellValueAsString(cell)); } else
-	 * if (cell.getColumnIndex() == 5) { // MaxDiffQty
-	 * data.setMaxDiffQty1(ExcelUtils.getCellValueAsString(cell)); }else if
-	 * (cell.getColumnIndex() == 6) { // MaxDiffQty
-	 * data.setMaxDiffQty2(ExcelUtils.getCellValueAsString(cell)); } }
-	 * dataList.add(data); }
-	 * 
-	 * } catch (Exception e) { logger.error(e.getMessage(), e); }
-	 * 
-	 * return dataList; }
-	 */
 
 	@Override
 	protected List<ProductPaperInputGoodsVo> inquiryByWs(ProductPaperFormVo formVo) {
@@ -263,8 +229,53 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 
 	@Override
 	protected List<ProductPaperInputGoodsVo> uploadData(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("readFileProductPaperInputGoods");
+		logger.info("fileName " + formVo.getFile().getOriginalFilename());
+		logger.info("type " + formVo.getFile().getContentType());
+
+		List<ProductPaperInputGoodsVo> dataList = new ArrayList<>();
+		ProductPaperInputGoodsVo data = null;
+
+		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(formVo.getFile().getBytes()))) {
+			Sheet sheet = workbook.getSheetAt(0);
+			for (Row row : sheet) {
+				data = new ProductPaperInputGoodsVo();
+				// Skip on first row
+				if (row.getRowNum() == 0) {
+					continue;
+				}
+				for (Cell cell : row) {
+					if (cell.getColumnIndex() == 0) {
+						// Column No.
+						continue;
+					} else if (cell.getColumnIndex() == 1) {
+						// GoodsDesc
+						data.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 2) {
+						// nputGoodsQty
+						data.setInputGoodsQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 3) {
+						// InputMonthStatementQty
+						data.setInputMonthStatementQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 4) {
+						// InputDailyAccountQty
+						data.setInputDailyAccountQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 5) {
+						// MaxDiffQty
+						data.setMaxDiffQty1(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 6) {
+						// MaxDiffQty
+						data.setMaxDiffQty2(ExcelUtils.getCellValueAsString(cell));
+					}
+
+				}
+				dataList.add(data);
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return dataList;
 	}
 
 	@Override
