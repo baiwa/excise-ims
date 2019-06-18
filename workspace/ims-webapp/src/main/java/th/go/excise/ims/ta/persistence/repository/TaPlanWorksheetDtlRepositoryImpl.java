@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -32,7 +34,9 @@ import th.go.excise.ims.ta.vo.PlanWorksheetSendTableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 
 public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepositoryCustom {
-
+	
+	private static final Logger logger = LoggerFactory.getLogger(TaPlanWorksheetDtlRepositoryImpl.class);
+	
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
@@ -520,5 +524,46 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		return commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), params.toArray(), Long.class);
 	}
 
+	@Override
+	public PlanWorksheetDtlVo findPlanDetailByAuditPlanCode(String auditPlanCode) {
+		logger.info("findByAuditPlanCode auditPlanCode={}", auditPlanCode);
+		
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT PLAN_D.OFFICE_CODE ");
+		sql.append("   ,PLAN_H.BUDGET_YEAR ");
+		sql.append("   ,PLAN_H.ANALYSIS_NUMBER ");
+		sql.append("   ,PLAN_H.PLAN_NUMBER ");
+		sql.append("   ,PLAN_D.NEW_REG_ID ");
+		sql.append("   ,PLAN_D.SYSTEM_TYPE ");
+		sql.append("   ,PLAN_D.PLAN_TYPE ");
+		sql.append("   ,PLAN_D.AUDIT_STATUS ");
+		sql.append("   ,PLAN_D.AUDIT_TYPE ");
+		sql.append("   ,PLAN_D.AUDIT_START_DATE ");
+		sql.append("   ,PLAN_D.AUDIT_END_DATE ");
+		sql.append("   ,PLAN_D.AUDIT_PLAN_CODE ");
+		sql.append(" FROM TA_PLAN_WORKSHEET_HDR PLAN_H ");
+		sql.append(" INNER JOIN TA_PLAN_WORKSHEET_DTL PLAN_D ON PLAN_D.PLAN_NUMBER = PLAN_H.PLAN_NUMBER ");
+		sql.append("   AND PLAN_H.IS_DELETED = 'N' ");
+		sql.append("   AND PLAN_D.IS_DELETED = 'N' ");
+		sql.append(" WHERE PLAN_D.AUDIT_PLAN_CODE = ? ");
+		
+		return commonJdbcTemplate.queryForObject(sql.toString(), new Object[] { auditPlanCode }, new RowMapper<PlanWorksheetDtlVo>() {
+			@Override
+			public PlanWorksheetDtlVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+				PlanWorksheetDtlVo vo = new PlanWorksheetDtlVo();
+				vo.setOfficeCode(rs.getString("OFFICE_CODE"));
+				vo.setBudgetYear(rs.getString("BUDGET_YEAR"));
+				vo.setAnalysisNumber(rs.getString("ANALYSIS_NUMBER"));
+				vo.setPlanNumber(rs.getString("PLAN_NUMBER"));
+				vo.setNewRegId(rs.getString("NEW_REG_ID"));
+				vo.setSystemType(rs.getString("SYSTEM_TYPE"));
+				vo.setPlanType(rs.getString("PLAN_TYPE"));
+				vo.setAuditStatus(rs.getString("AUDIT_STATUS"));
+				vo.setAuditType(rs.getString("AUDIT_TYPE"));
+				vo.setAuditPlanCode(rs.getString("AUDIT_PLAN_CODE"));
+				return vo;
+			}
+		});
+	}
     
 }
