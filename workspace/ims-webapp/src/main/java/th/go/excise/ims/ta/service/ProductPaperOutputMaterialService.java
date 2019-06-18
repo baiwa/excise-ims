@@ -49,9 +49,9 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 	protected List<ProductPaperOutputMaterialVo> inquiryByWs(ProductPaperFormVo formVo) {
 		logger.info("inquiryByWs");
 
-		LocalDate localDateStart = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]), Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
-		LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]), Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
-
+		LocalDate localDateStart = toLocalDate(formVo.getStartDate());
+		LocalDate localDateEnd = toLocalDate(formVo.getEndDate());
+		
 		WsOasfri0100FromVo wsOasfri0100FormVo = new WsOasfri0100FromVo();
 		wsOasfri0100FormVo.setNewRegId(formVo.getNewRegId());
 		wsOasfri0100FormVo.setDutyGroupId(formVo.getDutyGroupId());
@@ -197,7 +197,7 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 	}
 
 	@Override
-	protected List<ProductPaperOutputMaterialVo> uploadData(ProductPaperFormVo formVo) {
+	public List<ProductPaperOutputMaterialVo> upload(ProductPaperFormVo formVo) {
 		logger.info("readFileProductPaperOutputMaterial");
 		logger.info("fileName " + formVo.getFile().getOriginalFilename());
 		logger.info("type " + formVo.getFile().getContentType());
@@ -250,13 +250,13 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 	}
 
 	@Override
-	protected void saveData(ProductPaperFormVo formVo) {
+	public void save(ProductPaperFormVo formVo) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
+	public List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
 		// TODO Auto-generated method stub
 		return null;
 	}

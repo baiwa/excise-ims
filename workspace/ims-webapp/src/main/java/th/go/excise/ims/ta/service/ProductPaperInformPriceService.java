@@ -288,7 +288,7 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 	}
 
 	@Override
-	public List<ProductPaperInformPriceVo> uploadData(ProductPaperFormVo formVo) {
+	public List<ProductPaperInformPriceVo> upload(ProductPaperFormVo formVo) {
 		logger.info("readFileProductPaperInformPrice");
 		logger.info("fileName " + formVo.getFile().getOriginalFilename());
 		logger.info("type " + formVo.getFile().getContentType());
@@ -343,13 +343,13 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 	}
 
 	@Override
-	protected void saveData(ProductPaperFormVo formVo) {
+	public void save(ProductPaperFormVo formVo) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
+	public List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -225,19 +225,19 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 	}
 
 	@Override
-	protected List<ProductPaperBalanceMaterialVo> uploadData(ProductPaperFormVo formVo) {
+	public List<ProductPaperBalanceMaterialVo> upload(ProductPaperFormVo formVo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	protected void saveData(ProductPaperFormVo formVo) {
+	public void save(ProductPaperFormVo formVo) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
+	public List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
 		// TODO Auto-generated method stub
 		return null;
 	}

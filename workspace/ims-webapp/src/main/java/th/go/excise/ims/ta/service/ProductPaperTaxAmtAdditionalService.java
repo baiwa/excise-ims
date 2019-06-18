@@ -378,7 +378,7 @@ public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperSer
 	}
 
 	@Override
-	public List<ProductPaperTaxAmtAdditionalVo> uploadData(ProductPaperFormVo formVo) {
+	public List<ProductPaperTaxAmtAdditionalVo> upload(ProductPaperFormVo formVo) {
 		logger.info("readFileProductPaperTaxAmtAdditional");
 		logger.info("fileName " + formVo.getFile().getOriginalFilename());
 		logger.info("type " + formVo.getFile().getContentType());
@@ -445,13 +445,13 @@ public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperSer
 	}
 
 	@Override
-	protected void saveData(ProductPaperFormVo formVo) {
+	public void save(ProductPaperFormVo formVo) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
+	public List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
 		// TODO Auto-generated method stub
 		return null;
 	}

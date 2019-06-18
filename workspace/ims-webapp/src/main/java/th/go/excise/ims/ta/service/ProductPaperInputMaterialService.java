@@ -4,10 +4,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -16,6 +17,8 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
@@ -23,12 +26,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperPr01D;
+import th.go.excise.ims.ta.persistence.entity.TaPaperPr01H;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr01DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr01HRepository;
+import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
+import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperInputMaterialVo;
 import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
@@ -44,72 +53,24 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 	private static final String NO_VALUE = "-";
 
 	@Autowired
+	private Gson gson;
+	@Autowired
+	private TaPlanWorksheetDtlRepository taPlanWorksheetDtlRepository;
+	@Autowired
+	private PaperSequenceService paperSequenceService;
+	@Autowired
 	private TaPaperPr01HRepository taPaperPr01HRepository;
 	@Autowired
 	private TaPaperPr01DRepository taPaperPr01DRepository;
 	@Autowired
 	private WsOasfri0100DRepository wsOasfri0100DRepository;
 
-//	public List<ProductPaperInputMaterialVo> readFileProductPaperInputMaterial(ProductPaperInputMaterialVo request) {
-//		logger.info("readFileRawMaterialReceive");
-	// logger.info("fileName " + request.getFile().getOriginalFilename());
-	// logger.info("type " + request.getFile().getContentType());
-
-//		List<ProductPaperInputMaterialVo> dataList = new ArrayList<>();
-//		ProductPaperInputMaterialVo data = null;
-
-	// try (Workbook workbook = WorkbookFactory.create(new
-	// ByteArrayInputStream(request.getFile().getBytes()))) {
-//		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(null))) {
-//			Sheet sheet = workbook.getSheetAt(0);
-//
-//			for (Row row : sheet) {
-//				data = new ProductPaperInputMaterialVo();
-//				// Skip on first row
-//				if (row.getRowNum() == 0) {
-//					continue;
-//				}
-//				for (Cell cell : row) {
-//
-//					if (cell.getColumnIndex() == 0) {
-//						// Column No.
-//						continue;
-//					} else if (cell.getColumnIndex() == 1) {
-//						// MaterialDesc
-//						data.setMaterialDesc(ExcelUtils.getCellValueAsString(cell));
-//					} else if (cell.getColumnIndex() == 2) {
-//						// InputMaterialQty
-//						data.setInputMaterialQty(ExcelUtils.getCellValueAsString(cell));
-//					} else if (cell.getColumnIndex() == 3) {
-//						// DailyAccountQty
-//						data.setDailyAccountQty(ExcelUtils.getCellValueAsString(cell));
-//					} else if (cell.getColumnIndex() == 4) {
-//						// MonthStatementQty
-//						data.setMonthStatementQty(ExcelUtils.getCellValueAsString(cell));
-//					} else if (cell.getColumnIndex() == 5) {
-//						// ExternalDataQty
-//						data.setExternalDataQty(ExcelUtils.getCellValueAsString(cell));
-//					} else if (cell.getColumnIndex() == 6) {
-//						// MaxDiffQty
-//						data.setMaxDiffQty(ExcelUtils.getCellValueAsString(cell));
-//					}
-//				}
-//				dataList.add(data);
-//			}
-//
-//		} catch (Exception e) {
-//			logger.error(e.getMessage(), e);
-//		}
-//
-//		return dataList;
-//	}
-
 	@Override
 	protected List<ProductPaperInputMaterialVo> inquiryByWs(ProductPaperFormVo formVo) {
 		logger.info("inquiryByWs");
 		
-		LocalDate localDateStart = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]), Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
-		LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]), Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
+		LocalDate localDateStart = toLocalDate(formVo.getStartDate());
+		LocalDate localDateEnd = toLocalDate(formVo.getEndDate());
 		
 		WsOasfri0100FromVo wsOasfri0100FormVo = new WsOasfri0100FromVo();
 		wsOasfri0100FormVo.setNewRegId(formVo.getNewRegId());
@@ -268,19 +229,96 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 	}
 
 	@Override
-	protected List<ProductPaperInputMaterialVo> uploadData(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected void saveData(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
+	public List<ProductPaperInputMaterialVo> upload(ProductPaperFormVo formVo) {
+		logger.info("upload filename={}", formVo.getFile().getName());
 		
+		List<ProductPaperInputMaterialVo> voList = new ArrayList<>();
+		ProductPaperInputMaterialVo vo = null;
+		try (Workbook workbook = WorkbookFactory.create(formVo.getFile().getInputStream())) {
+			Sheet sheet = workbook.getSheetAt(0);
+			for (Row row : sheet) {
+				vo = new ProductPaperInputMaterialVo();
+				// Skip on first row
+				if (row.getRowNum() == 0) {
+					continue;
+				}
+				for (Cell cell : row) {
+					if (cell.getColumnIndex() == 0) {
+						// Column No.
+						continue;
+					} else if (cell.getColumnIndex() == 1) {
+						// MaterialDesc
+						vo.setMaterialDesc(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 2) {
+						// InputMaterialQty
+						vo.setInputMaterialQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 3) {
+						// DailyAccountQty
+						vo.setDailyAccountQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 4) {
+						// MonthStatementQty
+						vo.setMonthStatementQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 5) {
+						// ExternalDataQty
+						vo.setExternalDataQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 6) {
+						// MaxDiffQty
+						vo.setMaxDiffQty(ExcelUtils.getCellValueAsString(cell));
+					}
+				}
+				voList.add(vo);
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+	}
+
+		return voList;
+	}
+
+	@Transactional
+	@Override
+	public void save(ProductPaperFormVo formVo) {
+		logger.info("save");
+		
+		PlanWorksheetDtlVo planDtlVo = taPlanWorksheetDtlRepository.findPlanDetailByAuditPlanCode(formVo.getAuditPlanCode());
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		String budgetYear = planDtlVo.getBudgetYear();
+		String paperPrNumber = paperSequenceService.getPaperProductNumber(officeCode, budgetYear);
+		
+		TaPaperPr01H entityH = new TaPaperPr01H();
+		entityH.setOfficeCode(officeCode);
+		entityH.setBudgetYear(budgetYear);
+		entityH.setPlanNumber(planDtlVo.getPlanNumber());
+		entityH.setAuditPlanCode(formVo.getAuditPlanCode());
+		entityH.setPaperPrNumber(paperPrNumber);
+		entityH.setNewRegId(formVo.getNewRegId());
+		entityH.setDutyGroupId(formVo.getDutyGroupId());
+		entityH.setStartDate(toLocalDate(formVo.getStartDate()));
+		entityH.setEndDate(toLocalDate(formVo.getEndDate()));
+		taPaperPr01HRepository.save(entityH);
+		
+		List<ProductPaperInputMaterialVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
+		List<TaPaperPr01D> entityDList = new ArrayList<>();
+		TaPaperPr01D entityD = null;
+		int i = 1;
+		for (ProductPaperInputMaterialVo vo : voList) {
+			entityD = new TaPaperPr01D();
+			entityD.setPaperPrNumber(paperPrNumber);
+			entityD.setSeqNo(i);
+			entityD.setMaterialDesc(vo.getMaterialDesc());
+			entityD.setInputMaterialQty(!NO_VALUE.equals(vo.getInputMaterialQty()) ? NumberUtils.toBigDecimal(vo.getInputMaterialQty()) : null);
+			entityD.setDailyAccountQty(!NO_VALUE.equals(vo.getDailyAccountQty()) ? NumberUtils.toBigDecimal(vo.getDailyAccountQty()) : null);
+			entityD.setMonthStatementQty(!NO_VALUE.equals(vo.getMonthStatementQty()) ? NumberUtils.toBigDecimal(vo.getMonthStatementQty()) : null);
+			entityD.setExternalDataQty(!NO_VALUE.equals(vo.getExternalDataQty()) ? NumberUtils.toBigDecimal(vo.getExternalDataQty()) : null);
+			entityD.setMaxDiffQty(!NO_VALUE.equals(vo.getMaxDiffQty()) ? NumberUtils.toBigDecimal(vo.getMaxDiffQty()) : null);
+			entityDList.add(entityD);
+			i++;
+		}
+		taPaperPr01DRepository.saveAll(entityDList);
 	}
 
 	@Override
-	protected List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
+	public List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
 		return taPaperPr01HRepository.findPaperPrNumberByAuditPlanCode(formVo.getAuditPlanCode());
 	}
 

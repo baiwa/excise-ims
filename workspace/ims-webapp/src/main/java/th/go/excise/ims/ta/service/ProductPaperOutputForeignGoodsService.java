@@ -311,7 +311,7 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 	}
 
 	@Override
-	public List<ProductPaperOutputForeignGoodsVo> uploadData(ProductPaperFormVo formVo) {
+	public List<ProductPaperOutputForeignGoodsVo> upload(ProductPaperFormVo formVo) {
 		logger.info("readFileProductOutputForeignGoods");
 		logger.info("fileName " + formVo.getFile().getOriginalFilename());
 		logger.info("type " + formVo.getFile().getContentType());
@@ -369,13 +369,13 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 	}
 
 	@Override
-	protected void saveData(ProductPaperFormVo formVo) {
+	public void save(ProductPaperFormVo formVo) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
+	public List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
 		// TODO Auto-generated method stub
 		return null;
 	}

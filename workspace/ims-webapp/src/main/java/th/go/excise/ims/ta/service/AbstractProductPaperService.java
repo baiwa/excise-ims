@@ -1,8 +1,14 @@
 package th.go.excise.ims.ta.service;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.time.chrono.ThaiBuddhistDate;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+
+import com.google.gson.reflect.TypeToken;
 
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 
@@ -38,10 +44,19 @@ public abstract class AbstractProductPaperService<VO> {
 	
 	protected abstract byte[] exportData(List<VO> voList, String exportType);
 	
-	protected abstract List<VO> uploadData(ProductPaperFormVo formVo);
+	public abstract List<VO> upload(ProductPaperFormVo formVo);
 	
-	protected abstract void saveData(ProductPaperFormVo formVo);
+	public abstract void save(ProductPaperFormVo formVo);
 	
-	protected abstract List<String> getPaperPrNumberList(ProductPaperFormVo formVo);
+	public abstract List<String> getPaperPrNumberList(ProductPaperFormVo formVo);
+	
+	protected Type getListVoType() {
+		Type voType = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+		return TypeToken.getParameterized(List.class, voType).getType();
+	}
+	
+	protected LocalDate toLocalDate(String inputDate) {
+		return LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(inputDate.split("/")[1]), Integer.parseInt(inputDate.split("/")[0]), 1));
+	}
 	
 }

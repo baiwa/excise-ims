@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ta.service.AbstractProductPaperService;
 import th.go.excise.ims.ta.service.ProductPaperBalanceMaterialService;
 import th.go.excise.ims.ta.service.ProductPaperInformPriceService;
@@ -106,18 +108,24 @@ public class ProductPaperController {
 	
 	@PostMapping("/upload-{productPaperType}")
 	@ResponseBody
-	public ResponseData<DataTableAjax<?>> uploadData(@PathVariable("productPaperType") String productPaperType, @ModelAttribute ProductPaperFormVo formVo) throws IOException {
+	public ResponseData<?> uploadData(@PathVariable("productPaperType") String productPaperType, @ModelAttribute ProductPaperFormVo formVo) throws IOException {
 		logger.info("uploadData");
-		ResponseData<DataTableAjax<?>> responseData = new ResponseData<DataTableAjax<?>>();
-		//try {
-		//	responseData.setData(productPaperInputMaterialService.readFileProductPaperInputMaterial(request));
-		//	responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
-		//	responseData.setStatus(RESPONSE_STATUS.SUCCESS);
-		//} catch (Exception e) {
-		//	logger.error(e.getMessage(), e);
-		//	responseData.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
-		//	responseData.setStatus(RESPONSE_STATUS.FAILED);
-		//}
+		
+		ResponseData<DataTableAjax<Object>> responseData = new ResponseData<>();
+		try {
+			AbstractProductPaperService<Object> service = productPaperServiceMap.get(productPaperType);
+			DataTableAjax<Object> dataTableAjax = new DataTableAjax<>();
+			dataTableAjax.setData(service.upload(formVo));
+			
+			responseData.setData(dataTableAjax);
+			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			responseData.setMessage(e.getMessage());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		
 		return responseData;
 	}
 	
@@ -125,16 +133,39 @@ public class ProductPaperController {
 	@ResponseBody
 	public ResponseData<String> saveData(@PathVariable("productPaperType") String productPaperType, @RequestBody ProductPaperFormVo formVo) {
 		logger.info("saveData");
+		
 		ResponseData<String> responseData = new ResponseData<String>();
-		//try {
-		//	responseData.setData(productPaperInputMaterialService.readFileProductPaperInputMaterial(request));
-		//	responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
-		//	responseData.setStatus(RESPONSE_STATUS.SUCCESS);
-		//} catch (Exception e) {
-		//	logger.error(e.getMessage(), e);
-		//	responseData.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
-		//	responseData.setStatus(RESPONSE_STATUS.FAILED);
-		//}
+		try {
+			AbstractProductPaperService<Object> service = productPaperServiceMap.get(productPaperType);
+			service.save(formVo);
+			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			responseData.setMessage(e.getMessage());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		
+		return responseData;
+	}
+	
+	@PostMapping("/paper-pr-number-list/{productPaperType}")
+	@ResponseBody
+	public ResponseData<List<String>> getPaperPrNumberList(@PathVariable("productPaperType") String productPaperType, @RequestBody ProductPaperFormVo formVo) {
+		logger.info("getPaperPrNumberList");
+		
+		ResponseData<List<String>> responseData = new ResponseData<List<String>>();
+		try {
+			AbstractProductPaperService<Object> service = productPaperServiceMap.get(productPaperType);
+			responseData.setData(service.getPaperPrNumberList(formVo));
+			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			responseData.setMessage(e.getMessage());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		
 		return responseData;
 	}
 	
