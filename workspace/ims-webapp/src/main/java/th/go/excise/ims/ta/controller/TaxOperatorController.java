@@ -917,8 +917,7 @@ public class TaxOperatorController {
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			responseData.setMessage(
-					ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;

@@ -75,8 +75,6 @@ public class DraftWorksheetService {
 	@Autowired
 	private TaWsReg4000Repository taWsReg4000Repository;
 	@Autowired
-	private TaWsInc8000MRepository taWsInc8000MRepository;
-	@Autowired
 	private TaPlanWorksheetHisRepository taPlanWorksheetHisRepository;
 
 	@Autowired
@@ -170,52 +168,6 @@ public class DraftWorksheetService {
 		return detailVoList;
 	}
 
-	private void setTaxAmount(TaxOperatorDetailVo detailVo, String groupMonthNo, String taxAmount) {
-		try {
-			Method method = TaxOperatorDetailVo.class.getDeclaredMethod("setTaxAmt" + groupMonthNo, String.class);
-			method.invoke(detailVo, taxAmount);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-		}
-	}
-
-	private void calculateSD(TaxOperatorDetailVo detailVo, List<Double> taxAmountList) {
-		DecimalFormat decimalFormat = new DecimalFormat("#.00");
-
-		double[] taxAmounts = taxAmountList.stream().mapToDouble(d -> d).toArray();
-		double mean = StatUtils.mean(taxAmounts);
-		if (!Double.isNaN(mean)) {
-			detailVo.setTaxAmtMean(decimalFormat.format(mean));
-		} else {
-			detailVo.setTaxAmtMean(NO_TAX_AMOUNT);
-		}
-
-		StandardDeviation standardDeviation = new StandardDeviation();
-		double sd = standardDeviation.evaluate(taxAmounts, mean);
-		if (!Double.isNaN(sd)) {
-			detailVo.setTaxAmtSd(decimalFormat.format(sd));
-		} else {
-			detailVo.setTaxAmtSd(NO_TAX_AMOUNT);
-		}
-
-		double max = StatUtils.max(taxAmounts);
-		double taxAmtMaxPnt = ((max - mean) / mean) * 100;
-		if (!Double.isNaN(taxAmtMaxPnt)) {
-			detailVo.setTaxAmtMaxPnt(decimalFormat.format(taxAmtMaxPnt));
-		} else {
-			detailVo.setTaxAmtMaxPnt(NO_TAX_AMOUNT);
-		}
-
-		double min = StatUtils.min(taxAmounts);
-		double taxAmtMinPnt = ((min - mean) / mean) * 100;
-		if (!Double.isNaN(taxAmtMaxPnt)) {
-			detailVo.setTaxAmtMaxPnt(decimalFormat.format(taxAmtMinPnt));
-		} else {
-			detailVo.setTaxAmtMaxPnt(NO_TAX_AMOUNT);
-		}
-	}
-	
-	
 
 	@Transactional(rollbackOn = Exception.class)
 	public void saveDraftWorksheet(TaxOperatorFormVo formVo) {

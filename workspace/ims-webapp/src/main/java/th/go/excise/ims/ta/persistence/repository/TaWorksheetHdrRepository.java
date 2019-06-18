@@ -36,5 +36,5 @@ public interface TaWorksheetHdrRepository extends CommonJpaCrudRepository<TaWork
 	@Query(value ="SELECT * FROM TA_WORKSHEET_HDR WHERE WORKSHEET_STATUS = ?1 AND IS_DELETED = '" + FLAG.N_FLAG + "' ORDER BY WORKSHEET_HDR_ID DESC" ,nativeQuery = true)
 	public List<TaWorksheetHdr> findWorksheetHdrByStatusOrderById(String status);
 	
-	//List<TaWorksheetHdr> findAllOrderByCreatedDate();
+	public List<TaWorksheetHdr> findByOfficeCodeAndBudgetYearAndWorksheetStatusOrderByCreatedDateDesc(String officeCode, String budgetYear, String worksheetStatus);
 }
