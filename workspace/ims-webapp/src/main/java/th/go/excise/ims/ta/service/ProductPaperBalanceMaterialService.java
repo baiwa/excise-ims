@@ -3,7 +3,6 @@ package th.go.excise.ims.ta.service;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +11,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
@@ -21,6 +22,8 @@ import org.springframework.stereotype.Service;
 
 import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ta.persistence.repository.TaPaperPr03DRepository;
+import th.go.excise.ims.ta.persistence.repository.TaPaperPr03HRepository;
 import th.go.excise.ims.ta.vo.ProductPaperBalanceMaterialVo;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
@@ -31,70 +34,28 @@ import th.go.excise.ims.ws.vo.WsOasfri0100Vo;
 public class ProductPaperBalanceMaterialService extends AbstractProductPaperService<ProductPaperBalanceMaterialVo> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperBalanceMaterialService.class);
+	
 	private static final String PRODUCT_PAPER_BALANCE_MATERIAL = "ตรวจนับวัตถุดิบคงเหลือ";;
 
 	@Autowired
+	private TaPaperPr03HRepository taPaperPr03HRepository;
+	@Autowired
+	private TaPaperPr03DRepository taPaperPr03DRepository;
+	@Autowired
 	private WsOasfri0100DRepository wsOasfri0100DRepository;
 
-//	public List<ProductPaperBalanceMaterialVo> readFileProductPaperBalanceMaterial(
-//			ProductPaperBalanceMaterialVo request) {
-//		logger.info("readFileProductPaperBalanceMaterial");
-//		logger.info("fileName " + request.getFile().getOriginalFilename());
-//		logger.info("type " + request.getFile().getContentType());
-//
-//		List<ProductPaperBalanceMaterialVo> dataList = new ArrayList<>();
-//		ProductPaperBalanceMaterialVo data = null;
-//
-//		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(request.getFile().getBytes()))) {
-//			Sheet sheet = workbook.getSheetAt(0);
-//
-//			for (Row row : sheet) {
-//				data = new ProductPaperBalanceMaterialVo();
-//				// Skip on first row
-//				if (row.getRowNum() == 0) {
-//					continue;
-//				}
-//				for (Cell cell : row) {
-//
-//					if (cell.getColumnIndex() == 0) {
-//						// Column No.
-//						continue;
-//					} else if (cell.getColumnIndex() == 1) {
-//						// MaterialDesc
-//						data.setMaterialDesc(ExcelUtils.getCellValueAsString(cell));
-//					} else if (cell.getColumnIndex() == 2) {
-//						// BalanceByAccountQty
-//						data.setBalanceByAccountQty(ExcelUtils.getCellValueAsString(cell));
-//					} else if (cell.getColumnIndex() == 3) {
-//						// BalanceByCountQty
-//						data.setBalanceByStock(ExcelUtils.getCellValueAsString(cell));
-//					} else if (cell.getColumnIndex() == 4) {
-//						// BalanceByCountQty
-//						data.setBalanceByCountQty(ExcelUtils.getCellValueAsString(cell));
-//					} else if (cell.getColumnIndex() == 5) {
-//						// MaxDiffQty
-//						data.setMaxDiffQty1(ExcelUtils.getCellValueAsString(cell));
-//					} else if (cell.getColumnIndex() == 5) {
-//						// MaxDiffQty
-//						data.setMaxDiffQty2(ExcelUtils.getCellValueAsString(cell));
-//					}
-//				}
-//				dataList.add(data);
-//			}
-//
-//		} catch (Exception e) {
-//			logger.error(e.getMessage(), e);
-//		}
-//
-//		return dataList;
-//	}
-
+	@Override
+	protected Logger getLogger() {
+		return logger;
+	}
+	
 	@Override
 	protected List<ProductPaperBalanceMaterialVo> inquiryByWs(ProductPaperFormVo formVo) {
 		logger.info("inquiryByWs");
-		LocalDate localDateStart = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]), Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
-		LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]), Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
-
+		
+		LocalDate localDateStart = toLocalDate(formVo.getStartDate());
+		LocalDate localDateEnd = toLocalDate(formVo.getEndDate());
+		
 		WsOasfri0100FromVo wsOasfri0100FormVo = new WsOasfri0100FromVo();
 		wsOasfri0100FormVo.setNewRegId(formVo.getNewRegId());
 		wsOasfri0100FormVo.setDutyGroupId(formVo.getDutyGroupId());
@@ -226,8 +187,51 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 
 	@Override
 	public List<ProductPaperBalanceMaterialVo> upload(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		List<ProductPaperBalanceMaterialVo> dataList = new ArrayList<>();
+		ProductPaperBalanceMaterialVo data = null;
+
+		try (Workbook workbook = WorkbookFactory.create(formVo.getFile().getInputStream())) {
+			Sheet sheet = workbook.getSheetAt(0);
+
+			for (Row row : sheet) {
+				data = new ProductPaperBalanceMaterialVo();
+				// Skip on first row
+				if (row.getRowNum() == 0) {
+					continue;
+				}
+				for (Cell cell : row) {
+
+					if (cell.getColumnIndex() == 0) {
+						// Column No.
+						continue;
+					} else if (cell.getColumnIndex() == 1) {
+						// MaterialDesc
+						data.setMaterialDesc(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 2) {
+						// BalanceByAccountQty
+						data.setBalanceByAccountQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 3) {
+						// BalanceByCountQty
+						data.setBalanceByStock(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 4) {
+						// BalanceByCountQty
+						data.setBalanceByCountQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 5) {
+						// MaxDiffQty
+						data.setMaxDiffQty1(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 5) {
+						// MaxDiffQty
+						data.setMaxDiffQty2(ExcelUtils.getCellValueAsString(cell));
+					}
+				}
+				dataList.add(data);
+			}
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return dataList;
 	}
 
 	@Override
@@ -238,8 +242,7 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 
 	@Override
 	public List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		return taPaperPr03HRepository.findPaperPrNumberByAuditPlanCode(formVo.getAuditPlanCode());
 	}
 
 }

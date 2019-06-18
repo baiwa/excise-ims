@@ -19,23 +19,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperPr09D;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr09DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr09HRepository;
-import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperInformPriceVo;
 import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
 
 @Service
 public class ProductPaperInformPriceService extends AbstractProductPaperService<ProductPaperInformPriceVo> {
+	
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperInformPriceService.class);
 
-	private static final Integer TOTAL = 17;
 	private static final String PRODUCT_PAPER_IN_FORM_PRICE = "ตรวจสอบด้านราคา";
-	private static final String NO_VALUE = "-";
 	
 	@Autowired
 	private TaPaperPr09HRepository taPaperPr09HRepository;
@@ -44,24 +41,17 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 	@Autowired
 	private WsOasfri0100DRepository wsOasfri0100DRepository;
 
-	public DataTableAjax<ProductPaperInformPriceVo> listProductPaperInformPrice(CreatePaperFormVo request) {
-		DataTableAjax<ProductPaperInformPriceVo> dataTableAjax = new DataTableAjax<ProductPaperInformPriceVo>();
-		dataTableAjax.setDraw(request.getDraw() + 1);
-		dataTableAjax.setData(getDataProductPaperInformPrice(request.getStart(), request.getLength(), TOTAL));
-		dataTableAjax.setRecordsTotal(TOTAL);
-		dataTableAjax.setRecordsFiltered(TOTAL);
-		return dataTableAjax;
+	@Override
+	protected Logger getLogger() {
+		return logger;
 	}
-
-	public List<ProductPaperInformPriceVo> getDataProductPaperInformPrice(int start, int length, int total) {
-		logger.info("getDataProductPaperInformPrice");
-		String desc = "ตรวจสอบด้านราคา";
-		List<ProductPaperInformPriceVo> datalist = new ArrayList<ProductPaperInformPriceVo>();
+	
+	@Override
+	protected List<ProductPaperInformPriceVo> inquiryByWs(ProductPaperFormVo formVo) {
+		List<ProductPaperInformPriceVo> datalist = new ArrayList<>();
 		ProductPaperInformPriceVo data = null;
-		for (int i = start; i < (start + length); i++) {
-			if (i >= total) {
-				break;
-			}
+		String desc = "ตรวจสอบด้านราคา";
+		for (int i = 0; i < 5; i++) {
 			data = new ProductPaperInformPriceVo();
 			data.setGoodsDesc(desc + (i + 1));
 			data.setInformPrice("1,000.00");
@@ -75,8 +65,32 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 		return datalist;
 	}
 
-	public byte[] exportProductPaperInformPrice() {
+	@Override
+	protected List<ProductPaperInformPriceVo> inquiryByPaperPrNumber(ProductPaperFormVo formVo) {
+		logger.info("inquiryByPaperPrNumber paperPrNumber={}", formVo.getPaperPrNumber());
+		
+		List<TaPaperPr09D> entityList = taPaperPr09DRepository.findByPaperPrNumber(formVo.getPaperPrNumber());
+		List<ProductPaperInformPriceVo> voList = new ArrayList<>();
+		ProductPaperInformPriceVo vo = null;
+		for (TaPaperPr09D entity : entityList) {
+			vo = new ProductPaperInformPriceVo();
+			vo.setGoodsDesc(entity.getGoodsDesc());
+			vo.setInformPrice(entity.getInformPrice() != null ? entity.getInformPrice().toString() : NO_VALUE);
+			vo.setExternalPrice(entity.getExternalPrice() != null ? entity.getExternalPrice().toString() : NO_VALUE);
+			vo.setDeclarePrice(entity.getDeclarePrice() != null ? entity.getDeclarePrice().toString() : NO_VALUE);
+			vo.setRetailPrice(entity.getRetailPrice() != null ? entity.getRetailPrice().toString() : NO_VALUE);
+			vo.setTaxPrice(entity.getTaxPrice() != null ? entity.getTaxPrice().toString() : NO_VALUE);
+			vo.setDiffPrice(entity.getDiffPrice() != null ? entity.getDiffPrice().toString() : NO_VALUE);
+			voList.add(vo);
+		}
+		
+		return voList;
+	}
 
+	@Override
+	protected byte[] exportData(List<ProductPaperInformPriceVo> voList, String exportType) {
+		logger.info("exportData");
+		
 		/* create spreadsheet */
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(PRODUCT_PAPER_IN_FORM_PRICE);
@@ -124,8 +138,7 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 		rowNum = 1;
 		cellNum = 0;
 		int no = 1;
-		List<ProductPaperInformPriceVo> dataList = getDataProductPaperInformPrice(0, TOTAL, TOTAL);
-		for (ProductPaperInformPriceVo data : dataList) {
+		for (ProductPaperInformPriceVo vo : voList) {
 			row = sheet.createRow(rowNum);
 
 			cell = row.createCell(cellNum);
@@ -134,27 +147,27 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getGoodsDesc());
+			cell.setCellValue(vo.getGoodsDesc());
 			cell.setCellStyle(cellLeft);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getInformPrice());
+			cell.setCellValue(vo.getInformPrice());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getExternalPrice());
+			cell.setCellValue(vo.getExternalPrice());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getDeclarePrice());
+			cell.setCellValue(vo.getDeclarePrice());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getRetailPrice());
+			cell.setCellValue(vo.getRetailPrice());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
@@ -164,7 +177,7 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 //			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getDiffPrice());
+			cell.setCellValue(vo.getDiffPrice());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
@@ -183,108 +196,6 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 		}
 
 		return content;
-	}
-
-	/*public List<ProductPaperInformPriceVo> readFileProductPaperInformPrice(ProductPaperInformPriceVo request) {
-		logger.info("readFileProductPaperInformPrice");
-		logger.info("fileName " + request.getFile().getOriginalFilename());
-		logger.info("type " + request.getFile().getContentType());
-
-		List<ProductPaperInformPriceVo> dataList = new ArrayList<>();
-		ProductPaperInformPriceVo data = null;
-
-		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(request.getFile().getBytes()));) {
-			Sheet sheet = workbook.getSheetAt(0);
-
-			for (Row row : sheet) {
-				data = new ProductPaperInformPriceVo();
-				// Skip on first row
-				if (row.getRowNum() == 0) {
-					continue;
-				}
-				for (Cell cell : row) {
-					if (cell.getColumnIndex() == 0) {
-						// Column No.
-						continue;
-					} else if (cell.getColumnIndex() == 1) {
-						// GoodsDesc
-						data.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 2) {
-						// InformPrice
-						data.setInformPrice(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 3) {
-						// ExternalPrice
-						data.setExternalPrice(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 4) {
-						// DeclarePrice
-						data.setDeclarePrice(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 5) {
-						// RetailPrice
-						data.setRetailPrice(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 6) {
-						// TaxPrice
-						data.setTaxPrice(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 7) {
-						// DiffPrice
-						data.setDiffPrice(ExcelUtils.getCellValueAsString(cell));
-					}
-
-				}
-				dataList.add(data);
-			}
-
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-		}
-		return dataList;
-	}*/
-
-	@Override
-	protected List<ProductPaperInformPriceVo> inquiryByWs(ProductPaperFormVo formVo) {
-		List<ProductPaperInformPriceVo> datalist = new ArrayList<>();
-		ProductPaperInformPriceVo data = null;
-		String desc = "ตรวจสอบด้านราคา";
-		for (int i = 0; i < 5; i++) {
-			data = new ProductPaperInformPriceVo();
-			data.setGoodsDesc(desc + (i + 1));
-			data.setInformPrice("1,000.00");
-			data.setExternalPrice("1,500.00");
-			data.setDeclarePrice("1,400.00");
-			data.setRetailPrice("1,400.00");
-			data.setTaxPrice("1,000.00");
-			data.setDiffPrice("100.00");
-			datalist.add(data);
-		}
-		return datalist;
-	}
-
-	@Override
-	protected List<ProductPaperInformPriceVo> inquiryByPaperPrNumber(ProductPaperFormVo formVo) {
-		logger.info("inquiryByPaperPrNumber paperPrNumber={}", formVo.getPaperPrNumber());
-		
-		List<TaPaperPr09D> entityList = taPaperPr09DRepository.findByPaperPrNumber(formVo.getPaperPrNumber());
-		List<ProductPaperInformPriceVo> voList = new ArrayList<>();
-		ProductPaperInformPriceVo vo = null;
-		for (TaPaperPr09D entity : entityList) {
-			vo = new ProductPaperInformPriceVo();
-			vo.setGoodsDesc(entity.getGoodsDesc());
-			vo.setInformPrice(entity.getInformPrice() != null ? entity.getInformPrice().toString() : NO_VALUE);
-			vo.setExternalPrice(entity.getExternalPrice() != null ? entity.getExternalPrice().toString() : NO_VALUE);
-			vo.setDeclarePrice(entity.getDeclarePrice() != null ? entity.getDeclarePrice().toString() : NO_VALUE);
-			vo.setRetailPrice(entity.getRetailPrice() != null ? entity.getRetailPrice().toString() : NO_VALUE);
-			vo.setTaxPrice(entity.getTaxPrice() != null ? entity.getTaxPrice().toString() : NO_VALUE);
-			vo.setDiffPrice(entity.getDiffPrice() != null ? entity.getDiffPrice().toString() : NO_VALUE);
-			voList.add(vo);
-		}
-		
-		return voList;
-	}
-
-	@Override
-	protected byte[] exportData(List<ProductPaperInformPriceVo> voList, String exportType) {
-		logger.info("exportData");
-		byte[] file = exportProductPaperInformPrice();
-		return file;
 	}
 
 	@Override
@@ -350,8 +261,7 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 
 	@Override
 	public List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		return taPaperPr09HRepository.findPaperPrNumberByAuditPlanCode(formVo.getAuditPlanCode());
 	}
 
 }

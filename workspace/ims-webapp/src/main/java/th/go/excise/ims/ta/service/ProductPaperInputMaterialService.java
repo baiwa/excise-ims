@@ -26,18 +26,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.Gson;
-
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
-import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperPr01D;
 import th.go.excise.ims.ta.persistence.entity.TaPaperPr01H;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr01DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr01HRepository;
-import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
-import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperInputMaterialVo;
 import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
@@ -50,21 +45,19 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperInputMaterialService.class);
 	
 	private static final String PRODUCT_PAPER_INPUT_MATERIAL = "ตรวจสอบการรับวัตถุดิบ";
-	private static final String NO_VALUE = "-";
-
-	@Autowired
-	private Gson gson;
-	@Autowired
-	private TaPlanWorksheetDtlRepository taPlanWorksheetDtlRepository;
-	@Autowired
-	private PaperSequenceService paperSequenceService;
+	
 	@Autowired
 	private TaPaperPr01HRepository taPaperPr01HRepository;
 	@Autowired
 	private TaPaperPr01DRepository taPaperPr01DRepository;
 	@Autowired
 	private WsOasfri0100DRepository wsOasfri0100DRepository;
-
+	
+	@Override
+	protected Logger getLogger() {
+		return logger;
+	}
+	
 	@Override
 	protected List<ProductPaperInputMaterialVo> inquiryByWs(ProductPaperFormVo formVo) {
 		logger.info("inquiryByWs");
@@ -270,31 +263,18 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-	}
-
+		}
+		
 		return voList;
 	}
 
-	@Transactional
+	@Transactional(rollbackOn = {Exception.class})
 	@Override
 	public void save(ProductPaperFormVo formVo) {
 		logger.info("save");
 		
-		PlanWorksheetDtlVo planDtlVo = taPlanWorksheetDtlRepository.findPlanDetailByAuditPlanCode(formVo.getAuditPlanCode());
-		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		String budgetYear = planDtlVo.getBudgetYear();
-		String paperPrNumber = paperSequenceService.getPaperProductNumber(officeCode, budgetYear);
-		
 		TaPaperPr01H entityH = new TaPaperPr01H();
-		entityH.setOfficeCode(officeCode);
-		entityH.setBudgetYear(budgetYear);
-		entityH.setPlanNumber(planDtlVo.getPlanNumber());
-		entityH.setAuditPlanCode(formVo.getAuditPlanCode());
-		entityH.setPaperPrNumber(paperPrNumber);
-		entityH.setNewRegId(formVo.getNewRegId());
-		entityH.setDutyGroupId(formVo.getDutyGroupId());
-		entityH.setStartDate(toLocalDate(formVo.getStartDate()));
-		entityH.setEndDate(toLocalDate(formVo.getEndDate()));
+		prepareEntityH(formVo, entityH, TaPaperPr01H.class);
 		taPaperPr01HRepository.save(entityH);
 		
 		List<ProductPaperInputMaterialVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
@@ -303,7 +283,7 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 		int i = 1;
 		for (ProductPaperInputMaterialVo vo : voList) {
 			entityD = new TaPaperPr01D();
-			entityD.setPaperPrNumber(paperPrNumber);
+			entityD.setPaperPrNumber(entityH.getPaperPrNumber());
 			entityD.setSeqNo(i);
 			entityD.setMaterialDesc(vo.getMaterialDesc());
 			entityD.setInputMaterialQty(!NO_VALUE.equals(vo.getInputMaterialQty()) ? NumberUtils.toBigDecimal(vo.getInputMaterialQty()) : null);

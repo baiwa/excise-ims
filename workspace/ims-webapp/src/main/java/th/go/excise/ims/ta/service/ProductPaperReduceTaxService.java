@@ -20,23 +20,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperPr07D;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr07DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr07HRepository;
-import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperReduceTaxVo;
 import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
 
 @Service
 public class ProductPaperReduceTaxService extends AbstractProductPaperService<ProductPaperReduceTaxVo> {
+	
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperReduceTaxService.class);
 
-	private static final Integer TOTAL = 17;
 	private static final String PRODUCT_PAPER_REDUCE_TAX = "วัตถุดิบที่ขอลดหย่อนภาษี";
-	private static final String NO_VALUE = "-";
 	
 	@Autowired
 	private TaPaperPr07HRepository taPaperPr07HRepository;
@@ -44,25 +41,19 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 	private TaPaperPr07DRepository taPaperPr07DRepository;
 	@Autowired
 	private WsOasfri0100DRepository wsOasfri0100DRepository;
-
-	public DataTableAjax<ProductPaperReduceTaxVo> listProductPaperReduceTax(CreatePaperFormVo request) {
-		DataTableAjax<ProductPaperReduceTaxVo> dataTableAjax = new DataTableAjax<ProductPaperReduceTaxVo>();
-		dataTableAjax.setDraw(request.getDraw() + 1);
-		dataTableAjax.setData(getDataProductPaperReduceTax(request.getStart(), request.getLength(), TOTAL));
-		dataTableAjax.setRecordsTotal(TOTAL);
-		dataTableAjax.setRecordsFiltered(TOTAL);
-		return dataTableAjax;
+	
+	@Override
+	protected Logger getLogger() {
+		return logger;
 	}
-
-	public List<ProductPaperReduceTaxVo> getDataProductPaperReduceTax(int start, int length, int total) {
-		logger.info("getDataProductPaperReduceTax");
+	
+	@Override
+	protected List<ProductPaperReduceTaxVo> inquiryByWs(ProductPaperFormVo formVo) {
+		logger.info("inquiryByWs");
 		String desc = "วัตถุดิบที่ขอลดหย่อนภาษี";
 		List<ProductPaperReduceTaxVo> datalist = new ArrayList<ProductPaperReduceTaxVo>();
 		ProductPaperReduceTaxVo data = null;
-		for (int i = start; i < (start + length); i++) {
-			if (i >= total) {
-				break;
-			}
+		for (int i = 0; i < 10; i++) {
 			data = new ProductPaperReduceTaxVo();
 			data.setMaterialDesc(desc + (i + 1));
 			data.setTaxReduceAmt("1,000.00");
@@ -78,8 +69,34 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 		return datalist;
 	}
 
-	public byte[] exportProductPaperReduceTax() throws IOException {
+	@Override
+	protected List<ProductPaperReduceTaxVo> inquiryByPaperPrNumber(ProductPaperFormVo formVo) {
+		logger.info("inquiryByPaperPrNumber paperPrNumber={}", formVo.getPaperPrNumber());
+		
+		List<TaPaperPr07D> entityList = taPaperPr07DRepository.findByPaperPrNumber(formVo.getPaperPrNumber());
+		List<ProductPaperReduceTaxVo> voList = new ArrayList<>();
+		ProductPaperReduceTaxVo vo = null;
+		for (TaPaperPr07D entity : entityList) {
+			vo = new ProductPaperReduceTaxVo();
+			vo.setMaterialDesc(entity.getMaterialDesc());
+			vo.setTaxReduceAmt(entity.getTaxReduceAmt() != null ? entity.getTaxReduceAmt().toString() : NO_VALUE);
+			vo.setTaxReduceQty(entity.getTaxReduceQty() != null ? entity.getTaxReduceQty().toString() : NO_VALUE);
+			vo.setTaxReducePerUnitAmt(entity.getTaxReducePerUnitAmt() != null ? entity.getTaxReducePerUnitAmt().toString() : NO_VALUE);
+			vo.setBillNo(entity.getBillNo() != null ? entity.getBillNo().toString() : NO_VALUE);
+			vo.setBillTaxAmt(entity.getBillTaxAmt() != null ? entity.getBillTaxAmt().toString() : NO_VALUE);
+			vo.setBillTaxQty(entity.getBillTaxQty() != null ? entity.getBillTaxQty().toString() : NO_VALUE);
+			vo.setBillTaxPerUnit(entity.getBillTaxPerUnit() != null ? entity.getBillTaxPerUnit().toString() : NO_VALUE);
+			vo.setDiffTaxReduceAmt(entity.getDiffTaxReduceAmt() != null ? entity.getDiffTaxReduceAmt().toString() : NO_VALUE);
+			voList.add(vo);
+		}
+		
+		return voList;
+	}
 
+	@Override
+	protected byte[] exportData(List<ProductPaperReduceTaxVo> voList, String exportType) {
+		logger.info("exportData");
+		
 		/* create spreadsheet */
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(PRODUCT_PAPER_REDUCE_TAX);
@@ -157,8 +174,7 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 		rowNum = 2;
 		cellNum = 0;
 		int no = 1;
-		List<ProductPaperReduceTaxVo> dataList = getDataProductPaperReduceTax(0, TOTAL, TOTAL);
-		for (ProductPaperReduceTaxVo data : dataList) {
+		for (ProductPaperReduceTaxVo vo : voList) {
 			row = sheet.createRow(rowNum);
 
 			cell = row.createCell(cellNum);
@@ -167,47 +183,47 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getMaterialDesc());
+			cell.setCellValue(vo.getMaterialDesc());
 			cell.setCellStyle(cellLeft);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getTaxReduceAmt());
+			cell.setCellValue(vo.getTaxReduceAmt());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getTaxReduceQty());
+			cell.setCellValue(vo.getTaxReduceQty());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getTaxReducePerUnitAmt());
+			cell.setCellValue(vo.getTaxReducePerUnitAmt());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getBillNo());
+			cell.setCellValue(vo.getBillNo());
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getBillTaxAmt());
+			cell.setCellValue(vo.getBillTaxAmt());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getBillTaxQty());
+			cell.setCellValue(vo.getBillTaxQty());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getBillTaxPerUnit());
+			cell.setCellValue(vo.getBillTaxPerUnit());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getDiffTaxReduceAmt());
+			cell.setCellValue(vo.getDiffTaxReduceAmt());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
@@ -226,124 +242,6 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 		}
 
 		return content;
-	}
-
-	/*public List<ProductPaperReduceTaxVo> readFileProductPaperReduceTax(ProductPaperReduceTaxVo request) {
-		logger.info("readFileProductPaperReduceTax");
-		logger.info("fileName " + request.getFile().getOriginalFilename());
-		logger.info("type " + request.getFile().getContentType());
-		
-		List<ProductPaperReduceTaxVo> dataList = new ArrayList<>();
-		ProductPaperReduceTaxVo data = null;
-		
-		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(request.getFile().getBytes()));) {
-			Sheet sheet = workbook.getSheetAt(0);
-
-			for (Row row : sheet) {
-				 data = new ProductPaperReduceTaxVo();
-				// Skip on first row
-				if (row.getRowNum() == 0) {
-					continue;
-				}
-				for (Cell cell : row) {
-					if (cell.getColumnIndex() == 0) {
-						// Column No.
-						continue;
-					} else if (cell.getColumnIndex() == 1) {
-						// MaterialDesc
-						data.setMaterialDesc(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 2) {
-						// TaxReduceAmt
-						data.setTaxReduceAmt(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 3) {
-						// TaxReduceQty
-						data.setTaxReduceQty(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 4) {
-						// TaxReducePerUnitAmt
-						data.setTaxReducePerUnitAmt(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 5) {
-						// BillNo
-						data.setBillNo(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 6) {
-						// BillTaxAmt
-						data.setBillTaxAmt(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 7) {
-						// BillTaxQty
-						data.setBillTaxQty(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 8) {
-						// BillTaxQty
-						data.setBillTaxPerUnit(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 9) {
-						// DiffTaxReduceAmt
-						data.setDiffTaxReduceAmt(ExcelUtils.getCellValueAsString(cell));
-					}
-
-				}
-				dataList.add(data);
-			}
-
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-		}
-		return dataList;
-	}*/
-
-	@Override
-	protected List<ProductPaperReduceTaxVo> inquiryByWs(ProductPaperFormVo formVo) {
-		logger.info("inquiryByWs");
-		String desc = "วัตถุดิบที่ขอลดหย่อนภาษี";
-		List<ProductPaperReduceTaxVo> datalist = new ArrayList<ProductPaperReduceTaxVo>();
-		ProductPaperReduceTaxVo data = null;
-		for (int i = 0; i < 10; i++) {
-			data = new ProductPaperReduceTaxVo();
-			data.setMaterialDesc(desc + (i + 1));
-			data.setTaxReduceAmt("1,000.00");
-			data.setTaxReduceQty("100.00");
-			data.setTaxReducePerUnitAmt("15.00");
-			data.setBillNo("100-23-" + (i + 1));
-			data.setBillTaxAmt("500.00");
-			data.setBillTaxQty("100.00");
-			data.setBillTaxPerUnit("200.00");
-			data.setDiffTaxReduceAmt("400.00");
-			datalist.add(data);
-		}
-		return datalist;
-	}
-
-	@Override
-	protected List<ProductPaperReduceTaxVo> inquiryByPaperPrNumber(ProductPaperFormVo formVo) {
-		logger.info("inquiryByPaperPrNumber paperPrNumber={}", formVo.getPaperPrNumber());
-		
-		List<TaPaperPr07D> entityList = taPaperPr07DRepository.findByPaperPrNumber(formVo.getPaperPrNumber());
-		List<ProductPaperReduceTaxVo> voList = new ArrayList<>();
-		ProductPaperReduceTaxVo vo = null;
-		for (TaPaperPr07D entity : entityList) {
-			vo = new ProductPaperReduceTaxVo();
-			vo.setMaterialDesc(entity.getMaterialDesc());
-			vo.setTaxReduceAmt(entity.getTaxReduceAmt() != null ? entity.getTaxReduceAmt().toString() : NO_VALUE);
-			vo.setTaxReduceQty(entity.getTaxReduceQty() != null ? entity.getTaxReduceQty().toString() : NO_VALUE);
-			vo.setTaxReducePerUnitAmt(entity.getTaxReducePerUnitAmt() != null ? entity.getTaxReducePerUnitAmt().toString() : NO_VALUE);
-			vo.setBillNo(entity.getBillNo() != null ? entity.getBillNo().toString() : NO_VALUE);
-			vo.setBillTaxAmt(entity.getBillTaxAmt() != null ? entity.getBillTaxAmt().toString() : NO_VALUE);
-			vo.setBillTaxQty(entity.getBillTaxQty() != null ? entity.getBillTaxQty().toString() : NO_VALUE);
-			vo.setBillTaxPerUnit(entity.getBillTaxPerUnit() != null ? entity.getBillTaxPerUnit().toString() : NO_VALUE);
-			vo.setDiffTaxReduceAmt(entity.getDiffTaxReduceAmt() != null ? entity.getDiffTaxReduceAmt().toString() : NO_VALUE);
-			voList.add(vo);
-		}
-		
-		return voList;
-	}
-
-	@Override
-	protected byte[] exportData(List<ProductPaperReduceTaxVo> voList, String exportType) {
-		logger.info("exportData");
-		byte[] file = null;
-		try {
-			file = exportProductPaperReduceTax();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return file;
 	}
 
 	@Override
@@ -415,7 +313,6 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 
 	@Override
 	public List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		return taPaperPr07HRepository.findPaperPrNumberByAuditPlanCode(formVo.getAuditPlanCode());
 	}
 }

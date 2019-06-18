@@ -10,6 +10,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
@@ -30,16 +32,51 @@ public class ServicePaperMemberService extends AbstractServicePaperService<Servi
 
 	private static final Logger logger = LoggerFactory.getLogger(ServicePaperMemberService.class);
 	
-	private static final String NO_VALUE = "-";
-	
 	@Autowired
 	private TaPaperSv03HRepository taPaperSv03HRepository;
 	@Autowired
 	private TaPaperSv03DRepository taPaperSv03DRepository;
 
-	public byte[] exportFileMemberStatusServiceVo(List<ServicePaperMemberVo> voList, String exportType) throws IOException {
-		logger.info("Data list exportFilePriceServiceVo {} row", voList.size());
+	@Override
+	protected Logger getLogger() {
+		return logger;
+	}
+	
+	@Override
+	protected List<ServicePaperMemberVo> inquiryByWs(ServicePaperFormVo formVo) {
+		logger.info("inquiryByWs");
+		
+		List<ServicePaperMemberVo> voList = new ArrayList<>();
+		
+		return voList;
+	}
 
+	@Override
+	protected List<ServicePaperMemberVo> inquiryByPaperSvNumber(ServicePaperFormVo formVo) {
+		logger.info("inquiryByPaperSvNumber paperSvNumber={}", formVo.getPaperSvNumber());
+		
+		List<TaPaperSv03D> entityList = taPaperSv03DRepository.findByPaperSvNumber(formVo.getPaperSvNumber());
+		List<ServicePaperMemberVo> voList = new ArrayList<>();
+		ServicePaperMemberVo vo = null;
+		for (TaPaperSv03D entity : entityList) {
+			vo = new ServicePaperMemberVo();
+			vo.setMemberCode(entity.getMemberCode());
+			vo.setMemberFullName(entity.getMemberFullName() != null ? entity.getMemberFullName().toString() : NO_VALUE);
+			vo.setMemberStartDate(entity.getMemberStartDate() != null ? ConvertDateUtils.formatLocalDateToString(entity.getMemberStartDate(), ConvertDateUtils.DD_MMM_YYYY_SPAC, ConvertDateUtils.LOCAL_TH) : NO_VALUE);
+			vo.setMemberEndDate(entity.getMemberEndDate() != null ? ConvertDateUtils.formatLocalDateToString(entity.getMemberEndDate(), ConvertDateUtils.DD_MMM_YYYY_SPAC, ConvertDateUtils.LOCAL_TH) : NO_VALUE);
+			vo.setMemberCoupon(entity.getMemberCoupon() != null ? entity.getMemberCoupon().toString() : NO_VALUE);
+			vo.setMemberUsedDate(entity.getMemberUsedDate() != null ? ConvertDateUtils.formatLocalDateToString(entity.getMemberUsedDate(), ConvertDateUtils.DD_MMM_YYYY_SPAC, ConvertDateUtils.LOCAL_TH) : NO_VALUE);
+			vo.setMemberStatus(entity.getMemberStatus() != null ? entity.getMemberStatus().toString() : NO_VALUE);
+			voList.add(vo);
+		}
+		
+		return voList;
+	}
+
+	@Override
+	protected byte[] exportData(List<ServicePaperMemberVo> voList, String exportType) {
+		logger.info("exportData");
+		
 		XSSFWorkbook workbook = new XSSFWorkbook();
 
 		// call style from utils
@@ -123,20 +160,23 @@ public class ServicePaperMemberService extends AbstractServicePaperService<Servi
 			cellNum = 0;
 		}
 
-		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
-		byte[] cont = null;
-		workbook.write(outByteStream);
-		cont = outByteStream.toByteArray();
-		return cont;
+		// set output
+		byte[] content = null;
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			workbook.write(outputStream);
+			content = outputStream.toByteArray();
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return content;
 	}
-	/*
-	public List<ServicePaperMemberVo> readFileServicePaperMemberVo(ServicePaperMemberVo request) {
-		logger.info("readFileServicePaperMemberVo");
-		logger.info("fileName " + request.getFile().getOriginalFilename());
-		logger.info("type " + request.getFile().getContentType());
+
+	@Override
+	public List<ServicePaperMemberVo> upload(ServicePaperFormVo formVo) {
 		List<ServicePaperMemberVo> dataList = new ArrayList<>();
 
-		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(request.getFile().getBytes()));) {
+		try (Workbook workbook = WorkbookFactory.create(formVo.getFile().getInputStream())) {
 			Sheet sheet = workbook.getSheetAt(0);
 
 			for (Row row : sheet) {
@@ -173,67 +213,17 @@ public class ServicePaperMemberService extends AbstractServicePaperService<Servi
 			logger.error(e.getMessage(), e);
 		}
 		return dataList;
-	}*/
-
-	@Override
-	protected List<ServicePaperMemberVo> inquiryByWs(ServicePaperFormVo formVo) {
-		logger.info("inquiryByWs");
-		
-		List<ServicePaperMemberVo> voList = new ArrayList<>();
-		
-		return voList;
 	}
 
 	@Override
-	protected List<ServicePaperMemberVo> inquiryByPaperSvNumber(ServicePaperFormVo formVo) {
-		logger.info("inquiryByPaperSvNumber paperSvNumber={}", formVo.getPaperSvNumber());
-		
-		List<TaPaperSv03D> entityList = taPaperSv03DRepository.findByPaperSvNumber(formVo.getPaperSvNumber());
-		List<ServicePaperMemberVo> voList = new ArrayList<>();
-		ServicePaperMemberVo vo = null;
-		for (TaPaperSv03D entity : entityList) {
-			vo = new ServicePaperMemberVo();
-			vo.setMemberCode(entity.getMemberCode());
-			vo.setMemberFullName(entity.getMemberFullName() != null ? entity.getMemberFullName().toString() : NO_VALUE);
-			vo.setMemberStartDate(entity.getMemberStartDate() != null ? ConvertDateUtils.formatLocalDateToString(entity.getMemberStartDate(), ConvertDateUtils.DD_MMM_YYYY_SPAC, ConvertDateUtils.LOCAL_TH) : NO_VALUE);
-			vo.setMemberEndDate(entity.getMemberEndDate() != null ? ConvertDateUtils.formatLocalDateToString(entity.getMemberEndDate(), ConvertDateUtils.DD_MMM_YYYY_SPAC, ConvertDateUtils.LOCAL_TH) : NO_VALUE);
-			vo.setMemberCoupon(entity.getMemberCoupon() != null ? entity.getMemberCoupon().toString() : NO_VALUE);
-			vo.setMemberUsedDate(entity.getMemberUsedDate() != null ? ConvertDateUtils.formatLocalDateToString(entity.getMemberUsedDate(), ConvertDateUtils.DD_MMM_YYYY_SPAC, ConvertDateUtils.LOCAL_TH) : NO_VALUE);
-			vo.setMemberStatus(entity.getMemberStatus() != null ? entity.getMemberStatus().toString() : NO_VALUE);
-			voList.add(vo);
-		}
-		
-		return voList;
-	}
-
-	@Override
-	protected byte[] exportData(List<ServicePaperMemberVo> voList, String exportType) {
-		logger.info("exportData");
-		byte[] file = null;
-		try {
-			file = exportFileMemberStatusServiceVo(voList, exportType);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return file;
-	}
-
-	@Override
-	protected List<ServicePaperMemberVo> uploadData(ServicePaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected void saveData(ServicePaperFormVo formVo) {
+	public void save(ServicePaperFormVo formVo) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected List<String> getPaperSvNumberList(ServicePaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<String> getPaperSvNumberList(ServicePaperFormVo formVo) {
+		return taPaperSv03HRepository.findPaperSvNumberByAuditPlanCode(formVo.getAuditPlanCode());
 	}
 
 }

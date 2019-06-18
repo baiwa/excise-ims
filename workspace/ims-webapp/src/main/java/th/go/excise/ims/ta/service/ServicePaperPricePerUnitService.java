@@ -16,6 +16,8 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
@@ -37,8 +39,6 @@ public class ServicePaperPricePerUnitService extends AbstractServicePaperService
 
 	private static final Logger logger = LoggerFactory.getLogger(ServicePaperPricePerUnitService.class);
 	
-	private static final String NO_VALUE = "-";
-	
 	@Autowired
 	private TaPaperSv02HRepository taPaperSv02HRepository;
 	@Autowired
@@ -46,8 +46,63 @@ public class ServicePaperPricePerUnitService extends AbstractServicePaperService
 	@Autowired
 	private WsAnafri0001DRepository wsAnafri0001DRepository;
 
-	public byte[] exportFilePriceServiceVo(List<ServicePaperPricePerUnitVo> voList, String exportType) throws IOException {
-		logger.info("Data list exportFilePriceServiceVo {} row", voList.size());
+	@Override
+	protected Logger getLogger() {
+		return logger;
+	}
+	
+	@Override
+	protected List<ServicePaperPricePerUnitVo> inquiryByWs(ServicePaperFormVo formVo) {
+		logger.info("inquiryByWs");
+		
+		LocalDate localDateStart = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]), Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
+		LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]), Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
+		String dateStart = localDateStart.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
+		String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
+		
+		List<WsAnafri0001Vo> anafri0001VoList = wsAnafri0001DRepository.findProductList(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
+		
+		List<ServicePaperPricePerUnitVo> voList = new ArrayList<>();
+		ServicePaperPricePerUnitVo vo = null;
+		for (WsAnafri0001Vo anafri0001Vo : anafri0001VoList) {
+			vo = new ServicePaperPricePerUnitVo();
+			vo.setGoodsDesc(anafri0001Vo.getProductName());
+			vo.setInvoicePrice("");
+			vo.setInformPrice("");
+			vo.setAuditPrice("");
+			vo.setGoodsPrice(anafri0001Vo.getProductPrice().toString());
+			vo.setDiffPrice("");
+			voList.add(vo);
+		}
+		
+		return voList;
+	}
+
+	@Override
+	protected List<ServicePaperPricePerUnitVo> inquiryByPaperSvNumber(ServicePaperFormVo formVo) {
+		logger.info("inquiryByPaperSvNumber paperSvNumber={}", formVo.getPaperSvNumber());
+		
+		List<TaPaperSv02D> entityList = taPaperSv02DRepository.findByPaperSvNumber(formVo.getPaperSvNumber());
+		List<ServicePaperPricePerUnitVo> voList = new ArrayList<>();
+		ServicePaperPricePerUnitVo vo = null;
+		for (TaPaperSv02D entity : entityList) {
+			vo = new ServicePaperPricePerUnitVo();
+			vo.setGoodsDesc(entity.getGoodsDesc());
+			vo.setInvoicePrice(entity.getInvoicePrice() != null ? entity.getInvoicePrice().toString() : NO_VALUE);
+			vo.setInformPrice(entity.getInformPrice() != null ? entity.getInformPrice().toString() : NO_VALUE);
+			vo.setAuditPrice(entity.getAuditPrice() != null ? entity.getAuditPrice().toString() : NO_VALUE);
+			vo.setGoodsPrice(entity.getGoodsPrice() != null ? entity.getGoodsPrice().toString() : NO_VALUE);
+			vo.setDiffPrice(entity.getDiffPrice() != null ? entity.getDiffPrice().toString() : NO_VALUE);
+			voList.add(vo);
+		}
+		
+		return voList;
+	}
+
+	@Override
+	protected byte[] exportData(List<ServicePaperPricePerUnitVo> voList, String exportType) {
+		logger.info("exportData");
+		
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		// call style from utils
 		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
@@ -125,20 +180,23 @@ public class ServicePaperPricePerUnitService extends AbstractServicePaperService
 			cellNum = 0;
 		}
 
-		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
-		byte[] cont = null;
-		workbook.write(outByteStream);
-		cont = outByteStream.toByteArray();
-		return cont;
+		// set output
+		byte[] content = null;
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			workbook.write(outputStream);
+			content = outputStream.toByteArray();
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return content;
 	}
-	/*
-	public List<ServicePaperPricePerUnitVo> readFileServicePaperPricePerUnitVo(ServicePaperPricePerUnitVo request) {
-		logger.info("readFileQuantityServiceVo");
-		logger.info("fileName " + request.getFile().getOriginalFilename());
-		logger.info("type " + request.getFile().getContentType());
+
+	@Override
+	public List<ServicePaperPricePerUnitVo> upload(ServicePaperFormVo formVo) {
 		List<ServicePaperPricePerUnitVo> dataList = new ArrayList<>();
 
-		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(request.getFile().getBytes()));) {
+		try (Workbook workbook = WorkbookFactory.create(formVo.getFile().getInputStream())) {
 			Sheet sheet = workbook.getSheetAt(0);
 
 			for (Row row : sheet) {
@@ -159,11 +217,11 @@ public class ServicePaperPricePerUnitService extends AbstractServicePaperService
 						pushdata.setInformPrice(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 4) {
 						pushdata.setAuditPrice(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 5) {
+					} /*else if (cell.getColumnIndex() == 5) {
 						pushdata.setTaxPrice(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 6) {
 						pushdata.setDiffPrice(ExcelUtils.getCellValueAsString(cell));
-					}
+					}*/
 
 				}
 				dataList.add(pushdata);
@@ -173,84 +231,17 @@ public class ServicePaperPricePerUnitService extends AbstractServicePaperService
 			logger.error(e.getMessage(), e);
 		}
 		return dataList;
-	}*/
-
-	@Override
-	protected List<ServicePaperPricePerUnitVo> inquiryByWs(ServicePaperFormVo formVo) {
-		logger.info("inquiryByWs");
-		
-		LocalDate localDateStart = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]), Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
-		LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]), Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
-		String dateStart = localDateStart.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
-		String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
-		
-		List<WsAnafri0001Vo> anafri0001VoList = wsAnafri0001DRepository.findProductList(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
-		
-		List<ServicePaperPricePerUnitVo> voList = new ArrayList<>();
-		ServicePaperPricePerUnitVo vo = null;
-		for (WsAnafri0001Vo anafri0001Vo : anafri0001VoList) {
-			vo = new ServicePaperPricePerUnitVo();
-			vo.setGoodsDesc(anafri0001Vo.getProductName());
-			vo.setInvoicePrice("");
-			vo.setInformPrice("");
-			vo.setAuditPrice("");
-			vo.setGoodsPrice(anafri0001Vo.getProductPrice().toString());
-			vo.setDiffPrice("");
-			voList.add(vo);
-		}
-		
-		return voList;
 	}
 
 	@Override
-	protected List<ServicePaperPricePerUnitVo> inquiryByPaperSvNumber(ServicePaperFormVo formVo) {
-		logger.info("inquiryByPaperSvNumber paperSvNumber={}", formVo.getPaperSvNumber());
-		
-		List<TaPaperSv02D> entityList = taPaperSv02DRepository.findByPaperSvNumber(formVo.getPaperSvNumber());
-		List<ServicePaperPricePerUnitVo> voList = new ArrayList<>();
-		ServicePaperPricePerUnitVo vo = null;
-		for (TaPaperSv02D entity : entityList) {
-			vo = new ServicePaperPricePerUnitVo();
-			vo.setGoodsDesc(entity.getGoodsDesc());
-			vo.setInvoicePrice(entity.getInvoicePrice() != null ? entity.getInvoicePrice().toString() : NO_VALUE);
-			vo.setInformPrice(entity.getInformPrice() != null ? entity.getInformPrice().toString() : NO_VALUE);
-			vo.setAuditPrice(entity.getAuditPrice() != null ? entity.getAuditPrice().toString() : NO_VALUE);
-			vo.setGoodsPrice(entity.getGoodsPrice() != null ? entity.getGoodsPrice().toString() : NO_VALUE);
-			vo.setDiffPrice(entity.getDiffPrice() != null ? entity.getDiffPrice().toString() : NO_VALUE);
-			voList.add(vo);
-		}
-		
-		return voList;
-	}
-
-	@Override
-	protected byte[] exportData(List<ServicePaperPricePerUnitVo> voList, String exportType) {
-		logger.info("exportData");
-		byte[] file = null;
-		try {
-			file = exportFilePriceServiceVo(voList, exportType);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return file;
-	}
-
-	@Override
-	protected List<ServicePaperPricePerUnitVo> uploadData(ServicePaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected void saveData(ServicePaperFormVo formVo) {
+	public void save(ServicePaperFormVo formVo) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected List<String> getPaperSvNumberList(ServicePaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<String> getPaperSvNumberList(ServicePaperFormVo formVo) {
+		return taPaperSv02HRepository.findPaperSvNumberByAuditPlanCode(formVo.getAuditPlanCode());
 	}
 	
 }

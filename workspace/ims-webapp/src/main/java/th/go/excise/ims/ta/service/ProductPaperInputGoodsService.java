@@ -27,9 +27,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ta.persistence.repository.TaPaperPr05DRepository;
+import th.go.excise.ims.ta.persistence.repository.TaPaperPr05HRepository;
+import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperInputGoodsVo;
 import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
@@ -40,11 +45,21 @@ import th.go.excise.ims.ws.vo.WsOasfri0100Vo;
 public class ProductPaperInputGoodsService extends AbstractProductPaperService<ProductPaperInputGoodsVo> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperInputGoodsService.class);
+	
 	private static final String PRODUCT_PAPER_INPUT_GOODS = "รับสินค้าสำเร็จรูป";
 
 	@Autowired
+	private TaPaperPr05HRepository taPaperPr05HRepository;
+	@Autowired
+	private TaPaperPr05DRepository taPaperPr05DRepository;
+	@Autowired
 	private WsOasfri0100DRepository wsOasfri0100DRepository;
 
+	@Override
+	protected Logger getLogger() {
+		return logger;
+	}
+	
 	@Override
 	protected List<ProductPaperInputGoodsVo> inquiryByWs(ProductPaperFormVo formVo) {
 		logger.info("inquiryByWs");
@@ -286,7 +301,7 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 
 	@Override
 	public List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		return taPaperPr05HRepository.findPaperPrNumberByAuditPlanCode(formVo.getAuditPlanCode());
 	}
+	
 }

@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import th.go.excise.ims.ta.vo.ProductPaperFormVo;
+
 public class ProductPaperReduceTaxServiceTest {
 
 	private static final String PATH = "/tmp/";
@@ -16,9 +18,11 @@ public class ProductPaperReduceTaxServiceTest {
 
 	@Test
 	public void test_exportProductPaperReduceTax() {
+		ProductPaperFormVo formVo = new ProductPaperFormVo();
+		
 		// set output
 		try (FileOutputStream Output = new FileOutputStream(PATH + PRODUCT_PAPER_REDUCE_TAX + TYPE)) {
-			byte[] outArray = productPaperReduceTaxService.exportProductPaperReduceTax();
+			byte[] outArray = productPaperReduceTaxService.export(formVo);
 			Output.write(outArray);
 			System.out.println("Creating excel" + "\n" + PRODUCT_PAPER_REDUCE_TAX + "\n" + "Done" + "\n");
 		} catch (IOException e) {

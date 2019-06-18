@@ -3,7 +3,6 @@ package th.go.excise.ims.ta.service;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
@@ -16,6 +15,8 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
@@ -37,18 +38,72 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 	
 	private static final Logger logger = LoggerFactory.getLogger(ServicePaperQtyService.class);
 	
-	private static final String NO_VALUE = "-";
-	
 	@Autowired
 	private TaPaperSv01HRepository taPaperSv01HRepository;
 	@Autowired
 	private TaPaperSv01DRepository taPaperSv01DRepository;
 	@Autowired
 	private WsAnafri0001DRepository wsAnafri0001DRepository;
+	
+	@Override
+	protected Logger getLogger() {
+		return logger;
+	}
+	
+	@Override
+	protected List<ServicePaperQtyVo> inquiryByWs(ServicePaperFormVo formVo) {
+		logger.info("inquiryByWs");
+		
+		LocalDate localDateStart = toLocalDate(formVo.getStartDate());
+		LocalDate localDateEnd = toLocalDate(formVo.getEndDate());
+		String dateStart = localDateStart.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
+		String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
+		
+		List<WsAnafri0001Vo> anafri0001VoList = wsAnafri0001DRepository.findProductList(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
+		
+		List<ServicePaperQtyVo> voList = new ArrayList<>();
+		ServicePaperQtyVo vo = null;
+		for (WsAnafri0001Vo anafri0001Vo : anafri0001VoList) {
+			vo = new ServicePaperQtyVo();
+			vo.setGoodsDesc(anafri0001Vo.getProductName());
+			vo.setServiceDocNoQty("");
+			vo.setIncomeDailyAccountQty("");
+			vo.setPaymentDocNoQty("");
+			vo.setAuditQty("");
+			vo.setGoodsQty(anafri0001Vo.getProductQty().toString());
+			vo.setDiffQty("");
+			voList.add(vo);
+		}
+		
+		return voList;
+	}
 
-	public byte[] exportFileQuantityServiceVo(List<ServicePaperQtyVo> voList, String exportType) throws IOException {
-		logger.info("Data list exportFileQuantityServiceVo {} row", voList.size());
+	@Override
+	protected List<ServicePaperQtyVo> inquiryByPaperSvNumber(ServicePaperFormVo formVo) {
+		logger.info("inquiryByPaperSvNumber paperSvNumber={}", formVo.getPaperSvNumber());
+		
+		List<TaPaperSv01D> entityList = taPaperSv01DRepository.findByPaperSvNumber(formVo.getPaperSvNumber());
+		List<ServicePaperQtyVo> voList = new ArrayList<>();
+		ServicePaperQtyVo vo = null;
+		for (TaPaperSv01D entity : entityList) {
+			vo = new ServicePaperQtyVo();
+			vo.setGoodsDesc(entity.getGoodsDesc());
+			vo.setServiceDocNoQty(entity.getServiceDocNoQty() != null ? entity.getServiceDocNoQty().toString() : NO_VALUE);
+			vo.setIncomeDailyAccountQty(entity.getIncomeDailyAccountQty() != null ? entity.getIncomeDailyAccountQty().toString() : NO_VALUE);
+			vo.setPaymentDocNoQty(entity.getPaymentDocNoQty() != null ? entity.getPaymentDocNoQty().toString() : NO_VALUE);
+			vo.setAuditQty(entity.getAuditQty() != null ? entity.getAuditQty().toString() : NO_VALUE);
+			vo.setGoodsQty(entity.getGoodsQty() != null ? entity.getGoodsQty().toString() : NO_VALUE);
+			vo.setDiffQty(entity.getDiffQty() != null ? entity.getDiffQty().toString() : NO_VALUE);
+			voList.add(vo);
+		}
+		
+		return voList;
+	}
 
+	@Override
+	protected byte[] exportData(List<ServicePaperQtyVo> voList, String exportType) {
+		logger.info("exportData");
+		
 		XSSFWorkbook workbook = new XSSFWorkbook();
 
 		// call style from utils
@@ -131,22 +186,23 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 			cellNum = 0;
 		}
 
-		// set fileName
-		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
-		byte[] cont = null;
-		workbook.write(outByteStream);
-		cont = outByteStream.toByteArray();
-		return cont;
+		// set output
+		byte[] content = null;
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			workbook.write(outputStream);
+			content = outputStream.toByteArray();
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
 
+		return content;
 	}
-	/*
-	public List<ServicePaperQtyVo> readFileQuantityServiceVo(ServicePaperQtyVo request) {
-		logger.info("readFileQuantityServiceVo");
-		logger.info("fileName " + request.getFile().getOriginalFilename());
-		logger.info("type " + request.getFile().getContentType());
+
+	@Override
+	public List<ServicePaperQtyVo> upload(ServicePaperFormVo formVo) {
 		List<ServicePaperQtyVo> dataList = new ArrayList<>();
 
-		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(request.getFile().getBytes()));) {
+		try (Workbook workbook = WorkbookFactory.create(formVo.getFile().getInputStream())) {
 			Sheet sheet = workbook.getSheetAt(0);
 
 			for (Row row : sheet) {
@@ -159,7 +215,7 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 					if (cell.getColumnIndex() == 0) {
 						// Column No.
 						continue;
-					} else if (cell.getColumnIndex() == 1) {
+					} /*else if (cell.getColumnIndex() == 1) {
 						pushdata.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 2) {
 						pushdata.setServiceDocNo(ExcelUtils.getCellValueAsString(cell));
@@ -173,7 +229,7 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 						pushdata.setTaxAmt(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 7) {
 						pushdata.setDiffAmt(ExcelUtils.getCellValueAsString(cell));
-					}
+					}*/
 
 				}
 				dataList.add(pushdata);
@@ -183,86 +239,17 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 			logger.error(e.getMessage(), e);
 		}
 		return dataList;
-	}*/
-
-	@Override
-	protected List<ServicePaperQtyVo> inquiryByWs(ServicePaperFormVo formVo) {
-		logger.info("inquiryByWs");
-		
-		LocalDate localDateStart = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]), Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
-		LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]), Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
-		String dateStart = localDateStart.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
-		String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
-		
-		List<WsAnafri0001Vo> anafri0001VoList = wsAnafri0001DRepository.findProductList(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
-		
-		List<ServicePaperQtyVo> voList = new ArrayList<>();
-		ServicePaperQtyVo vo = null;
-		for (WsAnafri0001Vo anafri0001Vo : anafri0001VoList) {
-			vo = new ServicePaperQtyVo();
-			vo.setGoodsDesc(anafri0001Vo.getProductName());
-			vo.setServiceDocNoQty("");
-			vo.setIncomeDailyAccountQty("");
-			vo.setPaymentDocNoQty("");
-			vo.setAuditQty("");
-			vo.setGoodsQty(anafri0001Vo.getProductQty().toString());
-			vo.setDiffQty("");
-			voList.add(vo);
-		}
-		
-		return voList;
 	}
 
 	@Override
-	protected List<ServicePaperQtyVo> inquiryByPaperSvNumber(ServicePaperFormVo formVo) {
-		logger.info("inquiryByPaperSvNumber paperSvNumber={}", formVo.getPaperSvNumber());
-		
-		List<TaPaperSv01D> entityList = taPaperSv01DRepository.findByPaperSvNumber(formVo.getPaperSvNumber());
-		List<ServicePaperQtyVo> voList = new ArrayList<>();
-		ServicePaperQtyVo vo = null;
-		for (TaPaperSv01D entity : entityList) {
-			vo = new ServicePaperQtyVo();
-			vo.setGoodsDesc(entity.getGoodsDesc());
-			vo.setServiceDocNoQty(entity.getServiceDocNoQty() != null ? entity.getServiceDocNoQty().toString() : NO_VALUE);
-			vo.setIncomeDailyAccountQty(entity.getIncomeDailyAccountQty() != null ? entity.getIncomeDailyAccountQty().toString() : NO_VALUE);
-			vo.setPaymentDocNoQty(entity.getPaymentDocNoQty() != null ? entity.getPaymentDocNoQty().toString() : NO_VALUE);
-			vo.setAuditQty(entity.getAuditQty() != null ? entity.getAuditQty().toString() : NO_VALUE);
-			vo.setGoodsQty(entity.getGoodsQty() != null ? entity.getGoodsQty().toString() : NO_VALUE);
-			vo.setDiffQty(entity.getDiffQty() != null ? entity.getDiffQty().toString() : NO_VALUE);
-			voList.add(vo);
-		}
-		
-		return voList;
-	}
-
-	@Override
-	protected byte[] exportData(List<ServicePaperQtyVo> voList, String exportType) {
-		logger.info("exportData");
-		byte[] file = null;
-		try {
-			file = exportFileQuantityServiceVo(voList, exportType);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return file;
-	}
-
-	@Override
-	protected List<ServicePaperQtyVo> uploadData(ServicePaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected void saveData(ServicePaperFormVo formVo) {
+	public void save(ServicePaperFormVo formVo) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected List<String> getPaperSvNumberList(ServicePaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<String> getPaperSvNumberList(ServicePaperFormVo formVo) {
+		return taPaperSv01HRepository.findPaperSvNumberByAuditPlanCode(formVo.getAuditPlanCode());
 	}
 
 }

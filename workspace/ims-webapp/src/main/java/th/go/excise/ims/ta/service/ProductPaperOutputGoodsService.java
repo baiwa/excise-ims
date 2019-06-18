@@ -21,12 +21,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperPr06D;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr06DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr06HRepository;
-import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperOutputGoodsVo;
 import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
@@ -36,10 +34,8 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperOutputGoodsService.class);
 
-	private static final Integer TOTAL = 17;
 	private static final String PRODUCT_PAPER_OUTPUT_GOODS = "ตรวจสอบการจ่ายสินค้าสำเร็จรูป";
-	private static final String NO_VALUE = "-";
-	
+
 	@Autowired
 	private TaPaperPr06HRepository taPaperPr06HRepository;
 	@Autowired
@@ -47,24 +43,18 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 	@Autowired
 	private WsOasfri0100DRepository wsOasfri0100DRepository;
 
-	public DataTableAjax<ProductPaperOutputGoodsVo> listProductPaperOutputGoods(CreatePaperFormVo request) {
-		DataTableAjax<ProductPaperOutputGoodsVo> dataTableAjax = new DataTableAjax<ProductPaperOutputGoodsVo>();
-		dataTableAjax.setDraw(request.getDraw() + 1);
-		dataTableAjax.setData(getDataProductPaperOutputGoods(request.getStart(), request.getLength(), TOTAL));
-		dataTableAjax.setRecordsTotal(TOTAL);
-		dataTableAjax.setRecordsFiltered(TOTAL);
-		return dataTableAjax;
+	@Override
+	protected Logger getLogger() {
+		return logger;
 	}
-
-	public List<ProductPaperOutputGoodsVo> getDataProductPaperOutputGoods(int start, int length, int total) {
-		logger.info("getDataProductPaperOutputGoods");
+	
+	@Override
+	protected List<ProductPaperOutputGoodsVo> inquiryByWs(ProductPaperFormVo formVo) {
+		logger.info("inquiryByWs");
 		String desc = "ตรวจสอบการจ่ายสินค้าสำเร็จรูป";
 		List<ProductPaperOutputGoodsVo> datalist = new ArrayList<ProductPaperOutputGoodsVo>();
 		ProductPaperOutputGoodsVo data = null;
-		for (int i = start; i < (start + length); i++) {
-			if (i >= total) {
-				break;
-			}
+		for (int i = 0; i < 5; i++) {
 			data = new ProductPaperOutputGoodsVo();
 			data.setGoodsDesc(desc + (i + 1));
 			data.setOutputGoodsQty("");
@@ -78,8 +68,32 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 		return datalist;
 	}
 
-	public byte[] exportProductPaperOutputGoods() throws IOException {
+	@Override
+	protected List<ProductPaperOutputGoodsVo> inquiryByPaperPrNumber(ProductPaperFormVo formVo) {
+		logger.info("inquiryByPaperPrNumber paperPrNumber={}", formVo.getPaperPrNumber());
+		
+		List<TaPaperPr06D> entityList = taPaperPr06DRepository.findByPaperPrNumber(formVo.getPaperPrNumber());
+		List<ProductPaperOutputGoodsVo> voList = new ArrayList<>();
+		ProductPaperOutputGoodsVo vo = null;
+		for (TaPaperPr06D entity : entityList) {
+			vo = new ProductPaperOutputGoodsVo();
+			vo.setGoodsDesc(entity.getGoodsDesc());
+			vo.setOutputGoodsQty(entity.getOutputGoodsQty() != null ? entity.getOutputGoodsQty().toString() : NO_VALUE);
+			vo.setOutputDailyAccountQty(entity.getOutputDailyAccountQty() != null ? entity.getOutputDailyAccountQty().toString() : NO_VALUE);
+			vo.setOutputMonthStatementQty(entity.getOutputMonthStatementQty() != null ? entity.getOutputMonthStatementQty().toString() : NO_VALUE);
+			vo.setAuditQty(entity.getAuditQty() != null ? entity.getAuditQty().toString() : NO_VALUE);
+			vo.setTaxGoodsQty(entity.getTaxGoodsQty() != null ? entity.getTaxGoodsQty().toString() : NO_VALUE);
+			vo.setDiffQty(entity.getDiffQty() != null ? entity.getDiffQty().toString() : NO_VALUE);
+			voList.add(vo);
+		}
+		
+		return voList;
+	}
 
+	@Override
+	protected byte[] exportData(List<ProductPaperOutputGoodsVo> voList, String exportType) {
+		logger.info("exportData");
+		
 		// create spreadsheet
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(PRODUCT_PAPER_OUTPUT_GOODS);
@@ -130,8 +144,7 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 		rowNum = 1;
 		cellNum = 0;
 		int no = 1;
-		List<ProductPaperOutputGoodsVo> dataList = getDataProductPaperOutputGoods(0, TOTAL, TOTAL);
-		for (ProductPaperOutputGoodsVo data : dataList) {
+		for (ProductPaperOutputGoodsVo vo : voList) {
 			row = sheet.createRow(rowNum);
 
 			cell = row.createCell(cellNum);
@@ -140,37 +153,37 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getGoodsDesc());
+			cell.setCellValue(vo.getGoodsDesc());
 			cell.setCellStyle(cellLeft);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getOutputGoodsQty());
+			cell.setCellValue(vo.getOutputGoodsQty());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getOutputDailyAccountQty());
+			cell.setCellValue(vo.getOutputDailyAccountQty());
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getOutputMonthStatementQty());
+			cell.setCellValue(vo.getOutputMonthStatementQty());
 			cell.setCellStyle(cellRightBgStyle);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getAuditQty());
+			cell.setCellValue(vo.getAuditQty());
 			cell.setCellStyle(cellRightBgStyle);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getTaxGoodsQty());
+			cell.setCellValue(vo.getTaxGoodsQty());
 			cell.setCellStyle(cellRightBgStyle);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getDiffQty());
+			cell.setCellValue(vo.getDiffQty());
 			cell.setCellStyle(cellRightBgStyle);
 			cellNum++;
 
@@ -189,115 +202,6 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 		}
 
 		return content;
-	}
-
-	/*public List<ProductPaperOutputGoodsVo> readFileProductPaperOutputGoods(ProductPaperOutputGoodsVo request) {
-		logger.info("readFileProductPaperInputGoods");
-		logger.info("fileName " + request.getFile().getOriginalFilename());
-		logger.info("type " + request.getFile().getContentType());
-
-		List<ProductPaperOutputGoodsVo> dataList = new ArrayList<>();
-		ProductPaperOutputGoodsVo data = null;
-
-		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(request.getFile().getBytes()))) {
-			Sheet sheet = workbook.getSheetAt(0);
-
-			for (Row row : sheet) {
-				data = new ProductPaperOutputGoodsVo();
-				// Skip on first row
-				if (row.getRowNum() == 0) {
-					continue;
-				}
-				for (Cell cell : row) {
-
-					if (cell.getColumnIndex() == 0) {
-						// Column No.
-						continue;
-					} else if (cell.getColumnIndex() == 1) {
-						// GoodsDesc
-						data.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 2) {
-						// OutputGoodsQty
-						data.setOutputGoodsQty(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 3) {
-						// OutputDailyAccountQty
-						data.setOutputDailyAccountQty(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 4) {
-						// OutputMonthStatementQty
-						data.setOutputMonthStatementQty(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 5) {
-						// AuditQty
-						data.setAuditQty(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 6) {
-						// TaxGoodsQty
-						data.setTaxGoodsQty(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 7) {
-						// DiffQty
-						data.setDiffQty(ExcelUtils.getCellValueAsString(cell));
-					}
-				}
-				dataList.add(data);
-			}
-
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-		}
-
-		return dataList;
-	}*/
-
-	@Override
-	protected List<ProductPaperOutputGoodsVo> inquiryByWs(ProductPaperFormVo formVo) {
-		logger.info("inquiryByWs");
-		String desc = "ตรวจสอบการจ่ายสินค้าสำเร็จรูป";
-		List<ProductPaperOutputGoodsVo> datalist = new ArrayList<ProductPaperOutputGoodsVo>();
-		ProductPaperOutputGoodsVo data = null;
-		for (int i = 0; i < 5; i++) {
-			data = new ProductPaperOutputGoodsVo();
-			data.setGoodsDesc(desc + (i + 1));
-			data.setOutputGoodsQty("");
-			data.setOutputDailyAccountQty("");
-			data.setOutputMonthStatementQty("");
-			data.setAuditQty("");
-			data.setTaxGoodsQty("");
-			data.setDiffQty("");
-			datalist.add(data);
-		}
-		return datalist;
-	}
-
-	@Override
-	protected List<ProductPaperOutputGoodsVo> inquiryByPaperPrNumber(ProductPaperFormVo formVo) {
-		logger.info("inquiryByPaperPrNumber paperPrNumber={}", formVo.getPaperPrNumber());
-		
-		List<TaPaperPr06D> entityList = taPaperPr06DRepository.findByPaperPrNumber(formVo.getPaperPrNumber());
-		List<ProductPaperOutputGoodsVo> voList = new ArrayList<>();
-		ProductPaperOutputGoodsVo vo = null;
-		for (TaPaperPr06D entity : entityList) {
-			vo = new ProductPaperOutputGoodsVo();
-			vo.setGoodsDesc(entity.getGoodsDesc());
-			vo.setOutputGoodsQty(entity.getOutputGoodsQty() != null ? entity.getOutputGoodsQty().toString() : NO_VALUE);
-			vo.setOutputDailyAccountQty(entity.getOutputDailyAccountQty() != null ? entity.getOutputDailyAccountQty().toString() : NO_VALUE);
-			vo.setOutputMonthStatementQty(entity.getOutputMonthStatementQty() != null ? entity.getOutputMonthStatementQty().toString() : NO_VALUE);
-			vo.setAuditQty(entity.getAuditQty() != null ? entity.getAuditQty().toString() : NO_VALUE);
-			vo.setTaxGoodsQty(entity.getTaxGoodsQty() != null ? entity.getTaxGoodsQty().toString() : NO_VALUE);
-			vo.setDiffQty(entity.getDiffQty() != null ? entity.getDiffQty().toString() : NO_VALUE);
-			voList.add(vo);
-		}
-		
-		return voList;
-	}
-
-	@Override
-	protected byte[] exportData(List<ProductPaperOutputGoodsVo> voList, String exportType) {
-		logger.info("exportData");
-		byte[] file = null;
-		try {
-			file = exportProductPaperOutputGoods();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return file;
 	}
 
 	@Override
@@ -364,8 +268,7 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 
 	@Override
 	public List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		return taPaperPr06HRepository.findPaperPrNumberByAuditPlanCode(formVo.getAuditPlanCode());
 	}
 
 }
