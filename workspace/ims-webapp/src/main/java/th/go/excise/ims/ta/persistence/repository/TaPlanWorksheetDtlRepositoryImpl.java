@@ -355,11 +355,13 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 		sql.append( " SELECT COUNT(AUDIT_STATUS) COUNT_PLAN ,DPT.OFF_NAME,DPT.OFF_CODE OFFICE_CODE,SEND.SUBMIT_DATE ");
-		sql.append( " ,SEND.SEND_DATE,DTL.AUDIT_STATUS FROM EXCISE_DEPARTMENT DPT ");
+//		sql.append( " ,SEND.SEND_DATE,DTL.AUDIT_STATUS FROM EXCISE_DEPARTMENT DPT ");
+		sql.append( " ,SEND.SEND_DATE FROM EXCISE_DEPARTMENT DPT ");
 		sql.append( " LEFT JOIN TA_PLAN_WORKSHEET_DTL DTL ON DTL.OFFICE_CODE = DPT.OFF_CODE AND dtl.is_deleted = '"+FLAG.N_FLAG+ "' " );
 		sql.append( " LEFT JOIN TA_PLAN_WORKSHEET_SEND SEND ON SEND.OFFICE_CODE = DPT.OFF_CODE AND SEND.BUDGET_YEAR =  ?  " );
 		sql.append( " WHERE DPT.OFF_CODE LIKE ?  " );
-		sql.append( " GROUP BY DPT.OFF_CODE,DPT.OFF_NAME,SEND.SUBMIT_DATE,SEND.SEND_DATE,DTL.AUDIT_STATUS " );
+		sql.append( " GROUP BY DPT.OFF_CODE,DPT.OFF_NAME,SEND.SUBMIT_DATE,SEND.SEND_DATE " );
+//		sql.append( " GROUP BY DPT.OFF_CODE,DPT.OFF_NAME,SEND.SUBMIT_DATE,SEND.SEND_DATE,DTL.AUDIT_STATUS " );
 		sql.append( " ORDER BY DPT.OFF_CODE ASC ");
 		params.add(formVo.getBudgetYear());
 		params.add(formVo.getOfficeCode());
@@ -376,7 +378,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
         	vo.setOfficeCode(rs.getString("OFFICE_CODE"));
         	vo.setSendDate(rs.getDate("SEND_DATE"));
         	vo.setSubmitDate(rs.getDate("SUBMIT_DATE"));
-        	vo.setAuditStatus(rs.getString("AUDIT_STATUS"));
+//        	vo.setAuditStatus(rs.getString("AUDIT_STATUS"));
 //            vo.setAuditStartDate(ConvertDateUtils.formatDateToString(rs.getDate("AUDIT_START_DATE"), "yyyy-MM-dd", ConvertDateUtils.LOCAL_TH));
 //            vo.setAuditEndDate(ConvertDateUtils.formatDateToString(rs.getDate("AUDIT_END_DATE"), "yyyy-MM-dd", ConvertDateUtils.LOCAL_TH));
             return vo;

@@ -22,6 +22,7 @@ import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
+import java_cup.production;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
@@ -522,6 +523,16 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 			sql.append(" AND R4000.REG_DATE <= TO_DATE(?, 'YYYYMMDD') ");
 			params.add(ConvertDateUtils.formatDateToString(formVo.getToDate(), ConvertDateUtils.YYYYMMDD, Locale.US));
 		}
+		
+		if (StringUtils.isNotBlank(formVo.getPlanType())) {
+			sql.append(" AND R4000.NEW_REG_ID NOT IN ( SELECT NEW_REG_ID FROM TA_PLAN_WORKSHEET_DTL WHERE IS_DELETED  = 'N' AND PLAN_NUMBER =  ? ) ");
+			params.add(formVo.getPlanNumber());
+		}
+		if (StringUtils.isNotBlank(formVo.getNewRegId())) {
+			sql.append(" AND R4000.NEW_REG_ID = ? ");
+			params.add(formVo.getNewRegId());
+		}
+		
 	}
 
 	@Override

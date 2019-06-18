@@ -19,6 +19,8 @@ public class OutsidePlanFormVo extends DataTableRequest {
 	private String cusId;
 	private List<String> regStatus;
 	private String planNumber;
+	private String planType;
+	private String newRegId;
 
 	public String getCusFullname() {
 		return cusFullname;
@@ -107,6 +109,21 @@ public class OutsidePlanFormVo extends DataTableRequest {
 	public void setPlanNumber(String planNumber) {
 		this.planNumber = planNumber;
 	}
-	
+
+	public String getPlanType() {
+		return planType;
+	}
+
+	public void setPlanType(String planType) {
+		this.planType = planType;
+	}
+
+	public String getNewRegId() {
+		return newRegId;
+	}
+
+	public void setNewRegId(String newRegId) {
+		this.newRegId = newRegId;
+	}
 	
 }

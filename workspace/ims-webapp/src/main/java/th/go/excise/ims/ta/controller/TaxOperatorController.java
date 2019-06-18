@@ -931,7 +931,7 @@ public class TaxOperatorController {
 		if (ExciseUtils.isCentral(officeCode)) {
 			formVo.setOfficeCode("%");
 		}else if (ExciseUtils.isSector(officeCode)) {
-			formVo.setOfficeCode(officeCode.substring(0, 4) +"%");
+			formVo.setOfficeCode(officeCode.substring(0, 2) +"%");
 		}else {
 			formVo.setOfficeCode(officeCode);
 		}
