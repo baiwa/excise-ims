@@ -138,6 +138,25 @@ public class IaExpensesJdbcRepository {
 		List<Object> params = new ArrayList<>();
 
 		sql.append(" SELECT EXP.* FROM IA_EXPENSES EXP WHERE EXP.IS_DELETED='N' ");
+//		sql.append(" SELECT EXP.* " + 
+//				"FROM IA_EXPENSES EXP " + 
+//				"JOIN IA_GFLEDGER_ACCOUNT IGA " + 
+//				"ON EXP.ACCOUNT_ID = IGA.GL_ACC_NO " + 
+//				"JOIN IA_GFTRIAL_BALANCE IGB " + 
+//				"ON EXP.ACCOUNT_ID       = IGB.ACC_NO " + 
+////				EXP CONDITION
+//				"WHERE EXP.EXPENSE_YEAR >= '2017' " + 
+//				"AND EXP.EXPENSE_YEAR   <= '2019' " + 
+//				"AND EXP.EXPENSE_MONTH >= TO_NUMBER('1') " + 
+//				"AND EXP.EXPENSE_MONTH   <= TO_NUMBER('12') " + 
+////				IGA CONDITION
+//				"AND IGA.PERIOD >= TO_NUMBER('1') " + 
+//				"AND IGA.PERIOD <= TO_NUMBER('12') " + 
+////				IGB CONDITION
+//				"AND IGB.PERIOD_YEAR  >= '2017' " + 
+//				"AND IGB.PERIOD_YEAR  <= '2019' " + 
+//				"AND IGB.PERIOD_FROM  >= TO_NUMBER('1') " + 
+//				"AND IGB.PERIOD_FROM  <= TO_NUMBER('12')");
 //		params.add(formVo.getAccountId());
 
 		List<Int090101Vo> data = commonJdbcTemplate.query(sql.toString(), params.toArray(), compareRowmapper);

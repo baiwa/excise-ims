@@ -136,12 +136,12 @@ public class IaGfdrawAccountService {
 				iaGfDrawAccount = new IaGfdrawAccount();
 				iaGfDrawAccount.setGfuploadHId(ia.getGfuploadHId());
 				iaGfDrawAccount.setDeptDisb(vo.getDepartmentCode());
-				iaGfDrawAccount.setPeriodFrom(ConvertDateUtils.parseStringToDate(vo.getPeriodFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
-				iaGfDrawAccount.setPeriodTo(ConvertDateUtils.parseStringToDate(vo.getPeriodTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
-				iaGfDrawAccount.setRepDate(ConvertDateUtils.parseStringToDate(vo.getRepDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+				iaGfDrawAccount.setPeriodFrom(ConvertDateUtils.parseStringToDate(vo.getPeriodFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+				iaGfDrawAccount.setPeriodTo(ConvertDateUtils.parseStringToDate(vo.getPeriodTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+				iaGfDrawAccount.setRepDate(ConvertDateUtils.parseStringToDate(vo.getRepDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 				iaGfDrawAccount.setRepType(vo.getRepType());
-				iaGfDrawAccount.setRecordDate(ConvertDateUtils.parseStringToDate(vo.getRecordDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
-				iaGfDrawAccount.setRecodeApproveDate(ConvertDateUtils.parseStringToDate(vo.getRecodeApproveDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+				iaGfDrawAccount.setRecordDate(ConvertDateUtils.parseStringToDate(vo.getRecordDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+				iaGfDrawAccount.setRecodeApproveDate(ConvertDateUtils.parseStringToDate(vo.getRecodeApproveDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 				iaGfDrawAccount.setType(vo.getType());
 				iaGfDrawAccount.setDocNo(vo.getDocNo());
 				iaGfDrawAccount.setSellerName(vo.getSellerName());

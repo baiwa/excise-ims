@@ -157,6 +157,10 @@ public class IaGfledgerAccountService {
 	}
 
 	public void saveData(Int15SaveVo form) {
+		if(StringUtils.isNotBlank(form.getYear())) {
+			form.setYear(ConvertDateUtils.changPaettleStringDate("01/01/" + form.getYear(), ConvertDateUtils.DD_MM_YYYY,
+					ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_TH, ConvertDateUtils.LOCAL_EN));
+		}
 		List<IaGfledgerAccount> iaGfledgerAccountList = new ArrayList<>();
 		IaGfuploadH ia = new IaGfuploadH();
 		ia.setPeriodMonth(form.getPeriod());
@@ -178,8 +182,8 @@ public class IaGfledgerAccountService {
 				iaGfledgerAccount.setDepCode(vo.getDepCode());
 				iaGfledgerAccount.setType(vo.getType());
 				iaGfledgerAccount.setPeriod(vo.getPeriod());
-				iaGfledgerAccount.setDocDate(ConvertDateUtils.parseStringToDate(vo.getDocDate(), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_EN));
-				iaGfledgerAccount.setPostingDate(ConvertDateUtils.parseStringToDate(vo.getPostingDate(), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_EN));
+				iaGfledgerAccount.setDocDate(ConvertDateUtils.parseStringToDate(vo.getDocDate(), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_TH));
+				iaGfledgerAccount.setPostingDate(ConvertDateUtils.parseStringToDate(vo.getPostingDate(), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_TH));
 				iaGfledgerAccount.setDocNo(vo.getDocNo());
 				iaGfledgerAccount.setRefCode(vo.getRefCode());
 				iaGfledgerAccount.setCurrAmt(vo.getCurrAmt());

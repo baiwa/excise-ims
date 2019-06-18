@@ -1,26 +1,28 @@
 package th.go.excise.ims.ia.vo;
 
 public class Int090101CompareFormVo {
-	private String startDate;
-	private String endDate;
+	private String startYear;
+	private String endYear;
 	private String year;
 	private String sector;
 	private String area;
+	private String periodMonthStart;
+	private String periodMonthEnd;
 
-	public String getStartDate() {
-		return startDate;
+	public String getStartYear() {
+		return startYear;
 	}
 
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	public void setStartYear(String startYear) {
+		this.startYear = startYear;
 	}
 
-	public String getEndDate() {
-		return endDate;
+	public String getEndYear() {
+		return endYear;
 	}
 
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
+	public void setEndYear(String endYear) {
+		this.endYear = endYear;
 	}
 
 	public String getYear() {
@@ -45,6 +47,22 @@ public class Int090101CompareFormVo {
 
 	public void setArea(String area) {
 		this.area = area;
+	}
+
+	public String getPeriodMonthStart() {
+		return periodMonthStart;
+	}
+
+	public void setPeriodMonthStart(String periodMonthStart) {
+		this.periodMonthStart = periodMonthStart;
+	}
+
+	public String getPeriodMonthEnd() {
+		return periodMonthEnd;
+	}
+
+	public void setPeriodMonthEnd(String periodMonthEnd) {
+		this.periodMonthEnd = periodMonthEnd;
 	}
 
 }
