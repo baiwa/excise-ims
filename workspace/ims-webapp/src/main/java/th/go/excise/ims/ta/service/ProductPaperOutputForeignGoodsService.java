@@ -18,13 +18,18 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ta.persistence.entity.TaPaperPr10D;
+import th.go.excise.ims.ta.persistence.repository.TaPaperPr10DRepository;
+import th.go.excise.ims.ta.persistence.repository.TaPaperPr10HRepository;
 import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperOutputForeignGoodsVo;
+import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
 
 @Service
 public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperService<ProductPaperOutputForeignGoodsVo> {
@@ -32,6 +37,14 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 
 	private static final Integer TOTAL = 17;
 	private static final String PRODUCT_PAPER_OUTPUT_FOREIGN_GOODS = "จ่ายสินค้าสำเร็จรูปต่างประเทศ";
+	private static final String NO_VALUE = "-";
+	
+	@Autowired
+	private TaPaperPr10HRepository taPaperPr10HRepository;
+	@Autowired
+	private TaPaperPr10DRepository taPaperPr10DRepository;
+	@Autowired
+	private WsOasfri0100DRepository wsOasfri0100DRepository;
 
 	public DataTableAjax<ProductPaperOutputForeignGoodsVo> listProductPaperOutputForeignGoods(
 			CreatePaperFormVo request) {
@@ -264,8 +277,25 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 
 	@Override
 	protected List<ProductPaperOutputForeignGoodsVo> inquiryByPaperPrNumber(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("inquiryByPaperPrNumber paperPrNumber={}", formVo.getPaperPrNumber());
+		
+		List<TaPaperPr10D> entityList = taPaperPr10DRepository.findByPaperPrNumber(formVo.getPaperPrNumber());
+		List<ProductPaperOutputForeignGoodsVo> voList = new ArrayList<>();
+		ProductPaperOutputForeignGoodsVo vo = null;
+		for (TaPaperPr10D entity : entityList) {
+			vo = new ProductPaperOutputForeignGoodsVo();
+			vo.setGoodsDesc(entity.getGoodsDesc());
+			vo.setCargoDocNo(entity.getCargoDocNo() != null ? entity.getCargoDocNo().toString() : NO_VALUE);
+			vo.setInvoiceNo(entity.getInvoiceNo() != null ? entity.getInvoiceNo().toString() : NO_VALUE);
+			vo.setOutputDailyAccountQty(entity.getOutputDailyAccountQty() != null ? entity.getOutputDailyAccountQty().toString() : NO_VALUE);
+			vo.setOutputMonthStatementQty(entity.getOutputMonthStatementQty() != null ? entity.getOutputMonthStatementQty().toString() : NO_VALUE);
+			vo.setOutputAuditQty(entity.getOutputAuditQty() != null ? entity.getOutputAuditQty().toString() : NO_VALUE);
+			vo.setTaxReduceQty(entity.getTaxReduceQty() != null ? entity.getTaxReduceQty().toString() : NO_VALUE);
+			vo.setDiffOutputQty(entity.getDiffOutputQty() != null ? entity.getDiffOutputQty().toString() : NO_VALUE);
+			voList.add(vo);
+		}
+		
+		return voList;
 	}
 
 	@Override
@@ -281,9 +311,61 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 	}
 
 	@Override
-	protected List<ProductPaperOutputForeignGoodsVo> uploadData(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ProductPaperOutputForeignGoodsVo> uploadData(ProductPaperFormVo formVo) {
+		logger.info("readFileProductOutputForeignGoods");
+		logger.info("fileName " + formVo.getFile().getOriginalFilename());
+		logger.info("type " + formVo.getFile().getContentType());
+
+		List<ProductPaperOutputForeignGoodsVo> dataList = new ArrayList<>();
+		ProductPaperOutputForeignGoodsVo data = null;
+
+		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(formVo.getFile().getBytes()));) {
+			Sheet sheet = workbook.getSheetAt(0);
+
+			for (Row row : sheet) {
+				data = new ProductPaperOutputForeignGoodsVo();
+				// Skip on first row
+				if (row.getRowNum() == 0) {
+					continue;
+				}
+				for (Cell cell : row) {
+					if (cell.getColumnIndex() == 0) {
+						// Column No.
+						continue;
+					} else if (cell.getColumnIndex() == 1) {
+						// GoodsDesc
+						data.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 2) {
+						// CargoDocNo
+						data.setCargoDocNo(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 3) {
+						// InvoiceNo
+						data.setInvoiceNo(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 4) {
+						// OutputDailyAccountQty
+						data.setOutputDailyAccountQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 5) {
+						// OutputMonthStatementQty
+						data.setOutputMonthStatementQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 6) {
+						// OutputAuditQty
+						data.setOutputAuditQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 7) {
+						// TaxReduceQty
+						data.setTaxReduceQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 8) {
+						// DiffOutputQty
+						data.setDiffOutputQty(ExcelUtils.getCellValueAsString(cell));
+					}
+
+				}
+				dataList.add(data);
+			}
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+		return dataList;
 	}
 
 	@Override

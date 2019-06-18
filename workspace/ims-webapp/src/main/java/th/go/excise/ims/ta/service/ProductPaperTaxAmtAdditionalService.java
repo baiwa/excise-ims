@@ -16,13 +16,18 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ta.persistence.entity.TaPaperPr11D;
+import th.go.excise.ims.ta.persistence.repository.TaPaperPr11DRepository;
+import th.go.excise.ims.ta.persistence.repository.TaPaperPr11HRepository;
 import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperTaxAmtAdditionalVo;
+import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
 
 @Service
 public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperService<ProductPaperTaxAmtAdditionalVo> {
@@ -31,6 +36,14 @@ public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperSer
 
 	private static final Integer TOTAL = 17;
 	private static final String PRODUCT_PAPER_TAX_AMT_ADDITIONAL = "คำนวณภาษีที่ต้องชำระเพิ่ม";
+	private static final String NO_VALUE = "-";
+	
+	@Autowired
+	private TaPaperPr11HRepository taPaperPr11HRepository;
+	@Autowired
+	private TaPaperPr11DRepository taPaperPr11DRepository;
+	@Autowired
+	private WsOasfri0100DRepository wsOasfri0100DRepository;
 
 	public DataTableAjax<ProductPaperTaxAmtAdditionalVo> listProductPaperTaxAmtAdditional(CreatePaperFormVo request) {
 		DataTableAjax<ProductPaperTaxAmtAdditionalVo> dataTableAjax = new DataTableAjax<ProductPaperTaxAmtAdditionalVo>();
@@ -213,74 +226,77 @@ public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperSer
 		return content;
 	}
 
-	/*public List<ProductPaperTaxAmtAdditionalVo> readFileProductPaperTaxAmtAdditional(
-			ProductPaperTaxAmtAdditionalVo request) {
-		logger.info("readFileProductPaperUnitPriceReduceTax");
-		logger.info("fileName " + request.getFile().getOriginalFilename());
-		logger.info("type " + request.getFile().getContentType());
-
-		List<ProductPaperTaxAmtAdditionalVo> dataList = new ArrayList<>();
-		ProductPaperTaxAmtAdditionalVo data = null;
-
-		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(request.getFile().getBytes()));) {
-			Sheet sheet = workbook.getSheetAt(0);
-
-			for (Row row : sheet) {
-				data = new ProductPaperTaxAmtAdditionalVo();
-				// Skip on first row
-				if (row.getRowNum() == 0) {
-					continue;
-				}
-				for (Cell cell : row) {
-					if (cell.getColumnIndex() == 0) {
-						// Column No.
-						continue;
-					} else if (cell.getColumnIndex() == 1) {
-						// GoodsDesc
-						data.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 2) {
-						// TaxQty
-						data.setTaxQty(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 3) {
-						// InformPrice
-						data.setInformPrice(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 4) {
-						// TaxValue
-						data.setTaxValue(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 5) {
-						// TaxRateByValue
-						data.setTaxRateByValue(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 6) {
-						// TaxRateByQty
-						data.setTaxRateByQty(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 7) {
-						// PenaltyAmt
-						data.setPenaltyAmt(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 8) {
-						// SurchargeAmt
-						data.setSurchargeAmt(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 9) {
-						// MoiTaxAmt
-						data.setMoiTaxAmt(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 10) {
-						// NetTaxAmt
-						data.setNetTaxAmt(ExcelUtils.getCellValueAsString(cell));
-					}
-
-				}
-				dataList.add(data);
-			}
-
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-		}
-		return dataList;
-	}*/
+//	public List<ProductPaperTaxAmtAdditionalVo> readFileProductPaperTaxAmtAdditional(
+//			ProductPaperFormVo request) {
+//		logger.info("readFileProductPaperUnitPriceReduceTax");
+//		logger.info("fileName " + request.getFile().getOriginalFilename());
+//		logger.info("type " + request.getFile().getContentType());
+//
+//		List<ProductPaperTaxAmtAdditionalVo> dataList = new ArrayList<>();
+//		ProductPaperTaxAmtAdditionalVo data = null;
+//
+//		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(request.getFile().getBytes()));) {
+//			Sheet sheet = workbook.getSheetAt(0);
+//
+//			for (Row row : sheet) {
+//				data = new ProductPaperTaxAmtAdditionalVo();
+//				// Skip on first row
+//				if (row.getRowNum() == 0) {
+//					continue;
+//				}
+//				for (Cell cell : row) {
+//					if (cell.getColumnIndex() == 0) {
+//						// Column No.
+//						continue;
+//					} else if (cell.getColumnIndex() == 1) {
+//						// GoodsDesc
+//						data.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 2) {
+//						// TaxQty
+//						data.setTaxQty(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 3) {
+//						// InformPrice
+//						data.setInformPrice(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 4) {
+//						// TaxValue
+//						data.setTaxValue(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 5) {
+//						// TaxRateByValue
+//						data.setTaxRateByValue(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 6) {
+//						// TaxRateByQty
+//						data.setTaxRateByQty(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 7) {
+//						// TaxAdditional
+//						data.setTaxAdditional(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 8) {
+//						// PenaltyAmt
+//						data.setPenaltyAmt(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 9) {
+//						// SurchargeAmt
+//						data.setSurchargeAmt(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 10) {
+//						// MoiTaxAmt
+//						data.setMoiTaxAmt(ExcelUtils.getCellValueAsString(cell));
+//					} else if (cell.getColumnIndex() == 11) {
+//						// NetTaxAmt
+//						data.setNetTaxAmt(ExcelUtils.getCellValueAsString(cell));
+//					}
+//
+//				}
+//				dataList.add(data);
+//			}
+//
+//		} catch (Exception e) {
+//			logger.error(e.getMessage(), e);
+//		}
+//		return dataList;
+//	}
 
 	@Override
 	protected List<ProductPaperTaxAmtAdditionalVo> inquiryByWs(ProductPaperFormVo formVo) {
 		logger.info("inquiryByWs");
-//		
+		
 //		LocalDate localDateStart = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]), Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
 //		LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]), Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
 //		
@@ -293,10 +309,10 @@ public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperSer
 //		wsOasfri0100FormVo.setAccountName(WEB_SERVICE.OASFRI0100.PS0704_ACC05);
 //		
 //		List<WsOasfri0100Vo> wsOasfri0100VoList = wsOasfri0100DRepository.findByCriteria(wsOasfri0100FormVo);
-//		List<ProductPaperInputMaterialVo> voList = new ArrayList<>();
-//		ProductPaperInputMaterialVo vo = null;
+//		List<ProductPaperTaxAmtAdditionalVo> voList = new ArrayList<>();
+//		ProductPaperTaxAmtAdditionalVo vo = null;
 //		for (WsOasfri0100Vo wsOasfri0100Vo : wsOasfri0100VoList) {
-//			vo = new ProductPaperInputMaterialVo();
+//			vo = new ProductPaperTaxAmtAdditionalVo();
 //			vo.setMaterialDesc(wsOasfri0100Vo.getDataName());
 //			vo.setMonthStatementQty(wsOasfri0100Vo.getInQty().toString());
 //			voList.add(vo);
@@ -325,8 +341,28 @@ public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperSer
 
 	@Override
 	protected List<ProductPaperTaxAmtAdditionalVo> inquiryByPaperPrNumber(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("inquiryByPaperPrNumber paperPrNumber={}", formVo.getPaperPrNumber());
+		
+		List<TaPaperPr11D> entityList = taPaperPr11DRepository.findByPaperPrNumber(formVo.getPaperPrNumber());
+		List<ProductPaperTaxAmtAdditionalVo> voList = new ArrayList<>();
+		ProductPaperTaxAmtAdditionalVo vo = null;
+		for (TaPaperPr11D entity : entityList) {
+			vo = new ProductPaperTaxAmtAdditionalVo();
+			vo.setGoodsDesc(entity.getGoodsDesc());
+			vo.setTaxQty(entity.getTaxQty() != null ? entity.getTaxQty().toString() : NO_VALUE);
+			vo.setInformPrice(entity.getInformPrice() != null ? entity.getInformPrice().toString() : NO_VALUE);
+			vo.setTaxValue(entity.getTaxValue() != null ? entity.getTaxValue().toString() : NO_VALUE);
+			vo.setTaxRateByValue(entity.getTaxRateByValue() != null ? entity.getTaxRateByValue().toString() : NO_VALUE);
+			vo.setTaxRateByQty(entity.getTaxRateByQty() != null ? entity.getTaxRateByQty().toString() : NO_VALUE);
+			vo.setTaxAdditional(entity.getTaxAdditional() != null ? entity.getTaxAdditional().toString() : NO_VALUE);
+			vo.setPenaltyAmt(entity.getPenaltyAmt() != null ? entity.getPenaltyAmt().toString() : NO_VALUE);
+			vo.setSurchargeAmt(entity.getSurchargeAmt() != null ? entity.getSurchargeAmt().toString() : NO_VALUE);
+			vo.setMoiTaxAmt(entity.getMoiTaxAmt() != null ? entity.getMoiTaxAmt().toString() : NO_VALUE);
+			vo.setNetTaxAmt(entity.getNetTaxAmt() != null ? entity.getNetTaxAmt().toString() : NO_VALUE);
+			voList.add(vo);
+		}
+		
+		return voList;
 	}
 
 	@Override
@@ -342,9 +378,70 @@ public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperSer
 	}
 
 	@Override
-	protected List<ProductPaperTaxAmtAdditionalVo> uploadData(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ProductPaperTaxAmtAdditionalVo> uploadData(ProductPaperFormVo formVo) {
+		logger.info("readFileProductPaperTaxAmtAdditional");
+		logger.info("fileName " + formVo.getFile().getOriginalFilename());
+		logger.info("type " + formVo.getFile().getContentType());
+
+		List<ProductPaperTaxAmtAdditionalVo> dataList = new ArrayList<>();
+		ProductPaperTaxAmtAdditionalVo data = null;
+
+		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(formVo.getFile().getBytes()));) {
+			Sheet sheet = workbook.getSheetAt(0);
+
+			for (Row row : sheet) {
+				data = new ProductPaperTaxAmtAdditionalVo();
+				// Skip on first two row
+				if (row.getRowNum() < 2) {
+					continue;
+				}
+				for (Cell cell : row) {
+					if (cell.getColumnIndex() == 0) {
+						// Column No.
+						continue;
+					} else if (cell.getColumnIndex() == 1) {
+						// GoodsDesc
+						data.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 2) {
+						// TaxQty
+						data.setTaxQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 3) {
+						// InformPrice
+						data.setInformPrice(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 4) {
+						// TaxValue
+						data.setTaxValue(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 5) {
+						// TaxRateByValue
+						data.setTaxRateByValue(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 6) {
+						// TaxRateByQty
+						data.setTaxRateByQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 7) {
+						// TaxAdditional
+						data.setTaxAdditional(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 8) {
+						// PenaltyAmt
+						data.setPenaltyAmt(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 9) {
+						// SurchargeAmt
+						data.setSurchargeAmt(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 10) {
+						// MoiTaxAmt
+						data.setMoiTaxAmt(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 11) {
+						// NetTaxAmt
+						data.setNetTaxAmt(ExcelUtils.getCellValueAsString(cell));
+					}
+
+				}
+				dataList.add(data);
+			}
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+		return dataList;
 	}
 
 	@Override

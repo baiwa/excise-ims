@@ -16,13 +16,18 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ta.persistence.entity.TaPaperPr09D;
+import th.go.excise.ims.ta.persistence.repository.TaPaperPr09DRepository;
+import th.go.excise.ims.ta.persistence.repository.TaPaperPr09HRepository;
 import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperInformPriceVo;
+import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
 
 @Service
 public class ProductPaperInformPriceService extends AbstractProductPaperService<ProductPaperInformPriceVo> {
@@ -30,6 +35,14 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 
 	private static final Integer TOTAL = 17;
 	private static final String PRODUCT_PAPER_IN_FORM_PRICE = "ตรวจสอบด้านราคา";
+	private static final String NO_VALUE = "-";
+	
+	@Autowired
+	private TaPaperPr09HRepository taPaperPr09HRepository;
+	@Autowired
+	private TaPaperPr09DRepository taPaperPr09DRepository;
+	@Autowired
+	private WsOasfri0100DRepository wsOasfri0100DRepository;
 
 	public DataTableAjax<ProductPaperInformPriceVo> listProductPaperInformPrice(CreatePaperFormVo request) {
 		DataTableAjax<ProductPaperInformPriceVo> dataTableAjax = new DataTableAjax<ProductPaperInformPriceVo>();
@@ -247,8 +260,24 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 
 	@Override
 	protected List<ProductPaperInformPriceVo> inquiryByPaperPrNumber(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("inquiryByPaperPrNumber paperPrNumber={}", formVo.getPaperPrNumber());
+		
+		List<TaPaperPr09D> entityList = taPaperPr09DRepository.findByPaperPrNumber(formVo.getPaperPrNumber());
+		List<ProductPaperInformPriceVo> voList = new ArrayList<>();
+		ProductPaperInformPriceVo vo = null;
+		for (TaPaperPr09D entity : entityList) {
+			vo = new ProductPaperInformPriceVo();
+			vo.setGoodsDesc(entity.getGoodsDesc());
+			vo.setInformPrice(entity.getInformPrice() != null ? entity.getInformPrice().toString() : NO_VALUE);
+			vo.setExternalPrice(entity.getExternalPrice() != null ? entity.getExternalPrice().toString() : NO_VALUE);
+			vo.setDeclarePrice(entity.getDeclarePrice() != null ? entity.getDeclarePrice().toString() : NO_VALUE);
+			vo.setRetailPrice(entity.getRetailPrice() != null ? entity.getRetailPrice().toString() : NO_VALUE);
+			vo.setTaxPrice(entity.getTaxPrice() != null ? entity.getTaxPrice().toString() : NO_VALUE);
+			vo.setDiffPrice(entity.getDiffPrice() != null ? entity.getDiffPrice().toString() : NO_VALUE);
+			voList.add(vo);
+		}
+		
+		return voList;
 	}
 
 	@Override
@@ -259,9 +288,58 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 	}
 
 	@Override
-	protected List<ProductPaperInformPriceVo> uploadData(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ProductPaperInformPriceVo> uploadData(ProductPaperFormVo formVo) {
+		logger.info("readFileProductPaperInformPrice");
+		logger.info("fileName " + formVo.getFile().getOriginalFilename());
+		logger.info("type " + formVo.getFile().getContentType());
+
+		List<ProductPaperInformPriceVo> dataList = new ArrayList<>();
+		ProductPaperInformPriceVo data = null;
+
+		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(formVo.getFile().getBytes()));) {
+			Sheet sheet = workbook.getSheetAt(0);
+
+			for (Row row : sheet) {
+				data = new ProductPaperInformPriceVo();
+				// Skip on first row
+				if (row.getRowNum() == 0) {
+					continue;
+				}
+				for (Cell cell : row) {
+					if (cell.getColumnIndex() == 0) {
+						// Column No.
+						continue;
+					} else if (cell.getColumnIndex() == 1) {
+						// GoodsDesc
+						data.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 2) {
+						// InformPrice
+						data.setInformPrice(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 3) {
+						// ExternalPrice
+						data.setExternalPrice(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 4) {
+						// DeclarePrice
+						data.setDeclarePrice(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 5) {
+						// RetailPrice
+						data.setRetailPrice(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 6) {
+						// TaxPrice
+						data.setTaxPrice(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 7) {
+						// DiffPrice
+						data.setDiffPrice(ExcelUtils.getCellValueAsString(cell));
+					}
+
+				}
+				dataList.add(data);
+			}
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+		return dataList;
 	}
 
 	@Override

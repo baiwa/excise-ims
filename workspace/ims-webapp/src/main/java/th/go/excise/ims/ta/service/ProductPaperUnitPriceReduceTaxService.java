@@ -17,13 +17,18 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ta.persistence.entity.TaPaperPr08D;
+import th.go.excise.ims.ta.persistence.repository.TaPaperPr08DRepository;
+import th.go.excise.ims.ta.persistence.repository.TaPaperPr08HRepository;
 import th.go.excise.ims.ta.vo.CreatePaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperUnitPriceReduceTaxVo;
+import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
 
 @Service
 public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperService<ProductPaperUnitPriceReduceTaxVo> {
@@ -32,6 +37,14 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 
 	private static final Integer TOTAL = 17;
 	private static final String PRODUCT_PAPER_UNIT_PRICE_REDUCE_TAX = "ราคาต่อหน่วยสินค้า";
+	private static final String NO_VALUE = "-";
+	
+	@Autowired
+	private TaPaperPr08HRepository taPaperPr08HRepository;
+	@Autowired
+	private TaPaperPr08DRepository taPaperPr08DRepository;
+	@Autowired
+	private WsOasfri0100DRepository wsOasfri0100DRepository;
 
 	public DataTableAjax<ProductPaperUnitPriceReduceTaxVo> listProductPaperUnitPriceReduceTax(
 			CreatePaperFormVo request) {
@@ -111,9 +124,9 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 			if (i > 1) {
 				cell = row.createCell(i);
 				cell.setCellValue(tbTH2[i]);
-				if (i >= 0 && i <= 3) {
+				if (i >= 0 && i <= 4) {
 					cell.setCellStyle(thStyle);
-				} else if (i >= 4 && i <= 7) {
+				} else if (i >= 5 && i <= 8) {
 					cell.setCellStyle(bgKeyIn);
 				} else {
 					cell.setCellStyle(bgCal);
@@ -303,8 +316,26 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 
 	@Override
 	protected List<ProductPaperUnitPriceReduceTaxVo> inquiryByPaperPrNumber(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("inquiryByPaperPrNumber paperPrNumber={}", formVo.getPaperPrNumber());
+		
+		List<TaPaperPr08D> entityList = taPaperPr08DRepository.findByPaperPrNumber(formVo.getPaperPrNumber());
+		List<ProductPaperUnitPriceReduceTaxVo> voList = new ArrayList<>();
+		ProductPaperUnitPriceReduceTaxVo vo = null;
+		for (TaPaperPr08D entity : entityList) {
+			vo = new ProductPaperUnitPriceReduceTaxVo();
+			vo.setGoodsDesc(entity.getGoodsDesc());
+			vo.setTaxReduceAmt(entity.getTaxReduceAmt() != null ? entity.getTaxReduceAmt().toString() : NO_VALUE);
+			vo.setTaxReduceQty(entity.getTaxReduceQty() != null ? entity.getTaxReduceQty().toString() : NO_VALUE);
+			vo.setTaxReducePerUnitAmt(entity.getTaxReducePerUnitAmt() != null ? entity.getTaxReducePerUnitAmt().toString() : NO_VALUE);
+			vo.setBillNo(entity.getBillNo() != null ? entity.getBillNo().toString() : NO_VALUE);
+			vo.setBillTaxAmt(entity.getBillTaxAmt() != null ? entity.getBillTaxAmt().toString() : NO_VALUE);
+			vo.setBillTaxQty(entity.getBillTaxQty() != null ? entity.getBillTaxQty().toString() : NO_VALUE);
+			vo.setBillTaxPerUnit(entity.getBillTaxPerUnit() != null ? entity.getBillTaxPerUnit().toString() : NO_VALUE);
+			vo.setDiffTaxReduceAmt(entity.getDiffTaxReduceAmt() != null ? entity.getDiffTaxReduceAmt().toString() : NO_VALUE);
+			voList.add(vo);
+		}
+		
+		return voList;
 	}
 
 	@Override
@@ -320,9 +351,65 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 	}
 
 	@Override
-	protected List<ProductPaperUnitPriceReduceTaxVo> uploadData(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ProductPaperUnitPriceReduceTaxVo> uploadData(ProductPaperFormVo formVo) {
+		logger.info("readFileProductPaperUnitPriceReduceTax");
+		logger.info("fileName " + formVo.getFile().getOriginalFilename());
+		logger.info("type " + formVo.getFile().getContentType());
+
+		List<ProductPaperUnitPriceReduceTaxVo> dataList = new ArrayList<>();
+		ProductPaperUnitPriceReduceTaxVo data = null;
+
+		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(formVo.getFile().getBytes()));) {
+			Sheet sheet = workbook.getSheetAt(0);
+
+			for (Row row : sheet) {
+				data = new ProductPaperUnitPriceReduceTaxVo();
+				// Skip on first two row
+				if (row.getRowNum() < 2) {
+					continue;
+				}
+				for (Cell cell : row) {
+					if (cell.getColumnIndex() == 0) {
+						// Column No.
+						continue;
+					} else if (cell.getColumnIndex() == 1) {
+						//GoodsDesc
+						data.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 2) {
+						//TaxReduceAmt
+						data.setTaxReduceAmt(ExcelUtils.getCellValueAsString(cell));
+						//TaxReduceQty
+					} else if (cell.getColumnIndex() == 3) {
+						//TaxReduceQty
+						data.setTaxReduceQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 4) {
+						//TaxReducePerUnitAmt
+						data.setTaxReducePerUnitAmt(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 5) {
+						//BillNo
+						data.setBillNo(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 6) {
+						//BillTaxAmt
+						data.setBillTaxAmt(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 7) {
+						//BillTaxQty
+						data.setBillTaxQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 8) {
+						//BillTaxPerUnit
+						data.setBillTaxPerUnit(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 9) {
+						//DiffTaxReduceAmt
+						data.setDiffTaxReduceAmt(ExcelUtils.getCellValueAsString(cell));
+					}
+
+				}
+				dataList.add(data);
+			}
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+		return dataList;
 	}
 
 	@Override
