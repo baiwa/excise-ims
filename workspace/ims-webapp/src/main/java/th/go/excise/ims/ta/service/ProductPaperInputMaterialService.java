@@ -230,8 +230,8 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 				cell.setCellValue("");
 				cell.setCellStyle(thStyle);
 			} else {
-				if (StringUtils.isNotBlank(data.getExternalDataQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getExternalDataQty())));
+				if (StringUtils.isNotBlank(data.getMonthStatementQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMonthStatementQty())));
 				} else {
 					cell.setCellValue("");
 				}

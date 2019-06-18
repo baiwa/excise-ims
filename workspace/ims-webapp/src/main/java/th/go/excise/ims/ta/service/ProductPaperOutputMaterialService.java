@@ -1,6 +1,5 @@
 package th.go.excise.ims.ta.service;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -17,8 +16,6 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
@@ -40,11 +37,12 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperOutputMaterialService.class);
 
+	private static final String PRODUCT_PAPER_OUTPUT_MATERIAL = "ตรวจสอบการจ่ายวัตถุดิบ";
+
 	@Autowired
 	private WsOasfri0100DRepository wsOasfri0100DRepository;
 
-	private static final String PRODUCT_PAPER_OUTPUT_MATERIAL = "ตรวจสอบการจ่ายวัตถุดิบ";
-
+	
 	/*public List<ProductPaperOutputMaterialVo> readFileProductPaperOutputMaterial(ProductPaperOutputMaterialVo request) {
 		logger.info("readFileProductPaperOutputMaterial");
 		logger.info("fileName " + request.getFile().getOriginalFilename());
@@ -210,8 +208,8 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 				cell.setCellValue("");
 				cell.setCellStyle(thStyle);
 			} else {
-				if (StringUtils.isNotBlank(data.getExternalDataQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getExternalDataQty())));
+				if (StringUtils.isNotBlank(data.getMonthStatementQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMonthStatementQty())));
 				} else {
 					cell.setCellValue("");
 				}
