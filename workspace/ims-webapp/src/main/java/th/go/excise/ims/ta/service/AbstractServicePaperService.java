@@ -18,9 +18,9 @@ public abstract class AbstractServicePaperService<VO> {
 			return inquiryByPaperSvNumber(formVo);
 		}
 	};
-
+	
 	protected abstract List<VO> inquiryByWs(ServicePaperFormVo formVo);
-
+	
 	protected abstract List<VO> inquiryByPaperSvNumber(ServicePaperFormVo formVo);
 	
 	public byte[] export(ServicePaperFormVo formVo) {
@@ -38,8 +38,10 @@ public abstract class AbstractServicePaperService<VO> {
 	
 	protected abstract byte[] exportData(List<VO> voList, String exportType);
 	
-//	protected abstract List<VO> upload();
+	protected abstract List<VO> uploadData(ServicePaperFormVo formVo);
 	
-//	protected abstract save();
+	protected abstract void saveData(ServicePaperFormVo formVo);
+	
+	protected abstract List<String> getPaperSvNumberList(ServicePaperFormVo formVo);
 	
 }

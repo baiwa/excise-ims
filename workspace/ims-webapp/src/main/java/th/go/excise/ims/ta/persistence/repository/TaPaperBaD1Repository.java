@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRepository;
 import th.go.excise.ims.ta.persistence.entity.TaPaperBaD1;
-import th.go.excise.ims.ta.persistence.entity.TaPaperBaD7;
 
 public interface TaPaperBaD1Repository extends CommonJpaCrudRepository<TaPaperBaD1, Long> {
 

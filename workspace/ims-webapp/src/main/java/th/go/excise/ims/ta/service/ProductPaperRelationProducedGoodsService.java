@@ -279,4 +279,22 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 
 	}
 
+	@Override
+	protected List<ProductPaperRelationProducedGoodsVo> uploadData(ProductPaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void saveData(ProductPaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

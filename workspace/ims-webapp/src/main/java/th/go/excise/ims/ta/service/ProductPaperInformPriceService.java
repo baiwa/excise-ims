@@ -260,4 +260,22 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 		return file;
 	}
 
+	@Override
+	protected List<ProductPaperInformPriceVo> uploadData(ProductPaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void saveData(ProductPaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -26,6 +26,9 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ta.persistence.entity.TaPaperPr01D;
+import th.go.excise.ims.ta.persistence.repository.TaPaperPr01DRepository;
+import th.go.excise.ims.ta.persistence.repository.TaPaperPr01HRepository;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperInputMaterialVo;
 import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
@@ -36,8 +39,14 @@ import th.go.excise.ims.ws.vo.WsOasfri0100Vo;
 public class ProductPaperInputMaterialService extends AbstractProductPaperService<ProductPaperInputMaterialVo> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperInputMaterialService.class);
+	
 	private static final String PRODUCT_PAPER_INPUT_MATERIAL = "ตรวจสอบการรับวัตถุดิบ";
+	private static final String NO_VALUE = "-";
 
+	@Autowired
+	private TaPaperPr01HRepository taPaperPr01HRepository;
+	@Autowired
+	private TaPaperPr01DRepository taPaperPr01DRepository;
 	@Autowired
 	private WsOasfri0100DRepository wsOasfri0100DRepository;
 
@@ -98,10 +107,10 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 	@Override
 	protected List<ProductPaperInputMaterialVo> inquiryByWs(ProductPaperFormVo formVo) {
 		logger.info("inquiryByWs");
-
+		
 		LocalDate localDateStart = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]), Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
 		LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]), Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
-
+		
 		WsOasfri0100FromVo wsOasfri0100FormVo = new WsOasfri0100FromVo();
 		wsOasfri0100FormVo.setNewRegId(formVo.getNewRegId());
 		wsOasfri0100FormVo.setDutyGroupId(formVo.getDutyGroupId());
@@ -109,7 +118,7 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 		wsOasfri0100FormVo.setYearMonthStart(localDateStart.format(DateTimeFormatter.ofPattern("yyyyMM")));
 		wsOasfri0100FormVo.setYearMonthEnd(localDateEnd.format(DateTimeFormatter.ofPattern("yyyyMM")));
 		wsOasfri0100FormVo.setAccountName(WEB_SERVICE.OASFRI0100.PS0704_ACC05);
-
+		
 		List<WsOasfri0100Vo> wsOasfri0100VoList = wsOasfri0100DRepository.findByCriteria(wsOasfri0100FormVo);
 		List<ProductPaperInputMaterialVo> voList = new ArrayList<>();
 		ProductPaperInputMaterialVo vo = null;
@@ -119,14 +128,29 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 			vo.setMonthStatementQty(wsOasfri0100Vo.getInQty().toString());
 			voList.add(vo);
 		}
-
+		
 		return voList;
 	}
 
 	@Override
 	protected List<ProductPaperInputMaterialVo> inquiryByPaperPrNumber(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("inquiryByPaperPrNumber paperPrNumber={}", formVo.getPaperPrNumber());
+		
+		List<TaPaperPr01D> entityList = taPaperPr01DRepository.findByPaperPrNumber(formVo.getPaperPrNumber());
+		List<ProductPaperInputMaterialVo> voList = new ArrayList<>();
+		ProductPaperInputMaterialVo vo = null;
+		for (TaPaperPr01D entity : entityList) {
+			vo = new ProductPaperInputMaterialVo();
+			vo.setMaterialDesc(entity.getMaterialDesc());
+			vo.setInputMaterialQty(entity.getInputMaterialQty() != null ? entity.getInputMaterialQty().toString() : NO_VALUE);
+			vo.setDailyAccountQty(entity.getDailyAccountQty() != null ? entity.getDailyAccountQty().toString() : NO_VALUE);
+			vo.setMonthStatementQty(entity.getMonthStatementQty() != null ? entity.getMonthStatementQty().toString() : NO_VALUE);
+			vo.setExternalDataQty(entity.getExternalDataQty() != null ? entity.getExternalDataQty().toString() : NO_VALUE);
+			vo.setMaxDiffQty(entity.getMaxDiffQty() != null ? entity.getMaxDiffQty().toString() : NO_VALUE);
+			voList.add(vo);
+		}
+		
+		return voList;
 	}
 
 	@Override
@@ -241,6 +265,23 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 		}
 
 		return content;
+	}
+
+	@Override
+	protected List<ProductPaperInputMaterialVo> uploadData(ProductPaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void saveData(ProductPaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
+		return taPaperPr01HRepository.findPaperPrNumberByAuditPlanCode(formVo.getAuditPlanCode());
 	}
 
 }
