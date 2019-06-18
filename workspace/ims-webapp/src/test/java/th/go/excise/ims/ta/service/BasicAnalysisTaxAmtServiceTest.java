@@ -27,14 +27,15 @@ public class BasicAnalysisTaxAmtServiceTest {
 	private BasicAnalysisTaxAmtService basicAnalysisTaxAmtService;
 	
 	@Test
-	public void test_inquiryByWs() {
+	public void test_inquiry() {
 		BasicAnalysisFormVo formVo = new BasicAnalysisFormVo();
 		formVo.setNewRegId("01075440001081002");
 		formVo.setDutyGroupId("0101");
 		formVo.setStartDate("01/2562");
 		formVo.setEndDate("06/2562");
+		//formVo.setPaperBaNumber("PaperBaNumber");
 		
-		List<BasicAnalysisTaxAmtVo> voList = basicAnalysisTaxAmtService.inquiryByWs(formVo);
+		List<BasicAnalysisTaxAmtVo> voList = basicAnalysisTaxAmtService.inquiry(formVo);
 		for (BasicAnalysisTaxAmtVo vo : voList) {
 			System.out.println(ToStringBuilder.reflectionToString(vo, ToStringStyle.SHORT_PREFIX_STYLE));
 		}
@@ -50,20 +51,6 @@ public class BasicAnalysisTaxAmtServiceTest {
 		formVo.setEndDate("06/2562");
 		basicAnalysisTaxAmtService.save(formVo);
 		System.out.println("************************Is successfully saved************************");
-	}
-	
-//	@Test
-	public void test_inquiryByPaperBaNumber() {
-		BasicAnalysisFormVo formVo = new BasicAnalysisFormVo();
-		formVo.setNewRegId("01075440001081002");
-		formVo.setPaperBaNumber("PaperBaNumber");
-		formVo.setDutyGroupId("0101");
-		formVo.setStartDate("01/2562");
-		formVo.setEndDate("06/2562");
-		List<BasicAnalysisTaxAmtVo> voList = basicAnalysisTaxAmtService.inquiryByPaperBaNumber(formVo);
-		for (BasicAnalysisTaxAmtVo vo : voList) {
-			System.out.println(ToStringBuilder.reflectionToString(vo, ToStringStyle.SHORT_PREFIX_STYLE));
-		}	
 	}
 	
 }
