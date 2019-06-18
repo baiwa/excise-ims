@@ -5,7 +5,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +50,7 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 
 		LocalDate localDateStart = toLocalDate(formVo.getStartDate());
 		LocalDate localDateEnd = toLocalDate(formVo.getEndDate());
-		
+
 		WsOasfri0100FromVo wsOasfri0100FormVo = new WsOasfri0100FromVo();
 		wsOasfri0100FormVo.setNewRegId(formVo.getNewRegId());
 		wsOasfri0100FormVo.setDutyGroupId(formVo.getDutyGroupId());
@@ -145,12 +144,12 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getOutputMaterialQty());
-			cell.setCellStyle(cellCenter);
+			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getDailyAccountQty());
-			cell.setCellStyle(cellCenter);
+			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
@@ -165,7 +164,7 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 				}
 				cell.setCellStyle(cellRightBgStyle);
 			}
-			
+
 			cellNum++;
 
 			cell = row.createCell(cellNum);
@@ -252,7 +251,7 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 	@Override
 	public void save(ProductPaperFormVo formVo) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
