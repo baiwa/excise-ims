@@ -5,8 +5,6 @@ import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRe
 import th.go.excise.ims.preferences.persistence.entity.ExciseDepaccMas;
 
 public interface ExciseDepaccMasRepository
-    extends CommonJpaCrudRepository<ExciseDepaccMas, String>
-{
-
+		extends CommonJpaCrudRepository<ExciseDepaccMas, String>, ExciseDepaccMasRepositoryCustom {
 
 }
