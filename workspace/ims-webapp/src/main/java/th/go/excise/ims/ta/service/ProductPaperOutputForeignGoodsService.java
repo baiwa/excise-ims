@@ -281,4 +281,22 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 		}
 		return file;
 	}
+
+	@Override
+	protected List<ProductPaperOutputForeignGoodsVo> uploadData(ProductPaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void saveData(ProductPaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

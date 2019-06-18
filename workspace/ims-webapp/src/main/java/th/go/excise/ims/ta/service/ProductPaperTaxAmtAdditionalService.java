@@ -342,4 +342,22 @@ public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperSer
 		}
 		return file;
 	}
+
+	@Override
+	protected List<ProductPaperTaxAmtAdditionalVo> uploadData(ProductPaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void saveData(ProductPaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

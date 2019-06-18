@@ -247,4 +247,22 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 		return file;
 	}
 
+	@Override
+	protected List<ServicePaperQtyVo> uploadData(ServicePaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void saveData(ServicePaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected List<String> getPaperSvNumberList(ServicePaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

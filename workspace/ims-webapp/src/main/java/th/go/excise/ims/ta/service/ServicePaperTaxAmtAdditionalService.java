@@ -277,4 +277,22 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 		file = exportServicePaperTaxAmtAdditional(voList, exportType);
 		return file;
 	}
+
+	@Override
+	protected List<ServicePaperTaxAmtAdditionalVo> uploadData(ServicePaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void saveData(ServicePaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected List<String> getPaperSvNumberList(ServicePaperFormVo formVo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
