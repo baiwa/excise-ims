@@ -51,7 +51,6 @@ public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperSer
 				break;
 			}
 			data = new ProductPaperTaxAmtAdditionalVo();
-			data.setId(Long.valueOf(1));
 			data.setGoodsDesc(desc + (i + 1));
 			data.setTaxQty("1,000.00");
 			data.setInformPrice("10,000.00");
@@ -214,7 +213,7 @@ public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperSer
 		return content;
 	}
 
-	public List<ProductPaperTaxAmtAdditionalVo> readFileProductPaperTaxAmtAdditional(
+	/*public List<ProductPaperTaxAmtAdditionalVo> readFileProductPaperTaxAmtAdditional(
 			ProductPaperTaxAmtAdditionalVo request) {
 		logger.info("readFileProductPaperUnitPriceReduceTax");
 		logger.info("fileName " + request.getFile().getOriginalFilename());
@@ -276,7 +275,7 @@ public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperSer
 			logger.error(e.getMessage(), e);
 		}
 		return dataList;
-	}
+	}*/
 
 	@Override
 	protected List<ProductPaperTaxAmtAdditionalVo> inquiryByWs(ProductPaperFormVo formVo) {
@@ -307,7 +306,6 @@ public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperSer
 			String desc = "คำนวณภาษีที่ต้องชำระเพิ่ม";
 			ProductPaperTaxAmtAdditionalVo data = new ProductPaperTaxAmtAdditionalVo();
 			data = new ProductPaperTaxAmtAdditionalVo();
-			data.setId(Long.valueOf(1));
 			data.setGoodsDesc(desc + (i + 1));
 			data.setTaxQty("1,000.00");
 			data.setInformPrice("10,000.00");

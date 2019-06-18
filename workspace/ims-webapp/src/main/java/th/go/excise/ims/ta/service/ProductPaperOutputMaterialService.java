@@ -45,7 +45,7 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 
 	private static final String PRODUCT_PAPER_OUTPUT_MATERIAL = "ตรวจสอบการจ่ายวัตถุดิบ";
 
-	public List<ProductPaperOutputMaterialVo> readFileProductPaperOutputMaterial(ProductPaperOutputMaterialVo request) {
+	/*public List<ProductPaperOutputMaterialVo> readFileProductPaperOutputMaterial(ProductPaperOutputMaterialVo request) {
 		logger.info("readFileProductPaperOutputMaterial");
 		logger.info("fileName " + request.getFile().getOriginalFilename());
 		logger.info("type " + request.getFile().getContentType());
@@ -95,7 +95,7 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 		}
 
 		return dataList;
-	}
+	}*/
 
 	@Override
 	protected List<ProductPaperOutputMaterialVo> inquiryByWs(ProductPaperFormVo formVo) {

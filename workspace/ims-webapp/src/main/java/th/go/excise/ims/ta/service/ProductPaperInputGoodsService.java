@@ -54,7 +54,6 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 				break;
 			}
 			data = new ProductPaperInputGoodsVo();
-			data.setId(Long.valueOf(1));
 			data.setGoodsDesc(desc + (i + 1));
 			data.setInputGoodsQty("");
 			data.setInputMonthStatementQty("");
@@ -182,7 +181,7 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 		return content;
 	}
 
-	public List<ProductPaperInputGoodsVo> readFileProductPaperInputGoods(ProductPaperInputGoodsVo request) {
+	/*public List<ProductPaperInputGoodsVo> readFileProductPaperInputGoods(ProductPaperInputGoodsVo request) {
 		logger.info("readFileProductPaperInputGoods");
 		logger.info("fileName " + request.getFile().getOriginalFilename());
 		logger.info("type " + request.getFile().getContentType());
@@ -232,7 +231,7 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 		}
 
 		return dataList;
-	}
+	}*/
 
 	@Override
 	protected List<ProductPaperInputGoodsVo> inquiryByWs(ProductPaperFormVo formVo) {

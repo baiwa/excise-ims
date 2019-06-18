@@ -50,7 +50,6 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 				break;
 			}
 			data = new ProductPaperInformPriceVo();
-			data.setId(Long.valueOf(1));
 			data.setGoodsDesc(desc + (i + 1));
 			data.setInformPrice("1,000.00");
 			data.setExternalPrice("1,500.00");
@@ -173,7 +172,7 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 		return content;
 	}
 
-	public List<ProductPaperInformPriceVo> readFileProductPaperInformPrice(ProductPaperInformPriceVo request) {
+	/*public List<ProductPaperInformPriceVo> readFileProductPaperInformPrice(ProductPaperInformPriceVo request) {
 		logger.info("readFileProductPaperInformPrice");
 		logger.info("fileName " + request.getFile().getOriginalFilename());
 		logger.info("type " + request.getFile().getContentType());
@@ -225,7 +224,7 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 			logger.error(e.getMessage(), e);
 		}
 		return dataList;
-	}
+	}*/
 
 	@Override
 	protected List<ProductPaperInformPriceVo> inquiryByWs(ProductPaperFormVo formVo) {
@@ -234,7 +233,6 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 		String desc = "ตรวจสอบด้านราคา";
 		for (int i = 0; i < 5; i++) {
 			data = new ProductPaperInformPriceVo();
-			data.setId(Long.valueOf(1));
 			data.setGoodsDesc(desc + (i + 1));
 			data.setInformPrice("1,000.00");
 			data.setExternalPrice("1,500.00");

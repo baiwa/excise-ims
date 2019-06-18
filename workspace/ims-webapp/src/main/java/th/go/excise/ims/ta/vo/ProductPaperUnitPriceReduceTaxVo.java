@@ -1,9 +1,7 @@
 package th.go.excise.ims.ta.vo;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class ProductPaperUnitPriceReduceTaxVo {
-	private Long id;
+
 	private String goodsDesc;
 	private String taxReduceAmt;
 	private String taxReduceQty;
@@ -13,16 +11,6 @@ public class ProductPaperUnitPriceReduceTaxVo {
 	private String billTaxQty;
 	private String billTaxPerUnit;
 	private String diffTaxReduceAmt;
-
-	private MultipartFile file;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getGoodsDesc() {
 		return goodsDesc;
@@ -94,14 +82,6 @@ public class ProductPaperUnitPriceReduceTaxVo {
 
 	public void setDiffTaxReduceAmt(String diffTaxReduceAmt) {
 		this.diffTaxReduceAmt = diffTaxReduceAmt;
-	}
-
-	public MultipartFile getFile() {
-		return file;
-	}
-
-	public void setFile(MultipartFile file) {
-		this.file = file;
 	}
 
 }

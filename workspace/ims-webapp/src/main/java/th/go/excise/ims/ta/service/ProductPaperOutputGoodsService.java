@@ -53,7 +53,6 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 				break;
 			}
 			data = new ProductPaperOutputGoodsVo();
-			data.setId(Long.valueOf(1));
 			data.setGoodsDesc(desc + (i + 1));
 			data.setOutputGoodsQty("");
 			data.setOutputDailyAccountQty("");
@@ -179,7 +178,7 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 		return content;
 	}
 
-	public List<ProductPaperOutputGoodsVo> readFileProductPaperOutputGoods(ProductPaperOutputGoodsVo request) {
+	/*public List<ProductPaperOutputGoodsVo> readFileProductPaperOutputGoods(ProductPaperOutputGoodsVo request) {
 		logger.info("readFileProductPaperInputGoods");
 		logger.info("fileName " + request.getFile().getOriginalFilename());
 		logger.info("type " + request.getFile().getContentType());
@@ -232,7 +231,7 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 		}
 
 		return dataList;
-	}
+	}*/
 
 	@Override
 	protected List<ProductPaperOutputGoodsVo> inquiryByWs(ProductPaperFormVo formVo) {
@@ -242,7 +241,6 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 		ProductPaperOutputGoodsVo data = null;
 		for (int i = 0; i < 5; i++) {
 			data = new ProductPaperOutputGoodsVo();
-			data.setId(Long.valueOf(1));
 			data.setGoodsDesc(desc + (i + 1));
 			data.setOutputGoodsQty("");
 			data.setOutputDailyAccountQty("");

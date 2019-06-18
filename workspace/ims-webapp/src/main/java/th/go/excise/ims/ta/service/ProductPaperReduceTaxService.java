@@ -51,7 +51,6 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 				break;
 			}
 			data = new ProductPaperReduceTaxVo();
-			data.setId(Long.valueOf(1));
 			data.setMaterialDesc(desc + (i + 1));
 			data.setTaxReduceAmt("1,000.00");
 			data.setTaxReduceQty("100.00");
@@ -210,7 +209,7 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 		return content;
 	}
 
-	public List<ProductPaperReduceTaxVo> readFileProductPaperReduceTax(ProductPaperReduceTaxVo request) {
+	/*public List<ProductPaperReduceTaxVo> readFileProductPaperReduceTax(ProductPaperReduceTaxVo request) {
 		logger.info("readFileProductPaperReduceTax");
 		logger.info("fileName " + request.getFile().getOriginalFilename());
 		logger.info("type " + request.getFile().getContentType());
@@ -268,7 +267,7 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 			logger.error(e.getMessage(), e);
 		}
 		return dataList;
-	}
+	}*/
 
 	@Override
 	protected List<ProductPaperReduceTaxVo> inquiryByWs(ProductPaperFormVo formVo) {
@@ -278,7 +277,6 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 		ProductPaperReduceTaxVo data = null;
 		for (int i = 0; i < 10; i++) {
 			data = new ProductPaperReduceTaxVo();
-			data.setId(Long.valueOf(1));
 			data.setMaterialDesc(desc + (i + 1));
 			data.setTaxReduceAmt("1,000.00");
 			data.setTaxReduceQty("100.00");

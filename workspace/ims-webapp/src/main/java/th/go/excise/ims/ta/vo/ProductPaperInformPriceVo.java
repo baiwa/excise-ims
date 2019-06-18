@@ -1,9 +1,7 @@
 package th.go.excise.ims.ta.vo;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class ProductPaperInformPriceVo {
-	private Long id;
+
 	private String goodsDesc;
 	private String informPrice;
 	private String externalPrice;
@@ -11,16 +9,6 @@ public class ProductPaperInformPriceVo {
 	private String retailPrice;
 	private String taxPrice;
 	private String diffPrice;
-
-	private MultipartFile file;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getGoodsDesc() {
 		return goodsDesc;
@@ -78,11 +66,4 @@ public class ProductPaperInformPriceVo {
 		this.diffPrice = diffPrice;
 	}
 
-	public MultipartFile getFile() {
-		return file;
-	}
-
-	public void setFile(MultipartFile file) {
-		this.file = file;
-	}
 }

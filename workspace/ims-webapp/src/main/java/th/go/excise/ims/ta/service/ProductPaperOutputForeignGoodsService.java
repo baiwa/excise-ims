@@ -54,7 +54,6 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 				break;
 			}
 			data = new ProductPaperOutputForeignGoodsVo();
-			data.setId(Long.valueOf(1));
 			data.setGoodsDesc(desc + (i + 1));
 			data.setCargoDocNo("");
 			data.setInvoiceNo("");
@@ -184,7 +183,7 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 		return content;
 	}
 
-	public List<ProductPaperOutputForeignGoodsVo> readFileProductPaperOutputForeignGoods(
+	/*public List<ProductPaperOutputForeignGoodsVo> readFileProductPaperOutputForeignGoods(
 			ProductPaperOutputForeignGoodsVo request) {
 		logger.info("readFileProductPaperUnitPriceReduceTax");
 		logger.info("fileName " + request.getFile().getOriginalFilename());
@@ -240,7 +239,7 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 			logger.error(e.getMessage(), e);
 		}
 		return dataList;
-	}
+	}*/
 
 	@Override
 	protected List<ProductPaperOutputForeignGoodsVo> inquiryByWs(ProductPaperFormVo formVo) {
@@ -250,7 +249,6 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 			String desc = "จ่ายสินค้าสำเร็จรูปต่างประเทศ";
 			ProductPaperOutputForeignGoodsVo data = new ProductPaperOutputForeignGoodsVo();
 			data = new ProductPaperOutputForeignGoodsVo();
-			data.setId(Long.valueOf(1));
 			data.setGoodsDesc(desc + (i + 1));
 			data.setCargoDocNo("");
 			data.setInvoiceNo("");
