@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.7-hudson-48-. --><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://dexsrvint.excise.go.th/schema/AuthenAndGetUserRole" xmlns:ns0="http://dexsrvint.excise.go.th/schema/LdapUserBase" targetNamespace="http://dexsrvint.excise.go.th/schema/AuthenAndGetUserRole" elementFormDefault="qualified">
-    <xsd:import schemaLocation="http://dexsrvint.excise.go.th:5080/LDAPGateway/LDPAGAuthenAndGetUserRoleService?xsd=1" namespace="http://dexsrvint.excise.go.th/schema/LdapUserBase" />
+    <xsd:import schemaLocation="LDPAGAuthenAndGetUserRoleService1.xsd" namespace="http://dexsrvint.excise.go.th/schema/LdapUserBase" />
     <xsd:complexType name="AuthenAndGetUserRoleRequest">
         <xsd:sequence>
             <xsd:element name="userId" type="xsd:string" />
