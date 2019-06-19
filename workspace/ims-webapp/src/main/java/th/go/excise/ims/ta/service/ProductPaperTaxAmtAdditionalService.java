@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
@@ -19,8 +21,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperPr11D;
+import th.go.excise.ims.ta.persistence.entity.TaPaperPr11H;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr11DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr11HRepository;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
@@ -292,9 +296,38 @@ public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperSer
 		return dataList;
 	}
 
+	@Transactional(rollbackOn = {Exception.class})
 	@Override
 	public void save(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
+		logger.info("save");
+		
+		TaPaperPr11H entityH = new TaPaperPr11H();
+		prepareEntityH(formVo, entityH, TaPaperPr11H.class);
+		taPaperPr11HRepository.save(entityH);
+		
+		List<ProductPaperTaxAmtAdditionalVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
+		List<TaPaperPr11D> entityDList = new ArrayList<>();
+		TaPaperPr11D entityD = null;
+		int i = 1;
+		for (ProductPaperTaxAmtAdditionalVo vo : voList) {
+			entityD = new TaPaperPr11D();
+			entityD.setPaperPrNumber(entityH.getPaperPrNumber());
+			entityD.setSeqNo(i);
+			entityD.setGoodsDesc(vo.getGoodsDesc());
+			entityD.setTaxQty(!NO_VALUE.equals(vo.getTaxQty()) ? NumberUtils.toBigDecimal(vo.getTaxQty()) : null);
+			entityD.setInformPrice(!NO_VALUE.equals(vo.getInformPrice()) ? NumberUtils.toBigDecimal(vo.getInformPrice()) : null);
+			entityD.setTaxValue(!NO_VALUE.equals(vo.getTaxValue()) ? NumberUtils.toBigDecimal(vo.getTaxValue()) : null);
+			entityD.setTaxRateByValue(!NO_VALUE.equals(vo.getTaxRateByValue()) ? NumberUtils.toBigDecimal(vo.getTaxRateByValue()) : null);
+			entityD.setTaxRateByQty(!NO_VALUE.equals(vo.getTaxRateByQty()) ? NumberUtils.toBigDecimal(vo.getTaxRateByQty()) : null);
+			entityD.setTaxAdditional(!NO_VALUE.equals(vo.getTaxAdditional()) ? NumberUtils.toBigDecimal(vo.getTaxAdditional()) : null);
+			entityD.setPenaltyAmt(!NO_VALUE.equals(vo.getPenaltyAmt()) ? NumberUtils.toBigDecimal(vo.getPenaltyAmt()) : null);
+			entityD.setSurchargeAmt(!NO_VALUE.equals(vo.getSurchargeAmt()) ? NumberUtils.toBigDecimal(vo.getSurchargeAmt()) : null);
+			entityD.setMoiTaxAmt(!NO_VALUE.equals(vo.getMoiTaxAmt()) ? NumberUtils.toBigDecimal(vo.getMoiTaxAmt()) : null);
+			entityD.setNetTaxAmt(!NO_VALUE.equals(vo.getNetTaxAmt()) ? NumberUtils.toBigDecimal(vo.getNetTaxAmt()) : null);
+			entityDList.add(entityD);
+			i++;
+		}
+		taPaperPr11DRepository.saveAll(entityDList);
 		
 	}
 

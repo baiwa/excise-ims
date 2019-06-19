@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
@@ -19,8 +21,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperPr09D;
+import th.go.excise.ims.ta.persistence.entity.TaPaperPr09H;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr09DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr09HRepository;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
@@ -253,9 +257,34 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 		return dataList;
 	}
 
+	@Transactional(rollbackOn = {Exception.class})
 	@Override
 	public void save(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
+		logger.info("save");
+		
+		TaPaperPr09H entityH = new TaPaperPr09H();
+		prepareEntityH(formVo, entityH, TaPaperPr09H.class);
+		taPaperPr09HRepository.save(entityH);
+		
+		List<ProductPaperInformPriceVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
+		List<TaPaperPr09D> entityDList = new ArrayList<>();
+		TaPaperPr09D entityD = null;
+		int i = 1;
+		for (ProductPaperInformPriceVo vo : voList) {
+			entityD = new TaPaperPr09D();
+			entityD.setPaperPrNumber(entityH.getPaperPrNumber());
+			entityD.setSeqNo(i);
+			entityD.setGoodsDesc(vo.getGoodsDesc());
+			entityD.setInformPrice(!NO_VALUE.equals(vo.getInformPrice()) ? NumberUtils.toBigDecimal(vo.getInformPrice()) : null);
+			entityD.setExternalPrice(!NO_VALUE.equals(vo.getExternalPrice()) ? NumberUtils.toBigDecimal(vo.getExternalPrice()) : null);
+			entityD.setDeclarePrice(!NO_VALUE.equals(vo.getDeclarePrice()) ? NumberUtils.toBigDecimal(vo.getDeclarePrice()) : null);
+			entityD.setRetailPrice(!NO_VALUE.equals(vo.getRetailPrice()) ? NumberUtils.toBigDecimal(vo.getRetailPrice()) : null);
+			entityD.setTaxPrice(!NO_VALUE.equals(vo.getTaxPrice()) ? NumberUtils.toBigDecimal(vo.getTaxPrice()) : null);
+			entityD.setDiffPrice(!NO_VALUE.equals(vo.getDiffPrice()) ? NumberUtils.toBigDecimal(vo.getDiffPrice()) : null);
+			entityDList.add(entityD);
+			i++;
+		}
+		taPaperPr09DRepository.saveAll(entityDList);
 		
 	}
 

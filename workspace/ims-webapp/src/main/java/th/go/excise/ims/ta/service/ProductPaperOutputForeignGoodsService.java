@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -21,8 +23,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperPr10D;
+import th.go.excise.ims.ta.persistence.entity.TaPaperPr10H;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr10DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr10HRepository;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
@@ -267,9 +271,35 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 		return dataList;
 	}
 
+	@Transactional(rollbackOn = {Exception.class})
 	@Override
 	public void save(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
+		logger.info("save");
+		
+		TaPaperPr10H entityH = new TaPaperPr10H();
+		prepareEntityH(formVo, entityH, TaPaperPr10H.class);
+		taPaperPr10HRepository.save(entityH);
+		
+		List<ProductPaperOutputForeignGoodsVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
+		List<TaPaperPr10D> entityDList = new ArrayList<>();
+		TaPaperPr10D entityD = null;
+		int i = 1;
+		for (ProductPaperOutputForeignGoodsVo vo : voList) {
+			entityD = new TaPaperPr10D();
+			entityD.setPaperPrNumber(entityH.getPaperPrNumber());
+			entityD.setSeqNo(i);
+			entityD.setGoodsDesc(vo.getGoodsDesc());
+			entityD.setCargoDocNo(!NO_VALUE.equals(vo.getCargoDocNo()) ? NumberUtils.toBigDecimal(vo.getCargoDocNo()) : null);
+			entityD.setInvoiceNo(vo.getInvoiceNo());
+			entityD.setOutputDailyAccountQty(!NO_VALUE.equals(vo.getOutputDailyAccountQty()) ? NumberUtils.toBigDecimal(vo.getOutputDailyAccountQty()) : null);
+			entityD.setOutputMonthStatementQty(!NO_VALUE.equals(vo.getOutputMonthStatementQty()) ? NumberUtils.toBigDecimal(vo.getOutputMonthStatementQty()) : null);
+			entityD.setOutputAuditQty(!NO_VALUE.equals(vo.getOutputAuditQty()) ? NumberUtils.toBigDecimal(vo.getOutputAuditQty()) : null);
+			entityD.setTaxReduceQty(!NO_VALUE.equals(vo.getTaxReduceQty()) ? NumberUtils.toBigDecimal(vo.getTaxReduceQty()) : null);
+			entityD.setDiffOutputQty(!NO_VALUE.equals(vo.getDiffOutputQty()) ? NumberUtils.toBigDecimal(vo.getDiffOutputQty()) : null);
+			entityDList.add(entityD);
+			i++;
+		}
+		taPaperPr10DRepository.saveAll(entityDList);
 		
 	}
 
