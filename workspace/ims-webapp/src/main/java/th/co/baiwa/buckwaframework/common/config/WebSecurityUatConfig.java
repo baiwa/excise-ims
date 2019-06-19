@@ -16,12 +16,12 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 
 @Configuration
 @EnableWebSecurity
-@Profile(value = { "!" + PROFILE.UAT, "!" + PROFILE.PROD })
-public class WebSecurityConfig {
+@Profile(PROFILE.UAT)
+public class WebSecurityUatConfig {
 	
 	@Autowired
-	@Qualifier("customAuthenticationProvider")
-	private AuthenticationProvider customAuthenticationProvider;
+	@Qualifier("wsAuthenticationProvider")
+	private AuthenticationProvider webServiceAuthenticationProvider;
 	
 	@Autowired
 	@Qualifier("jdbcAuthenticationProvider")
@@ -29,7 +29,7 @@ public class WebSecurityConfig {
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(customAuthenticationProvider);
+		auth.authenticationProvider(webServiceAuthenticationProvider);
 		//auth.authenticationProvider(jdbcAuthenticationProvider);
 	}
 	

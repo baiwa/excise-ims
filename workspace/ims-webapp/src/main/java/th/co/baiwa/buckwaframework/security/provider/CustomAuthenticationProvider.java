@@ -46,7 +46,7 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
 
 	@Override
 	protected org.springframework.security.core.userdetails.UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-		logger.info("WebServiceAuthenticationProvider : {}" , username);
+		logger.info("CustomAuthenticationProvider : {}" , username);
 		String password = authentication.getCredentials().toString();
 		UserDetails userDetails = null;
 		

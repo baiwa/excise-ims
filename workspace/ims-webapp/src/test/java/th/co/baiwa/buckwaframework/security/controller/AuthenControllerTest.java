@@ -24,10 +24,11 @@ import org.springframework.web.context.WebApplicationContext;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.URL;
+import th.go.excise.ims.Application;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@ActiveProfiles(value = PROFILE.UNITTEST)
+@SpringBootTest(classes = Application.class, webEnvironment = WebEnvironment.RANDOM_PORT)
+//@ActiveProfiles(value = PROFILE.UAT)
 public class AuthenControllerTest {
 	
 	@Autowired
@@ -83,7 +84,7 @@ public class AuthenControllerTest {
 		
 		FormLoginRequestBuilder login = formLogin()
 			.loginProcessingUrl(URL.LOGIN_WEB)
-			.user("kek1")
+			.user("ta001401")
 			.password("password");
 		
 		mockMvc.perform(login)
@@ -113,7 +114,7 @@ public class AuthenControllerTest {
 		
 		MvcResult result = this.mockMvc.perform(formLogin()
 			.loginProcessingUrl(URL.LOGIN_REST)
-			.user("user")
+			.user("ta001401")
 			.password("password"))
 		.andDo(MockMvcResultHandlers.print())
 		.andExpect(status().isOk())
