@@ -465,13 +465,13 @@
 							<sourceRoot>${project.build.directory}/generated-sources/cxf</sourceRoot>
 							<wsdlOptions>
 								<wsdlOption>
-									<wsdl>${basedir}/src/main/resources/wsdl/LoginLdap.wsdl</wsdl>
+									<wsdl>${basedir}/src/main/resources/wsdl/LDPAGAuthenAndGetUserRoleService.wsdl</wsdl>
 									<extraargs>
 										<extraarg>-verbose</extraarg>
 										<extraarg>-p</extraarg><!-- targetNamespace -->
-										<extraarg>http://ws.th.co.baiwa=th.co.baiwa.ims.ws.userldap</extraarg>
+										<extraarg>http://ws.th.co.baiwa=th.co.baiwa.ims.ws.userldap.excise</extraarg>
 										<extraarg>-wsdlLocation</extraarg>
-										<extraarg>classpath:wsdl/LoginLdap.wsdl</extraarg>
+										<extraarg>classpath:wsdl/LDPAGAuthenAndGetUserRoleService.wsdl</extraarg>
 									</extraargs>
 								</wsdlOption>
 								<!-- <wsdlOption> -->

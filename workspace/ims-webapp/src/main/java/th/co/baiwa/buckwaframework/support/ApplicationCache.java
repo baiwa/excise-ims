@@ -137,7 +137,7 @@ public class ApplicationCache {
 		logger.info("ApplicationCache Reloading...");
 		loadParameter();
 		loadMessage();
-		loadGeography();
+//		loadGeography();
 		loadExciseDepartment();
 		loadExciseSubdept();
 		loadExciseDutyGroup();

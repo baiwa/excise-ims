@@ -5,15 +5,16 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
-import th.co.baiwa.ims.ws.userldap.LoginLdap;
-import th.co.baiwa.ims.ws.userldap.Response;
+import th.go.excise.dexsrvint.schema.authenandgetuserrole.AuthenAndGetUserRoleRequest;
+import th.go.excise.dexsrvint.schema.authenandgetuserrole.AuthenAndGetUserRoleResponse;
+import th.go.excise.dexsrvint.wsdl.ldapgateway.ldpagauthenandgetuserrole.LDPAGAuthenAndGetUserRolePortType;
 import th.go.excise.ims.Application;
 
 @RunWith(SpringRunner.class)
@@ -23,14 +24,16 @@ import th.go.excise.ims.Application;
 public class LoginLdapProxyTest {
 	
 	@Autowired
-	private LoginLdap loginLdapProxy;
+	private LDPAGAuthenAndGetUserRolePortType loginLdapProxy;
 	
 	@Test
 	public void test_login() {
 		String user = "admin";
 		String pass = "password";
-		
-		Response response = loginLdapProxy.login(user, pass);
+		AuthenAndGetUserRoleRequest ldap = new AuthenAndGetUserRoleRequest();
+		ldap.setUserId("pcc020100");
+		ldap.setPassword("pcc020100");
+		AuthenAndGetUserRoleResponse response = loginLdapProxy.ldpagAuthenAndGetUserRoleOperation(ldap);
 		
 		System.out.println(ToStringBuilder.reflectionToString(response, ToStringStyle.JSON_STYLE));
 	}

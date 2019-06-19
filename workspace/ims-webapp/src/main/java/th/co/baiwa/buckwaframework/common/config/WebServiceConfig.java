@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import th.co.baiwa.ims.ws.userldap.LoginLdap;
+import th.go.excise.dexsrvint.wsdl.ldapgateway.ldpagauthenandgetuserrole.LDPAGAuthenAndGetUserRolePortType;
+
+
+
 
 @Configuration
 public class WebServiceConfig {
@@ -21,13 +24,13 @@ public class WebServiceConfig {
 		@Value("${ws.excise.endpoint.ldapuser.dev}")
 		private String ldapDev;
 		
-		@Bean(name = "loginLdapProxy")
-		public LoginLdap loginLdapProxy() {
+		@Bean(name = "loginLdapProxy")	
+		public LDPAGAuthenAndGetUserRolePortType loginLdapProxy() {
 			JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
-			jaxWsProxyFactoryBean.setServiceClass(LoginLdap.class);
+			jaxWsProxyFactoryBean.setServiceClass(LDPAGAuthenAndGetUserRolePortType.class);
 			jaxWsProxyFactoryBean.setAddress(ldapDev);
 			
-			LoginLdap loginLdapProxy = (LoginLdap) jaxWsProxyFactoryBean.create();
+			LDPAGAuthenAndGetUserRolePortType loginLdapProxy = (LDPAGAuthenAndGetUserRolePortType) jaxWsProxyFactoryBean.create();
 			
 			Client client = ClientProxy.getClient(loginLdapProxy);
 			HTTPConduit http = (HTTPConduit) client.getConduit();

@@ -19,9 +19,9 @@ import th.co.baiwa.buckwaframework.security.persistence.entity.WsRole;
 import th.co.baiwa.buckwaframework.security.persistence.entity.WsUser;
 import th.co.baiwa.buckwaframework.security.persistence.repository.WsUserRepository;
 import th.co.baiwa.buckwaframework.security.persistence.repository.WsUserRoleRepository;
-import th.co.baiwa.ims.ws.userldap.Response;
-import th.co.baiwa.ims.ws.userldap.Role;
-import th.co.baiwa.ims.ws.userldap.Roles;
+import th.go.excise.dexsrvint.schema.ldapuserbase.RoleBase;
+import th.go.excise.dexsrvint.schema.ldapuserbase.RolesBase;
+import th.go.excise.dexsrvint.schema.authenandgetuserrole.AuthenAndGetUserRoleResponse;
 import th.go.excise.ims.preferences.persistence.entity.ExcisePerson;
 import th.go.excise.ims.preferences.persistence.repository.ExcisePersonRepository;
 
@@ -51,8 +51,8 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
 		UserDetails userDetails = null;
 		
 		// Login with LoginLdapUser
-		Response response = login(username, password);
-		if ("000".equals(response.getCode())) {
+		AuthenAndGetUserRoleResponse response = login(username, password);
+		if ("000".equals(response.getMessage())) {
 			// Assign Default ROLE_USER
 			List<SimpleGrantedAuthority> grantedAuthorityList = new ArrayList<>();
 			grantedAuthorityList.add(new SimpleGrantedAuthority(ROLE.USER));
@@ -61,7 +61,7 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
 				grantedAuthorityList.add(new SimpleGrantedAuthority(ROLE.ADMIN));
 			}
 			// Assign ROLE from WS
-			for (Role wsRole : response.getRoles().getRole()) {
+			for (RoleBase wsRole : response.getRoles().getRole()) {
 				grantedAuthorityList.add(new SimpleGrantedAuthority(wsRole.getRoleName()));
 			}
 			
@@ -72,26 +72,24 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
 			userDetails.setUserThaiName(response.getUserThaiName());
 			userDetails.setUserThaiSurname(response.getUserThaiSurname());
 			userDetails.setTitle(response.getTitle());
-			userDetails.setOfficeCode(response.getOfficeCode());
+			userDetails.setOfficeCode(response.getOfficeId());
 			addAdditionalInfo(userDetails);
 		} else {
-			throw new BadCredentialsException(response.getDescription());
+			throw new BadCredentialsException(response.getMessage().getDescription());
 		}
 		
 		return userDetails;
 	}
 	
-	public Response login(String username, String password) {
+	public AuthenAndGetUserRoleResponse login(String username, String password) {
 		logger.info("login username={}, password={}", username, password);
 		
 		WsUser wsUser = wsUserRepository.findByUsernameAndPassword(username, password);
 		
-		Response response = new Response();
+		AuthenAndGetUserRoleResponse response = new AuthenAndGetUserRoleResponse();
 		if (wsUser != null) {
-			response.setSuccess("true");
-			response.setCode("000");
-			response.setDescription("Authentication Success");
-			response.setOfficeCode(wsUser.getOfficeCode());
+			response.getMessage().setCode("000");
+			response.getMessage().setDescription("Authentication Success");
 			response.setTitle(wsUser.getTitle());
 			response.setUserThaiName(wsUser.getUserThaiName());
 			response.setUserThaiSurname(wsUser.getUserThaiSurname());
@@ -103,28 +101,25 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
 			response.setOfficeId(wsUser.getOfficeId());
 			response.setAccessAttr(wsUser.getAccessAttr());
 			
-			Roles roles = prepareRoles(username);
+			RolesBase roles = prepareRoles(username);
 			response.setRoles(roles);
 		} else {
-			response.setSuccess("false");
-			response.setCode("ERR001");
-			response.setDescription("Authentication Failed.");
+			response.getMessage().setCode("ERR001");
+			response.getMessage().setDescription("Authentication Failed.");
 		}
 		
 		return response;
 	}
 	
-	private Roles prepareRoles(String username) {
-		Roles roles = new Roles();
-		Role role = null;
-		
+	private RolesBase prepareRoles(String username) {
+		RolesBase roles = new RolesBase();
+		RoleBase role = null;
 		List<WsRole> wsRoleList = wsUserRoleRepository.findByUsername(username);
 		for (WsRole wsRole : wsRoleList) {
-			role = new Role();
+			role = new RoleBase();
 			role.setRoleName(wsRole.getRoleCode());
 			roles.getRole().add(role);
 		}
-		
 		return roles;
 	}
 	
