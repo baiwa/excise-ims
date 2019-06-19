@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -20,8 +22,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperSv04D;
+import th.go.excise.ims.ta.persistence.entity.TaPaperSv04H;
 import th.go.excise.ims.ta.persistence.repository.TaPaperSv04DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperSv04HRepository;
 import th.go.excise.ims.ta.vo.ServicePaperBalanceGoodsVo;
@@ -191,10 +195,31 @@ public class ServicePaperBalanceGoodsService extends AbstractServicePaperService
 		return dataList;
 	}
 
+	@Transactional(rollbackOn = {Exception.class})
 	@Override
 	public void save(ServicePaperFormVo formVo) {
-		// TODO Auto-generated method stub
+		logger.info("save");
 		
+		TaPaperSv04H entityH = new TaPaperSv04H();
+		prepareEntityH(formVo, entityH, TaPaperSv04H.class);
+		taPaperSv04HRepository.save(entityH);
+		
+		List<ServicePaperBalanceGoodsVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
+		List<TaPaperSv04D> entityDList = new ArrayList<>();
+		TaPaperSv04D entityD = null;
+		int i = 1;
+		for (ServicePaperBalanceGoodsVo vo : voList) {
+			entityD = new TaPaperSv04D();
+			entityD.setPaperSvNumber(entityH.getPaperSvNumber());
+			entityD.setSeqNo(i);
+			entityD.setGoodsDesc(vo.getGoodsDesc());
+			entityD.setBalanceGoodsQty(!NO_VALUE.equals(vo.getBalanceGoodsQty()) ? NumberUtils.toBigDecimal(vo.getBalanceGoodsQty()) : null);
+			entityD.setAuditBalanceGoodsQty(!NO_VALUE.equals(vo.getAuditBalanceGoodsQty()) ? NumberUtils.toBigDecimal(vo.getAuditBalanceGoodsQty()) : null);
+			entityD.setDiffBalanceGoodsQty(!NO_VALUE.equals(vo.getDiffBalanceGoodsQty()) ? NumberUtils.toBigDecimal(vo.getDiffBalanceGoodsQty()) : null);
+			entityDList.add(entityD);
+			i++;
+		}
+		taPaperSv04DRepository.saveAll(entityDList);
 	}
 
 	@Override

@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
@@ -20,8 +22,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperPr07D;
+import th.go.excise.ims.ta.persistence.entity.TaPaperPr07H;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr07DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr07HRepository;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
@@ -305,9 +309,36 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 		return dataList;
 	}
 
+	@Transactional(rollbackOn = {Exception.class})
 	@Override
 	public void save(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
+		logger.info("save");
+		
+		TaPaperPr07H entityH = new TaPaperPr07H();
+		prepareEntityH(formVo, entityH, TaPaperPr07H.class);
+		taPaperPr07HRepository.save(entityH);
+		
+		List<ProductPaperReduceTaxVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
+		List<TaPaperPr07D> entityDList = new ArrayList<>();
+		TaPaperPr07D entityD = null;
+		int i = 1;
+		for (ProductPaperReduceTaxVo vo : voList) {
+			entityD = new TaPaperPr07D();
+			entityD.setPaperPrNumber(entityH.getPaperPrNumber());
+			entityD.setSeqNo(i);
+			entityD.setMaterialDesc(vo.getMaterialDesc());
+			entityD.setTaxReduceAmt(!NO_VALUE.equals(vo.getTaxReduceAmt()) ? NumberUtils.toBigDecimal(vo.getTaxReduceAmt()) : null);
+			entityD.setTaxReduceQty(!NO_VALUE.equals(vo.getTaxReduceQty()) ? NumberUtils.toBigDecimal(vo.getTaxReduceQty()) : null);
+			entityD.setTaxReducePerUnitAmt(!NO_VALUE.equals(vo.getTaxReducePerUnitAmt()) ? NumberUtils.toBigDecimal(vo.getTaxReducePerUnitAmt()) : null);
+			entityD.setBillNo(!NO_VALUE.equals(vo.getBillNo()) ? NumberUtils.toBigDecimal(vo.getBillNo()) : null);
+			entityD.setBillTaxAmt(!NO_VALUE.equals(vo.getBillTaxAmt()) ? NumberUtils.toBigDecimal(vo.getBillTaxAmt()) : null);
+			entityD.setBillTaxQty(!NO_VALUE.equals(vo.getBillTaxQty()) ? NumberUtils.toBigDecimal(vo.getBillTaxQty()) : null);
+			entityD.setBillTaxPerUnit(!NO_VALUE.equals(vo.getBillTaxPerUnit()) ? NumberUtils.toBigDecimal(vo.getBillTaxPerUnit()) : null);
+			entityD.setDiffTaxReduceAmt(!NO_VALUE.equals(vo.getDiffTaxReduceAmt()) ? NumberUtils.toBigDecimal(vo.getDiffTaxReduceAmt()) : null);
+			entityDList.add(entityD);
+			i++;
+		}
+		taPaperPr07DRepository.saveAll(entityDList);
 		
 	}
 

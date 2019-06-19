@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
@@ -18,8 +20,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperSv05D;
+import th.go.excise.ims.ta.persistence.entity.TaPaperSv05H;
 import th.go.excise.ims.ta.persistence.repository.TaPaperSv05DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperSv05HRepository;
 import th.go.excise.ims.ta.vo.ServicePaperFormVo;
@@ -232,7 +236,7 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 			for (Row row : sheet) {
 				ServicePaperTaxAmtAdditionalVo pushdata = new ServicePaperTaxAmtAdditionalVo();
 				// Skip on first row
-				if (row.getRowNum() == 0) {
+				if (row.getRowNum() < 2) {
 					continue;
 				}
 				for (Cell cell : row) {
@@ -242,28 +246,26 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 					} else if (cell.getColumnIndex() == 1) {
 						pushdata.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 2) {
-						pushdata.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
-					} /*else if (cell.getColumnIndex() == 3) {
-						pushdata.setTaxQty(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 4) {
+						pushdata.setGoodsQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 3) {
 						pushdata.setInformPrice(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 4) {
+						pushdata.setGoodsValue(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 5) {
-						pushdata.setTaxValue(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 6) {
 						pushdata.setTaxRateByValue(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 7) {
+					} else if (cell.getColumnIndex() == 6) {
 						pushdata.setTaxRateByQty(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 7) {
+						pushdata.setTaxAdditionalAmt(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 8) {
-						pushdata.setTaxAdditional(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 9) {
 						pushdata.setPenaltyAmt(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 10) {
+					} else if (cell.getColumnIndex() == 9) {
 						pushdata.setSurchargeAmt(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 11) {
+					} else if (cell.getColumnIndex() == 10) {
 						pushdata.setMoiTaxAmt(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 12) {
+					} else if (cell.getColumnIndex() == 11) {
 						pushdata.setNetTaxAmt(ExcelUtils.getCellValueAsString(cell));
-					}*/
+					}
 
 				}
 				dataList.add(pushdata);
@@ -275,10 +277,38 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 		return dataList;
 	}
 
+	@Transactional(rollbackOn = {Exception.class})
 	@Override
 	public void save(ServicePaperFormVo formVo) {
-		// TODO Auto-generated method stub
+		logger.info("save");
 		
+		TaPaperSv05H entityH = new TaPaperSv05H();
+		prepareEntityH(formVo, entityH, TaPaperSv05H.class);
+		taPaperSv05HRepository.save(entityH);
+		
+		List<ServicePaperTaxAmtAdditionalVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
+		List<TaPaperSv05D> entityDList = new ArrayList<>();
+		TaPaperSv05D entityD = null;
+		int i = 1;
+		for (ServicePaperTaxAmtAdditionalVo vo : voList) {
+			entityD = new TaPaperSv05D();
+			entityD.setPaperSvNumber(entityH.getPaperSvNumber());
+			entityD.setSeqNo(i);
+			entityD.setGoodsDesc(vo.getGoodsDesc());
+			entityD.setGoodsQty(!NO_VALUE.equals(vo.getGoodsQty()) ? NumberUtils.toBigDecimal(vo.getGoodsQty()) : null);
+			entityD.setInformPrice(!NO_VALUE.equals(vo.getInformPrice()) ? NumberUtils.toBigDecimal(vo.getInformPrice()) : null);
+			entityD.setGoodsValue(!NO_VALUE.equals(vo.getGoodsValue()) ? NumberUtils.toBigDecimal(vo.getGoodsValue()) : null);
+			entityD.setTaxRateByValue(!NO_VALUE.equals(vo.getTaxRateByValue()) ? NumberUtils.toBigDecimal(vo.getTaxRateByValue()) : null);
+			entityD.setTaxRateByQty(!NO_VALUE.equals(vo.getTaxRateByQty()) ? NumberUtils.toBigDecimal(vo.getTaxRateByQty()) : null);
+			entityD.setTaxAdditionalAmt(!NO_VALUE.equals(vo.getTaxAdditionalAmt()) ? NumberUtils.toBigDecimal(vo.getTaxAdditionalAmt()) : null);
+			entityD.setPenaltyAmt(!NO_VALUE.equals(vo.getPenaltyAmt()) ? NumberUtils.toBigDecimal(vo.getPenaltyAmt()) : null);
+			entityD.setSurchargeAmt(!NO_VALUE.equals(vo.getSurchargeAmt()) ? NumberUtils.toBigDecimal(vo.getSurchargeAmt()) : null);
+			entityD.setMoiTaxAmt(!NO_VALUE.equals(vo.getMoiTaxAmt()) ? NumberUtils.toBigDecimal(vo.getMoiTaxAmt()) : null);
+			entityD.setNetTaxAmt(!NO_VALUE.equals(vo.getNetTaxAmt()) ? NumberUtils.toBigDecimal(vo.getNetTaxAmt()) : null);
+			entityDList.add(entityD);
+			i++;
+		}
+		taPaperSv05DRepository.saveAll(entityDList);
 	}
 
 	@Override

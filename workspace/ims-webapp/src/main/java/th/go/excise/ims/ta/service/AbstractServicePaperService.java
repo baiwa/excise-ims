@@ -89,7 +89,7 @@ public abstract class AbstractServicePaperService<VO> {
 		return LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(inputDate.split("/")[1]), Integer.parseInt(inputDate.split("/")[0]), 1));
 	}
 	
-	protected void prepareEntityH(ProductPaperFormVo formVo, Object entityObj, Class<?> entityClass) {
+	protected void prepareEntityH(ServicePaperFormVo formVo, Object entityObj, Class<?> entityClass) {
 		PlanWorksheetDtlVo planDtlVo = taPlanWorksheetDtlRepository.findPlanDetailByAuditPlanCode(formVo.getAuditPlanCode());
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = planDtlVo.getBudgetYear();
