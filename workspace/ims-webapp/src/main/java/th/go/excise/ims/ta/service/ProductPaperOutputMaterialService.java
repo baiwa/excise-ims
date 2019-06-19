@@ -152,12 +152,20 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getOutputMaterialQty());
+			if (StringUtils.isNotBlank(data.getOutputMaterialQty())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getOutputMaterialQty())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getDailyAccountQty());
+			if (StringUtils.isNotBlank(data.getDailyAccountQty())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getDailyAccountQty())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
@@ -176,12 +184,20 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getExternalDataQty());
+			if (StringUtils.isNotBlank(data.getExternalDataQty())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getExternalDataQty())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getMaxDiffQty());
+			if (StringUtils.isNotBlank(data.getMaxDiffQty())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMaxDiffQty())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 

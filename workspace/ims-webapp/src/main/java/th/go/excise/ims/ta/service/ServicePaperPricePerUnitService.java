@@ -9,6 +9,8 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -25,8 +27,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperSv02D;
+import th.go.excise.ims.ta.persistence.entity.TaPaperSv02H;
 import th.go.excise.ims.ta.persistence.repository.TaPaperSv02DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperSv02HRepository;
 import th.go.excise.ims.ta.vo.ServicePaperFormVo;
@@ -217,11 +221,11 @@ public class ServicePaperPricePerUnitService extends AbstractServicePaperService
 						pushdata.setInformPrice(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 4) {
 						pushdata.setAuditPrice(ExcelUtils.getCellValueAsString(cell));
-					} /*else if (cell.getColumnIndex() == 5) {
-						pushdata.setTaxPrice(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 5) {
+						pushdata.setGoodsPrice(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 6) {
 						pushdata.setDiffPrice(ExcelUtils.getCellValueAsString(cell));
-					}*/
+					}
 
 				}
 				dataList.add(pushdata);
@@ -233,10 +237,33 @@ public class ServicePaperPricePerUnitService extends AbstractServicePaperService
 		return dataList;
 	}
 
+	@Transactional(rollbackOn = {Exception.class})
 	@Override
 	public void save(ServicePaperFormVo formVo) {
-		// TODO Auto-generated method stub
+		logger.info("save");
 		
+		TaPaperSv02H entityH = new TaPaperSv02H();
+		prepareEntityH(formVo, entityH, TaPaperSv02H.class);
+		taPaperSv02HRepository.save(entityH);
+		
+		List<ServicePaperPricePerUnitVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
+		List<TaPaperSv02D> entityDList = new ArrayList<>();
+		TaPaperSv02D entityD = null;
+		int i = 1;
+		for (ServicePaperPricePerUnitVo vo : voList) {
+			entityD = new TaPaperSv02D();
+			entityD.setPaperSvNumber(entityH.getPaperSvNumber());
+			entityD.setSeqNo(i);
+			entityD.setGoodsDesc(vo.getGoodsDesc());
+			entityD.setInvoicePrice(!NO_VALUE.equals(vo.getInvoicePrice()) ? NumberUtils.toBigDecimal(vo.getInvoicePrice()) : null);
+			entityD.setInformPrice(!NO_VALUE.equals(vo.getInformPrice()) ? NumberUtils.toBigDecimal(vo.getInformPrice()) : null);
+			entityD.setAuditPrice(!NO_VALUE.equals(vo.getAuditPrice()) ? NumberUtils.toBigDecimal(vo.getAuditPrice()) : null);
+			entityD.setGoodsPrice(!NO_VALUE.equals(vo.getGoodsPrice()) ? NumberUtils.toBigDecimal(vo.getGoodsPrice()) : null);
+			entityD.setDiffPrice(!NO_VALUE.equals(vo.getDiffPrice()) ? NumberUtils.toBigDecimal(vo.getDiffPrice()) : null);
+			entityDList.add(entityD);
+			i++;
+		}
+		taPaperSv02DRepository.saveAll(entityDList);
 	}
 
 	@Override

@@ -4,7 +4,7 @@ public class ProductPaperBalanceMaterialVo {
 
 	private String materialDesc;
 	private String balanceByAccountQty;
-	private String balanceByStock;
+	private String balanceByStockQty;
 	private String balanceByCountQty;
 	private String maxDiffQty1;
 	private String maxDiffQty2;
@@ -25,12 +25,12 @@ public class ProductPaperBalanceMaterialVo {
 		this.balanceByAccountQty = balanceByAccountQty;
 	}
 
-	public String getBalanceByStock() {
-		return balanceByStock;
+	public String getBalanceByStockQty() {
+		return balanceByStockQty;
 	}
 
-	public void setBalanceByStock(String balanceByStock) {
-		this.balanceByStock = balanceByStock;
+	public void setBalanceByStockQty(String balanceByStockQty) {
+		this.balanceByStockQty = balanceByStockQty;
 	}
 
 	public String getBalanceByCountQty() {

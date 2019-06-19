@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperSv03D;
+import th.go.excise.ims.ta.persistence.entity.TaPaperSv03H;
 import th.go.excise.ims.ta.persistence.repository.TaPaperSv03DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperSv03HRepository;
 import th.go.excise.ims.ta.vo.ServicePaperFormVo;
@@ -194,13 +197,13 @@ public class ServicePaperMemberService extends AbstractServicePaperService<Servi
 					} else if (cell.getColumnIndex() == 2) {
 						pushdata.setMemberFullName(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 3) {
-						pushdata.setMemberStartDate(ExcelUtils.getCellValueAsString(cell));
+						pushdata.setMemberStartDate(ConvertDateUtils.formatDateToString(cell.getDateCellValue(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
 					} else if (cell.getColumnIndex() == 4) {
-						pushdata.setMemberEndDate(ExcelUtils.getCellValueAsString(cell));
+						pushdata.setMemberEndDate(ConvertDateUtils.formatDateToString(cell.getDateCellValue(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
 					} else if (cell.getColumnIndex() == 5) {
 						pushdata.setMemberCoupon(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 6) {
-						pushdata.setMemberUsedDate(ExcelUtils.getCellValueAsString(cell));
+						pushdata.setMemberUsedDate(ConvertDateUtils.formatDateToString(cell.getDateCellValue(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
 					} else if (cell.getColumnIndex() == 6) {
 						pushdata.setMemberStatus(ExcelUtils.getCellValueAsString(cell));
 					}
@@ -215,9 +218,34 @@ public class ServicePaperMemberService extends AbstractServicePaperService<Servi
 		return dataList;
 	}
 
+	@Transactional(rollbackOn = {Exception.class})
 	@Override
 	public void save(ServicePaperFormVo formVo) {
-		// TODO Auto-generated method stub
+		logger.info("save");
+		
+		TaPaperSv03H entityH = new TaPaperSv03H();
+		prepareEntityH(formVo, entityH, TaPaperSv03H.class);
+		taPaperSv03HRepository.save(entityH);
+		
+		List<ServicePaperMemberVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
+		List<TaPaperSv03D> entityDList = new ArrayList<>();
+		TaPaperSv03D entityD = null;
+		int i = 1;
+		for (ServicePaperMemberVo vo : voList) {
+			entityD = new TaPaperSv03D();
+			entityD.setPaperSvNumber(entityH.getPaperSvNumber());
+			entityD.setSeqNo(i);
+			entityD.setMemberCode(vo.getMemberCode());
+			entityD.setMemberFullName(vo.getMemberFullName());
+			entityD.setMemberStartDate(ConvertDateUtils.parseStringToLocalDate(vo.getMemberStartDate(), ConvertDateUtils.DD_MM_YYYY));
+			entityD.setMemberEndDate(ConvertDateUtils.parseStringToLocalDate(vo.getMemberEndDate(), ConvertDateUtils.DD_MM_YYYY));
+			entityD.setMemberCoupon(vo.getMemberCoupon());
+			entityD.setMemberUsedDate(ConvertDateUtils.parseStringToLocalDate(vo.getMemberUsedDate(), ConvertDateUtils.DD_MM_YYYY));
+			entityD.setMemberStatus(vo.getMemberStatus());
+			entityDList.add(entityD);
+			i++;
+		}
+		taPaperSv03DRepository.saveAll(entityDList);
 		
 	}
 

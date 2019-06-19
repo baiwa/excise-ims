@@ -2,11 +2,13 @@ package th.go.excise.ims.ta.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
@@ -20,8 +22,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ta.persistence.entity.TaPaperPr03D;
+import th.go.excise.ims.ta.persistence.entity.TaPaperPr03H;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr03DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr03HRepository;
 import th.go.excise.ims.ta.vo.ProductPaperBalanceMaterialVo;
@@ -34,7 +39,7 @@ import th.go.excise.ims.ws.vo.WsOasfri0100Vo;
 public class ProductPaperBalanceMaterialService extends AbstractProductPaperService<ProductPaperBalanceMaterialVo> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperBalanceMaterialService.class);
-	
+
 	private static final String PRODUCT_PAPER_BALANCE_MATERIAL = "ตรวจนับวัตถุดิบคงเหลือ";;
 
 	@Autowired
@@ -48,14 +53,14 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 	protected Logger getLogger() {
 		return logger;
 	}
-	
+
 	@Override
 	protected List<ProductPaperBalanceMaterialVo> inquiryByWs(ProductPaperFormVo formVo) {
 		logger.info("inquiryByWs");
-		
+
 		LocalDate localDateStart = toLocalDate(formVo.getStartDate());
 		LocalDate localDateEnd = toLocalDate(formVo.getEndDate());
-		
+
 		WsOasfri0100FromVo wsOasfri0100FormVo = new WsOasfri0100FromVo();
 		wsOasfri0100FormVo.setNewRegId(formVo.getNewRegId());
 		wsOasfri0100FormVo.setDutyGroupId(formVo.getDutyGroupId());
@@ -83,6 +88,9 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 
 	@Override
 	protected byte[] exportData(List<ProductPaperBalanceMaterialVo> voList, String exportType) {
+
+		// set format money
+		DecimalFormat df = new DecimalFormat("#,##0.00");
 
 		/* create spreadsheet */
 		XSSFWorkbook workbook = new XSSFWorkbook();
@@ -144,27 +152,47 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getBalanceByAccountQty());
+			if (StringUtils.isNotBlank(data.getBalanceByAccountQty())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getBalanceByAccountQty())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getBalanceByStock());
+			if (StringUtils.isNotBlank(data.getBalanceByStockQty())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getBalanceByStockQty())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getBalanceByCountQty());
+			if (StringUtils.isNotBlank(data.getBalanceByCountQty())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getBalanceByCountQty())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getMaxDiffQty1());
+			if (StringUtils.isNotBlank(data.getMaxDiffQty1())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMaxDiffQty1())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getMaxDiffQty2());
+			if (StringUtils.isNotBlank(data.getMaxDiffQty2())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMaxDiffQty2())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
@@ -212,7 +240,7 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 						data.setBalanceByAccountQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 3) {
 						// BalanceByCountQty
-						data.setBalanceByStock(ExcelUtils.getCellValueAsString(cell));
+						data.setBalanceByStockQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 4) {
 						// BalanceByCountQty
 						data.setBalanceByCountQty(ExcelUtils.getCellValueAsString(cell));
@@ -236,8 +264,31 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 
 	@Override
 	public void save(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		
+		logger.info("save");
+
+		TaPaperPr03H entityH = new TaPaperPr03H();
+		prepareEntityH(formVo, entityH, TaPaperPr03H.class);
+		taPaperPr03HRepository.save(entityH);
+
+		List<ProductPaperBalanceMaterialVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
+		List<TaPaperPr03D> entityDList = new ArrayList<>();
+		TaPaperPr03D entityD = null;
+		int i = 1;
+		for (ProductPaperBalanceMaterialVo vo : voList) {
+			entityD = new TaPaperPr03D();
+			entityD.setPaperPrNumber(entityH.getPaperPrNumber());
+			entityD.setSeqNo(i);
+			entityD.setMaterialDesc(vo.getMaterialDesc());
+			entityD.setBalanceByAccountQty(!NO_VALUE.equals(vo.getBalanceByAccountQty()) ? NumberUtils.toBigDecimal(vo.getBalanceByAccountQty()) : null);
+			entityD.setBalanceByStockQty(!NO_VALUE.equals(vo.getBalanceByStockQty()) ? NumberUtils.toBigDecimal(vo.getBalanceByStockQty()) : null);
+			entityD.setBalanceByCountQty(!NO_VALUE.equals(vo.getBalanceByCountQty()) ? NumberUtils.toBigDecimal(vo.getBalanceByCountQty()) : null);
+			entityD.setMaxDiffQty1(!NO_VALUE.equals(vo.getMaxDiffQty1()) ? NumberUtils.toBigDecimal(vo.getMaxDiffQty1()) : null);
+			entityD.setMaxDiffQty2(!NO_VALUE.equals(vo.getMaxDiffQty2()) ? NumberUtils.toBigDecimal(vo.getMaxDiffQty2()) : null);
+			entityDList.add(entityD);
+			i++;
+		}
+		taPaperPr03DRepository.saveAll(entityDList);
+
 	}
 
 	@Override

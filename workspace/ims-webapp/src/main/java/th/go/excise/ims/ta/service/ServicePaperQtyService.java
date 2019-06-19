@@ -8,6 +8,8 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -24,8 +26,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperSv01D;
+import th.go.excise.ims.ta.persistence.entity.TaPaperSv01H;
 import th.go.excise.ims.ta.persistence.repository.TaPaperSv01DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperSv01HRepository;
 import th.go.excise.ims.ta.vo.ServicePaperFormVo;
@@ -215,21 +219,21 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 					if (cell.getColumnIndex() == 0) {
 						// Column No.
 						continue;
-					} /*else if (cell.getColumnIndex() == 1) {
+					} else if (cell.getColumnIndex() == 1) {
 						pushdata.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 2) {
-						pushdata.setServiceDocNo(ExcelUtils.getCellValueAsString(cell));
+						pushdata.setServiceDocNoQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 3) {
-						pushdata.setIncomeDailyAccountAmt(ExcelUtils.getCellValueAsString(cell));
+						pushdata.setIncomeDailyAccountQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 4) {
-						pushdata.setPaymentDocNo(ExcelUtils.getCellValueAsString(cell));
+						pushdata.setPaymentDocNoQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 5) {
-						pushdata.setAuditAmt(ExcelUtils.getCellValueAsString(cell));
+						pushdata.setAuditQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 6) {
-						pushdata.setTaxAmt(ExcelUtils.getCellValueAsString(cell));
+						pushdata.setGoodsQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 7) {
-						pushdata.setDiffAmt(ExcelUtils.getCellValueAsString(cell));
-					}*/
+						pushdata.setDiffQty(ExcelUtils.getCellValueAsString(cell));
+					}
 
 				}
 				dataList.add(pushdata);
@@ -241,9 +245,34 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 		return dataList;
 	}
 
+	@Transactional(rollbackOn = {Exception.class})
 	@Override
 	public void save(ServicePaperFormVo formVo) {
-		// TODO Auto-generated method stub
+		logger.info("save");
+		
+		TaPaperSv01H entityH = new TaPaperSv01H();
+		prepareEntityH(formVo, entityH, TaPaperSv01H.class);
+		taPaperSv01HRepository.save(entityH);
+		
+		List<ServicePaperQtyVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
+		List<TaPaperSv01D> entityDList = new ArrayList<>();
+		TaPaperSv01D entityD = null;
+		int i = 1;
+		for (ServicePaperQtyVo vo : voList) {
+			entityD = new TaPaperSv01D();
+			entityD.setPaperSvNumber(entityH.getPaperSvNumber());
+			entityD.setSeqNo(i);
+			entityD.setGoodsDesc(vo.getGoodsDesc());
+			entityD.setServiceDocNoQty(!NO_VALUE.equals(vo.getServiceDocNoQty()) ? NumberUtils.toBigDecimal(vo.getServiceDocNoQty()) : null);
+			entityD.setIncomeDailyAccountQty(!NO_VALUE.equals(vo.getIncomeDailyAccountQty()) ? NumberUtils.toBigDecimal(vo.getIncomeDailyAccountQty()) : null);
+			entityD.setPaymentDocNoQty(!NO_VALUE.equals(vo.getPaymentDocNoQty()) ? NumberUtils.toBigDecimal(vo.getPaymentDocNoQty()) : null);
+			entityD.setAuditQty(!NO_VALUE.equals(vo.getAuditQty()) ? NumberUtils.toBigDecimal(vo.getAuditQty()) : null);
+			entityD.setGoodsQty(!NO_VALUE.equals(vo.getGoodsQty()) ? NumberUtils.toBigDecimal(vo.getGoodsQty()) : null);
+			entityD.setDiffQty(!NO_VALUE.equals(vo.getDiffQty()) ? NumberUtils.toBigDecimal(vo.getDiffQty()) : null);
+			entityDList.add(entityD);
+			i++;
+		}
+		taPaperSv01DRepository.saveAll(entityDList);
 		
 	}
 

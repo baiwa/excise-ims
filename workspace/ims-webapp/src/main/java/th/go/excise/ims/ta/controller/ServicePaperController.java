@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ta.service.AbstractServicePaperService;
 import th.go.excise.ims.ta.service.ServicePaperBalanceGoodsService;
 import th.go.excise.ims.ta.service.ServicePaperMemberService;
@@ -88,18 +90,24 @@ public class ServicePaperController {
 	
 	@PostMapping("/upload-{servicePaperType}")
 	@ResponseBody
-	public ResponseData<DataTableAjax<?>> uploadData(@PathVariable("servicePaperType") String servicePaperType, @ModelAttribute ServicePaperFormVo formVo) {
-		logger.info("Upload listProductPaperInputMaterial");
-		ResponseData<DataTableAjax<?>> responseData = new ResponseData<DataTableAjax<?>>();
-		//try {
-		//	responseData.setData(productPaperInputMaterialService.readFileProductPaperInputMaterial(request));
-		//	responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
-		//	responseData.setStatus(RESPONSE_STATUS.SUCCESS);
-		//} catch (Exception e) {
-		//	logger.error(e.getMessage(), e);
-		//	responseData.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
-		//	responseData.setStatus(RESPONSE_STATUS.FAILED);
-		//}
+	public ResponseData<?> uploadData(@PathVariable("servicePaperType") String servicePaperType, @ModelAttribute ServicePaperFormVo formVo) {
+		logger.info("uploadData");
+		
+		ResponseData<DataTableAjax<Object>> responseData = new ResponseData<>();
+		try {
+			AbstractServicePaperService<Object> service = servicePaperServiceMap.get(servicePaperType);
+			DataTableAjax<Object> dataTableAjax = new DataTableAjax<>();
+			dataTableAjax.setData(service.upload(formVo));
+			
+			responseData.setData(dataTableAjax);
+			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			responseData.setMessage(e.getMessage());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		
 		return responseData;
 	}
 	
@@ -107,16 +115,39 @@ public class ServicePaperController {
 	@ResponseBody
 	public ResponseData<String> saveData(@PathVariable("servicePaperType") String servicePaperType, @RequestBody ServicePaperFormVo formVo) {
 		logger.info("saveData");
+		
 		ResponseData<String> responseData = new ResponseData<String>();
-		//try {
-		//	responseData.setData(productPaperInputMaterialService.readFileProductPaperInputMaterial(request));
-		//	responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
-		//	responseData.setStatus(RESPONSE_STATUS.SUCCESS);
-		//} catch (Exception e) {
-		//	logger.error(e.getMessage(), e);
-		//	responseData.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
-		//	responseData.setStatus(RESPONSE_STATUS.FAILED);
-		//}
+		try {
+			AbstractServicePaperService<Object> service = servicePaperServiceMap.get(servicePaperType);
+			service.save(formVo);
+			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			responseData.setMessage(e.getMessage());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		
+		return responseData;
+	}
+	
+	@PostMapping("/paper-sv-number-list/{servicePaperType}")
+	@ResponseBody
+	public ResponseData<List<String>> getPaperSvNumberList(@PathVariable("servicePaperType") String servicePaperType, @RequestBody ServicePaperFormVo formVo) {
+		logger.info("getPaperSvNumberList");
+		
+		ResponseData<List<String>> responseData = new ResponseData<List<String>>();
+		try {
+			AbstractServicePaperService<Object> service = servicePaperServiceMap.get(servicePaperType);
+			responseData.setData(service.getPaperSvNumberList(formVo));
+			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			responseData.setMessage(e.getMessage());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		
 		return responseData;
 	}
 	
