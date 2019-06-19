@@ -31,10 +31,14 @@ public class TaPaperPr03D extends BaseEntity {
 	private String materialDesc;
 	@Column(name = "BALANCE_BY_ACCOUNT_QTY")
 	private BigDecimal balanceByAccountQty;
+	@Column(name = "BALANCE_BY_STOCK_QTY")
+	private BigDecimal balanceByStockQty;
 	@Column(name = "BALANCE_BY_COUNT_QTY")
 	private BigDecimal balanceByCountQty;
-	@Column(name = "MAX_DIFF_QTY")
-	private BigDecimal maxDiffQty;
+	@Column(name = "MAX_DIFF_QTY1")
+	private BigDecimal maxDiffQty1;
+	@Column(name = "MAX_DIFF_QTY2")
+	private BigDecimal maxDiffQty2;
 
 	public Long getPaperPr03DSeq() {
 		return paperPr03DSeq;
@@ -76,6 +80,14 @@ public class TaPaperPr03D extends BaseEntity {
 		this.balanceByAccountQty = balanceByAccountQty;
 	}
 
+	public BigDecimal getBalanceByStockQty() {
+		return balanceByStockQty;
+	}
+
+	public void setBalanceByStockQty(BigDecimal balanceByStockQty) {
+		this.balanceByStockQty = balanceByStockQty;
+	}
+
 	public BigDecimal getBalanceByCountQty() {
 		return balanceByCountQty;
 	}
@@ -84,12 +96,20 @@ public class TaPaperPr03D extends BaseEntity {
 		this.balanceByCountQty = balanceByCountQty;
 	}
 
-	public BigDecimal getMaxDiffQty() {
-		return maxDiffQty;
+	public BigDecimal getMaxDiffQty1() {
+		return maxDiffQty1;
 	}
 
-	public void setMaxDiffQty(BigDecimal maxDiffQty) {
-		this.maxDiffQty = maxDiffQty;
+	public void setMaxDiffQty1(BigDecimal maxDiffQty1) {
+		this.maxDiffQty1 = maxDiffQty1;
+	}
+
+	public BigDecimal getMaxDiffQty2() {
+		return maxDiffQty2;
+	}
+
+	public void setMaxDiffQty2(BigDecimal maxDiffQty2) {
+		this.maxDiffQty2 = maxDiffQty2;
 	}
 
 }
