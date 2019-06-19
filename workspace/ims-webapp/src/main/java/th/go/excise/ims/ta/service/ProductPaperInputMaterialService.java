@@ -13,10 +13,8 @@ import javax.transaction.Transactional;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFColor;
@@ -43,28 +41,28 @@ import th.go.excise.ims.ws.vo.WsOasfri0100Vo;
 public class ProductPaperInputMaterialService extends AbstractProductPaperService<ProductPaperInputMaterialVo> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperInputMaterialService.class);
-	
+
 	private static final String PRODUCT_PAPER_INPUT_MATERIAL = "ตรวจสอบการรับวัตถุดิบ";
-	
+
 	@Autowired
 	private TaPaperPr01HRepository taPaperPr01HRepository;
 	@Autowired
 	private TaPaperPr01DRepository taPaperPr01DRepository;
 	@Autowired
 	private WsOasfri0100DRepository wsOasfri0100DRepository;
-	
+
 	@Override
 	protected Logger getLogger() {
 		return logger;
 	}
-	
+
 	@Override
 	protected List<ProductPaperInputMaterialVo> inquiryByWs(ProductPaperFormVo formVo) {
 		logger.info("inquiryByWs");
-		
+
 		LocalDate localDateStart = toLocalDate(formVo.getStartDate());
 		LocalDate localDateEnd = toLocalDate(formVo.getEndDate());
-		
+
 		WsOasfri0100FromVo wsOasfri0100FormVo = new WsOasfri0100FromVo();
 		wsOasfri0100FormVo.setNewRegId(formVo.getNewRegId());
 		wsOasfri0100FormVo.setDutyGroupId(formVo.getDutyGroupId());
@@ -72,7 +70,7 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 		wsOasfri0100FormVo.setYearMonthStart(localDateStart.format(DateTimeFormatter.ofPattern("yyyyMM")));
 		wsOasfri0100FormVo.setYearMonthEnd(localDateEnd.format(DateTimeFormatter.ofPattern("yyyyMM")));
 		wsOasfri0100FormVo.setAccountName(WEB_SERVICE.OASFRI0100.PS0704_ACC05);
-		
+
 		List<WsOasfri0100Vo> wsOasfri0100VoList = wsOasfri0100DRepository.findByCriteria(wsOasfri0100FormVo);
 		List<ProductPaperInputMaterialVo> voList = new ArrayList<>();
 		ProductPaperInputMaterialVo vo = null;
@@ -82,14 +80,14 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 			vo.setMonthStatementQty(wsOasfri0100Vo.getInQty().toString());
 			voList.add(vo);
 		}
-		
+
 		return voList;
 	}
 
 	@Override
 	protected List<ProductPaperInputMaterialVo> inquiryByPaperPrNumber(ProductPaperFormVo formVo) {
 		logger.info("inquiryByPaperPrNumber paperPrNumber={}", formVo.getPaperPrNumber());
-		
+
 		List<TaPaperPr01D> entityList = taPaperPr01DRepository.findByPaperPrNumber(formVo.getPaperPrNumber());
 		List<ProductPaperInputMaterialVo> voList = new ArrayList<>();
 		ProductPaperInputMaterialVo vo = null;
@@ -103,7 +101,7 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 			vo.setMaxDiffQty(entity.getMaxDiffQty() != null ? entity.getMaxDiffQty().toString() : NO_VALUE);
 			voList.add(vo);
 		}
-		
+
 		return voList;
 	}
 
@@ -126,7 +124,7 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 		CellStyle bgCal = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(251, 189, 8)));
 		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
 		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
-		CellStyle cellRightBgStyle = ExcelUtils.createCellColorStyle(workbook, new XSSFColor(new java.awt.Color(192, 192, 192)), HorizontalAlignment.RIGHT, VerticalAlignment.TOP);
+//		CellStyle cellRightBgStyle = ExcelUtils.createCellColorStyle(workbook, new XSSFColor(new java.awt.Color(192, 192, 192)), HorizontalAlignment.RIGHT, VerticalAlignment.TOP);
 		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
 		/* tbTH */
@@ -171,12 +169,12 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getInputMaterialQty());
-			cell.setCellStyle(cellCenter);
+			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getDailyAccountQty());
-			cell.setCellStyle(cellCenter);
+			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
@@ -189,9 +187,9 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 				} else {
 					cell.setCellValue("");
 				}
-				cell.setCellStyle(cellRightBgStyle);
+				cell.setCellStyle(cellRight);
 			}
-			
+
 			cellNum++;
 
 			cell = row.createCell(cellNum);
@@ -224,7 +222,7 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 	@Override
 	public List<ProductPaperInputMaterialVo> upload(ProductPaperFormVo formVo) {
 		logger.info("upload filename={}", formVo.getFile().getName());
-		
+
 		List<ProductPaperInputMaterialVo> voList = new ArrayList<>();
 		ProductPaperInputMaterialVo vo = null;
 		try (Workbook workbook = WorkbookFactory.create(formVo.getFile().getInputStream())) {
@@ -264,19 +262,19 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
-		
+
 		return voList;
 	}
 
-	@Transactional(rollbackOn = {Exception.class})
+	@Transactional(rollbackOn = { Exception.class })
 	@Override
 	public void save(ProductPaperFormVo formVo) {
 		logger.info("save");
-		
+
 		TaPaperPr01H entityH = new TaPaperPr01H();
 		prepareEntityH(formVo, entityH, TaPaperPr01H.class);
 		taPaperPr01HRepository.save(entityH);
-		
+
 		List<ProductPaperInputMaterialVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
 		List<TaPaperPr01D> entityDList = new ArrayList<>();
 		TaPaperPr01D entityD = null;
