@@ -41,7 +41,6 @@ public class Int0804Service {
 		List<Int0804HeaderTable> headerTable = new ArrayList<Int0804HeaderTable>();
 
 		/* _________ set request _________ */
-		request.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(request.getOfficeCode()));
 		request.setDateFrom(ConvertDateUtils.formatDateToString(
 				ConvertDateUtils.parseStringToDate(request.getDateFrom(), ConvertDateUtils.MM_YYYY),
 				ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_EN));

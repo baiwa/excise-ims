@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.RowMapper;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.persistence.entity.IaGfmovementAccount;
 import th.go.excise.ims.ia.vo.Int0804SearchVo;
 import th.go.excise.ims.ia.vo.Int0804SummaryVo;
@@ -65,12 +66,17 @@ public class IaGfmovementAccountRepositoryImpl implements IaGfmovementAccountRep
 				"                          -TO_DATE(?, 'YYYYMMDD'))" + 
 				"    ) H" + 
 				" LEFT JOIN IA_GFMOVEMENT_ACCOUNT G  " + 
-				"    ON TO_DATE(H.DATE_DEFAULT, 'YYYYMMDD') =  G.GF_DOC_DATE  " + 
-				"    AND G.IS_DELETED = 'N' " + 
+				"    ON TO_DATE(H.DATE_DEFAULT, 'YYYYMMDD') =  G.GF_DOC_DATE  " +
+				"    AND G.IS_DELETED = 'N' " +
 				"	 AND G.ACC_NO = ? " +
-				" LEFT JOIN EXCISE_ORG_GFMIS O  " + 
-				"    ON 0||G.DEPT_DISB = O.GF_DISBURSE_UNIT  " + 
-				"    AND O.IS_DELETED = 'N' " + 
+				" LEFT JOIN EXCISE_ORG_GFMIS O  " +
+				"    ON 0 || G.DEPT_DISB = O.GF_DISBURSE_UNIT  " +
+				"    AND O.IS_DELETED = 'N' " +
+				"	 AND O.GF_EXCISE_CODE " +
+				"		 NOT IN ( " +
+				"	 			SELECT O.GF_EXCISE_CODE FROM EXCISE_ORG_GFMIS " +
+				"	 			WHERE O.GF_EXCISE_CODE = ?  " +
+				"	 			)  " +
 				"    AND O.GF_EXCISE_CODE LIKE ? " + 
 				" GROUP BY O.GF_EXCISE_CODE, H.DATE_DEFAULT " + 
 				" ORDER BY H.DATE_DEFAULT, O.GF_EXCISE_CODE";
@@ -81,7 +87,8 @@ public class IaGfmovementAccountRepositoryImpl implements IaGfmovementAccountRep
 		params.add(request.getDateTo());
 		params.add(request.getDateFrom());
 		params.add(request.getGfDepositCode());
-		params.add(request.getOfficeCode().concat("%"));
+		params.add(request.getOfficeCode());
+		params.add(ExciseUtils.whereInLocalOfficeCode(request.getOfficeCode()).concat("%"));
 		
 		return commonJdbcTemplate.query(sql.toString(), params.toArray(), mappingSumResult);
 	}
