@@ -148,6 +148,7 @@ public class WorksheetService {
 
 		for (TaxDraftVo taxDraftVo : taxDraftVoList) {
 			worksheetDtl = new TaWorksheetDtl();
+			worksheetDtl.setWorksheetDtlId(taxDraftVo.getWorksheetDtlId());
 			worksheetDtl.setNewRegId(taxDraftVo.getNewRegId());
 			worksheetDtl.setAnalysisNumber(analysisNumber);
 			worksheetDtl.setCondMainGrp("0"); // Default Main Group
@@ -211,6 +212,8 @@ public class WorksheetService {
 				if (condSubNoAudit != null) {
 					int lastAuditYear = StringUtils.isNotBlank(taxDraftVo.getLastAuditYear()) ? Integer.valueOf(taxDraftVo.getLastAuditYear()) : 0;
 					int year = Integer.valueOf(worksheetHdr.getBudgetYear()) - lastAuditYear - 1;
+					logger.debug("Check condSubNoAudit newRegId={}, lastAuditYear={}, condNoTaxAuditYear={}, year={}, year >= condNoTaxAuditYear = {}",
+							taxDraftVo.getNewRegId(), lastAuditYear, condSubNoAudit.getNoTaxAuditYearNum(), year, (year >= Integer.valueOf(condSubNoAudit.getNoTaxAuditYearNum())));
 					if (year >= Integer.valueOf(condSubNoAudit.getNoTaxAuditYearNum())) {
 						worksheetDtl.setCondSubNoAudit(FLAG.Y_FLAG);
 						condSorting++;
@@ -220,7 +223,10 @@ public class WorksheetService {
 				// Condition G1, G2
 				for (TaWorksheetCondMainDtl condMainDtl : condMainDtlList) {
 					if (TA_MAS_COND_MAIN_TYPE.TAX.equals(condMainDtl.getCondType())) {
+						logger.debug("Check condG{} newRegId={}, taxMonthNo={}, changePnt={}",
+								condMainDtl.getCondGroup(), taxDraftVo.getNewRegId(), taxDraftVo.getTaxMonthNo(), taxDraftVo.getTaxAmtChnPnt());
 						if (isConditionGroup(condMainDtl, taxDraftVo)) {
+							logger.debug("condGroup={}, flag=Y");
 							setConnGroup(worksheetDtl, condMainDtl.getCondGroup());
 							condSorting++;
 						}
