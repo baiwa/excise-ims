@@ -182,6 +182,12 @@ public abstract class ExcelUtils {
 		topicCenterlite.setAlignment(HorizontalAlignment.CENTER);
 		return topicCenterlite;
 	}
+	
+	public static XSSFCellStyle createTopicRightliteStyle(XSSFWorkbook workbook) {
+		XSSFCellStyle topicRightlite = workbook.createCellStyle();
+		topicRightlite.setAlignment(HorizontalAlignment.RIGHT);
+		return topicRightlite;
+	}
 
 	public static XSSFCellStyle createTopicCenterStyle(XSSFWorkbook workbook) {
 		XSSFCellStyle topicCenter = workbook.createCellStyle();

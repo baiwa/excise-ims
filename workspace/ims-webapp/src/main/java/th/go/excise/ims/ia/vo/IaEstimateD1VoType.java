@@ -20,6 +20,7 @@ public class IaEstimateD1VoType {
 	private BigDecimal sumAllowances;
 	private BigDecimal sumAccom;
 	private String flagNotWithdrawing;
+	
 
 	public Long getEstimateExpD1Id() {
 		return estimateExpD1Id;
