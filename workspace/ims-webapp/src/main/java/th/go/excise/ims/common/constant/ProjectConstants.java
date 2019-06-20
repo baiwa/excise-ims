@@ -99,6 +99,8 @@ public class ProjectConstants {
 		public static final String ONPLAN = "I";
 		public static final String RESERVE = "R";
 		public static final String OUTPLAN = "E";
+		
+		public static final String SUMMARY = "S";
 	}
 	
 	

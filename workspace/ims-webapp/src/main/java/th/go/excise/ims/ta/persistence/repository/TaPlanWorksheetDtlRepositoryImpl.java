@@ -101,10 +101,24 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 			sql.append("   AND PLAN_DTL.AUDIT_STATUS >= ? ");
 			params.add(formVo.getAuditStatus());
 		}
-		if (StringUtils.isNotEmpty(formVo.getPlanType())) {
-			sql.append("   AND PLAN_DTL.PLAN_TYPE = ? ");
-			params.add(formVo.getPlanType());
+		
+		if(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.SUMMARY.equals(formVo.getPlanType())) {
+			if (StringUtils.isNotEmpty(formVo.getPlanType())) {
+				sql.append("   AND PLAN_DTL.PLAN_TYPE IN ( ?,?)");
+				params.add(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.RESERVE);
+				params.add(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.ONPLAN);
+			}
+		}else {
+			if (StringUtils.isNotEmpty(formVo.getPlanType())) {
+				sql.append("   AND PLAN_DTL.PLAN_TYPE = ? ");
+				params.add(formVo.getPlanType());
+			}
 		}
+
+//		if (StringUtils.isNotEmpty(formVo.getPlanType())) {
+//			sql.append("   AND PLAN_DTL.PLAN_TYPE = ? ");
+//			params.add(formVo.getPlanType());
+//		}
 		
 		if (StringUtils.isNotEmpty(formVo.getNewRegId())) {
 			sql.append("   AND PLAN_DTL.NEW_REG_ID = ? ");
