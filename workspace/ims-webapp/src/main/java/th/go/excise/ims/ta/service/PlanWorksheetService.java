@@ -1016,6 +1016,25 @@ public class PlanWorksheetService {
 
 			}
 		}
+		
+//		find for update count outside plan
+		PlanWorksheetVo planVo = new PlanWorksheetVo();
+		planVo.setOfficeCode(formVo.getOfficeCode());
+		planVo.setPlanNumber(formVo.getPlanNumber());
+		planVo.setAnalysisNumber(formVo.getAnalysisNumber());
+		planVo.setBudgetYear(formVo.getBudgetYear());
+		TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), formVo.getOfficeCode());
+		planVo.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.OUTPLAN);
+		Long countOutNum = taPlanWorksheetDtlRepository.countByCriteria(planVo);
+		planVo.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.ONPLAN);
+		Long countInNum = taPlanWorksheetDtlRepository.countByCriteria(planVo);
+		planVo.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.RESERVE);
+		Long countReNum = taPlanWorksheetDtlRepository.countByCriteria(planVo);
+		
+		planSend.setFacInNum(new Integer(countInNum.intValue()));
+		planSend.setFacRsNum(new Integer(countReNum.intValue()));
+		planSend.setFacOutNum(new Integer(countOutNum.intValue()));
+		taPlanWorksheetSendRepository.save(planSend);
 
 		return planDtl;
 	}

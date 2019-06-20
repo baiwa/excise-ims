@@ -572,7 +572,7 @@ public class TaxOperatorController {
 	public DataTableAjax<PlanWorksheetDatatableVo> planDtlDatatableCentralApprove(@RequestBody PlanWorksheetVo formVo) {
 		UserBean userBean = UserLoginUtils.getCurrentUserBean();
 		if (ExciseUtils.isCentral(userBean.getOfficeCode())) {
-			formVo.setAuditStatus(TA_AUDIT_STATUS.CODE_0200);
+			formVo.setAuditStatus(TA_AUDIT_STATUS.CODE_0100);
 		}
 		if (StringUtils.isEmpty(formVo.getOfficeCode())) {
 			formVo.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(userBean.getOfficeCode()));
