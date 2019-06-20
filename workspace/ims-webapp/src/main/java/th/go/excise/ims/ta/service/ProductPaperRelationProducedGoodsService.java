@@ -3,9 +3,13 @@ package th.go.excise.ims.ta.service;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
@@ -20,17 +24,24 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.util.NumberUtils;
+import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ta.persistence.entity.TaPaperPr04D;
+import th.go.excise.ims.ta.persistence.entity.TaPaperPr04H;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr04DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr04HRepository;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperRelationProducedGoodsVo;
+import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
+import th.go.excise.ims.ws.vo.WsOasfri0100FromVo;
+import th.go.excise.ims.ws.vo.WsOasfri0100Vo;
 
 @Service
 public class ProductPaperRelationProducedGoodsService extends AbstractProductPaperService<ProductPaperRelationProducedGoodsVo> {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperRelationProducedGoodsService.class);
-	
+
 	private static final String PRODUCT_PAPER_RELATION_PRODUCED_GOODS = "ความสัมพันธ์การเบิกใช้วัตถุดิบ";
 
 	@Autowired
@@ -38,17 +49,37 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 	@Autowired
 	private TaPaperPr04DRepository taPaperPr04DRepository;
 
+	@Autowired
+	private WsOasfri0100DRepository wsOasfri0100DRepository;
+
 	@Override
 	protected Logger getLogger() {
 		return logger;
 	}
-	
+
 	@Override
 	protected List<ProductPaperRelationProducedGoodsVo> inquiryByWs(ProductPaperFormVo formVo) {
 		logger.info("inquiryByWs");
+
+		LocalDate localDateStart = toLocalDate(formVo.getStartDate());
+		LocalDate localDateEnd = toLocalDate(formVo.getEndDate());
+
+		WsOasfri0100FromVo wsOasfri0100FormVo = new WsOasfri0100FromVo();
+		wsOasfri0100FormVo.setNewRegId(formVo.getNewRegId());
+		wsOasfri0100FormVo.setDutyGroupId(formVo.getDutyGroupId());
+		wsOasfri0100FormVo.setDataType(WEB_SERVICE.OASFRI0100.DATA_TYPE_MATERIAL);
+		wsOasfri0100FormVo.setYearMonthStart(localDateStart.format(DateTimeFormatter.ofPattern("yyyyMM")));
+		wsOasfri0100FormVo.setYearMonthEnd(localDateEnd.format(DateTimeFormatter.ofPattern("yyyyMM")));
+
+		List<WsOasfri0100Vo> wsOasfri0100VoList = wsOasfri0100DRepository.findByCriteria(wsOasfri0100FormVo);
 		List<ProductPaperRelationProducedGoodsVo> voList = new ArrayList<>();
-		ProductPaperRelationProducedGoodsVo vo = new ProductPaperRelationProducedGoodsVo();
-		voList.add(vo);
+		ProductPaperRelationProducedGoodsVo vo = null;
+		for (WsOasfri0100Vo wsOasfri0100Vo : wsOasfri0100VoList) {
+			vo = new ProductPaperRelationProducedGoodsVo();
+//			vo.setMaterialDesc(wsOasfri0100Vo.getDataName());
+			voList.add(vo);
+		}
+
 		return voList;
 	}
 
@@ -60,6 +91,10 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 
 	@Override
 	protected byte[] exportData(List<ProductPaperRelationProducedGoodsVo> voList, String exportType) {
+
+		// set format money
+		DecimalFormat df = new DecimalFormat("#,##0.00");
+
 		/* create spreadsheet */
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(PRODUCT_PAPER_RELATION_PRODUCED_GOODS);
@@ -142,7 +177,7 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 
 			cell = row.createCell(cellNum);
 			cell.setCellValue(data.getDocNo());
-			cell.setCellStyle(cellLeft);
+			cell.setCellStyle(cellCenter);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
@@ -151,57 +186,101 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getInputMaterialQty());
+			if (StringUtils.isNotBlank(data.getInputMaterialQty())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getInputMaterialQty())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getFormulaMaterialQty());
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getUsedMaterialQty());
+			if (StringUtils.isNotBlank(data.getFormulaMaterialQty())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getFormulaMaterialQty())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getRealUsedMaterialQty());
+			if (StringUtils.isNotBlank(data.getUsedMaterialQty())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getUsedMaterialQty())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getDiffMaterialQty());
+			if (StringUtils.isNotBlank(data.getRealUsedMaterialQty())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getRealUsedMaterialQty())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getMaterialQty());
+			if (StringUtils.isNotBlank(data.getDiffMaterialQty())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getDiffMaterialQty())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getGoodsQty());
+			if (StringUtils.isNotBlank(data.getMaterialQty())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMaterialQty())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getDiffGoodsQty());
+			if (StringUtils.isNotBlank(data.getGoodsQty())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getGoodsQty())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getWasteGoodsPnt());
+			if (StringUtils.isNotBlank(data.getDiffGoodsQty())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getDiffGoodsQty())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getWasteGoodsQty());
+			if (StringUtils.isNotBlank(data.getWasteGoodsPnt())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getWasteGoodsPnt())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getBalanceGoodsQty());
+			if (StringUtils.isNotBlank(data.getWasteGoodsQty())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getWasteGoodsQty())));
+			} else {
+				cell.setCellValue("");
+			}
+			cell.setCellStyle(cellRight);
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			if (StringUtils.isNotBlank(data.getBalanceGoodsQty())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getBalanceGoodsQty())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
@@ -237,8 +316,8 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 
 			for (Row row : sheet) {
 				data = new ProductPaperRelationProducedGoodsVo();
-				// Skip on first row
-				if (row.getRowNum() == 0) {
+				// Skip on Second row
+				if (row.getRowNum() < 2) {
 					continue;
 				}
 				for (Cell cell : row) {
@@ -299,8 +378,37 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 
 	@Override
 	public void save(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
+		logger.info("save");
 
+		TaPaperPr04H entityH = new TaPaperPr04H();
+		prepareEntityH(formVo, entityH, TaPaperPr04H.class);
+		taPaperPr04HRepository.save(entityH);
+
+		List<ProductPaperRelationProducedGoodsVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
+		List<TaPaperPr04D> entityDList = new ArrayList<>();
+		TaPaperPr04D entityD = null;
+		int i = 1;
+		for (ProductPaperRelationProducedGoodsVo vo : voList) {
+			entityD = new TaPaperPr04D();
+			entityD.setPaperPrNumber(entityH.getPaperPrNumber());
+			entityD.setSeqNo(i);
+			entityD.setDocNo(vo.getDocNo());
+			entityD.setMaterialDesc(vo.getMaterialDesc());
+			entityD.setInputMaterialQty(!NO_VALUE.equals(vo.getInputMaterialQty()) ? NumberUtils.toBigDecimal(vo.getInputMaterialQty()) : null);
+			entityD.setFormulaMaterialQty(!NO_VALUE.equals(vo.getFormulaMaterialQty()) ? NumberUtils.toBigDecimal(vo.getFormulaMaterialQty()) : null);
+			entityD.setUsedMaterialQty(!NO_VALUE.equals(vo.getUsedMaterialQty()) ? NumberUtils.toBigDecimal(vo.getUsedMaterialQty()) : null);
+			entityD.setRealUsedMaterialQty(!NO_VALUE.equals(vo.getRealUsedMaterialQty()) ? NumberUtils.toBigDecimal(vo.getRealUsedMaterialQty()) : null);
+			entityD.setDiffMaterialQty(!NO_VALUE.equals(vo.getDiffMaterialQty()) ? NumberUtils.toBigDecimal(vo.getDiffMaterialQty()) : null);
+			entityD.setMaterialQty(!NO_VALUE.equals(vo.getMaterialQty()) ? NumberUtils.toBigDecimal(vo.getMaterialQty()) : null);
+			entityD.setGoodsQty(!NO_VALUE.equals(vo.getGoodsQty()) ? NumberUtils.toBigDecimal(vo.getGoodsQty()) : null);
+			entityD.setDiffGoodsQty(!NO_VALUE.equals(vo.getDiffGoodsQty()) ? NumberUtils.toBigDecimal(vo.getDiffGoodsQty()) : null);
+			entityD.setWasteGoodsPnt(!NO_VALUE.equals(vo.getWasteGoodsPnt()) ? NumberUtils.toBigDecimal(vo.getWasteGoodsPnt()) : null);
+			entityD.setWasteGoodsQty(!NO_VALUE.equals(vo.getWasteGoodsQty()) ? NumberUtils.toBigDecimal(vo.getWasteGoodsQty()) : null);
+			entityD.setBalanceGoodsQty(!NO_VALUE.equals(vo.getBalanceGoodsQty()) ? NumberUtils.toBigDecimal(vo.getBalanceGoodsQty()) : null);
+			entityDList.add(entityD);
+			i++;
+		}
+		taPaperPr04DRepository.saveAll(entityDList);
 	}
 
 	@Override
