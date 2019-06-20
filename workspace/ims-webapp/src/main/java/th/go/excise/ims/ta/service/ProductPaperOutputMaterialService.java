@@ -76,6 +76,10 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 			vo = new ProductPaperOutputMaterialVo();
 			vo.setMaterialDesc(wsOasfri0100Vo.getDataName());
 			vo.setMonthStatementQty(wsOasfri0100Vo.getInQty().toString());
+			vo.setOutputMaterialQty(NO_VALUE);
+			vo.setDailyAccountQty(NO_VALUE);
+			vo.setExternalDataQty(NO_VALUE);
+			vo.setMaxDiffQty(NO_VALUE);
 			voList.add(vo);
 		}
 
@@ -84,8 +88,22 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 
 	@Override
 	protected List<ProductPaperOutputMaterialVo> inquiryByPaperPrNumber(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<TaPaperPr02D> entityList = taPaperPr02DRepository.findByPaperPrNumber(formVo.getPaperPrNumber());
+		List<ProductPaperOutputMaterialVo> voList = new ArrayList<>();
+		ProductPaperOutputMaterialVo vo = null;
+		for (TaPaperPr02D entity : entityList) {
+			vo = new ProductPaperOutputMaterialVo();
+			vo.setMaterialDesc(entity.getMaterialDesc());
+			vo.setOutputMaterialQty(entity.getOutputMaterialQty() != null ? entity.getOutputMaterialQty().toString() : NO_VALUE);
+			vo.setDailyAccountQty(entity.getDailyAccountQty() != null ? entity.getDailyAccountQty().toString() : NO_VALUE);
+			vo.setMonthStatementQty(entity.getMonthStatementQty() != null ? entity.getMonthStatementQty().toString() : NO_VALUE);
+			vo.setExternalDataQty(entity.getExternalDataQty() != null ? entity.getExternalDataQty().toString() : NO_VALUE);
+			vo.setMaxDiffQty(entity.getMaxDiffQty() != null ? entity.getMaxDiffQty().toString() : NO_VALUE);
+			voList.add(vo);
+		}
+
+		return voList;
 	}
 
 	@Override
@@ -111,7 +129,7 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
 		/* tbTH */
-		String[] tbTH = { "ลำดับ", "รายการ", "ใบเบิกวัตถุดิบ	", "บัญชีประจำวัน (ภส.๐๗-๐๑)", "งบเดือน (ภส. ๐๗-๐๔)", "จำนวนจ่ายวัตถุดิบ", "ผลต่างสูงสุด" };
+		String[] tbTH = { "ลำดับ", "รายการ", "ใบเบิกวัตถุดิบ", "บัญชีประจำวัน (ภส.๐๗-๐๑)", "งบเดือน (ภส. ๐๗-๐๔)", "จำนวนจ่ายวัตถุดิบ", "ผลต่างสูงสุด" };
 		for (int i = 0; i < tbTH.length; i++) {
 			cell = row.createCell(i);
 			cell.setCellValue(tbTH[i]);
@@ -151,52 +169,73 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 			cell.setCellStyle(cellLeft);
 			cellNum++;
 
+			// getOutputMaterialQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getOutputMaterialQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getOutputMaterialQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getOutputMaterialQty())  && !NO_VALUE.equals(data.getOutputMaterialQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getOutputMaterialQty())));
+				} else {
+					cell.setCellValue("");
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
+			// getDailyAccountQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getDailyAccountQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getDailyAccountQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getDailyAccountQty()) && !NO_VALUE.equals(data.getDailyAccountQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getDailyAccountQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
+			// getMonthStatementQty
 			cell = row.createCell(cellNum);
 			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
 				cell.setCellStyle(thStyle);
 			} else {
-				if (StringUtils.isNotBlank(data.getMonthStatementQty())) {
+				if (StringUtils.isNotBlank(data.getMonthStatementQty()) && !NO_VALUE.equals(data.getMonthStatementQty())) {
 					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMonthStatementQty())));
 				} else {
-					cell.setCellValue("");
+					cell.setCellValue(NO_VALUE);
 				}
 				cell.setCellStyle(cellRight);
 			}
 			cellNum++;
 
+			// getExternalDataQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getExternalDataQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getExternalDataQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getExternalDataQty()) && !NO_VALUE.equals(data.getExternalDataQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getExternalDataQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
+			/// getMaxDiffQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getMaxDiffQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMaxDiffQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getMaxDiffQty()) && !NO_VALUE.equals(data.getMaxDiffQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMaxDiffQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
