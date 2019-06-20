@@ -74,6 +74,11 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 		for (WsOasfri0100Vo wsOasfri0100Vo : wsOasfri0100VoList) {
 			vo = new ProductPaperBalanceMaterialVo();
 			vo.setMaterialDesc(wsOasfri0100Vo.getDataName());
+			vo.setBalanceByAccountQty(NO_VALUE);
+			vo.setBalanceByStockQty(NO_VALUE);
+			vo.setBalanceByCountQty(NO_VALUE);
+			vo.setMaxDiffQty1(NO_VALUE);
+			vo.setMaxDiffQty2(NO_VALUE);
 			voList.add(vo);
 		}
 
@@ -82,8 +87,23 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 
 	@Override
 	protected List<ProductPaperBalanceMaterialVo> inquiryByPaperPrNumber(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("inquiryByPaperPrNumber paperPrNumber={}", formVo.getPaperPrNumber());
+
+		List<TaPaperPr03D> entityList = taPaperPr03DRepository.findByPaperPrNumber(formVo.getPaperPrNumber());
+		List<ProductPaperBalanceMaterialVo> voList = new ArrayList<>();
+		ProductPaperBalanceMaterialVo vo = null;
+		for (TaPaperPr03D entity : entityList) {
+			vo = new ProductPaperBalanceMaterialVo();
+			vo.setMaterialDesc(entity.getMaterialDesc());
+			vo.setBalanceByAccountQty(entity.getBalanceByAccountQty() != null ? entity.getBalanceByAccountQty().toString() : NO_VALUE);
+			vo.setBalanceByStockQty(entity.getBalanceByStockQty() != null ? entity.getBalanceByStockQty().toString() : NO_VALUE);
+			vo.setBalanceByCountQty(entity.getBalanceByCountQty() != null ? entity.getBalanceByCountQty().toString() : NO_VALUE);
+			vo.setMaxDiffQty1(entity.getMaxDiffQty1() != null ? entity.getMaxDiffQty1().toString() : NO_VALUE);
+			vo.setMaxDiffQty2(entity.getMaxDiffQty2() != null ? entity.getMaxDiffQty2().toString() : NO_VALUE);
+			voList.add(vo);
+		}
+
+		return voList;
 	}
 
 	@Override
@@ -151,47 +171,72 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 			cell.setCellStyle(cellLeft);
 			cellNum++;
 
+			// getBalanceByAccountQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getBalanceByAccountQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getBalanceByAccountQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getBalanceByAccountQty()) && !NO_VALUE.equals(data.getBalanceByAccountQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getBalanceByAccountQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
+			// getBalanceByStockQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getBalanceByStockQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getBalanceByStockQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getBalanceByStockQty()) && !NO_VALUE.equals(data.getBalanceByStockQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getBalanceByStockQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
+			// getBalanceByCountQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getBalanceByCountQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getBalanceByCountQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getBalanceByCountQty()) && !NO_VALUE.equals(data.getBalanceByCountQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getBalanceByCountQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
+			// getMaxDiffQty1
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getMaxDiffQty1())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMaxDiffQty1())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getMaxDiffQty1()) && !NO_VALUE.equals(data.getMaxDiffQty1())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMaxDiffQty1())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
+			// getMaxDiffQty2
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getMaxDiffQty2())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMaxDiffQty2())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getMaxDiffQty2()) && !NO_VALUE.equals(data.getMaxDiffQty2())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMaxDiffQty2())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
