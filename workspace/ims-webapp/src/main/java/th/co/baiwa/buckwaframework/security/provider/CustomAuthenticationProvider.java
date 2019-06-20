@@ -19,6 +19,7 @@ import th.co.baiwa.buckwaframework.security.persistence.entity.WsRole;
 import th.co.baiwa.buckwaframework.security.persistence.entity.WsUser;
 import th.co.baiwa.buckwaframework.security.persistence.repository.WsUserRepository;
 import th.co.baiwa.buckwaframework.security.persistence.repository.WsUserRoleRepository;
+import th.go.excise.dexsrvint.schema.ldapuserbase.MessageBase;
 import th.go.excise.dexsrvint.schema.ldapuserbase.RoleBase;
 import th.go.excise.dexsrvint.schema.ldapuserbase.RolesBase;
 import th.go.excise.dexsrvint.schema.authenandgetuserrole.AuthenAndGetUserRoleResponse;
@@ -52,7 +53,7 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
 		
 		// Login with LoginLdapUser
 		AuthenAndGetUserRoleResponse response = login(username, password);
-		if ("000".equals(response.getMessage())) {
+		if ("000".equals(response.getMessage().getCode())) {
 			// Assign Default ROLE_USER
 			List<SimpleGrantedAuthority> grantedAuthorityList = new ArrayList<>();
 			grantedAuthorityList.add(new SimpleGrantedAuthority(ROLE.USER));
@@ -88,8 +89,10 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
 		
 		AuthenAndGetUserRoleResponse response = new AuthenAndGetUserRoleResponse();
 		if (wsUser != null) {
-			response.getMessage().setCode("000");
-			response.getMessage().setDescription("Authentication Success");
+			MessageBase messageBase = new MessageBase();
+			messageBase.setCode("000");
+			messageBase.setDescription("Authentication Success");
+			response.setMessage(messageBase);
 			response.setTitle(wsUser.getTitle());
 			response.setUserThaiName(wsUser.getUserThaiName());
 			response.setUserThaiSurname(wsUser.getUserThaiSurname());
@@ -98,7 +101,7 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
 			response.setUserId(wsUser.getUserId());
 			response.setEmail(wsUser.getEmail());
 			response.setCnName(wsUser.getCnName());
-			response.setOfficeId(wsUser.getOfficeId());
+			response.setOfficeId(wsUser.getOfficeCode());
 			response.setAccessAttr(wsUser.getAccessAttr());
 			
 			RolesBase roles = prepareRoles(username);
