@@ -78,6 +78,10 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 			vo = new ProductPaperInputMaterialVo();
 			vo.setMaterialDesc(wsOasfri0100Vo.getDataName());
 			vo.setMonthStatementQty(wsOasfri0100Vo.getInQty().toString());
+			vo.setInputMaterialQty(NO_VALUE);
+			vo.setDailyAccountQty(NO_VALUE);
+			vo.setExternalDataQty(NO_VALUE);
+			vo.setMaxDiffQty(NO_VALUE);
 			voList.add(vo);
 		}
 
@@ -124,7 +128,6 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 		CellStyle bgCal = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(251, 189, 8)));
 		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
 		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
-//		CellStyle cellRightBgStyle = ExcelUtils.createCellColorStyle(workbook, new XSSFColor(new java.awt.Color(192, 192, 192)), HorizontalAlignment.RIGHT, VerticalAlignment.TOP);
 		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
 		/* tbTH */
@@ -167,54 +170,74 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 			cell.setCellStyle(cellLeft);
 			cellNum++;
 
+			// getInputMaterialQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getInputMaterialQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getInputMaterialQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getInputMaterialQty()) && !NO_VALUE.equals(data.getInputMaterialQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getInputMaterialQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
+			// getDailyAccountQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getDailyAccountQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getDailyAccountQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getDailyAccountQty()) && !NO_VALUE.equals(data.getDailyAccountQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getDailyAccountQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
+			// getMonthStatementQty
 			cell = row.createCell(cellNum);
 			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
 				cell.setCellStyle(thStyle);
 			} else {
-				if (StringUtils.isNotBlank(data.getMonthStatementQty())) {
+				if (StringUtils.isNotBlank(data.getMonthStatementQty()) && !NO_VALUE.equals(data.getMonthStatementQty())) {
 					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMonthStatementQty())));
 				} else {
-					cell.setCellValue("");
+					cell.setCellValue(NO_VALUE);
 				}
 				cell.setCellStyle(cellRight);
 			}
-
 			cellNum++;
 
+			// getExternalDataQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getExternalDataQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getExternalDataQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getExternalDataQty()) && !NO_VALUE.equals(data.getExternalDataQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getExternalDataQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
+			/// getMaxDiffQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getMaxDiffQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMaxDiffQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
-			}	
+			} else {
+				if (StringUtils.isNotBlank(data.getMaxDiffQty()) && !NO_VALUE.equals(data.getMaxDiffQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMaxDiffQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
