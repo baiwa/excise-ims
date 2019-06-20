@@ -35,8 +35,10 @@ public class TaPaperPr05D extends BaseEntity {
 	private BigDecimal inputMonthStatementQty;
 	@Column(name = "INPUT_DAILY_ACCOUNT_QTY")
 	private BigDecimal inputDailyAccountQty;
-	@Column(name = "MAX_DIFF_QTY")
-	private BigDecimal maxDiffQty;
+	@Column(name = "MAX_DIFF_QTY1")
+	private BigDecimal maxDiffQty1;
+	@Column(name = "MAX_DIFF_QTY2")
+	private BigDecimal maxDiffQty2;
 
 	public Long getPaperPr05DSeq() {
 		return paperPr05DSeq;
@@ -94,12 +96,20 @@ public class TaPaperPr05D extends BaseEntity {
 		this.inputDailyAccountQty = inputDailyAccountQty;
 	}
 
-	public BigDecimal getMaxDiffQty() {
-		return maxDiffQty;
+	public BigDecimal getMaxDiffQty1() {
+		return maxDiffQty1;
 	}
 
-	public void setMaxDiffQty(BigDecimal maxDiffQty) {
-		this.maxDiffQty = maxDiffQty;
+	public void setMaxDiffQty1(BigDecimal maxDiffQty1) {
+		this.maxDiffQty1 = maxDiffQty1;
+	}
+
+	public BigDecimal getMaxDiffQty2() {
+		return maxDiffQty2;
+	}
+
+	public void setMaxDiffQty2(BigDecimal maxDiffQty2) {
+		this.maxDiffQty2 = maxDiffQty2;
 	}
 
 }

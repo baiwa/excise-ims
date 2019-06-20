@@ -93,7 +93,7 @@ public class ProductPaperInputMaterialServiceTest {
 		vo2.setDailyAccountQty("205");
 		vo2.setMonthStatementQty("220");
 		vo2.setExternalDataQty("200");
-		vo2.setMaxDiffQty("20");;
+		vo2.setMaxDiffQty("20");
 		inputVoList.add(vo2);
 		
 		Gson gson = new Gson();

@@ -13,10 +13,8 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -27,14 +25,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.Gson;
-
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ta.persistence.entity.TaPaperPr05D;
+import th.go.excise.ims.ta.persistence.entity.TaPaperPr05H;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr05DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr05HRepository;
-import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperInputGoodsVo;
 import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
@@ -45,7 +42,7 @@ import th.go.excise.ims.ws.vo.WsOasfri0100Vo;
 public class ProductPaperInputGoodsService extends AbstractProductPaperService<ProductPaperInputGoodsVo> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperInputGoodsService.class);
-	
+
 	private static final String PRODUCT_PAPER_INPUT_GOODS = "รับสินค้าสำเร็จรูป";
 
 	@Autowired
@@ -59,7 +56,7 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 	protected Logger getLogger() {
 		return logger;
 	}
-	
+
 	@Override
 	protected List<ProductPaperInputGoodsVo> inquiryByWs(ProductPaperFormVo formVo) {
 		logger.info("inquiryByWs");
@@ -112,7 +109,6 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 		CellStyle bgCal = ExcelUtils.createThColorStyle(workbook, new XSSFColor(new java.awt.Color(251, 189, 8)));
 		CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
 		CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
-		CellStyle cellRightBgStyle = ExcelUtils.createCellColorStyle(workbook, new XSSFColor(new java.awt.Color(192, 192, 192)), HorizontalAlignment.RIGHT, VerticalAlignment.TOP);
 		CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
 
 		/* tbTH1 */
@@ -187,13 +183,12 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getInputGoodsQty());
-			cell.setCellStyle(cellCenter);
-			cellNum++;
-
-			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getInputMonthStatementQty());
-			cell.setCellStyle(cellRightBgStyle);
+			if (StringUtils.isNotBlank(data.getInputGoodsQty())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getInputGoodsQty())));
+			} else {
+				cell.setCellValue("");
+			}
+			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
@@ -206,22 +201,34 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 				} else {
 					cell.setCellValue("");
 				}
-				cell.setCellStyle(cellRightBgStyle);
+				cell.setCellStyle(cellRight);
 			}
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getInputDailyAccountQty());
+			if (StringUtils.isNotBlank(data.getInputDailyAccountQty())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getInputDailyAccountQty())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getMaxDiffQty1());
+			if (StringUtils.isNotBlank(data.getMaxDiffQty1())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMaxDiffQty1())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getMaxDiffQty1());
+			if (StringUtils.isNotBlank(data.getMaxDiffQty2())) {
+				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMaxDiffQty2())));
+			} else {
+				cell.setCellValue("");
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
@@ -255,8 +262,8 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 			Sheet sheet = workbook.getSheetAt(0);
 			for (Row row : sheet) {
 				data = new ProductPaperInputGoodsVo();
-				// Skip on first row
-				if (row.getRowNum() == 0) {
+				// Skip on second row
+				if (row.getRowNum() < 2) {
 					continue;
 				}
 				for (Cell cell : row) {
@@ -295,7 +302,30 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 
 	@Override
 	public void save(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
+		logger.info("save");
+
+		TaPaperPr05H entityH = new TaPaperPr05H();
+		prepareEntityH(formVo, entityH, TaPaperPr05H.class);
+		taPaperPr05HRepository.save(entityH);
+
+		List<ProductPaperInputGoodsVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
+		List<TaPaperPr05D> entityDList = new ArrayList<>();
+		TaPaperPr05D entityD = null;
+		int i = 1;
+		for (ProductPaperInputGoodsVo vo : voList) {
+			entityD = new TaPaperPr05D();
+			entityD.setPaperPrNumber(entityH.getPaperPrNumber());
+			entityD.setSeqNo(i);
+			entityD.setGoodsDesc(vo.getGoodsDesc());
+			entityD.setInputGoodsQty(!NO_VALUE.equals(vo.getInputGoodsQty()) ? NumberUtils.toBigDecimal(vo.getInputGoodsQty()) : null);
+			entityD.setInputMonthStatementQty(!NO_VALUE.equals(vo.getInputMonthStatementQty()) ? NumberUtils.toBigDecimal(vo.getInputMonthStatementQty()) : null);
+			entityD.setInputDailyAccountQty(!NO_VALUE.equals(vo.getInputDailyAccountQty()) ? NumberUtils.toBigDecimal(vo.getInputDailyAccountQty()) : null);
+			entityD.setMaxDiffQty1(!NO_VALUE.equals(vo.getMaxDiffQty1()) ? NumberUtils.toBigDecimal(vo.getMaxDiffQty1()) : null);
+			entityD.setMaxDiffQty2(!NO_VALUE.equals(vo.getMaxDiffQty2()) ? NumberUtils.toBigDecimal(vo.getMaxDiffQty2()) : null);
+			entityDList.add(entityD);
+			i++;
+		}
+		taPaperPr05DRepository.saveAll(entityDList);
 
 	}
 
@@ -303,5 +333,5 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 	public List<String> getPaperPrNumberList(ProductPaperFormVo formVo) {
 		return taPaperPr05HRepository.findPaperPrNumberByAuditPlanCode(formVo.getAuditPlanCode());
 	}
-	
+
 }
