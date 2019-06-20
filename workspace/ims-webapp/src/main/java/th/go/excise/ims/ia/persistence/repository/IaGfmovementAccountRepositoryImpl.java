@@ -83,10 +83,6 @@ public class IaGfmovementAccountRepositoryImpl implements IaGfmovementAccountRep
 		params.add(request.getGfDepositCode());
 		params.add(request.getOfficeCode().concat("%"));
 		
-//		@SuppressWarnings({ "rawtypes", "unchecked" })
-//		List<Int0804SummaryVo> response = commonJdbcTemplate.query(sql.toString(), params.toArray(),
-//				new BeanPropertyRowMapper(Int0804SummaryVo.class));
-//		return response;
 		return commonJdbcTemplate.query(sql.toString(), params.toArray(), mappingSumResult);
 	}
 	
