@@ -35,8 +35,8 @@ public class WebSecurityUatConfig {
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.authenticationProvider(customAuthenticationProvider);
-		auth.authenticationProvider(webServiceAuthenticationProvider);
+		auth.authenticationProvider(customAuthenticationProvider);
+//		auth.authenticationProvider(webServiceAuthenticationProvider);
 	}
 	
 	@Bean(name = "passwordEncoder")

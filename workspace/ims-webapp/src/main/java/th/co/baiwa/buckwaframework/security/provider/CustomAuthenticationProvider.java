@@ -3,9 +3,11 @@ package th.co.baiwa.buckwaframework.security.provider;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
@@ -13,6 +15,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.ROLE;
 import th.co.baiwa.buckwaframework.security.domain.UserDetails;
 import th.co.baiwa.buckwaframework.security.persistence.entity.WsRole;
@@ -22,6 +25,8 @@ import th.co.baiwa.buckwaframework.security.persistence.repository.WsUserRoleRep
 import th.go.excise.dexsrvint.schema.ldapuserbase.MessageBase;
 import th.go.excise.dexsrvint.schema.ldapuserbase.RoleBase;
 import th.go.excise.dexsrvint.schema.ldapuserbase.RolesBase;
+import th.go.excise.dexsrvint.wsdl.ldapgateway.ldpagauthenandgetuserrole.LDPAGAuthenAndGetUserRolePortType;
+import th.go.excise.dexsrvint.schema.authenandgetuserrole.AuthenAndGetUserRoleRequest;
 import th.go.excise.dexsrvint.schema.authenandgetuserrole.AuthenAndGetUserRoleResponse;
 import th.go.excise.ims.preferences.persistence.entity.ExcisePerson;
 import th.go.excise.ims.preferences.persistence.repository.ExcisePersonRepository;
@@ -40,6 +45,17 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
 	@Autowired
 	private ExcisePersonRepository excisePersonRepository;
 	
+	@Autowired
+	private LDPAGAuthenAndGetUserRolePortType loginLdapProxy;
+	
+	@Value("${user.list.test}")
+	private String userListTest;
+	
+	@Value("${spring.profiles.active}")
+	private String env;
+	
+	
+	
 	@Override
 	protected void additionalAuthenticationChecks(org.springframework.security.core.userdetails.UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
 
@@ -51,33 +67,59 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
 		String password = authentication.getCredentials().toString();
 		UserDetails userDetails = null;
 		
+		
 		// Login with LoginLdapUser
-		AuthenAndGetUserRoleResponse response = login(username, password);
-		if ("000".equals(response.getMessage().getCode())) {
-			// Assign Default ROLE_USER
-			List<SimpleGrantedAuthority> grantedAuthorityList = new ArrayList<>();
-			grantedAuthorityList.add(new SimpleGrantedAuthority(ROLE.USER));
-			// Assign ROLE_ADMIN
-			if (username.contains("admin")) {
-				grantedAuthorityList.add(new SimpleGrantedAuthority(ROLE.ADMIN));
+			AuthenAndGetUserRoleResponse response = login(username, password);
+			if ("000".equals(response.getMessage().getCode())) {
+				// Assign Default ROLE_USER
+				List<SimpleGrantedAuthority> grantedAuthorityList = new ArrayList<>();
+				grantedAuthorityList.add(new SimpleGrantedAuthority(ROLE.USER));
+				// Assign ROLE_ADMIN
+				if (username.contains("admin")) {
+					grantedAuthorityList.add(new SimpleGrantedAuthority(ROLE.ADMIN));
+				}
+				// Assign ROLE from WS
+				for (RoleBase wsRole : response.getRoles().getRole()) {
+					grantedAuthorityList.add(new SimpleGrantedAuthority(wsRole.getRoleName()));
+				}
+				
+				// Create UserDetails
+				userDetails = new UserDetails(username, password, grantedAuthorityList);
+				
+				// Assign Detail for UserDetailes
+				userDetails.setUserThaiName(response.getUserThaiName());
+				userDetails.setUserThaiSurname(response.getUserThaiSurname());
+				userDetails.setTitle(response.getTitle());
+				userDetails.setOfficeCode(response.getOfficeId());
+				addAdditionalInfo(userDetails);
+			}else if(PROFILE.UAT.equals(env)) {
+				AuthenAndGetUserRoleRequest ldap = new AuthenAndGetUserRoleRequest();
+				ldap.setUserId(username);
+				ldap.setPassword(password);
+				ldap.setApplicationId("TAX AUDIT");
+				response = loginLdapProxy.ldpagAuthenAndGetUserRoleOperation(ldap);
+				if ("000".equals(response.getMessage().getCode())) {
+					List<SimpleGrantedAuthority> grantedAuthorityList = new ArrayList<>();
+					grantedAuthorityList.add(new SimpleGrantedAuthority(ROLE.USER));
+					if (username.contains("admin")) {
+						grantedAuthorityList.add(new SimpleGrantedAuthority(ROLE.ADMIN));
+					}
+					for (RoleBase wsRole : response.getRoles().getRole()) {
+						if(StringUtils.isNotBlank(wsRole.getRoleName())) {
+							grantedAuthorityList.add(new SimpleGrantedAuthority(wsRole.getRoleName().split("=")[1]));
+						}
+					}
+					userDetails = new UserDetails(username, password, grantedAuthorityList);
+					userDetails.setUserThaiName(response.getUserThaiName());
+					userDetails.setUserThaiSurname(response.getUserThaiSurname());
+					userDetails.setTitle(response.getTitle());
+					userDetails.setOfficeCode(response.getOfficeId());
+					addAdditionalInfo(userDetails);
+				}else {
+					throw new BadCredentialsException(response.getMessage().getDescription());
+				}
 			}
-			// Assign ROLE from WS
-			for (RoleBase wsRole : response.getRoles().getRole()) {
-				grantedAuthorityList.add(new SimpleGrantedAuthority(wsRole.getRoleName()));
-			}
-			
-			// Create UserDetails
-			userDetails = new UserDetails(username, password, grantedAuthorityList);
-			
-			// Assign Detail for UserDetailes
-			userDetails.setUserThaiName(response.getUserThaiName());
-			userDetails.setUserThaiSurname(response.getUserThaiSurname());
-			userDetails.setTitle(response.getTitle());
-			userDetails.setOfficeCode(response.getOfficeId());
-			addAdditionalInfo(userDetails);
-		} else {
-			throw new BadCredentialsException(response.getMessage().getDescription());
-		}
+		
 		
 		return userDetails;
 	}
@@ -107,8 +149,10 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
 			RolesBase roles = prepareRoles(username);
 			response.setRoles(roles);
 		} else {
-			response.getMessage().setCode("ERR001");
-			response.getMessage().setDescription("Authentication Failed.");
+			MessageBase messageBase = new MessageBase();
+			messageBase.setCode("ERR001");
+			messageBase.setDescription("Authentication Failed.");
+			response.setMessage(messageBase);
 		}
 		
 		return response;

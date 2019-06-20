@@ -1,7 +1,6 @@
 package th.co.baiwa.buckwaframework.security.provider;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -30,8 +29,6 @@ public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthent
 
 	private Logger logger = LoggerFactory.getLogger(WebServiceAuthenticationProvider.class);
 
-	@Value("${application.env}")
-	private String env;
 
 	// @Autowired
 	// private WebServiceExciseService webServiceExciseService;
