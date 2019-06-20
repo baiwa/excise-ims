@@ -86,7 +86,6 @@ public class Int120101Controller {
 		} catch (Exception e) {
 			log.error("Error ! ==> exportFile method exportFile", e);
 		}
-
 	}
 	
 	@GetMapping("/get/department")
