@@ -179,7 +179,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		sql.append("   TA_PW_SEL.AREA_SEL_FLAG, ");
 		sql.append("   TA_PW_SEL.AREA_SEL_OFFICE_CODE, ");
 		sql.append("   TA_PW_SEL.AREA_SEL_DATE, ");
-		sql.append("   R4000.REG_STATUS, ");
+		sql.append("   R4000.REG_STATUS_DESC, ");
 		sql.append("   R4000.REG_DATE, ");
 		sql.append("   R4000.REG_CAPITAL, ");
 		sql.append("   TA_W_DTL.*, ");
@@ -471,7 +471,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			}
 
 			vo.setRegCapital(rs.getString("REG_CAPITAL"));
-			vo.setRegStatus((StringUtils.isNotBlank(rs.getString("REG_STATUS")) ? rs.getString("REG_STATUS") : " ") + " " + ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_TH));
+			vo.setRegStatus((StringUtils.isNotBlank(rs.getString("REG_STATUS_DESC")) ? rs.getString("REG_STATUS_DESC") : " ") + " " + ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_TH));
 			vo.setRegDate(ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_TH));
 			vo.setCentralSelFlag(rs.getString("CENTRAL_SEL_FLAG"));
 			if (FLAG.Y_FLAG.equals(vo.getCentralSelFlag())) {

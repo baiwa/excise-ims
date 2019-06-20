@@ -565,7 +565,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 			vo.setAreaDesc(rs.getString("AREA_DESC"));
 			vo.setDutyDesc(rs.getString("DUTY_GROUP_NAME"));
 			vo.setRegDate(ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY));
-			vo.setRegStatus(rs.getString("REG_STATUS") + " " + ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY));
+			vo.setRegStatus(rs.getString("REG_STATUS_DESC") + " " + ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY));
 			vo.setRegStatusDesc(rs.getString("REG_STATUS_DESC"));
 			return vo;
 		}
