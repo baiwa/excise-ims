@@ -17,7 +17,6 @@ import com.google.gson.reflect.TypeToken;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
-import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ServicePaperFormVo;
 
 public abstract class AbstractServicePaperService<VO> {
