@@ -1,6 +1,7 @@
 package th.co.baiwa.buckwaframework.security.provider;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -40,11 +41,18 @@ public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthent
 
 	@Autowired
 	private ExcisePersonRepository excisePersonRepository;
+	
+	@Autowired
+	private CustomAuthenticationProvider customAuthenticationProvider;
+	
+	@Value("${user.list.test}")
+	private String userListTest;
 
 	@Override
 	protected void additionalAuthenticationChecks(org.springframework.security.core.userdetails.UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
 
 	}
+	
 
 	@Override
 	protected org.springframework.security.core.userdetails.UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
@@ -74,6 +82,8 @@ public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthent
 			userDetails.setTitle(response.getTitle());
 			userDetails.setOfficeCode(response.getOfficeId());
 			addAdditionalInfo(userDetails);
+		}else if(userListTest.indexOf(username) >= 0) {
+			userDetails = (UserDetails) customAuthenticationProvider.retrieveUser(username, authentication);
 		} else {
 			throw new BadCredentialsException(response.getMessage().getDescription());
 		}
