@@ -29,7 +29,10 @@ import th.go.excise.ims.ta.persistence.repository.TaPaperPr09DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr09HRepository;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperInformPriceVo;
+import th.go.excise.ims.ta.vo.ProductPaperOutputGoodsVo;
+import th.go.excise.ims.ws.persistence.repository.WsAnafri0001DRepository;
 import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
+import th.go.excise.ims.ws.vo.WsAnafri0001Vo;
 
 @Service
 public class ProductPaperInformPriceService extends AbstractProductPaperService<ProductPaperInformPriceVo> {
@@ -43,7 +46,7 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 	@Autowired
 	private TaPaperPr09DRepository taPaperPr09DRepository;
 	@Autowired
-	private WsOasfri0100DRepository wsOasfri0100DRepository;
+	private WsAnafri0001DRepository wsAnafri0001DRepository;
 
 	@Override
 	protected Logger getLogger() {
@@ -52,21 +55,23 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 	
 	@Override
 	protected List<ProductPaperInformPriceVo> inquiryByWs(ProductPaperFormVo formVo) {
-		List<ProductPaperInformPriceVo> datalist = new ArrayList<>();
-		ProductPaperInformPriceVo data = null;
-		String desc = "ตรวจสอบด้านราคา";
-		for (int i = 0; i < 5; i++) {
-			data = new ProductPaperInformPriceVo();
-			data.setGoodsDesc(desc + (i + 1));
-			data.setInformPrice("1,000.00");
-			data.setExternalPrice("1,500.00");
-			data.setDeclarePrice("1,400.00");
-			data.setRetailPrice("1,400.00");
-			data.setTaxPrice("1,000.00");
-			data.setDiffPrice("100.00");
-			datalist.add(data);
+		logger.info("inquiryByWs");
+		
+		String[] splStartDate = formVo.getStartDate().split("/");
+		String cvStartDate = splStartDate[1]+splStartDate[0]+"01";
+		String[] splEndDate = formVo.getEndDate().split("/");
+		String cvEndDate = splEndDate[1]+splEndDate[0]+"01";
+		List<WsAnafri0001Vo> wsAnafri0001VoList = wsAnafri0001DRepository.findProductList(formVo.getNewRegId(), formVo.getDutyGroupId(), cvStartDate, cvEndDate);
+		List<ProductPaperInformPriceVo> voList = new ArrayList<>();
+		ProductPaperInformPriceVo vo = null;
+		for (WsAnafri0001Vo wsAnafri0001Vo : wsAnafri0001VoList) {
+			vo = new ProductPaperInformPriceVo();
+			vo.setGoodsDesc(wsAnafri0001Vo.getProductName());
+			vo.setTaxPrice(wsAnafri0001Vo.getProductPrice().toString());
+			voList.add(vo);
 		}
-		return datalist;
+
+		return voList;
 	}
 
 	@Override

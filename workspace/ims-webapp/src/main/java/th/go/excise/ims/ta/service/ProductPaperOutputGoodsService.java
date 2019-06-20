@@ -31,7 +31,8 @@ import th.go.excise.ims.ta.persistence.repository.TaPaperPr06DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr06HRepository;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperOutputGoodsVo;
-import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
+import th.go.excise.ims.ws.persistence.repository.WsAnafri0001DRepository;
+import th.go.excise.ims.ws.vo.WsAnafri0001Vo;
 
 @Service
 public class ProductPaperOutputGoodsService extends AbstractProductPaperService<ProductPaperOutputGoodsVo> {
@@ -45,7 +46,7 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 	@Autowired
 	private TaPaperPr06DRepository taPaperPr06DRepository;
 	@Autowired
-	private WsOasfri0100DRepository wsOasfri0100DRepository;
+	private WsAnafri0001DRepository wsAnafri0001DRepository;
 
 	@Override
 	protected Logger getLogger() {
@@ -55,21 +56,34 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 	@Override
 	protected List<ProductPaperOutputGoodsVo> inquiryByWs(ProductPaperFormVo formVo) {
 		logger.info("inquiryByWs");
-		String desc = "ตรวจสอบการจ่ายสินค้าสำเร็จรูป";
-		List<ProductPaperOutputGoodsVo> datalist = new ArrayList<ProductPaperOutputGoodsVo>();
-		ProductPaperOutputGoodsVo data = null;
-		for (int i = 0; i < 5; i++) {
-			data = new ProductPaperOutputGoodsVo();
-			data.setGoodsDesc(desc + (i + 1));
-			data.setOutputGoodsQty("");
-			data.setOutputDailyAccountQty("");
-			data.setOutputMonthStatementQty("");
-			data.setAuditQty("");
-			data.setTaxGoodsQty("");
-			data.setDiffQty("");
-			datalist.add(data);
+
+//		LocalDate localDateStart = toLocalDate(formVo.getStartDate());
+//		LocalDate localDateEnd = toLocalDate(formVo.getEndDate());
+//
+//		WsOasfri0100FromVo wsOasfri0100FormVo = new WsOasfri0100FromVo();
+//		wsOasfri0100FormVo.setNewRegId(formVo.getNewRegId());
+//		wsOasfri0100FormVo.setDutyGroupId(formVo.getDutyGroupId());
+//		wsOasfri0100FormVo.setDataType(WEB_SERVICE.OASFRI0100.DATA_TYPE_MATERIAL);
+//		wsOasfri0100FormVo.setYearMonthStart(localDateStart.format(DateTimeFormatter.ofPattern("yyyyMM")));
+//		wsOasfri0100FormVo.setYearMonthEnd(localDateEnd.format(DateTimeFormatter.ofPattern("yyyyMM")));
+//		wsOasfri0100FormVo.setAccountName(WEB_SERVICE.OASFRI0100.PS0704_ACC05);
+//
+//		List<WsOasfri0100Vo> wsOasfri0100VoList = wsOasfri0100DRepository.findByCriteria(wsOasfri0100FormVo);
+		String[] splStartDate = formVo.getStartDate().split("/");
+		String cvStartDate = splStartDate[1]+splStartDate[0]+"01";
+		String[] splEndDate = formVo.getEndDate().split("/");
+		String cvEndDate = splEndDate[1]+splEndDate[0]+"01";
+		List<WsAnafri0001Vo> wsAnafri0001VoList = wsAnafri0001DRepository.findProductList(formVo.getNewRegId(), formVo.getDutyGroupId(), cvStartDate, cvEndDate);
+		List<ProductPaperOutputGoodsVo> voList = new ArrayList<>();
+		ProductPaperOutputGoodsVo vo = null;
+		for (WsAnafri0001Vo wsAnafri0001Vo : wsAnafri0001VoList) {
+			vo = new ProductPaperOutputGoodsVo();
+			vo.setGoodsDesc(wsAnafri0001Vo.getProductName());
+			vo.setTaxGoodsQty(wsAnafri0001Vo.getProductQty().toString());
+			voList.add(vo);
 		}
-		return datalist;
+
+		return voList;
 	}
 
 	@Override
