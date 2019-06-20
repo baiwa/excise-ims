@@ -22,7 +22,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<maven.test.skip>true</maven.test.skip>
 		<!-- Java Version -->
 		<java.version>1.8</java.version>
 		<!-- Dependency Version -->
@@ -68,8 +67,7 @@
 			<version>${commons-math3.version}</version>
 		</dependency>
 
-		<!-- Starter for building web, including RESTful, applications using Spring 
-			MVC. Uses Tomcat as the default embedded container -->
+		<!-- Starter for building web, including RESTful, applications using Spring MVC. Uses Tomcat as the default embedded container -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -81,8 +79,7 @@
 			</exclusions>
 		</dependency>
 
-		<!-- Starter for using Tomcat as the embedded servlet container. Default 
-			servlet container starter used by spring-boot-starter-web -->
+		<!-- Starter for using Tomcat as the embedded servlet container. Default servlet container starter used by spring-boot-starter-web -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
@@ -125,8 +122,7 @@
 			</exclusions>
 		</dependency>
 
-		<!-- Modern server-side Java template engine for both web and standalone 
-			environments -->
+		<!-- Modern server-side Java template engine for both web and standalone environments -->
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
@@ -138,8 +134,7 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
-		<!-- Starter for testing Spring Boot applications with libraries including 
-			JUnit, Hamcrest and Mockito -->
+		<!-- Starter for testing Spring Boot applications with libraries including JUnit, Hamcrest and Mockito -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -371,8 +366,7 @@
 		<!-- This is the name of the bundled project when it is finally built. -->
 		<finalName>${project.name}</finalName>
 
-		<!-- List of resource elements that each describe what and where to include 
-			files associated with this project. -->
+		<!-- List of resource elements that each describe what and where to include files associated with this project. -->
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -382,8 +376,7 @@
 
 		<plugins>
 
-			<!-- Allowing to package executable jar or war archives and run an application 
-				"in-place" -->
+			<!-- Allowing to package executable jar or war archives and run an application "in-place" -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -401,8 +394,7 @@
 				</executions>
 			</plugin>
 
-			<!-- The Resources Plugin handles the copying of project resources to 
-				the output directory -->
+			<!-- The Resources Plugin handles the copying of project resources to the output directory -->
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<configuration>
@@ -474,16 +466,6 @@
 										<extraarg>classpath:wsdl/LDPAGAuthenAndGetUserRoleService.wsdl</extraarg>
 									</extraargs>
 								</wsdlOption>
-								<!-- <wsdlOption> -->
-								<!-- <wsdl>${basedir}/src/test/resources/wsdl/LDPAGAuthenAndGetUserRoleService.wsdl</wsdl> -->
-								<!-- <extraargs> -->
-								<!-- <extraarg>-verbose</extraarg> -->
-								<!-- <extraarg>-p</extraarg>targetNamespace -->
-								<!-- <extraarg>http://ws.baiwa.th.com=th.co.baiwa.exampleproject.ws.excisews</extraarg> -->
-								<!-- <extraarg>-wsdlLocation</extraarg> -->
-								<!-- <extraarg>classpath:wsdl/LDPAGAuthenAndGetUserRoleService.wsdl</extraarg> -->
-								<!-- </extraargs> -->
-								<!-- </wsdlOption> -->
 							</wsdlOptions>
 						</configuration>
 						<goals>
