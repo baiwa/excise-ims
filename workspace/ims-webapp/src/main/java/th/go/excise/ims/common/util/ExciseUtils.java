@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.chrono.ThaiBuddhistDate;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -25,6 +27,8 @@ public class ExciseUtils {
 	public static final Logger logger = LoggerFactory.getLogger(ExciseUtils.class);
 	
 	private static List<ParamInfo> paramInfoList = null;
+	
+	public static final int[] PERIOD_MONTH = {9,10,11,12,1,2,3,4,5,6,7,8};
 
 	static {
 		paramInfoList = new ArrayList<>();
@@ -265,6 +269,21 @@ public class ExciseUtils {
 			}
 		}
 		return dutyGroupIdList;
+	}
+	
+	
+	public static Date firstDateOfPeriod(String period ,String year) {
+		Calendar cal = Calendar.getInstance();
+		cal.set(Integer.parseInt(year), PERIOD_MONTH[Integer.parseInt(period)-1], 1);
+		return cal.getTime();
+	}
+	
+	public static Date lastDateOfPeriod(String period ,String year) {
+		Calendar cal = Calendar.getInstance();
+		cal.set(Integer.parseInt(year), PERIOD_MONTH[Integer.parseInt(period)-1], 1);
+		cal.add(Calendar.MONTH, 1);
+		cal.add(Calendar.DATE, -1);
+		return cal.getTime();
 	}
 	
 }
