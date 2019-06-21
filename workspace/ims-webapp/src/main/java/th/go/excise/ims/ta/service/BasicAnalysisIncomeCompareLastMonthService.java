@@ -18,10 +18,6 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
-import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
-import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CONFIG;
-import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.ta.persistence.entity.TaPaperBaD7;
 import th.go.excise.ims.ta.persistence.repository.TaPaperBaD7Repository;
 import th.go.excise.ims.ta.persistence.repository.TaWsInc8000MRepository;
@@ -34,8 +30,6 @@ public class BasicAnalysisIncomeCompareLastMonthService extends AbstractBasicAna
 
 	private static final Logger logger = LoggerFactory.getLogger(BasicAnalysisIncomeCompareLastMonthService.class);
 
-	private static final String NO_TAX_AMOUNT = "-";
-
 	@Autowired
 	private TaPaperBaD7Repository taPaperBaD7Repository;
 	@Autowired
@@ -45,16 +39,8 @@ public class BasicAnalysisIncomeCompareLastMonthService extends AbstractBasicAna
 	protected List<BasicAnalysisIncomeCompareLastMonthVo> inquiryByWs(BasicAnalysisFormVo formVo) {
 		logger.info("inquiryByWs");
 
-		String incomeTaxType = null;
-		ParamInfo taxType = ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.INCOME_TYPE);
-		if (taxType != null) {
-			incomeTaxType = taxType.getValue1();
-		} else {
-			incomeTaxType = TA_CONFIG.INCOME_TYPE_TAX;
-		}
-
-		LocalDate localDateG1Start = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]), Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
-		LocalDate localDateG1End = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]), Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
+		LocalDate localDateG1Start = toLocalDate(formVo.getStartDate());
+		LocalDate localDateG1End = toLocalDate(formVo.getEndDate());
 		LocalDate localDateG2Start = LocalDate.from(localDateG1Start);
 		LocalDate localDateG2End = LocalDate.from(localDateG1End);
 		localDateG1End = localDateG1End.plusMonths(1);
@@ -76,7 +62,7 @@ public class BasicAnalysisIncomeCompareLastMonthService extends AbstractBasicAna
 		logger.debug("subLocalDateList1.size()={}, subLocalDateList1={}", subLocalDateG1List.size(), org.springframework.util.StringUtils.collectionToCommaDelimitedString(subLocalDateG1List));
 		logger.debug("subLocalDateList2.size()={}, subLocalDateList2={}", subLocalDateG2List.size(), org.springframework.util.StringUtils.collectionToCommaDelimitedString(subLocalDateG2List));
 
-		Map<String, BigDecimal> incomeMap = wsInc8000MRepository.findByMonthRangeDuty(formVo.getNewRegId(), formVo.getDutyGroupId(), dateRangeVo, incomeTaxType);
+		Map<String, BigDecimal> incomeMap = wsInc8000MRepository.findByMonthRangeDuty(formVo.getNewRegId(), formVo.getDutyGroupId(), dateRangeVo, formVo.getMonthIncomeType());
 
 		List<BasicAnalysisIncomeCompareLastMonthVo> voList = new ArrayList<>();
 		BasicAnalysisIncomeCompareLastMonthVo vo = null;
@@ -104,8 +90,8 @@ public class BasicAnalysisIncomeCompareLastMonthService extends AbstractBasicAna
 
 			vo.setTaxMonth(ThaiBuddhistDate.from(subLocalDateG1List.get(i)).format(DateTimeFormatter.ofPattern("MMM yy", ConvertDateUtils.LOCAL_TH)));
 			vo.setIncomeAmt(incomeCurrentMonthAmt.toString());
-			vo.setDiffIncomeAmt(i == 0 ? NO_TAX_AMOUNT : diffIncomeAmt.toString());
-			vo.setDiffIncomePnt(i == 0 ? NO_TAX_AMOUNT : diffIncomePnt.toString());
+			vo.setDiffIncomeAmt(i == 0 ? NO_VALUE : diffIncomeAmt.toString());
+			vo.setDiffIncomePnt(i == 0 ? NO_VALUE : diffIncomePnt.toString());
 			voList.add(vo);
 		}
 
@@ -123,8 +109,8 @@ public class BasicAnalysisIncomeCompareLastMonthService extends AbstractBasicAna
 			vo = new BasicAnalysisIncomeCompareLastMonthVo();
 			vo.setTaxMonth(entity.getTaxMonth());
 			vo.setIncomeAmt(entity.getIncomeAmt().toString());
-			vo.setDiffIncomeAmt(entity.getDiffIncomeAmt() != null ? entity.getDiffIncomeAmt().toString() : NO_TAX_AMOUNT);
-			vo.setDiffIncomePnt(entity.getDiffIncomePnt() != null ? entity.getDiffIncomePnt().toString() : NO_TAX_AMOUNT);
+			vo.setDiffIncomeAmt(entity.getDiffIncomeAmt() != null ? entity.getDiffIncomeAmt().toString() : NO_VALUE);
+			vo.setDiffIncomePnt(entity.getDiffIncomePnt() != null ? entity.getDiffIncomePnt().toString() : NO_VALUE);
 			voList.add(vo);
 		}
 		
@@ -146,8 +132,8 @@ public class BasicAnalysisIncomeCompareLastMonthService extends AbstractBasicAna
 			entity.setSeqNo(i);
 			entity.setTaxMonth(vo.getTaxMonth());
 			entity.setIncomeAmt(NumberUtils.toBigDecimal(vo.getIncomeAmt()));
-			entity.setDiffIncomeAmt(NO_TAX_AMOUNT.equals(vo.getDiffIncomeAmt()) ? null : NumberUtils.toBigDecimal(vo.getDiffIncomeAmt()));
-			entity.setDiffIncomePnt(NO_TAX_AMOUNT.equals(vo.getDiffIncomePnt()) ? null : NumberUtils.toBigDecimal(vo.getDiffIncomePnt()));
+			entity.setDiffIncomeAmt(NO_VALUE.equals(vo.getDiffIncomeAmt()) ? null : NumberUtils.toBigDecimal(vo.getDiffIncomeAmt()));
+			entity.setDiffIncomePnt(NO_VALUE.equals(vo.getDiffIncomePnt()) ? null : NumberUtils.toBigDecimal(vo.getDiffIncomePnt()));
 			entityList.add(entity);
 			i++;
 		}

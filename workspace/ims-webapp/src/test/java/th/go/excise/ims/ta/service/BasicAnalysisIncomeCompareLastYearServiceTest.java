@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CONFIG;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
 import th.go.excise.ims.ta.vo.BasicAnalysisIncomeCompareLastYearVo;
@@ -25,13 +27,15 @@ public class BasicAnalysisIncomeCompareLastYearServiceTest {
 	@Autowired
 	private BasicAnalysisIncomeCompareLastYearService basicAnalysisIncomeCompareLastYearService;
 	
-//	@Test
+	@Test
 	public void test_inquiry() {
 		BasicAnalysisFormVo formVo = new BasicAnalysisFormVo();
 		formVo.setNewRegId("01075440001081002");
 		formVo.setDutyGroupId("0101");
 		formVo.setStartDate("01/2562");
 		formVo.setEndDate("06/2562");
+		formVo.setYearIncomeType(TA_CONFIG.INCOME_TYPE_NET);
+		formVo.setYearNum("5");
 		//formVo.setPaperBaNumber("PaperBaNumber");
 		
 		List<BasicAnalysisIncomeCompareLastYearVo> voList = basicAnalysisIncomeCompareLastYearService.inquiry(formVo);
