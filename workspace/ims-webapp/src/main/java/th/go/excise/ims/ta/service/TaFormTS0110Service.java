@@ -27,9 +27,11 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_FORM_TS_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0110;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0110Repository;
+import th.go.excise.ims.ta.vo.AuditStepFormVo;
 import th.go.excise.ims.ta.vo.TaFormTS0110Vo;
 
 @Service
@@ -39,6 +41,8 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 
 	@Autowired
 	private TaFormTs0110Repository taFormTs0110Repository;
+	@Autowired
+	private AuditStepService auditStepService;
 
 	@Override
 	public String getReportName() {
@@ -128,6 +132,15 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 			}
 			
 			taFormTs0110Repository.saveAll(formTs0110List);
+		}
+		
+		if (StringUtils.isNotBlank(formTS0110Vo.getAuditPlanCode())) {
+			AuditStepFormVo stepVo = new AuditStepFormVo();
+			stepVo.setAuditPlanCode(formTS0110Vo.getAuditPlanCode());
+			stepVo.setAuditStepStatus(formTS0110Vo.getAuditStepStatus());
+			stepVo.setFormTsCode(TA_FORM_TS_CODE.TS0110);
+			stepVo.setFormTsNumber(formTs0110.getFormTsNumber());
+			auditStepService.saveAuditStep(stepVo);			
 		}
 	}
 
