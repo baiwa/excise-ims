@@ -76,7 +76,19 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 		ProductPaperRelationProducedGoodsVo vo = null;
 		for (WsOasfri0100Vo wsOasfri0100Vo : wsOasfri0100VoList) {
 			vo = new ProductPaperRelationProducedGoodsVo();
-//			vo.setMaterialDesc(wsOasfri0100Vo.getDataName());
+			vo.setDocNo(NO_VALUE);
+			vo.setMaterialDesc(NO_VALUE);
+			vo.setInputMaterialQty(NO_VALUE);
+			vo.setFormulaMaterialQty(NO_VALUE);
+			vo.setUsedMaterialQty(NO_VALUE);
+			vo.setRealUsedMaterialQty(NO_VALUE);
+			vo.setDiffMaterialQty(NO_VALUE);
+			vo.setMaterialQty(NO_VALUE);
+			vo.setGoodsQty(NO_VALUE);
+			vo.setDiffGoodsQty(NO_VALUE);
+			vo.setWasteGoodsPnt(NO_VALUE);
+			vo.setWasteGoodsQty(NO_VALUE);
+			vo.setBalanceGoodsQty(NO_VALUE);
 			voList.add(vo);
 		}
 
@@ -85,8 +97,30 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 
 	@Override
 	protected List<ProductPaperRelationProducedGoodsVo> inquiryByPaperPrNumber(ProductPaperFormVo formVo) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("inquiryByPaperPrNumber paperPrNumber={}", formVo.getPaperPrNumber());
+
+		List<TaPaperPr04D> entityList = taPaperPr04DRepository.findByPaperPrNumber(formVo.getPaperPrNumber());
+		List<ProductPaperRelationProducedGoodsVo> voList = new ArrayList<>();
+		ProductPaperRelationProducedGoodsVo vo = null;
+		for (TaPaperPr04D entity : entityList) {
+			vo = new ProductPaperRelationProducedGoodsVo();
+			vo.setDocNo(entity.getDocNo());
+			vo.setMaterialDesc(entity.getMaterialDesc());
+			vo.setInputMaterialQty(entity.getInputMaterialQty() != null ? entity.getInputMaterialQty().toString() : NO_VALUE);
+			vo.setFormulaMaterialQty(entity.getFormulaMaterialQty() != null ? entity.getFormulaMaterialQty().toString() : NO_VALUE);
+			vo.setUsedMaterialQty(entity.getUsedMaterialQty() != null ? entity.getUsedMaterialQty().toString() : NO_VALUE);
+			vo.setRealUsedMaterialQty(entity.getRealUsedMaterialQty() != null ? entity.getRealUsedMaterialQty().toString() : NO_VALUE);
+			vo.setDiffMaterialQty(entity.getDiffMaterialQty() != null ? entity.getDiffMaterialQty().toString() : NO_VALUE);
+			vo.setMaterialQty(entity.getMaterialQty() != null ? entity.getMaterialQty().toString() : NO_VALUE);
+			vo.setGoodsQty(entity.getGoodsQty() != null ? entity.getGoodsQty().toString() : NO_VALUE);
+			vo.setDiffGoodsQty(entity.getDiffGoodsQty() != null ? entity.getDiffGoodsQty().toString() : NO_VALUE);
+			vo.setWasteGoodsPnt(entity.getWasteGoodsPnt() != null ? entity.getWasteGoodsPnt().toString() : NO_VALUE);
+			vo.setWasteGoodsQty(entity.getWasteGoodsQty() != null ? entity.getWasteGoodsQty().toString() : NO_VALUE);
+			vo.setBalanceGoodsQty(entity.getBalanceGoodsQty() != null ? entity.getBalanceGoodsQty().toString() : NO_VALUE);
+			voList.add(vo);
+		}
+
+		return voList;
 	}
 
 	@Override
@@ -175,111 +209,184 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
+			// getDocNo
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getDocNo());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getDocNo())) {
+					cell.setCellValue(data.getDocNo());
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
+			// getMaterialDesc
 			cell = row.createCell(cellNum);
-			cell.setCellValue(data.getMaterialDesc());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getMaterialDesc())) {
+					cell.setCellValue(data.getMaterialDesc());
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellLeft);
 			cellNum++;
 
+			// getInputMaterialQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getInputMaterialQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getInputMaterialQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getInputMaterialQty()) && !NO_VALUE.equals(data.getInputMaterialQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getInputMaterialQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
+			// getFormulaMaterialQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getFormulaMaterialQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getFormulaMaterialQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getFormulaMaterialQty()) && !NO_VALUE.equals(data.getFormulaMaterialQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getFormulaMaterialQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
+			// getUsedMaterialQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getUsedMaterialQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getUsedMaterialQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getUsedMaterialQty()) && !NO_VALUE.equals(data.getUsedMaterialQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getUsedMaterialQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
+			// getRealUsedMaterialQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getRealUsedMaterialQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getRealUsedMaterialQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getRealUsedMaterialQty()) && !NO_VALUE.equals(data.getRealUsedMaterialQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getRealUsedMaterialQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
+			// getDiffMaterialQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getDiffMaterialQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getDiffMaterialQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getDiffMaterialQty()) && !NO_VALUE.equals(data.getDiffMaterialQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getDiffMaterialQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
+			// getGoodsQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getMaterialQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMaterialQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getMaterialQty()) && !NO_VALUE.equals(data.getMaterialQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMaterialQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
+			// getGoodsQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getGoodsQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getGoodsQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getGoodsQty()) && !NO_VALUE.equals(data.getGoodsQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getGoodsQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
+			// getDiffGoodsQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getDiffGoodsQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getDiffGoodsQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getDiffGoodsQty()) && !NO_VALUE.equals(data.getDiffGoodsQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getDiffGoodsQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
+			// getWasteGoodsPnt
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getWasteGoodsPnt())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getWasteGoodsPnt())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getWasteGoodsPnt()) && !NO_VALUE.equals(data.getWasteGoodsPnt())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getWasteGoodsPnt())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
+			// getWasteGoodsQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getWasteGoodsQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getWasteGoodsQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getWasteGoodsQty()) && !NO_VALUE.equals(data.getWasteGoodsQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getWasteGoodsQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
+			// getBalanceGoodsQty
 			cell = row.createCell(cellNum);
-			if (StringUtils.isNotBlank(data.getBalanceGoodsQty())) {
-				cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getBalanceGoodsQty())));
-			} else {
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
 				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(data.getBalanceGoodsQty()) && !NO_VALUE.equals(data.getBalanceGoodsQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getBalanceGoodsQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
