@@ -181,9 +181,23 @@ public class TaFormTS0108Service extends AbstractTaFormTSService<TaFormTS0108Vo,
 		TaFormTS0108DtlVo formTS0108DtlVo = null;
 		List<TaFormTS0108DtlVo> formTS0108DtlVoList = new ArrayList<>();
 		List<TaFormTs0108Dtl> formTs0108DtlList = taFormTs0108DtlRepository.findByFormTsNumber(formTsNumber);
+
 		for (TaFormTs0108Dtl formTs0108Dtl : formTs0108DtlList) {
 			formTS0108DtlVo = new TaFormTS0108DtlVo();
-			toVoDtl(formTS0108DtlVo, formTs0108Dtl);
+			formTS0108DtlVo.setFormTs0108DtlId(StringUtils.defaultString(Long.toString(formTs0108Dtl.getFormTs0108DtlId())));
+			formTS0108DtlVo.setRecNo(StringUtils.defaultString(formTs0108Dtl.getRecNo()));
+			formTS0108DtlVo.setAuditDate(formTs0108Dtl.getAuditDate());
+			formTS0108DtlVo.setOfficerFullName(StringUtils.defaultString(formTs0108Dtl.getOfficerFullName()));
+			formTS0108DtlVo.setOfficerPosition(StringUtils.defaultString(formTs0108Dtl.getOfficerPosition()));
+			formTS0108DtlVo.setAuditTime(StringUtils.defaultString(formTs0108Dtl.getAuditTime()));
+			formTS0108DtlVo.setAuditDest(StringUtils.defaultString(formTs0108Dtl.getAuditDest()));
+			formTS0108DtlVo.setAuditTopic(StringUtils.defaultString(formTs0108Dtl.getAuditTopic()));
+			formTS0108DtlVo.setApprovedAck(StringUtils.defaultString(formTs0108Dtl.getApprovedAck()));
+			formTS0108DtlVo.setOfficerAck(StringUtils.defaultString(formTs0108Dtl.getOfficerAck()));
+			formTS0108DtlVo.setAuditResultDocNo(StringUtils.defaultString(formTs0108Dtl.getAuditResultDocNo()));
+			formTS0108DtlVo.setAuditResultDate(formTs0108Dtl.getAuditResultDate());
+			formTS0108DtlVo.setAuditComment(StringUtils.defaultString(formTs0108Dtl.getAuditComment()));
+			// toVoDtl(formTS0108DtlVo, formTs0108Dtl);
 			formTS0108DtlVoList.add(formTS0108DtlVo);
 		}
 

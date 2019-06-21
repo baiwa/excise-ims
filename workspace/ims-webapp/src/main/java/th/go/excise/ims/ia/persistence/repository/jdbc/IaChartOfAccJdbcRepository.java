@@ -18,7 +18,7 @@ public class IaChartOfAccJdbcRepository {
 	public List<IaChartOfAcc> findAll() {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
-		sql.append(" SELECT * FROM IA_CHART_OF_ACC WHERE IS_DELETED = 'N' AND COA_TYPE = '5' ");
+		sql.append(" SELECT * FROM IA_CHART_OF_ACC WHERE IS_DELETED = 'N' AND COA_TYPE = '5' ORDER BY COA_CODE ASC ");
 
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<IaChartOfAcc> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(),
