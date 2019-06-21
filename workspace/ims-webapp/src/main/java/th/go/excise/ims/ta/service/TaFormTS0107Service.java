@@ -21,9 +21,11 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_FORM_TS_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0107;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0107Repository;
+import th.go.excise.ims.ta.vo.AuditStepFormVo;
 import th.go.excise.ims.ta.vo.TaFormTS0107Vo;
 
 @Service
@@ -33,12 +35,12 @@ public class TaFormTS0107Service extends AbstractTaFormTSService<TaFormTS0107Vo,
 
 	@Autowired
 	private TaFormTs0107Repository taFormTs0107Repository;
-	
+
 	@Override
 	public String getReportName() {
 		return REPORT_NAME.TA_FORM_TS01_07;
 	}
-	
+
 	@Override
 	public byte[] processFormTS(TaFormTS0107Vo formTS0107Vo) throws Exception {
 		logger.info("processFormTS");
@@ -67,6 +69,17 @@ public class TaFormTS0107Service extends AbstractTaFormTSService<TaFormTS0107Vo,
 			formTs0107.setBudgetYear(budgetYear);
 			formTs0107.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
 		}
+
+		AuditStepFormVo dataStep = null;
+		if (StringUtils.isNotBlank(formTS0107Vo.getAuditPlanCode())&& !NULL.equalsIgnoreCase(formTS0107Vo.getFormTsNumber())) {
+			dataStep = new AuditStepFormVo();
+			dataStep.setAuditPlanCode(formTS0107Vo.getAuditPlanCode());
+			dataStep.setAuditStepStatus(formTS0107Vo.getAuditStepStatus());
+			dataStep.setFormTsNumber(formTs0107.getFormTsNumber());
+			dataStep.setFormTsCode(TA_FORM_TS_CODE.TS0107);
+			auditStepService.saveAuditStep(dataStep);
+		}
+
 		taFormTs0107Repository.save(formTs0107);
 	}
 
@@ -132,13 +145,13 @@ public class TaFormTS0107Service extends AbstractTaFormTSService<TaFormTS0107Vo,
 	@Override
 	public TaFormTS0107Vo getFormTS(String formTsNumber) {
 		logger.info("getFormTS formTsNumber={}", formTsNumber);
-		
+
 		TaFormTs0107 formTs0107 = taFormTs0107Repository.findByFormTsNumber(formTsNumber);
-		
+
 		// Set Data
 		TaFormTS0107Vo formTs0107Vo = new TaFormTS0107Vo();
 		toVo(formTs0107Vo, formTs0107);
-		
+
 		return formTs0107Vo;
 	}
 
