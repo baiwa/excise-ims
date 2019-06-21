@@ -128,7 +128,7 @@ public class BasicAnalysisService {
 	}
 
 	public List<String> getPaperBaNumberList(BasicAnalysisFormVo formVo) {
-		return taPaperBaHRepository.findPaperBaNumberByAuditPlanCodeAndDutyGroupId(formVo.getAuditPlanCode(), formVo.getDutyGroupId());
+		return taPaperBaHRepository.findPaperBaNumberByAuditPlanCode(formVo.getAuditPlanCode());
 	}
 	
 	public TaPaperBaH findBaH(TaPaperBaHFormVo form) {

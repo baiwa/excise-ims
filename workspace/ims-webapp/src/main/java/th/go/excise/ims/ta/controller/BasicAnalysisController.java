@@ -79,7 +79,7 @@ public class BasicAnalysisController {
 	@PostMapping("/get-paper-ba-number-list")
 	@ResponseBody
 	public ResponseData<List<String>> getPaperBaNumberList(@RequestBody BasicAnalysisFormVo formVo) {
-		logger.info("getPaperBaNumberList auditPlanCode={}, newRegId={}, dutyGroupId={}", formVo.getAuditPlanCode(), formVo.getNewRegId(), formVo.getDutyGroupId());
+		logger.info("getPaperBaNumberList auditPlanCode={}", formVo.getAuditPlanCode());
 		ResponseData<List<String>> response = new ResponseData<>();
 		try {
 			List<String> baNumberList = basicAnalysisService.getPaperBaNumberList(formVo);
