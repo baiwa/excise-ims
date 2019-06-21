@@ -3,11 +3,13 @@ package th.go.excise.ims.ta.service;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
@@ -68,6 +70,7 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 			vo = new ProductPaperInformPriceVo();
 			vo.setGoodsDesc(wsAnafri0001Vo.getProductName());
 			vo.setTaxPrice(wsAnafri0001Vo.getProductPrice().toString());
+			vo.setExternalPrice(NO_VALUE);
 			voList.add(vo);
 		}
 
@@ -99,7 +102,8 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 	@Override
 	protected byte[] exportData(List<ProductPaperInformPriceVo> voList, String exportType) {
 		logger.info("exportData");
-		
+		// set format money
+		DecimalFormat df = new DecimalFormat("#,##0.00");
 		/* create spreadsheet */
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(PRODUCT_PAPER_IN_FORM_PRICE);
@@ -161,22 +165,54 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(vo.getInformPrice());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(vo.getInformPrice()) && !NO_VALUE.equals(vo.getInformPrice())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getInformPrice())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(vo.getExternalPrice());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(vo.getExternalPrice()) && !NO_VALUE.equals(vo.getExternalPrice())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getExternalPrice())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(vo.getDeclarePrice());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(vo.getDeclarePrice()) && !NO_VALUE.equals(vo.getDeclarePrice())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getDeclarePrice())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(vo.getRetailPrice());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(vo.getRetailPrice()) && !NO_VALUE.equals(vo.getRetailPrice())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getRetailPrice())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
@@ -186,7 +222,15 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 //			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(vo.getDiffPrice());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(vo.getDiffPrice()) && !NO_VALUE.equals(vo.getDiffPrice())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getDiffPrice())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 

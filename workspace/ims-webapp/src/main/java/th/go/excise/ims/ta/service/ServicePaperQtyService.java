@@ -70,9 +70,9 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 		for (WsAnafri0001Vo anafri0001Vo : anafri0001VoList) {
 			vo = new ServicePaperQtyVo();
 			vo.setGoodsDesc(anafri0001Vo.getProductName());
-			vo.setServiceDocNoQty("");
-			vo.setIncomeDailyAccountQty("");
-			vo.setPaymentDocNoQty("");
+			vo.setServiceDocNoQty(NO_VALUE);
+			vo.setIncomeDailyAccountQty(NO_VALUE);
+			vo.setPaymentDocNoQty(NO_VALUE);
 			vo.setAuditQty("");
 			vo.setGoodsQty(anafri0001Vo.getProductQty().toString());
 			vo.setDiffQty("");

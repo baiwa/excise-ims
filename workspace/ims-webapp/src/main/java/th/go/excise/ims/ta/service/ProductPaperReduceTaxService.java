@@ -3,11 +3,13 @@ package th.go.excise.ims.ta.service;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
@@ -100,7 +102,8 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 	@Override
 	protected byte[] exportData(List<ProductPaperReduceTaxVo> voList, String exportType) {
 		logger.info("exportData");
-		
+		// set format money
+		DecimalFormat df = new DecimalFormat("#,##0.00");
 		/* create spreadsheet */
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(PRODUCT_PAPER_REDUCE_TAX);
@@ -192,42 +195,106 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(vo.getTaxReduceAmt());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(vo.getTaxReduceAmt()) && !NO_VALUE.equals(vo.getTaxReduceAmt())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getTaxReduceAmt())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(vo.getTaxReduceQty());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(vo.getTaxReduceQty()) && !NO_VALUE.equals(vo.getTaxReduceQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getTaxReduceQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(vo.getTaxReducePerUnitAmt());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(vo.getTaxReducePerUnitAmt()) && !NO_VALUE.equals(vo.getTaxReducePerUnitAmt())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getTaxReducePerUnitAmt())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(vo.getBillNo());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(vo.getBillNo()) && !NO_VALUE.equals(vo.getBillNo())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getBillNo())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellCenter);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(vo.getBillTaxAmt());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(vo.getBillTaxAmt()) && !NO_VALUE.equals(vo.getBillTaxAmt())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getBillTaxAmt())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(vo.getBillTaxQty());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(vo.getBillTaxQty()) && !NO_VALUE.equals(vo.getBillTaxQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getBillTaxQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(vo.getBillTaxPerUnit());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(vo.getBillTaxPerUnit()) && !NO_VALUE.equals(vo.getBillTaxPerUnit())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getBillTaxPerUnit())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(vo.getDiffTaxReduceAmt());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(vo.getDiffTaxReduceAmt()) && !NO_VALUE.equals(vo.getDiffTaxReduceAmt())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getDiffTaxReduceAmt())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 

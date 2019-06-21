@@ -71,7 +71,7 @@ public class ServicePaperPricePerUnitService extends AbstractServicePaperService
 		for (WsAnafri0001Vo anafri0001Vo : anafri0001VoList) {
 			vo = new ServicePaperPricePerUnitVo();
 			vo.setGoodsDesc(anafri0001Vo.getProductName());
-			vo.setInvoicePrice("");
+			vo.setInvoicePrice(NO_VALUE);
 			vo.setInformPrice("");
 			vo.setAuditPrice("");
 			vo.setGoodsPrice(anafri0001Vo.getProductPrice().toString());

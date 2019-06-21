@@ -3,11 +3,13 @@ package th.go.excise.ims.ta.service;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -80,6 +82,8 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 			vo = new ProductPaperOutputGoodsVo();
 			vo.setGoodsDesc(wsAnafri0001Vo.getProductName());
 			vo.setTaxGoodsQty(wsAnafri0001Vo.getProductQty().toString());
+			vo.setOutputGoodsQty(NO_VALUE);
+			vo.setOutputDailyAccountQty(NO_VALUE);
 			voList.add(vo);
 		}
 
@@ -111,6 +115,8 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 	@Override
 	protected byte[] exportData(List<ProductPaperOutputGoodsVo> voList, String exportType) {
 		logger.info("exportData");
+		// set format money
+		DecimalFormat df = new DecimalFormat("#,##0.00");
 		
 		// create spreadsheet
 		XSSFWorkbook workbook = new XSSFWorkbook();
@@ -176,32 +182,80 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(vo.getOutputGoodsQty());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(vo.getOutputGoodsQty()) && !NO_VALUE.equals(vo.getOutputGoodsQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getOutputGoodsQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(vo.getOutputDailyAccountQty());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(vo.getOutputDailyAccountQty()) && !NO_VALUE.equals(vo.getOutputDailyAccountQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getOutputDailyAccountQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(vo.getOutputMonthStatementQty());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(vo.getOutputMonthStatementQty()) && !NO_VALUE.equals(vo.getOutputMonthStatementQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getOutputMonthStatementQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellRightBgStyle);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(vo.getAuditQty());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(vo.getAuditQty()) && !NO_VALUE.equals(vo.getAuditQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getAuditQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellRightBgStyle);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(vo.getTaxGoodsQty());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(vo.getTaxGoodsQty()) && !NO_VALUE.equals(vo.getTaxGoodsQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getTaxGoodsQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellRightBgStyle);
 			cellNum++;
 
 			cell = row.createCell(cellNum);
-			cell.setCellValue(vo.getDiffQty());
+			if (EXPORT_TYPE_CREATE.equals(exportType)) {
+				cell.setCellValue("");
+			} else {
+				if (StringUtils.isNotBlank(vo.getDiffQty()) && !NO_VALUE.equals(vo.getDiffQty())) {
+					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getDiffQty())));
+				} else {
+					cell.setCellValue(NO_VALUE);
+				}
+			}
 			cell.setCellStyle(cellRightBgStyle);
 			cellNum++;
 

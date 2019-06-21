@@ -111,6 +111,7 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 
 	@Override
 	protected byte[] exportData(List<ProductPaperInputMaterialVo> voList, String exportType) {
+		logger.info("exportData");
 		// set format money
 		DecimalFormat df = new DecimalFormat("#,##0.00");
 
