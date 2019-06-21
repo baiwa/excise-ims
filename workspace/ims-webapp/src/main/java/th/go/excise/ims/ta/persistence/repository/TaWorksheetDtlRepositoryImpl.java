@@ -56,7 +56,8 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 				"TAX_AMT_G2_M6", "TAX_AMT_G2_M7", "TAX_AMT_G2_M8", "TAX_AMT_G2_M9", "TAX_AMT_G2_M10",
 				"TAX_AMT_G2_M11", "TAX_AMT_G2_M12", "TAX_AMT_G2_M13", "TAX_AMT_G2_M14", "TAX_AMT_G2_M15",
 				"TAX_AMT_G2_M16", "TAX_AMT_G2_M17", "TAX_AMT_G2_M18", "COND_MAIN_GRP", "COND_SUB_CAPITAL",
-				"COND_SUB_RISK", "CREATED_BY", "CREATED_DATE", "LAST_AUDIT_YEAR", "INC_MULTI_DUTY_FLAG"),
+				"COND_SUB_RISK", "CREATED_BY", "CREATED_DATE", "LAST_AUDIT_YEAR", "INC_MULTI_DUTY_FLAG" ,
+				"BUDGET_YEAR"),
 			"TA_WORKSHEET_DTL_SEQ");
 
 		commonJdbcTemplate.batchUpdate(sql, worksheetDtlList, 1000, new ParameterizedPreparedStatementSetter<TaWorksheetDtl>() {
@@ -124,6 +125,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 
 				paramList.add(worksheetDtl.getLastAuditYear());
 				paramList.add(worksheetDtl.getIncMultiDutyFlag());
+				paramList.add(worksheetDtl.getBudgetYear());
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
 			}
 		});

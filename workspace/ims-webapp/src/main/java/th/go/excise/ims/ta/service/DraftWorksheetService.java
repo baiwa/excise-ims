@@ -1,7 +1,5 @@
 package th.go.excise.ims.ta.service;
 
-import java.lang.reflect.Method;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,8 +10,6 @@ import java.util.Map;
 import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.math3.stat.StatUtils;
-import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +49,6 @@ import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondSubNoAuditRepos
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondSubRiskRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetHdrRepository;
-import th.go.excise.ims.ta.persistence.repository.TaWsInc8000MRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.util.TaxAuditUtils;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
@@ -350,7 +345,7 @@ public class DraftWorksheetService {
 
 			worksheetDtl.setLastAuditYear(detailVo.getLastAuditYear());
 			worksheetDtl.setIncMultiDutyFlag(detailVo.getIncMultiDutyFlag());
-
+			worksheetDtl.setBudgetYear(budgetYear);
 			worksheetfDtlList.add(worksheetDtl);
 		}
 
