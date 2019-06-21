@@ -3,12 +3,8 @@ package th.go.excise.ims.ta.vo;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+public class TaFormTS01141Vo extends AbstractTaFormTsVo {
 
-public class TaFormTS01141Vo {
-
-	private String formTsNumber;
 	private String pageNo;
 	private Date docDate;
 	private String docDear;
@@ -19,14 +15,6 @@ public class TaFormTS01141Vo {
 	private Date auditDateEnd;
 	private String auditDesc;
 	private List<TaFormTS01141Vo> taFormTS01141VoList;
-
-	public String getFormTsNumber() {
-		return formTsNumber;
-	}
-
-	public void setFormTsNumber(String formTsNumber) {
-		this.formTsNumber = formTsNumber;
-	}
 
 	public String getPageNo() {
 		return pageNo;
@@ -108,9 +96,4 @@ public class TaFormTS01141Vo {
 		this.taFormTS01141VoList = taFormTS01141VoList;
 	}
 
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-	}
-	
 }

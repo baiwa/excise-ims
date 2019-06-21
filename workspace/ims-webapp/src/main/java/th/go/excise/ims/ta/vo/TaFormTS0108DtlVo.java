@@ -2,10 +2,8 @@ package th.go.excise.ims.ta.vo;
 
 import java.util.Date;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 public class TaFormTS0108DtlVo {
+	
     private String formTs0108DtlId;
     private String recNo;
     private Date auditDate;
@@ -122,11 +120,6 @@ public class TaFormTS0108DtlVo {
 
     public void setAuditComment(String auditComment) {
         this.auditComment = auditComment;
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 
 }

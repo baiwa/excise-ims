@@ -4,86 +4,87 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class TaFormTS0114DtlVo {
-    private String formTs0114DtlId;
-    private String recNo;
-    private Date taxDate;
-    private String dutyTypeText;
-    private BigDecimal taxAmt;
-    private BigDecimal fineAmt;
-    private BigDecimal extraAmt;
-    private BigDecimal moiAmt;
-    private BigDecimal sumAmt;
 
-    public String getFormTs0114DtlId() {
-        return formTs0114DtlId;
-    }
+	private String formTs0114DtlId;
+	private String recNo;
+	private Date taxDate;
+	private String dutyTypeText;
+	private BigDecimal taxAmt;
+	private BigDecimal fineAmt;
+	private BigDecimal extraAmt;
+	private BigDecimal moiAmt;
+	private BigDecimal sumAmt;
 
-    public void setFormTs0114DtlId(String formTs0114DtlId) {
-        this.formTs0114DtlId = formTs0114DtlId;
-    }
+	public String getFormTs0114DtlId() {
+		return formTs0114DtlId;
+	}
 
-    public String getRecNo() {
-        return recNo;
-    }
+	public void setFormTs0114DtlId(String formTs0114DtlId) {
+		this.formTs0114DtlId = formTs0114DtlId;
+	}
 
-    public void setRecNo(String recNo) {
-        this.recNo = recNo;
-    }
+	public String getRecNo() {
+		return recNo;
+	}
 
-    public Date getTaxDate() {
-        return taxDate;
-    }
+	public void setRecNo(String recNo) {
+		this.recNo = recNo;
+	}
 
-    public void setTaxDate(Date taxDate) {
-        this.taxDate = taxDate;
-    }
+	public Date getTaxDate() {
+		return taxDate;
+	}
 
-    public String getDutyTypeText() {
-        return dutyTypeText;
-    }
+	public void setTaxDate(Date taxDate) {
+		this.taxDate = taxDate;
+	}
 
-    public void setDutyTypeText(String dutyTypeText) {
-        this.dutyTypeText = dutyTypeText;
-    }
+	public String getDutyTypeText() {
+		return dutyTypeText;
+	}
 
-    public BigDecimal getTaxAmt() {
-        return taxAmt;
-    }
+	public void setDutyTypeText(String dutyTypeText) {
+		this.dutyTypeText = dutyTypeText;
+	}
 
-    public void setTaxAmt(BigDecimal taxAmt) {
-        this.taxAmt = taxAmt;
-    }
+	public BigDecimal getTaxAmt() {
+		return taxAmt;
+	}
 
-    public BigDecimal getFineAmt() {
-        return fineAmt;
-    }
+	public void setTaxAmt(BigDecimal taxAmt) {
+		this.taxAmt = taxAmt;
+	}
 
-    public void setFineAmt(BigDecimal fineAmt) {
-        this.fineAmt = fineAmt;
-    }
+	public BigDecimal getFineAmt() {
+		return fineAmt;
+	}
 
-    public BigDecimal getExtraAmt() {
-        return extraAmt;
-    }
+	public void setFineAmt(BigDecimal fineAmt) {
+		this.fineAmt = fineAmt;
+	}
 
-    public void setExtraAmt(BigDecimal extraAmt) {
-        this.extraAmt = extraAmt;
-    }
+	public BigDecimal getExtraAmt() {
+		return extraAmt;
+	}
 
-    public BigDecimal getMoiAmt() {
-        return moiAmt;
-    }
+	public void setExtraAmt(BigDecimal extraAmt) {
+		this.extraAmt = extraAmt;
+	}
 
-    public void setMoiAmt(BigDecimal moiAmt) {
-        this.moiAmt = moiAmt;
-    }
+	public BigDecimal getMoiAmt() {
+		return moiAmt;
+	}
 
-    public BigDecimal getSumAmt() {
-        return sumAmt;
-    }
+	public void setMoiAmt(BigDecimal moiAmt) {
+		this.moiAmt = moiAmt;
+	}
 
-    public void setSumAmt(BigDecimal sumAmt) {
-        this.sumAmt = sumAmt;
-    }
+	public BigDecimal getSumAmt() {
+		return sumAmt;
+	}
+
+	public void setSumAmt(BigDecimal sumAmt) {
+		this.sumAmt = sumAmt;
+	}
 
 }

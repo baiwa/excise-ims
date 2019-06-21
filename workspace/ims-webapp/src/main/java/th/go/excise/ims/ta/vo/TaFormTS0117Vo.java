@@ -3,9 +3,8 @@ package th.go.excise.ims.ta.vo;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class TaFormTS0117Vo {
+public class TaFormTS0117Vo extends AbstractTaFormTsVo {
 
-	private String formTsNumber;
 	private String bookNumber1;
 	private String bookNumber2;
 	private String docTopic;
@@ -54,14 +53,6 @@ public class TaFormTS0117Vo {
 	private String officeName;
 	private String officePhone;
 	private String headOfficerFullName;
-
-	public String getFormTsNumber() {
-		return formTsNumber;
-	}
-
-	public void setFormTsNumber(String formTsNumber) {
-		this.formTsNumber = formTsNumber;
-	}
 
 	public String getBookNumber1() {
 		return bookNumber1;

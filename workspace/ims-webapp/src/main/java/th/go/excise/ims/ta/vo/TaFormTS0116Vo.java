@@ -3,9 +3,8 @@ package th.go.excise.ims.ta.vo;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class TaFormTS0116Vo {
+public class TaFormTS0116Vo extends AbstractTaFormTsVo {
 
-	private String formTsNumber;
 	private String docText;
 	private String docDear;
 	private String factoryName1;
@@ -48,30 +47,6 @@ public class TaFormTS0116Vo {
 	private String signApproverFullName;
 	private String signApproverPosition;
 	private Date signApproverDate;
-	
-	public String getFactoryName1() {
-		return factoryName1;
-	}
-
-	public void setFactoryName1(String factoryName1) {
-		this.factoryName1 = factoryName1;
-	}
-
-	public String getFactoryName2() {
-		return factoryName2;
-	}
-
-	public void setFactoryName2(String factoryName2) {
-		this.factoryName2 = factoryName2;
-	}
-
-	public String getFormTsNumber() {
-		return formTsNumber;
-	}
-
-	public void setFormTsNumber(String formTsNumber) {
-		this.formTsNumber = formTsNumber;
-	}
 
 	public String getDocText() {
 		return docText;
@@ -88,6 +63,23 @@ public class TaFormTS0116Vo {
 	public void setDocDear(String docDear) {
 		this.docDear = docDear;
 	}
+
+	public String getFactoryName1() {
+		return factoryName1;
+	}
+
+	public void setFactoryName1(String factoryName1) {
+		this.factoryName1 = factoryName1;
+	}
+
+	public String getFactoryName2() {
+		return factoryName2;
+	}
+
+	public void setFactoryName2(String factoryName2) {
+		this.factoryName2 = factoryName2;
+	}
+
 	public String getFactoryType() {
 		return factoryType;
 	}

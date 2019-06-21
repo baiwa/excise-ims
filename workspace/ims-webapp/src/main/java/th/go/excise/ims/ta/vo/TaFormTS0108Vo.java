@@ -2,9 +2,8 @@ package th.go.excise.ims.ta.vo;
 
 import java.util.List;
 
-public class TaFormTS0108Vo {
+public class TaFormTS0108Vo extends AbstractTaFormTsVo {
 
-	private String formTsNumber;
 	private List<TaFormTS0108DtlVo> taFormTS0108DtlVoList;
 
 	public String getFormTsNumber() {

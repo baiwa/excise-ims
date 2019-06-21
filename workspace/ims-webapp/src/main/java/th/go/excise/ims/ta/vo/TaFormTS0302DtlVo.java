@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class TaFormTS0302DtlVo {
+
 	private String formTs0302DtlId;
 	private String auditNo;
 	private String operatorOfficeName;

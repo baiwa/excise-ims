@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class TaFormTS0115DtlVo {
+
 	private String formTs0115DtlId;
 	private String recNo;
 	private Date recDate;

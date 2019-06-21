@@ -3,9 +3,8 @@ package th.go.excise.ims.ta.vo;
 import java.util.Date;
 import java.util.List;
 
-public class TaFormTS01142Vo {
+public class TaFormTS01142Vo extends AbstractTaFormTsVo {
 
-	private String formTsNumber;
 	private String ownerFullName;
 	private String factoryType;
 	private String factoryName;
@@ -17,14 +16,6 @@ public class TaFormTS01142Vo {
 	private Date extraAmtDate;
 	private String signOwnerFullName;
 	private String signOfficerFullName;
-
-	public String getFormTsNumber() {
-		return formTsNumber;
-	}
-
-	public void setFormTsNumber(String formTsNumber) {
-		this.formTsNumber = formTsNumber;
-	}
 
 	public String getOwnerFullName() {
 		return ownerFullName;

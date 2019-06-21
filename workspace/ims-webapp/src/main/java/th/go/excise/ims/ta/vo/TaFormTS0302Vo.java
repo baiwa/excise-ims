@@ -2,8 +2,8 @@ package th.go.excise.ims.ta.vo;
 
 import java.util.List;
 
-public class TaFormTS0302Vo {
-	private String formTsNumber;
+public class TaFormTS0302Vo extends AbstractTaFormTsVo {
+
 	private String factoryName;
 	private String factoryTypeText;
 	private String ownerName;
@@ -16,14 +16,6 @@ public class TaFormTS0302Vo {
 	private String facProvinceName;
 	private String assessmentText;
 	private List<TaFormTS0302DtlVo> taFormTS0302DtlVoList;
-
-	public String getFormTsNumber() {
-		return formTsNumber;
-	}
-
-	public void setFormTsNumber(String formTsNumber) {
-		this.formTsNumber = formTsNumber;
-	}
 
 	public String getFactoryName() {
 		return factoryName;

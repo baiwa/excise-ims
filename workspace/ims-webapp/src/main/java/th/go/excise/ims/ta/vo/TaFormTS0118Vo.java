@@ -4,9 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-public class TaFormTS0118Vo {
+public class TaFormTS0118Vo extends AbstractTaFormTsVo {
 
-	private String formTsNumber;
 	private String bookNumber1;
 	private String bookNumber2;
 	private Date docDate;
@@ -32,14 +31,6 @@ public class TaFormTS0118Vo {
 	private String signOfficerFullName2;
 	private Date signOfficerDate2;
 	private Date extraMoneyDate;
-
-	public String getFormTsNumber() {
-		return formTsNumber;
-	}
-
-	public void setFormTsNumber(String formTsNumber) {
-		this.formTsNumber = formTsNumber;
-	}
 
 	public String getBookNumber1() {
 		return bookNumber1;
