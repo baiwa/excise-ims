@@ -156,34 +156,29 @@ public class IaExpensesJdbcRepository {
 //		sql.append(" SELECT EXP.* FROM IA_EXPENSES EXP WHERE EXP.IS_DELETED='N' ");
 		sql.append(" SELECT EXP.* FROM IA_EXPENSES EXP JOIN IA_GFLEDGER_ACCOUNT IGA ");
 		sql.append(" ON EXP.ACCOUNT_ID = IGA.GL_ACC_NO JOIN IA_GFTRIAL_BALANCE IGB ");
-		sql.append(" ON EXP.ACCOUNT_ID = IGB.ACC_NO " );
-		sql.append(" WHERE EXP.OFFICE_CODE = ? " );
+		sql.append(" ON EXP.ACCOUNT_ID = IGB.ACC_NO ");
+		sql.append(" WHERE EXP.OFFICE_CODE = ? ");
 //				EXP CONDITION
-		sql.append(" WHERE EXP.EXPENSE_YEAR >= ? AND EXP.EXPENSE_YEAR   <= ? ");
-		sql.append(" AND EXP.EXPENSE_MONTH >= TO_NUMBER(?) " + "AND EXP.EXPENSE_MONTH   <= TO_NUMBER(?) ");
+		sql.append(" AND EXP.EXPENSE_YEAR||EXPENSE_MONTH  >= ? ");
+		sql.append(" AND EXP.EXPENSE_YEAR||EXPENSE_MONTH  <= ? ");
 //				IGA CONDITION
-		sql.append(" AND IGA.PERIOD >= TO_NUMBER(?) " + "AND IGA.PERIOD <= TO_NUMBER(?) ");
+		sql.append(" AND IGA.PERIOD_YEAR||PERIOD  >= ? ");
+		sql.append(" AND IGA.PERIOD_YEAR||PERIOD  <= ? ");
 //				IGB CONDITION
-		sql.append(" AND IGB.PERIOD_YEAR  >= ? " + "AND IGB.PERIOD_YEAR  <= ? " + "AND IGB.PERIOD_FROM  >= TO_NUMBER(?) ");
-		sql.append(" AND IGB.PERIOD_FROM  <= TO_NUMBER(?) ");
-		sql.append(" AND EXP.IS_DELETED='N' ");
+		sql.append(" AND IGB.PERIOD_YEAR||PERIOD_FROM  >= ? ");
+		sql.append(" AND IGB.PERIOD_YEAR||PERIOD_FROM  <= ? ");
+		sql.append(" AND EXP.IS_DELETED='N' AND IGA.IS_DELETED='N' AND IGB.IS_DELETED='N' ");
 
-		
 		params.add(form.getArea());
 //		EXP
-		params.add(form.getStartYear());
-		params.add(form.getEndYear());
-		params.add(form.getPeriodMonthStart());
-		params.add(form.getPeriodMonthEnd());
+		params.add(form.getStartYear() + StringUtils.leftPad(form.getPeriodMonthStart(), 2, '0').substring(0, 2));
+		params.add(form.getEndYear() + StringUtils.leftPad(form.getPeriodMonthEnd().substring(0, 2), 2, '0').substring(0, 2));
 //		IGA
-		params.add(form.getPeriodMonthStart());
-		params.add(form.getPeriodMonthEnd());
+		params.add(form.getStartYear() + StringUtils.leftPad(form.getPeriodMonthStart(), 2, '0').substring(0, 2));
+		params.add(form.getEndYear() + StringUtils.leftPad(form.getPeriodMonthEnd().substring(0, 2), 2, '0').substring(0, 2));
 //		IGB
-		params.add(form.getStartYear());
-		params.add(form.getEndYear());
-		params.add(form.getPeriodMonthStart());
-		params.add(form.getPeriodMonthEnd());
-
+		params.add(form.getStartYear() + StringUtils.leftPad(form.getPeriodMonthStart(), 2, '0').substring(0, 2));
+		params.add(form.getEndYear() + StringUtils.leftPad(form.getPeriodMonthEnd().substring(0, 2), 2, '0').substring(0, 2));
 		List<Int090101Vo> data = commonJdbcTemplate.query(sql.toString(), params.toArray(), compareRowmapper);
 		return data;
 	}
