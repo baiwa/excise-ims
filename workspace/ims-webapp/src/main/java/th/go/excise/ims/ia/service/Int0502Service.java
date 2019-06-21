@@ -58,7 +58,7 @@ public class Int0502Service {
 		CellStyle tdCenter = ExcelUtils.createCenterCellStyle(workbook);
 		CellStyle tdRight = ExcelUtils.createRightCellStyle(workbook);
 		CellStyle TopicCenter = ExcelUtils.createTopicCenterStyle(workbook);
-		CellStyle topicRightlite = ExcelUtils.createTopicRightliteStyle(workbook);
+		CellStyle TopicCenterlite = ExcelUtils.createTopicCenterliteStyle(workbook);
 		Sheet sheet = workbook.createSheet();
 
 		int rowNum = 0;
@@ -86,7 +86,7 @@ public class Int0502Service {
 		cell3 = row3.createCell(cellNum);
 		cell3.setCellValue(
 				"ใบประกอบใบเบิกค่าใช้จ่ายการเดินทางของ  " + UserLoginUtils.getCurrentUserBean().getUserThaiName() + "  "
-						+ UserLoginUtils.getCurrentUserBean().getUserThaiSurname() + "  ลงวันที่___________________");
+						+ UserLoginUtils.getCurrentUserBean().getUserThaiSurname() + "  ลงวันที่....................................");
 		cell3.setCellStyle(TopicCenter);
 		rowNum++;
 
@@ -319,16 +319,18 @@ public class Int0502Service {
 		cell.setCellValue("จำนวนเงินรวมทั้งสิ้น (ตัวอักษร)" + "      " + textMoney );
 		
 		cellNum = 8;
-		row = sheet.createRow(rowNum);
 		cell = row.createCell(cellNum);
-		cell.setCellValue("ลงชื่อ...................................");
+		cell.setCellValue("ลงชื่อ..............................................");
+		cell.setCellStyle(TopicCenterlite);
+		
+		
 
 		rowNum++;
 		cellNum = 8;
 		row = sheet.createRow(rowNum);
 		cell = row.createCell(cellNum);
 		cell.setCellValue("(" +UserLoginUtils.getCurrentUserBean().getUserThaiName() + "  " + UserLoginUtils.getCurrentUserBean().getUserThaiSurname() + ")");
-		
+		cell.setCellStyle(TopicCenterlite);
 		
 		rowNum++;
 		cellNum = 0;
@@ -337,14 +339,13 @@ public class Int0502Service {
 		cell.setCellValue("คำชี้แจง");
 		
 		cellNum = 1;
-		row = sheet.createRow(rowNum);
 		cell = row.createCell(cellNum);
 		cell.setCellValue("1. ค่าเบี้ยเลี้ยงและค่าเช่าที่พักให้ระบุอัตตราวันละและจำนวนวันที่ขอเบิกของแต่ล่ะบุคคลในช่องหมายเหตุ");
 		
 		cellNum = 8;
-		row = sheet.createRow(rowNum);
 		cell = row.createCell(cellNum);
 		cell.setCellValue("ตำแหน่ง   " + UserLoginUtils.getCurrentUserBean().getTitle());
+		cell.setCellStyle(TopicCenterlite);
 		
 		
 		rowNum++;
@@ -354,9 +355,9 @@ public class Int0502Service {
 		cell.setCellValue("1. ให้ผู้มีสิทธิแต่ละคนเป็นผู้ลงลายมือชื่อผู้รับเงินและวันเดือนปีที่ได้รับเงิน กรณีเป็นทางการรับจากเงินยืม ให้ระยุวันที่ที่ได้รับจากเงินยืม");
 		
 		cellNum = 8;
-		row = sheet.createRow(rowNum);
 		cell = row.createCell(cellNum);
-		cell.setCellValue("ลงวันที่___________________");
+		cell.setCellValue("ลงวันที่..................................");
+		cell.setCellStyle(TopicCenterlite);
 		
 		rowNum++;
 		cellNum = 1;
