@@ -40,8 +40,6 @@ public class TaFormTS0108Service extends AbstractTaFormTSService<TaFormTS0108Vo,
     private static final Logger logger = LoggerFactory.getLogger(TaFormTS0107Service.class);
 
     @Autowired
-    private TaFormTSSequenceService taFormTSSequenceService;
-    @Autowired
     private TaFormTs0108HdrRepository taFormTs0108HdrRepository;
     @Autowired
     private TaFormTs0108DtlRepository taFormTs0108DtlRepository;

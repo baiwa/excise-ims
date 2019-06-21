@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class AbstractTaFormTSService<VO extends Object, ENTITY> {
 	
@@ -14,6 +15,19 @@ public abstract class AbstractTaFormTSService<VO extends Object, ENTITY> {
 	
 	protected static final String NULL = "NULL";
 	
+	protected TaFormTSSequenceService taFormTSSequenceService;
+	protected AuditStepService auditStepService;
+	
+	@Autowired
+	public void setTaFormTSSequenceService(TaFormTSSequenceService taFormTSSequenceService) {
+		this.taFormTSSequenceService = taFormTSSequenceService;
+	}
+
+	@Autowired
+	public void setAuditStepService(AuditStepService auditStepService) {
+		this.auditStepService = auditStepService;
+	}
+
 	@SuppressWarnings("unchecked")
 	public Class<VO> getVoClass() {
 		return ((Class<VO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
