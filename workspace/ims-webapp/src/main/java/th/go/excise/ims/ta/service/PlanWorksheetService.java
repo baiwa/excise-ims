@@ -209,6 +209,7 @@ public class PlanWorksheetService {
 				planDtl.setAuditStatus(TA_AUDIT_STATUS.CODE_0100);
 				planDtl.setAuSubdeptCode(userBean.getSubdeptCode());
 				planDtl.setAuditPlanCode(planCode);
+				planDtl.setBudgetYear(formVo.getBudgetYear());
 				taPlanWorksheetDtlRepository.save(planDtl);
 				
 				updateFlagWorksheetSelect(budgetYear, newRegId, officeCode, FLAG.Y_FLAG, LocalDate.now());
@@ -667,6 +668,7 @@ public class PlanWorksheetService {
 				planDtl.setAuditStatus(TA_AUDIT_STATUS.CODE_0300);
 				planDtl.setAuditPlanCode(planCode);
 //				planDtl.setAuSubdeptCode(userBean.getSubdeptCode());
+				planDtl.setBudgetYear(formVo.getBudgetYear());
 				taPlanWorksheetDtlRepository.save(planDtl);
 
 				updateFlagWorksheetSelect(budgetYear, newRegId, officeCode, FLAG.Y_FLAG, LocalDate.now());
@@ -796,6 +798,7 @@ public class PlanWorksheetService {
 				planDtl.setAuditPlanCode(planCode);
 //				planDtl.setAuditType(upload.getAuditType());
 //				planDtl.setAuSubdeptCode(userBean.getSubdeptCode());
+				planDtl.setBudgetYear(formVo.getBudgetYear());
 				taPlanWorksheetDtlRepository.save(planDtl);
 
 				updateFlagWorksheetSelect(budgetYear, upload.getNewRegId(), officeCode, FLAG.Y_FLAG, LocalDate.now());
@@ -985,7 +988,7 @@ public class PlanWorksheetService {
 			planDtlInsert.setAnalysisNumber(formVo.getAnalysisNumber());
 			planDtlInsert.setOfficeCode(formVo.getOfficeCode());
 			planDtlInsert.setNewRegId(formVo.getReplaceRegId());
-			planDtlInsert.setAuditStatus(TA_AUDIT_STATUS.CODE_0300);
+			planDtlInsert.setAuditStatus(TA_AUDIT_STATUS.CODE_0301);
 			planDtlInsert.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.OUTPLAN);
 			planDtlInsert.setAuditPlanCode(planCode);
 			planDtlInsert.setReplaceReason(formVo.getReplaceReason());
@@ -1001,8 +1004,9 @@ public class PlanWorksheetService {
 				planDtlInsert.setAnalysisNumber(planDtl.getAnalysisNumber());
 				planDtlInsert.setOfficeCode(planDtl.getOfficeCode());
 				planDtlInsert.setNewRegId(formVo.getReplaceRegId());
-				planDtlInsert.setAuditStatus(TA_AUDIT_STATUS.CODE_0300);
-				planDtlInsert.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.OUTPLAN);
+				planDtlInsert.setAuditStatus(TA_AUDIT_STATUS.CODE_0301);
+				planDtlInsert.setPlanType(formVo.getPlanType());
+//				planDtlInsert.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.OUTPLAN);
 				planDtlInsert.setAuditPlanCode(planDtl.getAuditPlanCode());
 				planDtlInsert.setReplaceReason(formVo.getReplaceReason());
 				planDtlInsert = taPlanWorksheetDtlRepository.save(planDtlInsert);

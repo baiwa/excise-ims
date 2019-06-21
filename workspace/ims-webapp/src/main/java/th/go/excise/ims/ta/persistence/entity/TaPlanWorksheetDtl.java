@@ -76,6 +76,8 @@ public class TaPlanWorksheetDtl extends BaseEntity {
 	private String replaceReason;
 	@Column(name = "REPLACE_REG_ID")
 	private String replaceRegId;
+	@Column(name = "BUDGET_YEAR")
+	private String budgetYear;
 
 	public Long getPlanWorksheetDtlId() {
 		return planWorksheetDtlId;
@@ -291,6 +293,14 @@ public class TaPlanWorksheetDtl extends BaseEntity {
 
 	public void setReplaceRegId(String replaceRegId) {
 		this.replaceRegId = replaceRegId;
+	}
+	
+	public String getBudgetYear() {
+		return budgetYear;
+	}
+
+	public void setBudgetYear(String budgetYear) {
+		this.budgetYear = budgetYear;
 	}
 	
 

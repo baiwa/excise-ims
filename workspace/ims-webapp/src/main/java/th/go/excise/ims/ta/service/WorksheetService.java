@@ -422,7 +422,12 @@ public class WorksheetService {
 	public TaxOperatorVo getWorksheet(TaxOperatorFormVo formVo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
-		formVo.setBudgetYear(budgetYear);
+		if(StringUtils.isNotBlank(formVo.getBudgetYear())) {
+			budgetYear = formVo.getBudgetYear();
+		}else {
+			budgetYear = ExciseUtils.getCurrentBudgetYear();
+		}
+
 		logger.info("getWorksheet officeCode={}, budgetYear={}, analysisNumber={}", officeCode, budgetYear, formVo.getAnalysisNumber());
 
 		if (StringUtils.isBlank(formVo.getAnalysisNumber())) {
