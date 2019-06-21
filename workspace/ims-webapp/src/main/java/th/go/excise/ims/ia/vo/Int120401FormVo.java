@@ -9,7 +9,8 @@ public class Int120401FormVo {
 	private String year;
 	private String yearFrom;
 	private String yearTo;
-
+	private String officeCode;
+	private String area;
 
 	public BigDecimal getAccountId() {
 		return accountId;
@@ -57,6 +58,22 @@ public class Int120401FormVo {
 
 	public void setYearTo(String yearTo) {
 		this.yearTo = yearTo;
+	}
+
+	public String getOfficeCode() {
+		return officeCode;
+	}
+
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
+	}
+
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
 	}
 
 }

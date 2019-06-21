@@ -22,7 +22,7 @@ public class IaExpensesJdbcRepository {
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
-	private final String SQL = "SELECT * FROM IA_EXPENSES WHERE IS_DELETED = 'N' ";
+	private final String SQL = "SELECT * FROM IA_EXPENSES WHERE 1=1 ";
 
 	public List<IaExpenses> findByYearByCoa(Int120401FormVo formVo) {
 		StringBuilder sql = new StringBuilder(SQL);
@@ -32,20 +32,36 @@ public class IaExpensesJdbcRepository {
 			sql.append(" AND ACCOUNT_ID = ? ");
 			params.add(formVo.getAccountId());
 		}
-
-		if (StringUtils.isNotBlank(formVo.getYear())) {
-			Integer yearFormInt = Integer.parseInt(formVo.getYear()) - 544;
-			Integer yearToInt = Integer.parseInt(formVo.getYear()) - 543;
-			String yearFormStr = "01-DEC-" + yearFormInt.toString();
-			String yearToStr = "30-NOV-" + yearToInt.toString();
-			sql.append(" AND CREATED_DATE >= ? ");
-			params.add(yearFormStr);
-//			params.add(formVo.getYearFrom());
-			sql.append(" AND CREATED_DATE <= ? ");
-			params.add(yearToStr);
-//			params.add(formVo.getYearTo());
+		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
+			if (StringUtils.isNoneBlank(formVo.getArea())) {
+				sql.append(" AND OFFICE_CODE = ? ");
+				params.add(formVo.getArea());
+			} else {
+				sql.append(" AND SUBSTR(OFFICE_CODE, 0, 2) = ? ");
+				params.add(formVo.getOfficeCode().substring(0, 2));
+			}
 		}
-
+//		if(StringUtils.isNotBlank(formVo.getOfficeCode())) {
+//			sql.append(" AND OFFICE_CODE = ? ");
+//			params.add(formVo.getOfficeCode());
+//		}
+//		if (StringUtils.isNotBlank(formVo.getYear())) {
+//			Integer yearFormInt = Integer.parseInt(formVo.getYear()) - 544;
+//			Integer yearToInt = Integer.parseInt(formVo.getYear()) - 543;
+//			String yearFormStr = "01-DEC-" + yearFormInt.toString();
+//			String yearToStr = "30-NOV-" + yearToInt.toString();
+//			sql.append(" AND CREATED_DATE >= ? ");
+//			params.add(yearFormStr);
+////			params.add(formVo.getYearFrom());
+//			sql.append(" AND CREATED_DATE <= ? ");
+//			params.add(yearToStr);
+////			params.add(formVo.getYearTo());
+//		}
+		if (StringUtils.isNotBlank(formVo.getYear())) {
+			sql.append(" AND BUDGET_YEAR = ? ");
+			params.add(formVo.getYear());
+		}
+		sql.append(" AND IS_DELETED = 'N' ");
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<IaExpenses> data = commonJdbcTemplate.query(sql.toString(), params.toArray(),
 				new BeanPropertyRowMapper(IaExpenses.class));
@@ -137,27 +153,36 @@ public class IaExpensesJdbcRepository {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
 
-		sql.append(" SELECT EXP.* FROM IA_EXPENSES EXP WHERE EXP.IS_DELETED='N' ");
-//		sql.append(" SELECT EXP.* " + 
-//				"FROM IA_EXPENSES EXP " + 
-//				"JOIN IA_GFLEDGER_ACCOUNT IGA " + 
-//				"ON EXP.ACCOUNT_ID = IGA.GL_ACC_NO " + 
-//				"JOIN IA_GFTRIAL_BALANCE IGB " + 
-//				"ON EXP.ACCOUNT_ID       = IGB.ACC_NO " + 
-////				EXP CONDITION
-//				"WHERE EXP.EXPENSE_YEAR >= '2017' " + 
-//				"AND EXP.EXPENSE_YEAR   <= '2019' " + 
-//				"AND EXP.EXPENSE_MONTH >= TO_NUMBER('1') " + 
-//				"AND EXP.EXPENSE_MONTH   <= TO_NUMBER('12') " + 
-////				IGA CONDITION
-//				"AND IGA.PERIOD >= TO_NUMBER('1') " + 
-//				"AND IGA.PERIOD <= TO_NUMBER('12') " + 
-////				IGB CONDITION
-//				"AND IGB.PERIOD_YEAR  >= '2017' " + 
-//				"AND IGB.PERIOD_YEAR  <= '2019' " + 
-//				"AND IGB.PERIOD_FROM  >= TO_NUMBER('1') " + 
-//				"AND IGB.PERIOD_FROM  <= TO_NUMBER('12')");
-//		params.add(formVo.getAccountId());
+//		sql.append(" SELECT EXP.* FROM IA_EXPENSES EXP WHERE EXP.IS_DELETED='N' ");
+		sql.append(" SELECT EXP.* FROM IA_EXPENSES EXP JOIN IA_GFLEDGER_ACCOUNT IGA ");
+		sql.append(" ON EXP.ACCOUNT_ID = IGA.GL_ACC_NO JOIN IA_GFTRIAL_BALANCE IGB ");
+		sql.append(" ON EXP.ACCOUNT_ID = IGB.ACC_NO " );
+		sql.append(" WHERE EXP.OFFICE_CODE = ? " );
+//				EXP CONDITION
+		sql.append(" WHERE EXP.EXPENSE_YEAR >= ? AND EXP.EXPENSE_YEAR   <= ? ");
+		sql.append(" AND EXP.EXPENSE_MONTH >= TO_NUMBER(?) " + "AND EXP.EXPENSE_MONTH   <= TO_NUMBER(?) ");
+//				IGA CONDITION
+		sql.append(" AND IGA.PERIOD >= TO_NUMBER(?) " + "AND IGA.PERIOD <= TO_NUMBER(?) ");
+//				IGB CONDITION
+		sql.append(" AND IGB.PERIOD_YEAR  >= ? " + "AND IGB.PERIOD_YEAR  <= ? " + "AND IGB.PERIOD_FROM  >= TO_NUMBER(?) ");
+		sql.append(" AND IGB.PERIOD_FROM  <= TO_NUMBER(?) ");
+		sql.append(" AND EXP.IS_DELETED='N' ");
+
+		
+		params.add(form.getArea());
+//		EXP
+		params.add(form.getStartYear());
+		params.add(form.getEndYear());
+		params.add(form.getPeriodMonthStart());
+		params.add(form.getPeriodMonthEnd());
+//		IGA
+		params.add(form.getPeriodMonthStart());
+		params.add(form.getPeriodMonthEnd());
+//		IGB
+		params.add(form.getStartYear());
+		params.add(form.getEndYear());
+		params.add(form.getPeriodMonthStart());
+		params.add(form.getPeriodMonthEnd());
 
 		List<Int090101Vo> data = commonJdbcTemplate.query(sql.toString(), params.toArray(), compareRowmapper);
 		return data;

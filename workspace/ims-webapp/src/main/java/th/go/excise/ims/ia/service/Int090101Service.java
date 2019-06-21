@@ -17,6 +17,9 @@ public class Int090101Service {
 	
 	public List<Int090101Vo> findCompare(Int090101CompareFormVo form) {
 		List<Int090101Vo> data = new ArrayList<Int090101Vo>();
+		form.setStartYear(( Long.toString(Long.valueOf(form.getStartYear()) - 543)));
+		form.setEndYear(( Long.toString(Long.valueOf(form.getEndYear()) - 543)));
+		form.setYear(( Long.toString(Long.valueOf(form.getYear()) - 543)));
 		data = iaExpensesJdbcRepository.findCompare(form);
 		return data;
 	}
