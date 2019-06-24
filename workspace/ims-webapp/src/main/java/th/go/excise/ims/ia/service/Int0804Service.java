@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.persistence.repository.IaGfmovementAccountRepository;
 import th.go.excise.ims.ia.vo.Int0804DateVo;
 import th.go.excise.ims.ia.vo.Int0804HeaderTable;

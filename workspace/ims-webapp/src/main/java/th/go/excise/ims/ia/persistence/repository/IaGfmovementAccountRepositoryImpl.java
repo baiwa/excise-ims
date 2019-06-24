@@ -58,7 +58,7 @@ public class IaGfmovementAccountRepositoryImpl implements IaGfmovementAccountRep
 	
 	@Override
 	public List<Int0804SummaryVo> getResultByconditon(Int0804SearchVo request) {
-		 String SQL = "SELECT O.GF_EXCISE_CODE, H.DATE_DEFAULT, SUM(G.CARRY_FORWARD) SUM_CARRT_FORWARD" + 
+		 final String SQL = "SELECT O.GF_EXCISE_CODE, H.DATE_DEFAULT, SUM(G.CARRY_FORWARD) SUM_CARRT_FORWARD" + 
 				" FROM (" + 
 				"    SELECT TO_CHAR(TO_DATE(?, 'YYYYMMDD')+LEVEL-1 , 'YYYYMMDD') DATE_DEFAULT" + 
 				"    FROM DUAL " + 

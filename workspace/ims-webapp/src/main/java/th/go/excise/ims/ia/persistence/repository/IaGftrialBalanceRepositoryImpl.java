@@ -1,6 +1,7 @@
 package th.go.excise.ims.ia.persistence.repository;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
+import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
@@ -16,6 +18,8 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.ia.persistence.entity.IaGftrialBalance;
 import th.go.excise.ims.ia.vo.Int0802SearchVo;
 import th.go.excise.ims.ia.vo.Int0802Vo;
+import th.go.excise.ims.ia.vo.Int0803Search;
+import th.go.excise.ims.ia.vo.Int0803TableVo;
 
 public class IaGftrialBalanceRepositoryImpl implements IaGftrialBalanceRepositorCustom {
 
@@ -151,5 +155,96 @@ public class IaGftrialBalanceRepositoryImpl implements IaGftrialBalanceRepositor
 				new BeanPropertyRowMapper(Int0802Vo.class));
 		return response;
 	}
+	
+	@Override
+	public List<Int0803TableVo> findExperimentalBudgetByRequest(Int0803Search request) {
+		final String SQL = " SELECT H.ACC_NO, D.OFFICE_CODE, D.DISBURSE_UNIT, SUM(H.CARRY_FORWARD) SUM_CARRY_FORWARD,  " +
+				" SUM(H.BRING_FORWARD) BRING_FORWARD, SUM(H.DEBIT) DEBIT, SUM(H.CREDIT) CREDIT " +
+				" FROM IA_GFTRIAL_BALANCE H " +
+				" RIGHT JOIN EXCISE_ORG_DISB D " +
+				" 	ON '00000'||D.DISBURSE_UNIT = H.DEPT_DISB " +
+				" 	AND concat(H.period_year, H.period_from) >= ? " +
+				" 	AND concat(H.period_year, H.period_from) <= ? " +
+				" 	AND H.ACC_NO = ? " +
+				" WHERE D.OFFICE_CODE LIKE ? " +
+				" GROUP BY H.ACC_NO, D.OFFICE_CODE, D.DISBURSE_UNIT " +
+				" ORDER BY H.ACC_NO, D.OFFICE_CODE ";
+		
+		StringBuilder sql = new StringBuilder(SQL);
+		List<Object> params = new ArrayList<Object>();
+		
+		params.add(request.getPeriodDateFromStr());
+		params.add(request.getPeriodDateToStr());
+		params.add(request.getCoaCode());
+		params.add(request.getOfficeCode().substring(0, 4).concat("%"));
+		
+		return commonJdbcTemplate.query(sql.toString(), params.toArray(), new RowMapper<Int0803TableVo>() {
+			@Override
+			public Int0803TableVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Int0803TableVo vo = new Int0803TableVo();
+				vo.setAccNo(rs.getString("ACC_NO"));
+				vo.setBringForward(rs.getBigDecimal("BRING_FORWARD"));
+				vo.setCarryForward(rs.getBigDecimal("SUM_CARRY_FORWARD"));
+				vo.setCredit(rs.getBigDecimal("CREDIT"));
+				vo.setDebit(rs.getBigDecimal("DEBIT"));
+				vo.setOfficeCode(rs.getString("OFFICE_CODE"));
+				vo.setDisburseUnit(rs.getString("DISBURSE_UNIT"));
+				return vo;
+			}
+		});
+	}
+	
+	@Override
+	public List<Int0803TableVo> findDepositsReportByRequest(Int0803Search request) {
+		final String SQL = " SELECT H.ACC_NO, D.OFFICE_CODE, D.DISBURSE_UNIT, SUM(H.CARRY_FORWARD) SUM_CARRY_FORWARD,  " +
+				" SUM(H.DEBIT) DEBIT, SUM(H.CREDIT) CREDIT " +
+				" FROM IA_GFMOVEMENT_ACCOUNT H " +
+				" RIGHT JOIN EXCISE_ORG_DISB D " +
+				" 	ON D.DISBURSE_UNIT = 0||H.DEPT_DISB " +
+				" 	AND H.ACC_NO = ? " +
+				" 	AND H.GF_DOC_DATE >= ? " +
+				" 	AND H.GF_DOC_DATE <= ? " +
+				" WHERE D.OFFICE_CODE LIKE ? " +
+				" GROUP BY H.ACC_NO, D.OFFICE_CODE, D.DISBURSE_UNIT " +
+				" ORDER BY H.ACC_NO, D.OFFICE_CODE ";
+		
+		StringBuilder sql = new StringBuilder(SQL);
+		List<Object> params = new ArrayList<Object>();
+		
+		params.add(request.getGfDepositCode());
+		params.add(request.getPeriodDateFrom());
+		params.add(request.getPeriodDateTo());
+		params.add(request.getOfficeCode().substring(0, 4).concat("%"));
+		
+		return commonJdbcTemplate.query(sql.toString(), params.toArray(), new RowMapper<Int0803TableVo>() {
+			@Override
+			public Int0803TableVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Int0803TableVo vo = new Int0803TableVo();
+				vo.setAccNo(rs.getString("ACC_NO"));
+//				vo.setBringForward(rs.getBigDecimal("BRING_FORWARD"));
+				vo.setCarryForward(rs.getBigDecimal("SUM_CARRY_FORWARD"));
+				vo.setCredit(rs.getBigDecimal("CREDIT"));
+				vo.setDebit(rs.getBigDecimal("DEBIT"));
+				vo.setOfficeCode(rs.getString("OFFICE_CODE"));
+				vo.setDisburseUnit(rs.getString("DISBURSE_UNIT"));
+				return vo;
+			}
+		});
+	}
+	
+//	private RowMapper<Int0803TableVo> summaryInt0803RowMapper = new RowMapper<Int0803TableVo>() {
+//		@Override
+//		public Int0803TableVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+//			Int0803TableVo vo = new Int0803TableVo();
+//			vo.setAccNo(rs.getString("ACC_NO"));
+//			vo.setBringForward(rs.getBigDecimal("BRING_FORWARD"));
+//			vo.setCarryForward(rs.getBigDecimal("SUM_CARRY_FORWARD"));
+//			vo.setCredit(rs.getBigDecimal("CREDIT"));
+//			vo.setDebit(rs.getBigDecimal("DEBIT"));
+//			vo.setOfficeCode(rs.getString("OFFICE_CODE"));
+//			vo.setDisburseUnit(rs.getString("DISBURSE_UNIT"));
+//			return vo;
+//		}
+//	};
 
 }

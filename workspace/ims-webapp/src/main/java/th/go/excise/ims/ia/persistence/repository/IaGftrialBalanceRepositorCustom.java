@@ -5,6 +5,9 @@ import java.util.List;
 import th.go.excise.ims.ia.persistence.entity.IaGftrialBalance;
 import th.go.excise.ims.ia.vo.Int0802SearchVo;
 import th.go.excise.ims.ia.vo.Int0802Vo;
+import th.go.excise.ims.ia.vo.Int0803Search;
+import th.go.excise.ims.ia.vo.Int0803TableVo;
+import th.go.excise.ims.ia.vo.Int0803Vo;
 
 public interface IaGftrialBalanceRepositorCustom {
 	public void batchInsert(List<IaGftrialBalance> iaGftrialBalances);
@@ -14,4 +17,8 @@ public interface IaGftrialBalanceRepositorCustom {
 	public List<Int0802Vo> findDiferrenceByConditionTab1(Int0802SearchVo request);
 	
 	public List<Int0802Vo> findDiferrenceByConditionTab2(Int0802SearchVo request);
+
+	public List<Int0803TableVo> findExperimentalBudgetByRequest(Int0803Search request);
+
+	public List<Int0803TableVo> findDepositsReportByRequest(Int0803Search request);
 }
