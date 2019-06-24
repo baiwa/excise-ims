@@ -187,7 +187,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		sql.append("   TA_W_DTL.*, ");
 		sql.append("   T_W_COND_HDR.MONTH_NUM, ");
 		sql.append("   T_W_COND_DTL.RISK_LEVEL, ");
-		sql.append("   (TO_NUMBER(SUM_TAX_AMT_G1) + TO_NUMBER(SUM_TAX_AMT_G2)) AS SUM_TOTAL_TAX_AMT, ");
+		sql.append("   (TO_NUMBER(NVL(SUM_TAX_AMT_G1,0)) + TO_NUMBER(NVL(SUM_TAX_AMT_G2,0))) AS SUM_TOTAL_TAX_AMT, ");
 		sql.append("   R4000.MULTI_DUTY_FLAG, ");
 		sql.append("   ECDG.DUTY_GROUP_TYPE ");
 		sql.append(" FROM TA_WORKSHEET_DTL TA_W_DTL ");
@@ -411,7 +411,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			if (FLAG.Y_FLAG.equals(formVo.getNewRegFlag())) {
 				sql.append(" ORDER BY SUM_TOTAL_TAX_AMT DESC ");
 			} else {
-				sql.append(" ORDER BY NVL(TA_W_DTL.COND_SORTING,0) DESC, TA_W_DTL.COND_SUB_NO_AUDIT ASC, TO_NUMBER(TA_W_DTL.TAX_AMT_CHN_PNT) ASC, SUM_TOTAL_TAX_AMT DESC ");
+				sql.append(" ORDER BY NVL(TA_W_DTL.COND_SORTING,0) DESC, TA_W_DTL.COND_SUB_NO_AUDIT ASC, TO_NUMBER(TA_W_DTL.TAX_AMT_CHN_PNT) ASC, NVL(SUM_TOTAL_TAX_AMT,0) DESC ");
 			}
 		}
 
