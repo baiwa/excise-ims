@@ -14,13 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
-import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperBaH;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
-import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
 import th.go.excise.ims.ta.persistence.repository.TaPaperBaHRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
-import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetHdrRepository;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
 import th.go.excise.ims.ta.vo.TaPaperBaHFormVo;
 
@@ -29,7 +26,6 @@ public class BasicAnalysisService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BasicAnalysisService.class);
 	
-	private TaPlanWorksheetHdrRepository taPlanWorksheetHdrRepository;
 	private TaPlanWorksheetDtlRepository taPlanWorksheetDtlRepository;
 	private PaperSequenceService paperSequenceService;
 	private TaPaperBaHRepository taPaperBaHRepository;
@@ -46,7 +42,6 @@ public class BasicAnalysisService {
 			BasicAnalysisTaxFilingService basicAnalysisTaxFilingService,
 			BasicAnalysisIncomeCompareLastMonthService basicAnalysisIncomeCompareLastMonthService,
 			BasicAnalysisIncomeCompareLastYearService basicAnalysisIncomeCompareLastYearService,
-			TaPlanWorksheetHdrRepository taPlanWorksheetHdrRepository,
 			TaPlanWorksheetDtlRepository taPlanWorksheetDtlRepository,
 			PaperSequenceService paperSequenceService,
 			TaPaperBaHRepository taPaperBaHRepository) {
@@ -58,7 +53,6 @@ public class BasicAnalysisService {
 		basicAnalysisServiceMap.put("tax-filing", basicAnalysisTaxFilingService);
 		basicAnalysisServiceMap.put("income-compare-last-month", basicAnalysisIncomeCompareLastMonthService);
 		basicAnalysisServiceMap.put("income-compare-last-year", basicAnalysisIncomeCompareLastYearService);
-		this.taPlanWorksheetHdrRepository = taPlanWorksheetHdrRepository;
 		this.taPlanWorksheetDtlRepository = taPlanWorksheetDtlRepository;
 		this.paperSequenceService = paperSequenceService;
 		this.taPaperBaHRepository = taPaperBaHRepository;
@@ -81,16 +75,15 @@ public class BasicAnalysisService {
 		TaPaperBaH paperBaH = taPaperBaHRepository.findByPaperBaNumber(formVo.getPaperBaNumber());
 		if (paperBaH == null) {
 			TaPlanWorksheetDtl planWorksheeetDtl = taPlanWorksheetDtlRepository.findByAuditPlanCode(formVo.getAuditPlanCode());
-			TaPlanWorksheetHdr planWorksheeetHdr = taPlanWorksheetHdrRepository.findByPlanNumber(planWorksheeetDtl.getPlanNumber());
 			
-			String paperBaNumber = paperSequenceService.getBasicAnalysisNumber(planWorksheeetDtl.getOfficeCode(), planWorksheeetHdr.getBudgetYear());
+			String paperBaNumber = paperSequenceService.getBasicAnalysisNumber(planWorksheeetDtl.getOfficeCode(), planWorksheeetDtl.getBudgetYear());
 			LocalDate localDateStart = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]), Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
 			LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]), Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
 			
 			paperBaH = new TaPaperBaH();
 			paperBaH.setOfficeCode(planWorksheeetDtl.getOfficeCode());
-			paperBaH.setBudgetYear(planWorksheeetHdr.getBudgetYear());
-			paperBaH.setPlanNumber(planWorksheeetHdr.getPlanNumber());
+			paperBaH.setBudgetYear(planWorksheeetDtl.getBudgetYear());
+			paperBaH.setPlanNumber(planWorksheeetDtl.getPlanNumber());
 			paperBaH.setAuditPlanCode(formVo.getAuditPlanCode());
 			paperBaH.setPaperBaNumber(paperBaNumber);
 			paperBaH.setNewRegId(formVo.getNewRegId());
@@ -132,11 +125,8 @@ public class BasicAnalysisService {
 	}
 	
 	public TaPaperBaH findBaH(TaPaperBaHFormVo form) {
-//		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-//		TaPlanWorksheetDtl planWorksheeetDtl = taPlanWorksheetDtlRepository.findByAuditPlanCode(form.getAuditPlanCode());
-//		TaPlanWorksheetHdr planWorksheeetHdr = taPlanWorksheetHdrRepository.findByPlanNumber(planWorksheeetDtl.getPlanNumber());
 		TaPaperBaH paperBaH = taPaperBaHRepository.findByPaperBaNumber(form.getPaperBaNumber());
-		if (null == paperBaH) {
+		if (paperBaH == null) {
 			paperBaH = new TaPaperBaH();
 		}
 		return paperBaH;
