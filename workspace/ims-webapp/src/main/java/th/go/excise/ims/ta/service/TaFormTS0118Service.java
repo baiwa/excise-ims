@@ -1,15 +1,25 @@
 package th.go.excise.ims.ta.service;
 
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.transaction.Transactional;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.IMG_NAME;
@@ -17,21 +27,15 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_FORM_TS_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0118Dtl;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0118Hdr;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0118DtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0118HdrRepository;
+import th.go.excise.ims.ta.vo.AuditStepFormVo;
 import th.go.excise.ims.ta.vo.TaFormTS0118DtlVo;
 import th.go.excise.ims.ta.vo.TaFormTS0118Vo;
-
-import javax.transaction.Transactional;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class TaFormTS0118Service extends AbstractTaFormTSService<TaFormTS0118Vo, TaFormTs0118Hdr> {
@@ -131,12 +135,26 @@ public class TaFormTS0118Service extends AbstractTaFormTSService<TaFormTS0118Vo,
 		}
 
 		taFormTs0118HdrRepository.save(formTs0118Hdr);
+
+		AuditStepFormVo dataStep = null;
+		if (StringUtils.isNotBlank(formTS0118Vo.getAuditPlanCode())) {
+			dataStep = new AuditStepFormVo();
+			dataStep.setAuditPlanCode(formTS0118Vo.getAuditPlanCode());
+			dataStep.setAuditStepStatus(formTS0118Vo.getAuditStepStatus());
+			dataStep.setFormTsCode(TA_FORM_TS_CODE.TS0108);
+			if (StringUtils.isNotBlank(formTS0118Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0118Vo.getFormTsNumber())) {
+				dataStep.setFormTsNumber(formTS0118Vo.getFormTsNumber());
+			} else {
+				dataStep.setFormTsNumber(formTs0118Hdr.getFormTsNumber());
+			}
+			auditStepService.saveAuditStep(dataStep);
+		}
 	}
 
 	@Override
 	public byte[] generateReport(TaFormTS0118Vo formTs0118Vo) throws Exception, IOException {
 		logger.info("generateReport");
-		
+
 		// get data to report
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
@@ -185,12 +203,12 @@ public class TaFormTS0118Service extends AbstractTaFormTSService<TaFormTS0118Vo,
 	@Override
 	public TaFormTS0118Vo getFormTS(String formTsNumber) {
 		logger.info("getFormTS formTsNumber={}", formTsNumber);
-		
+
 		// Prepare Header
 		TaFormTS0118Vo formTS0118Vo = new TaFormTS0118Vo();
 		TaFormTs0118Hdr formTs0118Hdr = taFormTs0118HdrRepository.findByFormTsNumber(formTsNumber);
 		toVo(formTS0118Vo, formTs0118Hdr);
-		
+
 		// Prepare Detail
 		List<TaFormTs0118Dtl> formTs0118DtlList = taFormTs0118DtlRepository.findByFormTsNumber(formTsNumber);
 		List<TaFormTS0118DtlVo> formTS0118DtlVoList = new ArrayList<>();
@@ -201,7 +219,7 @@ public class TaFormTS0118Service extends AbstractTaFormTSService<TaFormTS0118Vo,
 			formTS0118DtlVoList.add(formTS0118DtlVo);
 		}
 		formTS0118Vo.setTaFormTS0118DtlVoList(formTS0118DtlVoList);
-		
+
 		return formTS0118Vo;
 	}
 

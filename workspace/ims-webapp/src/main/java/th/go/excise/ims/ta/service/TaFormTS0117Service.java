@@ -28,34 +28,36 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_FORM_TS_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0117;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0117Repository;
+import th.go.excise.ims.ta.vo.AuditStepFormVo;
 import th.go.excise.ims.ta.vo.TaFormTS0117Vo;
 
 @Service
 public class TaFormTS0117Service extends AbstractTaFormTSService<TaFormTS0117Vo, TaFormTs0117> {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(TaFormTS0117Service.class);
 
 	@Autowired
 	private TaFormTs0117Repository taFormTs0117Repository;
-	
+
 	@Override
 	public String getReportName() {
 		return REPORT_NAME.TA_FORM_TS01_17;
 	}
-	
+
 	@Override
 	public byte[] processFormTS(TaFormTS0117Vo formTS0117Vo) throws Exception {
 		logger.info("processFormTS");
-		
+
 		saveFormTS(formTS0117Vo);
 		byte[] reportFile = generateReport(formTS0117Vo);
-		
+
 		return reportFile;
 	}
-	
+
 	@Transactional(rollbackOn = { Exception.class })
 	@Override
 	public void saveFormTS(TaFormTS0117Vo formTS0117Vo) {
@@ -75,13 +77,24 @@ public class TaFormTS0117Service extends AbstractTaFormTSService<TaFormTS0117Vo,
 			formTs0117.setBudgetYear(budgetYear);
 			formTs0117.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
 		}
+
+		AuditStepFormVo dataStep = null;
+		if (StringUtils.isNotBlank(formTS0117Vo.getAuditPlanCode()) && !NULL.equalsIgnoreCase(formTS0117Vo.getFormTsNumber())) {
+			dataStep = new AuditStepFormVo();
+			dataStep.setAuditPlanCode(formTS0117Vo.getAuditPlanCode());
+			dataStep.setAuditStepStatus(formTS0117Vo.getAuditStepStatus());
+			dataStep.setFormTsNumber(formTs0117.getFormTsNumber());
+			dataStep.setFormTsCode(TA_FORM_TS_CODE.TS0117);
+			auditStepService.saveAuditStep(dataStep);
+		}
+
 		taFormTs0117Repository.save(formTs0117);
 	}
-	
+
 	@Override
 	public byte[] generateReport(TaFormTS0117Vo formTS0117Vo) throws IOException, JRException {
 		logger.info("generateReport");
-		
+
 		Map<String, Object> params = new HashMap<>();
 		params.put("logo", ReportUtils.getResourceFile(PATH.IMAGE_PATH, IMG_NAME.LOGO_GARUDA + "." + FILE_EXTENSION.JPG));
 		params.put("formTsNumber", formTS0117Vo.getFormTsNumber());
@@ -133,24 +146,24 @@ public class TaFormTS0117Service extends AbstractTaFormTSService<TaFormTS0117Vo,
 		params.put("officeName", formTS0117Vo.getOfficeName());
 		params.put("officePhone", formTS0117Vo.getOfficePhone());
 		params.put("headOfficerFullName", formTS0117Vo.getHeadOfficerFullName());
-		
+
 		// set output
 		JasperPrint jasperPrint1 = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_17 + "." + FILE_EXTENSION.JASPER, params);
 		JasperPrint jasperPrint2 = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_17P2 + "." + FILE_EXTENSION.JASPER, params);
-		
+
 		List<ExporterInputItem> items = new ArrayList<ExporterInputItem>();
 		items.add(new SimpleExporterInputItem(jasperPrint1));
 		items.add(new SimpleExporterInputItem(jasperPrint2));
-		
+
 		JRPdfExporter exporter = new JRPdfExporter();
 		exporter.setExporterInput(new SimpleExporterInput(items));
-		
+
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
 		exporter.exportReport();
 		byte[] content = outputStream.toByteArray();
 		ReportUtils.closeResourceFileInputStream(params);
-		
+
 		return content;
 	}
 
@@ -159,18 +172,18 @@ public class TaFormTS0117Service extends AbstractTaFormTSService<TaFormTS0117Vo,
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		return taFormTs0117Repository.findFormTsNumberByOfficeCode(officeCode);
 	}
-	
+
 	@Override
 	public TaFormTS0117Vo getFormTS(String formTsNumber) {
 		logger.info("getFormTS formTsNumber={}", formTsNumber);
-		
+
 		TaFormTs0117 formTs0117 = taFormTs0117Repository.findByFormTsNumber(formTsNumber);
-		
+
 		// Set Data
 		TaFormTS0117Vo formTs0117Vo = new TaFormTS0117Vo();
 		toVo(formTs0117Vo, formTs0117);
-		
+
 		return formTs0117Vo;
 	}
-	
+
 }
