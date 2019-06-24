@@ -2,6 +2,7 @@ package th.go.excise.ims.ia.service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,10 @@ import th.go.excise.ims.ia.persistence.entity.IaChartOfAcc;
 import th.go.excise.ims.ia.persistence.entity.IaExpenses;
 import th.go.excise.ims.ia.persistence.repository.IaExpensesRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaChartOfAccJdbcRepository;
+import th.go.excise.ims.ia.persistence.repository.jdbc.IaExpensesJdbcRepository;
+import th.go.excise.ims.ia.vo.Int090101Vo;
 import th.go.excise.ims.ia.vo.Int12040101SaveFormVo;
+import th.go.excise.ims.ia.vo.Int12040101ValidateSearchFormVo;
 
 @Service
 public class Int12040101Service {
@@ -22,6 +26,9 @@ public class Int12040101Service {
 
 	@Autowired
 	private IaExpensesRepository iaExpensesRepository;
+
+	@Autowired
+	private IaExpensesJdbcRepository iaExpensesJdbcRepository;
 
 	@Autowired
 	private IaChartOfAccJdbcRepository iaChartOfAccJdbcRepository;
@@ -91,6 +98,14 @@ public class Int12040101Service {
 	public IaExpenses findExpensesById(BigDecimal id) {
 		IaExpenses dataRes = new IaExpenses();
 		dataRes = iaExpensesRepository.findById(id).get();
+		return dataRes;
+	}
+
+	public List<Int090101Vo> findValidate(Int12040101ValidateSearchFormVo formReq) {
+		List<Int090101Vo> dataRes = new ArrayList<Int090101Vo>();
+		Date date = ConvertDateUtils.parseStringToDate(formReq.getExpenseDateStr(), ConvertDateUtils.MM_YYYY,ConvertDateUtils.LOCAL_TH);
+		formReq.setExpenseDateStr(ConvertDateUtils.formatDateToString(date, ConvertDateUtils.YYYYMMDD,ConvertDateUtils.LOCAL_EN));
+		dataRes = iaExpensesJdbcRepository.findValidate(formReq);
 		return dataRes;
 	}
 }

@@ -15,6 +15,7 @@ import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.go.excise.ims.ia.persistence.entity.IaExpenses;
 import th.go.excise.ims.ia.vo.Int090101CompareFormVo;
 import th.go.excise.ims.ia.vo.Int090101Vo;
+import th.go.excise.ims.ia.vo.Int12040101ValidateSearchFormVo;
 import th.go.excise.ims.ia.vo.Int120401FormVo;
 
 @Repository
@@ -152,33 +153,49 @@ public class IaExpensesJdbcRepository {
 	public List<Int090101Vo> findCompare(Int090101CompareFormVo form) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
+		sql.append(" SELECT E.* ,A.DISBURSE_UNIT, B.* , C.GL_ACC_NO FROM IA_EXPENSES E ");
+		sql.append(" INNER JOIN EXCISE_ORG_DISB A ON E.OFFICE_CODE = A.OFFICE_CODE ");
+		sql.append(" LEFT JOIN IA_GFTRIAL_BALANCE B ON '00000'||A.DISBURSE_UNIT = B.DEPT_DISB ");
+		sql.append(" LEFT JOIN IA_GFLEDGER_ACCOUNT C ON C.GL_ACC_NO = E.ACCOUNT_ID ");
+		sql.append(" WHERE E.OFFICE_CODE = ? ");
+		sql.append(" AND E.BUDGET_YEAR = ? ");
+		sql.append(" AND E.EXPENSE_YEAR||EXPENSE_MONTH  >= ? ");
+		sql.append(" AND E.EXPENSE_YEAR||EXPENSE_MONTH  <= ? ");
 
-//		sql.append(" SELECT EXP.* FROM IA_EXPENSES EXP WHERE EXP.IS_DELETED='N' ");
-		sql.append(" SELECT EXP.* FROM IA_EXPENSES EXP JOIN IA_GFLEDGER_ACCOUNT IGA ");
-		sql.append(" ON EXP.ACCOUNT_ID = IGA.GL_ACC_NO JOIN IA_GFTRIAL_BALANCE IGB ");
-		sql.append(" ON EXP.ACCOUNT_ID = IGB.ACC_NO ");
-		sql.append(" WHERE EXP.OFFICE_CODE = ? ");
-//				EXP CONDITION
-		sql.append(" AND EXP.EXPENSE_YEAR||EXPENSE_MONTH  >= ? ");
-		sql.append(" AND EXP.EXPENSE_YEAR||EXPENSE_MONTH  <= ? ");
-//				IGA CONDITION
-		sql.append(" AND IGA.PERIOD_YEAR||PERIOD  >= ? ");
-		sql.append(" AND IGA.PERIOD_YEAR||PERIOD  <= ? ");
-//				IGB CONDITION
-		sql.append(" AND IGB.PERIOD_YEAR||PERIOD_FROM  >= ? ");
-		sql.append(" AND IGB.PERIOD_YEAR||PERIOD_FROM  <= ? ");
-		sql.append(" AND EXP.IS_DELETED='N' AND IGA.IS_DELETED='N' AND IGB.IS_DELETED='N' ");
-
+//		sql.append(" AND E.IS_DELETED='N' AND A.IS_DELETED='N' AND B.IS_DELETED='N' ");
 		params.add(form.getArea());
-//		EXP
+		params.add(form.getYear());
 		params.add(form.getStartYear() + StringUtils.leftPad(form.getPeriodMonthStart(), 2, '0').substring(0, 2));
-		params.add(form.getEndYear() + StringUtils.leftPad(form.getPeriodMonthEnd().substring(0, 2), 2, '0').substring(0, 2));
-//		IGA
-		params.add(form.getStartYear() + StringUtils.leftPad(form.getPeriodMonthStart(), 2, '0').substring(0, 2));
-		params.add(form.getEndYear() + StringUtils.leftPad(form.getPeriodMonthEnd().substring(0, 2), 2, '0').substring(0, 2));
-//		IGB
-		params.add(form.getStartYear() + StringUtils.leftPad(form.getPeriodMonthStart(), 2, '0').substring(0, 2));
-		params.add(form.getEndYear() + StringUtils.leftPad(form.getPeriodMonthEnd().substring(0, 2), 2, '0').substring(0, 2));
+		params.add(form.getEndYear() + StringUtils.leftPad(form.getPeriodMonthEnd(), 2, '0').substring(0, 2));
+////		sql.append(" SELECT EXP.* FROM IA_EXPENSES EXP WHERE EXP.IS_DELETED='N' ");
+//		sql.append(" SELECT EXP.* FROM IA_EXPENSES EXP JOIN IA_GFLEDGER_ACCOUNT IGA ");
+//		sql.append(" ON EXP.ACCOUNT_ID = IGA.GL_ACC_NO JOIN IA_GFTRIAL_BALANCE IGB ");
+//		sql.append(" ON EXP.ACCOUNT_ID = IGB.ACC_NO ");
+//		sql.append(" WHERE EXP.OFFICE_CODE = ? ");
+////				EXP CONDITION
+//		sql.append(" AND EXP.EXPENSE_YEAR||EXPENSE_MONTH  >= ? ");
+//		sql.append(" AND EXP.EXPENSE_YEAR||EXPENSE_MONTH  <= ? ");
+////				IGA CONDITION
+//		sql.append(" AND IGA.PERIOD_YEAR||PERIOD  >= ? ");
+//		sql.append(" AND IGA.PERIOD_YEAR||PERIOD  <= ? ");
+////				IGB CONDITION
+//		sql.append(" AND IGB.PERIOD_YEAR||PERIOD_FROM  >= ? ");
+//		sql.append(" AND IGB.PERIOD_YEAR||PERIOD_FROM  <= ? ");
+//		sql.append(" AND EXP.IS_DELETED='N' AND IGA.IS_DELETED='N' AND IGB.IS_DELETED='N' ");
+//
+//		params.add(form.getArea());
+////		EXP
+//		params.add(form.getStartYear() + StringUtils.leftPad(form.getPeriodMonthStart(), 2, '0').substring(0, 2));
+//		params.add(form.getEndYear()
+//				+ StringUtils.leftPad(form.getPeriodMonthEnd().substring(0, 2), 2, '0').substring(0, 2));
+////		IGA
+//		params.add(form.getStartYear() + StringUtils.leftPad(form.getPeriodMonthStart(), 2, '0').substring(0, 2));
+//		params.add(form.getEndYear()
+//				+ StringUtils.leftPad(form.getPeriodMonthEnd().substring(0, 2), 2, '0').substring(0, 2));
+////		IGB
+//		params.add(form.getStartYear() + StringUtils.leftPad(form.getPeriodMonthStart(), 2, '0').substring(0, 2));
+//		params.add(form.getEndYear()
+//				+ StringUtils.leftPad(form.getPeriodMonthEnd().substring(0, 2), 2, '0').substring(0, 2));
 		List<Int090101Vo> data = commonJdbcTemplate.query(sql.toString(), params.toArray(), compareRowmapper);
 		return data;
 	}
@@ -222,4 +239,21 @@ public class IaExpensesJdbcRepository {
 			return vo;
 		}
 	};
+
+	public List<Int090101Vo> findValidate(Int12040101ValidateSearchFormVo formReq) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		sql.append(" SELECT * FROM IA_EXPENSES ");
+		sql.append(" WHERE ACCOUNT_ID= ? ");
+		sql.append(" AND OFFICE_CODE= ? ");
+		sql.append(" AND EXPENSE_DATE =TO_DATE( ?, 'YYYYMMDD') ");
+		sql.append("AND IS_DELETED='N'");
+		params.add(formReq.getAccountId());
+		params.add(formReq.getArea());
+		params.add(formReq.getExpenseDateStr());
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		List<Int090101Vo> data = commonJdbcTemplate.query(sql.toString(), params.toArray(),
+				new BeanPropertyRowMapper(Int090101Vo.class));
+		return data;
+	}
 }
