@@ -7,10 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.security.persistence.entity.WsUser;
 
 @Repository
@@ -19,14 +19,14 @@ public class WsUserRepository {
 	private static final Logger logger = LoggerFactory.getLogger(WsUserRepository.class);
 	
 	@Autowired
-	private JdbcTemplate jdbcTemplate;
+	private CommonJdbcTemplate commonJdbcTemplate;
 	
 	public WsUser findByUsernameAndPassword(String username, String password) {
 		String sql = "SELECT * FROM WS_USER WHERE IS_DELETED = 'N' AND USER_ID = ? AND PASSWORD = ?";
 		
 		WsUser wsUser = null;
 		try {
-			wsUser = jdbcTemplate.queryForObject(
+			wsUser = commonJdbcTemplate.queryForObject(
 				sql,
 				new Object[] {
 					username,
@@ -54,7 +54,7 @@ public class WsUserRepository {
 				}
 			);
 		} catch (DataAccessException e) {
-			logger.warn("User Not Found");
+			logger.warn(e.getMessage(), e);
 		}
 		
 		return wsUser;
