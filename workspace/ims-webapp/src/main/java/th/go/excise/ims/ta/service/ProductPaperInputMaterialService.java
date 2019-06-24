@@ -57,6 +57,11 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 	}
 
 	@Override
+	protected String getPaperCode() {
+		return "01";
+	}
+
+	@Override
 	protected List<ProductPaperInputMaterialVo> inquiryByWs(ProductPaperFormVo formVo) {
 		logger.info("inquiryByWs");
 

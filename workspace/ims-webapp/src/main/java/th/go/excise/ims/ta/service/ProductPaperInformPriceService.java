@@ -54,6 +54,11 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 	protected Logger getLogger() {
 		return logger;
 	}
+
+	@Override
+	protected String getPaperCode() {
+		return "09";
+	}
 	
 	@Override
 	protected List<ProductPaperInformPriceVo> inquiryByWs(ProductPaperFormVo formVo) {
@@ -238,6 +243,9 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 			rowNum++;
 			cellNum = 0;
 		}
+		
+		// Create 'Criteria' Sheet
+		createSheetCriteria(workbook, formVo);
 
 		// set output
 		byte[] content = null;

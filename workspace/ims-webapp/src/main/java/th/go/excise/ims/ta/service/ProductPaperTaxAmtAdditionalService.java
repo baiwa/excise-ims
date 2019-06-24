@@ -48,6 +48,11 @@ public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperSer
 	protected Logger getLogger() {
 		return logger;
 	}
+
+	@Override
+	protected String getPaperCode() {
+		return "11";
+	}
 	
 	@Override
 	protected List<ProductPaperTaxAmtAdditionalVo> inquiryByWs(ProductPaperFormVo formVo) {
@@ -299,6 +304,9 @@ public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperSer
 			rowNum++;
 			cellNum = 0;
 		}
+		
+		// Create 'Criteria' Sheet
+		createSheetCriteria(workbook, formVo);
 
 		// set output
 		byte[] content = null;

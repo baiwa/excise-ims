@@ -52,6 +52,11 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 	protected Logger getLogger() {
 		return logger;
 	}
+
+	@Override
+	protected String getPaperCode() {
+		return "08";
+	}
 	
 	@Override
 	protected List<ProductPaperUnitPriceReduceTaxVo> inquiryByWs(ProductPaperFormVo formVo) {
@@ -293,6 +298,9 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 			rowNum++;
 			cellNum = 0;
 		}
+		
+		// Create 'Criteria' Sheet
+		createSheetCriteria(workbook, formVo);
 
 		// set output
 		byte[] content = null;

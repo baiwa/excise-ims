@@ -56,6 +56,11 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 	protected Logger getLogger() {
 		return logger;
 	}
+
+	@Override
+	protected String getPaperCode() {
+		return "10";
+	}
 	
 	@Override
 	protected List<ProductPaperOutputForeignGoodsVo> inquiryByWs(ProductPaperFormVo formVo) {
@@ -259,6 +264,9 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 			rowNum++;
 			cellNum = 0;
 		}
+		
+		// Create 'Criteria' Sheet
+		createSheetCriteria(workbook, formVo);
 
 		// set output
 		byte[] content = null;

@@ -58,6 +58,11 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 	}
 
 	@Override
+	protected String getPaperCode() {
+		return "04";
+	}
+
+	@Override
 	protected List<ProductPaperRelationProducedGoodsVo> inquiryByWs(ProductPaperFormVo formVo) {
 		logger.info("inquiryByWs");
 
@@ -395,6 +400,9 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 			rowNum++;
 			cellNum = 0;
 		}
+		
+		// Create 'Criteria' Sheet
+		createSheetCriteria(workbook, formVo);
 
 		// set output
 		byte[] content = null;

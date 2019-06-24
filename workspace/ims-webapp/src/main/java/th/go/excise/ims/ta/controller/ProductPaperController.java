@@ -95,9 +95,9 @@ public class ProductPaperController {
 		logger.info("exportData productPaperType={}, paperPrNumber={}", productPaperType, formVo.getPaperPrNumber());
 
 		//String fileName = URLEncoder.encode("ตรวจสอบการรับวัตถุดิบ", "UTF-8");
-		String fileName = "test";
 		AbstractProductPaperService<Object> service = productPaperServiceMap.get(productPaperType);
 		byte[] bytes = service.export(formVo);
+		String fileName = service.getExportFileName(formVo);
 		
 		response.setContentType("application/octet-stream");
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");

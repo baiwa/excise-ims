@@ -57,6 +57,8 @@ public abstract class AbstractProductPaperService<VO> {
 	}
 	
 	protected abstract Logger getLogger();
+	
+	protected abstract String getPaperCode();
 
 	public List<VO> inquiry(ProductPaperFormVo formVo) {
 		if (StringUtils.isEmpty(formVo.getPaperPrNumber())) {
@@ -144,6 +146,13 @@ public abstract class AbstractProductPaperService<VO> {
 		int colIndex = 0;
 		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 16);
 		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 20);
+	}
+	
+	public String getExportFileName(ProductPaperFormVo formVo) {
+		String exportFileName = "%s-pr%s-%s";
+		String paperPrNumber = StringUtils.isNotEmpty(formVo.getPaperPrNumber()) ? formVo.getPaperPrNumber() : "temp";
+		
+		return String.format(exportFileName, formVo.getAuditPlanCode(), getPaperCode(), paperPrNumber);
 	}
 	
 	public ProductPaperUploadVo upload(ProductPaperFormVo formVo) {
