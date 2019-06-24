@@ -132,10 +132,10 @@ public class BasicAnalysisService {
 	}
 	
 	public TaPaperBaH findBaH(TaPaperBaHFormVo form) {
-		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		TaPlanWorksheetDtl planWorksheeetDtl = taPlanWorksheetDtlRepository.findByAuditPlanCode(form.getAuditPlanCode());
-		TaPlanWorksheetHdr planWorksheeetHdr = taPlanWorksheetHdrRepository.findByPlanNumber(planWorksheeetDtl.getPlanNumber());
-		TaPaperBaH paperBaH = taPaperBaHRepository.findByNewRegIdAndOfficeCodeAndBudgetYear(form.getNewRegId(), officeCode, planWorksheeetHdr.getBudgetYear());
+//		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+//		TaPlanWorksheetDtl planWorksheeetDtl = taPlanWorksheetDtlRepository.findByAuditPlanCode(form.getAuditPlanCode());
+//		TaPlanWorksheetHdr planWorksheeetHdr = taPlanWorksheetHdrRepository.findByPlanNumber(planWorksheeetDtl.getPlanNumber());
+		TaPaperBaH paperBaH = taPaperBaHRepository.findByPaperBaNumber(form.getPaperBaNumber());
 		if (null == paperBaH) {
 			paperBaH = new TaPaperBaH();
 		}
