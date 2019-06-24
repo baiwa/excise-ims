@@ -20,9 +20,11 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_FORM_TS_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0103;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0103Repository;
+import th.go.excise.ims.ta.vo.AuditStepFormVo;
 import th.go.excise.ims.ta.vo.TaFormTS0103Vo;
 
 @Service
@@ -32,11 +34,11 @@ public class TaFormTS0103Service extends AbstractTaFormTSService<TaFormTS0103Vo,
 
 	@Autowired
 	private TaFormTs0103Repository taFormTs0103Repository;
-	
+
 	public String getReportName() {
 		return REPORT_NAME.TA_FORM_TS01_03;
 	}
-	
+
 	@Override
 	public byte[] processFormTS(TaFormTS0103Vo formTS0103Vo) throws Exception {
 		logger.info("processFormTS");
@@ -66,6 +68,17 @@ public class TaFormTS0103Service extends AbstractTaFormTSService<TaFormTS0103Vo,
 			formTs0103.setBudgetYear(budgetYear);
 			formTs0103.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
 		}
+
+		AuditStepFormVo dataStep = null;
+		if (StringUtils.isNotBlank(formTS0103Vo.getAuditPlanCode()) && !NULL.equalsIgnoreCase(formTS0103Vo.getFormTsNumber())) {
+			dataStep = new AuditStepFormVo();
+			dataStep.setAuditPlanCode(formTS0103Vo.getAuditPlanCode());
+			dataStep.setAuditStepStatus(formTS0103Vo.getAuditStepStatus());
+			dataStep.setFormTsNumber(formTs0103.getFormTsNumber());
+			dataStep.setFormTsCode(TA_FORM_TS_CODE.TS0103);
+			auditStepService.saveAuditStep(dataStep);
+		}
+
 		taFormTs0103Repository.save(formTs0103);
 	}
 
@@ -111,12 +124,12 @@ public class TaFormTS0103Service extends AbstractTaFormTSService<TaFormTS0103Vo,
 		params.put("officeName2", formTS0103Vo.getOfficeName2());
 		params.put("officePhone", formTS0103Vo.getOfficePhone());
 		params.put("headOfficerFullName", formTS0103Vo.getHeadOfficerFullName());
-		
+
 		// set output
 		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_03 + "." + FILE_EXTENSION.JASPER, params);
 		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
 		ReportUtils.closeResourceFileInputStream(params);
-		
+
 		return content;
 	}
 

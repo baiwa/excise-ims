@@ -20,9 +20,11 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_FORM_TS_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0102;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0102Repository;
+import th.go.excise.ims.ta.vo.AuditStepFormVo;
 import th.go.excise.ims.ta.vo.TaFormTS0102Vo;
 
 @Service
@@ -65,6 +67,16 @@ public class TaFormTS0102Service extends AbstractTaFormTSService<TaFormTS0102Vo,
 			formTs0102.setOfficeCode(officeCode);
 			formTs0102.setBudgetYear(budgetYear);
 			formTs0102.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
+		}
+		
+		AuditStepFormVo dataStep = null;
+		if (StringUtils.isNotBlank(formTS0102Vo.getAuditPlanCode()) && !NULL.equalsIgnoreCase(formTS0102Vo.getFormTsNumber())) {
+			dataStep = new AuditStepFormVo();
+			dataStep.setAuditPlanCode(formTS0102Vo.getAuditPlanCode());
+			dataStep.setAuditStepStatus(formTS0102Vo.getAuditStepStatus());
+			dataStep.setFormTsNumber(formTs0102.getFormTsNumber());
+			dataStep.setFormTsCode(TA_FORM_TS_CODE.TS0102);
+			auditStepService.saveAuditStep(dataStep);
 		}
 		taFormTs0102Repository.save(formTs0102);
 
