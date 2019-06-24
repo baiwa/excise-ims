@@ -107,7 +107,7 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 	}
 
 	@Override
-	protected byte[] exportData(List<ProductPaperBalanceMaterialVo> voList, String exportType) {
+	protected byte[] exportData(ProductPaperFormVo formVo, List<ProductPaperBalanceMaterialVo> voList, String exportType) {
 
 		// set format money
 		DecimalFormat df = new DecimalFormat("#,##0.00");
@@ -259,7 +259,9 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 	}
 
 	@Override
-	public List<ProductPaperBalanceMaterialVo> upload(ProductPaperFormVo formVo) {
+	public List<ProductPaperBalanceMaterialVo> uploadData(ProductPaperFormVo formVo) {
+		logger.info("uploadData readVo filename={}", formVo.getFile().getOriginalFilename());
+
 		List<ProductPaperBalanceMaterialVo> dataList = new ArrayList<>();
 		ProductPaperBalanceMaterialVo data = null;
 

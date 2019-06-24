@@ -36,6 +36,7 @@ import th.go.excise.ims.ta.service.ProductPaperRelationProducedGoodsService;
 import th.go.excise.ims.ta.service.ProductPaperTaxAmtAdditionalService;
 import th.go.excise.ims.ta.service.ProductPaperUnitPriceReduceTaxService;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
+import th.go.excise.ims.ta.vo.ProductPaperUploadVo;
 
 @Controller
 @RequestMapping("/api/ta/product-paper")
@@ -111,13 +112,10 @@ public class ProductPaperController {
 	public ResponseData<?> uploadData(@PathVariable("productPaperType") String productPaperType, @ModelAttribute ProductPaperFormVo formVo) throws IOException {
 		logger.info("uploadData");
 		
-		ResponseData<DataTableAjax<Object>> responseData = new ResponseData<>();
+		ResponseData<ProductPaperUploadVo> responseData = new ResponseData<>();
 		try {
 			AbstractProductPaperService<Object> service = productPaperServiceMap.get(productPaperType);
-			DataTableAjax<Object> dataTableAjax = new DataTableAjax<>();
-			dataTableAjax.setData(service.upload(formVo));
-			
-			responseData.setData(dataTableAjax);
+			responseData.setData(service.upload(formVo));
 			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

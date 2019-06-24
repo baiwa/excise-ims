@@ -8,22 +8,34 @@ import java.time.chrono.ThaiBuddhistDate;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
+import th.go.excise.ims.ta.vo.ProductPaperUploadVo;
 
 public abstract class AbstractProductPaperService<VO> {
 	
 	protected static final String EXPORT_TYPE_CREATE = "001";
 	protected static final String EXPORT_TYPE_PR_NUM = "002";
 	protected static final String NO_VALUE = "-";
+	protected static final int SHEET_DATA_INDEX = 0;
+	protected static final int SHEET_CRITERIA_INDEX = 1;
+	protected static final String SHEET_NAME_CRITERIA = "Criteria";
 	
 	protected Gson gson;
 	protected TaPlanWorksheetDtlRepository taPlanWorksheetDtlRepository;
@@ -68,12 +80,136 @@ public abstract class AbstractProductPaperService<VO> {
 			voList = inquiryByPaperPrNumber(formVo);
 			exportType = EXPORT_TYPE_PR_NUM;
 		}
-		return exportData(voList, exportType);
+		return exportData(formVo, voList, exportType);
 	}
 	
-	protected abstract byte[] exportData(List<VO> voList, String exportType);
+	protected abstract byte[] exportData(ProductPaperFormVo formVo, List<VO> voList, String exportType);
 	
-	public abstract List<VO> upload(ProductPaperFormVo formVo);
+	protected void createSheetCriteria(XSSFWorkbook workbook, ProductPaperFormVo formVo) {
+		Sheet sheet = workbook.createSheet(SHEET_NAME_CRITERIA);
+		int rowNum = 0;
+		Row row = null;
+		Cell cell = null;
+		
+		// Data
+		// auditPlanCode
+		row = sheet.createRow(rowNum);
+		cell = row.createCell(0);
+		cell.setCellValue("auditPlanCode");
+		cell = row.createCell(1);
+		cell.setCellValue(formVo.getAuditPlanCode());
+		rowNum++;
+		
+		// newRegId
+		row = sheet.createRow(rowNum);
+		cell = row.createCell(0);
+		cell.setCellValue("newRegId");
+		cell = row.createCell(1);
+		cell.setCellValue(formVo.getNewRegId());
+		rowNum++;
+		
+		// dutyGroupId
+		row = sheet.createRow(rowNum);
+		cell = row.createCell(0);
+		cell.setCellValue("dutyGroupId");
+		cell = row.createCell(1);
+		cell.setCellValue(formVo.getDutyGroupId());
+		rowNum++;
+		
+		// startDate
+		row = sheet.createRow(rowNum);
+		cell = row.createCell(0);
+		cell.setCellValue("startDate");
+		cell = row.createCell(1);
+		cell.setCellValue(formVo.getStartDate());
+		rowNum++;
+		
+		// endDate
+		row = sheet.createRow(rowNum);
+		cell = row.createCell(0);
+		cell.setCellValue("endDate");
+		cell = row.createCell(1);
+		cell.setCellValue(formVo.getEndDate());
+		rowNum++;
+		
+		// paperPrNumber
+		row = sheet.createRow(rowNum);
+		cell = row.createCell(0);
+		cell.setCellValue("paperPrNumber");
+		cell = row.createCell(1);
+		cell.setCellValue(formVo.getPaperPrNumber());
+		rowNum++;
+		
+		// Column Width
+		int colIndex = 0;
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 16);
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 20);
+	}
+	
+	public ProductPaperUploadVo upload(ProductPaperFormVo formVo) {
+		getLogger().info("upload readCriteria filename={}", formVo.getFile().getOriginalFilename());
+		
+		ProductPaperUploadVo vo = new ProductPaperUploadVo();
+		try (Workbook workbook = WorkbookFactory.create(formVo.getFile().getInputStream())) {
+			Sheet sheet = workbook.getSheetAt(SHEET_CRITERIA_INDEX);
+			Cell cell = null;
+			for (Row row : sheet) {
+				if (row.getRowNum() == 0) {
+					// auditPlanCode
+					cell = row.getCell(1);
+					if (cell != null) {
+						formVo.setAuditPlanCode(cell.getStringCellValue());
+						vo.setAuditPlanCode(cell.getStringCellValue());
+					}
+				} else if (row.getRowNum() == 1) {
+					// newRegId
+					cell = row.getCell(1);
+					if (cell != null) {
+						formVo.setNewRegId(cell.getStringCellValue());
+						vo.setNewRegId(cell.getStringCellValue());
+					}
+				} else if (row.getRowNum() == 2) {
+					// dutyGroupId
+					cell = row.getCell(1);
+					if (cell != null) {
+						formVo.setDutyGroupId(cell.getStringCellValue());
+						vo.setDutyGroupId(cell.getStringCellValue());
+					}
+				} else if (row.getRowNum() == 3) {
+					// startDate
+					cell = row.getCell(1);
+					if (cell != null) {
+						formVo.setStartDate(cell.getStringCellValue());
+						vo.setStartDate(cell.getStringCellValue());
+					}
+				} else if (row.getRowNum() == 4) {
+					// endDate
+					cell = row.getCell(1);
+					if (cell != null) {
+						formVo.setEndDate(cell.getStringCellValue());
+						vo.setEndDate(cell.getStringCellValue());
+					}
+				} else if (row.getRowNum() == 5) {
+					// paperPrNumber
+					cell = row.getCell(1);
+					if (cell != null) {
+						formVo.setPaperPrNumber(cell.getStringCellValue());
+						vo.setPaperPrNumber(cell.getStringCellValue());
+					}
+				}
+			}
+		} catch (Exception e) {
+			getLogger().error(e.getMessage(), e);
+		}
+		
+		DataTableAjax dataTableAjax = new DataTableAjax<>();
+		dataTableAjax.setData(uploadData(formVo));
+		vo.setDataTableAjax(dataTableAjax);
+		
+		return vo;
+	}
+	
+	protected abstract List<VO> uploadData(ProductPaperFormVo formVo);
 	
 	public abstract void save(ProductPaperFormVo formVo);
 	

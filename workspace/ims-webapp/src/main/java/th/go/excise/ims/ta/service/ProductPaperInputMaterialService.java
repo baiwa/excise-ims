@@ -110,7 +110,7 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 	}
 
 	@Override
-	protected byte[] exportData(List<ProductPaperInputMaterialVo> voList, String exportType) {
+	protected byte[] exportData(ProductPaperFormVo formVo, List<ProductPaperInputMaterialVo> voList, String exportType) {
 		logger.info("exportData");
 		// set format money
 		DecimalFormat df = new DecimalFormat("#,##0.00");
@@ -246,6 +246,9 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 			rowNum++;
 			cellNum = 0;
 		}
+		
+		// Create 'Criteria' Sheet
+		createSheetCriteria(workbook, formVo);
 
 		// set output
 		byte[] content = null;
@@ -260,13 +263,13 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 	}
 
 	@Override
-	public List<ProductPaperInputMaterialVo> upload(ProductPaperFormVo formVo) {
-		logger.info("upload filename={}", formVo.getFile().getName());
-
+	public List<ProductPaperInputMaterialVo> uploadData(ProductPaperFormVo formVo) {
+		logger.info("uploadData readVo filename={}", formVo.getFile().getOriginalFilename());
+		
 		List<ProductPaperInputMaterialVo> voList = new ArrayList<>();
 		ProductPaperInputMaterialVo vo = null;
 		try (Workbook workbook = WorkbookFactory.create(formVo.getFile().getInputStream())) {
-			Sheet sheet = workbook.getSheetAt(0);
+			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
 			for (Row row : sheet) {
 				vo = new ProductPaperInputMaterialVo();
 				// Skip on first row

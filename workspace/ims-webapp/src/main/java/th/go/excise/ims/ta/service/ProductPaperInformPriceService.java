@@ -100,7 +100,7 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 	}
 
 	@Override
-	protected byte[] exportData(List<ProductPaperInformPriceVo> voList, String exportType) {
+	protected byte[] exportData(ProductPaperFormVo formVo, List<ProductPaperInformPriceVo> voList, String exportType) {
 		logger.info("exportData");
 		// set format money
 		DecimalFormat df = new DecimalFormat("#,##0.00");
@@ -252,10 +252,8 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 	}
 
 	@Override
-	public List<ProductPaperInformPriceVo> upload(ProductPaperFormVo formVo) {
-		logger.info("readFileProductPaperInformPrice");
-		logger.info("fileName " + formVo.getFile().getOriginalFilename());
-		logger.info("type " + formVo.getFile().getContentType());
+	public List<ProductPaperInformPriceVo> uploadData(ProductPaperFormVo formVo) {
+		logger.info("uploadData readVo filename={}", formVo.getFile().getOriginalFilename());
 
 		List<ProductPaperInformPriceVo> dataList = new ArrayList<>();
 		ProductPaperInformPriceVo data = null;
