@@ -32,7 +32,6 @@ import th.go.excise.ims.ta.persistence.entity.TaFormTs0108Dtl;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0108Hdr;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0108DtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0108HdrRepository;
-import th.go.excise.ims.ta.vo.AuditStepFormVo;
 import th.go.excise.ims.ta.vo.TaFormTS0108DtlVo;
 import th.go.excise.ims.ta.vo.TaFormTS0108Vo;
 
@@ -71,7 +70,10 @@ public class TaFormTS0108Service extends AbstractTaFormTSService<TaFormTS0108Vo,
 		TaFormTs0108Hdr formTs0108Hdr = null;
 		TaFormTs0108Dtl formTs0108Dtl = null;
 		List<TaFormTs0108Dtl> formTs0108DtlList = null;
+		String formTsNumber = null;
 		if (StringUtils.isNotBlank(formTS0108Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0108Vo.getFormTsNumber())) {
+			formTsNumber = formTS0108Vo.getFormTsNumber();
+			
 			// Case Update FormTS
 			formTs0108DtlList = taFormTs0108DtlRepository.findByFormTsNumber(formTS0108Vo.getFormTsNumber());
 
@@ -106,7 +108,7 @@ public class TaFormTS0108Service extends AbstractTaFormTSService<TaFormTS0108Vo,
 
 		} else {
 			// Case New FormTS
-			String formTsNumber = taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear);
+			formTsNumber = taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear);
 
 			// Set Header Record
 			formTs0108Hdr = new TaFormTs0108Hdr();
@@ -130,21 +132,8 @@ public class TaFormTS0108Service extends AbstractTaFormTSService<TaFormTS0108Vo,
 				taFormTs0108DtlRepository.saveAll(formTs0108DtlList);
 			}
 		}
-
-		AuditStepFormVo dataStep = null;
-		if (StringUtils.isNotBlank(formTS0108Vo.getAuditPlanCode())) {
-			dataStep = new AuditStepFormVo();
-			dataStep.setAuditPlanCode(formTS0108Vo.getAuditPlanCode());
-			dataStep.setAuditStepStatus(formTS0108Vo.getAuditStepStatus());
-			dataStep.setFormTsCode(TA_FORM_TS_CODE.TS0108);
-			if (StringUtils.isNotBlank(formTS0108Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0108Vo.getFormTsNumber())) {
-				dataStep.setFormTsNumber(formTS0108Vo.getFormTsNumber());
-			} else {
-				dataStep.setFormTsNumber(formTs0108Hdr.getFormTsNumber());
-			}
-			auditStepService.saveAuditStep(dataStep);
-		}
-
+		
+		saveAuditStep(formTS0108Vo, TaFormTS0108Vo.class, TA_FORM_TS_CODE.TS0108, formTsNumber);
 	}
 
 	@Override
@@ -197,7 +186,6 @@ public class TaFormTS0108Service extends AbstractTaFormTSService<TaFormTS0108Vo,
 			formTS0108DtlVo.setAuditResultDocNo(StringUtils.defaultString(formTs0108Dtl.getAuditResultDocNo()));
 			formTS0108DtlVo.setAuditResultDate(formTs0108Dtl.getAuditResultDate());
 			formTS0108DtlVo.setAuditComment(StringUtils.defaultString(formTs0108Dtl.getAuditComment()));
-			// toVoDtl(formTS0108DtlVo, formTs0108Dtl);
 			formTS0108DtlVoList.add(formTS0108DtlVo);
 		}
 
@@ -212,14 +200,6 @@ public class TaFormTS0108Service extends AbstractTaFormTSService<TaFormTS0108Vo,
 	private void toEntityDtl(TaFormTs0108Dtl entity, TaFormTS0108DtlVo vo) {
 		try {
 			BeanUtils.copyProperties(entity, vo);
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			logger.warn(e.getMessage(), e);
-		}
-	}
-
-	private void toVoDtl(TaFormTS0108DtlVo vo, TaFormTs0108Dtl entity) {
-		try {
-			BeanUtils.copyProperties(vo, entity);
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			logger.warn(e.getMessage(), e);
 		}

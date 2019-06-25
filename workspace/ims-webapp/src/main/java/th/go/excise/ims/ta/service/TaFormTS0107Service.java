@@ -25,7 +25,6 @@ import th.go.excise.ims.common.constant.ProjectConstants.TA_FORM_TS_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0107;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0107Repository;
-import th.go.excise.ims.ta.vo.AuditStepFormVo;
 import th.go.excise.ims.ta.vo.TaFormTS0107Vo;
 
 @Service
@@ -57,7 +56,7 @@ public class TaFormTS0107Service extends AbstractTaFormTSService<TaFormTS0107Vo,
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = ExciseUtils.getCurrentBudgetYear();
 		logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS0107Vo.getFormTsNumber());
-
+		
 		TaFormTs0107 formTs0107 = null;
 		if (StringUtils.isNotBlank(formTS0107Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0107Vo.getFormTsNumber())) {
 			formTs0107 = taFormTs0107Repository.findByFormTsNumber(formTS0107Vo.getFormTsNumber());
@@ -69,17 +68,8 @@ public class TaFormTS0107Service extends AbstractTaFormTSService<TaFormTS0107Vo,
 			formTs0107.setBudgetYear(budgetYear);
 			formTs0107.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
 		}
-
-		AuditStepFormVo dataStep = null;
-		if (StringUtils.isNotBlank(formTS0107Vo.getAuditPlanCode())&& !NULL.equalsIgnoreCase(formTS0107Vo.getFormTsNumber())) {
-			dataStep = new AuditStepFormVo();
-			dataStep.setAuditPlanCode(formTS0107Vo.getAuditPlanCode());
-			dataStep.setAuditStepStatus(formTS0107Vo.getAuditStepStatus());
-			dataStep.setFormTsNumber(formTs0107.getFormTsNumber());
-			dataStep.setFormTsCode(TA_FORM_TS_CODE.TS0107);
-			auditStepService.saveAuditStep(dataStep);
-		}
-
+		
+		saveAuditStep(formTS0107Vo, TaFormTS0107Vo.class, TA_FORM_TS_CODE.TS0107, formTs0107.getFormTsNumber());
 		taFormTs0107Repository.save(formTs0107);
 	}
 

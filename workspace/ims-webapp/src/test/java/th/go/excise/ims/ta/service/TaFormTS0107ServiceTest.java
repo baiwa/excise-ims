@@ -23,10 +23,10 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.vo.TaFormTS0107Vo;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest(classes = Application.class)
-//@WithUserDetails(value = "admin", userDetailsServiceBeanName = "userDetailService")
-//@ActiveProfiles(value = PROFILE.UNITTEST)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Application.class)
+@WithUserDetails(value = "admin", userDetailsServiceBeanName = "userDetailService")
+@ActiveProfiles(value = PROFILE.UNITTEST)
 public class TaFormTS0107ServiceTest {
 
 	private static final String REPORT_FILE = PATH.TEST_PATH + "%s" + "." + FILE_EXTENSION.PDF;
@@ -34,7 +34,7 @@ public class TaFormTS0107ServiceTest {
 	@Autowired
 	private TaFormTS0107Service taFormTS0107Service;
 
-	@Test
+//	@Test
 	public void test_generateReport() throws Exception {
 		TaFormTS0107Service taFormTS0107Service = new TaFormTS0107Service();
 
@@ -85,7 +85,7 @@ public class TaFormTS0107ServiceTest {
 		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_07))));
 	}
 
-	@Test
+//	@Test
 	public void test_generateReport_Blank() throws Exception {
 		TaFormTS0107Service taFormTS0107Service = new TaFormTS0107Service();
 
@@ -96,7 +96,7 @@ public class TaFormTS0107ServiceTest {
 		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_07 + "_blank"))));
 	}
 	
-//	@Test
+	@Test
 	public void test_saveFormTS() throws Exception {
 		TaFormTS0107Vo formTS0107Vo = new TaFormTS0107Vo();
 		formTS0107Vo.setFormTsNumber("");
@@ -139,6 +139,9 @@ public class TaFormTS0107ServiceTest {
 		formTS0107Vo.setSignOfficerPosition("ผู้อำนวยการเขต");
 		formTS0107Vo.setOtherText("");
 		formTS0107Vo.setOtherPhone("");
+		
+		formTS0107Vo.setAuditPlanCode("0014022561000005");
+		formTS0107Vo.setAuditStepStatus("1030");
 		
 		taFormTS0107Service.saveFormTS(formTS0107Vo);
 	}

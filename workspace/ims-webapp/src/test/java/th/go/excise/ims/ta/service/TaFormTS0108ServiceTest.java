@@ -36,7 +36,7 @@ public class TaFormTS0108ServiceTest {
 	@Autowired
 	private TaFormTS0108Service taFormTS0108Service;
 	
-	@Test
+//	@Test
 	public void test_generateReport() throws Exception {
 		TaFormTS0108Service service08 = new TaFormTS0108Service();
 		
@@ -73,18 +73,19 @@ public class TaFormTS0108ServiceTest {
 		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_08 + "_blank"))));
 	}
 	
-//	@Test
+	@Test
 	public void test_saveFormTS() throws Exception {
 		String formTsNumber = "000000-2562-000075";
 		
 		// set data
 		TaFormTS0108Vo formTS0108Vo = new TaFormTS0108Vo();
-		formTS0108Vo.setFormTsNumber(formTsNumber);
+//		formTS0108Vo.setFormTsNumber(formTsNumber);
 		
 		List<TaFormTS0108DtlVo> formTS0108DtlVoList = new ArrayList<>();
 		TaFormTS0108DtlVo formTS0108DtlVo = null;
 		for (int i = 0; i < 2; i++) {
 			formTS0108DtlVo = new TaFormTS0108DtlVo();
+			formTS0108DtlVo.setFormTs0108DtlId(String.valueOf((i + 1)));
 			formTS0108DtlVo.setRecNo(String.valueOf((i + 1)));
 			formTS0108DtlVo.setAuditDate(new Date());
 			formTS0108DtlVo.setOfficerFullName("ธนพล ชัยภูมิ");
@@ -106,6 +107,9 @@ public class TaFormTS0108ServiceTest {
 //		formTS0108DtlVoList.add(formTS0108DtlVo);
 		
 		formTS0108Vo.setTaFormTS0108DtlVoList(formTS0108DtlVoList);
+		
+		formTS0108Vo.setAuditPlanCode("0014022561000005");
+		formTS0108Vo.setAuditStepStatus("1040");
 		
 		taFormTS0108Service.saveFormTS(formTS0108Vo);
 	}

@@ -1,13 +1,17 @@
 package th.go.excise.ims.ta.service;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import th.go.excise.ims.ta.vo.AuditStepFormVo;
 
 public abstract class AbstractTaFormTSService<VO extends Object, ENTITY> {
 	
@@ -38,6 +42,29 @@ public abstract class AbstractTaFormTSService<VO extends Object, ENTITY> {
 	public abstract byte[] processFormTS(VO vo) throws Exception;
 
 	public abstract void saveFormTS(VO vo);
+	
+	public void saveAuditStep(VO vo, Class<?> voClass, String formTsCode, String formTsNumber) {
+		try {
+			Method methodGetAuditPlanCode = voClass.getMethod("getAuditPlanCode");
+			String auditPlanCode = (String) methodGetAuditPlanCode.invoke(vo);
+			
+			Method methodGetAuditStepStatus = voClass.getMethod("getAuditStepStatus");
+			String auditStepStatus = (String) methodGetAuditStepStatus.invoke(vo);
+			
+			logger.info("saveAuditStep auditPlanCode={}, auditStepStatus={}, formTsCode={}, formTsNumber={}",
+					auditPlanCode, auditStepStatus, formTsCode, formTsNumber);
+			if (StringUtils.isNotBlank(auditPlanCode) && StringUtils.isNotBlank(auditStepStatus)) {
+				AuditStepFormVo formVo = new AuditStepFormVo();
+				formVo.setAuditPlanCode(auditPlanCode);
+				formVo.setAuditStepStatus(auditStepStatus);
+				formVo.setFormTsNumber(formTsNumber);
+				formVo.setFormTsCode(formTsCode);
+				auditStepService.saveAuditStep(formVo);
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+	}
 	
 	public abstract byte[] generateReport(VO vo) throws Exception;
 	
