@@ -22,7 +22,7 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaChartOfAcc;
 import th.go.excise.ims.ia.persistence.entity.IaExpenses;
 import th.go.excise.ims.ia.service.Int12040101Service;
-import th.go.excise.ims.ia.vo.Int090101Vo;
+import th.go.excise.ims.ia.vo.Int12040101FindVo;
 import th.go.excise.ims.ia.vo.Int12040101SaveFormVo;
 import th.go.excise.ims.ia.vo.Int12040101ValidateSearchFormVo;
 
@@ -55,10 +55,10 @@ public class Int12040101Controller {
 	@ResponseBody
 	public ResponseData<List<IaExpenses>> saveExpenses(@RequestBody Int12040101SaveFormVo expenses) {
 		ResponseData<List<IaExpenses>> responseData = new ResponseData<List<IaExpenses>>();
-		List<IaExpenses> data = new ArrayList<>();
+//		List<IaExpenses> data = new ArrayList<>();
 		try {
 			int12040101Service.saveExpenses(expenses);
-			responseData.setData(data);
+//			responseData.setData(data);
 			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
@@ -71,9 +71,9 @@ public class Int12040101Controller {
 
 	@PostMapping("/findExpensesById/{id}")
 	@ResponseBody
-	public ResponseData<IaExpenses> findByYearByCoa(@PathVariable("id") BigDecimal id) {
-		ResponseData<IaExpenses> responseData = new ResponseData<IaExpenses>();
-		IaExpenses data = new IaExpenses();
+	public ResponseData<Int12040101FindVo> findByYearByCoa(@PathVariable("id") BigDecimal id) {
+		ResponseData<Int12040101FindVo> responseData = new ResponseData<Int12040101FindVo>();
+		Int12040101FindVo data = new Int12040101FindVo();
 
 		try {
 			data = int12040101Service.findExpensesById(id);
@@ -90,8 +90,8 @@ public class Int12040101Controller {
 
 	@PostMapping("/findValidate")
 	@ResponseBody
-	public ResponseData<List<Int090101Vo>> findValidate(@RequestBody Int12040101ValidateSearchFormVo formReq) {
-		ResponseData<List<Int090101Vo>> responseData = new ResponseData<>();
+	public ResponseData<Int12040101FindVo> findValidate(@RequestBody Int12040101ValidateSearchFormVo formReq) {
+		ResponseData<Int12040101FindVo> responseData = new ResponseData<>();
 
 		try {
 			responseData.setData(int12040101Service.findValidate(formReq));

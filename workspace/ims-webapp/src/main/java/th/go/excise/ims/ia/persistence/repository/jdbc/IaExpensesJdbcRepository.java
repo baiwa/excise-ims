@@ -247,7 +247,7 @@ public class IaExpensesJdbcRepository {
 		sql.append(" WHERE ACCOUNT_ID= ? ");
 		sql.append(" AND OFFICE_CODE= ? ");
 		sql.append(" AND EXPENSE_DATE =TO_DATE( ?, 'YYYYMMDD') ");
-		sql.append("AND IS_DELETED='N'");
+		sql.append(" AND IS_DELETED='N'");
 		params.add(formReq.getAccountId());
 		params.add(formReq.getArea());
 		params.add(formReq.getExpenseDateStr());
