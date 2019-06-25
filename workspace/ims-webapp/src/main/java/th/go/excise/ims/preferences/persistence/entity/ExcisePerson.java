@@ -37,6 +37,8 @@ public class ExcisePerson extends BaseEntity {
 	private String auSubdeptCode;
 	@Column(name = "AU_SUBDEPT_LEVEL")
 	private String auSubdeptLevel;
+	@Column(name = "SEQ")
+	private Integer seq;
 
 	public Long getEdPersonSeq() {
 		return edPersonSeq;
@@ -108,6 +110,14 @@ public class ExcisePerson extends BaseEntity {
 
 	public void setAuSubdeptLevel(String auSubdeptLevel) {
 		this.auSubdeptLevel = auSubdeptLevel;
+	}
+
+	public Integer getSeq() {
+		return seq;
+	}
+
+	public void setSeq(Integer seq) {
+		this.seq = seq;
 	}
 
 }
