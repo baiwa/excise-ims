@@ -101,13 +101,18 @@ public class WsOasfri0100DRepositoryImpl implements WsOasfri0100DRepositoryCusto
 		sql.append(" ) H ");
 		sql.append(" INNER JOIN WS_OASFRI0100_D D ON D.FORMDOC_REC0142_NO = H.FORMDOC_REC0142_NO ");
 		sql.append("   AND D.IS_DELETED = 'N' ");
-		sql.append(" WHERE D.DATA_ID LIKE ? ");
-		sql.append("   AND DATA_TYPE = ? ");
+		sql.append(" WHERE DATA_TYPE = ? ");
+
+		paramList.add(formVo.getNewRegId());
+		paramList.add(formVo.getDataType());
+		
+		if(StringUtils.isNotEmpty(formVo.getDutyGroupId())) {
+			sql.append("   AND D.DATA_ID LIKE ? ");
+			paramList.add(formVo.getDutyGroupId() + "%");
+		}
+
 		sql.append("   AND H.YEAR_MONTH >= ? ");
 		sql.append("   AND H.YEAR_MONTH <= ? ");
-		paramList.add(formVo.getNewRegId());
-		paramList.add(formVo.getDutyGroupId() + "%");
-		paramList.add(formVo.getDataType());
 		paramList.add(formVo.getYearMonthStart());
 		paramList.add(formVo.getYearMonthEnd());
 		

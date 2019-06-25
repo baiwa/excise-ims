@@ -64,37 +64,8 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 	@Override
 	protected List<ProductPaperRelationProducedGoodsVo> inquiryByWs(ProductPaperFormVo formVo) {
 		logger.info("inquiryByWs");
-
-		LocalDate localDateStart = toLocalDate(formVo.getStartDate());
-		LocalDate localDateEnd = toLocalDate(formVo.getEndDate());
-
-		WsOasfri0100FromVo wsOasfri0100FormVo = new WsOasfri0100FromVo();
-		wsOasfri0100FormVo.setNewRegId(formVo.getNewRegId());
-		wsOasfri0100FormVo.setDutyGroupId(formVo.getDutyGroupId());
-		wsOasfri0100FormVo.setDataType(WEB_SERVICE.OASFRI0100.DATA_TYPE_MATERIAL);
-		wsOasfri0100FormVo.setYearMonthStart(localDateStart.format(DateTimeFormatter.ofPattern("yyyyMM")));
-		wsOasfri0100FormVo.setYearMonthEnd(localDateEnd.format(DateTimeFormatter.ofPattern("yyyyMM")));
-
-		List<WsOasfri0100Vo> wsOasfri0100VoList = wsOasfri0100DRepository.findByCriteria(wsOasfri0100FormVo);
+		
 		List<ProductPaperRelationProducedGoodsVo> voList = new ArrayList<>();
-		ProductPaperRelationProducedGoodsVo vo = null;
-		for (WsOasfri0100Vo wsOasfri0100Vo : wsOasfri0100VoList) {
-			vo = new ProductPaperRelationProducedGoodsVo();
-			vo.setDocNo(NO_VALUE);
-			vo.setMaterialDesc(NO_VALUE);
-			vo.setInputMaterialQty(NO_VALUE);
-			vo.setFormulaMaterialQty(NO_VALUE);
-			vo.setUsedMaterialQty(NO_VALUE);
-			vo.setRealUsedMaterialQty(NO_VALUE);
-			vo.setDiffMaterialQty(NO_VALUE);
-			vo.setMaterialQty(NO_VALUE);
-			vo.setGoodsQty(NO_VALUE);
-			vo.setDiffGoodsQty(NO_VALUE);
-			vo.setWasteGoodsPnt(NO_VALUE);
-			vo.setWasteGoodsQty(NO_VALUE);
-			vo.setBalanceGoodsQty(NO_VALUE);
-			voList.add(vo);
-		}
 
 		return voList;
 	}

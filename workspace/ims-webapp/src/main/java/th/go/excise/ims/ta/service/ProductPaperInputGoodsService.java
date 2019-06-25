@@ -70,8 +70,8 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 
 		WsOasfri0100FromVo wsOasfri0100FormVo = new WsOasfri0100FromVo();
 		wsOasfri0100FormVo.setNewRegId(formVo.getNewRegId());
-		wsOasfri0100FormVo.setDutyGroupId(formVo.getDutyGroupId());
-		wsOasfri0100FormVo.setDataType(WEB_SERVICE.OASFRI0100.DATA_TYPE_MATERIAL);
+//		wsOasfri0100FormVo.setDutyGroupId(formVo.getDutyGroupId());
+		wsOasfri0100FormVo.setDataType(WEB_SERVICE.OASFRI0100.DATA_TYPE_PRODUCT);
 		wsOasfri0100FormVo.setYearMonthStart(localDateStart.format(DateTimeFormatter.ofPattern("yyyyMM")));
 		wsOasfri0100FormVo.setYearMonthEnd(localDateEnd.format(DateTimeFormatter.ofPattern("yyyyMM")));
 		wsOasfri0100FormVo.setAccountName(WEB_SERVICE.OASFRI0100.PS0704_ACC14);
@@ -83,7 +83,7 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 			vo = new ProductPaperInputGoodsVo();
 			vo.setGoodsDesc(wsOasfri0100Vo.getDataName());
 			vo.setInputGoodsQty(NO_VALUE);
-			vo.setInputMonthStatementQty(NO_VALUE);
+			vo.setInputMonthStatementQty(wsOasfri0100Vo.getInQty()!=null?wsOasfri0100Vo.getInQty().toString():NO_VALUE);
 			vo.setInputDailyAccountQty(NO_VALUE);
 			vo.setMaxDiffQty1(NO_VALUE);
 			vo.setMaxDiffQty2(NO_VALUE);
