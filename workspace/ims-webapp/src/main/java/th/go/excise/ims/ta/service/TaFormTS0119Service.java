@@ -26,6 +26,7 @@ import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0119;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0119Repository;
 import th.go.excise.ims.ta.vo.AuditStepFormVo;
+import th.go.excise.ims.ta.vo.TaFormTS0107Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0119Vo;
 
 @Service
@@ -69,17 +70,8 @@ public class TaFormTS0119Service extends AbstractTaFormTSService<TaFormTS0119Vo,
 			formTS0119.setBudgetYear(budgetYear);
 			formTS0119.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
 		}
-
-		AuditStepFormVo dataStep = null;
-		if (StringUtils.isNotBlank(formTS0119Vo.getAuditPlanCode()) && !NULL.equalsIgnoreCase(formTS0119Vo.getFormTsNumber())) {
-			dataStep = new AuditStepFormVo();
-			dataStep.setAuditPlanCode(formTS0119Vo.getAuditPlanCode());
-			dataStep.setAuditStepStatus(formTS0119Vo.getAuditStepStatus());
-			dataStep.setFormTsNumber(formTS0119.getFormTsNumber());
-			dataStep.setFormTsCode(TA_FORM_TS_CODE.TS0119);
-			auditStepService.saveAuditStep(dataStep);
-		}
-
+		
+		saveAuditStep(formTS0119Vo, TaFormTS0119Vo.class, TA_FORM_TS_CODE.TS0119, formTS0119Vo.getFormTsNumber());
 		taFormTs0119Repository.save(formTS0119);
 	}
 
