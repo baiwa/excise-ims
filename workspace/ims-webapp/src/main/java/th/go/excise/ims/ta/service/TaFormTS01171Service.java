@@ -21,9 +21,11 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_FORM_TS_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs01171;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs01171Repository;
+import th.go.excise.ims.ta.vo.TaFormTS0105Vo;
 import th.go.excise.ims.ta.vo.TaFormTS01171Vo;
 
 @Service
@@ -67,6 +69,8 @@ private static final Logger logger = LoggerFactory.getLogger(TaFormTS01171Servic
 			formTS01171.setBudgetYear(budgetYear);
 			formTS01171.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
 		}
+		
+		saveAuditStep(formTS01171Vo, TaFormTS01171Vo.class, TA_FORM_TS_CODE.TS01171, formTS01171Vo.getFormTsNumber());
 		taFormTs01171Repository.save(formTS01171);
 	}
 	

@@ -20,9 +20,11 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_FORM_TS_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0105;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0105Repository;
+import th.go.excise.ims.ta.vo.TaFormTS0101Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0105Vo;
 
 @Service
@@ -66,6 +68,7 @@ public class TaFormTS0105Service extends AbstractTaFormTSService<TaFormTS0105Vo,
 			formTs0105.setBudgetYear(budgetYear);
 			formTs0105.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
 		}
+		saveAuditStep(formTS0105Vo, TaFormTS0105Vo.class, TA_FORM_TS_CODE.TS0105, formTS0105Vo.getFormTsNumber());
 		taFormTs0105Repository.save(formTs0105);
 	}
 
