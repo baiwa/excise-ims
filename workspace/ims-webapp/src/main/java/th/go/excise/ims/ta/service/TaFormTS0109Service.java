@@ -21,10 +21,12 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_FORM_TS_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0109;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0109Repository;
 import th.go.excise.ims.ta.vo.TaFormTS0109Vo;
+import th.go.excise.ims.ta.vo.TaFormTS01141Vo;
 
 @Service
 public class TaFormTS0109Service extends AbstractTaFormTSService<TaFormTS0109Vo, TaFormTs0109> {
@@ -57,17 +59,25 @@ public class TaFormTS0109Service extends AbstractTaFormTSService<TaFormTS0109Vo,
         logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS0109Vo.getFormTsNumber());
 
         TaFormTs0109 formTS0109 = null;
+        String formTsNumber = null;
         if (StringUtils.isNotBlank(formTS0109Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0109Vo.getFormTsNumber())) {
+        	// Case Update FormTS
+        	formTsNumber = formTS0109Vo.getFormTsNumber();
+        	
             formTS0109 = taFormTs0109Repository.findByFormTsNumber(formTS0109Vo.getFormTsNumber());
             toEntity(formTS0109, formTS0109Vo);
         } else {
+        	// Case New FormTS
+			formTsNumber = taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear);
             formTS0109 = new TaFormTs0109();
             toEntity(formTS0109, formTS0109Vo);
             formTS0109.setOfficeCode(officeCode);
             formTS0109.setBudgetYear(budgetYear);
-            formTS0109.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
+            formTS0109.setFormTsNumber(formTsNumber);
         }
         taFormTs0109Repository.save(formTS0109);
+        
+        saveAuditStep(formTS0109Vo, TaFormTS0109Vo.class, TA_FORM_TS_CODE.TS0109, formTsNumber);
     }
 
     @Override
