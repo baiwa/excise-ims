@@ -28,7 +28,9 @@ public class ExciseUtils {
 	
 	private static List<ParamInfo> paramInfoList = null;
 	
-	public static final int[] PERIOD_MONTH = {9,10,11,12,1,2,3,4,5,6,7,8};
+	public static final int[] PERIOD_MONTH = {9,10,11,0,1,2,3,4,5,6,7,8};
+	
+	public static final String[] PERIOD_MONTH_STR = {"004","005","006","007","008","009","010","011","012","001","002","003"};
 
 	static {
 		paramInfoList = new ArrayList<>();
