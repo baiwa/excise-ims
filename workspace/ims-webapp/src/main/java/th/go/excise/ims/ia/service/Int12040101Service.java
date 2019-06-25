@@ -48,6 +48,7 @@ public class Int12040101Service {
 
 	@Autowired
 	private IaExpensesD1JdbcRepository iaExpensesD1JdbcRepository;
+
 	public List<IaChartOfAcc> findAll() {
 		List<IaChartOfAcc> data = new ArrayList<>();
 //		data = iaChartOfAccRepository.findAll();
@@ -111,11 +112,11 @@ public class Int12040101Service {
 		data.setBudgetYear(budgetyear);
 		iaExpensesRepository.save(data);
 		IaExpensesD1 detailSave = null;
-		
+
 		for (String id : form.getDeleteId()) {
 			iaExpensesD1Repository.deleteById(Long.valueOf(id));
 		}
-		
+
 		Long index = 0l;
 		for (IaExpensesD1 iaExpensesD1 : form.getIaExpensesD1()) {
 			detailSave = new IaExpensesD1();
@@ -152,7 +153,8 @@ public class Int12040101Service {
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			logger.error(e.getMessage(), e);
 		}
-		List<IaExpensesD1> detail = iaExpensesD1JdbcRepository.findDetail(entity.getOfficeCode(), entity.getBudgetYear(), entity.getExpenseMonth(), entity.getExpenseYear(), entity.getAccountId());
+		List<IaExpensesD1> detail = iaExpensesD1JdbcRepository.findDetail(entity.getOfficeCode(),
+				entity.getBudgetYear(), entity.getExpenseMonth(), entity.getExpenseYear(), entity.getAccountId());
 		dataRes.setIaExpensesD1(detail);
 		return dataRes;
 	}
@@ -163,14 +165,18 @@ public class Int12040101Service {
 				ConvertDateUtils.LOCAL_TH);
 		formReq.setExpenseDateStr(
 				ConvertDateUtils.formatDateToString(date, ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_EN));
-		entity = iaExpensesJdbcRepository.findValidate(formReq).get(0);
+		List<Int090101Vo> list = iaExpensesJdbcRepository.findValidate(formReq);
+		if (list.size() > 0) {
+			entity = list.get(0);
+		}
 		Int12040101FindVo dataRes = new Int12040101FindVo();
 		try {
 			BeanUtils.copyProperties(dataRes, entity);
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			logger.error(e.getMessage(), e);
 		}
-		List<IaExpensesD1> detail = iaExpensesD1JdbcRepository.findDetail(entity.getOfficeCode(), entity.getBudgetYear(), entity.getExpenseMonth(), entity.getExpenseYear(), entity.getAccountId());
+		List<IaExpensesD1> detail = iaExpensesD1JdbcRepository.findDetail(entity.getOfficeCode(),
+				entity.getBudgetYear(), entity.getExpenseMonth(), entity.getExpenseYear(), entity.getAccountId());
 		dataRes.setIaExpensesD1(detail);
 		return dataRes;
 	}
