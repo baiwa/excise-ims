@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 import th.go.excise.ims.ta.service.AbstractProductPaperService;
 import th.go.excise.ims.ta.service.ProductPaperBalanceMaterialService;
 import th.go.excise.ims.ta.service.ProductPaperInformPriceService;
@@ -78,7 +79,7 @@ public class ProductPaperController {
 		
 		ResponseData<ProductPaperVo> responseData = new ResponseData<>();
 		try {
-			AbstractProductPaperService<Object> service = productPaperServiceMap.get(productPaperType);
+			AbstractProductPaperService<Object, BaseEntity> service = productPaperServiceMap.get(productPaperType);
 			responseData.setData(service.inquiry(formVo));
 			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
@@ -95,7 +96,7 @@ public class ProductPaperController {
 		logger.info("exportData productPaperType={}, paperPrNumber={}", productPaperType, formVo.getPaperPrNumber());
 
 		//String fileName = URLEncoder.encode("ตรวจสอบการรับวัตถุดิบ", "UTF-8");
-		AbstractProductPaperService<Object> service = productPaperServiceMap.get(productPaperType);
+		AbstractProductPaperService<Object, BaseEntity> service = productPaperServiceMap.get(productPaperType);
 		byte[] bytes = service.export(formVo);
 		String fileName = service.getExportFileName(formVo);
 		
@@ -114,7 +115,7 @@ public class ProductPaperController {
 		
 		ResponseData<ProductPaperVo> responseData = new ResponseData<>();
 		try {
-			AbstractProductPaperService<Object> service = productPaperServiceMap.get(productPaperType);
+			AbstractProductPaperService<Object, BaseEntity> service = productPaperServiceMap.get(productPaperType);
 			responseData.setData(service.upload(formVo));
 			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
@@ -134,8 +135,9 @@ public class ProductPaperController {
 		
 		ResponseData<String> responseData = new ResponseData<String>();
 		try {
-			AbstractProductPaperService<Object> service = productPaperServiceMap.get(productPaperType);
-			service.save(formVo);
+			AbstractProductPaperService<Object, BaseEntity> service = productPaperServiceMap.get(productPaperType);
+			String paperPrNumber = service.save(formVo);
+			responseData.setData(paperPrNumber);
 			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
@@ -154,7 +156,7 @@ public class ProductPaperController {
 		
 		ResponseData<List<String>> responseData = new ResponseData<List<String>>();
 		try {
-			AbstractProductPaperService<Object> service = productPaperServiceMap.get(productPaperType);
+			AbstractProductPaperService<Object, BaseEntity> service = productPaperServiceMap.get(productPaperType);
 			responseData.setData(service.getPaperPrNumberList(formVo));
 			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);

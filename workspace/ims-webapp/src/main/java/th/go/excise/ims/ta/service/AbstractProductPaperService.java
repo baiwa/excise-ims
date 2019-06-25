@@ -6,6 +6,7 @@ import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.chrono.ThaiBuddhistDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -29,7 +30,7 @@ import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperVo;
 
-public abstract class AbstractProductPaperService<VO> {
+public abstract class AbstractProductPaperService<VO, ENTITY_H> {
 	
 	protected static final String EXPORT_TYPE_CREATE = "001";
 	protected static final String EXPORT_TYPE_PR_NUM = "002";
@@ -67,6 +68,8 @@ public abstract class AbstractProductPaperService<VO> {
 	protected abstract Logger getLogger();
 	
 	protected abstract String getPaperCode();
+	
+	protected abstract Object getRepository();
 
 	public ProductPaperVo inquiry(ProductPaperFormVo formVo) {
 		ProductPaperVo vo = new ProductPaperVo();
@@ -81,7 +84,7 @@ public abstract class AbstractProductPaperService<VO> {
 			voList = inquiryByWs(formVo);
 		} else {
 			vo.setPaperPrNumber(formVo.getPaperPrNumber());
-			// FIXME Add StartDate, EndDate
+			prepareProductPaperVo(formVo.getPaperPrNumber(), vo);
 			voList = inquiryByPaperPrNumber(formVo);
 		}
 		
@@ -95,6 +98,28 @@ public abstract class AbstractProductPaperService<VO> {
 	protected abstract List<VO> inquiryByWs(ProductPaperFormVo formVo);
 	
 	protected abstract List<VO> inquiryByPaperPrNumber(ProductPaperFormVo formVo);
+	
+	protected void prepareProductPaperVo(String paperPrNumber, ProductPaperVo vo) {
+		getLogger().info("prepareProductPaperVo paperPrNumber={}", paperPrNumber);
+		
+		try {
+			Class<?> repositoryClass = Class.forName(String.format("th.go.excise.ims.ta.persistence.repository.TaPaperPr%sHRepository", getPaperCode()));
+			Class<?> entityClass = ((Class<ENTITY_H>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1]);
+			
+			Method methodFindByPaperPrNumber = repositoryClass.getMethod("findByPaperPrNumber", String.class);
+			ENTITY_H entityH = (ENTITY_H) methodFindByPaperPrNumber.invoke(getRepository(), paperPrNumber);
+			
+			Method methodGetStartDate = entityClass.getMethod("getStartDate");
+			LocalDate startDate = (LocalDate) methodGetStartDate.invoke(entityH);
+			vo.setStartDate(ThaiBuddhistDate.from(startDate).format(DateTimeFormatter.ofPattern("MM/yyyy")));
+			
+			Method methodGetEndDate = entityClass.getMethod("getEndDate");
+			LocalDate endDate = (LocalDate) methodGetEndDate.invoke(entityH);
+			vo.setEndDate(ThaiBuddhistDate.from(endDate).format(DateTimeFormatter.ofPattern("MM/yyyy")));
+		} catch (Exception e) {
+			getLogger().warn(e.getMessage(), e);
+		}
+	}
 	
 	public byte[] export(ProductPaperFormVo formVo) {
 		List<VO> voList = null;
@@ -244,7 +269,7 @@ public abstract class AbstractProductPaperService<VO> {
 	
 	protected abstract List<VO> uploadData(ProductPaperFormVo formVo);
 	
-	public abstract void save(ProductPaperFormVo formVo);
+	public abstract String save(ProductPaperFormVo formVo);
 	
 	public abstract List<String> getPaperPrNumberList(ProductPaperFormVo formVo);
 	
@@ -257,7 +282,7 @@ public abstract class AbstractProductPaperService<VO> {
 		return LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(inputDate.split("/")[1]), Integer.parseInt(inputDate.split("/")[0]), 1));
 	}
 	
-	protected void prepareEntityH(ProductPaperFormVo formVo, Object entityObj, Class<?> entityClass) {
+	protected String prepareEntityH(ProductPaperFormVo formVo, Object entityObj, Class<?> entityClass) {
 		TaPlanWorksheetDtl planDtl = taPlanWorksheetDtlRepository.findByAuditPlanCode(formVo.getAuditPlanCode());
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		String budgetYear = planDtl.getBudgetYear();
@@ -293,6 +318,8 @@ public abstract class AbstractProductPaperService<VO> {
 		} catch (Exception e) {
 			getLogger().error(e.getMessage(), e);
 		}
+		
+		return paperPrNumber;
 	}
 	
 }

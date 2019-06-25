@@ -38,7 +38,7 @@ import th.go.excise.ims.ws.vo.WsOasfri0100FromVo;
 import th.go.excise.ims.ws.vo.WsOasfri0100Vo;
 
 @Service
-public class ProductPaperInputGoodsService extends AbstractProductPaperService<ProductPaperInputGoodsVo> {
+public class ProductPaperInputGoodsService extends AbstractProductPaperService<ProductPaperInputGoodsVo, TaPaperPr05H> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperInputGoodsService.class);
 
@@ -59,6 +59,11 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 	@Override
 	protected String getPaperCode() {
 		return "05";
+	}
+	
+	@Override
+	protected Object getRepository() {
+		return taPaperPr05HRepository;
 	}
 
 	@Override
@@ -345,11 +350,10 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 	}
 
 	@Override
-	public void save(ProductPaperFormVo formVo) {
-		logger.info("save");
-
+	public String save(ProductPaperFormVo formVo) {
 		TaPaperPr05H entityH = new TaPaperPr05H();
-		prepareEntityH(formVo, entityH, TaPaperPr05H.class);
+		String paperPrNumber = prepareEntityH(formVo, entityH, TaPaperPr05H.class);
+		logger.info("save paperPrNumber={}", paperPrNumber);
 		taPaperPr05HRepository.save(entityH);
 
 		List<ProductPaperInputGoodsVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
@@ -358,7 +362,7 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 		int i = 1;
 		for (ProductPaperInputGoodsVo vo : voList) {
 			entityD = new TaPaperPr05D();
-			entityD.setPaperPrNumber(entityH.getPaperPrNumber());
+			entityD.setPaperPrNumber(paperPrNumber);
 			entityD.setSeqNo(i);
 			entityD.setGoodsDesc(vo.getGoodsDesc());
 			entityD.setInputGoodsQty(!NO_VALUE.equals(vo.getInputGoodsQty()) ? NumberUtils.toBigDecimal(vo.getInputGoodsQty()) : null);
@@ -370,7 +374,8 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 			i++;
 		}
 		taPaperPr05DRepository.saveAll(entityDList);
-
+		
+		return paperPrNumber;
 	}
 
 	@Override

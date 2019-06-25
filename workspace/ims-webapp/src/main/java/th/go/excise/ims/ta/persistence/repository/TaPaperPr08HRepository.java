@@ -14,4 +14,7 @@ public interface TaPaperPr08HRepository extends CommonJpaCrudRepository<TaPaperP
 	@Query("select new java.lang.String(e.paperPrNumber) from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.auditPlanCode = :auditPlanCode order by e.paperPrNumber desc")
 	public List<String> findPaperPrNumberByAuditPlanCode(@Param("auditPlanCode") String auditPlanCode);
 	
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.paperPrNumber = :paperPrNumber")
+	public TaPaperPr08H findByPaperPrNumber(@Param("paperPrNumber") String paperPrNumber);
+	
 }

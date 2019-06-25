@@ -35,23 +35,25 @@ public class ProductPaperInputMaterialServiceTest {
 	@Autowired
 	private ProductPaperInputMaterialService productPaperInputMaterialService;
 
-//	@Test
+	@Test
 	public void test_inquiry() {
 		System.out.println("- - - - - test_inquiry");
 		
 		ProductPaperFormVo formVo = new ProductPaperFormVo();
-		formVo.setNewRegId("09920020600391004");
-		formVo.setDutyGroupId("7001");
-		formVo.setStartDate("09/2561");
-		formVo.setEndDate("10/2561");
+		formVo.setNewRegId("01055210150261001");
+		formVo.setDutyGroupId("0201");
+		//formVo.setStartDate("09/2561");
+		//formVo.setEndDate("10/2561");
+		formVo.setPaperPrNumber("001402-2561-000001");
 
 		ProductPaperVo vo = productPaperInputMaterialService.inquiry(formVo);
+		System.out.println(ToStringBuilder.reflectionToString(vo, ToStringStyle.SHORT_PREFIX_STYLE));
 		vo.getDataTableAjax().getData().forEach(e -> {
 			System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.SHORT_PREFIX_STYLE));
 		});
 	}
 
-	@Test
+//	@Test
 	public void test_export() {
 		System.out.println("- - - - - test_export");
 		

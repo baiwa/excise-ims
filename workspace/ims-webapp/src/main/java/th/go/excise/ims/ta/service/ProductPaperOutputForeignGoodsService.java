@@ -36,7 +36,7 @@ import th.go.excise.ims.ws.persistence.repository.WsAnafri0001DRepository;
 import th.go.excise.ims.ws.vo.WsAnafri0001Vo;
 
 @Service
-public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperService<ProductPaperOutputForeignGoodsVo> {
+public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperService<ProductPaperOutputForeignGoodsVo, TaPaperPr10H> {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperOutputForeignGoodsService.class);
 
@@ -57,6 +57,11 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 	@Override
 	protected String getPaperCode() {
 		return "10";
+	}
+	
+	@Override
+	protected Object getRepository() {
+		return taPaperPr10HRepository;
 	}
 	
 	@Override
@@ -334,11 +339,10 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 
 	@Transactional(rollbackOn = {Exception.class})
 	@Override
-	public void save(ProductPaperFormVo formVo) {
-		logger.info("save");
-		
+	public String save(ProductPaperFormVo formVo) {
 		TaPaperPr10H entityH = new TaPaperPr10H();
-		prepareEntityH(formVo, entityH, TaPaperPr10H.class);
+		String paperPrNumber = prepareEntityH(formVo, entityH, TaPaperPr10H.class);
+		logger.info("save paperPrNumber={}", paperPrNumber);
 		taPaperPr10HRepository.save(entityH);
 		
 		List<ProductPaperOutputForeignGoodsVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
@@ -347,7 +351,7 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 		int i = 1;
 		for (ProductPaperOutputForeignGoodsVo vo : voList) {
 			entityD = new TaPaperPr10D();
-			entityD.setPaperPrNumber(entityH.getPaperPrNumber());
+			entityD.setPaperPrNumber(paperPrNumber);
 			entityD.setSeqNo(i);
 			entityD.setGoodsDesc(vo.getGoodsDesc());
 			entityD.setCargoDocNo(!NO_VALUE.equals(vo.getCargoDocNo()) ? NumberUtils.toBigDecimal(vo.getCargoDocNo()) : null);
@@ -362,6 +366,7 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 		}
 		taPaperPr10DRepository.saveAll(entityDList);
 		
+		return paperPrNumber;
 	}
 
 	@Override

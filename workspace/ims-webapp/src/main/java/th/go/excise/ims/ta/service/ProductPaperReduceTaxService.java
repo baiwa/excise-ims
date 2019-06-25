@@ -3,7 +3,6 @@ package th.go.excise.ims.ta.service;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +34,7 @@ import th.go.excise.ims.ta.vo.ProductPaperReduceTaxVo;
 import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
 
 @Service
-public class ProductPaperReduceTaxService extends AbstractProductPaperService<ProductPaperReduceTaxVo> {
+public class ProductPaperReduceTaxService extends AbstractProductPaperService<ProductPaperReduceTaxVo, TaPaperPr07H> {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperReduceTaxService.class);
 
@@ -56,6 +55,11 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 	@Override
 	protected String getPaperCode() {
 		return "07";
+	}
+	
+	@Override
+	protected Object getRepository() {
+		return taPaperPr07HRepository;
 	}
 	
 	@Override
@@ -383,11 +387,10 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 
 	@Transactional(rollbackOn = {Exception.class})
 	@Override
-	public void save(ProductPaperFormVo formVo) {
-		logger.info("save");
-		
+	public String save(ProductPaperFormVo formVo) {
 		TaPaperPr07H entityH = new TaPaperPr07H();
-		prepareEntityH(formVo, entityH, TaPaperPr07H.class);
+		String paperPrNumber = prepareEntityH(formVo, entityH, TaPaperPr07H.class);
+		logger.info("save paperPrNumber={}", paperPrNumber);
 		taPaperPr07HRepository.save(entityH);
 		
 		List<ProductPaperReduceTaxVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
@@ -396,7 +399,7 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 		int i = 1;
 		for (ProductPaperReduceTaxVo vo : voList) {
 			entityD = new TaPaperPr07D();
-			entityD.setPaperPrNumber(entityH.getPaperPrNumber());
+			entityD.setPaperPrNumber(paperPrNumber);
 			entityD.setSeqNo(i);
 			entityD.setMaterialDesc(vo.getMaterialDesc());
 			entityD.setTaxReduceAmt(!NO_VALUE.equals(vo.getTaxReduceAmt()) ? NumberUtils.toBigDecimal(vo.getTaxReduceAmt()) : null);
@@ -412,6 +415,7 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 		}
 		taPaperPr07DRepository.saveAll(entityDList);
 		
+		return paperPrNumber;
 	}
 
 	@Override

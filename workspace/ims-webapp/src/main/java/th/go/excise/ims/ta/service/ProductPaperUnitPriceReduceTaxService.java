@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ta.persistence.entity.TaPaperPr03H;
 import th.go.excise.ims.ta.persistence.entity.TaPaperPr08D;
 import th.go.excise.ims.ta.persistence.entity.TaPaperPr08H;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr08DRepository;
@@ -34,7 +35,7 @@ import th.go.excise.ims.ta.vo.ProductPaperUnitPriceReduceTaxVo;
 import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
 
 @Service
-public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperService<ProductPaperUnitPriceReduceTaxVo> {
+public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperService<ProductPaperUnitPriceReduceTaxVo, TaPaperPr08H> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperUnitPriceReduceTaxService.class);
 
@@ -55,6 +56,11 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 	@Override
 	protected String getPaperCode() {
 		return "08";
+	}
+	
+	@Override
+	protected Object getRepository() {
+		return taPaperPr08HRepository;
 	}
 	
 	@Override
@@ -374,11 +380,10 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 
 	@Transactional(rollbackOn = {Exception.class})
 	@Override
-	public void save(ProductPaperFormVo formVo) {
-		logger.info("save");
-		
+	public String save(ProductPaperFormVo formVo) {
 		TaPaperPr08H entityH = new TaPaperPr08H();
-		prepareEntityH(formVo, entityH, TaPaperPr08H.class);
+		String paperPrNumber = prepareEntityH(formVo, entityH, TaPaperPr03H.class);
+		logger.info("save paperPrNumber={}", paperPrNumber);
 		taPaperPr08HRepository.save(entityH);
 		
 		List<ProductPaperUnitPriceReduceTaxVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
@@ -387,7 +392,7 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 		int i = 1;
 		for (ProductPaperUnitPriceReduceTaxVo vo : voList) {
 			entityD = new TaPaperPr08D();
-			entityD.setPaperPrNumber(entityH.getPaperPrNumber());
+			entityD.setPaperPrNumber(paperPrNumber);
 			entityD.setSeqNo(i);
 			entityD.setGoodsDesc(vo.getGoodsDesc());
 			entityD.setTaxReduceAmt(!NO_VALUE.equals(vo.getTaxReduceAmt()) ? NumberUtils.toBigDecimal(vo.getTaxReduceAmt()) : null);
@@ -403,6 +408,7 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 		}
 		taPaperPr08DRepository.saveAll(entityDList);
 		
+		return paperPrNumber;
 	}
 
 	@Override

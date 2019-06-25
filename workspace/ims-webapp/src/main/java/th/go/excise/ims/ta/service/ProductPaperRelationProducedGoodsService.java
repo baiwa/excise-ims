@@ -3,8 +3,6 @@ package th.go.excise.ims.ta.service;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
-import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperPr04D;
 import th.go.excise.ims.ta.persistence.entity.TaPaperPr04H;
@@ -33,11 +30,9 @@ import th.go.excise.ims.ta.persistence.repository.TaPaperPr04HRepository;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperRelationProducedGoodsVo;
 import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
-import th.go.excise.ims.ws.vo.WsOasfri0100FromVo;
-import th.go.excise.ims.ws.vo.WsOasfri0100Vo;
 
 @Service
-public class ProductPaperRelationProducedGoodsService extends AbstractProductPaperService<ProductPaperRelationProducedGoodsVo> {
+public class ProductPaperRelationProducedGoodsService extends AbstractProductPaperService<ProductPaperRelationProducedGoodsVo, TaPaperPr04H> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperRelationProducedGoodsService.class);
 
@@ -59,6 +54,11 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 	@Override
 	protected String getPaperCode() {
 		return "04";
+	}
+	
+	@Override
+	protected Object getRepository() {
+		return taPaperPr04HRepository;
 	}
 
 	@Override
@@ -458,11 +458,10 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 	}
 
 	@Override
-	public void save(ProductPaperFormVo formVo) {
-		logger.info("save");
-
+	public String save(ProductPaperFormVo formVo) {
 		TaPaperPr04H entityH = new TaPaperPr04H();
-		prepareEntityH(formVo, entityH, TaPaperPr04H.class);
+		String paperPrNumber = prepareEntityH(formVo, entityH, TaPaperPr04H.class);
+		logger.info("save paperPrNumber={}", paperPrNumber);
 		taPaperPr04HRepository.save(entityH);
 
 		List<ProductPaperRelationProducedGoodsVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
@@ -471,7 +470,7 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 		int i = 1;
 		for (ProductPaperRelationProducedGoodsVo vo : voList) {
 			entityD = new TaPaperPr04D();
-			entityD.setPaperPrNumber(entityH.getPaperPrNumber());
+			entityD.setPaperPrNumber(paperPrNumber);
 			entityD.setSeqNo(i);
 			entityD.setDocNo(vo.getDocNo());
 			entityD.setMaterialDesc(vo.getMaterialDesc());
@@ -490,6 +489,8 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 			i++;
 		}
 		taPaperPr04DRepository.saveAll(entityDList);
+		
+		return paperPrNumber;
 	}
 
 	@Override

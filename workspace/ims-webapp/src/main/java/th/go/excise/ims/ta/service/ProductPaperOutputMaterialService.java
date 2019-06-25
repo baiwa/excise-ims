@@ -35,7 +35,7 @@ import th.go.excise.ims.ws.vo.WsOasfri0100FromVo;
 import th.go.excise.ims.ws.vo.WsOasfri0100Vo;
 
 @Service
-public class ProductPaperOutputMaterialService extends AbstractProductPaperService<ProductPaperOutputMaterialVo> {
+public class ProductPaperOutputMaterialService extends AbstractProductPaperService<ProductPaperOutputMaterialVo, TaPaperPr02H> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperOutputMaterialService.class);
 
@@ -56,6 +56,11 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 	@Override
 	protected String getPaperCode() {
 		return "02";
+	}
+	
+	@Override
+	protected Object getRepository() {
+		return taPaperPr02HRepository;
 	}
 
 	@Override
@@ -315,11 +320,10 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 	}
 
 	@Override
-	public void save(ProductPaperFormVo formVo) {
-		logger.info("save");
-
+	public String save(ProductPaperFormVo formVo) {
 		TaPaperPr02H entityH = new TaPaperPr02H();
-		prepareEntityH(formVo, entityH, TaPaperPr02H.class);
+		String paperPrNumber = prepareEntityH(formVo, entityH, TaPaperPr02H.class);
+		logger.info("save paperPrNumber={}", paperPrNumber);
 		taPaperPr02HRepository.save(entityH);
 
 		List<ProductPaperOutputMaterialVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
@@ -328,7 +332,7 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 		int i = 1;
 		for (ProductPaperOutputMaterialVo vo : voList) {
 			entityD = new TaPaperPr02D();
-			entityD.setPaperPrNumber(entityH.getPaperPrNumber());
+			entityD.setPaperPrNumber(paperPrNumber);
 			entityD.setSeqNo(i);
 			entityD.setMaterialDesc(vo.getMaterialDesc());
 			entityD.setOutputMaterialQty(!NO_VALUE.equals(vo.getOutputMaterialQty()) ? NumberUtils.toBigDecimal(vo.getOutputMaterialQty()) : null);
@@ -340,6 +344,8 @@ public class ProductPaperOutputMaterialService extends AbstractProductPaperServi
 			i++;
 		}
 		taPaperPr02DRepository.saveAll(entityDList);
+		
+		return paperPrNumber;
 	}
 
 	@Override

@@ -32,7 +32,7 @@ import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperTaxAmtAdditionalVo;
 
 @Service
-public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperService<ProductPaperTaxAmtAdditionalVo> {
+public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperService<ProductPaperTaxAmtAdditionalVo, TaPaperPr11H> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductPaperTaxAmtAdditionalService.class);
 
@@ -51,6 +51,11 @@ public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperSer
 	@Override
 	protected String getPaperCode() {
 		return "11";
+	}
+	
+	@Override
+	protected Object getRepository() {
+		return taPaperPr11HRepository;
 	}
 	
 	@Override
@@ -385,11 +390,10 @@ public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperSer
 
 	@Transactional(rollbackOn = {Exception.class})
 	@Override
-	public void save(ProductPaperFormVo formVo) {
-		logger.info("save");
-		
+	public String save(ProductPaperFormVo formVo) {
 		TaPaperPr11H entityH = new TaPaperPr11H();
-		prepareEntityH(formVo, entityH, TaPaperPr11H.class);
+		String paperPrNumber = prepareEntityH(formVo, entityH, TaPaperPr11H.class);
+		logger.info("save paperPrNumber={}", paperPrNumber);
 		taPaperPr11HRepository.save(entityH);
 		
 		List<ProductPaperTaxAmtAdditionalVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
@@ -398,7 +402,7 @@ public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperSer
 		int i = 1;
 		for (ProductPaperTaxAmtAdditionalVo vo : voList) {
 			entityD = new TaPaperPr11D();
-			entityD.setPaperPrNumber(entityH.getPaperPrNumber());
+			entityD.setPaperPrNumber(paperPrNumber);
 			entityD.setSeqNo(i);
 			entityD.setGoodsDesc(vo.getGoodsDesc());
 			entityD.setTaxQty(!NO_VALUE.equals(vo.getTaxQty()) ? NumberUtils.toBigDecimal(vo.getTaxQty()) : null);
@@ -416,6 +420,7 @@ public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperSer
 		}
 		taPaperPr11DRepository.saveAll(entityDList);
 		
+		return paperPrNumber;
 	}
 
 	@Override
