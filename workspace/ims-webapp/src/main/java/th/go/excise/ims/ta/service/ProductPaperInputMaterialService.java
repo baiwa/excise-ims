@@ -2,7 +2,6 @@ package th.go.excise.ims.ta.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -117,8 +116,6 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 	@Override
 	protected byte[] exportData(ProductPaperFormVo formVo, List<ProductPaperInputMaterialVo> voList, String exportType) {
 		logger.info("exportData");
-		// set format money
-		DecimalFormat df = new DecimalFormat("#,##0.00");
 
 		/* create spreadsheet */
 		XSSFWorkbook workbook = new XSSFWorkbook();
@@ -182,7 +179,7 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(data.getInputMaterialQty()) && !NO_VALUE.equals(data.getInputMaterialQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getInputMaterialQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getInputMaterialQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -196,7 +193,7 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(data.getDailyAccountQty()) && !NO_VALUE.equals(data.getDailyAccountQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getDailyAccountQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getDailyAccountQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -211,7 +208,7 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 				cell.setCellStyle(thStyle);
 			} else {
 				if (StringUtils.isNotBlank(data.getMonthStatementQty()) && !NO_VALUE.equals(data.getMonthStatementQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMonthStatementQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getMonthStatementQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -225,7 +222,7 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(data.getExternalDataQty()) && !NO_VALUE.equals(data.getExternalDataQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getExternalDataQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getExternalDataQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -239,7 +236,7 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(data.getMaxDiffQty()) && !NO_VALUE.equals(data.getMaxDiffQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMaxDiffQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getMaxDiffQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}

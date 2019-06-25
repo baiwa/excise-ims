@@ -2,7 +2,6 @@ package th.go.excise.ims.ta.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -113,10 +112,8 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 
 	@Override
 	protected byte[] exportData(ProductPaperFormVo formVo, List<ProductPaperBalanceMaterialVo> voList, String exportType) {
-
-		// set format money
-		DecimalFormat df = new DecimalFormat("#,##0.00");
-
+		logger.info("exportData");
+		
 		/* create spreadsheet */
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(PRODUCT_PAPER_BALANCE_MATERIAL);
@@ -182,7 +179,7 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(data.getBalanceByAccountQty()) && !NO_VALUE.equals(data.getBalanceByAccountQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getBalanceByAccountQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getBalanceByAccountQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -196,7 +193,7 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(data.getBalanceByStockQty()) && !NO_VALUE.equals(data.getBalanceByStockQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getBalanceByStockQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getBalanceByStockQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -210,7 +207,7 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(data.getBalanceByCountQty()) && !NO_VALUE.equals(data.getBalanceByCountQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getBalanceByCountQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getBalanceByCountQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -224,7 +221,7 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(data.getMaxDiffQty1()) && !NO_VALUE.equals(data.getMaxDiffQty1())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMaxDiffQty1())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getMaxDiffQty1())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -238,7 +235,7 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(data.getMaxDiffQty2()) && !NO_VALUE.equals(data.getMaxDiffQty2())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMaxDiffQty2())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getMaxDiffQty2())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}

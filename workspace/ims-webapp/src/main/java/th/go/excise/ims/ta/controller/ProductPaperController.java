@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
@@ -36,7 +35,7 @@ import th.go.excise.ims.ta.service.ProductPaperRelationProducedGoodsService;
 import th.go.excise.ims.ta.service.ProductPaperTaxAmtAdditionalService;
 import th.go.excise.ims.ta.service.ProductPaperUnitPriceReduceTaxService;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
-import th.go.excise.ims.ta.vo.ProductPaperUploadVo;
+import th.go.excise.ims.ta.vo.ProductPaperVo;
 
 @Controller
 @RequestMapping("/api/ta/product-paper")
@@ -74,19 +73,20 @@ public class ProductPaperController {
 	
 	@PostMapping("/inquiry-{productPaperType}")
 	@ResponseBody
-	public DataTableAjax<?> inquiryData(@PathVariable("productPaperType") String productPaperType, @RequestBody ProductPaperFormVo formVo) {
+	public ResponseData<?> inquiryData(@PathVariable("productPaperType") String productPaperType, @RequestBody ProductPaperFormVo formVo) {
 		logger.info("inquiryData productPaperType={}", productPaperType);
 		
-		DataTableAjax<Object> dataTableAjax = new DataTableAjax<>();
+		ResponseData<ProductPaperVo> responseData = new ResponseData<>();
 		try {
 			AbstractProductPaperService<Object> service = productPaperServiceMap.get(productPaperType);
-			List<Object> voList = service.inquiry(formVo);
-			dataTableAjax.setData(voList);
+			responseData.setData(service.inquiry(formVo));
+			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
 		
-		return dataTableAjax;
+		return responseData;
 	}
 	
 	@PostMapping("/export-{productPaperType}")
@@ -112,7 +112,7 @@ public class ProductPaperController {
 	public ResponseData<?> uploadData(@PathVariable("productPaperType") String productPaperType, @ModelAttribute ProductPaperFormVo formVo) throws IOException {
 		logger.info("uploadData");
 		
-		ResponseData<ProductPaperUploadVo> responseData = new ResponseData<>();
+		ResponseData<ProductPaperVo> responseData = new ResponseData<>();
 		try {
 			AbstractProductPaperService<Object> service = productPaperServiceMap.get(productPaperType);
 			responseData.setData(service.upload(formVo));

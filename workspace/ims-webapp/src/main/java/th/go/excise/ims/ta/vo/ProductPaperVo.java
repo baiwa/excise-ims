@@ -2,7 +2,7 @@ package th.go.excise.ims.ta.vo;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 
-public class ProductPaperUploadVo {
+public class ProductPaperVo {
 
 	private String auditPlanCode;
 	private String newRegId;

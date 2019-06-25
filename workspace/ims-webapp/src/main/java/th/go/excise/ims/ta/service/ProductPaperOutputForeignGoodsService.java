@@ -3,7 +3,6 @@ package th.go.excise.ims.ta.service;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,9 +32,7 @@ import th.go.excise.ims.ta.persistence.repository.TaPaperPr10DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr10HRepository;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperOutputForeignGoodsVo;
-import th.go.excise.ims.ta.vo.ProductPaperOutputGoodsVo;
 import th.go.excise.ims.ws.persistence.repository.WsAnafri0001DRepository;
-import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
 import th.go.excise.ims.ws.vo.WsAnafri0001Vo;
 
 @Service
@@ -122,8 +119,7 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 	@Override
 	protected byte[] exportData(ProductPaperFormVo formVo, List<ProductPaperOutputForeignGoodsVo> voList, String exportType) {
 		logger.info("exportData");
-		// set format money
-		DecimalFormat df = new DecimalFormat("#,##0.00");
+		
 		/* create spreadsheet */
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(PRODUCT_PAPER_OUTPUT_FOREIGN_GOODS);
@@ -199,7 +195,7 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(vo.getOutputDailyAccountQty()) && !NO_VALUE.equals(vo.getOutputDailyAccountQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getOutputDailyAccountQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(vo.getOutputDailyAccountQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -212,7 +208,7 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(vo.getOutputMonthStatementQty()) && !NO_VALUE.equals(vo.getOutputMonthStatementQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getOutputMonthStatementQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(vo.getOutputMonthStatementQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -225,7 +221,7 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(vo.getOutputAuditQty()) && !NO_VALUE.equals(vo.getOutputAuditQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getOutputAuditQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(vo.getOutputAuditQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -238,7 +234,7 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(vo.getTaxReduceQty()) && !NO_VALUE.equals(vo.getTaxReduceQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getTaxReduceQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(vo.getTaxReduceQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -251,7 +247,7 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(vo.getDiffOutputQty()) && !NO_VALUE.equals(vo.getDiffOutputQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getDiffOutputQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(vo.getDiffOutputQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}

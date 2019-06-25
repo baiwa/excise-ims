@@ -3,7 +3,6 @@ package th.go.excise.ims.ta.service;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,8 +106,7 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 	@Override
 	protected byte[] exportData(ProductPaperFormVo formVo, List<ProductPaperUnitPriceReduceTaxVo> voList, String exportType) {
 		logger.info("exportData");
-		// set format money
-		DecimalFormat df = new DecimalFormat("#,##0.00");
+		
 		/* create spreadsheet */
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(PRODUCT_PAPER_UNIT_PRICE_REDUCE_TAX);
@@ -203,7 +201,7 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(vo.getTaxReduceAmt()) && !NO_VALUE.equals(vo.getTaxReduceAmt())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getTaxReduceAmt())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(vo.getTaxReduceAmt())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -216,7 +214,7 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(vo.getTaxReduceQty()) && !NO_VALUE.equals(vo.getTaxReduceQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getTaxReduceQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(vo.getTaxReduceQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -229,7 +227,7 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(vo.getTaxReducePerUnitAmt()) && !NO_VALUE.equals(vo.getTaxReducePerUnitAmt())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getTaxReducePerUnitAmt())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(vo.getTaxReducePerUnitAmt())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -247,7 +245,7 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(vo.getBillTaxAmt()) && !NO_VALUE.equals(vo.getBillTaxAmt())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getBillTaxAmt())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(vo.getBillTaxAmt())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -260,7 +258,7 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(vo.getBillTaxQty()) && !NO_VALUE.equals(vo.getBillTaxQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getBillTaxQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(vo.getBillTaxQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -273,7 +271,7 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(vo.getBillTaxPerUnit()) && !NO_VALUE.equals(vo.getBillTaxPerUnit())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getBillTaxPerUnit())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(vo.getBillTaxPerUnit())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -286,7 +284,7 @@ public class ProductPaperUnitPriceReduceTaxService extends AbstractProductPaperS
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(vo.getDiffTaxReduceAmt()) && !NO_VALUE.equals(vo.getDiffTaxReduceAmt())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getDiffTaxReduceAmt())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(vo.getDiffTaxReduceAmt())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}

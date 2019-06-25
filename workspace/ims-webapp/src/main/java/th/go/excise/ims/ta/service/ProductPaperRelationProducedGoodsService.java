@@ -3,7 +3,6 @@ package th.go.excise.ims.ta.service;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -130,10 +129,8 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 
 	@Override
 	protected byte[] exportData(ProductPaperFormVo formVo, List<ProductPaperRelationProducedGoodsVo> voList, String exportType) {
-
-		// set format money
-		DecimalFormat df = new DecimalFormat("#,##0.00");
-
+		logger.info("exportData");
+		
 		/* create spreadsheet */
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(PRODUCT_PAPER_RELATION_PRODUCED_GOODS);
@@ -248,7 +245,7 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(data.getInputMaterialQty()) && !NO_VALUE.equals(data.getInputMaterialQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getInputMaterialQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getInputMaterialQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -262,7 +259,7 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(data.getFormulaMaterialQty()) && !NO_VALUE.equals(data.getFormulaMaterialQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getFormulaMaterialQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getFormulaMaterialQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -276,7 +273,7 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(data.getUsedMaterialQty()) && !NO_VALUE.equals(data.getUsedMaterialQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getUsedMaterialQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getUsedMaterialQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -290,7 +287,7 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(data.getRealUsedMaterialQty()) && !NO_VALUE.equals(data.getRealUsedMaterialQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getRealUsedMaterialQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getRealUsedMaterialQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -304,7 +301,7 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(data.getDiffMaterialQty()) && !NO_VALUE.equals(data.getDiffMaterialQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getDiffMaterialQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getDiffMaterialQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -318,7 +315,7 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(data.getMaterialQty()) && !NO_VALUE.equals(data.getMaterialQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getMaterialQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getMaterialQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -332,7 +329,7 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(data.getGoodsQty()) && !NO_VALUE.equals(data.getGoodsQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getGoodsQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getGoodsQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -346,7 +343,7 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(data.getDiffGoodsQty()) && !NO_VALUE.equals(data.getDiffGoodsQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getDiffGoodsQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getDiffGoodsQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -360,7 +357,7 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(data.getWasteGoodsPnt()) && !NO_VALUE.equals(data.getWasteGoodsPnt())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getWasteGoodsPnt())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getWasteGoodsPnt())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -374,7 +371,7 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(data.getWasteGoodsQty()) && !NO_VALUE.equals(data.getWasteGoodsQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getWasteGoodsQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getWasteGoodsQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -388,7 +385,7 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(data.getBalanceGoodsQty()) && !NO_VALUE.equals(data.getBalanceGoodsQty())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(data.getBalanceGoodsQty())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(data.getBalanceGoodsQty())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}

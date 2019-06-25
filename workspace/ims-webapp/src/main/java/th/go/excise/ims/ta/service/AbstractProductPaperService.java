@@ -3,6 +3,7 @@ package th.go.excise.ims.ta.service;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.chrono.ThaiBuddhistDate;
 import java.util.List;
@@ -23,10 +24,10 @@ import com.google.gson.reflect.TypeToken;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
-import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
-import th.go.excise.ims.ta.vo.ProductPaperUploadVo;
+import th.go.excise.ims.ta.vo.ProductPaperVo;
 
 public abstract class AbstractProductPaperService<VO> {
 	
@@ -56,16 +57,39 @@ public abstract class AbstractProductPaperService<VO> {
 		this.paperSequenceService = paperSequenceService;
 	}
 	
+	protected static final ThreadLocal<DecimalFormat> DECIMAL_FORMAT = new ThreadLocal<DecimalFormat>() {
+		@Override
+		protected DecimalFormat initialValue() {
+			return new DecimalFormat("#,##0.00");
+		}
+	};
+	
 	protected abstract Logger getLogger();
 	
 	protected abstract String getPaperCode();
 
-	public List<VO> inquiry(ProductPaperFormVo formVo) {
+	public ProductPaperVo inquiry(ProductPaperFormVo formVo) {
+		ProductPaperVo vo = new ProductPaperVo();
+		vo.setAuditPlanCode(formVo.getAuditPlanCode());
+		vo.setNewRegId(formVo.getNewRegId());
+		vo.setDutyGroupId(formVo.getDutyGroupId());
+		
+		List<VO> voList = null;
 		if (StringUtils.isEmpty(formVo.getPaperPrNumber())) {
-			return inquiryByWs(formVo);
+			vo.setStartDate(formVo.getStartDate());
+			vo.setEndDate(formVo.getEndDate());
+			voList = inquiryByWs(formVo);
 		} else {
-			return inquiryByPaperPrNumber(formVo);
+			vo.setPaperPrNumber(formVo.getPaperPrNumber());
+			// FIXME Add StartDate, EndDate
+			voList = inquiryByPaperPrNumber(formVo);
 		}
+		
+		DataTableAjax dataTableAjax = new DataTableAjax<>();
+		dataTableAjax.setData(voList);
+		vo.setDataTableAjax(dataTableAjax);
+		
+		return vo;
 	};
 	
 	protected abstract List<VO> inquiryByWs(ProductPaperFormVo formVo);
@@ -155,10 +179,10 @@ public abstract class AbstractProductPaperService<VO> {
 		return String.format(exportFileName, formVo.getAuditPlanCode(), getPaperCode(), paperPrNumber);
 	}
 	
-	public ProductPaperUploadVo upload(ProductPaperFormVo formVo) {
+	public ProductPaperVo upload(ProductPaperFormVo formVo) {
 		getLogger().info("upload readCriteria filename={}", formVo.getFile().getOriginalFilename());
 		
-		ProductPaperUploadVo vo = new ProductPaperUploadVo();
+		ProductPaperVo vo = new ProductPaperVo();
 		try (Workbook workbook = WorkbookFactory.create(formVo.getFile().getInputStream())) {
 			Sheet sheet = workbook.getSheetAt(SHEET_CRITERIA_INDEX);
 			Cell cell = null;
@@ -234,9 +258,9 @@ public abstract class AbstractProductPaperService<VO> {
 	}
 	
 	protected void prepareEntityH(ProductPaperFormVo formVo, Object entityObj, Class<?> entityClass) {
-		PlanWorksheetDtlVo planDtlVo = taPlanWorksheetDtlRepository.findPlanDetailByAuditPlanCode(formVo.getAuditPlanCode());
+		TaPlanWorksheetDtl planDtl = taPlanWorksheetDtlRepository.findByAuditPlanCode(formVo.getAuditPlanCode());
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		String budgetYear = planDtlVo.getBudgetYear();
+		String budgetYear = planDtl.getBudgetYear();
 		String paperPrNumber = paperSequenceService.getPaperProductNumber(officeCode, budgetYear);
 		
 		try {
@@ -247,7 +271,7 @@ public abstract class AbstractProductPaperService<VO> {
 			methodSetBudgetYear.invoke(entityObj, budgetYear);
 			
 			Method methodSetPlanNumber = entityClass.getDeclaredMethod("setPlanNumber", String.class);
-			methodSetPlanNumber.invoke(entityObj, planDtlVo.getPlanNumber());
+			methodSetPlanNumber.invoke(entityObj, planDtl.getPlanNumber());
 			
 			Method methodSetAuditPlanCode = entityClass.getDeclaredMethod("setAuditPlanCode", String.class);
 			methodSetAuditPlanCode.invoke(entityObj, formVo.getAuditPlanCode());

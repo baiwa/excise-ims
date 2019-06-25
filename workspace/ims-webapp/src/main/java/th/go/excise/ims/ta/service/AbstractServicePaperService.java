@@ -15,8 +15,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
-import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
 import th.go.excise.ims.ta.vo.ServicePaperFormVo;
 
 public abstract class AbstractServicePaperService<VO> {
@@ -89,9 +89,9 @@ public abstract class AbstractServicePaperService<VO> {
 	}
 	
 	protected void prepareEntityH(ServicePaperFormVo formVo, Object entityObj, Class<?> entityClass) {
-		PlanWorksheetDtlVo planDtlVo = taPlanWorksheetDtlRepository.findPlanDetailByAuditPlanCode(formVo.getAuditPlanCode());
+		TaPlanWorksheetDtl planDtl = taPlanWorksheetDtlRepository.findByAuditPlanCode(formVo.getAuditPlanCode());
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		String budgetYear = planDtlVo.getBudgetYear();
+		String budgetYear = planDtl.getBudgetYear();
 		String paperSvNumber = paperSequenceService.getPaperServiceNumber(officeCode, budgetYear);
 		
 		try {
@@ -102,7 +102,7 @@ public abstract class AbstractServicePaperService<VO> {
 			methodSetBudgetYear.invoke(entityObj, budgetYear);
 			
 			Method methodSetPlanNumber = entityClass.getDeclaredMethod("setPlanNumber", String.class);
-			methodSetPlanNumber.invoke(entityObj, planDtlVo.getPlanNumber());
+			methodSetPlanNumber.invoke(entityObj, planDtl.getPlanNumber());
 			
 			Method methodSetAuditPlanCode = entityClass.getDeclaredMethod("setAuditPlanCode", String.class);
 			methodSetAuditPlanCode.invoke(entityObj, formVo.getAuditPlanCode());

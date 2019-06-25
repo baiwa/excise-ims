@@ -33,6 +33,4 @@ public interface TaPlanWorksheetDtlRepositoryCustom {
 	
 	public Long countOutPlanDtl(PlanWorksheetVo formVo);
 	
-	public PlanWorksheetDtlVo findPlanDetailByAuditPlanCode(String auditPlanCode);
-	
 }

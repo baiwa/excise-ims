@@ -22,6 +22,7 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperInputMaterialVo;
+import th.go.excise.ims.ta.vo.ProductPaperVo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
@@ -44,21 +45,21 @@ public class ProductPaperInputMaterialServiceTest {
 		formVo.setStartDate("09/2561");
 		formVo.setEndDate("10/2561");
 
-		List<ProductPaperInputMaterialVo> voList = productPaperInputMaterialService.inquiry(formVo);
-		voList.forEach(e -> {
+		ProductPaperVo vo = productPaperInputMaterialService.inquiry(formVo);
+		vo.getDataTableAjax().getData().forEach(e -> {
 			System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.SHORT_PREFIX_STYLE));
 		});
 	}
 
-//	@Test
+	@Test
 	public void test_export() {
 		System.out.println("- - - - - test_export");
 		
 		ProductPaperFormVo formVo = new ProductPaperFormVo();
-		formVo.setNewRegId("09920020600391004");
-		formVo.setDutyGroupId("7001");
-		formVo.setStartDate("09/2561");
-		formVo.setEndDate("10/2561");
+		formVo.setNewRegId("01055210150261001");
+		formVo.setDutyGroupId("0201");
+		formVo.setStartDate("07/2561");
+		formVo.setEndDate("12/2561");
 
 		try (FileOutputStream Output = new FileOutputStream(PATH.TEST_PATH + EXCEL_FILE_NAME)) {
 			byte[] outArray = productPaperInputMaterialService.export(formVo);
@@ -74,7 +75,7 @@ public class ProductPaperInputMaterialServiceTest {
 		System.out.println("- - - - - test_upload");
 	}
 	
-	@Test
+//	@Test
 	public void test_save() {
 		System.out.println("- - - - - test_save");
 		

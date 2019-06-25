@@ -3,7 +3,6 @@ package th.go.excise.ims.ta.service;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,9 +30,7 @@ import th.go.excise.ims.ta.persistence.repository.TaPaperPr09DRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPaperPr09HRepository;
 import th.go.excise.ims.ta.vo.ProductPaperFormVo;
 import th.go.excise.ims.ta.vo.ProductPaperInformPriceVo;
-import th.go.excise.ims.ta.vo.ProductPaperOutputGoodsVo;
 import th.go.excise.ims.ws.persistence.repository.WsAnafri0001DRepository;
-import th.go.excise.ims.ws.persistence.repository.WsOasfri0100DRepository;
 import th.go.excise.ims.ws.vo.WsAnafri0001Vo;
 
 @Service
@@ -107,8 +104,7 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 	@Override
 	protected byte[] exportData(ProductPaperFormVo formVo, List<ProductPaperInformPriceVo> voList, String exportType) {
 		logger.info("exportData");
-		// set format money
-		DecimalFormat df = new DecimalFormat("#,##0.00");
+		
 		/* create spreadsheet */
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet(PRODUCT_PAPER_IN_FORM_PRICE);
@@ -174,7 +170,7 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(vo.getInformPrice()) && !NO_VALUE.equals(vo.getInformPrice())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getInformPrice())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(vo.getInformPrice())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -187,7 +183,7 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(vo.getExternalPrice()) && !NO_VALUE.equals(vo.getExternalPrice())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getExternalPrice())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(vo.getExternalPrice())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -200,7 +196,7 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(vo.getDeclarePrice()) && !NO_VALUE.equals(vo.getDeclarePrice())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getDeclarePrice())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(vo.getDeclarePrice())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -213,7 +209,7 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(vo.getRetailPrice()) && !NO_VALUE.equals(vo.getRetailPrice())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getRetailPrice())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(vo.getRetailPrice())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
@@ -231,7 +227,7 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 				cell.setCellValue("");
 			} else {
 				if (StringUtils.isNotBlank(vo.getDiffPrice()) && !NO_VALUE.equals(vo.getDiffPrice())) {
-					cell.setCellValue(df.format(NumberUtils.toBigDecimal(vo.getDiffPrice())));
+					cell.setCellValue(DECIMAL_FORMAT.get().format(NumberUtils.toBigDecimal(vo.getDiffPrice())));
 				} else {
 					cell.setCellValue(NO_VALUE);
 				}
