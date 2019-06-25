@@ -22,6 +22,8 @@ import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CO
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
+import th.go.excise.ims.common.constant.ProjectConstants;
+import th.go.excise.ims.common.constant.ProjectConstants.TAX_COMPARE_TYPE;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaMasCondMainDtl;
@@ -119,9 +121,15 @@ public class DraftWorksheetService {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		formVo.setOfficeCode(officeCode);
 		String budgetYear = formVo.getBudgetYear();
-		
-		TaMasCondMainHdr condMainHdr = taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYearAndCondNumber(officeCode, budgetYear, formVo.getCondNumber());
-		WorksheetDateRangeVo dateRangeVo = TaxAuditUtils.getWorksheetDateRangeVo(formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange(), condMainHdr.getCompType());
+		TaMasCondMainHdr condMainHdr = new TaMasCondMainHdr();
+		WorksheetDateRangeVo dateRangeVo  = new WorksheetDateRangeVo();
+		if (!StringUtils.isNotBlank(formVo.getSkipCond())) {
+			condMainHdr = taMasCondMainHdrRepository.findByOfficeCodeAndBudgetYearAndCondNumber(officeCode, budgetYear, formVo.getCondNumber());
+			dateRangeVo = TaxAuditUtils.getWorksheetDateRangeVo(formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange(), condMainHdr.getCompType());
+		}else {
+			dateRangeVo = TaxAuditUtils.getWorksheetDateRangeVo(formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange() ,TAX_COMPARE_TYPE.HALF);
+		}
+//		WorksheetDateRangeVo dateRangeVo = TaxAuditUtils.getWorksheetDateRangeVo(formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange(), condMainHdr.getCompType());
 		List<LocalDate> subLocalDateG1List = dateRangeVo.getSubLocalDateG1List();
 		List<LocalDate> subLocalDateG2List = dateRangeVo.getSubLocalDateG2List();
 		List<String> monthList = new ArrayList<>();

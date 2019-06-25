@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -971,7 +972,7 @@ public class PlanWorksheetService {
 		return dataTableAjax;
 	}
 	
-	@Transactional
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public TaPlanWorksheetDtl savePlanWorksheetDtlOutPlan(PlanWorksheetDatatableVo formVo) {
 		
 		TaPlanWorksheetDtl planDtlInsert  = new TaPlanWorksheetDtl();
@@ -1021,6 +1022,15 @@ public class PlanWorksheetService {
 			}
 		}
 		
+		updateCountFacNum(formVo);
+		
+
+		return planDtl;
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void updateCountFacNum(PlanWorksheetDatatableVo formVo) {
+		
 //		find for update count outside plan
 		PlanWorksheetVo planVo = new PlanWorksheetVo();
 		planVo.setOfficeCode(formVo.getOfficeCode());
@@ -1037,10 +1047,8 @@ public class PlanWorksheetService {
 		
 		planSend.setFacInNum(new Integer(countInNum.intValue()));
 		planSend.setFacRsNum(new Integer(countReNum.intValue()));
-		planSend.setFacOutNum(new Integer(countOutNum.intValue()));
+		planSend.setFacOutNum(new Integer(countOutNum.intValue()+1));
 		taPlanWorksheetSendRepository.save(planSend);
-
-		return planDtl;
 	}
 
 }

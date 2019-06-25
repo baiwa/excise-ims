@@ -42,6 +42,7 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	private String newRegFlag;
 	private BigDecimal sumTaxAmStart;
 	private BigDecimal sumTaxAmEnd;
+	private String skipCond;
 
 	
 	// new Entity
@@ -330,6 +331,14 @@ public class TaxOperatorFormVo extends DataTableRequest {
 
 	public void setYearMonthList(List<String> yearMonthList) {
 		this.yearMonthList = yearMonthList;
+	}
+
+	public String getSkipCond() {
+		return skipCond;
+	}
+
+	public void setSkipCond(String skipCond) {
+		this.skipCond = skipCond;
 	}
 
 }
