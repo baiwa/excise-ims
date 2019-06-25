@@ -27,6 +27,7 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_FORM_TS_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs01141;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs01141Repository;
@@ -64,7 +65,9 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 		
 		// Set Data
 		TaFormTs01141 formTs01141 = null;
+		String formTsNumber = null;
 		if (StringUtils.isNotBlank(formTS01141Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS01141Vo.getFormTsNumber())) {
+			formTsNumber = formTS01141Vo.getFormTsNumber();
 			// Case Update FormTS
 			List<TaFormTs01141> taFormTs01141List = taFormTs01141Repository.findByFormTsNumber(formTS01141Vo.getFormTsNumber());
 			
@@ -103,7 +106,7 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 			
 		} else {
 			// Case New FormTS
-			String formTsNumber = taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear);
+			formTsNumber = taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear);
 			List<TaFormTs01141> formTs01141List = new ArrayList<>();
 			
 			// Set Main Record
@@ -128,6 +131,8 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 			
 			taFormTs01141Repository.saveAll(formTs01141List);
 		}
+		
+		saveAuditStep(formTS01141Vo, TaFormTS01141Vo.class, TA_FORM_TS_CODE.TS01141, formTsNumber);
 	}
 
 	@Override

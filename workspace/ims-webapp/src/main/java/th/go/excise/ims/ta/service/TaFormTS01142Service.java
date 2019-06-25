@@ -27,6 +27,7 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_FORM_TS_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs01142Dtl;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs01142Hdr;
@@ -70,7 +71,10 @@ public class TaFormTS01142Service  extends AbstractTaFormTSService<TaFormTS01142
 		TaFormTs01142Hdr formTS01142Hdr = null;
 		TaFormTs01142Dtl formTS01142Dtl = null;
 		List<TaFormTs01142Dtl> formTs01142DtlList = null;
+		String formTsNumber = null;
 		if (StringUtils.isNotBlank(formTS01142Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS01142Vo.getFormTsNumber())) {
+			formTsNumber = formTS01142Vo.getFormTsNumber();
+			
 			// Case Update FormTS
 
 			// Update Header
@@ -111,13 +115,14 @@ public class TaFormTS01142Service  extends AbstractTaFormTSService<TaFormTS01142
 			
 		} else {
 			// Case New FormTS
+			formTsNumber = taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear);
 			
 			// Set Header Record
 			formTS01142Hdr = new TaFormTs01142Hdr();
 			toEntity(formTS01142Hdr, formTS01142Vo);
 			formTS01142Hdr.setOfficeCode(officeCode);
 			formTS01142Hdr.setBudgetYear(budgetYear);
-			formTS01142Hdr.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
+			formTS01142Hdr.setFormTsNumber(formTsNumber);
 
 			// Set Detail Record
 			formTs01142DtlList = new ArrayList<>();
@@ -125,7 +130,7 @@ public class TaFormTS01142Service  extends AbstractTaFormTSService<TaFormTS01142
 			for (TaFormTS01142DtlVo formTS01142DtlVo : formTS01142Vo.getTaFormTS01142DtlVoList()) {
 				formTS01142Dtl = new TaFormTs01142Dtl();
 				toEntityDtl(formTS01142Dtl, formTS01142DtlVo);
-				formTS01142Dtl.setFormTsNumber(formTS01142Hdr.getFormTsNumber());
+				formTS01142Dtl.setFormTsNumber(formTsNumber);
 				formTS01142Dtl.setRecNo(String.valueOf(i));
 				formTs01142DtlList.add(formTS01142Dtl);
 				i++;
@@ -134,6 +139,8 @@ public class TaFormTS01142Service  extends AbstractTaFormTSService<TaFormTS01142
 		}
 		
 		taFormTs01142HdrRepository.save(formTS01142Hdr);
+		
+		saveAuditStep(formTS01142Vo, TaFormTS01142Vo.class, TA_FORM_TS_CODE.TS01142, formTsNumber);
 	}
 
 	@Override

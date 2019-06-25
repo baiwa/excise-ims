@@ -1,15 +1,25 @@
 package th.go.excise.ims.ta.service;
 
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.transaction.Transactional;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.IMG_NAME;
@@ -17,6 +27,7 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_FORM_TS_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0114Dtl;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0114Hdr;
@@ -24,14 +35,6 @@ import th.go.excise.ims.ta.persistence.repository.TaFormTs0114DtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0114HdrRepository;
 import th.go.excise.ims.ta.vo.TaFormTS0114DtlVo;
 import th.go.excise.ims.ta.vo.TaFormTS0114Vo;
-
-import javax.transaction.Transactional;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo, TaFormTs0114Hdr> {
@@ -68,7 +71,10 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
 		TaFormTs0114Hdr formTs0114Hdr = null;
 		TaFormTs0114Dtl formTs0114Dtl = null;
 		List<TaFormTs0114Dtl> taFormTs0114DtlList = null;
+		String formTsNumber = null;
 		if (StringUtils.isNotBlank(formTS0114Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0114Vo.getFormTsNumber())) {
+			formTsNumber = formTS0114Vo.getFormTsNumber();
+			
 			// Case Update FormTS
 
 			// ==> Set Hdr
@@ -109,13 +115,14 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
 			
 		} else {
 			// Case New FormTS
+			formTsNumber = taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear);
 			
 			// Set Header Record
 			formTs0114Hdr = new TaFormTs0114Hdr();
 			toEntity(formTs0114Hdr, formTS0114Vo);
 			formTs0114Hdr.setOfficeCode(officeCode);
 			formTs0114Hdr.setBudgetYear(budgetYear);
-			formTs0114Hdr.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
+			formTs0114Hdr.setFormTsNumber(formTsNumber);
 			
 			// Set Detail Record
 			taFormTs0114DtlList = new ArrayList<>();
@@ -123,7 +130,7 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
 			for (TaFormTS0114DtlVo formDtl : formTS0114Vo.getTaFormTS0114DtlVoList()) {
 				formTs0114Dtl = new TaFormTs0114Dtl();
 				toEntityDtl(formTs0114Dtl, formDtl);
-				formTs0114Dtl.setFormTsNumber(formTs0114Hdr.getFormTsNumber());
+				formTs0114Dtl.setFormTsNumber(formTsNumber);
 				formTs0114Dtl.setRecNo(String.valueOf(i));
 				taFormTs0114DtlList.add(formTs0114Dtl);
 				i++;
@@ -132,6 +139,8 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
 		}
 
 		taFormTs0114HdrRepository.save(formTs0114Hdr);
+		
+		saveAuditStep(formTS0114Vo, TaFormTS0114Vo.class, TA_FORM_TS_CODE.TS0114, formTsNumber);
 	}
 
 	@Override
