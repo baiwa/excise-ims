@@ -7,5 +7,7 @@ import th.go.excise.ims.ia.persistence.entity.IaChartOfAcc;
 public interface IaChartOfAccRepositoryCustom {
 
 	public List<IaChartOfAcc> getDropdown();
+	
+	
 
 }

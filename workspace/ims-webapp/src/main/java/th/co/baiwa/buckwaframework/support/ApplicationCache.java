@@ -288,6 +288,10 @@ public class ApplicationCache {
 	public static ExciseIncMast getExciseIncMastByIncCode(String incCode) {
 		return EXCISE_INC_MAST_MAP.get(incCode);
 	}
+	
+	public static List<ExciseIncMast> getExciseIncMastList() {
+		return new ArrayList<ExciseIncMast>(EXCISE_INC_MAST_MAP.values());
+	}
 	/********************* Method for Get Cache - End *********************/
 
 	
