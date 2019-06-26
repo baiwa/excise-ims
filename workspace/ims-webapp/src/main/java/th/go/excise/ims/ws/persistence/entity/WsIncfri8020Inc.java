@@ -94,6 +94,10 @@ public class WsIncfri8020Inc extends BaseEntity {
 	private String updatedBy;
 	@Column(name = "UPDATED_DATE")
 	private Date updatedDate;
+	@Column(name = "GL_ACC_NO")
+	private String glAccNo;
+	@Column(name = "DEPT_DISB")
+	private String deptDisb;
 
 	public Long getWsIncfri8020IncId() {
 		return wsIncfri8020IncId;
@@ -337,6 +341,22 @@ public class WsIncfri8020Inc extends BaseEntity {
 
 	public void setOfflineStatus(String offlineStatus) {
 		this.offlineStatus = offlineStatus;
+	}
+
+	public String getGlAccNo() {
+		return glAccNo;
+	}
+
+	public void setGlAccNo(String glAccNo) {
+		this.glAccNo = glAccNo;
+	}
+
+	public String getDeptDisb() {
+		return deptDisb;
+	}
+
+	public void setDeptDisb(String deptDisb) {
+		this.deptDisb = deptDisb;
 	}
 
 }
