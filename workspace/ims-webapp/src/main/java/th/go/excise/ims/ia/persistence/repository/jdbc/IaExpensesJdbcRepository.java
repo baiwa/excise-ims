@@ -153,10 +153,33 @@ public class IaExpensesJdbcRepository {
 	public List<Int090101Vo> findCompare(Int090101CompareFormVo form) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
-		sql.append(" SELECT IEX.* ,EOD.DISBURSE_UNIT, IGB.* , IGA.GL_ACC_NO FROM IA_EXPENSES IEX ");
-		sql.append(" INNER JOIN EXCISE_ORG_DISB EOD ON IEX.OFFICE_CODE = EOD.OFFICE_CODE ");
-		sql.append(" LEFT JOIN IA_GFTRIAL_BALANCE IGB ON '00000'||EOD.DISBURSE_UNIT = IGB.DEPT_DISB ");
-		sql.append(" LEFT JOIN IA_GFLEDGER_ACCOUNT IGA ON IGA.GL_ACC_NO = IEX.ACCOUNT_ID ");
+		sql.append(" SELECT IEX.ACCOUNT_ID, ");
+		sql.append("   IEX.ACCOUNT_NAME, ");
+		sql.append("   SUM(IEX.SERVICE_RECEIVE)   AS SERVICE_RECEIVE, ");
+		sql.append("   SUM(IEX.SUPPRESS_RECEIVE)  AS SUPPRESS_RECEIVE, ");
+		sql.append("   SUM(IEX.BUDGET_RECEIVE)    AS BUDGET_RECEIVE, ");
+		sql.append("   SUM(IEX.SUM_RECEIVE)       AS SUM_RECEIVE, ");
+		sql.append("   SUM(IEX.SERVICE_WITHDRAW)  AS SERVICE_WITHDRAW, ");
+		sql.append("   SUM(IEX.SUPPRESS_WITHDRAW) AS SUPPRESS_WITHDRAW, ");
+		sql.append("   SUM(IEX.BUDGET_WITHDRAW)   AS BUDGET_WITHDRAW, ");
+		sql.append("   SUM(IEX.SUM_WITHDRAW)      AS SUM_WITHDRAW, ");
+		sql.append("   SUM(IEX.SERVICE_BALANCE)   AS SERVICE_BALANCE, ");
+		sql.append("   SUM(IEX.SUPPRESS_BALANCE)  AS SUPPRESS_BALANCE, ");
+		sql.append("   SUM(IEX.BUDGET_BALANCE)    AS BUDGET_BALANCE, ");
+		sql.append("   SUM(IEX.SUM_BALANCE)       AS SUM_BALANCE, ");
+		sql.append("   SUM(IEX.AVERAGE_COST)      AS AVERAGE_COST, ");
+		sql.append("   SUM(IEX.AVERAGE_GIVE)      AS AVERAGE_GIVE, ");
+		sql.append("   SUM(IEX.AVERAGE_FROM)      AS AVERAGE_FROM, ");
+		sql.append("   SUM(IEX.AVERAGE_COME_COST) AS AVERAGE_COME_COST, ");
+		sql.append("   SUM(IEX.MONEY_BUDGET)      AS MONEY_BUDGET, ");
+		sql.append("   SUM(IEX.MONEY_OUT)         AS MONEY_OUT ");
+		sql.append(" FROM IA_EXPENSES IEX ");
+		sql.append(" INNER JOIN EXCISE_ORG_DISB EOD ");
+		sql.append("   ON IEX.OFFICE_CODE = EOD.OFFICE_CODE ");
+		sql.append(" LEFT JOIN IA_GFTRIAL_BALANCE IGB ");
+		sql.append("   ON '00000'||EOD.DISBURSE_UNIT = IGB.DEPT_DISB ");
+		sql.append(" LEFT JOIN IA_GFLEDGER_ACCOUNT IGA ");
+		sql.append("   ON IGA.GL_ACC_NO = IEX.ACCOUNT_ID ");
 		sql.append(" WHERE 1=1 ");
 		if (StringUtils.isNotBlank(form.getArea())) {
 			sql.append(" AND IEX.OFFICE_CODE = ? ");
@@ -174,6 +197,9 @@ public class IaExpensesJdbcRepository {
 			sql.append(" AND IEX.EXPENSE_YEAR||EXPENSE_MONTH  <= ? ");
 			params.add(form.getEndYear() + StringUtils.leftPad(form.getPeriodMonthEnd(), 2, '0').substring(0, 2));
 		}
+		
+		sql.append(" GROUP BY IEX.ACCOUNT_ID, ");
+		sql.append("   IEX.ACCOUNT_NAME ");
 		List<Int090101Vo> data = commonJdbcTemplate.query(sql.toString(), params.toArray(), compareRowmapper);
 		return data;
 	}
@@ -185,26 +211,26 @@ public class IaExpensesJdbcRepository {
 			vo.setAccountId(rs.getString("ACCOUNT_ID"));
 			vo.setAccountName(rs.getString("ACCOUNT_NAME"));
 			vo.setAverageComeCost(rs.getString("AVERAGE_COME_COST"));
-			vo.setAverageComeCostOut(rs.getString("AVERAGE_COME_COST_OUT"));
+//			vo.setAverageComeCostOut(rs.getString("AVERAGE_COME_COST_OUT"));
 			vo.setAverageCost(rs.getBigDecimal("AVERAGE_COST"));
-			vo.setAverageCostOut(rs.getBigDecimal("AVERAGE_COST_OUT"));
+//			vo.setAverageCostOut(rs.getBigDecimal("AVERAGE_COST_OUT"));
 			vo.setAverageFrom(rs.getBigDecimal("AVERAGE_FROM"));
-			vo.setAverageFromOut(rs.getBigDecimal("AVERAGE_FROM_OUT"));
+//			vo.setAverageFromOut(rs.getBigDecimal("AVERAGE_FROM_OUT"));
 			vo.setAverageGive(rs.getString("AVERAGE_GIVE"));
-			vo.setAverageGiveOut(rs.getString("AVERAGE_GIVE_OUT"));
+//			vo.setAverageGiveOut(rs.getString("AVERAGE_GIVE_OUT"));
 			vo.setBudgetBalance(rs.getBigDecimal("BUDGET_BALANCE"));
 			vo.setBudgetReceive(rs.getBigDecimal("BUDGET_RECEIVE"));
 			vo.setBudgetWithdraw(rs.getBigDecimal("BUDGET_WITHDRAW"));
-			vo.setBudgetYear(rs.getString("BUDGET_YEAR"));
-			vo.setExpenseDate(rs.getDate("EXPENSE_DATE"));
-			vo.setExpenseMonth(rs.getString("EXPENSE_MONTH"));
-			vo.setExpenseYear(rs.getString("EXPENSE_YEAR"));
-			vo.setId(rs.getBigDecimal("ID"));
+//			vo.setBudgetYear(rs.getString("BUDGET_YEAR"));
+//			vo.setExpenseDate(rs.getDate("EXPENSE_DATE"));
+//			vo.setExpenseMonth(rs.getString("EXPENSE_MONTH"));
+//			vo.setExpenseYear(rs.getString("EXPENSE_YEAR"));
+//			vo.setId(rs.getBigDecimal("ID"));
 			vo.setMoneyBudget(rs.getBigDecimal("MONEY_BUDGET"));
 			vo.setMoneyOut(rs.getBigDecimal("MONEY_OUT"));
-			vo.setNote(rs.getString("NOTE"));
-			vo.setOfficeCode(rs.getString("OFFICE_CODE"));
-			vo.setOfficeDesc(rs.getString("OFFICE_DESC"));
+//			vo.setNote(rs.getString("NOTE"));
+//			vo.setOfficeCode(rs.getString("OFFICE_CODE"));
+//			vo.setOfficeDesc(rs.getString("OFFICE_DESC"));
 			vo.setServiceBalance(rs.getBigDecimal("SERVICE_BALANCE"));
 			vo.setServiceReceive(rs.getBigDecimal("SERVICE_RECEIVE"));
 			vo.setServiceWithdraw(rs.getBigDecimal("SERVICE_WITHDRAW"));
