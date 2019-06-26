@@ -1,6 +1,7 @@
 package th.go.excise.ims.ta.persistence.entity;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -56,7 +57,7 @@ public class TaPlanWorksheetHdr extends BaseEntity {
 	@Column(name = "DOC_APPROVE_NO")
 	private String docApproveNo;
 	@Column(name = "DOC_APPROVE_DATE")
-	private String docApproveDate;
+	private Date docApproveDate;
 
 	public Long getPlanWorksheetHdrId() {
 		return planWorksheetHdrId;
@@ -194,11 +195,11 @@ public class TaPlanWorksheetHdr extends BaseEntity {
 		this.docApproveNo = docApproveNo;
 	}
 
-	public String getDocApproveDate() {
+	public Date getDocApproveDate() {
 		return docApproveDate;
 	}
 
-	public void setDocApproveDate(String docApproveDate) {
+	public void setDocApproveDate(Date docApproveDate) {
 		this.docApproveDate = docApproveDate;
 	}
 	
