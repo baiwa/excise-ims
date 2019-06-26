@@ -185,7 +185,30 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 			sql.append(" AND R4000.PINNIT_ID = ?");
 			params.add(StringUtils.trim(formVo.getPinnitId()));
 		}
-		sql.append("   AND R4000.REG_STATUS IN ('1','2','3','41','51') "); // REG_STATUS = '1' is Active
+		
+		// REG DATE START
+		if (formVo.getRegDateStart() != null) {
+			sql.append(" AND R4000.REG_DATE >= TO_DATE(?, 'YYYYMMDD') ");
+			params.add(ConvertDateUtils.formatDateToString(formVo.getRegDateStart(), ConvertDateUtils.YYYYMMDD, Locale.US));
+		}
+
+		// REG DATE END
+		if (formVo.getRegDateEnd() != null) {
+			sql.append(" AND R4000.REG_DATE <= TO_DATE(?, 'YYYYMMDD') ");
+			params.add(ConvertDateUtils.formatDateToString(formVo.getRegDateEnd(), ConvertDateUtils.YYYYMMDD, Locale.US));
+		}
+		
+		// REG STATUS
+		if (formVo.getRegStatus() != null && formVo.getRegStatus().size() > 0) {
+			sql.append(" AND R4000.REG_STATUS IN ( ");
+			sql.append(StringUtils.repeat("?", ",", formVo.getRegStatus().size()));
+			sql.append(" ) ");
+			params.addAll(formVo.getRegStatus());
+		}else {
+			sql.append(" AND R4000.REG_STATUS IN ('1','2','3','41','51') ");
+		}
+		
+		//sql.append("   AND R4000.REG_STATUS IN ('1','2','3','41','51') "); // REG_STATUS = '1' is Active
 	}
 
 	@Override
@@ -271,8 +294,28 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 			sql.append(" AND R.PINNIT_ID = ?");
 			params.add(StringUtils.trim(formVo.getPinnitId()));
 		}
-		sql.append(" AND R.REG_STATUS IN ('1','2','3','41','51') ");
+		// REG DATE START
+		if (formVo.getRegDateStart() != null) {
+			sql.append(" AND R.REG_DATE >= TO_DATE(?, 'YYYYMMDD') ");
+			params.add(ConvertDateUtils.formatDateToString(formVo.getRegDateStart(), ConvertDateUtils.YYYYMMDD, Locale.US));
+		}
 
+		// REG DATE END
+		if (formVo.getRegDateEnd() != null) {
+			sql.append(" AND R.REG_DATE <= TO_DATE(?, 'YYYYMMDD') ");
+			params.add(ConvertDateUtils.formatDateToString(formVo.getRegDateEnd(), ConvertDateUtils.YYYYMMDD, Locale.US));
+		}
+		
+		// REG STATUS
+		if (formVo.getRegStatus() != null && formVo.getRegStatus().size() > 0) {
+			sql.append(" AND R.REG_STATUS IN ( ");
+			sql.append(StringUtils.repeat("?", ",", formVo.getRegStatus().size()));
+			sql.append(" ) ");
+			params.addAll(formVo.getRegStatus());
+		}else {
+			sql.append(" AND R.REG_STATUS IN ('1','2','3','41','51') ");
+		}
+		
 		List<TaxOperatorDetailVo> taxOperatorDetailVoList = commonJdbcTemplate.query(sql.toString(), params.toArray(), new ResultSetExtractor<List<TaxOperatorDetailVo>>() {
 
 			public List<TaxOperatorDetailVo> extractData(ResultSet rs) throws SQLException, DataAccessException {

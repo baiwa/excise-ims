@@ -2,6 +2,7 @@ package th.go.excise.ims.ta.vo;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
@@ -43,7 +44,10 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	private BigDecimal sumTaxAmStart;
 	private BigDecimal sumTaxAmEnd;
 	private String skipCond;
-
+	private List<String> regStatus;
+	private Date regDateStart;
+	private Date regDateEnd;
+	private String incomeType;
 	
 	// new Entity
 	private String cuscatId;
@@ -340,5 +344,38 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	public void setSkipCond(String skipCond) {
 		this.skipCond = skipCond;
 	}
+
+	public List<String> getRegStatus() {
+		return regStatus;
+	}
+
+	public void setRegStatus(List<String> regStatus) {
+		this.regStatus = regStatus;
+	}
+
+	public Date getRegDateStart() {
+		return regDateStart;
+	}
+
+	public void setRegDateStart(Date regDateStart) {
+		this.regDateStart = regDateStart;
+	}
+
+	public Date getRegDateEnd() {
+		return regDateEnd;
+	}
+
+	public void setRegDateEnd(Date regDateEnd) {
+		this.regDateEnd = regDateEnd;
+	}
+
+	public String getIncomeType() {
+		return incomeType;
+	}
+
+	public void setIncomeType(String incomeType) {
+		this.incomeType = incomeType;
+	}
+	
 
 }

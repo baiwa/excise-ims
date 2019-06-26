@@ -117,9 +117,11 @@ public class DraftWorksheetService {
 	public List<TaxOperatorDetailVo> prepareTaxOperatorDetailVoList(TaxOperatorFormVo formVo) {
 		logger.info("prepareTaxOperatorDetailVoList startDate={}, endDate={}, dateRange={}", formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
 		long start = System.currentTimeMillis();
-		
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		formVo.setOfficeCode(officeCode);
+		if (StringUtils.isBlank(formVo.getOfficeCode())) {
+			formVo.setOfficeCode(officeCode);
+		}
+		
 		String budgetYear = formVo.getBudgetYear();
 		TaMasCondMainHdr condMainHdr = new TaMasCondMainHdr();
 		WorksheetDateRangeVo dateRangeVo  = new WorksheetDateRangeVo();
@@ -157,12 +159,25 @@ public class DraftWorksheetService {
 		Map<String, String> maxYearMap = taPlanWorksheetHisRepository.findMaxTaxAuditYear();
 		//==> Check TAX, NET
 		String incomeTaxType = null;
-		ParamInfo taxType = ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.INCOME_TYPE);
-		if (taxType != null) {
-			incomeTaxType = taxType.getValue1();
-		} else {
-			incomeTaxType = TA_CONFIG.INCOME_TYPE_TAX;
+//		ParamInfo taxType = ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.INCOME_TYPE);
+//		if (taxType != null) {
+//			incomeTaxType = taxType.getValue1();
+//		} else {
+//			incomeTaxType = TA_CONFIG.INCOME_TYPE_TAX;
+//		}
+		
+//		update 26 06 2019 get incomeType from page ta0501
+		if (StringUtils.isNotBlank(formVo.getIncomeType())) {
+			incomeTaxType = formVo.getIncomeType();
+		}else {
+			ParamInfo taxType = ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_CONFIG, TA_CONFIG.INCOME_TYPE);
+			if (taxType != null) {
+				incomeTaxType = taxType.getValue1();
+			} else {
+				incomeTaxType = TA_CONFIG.INCOME_TYPE_TAX;
+			}
 		}
+
 		formVo.setYearMonthList(monthList);
 		List<TaxOperatorDetailVo> detailVoList = taWsReg4000Repository.findByCriteriaTest(formVo , auditPlanMap , maxYearMap , incomeTaxType);
 		long end = System.currentTimeMillis();
