@@ -31,7 +31,7 @@ import th.go.excise.ims.ta.vo.ServicePaperFormVo;
 import th.go.excise.ims.ta.vo.ServicePaperMemberVo;
 
 @Service
-public class ServicePaperMemberService extends AbstractServicePaperService<ServicePaperMemberVo> {
+public class ServicePaperMemberService extends AbstractServicePaperService<ServicePaperMemberVo, TaPaperSv03H> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ServicePaperMemberService.class);
 	
@@ -43,6 +43,16 @@ public class ServicePaperMemberService extends AbstractServicePaperService<Servi
 	@Override
 	protected Logger getLogger() {
 		return logger;
+	}
+
+	@Override
+	protected String getPaperCode() {
+		return "03";
+	}
+	
+	@Override
+	protected Object getRepository() {
+		return taPaperSv03HRepository;
 	}
 	
 	@Override
@@ -77,7 +87,7 @@ public class ServicePaperMemberService extends AbstractServicePaperService<Servi
 	}
 
 	@Override
-	protected byte[] exportData(List<ServicePaperMemberVo> voList, String exportType) {
+	protected byte[] exportData(ServicePaperFormVo formVo, List<ServicePaperMemberVo> voList, String exportType) {
 		logger.info("exportData");
 		
 		XSSFWorkbook workbook = new XSSFWorkbook();
@@ -162,6 +172,9 @@ public class ServicePaperMemberService extends AbstractServicePaperService<Servi
 			rowNum++;
 			cellNum = 0;
 		}
+		
+		// Create 'Criteria' Sheet
+		createSheetCriteria(workbook, formVo);
 
 		// set output
 		byte[] content = null;
@@ -176,11 +189,11 @@ public class ServicePaperMemberService extends AbstractServicePaperService<Servi
 	}
 
 	@Override
-	public List<ServicePaperMemberVo> upload(ServicePaperFormVo formVo) {
+	public List<ServicePaperMemberVo> uploadData(ServicePaperFormVo formVo) {
 		List<ServicePaperMemberVo> dataList = new ArrayList<>();
 
 		try (Workbook workbook = WorkbookFactory.create(formVo.getFile().getInputStream())) {
-			Sheet sheet = workbook.getSheetAt(0);
+			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
 
 			for (Row row : sheet) {
 				ServicePaperMemberVo pushdata = new ServicePaperMemberVo();
@@ -220,11 +233,10 @@ public class ServicePaperMemberService extends AbstractServicePaperService<Servi
 
 	@Transactional(rollbackOn = {Exception.class})
 	@Override
-	public void save(ServicePaperFormVo formVo) {
-		logger.info("save");
-		
+	public String save(ServicePaperFormVo formVo) {
 		TaPaperSv03H entityH = new TaPaperSv03H();
-		prepareEntityH(formVo, entityH, TaPaperSv03H.class);
+		String paperSvNumber = prepareEntityH(formVo, entityH, TaPaperSv03H.class);
+		logger.info("save paperSvNumber={}", paperSvNumber);
 		taPaperSv03HRepository.save(entityH);
 		
 		List<ServicePaperMemberVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
@@ -233,7 +245,7 @@ public class ServicePaperMemberService extends AbstractServicePaperService<Servi
 		int i = 1;
 		for (ServicePaperMemberVo vo : voList) {
 			entityD = new TaPaperSv03D();
-			entityD.setPaperSvNumber(entityH.getPaperSvNumber());
+			entityD.setPaperSvNumber(paperSvNumber);
 			entityD.setSeqNo(i);
 			entityD.setMemberCode(vo.getMemberCode());
 			entityD.setMemberFullName(vo.getMemberFullName());
@@ -247,6 +259,7 @@ public class ServicePaperMemberService extends AbstractServicePaperService<Servi
 		}
 		taPaperSv03DRepository.saveAll(entityDList);
 		
+		return paperSvNumber;
 	}
 
 	@Override

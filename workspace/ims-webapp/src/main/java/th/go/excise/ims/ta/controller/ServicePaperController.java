@@ -23,13 +23,17 @@ import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
+import th.go.excise.ims.ta.service.AbstractProductPaperService;
 import th.go.excise.ims.ta.service.AbstractServicePaperService;
 import th.go.excise.ims.ta.service.ServicePaperBalanceGoodsService;
 import th.go.excise.ims.ta.service.ServicePaperMemberService;
 import th.go.excise.ims.ta.service.ServicePaperPricePerUnitService;
 import th.go.excise.ims.ta.service.ServicePaperQtyService;
 import th.go.excise.ims.ta.service.ServicePaperTaxAmtAdditionalService;
+import th.go.excise.ims.ta.vo.ProductPaperVo;
 import th.go.excise.ims.ta.vo.ServicePaperFormVo;
+import th.go.excise.ims.ta.vo.ServicePaperVo;
 
 @Controller
 @RequestMapping("/api/ta/service-paper")
@@ -55,19 +59,20 @@ public class ServicePaperController {
 	
 	@PostMapping("/inquiry-{servicePaperType}")
 	@ResponseBody
-	public DataTableAjax<?> inquiryData(@PathVariable("servicePaperType") String servicePaperType, @RequestBody ServicePaperFormVo formVo) {
+	public ResponseData<?> inquiryData(@PathVariable("servicePaperType") String servicePaperType, @RequestBody ServicePaperFormVo formVo) {
 		logger.info("inquiryData servicePaperType={}", servicePaperType);
 		
-		DataTableAjax<Object> dataTableAjax = new DataTableAjax<>();
+		ResponseData<ServicePaperVo> responseData = new ResponseData<>();
 		try {
-			AbstractServicePaperService<Object> service = servicePaperServiceMap.get(servicePaperType);
-			List<Object> voList = service.inquiry(formVo);
-			dataTableAjax.setData(voList);
+			AbstractServicePaperService<Object, BaseEntity> service = servicePaperServiceMap.get(servicePaperType);
+			responseData.setData(service.inquiry(formVo));
+			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
 		
-		return dataTableAjax;
+		return responseData;
 	}
 	
 	@PostMapping("/export-{servicePaperType}")
@@ -76,9 +81,9 @@ public class ServicePaperController {
 		logger.info("exportData servicePaperType={}, paperSvNumber={}", servicePaperType, formVo.getPaperSvNumber());
 
 		//String fileName = URLEncoder.encode("ตรวจสอบการรับวัตถุดิบ", "UTF-8");
-		String fileName = "test";
-		AbstractServicePaperService<Object> service = servicePaperServiceMap.get(servicePaperType);
+		AbstractServicePaperService<Object, BaseEntity> service = servicePaperServiceMap.get(servicePaperType);
 		byte[] bytes = service.export(formVo);
+		String fileName = service.getExportFileName(formVo);
 		
 		response.setContentType("application/octet-stream");
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
@@ -93,13 +98,10 @@ public class ServicePaperController {
 	public ResponseData<?> uploadData(@PathVariable("servicePaperType") String servicePaperType, @ModelAttribute ServicePaperFormVo formVo) {
 		logger.info("uploadData");
 		
-		ResponseData<DataTableAjax<Object>> responseData = new ResponseData<>();
+		ResponseData<ServicePaperVo> responseData = new ResponseData<>();
 		try {
-			AbstractServicePaperService<Object> service = servicePaperServiceMap.get(servicePaperType);
-			DataTableAjax<Object> dataTableAjax = new DataTableAjax<>();
-			dataTableAjax.setData(service.upload(formVo));
-			
-			responseData.setData(dataTableAjax);
+			AbstractServicePaperService<Object, BaseEntity> service = servicePaperServiceMap.get(servicePaperType);
+			responseData.setData(service.upload(formVo));
 			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
@@ -118,8 +120,9 @@ public class ServicePaperController {
 		
 		ResponseData<String> responseData = new ResponseData<String>();
 		try {
-			AbstractServicePaperService<Object> service = servicePaperServiceMap.get(servicePaperType);
-			service.save(formVo);
+			AbstractServicePaperService<Object, BaseEntity> service = servicePaperServiceMap.get(servicePaperType);
+			String paperSvNumber = service.save(formVo);
+			responseData.setData(paperSvNumber);
 			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
@@ -138,7 +141,7 @@ public class ServicePaperController {
 		
 		ResponseData<List<String>> responseData = new ResponseData<List<String>>();
 		try {
-			AbstractServicePaperService<Object> service = servicePaperServiceMap.get(servicePaperType);
+			AbstractServicePaperService<Object, BaseEntity> service = servicePaperServiceMap.get(servicePaperType);
 			responseData.setData(service.getPaperSvNumberList(formVo));
 			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);

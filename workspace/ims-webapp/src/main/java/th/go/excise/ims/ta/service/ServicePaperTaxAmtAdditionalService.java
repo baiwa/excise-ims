@@ -30,7 +30,7 @@ import th.go.excise.ims.ta.vo.ServicePaperFormVo;
 import th.go.excise.ims.ta.vo.ServicePaperTaxAmtAdditionalVo;
 
 @Service
-public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperService<ServicePaperTaxAmtAdditionalVo> {
+public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperService<ServicePaperTaxAmtAdditionalVo, TaPaperSv05H> {
 
 	private static final Logger logger = LoggerFactory.getLogger(ServicePaperTaxAmtAdditionalService.class);
 	
@@ -42,6 +42,16 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 	@Override
 	protected Logger getLogger() {
 		return logger;
+	}
+
+	@Override
+	protected String getPaperCode() {
+		return "05";
+	}
+	
+	@Override
+	protected Object getRepository() {
+		return taPaperSv05HRepository;
 	}
 	
 	@Override
@@ -80,7 +90,7 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 	}
 
 	@Override
-	protected byte[] exportData(List<ServicePaperTaxAmtAdditionalVo> voList, String exportType) {
+	protected byte[] exportData(ServicePaperFormVo formVo, List<ServicePaperTaxAmtAdditionalVo> voList, String exportType) {
 		logger.info("exportData");
 		
 		XSSFWorkbook workbook = new XSSFWorkbook();
@@ -213,6 +223,9 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 			rowNum++;
 			cellNum = 0;
 		}
+		
+		// Create 'Criteria' Sheet
+		createSheetCriteria(workbook, formVo);
 
 		// set output
 		byte[] content = null;
@@ -227,11 +240,11 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 	}
 
 	@Override
-	public List<ServicePaperTaxAmtAdditionalVo> upload(ServicePaperFormVo formVo) {
+	public List<ServicePaperTaxAmtAdditionalVo> uploadData(ServicePaperFormVo formVo) {
 		List<ServicePaperTaxAmtAdditionalVo> dataList = new ArrayList<>();
 
 		try (Workbook workbook = WorkbookFactory.create(formVo.getFile().getInputStream())) {
-			Sheet sheet = workbook.getSheetAt(0);
+			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
 
 			for (Row row : sheet) {
 				ServicePaperTaxAmtAdditionalVo pushdata = new ServicePaperTaxAmtAdditionalVo();
@@ -279,11 +292,10 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 
 	@Transactional(rollbackOn = {Exception.class})
 	@Override
-	public void save(ServicePaperFormVo formVo) {
-		logger.info("save");
-		
+	public String save(ServicePaperFormVo formVo) {
 		TaPaperSv05H entityH = new TaPaperSv05H();
-		prepareEntityH(formVo, entityH, TaPaperSv05H.class);
+		String paperSvNumber = prepareEntityH(formVo, entityH, TaPaperSv05H.class);
+		logger.info("save paperSvNumber={}", paperSvNumber);
 		taPaperSv05HRepository.save(entityH);
 		
 		List<ServicePaperTaxAmtAdditionalVo> voList = gson.fromJson(formVo.getJson(), getListVoType());
@@ -292,7 +304,7 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 		int i = 1;
 		for (ServicePaperTaxAmtAdditionalVo vo : voList) {
 			entityD = new TaPaperSv05D();
-			entityD.setPaperSvNumber(entityH.getPaperSvNumber());
+			entityD.setPaperSvNumber(paperSvNumber);
 			entityD.setSeqNo(i);
 			entityD.setGoodsDesc(vo.getGoodsDesc());
 			entityD.setGoodsQty(!NO_VALUE.equals(vo.getGoodsQty()) ? NumberUtils.toBigDecimal(vo.getGoodsQty()) : null);
@@ -309,6 +321,8 @@ public class ServicePaperTaxAmtAdditionalService extends AbstractServicePaperSer
 			i++;
 		}
 		taPaperSv05DRepository.saveAll(entityDList);
+		
+		return paperSvNumber;
 	}
 
 	@Override
