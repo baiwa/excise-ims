@@ -20,10 +20,13 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESS
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
+import th.go.excise.ims.ta.service.AuditStepService;
 import th.go.excise.ims.ta.service.RecordMessageService;
 import th.go.excise.ims.ta.service.TaxAuditService;
 import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
+import th.go.excise.ims.ta.vo.AuditStepFormVo;
+import th.go.excise.ims.ta.vo.AuditStepVo;
 import th.go.excise.ims.ta.vo.FormDocTypeVo;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanVo;
@@ -38,9 +41,10 @@ public class TaxAuditController {
 
 	@Autowired
 	private TaxAuditService taxAuditService;
-
 	@Autowired
 	private RecordMessageService recordMessageService;
+	@Autowired
+	private AuditStepService auditStepService;
 
 	@PostMapping("/get-operator-details")
 	@ResponseBody
@@ -168,6 +172,21 @@ public class TaxAuditController {
 		ResponseData<List<ParamInfo>> responseData = new ResponseData<List<ParamInfo>>();
 		try {
 			responseData.setData(taxAuditService.getRegStatus());
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
+	@PostMapping("/audit-step-list")
+	@ResponseBody
+	public ResponseData<?> getAuditStepList(@RequestBody AuditStepFormVo formVo) {
+		ResponseData<List<AuditStepVo>> responseData = new ResponseData<>();
+		try {
+			responseData.setData(auditStepService.getAuditStepVoList(formVo));
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
