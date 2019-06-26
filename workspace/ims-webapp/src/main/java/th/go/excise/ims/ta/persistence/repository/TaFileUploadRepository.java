@@ -14,7 +14,7 @@ public interface TaFileUploadRepository extends CommonJpaCrudRepository<TaFileUp
 	public TaFileUpload findByUploadNo(@Param("uploadNo") String uploadNo);
 	
 	@Modifying
-	@Query("update #{#entityName} e set e.isDeleted = " + FLAG.Y_FLAG + " where e.uploadNo = :uploadNo")
+	@Query("update #{#entityName} e set e.isDeleted = '" + FLAG.Y_FLAG + "' where e.uploadNo = :uploadNo")
 	public void deleteByUploadNo(@Param("uploadNo") String uploadNo);
 	
 }

@@ -90,9 +90,10 @@ public class TaFileUploadService {
 		return voList;
 	}
 	
-	public void deleteUploadFile(FileUploadFormVo formVo) {
-		logger.info("deleteUploadFile uploadNumber={}", formVo.getUploadNo());
-		taFileUploadRepository.deleteByUploadNo(formVo.getUploadNo());
+	@Transactional(rollbackOn = {Exception.class})
+	public void deleteUploadFile(String uploadNo) {
+		logger.info("deleteUploadFile upLoadNoStr={}", uploadNo);
+		taFileUploadRepository.deleteByUploadNo(uploadNo);
 	}
 	
 	public FileUploadVo getUploadFile(String uploadNumber) throws IOException {

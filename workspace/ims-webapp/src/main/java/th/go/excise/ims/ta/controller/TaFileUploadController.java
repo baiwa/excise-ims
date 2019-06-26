@@ -75,14 +75,14 @@ public class TaFileUploadController {
 		return responseData;
 	}
 	
-	@DeleteMapping("/delete")
+	@DeleteMapping("/delete/{uploadNo}")
 	@ResponseBody
-	public ResponseData<?> delete(@RequestBody FileUploadFormVo formVo) {
+	public ResponseData<?> delete(@PathVariable("uploadNo") String uploadNo) {
 		logger.info("delete");
 		
 		ResponseData<?> responseData = new ResponseData<>();
 		try {
-			taFileUploadService.deleteUploadFile(formVo);
+			taFileUploadService.deleteUploadFile(uploadNo);
 			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
