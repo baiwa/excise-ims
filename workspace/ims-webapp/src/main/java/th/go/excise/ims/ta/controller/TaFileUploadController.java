@@ -3,11 +3,17 @@ package th.go.excise.ims.ta.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +37,7 @@ public class TaFileUploadController {
 	
 	@PostMapping("/upload")
 	@ResponseBody
-	public ResponseData<?> upload(@ModelAttribute FileUploadFormVo formVo) throws IOException {
+	public ResponseData<?> upload(@ModelAttribute FileUploadFormVo formVo) {
 		logger.info("upload");
 		
 		ResponseData<String> responseData = new ResponseData<>();
@@ -51,7 +57,7 @@ public class TaFileUploadController {
 	
 	@PostMapping("/list")
 	@ResponseBody
-	public ResponseData<List<FileUploadVo>> list(@RequestBody FileUploadFormVo formVo) throws IOException {
+	public ResponseData<List<FileUploadVo>> list(@RequestBody FileUploadFormVo formVo) {
 		logger.info("list");
 		
 		ResponseData<List<FileUploadVo>> responseData = new ResponseData<>();
@@ -69,15 +75,14 @@ public class TaFileUploadController {
 		return responseData;
 	}
 	
-	@PostMapping("/delete")
+	@DeleteMapping("/delete")
 	@ResponseBody
-	public ResponseData<?> delete(@RequestBody FileUploadFormVo formVo) throws IOException {
-		logger.info("list");
+	public ResponseData<?> delete(@RequestBody FileUploadFormVo formVo) {
+		logger.info("delete");
 		
 		ResponseData<?> responseData = new ResponseData<>();
 		try {
-//			AbstractProductPaperService<Object, BaseEntity> service = productPaperServiceMap.get(productPaperType);
-//			responseData.setData(service.upload(formVo));
+			taFileUploadService.deleteUploadFile(formVo);
 			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
@@ -87,6 +92,19 @@ public class TaFileUploadController {
 		}
 		
 		return responseData;
+	}
+	
+	@GetMapping("/download/{uploadNumber}")
+	public void download(@PathVariable("uploadNumber") String uploadNumber, HttpServletResponse response) throws IOException {
+		logger.info("download");
+		
+		FileUploadVo vo = taFileUploadService.getUploadFile(uploadNumber);
+		byte[] bytes = vo.getBytes();
+
+		response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", vo.getFileName()));
+		response.setContentType("application/octet-stream");
+
+		FileCopyUtils.copy(bytes, response.getOutputStream());
 	}
 
 }

@@ -30,6 +30,8 @@ public class TaFileUploadService {
 
 	@Value("${app.path.upload}")
 	private String uploadPath;
+	
+	private static final String TA_DIC = "ta/";
 
 	@Autowired
 	private TaFileUploadSequenceService taFileUploadSequenceService;
@@ -50,14 +52,14 @@ public class TaFileUploadService {
 			formVo.getModuleCode(), formVo.getRefNo(), formVo.getFile().getOriginalFilename(), uploadFileNumber);
 		
 		formVo.setUploadNo(uploadFileNumber);
-		String fullUploadFilePath = writeUploadFile(formVo);
+		String fullUploadFileName = writeUploadFile(formVo);
 		
 		TaFileUpload entity = new TaFileUpload();
 		entity.setUploadNo(uploadFileNumber);
 		entity.setModuleCode(formVo.getModuleCode());
 		entity.setRefNo(formVo.getRefNo());
-		entity.setFilePath(FilenameUtils.getPath(fullUploadFilePath));
-		entity.setFileName(FilenameUtils.getName(fullUploadFilePath));
+		entity.setFilePath(FilenameUtils.getPath(fullUploadFileName));
+		entity.setFileName(formVo.getFile().getOriginalFilename());
 		taFileUploadRepository.save(entity);
 		
 		return uploadFileNumber;
@@ -65,11 +67,10 @@ public class TaFileUploadService {
 	
 	private String writeUploadFile(FileUploadFormVo formVo) throws IOException {
 		logger.info("writeUploadFile");
-		final String taDic = "ta/";
 		
 		String orgFileName = formVo.getFile().getOriginalFilename();
-		String fullUploadFilePath = uploadPath + taDic;
-		String fullUploadFileName = fullUploadFilePath + formVo.getUploadNo() + FilenameUtils.getExtension(orgFileName);
+		String fullUploadFilePath = uploadPath + TA_DIC;
+		String fullUploadFileName = fullUploadFilePath + formVo.getUploadNo() + "." + FilenameUtils.getExtension(orgFileName);
 		
 		File fullUploadFileDic = new File(fullUploadFilePath);
 		if (fullUploadFileDic.mkdirs()) {
@@ -78,24 +79,36 @@ public class TaFileUploadService {
 		
 		FileCopyUtils.copy(formVo.getFile().getInputStream(), new FileOutputStream(new File(fullUploadFileName)));
 		
-		return fullUploadFilePath;
+		return fullUploadFileName;
 	}
 
 	public List<FileUploadVo> getUploadFileList(FileUploadFormVo formVo) {
 		logger.info("getUploadFileList refNo={}", formVo.getRefNo());
 		
-		List<FileUploadVo> voList = null;
+		List<FileUploadVo> voList = taFileUploadRepository.findVoListByCriteria(formVo);
 		
 		return voList;
 	}
 	
 	public void deleteUploadFile(FileUploadFormVo formVo) {
 		logger.info("deleteUploadFile uploadNumber={}", formVo.getUploadNo());
-		
+		taFileUploadRepository.deleteByUploadNo(formVo.getUploadNo());
 	}
 	
-	public void getUploadFile(String uploadNumber) {
+	public FileUploadVo getUploadFile(String uploadNumber) throws IOException {
 		logger.info("getUploadFile uploadNumber={}", uploadNumber);
+		
+		TaFileUpload taFileUpload = taFileUploadRepository.findByUploadNo(uploadNumber);
+		String downloadFileName = taFileUpload.getUploadNo() + "." + FilenameUtils.getExtension(taFileUpload.getFileName());
+		
+		FileUploadVo vo = new FileUploadVo();
+		vo.setUploadNo(taFileUpload.getUploadNo());
+		vo.setModuleCode(taFileUpload.getModuleCode());
+		vo.setRefNo(taFileUpload.getRefNo());
+		vo.setFileName(taFileUpload.getFileName());
+		vo.setBytes(FileCopyUtils.copyToByteArray(new File(uploadPath + TA_DIC + downloadFileName)));
+		
+		return vo;
 	}
 
 }

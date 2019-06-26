@@ -6,6 +6,7 @@ public class FileUploadVo {
 	private String moduleCode;
 	private String refNo;
 	private String fileName;
+	private byte[] bytes;
 
 	public String getUploadNo() {
 		return uploadNo;
@@ -37,6 +38,14 @@ public class FileUploadVo {
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+	public byte[] getBytes() {
+		return bytes;
+	}
+
+	public void setBytes(byte[] bytes) {
+		this.bytes = bytes;
 	}
 
 }
