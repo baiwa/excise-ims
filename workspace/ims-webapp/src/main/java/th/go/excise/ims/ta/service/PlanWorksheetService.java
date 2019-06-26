@@ -522,11 +522,15 @@ public class PlanWorksheetService {
 			comment.setApprovalBy(UserLoginUtils.getCurrentUsername());
 			comment.setApprovalDate(LocalDateTime.now());
 			comment.setApprovalComment(form.getApprovalComment());
+			comment.setDocApproveNo(form.getDocApproveNo());
+			comment.setDocApproveDate(form.getDocApproveDate());
 			comment.setPlanStatus(ProjectConstants.TA_AUDIT_STATUS.CODE_0300);
 		} else {
 			comment.setApprovedBy(UserLoginUtils.getCurrentUsername());
 			comment.setApprovedDate(LocalDateTime.now());
 			comment.setApprovedComment(form.getApprovedComment());
+			comment.setDocApproveNo(form.getDocApproveNo());
+			comment.setDocApproveDate(form.getDocApproveDate());
 			comment.setPlanStatus(ProjectConstants.TA_AUDIT_STATUS.CODE_0300);
 		}
 		taPlanWorksheetHdrRepository.save(comment);

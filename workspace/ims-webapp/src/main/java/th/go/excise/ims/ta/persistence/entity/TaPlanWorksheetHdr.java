@@ -53,6 +53,10 @@ public class TaPlanWorksheetHdr extends BaseEntity {
 	private LocalDateTime rejectedDate;
 	@Column(name = "REJECTED_COMMENT")
 	private String rejectedComment;
+	@Column(name = "DOC_APPROVE_NO")
+	private String docApproveNo;
+	@Column(name = "DOC_APPROVE_DATE")
+	private String docApproveDate;
 
 	public Long getPlanWorksheetHdrId() {
 		return planWorksheetHdrId;
@@ -181,5 +185,22 @@ public class TaPlanWorksheetHdr extends BaseEntity {
 	public void setRejectedComment(String rejectedComment) {
 		this.rejectedComment = rejectedComment;
 	}
+
+	public String getDocApproveNo() {
+		return docApproveNo;
+	}
+
+	public void setDocApproveNo(String docApproveNo) {
+		this.docApproveNo = docApproveNo;
+	}
+
+	public String getDocApproveDate() {
+		return docApproveDate;
+	}
+
+	public void setDocApproveDate(String docApproveDate) {
+		this.docApproveDate = docApproveDate;
+	}
+	
 
 }
