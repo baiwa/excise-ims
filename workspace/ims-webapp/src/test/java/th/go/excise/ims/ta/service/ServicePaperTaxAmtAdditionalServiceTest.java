@@ -4,7 +4,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -19,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.vo.ServicePaperFormVo;
-import th.go.excise.ims.ta.vo.ServicePaperTaxAmtAdditionalVo;
+import th.go.excise.ims.ta.vo.ServicePaperVo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
@@ -42,8 +41,9 @@ public class ServicePaperTaxAmtAdditionalServiceTest {
 		formVo.setEndDate("12/2561");
 		//formVo.setPaperSvNumber("");
 		
-		List<ServicePaperTaxAmtAdditionalVo> voList = servicePaperTaxAmtAdditionalService.inquiry(formVo);
-		voList.forEach(e -> {
+		ServicePaperVo vo = servicePaperTaxAmtAdditionalService.inquiry(formVo);
+		System.out.println(ToStringBuilder.reflectionToString(vo, ToStringStyle.SHORT_PREFIX_STYLE));
+		vo.getDataTableAjax().getData().forEach(e -> {
 			System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.SHORT_PREFIX_STYLE));
 		});
 	}
