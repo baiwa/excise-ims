@@ -1,5 +1,6 @@
 package th.go.excise.ims.ia.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -7,15 +8,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.persistence.entity.IaChartOfAcc;
 import th.go.excise.ims.ia.service.Int1502Service;
+import th.go.excise.ims.ia.vo.IaChartAndIncVo;
+import th.go.excise.ims.ia.vo.Int0501FormVo;
+import th.go.excise.ims.ia.vo.Int0501SaveVo;
+import th.go.excise.ims.ia.vo.Int0501Vo;
+import th.go.excise.ims.ia.vo.Int1502FormVo;
 import th.go.excise.ims.preferences.vo.ExciseIncMast;
 
 @Controller
@@ -58,6 +67,40 @@ public class Int1502Controller {
 		}
 		return response;
 	}
+	
+	@PostMapping("/save")
+	@ResponseBody
+	public ResponseData<String> save(@RequestBody Int1502FormVo request) {
+		ResponseData<String> response = new ResponseData<String>();
+		try {
+			int1502Service.saveChartAndInc(request);
+			response.setData("SUCCESS");
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	@PostMapping("/list")
+	@ResponseBody
+	public DataTableAjax<IaChartAndIncVo> listData() {
+		DataTableAjax<IaChartAndIncVo> response = new DataTableAjax<IaChartAndIncVo>();
+		List<IaChartAndIncVo> dataList = new ArrayList<IaChartAndIncVo>();
+		try {
+			dataList = int1502Service.listData();
+			response.setData(dataList);
+		} catch (Exception e) {
+			logger.error("Int1502Controller : ", e);
+		}
+		return response;
+	}
+	
+	
+	
 	
 
 
