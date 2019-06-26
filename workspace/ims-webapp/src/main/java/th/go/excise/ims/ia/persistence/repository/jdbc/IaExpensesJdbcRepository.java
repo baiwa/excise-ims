@@ -153,49 +153,27 @@ public class IaExpensesJdbcRepository {
 	public List<Int090101Vo> findCompare(Int090101CompareFormVo form) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
-		sql.append(" SELECT E.* ,A.DISBURSE_UNIT, B.* , C.GL_ACC_NO FROM IA_EXPENSES E ");
-		sql.append(" INNER JOIN EXCISE_ORG_DISB A ON E.OFFICE_CODE = A.OFFICE_CODE ");
-		sql.append(" LEFT JOIN IA_GFTRIAL_BALANCE B ON '00000'||A.DISBURSE_UNIT = B.DEPT_DISB ");
-		sql.append(" LEFT JOIN IA_GFLEDGER_ACCOUNT C ON C.GL_ACC_NO = E.ACCOUNT_ID ");
-		sql.append(" WHERE E.OFFICE_CODE = ? ");
-		sql.append(" AND E.BUDGET_YEAR = ? ");
-		sql.append(" AND E.EXPENSE_YEAR||EXPENSE_MONTH  >= ? ");
-		sql.append(" AND E.EXPENSE_YEAR||EXPENSE_MONTH  <= ? ");
-
-//		sql.append(" AND E.IS_DELETED='N' AND A.IS_DELETED='N' AND B.IS_DELETED='N' ");
-		params.add(form.getArea());
-		params.add(form.getYear());
-		params.add(form.getStartYear() + StringUtils.leftPad(form.getPeriodMonthStart(), 2, '0').substring(0, 2));
-		params.add(form.getEndYear() + StringUtils.leftPad(form.getPeriodMonthEnd(), 2, '0').substring(0, 2));
-////		sql.append(" SELECT EXP.* FROM IA_EXPENSES EXP WHERE EXP.IS_DELETED='N' ");
-//		sql.append(" SELECT EXP.* FROM IA_EXPENSES EXP JOIN IA_GFLEDGER_ACCOUNT IGA ");
-//		sql.append(" ON EXP.ACCOUNT_ID = IGA.GL_ACC_NO JOIN IA_GFTRIAL_BALANCE IGB ");
-//		sql.append(" ON EXP.ACCOUNT_ID = IGB.ACC_NO ");
-//		sql.append(" WHERE EXP.OFFICE_CODE = ? ");
-////				EXP CONDITION
-//		sql.append(" AND EXP.EXPENSE_YEAR||EXPENSE_MONTH  >= ? ");
-//		sql.append(" AND EXP.EXPENSE_YEAR||EXPENSE_MONTH  <= ? ");
-////				IGA CONDITION
-//		sql.append(" AND IGA.PERIOD_YEAR||PERIOD  >= ? ");
-//		sql.append(" AND IGA.PERIOD_YEAR||PERIOD  <= ? ");
-////				IGB CONDITION
-//		sql.append(" AND IGB.PERIOD_YEAR||PERIOD_FROM  >= ? ");
-//		sql.append(" AND IGB.PERIOD_YEAR||PERIOD_FROM  <= ? ");
-//		sql.append(" AND EXP.IS_DELETED='N' AND IGA.IS_DELETED='N' AND IGB.IS_DELETED='N' ");
-//
-//		params.add(form.getArea());
-////		EXP
-//		params.add(form.getStartYear() + StringUtils.leftPad(form.getPeriodMonthStart(), 2, '0').substring(0, 2));
-//		params.add(form.getEndYear()
-//				+ StringUtils.leftPad(form.getPeriodMonthEnd().substring(0, 2), 2, '0').substring(0, 2));
-////		IGA
-//		params.add(form.getStartYear() + StringUtils.leftPad(form.getPeriodMonthStart(), 2, '0').substring(0, 2));
-//		params.add(form.getEndYear()
-//				+ StringUtils.leftPad(form.getPeriodMonthEnd().substring(0, 2), 2, '0').substring(0, 2));
-////		IGB
-//		params.add(form.getStartYear() + StringUtils.leftPad(form.getPeriodMonthStart(), 2, '0').substring(0, 2));
-//		params.add(form.getEndYear()
-//				+ StringUtils.leftPad(form.getPeriodMonthEnd().substring(0, 2), 2, '0').substring(0, 2));
+		sql.append(" SELECT IEX.* ,EOD.DISBURSE_UNIT, IGB.* , IGA.GL_ACC_NO FROM IA_EXPENSES IEX ");
+		sql.append(" INNER JOIN EXCISE_ORG_DISB EOD ON IEX.OFFICE_CODE = EOD.OFFICE_CODE ");
+		sql.append(" LEFT JOIN IA_GFTRIAL_BALANCE IGB ON '00000'||EOD.DISBURSE_UNIT = IGB.DEPT_DISB ");
+		sql.append(" LEFT JOIN IA_GFLEDGER_ACCOUNT IGA ON IGA.GL_ACC_NO = IEX.ACCOUNT_ID ");
+		sql.append(" WHERE 1=1 ");
+		if (StringUtils.isNotBlank(form.getArea())) {
+			sql.append(" AND IEX.OFFICE_CODE = ? ");
+			params.add(form.getArea());
+		}
+		if (StringUtils.isNotBlank(form.getYear())) {
+			sql.append(" AND IEX.BUDGET_YEAR = ? ");
+			params.add(form.getYear());
+		}
+		if (StringUtils.isNotBlank(form.getStartYear()) && StringUtils.isNoneBlank(form.getPeriodMonthStart())) {
+			sql.append(" AND IEX.EXPENSE_YEAR||EXPENSE_MONTH  >= ? ");
+			params.add(form.getStartYear() + StringUtils.leftPad(form.getPeriodMonthStart(), 2, '0').substring(0, 2));
+		}
+		if (StringUtils.isNotBlank(form.getEndYear()) && StringUtils.isNoneBlank(form.getPeriodMonthEnd())) {
+			sql.append(" AND IEX.EXPENSE_YEAR||EXPENSE_MONTH  <= ? ");
+			params.add(form.getEndYear() + StringUtils.leftPad(form.getPeriodMonthEnd(), 2, '0').substring(0, 2));
+		}
 		List<Int090101Vo> data = commonJdbcTemplate.query(sql.toString(), params.toArray(), compareRowmapper);
 		return data;
 	}

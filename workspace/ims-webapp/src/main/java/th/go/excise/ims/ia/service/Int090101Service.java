@@ -3,6 +3,7 @@ package th.go.excise.ims.ia.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,9 @@ public class Int090101Service {
 		List<Int090101Vo> data = new ArrayList<Int090101Vo>();
 		form.setStartYear(( Long.toString(Long.valueOf(form.getStartYear()) - 543)));
 		form.setEndYear(( Long.toString(Long.valueOf(form.getEndYear()) - 543)));
-		form.setYear(( Long.toString(Long.valueOf(form.getYear()) - 543)));
+		if(StringUtils.isNotBlank(form.getYear())) {			
+			form.setYear(( Long.toString(Long.valueOf(form.getYear()) - 543)));
+		}
 		data = iaExpensesJdbcRepository.findCompare(form);
 		return data;
 	}
