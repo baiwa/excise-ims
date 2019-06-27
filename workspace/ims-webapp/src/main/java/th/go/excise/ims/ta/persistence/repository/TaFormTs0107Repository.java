@@ -17,4 +17,7 @@ public interface TaFormTs0107Repository extends CommonJpaCrudRepository<TaFormTs
 	@Query("select new java.lang.String(e.formTsNumber) from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode = :officeCode order by e.formTsNumber desc")
 	public List<String> findFormTsNumberByOfficeCode(@Param("officeCode") String officeCode);
 	
+	@Query("select new java.lang.String(e.formTsNumber) from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.auditPlanCode = :auditPlanCode order by e.formTsNumber desc")
+	public List<String> findFormTsNumberByAuditPlanCode(@Param("auditPlanCode") String auditPlanCode);
+	
 }

@@ -62,6 +62,7 @@ import th.go.excise.ims.ta.service.TaFormTS0302Service;
 import th.go.excise.ims.ta.service.TaFormTS0303Service;
 import th.go.excise.ims.ta.service.TaFormTS0423Service;
 import th.go.excise.ims.ta.service.TaFormTS0424Service;
+import th.go.excise.ims.ta.vo.TaFormTsFormVo;
 
 @Controller
 @RequestMapping("/api/ta/report")
@@ -152,15 +153,15 @@ public class TaFormTSController {
 		FileCopyUtils.copy(reportFile, response.getOutputStream());
 	}
 
-	@GetMapping("/form-ts-number/{tsNumber}")
+	@PostMapping("/form-ts-number/{tsNumber}")
 	@ResponseBody
-	public ResponseData<List<String>> getFormTSNumber(@PathVariable("tsNumber") String tsNumber) {
+	public ResponseData<List<String>> getFormTSNumber(@PathVariable("tsNumber") String tsNumber, @RequestBody TaFormTsFormVo formVo) {
 		logger.info("getFormTSNumber tsNumber={}", tsNumber);
 
 		ResponseData<List<String>> response = new ResponseData<>();
 		try {
 			AbstractTaFormTSService taFormTSService = taFormTSServiceMap.get(tsNumber);
-			response.setData(taFormTSService.getFormTsNumberList());
+			response.setData(taFormTSService.getFormTsNumberList(formVo));
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

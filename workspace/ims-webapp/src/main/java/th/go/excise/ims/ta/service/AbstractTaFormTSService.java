@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import th.go.excise.ims.ta.vo.AuditStepFormVo;
+import th.go.excise.ims.ta.vo.TaFormTsFormVo;
 
 public abstract class AbstractTaFormTSService<VO extends Object, ENTITY> {
 	
@@ -68,7 +69,7 @@ public abstract class AbstractTaFormTSService<VO extends Object, ENTITY> {
 	
 	public abstract byte[] generateReport(VO vo) throws Exception;
 	
-	public abstract List<String> getFormTsNumberList();
+	public abstract List<String> getFormTsNumberList(TaFormTsFormVo formVo);
 	
 	public abstract VO getFormTS(String formTsNumber);
 	

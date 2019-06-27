@@ -25,6 +25,7 @@ import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0120;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0120Repository;
 import th.go.excise.ims.ta.vo.TaFormTS0120Vo;
+import th.go.excise.ims.ta.vo.TaFormTsFormVo;
 
 @Service
 public class TaFormTS0120Service extends AbstractTaFormTSService<TaFormTS0120Vo, TaFormTs0120> {
@@ -118,7 +119,7 @@ public class TaFormTS0120Service extends AbstractTaFormTSService<TaFormTS0120Vo,
 	}
 
 	@Override
-	public List<String> getFormTsNumberList() {
+	public List<String> getFormTsNumberList(TaFormTsFormVo formVo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		return taFormTs0120Repository.findFormTsNumberByOfficeCode(officeCode);
 	}
