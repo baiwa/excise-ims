@@ -231,20 +231,5 @@ public class IaGftrialBalanceRepositoryImpl implements IaGftrialBalanceRepositor
 			}
 		});
 	}
-	
-//	private RowMapper<Int0803TableVo> summaryInt0803RowMapper = new RowMapper<Int0803TableVo>() {
-//		@Override
-//		public Int0803TableVo mapRow(ResultSet rs, int rowNum) throws SQLException {
-//			Int0803TableVo vo = new Int0803TableVo();
-//			vo.setAccNo(rs.getString("ACC_NO"));
-//			vo.setBringForward(rs.getBigDecimal("BRING_FORWARD"));
-//			vo.setCarryForward(rs.getBigDecimal("SUM_CARRY_FORWARD"));
-//			vo.setCredit(rs.getBigDecimal("CREDIT"));
-//			vo.setDebit(rs.getBigDecimal("DEBIT"));
-//			vo.setOfficeCode(rs.getString("OFFICE_CODE"));
-//			vo.setDisburseUnit(rs.getString("DISBURSE_UNIT"));
-//			return vo;
-//		}
-//	};
 
 }
