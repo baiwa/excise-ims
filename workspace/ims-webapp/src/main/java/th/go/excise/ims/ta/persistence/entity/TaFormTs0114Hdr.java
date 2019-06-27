@@ -109,6 +109,8 @@ public class TaFormTs0114Hdr extends BaseEntity {
 	private String signOfficerFullName;
 	@Column(name = "SIGN_OFFICER_POSITION")
 	private String signOfficerPosition;
+	@Column(name = "AUDIT_PLAN_CODE")
+	private String auditPlanCode;
 
 	public Long getFormTs0114HdrId() {
 		return formTs0114HdrId;
@@ -462,8 +464,16 @@ public class TaFormTs0114Hdr extends BaseEntity {
 		this.signOfficerPosition = signOfficerPosition;
 	}
 
+	public String getAuditPlanCode() {
+		return auditPlanCode;
+	}
+
+	public void setAuditPlanCode(String auditPlanCode) {
+		this.auditPlanCode = auditPlanCode;
+	}
+
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 }

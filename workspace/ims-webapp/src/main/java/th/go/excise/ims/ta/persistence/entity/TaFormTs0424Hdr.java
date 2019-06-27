@@ -7,6 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
@@ -36,6 +40,8 @@ public class TaFormTs0424Hdr extends BaseEntity {
 	private String auditMonthEnd;
 	@Column(name = "AUDIT_YEAR")
 	private String auditYear;
+	@Column(name = "AUDIT_PLAN_CODE")
+	private String auditPlanCode;
 
 	public Long getFormTs0424HdrId() {
 		return formTs0424HdrId;
@@ -107,6 +113,18 @@ public class TaFormTs0424Hdr extends BaseEntity {
 
 	public void setAuditYear(String auditYear) {
 		this.auditYear = auditYear;
+	}
+
+	public String getAuditPlanCode() {
+		return auditPlanCode;
+	}
+
+	public void setAuditPlanCode(String auditPlanCode) {
+		this.auditPlanCode = auditPlanCode;
+	}
+
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 }

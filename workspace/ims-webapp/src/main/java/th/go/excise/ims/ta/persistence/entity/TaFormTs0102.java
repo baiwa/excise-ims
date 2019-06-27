@@ -93,6 +93,8 @@ public class TaFormTs0102 extends BaseEntity {
 	private String signFinancePosition;
 	@Column(name = "SIGN_FINANCE_DATE")
 	private Date signFinanceDate;
+	@Column(name = "AUDIT_PLAN_CODE")
+	private String auditPlanCode;
 
 	public Long getFormTs0102Id() {
 		return formTs0102Id;
@@ -374,8 +376,16 @@ public class TaFormTs0102 extends BaseEntity {
 		this.signFinanceDate = signFinanceDate;
 	}
 
+	public String getAuditPlanCode() {
+		return auditPlanCode;
+	}
+
+	public void setAuditPlanCode(String auditPlanCode) {
+		this.auditPlanCode = auditPlanCode;
+	}
+
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 }

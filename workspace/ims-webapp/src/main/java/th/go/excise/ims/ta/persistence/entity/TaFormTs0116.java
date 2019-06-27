@@ -114,6 +114,8 @@ public class TaFormTs0116 extends BaseEntity {
 	private String signApproverPosition;
 	@Column(name = "SIGN_APPROVER_DATE")
 	private Date signApproverDate;
+	@Column(name = "AUDIT_PLAN_CODE")
+	private String auditPlanCode;
 
 	public Long getFormTs0116Id() {
 		return formTs0116Id;
@@ -483,8 +485,16 @@ public class TaFormTs0116 extends BaseEntity {
 		this.signApproverDate = signApproverDate;
 	}
 
+	public String getAuditPlanCode() {
+		return auditPlanCode;
+	}
+
+	public void setAuditPlanCode(String auditPlanCode) {
+		this.auditPlanCode = auditPlanCode;
+	}
+
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 }

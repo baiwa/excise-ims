@@ -125,9 +125,9 @@ public class TaFormTs0114Dtl extends BaseEntity {
 	public void setSumAmt(BigDecimal sumAmt) {
 		this.sumAmt = sumAmt;
 	}
-	
+
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 }

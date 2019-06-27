@@ -110,6 +110,8 @@ public class TaFormTs01171 extends BaseEntity {
 	private String offficePhone;
 	@Column(name = "HEAD_OFFICER_FULL_NAME")
 	private String headOfficerFullName;
+	@Column(name = "AUDIT_PLAN_CODE")
+	private String auditPlanCode;
 
 	public Long getFormTs01171Id() {
 		return formTs01171Id;
@@ -463,8 +465,16 @@ public class TaFormTs01171 extends BaseEntity {
 		this.headOfficerFullName = headOfficerFullName;
 	}
 
+	public String getAuditPlanCode() {
+		return auditPlanCode;
+	}
+
+	public void setAuditPlanCode(String auditPlanCode) {
+		this.auditPlanCode = auditPlanCode;
+	}
+
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 }

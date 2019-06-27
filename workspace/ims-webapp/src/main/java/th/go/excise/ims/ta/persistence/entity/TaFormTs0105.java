@@ -69,6 +69,8 @@ public class TaFormTs0105 extends BaseEntity {
 	private String otherText;
 	@Column(name = "OTHER_PHONE")
 	private String otherPhone;
+	@Column(name = "AUDIT_PLAN_CODE")
+	private String auditPlanCode;
 
 	public Long getFormTs0105Id() {
 		return formTs0105Id;
@@ -254,8 +256,16 @@ public class TaFormTs0105 extends BaseEntity {
 		this.otherPhone = otherPhone;
 	}
 
+	public String getAuditPlanCode() {
+		return auditPlanCode;
+	}
+
+	public void setAuditPlanCode(String auditPlanCode) {
+		this.auditPlanCode = auditPlanCode;
+	}
+
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 }
