@@ -29,11 +29,11 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0424Dtl;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0424Hdr;
+import th.go.excise.ims.ta.persistence.repository.CommonTaFormTsRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0424DtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0424HdrRepository;
 import th.go.excise.ims.ta.vo.TaFormTS0424DtlVo;
 import th.go.excise.ims.ta.vo.TaFormTS0424Vo;
-import th.go.excise.ims.ta.vo.TaFormTsFormVo;
 
 @Service
 public class TaFormTS0424Service extends AbstractTaFormTSService<TaFormTS0424Vo, TaFormTs0424Hdr>  {
@@ -44,6 +44,16 @@ public class TaFormTS0424Service extends AbstractTaFormTSService<TaFormTS0424Vo,
 	private TaFormTs0424HdrRepository taFormTs0424HdrRepository;
 	@Autowired
 	private TaFormTs0424DtlRepository taFormTs0424DtlRepository;
+
+	@Override
+	protected Logger getLogger() {
+		return logger;
+	}
+
+	@Override
+	protected CommonTaFormTsRepository<?, Long> getRepository() {
+		return taFormTs0424HdrRepository;
+	}
 
 	@Override
 	public String getReportName() {
@@ -146,15 +156,32 @@ public class TaFormTS0424Service extends AbstractTaFormTSService<TaFormTS0424Vo,
 
 	private TaFormTs0424Dtl getEntityById(List<TaFormTs0424Dtl> taFormTs0424DtlList, String id) {
 		TaFormTs0424Dtl formTs0424Dtl = null;
-
 		for (TaFormTs0424Dtl taFormTs0424Dtl : taFormTs0424DtlList) {
 			if (id.equals(taFormTs0424Dtl.getFormTs0424DtlId().toString())) {
 				formTs0424Dtl = taFormTs0424Dtl;
 				break;
 			}
 		}
-
 		return formTs0424Dtl;
+	}
+	
+	@Override
+	public byte[] generateReport(TaFormTS0424Vo taFormTS0424Vo) throws Exception, IOException {
+		// get data to report
+		Map<String, Object> params = new HashMap<>();
+		params.put("formTsNumber", taFormTS0424Vo.getFormTsNumber());
+		params.put("factoryName",taFormTS0424Vo.getFactoryName());
+		params.put("auditMonthStart", StringUtils.isNotEmpty(taFormTS0424Vo.getAuditMonthStart()) ? ApplicationCache.getParamInfoByCode("MONTH_LIST", taFormTS0424Vo.getAuditMonthStart()).getValue1() : null);
+		params.put("auditMonthEnd",StringUtils.isNoneEmpty(taFormTS0424Vo.getAuditMonthEnd()) ? ApplicationCache.getParamInfoByCode("MONTH_LIST", taFormTS0424Vo.getAuditMonthEnd()).getValue1() : null);
+		params.put("auditYear",taFormTS0424Vo.getAuditYear());
+		
+        JRDataSource dataSource = new JRBeanCollectionDataSource(taFormTS0424Vo.getTaFormTS0424DtlVoList());
+
+		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS04_24 + "." + FILE_EXTENSION.JASPER, params, dataSource);
+		byte[] reportFile = JasperExportManager.exportReportToPdf(jasperPrint);
+		ReportUtils.closeResourceFileInputStream(params);
+		
+		return reportFile;
 	}
 	
 	@Override
@@ -192,31 +219,6 @@ public class TaFormTS0424Service extends AbstractTaFormTSService<TaFormTS0424Vo,
 		formTS0424Vo.setTaFormTS0424DtlVoList(formTS0424DtlVoList);
 
 		return formTS0424Vo;
-	}
-
-	@Override
-	public List<String> getFormTsNumberList(TaFormTsFormVo formVo) {
-		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		return taFormTs0424HdrRepository.findFormTsNumberByOfficeCode(officeCode);
-	}
-	
-	@Override
-	public byte[] generateReport(TaFormTS0424Vo taFormTS0424Vo) throws Exception, IOException {
-		// get data to report
-		Map<String, Object> params = new HashMap<>();
-		params.put("formTsNumber", taFormTS0424Vo.getFormTsNumber());
-		params.put("factoryName",taFormTS0424Vo.getFactoryName());
-		params.put("auditMonthStart", StringUtils.isNotEmpty(taFormTS0424Vo.getAuditMonthStart()) ? ApplicationCache.getParamInfoByCode("MONTH_LIST", taFormTS0424Vo.getAuditMonthStart()).getValue1() : null);
-		params.put("auditMonthEnd",StringUtils.isNoneEmpty(taFormTS0424Vo.getAuditMonthEnd()) ? ApplicationCache.getParamInfoByCode("MONTH_LIST", taFormTS0424Vo.getAuditMonthEnd()).getValue1() : null);
-		params.put("auditYear",taFormTS0424Vo.getAuditYear());
-		
-        JRDataSource dataSource = new JRBeanCollectionDataSource(taFormTS0424Vo.getTaFormTS0424DtlVoList());
-
-		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS04_24 + "." + FILE_EXTENSION.JASPER, params, dataSource);
-		byte[] reportFile = JasperExportManager.exportReportToPdf(jasperPrint);
-		ReportUtils.closeResourceFileInputStream(params);
-		
-		return reportFile;
 	}
 	
 }

@@ -28,11 +28,11 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0423Dtl;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0423Hdr;
+import th.go.excise.ims.ta.persistence.repository.CommonTaFormTsRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0423DtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0423HdrRepository;
 import th.go.excise.ims.ta.vo.TaFormTS0423DtlVo;
 import th.go.excise.ims.ta.vo.TaFormTS0423Vo;
-import th.go.excise.ims.ta.vo.TaFormTsFormVo;
 
 @Service
 public class TaFormTS0423Service extends AbstractTaFormTSService<TaFormTS0423Vo, TaFormTs0423Hdr> {
@@ -43,6 +43,16 @@ public class TaFormTS0423Service extends AbstractTaFormTSService<TaFormTS0423Vo,
 	private TaFormTs0423HdrRepository taFormTs0423HdrRepository;
 	@Autowired
 	private TaFormTs0423DtlRepository taFormTs0423DtlRepository;
+
+	@Override
+	protected Logger getLogger() {
+		return logger;
+	}
+
+	@Override
+	protected CommonTaFormTsRepository<?, Long> getRepository() {
+		return taFormTs0423HdrRepository;
+	}
 
 	@Override
 	public String getReportName() {
@@ -145,14 +155,12 @@ public class TaFormTS0423Service extends AbstractTaFormTSService<TaFormTS0423Vo,
 
 	private TaFormTs0423Dtl getEntityById(List<TaFormTs0423Dtl> taFormTs0423DtlList, String id) {
 		TaFormTs0423Dtl formTs0423Dtl = null;
-
 		for (TaFormTs0423Dtl taFormTs0423Dtl : taFormTs0423DtlList) {
 			if (id.equals(taFormTs0423Dtl.getFormTs0423DtlId().toString())) {
 				formTs0423Dtl = taFormTs0423Dtl;
 				break;
 			}
 		}
-
 		return formTs0423Dtl;
 	}
 
@@ -213,12 +221,6 @@ public class TaFormTS0423Service extends AbstractTaFormTSService<TaFormTS0423Vo,
 		formTS0423Vo.setTaFormTS0423DtlVoList(formTS0423DtlVoList);
 
 		return formTS0423Vo;
-	}
-
-	@Override
-	public List<String> getFormTsNumberList(TaFormTsFormVo formVo) {
-		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		return taFormTs0423HdrRepository.findFormTsNumberByOfficeCode(officeCode);
 	}
 
 }

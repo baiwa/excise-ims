@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.ta.persistence.repository.CommonTaFormTsRepository;
 import th.go.excise.ims.ta.vo.AuditStepFormVo;
 import th.go.excise.ims.ta.vo.TaFormTsFormVo;
 
@@ -37,6 +39,10 @@ public abstract class AbstractTaFormTSService<VO extends Object, ENTITY> {
 	public Class<VO> getVoClass() {
 		return ((Class<VO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
 	}
+	
+	protected abstract Logger getLogger();
+	
+	protected abstract CommonTaFormTsRepository<?, Long> getRepository();
 	
 	public abstract String getReportName();
 	
@@ -69,7 +75,16 @@ public abstract class AbstractTaFormTSService<VO extends Object, ENTITY> {
 	
 	public abstract byte[] generateReport(VO vo) throws Exception;
 	
-	public abstract List<String> getFormTsNumberList(TaFormTsFormVo formVo);
+	public List<String> getFormTsNumberList(TaFormTsFormVo formVo) {
+		if (StringUtils.isEmpty(formVo.getAuditPlanCode())) {
+			String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+			getLogger().info("getFormTsNumberList officeCode={}", officeCode);
+			return getRepository().findFormTsNumberByOfficeCode(officeCode);
+		} else {
+			getLogger().info("getFormTsNumberList auditPlanCode={}", formVo.getAuditPlanCode());
+			return getRepository().findFormTsNumberByAuditPlanCode(formVo.getAuditPlanCode());
+		}
+	}
 	
 	public abstract VO getFormTS(String formTsNumber);
 	

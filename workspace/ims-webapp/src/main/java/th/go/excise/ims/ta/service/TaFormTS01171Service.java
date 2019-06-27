@@ -2,7 +2,6 @@ package th.go.excise.ims.ta.service;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.transaction.Transactional;
@@ -24,9 +23,9 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_FORM_TS_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs01171;
+import th.go.excise.ims.ta.persistence.repository.CommonTaFormTsRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs01171Repository;
 import th.go.excise.ims.ta.vo.TaFormTS01171Vo;
-import th.go.excise.ims.ta.vo.TaFormTsFormVo;
 
 @Service
 public class TaFormTS01171Service extends AbstractTaFormTSService<TaFormTS01171Vo, TaFormTs01171> {
@@ -36,6 +35,16 @@ private static final Logger logger = LoggerFactory.getLogger(TaFormTS01171Servic
 	@Autowired
 	private TaFormTs01171Repository taFormTs01171Repository;
 	
+	@Override
+	protected Logger getLogger() {
+		return logger;
+	}
+
+	@Override
+	protected CommonTaFormTsRepository<?, Long> getRepository() {
+		return taFormTs01171Repository;
+	}
+
 	@Override
 	public String getReportName() {
 		return REPORT_NAME.TA_FORM_TS01_17_1;
@@ -135,12 +144,6 @@ private static final Logger logger = LoggerFactory.getLogger(TaFormTS01171Servic
 		ReportUtils.closeResourceFileInputStream(params);
 
 		return content;
-	}
-
-	@Override
-	public List<String> getFormTsNumberList(TaFormTsFormVo formVo) {
-		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		return taFormTs01171Repository.findFormTsNumberByOfficeCode(officeCode);
 	}
 
 	@Override

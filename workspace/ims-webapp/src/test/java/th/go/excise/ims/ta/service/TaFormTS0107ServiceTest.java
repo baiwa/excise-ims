@@ -97,7 +97,7 @@ public class TaFormTS0107ServiceTest {
 		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_07 + "_blank"))));
 	}
 	
-	@Test
+//	@Test
 	public void test_saveFormTS() throws Exception {
 		TaFormTS0107Vo formTS0107Vo = new TaFormTS0107Vo();
 		formTS0107Vo.setFormTsNumber("");
@@ -153,10 +153,10 @@ public class TaFormTS0107ServiceTest {
 		System.out.println(ToStringBuilder.reflectionToString(formTs0107Vo, ToStringStyle.JSON_STYLE));
 	}
 	
-//	@Test
+	@Test
 	public void test_getFormTsNumberList() {
 		TaFormTsFormVo formVo = new TaFormTsFormVo();
-		formVo.setAuditPlanCode("");
+		formVo.setAuditPlanCode("0014022561000005");
 		
 		taFormTS0107Service.getFormTsNumberList(formVo).forEach(e -> System.out.println(e));
 	}

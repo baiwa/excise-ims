@@ -2,7 +2,6 @@ package th.go.excise.ims.ta.service;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.transaction.Transactional;
@@ -24,9 +23,9 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_FORM_TS_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0116;
+import th.go.excise.ims.ta.persistence.repository.CommonTaFormTsRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0116Repository;
 import th.go.excise.ims.ta.vo.TaFormTS0116Vo;
-import th.go.excise.ims.ta.vo.TaFormTsFormVo;
 
 @Service
 public class TaFormTS0116Service extends AbstractTaFormTSService<TaFormTS0116Vo, TaFormTs0116> {
@@ -36,6 +35,17 @@ public class TaFormTS0116Service extends AbstractTaFormTSService<TaFormTS0116Vo,
 	@Autowired
 	private TaFormTs0116Repository taFormTs0116Repository;
 	
+	@Override
+	protected Logger getLogger() {
+		return logger;
+	}
+
+	@Override
+	protected CommonTaFormTsRepository<?, Long> getRepository() {
+		return taFormTs0116Repository;
+	}
+
+	@Override
 	public String getReportName() {
 		return REPORT_NAME.TA_FORM_TS01_16;
 	}
@@ -131,18 +141,13 @@ public class TaFormTS0116Service extends AbstractTaFormTSService<TaFormTS0116Vo,
 		params.put("signApproverFullName",formTS0116Vo.getSignApproverFullName());
 		params.put("signApproverPosition",formTS0116Vo.getSignApproverPosition());
 		params.put("signApproverDate",formTS0116Vo.getSignApproverDate());
+		
 		// set output
 		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_FORM_TS01_16 + "." + FILE_EXTENSION.JASPER, params);
 		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
 		ReportUtils.closeResourceFileInputStream(params);
 
 		return content;
-	}
-	
-	@Override
-	public List<String> getFormTsNumberList(TaFormTsFormVo formVo) {
-		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		return taFormTs0116Repository.findFormTsNumberByOfficeCode(officeCode);
 	}
 	
 	@Override

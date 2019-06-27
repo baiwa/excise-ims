@@ -30,9 +30,9 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_FORM_TS_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs01141;
+import th.go.excise.ims.ta.persistence.repository.CommonTaFormTsRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs01141Repository;
 import th.go.excise.ims.ta.vo.TaFormTS01141Vo;
-import th.go.excise.ims.ta.vo.TaFormTsFormVo;
 
 @Service
 public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141Vo, TaFormTs01141> {
@@ -42,6 +42,16 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 	@Autowired
 	private TaFormTs01141Repository taFormTs01141Repository;
 	
+	@Override
+	protected Logger getLogger() {
+		return logger;
+	}
+
+	@Override
+	protected CommonTaFormTsRepository<?, Long> getRepository() {
+		return taFormTs01141Repository;
+	}
+
 	@Override
 	public String getReportName() {
 		return REPORT_NAME.TA_FORM_TS01_14_1;
@@ -181,12 +191,6 @@ public class TaFormTS01141Service extends AbstractTaFormTSService<TaFormTS01141V
 		ReportUtils.closeResourceFileInputStream(params);
 
 		return content;
-	}
-
-	@Override
-	public List<String> getFormTsNumberList(TaFormTsFormVo formVo) {
-		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		return taFormTs01141Repository.findFormTsNumberByOfficeCode(officeCode);
 	}
 
 	@Override

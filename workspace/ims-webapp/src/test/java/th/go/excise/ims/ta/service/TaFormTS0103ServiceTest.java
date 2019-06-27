@@ -22,6 +22,7 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.vo.TaFormTS0103Vo;
+import th.go.excise.ims.ta.vo.TaFormTsFormVo;
 
 //@RunWith(SpringRunner.class)
 //@SpringBootTest(classes = Application.class)
@@ -141,7 +142,10 @@ public class TaFormTS0103ServiceTest {
 	
 //	@Test
 	public void test_getFormTsNumberList() {
-		taFormTS0103Service.getFormTsNumberList().forEach(e -> System.out.println(e));
+		TaFormTsFormVo formVo = new TaFormTsFormVo();
+		//formVo.setAuditPlanCode("");
+		
+		taFormTS0103Service.getFormTsNumberList(formVo).forEach(e -> System.out.println(e));
 	}
 	
 }

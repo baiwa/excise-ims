@@ -1,7 +1,6 @@
 package th.go.excise.ims.ta.service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.transaction.Transactional;
@@ -20,11 +19,12 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_FORM_TS_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0104;
+import th.go.excise.ims.ta.persistence.repository.CommonTaFormTsRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0104Repository;
 import th.go.excise.ims.ta.vo.TaFormTS0104Vo;
-import th.go.excise.ims.ta.vo.TaFormTsFormVo;
 
 @Service
 public class TaFormTS0104Service extends AbstractTaFormTSService<TaFormTS0104Vo, TaFormTs0104> {
@@ -33,7 +33,18 @@ public class TaFormTS0104Service extends AbstractTaFormTSService<TaFormTS0104Vo,
 
 	@Autowired
 	private TaFormTs0104Repository taFormTs0104Repository;
+
+	@Override
+	protected Logger getLogger() {
+		return logger;
+	}
+
+	@Override
+	protected CommonTaFormTsRepository<?, Long> getRepository() {
+		return taFormTs0104Repository;
+	}
 	
+	@Override
 	public String getReportName() {
 		return REPORT_NAME.TA_FORM_TS01_04;
 	}
@@ -58,17 +69,26 @@ public class TaFormTS0104Service extends AbstractTaFormTSService<TaFormTS0104Vo,
 
 		// Set Data
 		TaFormTs0104 formTs0104 = null;
+		String formTsNumber = null;
 		if (StringUtils.isNotBlank(formTS0104Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0104Vo.getFormTsNumber())) {
+			// Case Update FormTS
+			formTsNumber = formTS0104Vo.getFormTsNumber();
+						
 			formTs0104 = taFormTs0104Repository.findByFormTsNumber(formTS0104Vo.getFormTsNumber());
 			toEntity(formTs0104, formTS0104Vo);
 		} else {
+			// Case New FormTS
+			formTsNumber = taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear);
+			
 			formTs0104 = new TaFormTs0104();
 			toEntity(formTs0104, formTS0104Vo);
 			formTs0104.setOfficeCode(officeCode);
 			formTs0104.setBudgetYear(budgetYear);
-			formTs0104.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
+			formTs0104.setFormTsNumber(formTsNumber);
 		}
 		taFormTs0104Repository.save(formTs0104);
+		
+		saveAuditStep(formTS0104Vo, TaFormTS0104Vo.class, TA_FORM_TS_CODE.TS0104, formTsNumber);
 	}
 
 	@Override
@@ -102,12 +122,6 @@ public class TaFormTS0104Service extends AbstractTaFormTSService<TaFormTS0104Vo,
 		ReportUtils.closeResourceFileInputStream(params);
 
 		return content;
-	}
-
-	@Override
-	public List<String> getFormTsNumberList(TaFormTsFormVo formVo) {
-		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		return taFormTs0104Repository.findFormTsNumberByOfficeCode(officeCode);
 	}
 
 	@Override

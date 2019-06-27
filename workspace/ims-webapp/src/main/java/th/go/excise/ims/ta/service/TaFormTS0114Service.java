@@ -31,11 +31,11 @@ import th.go.excise.ims.common.constant.ProjectConstants.TA_FORM_TS_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0114Dtl;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0114Hdr;
+import th.go.excise.ims.ta.persistence.repository.CommonTaFormTsRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0114DtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0114HdrRepository;
 import th.go.excise.ims.ta.vo.TaFormTS0114DtlVo;
 import th.go.excise.ims.ta.vo.TaFormTS0114Vo;
-import th.go.excise.ims.ta.vo.TaFormTsFormVo;
 
 @Service
 public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo, TaFormTs0114Hdr> {
@@ -46,6 +46,16 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
 	private TaFormTs0114HdrRepository taFormTs0114HdrRepository;
 	@Autowired
 	private TaFormTs0114DtlRepository taFormTs0114DtlRepository;
+
+	@Override
+	protected Logger getLogger() {
+		return logger;
+	}
+
+	@Override
+	protected CommonTaFormTsRepository<?, Long> getRepository() {
+		return taFormTs0114HdrRepository;
+	}
 
 	@Override
 	public String getReportName() {
@@ -138,7 +148,6 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
 			}
 			taFormTs0114DtlRepository.saveAll(taFormTs0114DtlList);
 		}
-
 		taFormTs0114HdrRepository.save(formTs0114Hdr);
 		
 		saveAuditStep(formTS0114Vo, TaFormTS0114Vo.class, TA_FORM_TS_CODE.TS0114, formTsNumber);
@@ -202,12 +211,6 @@ public class TaFormTS0114Service extends AbstractTaFormTSService<TaFormTS0114Vo,
 		ReportUtils.closeResourceFileInputStream(params);
 
 		return content;
-	}
-
-	@Override
-	public List<String> getFormTsNumberList(TaFormTsFormVo formVo) {
-		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		return taFormTs0114HdrRepository.findFormTsNumberByOfficeCode(officeCode);
 	}
 
 	@Override

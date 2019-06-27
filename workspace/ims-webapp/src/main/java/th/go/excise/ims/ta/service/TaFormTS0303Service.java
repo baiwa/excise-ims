@@ -27,11 +27,11 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0303Dtl;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0303Hdr;
+import th.go.excise.ims.ta.persistence.repository.CommonTaFormTsRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0303DtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0303HdrRepository;
 import th.go.excise.ims.ta.vo.TaFormTS0303DtlVo;
 import th.go.excise.ims.ta.vo.TaFormTS0303Vo;
-import th.go.excise.ims.ta.vo.TaFormTsFormVo;
 
 @Service
 public class TaFormTS0303Service extends AbstractTaFormTSService<TaFormTS0303Vo, TaFormTs0303Hdr> {
@@ -42,6 +42,16 @@ public class TaFormTS0303Service extends AbstractTaFormTSService<TaFormTS0303Vo,
 	private TaFormTs0303HdrRepository taFormTs0303HdrRepository;
 	@Autowired
 	private TaFormTs0303DtlRepository taFormTs0303DtlRepository;
+
+	@Override
+	protected Logger getLogger() {
+		return logger;
+	}
+
+	@Override
+	protected CommonTaFormTsRepository<?, Long> getRepository() {
+		return taFormTs0303HdrRepository;
+	}
 
 	@Override
 	public String getReportName() {
@@ -148,12 +158,6 @@ public class TaFormTS0303Service extends AbstractTaFormTSService<TaFormTS0303Vo,
 		ReportUtils.closeResourceFileInputStream(params);
 
 		return reportFile;
-	}
-
-	@Override
-	public List<String> getFormTsNumberList(TaFormTsFormVo formVo) {
-		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		return taFormTs0303HdrRepository.findFormTsNumberByOfficeCode(officeCode);
 	}
 
 	@Override

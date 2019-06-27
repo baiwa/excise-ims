@@ -22,6 +22,7 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.vo.TaFormTS0117Vo;
+import th.go.excise.ims.ta.vo.TaFormTsFormVo;
 
 //@RunWith(SpringRunner.class)
 //@SpringBootTest(classes = Application.class)
@@ -167,7 +168,10 @@ public class TaFormTS0117ServiceTest {
 	
 //	@Test
 	public void test_getFormTsNumberList() {
-		taFormTS0117Service.getFormTsNumberList().forEach(e -> System.out.println(e));
+		TaFormTsFormVo formVo = new TaFormTsFormVo();
+		//formVo.setAuditPlanCode("");
+		
+		taFormTS0117Service.getFormTsNumberList(formVo).forEach(e -> System.out.println(e));
 	}
 	
 }

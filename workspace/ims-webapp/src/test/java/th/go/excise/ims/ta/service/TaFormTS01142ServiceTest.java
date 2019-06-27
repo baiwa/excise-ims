@@ -27,6 +27,7 @@ import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.vo.TaFormTS0111Vo;
 import th.go.excise.ims.ta.vo.TaFormTS01142DtlVo;
 import th.go.excise.ims.ta.vo.TaFormTS01142Vo;
+import th.go.excise.ims.ta.vo.TaFormTsFormVo;
 
 //@RunWith(SpringRunner.class)
 //@SpringBootTest(classes = Application.class)
@@ -138,7 +139,10 @@ public class TaFormTS01142ServiceTest {
 	
 //	@Test
 	public void test_getFormTsNumberList() {
-		taFormTS01142Service.getFormTsNumberList().forEach(e -> System.out.println(e));
+		TaFormTsFormVo formVo = new TaFormTsFormVo();
+		//formVo.setAuditPlanCode("");
+		
+		taFormTS01142Service.getFormTsNumberList(formVo).forEach(e -> System.out.println(e));
 	}
 
 }
