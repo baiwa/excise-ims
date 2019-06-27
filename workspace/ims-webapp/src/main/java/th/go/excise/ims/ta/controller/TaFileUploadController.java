@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ta.service.TaFileUploadService;
 import th.go.excise.ims.ta.vo.FileUploadFormVo;
 import th.go.excise.ims.ta.vo.FileUploadVo;
@@ -44,7 +45,7 @@ public class TaFileUploadController {
 		try {
 			String uploadNumber = taFileUploadService.upload(formVo);
 			responseData.setData(uploadNumber);
-			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -83,7 +84,7 @@ public class TaFileUploadController {
 		ResponseData<?> responseData = new ResponseData<>();
 		try {
 			taFileUploadService.deleteUploadFile(uploadNo);
-			responseData.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.DELETE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
