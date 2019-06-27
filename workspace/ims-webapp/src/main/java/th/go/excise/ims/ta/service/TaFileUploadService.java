@@ -88,19 +88,19 @@ public class TaFileUploadService {
 	}
 
 	@Transactional(rollbackOn = { Exception.class })
-	public void deleteUploadFile(String uploadNo) {
-		logger.info("deleteUploadFile upLoadNoStr={}", uploadNo);
+	public void deleteUploadFile(String uploadNumber) {
+		logger.info("getUploadFile uploadNumber={}", uploadNumber);
 
-		TaFileUpload taFileDelete = taFileUploadRepository.findByUploadNo(uploadNo);
-		String fullDeleteFilePath = taFileDelete.getFilePath() + taFileDelete.getUploadNo() + "." + FilenameUtils.getExtension(taFileDelete.getFileName());
+		TaFileUpload taFileUpload = taFileUploadRepository.findByUploadNo(uploadNumber);
+		String fullDeleteFilePath = File.separator + taFileUpload.getFilePath() + taFileUpload.getUploadNo() + "." + FilenameUtils.getExtension(taFileUpload.getFileName());
 
 		File file = new File(fullDeleteFilePath);
-		logger.info("fullDeleteFilePath ={}", fullDeleteFilePath);
+		logger.info("fullDeleteFilePath={}", fullDeleteFilePath);
 		if (file.delete()) {
-			logger.info("Create Path={}", file.getAbsolutePath());
+			logger.info("Delete File Success");
 		}
 
-		taFileUploadRepository.deleteByUploadNo(uploadNo);
+		taFileUploadRepository.deleteByUploadNo(uploadNumber);
 
 	}
 
