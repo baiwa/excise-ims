@@ -28,7 +28,7 @@ public class ExcisePersonRepositoryImpl implements ExcisePersonRepositoryCustom 
 		sql.append(" SELECT * FROM EXCISE_PERSON  ");
 		sql.append(" WHERE ED_PERSON_NAME LIKE ? ");
 		sql.append(" AND ED_OFFCODE = ?  ");
-		sql.append(" AND IS_DELETED = 'N' ");
+		sql.append(" AND IS_DELETED = 'N'  AND SEQ = '0'  ");
 		params.add("%" + name + "%");
 		params.add(officeCode);
 
@@ -42,7 +42,7 @@ public class ExcisePersonRepositoryImpl implements ExcisePersonRepositoryCustom 
 		List<Object> params = new ArrayList<>();
 		sql.append(" SELECT * FROM EXCISE_PERSON  ");
 		sql.append(" WHERE ED_OFFCODE = ?  AND AU_SUBDEPT_CODE = ? ");
-		sql.append(" AND IS_DELETED = 'N' ");
+		sql.append(" AND IS_DELETED = 'N' AND SEQ = '0' ");
 		params.add(officeCode);
 		params.add(subDeptCode);
 		return commonJdbcTemplate.query(sql.toString(), params.toArray(), edPersonRowMapper);
@@ -70,7 +70,7 @@ public class ExcisePersonRepositoryImpl implements ExcisePersonRepositoryCustom 
 		List<Object> params = new ArrayList<>();
 		sql.append(" SELECT * FROM EXCISE_PERSON  ");
 		sql.append(" WHERE ED_PERSON_NAME LIKE ? ");
-		sql.append(" AND IS_DELETED = 'N' ");
+		sql.append(" AND IS_DELETED = 'N' AND SEQ = '0' ");
 		params.add(" IN (" + edLogin + ")");
 
 		return commonJdbcTemplate.query(sql.toString(), params.toArray(), edPersonRowMapper);
@@ -83,7 +83,7 @@ public class ExcisePersonRepositoryImpl implements ExcisePersonRepositoryCustom 
 		sql.append(" SELECT  PERSON.*,DPT.OFF_SHORT_NAME OFF_NAME ,SUBDPT.SUBDEPT_NAME ,SUBDPT.SUBDEPT_CODE FROM EXCISE_PERSON PERSON  ");
 		sql.append(" LEFT JOIN EXCISE_DEPARTMENT DPT ON PERSON.ED_OFFCODE = DPT.OFF_CODE  ");
 		sql.append(" LEFT JOIN EXCISE_SUBDEPT SUBDPT ON PERSON.AU_SUBDEPT_CODE = SUBDPT.SUBDEPT_CODE  ");
-		sql.append(" WHERE PERSON.IS_DELETED = 'N' AND DPT.OFF_CODE LIKE  ? ");
+		sql.append(" WHERE PERSON.IS_DELETED = 'N' AND DPT.OFF_CODE LIKE  ?  AND PERSON.SEQ = '0' ");
 		String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		if (ExciseUtils.isCentral(offCode)) {
 			offCode = "__"+offCode.substring(2, 4)+"__";
@@ -121,12 +121,21 @@ public class ExcisePersonRepositoryImpl implements ExcisePersonRepositoryCustom 
 	public Integer countAllForAssign(DataTableRequest quest) {
 		// TODO Auto-generated method stub
 		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
 		sql.append(" SELECT   PERSON.* FROM EXCISE_PERSON PERSON  ");
 		sql.append(" LEFT JOIN EXCISE_DEPARTMENT DPT ON PERSON.ED_OFFCODE = DPT.OFF_CODE  ");
 		sql.append(" LEFT JOIN EXCISE_SUBDEPT SUBDPT ON PERSON.AU_SUBDEPT_CODE = SUBDPT.SUBDEPT_CODE  ");
-		sql.append(" WHERE PERSON.IS_DELETED = 'N' ");
-		
-		return this.commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), Integer.class);
+		sql.append(" WHERE PERSON.IS_DELETED = 'N' AND DPT.OFF_CODE LIKE  ?  AND PERSON.SEQ = '0' ");
+		String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		if (ExciseUtils.isCentral(offCode)) {
+			offCode = "__"+offCode.substring(2, 4)+"__";
+		} else if (ExciseUtils.isSector(offCode)) {
+			offCode = offCode.substring(0, 2) + "____";
+		} else if (ExciseUtils.isArea(offCode)) {
+			offCode = offCode.substring(0, 4) + "__";
+		}
+		params.add(offCode);
+		return this.commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()),params.toArray(), Integer.class);
 	}
 	
 
