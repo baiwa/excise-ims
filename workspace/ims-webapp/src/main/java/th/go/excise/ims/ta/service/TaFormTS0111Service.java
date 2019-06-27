@@ -40,6 +40,7 @@ import th.go.excise.ims.ta.persistence.entity.TaFormTs0111Hdr;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0111DtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0111HdrRepository;
 import th.go.excise.ims.ta.vo.AuditStepFormVo;
+import th.go.excise.ims.ta.vo.TaFormTS0108Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0111DtlVo;
 import th.go.excise.ims.ta.vo.TaFormTS0111Vo;
 
@@ -80,7 +81,9 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 		TaFormTs0111Hdr formTS0111Hdr = null;
 		TaFormTs0111Dtl formTS0111Dtl = null;
 		List<TaFormTs0111Dtl> formTs0111DtlList = null;
+		String formTsNumber = null;
 		if (StringUtils.isNotBlank(formTS0111Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0111Vo.getFormTsNumber())) {
+			formTsNumber = formTS0111Vo.getFormTsNumber();
 			// Case Update FormTS
 
 			// Update Header
@@ -121,13 +124,14 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 
 		} else {
 			// Case New FormTS
-
+			formTsNumber = taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear);
+			
 			// Set Header Record
 			formTS0111Hdr = new TaFormTs0111Hdr();
 			toEntity(formTS0111Hdr, formTS0111Vo);
 			formTS0111Hdr.setOfficeCode(officeCode);
 			formTS0111Hdr.setBudgetYear(budgetYear);
-			formTS0111Hdr.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
+			formTS0111Hdr.setFormTsNumber(formTsNumber);
 
 			// Set Detail Record
 			formTs0111DtlList = new ArrayList<>();
@@ -144,14 +148,8 @@ public class TaFormTS0111Service extends AbstractTaFormTSService<TaFormTS0111Vo,
 		}
 
 		taFormTs0111HdrRepository.save(formTS0111Hdr);
-		if (StringUtils.isNotBlank(formTS0111Vo.getAuditPlanCode())) {
-			AuditStepFormVo stepVo = new AuditStepFormVo();
-			stepVo.setAuditPlanCode(formTS0111Vo.getAuditPlanCode());
-			stepVo.setAuditStepStatus(formTS0111Vo.getAuditStepStatus());
-			stepVo.setFormTsCode(TA_FORM_TS_CODE.TS0111);
-			stepVo.setFormTsNumber(formTS0111Hdr.getFormTsNumber());
-			auditStepService.saveAuditStep(stepVo);			
-		}
+		
+		saveAuditStep(formTS0111Vo, TaFormTS0111Vo.class, TA_FORM_TS_CODE.TS0111, formTsNumber);
 	}
 
 	@Override

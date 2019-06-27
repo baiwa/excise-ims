@@ -59,19 +59,26 @@ public class TaFormTS0103Service extends AbstractTaFormTSService<TaFormTS0103Vo,
 
 		// Set Data
 		TaFormTs0103 formTs0103 = null;
+		String formTsNumber = null;
 		if (StringUtils.isNotBlank(formTS0103Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0103Vo.getFormTsNumber())) {
+			// Case Update FormTS
+			formTsNumber = formTS0103Vo.getFormTsNumber();
+						
 			formTs0103 = taFormTs0103Repository.findByFormTsNumber(formTS0103Vo.getFormTsNumber());
 			toEntity(formTs0103, formTS0103Vo);
 		} else {
+			// Case New FormTS
+			formTsNumber = taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear);
+			
 			formTs0103 = new TaFormTs0103();
 			toEntity(formTs0103, formTS0103Vo);
 			formTs0103.setOfficeCode(officeCode);
 			formTs0103.setBudgetYear(budgetYear);
-			formTs0103.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
+			formTs0103.setFormTsNumber(formTsNumber);
 		}
 
-		saveAuditStep(formTS0103Vo, TaFormTS0103Vo.class, TA_FORM_TS_CODE.TS0103, formTS0103Vo.getFormTsNumber());
 		taFormTs0103Repository.save(formTs0103);
+		saveAuditStep(formTS0103Vo, TaFormTS0103Vo.class, TA_FORM_TS_CODE.TS0103, formTsNumber);
 	}
 
 	@Override

@@ -59,19 +59,26 @@ private static final Logger logger = LoggerFactory.getLogger(TaFormTS01171Servic
 		logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS01171Vo.getFormTsNumber());
 
 		TaFormTs01171 formTS01171 = null;
+		String formTsNumber = null;
 		if (StringUtils.isNotBlank(formTS01171Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS01171Vo.getFormTsNumber())) {
+			// Case Update FormTS
+			formTsNumber = formTS01171Vo.getFormTsNumber();
+			
 			formTS01171 = taFormTs01171Repository.findByFormTsNumber(formTS01171Vo.getFormTsNumber());
 			toEntity(formTS01171, formTS01171Vo);
 		} else {
+			// Case New FormTS
+			formTsNumber = taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear);
+						
 			formTS01171 = new TaFormTs01171();
 			toEntity(formTS01171, formTS01171Vo);
 			formTS01171.setOfficeCode(officeCode);
 			formTS01171.setBudgetYear(budgetYear);
-			formTS01171.setFormTsNumber(taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear));
+			formTS01171.setFormTsNumber(formTsNumber);
 		}
 		
-		saveAuditStep(formTS01171Vo, TaFormTS01171Vo.class, TA_FORM_TS_CODE.TS01171, formTS01171Vo.getFormTsNumber());
 		taFormTs01171Repository.save(formTS01171);
+		saveAuditStep(formTS01171Vo, TaFormTS01171Vo.class, TA_FORM_TS_CODE.TS01171, formTsNumber);
 	}
 	
 	@Override

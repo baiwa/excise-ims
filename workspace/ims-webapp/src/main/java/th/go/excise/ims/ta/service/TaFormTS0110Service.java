@@ -32,6 +32,7 @@ import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaFormTs0110;
 import th.go.excise.ims.ta.persistence.repository.TaFormTs0110Repository;
 import th.go.excise.ims.ta.vo.AuditStepFormVo;
+import th.go.excise.ims.ta.vo.TaFormTS0108Vo;
 import th.go.excise.ims.ta.vo.TaFormTS0110Vo;
 
 @Service
@@ -67,7 +68,10 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 		logger.info("saveFormTS officeCode={}, formTsNumber={}", officeCode, formTS0110Vo.getFormTsNumber());
 		
 		TaFormTs0110 formTs0110 = null;
+		String formTsNumber = null;
 		if (StringUtils.isNotBlank(formTS0110Vo.getFormTsNumber()) && !NULL.equalsIgnoreCase(formTS0110Vo.getFormTsNumber())) {
+			formTsNumber = formTS0110Vo.getFormTsNumber();
+			
 			// Case Update FormTS
 			List<TaFormTs0110> taFormTs0110List = taFormTs0110Repository.findByFormTsNumber(formTS0110Vo.getFormTsNumber());
 			
@@ -107,7 +111,8 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 			
 		} else {
 			// Case New FormTS
-			String formTsNumber = taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear);
+			formTsNumber = taFormTSSequenceService.getFormTsNumber(officeCode, budgetYear);
+			
 			List<TaFormTs0110> formTs0110List = new ArrayList<>();
 			
 			// Set Main Record
@@ -134,14 +139,7 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 			taFormTs0110Repository.saveAll(formTs0110List);
 		}
 		
-		if (StringUtils.isNotBlank(formTS0110Vo.getAuditPlanCode())) {
-			AuditStepFormVo stepVo = new AuditStepFormVo();
-			stepVo.setAuditPlanCode(formTS0110Vo.getAuditPlanCode());
-			stepVo.setAuditStepStatus(formTS0110Vo.getAuditStepStatus());
-			stepVo.setFormTsCode(TA_FORM_TS_CODE.TS0110);
-			stepVo.setFormTsNumber(formTs0110.getFormTsNumber());
-			auditStepService.saveAuditStep(stepVo);			
-		}
+		saveAuditStep(formTS0110Vo, TaFormTS0110Vo.class, TA_FORM_TS_CODE.TS0110, formTsNumber);
 	}
 
 	@Override
