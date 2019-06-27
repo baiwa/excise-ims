@@ -33,4 +33,7 @@ public interface TaPlanWorksheetDtlRepositoryCustom {
 	
 	public Long countOutPlanDtl(PlanWorksheetVo formVo);
 	
+	public int countPlanTypeByOfficeCodeAndPlanType(PlanWorksheetVo formVo);
+	
+	
 }

@@ -73,13 +73,15 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		params.add(formVo.getPlanNumber());
 		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
 			if(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.RESERVE.equals(formVo.getPlanType())) {
-				if (ExciseUtils.isCentral(formVo.getOfficeCode())) {
-					sql.append("   AND PLAN_DTL.OFFICE_CODE LIKE ? ");
-					params.add("0014__");
-				}else {
-					sql.append("   AND PLAN_DTL.OFFICE_CODE LIKE ? ");
-					params.add(formVo.getOfficeCode());
-				}
+//				if (ExciseUtils.isCentral(formVo.getOfficeCode())) {
+//					sql.append("   AND PLAN_DTL.OFFICE_CODE LIKE ? ");
+//					params.add("0014__");
+//				}else {
+//					sql.append("   AND PLAN_DTL.OFFICE_CODE LIKE ? ");
+//					params.add(formVo.getOfficeCode());
+//				}
+				sql.append("   AND PLAN_DTL.OFFICE_CODE LIKE ? ");
+				params.add(formVo.getOfficeCode());
 			}else {
 				sql.append("   AND PLAN_DTL.OFFICE_CODE LIKE ? ");
 				params.add(formVo.getOfficeCode());
@@ -538,6 +540,30 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		buildOutPlanDtl(sql, params, formVo);
 
 		return commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), params.toArray(), Long.class);
+	}
+
+	@Override
+	public int countPlanTypeByOfficeCodeAndPlanType(PlanWorksheetVo formVo) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		
+		sql.append(" SELECT COUNT(1) FROM TA_PLAN_WORKSHEET_DTL WHERE IS_DELETED = 'N' ");
+
+		if (StringUtils.isNotEmpty(formVo.getPlanNumber())) {
+			sql.append("   AND PLAN_NUMBER = ? ");
+			params.add(formVo.getPlanNumber());
+		}
+		
+		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
+			sql.append("   AND OFFICE_CODE LIKE ? ");
+			params.add(formVo.getOfficeCode());
+		}
+		if (StringUtils.isNotEmpty(formVo.getPlanType())) {
+			sql.append("   AND PLAN_TYPE = ? ");
+			params.add(formVo.getPlanType());
+		}
+		
+		return commonJdbcTemplate.queryForObject(sql.toString(), params.toArray(), Integer.class);
 	}
     
 }

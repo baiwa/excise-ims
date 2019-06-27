@@ -633,6 +633,11 @@ public class TaxOperatorController {
 				}
 			}
 		}
+		
+		if (StringUtils.isNotBlank(formVo.getPlanType()) 
+				&& ProjectConstants.TA_PLAN_WORKSHEET_STATUS.RESERVE.equals(formVo.getPlanType())) {
+			formVo.setOfficeCode("0014__");
+		}
 
 		// if (EXCISE_SUBDEPT_LEVEL.LV3.equals(userBean.getSubdeptLevel())) {
 		// formVo.setUserLoginId(userBean.getUsername());

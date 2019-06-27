@@ -904,12 +904,12 @@ public class PlanWorksheetService {
 		
 		TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), formVo.getOfficeCode());
 		formVo.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.ONPLAN);
-		Long countInNum = taPlanWorksheetDtlRepository.countByCriteria(formVo);
+		int countInNum = taPlanWorksheetDtlRepository.countPlanTypeByOfficeCodeAndPlanType(formVo);
 		formVo.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.RESERVE);
-		Long countReNum = taPlanWorksheetDtlRepository.countByCriteria(formVo);
+		int countReNum = taPlanWorksheetDtlRepository.countPlanTypeByOfficeCodeAndPlanType(formVo);
 		
-		planSend.setFacInNum(new Integer(countInNum.intValue()));
-		planSend.setFacRsNum(new Integer(countReNum.intValue()));
+		planSend.setFacInNum(countInNum);
+		planSend.setFacRsNum(countReNum);
 		planSend.setSubmitDate(LocalDate.now());
 		taPlanWorksheetSendRepository.save(planSend);
 		
@@ -1043,15 +1043,15 @@ public class PlanWorksheetService {
 		planVo.setBudgetYear(formVo.getBudgetYear());
 		TaPlanWorksheetSend planSend = taPlanWorksheetSendRepository.findByPlanNumberAndOfficeCode(formVo.getPlanNumber(), formVo.getOfficeCode());
 		planVo.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.OUTPLAN);
-		Long countOutNum = taPlanWorksheetDtlRepository.countByCriteria(planVo);
+		int countOutNum = taPlanWorksheetDtlRepository.countPlanTypeByOfficeCodeAndPlanType(planVo);
 		planVo.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.ONPLAN);
-		Long countInNum = taPlanWorksheetDtlRepository.countByCriteria(planVo);
+		int countInNum = taPlanWorksheetDtlRepository.countPlanTypeByOfficeCodeAndPlanType(planVo);
 		planVo.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.RESERVE);
-		Long countReNum = taPlanWorksheetDtlRepository.countByCriteria(planVo);
+		int countReNum = taPlanWorksheetDtlRepository.countPlanTypeByOfficeCodeAndPlanType(planVo);
 		
-		planSend.setFacInNum(new Integer(countInNum.intValue()));
-		planSend.setFacRsNum(new Integer(countReNum.intValue()));
-		planSend.setFacOutNum(new Integer(countOutNum.intValue()+1));
+		planSend.setFacInNum(countInNum);
+		planSend.setFacRsNum(countReNum);
+		planSend.setFacOutNum(countOutNum+1);
 		taPlanWorksheetSendRepository.save(planSend);
 	}
 
