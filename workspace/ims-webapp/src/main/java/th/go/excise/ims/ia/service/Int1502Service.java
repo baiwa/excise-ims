@@ -15,6 +15,7 @@ import th.go.excise.ims.ia.vo.IaChartAndIncVo;
 import th.go.excise.ims.ia.vo.Int0501FormVo;
 import th.go.excise.ims.ia.vo.Int0501Vo;
 import th.go.excise.ims.ia.vo.Int1502FormVo;
+import th.go.excise.ims.ia.vo.Int1503FormVo;
 
 @Service
 public class Int1502Service {
@@ -69,6 +70,10 @@ public class Int1502Service {
 		List<IaChartAndIncVo> dataList = new ArrayList<IaChartAndIncVo>();
 		dataList = iaChartAndIncJdbcRepository.listData();
 		return dataList;
+	}
+	
+	public void delete(Int1502FormVo request) {
+		iaChartAndIncJdbcRepository.deleteById(request);
 	}
 
 

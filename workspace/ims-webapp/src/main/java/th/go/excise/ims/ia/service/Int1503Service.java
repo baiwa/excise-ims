@@ -1,6 +1,5 @@
 package th.go.excise.ims.ia.service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,12 +9,15 @@ import org.springframework.stereotype.Service;
 import th.go.excise.ims.ia.vo.Int1503FormVo;
 import th.go.excise.ims.preferences.persistence.entity.ExciseDepaccMas;
 import th.go.excise.ims.preferences.persistence.repository.ExciseDepaccMasRepository;
+import th.go.excise.ims.preferences.vo.Ed02FormVo;
 
 @Service
 public class Int1503Service {
 
 	@Autowired
 	private ExciseDepaccMasRepository exciseDepaccMasRepository;
+	
+	
 
 	public List<ExciseDepaccMas> listData() {
 		List<ExciseDepaccMas> dataList = new ArrayList<ExciseDepaccMas>();
@@ -43,10 +45,9 @@ public class Int1503Service {
 		}
 	}
 	
-//	public String deleteBygfDepositCode(String gfDepositCode) {
-//		exciseDepaccMasRepository.deleteBygfDepositCode(gfDepositCode);
-//		return gfDepositCode;
-//	}
+	public void delete(Int1503FormVo request) {
+		exciseDepaccMasRepository.deleteById(request);
+	}
 	
 	
 	

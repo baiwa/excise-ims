@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.go.excise.ims.ia.vo.IaChartAndIncVo;
+import th.go.excise.ims.ia.vo.Int1502FormVo;
+import th.go.excise.ims.ia.vo.Int1503FormVo;
 
 @Repository
 public class IaChartAndIncJdbcRepository {
@@ -26,7 +28,7 @@ public class IaChartAndIncJdbcRepository {
 		sqlBuilder.append(" FROM IA_CHART_AND_INC a,                                                    ");
 		sqlBuilder.append("      IA_CHART_OF_ACC b,                                                     ");
 		sqlBuilder.append("      EXCISE_INC_MAST c                                                      ");
-		sqlBuilder.append(" WHERE C.INC_CODE = A.INC_CODE                                               ");	
+		sqlBuilder.append(" WHERE A.IS_DELETED ='N' AND C.INC_CODE = A.INC_CODE                           ");	
 		sqlBuilder.append(" AND   B.COA_CODE = A.COA_CODE ORDER BY B.COA_CODE                           ");	                                                                
 		iaChartAndIncVoList = commonJdbcTemplate.query(sqlBuilder.toString(), params.toArray(), listRowmapper);
 		return iaChartAndIncVoList;
@@ -44,6 +46,16 @@ public class IaChartAndIncJdbcRepository {
 			return vo;
 		}
 	};
+	
+	public void deleteById(Int1502FormVo request) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		sql.append("UPDATE IA_CHART_AND_INC SET IS_DELETED = 'Y' WHERE CHART_AND_INC_ID = ? ");
+		params.add(request.getChartAndIncId());
+		commonJdbcTemplate.update(sql.toString(), params.toArray());
+	}	
+	
+	
 	
 
 }

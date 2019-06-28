@@ -24,6 +24,7 @@ import th.go.excise.ims.ia.service.Int1503Service;
 import th.go.excise.ims.ia.vo.Int1502FormVo;
 import th.go.excise.ims.ia.vo.Int1503FormVo;
 import th.go.excise.ims.preferences.persistence.entity.ExciseDepaccMas;
+import th.go.excise.ims.preferences.vo.Ed02FormVo;
 
 @Controller
 @RequestMapping("/api/ia/int15/03")
@@ -82,23 +83,22 @@ public class Int1503Controller {
 		return response;
 	}
 	
-//	@DeleteMapping("/deleteBygfDepositCode/{gfDepositCode}")
-//	@ResponseBody
-//	public ResponseData<String> deleteBygfDepositCode(@PathVariable("gfDepositCode") String gfDepositCode) {
-//		ResponseData<String> response = new ResponseData<String>();
-//		try {
-//			String idRes = int1503Service.deleteBygfDepositCode(gfDepositCode);
-//			response.setData(idRes);
-//			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.SUCCESS);
-//			response.setStatus(RESPONSE_STATUS.SUCCESS);
-//
-//		} catch (Exception e) {
-//			logger.error("Int120401Service deleteById : ", e);
-//			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.FAILED);
-//			response.setStatus(RESPONSE_STATUS.FAILED);
-//		}
-//		return response;
-//	}
-//	
+	@PostMapping("/delete")
+	@ResponseBody
+	public ResponseData<String> delete(@RequestBody Int1503FormVo request) {
+		ResponseData<String> response = new ResponseData<>();
+		try {	
+			int1503Service.delete(request);
+			response.setData("SUCCESS");
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Int1503Controller : ", e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
 	
 }

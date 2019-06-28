@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
@@ -25,6 +26,7 @@ import th.go.excise.ims.ia.vo.Int0501FormVo;
 import th.go.excise.ims.ia.vo.Int0501SaveVo;
 import th.go.excise.ims.ia.vo.Int0501Vo;
 import th.go.excise.ims.ia.vo.Int1502FormVo;
+import th.go.excise.ims.ia.vo.Int1503FormVo;
 import th.go.excise.ims.preferences.vo.ExciseIncMast;
 
 @Controller
@@ -99,6 +101,23 @@ public class Int1502Controller {
 		return response;
 	}
 	
+	
+	@PostMapping("/delete")
+	@ResponseBody
+	public ResponseData<String> delete(@RequestBody Int1502FormVo request) {
+		ResponseData<String> response = new ResponseData<>();
+		try {	
+			int1502Service.delete(request);
+			response.setData("SUCCESS");
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("Int1503Controller : ", e);
+			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
 	
 	
 	
