@@ -19,7 +19,7 @@ public interface ExciseDepaccMasRepository
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.gfDepositCode = :gfDepositCode")
 	public ExciseDepaccMas findByGfDepositCode (@Param("gfDepositCode") String gfDepositCode);
 	
-	@Query("delete e from #{#entityName} e where e.gfDepositCode = :gfDepositCode")
-	public ExciseDepaccMas deleteBygfDepositCode (@Param("gfDepositCode") String gfDepositCode);
+//	@Query("delete e from #{#entityName} e where e.gfDepositCode = :gfDepositCode")
+//	public ExciseDepaccMas deleteBygfDepositCode (@Param("gfDepositCode") String gfDepositCode);
 	
 }

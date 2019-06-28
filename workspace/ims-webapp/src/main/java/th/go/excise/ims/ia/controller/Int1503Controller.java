@@ -82,23 +82,23 @@ public class Int1503Controller {
 		return response;
 	}
 	
-	@DeleteMapping("/deleteBygfDepositCode/{gfDepositCode}")
-	@ResponseBody
-	public ResponseData<String> deleteBygfDepositCode(@PathVariable("gfDepositCode") String gfDepositCode) {
-		ResponseData<String> response = new ResponseData<String>();
-		try {
-			String idRes = int1503Service.deleteBygfDepositCode(gfDepositCode);
-			response.setData(idRes);
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.SUCCESS);
-			response.setStatus(RESPONSE_STATUS.SUCCESS);
-
-		} catch (Exception e) {
-			logger.error("Int120401Service deleteById : ", e);
-			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.FAILED);
-			response.setStatus(RESPONSE_STATUS.FAILED);
-		}
-		return response;
-	}
-	
+//	@DeleteMapping("/deleteBygfDepositCode/{gfDepositCode}")
+//	@ResponseBody
+//	public ResponseData<String> deleteBygfDepositCode(@PathVariable("gfDepositCode") String gfDepositCode) {
+//		ResponseData<String> response = new ResponseData<String>();
+//		try {
+//			String idRes = int1503Service.deleteBygfDepositCode(gfDepositCode);
+//			response.setData(idRes);
+//			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.SUCCESS);
+//			response.setStatus(RESPONSE_STATUS.SUCCESS);
+//
+//		} catch (Exception e) {
+//			logger.error("Int120401Service deleteById : ", e);
+//			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.FAILED);
+//			response.setStatus(RESPONSE_STATUS.FAILED);
+//		}
+//		return response;
+//	}
+//	
 	
 }

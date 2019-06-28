@@ -43,10 +43,10 @@ public class Int1503Service {
 		}
 	}
 	
-	public String deleteBygfDepositCode(String gfDepositCode) {
-		exciseDepaccMasRepository.deleteBygfDepositCode(gfDepositCode);
-		return gfDepositCode;
-	}
+//	public String deleteBygfDepositCode(String gfDepositCode) {
+//		exciseDepaccMasRepository.deleteBygfDepositCode(gfDepositCode);
+//		return gfDepositCode;
+//	}
 	
 	
 	
