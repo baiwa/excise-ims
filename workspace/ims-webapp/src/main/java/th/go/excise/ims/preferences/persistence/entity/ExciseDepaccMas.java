@@ -19,8 +19,8 @@ public class ExciseDepaccMas extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 772379979926738328L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EXCISE_DEPACC_MAS_GEN")
-	@SequenceGenerator(name = "EXCISE_DEPACC_MAS_GEN", sequenceName = "EXCISE_DEPACC_MAS_SEQ", allocationSize = 1)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EXCISE_DEPACC_MAS_GEN")
+//	@SequenceGenerator(name = "EXCISE_DEPACC_MAS_GEN", sequenceName = "EXCISE_DEPACC_MAS_SEQ", allocationSize = 1)
 	@Column(name = "GF_DEPOSIT_CODE")
 	private String gfDepositCode;
 	@Column(name = "GF_DEPOSIT_NAME")
