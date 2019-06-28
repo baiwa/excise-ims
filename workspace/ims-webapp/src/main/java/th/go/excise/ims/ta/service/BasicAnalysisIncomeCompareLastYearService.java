@@ -35,6 +35,7 @@ public class BasicAnalysisIncomeCompareLastYearService extends AbstractBasicAnal
 	@Autowired
 	private TaWsInc8000MRepository wsInc8000MRepository;
 
+	// FIXME Rewrite logic for calculate Difference and Percent
 	@Override
 	protected List<BasicAnalysisIncomeCompareLastYearVo> inquiryByWs(BasicAnalysisFormVo formVo) {
 		logger.info("inquiryByWs");
@@ -96,10 +97,10 @@ public class BasicAnalysisIncomeCompareLastYearService extends AbstractBasicAnal
 				diffIncomePnt = NumberUtils.calculatePercent(incomeCurrentYearAmt, incomeLastYearAmt);
 				
 				vo.setTaxMonth(ThaiBuddhistDate.from(subLocalDateG1List.get(j)).format(DateTimeFormatter.ofPattern("MMM yy", ConvertDateUtils.LOCAL_TH)));
-				vo.setIncomeLastYearAmt(decimalFormat.format(incomeLastYearAmt));
 				vo.setIncomeCurrentYearAmt(decimalFormat.format(incomeCurrentYearAmt));
-				vo.setDiffIncomeAmt(decimalFormat.format(diffIncomeAmt));
-				vo.setDiffIncomePnt(decimalFormat.format(diffIncomePnt));
+				vo.setIncomeLastYear1Amt(decimalFormat.format(incomeLastYearAmt));
+				vo.setDiffIncomeLastYear1Amt(decimalFormat.format(diffIncomeAmt));
+				vo.setDiffIncomeLastYear1Pnt(decimalFormat.format(diffIncomePnt));
 				voList.add(vo);
 			}
 		}
@@ -116,11 +117,11 @@ public class BasicAnalysisIncomeCompareLastYearService extends AbstractBasicAnal
 		BasicAnalysisIncomeCompareLastYearVo vo = null;
 		for (TaPaperBaD8 entity : entityList) {
 			vo = new BasicAnalysisIncomeCompareLastYearVo();
-
 			vo.setTaxMonth(entity.getTaxMonth());
-			vo.setIncomeLastYearAmt(entity.getIncomeLastYearAmt().toString());
-			vo.setDiffIncomeAmt(entity.getDiffIncomeAmt().toString());
-			vo.setDiffIncomePnt(entity.getDiffIncomePnt().toString());
+			vo.setIncomeCurrentYearAmt(entity.getIncomeCurrentYearAmt().toString());
+			vo.setIncomeLastYear1Amt(entity.getIncomeLastYearAmt().toString());
+			vo.setDiffIncomeLastYear1Amt(entity.getDiffIncomeAmt().toString());
+			vo.setDiffIncomeLastYear1Pnt(entity.getDiffIncomePnt().toString());
 			voList.add(vo);
 		}
 		return voList;
@@ -136,10 +137,10 @@ public class BasicAnalysisIncomeCompareLastYearService extends AbstractBasicAnal
 			entity.setPaperBaNumber(formVo.getPaperBaNumber());
 			entity.setSeqNo(i);
 			entity.setTaxMonth(saveData.getTaxMonth());
-			entity.setIncomeLastYearAmt(new BigDecimal((saveData.getIncomeLastYearAmt()).replaceAll(",", "")));
 			entity.setIncomeCurrentYearAmt(new BigDecimal((saveData.getIncomeCurrentYearAmt()).replaceAll(",", "")));
-			entity.setDiffIncomeAmt(new BigDecimal((saveData.getDiffIncomeAmt()).replaceAll(",", "")));
-			entity.setDiffIncomePnt(new BigDecimal((saveData.getDiffIncomePnt()).replaceAll(",", "")));
+			entity.setIncomeLastYearAmt(new BigDecimal((saveData.getIncomeLastYear1Amt()).replaceAll(",", "")));
+			entity.setDiffIncomeAmt(new BigDecimal((saveData.getDiffIncomeLastYear1Amt()).replaceAll(",", "")));
+			entity.setDiffIncomePnt(new BigDecimal((saveData.getDiffIncomeLastYear1Pnt()).replaceAll(",", "")));
 			taPaperBaD8Repository.save(entity);
 			i++;
 		}
