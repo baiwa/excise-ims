@@ -1,7 +1,7 @@
 package th.go.excise.ims.ta.service;
 
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
@@ -9,6 +9,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,12 +21,12 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
+import th.go.excise.ims.ta.persistence.entity.TaPaperBaD7;
 import th.go.excise.ims.ta.persistence.entity.TaPaperBaD8;
 import th.go.excise.ims.ta.persistence.repository.TaPaperBaD8Repository;
 import th.go.excise.ims.ta.persistence.repository.TaWsInc8000MRepository;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
 import th.go.excise.ims.ta.vo.BasicAnalysisIncomeCompareLastYearVo;
-import th.go.excise.ims.ta.vo.WorksheetDateRangeVo;
 
 @Service
 public class BasicAnalysisIncomeCompareLastYearService extends AbstractBasicAnalysisService<BasicAnalysisIncomeCompareLastYearVo> {
@@ -35,77 +38,77 @@ public class BasicAnalysisIncomeCompareLastYearService extends AbstractBasicAnal
 	@Autowired
 	private TaWsInc8000MRepository wsInc8000MRepository;
 
-	// FIXME Rewrite logic for calculate Difference and Percent
 	@Override
 	protected List<BasicAnalysisIncomeCompareLastYearVo> inquiryByWs(BasicAnalysisFormVo formVo) {
 		logger.info("inquiryByWs");
 		
-		LocalDate localDateG1Start = null;
-		LocalDate localDateG1End = null;
-		LocalDate localDateG2Start = null;
-		LocalDate localDateG2End = null;
-		WorksheetDateRangeVo dateRangeVo = null;
-		
-		Map<String, BigDecimal> incomeMap = null;
-		List<BasicAnalysisIncomeCompareLastYearVo> voList = new ArrayList<>();
+		// Initial
+		int yearNum = Integer.parseInt(formVo.getYearNum());
 		BasicAnalysisIncomeCompareLastYearVo vo = null;
 		BigDecimal incomeCurrentYearAmt = null;
 		BigDecimal incomeLastYearAmt = null;
-		BigDecimal diffIncomeAmt = null;
-		BigDecimal diffIncomePnt = null;
-		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+		BigDecimal diffIncomeLastYearAmt = null;
+		BigDecimal diffIncomeLastYearPnt = null;
 		
-		int yearNum = Integer.parseInt(formVo.getYearNum());
-		for (int i = 1; i <= yearNum; i++) {
-			int year = i - 1;
-			localDateG1Start = toLocalDate(formVo.getStartDate()).minusYears(year);
-			localDateG1End = toLocalDate(formVo.getEndDate()).minusYears(year);
-			localDateG2Start = localDateG1Start.minus(1, ChronoUnit.YEARS);
-			localDateG2End = localDateG1End.minus(1, ChronoUnit.YEARS);
+		LocalDate localDateCurrentStart = toLocalDate(formVo.getStartDate());
+		LocalDate localDateCurrentEnd = toLocalDate(formVo.getEndDate());
+		List<LocalDate> localDateCurrentList = LocalDateUtils.getLocalDateRange(localDateCurrentStart, localDateCurrentEnd);
+		List<String> yyyyMMList = LocalDateUtils.getLocalDateRange(localDateCurrentStart.minus(yearNum, ChronoUnit.YEARS), localDateCurrentEnd)
+			.stream()
+			.map(e -> e.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)))
+			.collect(Collectors.toList());
+		Map<String, BigDecimal> incomeMap = wsInc8000MRepository.findByMonthRangePivot(formVo.getNewRegId(), formVo.getDutyGroupId(), yyyyMMList, formVo.getYearIncomeType());
+		LocalDate tmpLocalDate = null;
+		
+		List<BasicAnalysisIncomeCompareLastYearVo> voList = new ArrayList<>();
+		for (LocalDate localDate : localDateCurrentList) {
+			vo = new BasicAnalysisIncomeCompareLastYearVo();
+			vo.setTaxMonth(ThaiBuddhistDate.from(localDate).format(DateTimeFormatter.ofPattern(ConvertDateUtils.MMMM, ConvertDateUtils.LOCAL_TH)));
 			
-			List<LocalDate> subLocalDateG1List = LocalDateUtils.getLocalDateRange(localDateG1Start, localDateG1End);
-			List<LocalDate> subLocalDateG2List = LocalDateUtils.getLocalDateRange(localDateG2Start, localDateG2End);
+			// Current Year
+			incomeCurrentYearAmt = incomeMap.get(localDate.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
+			if (incomeCurrentYearAmt != null) {
+				vo.setIncomeCurrentYearAmt(incomeCurrentYearAmt.toString());
+			} else {
+				vo.setIncomeCurrentYearAmt(NO_VALUE);
+				incomeCurrentYearAmt = BigDecimal.ZERO;
+			}
 			
-			dateRangeVo = new WorksheetDateRangeVo();
-			dateRangeVo.setYmG1StartInc8000M(localDateG1Start.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
-			dateRangeVo.setYmG1EndInc8000M(localDateG1End.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
-			dateRangeVo.setYmG2StartInc8000M(localDateG2Start.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
-			dateRangeVo.setYmG2EndInc8000M(localDateG2End.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
-			
-			logger.debug("localDateG1Start={}", localDateG1Start);
-			logger.debug("localDateG1End  ={}", localDateG1End);
-			logger.debug("localDateG2Start={}", localDateG2Start);
-			logger.debug("localDateG2End  ={}", localDateG2End);
-			logger.debug("ymG1StartInc8000M={}, ymG1EndInc8000M={}, ymG2StartInc8000M={}, ymG2EndInc8000M={}", dateRangeVo.getYmG1StartInc8000M(), dateRangeVo.getYmG1EndInc8000M(), dateRangeVo.getYmG2StartInc8000M(), dateRangeVo.getYmG2EndInc8000M());
-			logger.debug("subLocalDateList1.size()={}, subLocalDateList1={}", subLocalDateG1List.size(), org.springframework.util.StringUtils.collectionToCommaDelimitedString(subLocalDateG1List));
-			logger.debug("subLocalDateList2.size()={}, subLocalDateList2={}", subLocalDateG2List.size(), org.springframework.util.StringUtils.collectionToCommaDelimitedString(subLocalDateG2List));
-			
-			incomeMap = wsInc8000MRepository.findByMonthRangeDuty(formVo.getNewRegId(), formVo.getDutyGroupId(), dateRangeVo, formVo.getYearIncomeType());
-			
-			int dateLength = subLocalDateG1List.size();
-			for (int j = 0; j < dateLength; j++) {
-				vo = new BasicAnalysisIncomeCompareLastYearVo();
-				incomeCurrentYearAmt = incomeMap.get(subLocalDateG1List.get(j).format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
-				if (incomeCurrentYearAmt == null) {
-					incomeCurrentYearAmt = BigDecimal.ZERO;
-				}
-				incomeLastYearAmt = incomeMap.get(subLocalDateG2List.get(j).format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
-				if (incomeLastYearAmt == null) {
+			// Last Year
+			for (int i = 1; i <= yearNum; i++) {
+				tmpLocalDate = localDate.minusYears(i);
+				
+				// IncomeLastYearAmt
+				incomeLastYearAmt = incomeMap.get(tmpLocalDate.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
+				if (incomeLastYearAmt != null) {
+					setLastYearValue(vo, "setIncomeLastYear" + i + "Amt", incomeLastYearAmt.toString());
+				} else {
+					setLastYearValue(vo, "setIncomeLastYear" + i + "Amt", NO_VALUE);
 					incomeLastYearAmt = BigDecimal.ZERO;
 				}
-				diffIncomeAmt = incomeCurrentYearAmt.subtract(incomeLastYearAmt);
-				diffIncomePnt = NumberUtils.calculatePercent(incomeCurrentYearAmt, incomeLastYearAmt);
 				
-				vo.setTaxMonth(ThaiBuddhistDate.from(subLocalDateG1List.get(j)).format(DateTimeFormatter.ofPattern("MMM yy", ConvertDateUtils.LOCAL_TH)));
-				vo.setIncomeCurrentYearAmt(decimalFormat.format(incomeCurrentYearAmt));
-				vo.setIncomeLastYear1Amt(decimalFormat.format(incomeLastYearAmt));
-				vo.setDiffIncomeLastYear1Amt(decimalFormat.format(diffIncomeAmt));
-				vo.setDiffIncomeLastYear1Pnt(decimalFormat.format(diffIncomePnt));
-				voList.add(vo);
+				// DiffIncomeLastYearAmt
+				diffIncomeLastYearAmt = incomeCurrentYearAmt.subtract(incomeLastYearAmt);
+				setLastYearValue(vo, "setDiffIncomeLastYear" + i + "Amt", diffIncomeLastYearAmt.toString());
+				
+				// DiffIncomeLastYearPnt
+				diffIncomeLastYearPnt = NumberUtils.calculatePercent(incomeCurrentYearAmt, incomeLastYearAmt);
+				setLastYearValue(vo, "setDiffIncomeLastYear" + i + "Pnt", diffIncomeLastYearPnt.toString());
 			}
+			
+			voList.add(vo);
 		}
 		
 		return voList;
+	}
+	
+	private void setLastYearValue(BasicAnalysisIncomeCompareLastYearVo vo, String methodName, String value) {
+		try {
+			Method methodSetLastYearValue = BasicAnalysisIncomeCompareLastYearVo.class.getMethod(methodName, String.class);
+			methodSetLastYearValue.invoke(vo, value);
+		} catch (Exception e) {
+			logger.warn(e.getMessage());
+		}
 	}
 
 	@Override
@@ -119,31 +122,49 @@ public class BasicAnalysisIncomeCompareLastYearService extends AbstractBasicAnal
 			vo = new BasicAnalysisIncomeCompareLastYearVo();
 			vo.setTaxMonth(entity.getTaxMonth());
 			vo.setIncomeCurrentYearAmt(entity.getIncomeCurrentYearAmt().toString());
-			vo.setIncomeLastYear1Amt(entity.getIncomeLastYearAmt().toString());
-			vo.setDiffIncomeLastYear1Amt(entity.getDiffIncomeAmt().toString());
-			vo.setDiffIncomeLastYear1Pnt(entity.getDiffIncomePnt().toString());
+			vo.setIncomeLastYear1Amt(entity.getIncomeLastYear1Amt().toString());
+			vo.setDiffIncomeLastYear1Amt(entity.getDiffIncomeLastYear1Amt().toString());
+			vo.setDiffIncomeLastYear1Pnt(entity.getDiffIncomeLastYear1Pnt().toString());
+			vo.setIncomeLastYear2Amt(entity.getIncomeLastYear2Amt().toString());
+			vo.setDiffIncomeLastYear2Amt(entity.getDiffIncomeLastYear2Amt().toString());
+			vo.setDiffIncomeLastYear2Pnt(entity.getDiffIncomeLastYear2Pnt().toString());
+			vo.setIncomeLastYear3Amt(entity.getIncomeLastYear3Amt().toString());
+			vo.setDiffIncomeLastYear3Amt(entity.getDiffIncomeLastYear3Amt().toString());
+			vo.setDiffIncomeLastYear3Pnt(entity.getDiffIncomeLastYear3Pnt().toString());
 			voList.add(vo);
 		}
 		return voList;
 	}
 
+	@Transactional(rollbackOn = {Exception.class})
 	@Override
 	protected void save(BasicAnalysisFormVo formVo) {
-		List<BasicAnalysisIncomeCompareLastYearVo> dataSaveList = inquiryByWs(formVo);
-		int i = 1;
+		logger.info("save paperBaNumber={}", formVo.getPaperBaNumber());
+		
+		List<BasicAnalysisIncomeCompareLastYearVo> voList = inquiryByWs(formVo);
+		List<TaPaperBaD8> entityList = new ArrayList<>();
 		TaPaperBaD8 entity = null;
-		for (BasicAnalysisIncomeCompareLastYearVo saveData : dataSaveList) {
+		int i = 1;
+		for (BasicAnalysisIncomeCompareLastYearVo vo : voList) {
 			entity = new TaPaperBaD8();
 			entity.setPaperBaNumber(formVo.getPaperBaNumber());
 			entity.setSeqNo(i);
-			entity.setTaxMonth(saveData.getTaxMonth());
-			entity.setIncomeCurrentYearAmt(new BigDecimal((saveData.getIncomeCurrentYearAmt()).replaceAll(",", "")));
-			entity.setIncomeLastYearAmt(new BigDecimal((saveData.getIncomeLastYear1Amt()).replaceAll(",", "")));
-			entity.setDiffIncomeAmt(new BigDecimal((saveData.getDiffIncomeLastYear1Amt()).replaceAll(",", "")));
-			entity.setDiffIncomePnt(new BigDecimal((saveData.getDiffIncomeLastYear1Pnt()).replaceAll(",", "")));
-			taPaperBaD8Repository.save(entity);
+			entity.setTaxMonth(vo.getTaxMonth());
+			entity.setIncomeCurrentYearAmt(!NO_VALUE.equals(vo.getIncomeCurrentYearAmt()) ? new BigDecimal((vo.getIncomeCurrentYearAmt()).replaceAll(",", "")) : null);
+			entity.setIncomeLastYear1Amt(!NO_VALUE.equals(vo.getIncomeLastYear1Amt()) ? new BigDecimal((vo.getIncomeLastYear1Amt()).replaceAll(",", "")) : null);
+			entity.setDiffIncomeLastYear1Amt(new BigDecimal((vo.getDiffIncomeLastYear1Amt()).replaceAll(",", "")));
+			entity.setDiffIncomeLastYear1Pnt(new BigDecimal((vo.getDiffIncomeLastYear1Pnt()).replaceAll(",", "")));
+			entity.setIncomeLastYear2Amt(!NO_VALUE.equals(vo.getIncomeLastYear2Amt()) ? new BigDecimal((vo.getIncomeLastYear2Amt()).replaceAll(",", "")) : null);
+			entity.setDiffIncomeLastYear2Amt(new BigDecimal((vo.getDiffIncomeLastYear2Amt()).replaceAll(",", "")));
+			entity.setDiffIncomeLastYear2Pnt(new BigDecimal((vo.getDiffIncomeLastYear2Pnt()).replaceAll(",", "")));
+			entity.setIncomeLastYear3Amt(!NO_VALUE.equals(vo.getIncomeLastYear3Amt()) ? new BigDecimal((vo.getIncomeLastYear3Amt()).replaceAll(",", "")) : null);
+			entity.setDiffIncomeLastYear3Amt(new BigDecimal((vo.getDiffIncomeLastYear3Amt()).replaceAll(",", "")));
+			entity.setDiffIncomeLastYear3Pnt(new BigDecimal((vo.getDiffIncomeLastYear3Pnt()).replaceAll(",", "")));
+			entityList.add(entity);
 			i++;
 		}
+		
+		taPaperBaD8Repository.saveAll(entityList);
 	}
 
 }

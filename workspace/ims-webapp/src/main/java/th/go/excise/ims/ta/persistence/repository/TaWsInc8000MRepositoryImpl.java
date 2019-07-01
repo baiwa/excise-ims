@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.util.StringUtils;
 
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CONFIG;
@@ -110,6 +111,47 @@ public class TaWsInc8000MRepositoryImpl implements TaWsInc8000MRepositoryCustom 
 			}
 		});
 
+		return incfri8000MMap;
+	}
+	
+	@Override
+	public Map<String, BigDecimal> findByMonthRangePivot(String newRegId, String dutyCode, List<String> yyyyMMList, String incomeTaxType) {
+		logger.info("findByMonthRange newRegId={}, dutyCode={}, incomeTaxType={}", newRegId, dutyCode, incomeTaxType);
+		
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT * ");
+		sql.append(" FROM ( ");
+		sql.append("   SELECT NEW_REG_ID, DUTY_CODE, TAX_YEAR || TAX_MONTH AS YEAR_MONTH ");
+		if (TA_CONFIG.INCOME_TYPE_TAX.equals(incomeTaxType)) {
+			sql.append(" , SUM(TAX_AMOUNT) AS TAX_AMOUNT ");
+		} else {
+			sql.append(" , SUM(NET_TAX_AMOUNT) AS TAX_AMOUNT ");
+		}
+		sql.append("   FROM TA_WS_INC8000_M ");
+		sql.append("   WHERE NEW_REG_ID = ? ");
+		sql.append("   AND DUTY_CODE = ? ");
+		sql.append("   GROUP BY NEW_REG_ID, DUTY_CODE, TAX_YEAR, TAX_MONTH ");
+		sql.append(" ) ");
+		sql.append(" PIVOT(SUM(TAX_AMOUNT) FOR YEAR_MONTH IN ( ");
+		sql.append(StringUtils.collectionToDelimitedString(yyyyMMList, ",", "'", "'"));
+		sql.append(" )) ");
+		
+		List<Object> paramList = new ArrayList<>();
+		paramList.add(newRegId);
+		paramList.add(dutyCode);
+		
+		Map<String, BigDecimal> incfri8000MMap = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), new ResultSetExtractor<Map<String, BigDecimal>>() {
+			public Map<String, BigDecimal> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				Map<String, BigDecimal> incomeMap = new HashMap<>();
+				while (rs.next()) {
+					for (String yyyyMM : yyyyMMList) {
+						incomeMap.put(yyyyMM, rs.getBigDecimal("'" + yyyyMM + "'"));
+					}
+				}
+				return incomeMap;
+			}
+		});
+		
 		return incfri8000MMap;
 	}
 

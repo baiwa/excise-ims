@@ -117,8 +117,8 @@ public class BasicAnalysisIncomeCompareLastMonthService extends AbstractBasicAna
 		return voList;
 	}
 
+	@Transactional(rollbackOn = {Exception.class})
 	@Override
-	@Transactional
 	protected void save(BasicAnalysisFormVo formVo) {
 		logger.info("save paperBaNumber={}", formVo.getPaperBaNumber());
 		

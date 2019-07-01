@@ -7,6 +7,8 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,6 +89,7 @@ public class BasicAnalysisTaxAmtService extends AbstractBasicAnalysisService<Bas
 		return voList;
 	}
 
+	@Transactional(rollbackOn = {Exception.class})
 	@Override
 	protected void save(BasicAnalysisFormVo formVo) {
 		logger.info("save paperBaNumber={}", formVo.getPaperBaNumber());
