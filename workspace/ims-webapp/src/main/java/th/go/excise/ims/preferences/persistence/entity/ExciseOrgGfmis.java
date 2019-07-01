@@ -18,8 +18,8 @@ public class ExciseOrgGfmis extends BaseEntity {
 
 	private static final long serialVersionUID = 8083932537881508545L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EXCISE_ORG_GFMIS_GEN")
-	@SequenceGenerator(name = "EXCISE_ORG_GFMIS_GEN", sequenceName = "EXCISE_ORG_GFMIS_SEQ", allocationSize = 1)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EXCISE_ORG_GFMIS_GEN")
+//	@SequenceGenerator(name = "EXCISE_ORG_GFMIS_GEN", sequenceName = "EXCISE_ORG_GFMIS_SEQ", allocationSize = 1)
 	@Column(name = "GF_EXCISE_CODE")
 	private String gfExciseCode;
 	@Column(name = "GF_EXCISE_NAME")
