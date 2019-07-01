@@ -29,6 +29,8 @@ import th.go.excise.ims.ta.vo.FactoryAuditDetailVo;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
+import th.go.excise.ims.ta.vo.TaxAuditDetailFormVo;
+import th.go.excise.ims.ta.vo.TaxAuditDetailVo;
 import th.go.excise.ims.ta.vo.WsRegfri4000FormVo;
 import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
 import th.go.excise.ims.ws.client.pcc.regfri4000.model.RegDuty;
@@ -166,6 +168,37 @@ public class TaxAuditService {
 		}
 		
 		return formVo;
+	}
+	
+	public TaxAuditDetailVo getOperatorDetailsByAuditPlanCode(TaxAuditDetailFormVo formVo) {
+		logger.info("getOperatorDetailsByAuditPlanCode auditPlanCode={}", formVo.getAuditPlanCode());
+		
+		TaPlanWorksheetDtl planDtl = taPlanWorksheetDtlRepository.findByAuditPlanCode(formVo.getAuditPlanCode());
+		
+		TaxAuditDetailVo vo = new TaxAuditDetailVo();
+		vo.setOfficeCode(planDtl.getOfficeCode());
+		vo.setBudgetYear(planDtl.getBudgetYear());
+		vo.setPlanNumber(planDtl.getPlanNumber());
+		vo.setNewRegId(planDtl.getNewRegId());
+		vo.setSystemType(planDtl.getSystemType());
+		vo.setPlanType(planDtl.getPlanType());
+		vo.setAuditStatus(planDtl.getAuditStatus());
+		vo.setAuditType(planDtl.getAuditType());
+		vo.setAuditTypeDesc(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_AUDIT_TYPE, planDtl.getAuditType()).getValue1());
+		vo.setAuditStartDate(planDtl.getAuditStartDate() != null ? ThaiBuddhistDate.from(planDtl.getAuditStartDate()).format(DateTimeFormatter.ofPattern(ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH)) : "");
+		vo.setAuditEndDate(planDtl.getAuditEndDate() != null ? ThaiBuddhistDate.from(planDtl.getAuditEndDate()).format(DateTimeFormatter.ofPattern(ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH)) : "");
+		vo.setAuditPlanCode(planDtl.getAuditPlanCode());
+		vo.setAuSubdeptCode(planDtl.getAuSubdeptCode());
+		vo.setAuJobResp(planDtl.getAuJobResp());
+		
+		try {
+			vo.setWsRegfri4000Vo(getOperatorDetails(planDtl.getNewRegId()));
+		} catch (Exception e) {
+			logger.warn(e.getMessage());
+			vo.setWsRegfri4000Vo(new WsRegfri4000FormVo());
+		}
+		
+		return vo;
 	}
 
 	public void savePlanWsDtl(PlanWorksheetDtlVo formVo) {
