@@ -31,6 +31,8 @@ import th.go.excise.ims.ta.vo.FormDocTypeVo;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
+import th.go.excise.ims.ta.vo.TaxAuditDetailFormVo;
+import th.go.excise.ims.ta.vo.TaxAuditDetailVo;
 import th.go.excise.ims.ta.vo.WsRegfri4000FormVo;
 
 @Controller
@@ -187,6 +189,21 @@ public class TaxAuditController {
 		ResponseData<List<AuditStepVo>> responseData = new ResponseData<>();
 		try {
 			responseData.setData(auditStepService.getAuditStepVoList(formVo));
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
+	@PostMapping("get-operator-details-by-audit-plan-code")
+	@ResponseBody
+	public ResponseData<TaxAuditDetailVo> getOperatorDetailsByAuditPlanCode(@RequestBody TaxAuditDetailFormVo formVo) {
+		ResponseData<TaxAuditDetailVo> responseData = new ResponseData<>();
+		try {
+			responseData.setData(taxAuditService.getOperatorDetailsByAuditPlanCode(formVo));
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

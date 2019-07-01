@@ -13,4 +13,6 @@ public interface TaWsInc8000MRepositoryCustom {
 	
 	public Map<String, BigDecimal> findByMonthRangeDuty(String newRegId, String dutyCode, WorksheetDateRangeVo dateRangeVo, String incomeTaxType);
 	
+	public Map<String, BigDecimal> findByMonthRangePivot(String newRegId, String dutyCode, List<String> yyyyMMList, String incomeTaxType);
+	
 }

@@ -68,7 +68,7 @@ public class BasicAnalysisService {
 		return dataTableAjax;
 	}
 	
-	@Transactional
+	@Transactional(rollbackOn = {Exception.class})
 	public void save(BasicAnalysisFormVo formVo) {
 		logger.info("save");
 		
