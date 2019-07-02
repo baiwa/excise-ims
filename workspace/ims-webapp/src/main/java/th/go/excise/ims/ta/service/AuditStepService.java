@@ -30,14 +30,21 @@ public class AuditStepService {
 		logger.info("saveAuditStep auditPlanCode={}, auditStepStatus={}, auditStepFlag={}, formTsCode={}, formTsNumber={}",
 				formVo.getAuditPlanCode(), formVo.getAuditStepStatus(), formVo.getAuditStepFlag(),
 				formVo.getFormTsCode(), formVo.getFormTsNumber());
-		TaPlanWorksheetStep entity = new TaPlanWorksheetStep();
-		entity.setAuditPlanCode(formVo.getAuditPlanCode());
-		entity.setAuditStepStatus(formVo.getAuditStepStatus());
-		entity.setAuditStepSubStatus(formVo.getAuditStepSubStatus());
-		entity.setAuditStepFlag(formVo.getAuditStepFlag());
-		entity.setFormTsCode(formVo.getFormTsCode());
-		entity.setFormTsNumber(formVo.getFormTsNumber());
-		entity.setProcessDate(LocalDateTime.now());
+		
+		TaPlanWorksheetStep entity = taPlanWorksheetStepRepository.findByFormTsNumber(formVo.getFormTsNumber());
+		if (entity != null) {
+			entity.setProcessDate(LocalDateTime.now());
+		} else {
+			entity = new TaPlanWorksheetStep();
+			entity.setAuditPlanCode(formVo.getAuditPlanCode());
+			entity.setAuditStepStatus(formVo.getAuditStepStatus());
+			entity.setAuditStepSubStatus(formVo.getAuditStepSubStatus());
+			entity.setAuditStepFlag(formVo.getAuditStepFlag());
+			entity.setFormTsCode(formVo.getFormTsCode());
+			entity.setFormTsNumber(formVo.getFormTsNumber());
+			entity.setProcessDate(LocalDateTime.now());
+		}
+		
 		taPlanWorksheetStepRepository.save(entity);
 	}
 	
