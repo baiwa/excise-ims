@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
@@ -273,19 +274,36 @@ public class ExciseUtils {
 		return dutyGroupIdList;
 	}
 	
-	
+	/** 
+	 * example transfer (001, 2019) => 01/10/2019(format DATE)
+	 **/
 	public static Date firstDateOfPeriod(String period ,String year) {
 		Calendar cal = Calendar.getInstance();
 		cal.set(Integer.parseInt(year), PERIOD_MONTH[Integer.parseInt(period)-1], 1);
 		return cal.getTime();
 	}
 	
+	/** 
+	 * example transfer (012, 2019) => 30/09/2020(format DATE)
+	 **/
 	public static Date lastDateOfPeriod(String period ,String year) {
 		Calendar cal = Calendar.getInstance();
 		cal.set(Integer.parseInt(year), PERIOD_MONTH[Integer.parseInt(period)-1], 1);
 		cal.add(Calendar.MONTH, 1);
 		cal.add(Calendar.DATE, -1);
 		return cal.getTime();
+	}
+	
+	/**
+	 * example transfer (10, 2562) => 2019001 || (09, 2563) => 2019012
+	 **/
+	public static String monthYearStrOfPeriod(String month, String yearTH) {
+		String yearEN = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(yearTH, ConvertDateUtils.YYYY), ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_EN);
+		String periodMonth = ExciseUtils.PERIOD_MONTH_STR[Integer.parseInt(month)-1];
+		if(Integer.parseInt(periodMonth) >= 4) {
+			yearEN = String.valueOf(Integer.parseInt(yearEN)-1);
+		}
+		return yearEN.concat(periodMonth);
 	}
 	
 }
