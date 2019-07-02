@@ -53,7 +53,6 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		sql.append("   ,ED_AREA.OFF_CODE AREA_CODE ");
 		sql.append("   ,ED_AREA.OFF_SHORT_NAME AREA_DESC ");
 		sql.append("   ,PLAN_DTL.* ");
-		
 		sql.append("   ,ED_SUBDEPT.SUBDEPT_SHORT_NAME SUBDEPTSHORTNAME ");
 		sql.append("   ,ED_PERSON.ED_PERSON_NAME PERSON_NAME ");
 		sql.append("   ,WK_DTL.DUTY_GROUP_NAME  DUTY_GROUP_NAME ");
@@ -63,6 +62,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		sql.append(" LEFT JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
 		sql.append(" LEFT JOIN EXCISE_SUBDEPT ED_SUBDEPT ON PLAN_DTL.AU_SUBDEPT_CODE = ED_SUBDEPT.SUBDEPT_CODE " );
 		sql.append(" LEFT JOIN EXCISE_PERSON ED_PERSON ON PLAN_DTL.CREATED_BY = ED_PERSON.ED_LOGIN ");
+		sql.append("   AND ED_PERSON.SEQ = 0 ");
 		sql.append(" LEFT JOIN TA_WORKSHEET_DTL WK_DTL ON PLAN_DTL.NEW_REG_ID = WK_DTL.NEW_REG_ID ");
 		sql.append("  AND PLAN_DTL.ANALYSIS_NUMBER = WK_DTL.ANALYSIS_NUMBER");
 	    
@@ -485,6 +485,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		sql.append(" LEFT JOIN EXCISE_DEPARTMENT ED_AREA ON ED_AREA.OFF_CODE = CONCAT(SUBSTR(R4000.OFFICE_CODE, 0, 4),'00') ");
 		sql.append(" LEFT JOIN EXCISE_SUBDEPT ED_SUBDEPT ON PLAN_DTL.AU_SUBDEPT_CODE = ED_SUBDEPT.SUBDEPT_CODE " );
 		sql.append(" LEFT JOIN EXCISE_PERSON ED_PERSON ON PLAN_DTL.CREATED_BY = ED_PERSON.ED_LOGIN ");
+		sql.append("   AND ED_PERSON.SEQ = 0 ");
 		sql.append(" LEFT JOIN TA_WORKSHEET_DTL WK_DTL ON PLAN_DTL.NEW_REG_ID = WK_DTL.NEW_REG_ID ");
 		sql.append("  AND PLAN_DTL.ANALYSIS_NUMBER = WK_DTL.ANALYSIS_NUMBER");
 	    
