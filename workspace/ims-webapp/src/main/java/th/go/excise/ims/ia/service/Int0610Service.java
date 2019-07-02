@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +13,12 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncGfd;
+import th.go.excise.ims.ia.persistence.entity.IaAuditIncGfh;
 import th.go.excise.ims.ia.persistence.repository.IaAuditIncGfdRepository;
 import th.go.excise.ims.ia.persistence.repository.IaAuditIncGfhRepository;
+import th.go.excise.ims.ia.persistence.repository.IaGftrialBalanceRepository;
+import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
+import th.go.excise.ims.ia.vo.Int0610HeaderVo;
 import th.go.excise.ims.ia.vo.Int0610SaveVo;
 import th.go.excise.ims.ia.vo.Int0610SearchVo;
 import th.go.excise.ims.ia.vo.Int0610SumVo;
@@ -40,6 +45,9 @@ public class Int0610Service {
 	@Autowired
 	private IaCommonService iaCommonService;
 
+	@Autowired
+	private IaGftrialBalanceRepository iaGftrialBalanceRepository;
+
 	public List<Int0610Vo> getTabs(Int0610SearchVo request) throws Exception {
 		List<Int0610Vo> response = new ArrayList<Int0610Vo>();
 
@@ -54,7 +62,6 @@ public class Int0610Service {
 		request.setPeriodToStr(ExciseUtils.monthYearStrOfPeriod(request.getPeriodTo().split("/")[0], request.getPeriodTo().split("/")[1]));
 		request.setPeriodFromDate(ExciseUtils.firstDateOfPeriod(periodMonthFromStr, yearFromTH));
 		request.setPeriodToDate(ExciseUtils.firstDateOfPeriod(periodMonthToStr, yearToTH));
-		request.setOfficeCode(ExciseUtils.whereInLocalOfficeCode(request.getOfficeCode()));
 
 		/* _________ find amount tabs _________ */
 		List<WsIncfri8020Inc> tabsAmount = wsIncfri8020IncRepository.findTabs(request.getOfficeCode());
@@ -122,6 +129,64 @@ public class Int0610Service {
 		}
 		/* ________ save details ________ */
 		iaAuditIncGfdRepository.saveAll(request.getDetails());
+	}
+
+	public List<IaAuditIncGfh> getAuditIncGfNoDropdown() {
+		return iaAuditIncGfhRepository.findAuditIncGfNoOrderByAuditIncGfNo();
+	}
+
+	public Int0610HeaderVo findByAuditIncGfNo(String auditIncGfNo) {
+		List<Int0610Vo> tabList = new ArrayList<Int0610Vo>();
+		Int0610Vo tab = null;
+		List<Int0610TabVo> dataList = null;
+		Int0610TabVo data = null;
+		List<Int0610SumVo> summaryList = null;
+		Int0610SumVo summary = null;
+
+		IaAuditIncGfh header = iaAuditIncGfhRepository.findByAuditIncGfNoAndIsDeleted(auditIncGfNo, "N");
+		List<IaAuditIncGfd> details = iaAuditIncGfdRepository.findByAuditIncGfNoAndIsDeleted(auditIncGfNo, "N");
+
+		for (IaAuditIncGfd d : details) {
+			summaryList = new ArrayList<>();
+			List<IaAuditIncGfd> dataFilter = details.stream().filter(f -> d.getDisburseUnit().equals(f.getDisburseUnit())).collect(Collectors.toList());
+			for (IaAuditIncGfd iaAuditIncGfd : dataFilter) {
+				summary = new Int0610SumVo();
+				summary.setIncomeCode(iaAuditIncGfd.getIncomeCode());
+				summary.setIncomeName(wsIncfri8020IncRepository.findIncomeName(iaAuditIncGfd.getIncomeCode()));
+				summary.setNetTaxAmt(iaAuditIncGfd.getIncNetTaxAmt());
+				summaryList.add(summary);
+			}
+			
+			data = new Int0610TabVo();
+			if (StringUtils.isNotBlank(d.getGlAccNo())) {
+				data.setAccNo(d.getGlAccNo());
+				data.setAccName(iaGftrialBalanceRepository.findAccName(d.getGlAccNo()));
+			}
+			data.setCarryForward(d.getGlNetTaxAmt());
+			data.setDifference(summary.getNetTaxAmt().subtract(data.getCarryForward()));
+			data.setSummary(summaryList);
+
+			dataList = new ArrayList<>();
+			dataList.add(data);
+
+			tab = new Int0610Vo();
+			tab.setTab(dataList);
+			tab.setExciseOrgDisb(exciseOrgGfmisService.findExciseOrgGfmisByGfDisburseUnit(d.getDisburseUnit()));
+			tab.setOfficeCode(header.getOfficeCode());
+			tabList.add(tab);
+		}
+		
+		Int0610HeaderVo response = new Int0610HeaderVo();
+		response.setExciseDepartmentVo(ExciseDepartmentUtil.getExciseDepartmentFull(header.getOfficeCode()));
+		response.setAuditIncGfNo(auditIncGfNo);
+		response.setAuditFlag(header.getAuditFlag());
+		response.setIncgfConditionText(header.getIncgfConditionText());
+		response.setIncgfCreteriaText(header.getIncgfCreteriaText());
+		response.setMonthPeriodFrom(ConvertDateUtils.formatDateToString(ExciseUtils.firstDateOfPeriod(header.getIncMonthFrom(), header.getIncYearFrom()), ConvertDateUtils.MM_YYYY));
+		response.setMonthPeriodTo(ConvertDateUtils.formatDateToString(ExciseUtils.firstDateOfPeriod(header.getIncMonthTo(), header.getIncYearTo()), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH));
+		response.setDataList(tabList);
+		
+		return response;
 	}
 
 }

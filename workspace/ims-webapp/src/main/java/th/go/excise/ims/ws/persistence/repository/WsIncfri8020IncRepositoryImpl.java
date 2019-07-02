@@ -95,7 +95,7 @@ public class WsIncfri8020IncRepositoryImpl implements WsIncfri8020IncRepositoryC
 		
 		StringBuilder sql = new StringBuilder(SQL);
 		List<Object> params = new ArrayList<Object>();
-		params.add(officeCode);
+		params.add(ExciseUtils.whereInLocalOfficeCode(officeCode));
 		
 		return commonJdbcTemplate.query(sql.toString(), params.toArray(), new RowMapper<WsIncfri8020Inc>() {
 			@Override
@@ -133,7 +133,7 @@ public class WsIncfri8020IncRepositoryImpl implements WsIncfri8020IncRepositoryC
 		params.add(request.getPeriodToStr());
 		params.add(request.getDeptDisb());
 //		params.add(request.getGlAccNo());
-		params.add(request.getOfficeCode());
+		params.add(ExciseUtils.whereInLocalOfficeCode(request.getOfficeCode()));
 		params.add(request.getPeriodFromDate());
 		params.add(request.getPeriodToDate());
 		params.add(request.getDeptDisb());
