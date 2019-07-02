@@ -115,8 +115,8 @@ public class WorksheetExportService {
 		formVo.setOfficeCode(officeCode);
 		formVo.setWorksheetStatus(TA_WORKSHEET_STATUS.DRAFT);
 		formVo.setStart(0);
-		//formVo.setLength(taWorksheetDtlRepository.countByCriteria(formVo).intValue());
-		formVo.setLength(10);
+		formVo.setLength(taWorksheetDtlRepository.countByCriteria(formVo).intValue());
+		//formVo.setLength(10);
 		
 		List<TaxOperatorDetailVo> worksheetVoList = taWorksheetDtlRepository.findByCriteria(formVo);
 		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = TaxAuditUtils.prepareTaxOperatorDatatable(worksheetVoList, formVo);
@@ -133,7 +133,7 @@ public class WorksheetExportService {
 	}
 	
 	private byte[] generateDraftWorksheetXlsx(WorksheetExportFormVo formVo) {
-		
+		// Reverse Date
 		List<LocalDate> subLocalDateG1List = new ArrayList<>(formVo.getWorksheetDateRangeVo().getSubLocalDateG1List());
 		List<LocalDate> subLocalDateG2List = new ArrayList<>(formVo.getWorksheetDateRangeVo().getSubLocalDateG2List());
 		Collections.reverse(subLocalDateG1List);

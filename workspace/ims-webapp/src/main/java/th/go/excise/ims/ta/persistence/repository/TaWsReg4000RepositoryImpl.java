@@ -675,8 +675,17 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 						}
 						indKey1++;
 					}
-					
 					vo.setTaxMonthNo(String.valueOf(taxMonthNo));
+					
+					int monthNum = formVo.getDateRange();
+					String notPayTaxMonthNo = null;
+					if (monthNum == taxMonthNo) {
+						notPayTaxMonthNo = "-";
+					} else {
+						notPayTaxMonthNo = String.valueOf(monthNum - taxMonthNo);
+					}
+					vo.setNotPayTaxMonthNo(notPayTaxMonthNo);
+					
 					exciseDeptSector = ApplicationCache.getExciseDepartment(vo.getOfficeCode().substring(0, 2) + "0000");
 					if (exciseDeptSector != null) {
 						vo.setSecCode(exciseDeptSector.getOfficeCode());

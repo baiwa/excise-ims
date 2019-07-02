@@ -37,14 +37,14 @@ public class TaxAuditReportController {
 	public void exportPreviewWorksheet(@ModelAttribute TaxOperatorFormVo formVo, HttpServletResponse response) throws Exception {
 		logger.info("exportPreviewWorksheet");
 		
-		/*String fileName = URLEncoder.encode("Worksheet", "UTF-8");
+		String fileName = URLEncoder.encode("Worksheet", "UTF-8");
 		
 		byte[] bytes = worksheetExportService.exportPreviewWorksheet(formVo);
 		response.setContentType("application/octet-stream");
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
 		
 		OutputStream os = response.getOutputStream();
-		os.write(bytes);*/
+		os.write(bytes);
 	}
 
 	// TODO Draft Worksheet
@@ -53,7 +53,7 @@ public class TaxAuditReportController {
 	public void exportDraftWorksheet(@ModelAttribute TaxOperatorFormVo formVo, HttpServletResponse response) throws Exception {
 		logger.info("exportDraftWorksheet");
 		
-		String fileName = URLEncoder.encode("DraftWorksheet", "UTF-8");
+		String fileName = URLEncoder.encode("Worksheet", "UTF-8");
 		
 		byte[] bytes = worksheetExportService.exportDraftWorksheet(formVo);
 		response.setContentType("application/octet-stream");
