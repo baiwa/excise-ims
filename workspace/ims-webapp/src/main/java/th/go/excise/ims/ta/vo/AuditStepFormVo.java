@@ -3,6 +3,9 @@ package th.go.excise.ims.ta.vo;
 public class AuditStepFormVo {
 
 	private String auditPlanCode;
+	private String auditType;
+	private String auditStartDate;
+	private String auditEndDate;
 	private String auditStepStatus;
 	private String auditStepSubStatus;
 	private String auditStepFlag;
@@ -15,6 +18,30 @@ public class AuditStepFormVo {
 
 	public void setAuditPlanCode(String auditPlanCode) {
 		this.auditPlanCode = auditPlanCode;
+	}
+
+	public String getAuditType() {
+		return auditType;
+	}
+
+	public void setAuditType(String auditType) {
+		this.auditType = auditType;
+	}
+
+	public String getAuditStartDate() {
+		return auditStartDate;
+	}
+
+	public void setAuditStartDate(String auditStartDate) {
+		this.auditStartDate = auditStartDate;
+	}
+
+	public String getAuditEndDate() {
+		return auditEndDate;
+	}
+
+	public void setAuditEndDate(String auditEndDate) {
+		this.auditEndDate = auditEndDate;
 	}
 
 	public String getAuditStepStatus() {

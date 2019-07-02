@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -122,21 +121,6 @@ public class TaxAuditController {
 		return res;
 	}
 
-	@GetMapping("/find-by-new-reg-id/{id}")
-	@ResponseBody
-	public ResponseData<WsRegfri4000FormVo> getFactoryByNewRegId(@PathVariable("id") String newRegId) {
-		ResponseData<WsRegfri4000FormVo> responseData = new ResponseData<WsRegfri4000FormVo>();
-		try {
-			responseData.setData(taxAuditService.getFactoryAuditDetailByNewRegId(newRegId));
-			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
-			responseData.setStatus(RESPONSE_STATUS.FAILED);
-		}
-		return responseData;
-	}
-
 	@GetMapping("/get-doc-type")
 	@ResponseBody
 	public ResponseData<List<FormDocTypeVo>> getTypeDoc() {
@@ -154,7 +138,7 @@ public class TaxAuditController {
 	
 	@PostMapping("/update-plan-ws-dtl")
 	@ResponseBody
-	public ResponseData<List<PlanWorksheetDtlVo>> savePlanWsDtl(@RequestBody PlanWorksheetDtlVo formVo) {
+	public ResponseData<List<PlanWorksheetDtlVo>> savePlanWsDtl(@RequestBody AuditStepFormVo formVo) {
 		ResponseData<List<PlanWorksheetDtlVo>> res = new ResponseData<>();
 		try {
 			taxAuditService.savePlanWsDtl(formVo);

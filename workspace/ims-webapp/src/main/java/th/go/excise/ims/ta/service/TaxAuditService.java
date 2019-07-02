@@ -25,6 +25,7 @@ import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
+import th.go.excise.ims.ta.vo.AuditStepFormVo;
 import th.go.excise.ims.ta.vo.FactoryAuditDetailVo;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanVo;
@@ -138,38 +139,6 @@ public class TaxAuditService {
 		return formVo;
 	}
 	
-	public FactoryAuditDetailVo getFactoryAuditDetailByNewRegId(String newRegId) throws Exception {
-		logger.info("getFactoryAuditDetailByNewRegId newRegId={}", newRegId);
-		
-		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
-		
-		WsRegfri4000FormVo wsRegfri4000FormVo = getOperatorDetails(newRegId);
-		FactoryAuditDetailVo formVo = new FactoryAuditDetailVo();
-		BeanUtils.copyProperties(formVo, wsRegfri4000FormVo);
-		String secDesc = ApplicationCache.getExciseDepartment(wsRegfri4000FormVo.getOffcode().substring(0, 2) + "0000").getDeptShortName();
-		String areaDesc = ApplicationCache.getExciseDepartment(wsRegfri4000FormVo.getOffcode().substring(0, 4) + "00").getDeptShortName();
-		formVo.setSecDesc(secDesc);
-		formVo.setAreaDesc(areaDesc);
-		for (RegDuty regDuty : formVo.getRegDutyList()) {
-			formVo.setDutyCode(regDuty.getGroupId());
-			formVo.setDutyDesc(regDuty.getGroupName());
-			break;
-		}
-		
-		TaPlanWorksheetDtl planDtl = taPlanWorksheetDtlRepository.findByOfficeCodeAndNewRegId(officeCode, newRegId);
-		if (planDtl != null) {
-			formVo.setAuditType(planDtl.getAuditType());
-			if (planDtl.getAuditStartDate() != null) {
-				formVo.setAuditStartDate(ThaiBuddhistDate.from(planDtl.getAuditStartDate()).format(DateTimeFormatter.ofPattern(ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH)));
-			}
-			if (planDtl.getAuditEndDate() != null) {
-				formVo.setAuditEndDate(ThaiBuddhistDate.from(planDtl.getAuditEndDate()).format(DateTimeFormatter.ofPattern(ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH)));
-			}
-		}
-		
-		return formVo;
-	}
-	
 	public TaxAuditDetailVo getOperatorDetailsByAuditPlanCode(TaxAuditDetailFormVo formVo) {
 		logger.info("getOperatorDetailsByAuditPlanCode auditPlanCode={}", formVo.getAuditPlanCode());
 		
@@ -201,14 +170,15 @@ public class TaxAuditService {
 		return vo;
 	}
 
-	public void savePlanWsDtl(PlanWorksheetDtlVo formVo) {
-		logger.info("savePlanWsDtl: newRegId = {}", formVo.getNewRegId());
-		TaPlanWorksheetDtl planWsDtl = new TaPlanWorksheetDtl();
-		planWsDtl = taPlanWorksheetDtlRepository.findByOfficeCodeAndNewRegId(UserLoginUtils.getCurrentUserBean().getOfficeCode(), formVo.getNewRegId());
-		planWsDtl.setAuditType(formVo.getAuditType());
-		planWsDtl.setAuditStartDate(ConvertDateUtils.parseStringToLocalDate(formVo.getAuditStartDate(), ConvertDateUtils.DD_MM_YYYY));
-		planWsDtl.setAuditEndDate(ConvertDateUtils.parseStringToLocalDate(formVo.getAuditEndDate(), ConvertDateUtils.DD_MM_YYYY));
-		taPlanWorksheetDtlRepository.save(planWsDtl);
+	public void savePlanWsDtl(AuditStepFormVo formVo) {
+		logger.info("savePlanWsDtl auditPlanCode={}", formVo.getAuditPlanCode());
+		
+		TaPlanWorksheetDtl planDtl = taPlanWorksheetDtlRepository.findByAuditPlanCode(formVo.getAuditPlanCode());
+		planDtl.setAuditType(formVo.getAuditType());
+		planDtl.setAuditStartDate(ConvertDateUtils.parseStringToLocalDate(formVo.getAuditStartDate(), ConvertDateUtils.DD_MM_YYYY));
+		planDtl.setAuditEndDate(ConvertDateUtils.parseStringToLocalDate(formVo.getAuditEndDate(), ConvertDateUtils.DD_MM_YYYY));
+		
+		taPlanWorksheetDtlRepository.save(planDtl);
 	}
 	
 	public List<ParamInfo> getRegStatus() {
