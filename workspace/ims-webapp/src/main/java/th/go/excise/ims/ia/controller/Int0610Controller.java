@@ -2,6 +2,7 @@ package th.go.excise.ims.ia.controller;
 
 import java.util.List;
 
+import org.apache.poi.ss.formula.functions.T;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.service.Int0610Service;
+import th.go.excise.ims.ia.vo.Int0610SaveVo;
 import th.go.excise.ims.ia.vo.Int0610SearchVo;
 import th.go.excise.ims.ia.vo.Int0610Vo;
 
@@ -37,6 +40,22 @@ public class Int0610Controller {
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	@PostMapping("/save")
+	@ResponseBody
+	public ResponseData<T> save(@RequestBody Int0610SaveVo request) {
+		ResponseData<T> response = new ResponseData<T>();
+		try {
+			int0610Service.save(request);
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;

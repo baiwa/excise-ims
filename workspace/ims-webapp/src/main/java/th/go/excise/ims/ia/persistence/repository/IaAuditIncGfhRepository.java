@@ -5,9 +5,6 @@ import java.math.BigDecimal;
 import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRepository;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncGfh;
 
-public interface IaAuditIncGfhRepository
-    extends CommonJpaCrudRepository<IaAuditIncGfh, BigDecimal>
-{
-
+public interface IaAuditIncGfhRepository extends CommonJpaCrudRepository<IaAuditIncGfh, BigDecimal> {
 
 }
