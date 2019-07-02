@@ -2,11 +2,19 @@ package th.go.excise.ims.ia.vo;
 
 import java.util.List;
 
+import th.go.excise.ims.preferences.persistence.entity.ExciseOrgDisb;
+
 public class Int0610Vo {
 	private List<Int0610TabVo> tab;
-	private String glAccNo;
-	private String deptDisb;
-	
+	private String officeCode;
+	private String incMonthFrom;
+	private String incYearFrom;
+	private String incMonthTo;
+	private String incYearTo;
+
+	/* exciseOrgDisb */
+	private ExciseOrgDisb exciseOrgDisb;
+
 	public List<Int0610TabVo> getTab() {
 		return tab;
 	}
@@ -15,19 +23,52 @@ public class Int0610Vo {
 		this.tab = tab;
 	}
 
-	public String getGlAccNo() {
-		return glAccNo;
+	public String getOfficeCode() {
+		return officeCode;
 	}
 
-	public void setGlAccNo(String glAccNo) {
-		this.glAccNo = glAccNo;
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
 	}
 
-	public String getDeptDisb() {
-		return deptDisb;
+	public String getIncMonthFrom() {
+		return incMonthFrom;
 	}
 
-	public void setDeptDisb(String deptDisb) {
-		this.deptDisb = deptDisb;
+	public void setIncMonthFrom(String incMonthFrom) {
+		this.incMonthFrom = incMonthFrom;
 	}
+
+	public String getIncYearFrom() {
+		return incYearFrom;
+	}
+
+	public void setIncYearFrom(String incYearFrom) {
+		this.incYearFrom = incYearFrom;
+	}
+
+	public String getIncMonthTo() {
+		return incMonthTo;
+	}
+
+	public void setIncMonthTo(String incMonthTo) {
+		this.incMonthTo = incMonthTo;
+	}
+
+	public String getIncYearTo() {
+		return incYearTo;
+	}
+
+	public void setIncYearTo(String incYearTo) {
+		this.incYearTo = incYearTo;
+	}
+
+	public ExciseOrgDisb getExciseOrgDisb() {
+		return exciseOrgDisb;
+	}
+
+	public void setExciseOrgDisb(ExciseOrgDisb exciseOrgDisb) {
+		this.exciseOrgDisb = exciseOrgDisb;
+	}
+
 }

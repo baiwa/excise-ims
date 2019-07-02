@@ -8,7 +8,6 @@ public class Int0610SearchVo {
 	private String periodTo;
 	private String periodFromStr;
 	private String periodToStr;
-	private String glAccNo;
 	private String deptDisb;
 	private Date periodFromDate;
 	private Date periodToDate;
@@ -35,14 +34,6 @@ public class Int0610SearchVo {
 
 	public void setPeriodTo(String periodTo) {
 		this.periodTo = periodTo;
-	}
-
-	public String getGlAccNo() {
-		return glAccNo;
-	}
-
-	public void setGlAccNo(String glAccNo) {
-		this.glAccNo = glAccNo;
 	}
 
 	public String getDeptDisb() {

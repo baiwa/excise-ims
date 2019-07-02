@@ -8,6 +8,7 @@ public class Int0610TabVo {
 	private String accNo;
 	private String accName;
 	private BigDecimal carryForward;
+	private BigDecimal difference;
 
 	public List<Int0610SumVo> getSummary() {
 		return summary;
@@ -39,5 +40,13 @@ public class Int0610TabVo {
 
 	public void setCarryForward(BigDecimal carryForward) {
 		this.carryForward = carryForward;
+	}
+
+	public BigDecimal getDifference() {
+		return difference;
+	}
+
+	public void setDifference(BigDecimal difference) {
+		this.difference = difference;
 	}
 }
