@@ -30,6 +30,7 @@ import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CONFIG;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.common.constant.ProjectConstants.TA_DUTY_TYPE;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.ta.persistence.entity.TaWsReg4000;
@@ -223,209 +224,6 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 			return this.commonJdbcTemplate.query(sql.toString(), params.toArray(), wsReg4000RowMapper);
 		} else {
 			return this.commonJdbcTemplate.query(OracleUtils.limitForDatable(sql.toString(), formVo.getStart(), formVo.getLength()), params.toArray(), wsReg4000RowMapper);
-		}
-	}
-
-	@Override
-	public List<TaxOperatorDetailVo> findByCriteriaTest(TaxOperatorFormVo formVo, Map<String, String> auditPlanMap, Map<String, String> maxYearMap, String incomeTaxType) {
-		StringBuilder sql = new StringBuilder();
-		List<Object> params = new ArrayList<>();
-		sql.append(" SELECT DISTINCT R.NEW_REG_ID ");
-		sql.append("   ,D.GROUP_ID ");
-		sql.append("   ,D.GROUP_NAME ");
-		sql.append("   ,R.CUS_FULLNAME ");
-		sql.append("   ,R.FAC_FULLNAME ");
-		sql.append("   ,R.FAC_ADDRESS ");
-		sql.append("   ,R.OFFICE_CODE ");
-		sql.append("   ,R.REG_STATUS ");
-		sql.append("   ,R.REG_STATUS_DESC ");
-		sql.append("   ,R.REG_DATE ");
-		sql.append("   ,R.REG_CAPITAL ");
-		sql.append("   ,R.MULTI_DUTY_FLAG ");
-		sql.append("   ,M.* ");
-		sql.append(" FROM TA_WS_REG4000 R ");
-		sql.append(" LEFT JOIN TA_WS_REG4000_DUTY D ON D.NEWREG_ID = R.NEW_REG_ID ");
-		sql.append(" LEFT JOIN ( ");
-		sql.append("   SELECT * ");
-		sql.append("   FROM ( ");
-		sql.append("     SELECT NEW_REG_ID ");
-		sql.append("       ,DUTY_CODE ");
-		sql.append("       ,TAX_YEAR || TAX_MONTH AS YEAR_MONTH ");
-		if (TA_CONFIG.INCOME_TYPE_TAX.equals(incomeTaxType)) {
-			sql.append("       ,SUM(TAX_AMOUNT) AS TAX_AMOUNT ");
-		} else {
-			sql.append("       ,SUM(NET_TAX_AMOUNT) AS TAX_AMOUNT ");
-		}
-		sql.append("     FROM TA_WS_INC8000_M ");
-		sql.append("     GROUP BY NEW_REG_ID, TAX_YEAR, TAX_MONTH, DUTY_CODE ");
-		sql.append("   ) PIVOT (SUM(TAX_AMOUNT) FOR YEAR_MONTH IN (").append(org.springframework.util.StringUtils.collectionToDelimitedString(formVo.getYearMonthList(), ",")).append(")) ");
-		sql.append(" ) M ON M.NEW_REG_ID = R.NEW_REG_ID ");
-		sql.append("   AND D.GROUP_ID = M.DUTY_CODE ");
-		sql.append(" WHERE R.IS_DELETED = 'N' ");
-		if (StringUtils.isNotBlank(formVo.getFacType())) {
-			params.add(formVo.getFacType());
-			sql.append(" AND R.FAC_TYPE = ?");
-		}
-		if (StringUtils.isNotBlank(formVo.getDutyCode())) {
-			sql.append(" AND R.GROUP_ID = ?");
-			params.add(formVo.getDutyCode());
-		}
-		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
-			sql.append(" AND R.OFFICE_CODE LIKE ?");
-			params.add(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
-		}
-		if (StringUtils.isNotBlank(formVo.getFacFullname())) {
-			sql.append(" AND R.FAC_FULLNAME LIKE ?");
-			params.add("%" + StringUtils.trim(formVo.getFacFullname()) + "%");
-		}
-		if (StringUtils.isNotBlank(formVo.getCusFullname())) {
-			sql.append(" AND R.CUS_FULLNAME LIKE ?");
-			params.add("%" + StringUtils.trim(formVo.getCusFullname()) + "%");
-		}
-		if (StringUtils.isNotBlank(formVo.getNewRegId())) {
-			sql.append(" AND R.NEW_REG_ID = ?");
-			params.add(StringUtils.trim(formVo.getNewRegId()));
-		}
-		if (StringUtils.isNotBlank(formVo.getCuscatId())) {
-			sql.append(" AND R.CUSCAT_ID = ?");
-			params.add(StringUtils.trim(formVo.getCuscatId()));
-		}
-		if (StringUtils.isNotBlank(formVo.getPinnitId())) {
-			sql.append(" AND R.PINNIT_ID = ?");
-			params.add(StringUtils.trim(formVo.getPinnitId()));
-		}
-		// REG DATE START
-		if (formVo.getRegDateStart() != null) {
-			sql.append(" AND R.REG_DATE >= TO_DATE(?, 'YYYYMMDD') ");
-			params.add(ConvertDateUtils.formatDateToString(formVo.getRegDateStart(), ConvertDateUtils.YYYYMMDD, Locale.US));
-		}
-
-		// REG DATE END
-		if (formVo.getRegDateEnd() != null) {
-			sql.append(" AND R.REG_DATE <= TO_DATE(?, 'YYYYMMDD') ");
-			params.add(ConvertDateUtils.formatDateToString(formVo.getRegDateEnd(), ConvertDateUtils.YYYYMMDD, Locale.US));
-		}
-		
-		// REG STATUS
-		if (formVo.getRegStatus() != null && formVo.getRegStatus().size() > 0) {
-			sql.append(" AND R.REG_STATUS IN ( ");
-			sql.append(StringUtils.repeat("?", ",", formVo.getRegStatus().size()));
-			sql.append(" ) ");
-			params.addAll(formVo.getRegStatus());
-		}else {
-			sql.append(" AND R.REG_STATUS IN ('1','2','3','41','51') ");
-		}
-		
-		List<TaxOperatorDetailVo> taxOperatorDetailVoList = commonJdbcTemplate.query(sql.toString(), params.toArray(), new ResultSetExtractor<List<TaxOperatorDetailVo>>() {
-
-			public List<TaxOperatorDetailVo> extractData(ResultSet rs) throws SQLException, DataAccessException {
-
-				int budget = Integer.parseInt(formVo.getBudgetYear());
-				List<TaxOperatorDetailVo> toList = new ArrayList<>();
-				TaxOperatorDetailVo detailVo = null;
-				ResultSetMetaData rsmd = rs.getMetaData();
-				ExciseDepartment exciseDeptSector;
-				ExciseDepartment exciseDeptArea;
-				Map<String, Integer> incMultiDutyMap = new HashMap<>();
-				while (rs.next()) {
-					detailVo = new TaxOperatorDetailVo();
-					detailVo.setNewRegId(rs.getString("NEW_REG_ID"));
-					detailVo.setDutyCode(rs.getString("GROUP_ID"));
-					detailVo.setDutyName(rs.getString("GROUP_NAME"));
-					detailVo.setCusFullname(rs.getString("CUS_FULLNAME"));
-					detailVo.setFacFullname(rs.getString("FAC_FULLNAME"));
-					detailVo.setFacAddress(rs.getString("FAC_ADDRESS"));
-					detailVo.setOfficeCode(rs.getString("OFFICE_CODE"));
-					detailVo.setMultiDutyFlag(rs.getString("MULTI_DUTY_FLAG"));
-					detailVo.setRegStatus(rs.getString("REG_STATUS_DESC") + " " + ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), "dd/MM/yy", ConvertDateUtils.LOCAL_TH));
-					detailVo.setRegCapital(rs.getString("REG_CAPITAL"));
-					detailVo.setTaxAuditLast1(auditPlanMap.get(String.valueOf(budget - 1) + detailVo.getNewRegId()));
-					detailVo.setTaxAuditLast2(auditPlanMap.get(String.valueOf(budget - 2) + detailVo.getNewRegId()));
-					detailVo.setTaxAuditLast3(auditPlanMap.get(String.valueOf(budget - 3) + detailVo.getNewRegId()));
-					detailVo.setLastAuditYear(maxYearMap.get(detailVo.getNewRegId()));
-					BigDecimal sumFirst = new BigDecimal("0");
-					BigDecimal sumLast = new BigDecimal("0");
-					int indKey = 1;
-					int indKey2 = 1;
-					int taxMonthNo = 0;
-					String columnName = "";
-
-					for (int i = 15; i <= rsmd.getColumnCount(); i++) {
-						columnName = rsmd.getColumnName(i);
-						if (columnName.indexOf("G1") >= 2) {
-							if (rs.getString(columnName) != null) {
-								taxMonthNo++;
-								setTaxAmount(detailVo, "G1M" + indKey, rs.getString(columnName));
-								sumFirst = sumFirst.add(NumberUtils.nullToZero(NumberUtils.toBigDecimal(rs.getString(columnName))));
-							} else {
-								setTaxAmount(detailVo, "G1M" + indKey, "-");
-							}
-						} else {
-							if (rs.getString(columnName) != null) {
-								taxMonthNo++;
-								setTaxAmount(detailVo, "G2M" + indKey2, rs.getString(columnName));
-								sumLast = sumLast.add(NumberUtils.nullToZero(NumberUtils.toBigDecimal(rs.getString(columnName))));
-							} else {
-								setTaxAmount(detailVo, "G2M" + indKey2, "-");
-							}
-							indKey2++;
-						}
-						indKey++;
-					}
-
-					detailVo.setTaxMonthNo(String.valueOf(taxMonthNo));
-					exciseDeptSector = ApplicationCache.getExciseDepartment(detailVo.getOfficeCode().substring(0, 2) + "0000");
-					if (exciseDeptSector != null) {
-						detailVo.setSecCode(exciseDeptSector.getOfficeCode());
-						detailVo.setSecDesc(exciseDeptSector.getDeptShortName());
-					}
-
-					exciseDeptArea = ApplicationCache.getExciseDepartment(detailVo.getOfficeCode().substring(0, 4) + "00");
-					if (exciseDeptArea != null) {
-						detailVo.setAreaCode(exciseDeptArea.getOfficeCode());
-						detailVo.setAreaDesc(exciseDeptArea.getDeptShortName());
-					}
-
-					detailVo.setSumTaxAmtG1(BigDecimal.ZERO.equals(sumFirst) ? "-" : (sumFirst.setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
-					detailVo.setSumTaxAmtG2(BigDecimal.ZERO.equals(sumLast) ? "-" : (sumLast.setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
-					BigDecimal percentTax = NumberUtils.calculatePercent(sumFirst, sumLast);
-					detailVo.setTaxAmtChnPnt(BigDecimal.ZERO.equals(percentTax) ? "-" : percentTax.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
-					Integer incMultiDutyCount = 0;
-					incMultiDutyCount = incMultiDutyMap.get(detailVo.getNewRegId());
-					if (incMultiDutyCount == null) {
-						incMultiDutyCount = 0;
-					}
-					if (taxMonthNo > 0) {
-						incMultiDutyCount++;
-					}
-					incMultiDutyMap.put(detailVo.getNewRegId(), incMultiDutyCount);
-					toList.add(detailVo);
-
-				}
-				calculateIncMultiDuty(toList, incMultiDutyMap);
-				logger.info("End : {}", toList.size());
-				return toList;
-			}
-		});
-
-		return taxOperatorDetailVoList;
-	}
-
-	private void calculateIncMultiDuty(List<TaxOperatorDetailVo> detailVoList, Map<String, Integer> incMultiDutyMap) {
-		for (TaxOperatorDetailVo detailVo : detailVoList) {
-			int incMultiDutyCount = incMultiDutyMap.get(detailVo.getNewRegId());
-			if (incMultiDutyCount > 1) {
-				detailVo.setIncMultiDutyFlag(FLAG.Y_FLAG);
-			}
-		}
-	}
-
-	private void setTaxAmount(TaxOperatorDetailVo detailVo, String groupMonthNo, String taxAmount) {
-		try {
-			Method method = TaxOperatorDetailVo.class.getDeclaredMethod("setTaxAmt" + groupMonthNo, String.class);
-			method.invoke(detailVo, taxAmount);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
 		}
 	}
 
@@ -699,6 +497,239 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		});
 
 		return dutyMap;
+	}
+	
+	private void buildByCriteriaPivotQuery(StringBuilder sql, List<Object> params, TaxOperatorFormVo formVo, String incomeTaxType, String dutyType) {
+		logger.info("buildByCriteriaPivotQuery dutyType={}", dutyType);
+		
+		sql.append(" SELECT R.NEW_REG_ID AS R4000_NEW_REG_ID ");
+		sql.append("   ,D.GROUP_ID ");
+		sql.append("   ,D.GROUP_NAME ");
+		sql.append("   ,R.CUS_FULLNAME ");
+		sql.append("   ,R.FAC_FULLNAME ");
+		sql.append("   ,R.FAC_ADDRESS ");
+		sql.append("   ,R.OFFICE_CODE ");
+		sql.append("   ,R.REG_STATUS ");
+		sql.append("   ,R.REG_STATUS_DESC ");
+		sql.append("   ,R.REG_DATE ");
+		sql.append("   ,R.REG_CAPITAL ");
+		sql.append("   ,R.MULTI_DUTY_FLAG ");
+		sql.append("   ,M.* ");
+		sql.append(" FROM TA_WS_REG4000 R ");
+		sql.append(" LEFT JOIN TA_WS_REG4000_DUTY D ON D.NEWREG_ID = R.NEW_REG_ID ");
+		sql.append(" LEFT JOIN ( ");
+		sql.append("   SELECT * ");
+		sql.append("   FROM ( ");
+		sql.append("     SELECT NEW_REG_ID ");
+		sql.append("       ,DUTY_CODE ");
+		sql.append("       ,TAX_YEAR || TAX_MONTH AS YEAR_MONTH ");
+		if (TA_CONFIG.INCOME_TYPE_TAX.equals(incomeTaxType)) {
+			sql.append("       ,SUM(TAX_AMOUNT) AS TAX_AMOUNT ");
+		} else {
+			sql.append("       ,SUM(NET_TAX_AMOUNT) AS TAX_AMOUNT ");
+		}
+		sql.append("     FROM TA_WS_INC8000_M ");
+		sql.append("     GROUP BY NEW_REG_ID, TAX_YEAR, TAX_MONTH, DUTY_CODE ");
+		sql.append("   ) PIVOT (SUM(TAX_AMOUNT) FOR YEAR_MONTH IN (").append(org.springframework.util.StringUtils.collectionToDelimitedString(formVo.getYearMonthList(), ",")).append(")) ");
+		sql.append(" ) M ON M.NEW_REG_ID = R.NEW_REG_ID ");
+		if (TA_DUTY_TYPE.SEPARATE.equals(dutyType)) {
+			sql.append("   AND D.GROUP_ID = M.DUTY_CODE ");
+		} else if (TA_DUTY_TYPE.GROUP.equals(dutyType)) {
+			sql.append("   AND D.GROUP_ID LIKE SUBSTR(M.DUTY_CODE, 0, 2) || '__' ");
+		}
+		sql.append(" WHERE R.IS_DELETED = 'N' ");
+		sql.append("   AND GROUP_ID IN (SELECT DUTY_CODE FROM TA_DUTY_CONFIG WHERE DUTY_TYPE = ?) ");
+		params.add(dutyType);
+		
+		// FAC_TYPE
+		if (StringUtils.isNotBlank(formVo.getFacType())) {
+			sql.append(" AND R.FAC_TYPE = ? ");
+			params.add(formVo.getFacType());
+		}
+		// GROUP_ID
+		if (StringUtils.isNotBlank(formVo.getDutyCode())) {
+			sql.append(" AND R.GROUP_ID = ? ");
+			params.add(formVo.getDutyCode());
+		}
+		// OFFICE_CODE
+		if (StringUtils.isNotBlank(formVo.getOfficeCode())) {
+			sql.append(" AND R.OFFICE_CODE LIKE ? ");
+			params.add(ExciseUtils.whereInLocalOfficeCode(formVo.getOfficeCode()));
+		}
+		// FAC_FULLNAME
+		if (StringUtils.isNotBlank(formVo.getFacFullname())) {
+			sql.append(" AND R.FAC_FULLNAME LIKE ? ");
+			params.add("%" + StringUtils.trim(formVo.getFacFullname()) + "%");
+		}
+		// CUS_FULLNAME
+		if (StringUtils.isNotBlank(formVo.getCusFullname())) {
+			sql.append(" AND R.CUS_FULLNAME LIKE ? ");
+			params.add("%" + StringUtils.trim(formVo.getCusFullname()) + "%");
+		}
+		// NEW_REG_ID
+		if (StringUtils.isNotBlank(formVo.getNewRegId())) {
+			sql.append(" AND R.NEW_REG_ID = ? ");
+			params.add(StringUtils.trim(formVo.getNewRegId()));
+		}
+		// CUSCAT_ID
+		if (StringUtils.isNotBlank(formVo.getCuscatId())) {
+			sql.append(" AND R.CUSCAT_ID = ? ");
+			params.add(StringUtils.trim(formVo.getCuscatId()));
+		}
+		// PINNIT_ID
+		if (StringUtils.isNotBlank(formVo.getPinnitId())) {
+			sql.append(" AND R.PINNIT_ID = ? ");
+			params.add(StringUtils.trim(formVo.getPinnitId()));
+		}
+		// REG_DATE START
+		if (formVo.getRegDateStart() != null) {
+			sql.append(" AND R.REG_DATE >= TO_DATE(?, 'YYYYMMDD') ");
+			params.add(ConvertDateUtils.formatDateToString(formVo.getRegDateStart(), ConvertDateUtils.YYYYMMDD, Locale.US));
+		}
+		// REG_DATE END
+		if (formVo.getRegDateEnd() != null) {
+			sql.append(" AND R.REG_DATE <= TO_DATE(?, 'YYYYMMDD') ");
+			params.add(ConvertDateUtils.formatDateToString(formVo.getRegDateEnd(), ConvertDateUtils.YYYYMMDD, Locale.US));
+		}
+		// REG_STATUS
+		if (formVo.getRegStatus() != null && formVo.getRegStatus().size() > 0) {
+			sql.append(" AND R.REG_STATUS IN ( ");
+			sql.append(StringUtils.repeat("?", ",", formVo.getRegStatus().size()));
+			sql.append(" ) ");
+			params.addAll(formVo.getRegStatus());
+		} else {
+			sql.append(" AND R.REG_STATUS IN ('1','2','3','41','51') ");
+		}
+	}
+	
+	@Override
+	public List<TaxOperatorDetailVo> findByCriteriaPivot(TaxOperatorFormVo formVo, Map<String, String> auditPlanMap, Map<String, String> maxYearMap, String incomeTaxType) {
+		logger.info("findByCriteriaPivot");
+		
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		
+		sql.append(" SELECT * FROM ( ");
+		buildByCriteriaPivotQuery(sql, params, formVo, incomeTaxType, TA_DUTY_TYPE.SEPARATE);
+		sql.append(" UNION ");
+		buildByCriteriaPivotQuery(sql, params, formVo, incomeTaxType, TA_DUTY_TYPE.GROUP);
+		sql.append(" ) X ");
+		sql.append(" ORDER BY X.GROUP_ID, X.R4000_NEW_REG_ID ");
+		
+		List<TaxOperatorDetailVo> taxOperatorDetailVoList = commonJdbcTemplate.query(sql.toString(), params.toArray(), new ResultSetExtractor<List<TaxOperatorDetailVo>>() {
+			public List<TaxOperatorDetailVo> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				int budgetYear = Integer.parseInt(formVo.getBudgetYear());
+				List<TaxOperatorDetailVo> voList = new ArrayList<>();
+				TaxOperatorDetailVo vo = null;
+				ResultSetMetaData rsmd = rs.getMetaData();
+				ExciseDepartment exciseDeptSector;
+				ExciseDepartment exciseDeptArea;
+				Map<String, Integer> incMultiDutyMap = new HashMap<>();
+				while (rs.next()) {
+					vo = new TaxOperatorDetailVo();
+					vo.setNewRegId(rs.getString("R4000_NEW_REG_ID"));
+					if (StringUtils.isNotEmpty(rs.getString("DUTY_CODE"))) {
+						vo.setDutyCode(rs.getString("DUTY_CODE"));
+					} else {
+						vo.setDutyCode(rs.getString("GROUP_ID"));
+					}
+					vo.setDutyName(rs.getString("GROUP_NAME"));
+					vo.setCusFullname(rs.getString("CUS_FULLNAME"));
+					vo.setFacFullname(rs.getString("FAC_FULLNAME"));
+					vo.setFacAddress(rs.getString("FAC_ADDRESS"));
+					vo.setOfficeCode(rs.getString("OFFICE_CODE"));
+					vo.setMultiDutyFlag(rs.getString("MULTI_DUTY_FLAG"));
+					vo.setRegDate(ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), "dd/MM/yy", ConvertDateUtils.LOCAL_TH));
+					vo.setRegStatus(rs.getString("REG_STATUS_DESC") + " " + vo.getRegDate());
+					vo.setRegCapital(rs.getString("REG_CAPITAL"));
+					vo.setTaxAuditLast1(auditPlanMap.get(String.valueOf(budgetYear - 1) + vo.getNewRegId()));
+					vo.setTaxAuditLast2(auditPlanMap.get(String.valueOf(budgetYear - 2) + vo.getNewRegId()));
+					vo.setTaxAuditLast3(auditPlanMap.get(String.valueOf(budgetYear - 3) + vo.getNewRegId()));
+					vo.setLastAuditYear(maxYearMap.get(vo.getNewRegId()));
+					BigDecimal sumTaxAmtG1 = BigDecimal.ZERO;
+					BigDecimal sumTaxAmtG2 = BigDecimal.ZERO;
+					int indKey1 = 1;
+					int indKey2 = 1;
+					int taxMonthNo = 0;
+					String columnName = "";
+					
+					for (int i = 15; i <= rsmd.getColumnCount(); i++) {
+						columnName = rsmd.getColumnName(i);
+						if (columnName.indexOf("G1") >= 2) {
+							if (rs.getString(columnName) != null) {
+								taxMonthNo++;
+								setTaxAmount(vo, "G1M" + indKey1, rs.getString(columnName));
+								sumTaxAmtG1 = sumTaxAmtG1.add(NumberUtils.nullToZero(NumberUtils.toBigDecimal(rs.getString(columnName))));
+							} else {
+								setTaxAmount(vo, "G1M" + indKey1, "-");
+							}
+						} else {
+							if (rs.getString(columnName) != null) {
+								taxMonthNo++;
+								setTaxAmount(vo, "G2M" + indKey2, rs.getString(columnName));
+								sumTaxAmtG2 = sumTaxAmtG2.add(NumberUtils.nullToZero(NumberUtils.toBigDecimal(rs.getString(columnName))));
+							} else {
+								setTaxAmount(vo, "G2M" + indKey2, "-");
+							}
+							indKey2++;
+						}
+						indKey1++;
+					}
+					
+					vo.setTaxMonthNo(String.valueOf(taxMonthNo));
+					exciseDeptSector = ApplicationCache.getExciseDepartment(vo.getOfficeCode().substring(0, 2) + "0000");
+					if (exciseDeptSector != null) {
+						vo.setSecCode(exciseDeptSector.getOfficeCode());
+						vo.setSecDesc(exciseDeptSector.getDeptShortName());
+					}
+					
+					exciseDeptArea = ApplicationCache.getExciseDepartment(vo.getOfficeCode().substring(0, 4) + "00");
+					if (exciseDeptArea != null) {
+						vo.setAreaCode(exciseDeptArea.getOfficeCode());
+						vo.setAreaDesc(exciseDeptArea.getDeptShortName());
+					}
+					
+					vo.setSumTaxAmtG1(BigDecimal.ZERO.equals(sumTaxAmtG1) ? "-" : (sumTaxAmtG1.setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
+					vo.setSumTaxAmtG2(BigDecimal.ZERO.equals(sumTaxAmtG2) ? "-" : (sumTaxAmtG2.setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
+					BigDecimal percentTax = NumberUtils.calculatePercent(sumTaxAmtG1, sumTaxAmtG2);
+					vo.setTaxAmtChnPnt(BigDecimal.ZERO.equals(percentTax) ? "-" : percentTax.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+					Integer incMultiDutyCount = 0;
+					incMultiDutyCount = incMultiDutyMap.get(vo.getNewRegId());
+					if (incMultiDutyCount == null) {
+						incMultiDutyCount = 0;
+					}
+					if (taxMonthNo > 0) {
+						incMultiDutyCount++;
+					}
+					incMultiDutyMap.put(vo.getNewRegId(), incMultiDutyCount);
+					voList.add(vo);
+				}
+				calculateIncMultiDuty(voList, incMultiDutyMap);
+				logger.info("End : {}", voList.size());
+				
+				return voList;
+			}
+		});
+		
+		return taxOperatorDetailVoList;
+	}
+
+	private void calculateIncMultiDuty(List<TaxOperatorDetailVo> detailVoList, Map<String, Integer> incMultiDutyMap) {
+		for (TaxOperatorDetailVo detailVo : detailVoList) {
+			int incMultiDutyCount = incMultiDutyMap.get(detailVo.getNewRegId());
+			if (incMultiDutyCount > 1) {
+				detailVo.setIncMultiDutyFlag(FLAG.Y_FLAG);
+			}
+		}
+	}
+
+	private void setTaxAmount(TaxOperatorDetailVo detailVo, String groupMonthNo, String taxAmount) {
+		try {
+			Method method = TaxOperatorDetailVo.class.getDeclaredMethod("setTaxAmt" + groupMonthNo, String.class);
+			method.invoke(detailVo, taxAmount);
+		} catch (Exception e) {
+			logger.warn(e.getMessage(), e);
+		}
 	}
 
 }

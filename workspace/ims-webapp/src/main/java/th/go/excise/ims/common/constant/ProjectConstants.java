@@ -26,6 +26,11 @@ public class ProjectConstants {
 		public static final String MONTH = "2";
 	}
 	
+	public class TA_DUTY_TYPE {
+		public static final String SEPARATE = "S";
+		public static final String GROUP = "G";
+	}
+	
 	public class TA_WORKSHEET_STATUS {
 		public static final String DRAFT = "D";
 		public static final String CONDITION = "C";

@@ -12,20 +12,21 @@ import th.go.excise.ims.ta.vo.WsReg4000Vo;
 import th.go.excise.ims.ta.vo.WsRegfri4000FormVo;
 
 public interface TaWsReg4000RepositoryCustom {
-
+	
 	public void batchMerge(List<TaWsReg4000> taWsReg4000List);
-
+	
 	public List<WsReg4000Vo> findByCriteria(TaxOperatorFormVo formVo);
-
+	
 	public Long countByCriteria(TaxOperatorFormVo formVo);
-
+	
 	public List<OutsidePlanVo> outsidePlan(OutsidePlanFormVo formVo);
-
+	
 	public Long countOutsidePlan(OutsidePlanFormVo formVo);
-
+	
 	public WsRegfri4000FormVo findByNewRegId(String newRegId);
 	
 	public Map<String, List<String>> findDutyByNewRegId(List<String> newRegIdList);
 	
-	public List<TaxOperatorDetailVo> findByCriteriaTest(TaxOperatorFormVo formVo , Map<String, String> auditPlanMap ,Map<String, String> maxYearMap , String incomeTaxType);
+	public List<TaxOperatorDetailVo> findByCriteriaPivot(TaxOperatorFormVo formVo, Map<String, String> auditPlanMap, Map<String, String> maxYearMap, String incomeTaxType);
+	
 }
