@@ -172,7 +172,12 @@ public class IaExpensesJdbcRepository {
 		sql.append("   SUM(IEX.AVERAGE_FROM)      AS AVERAGE_FROM, ");
 		sql.append("   SUM(IEX.AVERAGE_COME_COST) AS AVERAGE_COME_COST, ");
 		sql.append("   SUM(IEX.MONEY_BUDGET)      AS MONEY_BUDGET, ");
-		sql.append("   SUM(IEX.MONEY_OUT)         AS MONEY_OUT ");
+		sql.append("   SUM(IEX.MONEY_OUT)         AS MONEY_OUT, ");
+		sql.append("   NVL2( SUM(IGB.BRING_FORWARD), SUM(IGB.BRING_FORWARD), 0 )  AS EXPERIMENTAL_BUDGET, ");
+		sql.append("   NVL2( SUM(IGB.BRING_FORWARD), SUM(IGB.BRING_FORWARD), 0 ) - SUM(IEX.SUM_WITHDRAW)  AS DIFFERENCE_EXPERIMENTAL_BUDGET, ");
+		sql.append("   NVL2(SUM(IGA.CURR_AMT), SUM(IGA.CURR_AMT), 0) AS LEDGER, ");
+		sql.append("   NVL2(SUM(IGA.CURR_AMT), SUM(IGA.CURR_AMT), 0) - SUM(IEX.SUM_WITHDRAW) AS DIFFERENCE_LEDGER, "); 
+		sql.append("   IEX.OFFICE_CODE ");  
 		sql.append(" FROM IA_EXPENSES IEX ");
 		sql.append(" INNER JOIN EXCISE_ORG_DISB EOD ");
 		sql.append("   ON IEX.OFFICE_CODE = EOD.OFFICE_CODE ");
@@ -197,9 +202,10 @@ public class IaExpensesJdbcRepository {
 			sql.append(" AND IEX.EXPENSE_YEAR||EXPENSE_MONTH  <= ? ");
 			params.add(form.getEndYear() + StringUtils.leftPad(form.getPeriodMonthEnd(), 2, '0').substring(0, 2));
 		}
-		
+//		sql.append(" AND TO_NUMBER(IGA.PK_CODE) = 40 ");
 		sql.append(" GROUP BY IEX.ACCOUNT_ID, ");
-		sql.append("   IEX.ACCOUNT_NAME ");
+		sql.append("   IEX.ACCOUNT_NAME, ");
+		sql.append("   IEX.OFFICE_CODE ");
 		List<Int090101Vo> data = commonJdbcTemplate.query(sql.toString(), params.toArray(), compareRowmapper);
 		return data;
 	}
@@ -221,15 +227,11 @@ public class IaExpensesJdbcRepository {
 			vo.setBudgetBalance(rs.getBigDecimal("BUDGET_BALANCE"));
 			vo.setBudgetReceive(rs.getBigDecimal("BUDGET_RECEIVE"));
 			vo.setBudgetWithdraw(rs.getBigDecimal("BUDGET_WITHDRAW"));
-//			vo.setBudgetYear(rs.getString("BUDGET_YEAR"));
 //			vo.setExpenseDate(rs.getDate("EXPENSE_DATE"));
-//			vo.setExpenseMonth(rs.getString("EXPENSE_MONTH"));
-//			vo.setExpenseYear(rs.getString("EXPENSE_YEAR"));
 //			vo.setId(rs.getBigDecimal("ID"));
 			vo.setMoneyBudget(rs.getBigDecimal("MONEY_BUDGET"));
 			vo.setMoneyOut(rs.getBigDecimal("MONEY_OUT"));
 //			vo.setNote(rs.getString("NOTE"));
-//			vo.setOfficeCode(rs.getString("OFFICE_CODE"));
 //			vo.setOfficeDesc(rs.getString("OFFICE_DESC"));
 			vo.setServiceBalance(rs.getBigDecimal("SERVICE_BALANCE"));
 			vo.setServiceReceive(rs.getBigDecimal("SERVICE_RECEIVE"));
@@ -240,6 +242,16 @@ public class IaExpensesJdbcRepository {
 			vo.setSuppressBalance(rs.getBigDecimal("SUPPRESS_BALANCE"));
 			vo.setSuppressReceive(rs.getBigDecimal("SUPPRESS_RECEIVE"));
 			vo.setSuppressWithdraw(rs.getBigDecimal("SUPPRESS_WITHDRAW"));
+			
+			vo.setExperimentalBudget(rs.getDouble("EXPERIMENTAL_BUDGET"));
+			vo.setDifferenceExperimentalBudget(rs.getDouble("DIFFERENCE_EXPERIMENTAL_BUDGET"));
+			vo.setLedger(rs.getDouble("LEDGER"));
+			vo.setDifferenceLedger(rs.getDouble("DIFFERENCE_LEDGER"));
+			
+//			vo.setBudgetYear(rs.getString("BUDGET_YEAR"));
+			vo.setOfficeCode(rs.getString("OFFICE_CODE"));
+//			vo.setExpenseMonth(rs.getString("EXPENSE_MONTH"));
+//			vo.setExpenseYear(rs.getString("EXPENSE_YEAR"));
 			return vo;
 		}
 	};

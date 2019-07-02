@@ -1,5 +1,6 @@
 package th.go.excise.ims.ia.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.go.excise.ims.ia.persistence.entity.IaExpensesD1;
+import th.go.excise.ims.ia.persistence.repository.jdbc.IaExpensesD1JdbcRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.IaExpensesJdbcRepository;
 import th.go.excise.ims.ia.vo.Int090101CompareFormVo;
 import th.go.excise.ims.ia.vo.Int090101Vo;
@@ -15,6 +18,8 @@ import th.go.excise.ims.ia.vo.Int090101Vo;
 public class Int090101Service {
 	@Autowired
 	private IaExpensesJdbcRepository iaExpensesJdbcRepository;
+	
+	@Autowired IaExpensesD1JdbcRepository iaExpensesD1JdbcRepository;
 
 	public List<Int090101Vo> findCompare(Int090101CompareFormVo form) {
 
@@ -33,7 +38,32 @@ public class Int090101Service {
 //		form.setPeriodMonthStart(this.monthMap(StringUtils.leftPad(form.getPeriodMonthStart(), 2,"0")));
 //		form.setPeriodMonthEnd(this.monthMap(StringUtils.leftPad(form.getPeriodMonthEnd(), 2,"0")));
 		data = iaExpensesJdbcRepository.findCompare(form);
-		return data;
+		
+		List<Int090101Vo> dataRes = new ArrayList<>();
+		List<IaExpensesD1> detail = null;
+		
+		for (Int090101Vo headder : data) {
+			detail = iaExpensesD1JdbcRepository.findDetailTime(headder.getOfficeCode(), headder.getAccountId(), form.getPeriodMonthStart(), form.getStartYear(), form.getPeriodMonthEnd(), form.getEndYear());
+//			detail = iaExpensesD1JdbcRepository.findDetail(headder.getOfficeCode(), headder.getBudgetYear(), headder.getExpenseMonth(), headder.getExpenseYear(), headder.getAccountId());
+			int index = 0;
+			for (IaExpensesD1 iaExpensesD1 : detail) {
+				if(index == 0) {
+					headder.setAverageCost(new BigDecimal(iaExpensesD1.getAverageCost()));
+					headder.setAverageGive(iaExpensesD1.getAverageGive());
+					headder.setAverageFrom(new BigDecimal(iaExpensesD1.getAverageFrom()));
+					dataRes.add(headder);
+				}else if(index > 0) {
+					Int090101Vo	dataBlank = new Int090101Vo();
+					dataBlank.setAverageCost(new BigDecimal(iaExpensesD1.getAverageCost()));
+					dataBlank.setAverageGive(iaExpensesD1.getAverageGive());
+					dataBlank.setAverageFrom(new BigDecimal(iaExpensesD1.getAverageFrom()));
+					dataRes.add(dataBlank);
+				}
+				index++;
+			}
+		}
+		
+		return dataRes;
 	}
 
 	private String monthMap(String inputStr) {
