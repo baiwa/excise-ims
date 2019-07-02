@@ -19,7 +19,6 @@ import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_US
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.vo.Int0610SearchVo;
 import th.go.excise.ims.ia.vo.Int0610SumVo;
-import th.go.excise.ims.ia.vo.Int0804SummaryVo;
 import th.go.excise.ims.ws.persistence.entity.WsIncfri8020Inc;
 
 public class WsIncfri8020IncRepositoryImpl implements WsIncfri8020IncRepositoryCustom {
