@@ -88,9 +88,9 @@ public class WsIncfri8020IncRepositoryImpl implements WsIncfri8020IncRepositoryC
 	
 	@Override
 	public List<WsIncfri8020Inc> findTabs(String officeCode) {
-		final String SQL = " SELECT DEPT_DISB, GL_ACC_NO FROM WS_INCFRI8020_INC " +
+		final String SQL = " SELECT DEPT_DISB FROM WS_INCFRI8020_INC " +
 				" WHERE OFFICE_RECEIVE LIKE ? " +
-				" GROUP BY DEPT_DISB, GL_ACC_NO " +
+				" GROUP BY DEPT_DISB " +
 				" ORDER BY DEPT_DISB ";
 		
 		StringBuilder sql = new StringBuilder(SQL);
@@ -102,7 +102,7 @@ public class WsIncfri8020IncRepositoryImpl implements WsIncfri8020IncRepositoryC
 			public WsIncfri8020Inc mapRow(ResultSet rs, int rowNum) throws SQLException {
 				WsIncfri8020Inc vo = new WsIncfri8020Inc();
 				vo.setDeptDisb(rs.getString("DEPT_DISB"));
-				vo.setGlAccNo(rs.getString("GL_ACC_NO"));
+//				vo.setGlAccNo(rs.getString("GL_ACC_NO"));
 				return vo;
 			}
 		});
@@ -118,11 +118,11 @@ public class WsIncfri8020IncRepositoryImpl implements WsIncfri8020IncRepositoryC
 				" 	AND G.PERIOD_YEAR||G.PERIOD_FROM >= ? " +
 				" 	AND G.PERIOD_YEAR||G.PERIOD_TO <= ? " +
 				" 	AND G.DEPT_DISB = '00000'||? " +
-				" 	AND G.ACC_NO = ? " +
+//				" 	AND G.ACC_NO = ? " +
 				" WHERE I.GL_ACC_NO LIKE '4%' " +
 				" 	AND I.OFFICE_RECEIVE LIKE ? " +
-//				" 	AND I.RECEIPT_DATE >= ? " +
-//				" 	AND I.RECEIPT_DATE <= ? " +
+				" 	AND I.RECEIPT_DATE >= ? " +
+				" 	AND I.RECEIPT_DATE <= ? " +
 				" 	AND I.DEPT_DISB = ? " +
 				" GROUP BY I.INCOME_CODE, I.INCOME_NAME,G.ACC_NO, G.ACC_NAME " +
 				" ORDER BY I.INCOME_CODE ";
@@ -132,27 +132,25 @@ public class WsIncfri8020IncRepositoryImpl implements WsIncfri8020IncRepositoryC
 		params.add(request.getPeriodFromStr());
 		params.add(request.getPeriodToStr());
 		params.add(request.getDeptDisb());
-		params.add(request.getGlAccNo());
+//		params.add(request.getGlAccNo());
 		params.add(request.getOfficeCode());
-//		params.add(request.getPeriodFromDate());
-//		params.add(request.getPeriodToDate());
+		params.add(request.getPeriodFromDate());
+		params.add(request.getPeriodToDate());
 		params.add(request.getDeptDisb());
 		
-		return commonJdbcTemplate.query(sql.toString(), params.toArray(), mappingSumResult);
+		return commonJdbcTemplate.query(sql.toString(), params.toArray(), new RowMapper<Int0610SumVo>() {
+			@Override
+			public Int0610SumVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Int0610SumVo vo = new Int0610SumVo();
+				vo.setIncomeCode(rs.getString("INCOME_CODE"));
+				vo.setIncomeName(rs.getString("INCOME_NAME"));
+				vo.setNetTaxAmt(rs.getBigDecimal("SUM_NET_TAX_AMT"));
+				vo.setAccNo(rs.getString("ACC_NO"));
+				vo.setAccName(rs.getString("ACC_NAME"));
+				vo.setCarryForward(rs.getBigDecimal("CARRY_FORWARD"));
+				return vo;
+			}
+		});
 	}
-	
-	private RowMapper<Int0610SumVo> mappingSumResult = new RowMapper<Int0610SumVo>() {
-		@Override
-		public Int0610SumVo mapRow(ResultSet rs, int rowNum) throws SQLException {
-			Int0610SumVo vo = new Int0610SumVo();
-			vo.setIncomeCode(rs.getString("INCOME_CODE"));
-			vo.setIncomeName(rs.getString("INCOME_NAME"));
-			vo.setNetTaxAmt(rs.getBigDecimal("SUM_NET_TAX_AMT"));
-			vo.setAccNo(rs.getString("ACC_NO"));
-			vo.setAccName(rs.getString("ACC_NAME"));
-			vo.setCarryForward(rs.getBigDecimal("CARRY_FORWARD"));
-			return vo;
-		}
-	};
 	
 }
