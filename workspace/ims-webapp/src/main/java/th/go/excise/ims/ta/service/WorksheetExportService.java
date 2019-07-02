@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
@@ -41,12 +42,12 @@ import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondMainHdrReposito
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondSubNoAuditRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetHdrRepository;
-import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.util.TaxAuditUtils;
 import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 import th.go.excise.ims.ta.vo.WorksheetDateRangeVo;
+import th.go.excise.ims.ta.vo.WorksheetExportFormVo;
 
 @Service
 public class WorksheetExportService {
@@ -59,10 +60,7 @@ public class WorksheetExportService {
 	private static final DateTimeFormatter dateFormatter_MMM_yy = DateTimeFormatter.ofPattern("MMM yy", ConvertDateUtils.LOCAL_TH);
 	
 	@Autowired
-	private TaWsReg4000Repository taWsReg4000Repository;
-	@Autowired
 	private DraftWorksheetService draftWorksheetService;
-	
 	@Autowired
 	private TaWorksheetCondMainHdrRepository taWorksheetCondMainHdrRepository;
 	@Autowired
@@ -74,59 +72,32 @@ public class WorksheetExportService {
 	@Autowired
 	private TaWorksheetDtlRepository taWorksheetDtlRepository;
 	
-	/*public byte[] exportPreviewWorksheet(TaxOperatorFormVo formVo) {
+	public byte[] exportPreviewWorksheet(TaxOperatorFormVo formVo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		LocalDate dateStart = LocalDateUtils.thaiMonthYear2LocalDate(formVo.getDateStart());
+		LocalDate dateEnd = LocalDateUtils.thaiMonthYear2LocalDate(formVo.getDateEnd());
+		int dateRange = LocalDateUtils.getLocalDateRange(dateStart, dateEnd).size() * 2;
+		formVo.setDateRange(dateRange);
 		logger.info("exportPreviewWorksheet officeCode={}, budgetYear={}, startDate={}, endDate={}, dateRange={}",
 			formVo.getOfficeCode(), formVo.getBudgetYear(), formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange());
 		
 		// Prepare Data for Export
 		formVo.setOfficeCode(officeCode);
-		formVo.setStart(0);
-		formVo.setLength(taWsReg4000Repository.countByCriteria(formVo).intValue());
+		String taxCompareType = TaxAuditUtils.getTaxCompareType(formVo.getDateRange());
+		
 		List<TaxOperatorDetailVo> previewVoList = draftWorksheetService.prepareTaxOperatorDetailVoList(formVo);
 		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = TaxAuditUtils.prepareTaxOperatorDatatable(previewVoList, formVo);
+		WorksheetDateRangeVo worksheetDateRangeVo = TaxAuditUtils.getWorksheetDateRangeVo(formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange(), taxCompareType);
 		
-		// Label and Text
-		String SHEET_NAME = "รายชื่อผู้ประกอบการ";
+		// Prepare WorksheetExportFormVo
+		WorksheetExportFormVo exportFormVo = new WorksheetExportFormVo();
+		exportFormVo.setBudgetYear(formVo.getBudgetYear());
+		exportFormVo.setDateRange(formVo.getDateRange());
+		exportFormVo.setWorksheetDateRangeVo(worksheetDateRangeVo);
+		exportFormVo.setTaxOperatorDatatableVoList(taxOperatorDatatableVoList);
 		
-		// Create Workbook
-		XSSFWorkbook workbook = new XSSFWorkbook();
-		
-		// Cell Style
-		CellStyle cellHeader = ExcelUtils.createThColorStyle(workbook, new XSSFColor(Color.LIGHT_GRAY));
-		
-		Sheet sheet = workbook.createSheet(SHEET_NAME);
-		Row row = null;
-		Cell cell = null;
-		int rowNum = 0;
-		
-		// Column Header
-		// Header Line 1
-		row = sheet.createRow(rowNum);
-		generateWorksheetHeader1(row, cell, cellHeader, formVo);
-		rowNum++;
-		// Header Line 2
-		row = sheet.createRow(rowNum);
-		generateWorksheetHeader2(row, cell, cellHeader, formVo);
-		rowNum++;
-		
-		// Details
-		rowNum = generateWorksheetDetail(workbook, sheet, row, rowNum, cell, taxOperatorDatatableVoList);
-		
-		// Column Width
-		setColumnWidth(sheet, 0, formVo.getDateRange());
-//		setMergeCell(sheet, formVo.getDateRange());
-		
-		byte[] content = null;
-		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-			workbook.write(outputStream);
-			content = outputStream.toByteArray();
-		} catch (IOException e) {
-			logger.error(e.getMessage(), e);
-		}
-
-		return content;
-	}*/
+		return generateDraftWorksheetXlsx(exportFormVo);
+	}
 	
 	public byte[] exportDraftWorksheet(TaxOperatorFormVo formVo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
@@ -144,13 +115,27 @@ public class WorksheetExportService {
 		formVo.setOfficeCode(officeCode);
 		formVo.setWorksheetStatus(TA_WORKSHEET_STATUS.DRAFT);
 		formVo.setStart(0);
-		formVo.setLength(taWorksheetDtlRepository.countByCriteria(formVo).intValue());
+		//formVo.setLength(taWorksheetDtlRepository.countByCriteria(formVo).intValue());
+		formVo.setLength(10);
 		
 		List<TaxOperatorDetailVo> worksheetVoList = taWorksheetDtlRepository.findByCriteria(formVo);
 		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = TaxAuditUtils.prepareTaxOperatorDatatable(worksheetVoList, formVo);
 		WorksheetDateRangeVo worksheetDateRangeVo = TaxAuditUtils.getWorksheetDateRangeVo(formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange(), worksheetCondMainHdr.getCompType());
-		List<LocalDate> subLocalDateG1List = new ArrayList<>(worksheetDateRangeVo.getSubLocalDateG1List());
-		List<LocalDate> subLocalDateG2List = new ArrayList<>(worksheetDateRangeVo.getSubLocalDateG2List());
+		
+		// Prepare WorksheetExportFormVo
+		WorksheetExportFormVo exportFormVo = new WorksheetExportFormVo();
+		exportFormVo.setBudgetYear(formVo.getBudgetYear());
+		exportFormVo.setDateRange(formVo.getDateRange());
+		exportFormVo.setWorksheetDateRangeVo(worksheetDateRangeVo);
+		exportFormVo.setTaxOperatorDatatableVoList(taxOperatorDatatableVoList);
+		
+		return generateDraftWorksheetXlsx(exportFormVo);
+	}
+	
+	private byte[] generateDraftWorksheetXlsx(WorksheetExportFormVo formVo) {
+		
+		List<LocalDate> subLocalDateG1List = new ArrayList<>(formVo.getWorksheetDateRangeVo().getSubLocalDateG1List());
+		List<LocalDate> subLocalDateG2List = new ArrayList<>(formVo.getWorksheetDateRangeVo().getSubLocalDateG2List());
 		Collections.reverse(subLocalDateG1List);
 		Collections.reverse(subLocalDateG2List);
 		
@@ -256,9 +241,9 @@ public class WorksheetExportService {
 			headerText2List.add("");
 			int startTaxAmtIndex = headerText2List.size();
 			// Date G1
-			headerText2List.addAll(generateDateString(worksheetDateRangeVo.getSubLocalDateG1List()));
+			headerText2List.addAll(generateDateString(formVo.getWorksheetDateRangeVo().getSubLocalDateG1List()));
 			// Date G2
-			headerText2List.addAll(generateDateString(worksheetDateRangeVo.getSubLocalDateG2List()));
+			headerText2List.addAll(generateDateString(formVo.getWorksheetDateRangeVo().getSubLocalDateG2List()));
 			
 			cellNum = 0;
 			for (String headerText : headerText2List) {
@@ -271,7 +256,7 @@ public class WorksheetExportService {
 			
 			// Details
 			int no = 1;
-			for (TaxOperatorDatatableVo taxVo : taxOperatorDatatableVoList) {
+			for (TaxOperatorDatatableVo taxVo : formVo.getTaxOperatorDatatableVoList()) {
 				row = sheet.createRow(rowNum);
 				cellNum = 0;
 				// ลำดับ
@@ -366,10 +351,10 @@ public class WorksheetExportService {
 			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // การตรวจสอบภาษีย้อนหลัง 3 ปี
 			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // การตรวจสอบภาษีย้อนหลัง 2 ปี
 			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // การตรวจสอบภาษีย้อนหลัง 1 ปี
-			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // เปลี่ยนแปลง (ร้อยละ)
-			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // จำนวนเดือนไม่ชำระภาษี
 			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 18); // ยอดชำระภาษี วิเคราะห์
 			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 18); // ยอดชำระภาษี เปรียบเทียบ
+			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // เปลี่ยนแปลง (ร้อยละ)
+			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // จำนวนเดือนไม่ชำระภาษี
 			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 50); // ชื่อโรงอุตสาหกรรม/สถานบริการ
 			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 50); // ที่อยู่โรงอุตสาหกรรม/สถานบริการ
 			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 10); // ภาค

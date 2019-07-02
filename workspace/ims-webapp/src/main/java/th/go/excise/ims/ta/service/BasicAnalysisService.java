@@ -1,7 +1,6 @@
 package th.go.excise.ims.ta.service;
 
 import java.time.LocalDate;
-import java.time.chrono.ThaiBuddhistDate;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperBaH;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.repository.TaPaperBaHRepository;
@@ -77,8 +77,8 @@ public class BasicAnalysisService {
 			TaPlanWorksheetDtl planWorksheeetDtl = taPlanWorksheetDtlRepository.findByAuditPlanCode(formVo.getAuditPlanCode());
 			
 			String paperBaNumber = paperSequenceService.getBasicAnalysisNumber(planWorksheeetDtl.getOfficeCode(), planWorksheeetDtl.getBudgetYear());
-			LocalDate localDateStart = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]), Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
-			LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]), Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
+			LocalDate localDateStart = LocalDateUtils.thaiMonthYear2LocalDate(formVo.getStartDate());
+			LocalDate localDateEnd = LocalDateUtils.thaiMonthYear2LocalDate(formVo.getEndDate());
 			
 			paperBaH = new TaPaperBaH();
 			paperBaH.setOfficeCode(planWorksheeetDtl.getOfficeCode());

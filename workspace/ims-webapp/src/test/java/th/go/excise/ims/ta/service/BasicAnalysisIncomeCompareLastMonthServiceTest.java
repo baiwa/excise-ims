@@ -13,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_CONFIG;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
 import th.go.excise.ims.ta.vo.BasicAnalysisIncomeCompareLastMonthVo;
@@ -33,6 +34,7 @@ public class BasicAnalysisIncomeCompareLastMonthServiceTest {
 		formVo.setDutyGroupId("0201");
 		formVo.setStartDate("01/2561");
 		formVo.setEndDate("06/2561");
+		formVo.setMonthIncomeType(TA_CONFIG.INCOME_TYPE_NET);
 		//formVo.setPaperBaNumber("0100002562000001");
 		
 		List<BasicAnalysisIncomeCompareLastMonthVo> voList = basicAnalysisIncomeCompareLastMonthService.inquiry(formVo);

@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,8 +69,8 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 	protected List<ProductPaperInputGoodsVo> inquiryByWs(ProductPaperFormVo formVo) {
 		logger.info("inquiryByWs");
 
-		LocalDate localDateStart = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]), Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
-		LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]), Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
+		LocalDate localDateStart = toLocalDate(formVo.getStartDate());
+		LocalDate localDateEnd = toLocalDate(formVo.getEndDate());
 
 		WsOasfri0100FromVo wsOasfri0100FormVo = new WsOasfri0100FromVo();
 		wsOasfri0100FormVo.setNewRegId(formVo.getNewRegId());
@@ -308,7 +307,7 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 		ProductPaperInputGoodsVo data = null;
 
 		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(formVo.getFile().getBytes()))) {
-			Sheet sheet = workbook.getSheetAt(0);
+			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
 			for (Row row : sheet) {
 				data = new ProductPaperInputGoodsVo();
 				// Skip on second row

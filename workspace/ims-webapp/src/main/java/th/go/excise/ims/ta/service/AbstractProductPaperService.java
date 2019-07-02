@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
@@ -279,7 +280,7 @@ public abstract class AbstractProductPaperService<VO, ENTITY_H> {
 	}
 	
 	protected LocalDate toLocalDate(String inputDate) {
-		return LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(inputDate.split("/")[1]), Integer.parseInt(inputDate.split("/")[0]), 1));
+		return LocalDateUtils.thaiMonthYear2LocalDate(inputDate);
 	}
 	
 	protected String prepareEntityH(ProductPaperFormVo formVo, Object entityObj, Class<?> entityClass) {

@@ -3,7 +3,6 @@ package th.go.excise.ims.ta.service;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
@@ -69,8 +68,8 @@ public class ServicePaperPricePerUnitService extends AbstractServicePaperService
 	protected List<ServicePaperPricePerUnitVo> inquiryByWs(ServicePaperFormVo formVo) {
 		logger.info("inquiryByWs");
 		
-		LocalDate localDateStart = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getStartDate().split("/")[1]), Integer.parseInt(formVo.getStartDate().split("/")[0]), 1));
-		LocalDate localDateEnd = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(formVo.getEndDate().split("/")[1]), Integer.parseInt(formVo.getEndDate().split("/")[0]), 1));
+		LocalDate localDateStart = toLocalDate(formVo.getStartDate());
+		LocalDate localDateEnd = toLocalDate(formVo.getEndDate());
 		String dateStart = localDateStart.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
 		String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
 		

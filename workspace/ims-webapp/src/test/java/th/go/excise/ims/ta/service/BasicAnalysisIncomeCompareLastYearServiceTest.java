@@ -27,15 +27,15 @@ public class BasicAnalysisIncomeCompareLastYearServiceTest {
 	@Autowired
 	private BasicAnalysisIncomeCompareLastYearService basicAnalysisIncomeCompareLastYearService;
 	
-	@Test
+//	@Test
 	public void test_inquiry() {
 		BasicAnalysisFormVo formVo = new BasicAnalysisFormVo();
 		formVo.setNewRegId("01075440001081002");
 		formVo.setDutyGroupId("0101");
-		formVo.setStartDate("01/2562");
-		formVo.setEndDate("06/2562");
+		formVo.setStartDate("07/2561");
+		formVo.setEndDate("12/2561");
 		formVo.setYearIncomeType(TA_CONFIG.INCOME_TYPE_NET);
-		formVo.setYearNum("5");
+		formVo.setYearNum("3");
 		//formVo.setPaperBaNumber("PaperBaNumber");
 		
 		List<BasicAnalysisIncomeCompareLastYearVo> voList = basicAnalysisIncomeCompareLastYearService.inquiry(formVo);
@@ -44,14 +44,16 @@ public class BasicAnalysisIncomeCompareLastYearServiceTest {
 		}
 	}
 	
-//	@Test
+	@Test
 	public void test_save() {
 		BasicAnalysisFormVo formVo = new BasicAnalysisFormVo();
 		formVo.setNewRegId("01075440001081002");
 		formVo.setPaperBaNumber("PaperBaNumber");
 		formVo.setDutyGroupId("0101");
-		formVo.setStartDate("01/2562");
-		formVo.setEndDate("06/2562");
+		formVo.setStartDate("07/2561");
+		formVo.setEndDate("12/2561");
+		formVo.setYearIncomeType(TA_CONFIG.INCOME_TYPE_NET);
+		formVo.setYearNum("3");
 		basicAnalysisIncomeCompareLastYearService.save(formVo);
 		System.out.println("************************Is successfully saved************************");
 	}

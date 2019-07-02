@@ -1,6 +1,7 @@
 package th.co.baiwa.buckwaframework.common.util;
 
 import java.time.LocalDate;
+import java.time.chrono.ThaiBuddhistDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +25,10 @@ public class LocalDateUtils {
 	public static boolean isRange(LocalDate dateStart, LocalDate dateEnd, LocalDate localDate) {
 		return (localDate.isEqual(dateStart) || localDate.isAfter(dateStart))
 			&& (localDate.isEqual(dateEnd) || localDate.isBefore(dateEnd));
+	}
+	
+	public static LocalDate thaiMonthYear2LocalDate(String inputDate) {
+		return LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(inputDate.split("/")[1]), Integer.parseInt(inputDate.split("/")[0]), 1));
 	}
 	
 }

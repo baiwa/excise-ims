@@ -331,7 +331,7 @@ public class ProductPaperTaxAmtAdditionalService extends AbstractProductPaperSer
 		ProductPaperTaxAmtAdditionalVo data = null;
 
 		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(formVo.getFile().getBytes()));) {
-			Sheet sheet = workbook.getSheetAt(0);
+			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
 
 			for (Row row : sheet) {
 				data = new ProductPaperTaxAmtAdditionalVo();

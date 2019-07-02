@@ -1,11 +1,11 @@
 package th.go.excise.ims.ta.service;
 
 import java.time.LocalDate;
-import java.time.chrono.ThaiBuddhistDate;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
 
 public abstract class AbstractBasicAnalysisService<VO> {
@@ -27,7 +27,7 @@ public abstract class AbstractBasicAnalysisService<VO> {
 	protected abstract void save(BasicAnalysisFormVo formVo);
 	
 	protected LocalDate toLocalDate(String inputDate) {
-		return LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(inputDate.split("/")[1]), Integer.parseInt(inputDate.split("/")[0]), 1));
+		return LocalDateUtils.thaiMonthYear2LocalDate(inputDate);
 	}
 	
 }

@@ -3,7 +3,6 @@ package th.go.excise.ims.ta.util;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -280,13 +279,13 @@ public class TaxAuditUtils {
 		LocalDate localDateG2End = null;
 		if (TAX_COMPARE_TYPE.HALF.equals(compType)) {
 			int range = (dateRange / 2) - 1;
-			localDateG1Start = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(dateEnd.split("/")[1]), Integer.parseInt(dateEnd.split("/")[0]), 1));
-			localDateG1End = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(dateStart.split("/")[1]), Integer.parseInt(dateStart.split("/")[0]), 1));
+			localDateG1Start = LocalDateUtils.thaiMonthYear2LocalDate(dateEnd);
+			localDateG1End = LocalDateUtils.thaiMonthYear2LocalDate(dateStart);
 			localDateG2Start = localDateG1End.minus(1, ChronoUnit.MONTHS);
 			localDateG2End = localDateG2Start.minus(range, ChronoUnit.MONTHS);
 		} else {
-			localDateG1Start = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(dateEnd.split("/")[1]), Integer.parseInt(dateEnd.split("/")[0]), 1));
-			localDateG1End = LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(dateStart.split("/")[1]), Integer.parseInt(dateStart.split("/")[0]), 1));
+			localDateG1Start = LocalDateUtils.thaiMonthYear2LocalDate(dateEnd);
+			localDateG1End = LocalDateUtils.thaiMonthYear2LocalDate(dateStart);
 			localDateG2Start = localDateG1Start.minus(1, ChronoUnit.YEARS);
 			localDateG2End = localDateG1End.minus(1, ChronoUnit.YEARS);
 		}
@@ -310,5 +309,14 @@ public class TaxAuditUtils {
 		
 		return vo;
 	}
+	
+	public static String getTaxCompareType(int monthNum) {
+    	final int MONTH_NUM = 24;
+    	if (monthNum >= MONTH_NUM) {
+    		return TAX_COMPARE_TYPE.HALF;
+    	} else {
+    		return TAX_COMPARE_TYPE.MONTH;
+    	}
+    }
 
 }
