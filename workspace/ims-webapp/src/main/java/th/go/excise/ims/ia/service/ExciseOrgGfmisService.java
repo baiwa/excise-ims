@@ -16,12 +16,11 @@ import th.go.excise.ims.preferences.persistence.repository.ExciseOrgGfmisReposit
 public class ExciseOrgGfmisService {
 	@Autowired
 	private ExciseOrgGfmisRepository exciseOrgGfmisRepository;
-	
-	
+
 	@Autowired
 	private ExciseOrgDisbRepository exciseOrgDisbRepository;
-	
-	public List<ExciseOrgGfDisburseUnitVo> findGfDisburseUnitAndName(){
+
+	public List<ExciseOrgGfDisburseUnitVo> findGfDisburseUnitAndName() {
 		List<ExciseOrgGfmis> exciseOrgGfmisList = exciseOrgGfmisRepository.findGfDisburseUnitAndName();
 		List<ExciseOrgGfDisburseUnitVo> resData = new ArrayList<>();
 		ExciseOrgGfDisburseUnitVo dat = null;
@@ -34,8 +33,8 @@ public class ExciseOrgGfmisService {
 		}
 		return resData;
 	}
-	
-	public ExciseOrgDisb findExciseOrgGfmisByGfDisburseUnit(String gfDisburseUnit){
+
+	public ExciseOrgDisb findExciseOrgGfmisByGfDisburseUnit(String gfDisburseUnit) {
 		return exciseOrgDisbRepository.findExciseOrgGfmisByGfDisburseUnit(gfDisburseUnit);
 	}
 }
