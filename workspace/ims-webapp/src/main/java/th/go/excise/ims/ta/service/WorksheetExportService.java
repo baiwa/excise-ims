@@ -43,6 +43,8 @@ import th.go.excise.ims.ta.persistence.repository.TaWorksheetCondSubNoAuditRepos
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWorksheetHdrRepository;
 import th.go.excise.ims.ta.util.TaxAuditUtils;
+import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
@@ -71,6 +73,8 @@ public class WorksheetExportService {
 	private TaWorksheetHdrRepository taWorksheetHdrRepository;
 	@Autowired
 	private TaWorksheetDtlRepository taWorksheetDtlRepository;
+	@Autowired
+	private PlanWorksheetService planWorksheetService;
 	
 	public byte[] exportPreviewWorksheet(TaxOperatorFormVo formVo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
@@ -822,6 +826,147 @@ public class WorksheetExportService {
 
 		return content;
 	}*/
+	
+	public byte[] exportPlanWorksheetSelected(PlanWorksheetVo formVo) {
+		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		logger.info("exportWorksheet officeCode={}, planNumber={}", officeCode, formVo.getPlanNumber());
+		
+		// PlanWorksheet Data for Export
+		List<PlanWorksheetDatatableVo> planVoList = planWorksheetService.planDtlDatatableAll(formVo);
+		
+		// Label and Text
+		String SHEET_NAME = "รายชื่อผู้ประกอบการที่คัดเลือก";
+		
+		// Create Workbook
+		byte[] content = null;
+		try (SXSSFWorkbook workbook = new SXSSFWorkbook(-1); // turn off auto-flushing and accumulate all rows in memory
+			ByteArrayOutputStream out = new ByteArrayOutputStream();) {
+			
+			// Font
+			Font headerFont = workbook.createFont();
+			headerFont.setFontHeightInPoints((short) 14);
+			headerFont.setFontName(ExcelUtils.FONT_NAME.TH_SARABUN_PSK);
+			headerFont.setBold(true);
+			
+			Font detailFont = workbook.createFont();
+			detailFont.setFontHeightInPoints((short) 14);
+			detailFont.setFontName(ExcelUtils.FONT_NAME.TH_SARABUN_PSK);
+			
+			// Cell Style
+			CellStyle cellHeaderStyle = ExcelUtils.createThColorStyle(workbook, new XSSFColor(Color.LIGHT_GRAY));
+			cellHeaderStyle.setFont(headerFont);
+			CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
+			cellCenter.setFont(detailFont);
+			CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
+			cellLeft.setFont(detailFont);
+			CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
+			cellRight.setFont(detailFont);
+			
+			// Prepare Data for Export
+			Sheet sheet = workbook.createSheet(SHEET_NAME);
+			Row row = null;
+			Cell cell = null;
+			int rowNum = 0;
+			int cellNum = 0;
+			
+			// Column Header
+			row = sheet.createRow(rowNum);
+			List<String> headerTextList = new ArrayList<>();
+			headerTextList.add("ในแผน");
+			headerTextList.add("ลำดับ");
+			headerTextList.add("เลขทะเบียนสรรพสามิต");
+			headerTextList.add("ชื่อผู้ประกอบการ");
+			headerTextList.add("ชื่อโรงอุตสาหกรรม/สถานบริการ");
+			headerTextList.add("ที่อยู่โรงอุตสาหกรรม/สถานบริการ");
+			headerTextList.add("ภาค");
+			headerTextList.add("พื้นที่");
+			headerTextList.add("พิกัด");
+			
+			cellNum = 0;
+			for (String headerText : headerTextList) {
+				cell = row.createCell(cellNum);
+				cell.setCellValue(headerText);
+				cell.setCellStyle(cellHeaderStyle);
+				cellNum++;
+			}
+			rowNum++;
+			
+			// Details
+			int no = 1;
+			for (PlanWorksheetDatatableVo planVo : planVoList) {
+				row = sheet.createRow(rowNum);
+				cellNum = 0;
+				// ในแผน
+				cell = row.createCell(cellNum++);
+				cell.setCellValue("");
+				cell.setCellStyle(cellCenter);
+				// ลำดับ
+				cell = row.createCell(cellNum++);
+				cell.setCellValue(no);
+				cell.setCellStyle(cellCenter);
+				// ทะเบียนสรรพสามิต
+				cell = row.createCell(cellNum++);
+				cell.setCellValue(planVo.getNewRegId());
+				cell.setCellStyle(cellCenter);
+				// ชื่อผู้ประกอบการ
+				cell = row.createCell(cellNum++);
+				cell.setCellValue(planVo.getCusFullname());
+				cell.setCellStyle(cellLeft);
+				// ชื่อโรงอุตสาหกรรม/สถานบริการ
+				cell = row.createCell(cellNum++);
+				cell.setCellValue(planVo.getFacFullname());
+				cell.setCellStyle(cellLeft);
+				// ที่อยู่โรงอุตสาหกรรม/สถานบริการ
+				cell = row.createCell(cellNum++);
+				cell.setCellValue(planVo.getFacAddress());
+				cell.setCellStyle(cellLeft);
+				// ภาค
+				cell = row.createCell(cellNum++);
+				cell.setCellValue(planVo.getSecDesc());
+				cell.setCellStyle(cellLeft);
+				// พื้นที่
+				cell = row.createCell(cellNum++);
+				cell.setCellValue(planVo.getAreaDesc());
+				cell.setCellStyle(cellLeft);
+				// พิกัด
+				cell = row.createCell(cellNum++);
+				cell.setCellValue(planVo.getDutyDesc());
+				cell.setCellStyle(cellLeft);
+				
+				if (rowNum % FLUSH_ROWS == 0) {
+					((SXSSFSheet) sheet).flushRows(FLUSH_ROWS); // retain ${flushRows} last rows and flush all others
+					logger.debug("Writed {} row(s)", rowNum);
+				}
+				
+				no++;
+				rowNum++;
+			}
+			
+			// Column Width
+			int colIndex = 0;
+			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 7); // ในแผน
+			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 7); // ลำดับ
+			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 28); // ทะเบียนสรรพสามิต
+			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 50); // ชื่อผู้ประกอบการ
+			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 50); // ชื่อโรงอุตสาหกรรม/สถานบริการ
+			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 50); // ที่อยู่โรงอุตสาหกรรม/สถานบริการ
+			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 10); // ภาค
+			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // พื้นที่
+			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 25); // พิกัด
+			
+			workbook.write(out);
+			content = out.toByteArray();
+			
+			// dispose of temporary files backing this workbook on disk
+			workbook.dispose();
+			//logger.debug("Writed {} row(s)", rowNum);
+			
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+		
+		return content;
+	}
 	
 	private String convertToThaiDate(String date) {
 		return ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(date, ConvertDateUtils.YYYYMM, ConvertDateUtils.LOCAL_EN), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);

@@ -15,11 +15,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
+import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
-@WithUserDetails(value = "ta001401", userDetailsServiceBeanName = "userDetailService")
+@WithUserDetails(value = "ta001402", userDetailsServiceBeanName = "userDetailService")
 @ActiveProfiles(value = PROFILE.UNITTEST)
 public class WorksheetExportServiceTest {
 	
@@ -28,20 +29,19 @@ public class WorksheetExportServiceTest {
 	@Autowired
 	private WorksheetExportService worksheetExportService;
 	
-	//@Test
-	/*public void test_exportPreviewWorksheet() {
+//	@Test
+	public void test_exportPreviewWorksheet() {
 		long start = System.currentTimeMillis();
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
 		formVo.setBudgetYear("2562");
 		formVo.setDateStart("01/2560");
-		formVo.setDateEnd("12/2561");
-		formVo.setDateRange(24);
+		formVo.setDateEnd("12/2560");
 		
 		String fileName = "previewWorksheet" + LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE) + ".xlsx";
 		
-		try (FileOutputStream Output = new FileOutputStream(OUTPUT_PATH + "/" + fileName)) {
+		try (FileOutputStream fos = new FileOutputStream(OUTPUT_PATH + "/" + fileName)) {
 			byte[] bytes = worksheetExportService.exportPreviewWorksheet(formVo);
-			Output.write(bytes);
+			fos.write(bytes);
 			System.out.println("Creating excel " + fileName + " Done");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -49,18 +49,18 @@ public class WorksheetExportServiceTest {
 		
 		long end = System.currentTimeMillis();
 		System.out.println("Process Success, using " + ((float) (end - start) / 1000F) + " seconds");
-	}*/
+	}
 	
-	@Test
+//	@Test
 	public void test_exportDraftWorksheet() {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
-		formVo.setDraftNumber("001401-2562-000021");
+		formVo.setDraftNumber("001401-2563-000001");
 		
 		String fileName = "draftWorksheet" + LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE) + ".xlsx";
 		
-		try (FileOutputStream Output = new FileOutputStream(OUTPUT_PATH + "/" + fileName)) {
+		try (FileOutputStream fos = new FileOutputStream(OUTPUT_PATH + "/" + fileName)) {
 			byte[] bytes = worksheetExportService.exportDraftWorksheet(formVo);
-			Output.write(bytes);
+			fos.write(bytes);
 			System.out.println("Creating excel " + fileName + " Done");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -70,13 +70,13 @@ public class WorksheetExportServiceTest {
 //	@Test
 	public void test_exportWorksheet() {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
-		formVo.setAnalysisNumber("001401-2562-000001");
+		formVo.setAnalysisNumber("001401-2563-000001");
 		
 		String fileName = "worksheet" + LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE) + ".xlsx";
 		
-		try (FileOutputStream Output = new FileOutputStream(OUTPUT_PATH + "/" + fileName)) {
+		try (FileOutputStream fos = new FileOutputStream(OUTPUT_PATH + "/" + fileName)) {
 			byte[] bytes = worksheetExportService.exportWorksheet(formVo);
-			Output.write(bytes);
+			fos.write(bytes);
 			System.out.println("Creating excel " + fileName + " Done");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -98,5 +98,21 @@ public class WorksheetExportServiceTest {
 			e.printStackTrace();
 		}
 	}*/
+	
+	@Test
+	public void test_exportPlanWorksheetSelected() {
+		PlanWorksheetVo formVo = new PlanWorksheetVo();
+		formVo.setPlanNumber("001401-2563-000001");
+		
+		String fileName = "PlanWorksheetSelected" + LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE) + ".xlsx";
+		
+		try (FileOutputStream fos = new FileOutputStream(OUTPUT_PATH + "/" + fileName)) {
+			byte[] outArray = worksheetExportService.exportPlanWorksheetSelected(formVo);
+			fos.write(outArray);
+			System.out.println("Creating excel " + fileName + " Done");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 }

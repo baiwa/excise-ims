@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import th.go.excise.ims.ta.service.PlanWorksheetExportService;
 import th.go.excise.ims.ta.service.WorksheetExportService;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
@@ -27,9 +26,6 @@ public class TaxAuditReportController {
 
 	@Autowired
 	private WorksheetExportService worksheetExportService;
-
-	@Autowired
-	private PlanWorksheetExportService planWorksheetExportService;
 
 	// TODO preview Worksheet
 	@GetMapping("/ta-rpt0001")
@@ -95,15 +91,15 @@ public class TaxAuditReportController {
 		os.write(bytes);*/
 	}
 
-	// TODO Plan Worksheet
+	// TODO PlanWorksheet
 	@GetMapping("/export-worksheet-selected")
 	@ResponseBody
 	public void exportPlanWorksheet(@ModelAttribute PlanWorksheetVo formVo, HttpServletResponse response) throws Exception {
 		logger.info("exportPlanWorksheet");
 		
-		String fileName = URLEncoder.encode("Plan Worksheet", "UTF-8");
+		String fileName = URLEncoder.encode("PlanWorksheetSelected", "UTF-8");
 		
-		byte[] bytes = planWorksheetExportService.exportPlanWorksheet(formVo);
+		byte[] bytes = worksheetExportService.exportPlanWorksheetSelected(formVo);
 		response.setContentType("application/octet-stream");
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
 		
