@@ -10,6 +10,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -274,7 +275,8 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 
 		List<ProductPaperBalanceMaterialVo> dataList = new ArrayList<>();
 		ProductPaperBalanceMaterialVo data = null;
-
+		DataFormatter formatter = new DataFormatter();
+		int diff1 = 0, diff2 = 0;
 		try (Workbook workbook = WorkbookFactory.create(formVo.getFile().getInputStream())) {
 			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
 
@@ -284,6 +286,10 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 				if (row.getRowNum() == 0) {
 					continue;
 				}
+				diff1 = Integer.parseInt(formatter.formatCellValue(row.getCell(4))) - Integer.parseInt(formatter.formatCellValue(row.getCell(3)));
+				diff2 = Integer.parseInt(formatter.formatCellValue(row.getCell(4))) - Integer.parseInt(formatter.formatCellValue(row.getCell(2)));
+				data.setMaxDiffQty1(String.valueOf(diff1));
+				data.setMaxDiffQty2(String.valueOf(diff2));
 				for (Cell cell : row) {
 
 					if (cell.getColumnIndex() == 0) {

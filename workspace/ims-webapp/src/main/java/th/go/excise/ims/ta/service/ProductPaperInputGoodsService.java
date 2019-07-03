@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -305,15 +306,59 @@ public class ProductPaperInputGoodsService extends AbstractProductPaperService<P
 
 		List<ProductPaperInputGoodsVo> dataList = new ArrayList<>();
 		ProductPaperInputGoodsVo data = null;
-
+		
 		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(formVo.getFile().getBytes()))) {
 			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
+			Sheet sheetCI = workbook.getSheetAt(SHEET_CRITERIA_INDEX);
+			ProductPaperFormVo formSheet = new ProductPaperFormVo();
+			// ###### find data for calcualte in excel
+			// get data in Criteria sheet
+			for (Row row : sheetCI) {
+				for (Cell cell : row) {
+					if (cell.getColumnIndex() == 0) {
+						formSheet.setAuditPlanCode(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 1) {
+						formSheet.setNewRegId(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 2) {
+						formSheet.setDutyGroupId(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 3) {
+						formSheet.setStartDate(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 4) {
+						formSheet.setEndDate(ExcelUtils.getCellValueAsString(cell));
+					} else if (cell.getColumnIndex() == 5) {
+						formSheet.setPaperPrNumber(ExcelUtils.getCellValueAsString(cell));
+					}
+				}
+			}
+			LocalDate localDateStart = toLocalDate(formVo.getStartDate());
+			LocalDate localDateEnd = toLocalDate(formVo.getEndDate());
+
+			WsOasfri0100FromVo wsOasfri0100FormVo = new WsOasfri0100FromVo();
+			wsOasfri0100FormVo.setNewRegId(formVo.getNewRegId());
+			// wsOasfri0100FormVo.setDutyGroupId(formVo.getDutyGroupId());
+			wsOasfri0100FormVo.setDataType(WEB_SERVICE.OASFRI0100.DATA_TYPE_PRODUCT);
+			wsOasfri0100FormVo.setYearMonthStart(localDateStart.format(DateTimeFormatter.ofPattern("yyyyMM")));
+			wsOasfri0100FormVo.setYearMonthEnd(localDateEnd.format(DateTimeFormatter.ofPattern("yyyyMM")));
+			wsOasfri0100FormVo.setAccountName(WEB_SERVICE.OASFRI0100.PS0704_ACC14);
+
+			List<WsOasfri0100Vo> wsOasfri0100VoList = wsOasfri0100DRepository.findByCriteria(wsOasfri0100FormVo);
+			DataFormatter formatter = new DataFormatter();
+			int diff1 = 0, diff2 = 0;
 			for (Row row : sheet) {
 				data = new ProductPaperInputGoodsVo();
 				// Skip on second row
 				if (row.getRowNum() < 2) {
 					continue;
 				}
+				if (wsOasfri0100VoList.size() > 0) {
+					diff1 = wsOasfri0100VoList.get(row.getRowNum()-2).getInQty().intValue() - Integer.parseInt(formatter.formatCellValue(row.getCell(3)));
+					diff2 = wsOasfri0100VoList.get(row.getRowNum()-2).getInQty().intValue() - Integer.parseInt(formatter.formatCellValue(row.getCell(4)));
+				} else {					
+					diff1 = -Integer.parseInt(formatter.formatCellValue(row.getCell(2)));
+					diff2 = -Integer.parseInt(formatter.formatCellValue(row.getCell(4)));
+				}
+				data.setMaxDiffQty1(String.valueOf(diff1));
+				data.setMaxDiffQty2(String.valueOf(diff2));
 				for (Cell cell : row) {
 					if (cell.getColumnIndex() == 0) {
 						// Column No.

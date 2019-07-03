@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -391,7 +392,8 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 
 		List<ProductPaperRelationProducedGoodsVo> dataList = new ArrayList<>();
 		ProductPaperRelationProducedGoodsVo data = null;
-
+		DataFormatter formatter = new DataFormatter();
+		int diff = 0;
 		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(formVo.getFile().getBytes()))) {
 			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
 
@@ -401,6 +403,8 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 				if (row.getRowNum() < 2) {
 					continue;
 				}
+				diff = Integer.parseInt(formatter.formatCellValue(row.getCell(6))) - Integer.parseInt(formatter.formatCellValue(row.getCell(3)));
+				data.setDiffMaterialQty(String.valueOf(diff));
 				for (Cell cell : row) {
 
 					if (cell.getColumnIndex() == 0) {
