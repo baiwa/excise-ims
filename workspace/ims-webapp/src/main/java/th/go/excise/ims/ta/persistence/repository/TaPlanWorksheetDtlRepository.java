@@ -42,11 +42,6 @@ public interface TaPlanWorksheetDtlRepository extends CommonJpaCrudRepository<Ta
 	@Query(value = "DELETE FROM TA_PLAN_WORKSHEET_DTL WHERE PLAN_NUMBER IN (SELECT PLAN_NUMBER FROM TA_PLAN_WORKSHEET_HDR WHERE BUDGET_YEAR = :budgetYear)", nativeQuery = true)
 	public void forceDeleteByBudgetYear(@Param("budgetYear") String budgetYear);
 	
-	@Modifying
-//	@Query(value = "update TA_PLAN_WORKSHEET_DTL set AUDIT_STATUS = :auditStatus where PLAN_NUMBER	= :planNumber ", nativeQuery = true)
-	@Query("update #{#entityName} e set e.auditStatus = :auditStatus , e.auditPlanCode = :auditPlanCode where e.planNumber = :planNumber ")
-	public void updateAuditStatusAndAuditPlanCodeByPlanNumber(@Param("auditStatus") String auditStatus,@Param("auditPlanCode") String auditPlanCode, @Param("planNumber") String planNumber);
-	
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.officeCode LIKE :officeCode and e.planNumber = :planNumber")
 	public List<TaPlanWorksheetDtl> findByOfficeCodeAndPlanNumberLike(@Param("officeCode") String officeCode, @Param("planNumber") String planNumber);
 	

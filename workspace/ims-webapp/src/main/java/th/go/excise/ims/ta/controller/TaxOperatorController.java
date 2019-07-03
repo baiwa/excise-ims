@@ -90,7 +90,6 @@ public class TaxOperatorController {
 		return response;
 	}
 
-	@SuppressWarnings("deprecation")
 	@PostMapping("/preview-data")
 	@ResponseBody
 	public ResponseData<TaxOperatorVo> previewData(@RequestBody TaxOperatorFormVo formVo) {

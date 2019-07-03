@@ -198,10 +198,8 @@ public class PlanWorksheetService {
 		}
 		
 		// Insert newRegId to planWorksheetDtl
-		String planCode = "";
 		if (CollectionUtils.isNotEmpty(insertNewRegIdList)) {
 			for (String newRegId : insertNewRegIdList) {
-				planCode = worksheetSequenceService.getAuditPlanCode(officeCode, budgetYear);
 				planDtl = new TaPlanWorksheetDtl();
 				planDtl.setPlanNumber(formVo.getPlanNumber());
 				planDtl.setAnalysisNumber(formVo.getAnalysisNumber());
@@ -209,7 +207,7 @@ public class PlanWorksheetService {
 				planDtl.setNewRegId(newRegId);
 				planDtl.setAuditStatus(TA_AUDIT_STATUS.CODE_0100);
 				planDtl.setAuSubdeptCode(userBean.getSubdeptCode());
-				planDtl.setAuditPlanCode(planCode);
+				planDtl.setAuditPlanCode(worksheetSequenceService.getAuditPlanCode(officeCode, budgetYear));
 				planDtl.setBudgetYear(formVo.getBudgetYear());
 				taPlanWorksheetDtlRepository.save(planDtl);
 				
@@ -514,29 +512,33 @@ public class PlanWorksheetService {
 		return status;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = { Exception.class })
 	public void insertComment(TaPlanWorksheetHdr form) {
-		TaPlanWorksheetHdr comment = taPlanWorksheetHdrRepository.findByBudgetYear(form.getBudgetYear());
+		TaPlanWorksheetHdr planHdr = taPlanWorksheetHdrRepository.findByBudgetYear(form.getBudgetYear());
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		if (StringUtils.isEmpty(form.getApprovedComment())) {
-			comment.setApprovalBy(UserLoginUtils.getCurrentUsername());
-			comment.setApprovalDate(LocalDateTime.now());
-			comment.setApprovalComment(form.getApprovalComment());
-			comment.setDocApproveNo(form.getDocApproveNo());
-			comment.setDocApproveDate(form.getDocApproveDate());
-			comment.setPlanStatus(ProjectConstants.TA_AUDIT_STATUS.CODE_0300);
+			planHdr.setApprovalBy(UserLoginUtils.getCurrentUsername());
+			planHdr.setApprovalDate(LocalDateTime.now());
+			planHdr.setApprovalComment(form.getApprovalComment());
+			planHdr.setDocApproveNo(form.getDocApproveNo());
+			planHdr.setDocApproveDate(form.getDocApproveDate());
+			planHdr.setPlanStatus(ProjectConstants.TA_AUDIT_STATUS.CODE_0300);
 		} else {
-			comment.setApprovedBy(UserLoginUtils.getCurrentUsername());
-			comment.setApprovedDate(LocalDateTime.now());
-			comment.setApprovedComment(form.getApprovedComment());
-			comment.setDocApproveNo(form.getDocApproveNo());
-			comment.setDocApproveDate(form.getDocApproveDate());
-			comment.setPlanStatus(ProjectConstants.TA_AUDIT_STATUS.CODE_0300);
+			planHdr.setApprovedBy(UserLoginUtils.getCurrentUsername());
+			planHdr.setApprovedDate(LocalDateTime.now());
+			planHdr.setApprovedComment(form.getApprovedComment());
+			planHdr.setDocApproveNo(form.getDocApproveNo());
+			planHdr.setDocApproveDate(form.getDocApproveDate());
+			planHdr.setPlanStatus(ProjectConstants.TA_AUDIT_STATUS.CODE_0300);
 		}
-		taPlanWorksheetHdrRepository.save(comment);
-		String auditPlanCode = worksheetSequenceService.getAuditPlanCode(officeCode, comment.getBudgetYear());
-
-		taPlanWorksheetDtlRepository.updateAuditStatusAndAuditPlanCodeByPlanNumber(ProjectConstants.TA_AUDIT_STATUS.CODE_0300, auditPlanCode, comment.getPlanNumber());
+		taPlanWorksheetHdrRepository.save(planHdr);
+		
+		List<TaPlanWorksheetDtl> planDtlList = taPlanWorksheetDtlRepository.findByPlanNumber(planHdr.getPlanNumber());
+		for (TaPlanWorksheetDtl planDtl : planDtlList) {
+			planDtl.setAuditStatus(ProjectConstants.TA_AUDIT_STATUS.CODE_0300);
+			planDtl.setAuditPlanCode(worksheetSequenceService.getAuditPlanCode(officeCode, planHdr.getBudgetYear()));
+			taPlanWorksheetDtlRepository.save(planDtl);
+		}
 	}
 
 	@Transactional(rollbackFor = { Exception.class })
@@ -661,17 +663,15 @@ public class PlanWorksheetService {
 		}
 
 		// Insert newRegId to planWorksheetDtl
-		String planCode = "";
 		if (CollectionUtils.isNotEmpty(insertNewRegIdList)) {
 			for (String newRegId : insertNewRegIdList) {
-				planCode = worksheetSequenceService.getAuditPlanCode(officeCode, budgetYear);
 				planDtl = new TaPlanWorksheetDtl();
 				planDtl.setPlanNumber(formVo.getPlanNumber());
 				planDtl.setAnalysisNumber(formVo.getAnalysisNumber());
 				planDtl.setOfficeCode(assingOfficeCode);
 				planDtl.setNewRegId(newRegId);
 				planDtl.setAuditStatus(TA_AUDIT_STATUS.CODE_0300);
-				planDtl.setAuditPlanCode(planCode);
+				planDtl.setAuditPlanCode(worksheetSequenceService.getAuditPlanCode(officeCode, budgetYear));
 //				planDtl.setAuSubdeptCode(userBean.getSubdeptCode());
 				planDtl.setBudgetYear(formVo.getBudgetYear());
 				taPlanWorksheetDtlRepository.save(planDtl);
@@ -987,7 +987,6 @@ public class PlanWorksheetService {
 		
 		if (ProjectConstants.TA_PLAN_WORKSHEET_STATUS.OUTPLAN.equals(formVo.getPlanType())) {
 
-			String planCode = worksheetSequenceService.getAuditPlanCode(officeCode, budgetYear);
 //			insert outplan to plan detail
 			planDtlInsert.setPlanNumber(formVo.getPlanNumber());
 			planDtlInsert.setAnalysisNumber(formVo.getAnalysisNumber());
@@ -995,10 +994,10 @@ public class PlanWorksheetService {
 			planDtlInsert.setNewRegId(formVo.getReplaceRegId());
 			planDtlInsert.setAuditStatus(TA_AUDIT_STATUS.CODE_0301);
 			planDtlInsert.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.OUTPLAN);
-			planDtlInsert.setAuditPlanCode(planCode);
+			planDtlInsert.setAuditPlanCode(worksheetSequenceService.getAuditPlanCode(officeCode, budgetYear));
 			planDtlInsert.setReplaceReason(formVo.getReplaceReason());
 			planDtlInsert = taPlanWorksheetDtlRepository.save(planDtlInsert);
-		}else {
+		} else {
 //			find plan detail by id for replace 
 			Optional<TaPlanWorksheetDtl> taPlanOpt = taPlanWorksheetDtlRepository.findById(formVo.getPlanWorksheetDtlId());
 			if (taPlanOpt.isPresent()) {
