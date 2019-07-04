@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -21,6 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.ibm.icu.math.BigDecimal;
 
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
@@ -177,13 +180,16 @@ public class ServicePaperBalanceGoodsService extends AbstractServicePaperService
 
 		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(formVo.getFile().getBytes()));) {
 			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
-
+			BigDecimal diff;
+			DataFormatter formatter = new DataFormatter();
 			for (Row row : sheet) {
 				ServicePaperBalanceGoodsVo pushdata = new ServicePaperBalanceGoodsVo();
 				// Skip on first row
 				if (row.getRowNum() == 0) {
 					continue;
 				}
+				diff = new BigDecimal(formatter.formatCellValue(row.getCell(3))).subtract(new BigDecimal(formatter.formatCellValue(row.getCell(2)))).abs();
+				pushdata.setDiffBalanceGoodsQty(String.valueOf(diff));
 				for (Cell cell : row) {
 					if (cell.getColumnIndex() == 0) {
 						// Column No.

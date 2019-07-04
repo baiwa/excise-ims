@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -25,6 +26,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.ibm.icu.math.BigDecimal;
 
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
@@ -221,13 +224,29 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 
 		try (Workbook workbook = WorkbookFactory.create(formVo.getFile().getInputStream())) {
 			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
-
+			// ###### find data for calcualte in excel
+			LocalDate localDateStart = toLocalDate(formVo.getStartDate());
+			LocalDate localDateEnd = toLocalDate(formVo.getEndDate());
+			String dateStart = localDateStart.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
+			String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
+			
+			List<WsAnafri0001Vo> anafri0001VoList = wsAnafri0001DRepository.findProductList(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
+			DataFormatter formatter = new DataFormatter();
+			BigDecimal max, diff;
 			for (Row row : sheet) {
 				ServicePaperQtyVo pushdata = new ServicePaperQtyVo();
 				// Skip on first row
 				if (row.getRowNum() == 0) {
 					continue;
 				}
+				max = new BigDecimal(formatter.formatCellValue(row.getCell(2))).max(new BigDecimal(formatter.formatCellValue(row.getCell(3))));
+				max = max.max(new BigDecimal(formatter.formatCellValue(row.getCell(4))));
+				if (anafri0001VoList.size() > 0) {
+					diff = max.subtract(new BigDecimal(anafri0001VoList.get(row.getRowNum()-1).getProductQty())).abs();
+				} else {
+					diff = max;
+				}
+				
 				for (Cell cell : row) {
 					if (cell.getColumnIndex() == 0) {
 						// Column No.
@@ -241,11 +260,13 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 					} else if (cell.getColumnIndex() == 4) {
 						pushdata.setPaymentDocNoQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 5) {
-						pushdata.setAuditQty(ExcelUtils.getCellValueAsString(cell));
+						pushdata.setAuditQty(String.valueOf(max));
+						// pushdata.setAuditQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 6) {
 						pushdata.setGoodsQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 7) {
-						pushdata.setDiffQty(ExcelUtils.getCellValueAsString(cell));
+						pushdata.setDiffQty(String.valueOf(diff));
+						// pushdata.setDiffQty(ExcelUtils.getCellValueAsString(cell));
 					}
 
 				}

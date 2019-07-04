@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -21,6 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.ibm.icu.math.BigDecimal;
 
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
@@ -269,13 +272,26 @@ public class ProductPaperInformPriceService extends AbstractProductPaperService<
 
 		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(formVo.getFile().getBytes()));) {
 			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
-
+			// ###### find data for calcualte in excel
+			String[] splStartDate = formVo.getStartDate().split("/");
+			String cvStartDate = splStartDate[1]+splStartDate[0]+"01";
+			String[] splEndDate = formVo.getEndDate().split("/");
+			String cvEndDate = splEndDate[1]+splEndDate[0]+"01";
+			List<WsAnafri0001Vo> wsAnafri0001VoList = wsAnafri0001DRepository.findProductList(formVo.getNewRegId(), formVo.getDutyGroupId(), cvStartDate, cvEndDate);
+			DataFormatter formatter = new DataFormatter();
+			BigDecimal diff = null;
 			for (Row row : sheet) {
 				data = new ProductPaperInformPriceVo();
 				// Skip on first row
 				if (row.getRowNum() == 0) {
 					continue;
 				}
+				if (wsAnafri0001VoList.size() > 0) {
+					diff = new BigDecimal(formatter.formatCellValue(row.getCell(3))).subtract(new BigDecimal(wsAnafri0001VoList.get(row.getRowNum()-1).getProductPrice())).abs();
+				} else {
+					diff = new BigDecimal(formatter.formatCellValue(row.getCell(3)));
+				}
+				data.setDiffPrice(String.valueOf(diff));
 				for (Cell cell : row) {
 					if (cell.getColumnIndex() == 0) {
 						// Column No.

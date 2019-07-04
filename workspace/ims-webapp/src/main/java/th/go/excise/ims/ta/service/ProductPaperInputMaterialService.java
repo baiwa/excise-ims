@@ -24,6 +24,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ibm.icu.math.BigDecimal;
+
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
 import th.go.excise.ims.common.util.ExcelUtils;
@@ -278,27 +280,7 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 		ProductPaperInputMaterialVo vo = null;
 		try (Workbook workbook = WorkbookFactory.create(formVo.getFile().getInputStream())) {
 			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
-			Sheet sheetCI = workbook.getSheetAt(SHEET_CRITERIA_INDEX);
-			ProductPaperFormVo formSheet = new ProductPaperFormVo();
 			// ###### find data for calcualte in excel
-			// get data in Criteria sheet
-			for (Row row : sheetCI) {
-				for (Cell cell : row) {
-					if (cell.getColumnIndex() == 0) {
-						formSheet.setAuditPlanCode(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 1) {
-						formSheet.setNewRegId(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 2) {
-						formSheet.setDutyGroupId(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 3) {
-						formSheet.setStartDate(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 4) {
-						formSheet.setEndDate(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 5) {
-						formSheet.setPaperPrNumber(ExcelUtils.getCellValueAsString(cell));
-					}
-				}
-			}
 			LocalDate localDateStart = toLocalDate(formVo.getStartDate());
 			LocalDate localDateEnd = toLocalDate(formVo.getEndDate());
 
@@ -312,7 +294,7 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 
 			List<WsOasfri0100Vo> wsOasfri0100VoList = wsOasfri0100DRepository.findByCriteria(wsOasfri0100FormVo);
 			DataFormatter formatter = new DataFormatter();
-			int max, diff1 = 0, diff2 = 0;
+			BigDecimal max, diff1, diff2;
 			for (Row row : sheet) {
 				vo = new ProductPaperInputMaterialVo();
 				// Skip on first row
@@ -320,13 +302,13 @@ public class ProductPaperInputMaterialService extends AbstractProductPaperServic
 					continue;
 				}
 				if (wsOasfri0100VoList.size() > 0) {
-					diff1 = Math.abs(Integer.parseInt(formatter.formatCellValue(row.getCell(3))) - wsOasfri0100VoList.get(row.getRowNum()-1).getInQty().intValue());
-					diff2 = Math.abs(Integer.parseInt(formatter.formatCellValue(row.getCell(5))) - wsOasfri0100VoList.get(row.getRowNum()-1).getInQty().intValue());
+					diff1 = new BigDecimal(formatter.formatCellValue(row.getCell(3))).subtract(new BigDecimal(wsOasfri0100VoList.get(row.getRowNum()-1).getInQty())).abs();
+					diff2 = new BigDecimal(formatter.formatCellValue(row.getCell(5))).subtract(new BigDecimal(wsOasfri0100VoList.get(row.getRowNum()-1).getInQty())).abs();
 				} else {
-					diff1 = Integer.parseInt(formatter.formatCellValue(row.getCell(3)));
-					diff2 = Integer.parseInt(formatter.formatCellValue(row.getCell(5)));
+					diff1 = new BigDecimal(formatter.formatCellValue(row.getCell(3)));
+					diff2 = new BigDecimal(formatter.formatCellValue(row.getCell(5)));
 				}
-				max = Math.max(diff1, diff2);
+				max = diff1.max(diff2);
 				vo.setMaxDiffQty(String.valueOf(max));
 				for (Cell cell : row) {
 					if (cell.getColumnIndex() == 0) {

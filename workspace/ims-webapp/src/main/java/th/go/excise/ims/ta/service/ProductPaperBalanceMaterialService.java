@@ -22,6 +22,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ibm.icu.math.BigDecimal;
+
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
 import th.go.excise.ims.common.util.ExcelUtils;
@@ -276,7 +278,7 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 		List<ProductPaperBalanceMaterialVo> dataList = new ArrayList<>();
 		ProductPaperBalanceMaterialVo data = null;
 		DataFormatter formatter = new DataFormatter();
-		int diff1 = 0, diff2 = 0;
+		BigDecimal diff1, diff2;
 		try (Workbook workbook = WorkbookFactory.create(formVo.getFile().getInputStream())) {
 			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
 
@@ -286,8 +288,8 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 				if (row.getRowNum() == 0) {
 					continue;
 				}
-				diff1 = Integer.parseInt(formatter.formatCellValue(row.getCell(4))) - Integer.parseInt(formatter.formatCellValue(row.getCell(3)));
-				diff2 = Integer.parseInt(formatter.formatCellValue(row.getCell(4))) - Integer.parseInt(formatter.formatCellValue(row.getCell(2)));
+				diff1 = new BigDecimal(formatter.formatCellValue(row.getCell(4))).subtract(new BigDecimal(formatter.formatCellValue(row.getCell(3)))).abs();
+				diff2 = new BigDecimal(formatter.formatCellValue(row.getCell(4))).subtract(new BigDecimal(formatter.formatCellValue(row.getCell(2)))).abs();
 				data.setMaxDiffQty1(String.valueOf(diff1));
 				data.setMaxDiffQty2(String.valueOf(diff2));
 				for (Cell cell : row) {

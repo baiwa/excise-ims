@@ -22,6 +22,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ibm.icu.math.BigDecimal;
+
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperPr04D;
@@ -393,7 +395,7 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 		List<ProductPaperRelationProducedGoodsVo> dataList = new ArrayList<>();
 		ProductPaperRelationProducedGoodsVo data = null;
 		DataFormatter formatter = new DataFormatter();
-		int diff = 0;
+		BigDecimal diff;
 		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(formVo.getFile().getBytes()))) {
 			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
 
@@ -403,7 +405,7 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 				if (row.getRowNum() < 2) {
 					continue;
 				}
-				diff = Integer.parseInt(formatter.formatCellValue(row.getCell(6))) - Integer.parseInt(formatter.formatCellValue(row.getCell(3)));
+				diff = new BigDecimal(formatter.formatCellValue(row.getCell(6))).subtract(new BigDecimal(formatter.formatCellValue(row.getCell(3)))).abs();
 				data.setDiffMaterialQty(String.valueOf(diff));
 				for (Cell cell : row) {
 
