@@ -24,6 +24,7 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.IMG_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
+import th.co.baiwa.buckwaframework.common.util.ThaiNumberUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_FORM_TS_CODE;
 import th.go.excise.ims.common.util.ExciseUtils;
@@ -184,6 +185,11 @@ public class TaFormTS0107Service extends AbstractTaFormTSService<TaFormTS0107Vo,
 		params.put("signOfficerPosition", formTS0107Vo.getSignOfficerPosition());
 		params.put("otherText", formTS0107Vo.getOtherText());
 		params.put("otherPhone", formTS0107Vo.getOtherPhone());
+		
+		// Prepare Thai Number
+		formTS0107Vo.getTaFormTS0107DtlVoList().forEach(e -> {
+			e.setRecNoTh(ThaiNumberUtils.toThaiNumber(e.getRecNo()));
+		});
 		
 		JRDataSource dataSource = new JRBeanCollectionDataSource(formTS0107Vo.getTaFormTS0107DtlVoList());
 

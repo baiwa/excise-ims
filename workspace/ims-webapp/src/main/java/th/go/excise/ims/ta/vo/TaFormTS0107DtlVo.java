@@ -4,6 +4,7 @@ public class TaFormTS0107DtlVo {
 
 	private String formTs0107DtlId;
 	private String recNo;
+	private String recNoTh;
 	private String officerFullName;
 	private String officerPosition;
 
@@ -21,6 +22,14 @@ public class TaFormTS0107DtlVo {
 
 	public void setRecNo(String recNo) {
 		this.recNo = recNo;
+	}
+
+	public String getRecNoTh() {
+		return recNoTh;
+	}
+
+	public void setRecNoTh(String recNoTh) {
+		this.recNoTh = recNoTh;
 	}
 
 	public String getOfficerFullName() {

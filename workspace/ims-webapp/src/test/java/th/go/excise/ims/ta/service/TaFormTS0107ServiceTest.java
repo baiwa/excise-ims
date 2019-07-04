@@ -38,7 +38,7 @@ public class TaFormTS0107ServiceTest {
 	@Autowired
 	private TaFormTS0107Service taFormTS0107Service;
 
-//	@Test
+	@Test
 	public void test_generateReport() throws Exception {
 		TaFormTS0107Service taFormTS0107Service = new TaFormTS0107Service();
 
@@ -54,10 +54,12 @@ public class TaFormTS0107ServiceTest {
 		formTS0107Vo.setHeadOfficerPosition("เจ้าหน้าที่ออกตรวจภาษี ระดับภาค");
 		
 		TaFormTS0107DtlVo formTS0107DtlVo1 = new TaFormTS0107DtlVo();
+		formTS0107DtlVo1.setRecNo("1");
 		formTS0107DtlVo1.setOfficerFullName("นายอนุชา จันทร์แก้ว");
 		formTS0107DtlVo1.setOfficerPosition("เจ้าหน้าที่ออกตรวจภาษี ระดับพื้นที่");
 		
 		TaFormTS0107DtlVo formTS0107DtlVo2 = new TaFormTS0107DtlVo();
+		formTS0107DtlVo2.setRecNo("2");
 		formTS0107DtlVo2.setOfficerFullName("นายชัยชนะ ใจดี");
 		formTS0107DtlVo2.setOfficerPosition("เจ้าหน้าที่ออกตรวจภาษีระดับเขต");
 		
@@ -156,13 +158,13 @@ public class TaFormTS0107ServiceTest {
 		taFormTS0107Service.saveFormTS(formTS0107Vo);
 	}
 	
-	@Test
+//	@Test
 	public void test_getFormTS() {
 		TaFormTS0107Vo formTs0107Vo = taFormTS0107Service.getFormTS("000000-2562-000189");
 		System.out.println(ToStringBuilder.reflectionToString(formTs0107Vo, ToStringStyle.MULTI_LINE_STYLE));
 	}
 	
-	@Test
+//	@Test
 	public void test_getFormTsNumberList() {
 		TaFormTsFormVo formVo = new TaFormTsFormVo();
 		formVo.setAuditPlanCode("0014022561000005");
