@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
-import th.go.excise.ims.ta.persistence.entity.TaPaperBaD7;
 import th.go.excise.ims.ta.persistence.entity.TaPaperBaD8;
 import th.go.excise.ims.ta.persistence.repository.TaPaperBaD8Repository;
 import th.go.excise.ims.ta.persistence.repository.TaWsInc8000MRepository;
@@ -63,7 +62,7 @@ public class BasicAnalysisIncomeCompareLastYearService extends AbstractBasicAnal
 		List<BasicAnalysisIncomeCompareLastYearVo> voList = new ArrayList<>();
 		for (LocalDate localDate : localDateCurrentList) {
 			vo = new BasicAnalysisIncomeCompareLastYearVo();
-			vo.setTaxMonth(ThaiBuddhistDate.from(localDate).format(DateTimeFormatter.ofPattern(ConvertDateUtils.MMMM, ConvertDateUtils.LOCAL_TH)));
+			vo.setTaxMonth(ThaiBuddhistDate.from(localDate).format(DateTimeFormatter.ofPattern(DATEFORMAT_MMMM_YYYY, ConvertDateUtils.LOCAL_TH)));
 			
 			// Current Year
 			incomeCurrentYearAmt = incomeMap.get(localDate.format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));

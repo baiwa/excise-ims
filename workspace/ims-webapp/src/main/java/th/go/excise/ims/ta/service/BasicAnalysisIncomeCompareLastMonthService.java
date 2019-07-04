@@ -76,6 +76,9 @@ public class BasicAnalysisIncomeCompareLastMonthService extends AbstractBasicAna
 			incomeCurrentMonthAmt = incomeMap.get(subLocalDateG1List.get(i).format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
 			if (incomeCurrentMonthAmt == null) {
 				incomeCurrentMonthAmt = BigDecimal.ZERO;
+				vo.setIncomeAmt(NO_VALUE);
+			} else {
+				vo.setIncomeAmt(incomeCurrentMonthAmt.toString());
 			}
 			if (i > 0) {
 				incomePreviousMonthAmt = incomeMap.get(subLocalDateG2List.get(i).format(DateTimeFormatter.ofPattern(ConvertDateUtils.YYYYMM)));
@@ -88,8 +91,7 @@ public class BasicAnalysisIncomeCompareLastMonthService extends AbstractBasicAna
 			diffIncomeAmt = incomeCurrentMonthAmt.subtract(incomePreviousMonthAmt);
 			diffIncomePnt = NumberUtils.calculatePercent(incomeCurrentMonthAmt, incomePreviousMonthAmt);
 
-			vo.setTaxMonth(ThaiBuddhistDate.from(subLocalDateG1List.get(i)).format(DateTimeFormatter.ofPattern("MMM yy", ConvertDateUtils.LOCAL_TH)));
-			vo.setIncomeAmt(incomeCurrentMonthAmt.toString());
+			vo.setTaxMonth(ThaiBuddhistDate.from(subLocalDateG1List.get(i)).format(DateTimeFormatter.ofPattern(DATEFORMAT_MMMM_YYYY, ConvertDateUtils.LOCAL_TH)));
 			vo.setDiffIncomeAmt(i == 0 ? NO_VALUE : diffIncomeAmt.toString());
 			vo.setDiffIncomePnt(i == 0 ? NO_VALUE : diffIncomePnt.toString());
 			voList.add(vo);

@@ -11,6 +11,7 @@ import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
 public abstract class AbstractBasicAnalysisService<VO> {
 	
 	protected static final String NO_VALUE = "-";
+	protected static final String DATEFORMAT_MMMM_YYYY = "MMMM YYYY";
 
 	public List<VO> inquiry(BasicAnalysisFormVo formVo) {
 		if (StringUtils.isEmpty(formVo.getPaperBaNumber())) {

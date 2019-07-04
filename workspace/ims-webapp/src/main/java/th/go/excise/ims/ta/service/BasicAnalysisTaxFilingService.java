@@ -64,19 +64,19 @@ public class BasicAnalysisTaxFilingService extends AbstractBasicAnalysisService<
 		LocalDate anaLocalDate = null;
 		for (LocalDate localDate : localDateList) {
 			vo = new BasicAnalysisTaxFilingVo();
-			vo.setTaxMonth(ThaiBuddhistDate.from(localDate).format(DateTimeFormatter.ofPattern("MMM yy", ConvertDateUtils.LOCAL_TH)));
+			vo.setTaxMonth(ThaiBuddhistDate.from(localDate).format(DateTimeFormatter.ofPattern(DATEFORMAT_MMMM_YYYY, ConvertDateUtils.LOCAL_TH)));
 			vo.setTaxMonthLocalDate(localDate);
 			yearMonth = ThaiBuddhistDate.from(localDate).format(DateTimeFormatter.ofPattern("yyyyMM", ConvertDateUtils.LOCAL_TH));
 			duedateLocalDate = duedateMap.get(yearMonth);
 			if (duedateLocalDate != null) {
-				vo.setTaxSubmissionDate(ThaiBuddhistDate.from(duedateLocalDate).format(DateTimeFormatter.ofPattern("dd MMM yyyy", ConvertDateUtils.LOCAL_TH)));
+				vo.setTaxSubmissionDate(ThaiBuddhistDate.from(duedateLocalDate).format(DateTimeFormatter.ofPattern("dd MMMM yyyy", ConvertDateUtils.LOCAL_TH)));
 				vo.setTaxSubmissionLocalDate(duedateLocalDate);
 			} else {
 				vo.setTaxSubmissionDate(NO_VALUE);
 			}
 			anaLocalDate = filingMap.get(yearMonth);
 			if (anaLocalDate != null) {
-				vo.setAnaTaxSubmissionDate(ThaiBuddhistDate.from(anaLocalDate).format(DateTimeFormatter.ofPattern("dd MMM yyyy", ConvertDateUtils.LOCAL_TH)));
+				vo.setAnaTaxSubmissionDate(ThaiBuddhistDate.from(anaLocalDate).format(DateTimeFormatter.ofPattern("dd MMMM yyyy", ConvertDateUtils.LOCAL_TH)));
 				vo.setAnaTaxSubmissionLocalDate(anaLocalDate);
 			} else {
 				vo.setAnaTaxSubmissionDate(NO_VALUE);
