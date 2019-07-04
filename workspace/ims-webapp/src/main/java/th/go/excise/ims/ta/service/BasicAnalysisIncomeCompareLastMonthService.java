@@ -110,7 +110,7 @@ public class BasicAnalysisIncomeCompareLastMonthService extends AbstractBasicAna
 		for (TaPaperBaD7 entity : entityList) {
 			vo = new BasicAnalysisIncomeCompareLastMonthVo();
 			vo.setTaxMonth(entity.getTaxMonth());
-			vo.setIncomeAmt(entity.getIncomeAmt().toString());
+			vo.setIncomeAmt(entity.getIncomeAmt() != null ? entity.getIncomeAmt().toString() : NO_VALUE);
 			vo.setDiffIncomeAmt(entity.getDiffIncomeAmt() != null ? entity.getDiffIncomeAmt().toString() : NO_VALUE);
 			vo.setDiffIncomePnt(entity.getDiffIncomePnt() != null ? entity.getDiffIncomePnt().toString() : NO_VALUE);
 			voList.add(vo);
@@ -133,7 +133,7 @@ public class BasicAnalysisIncomeCompareLastMonthService extends AbstractBasicAna
 			entity.setPaperBaNumber(formVo.getPaperBaNumber());
 			entity.setSeqNo(i);
 			entity.setTaxMonth(vo.getTaxMonth());
-			entity.setIncomeAmt(NumberUtils.toBigDecimal(vo.getIncomeAmt()));
+			entity.setIncomeAmt(NO_VALUE.equals(vo.getIncomeAmt()) ? null : NumberUtils.toBigDecimal(vo.getIncomeAmt()));
 			entity.setDiffIncomeAmt(NO_VALUE.equals(vo.getDiffIncomeAmt()) ? null : NumberUtils.toBigDecimal(vo.getDiffIncomeAmt()));
 			entity.setDiffIncomePnt(NO_VALUE.equals(vo.getDiffIncomePnt()) ? null : NumberUtils.toBigDecimal(vo.getDiffIncomePnt()));
 			entityList.add(entity);
