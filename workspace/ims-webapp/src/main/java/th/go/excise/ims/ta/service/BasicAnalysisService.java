@@ -1,6 +1,8 @@
 package th.go.excise.ims.ta.service;
 
 import java.time.LocalDate;
+import java.time.chrono.ThaiBuddhistDate;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,13 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperBaH;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.repository.TaPaperBaHRepository;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
-import th.go.excise.ims.ta.vo.TaPaperBaHFormVo;
+import th.go.excise.ims.ta.vo.TaxAuditDetailFormVo;
+import th.go.excise.ims.ta.vo.TaxAuditDetailVo;
 
 @Service
 public class BasicAnalysisService {
@@ -29,6 +33,7 @@ public class BasicAnalysisService {
 	private TaPlanWorksheetDtlRepository taPlanWorksheetDtlRepository;
 	private PaperSequenceService paperSequenceService;
 	private TaPaperBaHRepository taPaperBaHRepository;
+	private TaxAuditService taxAuditService;
 	
 	private Map<String, AbstractBasicAnalysisService> basicAnalysisServiceMap = new LinkedHashMap<>();
 	
@@ -44,7 +49,8 @@ public class BasicAnalysisService {
 			BasicAnalysisIncomeCompareLastYearService basicAnalysisIncomeCompareLastYearService,
 			TaPlanWorksheetDtlRepository taPlanWorksheetDtlRepository,
 			PaperSequenceService paperSequenceService,
-			TaPaperBaHRepository taPaperBaHRepository) {
+			TaPaperBaHRepository taPaperBaHRepository,
+			TaxAuditService taxAuditService) {
 		basicAnalysisServiceMap.put("tax-qty", basicAnalysisTaxQtyService);
 		basicAnalysisServiceMap.put("tax-retail-price", basicAnalysisTaxRetailPriceService);
 		basicAnalysisServiceMap.put("tax-value", basicAnalysisTaxValueService);
@@ -56,6 +62,7 @@ public class BasicAnalysisService {
 		this.taPlanWorksheetDtlRepository = taPlanWorksheetDtlRepository;
 		this.paperSequenceService = paperSequenceService;
 		this.taPaperBaHRepository = taPaperBaHRepository;
+		this.taxAuditService = taxAuditService;
 	}
 	
 	public DataTableAjax<Object> inquiry(String analysisType, BasicAnalysisFormVo formVo) {
@@ -124,12 +131,54 @@ public class BasicAnalysisService {
 		return taPaperBaHRepository.findPaperBaNumberByAuditPlanCode(formVo.getAuditPlanCode());
 	}
 	
-	public TaPaperBaH findBaH(TaPaperBaHFormVo form) {
-		TaPaperBaH paperBaH = taPaperBaHRepository.findByPaperBaNumber(form.getPaperBaNumber());
-		if (paperBaH == null) {
-			paperBaH = new TaPaperBaH();
+	public BasicAnalysisFormVo getPaperBaHeader(BasicAnalysisFormVo formVo) {
+		logger.info("getPaperBaHeader paperBaNumber={}", formVo.getPaperBaNumber());
+		
+		TaPaperBaH paperBaH = taPaperBaHRepository.findByPaperBaNumber(formVo.getPaperBaNumber());
+		if (paperBaH != null) {
+			formVo.setAuditPlanCode(paperBaH.getAuditPlanCode());
+			formVo.setNewRegId(paperBaH.getNewRegId());
+			formVo.setDutyGroupId(paperBaH.getDutyGroupId());
+			formVo.setStartDate(ThaiBuddhistDate.from(paperBaH.getStartDate()).format(DateTimeFormatter.ofPattern(ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH)));
+			formVo.setEndDate(ThaiBuddhistDate.from(paperBaH.getEndDate()).format(DateTimeFormatter.ofPattern(ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH)));
+			formVo.setMonthIncomeType(paperBaH.getMonthIncType());
+			formVo.setYearIncomeType(paperBaH.getYearIncType());
+			formVo.setYearNum(String.valueOf(paperBaH.getYearNum()));
+			formVo.setCommentText1(paperBaH.getAnaResultText1());
+			formVo.setCommentText2(paperBaH.getAnaResultText2());
+			formVo.setCommentText3(paperBaH.getAnaResultText3());
+			formVo.setCommentText4(paperBaH.getAnaResultText4());
+			formVo.setCommentText5(paperBaH.getAnaResultText5());
+			formVo.setCommentText6(paperBaH.getAnaResultText6());
+			formVo.setCommentText7(paperBaH.getAnaResultText7());
+			formVo.setCommentText8(paperBaH.getAnaResultText8());
 		}
-		return paperBaH;
+		
+		return formVo;
+	}
+	
+	public byte[] generateReport(String paperBaNumber) {
+		logger.info("generateReport paperBaNumber={}", paperBaNumber);
+		
+		BasicAnalysisFormVo formVo = new BasicAnalysisFormVo();
+		formVo.setPaperBaNumber(paperBaNumber);
+		
+		formVo = getPaperBaHeader(formVo);
+		TaPaperBaH paperBaH = taPaperBaHRepository.findByPaperBaNumber(paperBaNumber);
+		
+		TaxAuditDetailFormVo taxAuditDetailFormVo = new TaxAuditDetailFormVo();
+		taxAuditDetailFormVo.setAuditPlanCode(paperBaH.getAuditPlanCode());
+		TaxAuditDetailVo taxAuditDetailVo = taxAuditService.getOperatorDetailsByAuditPlanCode(taxAuditDetailFormVo);
+		
+		for (AbstractBasicAnalysisService service : basicAnalysisServiceMap.values()) {
+			try {
+				service.getJasperPrint(formVo, taxAuditDetailVo);
+			} catch (Exception e) {
+				logger.error(e.getMessage(), e);
+			}
+		}
+		
+		return null;
 	}
 	
 }

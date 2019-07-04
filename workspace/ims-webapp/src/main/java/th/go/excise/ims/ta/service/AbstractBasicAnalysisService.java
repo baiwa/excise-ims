@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import net.sf.jasperreports.engine.JasperPrint;
 import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
+import th.go.excise.ims.ta.vo.TaxAuditDetailVo;
 
 public abstract class AbstractBasicAnalysisService<VO> {
 	
@@ -27,6 +29,8 @@ public abstract class AbstractBasicAnalysisService<VO> {
 	protected abstract List<VO> inquiryByPaperBaNumber(BasicAnalysisFormVo formVo);
 
 	protected abstract void save(BasicAnalysisFormVo formVo);
+	
+	protected abstract JasperPrint getJasperPrint(BasicAnalysisFormVo formVo, TaxAuditDetailVo taxAuditDetailVo) throws Exception;
 	
 	protected LocalDate toLocalDate(String inputDate) {
 		return LocalDateUtils.thaiMonthYear2LocalDate(inputDate);

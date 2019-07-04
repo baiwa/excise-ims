@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import net.sf.jasperreports.engine.JasperPrint;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
@@ -26,6 +27,7 @@ import th.go.excise.ims.ta.persistence.repository.TaPaperBaD8Repository;
 import th.go.excise.ims.ta.persistence.repository.TaWsInc8000MRepository;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
 import th.go.excise.ims.ta.vo.BasicAnalysisIncomeCompareLastYearVo;
+import th.go.excise.ims.ta.vo.TaxAuditDetailVo;
 
 @Service
 public class BasicAnalysisIncomeCompareLastYearService extends AbstractBasicAnalysisService<BasicAnalysisIncomeCompareLastYearVo> {
@@ -164,6 +166,13 @@ public class BasicAnalysisIncomeCompareLastYearService extends AbstractBasicAnal
 		}
 		
 		taPaperBaD8Repository.saveAll(entityList);
+	}
+
+	@Override
+	protected JasperPrint getJasperPrint(BasicAnalysisFormVo formVo, TaxAuditDetailVo taxAuditDetailVo) throws Exception {
+		logger.info("generateReport paperBaNumber={}", formVo.getPaperBaNumber());
+		
+		return null;
 	}
 
 }

@@ -27,7 +27,6 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ta.persistence.entity.TaPaperBaH;
 import th.go.excise.ims.ta.service.BasicAnalysisService;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
-import th.go.excise.ims.ta.vo.TaPaperBaHFormVo;
 
 @Controller
 @RequestMapping("/api/ta/basic-analysis")
@@ -87,7 +86,7 @@ public class BasicAnalysisController {
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			response.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			response.setMessage(e.getMessage());
 			response.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
 		}
 
@@ -107,19 +106,21 @@ public class BasicAnalysisController {
 		FileCopyUtils.copy(reportFile, response.getOutputStream());
 	}
 	
-	@PostMapping("/bah-find")
+	@PostMapping("/get-paper-ba-header")
 	@ResponseBody
-	public ResponseData<TaPaperBaH> findBaH(@RequestBody TaPaperBaHFormVo form) {
-		ResponseData<TaPaperBaH> res = new ResponseData<TaPaperBaH>();
+	public ResponseData<BasicAnalysisFormVo> getPaperBaHeader(@RequestBody BasicAnalysisFormVo form) {
+		ResponseData<BasicAnalysisFormVo> response = new ResponseData<>();
+		
 		try {
-			res.setData(basicAnalysisService.findBaH(form));
-			res.setStatus(RESPONSE_STATUS.SUCCESS);
+			response.setData(basicAnalysisService.getPaperBaHeader(form));
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			e.printStackTrace();
-			res.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
-			res.setStatus(RESPONSE_STATUS.FAILED);
+			logger.error(e.getMessage(), e);
+			response.setMessage(e.getMessage());
+			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
-		return res;
+		
+		return response;
 	}
 
 }

@@ -14,10 +14,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import net.sf.jasperreports.engine.JasperPrint;
 import th.go.excise.ims.ta.persistence.entity.TaPaperBaD2;
 import th.go.excise.ims.ta.persistence.repository.TaPaperBaD2Repository;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
 import th.go.excise.ims.ta.vo.BasicAnalysisTaxRetailPriceVo;
+import th.go.excise.ims.ta.vo.TaxAuditDetailVo;
 import th.go.excise.ims.ws.persistence.repository.WsAnafri0001DRepository;
 import th.go.excise.ims.ws.vo.WsAnafri0001Vo;
 
@@ -97,6 +99,13 @@ public class BasicAnalysisTaxRetailPriceService extends AbstractBasicAnalysisSer
 		}
 		
 		taPaperBaD2Repository.saveAll(entityList);
+	}
+
+	@Override
+	protected JasperPrint getJasperPrint(BasicAnalysisFormVo formVo, TaxAuditDetailVo taxAuditDetailVo) throws Exception {
+		logger.info("generateReport paperBaNumber={}", formVo.getPaperBaNumber());
+		
+		return null;
 	}
 
 }
