@@ -190,10 +190,10 @@ public class IaExpensesJdbcRepository {
 			sql.append(" AND IEX.OFFICE_CODE = ? ");
 			params.add(form.getArea());
 		}
-		if (StringUtils.isNotBlank(form.getYear())) {
-			sql.append(" AND IEX.BUDGET_YEAR = ? ");
-			params.add(form.getYear());
-		}
+//		if (StringUtils.isNotBlank(form.getYear())) {
+//			sql.append(" AND IEX.BUDGET_YEAR = ? ");
+//			params.add(form.getYear());
+//		}
 		if (StringUtils.isNotBlank(form.getStartYear()) && StringUtils.isNoneBlank(form.getPeriodMonthStart())) {
 			sql.append(" AND IEX.EXPENSE_YEAR||EXPENSE_MONTH  >= ? ");
 			params.add(form.getStartYear() + StringUtils.leftPad(form.getPeriodMonthStart(), 2, '0').substring(0, 2));
@@ -206,6 +206,7 @@ public class IaExpensesJdbcRepository {
 		sql.append(" GROUP BY IEX.ACCOUNT_ID, ");
 		sql.append("   IEX.ACCOUNT_NAME, ");
 		sql.append("   IEX.OFFICE_CODE ");
+		sql.append(" ORDER BY IEX.ACCOUNT_ID ASC ");
 		List<Int090101Vo> data = commonJdbcTemplate.query(sql.toString(), params.toArray(), compareRowmapper);
 		return data;
 	}

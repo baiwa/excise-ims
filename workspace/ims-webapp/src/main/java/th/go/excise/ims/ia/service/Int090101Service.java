@@ -29,14 +29,18 @@ public class Int090101Service {
 		if (StringUtils.isNotBlank(form.getYear())) {
 			form.setYear((Long.toString(Long.valueOf(form.getYear()) - 543)));
 		}
-//		if (Long.valueOf(form.getPeriodMonthStart()) <= 3) {
-//			form.setYear((Long.toString(Long.valueOf(form.getStartYear()) - 1)));
-//		}
-//		if (Long.valueOf(form.getPeriodMonthEnd()) <= 3) {
-//			form.setYear((Long.toString(Long.valueOf(form.getEndYear()) - 1)));
-//		}
-//		form.setPeriodMonthStart(this.monthMap(StringUtils.leftPad(form.getPeriodMonthStart(), 2,"0")));
-//		form.setPeriodMonthEnd(this.monthMap(StringUtils.leftPad(form.getPeriodMonthEnd(), 2,"0")));
+		
+		// set budget Year
+		if (Long.valueOf(form.getPeriodMonthStart()) <= 3) {
+			form.setStartYear((Long.toString(Long.valueOf(form.getStartYear()) - 1)));
+		}
+		if (Long.valueOf(form.getPeriodMonthEnd()) <= 3) {
+			form.setEndYear((Long.toString(Long.valueOf(form.getEndYear()) - 1)));
+		}
+		form.setPeriodMonthStart(this.monthMap(StringUtils.leftPad(form.getPeriodMonthStart(), 2,"0")));
+		form.setPeriodMonthEnd(this.monthMap(StringUtils.leftPad(form.getPeriodMonthEnd(), 2,"0")));
+		
+		
 		data = iaExpensesJdbcRepository.findCompare(form);
 		
 		List<Int090101Vo> dataRes = new ArrayList<>();
