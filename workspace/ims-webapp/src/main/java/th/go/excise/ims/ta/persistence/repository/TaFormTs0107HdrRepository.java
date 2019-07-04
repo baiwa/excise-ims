@@ -4,11 +4,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
-import th.go.excise.ims.ta.persistence.entity.TaFormTs0107;
+import th.go.excise.ims.ta.persistence.entity.TaFormTs0107Hdr;
 
-public interface TaFormTs0107Repository extends CommonTaFormTsRepository<TaFormTs0107, Long> {
+public interface TaFormTs0107HdrRepository extends CommonTaFormTsRepository<TaFormTs0107Hdr, Long> {
 	
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.formTsNumber = :formTsNumber")
-	public TaFormTs0107 findByFormTsNumber(@Param("formTsNumber") String formTsNumber);
+	public TaFormTs0107Hdr findByFormTsNumber(@Param("formTsNumber") String formTsNumber);
 	
 }

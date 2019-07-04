@@ -1,6 +1,7 @@
 package th.go.excise.ims.ta.vo;
 
 import java.util.Date;
+import java.util.List;
 
 public class TaFormTS0107Vo extends AbstractTaFormTsVo {
 
@@ -11,16 +12,7 @@ public class TaFormTS0107Vo extends AbstractTaFormTsVo {
 	private String officeName2;
 	private String headOfficerFullName;
 	private String headOfficerPosition;
-	private String officerFullName1;
-	private String officerPosition1;
-	private String officerFullName2;
-	private String officerPosition2;
-	private String officerFullName3;
-	private String officerPosition3;
-	private String officerFullName4;
-	private String officerPosition4;
-	private String officerFullName5;
-	private String officerPosition5;
+	private List<TaFormTS0107DtlVo> taFormTS0107DtlVoList;
 	private String companyName;
 	private String factoryType;
 	private String factoryName;
@@ -97,84 +89,12 @@ public class TaFormTS0107Vo extends AbstractTaFormTsVo {
 		this.headOfficerPosition = headOfficerPosition;
 	}
 
-	public String getOfficerFullName1() {
-		return officerFullName1;
+	public List<TaFormTS0107DtlVo> getTaFormTS0107DtlVoList() {
+		return taFormTS0107DtlVoList;
 	}
 
-	public void setOfficerFullName1(String officerFullName1) {
-		this.officerFullName1 = officerFullName1;
-	}
-
-	public String getOfficerPosition1() {
-		return officerPosition1;
-	}
-
-	public void setOfficerPosition1(String officerPosition1) {
-		this.officerPosition1 = officerPosition1;
-	}
-
-	public String getOfficerFullName2() {
-		return officerFullName2;
-	}
-
-	public void setOfficerFullName2(String officerFullName2) {
-		this.officerFullName2 = officerFullName2;
-	}
-
-	public String getOfficerPosition2() {
-		return officerPosition2;
-	}
-
-	public void setOfficerPosition2(String officerPosition2) {
-		this.officerPosition2 = officerPosition2;
-	}
-
-	public String getOfficerFullName3() {
-		return officerFullName3;
-	}
-
-	public void setOfficerFullName3(String officerFullName3) {
-		this.officerFullName3 = officerFullName3;
-	}
-
-	public String getOfficerPosition3() {
-		return officerPosition3;
-	}
-
-	public void setOfficerPosition3(String officerPosition3) {
-		this.officerPosition3 = officerPosition3;
-	}
-
-	public String getOfficerFullName4() {
-		return officerFullName4;
-	}
-
-	public void setOfficerFullName4(String officerFullName4) {
-		this.officerFullName4 = officerFullName4;
-	}
-
-	public String getOfficerPosition4() {
-		return officerPosition4;
-	}
-
-	public void setOfficerPosition4(String officerPosition4) {
-		this.officerPosition4 = officerPosition4;
-	}
-
-	public String getOfficerFullName5() {
-		return officerFullName5;
-	}
-
-	public void setOfficerFullName5(String officerFullName5) {
-		this.officerFullName5 = officerFullName5;
-	}
-
-	public String getOfficerPosition5() {
-		return officerPosition5;
-	}
-
-	public void setOfficerPosition5(String officerPosition5) {
-		this.officerPosition5 = officerPosition5;
+	public void setTaFormTS0107DtlVoList(List<TaFormTS0107DtlVo> taFormTS0107DtlVoList) {
+		this.taFormTS0107DtlVoList = taFormTS0107DtlVoList;
 	}
 
 	public String getCompanyName() {

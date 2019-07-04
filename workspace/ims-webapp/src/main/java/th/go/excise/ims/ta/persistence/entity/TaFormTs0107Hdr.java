@@ -1,6 +1,7 @@
 package th.go.excise.ims.ta.persistence.entity;
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,22 +10,19 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
-@Table(name = "TA_FORM_TS0107")
-public class TaFormTs0107 extends BaseEntity {
+@Table(name = "TA_FORM_TS0107_HDR")
+public class TaFormTs0107Hdr extends BaseEntity {
 
-	private static final long serialVersionUID = -4297806203979136227L;
+	private static final long serialVersionUID = -6051683419624108686L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_FORM_TS0107_GEN")
-	@SequenceGenerator(name = "TA_FORM_TS0107_GEN", sequenceName = "TA_FORM_TS0107_SEQ", allocationSize = 1)
-	@Column(name = "FORM_TS0107_ID")
-	private Long formTs0107Id;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_FORM_TS0107_HDR_GEN")
+	@SequenceGenerator(name = "TA_FORM_TS0107_HDR_GEN", sequenceName = "TA_FORM_TS0107_HDR_SEQ", allocationSize = 1)
+	@Column(name = "FORM_TS0107_HDR_ID")
+	private Long formTs0107HdrId;
 	@Column(name = "OFFICE_CODE")
 	private String officeCode;
 	@Column(name = "BUDGET_YEAR")
@@ -47,26 +45,6 @@ public class TaFormTs0107 extends BaseEntity {
 	private String headOfficerFullName;
 	@Column(name = "HEAD_OFFICER_POSITION")
 	private String headOfficerPosition;
-	@Column(name = "OFFICER_FULL_NAME1")
-	private String officerFullName1;
-	@Column(name = "OFFICER_POSITION1")
-	private String officerPosition1;
-	@Column(name = "OFFICER_FULL_NAME2")
-	private String officerFullName2;
-	@Column(name = "OFFICER_POSITION2")
-	private String officerPosition2;
-	@Column(name = "OFFICER_FULL_NAME3")
-	private String officerFullName3;
-	@Column(name = "OFFICER_POSITION3")
-	private String officerPosition3;
-	@Column(name = "OFFICER_FULL_NAME4")
-	private String officerFullName4;
-	@Column(name = "OFFICER_POSITION4")
-	private String officerPosition4;
-	@Column(name = "OFFICER_FULL_NAME5")
-	private String officerFullName5;
-	@Column(name = "OFFICER_POSITION5")
-	private String officerPosition5;
 	@Column(name = "COMPANY_NAME")
 	private String companyName;
 	@Column(name = "FACTORY_TYPE")
@@ -106,12 +84,12 @@ public class TaFormTs0107 extends BaseEntity {
 	@Column(name = "AUDIT_PLAN_CODE")
 	private String auditPlanCode;
 
-	public Long getFormTs0107Id() {
-		return formTs0107Id;
+	public Long getFormTs0107HdrId() {
+		return formTs0107HdrId;
 	}
 
-	public void setFormTs0107Id(Long formTs0107Id) {
-		this.formTs0107Id = formTs0107Id;
+	public void setFormTs0107HdrId(Long formTs0107HdrId) {
+		this.formTs0107HdrId = formTs0107HdrId;
 	}
 
 	public String getOfficeCode() {
@@ -200,86 +178,6 @@ public class TaFormTs0107 extends BaseEntity {
 
 	public void setHeadOfficerPosition(String headOfficerPosition) {
 		this.headOfficerPosition = headOfficerPosition;
-	}
-
-	public String getOfficerFullName1() {
-		return officerFullName1;
-	}
-
-	public void setOfficerFullName1(String officerFullName1) {
-		this.officerFullName1 = officerFullName1;
-	}
-
-	public String getOfficerPosition1() {
-		return officerPosition1;
-	}
-
-	public void setOfficerPosition1(String officerPosition1) {
-		this.officerPosition1 = officerPosition1;
-	}
-
-	public String getOfficerFullName2() {
-		return officerFullName2;
-	}
-
-	public void setOfficerFullName2(String officerFullName2) {
-		this.officerFullName2 = officerFullName2;
-	}
-
-	public String getOfficerPosition2() {
-		return officerPosition2;
-	}
-
-	public void setOfficerPosition2(String officerPosition2) {
-		this.officerPosition2 = officerPosition2;
-	}
-
-	public String getOfficerFullName3() {
-		return officerFullName3;
-	}
-
-	public void setOfficerFullName3(String officerFullName3) {
-		this.officerFullName3 = officerFullName3;
-	}
-
-	public String getOfficerPosition3() {
-		return officerPosition3;
-	}
-
-	public void setOfficerPosition3(String officerPosition3) {
-		this.officerPosition3 = officerPosition3;
-	}
-
-	public String getOfficerFullName4() {
-		return officerFullName4;
-	}
-
-	public void setOfficerFullName4(String officerFullName4) {
-		this.officerFullName4 = officerFullName4;
-	}
-
-	public String getOfficerPosition4() {
-		return officerPosition4;
-	}
-
-	public void setOfficerPosition4(String officerPosition4) {
-		this.officerPosition4 = officerPosition4;
-	}
-
-	public String getOfficerFullName5() {
-		return officerFullName5;
-	}
-
-	public void setOfficerFullName5(String officerFullName5) {
-		this.officerFullName5 = officerFullName5;
-	}
-
-	public String getOfficerPosition5() {
-		return officerPosition5;
-	}
-
-	public void setOfficerPosition5(String officerPosition5) {
-		this.officerPosition5 = officerPosition5;
 	}
 
 	public String getCompanyName() {
@@ -432,10 +330,6 @@ public class TaFormTs0107 extends BaseEntity {
 
 	public void setAuditPlanCode(String auditPlanCode) {
 		this.auditPlanCode = auditPlanCode;
-	}
-
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 }

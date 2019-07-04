@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.time.chrono.ThaiBuddhistDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -21,6 +23,7 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSIO
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.go.excise.ims.Application;
+import th.go.excise.ims.ta.vo.TaFormTS0107DtlVo;
 import th.go.excise.ims.ta.vo.TaFormTS0107Vo;
 import th.go.excise.ims.ta.vo.TaFormTsFormVo;
 
@@ -49,17 +52,20 @@ public class TaFormTS0107ServiceTest {
 		formTS0107Vo.setOfficeName2("กรมสรรพสามิต");
 		formTS0107Vo.setHeadOfficerFullName("กรมสรรพสามิต");
 		formTS0107Vo.setHeadOfficerPosition("เจ้าหน้าที่ออกตรวจภาษี ระดับภาค");
-		formTS0107Vo.setOfficerFullName1("นายอนุชา จันทร์แก้ว");
-		formTS0107Vo.setOfficerPosition1("เจ้าหน้าที่ออกตรวจภาษี ระดับพื้นที่");
-		formTS0107Vo.setOfficerFullName2("นายชัยชนะ ใจดี");
-		formTS0107Vo.setOfficerPosition2("เจ้าหน้าที่ออกตรวจภาษีระดับเขต");
-		formTS0107Vo.setOfficerFullName3("");
-		formTS0107Vo.setOfficerPosition3("");
-		formTS0107Vo.setOfficerFullName4("");
-		formTS0107Vo.setOfficerPosition4("");
-		formTS0107Vo.setOfficerFullName5("");
-		formTS0107Vo.setOfficerPosition5("");
-
+		
+		TaFormTS0107DtlVo formTS0107DtlVo1 = new TaFormTS0107DtlVo();
+		formTS0107DtlVo1.setOfficerFullName("นายอนุชา จันทร์แก้ว");
+		formTS0107DtlVo1.setOfficerPosition("เจ้าหน้าที่ออกตรวจภาษี ระดับพื้นที่");
+		
+		TaFormTS0107DtlVo formTS0107DtlVo2 = new TaFormTS0107DtlVo();
+		formTS0107DtlVo2.setOfficerFullName("นายชัยชนะ ใจดี");
+		formTS0107DtlVo2.setOfficerPosition("เจ้าหน้าที่ออกตรวจภาษีระดับเขต");
+		
+		List<TaFormTS0107DtlVo> formTS0107DtlVoList = new ArrayList<>();
+		formTS0107DtlVoList.add(formTS0107DtlVo1);
+		formTS0107DtlVoList.add(formTS0107DtlVo2);
+		formTS0107Vo.setTaFormTS0107DtlVoList(formTS0107DtlVoList);
+		
 		formTS0107Vo.setCompanyName("บริษัท โฮมโปรดักส์ เซ็นเตอร์ จำกัด (มหาชน)");
 		// type 1 =โรงอุตสาหกรรม || 2=สถานบริการ || 3 =สถานประกอบการผู้นำเข้า
 		formTS0107Vo.setFactoryType("3");
@@ -108,16 +114,19 @@ public class TaFormTS0107ServiceTest {
 		formTS0107Vo.setOfficeName2("กรมสรรพสามิต");
 		formTS0107Vo.setHeadOfficerFullName("กรมสรรพสามิต");
 		formTS0107Vo.setHeadOfficerPosition("เจ้าหน้าที่ออกตรวจภาษี ระดับภาค");
-		formTS0107Vo.setOfficerFullName1("นายอนุชา จันทร์แก้ว");
-		formTS0107Vo.setOfficerPosition1("เจ้าหน้าที่ออกตรวจภาษี ระดับพื้นที่");
-		formTS0107Vo.setOfficerFullName2("นายชัยชนะ ใจดี");
-		formTS0107Vo.setOfficerPosition2("เจ้าหน้าที่ออกตรวจภาษีระดับเขต");
-		formTS0107Vo.setOfficerFullName3("");
-		formTS0107Vo.setOfficerPosition3("");
-		formTS0107Vo.setOfficerFullName4("");
-		formTS0107Vo.setOfficerPosition4("");
-		formTS0107Vo.setOfficerFullName5("");
-		formTS0107Vo.setOfficerPosition5("");
+		
+		TaFormTS0107DtlVo formTS0107DtlVo1 = new TaFormTS0107DtlVo();
+		formTS0107DtlVo1.setOfficerFullName("นายอนุชา จันทร์แก้ว");
+		formTS0107DtlVo1.setOfficerPosition("เจ้าหน้าที่ออกตรวจภาษี ระดับพื้นที่");
+		
+		TaFormTS0107DtlVo formTS0107DtlVo2 = new TaFormTS0107DtlVo();
+		formTS0107DtlVo2.setOfficerFullName("นายชัยชนะ ใจดี");
+		formTS0107DtlVo2.setOfficerPosition("เจ้าหน้าที่ออกตรวจภาษีระดับเขต");
+		
+		List<TaFormTS0107DtlVo> formTS0107DtlVoList = new ArrayList<>();
+		formTS0107DtlVoList.add(formTS0107DtlVo1);
+		formTS0107DtlVoList.add(formTS0107DtlVo2);
+		formTS0107Vo.setTaFormTS0107DtlVoList(formTS0107DtlVoList);
 
 		formTS0107Vo.setCompanyName("บริษัท โฮมโปรดักส์ เซ็นเตอร์ จำกัด (มหาชน)");
 		// type 1 =โรงอุตสาหกรรม || 2=สถานบริการ || 3 =สถานประกอบการผู้นำเข้า
@@ -147,10 +156,10 @@ public class TaFormTS0107ServiceTest {
 		taFormTS0107Service.saveFormTS(formTS0107Vo);
 	}
 	
-//	@Test
+	@Test
 	public void test_getFormTS() {
-		TaFormTS0107Vo formTs0107Vo = taFormTS0107Service.getFormTS("000000-2562-000265");
-		System.out.println(ToStringBuilder.reflectionToString(formTs0107Vo, ToStringStyle.JSON_STYLE));
+		TaFormTS0107Vo formTs0107Vo = taFormTS0107Service.getFormTS("000000-2562-000189");
+		System.out.println(ToStringBuilder.reflectionToString(formTs0107Vo, ToStringStyle.MULTI_LINE_STYLE));
 	}
 	
 	@Test
