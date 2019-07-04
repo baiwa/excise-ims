@@ -218,8 +218,8 @@ public class TaFormTS0107Service extends AbstractTaFormTSService<TaFormTS0107Vo,
 			formTS0107DtlVo = new TaFormTS0107DtlVo();
 			formTS0107DtlVo.setFormTs0107DtlId(StringUtils.defaultString(Long.toString(formTs0107Dtl.getFormTs0107DtlId())));
 			formTS0107DtlVo.setRecNo(StringUtils.defaultString(formTs0107Dtl.getRecNo()));
-			formTS0107DtlVo.setOfficerFullName(formTs0107Dtl.getOfficerFullName());
-			formTS0107DtlVo.setOfficerPosition(formTs0107Dtl.getOfficerPosition());
+			formTS0107DtlVo.setOfficerFullName(StringUtils.defaultString(formTs0107Dtl.getOfficerFullName()));
+			formTS0107DtlVo.setOfficerPosition(StringUtils.defaultString(formTs0107Dtl.getOfficerPosition()));
 			formTS0107DtlVoList.add(formTS0107DtlVo);
 		}
 		formTS0107Vo.setTaFormTS0107DtlVoList(formTS0107DtlVoList);
@@ -228,8 +228,8 @@ public class TaFormTS0107Service extends AbstractTaFormTSService<TaFormTS0107Vo,
 	}
 	
 	private void toEntityDtl(TaFormTs0107Dtl entity, TaFormTS0107DtlVo vo) {
-		entity.setOfficerFullName(vo.getOfficerFullName());
-		entity.setOfficerPosition(vo.getOfficerPosition());
+		entity.setOfficerFullName(NULL.equalsIgnoreCase(vo.getOfficerFullName()) ? "" : vo.getOfficerFullName());
+		entity.setOfficerPosition(NULL.equalsIgnoreCase(vo.getOfficerPosition()) ? "" : vo.getOfficerPosition());
 	}
 	
 	private TaFormTs0107Dtl getEntityById(List<TaFormTs0107Dtl> formTs0107DtlList, String id) {
