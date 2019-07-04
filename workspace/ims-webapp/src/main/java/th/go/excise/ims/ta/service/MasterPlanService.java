@@ -3,12 +3,14 @@ package th.go.excise.ims.ta.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPlanMas;
 import th.go.excise.ims.ta.persistence.repository.TaPlanMasRepository;
+import th.go.excise.ims.ta.vo.TaPlanMasVo;
 
 @Service
 public class MasterPlanService {
@@ -42,5 +44,14 @@ public class MasterPlanService {
 		List<TaPlanMas> list = new ArrayList<>();
 		list = planMasRepository.findByBudgetYearAndOfficeCode(form.getBudgetYear(), UserLoginUtils.getCurrentUserBean().getOfficeCode());
 		return list;
+	}
+	
+	public List<TaPlanMasVo> getPlanMas(TaPlanMas form) {
+		String officeCode =  UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		if (StringUtils.isNotBlank(form.getOfficeCode())) {
+			officeCode = form.getOfficeCode();
+		}
+		return planMasRepository.findPlanCountByOfficeCode(officeCode, form.getBudgetYear());
+		
 	}
 }
