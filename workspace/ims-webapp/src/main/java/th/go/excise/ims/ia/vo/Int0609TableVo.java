@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Int0609TableVo {
 	/* ________ WsGfr01051 ________ */
-	// private String offname;
+	private String offname;
 	private Date trnDate;
 	private Date gfDate;
 	private String offcode;
@@ -15,33 +15,19 @@ public class Int0609TableVo {
 	private BigDecimal totalAmt;
 	private BigDecimal totalSendAmt;
 
-	/* ________ WsIncr0003 ________ */
-	// private Date trnDate;
-	// private String incctlNo;
-	// private String bankName;
-	// private String chqNo;
-	// private String chqDate;
-	// private String cusId;
-	// private String cusName;
-	// private String offcode;
-	// private String offname;
-	private String incCode;
-	// private String incName;
-	// private BigDecimal sum1;
-	// private BigDecimal sum2;
-	// private BigDecimal sum3;
-	// private BigDecimal sum4;
-	// private BigDecimal sum5;
-	// private BigDecimal sum6;
-	// private BigDecimal sum7;
-
-	/* ________ custom ________ */
 	private BigDecimal sum1Sum2;
 	private BigDecimal sum4Sum5;
-	private BigDecimal sum7;
-	private BigDecimal sum4;
 	private BigDecimal sum4I;
 	private BigDecimal sum4II;
+	private BigDecimal sum7;
+
+	public String getOffname() {
+		return offname;
+	}
+
+	public void setOffname(String offname) {
+		this.offname = offname;
+	}
 
 	public Date getTrnDate() {
 		return trnDate;
@@ -107,14 +93,6 @@ public class Int0609TableVo {
 		this.totalSendAmt = totalSendAmt;
 	}
 
-	public String getIncCode() {
-		return incCode;
-	}
-
-	public void setIncCode(String incCode) {
-		this.incCode = incCode;
-	}
-
 	public BigDecimal getSum1Sum2() {
 		return sum1Sum2;
 	}
@@ -131,22 +109,6 @@ public class Int0609TableVo {
 		this.sum4Sum5 = sum4Sum5;
 	}
 
-	public BigDecimal getSum7() {
-		return sum7;
-	}
-
-	public void setSum7(BigDecimal sum7) {
-		this.sum7 = sum7;
-	}
-
-	public BigDecimal getSum4() {
-		return sum4;
-	}
-
-	public void setSum4(BigDecimal sum4) {
-		this.sum4 = sum4;
-	}
-
 	public BigDecimal getSum4I() {
 		return sum4I;
 	}
@@ -161,6 +123,14 @@ public class Int0609TableVo {
 
 	public void setSum4II(BigDecimal sum4ii) {
 		sum4II = sum4ii;
+	}
+
+	public BigDecimal getSum7() {
+		return sum7;
+	}
+
+	public void setSum7(BigDecimal sum7) {
+		this.sum7 = sum7;
 	}
 
 }
