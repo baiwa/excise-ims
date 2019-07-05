@@ -13,7 +13,7 @@
 	<field name="docQty" class="java.lang.String"/>
 	<field name="docComment" class="java.lang.String"/>
 	<title>
-		<band height="120" splitType="Stretch">
+		<band height="141" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="25" width="105" height="22" uuid="24d5cb26-b161-4830-ab11-577dd160817f"/>
 				<textElement>
@@ -209,6 +209,34 @@
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{refDocDate})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="113" width="20" height="22" uuid="507f1a74-9fee-4e42-8f2c-d5ca1dd815a5"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA["1".equals( $P{docPlace} )?"\u2611" : "\u2610"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="204" y="113" width="130" height="22" uuid="20160862-357c-4265-9820-7d432b9c9c6a"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="TH Sarabun New" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA["จำนวนเงินรวมภาษีที่ต้องชำระ"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="113" width="154" height="22" uuid="9de72eb1-2ad8-40a9-9609-ebe1a5d215f4"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="TH Sarabun New" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA["จำนวนเงินภาษีก่อนหักรายการต่างๆ"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="184" y="113" width="20" height="22" uuid="1eed75df-0a00-4fa4-822e-3c8474ec6956"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA["2".equals( $P{docPlace} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
