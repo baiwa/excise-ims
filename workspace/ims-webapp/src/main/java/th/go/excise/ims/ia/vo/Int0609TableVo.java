@@ -20,6 +20,10 @@ public class Int0609TableVo {
 	private BigDecimal sum4I;
 	private BigDecimal sum4II;
 	private BigDecimal sum7;
+	private Long dateDiff;
+	private String incsendIncStm;
+	private String trnDateStr;
+	private String gfDateStr;
 
 	public String getOffname() {
 		return offname;
@@ -131,6 +135,38 @@ public class Int0609TableVo {
 
 	public void setSum7(BigDecimal sum7) {
 		this.sum7 = sum7;
+	}
+
+	public Long getDateDiff() {
+		return dateDiff;
+	}
+
+	public void setDateDiff(Long dateDiff) {
+		this.dateDiff = dateDiff;
+	}
+
+	public String getIncsendIncStm() {
+		return incsendIncStm;
+	}
+
+	public void setIncsendIncStm(String incsendIncStm) {
+		this.incsendIncStm = incsendIncStm;
+	}
+
+	public String getTrnDateStr() {
+		return trnDateStr;
+	}
+
+	public void setTrnDateStr(String trnDateStr) {
+		this.trnDateStr = trnDateStr;
+	}
+
+	public String getGfDateStr() {
+		return gfDateStr;
+	}
+
+	public void setGfDateStr(String gfDateStr) {
+		this.gfDateStr = gfDateStr;
 	}
 
 }

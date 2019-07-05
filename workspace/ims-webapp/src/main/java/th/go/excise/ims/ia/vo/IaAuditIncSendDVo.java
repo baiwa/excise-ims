@@ -1,72 +1,35 @@
-
-package th.go.excise.ims.ia.persistence.entity;
+package th.go.excise.ims.ia.vo;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
-@Entity
-@Table(name = "IA_AUDIT_INC_SEND_D")
-public class IaAuditIncSendD extends BaseEntity {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6112191036977073613L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_AUDIT_INC_SEND_D_GEN")
-	@SequenceGenerator(name = "IA_AUDIT_INC_SEND_D_GEN", sequenceName = "IA_AUDIT_INC_SEND_D_SEQ", allocationSize = 1)
-	@Column(name = "AUDIT_INC_SEND_D_SEQ")
+public class IaAuditIncSendDVo {
+	/* entity */
 	private BigDecimal auditIncSendDSeq;
-	@Column(name = "INCSEND_NO")
 	private String incsendNo;
-	@Column(name = "INCSEND_TRN_DATE")
 	private Date incsendTrnDate;
-	@Column(name = "INCSEND_GF_DATE")
 	private Date incsendGfDate;
-	@Column(name = "INCSEND_PERIOD")
 	private BigDecimal incsendPeriod;
-	@Column(name = "INCSEND_GF_OFFCODE")
 	private String incsendGfOffcode;
-	@Column(name = "INCSEND_ACTCOST_CENT")
 	private String incsendActcostCent;
-	@Column(name = "INCSEND_REF_NO")
 	private String incsendRefNo;
-	@Column(name = "INCSEND_CNT")
 	private BigDecimal incsendCnt;
-	@Column(name = "INCSEND_TOTAL_AMT")
 	private BigDecimal incsendTotalAmt;
-	@Column(name = "INCSEND_AMOUNT")
 	private BigDecimal incsendAmount;
-	@Column(name = "INCSEND_EDC")
 	private BigDecimal incsendEdc;
-	@Column(name = "INCSEND_EDC_LICENSE")
 	private BigDecimal incsendEdcLicense;
-	@Column(name = "INCSEND_ACC_CASH")
 	private String incsendAccCash;
-	@Column(name = "INCSEND_ACC_PAY_IN")
 	private String incsendAccPayIn;
-	@Column(name = "INCSEND_AMT_DELIVERY")
 	private BigDecimal incsendAmtDelivery;
-	@Column(name = "INCSEND_INC_KTB")
 	private String incsendIncKtb;
-	@Column(name = "INCSEND_INC_STM")
 	private String incsendIncStm;
-	@Column(name = "INCSEND_INC_115010")
 	private BigDecimal incsendInc115010;
-	@Column(name = "INCSEND_INC_116010")
 	private BigDecimal incsendInc116010;
-	@Column(name = "INCSEND_NOTE")
 	private String incsendNote;
+
+	/* custom */
+	private String incsendTrnDateStr;
+	private String incsendGfDateStr;
 
 	public BigDecimal getAuditIncSendDSeq() {
 		return auditIncSendDSeq;
@@ -234,6 +197,22 @@ public class IaAuditIncSendD extends BaseEntity {
 
 	public void setIncsendNote(String incsendNote) {
 		this.incsendNote = incsendNote;
+	}
+
+	public String getIncsendTrnDateStr() {
+		return incsendTrnDateStr;
+	}
+
+	public void setIncsendTrnDateStr(String incsendTrnDateStr) {
+		this.incsendTrnDateStr = incsendTrnDateStr;
+	}
+
+	public String getIncsendGfDateStr() {
+		return incsendGfDateStr;
+	}
+
+	public void setIncsendGfDateStr(String incsendGfDateStr) {
+		this.incsendGfDateStr = incsendGfDateStr;
 	}
 
 }

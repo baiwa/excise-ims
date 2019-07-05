@@ -1,13 +1,21 @@
 package th.go.excise.ims.ia.service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
+import th.go.excise.ims.ia.persistence.entity.IaAuditIncSendD;
+import th.go.excise.ims.ia.persistence.repository.IaAuditIncSendDRepository;
+import th.go.excise.ims.ia.persistence.repository.IaAuditIncSendHRepository;
+import th.go.excise.ims.ia.vo.IaAuditIncSendDVo;
+import th.go.excise.ims.ia.vo.Int0609SaveVo;
 import th.go.excise.ims.ia.vo.Int0609TableVo;
 import th.go.excise.ims.ia.vo.Int0609Vo;
 import th.go.excise.ims.ia.vo.SearchVo;
@@ -24,6 +32,15 @@ public class Int0609Service {
 	@Autowired
 	private WsIncr0003JdbcRepository wsIncr0003JdbcRepository;
 
+	@Autowired
+	private IaCommonService iaCommonService;
+
+	@Autowired
+	private IaAuditIncSendHRepository iaAuditIncSendHRepository;
+
+	@Autowired
+	private IaAuditIncSendDRepository iaAuditIncSendDRepository;
+
 	public Int0609Vo search(SearchVo request) {
 		/* __________ set year TH to EN __________ */
 		request.setPeriodMonth(
@@ -35,9 +52,17 @@ public class Int0609Service {
 
 		/* __________ loop for map object __________ */
 		for (Int0609TableVo wsGfr01051 : resWsGfr01051) {
+			/* __________ calculate difference day__________ */
+			long diffInMillies = Math.abs(wsGfr01051.getGfDate().getTime() - wsGfr01051.getTrnDate().getTime());
+			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			wsGfr01051.setDateDiff(diff);
+
 			String dateStrHeader = ConvertDateUtils.formatDateToString(wsGfr01051.getTrnDate(), ConvertDateUtils.DD_MM_YY);
+			wsGfr01051.setTrnDateStr(dateStrHeader);
+			wsGfr01051.setGfDateStr(ConvertDateUtils.formatDateToString(wsGfr01051.getGfDate(), ConvertDateUtils.DD_MM_YY));
 			for (WsIncr0003Vo wsIncr0003Vo : resWsIncr0003) {
 				String dateStr = ConvertDateUtils.formatDateToString(wsIncr0003Vo.getTrnDate(), ConvertDateUtils.DD_MM_YY);
+
 				if (dateStrHeader.equals(dateStr)) {
 					wsGfr01051.setSum1Sum2(wsIncr0003Vo.getSum1Sum2());
 					wsGfr01051.setSum4Sum5(wsIncr0003Vo.getSum4Sum5());
@@ -110,6 +135,27 @@ public class Int0609Service {
 		response.setFooter(footer);
 		response.setTable(resWsGfr01051);
 		return response;
+	}
+
+	public void save(Int0609SaveVo request) throws Exception {
+		String incsendNo = iaCommonService.autoGetRunAuditNoBySeqName("AIS", request.getHeader().getIncsendOfficeCode(), "INCSEND_NO_SEQ", 8);
+
+		/* __________ header __________ */
+		request.getHeader().setIncsendNo(incsendNo);
+		request.getHeader().setIncsendPeriodMonth(
+				ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(request.getHeader().getIncsendPeriodMonth(), ConvertDateUtils.MM_YYYY), ConvertDateUtils.YYYYMM));
+		iaAuditIncSendHRepository.save(request.getHeader());
+
+		/* __________ details __________ */
+		IaAuditIncSendD detail = null;
+		for (IaAuditIncSendDVo d : request.getDetails()) {
+			detail = new IaAuditIncSendD();
+			BeanUtils.copyProperties(detail, d);
+			detail.setIncsendNo(incsendNo);
+			detail.setIncsendTrnDate(ConvertDateUtils.parseStringToDate(d.getIncsendTrnDateStr(), ConvertDateUtils.DD_MM_YY));
+			detail.setIncsendGfDate(ConvertDateUtils.parseStringToDate(d.getIncsendGfDateStr(), ConvertDateUtils.DD_MM_YY));
+			iaAuditIncSendDRepository.save(detail);
+		}
 	}
 
 }
