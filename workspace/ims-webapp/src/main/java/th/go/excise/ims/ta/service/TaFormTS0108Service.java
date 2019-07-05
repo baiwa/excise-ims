@@ -123,6 +123,7 @@ public class TaFormTS0108Service extends AbstractTaFormTSService<TaFormTS0108Vo,
 
 			// Set Header Record
 			formTs0108Hdr = new TaFormTs0108Hdr();
+			toEntity(formTs0108Hdr, formTS0108Vo);
 			formTs0108Hdr.setBudgetYear(budgetYear);
 			formTs0108Hdr.setOfficeCode(officeCode);
 			formTs0108Hdr.setFormTsNumber(formTsNumber);
