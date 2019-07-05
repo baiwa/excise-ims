@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.go.excise.ims.common.constant.ProjectConstants;
+import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPlanMas;
 import th.go.excise.ims.ta.persistence.repository.TaPlanMasRepository;
 import th.go.excise.ims.ta.vo.TaPlanMasVo;
@@ -51,7 +53,12 @@ public class MasterPlanService {
 		if (StringUtils.isNotBlank(form.getOfficeCode())) {
 			officeCode = form.getOfficeCode();
 		}
-		return planMasRepository.findPlanCountByOfficeCode(officeCode, form.getBudgetYear());
+		
+		if (ProjectConstants.EXCISE_OFFICE_CODE.TA_CENTRAL.equals(officeCode)) {
+			return planMasRepository.findPlanCountByCentral(form.getBudgetYear());
+		}else {
+			return planMasRepository.findPlanCountByOfficeCode(officeCode, form.getBudgetYear());
+		}
 		
 	}
 }

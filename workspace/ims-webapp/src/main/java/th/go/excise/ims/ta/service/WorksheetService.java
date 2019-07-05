@@ -584,7 +584,10 @@ public class WorksheetService {
 		}
 		
 		List<TaxOperatorDetailVo> list = taWorksheetDtlRepository.findByCriteria(formVo);
-		vo.setDatas(TaxAuditUtils.prepareTaxOperatorDatatable(list, formVo));
+		List<TaxOperatorDatatableVo> datatableVoList = TaxAuditUtils.prepareTaxOperatorDatatable(list, formVo);
+		prepareAdditionalData(budgetYear, datatableVoList);
+		vo.setDatas(datatableVoList);
+//		vo.setDatas(TaxAuditUtils.prepareTaxOperatorDatatable(list, formVo));
 		vo.setCount(taWorksheetDtlRepository.countByCriteria(formVo));
 
 		return vo;

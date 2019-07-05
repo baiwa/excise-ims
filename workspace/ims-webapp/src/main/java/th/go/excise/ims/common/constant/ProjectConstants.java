@@ -50,6 +50,9 @@ public class ProjectConstants {
 		public static final String CODE_0301 = "0301";
 		public static final String CODE_0400 = "0400";
 		public static final String CODE_0401 = "0401";
+		public static final String CODE_0501 = "0501";
+		public static final String CODE_0502 = "0502";
+		public static final String CODE_0503 = "0503";
 		public static final String CODE_0900 = "0900";
 	}
 	
