@@ -33,7 +33,7 @@ public class TaxAuditReportController {
 	public void exportPreviewWorksheet(@ModelAttribute TaxOperatorFormVo formVo, HttpServletResponse response) throws Exception {
 		logger.info("exportPreviewWorksheet");
 		
-		String fileName = URLEncoder.encode("Worksheet", "UTF-8");
+		String fileName = URLEncoder.encode("ta-rpt0001", "UTF-8");
 		
 		byte[] bytes = worksheetExportService.exportPreviewWorksheet(formVo);
 		response.setContentType("application/octet-stream");
@@ -49,7 +49,7 @@ public class TaxAuditReportController {
 	public void exportDraftWorksheet(@ModelAttribute TaxOperatorFormVo formVo, HttpServletResponse response) throws Exception {
 		logger.info("exportDraftWorksheet");
 		
-		String fileName = URLEncoder.encode("Worksheet", "UTF-8");
+		String fileName = URLEncoder.encode("ta-rpt0002", "UTF-8");
 		
 		byte[] bytes = worksheetExportService.exportDraftWorksheet(formVo);
 		response.setContentType("application/octet-stream");
@@ -65,7 +65,7 @@ public class TaxAuditReportController {
 	public void exportWorksheet(@ModelAttribute TaxOperatorFormVo formVo, HttpServletResponse response) throws Exception {
 		logger.info("exportWorksheet");
 		
-		String fileName = URLEncoder.encode("Worksheet", "UTF-8");
+		String fileName = URLEncoder.encode("ta-rpt0003", "UTF-8");
 		
 		byte[] bytes = worksheetExportService.exportWorksheet(formVo);
 		response.setContentType("application/octet-stream");
@@ -97,7 +97,7 @@ public class TaxAuditReportController {
 	public void exportPlanWorksheet(@ModelAttribute PlanWorksheetVo formVo, HttpServletResponse response) throws Exception {
 		logger.info("exportPlanWorksheet");
 		
-		String fileName = URLEncoder.encode("PlanWorksheetSelected", "UTF-8");
+		String fileName = URLEncoder.encode("ta-rpt0004", "UTF-8");
 		
 		byte[] bytes = worksheetExportService.exportPlanWorksheetSelected(formVo);
 		response.setContentType("application/octet-stream");

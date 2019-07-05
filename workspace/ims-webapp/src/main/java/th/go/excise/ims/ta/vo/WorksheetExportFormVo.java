@@ -4,10 +4,28 @@ import java.util.List;
 
 public class WorksheetExportFormVo {
 
+	private String titleName;
+	private String officeName;
 	private String budgetYear;
 	private int dateRange;
 	private WorksheetDateRangeVo worksheetDateRangeVo;
 	private List<TaxOperatorDatatableVo> taxOperatorDatatableVoList;
+
+	public String getTitleName() {
+		return titleName;
+	}
+
+	public void setTitleName(String titleName) {
+		this.titleName = titleName;
+	}
+
+	public String getOfficeName() {
+		return officeName;
+	}
+
+	public void setOfficeName(String officeName) {
+		this.officeName = officeName;
+	}
 
 	public String getBudgetYear() {
 		return budgetYear;

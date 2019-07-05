@@ -16,11 +16,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,8 +34,10 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondSubNoAudit;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
@@ -95,6 +99,8 @@ public class WorksheetExportService {
 		
 		// Prepare WorksheetExportFormVo
 		WorksheetExportFormVo exportFormVo = new WorksheetExportFormVo();
+		exportFormVo.setTitleName("รายการข้อมูลผู้ประกอบการที่เสียภาษีสรรพสามิต");
+		exportFormVo.setOfficeName(ApplicationCache.getExciseDepartment(officeCode).getDeptName());
 		exportFormVo.setBudgetYear(formVo.getBudgetYear());
 		exportFormVo.setDateRange(formVo.getDateRange());
 		exportFormVo.setWorksheetDateRangeVo(worksheetDateRangeVo);
@@ -128,6 +134,8 @@ public class WorksheetExportService {
 		
 		// Prepare WorksheetExportFormVo
 		WorksheetExportFormVo exportFormVo = new WorksheetExportFormVo();
+		exportFormVo.setTitleName("รายการข้อมูลผู้ประกอบการที่เสียภาษีสรรพสามิต");
+		exportFormVo.setOfficeName(ApplicationCache.getExciseDepartment(officeCode).getDeptName());
 		exportFormVo.setBudgetYear(formVo.getBudgetYear());
 		exportFormVo.setDateRange(formVo.getDateRange());
 		exportFormVo.setWorksheetDateRangeVo(worksheetDateRangeVo);
@@ -162,6 +170,9 @@ public class WorksheetExportService {
 			detailFont.setFontName(ExcelUtils.FONT_NAME.TH_SARABUN_PSK);
 			
 			// Cell Style
+			CellStyle cellTitleStyle = (XSSFCellStyle) workbook.createCellStyle();
+			cellTitleStyle.setAlignment(HorizontalAlignment.CENTER);
+			cellTitleStyle.setFont(headerFont);
 			CellStyle cellHeaderStyle = ExcelUtils.createThColorStyle(workbook, new XSSFColor(Color.LIGHT_GRAY));
 			cellHeaderStyle.setFont(headerFont);
 			CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
@@ -179,6 +190,32 @@ public class WorksheetExportService {
 			Cell cell = null;
 			int rowNum = 0;
 			int cellNum = 0;
+			
+			// Title
+			// Report Name
+			row = sheet.createRow(rowNum);
+			row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+			cellNum = 0;
+			cell = row.createCell(cellNum);
+			cell.setCellValue(formVo.getTitleName());
+			cell.setCellStyle(cellTitleStyle);
+			rowNum++;
+			// Office Name
+			row = sheet.createRow(rowNum);
+			row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+			cellNum = 0;
+			cell = row.createCell(cellNum);
+			cell.setCellValue("สำนักงาน " + formVo.getOfficeName());
+			cell.setCellStyle(cellTitleStyle);
+			rowNum++;
+			// Budget Year
+			row = sheet.createRow(rowNum);
+			row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+			cellNum = 0;
+			cell = row.createCell(cellNum);
+			cell.setCellValue("ประจำปีงบประมาณ " + formVo.getBudgetYear());
+			cell.setCellStyle(cellTitleStyle);
+			rowNum++;
 			
 			// Column Header
 			// Header Line 1
@@ -371,19 +408,23 @@ public class WorksheetExportService {
 			}
 			
 			// Merge Column
+			int titleRow = 0;
+			sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 16));
+			sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 16));
+			sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 16));
 			int mergeCellIndex = 0;
 			for (String headerText : headerText2List) {
 				if (StringUtils.isEmpty(headerText)) {
-					sheet.addMergedRegion(new CellRangeAddress(0, 1, mergeCellIndex, mergeCellIndex));
+					sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 1, mergeCellIndex, mergeCellIndex));
 				}
 				mergeCellIndex++;
 			}
-			sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 5)); // การตรวจสอบภาษีย้อนหลัง 3 ปี
-			sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 8)); // การชำระภาษีในสภาวะปกติ
+			sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, 3, 5)); // การตรวจสอบภาษีย้อนหลัง 3 ปี
+			sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, 6, 8)); // การชำระภาษีในสภาวะปกติ
 			int halfDataRange = formVo.getDateRange() / 2;
 			if (halfDataRange > 1) {
-				sheet.addMergedRegion(new CellRangeAddress(0, 0, startTaxAmtIndex, startTaxAmtIndex + halfDataRange - 1));
-				sheet.addMergedRegion(new CellRangeAddress(0, 0, startTaxAmtIndex + halfDataRange, startTaxAmtIndex + formVo.getDateRange() - 1));
+				sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, startTaxAmtIndex, startTaxAmtIndex + halfDataRange - 1));
+				sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, startTaxAmtIndex + halfDataRange, startTaxAmtIndex + formVo.getDateRange() - 1));
 			}
 			
 			workbook.write(out);
@@ -432,6 +473,8 @@ public class WorksheetExportService {
 		List<String> sheetNameList = new ArrayList<>();
 		sheetNameList.add(SHEET_NAME_1);
 		sheetNameList.add(SHEET_NAME_2);
+		String titleName = "รายการข้อมูลผู้ประกอบการที่เสียภาษีสรรพสามิตตามเงื่อนไข";
+		String officeName = ApplicationCache.getExciseDepartment(officeCode).getDeptName();
 		
 		// Create Workbook
 		byte[] content = null;
@@ -449,6 +492,9 @@ public class WorksheetExportService {
 		    detailFont.setFontName(ExcelUtils.FONT_NAME.TH_SARABUN_PSK);
 			
 			// Cell Style
+		    CellStyle cellTitleStyle = (XSSFCellStyle) workbook.createCellStyle();
+			cellTitleStyle.setAlignment(HorizontalAlignment.CENTER);
+			cellTitleStyle.setFont(headerFont);
 			CellStyle cellHeaderStyle = ExcelUtils.createThColorStyle(workbook, new XSSFColor(Color.LIGHT_GRAY));
 			cellHeaderStyle.setFont(headerFont);
 			CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
@@ -490,6 +536,32 @@ public class WorksheetExportService {
 				
 				// Sheet Name
 				sheet = workbook.createSheet(sheetName);
+				
+				// Title
+				// Report Name
+				row = sheet.createRow(rowNum);
+				row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+				cellNum = 0;
+				cell = row.createCell(cellNum);
+				cell.setCellValue(titleName);
+				cell.setCellStyle(cellTitleStyle);
+				rowNum++;
+				// Office Name
+				row = sheet.createRow(rowNum);
+				row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+				cellNum = 0;
+				cell = row.createCell(cellNum);
+				cell.setCellValue("สำนักงาน " + officeName);
+				cell.setCellStyle(cellTitleStyle);
+				rowNum++;
+				// Budget Year
+				row = sheet.createRow(rowNum);
+				row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+				cellNum = 0;
+				cell = row.createCell(cellNum);
+				cell.setCellValue("ประจำปีงบประมาณ " + formVo.getBudgetYear());
+				cell.setCellStyle(cellTitleStyle);
+				rowNum++;
 				
 				// Column Header
 				// Header Line 1
@@ -726,26 +798,30 @@ public class WorksheetExportService {
 				}
 				
 				// Merge Column
+				int titleRow = 0;
+				sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 19));
+				sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 19));
+				sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 19));
 				int mergeCellIndex = 0;
 				for (String headerText : headerText2List) {
 					if (StringUtils.isEmpty(headerText)) {
-						sheet.addMergedRegion(new CellRangeAddress(0, 1, mergeCellIndex, mergeCellIndex));
+						sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 1, mergeCellIndex, mergeCellIndex));
 					}
 					mergeCellIndex++;
 				}
 				int afterCondGroupIndex = 3;
 				if (sheetNameCount == 1) {
 					afterCondGroupIndex += condGroupCount - 1;
-					sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, afterCondGroupIndex)); // กลุ่มเงื่อนไข
+					sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, 3, afterCondGroupIndex)); // กลุ่มเงื่อนไข
 				} else {
 					afterCondGroupIndex--;
 				}
-				sheet.addMergedRegion(new CellRangeAddress(0, 0, afterCondGroupIndex + 1, afterCondGroupIndex + 3)); // การตรวจสอบภาษีย้อนหลัง 3 ปี
-				sheet.addMergedRegion(new CellRangeAddress(0, 0, afterCondGroupIndex + 4, afterCondGroupIndex + 6)); // การชำระภาษีในสภาวะปกติ
+				sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, afterCondGroupIndex + 1, afterCondGroupIndex + 3)); // การตรวจสอบภาษีย้อนหลัง 3 ปี
+				sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, afterCondGroupIndex + 4, afterCondGroupIndex + 6)); // การชำระภาษีในสภาวะปกติ
 				int halfDataRange = formVo.getDateRange() / 2;
 				if (halfDataRange > 1) {
-					sheet.addMergedRegion(new CellRangeAddress(0, 0, startTaxAmtIndex, startTaxAmtIndex + halfDataRange - 1));
-					sheet.addMergedRegion(new CellRangeAddress(0, 0, startTaxAmtIndex + halfDataRange, startTaxAmtIndex + formVo.getDateRange() - 1));
+					sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, startTaxAmtIndex, startTaxAmtIndex + halfDataRange - 1));
+					sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, startTaxAmtIndex + halfDataRange, startTaxAmtIndex + formVo.getDateRange() - 1));
 				}
 				
 				sheetNameCount++;
@@ -831,11 +907,17 @@ public class WorksheetExportService {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		logger.info("exportWorksheet officeCode={}, planNumber={}", officeCode, formVo.getPlanNumber());
 		
+		// Prepare Data
+		TaPlanWorksheetHdr planHdr = planWorksheetService.getPlanWorksheetHdr(formVo);
+		formVo.setBudgetYear(planHdr.getBudgetYear());
+		
 		// PlanWorksheet Data for Export
 		List<PlanWorksheetDatatableVo> planVoList = planWorksheetService.planDtlDatatableAll(formVo);
 		
 		// Label and Text
 		String SHEET_NAME = "รายชื่อผู้ประกอบการที่คัดเลือก";
+		String titleName = "รายการคัดเลือกราย";
+		String officeName = ApplicationCache.getExciseDepartment(officeCode).getDeptName();
 		
 		// Create Workbook
 		byte[] content = null;
@@ -853,6 +935,9 @@ public class WorksheetExportService {
 			detailFont.setFontName(ExcelUtils.FONT_NAME.TH_SARABUN_PSK);
 			
 			// Cell Style
+			CellStyle cellTitleStyle = (XSSFCellStyle) workbook.createCellStyle();
+			cellTitleStyle.setAlignment(HorizontalAlignment.CENTER);
+			cellTitleStyle.setFont(headerFont);
 			CellStyle cellHeaderStyle = ExcelUtils.createThColorStyle(workbook, new XSSFColor(Color.LIGHT_GRAY));
 			cellHeaderStyle.setFont(headerFont);
 			CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
@@ -868,6 +953,32 @@ public class WorksheetExportService {
 			Cell cell = null;
 			int rowNum = 0;
 			int cellNum = 0;
+			
+			// Title
+			// Report Name
+			row = sheet.createRow(rowNum);
+			row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+			cellNum = 0;
+			cell = row.createCell(cellNum);
+			cell.setCellValue(titleName);
+			cell.setCellStyle(cellTitleStyle);
+			rowNum++;
+			// Office Name
+			row = sheet.createRow(rowNum);
+			row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+			cellNum = 0;
+			cell = row.createCell(cellNum);
+			cell.setCellValue("สำนักงาน " + officeName);
+			cell.setCellStyle(cellTitleStyle);
+			rowNum++;
+			// Budget Year
+			row = sheet.createRow(rowNum);
+			row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+			cellNum = 0;
+			cell = row.createCell(cellNum);
+			cell.setCellValue("ประจำปีงบประมาณ " + formVo.getBudgetYear());
+			cell.setCellStyle(cellTitleStyle);
+			rowNum++;
 			
 			// Column Header
 			row = sheet.createRow(rowNum);
@@ -953,6 +1064,12 @@ public class WorksheetExportService {
 			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 10); // ภาค
 			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // พื้นที่
 			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 25); // พิกัด
+			
+			// Merge Column
+			int titleRow = 0;
+			sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 8));
+			sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 8));
+			sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 8));
 			
 			workbook.write(out);
 			content = out.toByteArray();
