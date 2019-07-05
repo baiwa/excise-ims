@@ -361,15 +361,15 @@ public class MasterConditionMainService {
 			vo.setCondNumber(dtl.getCondNumber());
 			vo.setCondGroup(dtl.getCondGroup());
 			if (TA_MAS_COND_MAIN_TYPE.OTHER.equals(dtl.getCondType())) {
-				vo.setCondTypeDesc(ApplicationCache.getParamInfoByCode("TA_MAS_COND_MAIN_DESC", "NEW_COMP").getValue1());
+				vo.setCondTypeDesc(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "NEW_COMP").getValue1());
 			} else {
 				vo.setTaxFreqType(dtl.getTaxFreqType());
 				vo.setTaxFreqTypeDesc(ApplicationCache.getParamInfoByCode("TA_MAIN_COND_FREQ_TYPE", dtl.getTaxFreqType()).getValue1());
 				vo.setRangeTypeStart(dtl.getRangeTypeStart());
-				vo.setRangeTypeStartDesc(ApplicationCache.getParamInfoByCode("TA_MAIN_COND_RANGE", dtl.getRangeTypeStart()).getValue1());
+				vo.setRangeTypeStartDesc(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAIN_COND_RANGE, dtl.getRangeTypeStart()).getValue1());
 				vo.setRangeTypeEnd(dtl.getRangeTypeEnd());
 				if (dtl.getRangeTypeEnd() != null) {
-					vo.setRangeTypeEndDesc(ApplicationCache.getParamInfoByCode("TA_MAIN_COND_RANGE", dtl.getRangeTypeEnd()).getValue1());
+					vo.setRangeTypeEndDesc(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAIN_COND_RANGE, dtl.getRangeTypeEnd()).getValue1());
 				}
 				vo.setRiskLevelDesc(ApplicationCache.getParamInfoByCode("TA_RISK_LEVEL", dtl.getRiskLevel()).getValue1());
 			}
@@ -433,7 +433,7 @@ public class MasterConditionMainService {
 					dtl.setRiskLevel(form.getRiskLevel());
 					dtl.setTaxMonthEnd(hdr.getMonthNum());
 					String condRange = "";
-					List<ParamInfo> mainCondRange = ApplicationCache.getParamInfoListByGroupCode("TA_MAIN_COND_RANGE");
+					List<ParamInfo> mainCondRange = ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.TA_MAIN_COND_RANGE);
 					for (ParamInfo param : mainCondRange) {
 						if (form.getRangeTypeStart().equals(param.getParamCode())) {
 							condRange = param.getValue1();
@@ -451,7 +451,7 @@ public class MasterConditionMainService {
 				String rangeTypeStart = form.getRangeTypeStart();
 				BigDecimal rangeStart = new BigDecimal(form.getRangeStart());
 				int num = 1;
-				List<ParamInfo> mainCondRange = ApplicationCache.getParamInfoListByGroupCode("TA_MAIN_COND_RANGE");
+				List<ParamInfo> mainCondRange = ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.TA_MAIN_COND_RANGE);
 				String condRange = "";
 				for (ParamInfo param : mainCondRange) {
 					if (rangeTypeStart.equals(param.getParamCode())) {

@@ -53,6 +53,7 @@ import th.go.excise.ims.ta.vo.PlanWorksheetStatus;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 import th.go.excise.ims.ta.vo.TaxOperatorVo;
+import th.go.excise.ims.ta.vo.WorksheetCondDetailVo;
 import th.go.excise.ims.ta.vo.YearMonthVo;
 
 @Controller
@@ -182,11 +183,11 @@ public class TaxOperatorController {
 
 	@PostMapping("/get-worksheet-cond-dtl")
 	@ResponseBody
-	public ResponseData<List<TaWorksheetCondMainDtl>> worksheetCondMainDtls(@RequestBody TaxOperatorFormVo formVo) {
-		ResponseData<List<TaWorksheetCondMainDtl>> response = new ResponseData<>();
+	public ResponseData<List<WorksheetCondDetailVo>> worksheetCondMainDtls(@RequestBody TaxOperatorFormVo formVo) {
+		ResponseData<List<WorksheetCondDetailVo>> response = new ResponseData<>();
 
 		try {
-			response.setData(worksheetService.worksheetCondMainDtls(formVo));
+			response.setData(worksheetService.getCondDetails(formVo));
 			response.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

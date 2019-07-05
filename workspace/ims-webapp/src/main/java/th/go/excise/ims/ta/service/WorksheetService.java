@@ -26,6 +26,7 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
+import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_MAIN_COND_RANGE;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.TA_SUB_COND_CAPITAL;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
@@ -58,6 +59,7 @@ import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
 import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 import th.go.excise.ims.ta.vo.TaxOperatorVo;
+import th.go.excise.ims.ta.vo.WorksheetCondDetailVo;
 import th.go.excise.ims.ta.vo.YearMonthVo;
 
 @Service
@@ -515,12 +517,37 @@ public class WorksheetService {
 		return taWorksheetDtlRepository.groupCondSubRisk(analysisNumber);
 	}
 
-	public List<TaWorksheetCondMainDtl> worksheetCondMainDtls(TaxOperatorFormVo formVo) {
+	public List<WorksheetCondDetailVo> getCondDetails(TaxOperatorFormVo formVo) {
+		String analysisNumber = null;
 		if (StringUtils.isNotBlank(formVo.getAnalysisNumber())) {
-			return taWorksheetCondMainDtlRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
+			analysisNumber = formVo.getAnalysisNumber();
 		} else {
-			return taWorksheetCondMainDtlRepository.findByAnalysisNumber(formVo.getDraftNumber());
+			analysisNumber = formVo.getDraftNumber();
 		}
+		logger.info("getCondDetails analysisNumber={}", analysisNumber);
+		
+		List<WorksheetCondDetailVo> voList = new ArrayList<>();
+		
+		// Condition 1
+		TaWorksheetCondSubNoAudit condSubNoAudit = taWorksheetCondSubNoAuditRepository.findByAnalysisNumber(analysisNumber);
+		String condDesc1 = String.format(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "NO_AUDIT").getValue1(), condSubNoAudit.getNoTaxAuditYearNum());
+		WorksheetCondDetailVo condVo1 = new WorksheetCondDetailVo();
+		condVo1.setCondGroup("1");
+		condVo1.setCondDtlDesc(condDesc1);
+		voList.add(condVo1);
+		
+		List<TaWorksheetCondMainDtl> condMainDtlList = taWorksheetCondMainDtlRepository.findByAnalysisNumber(analysisNumber);
+		int i = 2;
+		WorksheetCondDetailVo condVo = null;
+		for (TaWorksheetCondMainDtl condMainDtl : condMainDtlList) {
+			condVo = new WorksheetCondDetailVo();
+			condVo.setCondGroup(String.valueOf(i));
+			condVo.setCondDtlDesc(condMainDtl.getCondDtlDesc());
+			voList.add(condVo);
+			i++;
+		}
+		
+		return voList;
 	}
 
 	public TaWorksheetHdr checkEvaluateCondition(TaxOperatorFormVo formVo) {
