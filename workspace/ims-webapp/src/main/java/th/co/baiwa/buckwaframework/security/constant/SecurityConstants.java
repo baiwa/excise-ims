@@ -35,4 +35,6 @@ public class SecurityConstants {
 		public static final String BATCH = "BATCH";
 	}
 	
+	public static final String LOGOUT_FLAG = "logoutFlag";
+	
 }

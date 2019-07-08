@@ -7,7 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
@@ -29,21 +28,10 @@ public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthent
 
 	private Logger logger = LoggerFactory.getLogger(WebServiceAuthenticationProvider.class);
 
-
-	// @Autowired
-	// private WebServiceExciseService webServiceExciseService;
-
 	@Autowired
 	private LDPAGAuthenAndGetUserRolePortType loginLdapProxy;
-
 	@Autowired
 	private ExcisePersonRepository excisePersonRepository;
-	
-	@Autowired
-	private CustomAuthenticationProvider customAuthenticationProvider;
-	
-	@Value("${user.list.test}")
-	private String userListTest;
 
 	@Override
 	protected void additionalAuthenticationChecks(org.springframework.security.core.userdetails.UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
@@ -79,8 +67,6 @@ public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthent
 			userDetails.setTitle(response.getTitle());
 			userDetails.setOfficeCode(response.getOfficeId());
 			addAdditionalInfo(userDetails);
-		}else if(userListTest.indexOf(username) >= 0) {
-			userDetails = (UserDetails) customAuthenticationProvider.retrieveUser(username, authentication);
 		} else {
 			throw new BadCredentialsException(response.getMessage().getDescription());
 		}

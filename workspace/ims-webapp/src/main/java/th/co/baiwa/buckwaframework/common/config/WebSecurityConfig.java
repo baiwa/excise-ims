@@ -2,9 +2,9 @@ package th.co.baiwa.buckwaframework.common.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,21 +16,26 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 
 @Configuration
 @EnableWebSecurity
-@Profile(value = { "!" + PROFILE.UAT, "!" + PROFILE.PROD })
 public class WebSecurityConfig {
+	
+	@Value("${spring.profiles.active}")
+	private String profileActive;
 	
 	@Autowired
 	@Qualifier("customAuthenticationProvider")
 	private AuthenticationProvider customAuthenticationProvider;
 	
 	@Autowired
-	@Qualifier("jdbcAuthenticationProvider")
-	private AuthenticationProvider jdbcAuthenticationProvider;
+	@Qualifier("wsAuthenticationProvider")
+	private AuthenticationProvider wsAuthenticationProvider;
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(customAuthenticationProvider);
-		//auth.authenticationProvider(jdbcAuthenticationProvider);
+		if (PROFILE.PROD.equals(profileActive)) {
+			auth.authenticationProvider(wsAuthenticationProvider);
+		} else {
+			auth.authenticationProvider(customAuthenticationProvider);
+		}
 	}
 	
 	@Bean(name = "passwordEncoder")

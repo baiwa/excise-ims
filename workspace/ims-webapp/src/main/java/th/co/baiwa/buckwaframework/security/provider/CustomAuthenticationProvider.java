@@ -1,6 +1,5 @@
 package th.co.baiwa.buckwaframework.security.provider;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,17 +22,14 @@ import th.co.baiwa.buckwaframework.security.persistence.entity.WsRole;
 import th.co.baiwa.buckwaframework.security.persistence.entity.WsUser;
 import th.co.baiwa.buckwaframework.security.persistence.repository.WsUserRepository;
 import th.co.baiwa.buckwaframework.security.persistence.repository.WsUserRoleRepository;
+import th.go.excise.dexsrvint.schema.authenandgetuserrole.AuthenAndGetUserRoleRequest;
+import th.go.excise.dexsrvint.schema.authenandgetuserrole.AuthenAndGetUserRoleResponse;
 import th.go.excise.dexsrvint.schema.ldapuserbase.MessageBase;
 import th.go.excise.dexsrvint.schema.ldapuserbase.RoleBase;
 import th.go.excise.dexsrvint.schema.ldapuserbase.RolesBase;
 import th.go.excise.dexsrvint.wsdl.ldapgateway.ldpagauthenandgetuserrole.LDPAGAuthenAndGetUserRolePortType;
-import th.go.excise.dexsrvint.schema.authenandgetuserrole.AuthenAndGetUserRoleRequest;
-import th.go.excise.dexsrvint.schema.authenandgetuserrole.AuthenAndGetUserRoleResponse;
-import th.go.excise.ims.preferences.persistence.entity.ExciseAuthenHit;
 import th.go.excise.ims.preferences.persistence.entity.ExcisePerson;
 import th.go.excise.ims.preferences.persistence.repository.ExcisePersonRepository;
-import th.go.excise.ims.preferences.service.ExciseAuthenHitService;
-import th.go.excise.ims.preferences.service.ExcisePersonService;
 
 @Component("customAuthenticationProvider")
 public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
@@ -42,37 +38,23 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
 
 	@Autowired
 	private WsUserRepository wsUserRepository;
-
 	@Autowired
 	private WsUserRoleRepository wsUserRoleRepository;
-
+	@Autowired
+	private LDPAGAuthenAndGetUserRolePortType loginLdapProxy;
 	@Autowired
 	private ExcisePersonRepository excisePersonRepository;
 
-	@Autowired
-	private LDPAGAuthenAndGetUserRolePortType loginLdapProxy;
-	
-	@Autowired
-	private ExcisePersonService excisePersonService;
-	
-	@Autowired
-	private ExciseAuthenHitService exciseAuthenHitService;
-
-	@Value("${user.list.test}")
-	private String userListTest;
-
 	@Value("${spring.profiles.active}")
-	private String env;
+	private String profileActive;
 
 	@Override
-	protected void additionalAuthenticationChecks(org.springframework.security.core.userdetails.UserDetails userDetails,
-			UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-
+	protected void additionalAuthenticationChecks(org.springframework.security.core.userdetails.UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
+		
 	}
 
 	@Override
-	protected org.springframework.security.core.userdetails.UserDetails retrieveUser(String username,
-			UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
+	protected org.springframework.security.core.userdetails.UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
 		logger.info("CustomAuthenticationProvider : {}", username);
 		String password = authentication.getCredentials().toString();
 		UserDetails userDetails = null;
@@ -100,7 +82,7 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
 			userDetails.setUserThaiSurname(response.getUserThaiSurname());
 			userDetails.setTitle(response.getTitle());
 			userDetails.setOfficeCode(response.getOfficeId());
-		} else if (PROFILE.UAT.equals(env)) {
+		} else if (PROFILE.UAT.equals(profileActive)) {
 			AuthenAndGetUserRoleRequest ldap = new AuthenAndGetUserRoleRequest();
 			ldap.setUserId(username);
 			ldap.setPassword(password);
@@ -122,23 +104,13 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
 				userDetails.setUserThaiSurname(response.getUserThaiSurname());
 				userDetails.setTitle(response.getTitle());
 				userDetails.setOfficeCode(response.getOfficeId());
-				//Check Excise Person
-				ExcisePerson excisePerson = excisePersonService.checkAccountByLdapLogin(userDetails);
-				// #############
-				// insert hitory
-				ExciseAuthenHit exciseAuthenHit = new ExciseAuthenHit();
-				exciseAuthenHit.setActionType("1");
-				exciseAuthenHit.setExcisePersonId(excisePerson.getEdPersonSeq());
-				exciseAuthenHit.setTime(LocalDateTime.now());
-				exciseAuthenHit.setUserId(username);
-				exciseAuthenHitService.save(exciseAuthenHit);
-				// #############
-				
 			} else {
 				throw new BadCredentialsException(response.getMessage().getDescription());
 			}
 		}
+		
 		addAdditionalInfo(userDetails);
+		
 		return userDetails;
 	}
 

@@ -4,6 +4,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -37,6 +38,20 @@ public class WebContextUtils {
 	public static ServletContext getServletContext() {
 		ServletContext context = getHttpSession().getServletContext();
 		return context;
+	}
+	
+	public static String getIpAddress() {
+		String remoteAddress = null;
+		HttpServletRequest request = getHttpServletRequest();
+		
+		if (request != null) {
+			remoteAddress = request.getHeader("X-FORWADED-FOR");
+			if (StringUtils.isEmpty(remoteAddress)) {
+				remoteAddress = request.getRemoteAddr();
+			}
+		}
+		
+		return remoteAddress;
 	}
 	
 }

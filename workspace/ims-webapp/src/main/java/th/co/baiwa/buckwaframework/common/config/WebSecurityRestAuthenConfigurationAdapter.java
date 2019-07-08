@@ -18,6 +18,7 @@ import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.ROLE;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.URL;
 import th.co.baiwa.buckwaframework.security.rest.entrypoint.RestAuthenticationEntryPoint;
 import th.co.baiwa.buckwaframework.security.rest.handler.RestAuthenticationSuccessHandler;
+import th.co.baiwa.buckwaframework.security.rest.handler.RestLogoutHandler;
 import th.co.baiwa.buckwaframework.security.rest.handler.RestLogoutSuccessHandler;
 
 @Configuration
@@ -49,6 +50,7 @@ public class WebSecurityRestAuthenConfigurationAdapter extends WebSecurityConfig
 			.and()
 			.logout()
 				.permitAll()
+				.addLogoutHandler(restLogoutHandler())
 				.logoutRequestMatcher(new AntPathRequestMatcher(URL.LOGIN_REST, HttpMethod.DELETE.toString()))
 				.logoutSuccessHandler(restLogoutSuccessHandler())
 			.and()
@@ -61,10 +63,7 @@ public class WebSecurityRestAuthenConfigurationAdapter extends WebSecurityConfig
 //				.sessionRegistry(sessionRegistry())
 				;
 		
-		http
-		   .headers()
-		      .frameOptions()
-		         .sameOrigin();
+		http.headers().frameOptions().sameOrigin();
 		
 		http.csrf().disable();
 	}
@@ -77,6 +76,11 @@ public class WebSecurityRestAuthenConfigurationAdapter extends WebSecurityConfig
 	@Bean
 	public SimpleUrlAuthenticationFailureHandler restAuthenticationFailureHandler() {
 		return new SimpleUrlAuthenticationFailureHandler();
+	}
+	
+	@Bean
+	public RestLogoutHandler restLogoutHandler() {
+		return new RestLogoutHandler();
 	}
 	
 	@Bean
