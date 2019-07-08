@@ -3,123 +3,123 @@ package th.go.excise.ims.ta.vo;
 import java.util.Date;
 
 public class TaFormTS0108DtlVo {
-	
-    private String formTs0108DtlId;
-    private String recNo;
-    private Date auditDate;
-    private String officerFullName;
-    private String officerPosition;
-    private String auditTime;
-    private String auditDest;
-    private String auditTopic;
-    private String approvedAck;
-    private String officerAck;
-    private String auditResultDocNo;
-    private Date auditResultDate;
-    private String auditComment;
 
-    public String getFormTs0108DtlId() {
-        return formTs0108DtlId;
-    }
+	private String formTs0108DtlId;
+	private String recNo;
+	private Date auditDate;
+	private String officerFullName;
+	private String officerPosition;
+	private String auditTime;
+	private String auditDest;
+	private String auditTopic;
+	private String approvedAck;
+	private String officerAck;
+	private String auditResultDocNo;
+	private Date auditResultDate;
+	private String auditComment;
 
-    public void setFormTs0108DtlId(String formTs0108DtlId) {
-        this.formTs0108DtlId = formTs0108DtlId;
-    }
+	public String getFormTs0108DtlId() {
+		return formTs0108DtlId;
+	}
 
-    public String getRecNo() {
-        return recNo;
-    }
+	public void setFormTs0108DtlId(String formTs0108DtlId) {
+		this.formTs0108DtlId = formTs0108DtlId;
+	}
 
-    public void setRecNo(String recNo) {
-        this.recNo = recNo;
-    }
+	public String getRecNo() {
+		return recNo;
+	}
 
-    public Date getAuditDate() {
-        return auditDate;
-    }
+	public void setRecNo(String recNo) {
+		this.recNo = recNo;
+	}
 
-    public void setAuditDate(Date auditDate) {
-        this.auditDate = auditDate;
-    }
+	public Date getAuditDate() {
+		return auditDate;
+	}
 
-    public String getOfficerFullName() {
-        return officerFullName;
-    }
+	public void setAuditDate(Date auditDate) {
+		this.auditDate = auditDate;
+	}
 
-    public void setOfficerFullName(String officerFullName) {
-        this.officerFullName = officerFullName;
-    }
+	public String getOfficerFullName() {
+		return officerFullName;
+	}
 
-    public String getOfficerPosition() {
-        return officerPosition;
-    }
+	public void setOfficerFullName(String officerFullName) {
+		this.officerFullName = officerFullName;
+	}
 
-    public void setOfficerPosition(String officerPosition) {
-        this.officerPosition = officerPosition;
-    }
+	public String getOfficerPosition() {
+		return officerPosition;
+	}
 
-    public String getAuditTime() {
-        return auditTime;
-    }
+	public void setOfficerPosition(String officerPosition) {
+		this.officerPosition = officerPosition;
+	}
 
-    public void setAuditTime(String auditTime) {
-        this.auditTime = auditTime;
-    }
+	public String getAuditTime() {
+		return auditTime;
+	}
 
-    public String getAuditDest() {
-        return auditDest;
-    }
+	public void setAuditTime(String auditTime) {
+		this.auditTime = auditTime;
+	}
 
-    public void setAuditDest(String auditDest) {
-        this.auditDest = auditDest;
-    }
+	public String getAuditDest() {
+		return auditDest;
+	}
 
-    public String getAuditTopic() {
-        return auditTopic;
-    }
+	public void setAuditDest(String auditDest) {
+		this.auditDest = auditDest;
+	}
 
-    public void setAuditTopic(String auditTopic) {
-        this.auditTopic = auditTopic;
-    }
+	public String getAuditTopic() {
+		return auditTopic;
+	}
 
-    public String getApprovedAck() {
-        return approvedAck;
-    }
+	public void setAuditTopic(String auditTopic) {
+		this.auditTopic = auditTopic;
+	}
 
-    public void setApprovedAck(String approvedAck) {
-        this.approvedAck = approvedAck;
-    }
+	public String getApprovedAck() {
+		return approvedAck;
+	}
 
-    public String getOfficerAck() {
-        return officerAck;
-    }
+	public void setApprovedAck(String approvedAck) {
+		this.approvedAck = approvedAck;
+	}
 
-    public void setOfficerAck(String officerAck) {
-        this.officerAck = officerAck;
-    }
+	public String getOfficerAck() {
+		return officerAck;
+	}
 
-    public String getAuditResultDocNo() {
-        return auditResultDocNo;
-    }
+	public void setOfficerAck(String officerAck) {
+		this.officerAck = officerAck;
+	}
 
-    public void setAuditResultDocNo(String auditResultDocNo) {
-        this.auditResultDocNo = auditResultDocNo;
-    }
+	public String getAuditResultDocNo() {
+		return auditResultDocNo;
+	}
 
-    public Date getAuditResultDate() {
-        return auditResultDate;
-    }
+	public void setAuditResultDocNo(String auditResultDocNo) {
+		this.auditResultDocNo = auditResultDocNo;
+	}
 
-    public void setAuditResultDate(Date auditResultDate) {
-        this.auditResultDate = auditResultDate;
-    }
+	public Date getAuditResultDate() {
+		return auditResultDate;
+	}
 
-    public String getAuditComment() {
-        return auditComment;
-    }
+	public void setAuditResultDate(Date auditResultDate) {
+		this.auditResultDate = auditResultDate;
+	}
 
-    public void setAuditComment(String auditComment) {
-        this.auditComment = auditComment;
-    }
+	public String getAuditComment() {
+		return auditComment;
+	}
+
+	public void setAuditComment(String auditComment) {
+		this.auditComment = auditComment;
+	}
 
 }
