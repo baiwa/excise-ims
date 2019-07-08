@@ -215,4 +215,11 @@ public class IaConstants {
 		public static final String VALUE_1_DESC_VI = "ค่าบริการสื่อสารและโทรคมนาคม";
 		
 	}
+	
+	public static class STATUS {
+    	public static final String PROCESS = "2048";
+    	public static final String PASS = "2055";
+    	public static final String NOT_PASS = "2056";
+    	public static final String SUCCESS = "2057";	    				    			   
+    }
 }
