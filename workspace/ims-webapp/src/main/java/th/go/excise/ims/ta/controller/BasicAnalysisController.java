@@ -24,7 +24,6 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
-import th.go.excise.ims.ta.persistence.entity.TaPaperBaH;
 import th.go.excise.ims.ta.service.BasicAnalysisService;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
 

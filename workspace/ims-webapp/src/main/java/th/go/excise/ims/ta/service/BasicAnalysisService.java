@@ -1,8 +1,10 @@
 package th.go.excise.ims.ta.service;
 
+import java.io.ByteArrayOutputStream;
 import java.time.LocalDate;
 import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.export.ExporterInputItem;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleExporterInputItem;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
@@ -157,28 +165,35 @@ public class BasicAnalysisService {
 		return formVo;
 	}
 	
-	public byte[] generateReport(String paperBaNumber) {
+	public byte[] generateReport(String paperBaNumber) throws Exception {
 		logger.info("generateReport paperBaNumber={}", paperBaNumber);
 		
 		BasicAnalysisFormVo formVo = new BasicAnalysisFormVo();
 		formVo.setPaperBaNumber(paperBaNumber);
-		
 		formVo = getPaperBaHeader(formVo);
-		TaPaperBaH paperBaH = taPaperBaHRepository.findByPaperBaNumber(paperBaNumber);
 		
 		TaxAuditDetailFormVo taxAuditDetailFormVo = new TaxAuditDetailFormVo();
-		taxAuditDetailFormVo.setAuditPlanCode(paperBaH.getAuditPlanCode());
+		taxAuditDetailFormVo.setAuditPlanCode(formVo.getAuditPlanCode());
 		TaxAuditDetailVo taxAuditDetailVo = taxAuditService.getOperatorDetailsByAuditPlanCode(taxAuditDetailFormVo);
 		
+		List<ExporterInputItem> items = new ArrayList<ExporterInputItem>();
+		JasperPrint jasperPrint = null;
+		byte[] content = null;
 		for (AbstractBasicAnalysisService service : basicAnalysisServiceMap.values()) {
-			try {
-				service.getJasperPrint(formVo, taxAuditDetailVo);
-			} catch (Exception e) {
-				logger.error(e.getMessage(), e);
-			}
+			jasperPrint = service.getJasperPrint(formVo, taxAuditDetailVo);
+			items.add(new SimpleExporterInputItem(jasperPrint));
+			
+			JRPdfExporter exporter = new JRPdfExporter();
+			exporter.setExporterInput(new SimpleExporterInput(items));
+
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
+			exporter.exportReport();
+			
+			content = outputStream.toByteArray();
 		}
 		
-		return null;
+		return content;
 	}
 	
 }
