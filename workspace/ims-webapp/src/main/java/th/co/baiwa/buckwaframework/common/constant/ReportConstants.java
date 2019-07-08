@@ -33,6 +33,17 @@ public class ReportConstants {
 	public static final class REPORT_NAME {
 		public static final String IA_EMP_WORKING = "IA_EMP_WORKING";
 		public static final String IA_EMP_WORKING_2 = "IA_EMP_WORKING_2";
+		// basic analysis
+		public static final String TA_PAPER_BA_D1 = "TA_PAPER_BA_D1";
+		public static final String TA_PAPER_BA_D2 = "TA_PAPER_BA_D2";
+		public static final String TA_PAPER_BA_D3 = "TA_PAPER_BA_D3";
+		public static final String TA_PAPER_BA_D4 = "TA_PAPER_BA_D4";
+		public static final String TA_PAPER_BA_D5 = "TA_PAPER_BA_D5";
+		public static final String TA_PAPER_BA_D6 = "TA_PAPER_BA_D6";
+		public static final String TA_PAPER_BA_D7 = "TA_PAPER_BA_D7";
+		public static final String TA_PAPER_BA_D8_Y1 = "TA_PAPER_BA_D8_Y1";
+		public static final String TA_PAPER_BA_D8_Y2 = "TA_PAPER_BA_D8_Y2";
+		public static final String TA_PAPER_BA_D8_Y3 = "TA_PAPER_BA_D8_Y3";
 		
 		public static final String TA_FORM_TS01_01 = "TA_FORM_TS01_01";
 		public static final String TA_FORM_TS01_02 = "TA_FORM_TS01_02";

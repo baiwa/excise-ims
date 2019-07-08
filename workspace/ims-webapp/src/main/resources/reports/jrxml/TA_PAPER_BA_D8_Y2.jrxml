@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_PAPER_BA_D8" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="800" leftMargin="20" rightMargin="22" topMargin="40" bottomMargin="40" isIgnorePagination="true" uuid="844b31d5-6231-44ba-8b68-d7f128e3c42f">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_PAPER_BA_D8_Y1" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="800" leftMargin="20" rightMargin="22" topMargin="40" bottomMargin="40" isIgnorePagination="true" uuid="844b31d5-6231-44ba-8b68-d7f128e3c42f">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<parameter name="docPlace" class="java.lang.String"/>
-	<parameter name="testimonyText" class="java.lang.String"/>
-	<parameter name="refDocDate" class="java.util.Date"/>
+	<parameter name="newRegId" class="java.lang.String"/>
+	<parameter name="dutyGroupId" class="java.lang.String"/>
+	<parameter name="facFullname" class="java.lang.String"/>
+	<parameter name="auJobResp" class="java.lang.String"/>
+	<parameter name="paperBaNumber" class="java.lang.String"/>
+	<parameter name="startDate" class="java.util.Date"/>
+	<parameter name="endDate" class="java.util.Date"/>
+	<parameter name="yearIncType" class="java.lang.String"/>
+	<parameter name="yearNum" class="java.lang.String"/>
+	<parameter name="commentText8" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="recNo" class="java.lang.String"/>
-	<field name="docName" class="java.lang.String"/>
-	<field name="docQty" class="java.lang.String"/>
-	<field name="docComment" class="java.lang.String"/>
+	<field name="no" class="java.lang.String"/>
+	<field name="taxMonth" class="java.lang.String"/>
+	<field name="incomeCurrentYearAmt" class="java.lang.String"/>
+	<field name="incomeLastYear1Amt" class="java.lang.String"/>
+	<field name="diffIncomeLastYear1Amt" class="java.lang.String"/>
+	<field name="diffIncomeLastYear1Pnt" class="java.lang.String"/>
+	<field name="incomeLastYear2Amt" class="java.lang.String"/>
+	<field name="diffIncomeLastYear2Amt" class="java.lang.String"/>
+	<field name="diffIncomeLastYear2Pnt" class="java.lang.String"/>
 	<title>
 		<band height="101" splitType="Stretch">
 			<textField>
@@ -41,7 +53,7 @@
 				<textElement textAlignment="Left">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{docPlace}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{newRegId}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="105" y="40" width="135" height="1" uuid="75439041-561b-4271-a61d-7f432b5ef7bd"/>
@@ -61,7 +73,7 @@
 				<textElement textAlignment="Left">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{docPlace}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{dutyGroupId}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="340" y="40" width="190" height="1" uuid="54e1099a-4e07-4629-83af-874085e3e0aa"/>
@@ -88,7 +100,7 @@
 				<textElement textAlignment="Left">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{docPlace}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{facFullname}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="140" y="62" width="390" height="1" uuid="8e7c6c97-2e9f-4009-9af9-7b8fcfdfca48"/>
@@ -128,7 +140,7 @@
 				<textElement textAlignment="Left">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{docPlace}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{auJobResp}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="122" y="84" width="100" height="1" uuid="249a81ff-2e15-46b4-a563-5f130d320ab3"/>
@@ -168,7 +180,7 @@
 				<textElement textAlignment="Left">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{docPlace}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{paperBaNumber}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="122" y="69" width="98" height="22" uuid="d337315b-4c5a-4c06-894d-60d0e0270424"/>
@@ -182,7 +194,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{refDocDate})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{startDate})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="225" y="69" width="15" height="22" uuid="535fd204-51ef-4766-bfa3-f3970dcb0e2e"/>
@@ -209,7 +221,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{refDocDate})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{endDate})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="366" y="69" width="154" height="22" uuid="7779e99f-2040-47ef-8871-9d1d618e9d9b"/>
@@ -223,14 +235,14 @@
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA["1".equals( $P{docPlace} )?"\u2611" : "\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["1".equals( $P{yearIncType} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="530" y="69" width="20" height="22" uuid="134f8be8-b991-4445-8ea3-2331f63a6b5a"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA["2".equals( $P{docPlace} )?"\u2611" : "\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["2".equals( $P{yearIncType} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="550" y="69" width="130" height="22" uuid="3f16f86a-53d2-46d8-926e-d5f04271d1dc"/>
@@ -255,10 +267,10 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{docPlace}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["2"]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="732" y="84" width="48" height="1" uuid="d5f95b2a-27ba-4ed6-8224-e4d8d721cdff"/>
@@ -298,27 +310,27 @@
 				<textFieldExpression><![CDATA["เดือน"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="188" y="0" width="68" height="45" uuid="a62032f0-309b-4d07-9029-8e646c84b589"/>
+				<reportElement x="200" y="0" width="100" height="45" uuid="a62032f0-309b-4d07-9029-8e646c84b589"/>
 				<box>
 					<pen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA["รายได้ปีย้อน-\nหลัง 1 ปี (บาท)"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["รายได้ปีย้อนหลัง 1 ปี (บาท)"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="256" y="0" width="68" height="45" uuid="a4ea6029-bcc1-4816-804a-86ed767474d9"/>
+				<reportElement x="300" y="0" width="100" height="45" uuid="a4ea6029-bcc1-4816-804a-86ed767474d9"/>
 				<box>
 					<pen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA["ผลต่างย้อน-\nหลัง 1 ปี (บาท)"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ผลต่างย้อนหลัง 1 ปี (บาท)"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="324" y="0" width="68" height="45" uuid="3d57ee7a-67bc-4379-8700-9be24533c9ae"/>
+				<reportElement x="400" y="0" width="100" height="45" uuid="3d57ee7a-67bc-4379-8700-9be24533c9ae"/>
 				<box>
 					<pen lineWidth="0.5"/>
 				</box>
@@ -328,7 +340,7 @@
 				<textFieldExpression><![CDATA["ผลต่างย้อนหลัง 1 ปี (ร้อยละ)"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="100" y="0" width="88" height="45" uuid="7f3f1221-1d1d-479c-8404-c4638b189b5e"/>
+				<reportElement x="100" y="0" width="100" height="45" uuid="7f3f1221-1d1d-479c-8404-c4638b189b5e"/>
 				<box>
 					<pen lineWidth="0.5"/>
 				</box>
@@ -338,27 +350,27 @@
 				<textFieldExpression><![CDATA["รายได้ปีปัจจุบัน (บาท)"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="392" y="0" width="68" height="45" uuid="f9ca7abd-8618-443a-8792-9c4244247318"/>
+				<reportElement x="500" y="0" width="100" height="45" uuid="f9ca7abd-8618-443a-8792-9c4244247318"/>
 				<box>
 					<pen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA["รายได้ปีย้อน-\nหลัง 2 ปี (บาท)"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["รายได้ปีย้อนหลัง 2 ปี (บาท)"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="460" y="0" width="68" height="45" uuid="679f65c0-840f-4ee9-9b47-41943252abf9"/>
+				<reportElement x="600" y="0" width="100" height="45" uuid="679f65c0-840f-4ee9-9b47-41943252abf9"/>
 				<box>
 					<pen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA["ผลต่างย้อน-\nหลัง 2 ปี (บาท)"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ผลต่างย้อนหลัง 2 ปี (บาท)"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="528" y="0" width="68" height="45" uuid="42e233da-5f58-4c31-905e-1febd7e2ee59"/>
+				<reportElement x="700" y="0" width="100" height="45" uuid="42e233da-5f58-4c31-905e-1febd7e2ee59"/>
 				<box>
 					<pen lineWidth="0.5"/>
 				</box>
@@ -366,36 +378,6 @@
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA["ผลต่างย้อนหลัง 2 ปี (ร้อยละ)"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="596" y="0" width="68" height="45" uuid="a41c615a-cc0a-4678-8703-2e9ded95f931"/>
-				<box>
-					<pen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="TH Sarabun New" size="16"/>
-				</textElement>
-				<textFieldExpression><![CDATA["รายได้ปีย้อน-\nหลัง 3 ปี (บาท)"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="664" y="0" width="68" height="45" uuid="e4dfe048-2d40-4700-91c7-1c675c368c75"/>
-				<box>
-					<pen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="TH Sarabun New" size="16"/>
-				</textElement>
-				<textFieldExpression><![CDATA["ผลต่างย้อน-\nหลัง 3 ปี (บาท)"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="732" y="0" width="68" height="45" uuid="cbe61cc6-bdae-4811-8bdf-f972fcbec4e7"/>
-				<box>
-					<pen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="TH Sarabun New" size="16"/>
-				</textElement>
-				<textFieldExpression><![CDATA["ผลต่างย้อนหลัง 3 ปี (ร้อยละ)"]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
@@ -409,17 +391,17 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{recNo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="188" y="0" width="68" height="22" uuid="b336dcae-4b87-4c69-a860-5549e94a6872"/>
+				<reportElement x="200" y="0" width="100" height="22" uuid="b336dcae-4b87-4c69-a860-5549e94a6872"/>
 				<box>
 					<pen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{docQty}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{incomeLastYear1Amt}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="30" y="0" width="70" height="22" uuid="b8148e8a-e9bd-4172-867a-1e59b76e509c"/>
@@ -429,97 +411,67 @@
 				<textElement textAlignment="Left">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{docName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{taxMonth}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="100" y="0" width="88" height="22" uuid="a5c3f59b-5de3-449b-8a33-88366a2e2cdf"/>
+				<reportElement x="100" y="0" width="100" height="22" uuid="a5c3f59b-5de3-449b-8a33-88366a2e2cdf"/>
 				<box>
 					<pen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{docQty}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{incomeCurrentYearAmt}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="256" y="0" width="68" height="22" uuid="d1779d19-532b-4962-a6fd-75c349e7d5e9"/>
+				<reportElement x="300" y="0" width="100" height="22" uuid="d1779d19-532b-4962-a6fd-75c349e7d5e9"/>
 				<box>
 					<pen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{docQty}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{diffIncomeLastYear1Amt}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="324" y="0" width="68" height="22" uuid="4886ede7-332f-4788-8a48-37678b88a012"/>
+				<reportElement x="400" y="0" width="100" height="22" uuid="4886ede7-332f-4788-8a48-37678b88a012"/>
 				<box>
 					<pen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{docQty}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{diffIncomeLastYear1Pnt}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="460" y="0" width="68" height="22" uuid="d4481926-ce4e-435f-841b-1e106d23acec"/>
+				<reportElement x="600" y="0" width="100" height="22" uuid="d4481926-ce4e-435f-841b-1e106d23acec"/>
 				<box>
 					<pen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{docQty}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{diffIncomeLastYear2Amt}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="392" y="0" width="68" height="22" uuid="c4f382b3-d21b-4644-a89c-db9c1f404eee"/>
+				<reportElement x="500" y="0" width="100" height="22" uuid="c4f382b3-d21b-4644-a89c-db9c1f404eee"/>
 				<box>
 					<pen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{docQty}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{incomeLastYear2Amt}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="528" y="0" width="68" height="22" uuid="fda94c0b-261c-4c02-8db7-2a3991a22850"/>
+				<reportElement x="700" y="0" width="100" height="22" uuid="fda94c0b-261c-4c02-8db7-2a3991a22850"/>
 				<box>
 					<pen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{docQty}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="732" y="0" width="68" height="22" uuid="b0f288e0-8293-4f6d-a443-d447f5ab8fb3"/>
-				<box>
-					<pen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New" size="16"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{docQty}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="596" y="0" width="68" height="22" uuid="640fc9ef-4a89-45a7-98ff-a966ba83a458"/>
-				<box>
-					<pen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New" size="16"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{docQty}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="664" y="0" width="68" height="22" uuid="0a178559-c598-4943-86ae-3688ce9ac8f4"/>
-				<box>
-					<pen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="TH Sarabun New" size="16"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{docQty}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{diffIncomeLastYear2Pnt}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -555,7 +507,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{testimonyText}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{commentText8}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

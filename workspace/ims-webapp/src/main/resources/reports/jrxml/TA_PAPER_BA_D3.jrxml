@@ -2,16 +2,21 @@
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TA_PAPER_BA_D3" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="55" isIgnorePagination="true" uuid="844b31d5-6231-44ba-8b68-d7f128e3c42f">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-	<parameter name="docPlace" class="java.lang.String"/>
-	<parameter name="testimonyText" class="java.lang.String"/>
-	<parameter name="refDocDate" class="java.util.Date"/>
+	<parameter name="newRegId" class="java.lang.String"/>
+	<parameter name="dutyGroupId" class="java.lang.String"/>
+	<parameter name="facFullname" class="java.lang.String"/>
+	<parameter name="auJobResp" class="java.lang.String"/>
+	<parameter name="paperBaNumber" class="java.lang.String"/>
+	<parameter name="startDate" class="java.lang.String"/>
+	<parameter name="endDate" class="java.lang.String"/>
+	<parameter name="commentText3" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="recNo" class="java.lang.String"/>
-	<field name="docName" class="java.lang.String"/>
-	<field name="docQty" class="java.lang.String"/>
-	<field name="docComment" class="java.lang.String"/>
+	<field name="goodsDescText" class="java.lang.String"/>
+	<field name="taxQty" class="java.math.BigDecimal"/>
+	<field name="informPrice" class="java.math.BigDecimal"/>
+	<field name="goodsValueAmt" class="java.math.BigDecimal"/>
 	<title>
 		<band height="120" splitType="Stretch">
 			<textField>
@@ -40,7 +45,7 @@
 				<textElement textAlignment="Left">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{docPlace}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{newRegId}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="105" y="40" width="115" height="1" uuid="75439041-561b-4271-a61d-7f432b5ef7bd"/>
@@ -60,7 +65,7 @@
 				<textElement textAlignment="Left">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{docPlace}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{dutyGroupId}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="320" y="40" width="140" height="1" uuid="54e1099a-4e07-4629-83af-874085e3e0aa"/>
@@ -87,7 +92,7 @@
 				<textElement textAlignment="Left">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{docPlace}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{facFullname}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="140" y="62" width="320" height="1" uuid="8e7c6c97-2e9f-4009-9af9-7b8fcfdfca48"/>
@@ -127,7 +132,7 @@
 				<textElement textAlignment="Left">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{docPlace}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{auJobResp}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="122" y="106" width="100" height="1" uuid="249a81ff-2e15-46b4-a563-5f130d320ab3"/>
@@ -167,7 +172,7 @@
 				<textElement textAlignment="Left">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{docPlace}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{paperBaNumber}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="122" y="91" width="98" height="22" uuid="d337315b-4c5a-4c06-894d-60d0e0270424"/>
@@ -181,7 +186,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{refDocDate})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{startDate}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="225" y="91" width="15" height="22" uuid="535fd204-51ef-4766-bfa3-f3970dcb0e2e"/>
@@ -208,7 +213,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{refDocDate})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{endDate}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -277,7 +282,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{recNo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="30" y="0" width="140" height="22" uuid="b8148e8a-e9bd-4172-867a-1e59b76e509c"/>
@@ -287,37 +292,37 @@
 				<textElement textAlignment="Left">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{docName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{goodsDescText}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="170" y="0" width="120" height="22" uuid="b336dcae-4b87-4c69-a860-5549e94a6872"/>
-				<box>
+				<box leftPadding="4" rightPadding="4">
 					<pen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Right">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{docQty}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{taxQty}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="290" y="0" width="110" height="22" uuid="4bdc7c45-fe86-4e65-8f59-8f0525be3d05"/>
-				<box leftPadding="4">
+				<box leftPadding="4" rightPadding="4">
 					<pen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Right">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{docComment}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{informPrice}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="400" y="0" width="60" height="22" uuid="19545da1-fc61-4b14-b4bf-b56e0268f74b"/>
-				<box leftPadding="4">
+				<box leftPadding="4" rightPadding="4">
 					<pen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Right">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{docComment}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{goodsValueAmt}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -353,7 +358,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{testimonyText}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{commentText3}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="69" width="460" height="22" uuid="a89cffdd-9200-4611-b858-48f882afb63f"/>

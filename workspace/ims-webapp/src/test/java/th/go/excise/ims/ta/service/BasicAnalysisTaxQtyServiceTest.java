@@ -44,7 +44,7 @@ public class BasicAnalysisTaxQtyServiceTest {
 	@Autowired
 	private BasicAnalysisTaxQtyService basicAnalysisTaxQtyService;
 	
-	@Test
+//	@Test
 	public void test_inquiry() {
 		BasicAnalysisFormVo formVo = new BasicAnalysisFormVo();
 		formVo.setNewRegId("01075440001081002");
@@ -73,7 +73,7 @@ public class BasicAnalysisTaxQtyServiceTest {
 	
 	@Test
 	public void test_getJasperPrint() throws Exception {
-		String paperBaNumber = "";
+		String paperBaNumber = "001402-2563-000001";
 		
 		BasicAnalysisFormVo formVo = new BasicAnalysisFormVo();
 		formVo.setPaperBaNumber(paperBaNumber);

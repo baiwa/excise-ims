@@ -1,11 +1,14 @@
 package th.go.excise.ims.ta.service;
 
+import java.math.BigDecimal;
 import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -14,7 +17,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
+import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperBaD3;
 import th.go.excise.ims.ta.persistence.repository.TaPaperBaD3Repository;
 import th.go.excise.ims.ta.vo.BasicAnalysisFormVo;
@@ -104,7 +112,32 @@ public class BasicAnalysisTaxValueService extends AbstractBasicAnalysisService<B
 	protected JasperPrint getJasperPrint(BasicAnalysisFormVo formVo, TaxAuditDetailVo taxAuditDetailVo) throws Exception {
 		logger.info("generateReport paperBaNumber={}", formVo.getPaperBaNumber());
 		
-		return null;
+		// set data to report
+		Map<String, Object> params = new HashMap<>();
+		params.put("newRegId", formVo.getNewRegId());
+		params.put("dutyGroupId", taxAuditDetailVo.getWsRegfri4000Vo().getRegDutyList().get(0).getGroupName());
+		params.put("facFullname", taxAuditDetailVo.getWsRegfri4000Vo().getFacFullname());
+		params.put("auJobResp", taxAuditDetailVo.getAuJobResp());
+		params.put("paperBaNumber", formVo.getPaperBaNumber());
+		params.put("startDate", formVo.getStartDate());
+		params.put("endDate", formVo.getEndDate());
+		params.put("commentText3", formVo.getCommentText3());
+		
+		List<BasicAnalysisTaxValueVo> dataList = new ArrayList<>();
+		BasicAnalysisTaxValueVo data = new BasicAnalysisTaxValueVo();
+		for (int i = 0; i < 5; i++) {
+			data.setGoodsDescText("GoodsDesc");
+			data.setTaxQty(new BigDecimal(10.00));
+			data.setInformPrice(new BigDecimal(30.00));
+			data.setGoodsValueAmt(new BigDecimal(20.00));		
+			dataList.add(data);
+		}
+		
+		JRDataSource dataSource = new JRBeanCollectionDataSource(dataList);
+		
+		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_PAPER_BA_D3 + "." + FILE_EXTENSION.JASPER, params, dataSource);
+		
+		return jasperPrint;
 	}
 
 }

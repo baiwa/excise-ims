@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,10 +16,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
+import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperBaD7;
 import th.go.excise.ims.ta.persistence.repository.TaPaperBaD7Repository;
 import th.go.excise.ims.ta.persistence.repository.TaWsInc8000MRepository;
@@ -149,7 +155,33 @@ public class BasicAnalysisIncomeCompareLastMonthService extends AbstractBasicAna
 	protected JasperPrint getJasperPrint(BasicAnalysisFormVo formVo, TaxAuditDetailVo taxAuditDetailVo) throws Exception {
 		logger.info("generateReport paperBaNumber={}", formVo.getPaperBaNumber());
 		
-		return null;
+		// set data to report
+		Map<String, Object> params = new HashMap<>();
+		params.put("newRegId", formVo.getNewRegId());
+		params.put("dutyGroupId", taxAuditDetailVo.getWsRegfri4000Vo().getRegDutyList().get(0).getGroupName());
+		params.put("facFullname", taxAuditDetailVo.getWsRegfri4000Vo().getFacFullname());
+		params.put("auJobResp", taxAuditDetailVo.getAuJobResp());
+		params.put("paperBaNumber", formVo.getPaperBaNumber());
+		params.put("startDate", formVo.getStartDate());
+		params.put("endDate", formVo.getEndDate());
+		params.put("monthIncType", formVo.getMonthIncomeType());
+		params.put("commentText7", formVo.getCommentText7());
+		
+		List<BasicAnalysisIncomeCompareLastMonthVo> dataList = new ArrayList<>();
+		BasicAnalysisIncomeCompareLastMonthVo data = new BasicAnalysisIncomeCompareLastMonthVo();
+		for (int i = 0; i < 5; i++) {
+			data.setTaxMonth("มกราคม 2562");
+			data.setIncomeAmt(String.valueOf(i+1)+".00");
+			data.setDiffIncomeAmt(String.valueOf(i+2)+".00");
+			data.setDiffIncomePnt(String.valueOf(i+3)+".00");		
+			dataList.add(data);
+		}
+		
+		JRDataSource dataSource = new JRBeanCollectionDataSource(dataList);
+		
+		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_PAPER_BA_D7 + "." + FILE_EXTENSION.JASPER, params, dataSource);
+		
+		return jasperPrint;
 	}
 	
 }
