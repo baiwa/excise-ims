@@ -101,6 +101,7 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 						// Exist Page
 						formTs0110.setTestimonyOf(formTS0110Vo.getTestimonyOf());
 						formTs0110.setTestimonyText(subFormTS0110Vo.getTestimonyText());
+						formTs0110.setAuditPlanCode(formTS0110Vo.getAuditPlanCode());
 						formTs0110.setIsDeleted(FLAG.N_FLAG);
 					} else {
 						// New Page
@@ -109,6 +110,7 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 						formTs0110.setOfficeCode(officeCode);
 						formTs0110.setBudgetYear(budgetYear);
 						formTs0110.setFormTsNumber(formTS0110Vo.getFormTsNumber());
+						formTs0110.setAuditPlanCode(formTS0110Vo.getAuditPlanCode());
 						taFormTs0110List.add(formTs0110);
 					}
 				}
@@ -139,6 +141,7 @@ public class TaFormTS0110Service extends AbstractTaFormTSService<TaFormTS0110Vo,
 					formTs0110.setOfficeCode(officeCode);
 					formTs0110.setBudgetYear(budgetYear);
 					formTs0110.setFormTsNumber(formTsNumber);
+					formTs0110.setAuditPlanCode(formTS0110Vo.getAuditPlanCode());
 					formTs0110List.add(formTs0110);
 				}
 			}
