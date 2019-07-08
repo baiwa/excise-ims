@@ -511,14 +511,14 @@ public class TaxOperatorController {
 		return responseData;
 	}
 
-	@DeleteMapping("/delete-plan-worksheet-dtl/{id}")
+	@DeleteMapping("/delete-plan-worksheet-dtl/{id}/{budgetyear}")
 	@ResponseBody
-	public ResponseData<?> deletePlanWorksheetDlt(@PathVariable("id") String id) {
+	public ResponseData<?> deletePlanWorksheetDlt(@PathVariable("id") String id,@PathVariable("budgetyear") String budgetyear) {
 
 		ResponseData<?> responseData = new ResponseData<>();
 
 		try {
-			planWorksheetService.deletePlanWorksheetDlt(id);
+			planWorksheetService.deletePlanWorksheetDlt(id,budgetyear);
 			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.DELETE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {

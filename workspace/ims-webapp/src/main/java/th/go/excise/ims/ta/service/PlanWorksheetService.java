@@ -312,9 +312,9 @@ public class PlanWorksheetService {
 	}
 
 	@Transactional
-	public void deletePlanWorksheetDlt(String id) {
+	public void deletePlanWorksheetDlt(String id,String budgetYear) {
 		logger.info("deletePlanWorksheetDlt by ID : {}", id);
-		String budgetYear = ExciseUtils.getCurrentBudgetYear();
+//		String budgetYear = ExciseUtils.getCurrentBudgetYear();
 		TaPlanWorksheetHdr planHdr = taPlanWorksheetHdrRepository.findByBudgetYear(budgetYear);
 		if (planHdr != null) {
 			taPlanWorksheetDtlRepository.deleteByPlanNumberAndNewRegId(planHdr.getPlanNumber(), id);
@@ -996,6 +996,7 @@ public class PlanWorksheetService {
 			planDtlInsert.setPlanType(ProjectConstants.TA_PLAN_WORKSHEET_STATUS.OUTPLAN);
 			planDtlInsert.setAuditPlanCode(worksheetSequenceService.getAuditPlanCode(officeCode, budgetYear));
 			planDtlInsert.setReplaceReason(formVo.getReplaceReason());
+			planDtlInsert.setBudgetYear(formVo.getBudgetYear());
 			planDtlInsert = taPlanWorksheetDtlRepository.save(planDtlInsert);
 		} else {
 //			find plan detail by id for replace 

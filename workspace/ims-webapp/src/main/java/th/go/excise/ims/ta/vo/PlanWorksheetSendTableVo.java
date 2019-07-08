@@ -9,6 +9,8 @@ public class PlanWorksheetSendTableVo {
 	private Date submitDate;
 	private String auditStatus;
 	private int countPlan;
+	private int countRes;
+	private int countOut;
 	
 	public String getOfficeName() {
 		return officeName;
@@ -46,7 +48,17 @@ public class PlanWorksheetSendTableVo {
 	public void setCountPlan(int countPlan) {
 		this.countPlan = countPlan;
 	}
+	public int getCountRes() {
+		return countRes;
+	}
+	public void setCountRes(int countRes) {
+		this.countRes = countRes;
+	}
+	public int getCountOut() {
+		return countOut;
+	}
+	public void setCountOut(int countOut) {
+		this.countOut = countOut;
+	}
 	
-	
-
 }
