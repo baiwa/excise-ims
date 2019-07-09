@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,19 +28,37 @@ public class Int12070101Controller {
 	
 	@PostMapping("/save")
 	@ResponseBody
-	public ResponseData<IaRentHouse> getWsPmAssess(@RequestBody Int12070101SaveFormVo en) {
+	public ResponseData<IaRentHouse> save(@RequestBody Int12070101SaveFormVo en) {
 
 		ResponseData<IaRentHouse> response = new ResponseData<IaRentHouse>();
 		IaRentHouse data = new IaRentHouse();
 		try {
 			data = int12070101Service.save(en);
-//			response.setData(int12070101Service.getWsPaAssess(request));
+			response.setData(data);
 			response.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error(e.getMessage());
+			logger.error("save => ", e.getMessage());
 			response.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+
+		return response;
+	}
+	
+	@GetMapping("/find-by-renhouse/{id}")
+	@ResponseBody
+	public ResponseData<Int12070101SaveFormVo> findById(@PathVariable("id") long id) {
+		ResponseData<Int12070101SaveFormVo> response = new ResponseData<Int12070101SaveFormVo>();
+		try {
+			response.setData(int12070101Service.findById(id));
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("save => ", e.getMessage());
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 
