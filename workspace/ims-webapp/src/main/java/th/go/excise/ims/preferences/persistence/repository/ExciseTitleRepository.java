@@ -1,5 +1,7 @@
 package th.go.excise.ims.preferences.persistence.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
@@ -15,5 +17,9 @@ public interface ExciseTitleRepository extends CommonJpaCrudRepository<ExciseTit
 		nativeQuery = true
 	)
 	public void queryUpdateIsDeletedY();
+	
+	@Query(value = " SELECT * FROM EXCISE_TITLE WHERE IS_DELETED = '" + FLAG.N_FLAG + "' ORDER BY TITLE_SEQ ", nativeQuery = true)
+	public List<ExciseTitle> listPersonThTitle();
+	
 	
 }

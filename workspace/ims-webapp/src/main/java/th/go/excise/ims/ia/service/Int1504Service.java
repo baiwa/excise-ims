@@ -12,6 +12,7 @@ import th.go.excise.ims.ia.vo.ExciseDepartmentVo;
 import th.go.excise.ims.ia.vo.ExciseOrgDepaccVo;
 import th.go.excise.ims.ia.vo.ExciseOrgGfmisVo;
 import th.go.excise.ims.ia.vo.Int1504FormVo;
+import th.go.excise.ims.ia.vo.Int1504OrgFormVo;
 import th.go.excise.ims.preferences.persistence.entity.ExciseOrgDepacc;
 import th.go.excise.ims.preferences.persistence.entity.ExciseOrgGfmis;
 import th.go.excise.ims.preferences.persistence.repository.ExciseOrgDepaccRepository;
@@ -32,6 +33,14 @@ public class Int1504Service {
 		dataList = exciseOrgGfmisRepository.listData();
 		return dataList;
 	}
+	
+	public List<ExciseOrgDepacc> listOrg(Int1504OrgFormVo form) {
+		List<ExciseOrgDepacc> dataList = new ArrayList<ExciseOrgDepacc>();
+		dataList = exciseOrgDepaccRepository.listOrg(form.getOfficeCode());
+		return dataList;
+	}
+	
+	
 	
 	public ExciseOrgGfmisVo saveOrgGfmis(Int1504FormVo vo) {
 		ExciseOrgGfmis exciseOrgGfmis = null;

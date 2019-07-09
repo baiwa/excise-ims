@@ -25,7 +25,11 @@ import th.go.excise.ims.ia.service.Int1504Service;
 import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
 import th.go.excise.ims.ia.vo.ExciseDepartmentVo;
 import th.go.excise.ims.ia.vo.ExciseOrgGfmisVo;
+import th.go.excise.ims.ia.vo.Int0305FormVo;
 import th.go.excise.ims.ia.vo.Int1504FormVo;
+import th.go.excise.ims.ia.vo.Int1504OrgFormVo;
+import th.go.excise.ims.preferences.persistence.entity.ExciseDepaccMas;
+import th.go.excise.ims.preferences.persistence.entity.ExciseOrgDepacc;
 import th.go.excise.ims.preferences.persistence.entity.ExciseOrgGfmis;
 
 @Controller
@@ -46,7 +50,22 @@ public class Int1504Controller {
 			dataList = int1504Service.listData();
 			response.setData(dataList);
 		} catch (Exception e) {
-			logger.error("Int1503Controller : ", e);
+			logger.error("Int1504Controller : ", e);
+		}
+		return response;
+	}
+	
+	
+	@PostMapping("/listOrg")
+	@ResponseBody
+	public DataTableAjax<ExciseOrgDepacc> listOrg(@RequestBody Int1504OrgFormVo form) {
+		DataTableAjax<ExciseOrgDepacc> response = new DataTableAjax<ExciseOrgDepacc>();
+		List<ExciseOrgDepacc> dataList = new ArrayList<ExciseOrgDepacc>();
+		try {
+			dataList = int1504Service.listOrg(form);
+			response.setData(dataList);
+		} catch (Exception e) {
+			logger.error("Int1504Controller : ", e);
 		}
 		return response;
 	}
