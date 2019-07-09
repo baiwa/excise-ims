@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -138,7 +137,7 @@ public class TaFormTSController {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@PostMapping("/pdf/{tsNumber}")
+	@PostMapping("/form-ts/pdf/{tsNumber}")
 	public void generatePdfReportFormTS(@PathVariable("tsNumber") String tsNumber, @ModelAttribute ReportJsonBean reportJsonBean, HttpServletResponse response) throws Exception {
 		logger.info("generatePdfReportFormTS tsNumber={}", tsNumber);
 
@@ -172,10 +171,10 @@ public class TaFormTSController {
 		return response;
 	}
 
-	@PostMapping("/get-from-ts/{tsNumber}/{formTsNumber}")
+	@PostMapping("/get-form-ts/{tsNumber}/{formTsNumber}")
 	@ResponseBody
-	public ResponseData<String> getFromTs(@PathVariable("tsNumber") String tsNumber, @PathVariable("formTsNumber") String formTsNumber) {
-		logger.info("getFormTSNumber tsNumber={}", tsNumber);
+	public ResponseData<String> getFormTs(@PathVariable("tsNumber") String tsNumber, @PathVariable("formTsNumber") String formTsNumber) {
+		logger.info("getFormTs tsNumber={}", tsNumber);
 		ResponseData<String> response = new ResponseData<>();
 		try {
 			AbstractTaFormTSService taFormTSService = taFormTSServiceMap.get(tsNumber);
@@ -190,10 +189,10 @@ public class TaFormTSController {
 		return response;
 	}
 
-	@PostMapping("/save-from-ts/{tsNumber}")
+	@PostMapping("/save-form-ts/{tsNumber}")
 	@ResponseBody
-	public ResponseData<?> saveFromTs(@PathVariable("tsNumber") String tsNumber, @RequestBody ReportJsonBean reportJsonBean) {
-		logger.info("getFormTSNumber tsNumber={}", tsNumber);
+	public ResponseData<?> saveFormTs(@PathVariable("tsNumber") String tsNumber, @RequestBody ReportJsonBean reportJsonBean) {
+		logger.info("saveFormTs tsNumber={}", tsNumber);
 		ResponseData<String> response = new ResponseData<>();
 		try {
 			AbstractTaFormTSService taFormTSService = taFormTSServiceMap.get(tsNumber);
