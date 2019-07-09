@@ -33,4 +33,15 @@ public class AuditLogService {
 		auditLogRepository.save(auditLog);
 	}
 	
+	public void saveAuditLogNoIp(AuditLogFormVo formVo) {
+		logger.info("saveAuditLog");
+		
+		AuditLog auditLog = new AuditLog();
+		auditLog.setActionDate(LocalDateTime.now());
+		auditLog.setUserId(UserLoginUtils.getCurrentUsername());
+		auditLog.setActionName(formVo.getActionName());
+		auditLog.setActionDesc(formVo.getActionDesc());
+		auditLogRepository.save(auditLog);
+	}
+	
 }

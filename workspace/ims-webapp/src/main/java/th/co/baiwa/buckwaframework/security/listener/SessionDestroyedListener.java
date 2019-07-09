@@ -31,7 +31,7 @@ public class SessionDestroyedListener implements ApplicationListener<HttpSession
 				AuditLogFormVo auditLogFormVo = new AuditLogFormVo();
 				auditLogFormVo.setActionName("LOGOUT");
 				auditLogFormVo.setActionDesc(String.format("userId=%s Session Timeout on %s", userBean.getUsername(), LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)));
-				auditLogService.saveAuditLog(auditLogFormVo);
+				auditLogService.saveAuditLogNoIp(auditLogFormVo);
 			}
 		}
 	}
