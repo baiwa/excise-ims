@@ -25,10 +25,19 @@ public class TaPlanWorksheetStepRepositoryImpl implements TaPlanWorksheetStepRep
 		logger.info("findByAuditPlanCode auditPlanCode={}", auditPlanCode);
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT * ");
-		sql.append(" FROM TA_PLAN_WORKSHEET_STEP ");
-		sql.append(" WHERE IS_DELETED = 'N' ");
-		sql.append("   AND AUDIT_PLAN_CODE = ? ");
+		sql.append(" SELECT PSTEP.AUDIT_PLAN_CODE, PSTEP.AUDIT_STEP_STATUS, PSTEP.AUDIT_STEP_SUB_STATUS, ");
+		sql.append("   PSTEP.AUDIT_STEP_FLAG, PSTEP.FORM_TS_CODE, PSTEP.FORM_TS_NUMBER, PSTEP.PROCESS_DATE ");
+		sql.append(" FROM TA_PLAN_WORKSHEET_STEP PSTEP ");
+		sql.append(" INNER JOIN ( ");
+		sql.append("   SELECT AUDIT_PLAN_CODE, AUDIT_STEP_STATUS, MAX(FORM_TS_NUMBER) AS FORM_TS_NUMBER ");
+		sql.append("   FROM TA_PLAN_WORKSHEET_STEP ");
+		sql.append("   WHERE IS_DELETED = 'N' ");
+		sql.append("     AND AUDIT_PLAN_CODE = ? ");
+		sql.append("   GROUP BY AUDIT_PLAN_CODE, AUDIT_STEP_STATUS ");
+		sql.append(" ) X ON PSTEP.AUDIT_PLAN_CODE = X.AUDIT_PLAN_CODE ");
+		sql.append("   AND PSTEP.AUDIT_STEP_STATUS = X.AUDIT_STEP_STATUS ");
+		sql.append("   AND PSTEP.FORM_TS_NUMBER = X.FORM_TS_NUMBER ");
+		sql.append(" ORDER BY PSTEP.AUDIT_PLAN_CODE, PSTEP.AUDIT_STEP_STATUS, PSTEP.FORM_TS_NUMBER ");
 		
 		List<AuditStepVo> voList = commonJdbcTemplate.query(
 			sql.toString(),
