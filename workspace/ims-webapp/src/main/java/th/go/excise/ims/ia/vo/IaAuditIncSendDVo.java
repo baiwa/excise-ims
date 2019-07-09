@@ -21,7 +21,7 @@ public class IaAuditIncSendDVo {
 	private String incsendAccCash;
 	private String incsendAccPayIn;
 	private BigDecimal incsendAmtDelivery;
-	private String incsendIncKtb;
+	private BigDecimal incsendIncKtb;
 	private String incsendIncStm;
 	private BigDecimal incsendInc115010;
 	private BigDecimal incsendInc116010;
@@ -159,11 +159,11 @@ public class IaAuditIncSendDVo {
 		this.incsendAmtDelivery = incsendAmtDelivery;
 	}
 
-	public String getIncsendIncKtb() {
+	public BigDecimal getIncsendIncKtb() {
 		return incsendIncKtb;
 	}
 
-	public void setIncsendIncKtb(String incsendIncKtb) {
+	public void setIncsendIncKtb(BigDecimal incsendIncKtb) {
 		this.incsendIncKtb = incsendIncKtb;
 	}
 

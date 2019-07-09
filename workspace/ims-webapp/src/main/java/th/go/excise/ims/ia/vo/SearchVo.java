@@ -6,6 +6,7 @@ public class SearchVo {
 	private String periodFrom;
 	private String periodTo;
 	private String incomeCode;
+	private String paperNumber;
 
 	public String getOfficeCode() {
 		return officeCode;
@@ -45,6 +46,14 @@ public class SearchVo {
 
 	public void setIncomeCode(String incomeCode) {
 		this.incomeCode = incomeCode;
+	}
+
+	public String getPaperNumber() {
+		return paperNumber;
+	}
+
+	public void setPaperNumber(String paperNumber) {
+		this.paperNumber = paperNumber;
 	}
 
 }

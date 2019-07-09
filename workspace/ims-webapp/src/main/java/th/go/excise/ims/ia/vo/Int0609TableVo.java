@@ -24,6 +24,10 @@ public class Int0609TableVo {
 	private String incsendIncStm;
 	private String trnDateStr;
 	private String gfDateStr;
+	private BigDecimal incsendIncKtb;
+	private String incsendNote;
+	private String incsendAccCash;
+	private String incsendAccPayIn;
 
 	public String getOffname() {
 		return offname;
@@ -167,6 +171,38 @@ public class Int0609TableVo {
 
 	public void setGfDateStr(String gfDateStr) {
 		this.gfDateStr = gfDateStr;
+	}
+
+	public BigDecimal getIncsendIncKtb() {
+		return incsendIncKtb;
+	}
+
+	public void setIncsendIncKtb(BigDecimal incsendIncKtb) {
+		this.incsendIncKtb = incsendIncKtb;
+	}
+
+	public String getIncsendNote() {
+		return incsendNote;
+	}
+
+	public void setIncsendNote(String incsendNote) {
+		this.incsendNote = incsendNote;
+	}
+
+	public String getIncsendAccCash() {
+		return incsendAccCash;
+	}
+
+	public void setIncsendAccCash(String incsendAccCash) {
+		this.incsendAccCash = incsendAccCash;
+	}
+
+	public String getIncsendAccPayIn() {
+		return incsendAccPayIn;
+	}
+
+	public void setIncsendAccPayIn(String incsendAccPayIn) {
+		this.incsendAccPayIn = incsendAccPayIn;
 	}
 
 }
