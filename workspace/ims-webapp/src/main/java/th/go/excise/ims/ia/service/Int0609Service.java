@@ -1,7 +1,7 @@
 package th.go.excise.ims.ia.service;
 
-import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncSendD;
+import th.go.excise.ims.ia.persistence.entity.IaAuditIncSendH;
 import th.go.excise.ims.ia.persistence.repository.IaAuditIncSendDRepository;
 import th.go.excise.ims.ia.persistence.repository.IaAuditIncSendHRepository;
+import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
 import th.go.excise.ims.ia.vo.IaAuditIncSendDVo;
 import th.go.excise.ims.ia.vo.Int0609SaveVo;
 import th.go.excise.ims.ia.vo.Int0609TableVo;
@@ -71,6 +73,21 @@ public class Int0609Service {
 			}
 		}
 
+		/* __________ set footer __________ */
+		Int0609TableVo sumWsGfr01051 = wsGfr01051JdbcRepository.summaryByRequest(request);
+		WsIncr0003Vo sumWsIncr0003 = wsIncr0003JdbcRepository.summaryByRequest(request);
+		Int0609TableVo footer = new Int0609TableVo();
+		if (sumWsGfr01051 != null) {
+			footer.setCnt(sumWsGfr01051.getCnt());
+			footer.setTotalAmt(sumWsGfr01051.getTotalAmt());
+			footer.setTotalSendAmt(sumWsGfr01051.getTotalSendAmt());
+		}
+		if (sumWsIncr0003 != null) {
+			footer.setSum1Sum2(sumWsIncr0003.getSum1Sum2());
+			footer.setSum4Sum5(sumWsIncr0003.getSum4Sum5());
+			footer.setSum7(sumWsIncr0003.getSum7());
+		}
+
 		/* __________ incomeCode = '115010' __________ */
 		BigDecimal sum4_I = BigDecimal.ZERO;
 		request.setIncomeCode("115010");
@@ -83,8 +100,6 @@ public class Int0609Service {
 					if (dateStrHeader.equals(dateStr)) {
 						r.setSum4I(I.getSum4());
 						sum4_I = sum4_I.add(NumberUtils.nullToZero(I.getSum4()));
-					} else {
-						r.setSum4I(BigDecimal.ZERO);
 					}
 				}
 			} else {
@@ -104,28 +119,11 @@ public class Int0609Service {
 					if (dateStrHeader.equals(dateStr)) {
 						r.setSum4II(II.getSum4());
 						sum4_II = sum4_II.add(NumberUtils.nullToZero(II.getSum4()));
-					} else {
-						r.setSum4II(BigDecimal.ZERO);
 					}
 				}
 			} else {
 				r.setSum4II(BigDecimal.ZERO);
 			}
-		}
-
-		/* __________ set footer __________ */
-		Int0609TableVo sumWsGfr01051 = wsGfr01051JdbcRepository.summaryByRequest(request);
-		WsIncr0003Vo sumWsIncr0003 = wsIncr0003JdbcRepository.summaryByRequest(request);
-		Int0609TableVo footer = new Int0609TableVo();
-		if (sumWsGfr01051 != null) {
-			footer.setCnt(sumWsGfr01051.getCnt());
-			footer.setTotalAmt(sumWsGfr01051.getTotalAmt());
-			footer.setTotalSendAmt(sumWsGfr01051.getTotalSendAmt());
-		}
-		if (sumWsIncr0003 != null) {
-			footer.setSum1Sum2(sumWsIncr0003.getSum1Sum2());
-			footer.setSum4Sum5(sumWsIncr0003.getSum4Sum5());
-			footer.setSum7(sumWsIncr0003.getSum7());
 		}
 		footer.setSum4I(sum4_I);
 		footer.setSum4II(sum4_II);
@@ -156,6 +154,70 @@ public class Int0609Service {
 			detail.setIncsendGfDate(ConvertDateUtils.parseStringToDate(d.getIncsendGfDateStr(), ConvertDateUtils.DD_MM_YY));
 			iaAuditIncSendDRepository.save(detail);
 		}
+	}
+
+	public List<IaAuditIncSendH> getIncSendNoDropdown() {
+		return iaAuditIncSendHRepository.findIncSendNo();
+	}
+
+	public Int0609Vo findByAuditIncsendNo(String incsendNo) throws Exception {
+		IaAuditIncSendH header = iaAuditIncSendHRepository.findByIncsendNoAndIsDeleted(incsendNo, "N");
+
+		List<IaAuditIncSendD> details = iaAuditIncSendDRepository.findByIncsendNoAndIsDeletedOrderByIncsendNo(incsendNo, "N");
+		List<Int0609TableVo> tableList = new ArrayList<>();
+		Int0609TableVo table = null;
+		for (IaAuditIncSendD d : details) {
+			table = new Int0609TableVo();
+			table.setActcostCent(d.getIncsendActcostCent());
+			table.setCnt(d.getIncsendCnt());
+			table.setDateDiff(d.getIncsendPeriod().longValue());
+			table.setGfDate(d.getIncsendGfDate());
+			table.setGfDateStr(ConvertDateUtils.formatDateToString(d.getIncsendGfDate(), ConvertDateUtils.DD_MM_YY));
+			table.setGfRefNo(d.getIncsendRefNo());
+			table.setIncsendIncStm(d.getIncsendIncStm());
+			table.setOffcode(d.getIncsendGfOffcode());
+			table.setSum1Sum2(d.getIncsendAmount());
+			table.setSum4I(d.getIncsendInc115010());
+			table.setSum4II(d.getIncsendInc116010());
+			table.setSum4Sum5(d.getIncsendEdc());
+			table.setSum7(d.getIncsendEdcLicense());
+			table.setTotalAmt(d.getIncsendTotalAmt());
+			table.setTotalSendAmt(d.getIncsendAmtDelivery());
+			table.setTrnDate(d.getIncsendTrnDate());
+			table.setTrnDateStr(ConvertDateUtils.formatDateToString(d.getIncsendTrnDate(), ConvertDateUtils.DD_MM_YYYY));
+			/* set value on input and check box */
+			table.setIncsendIncStm(d.getIncsendIncStm());
+			table.setIncsendIncKtb(d.getIncsendIncKtb());
+			table.setIncsendAccPayIn(d.getIncsendAccPayIn());
+			table.setIncsendAccCash(d.getIncsendAccCash());
+			table.setIncsendNote(d.getIncsendNote());
+			tableList.add(table);
+		}
+
+		Int0609Vo response = new Int0609Vo();
+		response.setExciseDepartmentVo(ExciseDepartmentUtil.getExciseDepartmentFull(header.getIncsendOfficeCode()));
+		response.setHeader(header);
+		response.setTable(tableList);
+
+		/* set request search footer */
+		SearchVo requestSearch = new SearchVo();
+		Int0609TableVo footer = null;
+		requestSearch.setPaperNumber(incsendNo);
+		IaAuditIncSendD resFooter = iaAuditIncSendDRepository.summaryByIncsendNo(requestSearch);
+		if (resFooter != null) {
+			footer = new Int0609TableVo();
+			footer.setCnt(resFooter.getIncsendCnt());
+			footer.setTotalAmt(resFooter.getIncsendTotalAmt());
+			footer.setTotalSendAmt(resFooter.getIncsendAmtDelivery());
+			footer.setSum1Sum2(resFooter.getIncsendAmount());
+			footer.setSum4Sum5(resFooter.getIncsendEdc());
+			footer.setSum7(resFooter.getIncsendEdcLicense());
+			footer.setIncsendIncKtb(resFooter.getIncsendIncKtb());
+			footer.setSum4I(resFooter.getIncsendInc115010());
+			footer.setSum4II(resFooter.getIncsendInc116010());
+		}
+		response.setFooter(footer);
+		return response;
 	}
 
 }

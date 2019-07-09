@@ -58,7 +58,7 @@ public class IaAuditIncSendD extends BaseEntity {
 	@Column(name = "INCSEND_AMT_DELIVERY")
 	private BigDecimal incsendAmtDelivery;
 	@Column(name = "INCSEND_INC_KTB")
-	private String incsendIncKtb;
+	private BigDecimal incsendIncKtb;
 	@Column(name = "INCSEND_INC_STM")
 	private String incsendIncStm;
 	@Column(name = "INCSEND_INC_115010")
@@ -196,11 +196,11 @@ public class IaAuditIncSendD extends BaseEntity {
 		this.incsendAmtDelivery = incsendAmtDelivery;
 	}
 
-	public String getIncsendIncKtb() {
+	public BigDecimal getIncsendIncKtb() {
 		return incsendIncKtb;
 	}
 
-	public void setIncsendIncKtb(String incsendIncKtb) {
+	public void setIncsendIncKtb(BigDecimal incsendIncKtb) {
 		this.incsendIncKtb = incsendIncKtb;
 	}
 
