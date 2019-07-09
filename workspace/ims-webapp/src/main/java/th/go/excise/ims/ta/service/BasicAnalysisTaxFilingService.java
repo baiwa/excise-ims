@@ -177,19 +177,11 @@ public class BasicAnalysisTaxFilingService extends AbstractBasicAnalysisService<
 		params.put("startDate", formVo.getStartDate());
 		params.put("endDate", formVo.getEndDate());
 		params.put("commentText6", formVo.getCommentText6());
-		
-		List<BasicAnalysisTaxFilingVo> dataList = new ArrayList<>();
-		BasicAnalysisTaxFilingVo data = new BasicAnalysisTaxFilingVo();
-		for (int i = 0; i < 5; i++) {
-			data.setTaxMonth("มกราคม 2562");
-			data.setAnaTaxSubmissionDate(String.valueOf(i+1)+" มกราคม 2562");
-			data.setTaxSubmissionDate(String.valueOf(i+2)+" มกราคม 2562");
-			data.setResultTaxSubmission(String.valueOf(i+3)+" มกราคม 2562");		
-			dataList.add(data);
-		}
-		
+		// get data from inquiryByPaperBaNumber()
+		List<BasicAnalysisTaxFilingVo> dataList = inquiryByPaperBaNumber(formVo);
+		// add data to dataSource
 		JRDataSource dataSource = new JRBeanCollectionDataSource(dataList);
-		
+		// check jasper by yearNum
 		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_PAPER_BA_D6 + "." + FILE_EXTENSION.JASPER, params, dataSource);
 		
 		return jasperPrint;

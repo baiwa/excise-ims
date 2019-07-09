@@ -71,7 +71,7 @@ public class BasicAnalysisTaxQtyServiceTest {
 		System.out.println("************************Is successfully saved************************");
 	}
 	
-	@Test
+//	@Test
 	public void test_getJasperPrint() throws Exception {
 		String paperBaNumber = "001402-2563-000001";
 		

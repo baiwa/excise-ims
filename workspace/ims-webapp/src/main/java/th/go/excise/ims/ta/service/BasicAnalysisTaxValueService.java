@@ -122,19 +122,11 @@ public class BasicAnalysisTaxValueService extends AbstractBasicAnalysisService<B
 		params.put("startDate", formVo.getStartDate());
 		params.put("endDate", formVo.getEndDate());
 		params.put("commentText3", formVo.getCommentText3());
-		
-		List<BasicAnalysisTaxValueVo> dataList = new ArrayList<>();
-		BasicAnalysisTaxValueVo data = new BasicAnalysisTaxValueVo();
-		for (int i = 0; i < 5; i++) {
-			data.setGoodsDescText("GoodsDesc");
-			data.setTaxQty(new BigDecimal(10.00));
-			data.setInformPrice(new BigDecimal(30.00));
-			data.setGoodsValueAmt(new BigDecimal(20.00));		
-			dataList.add(data);
-		}
-		
+		// get data from inquiryByPaperBaNumber()
+		List<BasicAnalysisTaxValueVo> dataList = inquiryByPaperBaNumber(formVo);
+		// add data to dataSource
 		JRDataSource dataSource = new JRBeanCollectionDataSource(dataList);
-		
+		// check jasper by yearNum
 		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_PAPER_BA_D3 + "." + FILE_EXTENSION.JASPER, params, dataSource);
 		
 		return jasperPrint;

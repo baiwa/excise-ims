@@ -142,26 +142,11 @@ public class BasicAnalysisTaxAmtService extends AbstractBasicAnalysisService<Bas
 		params.put("startDate", formVo.getStartDate());
 		params.put("endDate", formVo.getEndDate());
 		params.put("commentText5", formVo.getCommentText5());
-		
-		List<BasicAnalysisTaxAmtVo> dataList = new ArrayList<>();
-		BasicAnalysisTaxAmtVo data = new BasicAnalysisTaxAmtVo();
-		for (int i = 0; i < 5; i++) {
-			data.setGoodsDesc("GoodsDesc");
-			data.setTaxSubmissionDate((i+1)+"/7/2562");
-			data.setNetTaxByValue(new BigDecimal(10));
-			data.setNetTaxByQty(new BigDecimal(20));
-			data.setNetTaxAmt(new BigDecimal(30));
-			data.setAnaNetTaxByValue(new BigDecimal(11));
-			data.setAnaNetTaxByQty(new BigDecimal(21));
-			data.setAnaNetTaxAmt(new BigDecimal(22));
-			data.setDiffNetTaxByValue(new BigDecimal(13));
-			data.setDiffNetTaxByQty(new BigDecimal(23));
-			data.setDiffNetTaxAmt(new BigDecimal(33));
-			dataList.add(data);
-		}
-		
+		// get data from inquiryByPaperBaNumber()
+		List<BasicAnalysisTaxAmtVo> dataList = inquiryByPaperBaNumber(formVo);
+		// add data to dataSource
 		JRDataSource dataSource = new JRBeanCollectionDataSource(dataList);
-		
+		// check jasper by yearNum
 		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_PAPER_BA_D5 + "." + FILE_EXTENSION.JASPER, params, dataSource);
 		
 		return jasperPrint;

@@ -73,7 +73,7 @@ public class BasicAnalysisIncomeCompareLastMonthServiceTest {
 		basicAnalysisIncomeCompareLastMonthService.save(formVo);
 	}
 	
-	@Test
+//	@Test
 	public void test_getJasperPrint() throws Exception {
 		String paperBaNumber = "001402-2563-000001";
 		

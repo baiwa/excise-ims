@@ -166,19 +166,11 @@ public class BasicAnalysisIncomeCompareLastMonthService extends AbstractBasicAna
 		params.put("endDate", formVo.getEndDate());
 		params.put("monthIncType", formVo.getMonthIncomeType());
 		params.put("commentText7", formVo.getCommentText7());
-		
-		List<BasicAnalysisIncomeCompareLastMonthVo> dataList = new ArrayList<>();
-		BasicAnalysisIncomeCompareLastMonthVo data = new BasicAnalysisIncomeCompareLastMonthVo();
-		for (int i = 0; i < 5; i++) {
-			data.setTaxMonth("มกราคม 2562");
-			data.setIncomeAmt(String.valueOf(i+1)+".00");
-			data.setDiffIncomeAmt(String.valueOf(i+2)+".00");
-			data.setDiffIncomePnt(String.valueOf(i+3)+".00");		
-			dataList.add(data);
-		}
-		
+		// get data from inquiryByPaperBaNumber()
+		List<BasicAnalysisIncomeCompareLastMonthVo> dataList = inquiryByPaperBaNumber(formVo);
+		// add data to dataSource
 		JRDataSource dataSource = new JRBeanCollectionDataSource(dataList);
-		
+		// check jasper by yearNum
 		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_PAPER_BA_D7 + "." + FILE_EXTENSION.JASPER, params, dataSource);
 		
 		return jasperPrint;

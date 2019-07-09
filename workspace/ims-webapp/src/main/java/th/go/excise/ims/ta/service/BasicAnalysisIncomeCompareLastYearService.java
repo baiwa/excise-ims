@@ -7,21 +7,28 @@ import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
+import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.go.excise.ims.ta.persistence.entity.TaPaperBaD8;
 import th.go.excise.ims.ta.persistence.repository.TaPaperBaD8Repository;
 import th.go.excise.ims.ta.persistence.repository.TaWsInc8000MRepository;
@@ -172,7 +179,33 @@ public class BasicAnalysisIncomeCompareLastYearService extends AbstractBasicAnal
 	protected JasperPrint getJasperPrint(BasicAnalysisFormVo formVo, TaxAuditDetailVo taxAuditDetailVo) throws Exception {
 		logger.info("generateReport paperBaNumber={}", formVo.getPaperBaNumber());
 		
-		return null;
+		// set data to report
+		Map<String, Object> params = new HashMap<>();
+		params.put("newRegId", formVo.getNewRegId());
+		params.put("dutyGroupId", taxAuditDetailVo.getWsRegfri4000Vo().getRegDutyList().get(0).getGroupName());
+		params.put("facFullname", taxAuditDetailVo.getWsRegfri4000Vo().getFacFullname());
+		params.put("auJobResp", taxAuditDetailVo.getAuJobResp());
+		params.put("paperBaNumber", formVo.getPaperBaNumber());
+		params.put("startDate", formVo.getStartDate());
+		params.put("endDate", formVo.getEndDate());
+		params.put("yearIncType", formVo.getYearIncomeType());
+		params.put("yearNum", formVo.getYearNum());
+		params.put("commentText8", formVo.getCommentText8());
+		// get data from inquiryByPaperBaNumber()
+		List<BasicAnalysisIncomeCompareLastYearVo> dataList = inquiryByPaperBaNumber(formVo);
+		// add data to dataSource
+		JRDataSource dataSource = new JRBeanCollectionDataSource(dataList);
+		// check jasper by yearNum
+		JasperPrint jasperPrint = null;
+		if (StringUtils.equals("1", formVo.getYearNum())) {
+			jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_PAPER_BA_D8_Y1 + "." + FILE_EXTENSION.JASPER, params, dataSource);
+		} else if (StringUtils.equals("2", formVo.getYearNum())) {
+			jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_PAPER_BA_D8_Y2 + "." + FILE_EXTENSION.JASPER, params, dataSource);
+		} else {
+			jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.TA_PAPER_BA_D8_Y3 + "." + FILE_EXTENSION.JASPER, params, dataSource);
+		}
+		
+		return jasperPrint;
 	}
 
 }

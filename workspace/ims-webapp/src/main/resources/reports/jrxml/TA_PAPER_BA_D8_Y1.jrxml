@@ -7,15 +7,14 @@
 	<parameter name="facFullname" class="java.lang.String"/>
 	<parameter name="auJobResp" class="java.lang.String"/>
 	<parameter name="paperBaNumber" class="java.lang.String"/>
-	<parameter name="startDate" class="java.util.Date"/>
-	<parameter name="endDate" class="java.util.Date"/>
+	<parameter name="startDate" class="java.lang.String"/>
+	<parameter name="endDate" class="java.lang.String"/>
 	<parameter name="yearIncType" class="java.lang.String"/>
 	<parameter name="yearNum" class="java.lang.String"/>
 	<parameter name="commentText8" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="no" class="java.lang.String"/>
 	<field name="taxMonth" class="java.lang.String"/>
 	<field name="incomeCurrentYearAmt" class="java.lang.String"/>
 	<field name="incomeLastYear1Amt" class="java.lang.String"/>
@@ -190,7 +189,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{startDate})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{startDate}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="225" y="91" width="15" height="22" uuid="535fd204-51ef-4766-bfa3-f3970dcb0e2e"/>
@@ -217,7 +216,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("d/M/yyyy",new Locale("th", "TH")).format($P{endDate})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{endDate}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="351" y="113" width="40" height="22" uuid="d5724d31-e579-4a93-81b3-629322aa9ca9"/>
@@ -231,7 +230,7 @@
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA["2".equals( $P{yearIncType} )?"\u2611" : "\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["NET".equals( $P{yearIncType} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="20" y="113" width="154" height="22" uuid="9b607ba1-8fea-4a98-95ef-154ae0d4eca3"/>
@@ -245,7 +244,7 @@
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA["1".equals( $P{yearIncType} )?"\u2611" : "\u2610"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["TAX".equals( $P{yearIncType} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="204" y="113" width="130" height="22" uuid="bdf02003-d325-4421-940b-bb31c29be836"/>
@@ -297,23 +296,23 @@
 			</textField>
 			<textField>
 				<reportElement x="190" y="0" width="90" height="45" uuid="6e73fe8c-bd5d-470d-8259-bc77d6da133e"/>
-				<box>
+				<box leftPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA["รายได้ปีย้อน-\nหลัง 1 ปี (บาท)"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["รายได้ปีย้อนหลัง 1 ปี (บาท)"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="280" y="0" width="90" height="45" uuid="ef99b71e-6172-4b93-82e8-4bf842584656"/>
-				<box>
+				<box leftPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA["ผลต่างย้อน-\nหลัง 1 ปี (บาท)"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ผลต่างย้อนหลัง 1 ปี (บาท)"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="30" y="0" width="70" height="45" uuid="053ee361-3553-401d-9091-bc41b6151936"/>
@@ -337,7 +336,7 @@
 			</textField>
 			<textField>
 				<reportElement x="370" y="0" width="90" height="45" uuid="f87046dc-6a6f-4f92-8af3-f239192f9b4d"/>
-				<box>
+				<box leftPadding="2" rightPadding="2">
 					<pen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -351,10 +350,10 @@
 		<band height="22" splitType="Stretch">
 			<textField isBlankWhenNull="true">
 				<reportElement x="190" y="0" width="90" height="22" uuid="ec8d4e0d-2121-416c-9457-e9e1fa5b9234"/>
-				<box>
+				<box leftPadding="4" rightPadding="4">
 					<pen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Right">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{incomeLastYear1Amt}]]></textFieldExpression>
@@ -367,14 +366,14 @@
 				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="280" y="0" width="90" height="22" uuid="10a5c83f-f12d-437d-97bf-a7c31e949524"/>
-				<box>
+				<box leftPadding="4" rightPadding="4">
 					<pen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Right">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{diffIncomeLastYear1Amt}]]></textFieldExpression>
@@ -384,27 +383,27 @@
 				<box leftPadding="4">
 					<pen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Center">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{taxMonth}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="100" y="0" width="90" height="22" uuid="a858078e-c1dd-4c25-917f-fc7ea2627ae1"/>
-				<box>
+				<box leftPadding="4" rightPadding="4">
 					<pen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Right">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{incomeCurrentYearAmt}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="370" y="0" width="90" height="22" uuid="736e35fa-3852-42e5-858c-e086f038dbe4"/>
-				<box>
+				<box leftPadding="4" rightPadding="4">
 					<pen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Right">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{diffIncomeLastYear1Pnt}]]></textFieldExpression>
@@ -440,6 +439,7 @@
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="0" y="32" width="458" height="88" uuid="cf514d62-6fae-45bf-a45f-c8819f587609"/>
+				<box leftPadding="0" rightPadding="0"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="TH Sarabun New" size="16"/>
 				</textElement>

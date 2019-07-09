@@ -96,7 +96,7 @@ public class BasicAnalysisController {
 	public void generateBasicAnalysisPdfReport(@PathVariable("paperBaNumber") String paperBaNumber, HttpServletResponse response) throws Exception {
 		logger.info("generateBasicAnalysisPdfReport paperBaNumber={}", paperBaNumber);
 
-		byte[] reportFile = null;
+		byte[] reportFile = basicAnalysisService.generateReport(paperBaNumber);
 
 		String filename = String.format("ba_report_%s." + FILE_EXTENSION.PDF, DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now()));
 		response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", filename));
