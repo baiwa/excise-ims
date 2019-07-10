@@ -124,7 +124,7 @@ public class TaxAuditService {
 				}
 			}
 		} catch (PccRestfulException e) {
-			logger.warn("Now Found in WsRegfri4000");
+			logger.warn("Now Found when call WS Regfri4000");
 			formVo = taWsReg4000Repository.findByNewRegId(newRegId);
 			if (formVo == null) {
 				throw new PccRestfulException("NewRegId=" + newRegId + " Not Found");
