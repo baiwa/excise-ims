@@ -150,7 +150,7 @@ public class TaFormTS0118Service extends AbstractTaFormTSService<TaFormTS0118Vo,
 
 		taFormTs0118HdrRepository.save(formTs0118Hdr);
 
-		saveAuditStep(formTS0118Vo, TaFormTS0118Vo.class, TA_FORM_TS_CODE.TS0108, formTsNumber);
+		saveAuditStep(formTS0118Vo, TaFormTS0118Vo.class, TA_FORM_TS_CODE.TS0118, formTsNumber);
 	}
 
 	@Override
