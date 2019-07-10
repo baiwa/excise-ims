@@ -156,7 +156,7 @@ public class Int0610Service {
 				summary.setNetTaxAmt(iaAuditIncGfd.getIncNetTaxAmt());
 				summaryList.add(summary);
 			}
-			
+
 			data = new Int0610TabVo();
 			if (StringUtils.isNotBlank(d.getGlAccNo())) {
 				data.setAccNo(d.getGlAccNo());
@@ -175,17 +175,17 @@ public class Int0610Service {
 			tab.setOfficeCode(header.getOfficeCode());
 			tabList.add(tab);
 		}
-		
+
 		Int0610HeaderVo response = new Int0610HeaderVo();
 		response.setExciseDepartmentVo(ExciseDepartmentUtil.getExciseDepartmentFull(header.getOfficeCode()));
 		response.setAuditIncGfNo(auditIncGfNo);
 		response.setAuditFlag(header.getAuditFlag());
 		response.setIncgfConditionText(header.getIncgfConditionText());
 		response.setIncgfCreteriaText(header.getIncgfCreteriaText());
-		response.setMonthPeriodFrom(ConvertDateUtils.formatDateToString(ExciseUtils.firstDateOfPeriod(header.getIncMonthFrom(), header.getIncYearFrom()), ConvertDateUtils.MM_YYYY));
-		response.setMonthPeriodTo(ConvertDateUtils.formatDateToString(ExciseUtils.firstDateOfPeriod(header.getIncMonthTo(), header.getIncYearTo()), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH));
+		response.setMonthPeriodFrom(ConvertDateUtils.formatDateToString(ExciseUtils.firstDateOfPeriod(header.getIncMonthFrom(), header.getIncYearFrom()), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH));
+		response.setMonthPeriodTo(ConvertDateUtils.formatDateToString(ExciseUtils.lastDateOfPeriod(header.getIncMonthTo(), header.getIncYearTo()), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		response.setDataList(tabList);
-		
+
 		return response;
 	}
 
