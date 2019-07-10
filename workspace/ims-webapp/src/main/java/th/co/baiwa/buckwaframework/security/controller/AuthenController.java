@@ -1,6 +1,7 @@
 package th.co.baiwa.buckwaframework.security.controller;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -107,6 +108,7 @@ public class AuthenController {
 			userProfileVo.setAuthorityList(UserLoginUtils.getGrantedAuthorityList());
 			userProfileVo.setDepartmentName(ApplicationCache.getExciseDepartment(userProfileVo.getOfficeCode()).getDeptShortName());
 			userProfileVo.setIsCentral(ExciseUtils.isCentral(UserLoginUtils.getCurrentUserBean().getOfficeCode()));
+			userProfileVo.setSystemName(getCurrentUserSystemByRole(UserLoginUtils.getGrantedAuthorityList()));
 			respData.setData(userProfileVo);
 			respData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (IllegalAccessException | InvocationTargetException e) {
@@ -115,6 +117,28 @@ public class AuthenController {
 		}
 		
 		return respData;
+	}
+	
+	public String getCurrentUserSystemByRole(List<String> role) {
+		String roleStr = "TA";
+		for (String str : role) {
+			int iaIndex = str.indexOf("IA");
+			int oaIndex = str.indexOf("OA");
+			int taIndex = str.indexOf("TA");
+			if (iaIndex > 0 ) {
+				roleStr = "IA";
+				break;
+			};
+			if (oaIndex > 0 ) {
+				roleStr = "OA";
+				break;
+			};
+			if (taIndex > 0 ) {
+				roleStr = "TA";
+				break;
+			};
+		}
+		return roleStr;
 	}
 	
 }

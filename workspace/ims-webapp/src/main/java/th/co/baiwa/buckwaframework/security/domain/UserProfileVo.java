@@ -14,6 +14,7 @@ public class UserProfileVo {
 	private String subdeptCode;
 	private String subdeptLevel;
 	private Boolean isCentral;
+	private String systemName;
 
 	public Boolean getIsCentral() {
 		return isCentral;
@@ -93,6 +94,14 @@ public class UserProfileVo {
 
 	public void setSubdeptLevel(String subdeptLevel) {
 		this.subdeptLevel = subdeptLevel;
+	}
+
+	public String getSystemName() {
+		return systemName;
+	}
+
+	public void setSystemName(String systemName) {
+		this.systemName = systemName;
 	}
 
 }
