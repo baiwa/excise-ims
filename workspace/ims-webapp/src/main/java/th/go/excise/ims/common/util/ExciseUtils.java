@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
@@ -278,7 +279,7 @@ public class ExciseUtils {
 	 * example transfer (001, 2019) => 01/10/2019(format DATE)
 	 **/
 	public static Date firstDateOfPeriod(String period ,String year) {
-		Calendar cal = Calendar.getInstance();
+		Calendar cal = Calendar.getInstance(Locale.ENGLISH);
 		cal.set(Integer.parseInt(year), PERIOD_MONTH[Integer.parseInt(period)-1], 1);
 		return cal.getTime();
 	}
@@ -287,10 +288,13 @@ public class ExciseUtils {
 	 * example transfer (012, 2019) => 30/09/2020(format DATE)
 	 **/
 	public static Date lastDateOfPeriod(String period ,String year) {
-		Calendar cal = Calendar.getInstance();
+		Calendar cal = Calendar.getInstance(Locale.ENGLISH);
 		cal.set(Integer.parseInt(year), PERIOD_MONTH[Integer.parseInt(period)-1], 1);
 		cal.add(Calendar.MONTH, 1);
 		cal.add(Calendar.DATE, -1);
+		if (Integer.parseInt(period) >= 4) {
+			cal.add(Calendar.YEAR, 1);
+		}
 		return cal.getTime();
 	}
 	
