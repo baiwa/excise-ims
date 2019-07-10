@@ -1,6 +1,11 @@
 package th.go.excise.ims.ia.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.ss.formula.functions.T;
 import org.slf4j.Logger;
@@ -8,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -94,6 +100,23 @@ public class Int0610Controller {
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
+	}
+	
+	@GetMapping("/export/{officeCode}/{periodFrom}/{periodTo}")
+	public void exportByYear(@PathVariable("officeCode") String officeCode, @PathVariable("periodFrom") String periodFrom, @PathVariable("periodTo") String periodTo, HttpServletResponse response) throws Exception {
+		// set fileName
+		String fileName = URLEncoder.encode("EXPORT".concat("-").concat(officeCode), "UTF-8");
+		// write it as an excel attachment
+		ByteArrayOutputStream outByteStream = int0610Service.export(officeCode, periodFrom, periodTo);
+		byte[] outArray = outByteStream.toByteArray();
+		response.setContentType("application/octet-stream");
+		response.setContentLength(outArray.length);
+		response.setHeader("Expires:", "0"); // eliminates browser caching
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+		OutputStream outStream = response.getOutputStream();
+		outStream.write(outArray);
+		outStream.flush();
+		outStream.close();
 	}
 
 }

@@ -1,16 +1,28 @@
 package th.go.excise.ims.ia.service;
 
+import java.awt.Color;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
+import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncGfd;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncGfh;
@@ -182,11 +194,109 @@ public class Int0610Service {
 		response.setAuditFlag(header.getAuditFlag());
 		response.setIncgfConditionText(header.getIncgfConditionText());
 		response.setIncgfCreteriaText(header.getIncgfCreteriaText());
-		response.setMonthPeriodFrom(ConvertDateUtils.formatDateToString(ExciseUtils.firstDateOfPeriod(header.getIncMonthFrom(), header.getIncYearFrom()), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH));
-		response.setMonthPeriodTo(ConvertDateUtils.formatDateToString(ExciseUtils.lastDateOfPeriod(header.getIncMonthTo(), header.getIncYearTo(), "Y"), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH));
+		response.setMonthPeriodFrom(
+				ConvertDateUtils.formatDateToString(ExciseUtils.firstDateOfPeriod(header.getIncMonthFrom(), header.getIncYearFrom()), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH));
+		response.setMonthPeriodTo(
+				ConvertDateUtils.formatDateToString(ExciseUtils.lastDateOfPeriod(header.getIncMonthTo(), header.getIncYearTo(), "Y"), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		response.setDataList(tabList);
 
 		return response;
+	}
+
+	public ByteArrayOutputStream export(String officeCode, String periodFrom, String periodTo) throws Exception {
+		/* find data to write excel */
+		Int0610SearchVo requestData = new Int0610SearchVo();
+		requestData.setOfficeCode(officeCode);
+		requestData.setPeriodFrom(periodFrom.replace("-", "/"));
+		requestData.setPeriodTo(periodTo.replace("-", "/"));
+		List<Int0610Vo> resData = getTabs(requestData);
+		
+		/* style */
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		CellStyle thStyle = ExcelUtils.createThCellStyle(workbook);
+		CellStyle tdStyle = ExcelUtils.createTdCellStyle(workbook);
+		CellStyle TopicCenterlite = ExcelUtils.createTopicCenterliteStyle(workbook);
+		CellStyle tdLeft = ExcelUtils.createLeftCellStyle(workbook);
+		CellStyle tdRight = ExcelUtils.createRightCellStyle(workbook);
+		CellStyle TopicRight = ExcelUtils.createTopicRightStyle(workbook);
+		CellStyle TopicCenter = ExcelUtils.createTopicCenterStyle(workbook);
+		Sheet sheet = workbook.createSheet();
+		int rowNum = 0;
+		int cellNum = 0;
+
+		Font headerFont = workbook.createFont();
+		headerFont.setFontHeightInPoints((short) 14);
+		headerFont.setFontName(ExcelUtils.FONT_NAME.TH_SARABUN_PSK);
+
+		CellStyle cellHeaderStyle = ExcelUtils.createThColorStyle(workbook, new XSSFColor(Color.LIGHT_GRAY));
+		cellHeaderStyle.setFont(headerFont);
+
+		tdRight.setFont(headerFont);
+		tdLeft.setFont(headerFont);
+
+		String[] header = { "รหัสภาษี", "รายการภาษี", "จำนวนเงิน(ระบบรายได้)", "รหัส GL", "ชื่อรายได้", "จำนวนเงิน", "ผลต่าง" };
+		Row row = sheet.createRow(rowNum);
+		Cell cell = row.createCell(cellNum);
+		
+		rowNum = 0;
+		row = sheet.createRow(rowNum);
+		for (int i = 0; i < header.length; i++) {
+			cell = row.createCell(cellNum);
+			cell.setCellValue(header[i]);
+			cell.setCellStyle(TopicCenter);
+			cell.setCellStyle(cellHeaderStyle);
+			cellNum++;
+		}
+		
+//		for (Int0610Vo tabs : resData) {
+//			for (Int0610TabVo t : tabs.getTab()) {
+//				rowNum++;
+//				cellNum = 0;
+//				row = sheet.createRow(rowNum);
+//				for (Int0610SumVo s : t.getSummary()) {
+//					cell = row.createCell(cellNum);
+//					cell.setCellValue(s.getIncomeCode());
+//					cellNum++;
+//					
+//					cell = row.createCell(cellNum);
+//					cell.setCellValue(s.getAccName());
+//					cellNum++;
+//					
+//					cell = row.createCell(cellNum);
+//					cell.setCellValue(s.getNetTaxAmt().doubleValue());
+//					cellNum++;
+//					
+//					cell = row.createCell(cellNum);
+//					cell.setCellValue(t.getAccNo());
+//					cellNum++;
+//					
+//					cell = row.createCell(cellNum);
+//					cell.setCellValue(t.getAccName());
+//					cellNum++;
+//					
+//					cell = row.createCell(cellNum);
+//					cell.setCellValue(t.getCarryForward().doubleValue());
+//					cellNum++;
+//				}
+//			}
+//		}
+
+		// set width
+		int width = 76;
+		sheet.setColumnWidth(1, width * 40);
+		sheet.setColumnWidth(2, width * 145);
+		for (int i = 3; i < 8; i++) {
+			// if (i == 21) {
+			// continue;
+			// }
+			sheet.setColumnWidth(i, width * 50);
+		}
+		
+		Sheet sheet2 = workbook.createSheet();
+
+		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		workbook.write(outByteStream);
+		return outByteStream;
 	}
 
 }
