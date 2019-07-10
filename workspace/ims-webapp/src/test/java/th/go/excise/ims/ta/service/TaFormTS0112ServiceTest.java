@@ -2,7 +2,9 @@ package th.go.excise.ims.ta.service;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -20,6 +22,7 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSIO
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.go.excise.ims.Application;
+import th.go.excise.ims.ta.vo.TaFormTS0112DtlVo;
 import th.go.excise.ims.ta.vo.TaFormTS0112Vo;
 import th.go.excise.ims.ta.vo.TaFormTsFormVo;
 
@@ -45,16 +48,22 @@ public class TaFormTS0112ServiceTest {
 		formTS0112Vo.setHeadOfficerFullName("ธีรวุฒิ กุลฤทธิชัย");
 		formTS0112Vo.setHeadOfficerPosition("เจ้าหน้าที่ตรวจสอบภาษี");
 		formTS0112Vo.setHeadOfficerOfficeName("สังกัด");
-		formTS0112Vo.setOfficerFullName1("สมพงษ์ คงมี");
-		formTS0112Vo.setOfficerPosition1("ตรวจ");
-		formTS0112Vo.setOfficerFullName2("จรัญ จำรูญ");
-		formTS0112Vo.setOfficerPosition2("ตรวจ");
-		formTS0112Vo.setOfficerFullName3("");
-		formTS0112Vo.setOfficerPosition3("");
-		formTS0112Vo.setOfficerFullName4("");
-		formTS0112Vo.setOfficerPosition4("");
-		formTS0112Vo.setOfficerFullName5("");
-		formTS0112Vo.setOfficerPosition5("");
+		
+		TaFormTS0112DtlVo formTS0112DtlVo1 = new TaFormTS0112DtlVo();
+		formTS0112DtlVo1.setRecNo("1");
+		formTS0112DtlVo1.setOfficerFullName("นายอนุชา จันทร์แก้ว");
+		formTS0112DtlVo1.setOfficerPosition("เจ้าหน้าที่ออกตรวจภาษี ระดับพื้นที่");
+		
+		TaFormTS0112DtlVo formTS0112DtlVo2 = new TaFormTS0112DtlVo();
+		formTS0112DtlVo2.setRecNo("2");
+		formTS0112DtlVo2.setOfficerFullName("นายชัยชนะ ใจดี");
+		formTS0112DtlVo2.setOfficerPosition("เจ้าหน้าที่ออกตรวจภาษีระดับเขต");
+		
+		List<TaFormTS0112DtlVo> formTS0112DtlVoList = new ArrayList<>();
+		formTS0112DtlVoList.add(formTS0112DtlVo1);
+		formTS0112DtlVoList.add(formTS0112DtlVo2);
+		formTS0112Vo.setTaFormTS0112DtlVoList(formTS0112DtlVoList);
+		
 		formTS0112Vo.setFactoryName("บริษัท เชลล์แห่งประเทศไทย จำกัด ");
 		formTS0112Vo.setNewRegId("01005150424621001");
 		formTS0112Vo.setFacAddrNo("789");
@@ -82,7 +91,7 @@ public class TaFormTS0112ServiceTest {
 		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.TA_FORM_TS01_12))));
 	}
 	
-	@Test
+//	@Test
 	public void test_generateReport_Blank() throws Exception {
 		TaFormTS0112Service taFormTS0112Service = new TaFormTS0112Service();
 		
@@ -101,16 +110,22 @@ public class TaFormTS0112ServiceTest {
 		formTS0112Vo.setHeadOfficerFullName("ธีรวุฒิ กุลฤทธิชัย");
 		formTS0112Vo.setHeadOfficerPosition("เจ้าหน้าที่ตรวจสอบภาษี");
 		formTS0112Vo.setHeadOfficerOfficeName("สังกัด");
-		formTS0112Vo.setOfficerFullName1("สมพงษ์ คงมี");
-		formTS0112Vo.setOfficerPosition1("ตรวจ");
-		formTS0112Vo.setOfficerFullName2("จรัญ จำรูญ");
-		formTS0112Vo.setOfficerPosition2("ตรวจ");
-		formTS0112Vo.setOfficerFullName3("");
-		formTS0112Vo.setOfficerPosition3("");
-		formTS0112Vo.setOfficerFullName4("");
-		formTS0112Vo.setOfficerPosition4("");
-		formTS0112Vo.setOfficerFullName5("");
-		formTS0112Vo.setOfficerPosition5("");
+		
+		TaFormTS0112DtlVo formTS0112DtlVo1 = new TaFormTS0112DtlVo();
+		formTS0112DtlVo1.setRecNo("1");
+		formTS0112DtlVo1.setOfficerFullName("นายอนุชา จันทร์แก้ว");
+		formTS0112DtlVo1.setOfficerPosition("เจ้าหน้าที่ออกตรวจภาษี ระดับพื้นที่");
+		
+		TaFormTS0112DtlVo formTS0112DtlVo2 = new TaFormTS0112DtlVo();
+		formTS0112DtlVo2.setRecNo("2");
+		formTS0112DtlVo2.setOfficerFullName("นายชัยชนะ ใจดี");
+		formTS0112DtlVo2.setOfficerPosition("เจ้าหน้าที่ออกตรวจภาษีระดับเขต");
+		
+		List<TaFormTS0112DtlVo> formTS0112DtlVoList = new ArrayList<>();
+		formTS0112DtlVoList.add(formTS0112DtlVo1);
+		formTS0112DtlVoList.add(formTS0112DtlVo2);
+		formTS0112Vo.setTaFormTS0112DtlVoList(formTS0112DtlVoList);
+		
 		formTS0112Vo.setFactoryName("บริษัท เชลล์แห่งประเทศไทย จำกัด ");
 		formTS0112Vo.setNewRegId("01005150424621001");
 		formTS0112Vo.setFacAddrNo("789");
