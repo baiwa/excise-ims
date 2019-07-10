@@ -97,24 +97,24 @@ public class RoleRepositoryTest {
 		roleList.add(roleAdmin);
 		
 		Role roleInternalAudit = new Role();
-		roleInternalAudit.setRoleCode(ROLE.IA);
+		roleInternalAudit.setRoleCode(ROLE.IA_ADM);
 		roleInternalAudit.setRoleDesc("Internal Audit");
 		roleList.add(roleInternalAudit);
 		
 		Role roleTaxAudit = new Role();
-		roleTaxAudit.setRoleCode(ROLE.TA);
+		roleTaxAudit.setRoleCode(ROLE.TA_ADM);
 		roleTaxAudit.setRoleDesc("Tax Audit");
 		roleList.add(roleTaxAudit);
 		
 		Role roleOperatorAudit = new Role();
-		roleOperatorAudit.setRoleCode(ROLE.OA);
+		roleOperatorAudit.setRoleCode(ROLE.OA_ADM);
 		roleOperatorAudit.setRoleDesc("Operator Audit");
 		roleList.add(roleOperatorAudit);
 		
-		Role roleExportAudit = new Role();
-		roleExportAudit.setRoleCode(ROLE.EA);
-		roleExportAudit.setRoleDesc("Export Audit");
-		roleList.add(roleExportAudit);
+//		Role roleExportAudit = new Role();
+//		roleExportAudit.setRoleCode(ROLE.EA);
+//		roleExportAudit.setRoleDesc("Export Audit");
+//		roleList.add(roleExportAudit);
 				
 		roleRepository.saveAll(roleList);
 	}

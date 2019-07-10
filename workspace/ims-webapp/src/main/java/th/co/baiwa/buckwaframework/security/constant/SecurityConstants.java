@@ -18,16 +18,27 @@ public class SecurityConstants {
 		public static final String ADMIN = "ROLE_ADMIN";
 		
 		// Role for Tax Audit
-		public static final String TA = "ROLE_TA";
+		public static final String PREFIX_TA = "TA";
+		public static final String TA_ADM = "TA_ADM";
+		public static final String TA_HEAD = "TA_HEAD";
+		public static final String TA_PLAN = "TA_PLAN";
+		public static final String TA_SEL = "TA_SEL";
+		public static final String TA_OPR = "TA_OPR";
 		
 		// Role for Internal Audit
-		public static final String IA = "ROLE_IA";
+		public static final String PREFIX_IA = "IA";
+		public static final String IA_ADM = "IA_ADM";
+		public static final String IA_HEAD = "IA_HEAD";
+		public static final String IA_OPR = "IA_OPR";
+		public static final String IA_REC = "IA_REC";
+		public static final String IA_SEL = "IA_SEL";
 		
 		// Role for Operator Audit
-		public static final String OA = "ROLE_OA";
-		
-		// Role for Export Audit
-		public static final String EA = "ROLE_EA";
+		public static final String PREFIX_OA = "OA";
+		public static final String OA_ADM = "OA_ADM";
+		public static final String OA_AU = "OA_AU";
+		public static final String OA_HEAD = "OA_HEAD";
+		public static final String OA_OPR = "OA_OPR";
 	}
 	
 	public static final class SYSTEM_USER {

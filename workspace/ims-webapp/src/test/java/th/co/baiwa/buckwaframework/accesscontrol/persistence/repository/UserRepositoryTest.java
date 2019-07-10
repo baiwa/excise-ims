@@ -15,12 +15,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.Role;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.User;
 import th.co.baiwa.buckwaframework.accesscontrol.persistence.entity.UserRole;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
-import th.co.baiwa.buckwaframework.security.constant.SecurityConstants;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.ROLE;
 import th.go.excise.ims.Application;
 
@@ -187,10 +185,9 @@ public class UserRepositoryTest {
 		List<String> roleCodeList = Arrays.asList(new String[] {
 			ROLE.USER,
 			ROLE.ADMIN,
-			ROLE.IA,
-			ROLE.TA,
-			ROLE.OA,
-			ROLE.EA
+			ROLE.IA_ADM,
+			ROLE.TA_ADM,
+			ROLE.OA_ADM
 		});
 		
 		UserRole userRole = null;

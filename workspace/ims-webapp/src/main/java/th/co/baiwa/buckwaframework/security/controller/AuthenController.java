@@ -24,6 +24,7 @@ import io.swagger.annotations.ApiOperation;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.DocumentConstants.MODULE_NAME;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.ROLE;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.URL;
 import th.co.baiwa.buckwaframework.security.domain.UserBean;
 import th.co.baiwa.buckwaframework.security.domain.UserProfileVo;
@@ -119,26 +120,21 @@ public class AuthenController {
 		return respData;
 	}
 	
-	public String getCurrentUserSystemByRole(List<String> role) {
-		String roleStr = "TA";
-		for (String str : role) {
-			int iaIndex = str.indexOf("IA");
-			int oaIndex = str.indexOf("OA");
-			int taIndex = str.indexOf("TA");
-			if (iaIndex > 0 ) {
-				roleStr = "IA";
+	public String getCurrentUserSystemByRole(List<String> roleList) {
+		String systemName = ROLE.PREFIX_TA;
+		for (String role : roleList) {
+			if (role.startsWith(ROLE.PREFIX_TA)) {
+				systemName = ROLE.PREFIX_TA;
 				break;
-			};
-			if (oaIndex > 0 ) {
-				roleStr = "OA";
+			} else if (role.startsWith(ROLE.PREFIX_IA)) {
+				systemName = ROLE.PREFIX_IA;
 				break;
-			};
-			if (taIndex > 0 ) {
-				roleStr = "TA";
+			} else if (role.startsWith(ROLE.PREFIX_OA)) {
+				systemName = ROLE.PREFIX_OA;
 				break;
-			};
+			}
 		}
-		return roleStr;
+		return systemName;
 	}
 	
 }
