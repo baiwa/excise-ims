@@ -34,19 +34,20 @@ public class Int0803Service {
 	public Int0803Vo getExperimentalBudget(Int0803Search request) {
 		Int0803Vo response = new Int0803Vo();
 		/* ___________ set request ___________ */
-		request.setPeriodDateFromStr(
-				ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(request.getFromYear(), ConvertDateUtils.YYYY), ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_EN)
-						.concat(request.getPeriodFrom()));
-		request.setPeriodDateToStr(ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(request.getToYear(), ConvertDateUtils.YYYY), ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_EN)
-				.concat(request.getPeriodTo()));
-		request.setPeriodDateFrom(ExciseUtils.firstDateOfPeriod(request.getPeriodFrom(), request.getFromYear()));
-		request.setPeriodDateTo(ExciseUtils.lastDateOfPeriod(request.getPeriodTo(), request.getToYear()));
+		String fromYearEN = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(request.getFromYear(), ConvertDateUtils.YYYY), ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_EN);
+		String toYearEN = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(request.getToYear(), ConvertDateUtils.YYYY), ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_EN);
+		request.setPeriodDateFromStr(fromYearEN.concat(request.getPeriodFrom()));
+		request.setPeriodDateToStr(toYearEN.concat(request.getPeriodTo()));
+		request.setPeriodDateFrom(ExciseUtils.firstDateOfPeriod(request.getPeriodFrom(), fromYearEN));
+		request.setPeriodDateTo(ExciseUtils.lastDateOfPeriod(request.getPeriodTo(), toYearEN, ""));
 
 		/* ___________ set response ___________ */
-		response.setExperimentalBudgetList(experimentalBudget(iaGftrialBalanceRepository.findExperimentalBudgetByRequest(request)).getExperimentalBudgetList());
-		response.setSumExperimentalBudget(experimentalBudget(iaGftrialBalanceRepository.findExperimentalBudgetByRequest(request)).getSumExperimentalBudget());
-		response.setDepositsReportList(depositsReport(iaGftrialBalanceRepository.findDepositsReportByRequest(request)).getDepositsReportList());
-		response.setSumDepositsReport(depositsReport(iaGftrialBalanceRepository.findDepositsReportByRequest(request)).getSumDepositsReport());
+		List<Int0803TableVo> resExperimentalBudget = iaGftrialBalanceRepository.findExperimentalBudgetByRequest(request);
+		List<Int0803TableVo> resDeposits = iaGftrialBalanceRepository.findDepositsReportByRequest(request);
+		response.setExperimentalBudgetList(experimentalBudget(resExperimentalBudget).getExperimentalBudgetList());
+		response.setSumExperimentalBudget(experimentalBudget(resExperimentalBudget).getSumExperimentalBudget());
+		response.setDepositsReportList(depositsReport(resDeposits).getDepositsReportList());
+		response.setSumDepositsReport(depositsReport(resDeposits).getSumDepositsReport());
 		response.setDifference(calculateDiffValue(response.getSumExperimentalBudget(), response.getSumDepositsReport()));
 		return response;
 	}

@@ -285,15 +285,15 @@ public class ExciseUtils {
 	}
 	
 	/** 
-	 * example transfer (012, 2019) => 30/09/2020(format DATE)
+	 * example transfer (012, 2019) => 30/09/2019(format DATE)
 	 **/
-	public static Date lastDateOfPeriod(String period ,String year) {
+	public static Date lastDateOfPeriod(String period ,String year, String flag) {
 		Calendar cal = Calendar.getInstance(Locale.ENGLISH);
 		cal.set(Integer.parseInt(year), PERIOD_MONTH[Integer.parseInt(period)-1], 1);
 		cal.add(Calendar.MONTH, 1);
 		cal.add(Calendar.DATE, -1);
-		if (Integer.parseInt(period) >= 4) {
-			cal.add(Calendar.YEAR, 1);
+		if (Integer.parseInt(period) >= 4 && "Y".equals(flag)) {
+			cal.add(Calendar.YEAR, 1);	/* year + 1 */
 		}
 		return cal.getTime();
 	}

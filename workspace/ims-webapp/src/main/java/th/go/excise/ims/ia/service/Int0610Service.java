@@ -183,7 +183,7 @@ public class Int0610Service {
 		response.setIncgfConditionText(header.getIncgfConditionText());
 		response.setIncgfCreteriaText(header.getIncgfCreteriaText());
 		response.setMonthPeriodFrom(ConvertDateUtils.formatDateToString(ExciseUtils.firstDateOfPeriod(header.getIncMonthFrom(), header.getIncYearFrom()), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH));
-		response.setMonthPeriodTo(ConvertDateUtils.formatDateToString(ExciseUtils.lastDateOfPeriod(header.getIncMonthTo(), header.getIncYearTo()), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH));
+		response.setMonthPeriodTo(ConvertDateUtils.formatDateToString(ExciseUtils.lastDateOfPeriod(header.getIncMonthTo(), header.getIncYearTo(), "Y"), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		response.setDataList(tabList);
 
 		return response;
