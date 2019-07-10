@@ -11,16 +11,16 @@ import javax.persistence.Table;
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
-@Table(name = "TA_FORM_TS0107_DTL")
-public class TaFormTs0107Dtl extends BaseEntity {
+@Table(name = "TA_FORM_TS0112_DTL")
+public class TaFormTs0112Dtl extends BaseEntity {
 
-	private static final long serialVersionUID = -6642334621003129949L;
+	private static final long serialVersionUID = 7887113213055307635L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_FORM_TS0107_DTL_GEN")
-	@SequenceGenerator(name = "TA_FORM_TS0107_DTL_GEN", sequenceName = "TA_FORM_TS0107_DTL_SEQ", allocationSize = 1)
-	@Column(name = "FORM_TS0107_DTL_ID")
-	private Long formTs0107DtlId;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TA_FORM_TS0112_DTL_GEN")
+	@SequenceGenerator(name = "TA_FORM_TS0112_DTL_GEN", sequenceName = "TA_FORM_TS0112_DTL_SEQ", allocationSize = 1)
+	@Column(name = "FORM_TS0112_DTL_ID")
+	private Long formTs0112DtlId;
 	@Column(name = "FORM_TS_NUMBER")
 	private String formTsNumber;
 	@Column(name = "REC_NO")
@@ -32,12 +32,12 @@ public class TaFormTs0107Dtl extends BaseEntity {
 	@Column(name = "OFFICER_POSITION")
 	private String officerPosition;
 
-	public Long getFormTs0107DtlId() {
-		return formTs0107DtlId;
+	public Long getFormTs0112DtlId() {
+		return formTs0112DtlId;
 	}
 
-	public void setFormTs0107DtlId(Long formTs0107DtlId) {
-		this.formTs0107DtlId = formTs0107DtlId;
+	public void setFormTs0112DtlId(Long formTs0112DtlId) {
+		this.formTs0112DtlId = formTs0112DtlId;
 	}
 
 	public String getFormTsNumber() {

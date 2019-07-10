@@ -103,16 +103,6 @@ public class TaFormTS0112Service extends AbstractTaFormTSService<TaFormTS0112Vo,
         params.put("headOfficerFullName", formTS0112Vo.getHeadOfficerFullName());
         params.put("headOfficerPosition", formTS0112Vo.getHeadOfficerPosition());
         params.put("headOfficerOfficeName", formTS0112Vo.getHeadOfficerOfficeName());
-        params.put("officerFullName1", formTS0112Vo.getOfficerFullName1());
-        params.put("officerPosition1", formTS0112Vo.getOfficerPosition1());
-        params.put("officerFullName2", formTS0112Vo.getOfficerFullName2());
-        params.put("officerPosition2", formTS0112Vo.getOfficerPosition2());
-        params.put("officerFullName3", formTS0112Vo.getOfficerFullName3());
-        params.put("officerPosition3", formTS0112Vo.getOfficerPosition3());
-        params.put("officerFullName4", formTS0112Vo.getOfficerFullName4());
-        params.put("officerPosition4", formTS0112Vo.getOfficerPosition4());
-        params.put("officerFullName5", formTS0112Vo.getOfficerFullName5());
-        params.put("officerPosition5", formTS0112Vo.getOfficerPosition5());
         params.put("factoryName", formTS0112Vo.getFactoryName());
         params.put("newRegId", formTS0112Vo.getNewRegId());
         params.put("facAddrNo", formTS0112Vo.getFacAddrNo());
