@@ -135,7 +135,6 @@ public class Int0610Service {
 		request.getHeader().setAuditIncGfNo(auditIncGfNo);
 		/* ________ save header ________ */
 		iaAuditIncGfhRepository.save(request.getHeader());
-
 		for (IaAuditIncGfd entity : request.getDetails()) {
 			entity.setAuditIncGfNo(auditIncGfNo);
 		}

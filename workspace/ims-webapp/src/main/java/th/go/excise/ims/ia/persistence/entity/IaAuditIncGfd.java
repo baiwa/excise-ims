@@ -40,6 +40,8 @@ public class IaAuditIncGfd extends BaseEntity {
 	private String glAccNo;
 	@Column(name = "GL_NET_TAX_AMT")
 	private BigDecimal glNetTaxAmt;
+	@Column(name = "INC_GFD_SEQ")
+	private BigDecimal incGfdSeq;
 
 	public BigDecimal getIaAuditIncGfdId() {
 		return iaAuditIncGfdId;
@@ -107,6 +109,14 @@ public class IaAuditIncGfd extends BaseEntity {
 
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+	public BigDecimal getIncGfdSeq() {
+		return incGfdSeq;
+	}
+
+	public void setIncGfdSeq(BigDecimal incGfdSeq) {
+		this.incGfdSeq = incGfdSeq;
 	}
 
 }
