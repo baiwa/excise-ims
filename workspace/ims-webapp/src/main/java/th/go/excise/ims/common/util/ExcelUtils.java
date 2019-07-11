@@ -13,16 +13,15 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.monitorjbl.xlsx.StreamingReader;
-
 public abstract class ExcelUtils {
-
+	
 	private static final String defaultDatePattern = "dd/MM/yyyy HH:mm:ss";
 	
 	public static final class FONT_NAME {
@@ -222,19 +221,23 @@ public abstract class ExcelUtils {
 	}
 
 	public static List<List<String>> readExcel(MultipartFile file) throws Exception {
-		List<List<String>> excelData = new ArrayList<>();
-		Workbook workbook = StreamingReader.builder().rowCacheSize(100).bufferSize(4096).open(file.getInputStream());
-		Sheet sheet = workbook.getSheetAt(0);
-		sheet.forEach(row -> {
-			List<String> listInLine = new ArrayList<>();
-			row.forEach(cell -> {
-				String cellValue = ExcelUtils.getCellValueAsString(cell);
-				listInLine.add(cellValue);
+		final List<List<String>> excelDataList = new ArrayList<>();
+		
+		try (Workbook workbook = WorkbookFactory.create(file.getInputStream());) {
+			Sheet sheet = workbook.getSheetAt(0);
+			sheet.forEach(row -> {
+				List<String> lineDataList = new ArrayList<>();
+				row.forEach(cell -> {
+					String cellValue = ExcelUtils.getCellValueAsString(cell);
+					lineDataList.add(cellValue);
+				});
+				excelDataList.add(lineDataList);
 			});
-			excelData.add(listInLine);
-		});
-		workbook.close();
-		return excelData;
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		return excelDataList;
 	}
 
 }
