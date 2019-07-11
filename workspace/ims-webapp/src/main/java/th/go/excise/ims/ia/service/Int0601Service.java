@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD1;
@@ -64,36 +65,55 @@ public class Int0601Service {
 	@Autowired
 	private IaAuditIncD3Repository iaAuditIncD3Repository;
 
-	DecimalFormat df1 = new DecimalFormat("###,###,###");
-	DecimalFormat df2 = new DecimalFormat("###,###,###.00");
-
 	public List<IaAuditIncD1Vo> findTab1ByCriteria(Int0601RequestVo int0601Vo) {
 		logger.info("findTab1ByCriteria");
 		
 		List<WsIncfri8020Inc> wsIncfri8020List = int0601JdbcRepository.findByCriteria(int0601Vo, "RECEIPT_DATE, OFFLINE_STATUS, RECEIPT_NO");
 		
-		List<IaAuditIncD1Vo> auditIncD1VoList = new ArrayList<>();
-		IaAuditIncD1Vo d1Vo = null;
+		List<IaAuditIncD1Vo> voList = new ArrayList<>();
+		IaAuditIncD1Vo vo = null;
 		if (wsIncfri8020List != null && wsIncfri8020List.size() > 0) {
 			for (WsIncfri8020Inc data : wsIncfri8020List) {
-				d1Vo = new IaAuditIncD1Vo();
-				try {
-					d1Vo.setIaAuditIncDId(data.getWsIncfri8020IncId());
-					d1Vo.setOfficeCode(data.getOfficeReceive());
-					d1Vo.setDocCtlNo(data.getIncCtlNo());
-					d1Vo.setReceiptNo(data.getReceiptNo());
-					d1Vo.setReceiptDate(data.getReceiptDate() != null ? ConvertDateUtils.formatDateToString(data.getReceiptDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH) : "");
-					d1Vo.setTaxName(data.getIncomeName());
-					d1Vo.setTaxCode(data.getIncomeCode());
-					d1Vo.setAmount(data.getNetTaxAmt());
-					auditIncD1VoList.add(d1Vo);
-				} catch (Exception e) {
-					logger.error(e.getMessage(), e);
+				vo = new IaAuditIncD1Vo();
+				vo.setIaAuditIncDId(data.getWsIncfri8020IncId());
+				vo.setOfficeCode(data.getOfficeReceive());
+				vo.setDocCtlNo(data.getIncCtlNo());
+				vo.setReceiptNo(data.getReceiptNo());
+				vo.setReceiptDate(data.getReceiptDate() != null ? ConvertDateUtils.formatDateToString(data.getReceiptDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH) : "");
+				vo.setTaxName(data.getIncomeName());
+				vo.setTaxCode(data.getIncomeCode());
+				vo.setAmount(data.getNetTaxAmt());
+				voList.add(vo);
+			}
+			checkWasteReceiptNo(voList);
+		}
+		
+		return voList;
+	}
+	
+	private void checkWasteReceiptNo(List<IaAuditIncD1Vo> voList) {
+		String[] tmp = null;
+		String group1 = null;
+		long running1 = 0L;
+		String group2 = null;
+		long running2 = 0L;
+		int size = voList.size();
+		for (int i = 0; i < size; i++) {
+			tmp = voList.get(i).getReceiptNo().split("/");
+			group1 = tmp[0];
+			running1 = Long.valueOf(tmp[1]);
+			if (i + 1 < size) {
+				tmp = voList.get(i + 1).getReceiptNo().split("/");
+				group2 = tmp[0];
+				if (group1.equals(group2)) {
+					running2 = Long.valueOf(tmp[1]);
+					if ((running1 + 1) != running2) {
+						voList.get(i).setWasteReceiptFlag(FLAG.Y_FLAG);
+						voList.get(i + 1).setWasteReceiptFlag(FLAG.Y_FLAG);
+					}
 				}
 			}
 		}
-		
-		return auditIncD1VoList;
 	}
 
 	public List<IaAuditIncD2Vo> findIaAuditIncD2ByCriteria(Int0601RequestVo criteria) {
@@ -418,6 +438,9 @@ public class Int0601Service {
 	public byte[] export(String auditIncNo) {
 		logger.info("export auditIncNo={}", auditIncNo);
 		
+		DecimalFormat decimalFormatZeroDigit = new DecimalFormat("#,##0");
+		DecimalFormat decimalFormatTwoDigits = new DecimalFormat("#,##0.00");
+		
 		IaAuditIncHVo iaAuditIncH = null;
 		List<IaAuditIncD1Vo> dataList = new ArrayList<IaAuditIncD1Vo>();
 		List<IaAuditIncD2Vo> dataList2 = new ArrayList<IaAuditIncD2Vo>();
@@ -522,7 +545,7 @@ public class Int0601Service {
 			if (data.getAmount() == null) {
 				cell.setCellValue("");
 			} else {
-				cell.setCellValue(df2.format(data.getAmount()));
+				cell.setCellValue(decimalFormatTwoDigits.format(data.getAmount()));
 			}
 			cell.setCellStyle(cellRight);
 			cellNum++;
@@ -627,7 +650,7 @@ public class Int0601Service {
 			if (data.getAmount() == null) {
 				cell2.setCellValue("");
 			} else {
-				cell2.setCellValue(df2.format(data.getAmount()));
+				cell2.setCellValue(decimalFormatTwoDigits.format(data.getAmount()));
 			}
 			cell2.setCellStyle(cellRight);
 			cellNum2++;
@@ -636,7 +659,7 @@ public class Int0601Service {
 			if (data.getPrintPerDay() == null) {
 				cell2.setCellValue("");
 			} else {
-				cell2.setCellValue(df1.format(data.getPrintPerDay()));
+				cell2.setCellValue(decimalFormatZeroDigit.format(data.getPrintPerDay()));
 			}
 			cell2.setCellStyle(cellRight);
 			cellNum2++;
@@ -741,7 +764,7 @@ public class Int0601Service {
 			if (data.getAmount() == null) {
 				cell3.setCellValue("");
 			} else {
-				cell3.setCellValue(df2.format(data.getAmount()));
+				cell3.setCellValue(decimalFormatTwoDigits.format(data.getAmount()));
 			}
 			cell3.setCellStyle(cellRight);
 			cellNum3++;
@@ -750,7 +773,7 @@ public class Int0601Service {
 			if (data.getCountReceipt() == null) {
 				cell3.setCellValue("");
 			} else {
-				cell3.setCellValue(df1.format(data.getCountReceipt()));
+				cell3.setCellValue(decimalFormatZeroDigit.format(data.getCountReceipt()));
 			}
 			cell3.setCellStyle(cellRight);
 			cellNum3++;
@@ -877,7 +900,7 @@ public class Int0601Service {
 			if (data.getAmount() == null) {
 				cell4.setCellValue("");
 			} else {
-				cell4.setCellValue(df2.format(data.getAmount()));
+				cell4.setCellValue(decimalFormatTwoDigits.format(data.getAmount()));
 			}
 			cell4.setCellStyle(cellRight);
 			cellNum4++;
