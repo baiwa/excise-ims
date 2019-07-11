@@ -3,6 +3,9 @@ package th.go.excise.ims.ia.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,31 +25,51 @@ import th.go.excise.ims.ia.vo.Int15SaveVo;
 
 @Service
 public class IaGftrialBalanceService {
-
+	
+	private static final Logger logger = LoggerFactory.getLogger(IaGftrialBalanceService.class);
+	
 	@Autowired
 	private IaGftrialBalanceRepository iaGftrialBalanceRepository;
 
-	private final String KEY_FILTER = "User name     :";
 
 	public ResponseData<Int15ResponseUploadVo> addDataByExcel(MultipartFile file) {
+		logger.info("addDataByExcel filename={}", file.getOriginalFilename());
+		
+		final String KEY_FILTER_USERNAME = "User name";
+		final String KEY_FILTER_PERIOD = "ประจำงวด";
+		final String KEY_FILTER_ACCOUNT = "บัญชีแยกประเภท";
+		
 		ResponseData<Int15ResponseUploadVo> responseData = new ResponseData<Int15ResponseUploadVo>();
 		try {
 			String departmentCode = "";
 			String periodFrom = "";
 			String periodTo = "";
 			String periodYear = "";
+			boolean dataFlag = false;
 			List<IaGftrialBalance> iaRepDisbPerMonthList = new ArrayList<>();
 			IaGftrialBalance iaRepDisbPerMonth = new IaGftrialBalance();
 			List<List<String>> allLine = ExcelUtils.readExcel(file);
 			for (List<String> line : allLine) {
-				if (line != null && line.size() == 5 && line.get(0) != null && KEY_FILTER.equals(line.get(0).trim())) {
+				if (line != null && StringUtils.trimToEmpty(line.get(0)).startsWith(KEY_FILTER_USERNAME)) {
 					departmentCode = line.get(2).trim().split(" ")[1];
-				} else if (line != null && line.size() == 1 && line.get(0).trim().split(" ").length == 6) {
-					String[] periodData = line.get(0).trim().split(" ");
+					dataFlag = false;
+					continue;
+				} else if (line != null && StringUtils.trimToEmpty(line.get(0)).startsWith(KEY_FILTER_PERIOD)) {
+					String[] periodData = StringUtils.trimToEmpty(line.get(0)).split(" ");
 					periodFrom = periodData[1];
 					periodTo = periodData[3];
 					periodYear = periodData[5];
-				} else if (line != null && line.size() == 6) {
+					dataFlag = false;
+					continue;
+				} else if (line != null && StringUtils.trimToEmpty(line.get(0)).startsWith(KEY_FILTER_ACCOUNT)) {
+					dataFlag = true;
+					continue;
+				} else if (line != null && dataFlag) {
+					try {
+						Long.parseLong(line.get(0));
+					} catch(NumberFormatException e) {
+						continue;
+					}
 					iaRepDisbPerMonth = new IaGftrialBalance();
 					iaRepDisbPerMonth.setDeptDisb(departmentCode);
 					iaRepDisbPerMonth.setPeriodFrom(periodFrom);
@@ -68,10 +91,11 @@ public class IaGftrialBalanceService {
 			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
+		
 		return responseData;
 	}
 	

@@ -116,7 +116,7 @@ public class Int0601Controller {
 
 	@PostMapping("/find-header-by-audit-no")
 	@ResponseBody
-	public ResponseData<IaAuditIncHVo> findAuditLicdupHByAuditLicdupNo(@RequestBody String auditIncNo) {
+	public ResponseData<IaAuditIncHVo> findAuditLicDupHByAuditLicDupNo(@RequestBody String auditIncNo) {
 		ResponseData<IaAuditIncHVo> response = new ResponseData<IaAuditIncHVo>();
 		try {
 			response.setData(int0601Service.findIaAuditIncHByAuditIncNo(auditIncNo));
@@ -180,7 +180,7 @@ public class Int0601Controller {
 
 	@PostMapping("/find-tab3-dtl")
 	@ResponseBody
-	public ResponseData<IaAuditIncD3DatatableDtlVo> findTab2Dtl(@RequestBody Int0601RequestVo request) {
+	public ResponseData<IaAuditIncD3DatatableDtlVo> findTab3Dtl(@RequestBody Int0601RequestVo request) {
 		ResponseData<IaAuditIncD3DatatableDtlVo> response = new ResponseData<IaAuditIncD3DatatableDtlVo>();
 		try {
 			response.setData(int0601Service.findTab3Dtl(request));

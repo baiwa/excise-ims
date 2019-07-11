@@ -3,6 +3,7 @@ package th.go.excise.ims.ia.service;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +17,8 @@ import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.PATH;
 import th.go.excise.ims.Application;
+import th.go.excise.ims.ia.vo.IaAuditIncD1Vo;
+import th.go.excise.ims.ia.vo.Int0601RequestVo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
@@ -25,8 +28,21 @@ public class Int0601ServiceTest {
 
 	@Autowired
 	private Int0601Service int0601Service;
-
+	
 	@Test
+	public void test_findTab1ByCriteria() {
+		Int0601RequestVo formVo = new Int0601RequestVo();
+		formVo.setOfficeReceive("010100");
+		formVo.setReceiptDateFrom("01/10/2561");
+		formVo.setReceiptDateTo("31/10/2561");
+		
+		List<IaAuditIncD1Vo> voList = int0601Service.findTab1ByCriteria(formVo);
+		voList.forEach(e -> {
+			System.out.println(e.getReceiptNo() + " " + e.getWasteReceiptFlag());
+		});
+	}
+
+//	@Test
 	public void test_PriceServiceVo() throws IOException {
 
 		String fileName = "int0601";
