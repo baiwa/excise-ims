@@ -9,11 +9,10 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.monitorjbl.xlsx.StreamingReader;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
@@ -41,11 +40,13 @@ public class IaGfmovementAccountService {
 
 	public final String KEY_FILTER[] = { "บัญชีแยกประเภท", "บัญชีเงินฝาก", "รายงานแสดงการเคลื่อนไหวเงินฝากกระทรวงการคลัง", "Program name  :", "User name     :", "ตั้งแต่" };
 
-	public ResponseData<Int15ResponseUploadVo> addDataByExcel(MultipartFile file) throws IOException {
+	public ResponseData<Int15ResponseUploadVo> addDataByExcel(MultipartFile file) throws Exception {
 		ResponseData<Int15ResponseUploadVo> responseData = new ResponseData<Int15ResponseUploadVo>();
 		List<IaGfmovementAccountVo> iaGfmovementAccountList = new ArrayList<>();
 		IaGfmovementAccountVo iaGfmovementAccount = new IaGfmovementAccountVo();
-		Workbook workbook = StreamingReader.builder().rowCacheSize(100).bufferSize(4096).open(file.getInputStream());
+		Workbook workbook = WorkbookFactory.create(file.getInputStream());
+
+//		Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(file.getBytes()));
 		String valueExc = "";
 		for (Sheet sheet : workbook) {
 			String accTypeNo = "";
@@ -117,8 +118,8 @@ public class IaGfmovementAccountService {
 					System.out.println("");
 
 				} catch (Exception e) {
-					// System.out.print(valueExc + "|err|");
-					// e.printStackTrace();
+					 System.out.print(valueExc + "|err|");
+					 e.printStackTrace();
 				}
 
 			}
