@@ -28,7 +28,13 @@ public class LocalDateUtils {
 	}
 	
 	public static LocalDate thaiMonthYear2LocalDate(String inputDate) {
-		return LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(inputDate.split("/")[1]), Integer.parseInt(inputDate.split("/")[0]), 1));
+		String[] tmp = inputDate.split("/");
+		return LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(tmp[1]), Integer.parseInt(tmp[0]), 1));
+	}
+	
+	public static LocalDate thaiDateSlash2LocalDate(String inputDate) {
+		String[] tmp = inputDate.split("/");
+		return LocalDate.from(ThaiBuddhistDate.of(Integer.parseInt(tmp[2]), Integer.parseInt(tmp[1]), Integer.parseInt(tmp[0])));
 	}
 	
 }
