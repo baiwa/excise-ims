@@ -2,6 +2,8 @@ package th.go.excise.ims.ia.persistence.repository.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.vo.IaAuditIncD2Vo;
 import th.go.excise.ims.ia.vo.IaAuditIncD3Vo;
@@ -43,14 +46,17 @@ public class Int0601JdbcRepository {
 		}
 
 		if (StringUtils.isNotEmpty(criteria.getReceiptDateFrom())) {
-			sql.append(" AND WS.RECEIPT_DATE >= ? ");
-			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			sql.append(" AND TRUNC(WS.RECEIPT_DATE) >= TO_DATE(?, 'YYYYMMDD') ");
+			LocalDate localDate = LocalDateUtils.thaiDateSlash2LocalDate(criteria.getReceiptDateFrom());
+			paramList.add(localDate.format(DateTimeFormatter.BASIC_ISO_DATE));
 		}
 
 		if (StringUtils.isNotEmpty(criteria.getReceiptDateTo())) {
-			sql.append(" AND WS.RECEIPT_DATE <= ? ");
-			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			sql.append(" AND TRUNC(WS.RECEIPT_DATE) <= TO_DATE(?, 'YYYYMMDD') ");
+			LocalDate localDate = LocalDateUtils.thaiDateSlash2LocalDate(criteria.getReceiptDateTo());
+			paramList.add(localDate.format(DateTimeFormatter.BASIC_ISO_DATE));
 		}
+		
 		if (StringUtils.isNotEmpty(criteria.getTaxCode())) {
 			sql.append(" AND WS.INCOME_CODE = ? ");
 			paramList.add(criteria.getTaxCode());
@@ -101,7 +107,9 @@ public class Int0601JdbcRepository {
 
 	public List<IaAuditIncD2Vo> findDataTab2(Int0601RequestVo criteria) {
 		List<Object> paramList = new ArrayList<>();
-		StringBuilder sql = new StringBuilder(" SELECT WS.RECEIPT_DATE RECEIPT_DATE, SUM(WS.NET_TAX_AMT) NET_TAX_AMT, COUNT(1) PRINT_PER_DAY FROM WS_INCFRI8020_INC WS ");
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT WS.RECEIPT_DATE RECEIPT_DATE, SUM(WS.NET_TAX_AMT) NET_TAX_AMT, COUNT(1) PRINT_PER_DAY ");
+		sql.append(" FROM WS_INCFRI8020_INC WS ");
 		sql.append(" WHERE WS.IS_DELETED = '").append(FLAG.N_FLAG).append("'");
 
 		if (StringUtils.isNoneBlank(criteria.getOfficeReceive())) {
@@ -110,14 +118,17 @@ public class Int0601JdbcRepository {
 		}
 
 		if (StringUtils.isNotEmpty(criteria.getReceiptDateFrom())) {
-			sql.append(" AND WS.RECEIPT_DATE >= ? ");
-			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			sql.append(" AND TRUNC(WS.RECEIPT_DATE) >= TO_DATE(?, 'YYYYMMDD') ");
+			LocalDate localDate = LocalDateUtils.thaiDateSlash2LocalDate(criteria.getReceiptDateFrom());
+			paramList.add(localDate.format(DateTimeFormatter.BASIC_ISO_DATE));
 		}
 
 		if (StringUtils.isNotEmpty(criteria.getReceiptDateTo())) {
-			sql.append(" AND WS.RECEIPT_DATE <= ? ");
-			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			sql.append(" AND TRUNC(WS.RECEIPT_DATE) <= TO_DATE(?, 'YYYYMMDD') ");
+			LocalDate localDate = LocalDateUtils.thaiDateSlash2LocalDate(criteria.getReceiptDateTo());
+			paramList.add(localDate.format(DateTimeFormatter.BASIC_ISO_DATE));
 		}
+		
 		sql.append(" AND WS.RECEIPT_NO IS NOT NULL ");
 		sql.append(" GROUP BY WS.RECEIPT_DATE ");
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), tab2RowMapper);
@@ -155,14 +166,17 @@ public class Int0601JdbcRepository {
 		}
 
 		if (StringUtils.isNotEmpty(criteria.getReceiptDateFrom())) {
-			sql.append(" AND WS.RECEIPT_DATE >= ? ");
-			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			sql.append(" AND TRUNC(WS.RECEIPT_DATE) >= TO_DATE(?, 'YYYYMMDD') ");
+			LocalDate localDate = LocalDateUtils.thaiDateSlash2LocalDate(criteria.getReceiptDateFrom());
+			paramList.add(localDate.format(DateTimeFormatter.BASIC_ISO_DATE));
 		}
 
 		if (StringUtils.isNotEmpty(criteria.getReceiptDateTo())) {
-			sql.append(" AND WS.RECEIPT_DATE <= ? ");
-			paramList.add(ConvertDateUtils.parseStringToDate(criteria.getReceiptDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			sql.append(" AND TRUNC(WS.RECEIPT_DATE) <= TO_DATE(?, 'YYYYMMDD') ");
+			LocalDate localDate = LocalDateUtils.thaiDateSlash2LocalDate(criteria.getReceiptDateTo());
+			paramList.add(localDate.format(DateTimeFormatter.BASIC_ISO_DATE));
 		}
+		
 		sql.append(" AND WS.RECEIPT_NO IS NOT NULL ");
 		sql.append(" GROUP BY ");
 		sql.append(" WS.INCOME_CODE, ");
