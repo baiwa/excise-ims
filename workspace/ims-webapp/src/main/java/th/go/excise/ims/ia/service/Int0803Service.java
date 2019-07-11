@@ -38,8 +38,8 @@ public class Int0803Service {
 		String toYearEN = ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(request.getToYear(), ConvertDateUtils.YYYY), ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_EN);
 		request.setPeriodDateFromStr(fromYearEN.concat(request.getPeriodFrom()));
 		request.setPeriodDateToStr(toYearEN.concat(request.getPeriodTo()));
-		request.setPeriodDateFrom(ExciseUtils.firstDateOfPeriod(request.getPeriodFrom(), fromYearEN));
-		request.setPeriodDateTo(ExciseUtils.lastDateOfPeriod(request.getPeriodTo(), toYearEN, ""));
+//		request.setPeriodDateFrom(ExciseUtils.firstDateOfPeriod(request.getPeriodFrom(), fromYearEN));
+//		request.setPeriodDateTo(ExciseUtils.lastDateOfPeriod(request.getPeriodTo(), toYearEN, false));
 
 		/* ___________ set response ___________ */
 		List<Int0803TableVo> resExperimentalBudget = iaGftrialBalanceRepository.findExperimentalBudgetByRequest(request);

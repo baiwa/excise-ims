@@ -202,8 +202,8 @@ public class IaGftrialBalanceRepositoryImpl implements IaGftrialBalanceRepositor
 				" RIGHT JOIN EXCISE_ORG_DISB D " +
 				" 	ON D.DISBURSE_UNIT = 0||H.DEPT_DISB " +
 				" 	AND H.ACC_NO = ? " +
-				" 	AND H.GF_DOC_DATE >= ? " +
-				" 	AND H.GF_DOC_DATE <= ? " +
+				" 	AND TRUNC(H.GF_DOC_DATE) >= TO_DATE(?, 'dd/mm/yyyy') " +
+				" 	AND TRUNC(H.GF_DOC_DATE) <= TO_DATE(?, 'dd/mm/yyyy') " +
 				" WHERE D.OFFICE_CODE LIKE ? " +
 				" GROUP BY H.ACC_NO, D.OFFICE_CODE, D.DISBURSE_UNIT " +
 				" ORDER BY H.ACC_NO, D.OFFICE_CODE ";

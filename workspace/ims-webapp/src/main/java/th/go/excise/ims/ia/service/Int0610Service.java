@@ -2,11 +2,11 @@ package th.go.excise.ims.ia.service;
 
 import java.awt.Color;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -72,8 +72,8 @@ public class Int0610Service {
 
 		request.setPeriodFromStr(ExciseUtils.monthYearStrOfPeriod(request.getPeriodFrom().split("/")[0], request.getPeriodFrom().split("/")[1]));
 		request.setPeriodToStr(ExciseUtils.monthYearStrOfPeriod(request.getPeriodTo().split("/")[0], request.getPeriodTo().split("/")[1]));
-		request.setPeriodFromDate(ExciseUtils.firstDateOfPeriod(periodMonthFromStr, yearFromTH));
-		request.setPeriodToDate(ExciseUtils.firstDateOfPeriod(periodMonthToStr, yearToTH));
+		request.setFromDateStr(ExciseUtils.firstDateOfPeriod(periodMonthFromStr, yearFromTH));
+		request.setToDateStr(ExciseUtils.lastDateOfPeriod(periodMonthToStr, yearToTH, false));
 
 		/* _________ find amount tabs _________ */
 		List<WsIncfri8020Inc> tabsAmount = wsIncfri8020IncRepository.findTabs(request.getOfficeCode());
@@ -194,13 +194,15 @@ public class Int0610Service {
 		response.setAuditFlag(header.getAuditFlag());
 		response.setIncgfConditionText(header.getIncgfConditionText());
 		response.setIncgfCreteriaText(header.getIncgfCreteriaText());
-		response.setMonthPeriodFrom(
-				ConvertDateUtils.formatDateToString(ExciseUtils.firstDateOfPeriod(header.getIncMonthFrom(), header.getIncYearFrom()), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH));
-		response.setMonthPeriodTo(
-				ConvertDateUtils.formatDateToString(ExciseUtils.lastDateOfPeriod(header.getIncMonthTo(), header.getIncYearTo(), "Y"), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH));
+		response.setMonthPeriodFrom(strEnToStrTh(ExciseUtils.firstDateOfPeriod(header.getIncMonthFrom(), header.getIncYearTo())));
+		response.setMonthPeriodTo(strEnToStrTh(ExciseUtils.lastDateOfPeriod(header.getIncMonthTo(), header.getIncYearTo(), true)));
 		response.setDataList(tabList);
 
 		return response;
+	}
+	
+	private static String strEnToStrTh(String dateStrEN) {
+		return ConvertDateUtils.formatDateToString(ConvertDateUtils.parseStringToDate(dateStrEN, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN), ConvertDateUtils.MM_YYYY, ConvertDateUtils.LOCAL_TH);
 	}
 
 	public ByteArrayOutputStream export(String officeCode, String periodFrom, String periodTo) throws Exception {
@@ -248,38 +250,38 @@ public class Int0610Service {
 			cellNum++;
 		}
 		
-//		for (Int0610Vo tabs : resData) {
-//			for (Int0610TabVo t : tabs.getTab()) {
-//				rowNum++;
-//				cellNum = 0;
-//				row = sheet.createRow(rowNum);
-//				for (Int0610SumVo s : t.getSummary()) {
-//					cell = row.createCell(cellNum);
-//					cell.setCellValue(s.getIncomeCode());
-//					cellNum++;
-//					
-//					cell = row.createCell(cellNum);
-//					cell.setCellValue(s.getAccName());
-//					cellNum++;
-//					
-//					cell = row.createCell(cellNum);
-//					cell.setCellValue(s.getNetTaxAmt().doubleValue());
-//					cellNum++;
-//					
-//					cell = row.createCell(cellNum);
-//					cell.setCellValue(t.getAccNo());
-//					cellNum++;
-//					
-//					cell = row.createCell(cellNum);
-//					cell.setCellValue(t.getAccName());
-//					cellNum++;
-//					
-//					cell = row.createCell(cellNum);
-//					cell.setCellValue(t.getCarryForward().doubleValue());
-//					cellNum++;
-//				}
-//			}
-//		}
+		for (Int0610Vo tabs : resData) {
+			for (Int0610TabVo t : tabs.getTab()) {
+				rowNum++;
+				cellNum = 0;
+				row = sheet.createRow(rowNum);
+				for (Int0610SumVo s : t.getSummary()) {
+					cell = row.createCell(cellNum);
+					cell.setCellValue(s.getIncomeCode());
+					cellNum++;
+					
+					cell = row.createCell(cellNum);
+					cell.setCellValue(s.getAccName());
+					cellNum++;
+					
+					cell = row.createCell(cellNum);
+					cell.setCellValue(s.getNetTaxAmt().doubleValue());
+					cellNum++;
+					
+					cell = row.createCell(cellNum);
+					cell.setCellValue(t.getAccNo());
+					cellNum++;
+					
+					cell = row.createCell(cellNum);
+					cell.setCellValue(t.getAccName());
+					cellNum++;
+					
+					cell = row.createCell(cellNum);
+					cell.setCellValue(t.getCarryForward().doubleValue());
+					cellNum++;
+				}
+			}
+		}
 
 		// set width
 		int width = 76;
@@ -297,6 +299,11 @@ public class Int0610Service {
 		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
 		workbook.write(outByteStream);
 		return outByteStream;
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(strEnToStrTh(ExciseUtils.firstDateOfPeriod("004", "2019")));
+//		System.out.println(ExciseUtils.firstDateOfPeriod("012", "2562"));
 	}
 
 }

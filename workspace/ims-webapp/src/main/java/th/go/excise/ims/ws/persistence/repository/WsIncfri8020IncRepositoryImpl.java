@@ -120,8 +120,8 @@ public class WsIncfri8020IncRepositoryImpl implements WsIncfri8020IncRepositoryC
 //				" 	AND G.ACC_NO = ? " +
 				" WHERE I.GL_ACC_NO LIKE '4%' " +
 				" 	AND I.OFFICE_RECEIVE LIKE ? " +
-				" 	AND I.RECEIPT_DATE >= ? " +
-				" 	AND I.RECEIPT_DATE <= ? " +
+				" 	AND TRUNC(I.RECEIPT_DATE) >= TO_DATE(?, 'dd/mm/yyyy') " +
+				" 	AND TRUNC(I.RECEIPT_DATE) <= TO_DATE(?, 'dd/mm/yyyy') " +
 				" 	AND I.DEPT_DISB = ? " +
 				" GROUP BY I.INCOME_CODE, I.INCOME_NAME,G.ACC_NO, G.ACC_NAME " +
 				" ORDER BY I.INCOME_CODE ";
@@ -133,8 +133,8 @@ public class WsIncfri8020IncRepositoryImpl implements WsIncfri8020IncRepositoryC
 		params.add(request.getDeptDisb());
 //		params.add(request.getGlAccNo());
 		params.add(ExciseUtils.whereInLocalOfficeCode(request.getOfficeCode()));
-		params.add(request.getPeriodFromDate());
-		params.add(request.getPeriodToDate());
+		params.add(request.getFromDateStr());
+		params.add(request.getToDateStr());
 		params.add(request.getDeptDisb());
 		
 		return commonJdbcTemplate.query(sql.toString(), params.toArray(), new RowMapper<Int0610SumVo>() {

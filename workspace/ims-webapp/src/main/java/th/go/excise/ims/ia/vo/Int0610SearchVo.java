@@ -1,7 +1,5 @@
 package th.go.excise.ims.ia.vo;
 
-import java.util.Date;
-
 public class Int0610SearchVo {
 	private String officeCode;
 	private String periodFrom;
@@ -9,8 +7,8 @@ public class Int0610SearchVo {
 	private String periodFromStr;
 	private String periodToStr;
 	private String deptDisb;
-	private Date periodFromDate;
-	private Date periodToDate;
+	private String fromDateStr;
+	private String toDateStr;
 
 	public String getOfficeCode() {
 		return officeCode;
@@ -36,14 +34,6 @@ public class Int0610SearchVo {
 		this.periodTo = periodTo;
 	}
 
-	public String getDeptDisb() {
-		return deptDisb;
-	}
-
-	public void setDeptDisb(String deptDisb) {
-		this.deptDisb = deptDisb;
-	}
-
 	public String getPeriodFromStr() {
 		return periodFromStr;
 	}
@@ -60,20 +50,28 @@ public class Int0610SearchVo {
 		this.periodToStr = periodToStr;
 	}
 
-	public Date getPeriodFromDate() {
-		return periodFromDate;
+	public String getDeptDisb() {
+		return deptDisb;
 	}
 
-	public void setPeriodFromDate(Date periodFromDate) {
-		this.periodFromDate = periodFromDate;
+	public void setDeptDisb(String deptDisb) {
+		this.deptDisb = deptDisb;
 	}
 
-	public Date getPeriodToDate() {
-		return periodToDate;
+	public String getFromDateStr() {
+		return fromDateStr;
 	}
 
-	public void setPeriodToDate(Date periodToDate) {
-		this.periodToDate = periodToDate;
+	public void setFromDateStr(String fromDateStr) {
+		this.fromDateStr = fromDateStr;
+	}
+
+	public String getToDateStr() {
+		return toDateStr;
+	}
+
+	public void setToDateStr(String toDateStr) {
+		this.toDateStr = toDateStr;
 	}
 
 }
