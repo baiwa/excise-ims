@@ -14,6 +14,7 @@ import th.go.excise.ims.ia.vo.ExciseDepartmentVo;
 import th.go.excise.ims.ia.vo.ExciseOrgDepaccVo;
 import th.go.excise.ims.ia.vo.ExciseOrgGfmisVo;
 import th.go.excise.ims.ia.vo.Int1504FormVo;
+import th.go.excise.ims.ia.vo.Int1504OrgFormVo;
 import th.go.excise.ims.preferences.persistence.entity.ExciseOrgDepacc;
 import th.go.excise.ims.preferences.persistence.entity.ExciseOrgGfmis;
 import th.go.excise.ims.preferences.persistence.entity.ExcisePersonInfo;
@@ -22,6 +23,7 @@ import th.go.excise.ims.preferences.persistence.entity.ExciseTitle;
 import th.go.excise.ims.preferences.persistence.repository.ExcisePersonInfo1Repository;
 import th.go.excise.ims.preferences.persistence.repository.ExcisePersonInfoRepository;
 import th.go.excise.ims.preferences.persistence.repository.ExciseTitleRepository;
+import th.go.excise.ims.preferences.vo.Ed04FormHeadVo;
 import th.go.excise.ims.preferences.vo.Ed04FormSave;
 import th.go.excise.ims.preferences.vo.ExcisePersonInfo1Vo;
 import th.go.excise.ims.preferences.vo.ExcisePersonInfoVo;
@@ -117,5 +119,17 @@ public class Ed04Service {
 		}
 		return vo.getExcisePersonInfoVo();
 	}
+	
+	public ExcisePersonInfo dataHead(Ed04FormHeadVo form) {
+		ExcisePersonInfo dataList = excisePersonInfoRepository.dataHead(form.getPersonLogin());
+		return dataList;
+	}
+	
+	public List<ExcisePersonInfo1> listChild(Ed04FormHeadVo form) {
+		List<ExcisePersonInfo1> dataList = new ArrayList<ExcisePersonInfo1>();
+		dataList = excisePersonInfo1Repository.listChild(form.getPersonLogin());
+		return dataList;
+	}
+	
 
 }

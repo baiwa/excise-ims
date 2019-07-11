@@ -19,8 +19,13 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STAT
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.vo.ExciseOrgGfmisVo;
 import th.go.excise.ims.ia.vo.Int1504FormVo;
+import th.go.excise.ims.ia.vo.Int1504OrgFormVo;
+import th.go.excise.ims.preferences.persistence.entity.ExciseOrgDepacc;
+import th.go.excise.ims.preferences.persistence.entity.ExcisePersonInfo;
+import th.go.excise.ims.preferences.persistence.entity.ExcisePersonInfo1;
 import th.go.excise.ims.preferences.persistence.entity.ExciseTitle;
 import th.go.excise.ims.preferences.service.Ed04Service;
+import th.go.excise.ims.preferences.vo.Ed04FormHeadVo;
 import th.go.excise.ims.preferences.vo.Ed04FormSave;
 import th.go.excise.ims.preferences.vo.ExcisePersonInfoVo;
 
@@ -42,7 +47,7 @@ public class Ed04Controller {
 			dataList = ed04Service.listPersonThTitle();
 			response.setData(dataList);
 		} catch (Exception e) {
-			logger.error("Int1503Controller : ", e);
+			logger.error("Ed04Controller : ", e);
 		}
 		return response;
 	}
@@ -62,5 +67,36 @@ public class Ed04Controller {
 		}
 		return response;
 	}
+	
+	@PostMapping("/data-head")
+	@ResponseBody
+	public ResponseData<ExcisePersonInfo> dataHead(@RequestBody Ed04FormHeadVo form) {
+		ResponseData<ExcisePersonInfo> response = new ResponseData<ExcisePersonInfo>();
+		try {
+			response.setData(ed04Service.dataHead(form));
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Ed04Controller : ", e);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	@PostMapping("/list-child")
+	@ResponseBody
+	public DataTableAjax<ExcisePersonInfo1> listChild(@RequestBody Ed04FormHeadVo form) {
+		DataTableAjax<ExcisePersonInfo1> response = new DataTableAjax<ExcisePersonInfo1>();
+		List<ExcisePersonInfo1> dataList = new ArrayList<ExcisePersonInfo1>();
+		try {
+			dataList = ed04Service.listChild(form);
+			response.setData(dataList);
+		} catch (Exception e) {
+			logger.error("Ed04Controller : ", e);
+		}
+		return response;
+	}
+	
+	
 
 }
