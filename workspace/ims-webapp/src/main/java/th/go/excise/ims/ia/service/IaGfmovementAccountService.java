@@ -149,7 +149,7 @@ public class IaGfmovementAccountService {
 				iaGfmovementAccount = new IaGfmovementAccount();
 				iaGfmovementAccount.setGfuploadHId(ia.getGfuploadHId());
 				iaGfmovementAccount.setGfmovementAccountId(vo.getGfmovementAccountId());
-				iaGfmovementAccount.setGfuploadHId(vo.getGfuploadHId());
+//				iaGfmovementAccount.setGfuploadHId(vo.getGfuploadHId());
 				iaGfmovementAccount.setAccTypeNo(vo.getAccTypeNo());
 				iaGfmovementAccount.setAccTypeName(vo.getAccTypeName());
 				iaGfmovementAccount.setAccNo(vo.getAccNo());

@@ -20,6 +20,7 @@ import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ia.persistence.entity.IaGftrialBalance;
 import th.go.excise.ims.ia.persistence.entity.IaGfuploadH;
 import th.go.excise.ims.ia.persistence.repository.IaGftrialBalanceRepository;
+import th.go.excise.ims.ia.persistence.repository.IaGfuploadHRepository;
 import th.go.excise.ims.ia.vo.Int15ResponseUploadVo;
 import th.go.excise.ims.ia.vo.Int15SaveVo;
 
@@ -28,6 +29,8 @@ public class IaGftrialBalanceService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(IaGftrialBalanceService.class);
 	
+	@Autowired
+	private IaGfuploadHRepository iaGfuploadHRepository;
 	@Autowired
 	private IaGftrialBalanceRepository iaGftrialBalanceRepository;
 
@@ -108,6 +111,7 @@ public class IaGftrialBalanceService {
 		ia.setUploadType(form.getTypeData());
 		ia.setDeptDisb(form.getDisburseMoney());
 		ia.setFileName(form.getFileName());
+		iaGfuploadHRepository.save(ia);
 		if (form.getFormData2() != null && form.getFormData2().size() > 0) {
 			for (IaGftrialBalance iaGfmovementAccount : form.getFormData2()) {
 				iaGfmovementAccount.setGfuploadHId(ia.getGfuploadHId());
