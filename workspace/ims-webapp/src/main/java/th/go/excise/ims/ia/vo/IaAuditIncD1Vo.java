@@ -19,6 +19,7 @@ public class IaAuditIncD1Vo {
 	private String checkStamp;
 	private String checkTax0704;
 	private String remarkTax;
+	private String lostReceiptFlag;
 
 	public Long getIaAuditIncDId() {
 		return iaAuditIncDId;
@@ -138,6 +139,14 @@ public class IaAuditIncD1Vo {
 
 	public void setRemarkTax(String remarkTax) {
 		this.remarkTax = remarkTax;
+	}
+
+	public String getLostReceiptFlag() {
+		return lostReceiptFlag;
+	}
+
+	public void setLostReceiptFlag(String lostReceiptFlag) {
+		this.lostReceiptFlag = lostReceiptFlag;
 	}
 
 }

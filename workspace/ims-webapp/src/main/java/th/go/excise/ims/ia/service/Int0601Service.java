@@ -1,4 +1,3 @@
-
 package th.go.excise.ims.ia.service;
 
 import java.io.ByteArrayOutputStream;
@@ -69,8 +68,10 @@ public class Int0601Service {
 	DecimalFormat df2 = new DecimalFormat("###,###,###.00");
 
 	public List<IaAuditIncD1Vo> findTab1ByCriteria(Int0601RequestVo int0601Vo) {
-		logger.info("findByCriterai_tap1");
-		List<WsIncfri8020Inc> wsIncfri8020List = int0601JdbcRepository.findByCriteria(int0601Vo, "RECEIPT_NO");
+		logger.info("findTab1ByCriteria");
+		
+		List<WsIncfri8020Inc> wsIncfri8020List = int0601JdbcRepository.findByCriteria(int0601Vo, "RECEIPT_DATE, OFFLINE_STATUS, RECEIPT_NO");
+		
 		List<IaAuditIncD1Vo> auditIncD1VoList = new ArrayList<>();
 		IaAuditIncD1Vo d1Vo = null;
 		if (wsIncfri8020List != null && wsIncfri8020List.size() > 0) {
@@ -87,31 +88,31 @@ public class Int0601Service {
 					d1Vo.setAmount(data.getNetTaxAmt());
 					auditIncD1VoList.add(d1Vo);
 				} catch (Exception e) {
-					e.printStackTrace();
-					logger.error(e.getMessage());
+					logger.error(e.getMessage(), e);
 				}
-
 			}
 		}
-
+		
 		return auditIncD1VoList;
 	}
 
 	public List<IaAuditIncD2Vo> findIaAuditIncD2ByCriteria(Int0601RequestVo criteria) {
-		logger.info("findByCriterai_tap2");
+		logger.info("findIaAuditIncD2ByCriteria");
 		return int0601JdbcRepository.findDataTab2(criteria);
 	}
 
 	public List<IaAuditIncD3Vo> findIaAuditIncD3ByCriteria(Int0601RequestVo criteria) {
-		logger.info("findByCriterai_tap3");
+		logger.info("findIaAuditIncD3ByCriteria");
 		return int0601JdbcRepository.findDataTab3(criteria);
 	}
 
 	public List<IaAuditIncHVo> findAllIaAuditIncH() {
+		logger.info("findAllIaAuditIncH");
+		
 		List<IaAuditIncH> iaAuditIncHList = iaAuditIncHRepository.findIaAuditIncHAllDataActive();
 		IaAuditIncHVo incHVo = null;
 		List<IaAuditIncHVo> IaAuditIncHVoList = new ArrayList<>();
-
+		
 		for (IaAuditIncH data : iaAuditIncHList) {
 			incHVo = new IaAuditIncHVo();
 			try {
@@ -130,14 +131,11 @@ public class Int0601Service {
 				incHVo.setD4ConditionText(data.getD4ConditionText());
 				incHVo.setD4CriteriaText(data.getD4CriteriaText());
 				IaAuditIncHVoList.add(incHVo);
-
 			} catch (Exception e) {
-				e.printStackTrace();
-				logger.error(e.getMessage());
+				logger.error(e.getMessage(), e);
 			}
-
 		}
-
+		
 		return IaAuditIncHVoList;
 
 	}
@@ -181,8 +179,7 @@ public class Int0601Service {
 				vo.getIaAuditIncH().setAuditIncNo(auditIncH.getAuditIncNo());
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 		}
 		// D1
 		if (vo.getIaAuditIncD1List() != null && vo.getIaAuditIncD1List().size() > 0) {
@@ -201,8 +198,7 @@ public class Int0601Service {
 						val1.setRemarkTax(data1.getRemarkTax());
 						val1 = iaAuditIncD1Repository.save(val1);
 					} catch (Exception e) {
-						e.printStackTrace();
-						logger.error(e.getMessage());
+						logger.error(e.getMessage(), e);
 					}
 				} else {
 					try {
@@ -221,10 +217,9 @@ public class Int0601Service {
 						val1.setCheckTax0704(data1.getCheckTax0704());
 						val1.setRemarkTax(data1.getRemarkTax());
 					} catch (Exception e) {
-						e.printStackTrace();
-						logger.error(e.getMessage());
+						logger.error(e.getMessage(), e);
 					}
-
+					
 					iaAuditIncD1List.add(val1);
 				}
 			}
@@ -243,8 +238,7 @@ public class Int0601Service {
 						val2.setRemark(data2.getRemark());
 						val2 = iaAuditIncD2Repository.save(val2);
 					} catch (Exception e) {
-						e.printStackTrace();
-						logger.error(e.getMessage());
+						logger.error(e.getMessage(), e);
 					}
 				} else {
 					try {
@@ -255,16 +249,14 @@ public class Int0601Service {
 						val2.setAuditCheck(data2.getAuditCheck());
 						val2.setRemark(data2.getRemark());
 					} catch (Exception e) {
-						e.printStackTrace();
-						logger.error(e.getMessage());
+						logger.error(e.getMessage(), e);
 					}
-
+					
 					iaAuditIncD2List.add(val2);
 				}
 			}
 			iaAuditIncD2Repository.saveAll(iaAuditIncD2List);
 		}
-
 		// D3
 		if (vo.getIaAuditIncD3List() != null && vo.getIaAuditIncD3List().size() > 0) {
 			IaAuditIncD3 val3 = null;
@@ -278,8 +270,7 @@ public class Int0601Service {
 						val3.setRemark(data3.getRemark());
 						val3 = iaAuditIncD3Repository.save(val3);
 					} catch (Exception e) {
-						e.printStackTrace();
-						logger.error(e.getMessage());
+						logger.error(e.getMessage(), e);
 					}
 				} else {
 					try {
@@ -290,21 +281,21 @@ public class Int0601Service {
 						val3.setCountReceipt(data3.getCountReceipt());
 						val3.setAuditCheck(data3.getAuditCheck());
 						val3.setRemark(data3.getRemark());
-
 					} catch (Exception e) {
-						e.printStackTrace();
-						logger.error(e.getMessage());
+						logger.error(e.getMessage(), e);
 					}
-
 					iaAuditIncD3List.add(val3);
 				}
 			}
 			iaAuditIncD3Repository.saveAll(iaAuditIncD3List);
 		}
+		
 		return vo.getIaAuditIncH();
 	}
 
 	public IaAuditIncHVo findIaAuditIncHByAuditIncNo(String auditIncNo) {
+		logger.info("findIaAuditIncHByAuditIncNo auditIncNo={}", auditIncNo);
+		
 		IaAuditIncHVo incHVo = null;
 		IaAuditIncH data = null;
 		ExciseDepartmentVo excise = null;
@@ -334,10 +325,13 @@ public class Int0601Service {
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
+		
 		return incHVo;
 	}
 
 	public List<IaAuditIncD1Vo> findIaAuditIncD1ByAuditIncNo(String auditIncNo) throws Exception {
+		logger.info("findIaAuditIncD1ByAuditIncNo auditIncNo={}", auditIncNo);
+		
 		List<IaAuditIncD1Vo> iaAuditIncD1VoList = new ArrayList<>();
 		IaAuditIncD1Vo iaAuditIncD1Vo = null;
 		List<IaAuditIncD1> auditIncD1List = iaAuditIncD1Repository.findByAuditIncNoOrderByReceiptNo(auditIncNo);
@@ -360,10 +354,13 @@ public class Int0601Service {
 			iaAuditIncD1Vo.setRemarkTax(iaAuditIncD1.getRemarkTax());
 			iaAuditIncD1VoList.add(iaAuditIncD1Vo);
 		}
+		
 		return iaAuditIncD1VoList;
 	}
 
 	public List<IaAuditIncD2Vo> findIaAuditIncD2ByAuditIncNo(String auditIncNo) throws Exception {
+		logger.info("findIaAuditIncD2ByAuditIncNo auditIncNo={}", auditIncNo);
+		
 		List<IaAuditIncD2Vo> iaAuditIncD2VoList = new ArrayList<>();
 		IaAuditIncD2Vo iaAuditIncD2Vo = null;
 		List<IaAuditIncD2> auditIncD2List = iaAuditIncD2Repository.findByAuditIncNoOrderByReceiptDate(auditIncNo);
@@ -378,10 +375,13 @@ public class Int0601Service {
 			iaAuditIncD2Vo.setRemark(iaAuditIncD2.getRemark());
 			iaAuditIncD2VoList.add(iaAuditIncD2Vo);
 		}
+		
 		return iaAuditIncD2VoList;
 	}
 
 	public List<IaAuditIncD3Vo> findIaAuditIncD3ByAuditIncNo(String auditIncNo) throws Exception {
+		logger.info("findIaAuditIncD3ByAuditIncNo auditIncNo={}", auditIncNo);
+		
 		List<IaAuditIncD3Vo> iaAuditIncD3VoList = new ArrayList<>();
 		IaAuditIncD3Vo iaAuditIncD3Vo = null;
 		List<IaAuditIncD3> auditIncD3List = iaAuditIncD3Repository.findByAuditIncNoOrderByTaxCode(auditIncNo);
@@ -392,7 +392,7 @@ public class Int0601Service {
 			iaAuditIncD3Vo.setTaxCode(iaAuditIncD3.getTaxCode());
 			iaAuditIncD3Vo.setTaxName(iaAuditIncD3.getTaxName());
 			iaAuditIncD3Vo.setAmount(iaAuditIncD3.getAmount());
-			iaAuditIncD3Vo.setCountReceipt(iaAuditIncD3.getAmount());
+			iaAuditIncD3Vo.setCountReceipt(iaAuditIncD3.getCountReceipt());
 			iaAuditIncD3Vo.setAuditCheck(iaAuditIncD3.getAuditCheck());
 			iaAuditIncD3Vo.setRemark(iaAuditIncD3.getRemark());
 			iaAuditIncD3VoList.add(iaAuditIncD3Vo);
@@ -401,6 +401,8 @@ public class Int0601Service {
 	}
 
 	public IaAuditIncD3DatatableDtlVo findTab3Dtl(Int0601RequestVo criteria) {
+		logger.info("findTab3Dtl");
+		
 		IaAuditIncD3DatatableDtlVo iaAuditIncD3DatatableDtlVo = new IaAuditIncD3DatatableDtlVo();
 		List<WsIncfri8020Inc> wsIncfri8020IncList = int0601JdbcRepository.findByCriteria(criteria, "INCOME_CODE,RECEIPT_DATE");
 		BigDecimal sumAmt = BigDecimal.ZERO;
@@ -409,10 +411,13 @@ public class Int0601Service {
 		}
 		iaAuditIncD3DatatableDtlVo.setWsIncfri8020Inc(wsIncfri8020IncList);
 		iaAuditIncD3DatatableDtlVo.setSumAmt(sumAmt);
+		
 		return iaAuditIncD3DatatableDtlVo;
 	}
 
 	public byte[] export(String auditIncNo) {
+		logger.info("export auditIncNo={}", auditIncNo);
+		
 		IaAuditIncHVo iaAuditIncH = null;
 		List<IaAuditIncD1Vo> dataList = new ArrayList<IaAuditIncD1Vo>();
 		List<IaAuditIncD2Vo> dataList2 = new ArrayList<IaAuditIncD2Vo>();

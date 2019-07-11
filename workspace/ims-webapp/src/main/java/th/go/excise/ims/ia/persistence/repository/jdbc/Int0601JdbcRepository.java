@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
-import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.vo.IaAuditIncD2Vo;
 import th.go.excise.ims.ia.vo.IaAuditIncD3Vo;
@@ -31,11 +30,12 @@ public class Int0601JdbcRepository {
 	private CommonJdbcTemplate commonJdbcTemplate;
 
 	public List<WsIncfri8020Inc> findByCriteria(Int0601RequestVo criteria, String strOrder) {
-		logger.info("findTab1ByCriteria");
+		logger.info("findByCriteria");
 
 		List<Object> paramList = new ArrayList<>();
-		StringBuilder sql = new StringBuilder(" SELECT * FROM WS_INCFRI8020_INC WS");
-		sql.append(" WHERE WS.IS_DELETED = '").append(FLAG.N_FLAG).append("'");
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT * FROM WS_INCFRI8020_INC WS ");
+		sql.append(" WHERE WS.IS_DELETED = 'N' ");
 
 		if (StringUtils.isNoneBlank(criteria.getOfficeReceive())) {
 			sql.append(" AND WS.OFFICE_RECEIVE like ? ");
@@ -95,13 +95,6 @@ public class Int0601JdbcRepository {
 			vo.setFacName(rs.getString("FAC_NAME"));
 			vo.setIncCtlNo(rs.getString("INC_CTL_NO"));
 			vo.setOfflineStatus(rs.getString("OFFLINE_STATUS"));
-			vo.setIsDeleted(rs.getString("IS_DELETED"));
-			vo.setVersion(rs.getInt("VERSION"));
-			vo.setCreatedBy(rs.getString("CREATED_BY"));
-			vo.setCreatedDate(LocalDateTimeConverter.convertToEntityAttribute(rs.getTimestamp("CREATED_DATE")));
-			vo.setUpdatedBy(rs.getString("UPDATED_BY"));
-			vo.setUpdatedDate(LocalDateTimeConverter.convertToEntityAttribute(rs.getTimestamp("UPDATED_DATE")));
-
 			return vo;
 		}
 	};
