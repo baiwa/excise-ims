@@ -1,4 +1,3 @@
-
 package th.go.excise.ims.ia.persistence.repository;
 
 import java.util.List;
@@ -11,7 +10,8 @@ import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRe
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD1;
 
 public interface IaAuditIncD1Repository extends CommonJpaCrudRepository<IaAuditIncD1, Long>, IaAuditIncD1RepositoryCustom {
-
-	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.auditIncNo = :auditIncNo order by e.receiptNo , e.runCheck ")
-	public List<IaAuditIncD1> findByAuditIncNoOrderByReceiptNo(@Param("auditIncNo") String auditIncNo);
+	
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.auditIncNo = :auditIncNo order by e.seqNo ")
+	public List<IaAuditIncD1> findByAuditIncNoOrderBySeqNo(@Param("auditIncNo") String auditIncNo);
+	
 }

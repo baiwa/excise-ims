@@ -318,7 +318,7 @@ public class Int0601Service {
 		
 		List<IaAuditIncD1Vo> iaAuditIncD1VoList = new ArrayList<>();
 		IaAuditIncD1Vo iaAuditIncD1Vo = null;
-		List<IaAuditIncD1> auditIncD1List = iaAuditIncD1Repository.findByAuditIncNoOrderByReceiptNo(auditIncNo);
+		List<IaAuditIncD1> auditIncD1List = iaAuditIncD1Repository.findByAuditIncNoOrderBySeqNo(auditIncNo);
 		for (IaAuditIncD1 iaAuditIncD1 : auditIncD1List) {
 			iaAuditIncD1Vo = new IaAuditIncD1Vo();
 			iaAuditIncD1Vo.setIaAuditIncDId(iaAuditIncD1.getIaAuditIncDId());
