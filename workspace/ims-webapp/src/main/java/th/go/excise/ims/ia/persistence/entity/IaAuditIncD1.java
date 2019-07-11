@@ -54,6 +54,8 @@ public class IaAuditIncD1 extends BaseEntity {
 	private String remarkTax;
 	@Column(name = "SEQ_NO")
 	private Integer seqNo;
+	@Column(name = "WASTE_RECEIPT_NO_FLAG")
+	private String wasteReceiptNoFlag;
 
 	public Long getIaAuditIncDId() {
 		return iaAuditIncDId;
@@ -181,6 +183,14 @@ public class IaAuditIncD1 extends BaseEntity {
 
 	public void setSeqNo(Integer seqNo) {
 		this.seqNo = seqNo;
+	}
+
+	public String getWasteReceiptNoFlag() {
+		return wasteReceiptNoFlag;
+	}
+
+	public void setWasteReceiptNoFlag(String wasteReceiptNoFlag) {
+		this.wasteReceiptNoFlag = wasteReceiptNoFlag;
 	}
 
 }
