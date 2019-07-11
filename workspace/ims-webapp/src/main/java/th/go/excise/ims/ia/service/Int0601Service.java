@@ -70,7 +70,7 @@ public class Int0601Service {
 	public List<IaAuditIncD1Vo> findTab1ByCriteria(Int0601RequestVo int0601Vo) {
 		logger.info("findTab1ByCriteria");
 		
-		List<WsIncfri8020Inc> wsIncfri8020List = int0601JdbcRepository.findByCriteria(int0601Vo, "RECEIPT_DATE, OFFLINE_STATUS DESC, RECEIPT_NO");
+		List<WsIncfri8020Inc> wsIncfri8020List = int0601JdbcRepository.findByCriteria(int0601Vo, "OFFLINE_STATUS, RECEIPT_DATE, RECEIPT_NO");
 		
 		List<IaAuditIncD1Vo> voList = new ArrayList<>();
 		IaAuditIncD1Vo vo = null;
