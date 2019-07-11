@@ -20,6 +20,7 @@ public class ReportConstants {
 		public static final String PNG = "png";
 		public static final String PDF = "pdf";
 		public static final String XLSX = "xlsx";
+		public static final String DOCX = "docx";
 	}
 
 	// Img Name in JasperReports
