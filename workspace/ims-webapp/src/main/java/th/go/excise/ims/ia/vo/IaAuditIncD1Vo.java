@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 public class IaAuditIncD1Vo {
 
 	private Long iaAuditIncDId;
+	private Integer seqNo;
 	private String auditIncNo;
 	private String officeCode;
 	private String docCtlNo;
@@ -27,6 +28,14 @@ public class IaAuditIncD1Vo {
 
 	public void setIaAuditIncDId(Long iaAuditIncDId) {
 		this.iaAuditIncDId = iaAuditIncDId;
+	}
+
+	public Integer getSeqNo() {
+		return seqNo;
+	}
+
+	public void setSeqNo(Integer seqNo) {
+		this.seqNo = seqNo;
 	}
 
 	public String getAuditIncNo() {

@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +33,9 @@ import th.go.excise.ims.ia.vo.Int0601SaveVo;
 @Controller
 @RequestMapping("/api/ia/int06/01")
 public class Int0601Controller {
-
+	
+	private static final Logger logger = LoggerFactory.getLogger(Int0601Controller.class);
+	
 	@Autowired
 	private Int0601Service int0601Service;
 
@@ -44,8 +48,8 @@ public class Int0601Controller {
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			e.printStackTrace();
-			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			logger.error(e.getMessage(), e);
+			response.setMessage(e.getMessage());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -60,8 +64,8 @@ public class Int0601Controller {
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			e.printStackTrace();
-			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			logger.error(e.getMessage(), e);
+			response.setMessage(e.getMessage());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -76,8 +80,8 @@ public class Int0601Controller {
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			e.printStackTrace();
-			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			logger.error(e.getMessage(), e);
+			response.setMessage(e.getMessage());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -92,7 +96,8 @@ public class Int0601Controller {
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			logger.error(e.getMessage(), e);
+			response.setMessage(e.getMessage());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -107,8 +112,8 @@ public class Int0601Controller {
 			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			e.printStackTrace();
-			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			logger.error(e.getMessage(), e);
+			response.setMessage(e.getMessage());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -123,8 +128,8 @@ public class Int0601Controller {
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			e.printStackTrace();
-			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			logger.error(e.getMessage(), e);
+			response.setMessage(e.getMessage());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -139,8 +144,8 @@ public class Int0601Controller {
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			e.printStackTrace();
-			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			logger.error(e.getMessage(), e);
+			response.setMessage(e.getMessage());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -155,8 +160,8 @@ public class Int0601Controller {
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			e.printStackTrace();
-			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			logger.error(e.getMessage(), e);
+			response.setMessage(e.getMessage());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -171,8 +176,8 @@ public class Int0601Controller {
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			e.printStackTrace();
-			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			logger.error(e.getMessage(), e);
+			response.setMessage(e.getMessage());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
@@ -187,8 +192,8 @@ public class Int0601Controller {
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			e.printStackTrace();
-			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			logger.error(e.getMessage(), e);
+			response.setMessage(e.getMessage());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;

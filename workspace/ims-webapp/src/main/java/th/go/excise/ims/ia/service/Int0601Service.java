@@ -7,6 +7,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -157,50 +159,36 @@ public class Int0601Service {
 		}
 		
 		return IaAuditIncHVoList;
-
 	}
 
-	public IaAuditIncHVo saveIaAuditInc(Int0601SaveVo vo) {
+	@Transactional(rollbackOn = { Exception.class })
+	public IaAuditIncHVo saveIaAuditInc(Int0601SaveVo vo) throws Exception {
 		logger.info("saveIaAuditInc : {} ", vo.getIaAuditIncH().getAuditIncNo());
+		
+		// Header
 		IaAuditIncH auditIncH = null;
-		try {
-			if (StringUtils.isNotBlank(vo.getIaAuditIncH().getAuditIncNo())) {
-				auditIncH = new IaAuditIncH();
-				auditIncH = iaAuditIncHRepository.findByAuditNo(vo.getIaAuditIncH().getAuditIncNo());
-				auditIncH.setD1AuditFlag(vo.getIaAuditIncH().getD1AuditFlag());
-				auditIncH.setD1ConditionText(vo.getIaAuditIncH().getD1ConditionText());
-				auditIncH.setD1CriteriaText(vo.getIaAuditIncH().getD1CriteriaText());
-				auditIncH.setD2ConditionText(vo.getIaAuditIncH().getD2ConditionText());
-				auditIncH.setD2CriteriaText(vo.getIaAuditIncH().getD2CriteriaText());
-				auditIncH.setD3ConditionText(vo.getIaAuditIncH().getD3ConditionText());
-				auditIncH.setD3CriteriaText(vo.getIaAuditIncH().getD3CriteriaText());
-				auditIncH.setD4ConditionText(vo.getIaAuditIncH().getD4ConditionText());
-				auditIncH.setD4CriteriaText(vo.getIaAuditIncH().getD4CriteriaText());
-				auditIncH = iaAuditIncHRepository.save(auditIncH);
-				vo.getIaAuditIncH().setAuditIncSeq(auditIncH.getAuditIncSeq());
-				vo.getIaAuditIncH().setAuditIncNo(auditIncH.getAuditIncNo());
-			} else {
-				auditIncH = new IaAuditIncH();
-				auditIncH.setOfficeCode(vo.getIaAuditIncH().getOfficeCode());
-				auditIncH.setReceiptDateFrom(ConvertDateUtils.parseStringToDate(vo.getIaAuditIncH().getReceiptDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-				auditIncH.setReceiptDateTo(ConvertDateUtils.parseStringToDate(vo.getIaAuditIncH().getReceiptDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-				auditIncH.setAuditIncNo(iaCommonService.autoGetRunAuditNoBySeqName("INC", vo.getIaAuditIncH().getOfficeCode(), "AUDIT_INC_NO_SEQ", 8));
-				auditIncH.setD1AuditFlag(vo.getIaAuditIncH().getD1AuditFlag());
-				auditIncH.setD1ConditionText(vo.getIaAuditIncH().getD1ConditionText());
-				auditIncH.setD1CriteriaText(vo.getIaAuditIncH().getD1CriteriaText());
-				auditIncH.setD2ConditionText(vo.getIaAuditIncH().getD2ConditionText());
-				auditIncH.setD2CriteriaText(vo.getIaAuditIncH().getD2CriteriaText());
-				auditIncH.setD3ConditionText(vo.getIaAuditIncH().getD3ConditionText());
-				auditIncH.setD3CriteriaText(vo.getIaAuditIncH().getD3CriteriaText());
-				auditIncH.setD4ConditionText(vo.getIaAuditIncH().getD4ConditionText());
-				auditIncH.setD4CriteriaText(vo.getIaAuditIncH().getD4CriteriaText());
-				auditIncH = iaAuditIncHRepository.save(auditIncH);
-				vo.getIaAuditIncH().setAuditIncSeq(auditIncH.getAuditIncSeq());
-				vo.getIaAuditIncH().setAuditIncNo(auditIncH.getAuditIncNo());
-			}
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
+		if (StringUtils.isNotBlank(vo.getIaAuditIncH().getAuditIncNo())) {
+			auditIncH = iaAuditIncHRepository.findByAuditNo(vo.getIaAuditIncH().getAuditIncNo());
+		} else {
+			auditIncH = new IaAuditIncH();
+			auditIncH.setOfficeCode(vo.getIaAuditIncH().getOfficeCode());
+			auditIncH.setReceiptDateFrom(ConvertDateUtils.parseStringToDate(vo.getIaAuditIncH().getReceiptDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			auditIncH.setReceiptDateTo(ConvertDateUtils.parseStringToDate(vo.getIaAuditIncH().getReceiptDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+			auditIncH.setAuditIncNo(iaCommonService.autoGetRunAuditNoBySeqName("INC", vo.getIaAuditIncH().getOfficeCode(), "AUDIT_INC_NO_SEQ", 8));
 		}
+		auditIncH.setD1AuditFlag(vo.getIaAuditIncH().getD1AuditFlag());
+		auditIncH.setD1ConditionText(vo.getIaAuditIncH().getD1ConditionText());
+		auditIncH.setD1CriteriaText(vo.getIaAuditIncH().getD1CriteriaText());
+		auditIncH.setD2ConditionText(vo.getIaAuditIncH().getD2ConditionText());
+		auditIncH.setD2CriteriaText(vo.getIaAuditIncH().getD2CriteriaText());
+		auditIncH.setD3ConditionText(vo.getIaAuditIncH().getD3ConditionText());
+		auditIncH.setD3CriteriaText(vo.getIaAuditIncH().getD3CriteriaText());
+		auditIncH.setD4ConditionText(vo.getIaAuditIncH().getD4ConditionText());
+		auditIncH.setD4CriteriaText(vo.getIaAuditIncH().getD4CriteriaText());
+		auditIncH = iaAuditIncHRepository.save(auditIncH);
+		vo.getIaAuditIncH().setAuditIncSeq(auditIncH.getAuditIncSeq());
+		vo.getIaAuditIncH().setAuditIncNo(auditIncH.getAuditIncNo());
+		
 		// D1
 		if (vo.getIaAuditIncD1List() != null && vo.getIaAuditIncD1List().size() > 0) {
 			IaAuditIncD1 val1 = null;
@@ -209,37 +197,30 @@ public class Int0601Service {
 				val1 = new IaAuditIncD1();
 				if (data1.getIaAuditIncDId() != null) {
 					val1 = iaAuditIncD1Repository.findById(data1.getIaAuditIncDId()).get();
-					try {
-						val1.setRunCheck(data1.getRunCheck());
-						val1.setRemark(data1.getRemark());
-						val1.setCheckTax0307(data1.getCheckTax0307());
-						val1.setCheckStamp(data1.getCheckStamp());
-						val1.setCheckTax0704(data1.getCheckTax0704());
-						val1.setRemarkTax(data1.getRemarkTax());
-						val1 = iaAuditIncD1Repository.save(val1);
-					} catch (Exception e) {
-						logger.error(e.getMessage(), e);
-					}
+					val1.setSeqNo(data1.getSeqNo());
+					val1.setRunCheck(data1.getRunCheck());
+					val1.setRemark(data1.getRemark());
+					val1.setCheckTax0307(data1.getCheckTax0307());
+					val1.setCheckStamp(data1.getCheckStamp());
+					val1.setCheckTax0704(data1.getCheckTax0704());
+					val1.setRemarkTax(data1.getRemarkTax());
+					val1 = iaAuditIncD1Repository.save(val1);
 				} else {
-					try {
-						val1.setAuditIncNo(auditIncH.getAuditIncNo());
-						val1.setOfficeCode(data1.getOfficeCode());
-						val1.setDocCtlNo(data1.getDocCtlNo());
-						val1.setReceiptNo(data1.getReceiptNo());
-						val1.setRunCheck(data1.getRunCheck());
-						val1.setReceiptDate(ConvertDateUtils.parseStringToDate(data1.getReceiptDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-						val1.setTaxName(data1.getTaxName());
-						val1.setTaxCode(data1.getTaxCode());
-						val1.setAmount(data1.getAmount());
-						val1.setRemark(data1.getRemark());
-						val1.setCheckTax0307(data1.getCheckTax0307());
-						val1.setCheckStamp(data1.getCheckStamp());
-						val1.setCheckTax0704(data1.getCheckTax0704());
-						val1.setRemarkTax(data1.getRemarkTax());
-					} catch (Exception e) {
-						logger.error(e.getMessage(), e);
-					}
-					
+					val1.setSeqNo(data1.getSeqNo());
+					val1.setAuditIncNo(auditIncH.getAuditIncNo());
+					val1.setOfficeCode(data1.getOfficeCode());
+					val1.setDocCtlNo(data1.getDocCtlNo());
+					val1.setReceiptNo(data1.getReceiptNo());
+					val1.setRunCheck(data1.getRunCheck());
+					val1.setReceiptDate(ConvertDateUtils.parseStringToDate(data1.getReceiptDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+					val1.setTaxName(data1.getTaxName());
+					val1.setTaxCode(data1.getTaxCode());
+					val1.setAmount(data1.getAmount());
+					val1.setRemark(data1.getRemark());
+					val1.setCheckTax0307(data1.getCheckTax0307());
+					val1.setCheckStamp(data1.getCheckStamp());
+					val1.setCheckTax0704(data1.getCheckTax0704());
+					val1.setRemarkTax(data1.getRemarkTax());
 					iaAuditIncD1List.add(val1);
 				}
 			}
@@ -253,25 +234,16 @@ public class Int0601Service {
 				val2 = new IaAuditIncD2();
 				if (data2.getIaAuditIncD2Id() != null) {
 					val2 = iaAuditIncD2Repository.findById(data2.getIaAuditIncD2Id()).get();
-					try {
-						val2.setAuditCheck(data2.getAuditCheck());
-						val2.setRemark(data2.getRemark());
-						val2 = iaAuditIncD2Repository.save(val2);
-					} catch (Exception e) {
-						logger.error(e.getMessage(), e);
-					}
+					val2.setAuditCheck(data2.getAuditCheck());
+					val2.setRemark(data2.getRemark());
+					val2 = iaAuditIncD2Repository.save(val2);
 				} else {
-					try {
-						val2.setAuditIncNo(auditIncH.getAuditIncNo());
-						val2.setReceiptDate(ConvertDateUtils.parseStringToDate(data2.getReceiptDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-						val2.setAmount(data2.getAmount());
-						val2.setPrintPerDay(data2.getPrintPerDay());
-						val2.setAuditCheck(data2.getAuditCheck());
-						val2.setRemark(data2.getRemark());
-					} catch (Exception e) {
-						logger.error(e.getMessage(), e);
-					}
-					
+					val2.setAuditIncNo(auditIncH.getAuditIncNo());
+					val2.setReceiptDate(ConvertDateUtils.parseStringToDate(data2.getReceiptDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+					val2.setAmount(data2.getAmount());
+					val2.setPrintPerDay(data2.getPrintPerDay());
+					val2.setAuditCheck(data2.getAuditCheck());
+					val2.setRemark(data2.getRemark());
 					iaAuditIncD2List.add(val2);
 				}
 			}
@@ -285,25 +257,17 @@ public class Int0601Service {
 				val3 = new IaAuditIncD3();
 				if (data3.getIaAuditIncD3Id() != null) {
 					val3 = iaAuditIncD3Repository.findById(data3.getIaAuditIncD3Id()).get();
-					try {
-						val3.setAuditCheck(data3.getAuditCheck());
-						val3.setRemark(data3.getRemark());
-						val3 = iaAuditIncD3Repository.save(val3);
-					} catch (Exception e) {
-						logger.error(e.getMessage(), e);
-					}
+					val3.setAuditCheck(data3.getAuditCheck());
+					val3.setRemark(data3.getRemark());
+					val3 = iaAuditIncD3Repository.save(val3);
 				} else {
-					try {
-						val3.setAuditIncNo(auditIncH.getAuditIncNo());
-						val3.setTaxCode(data3.getTaxCode());
-						val3.setTaxName(data3.getTaxName());
-						val3.setAmount(data3.getAmount());
-						val3.setCountReceipt(data3.getCountReceipt());
-						val3.setAuditCheck(data3.getAuditCheck());
-						val3.setRemark(data3.getRemark());
-					} catch (Exception e) {
-						logger.error(e.getMessage(), e);
-					}
+					val3.setAuditIncNo(auditIncH.getAuditIncNo());
+					val3.setTaxCode(data3.getTaxCode());
+					val3.setTaxName(data3.getTaxName());
+					val3.setAmount(data3.getAmount());
+					val3.setCountReceipt(data3.getCountReceipt());
+					val3.setAuditCheck(data3.getAuditCheck());
+					val3.setRemark(data3.getRemark());
 					iaAuditIncD3List.add(val3);
 				}
 			}
@@ -358,6 +322,7 @@ public class Int0601Service {
 		for (IaAuditIncD1 iaAuditIncD1 : auditIncD1List) {
 			iaAuditIncD1Vo = new IaAuditIncD1Vo();
 			iaAuditIncD1Vo.setIaAuditIncDId(iaAuditIncD1.getIaAuditIncDId());
+			iaAuditIncD1Vo.setSeqNo(iaAuditIncD1.getSeqNo());
 			iaAuditIncD1Vo.setAuditIncNo(iaAuditIncD1.getAuditIncNo());
 			iaAuditIncD1Vo.setOfficeCode(iaAuditIncD1.getOfficeCode());
 			iaAuditIncD1Vo.setDocCtlNo(iaAuditIncD1.getDocCtlNo());
