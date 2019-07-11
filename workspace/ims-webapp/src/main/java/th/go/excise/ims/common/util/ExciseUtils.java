@@ -276,26 +276,40 @@ public class ExciseUtils {
 	}
 	
 	/** 
-	 * example transfer (001, 2019) => 01/10/2019(format DATE)
+	 * example transfer (001, 2562 or 2019) => 01/10/2019
 	 **/
-	public static Date firstDateOfPeriod(String period ,String year) {
-		Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+	public static String firstDateOfPeriod(String period ,String year) {
+		String dd_mm_yyyy = "";
+		Calendar cal = Calendar.getInstance();
 		cal.set(Integer.parseInt(year), PERIOD_MONTH[Integer.parseInt(period)-1], 1);
-		return cal.getTime();
+		if (Integer.parseInt(year) > Calendar.getInstance(Locale.ENGLISH).get(Calendar.YEAR)) {
+			dd_mm_yyyy = ConvertDateUtils.formatDateToString(cal.getTime(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN);
+		} else {
+			dd_mm_yyyy = ConvertDateUtils.formatDateToString(cal.getTime(), ConvertDateUtils.DD_MM_YYYY);
+		}
+		return dd_mm_yyyy;
 	}
 	
 	/** 
-	 * example transfer (012, 2019) => 30/09/2019(format DATE)
+	 * example transfer (012, 2562 or 2019) => 30/09/2019
 	 **/
-	public static Date lastDateOfPeriod(String period ,String year, String flag) {
-		Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+	public static String lastDateOfPeriod(String period ,String year, Boolean flag) {
+		String dd_mm_yyyy = "";
+		Calendar cal = Calendar.getInstance();
 		cal.set(Integer.parseInt(year), PERIOD_MONTH[Integer.parseInt(period)-1], 1);
 		cal.add(Calendar.MONTH, 1);
 		cal.add(Calendar.DATE, -1);
-		if (Integer.parseInt(period) >= 4 && "Y".equals(flag)) {
-			cal.add(Calendar.YEAR, 1);	/* year + 1 */
+		/*  if you need show on display (flag = true) => year + 1 */
+		if (Integer.parseInt(period) >= 4 && flag) {
+			cal.add(Calendar.YEAR, 1);
+		}	
+		/* __________________________________ */
+		if (Integer.parseInt(year) > Calendar.getInstance(Locale.ENGLISH).get(Calendar.YEAR)) {
+			dd_mm_yyyy = ConvertDateUtils.formatDateToString(cal.getTime(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN);
+		} else {
+			dd_mm_yyyy = ConvertDateUtils.formatDateToString(cal.getTime(), ConvertDateUtils.DD_MM_YYYY);
 		}
-		return cal.getTime();
+		return dd_mm_yyyy;
 	}
 	
 	/**
