@@ -70,7 +70,7 @@ public class Int0601Service {
 	public List<IaAuditIncD1Vo> findTab1ByCriteria(Int0601RequestVo int0601Vo) {
 		logger.info("findTab1ByCriteria");
 		
-		List<WsIncfri8020Inc> wsIncfri8020List = int0601JdbcRepository.findByCriteria(int0601Vo, "RECEIPT_DATE, OFFLINE_STATUS, RECEIPT_NO");
+		List<WsIncfri8020Inc> wsIncfri8020List = int0601JdbcRepository.findByCriteria(int0601Vo, "RECEIPT_DATE, OFFLINE_STATUS DESC, RECEIPT_NO");
 		
 		List<IaAuditIncD1Vo> voList = new ArrayList<>();
 		IaAuditIncD1Vo vo = null;
@@ -103,12 +103,12 @@ public class Int0601Service {
 		for (int i = 0; i < size; i++) {
 			tmp = voList.get(i).getReceiptNo().split("/");
 			group1 = tmp[0];
-			running1 = Long.valueOf(tmp[1]);
+			running1 = Long.valueOf(StringUtils.trim(tmp[1]));
 			if (i + 1 < size) {
 				tmp = voList.get(i + 1).getReceiptNo().split("/");
 				group2 = tmp[0];
 				if (group1.equals(group2)) {
-					running2 = Long.valueOf(tmp[1]);
+					running2 = Long.valueOf(StringUtils.trim(tmp[1]));
 					if ((running1 + 1) != running2) {
 						voList.get(i).setWasteReceiptFlag(FLAG.Y_FLAG);
 						voList.get(i + 1).setWasteReceiptFlag(FLAG.Y_FLAG);
