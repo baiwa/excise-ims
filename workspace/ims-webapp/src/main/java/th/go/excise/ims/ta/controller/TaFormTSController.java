@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,8 @@ import com.google.gson.GsonBuilder;
 import th.co.baiwa.buckwaframework.common.bean.ReportJsonBean;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.rest.adapter.BigDecimalTypeAdapter;
 import th.co.baiwa.buckwaframework.common.rest.adapter.DateThaiTypeAdapter;
@@ -61,6 +64,8 @@ import th.go.excise.ims.ta.service.TaFormTS0302Service;
 import th.go.excise.ims.ta.service.TaFormTS0303Service;
 import th.go.excise.ims.ta.service.TaFormTS0423Service;
 import th.go.excise.ims.ta.service.TaFormTS0424Service;
+import th.go.excise.ims.ta.service.TaxAuditService;
+import th.go.excise.ims.ta.vo.FormDocTypeVo;
 import th.go.excise.ims.ta.vo.TaFormTsFormVo;
 
 @Controller
@@ -73,7 +78,8 @@ public class TaFormTSController {
 		.registerTypeAdapter(Date.class, DateThaiTypeAdapter.getInstance())
 		.registerTypeAdapter(BigDecimal.class, BigDecimalTypeAdapter.getInstance())
 		.create();
-
+	
+	private TaxAuditService taxAuditService;
 	private Map<String, AbstractTaFormTSService> taFormTSServiceMap = new HashMap<>();
 	
 	@Autowired
@@ -105,7 +111,8 @@ public class TaFormTSController {
 			TaFormTS0302Service taFormTS0302Service,
 			TaFormTS0303Service taFormTS0303Service,
 			TaFormTS0423Service taFormTS0423Service,
-			TaFormTS0424Service taFormTS0424Service) {
+			TaFormTS0424Service taFormTS0424Service,
+			TaxAuditService taxAuditService) {
 		taFormTSServiceMap.put("ta-form-ts0101", taFormTS0101Service);
 		taFormTSServiceMap.put("ta-form-ts0102", taFormTS0102Service);
 		taFormTSServiceMap.put("ta-form-ts0103", taFormTS0103Service);
@@ -134,6 +141,22 @@ public class TaFormTSController {
 		taFormTSServiceMap.put("ta-form-ts0303", taFormTS0303Service);
 		taFormTSServiceMap.put("ta-form-ts0423", taFormTS0423Service);
 		taFormTSServiceMap.put("ta-form-ts0424", taFormTS0424Service);
+		this.taxAuditService = taxAuditService;
+	}
+	
+	@GetMapping("/form-ts/doc-type-list")
+	@ResponseBody
+	public ResponseData<List<FormDocTypeVo>> getTypeDoc() {
+		ResponseData<List<FormDocTypeVo>> responseData = new ResponseData<List<FormDocTypeVo>>();
+		try {
+			responseData.setData(taxAuditService.getFormTsDocTypeList());
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error("TaxAuditController::getFactoryByNewRegId ", e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
 	}
 	
 	@SuppressWarnings("unchecked")

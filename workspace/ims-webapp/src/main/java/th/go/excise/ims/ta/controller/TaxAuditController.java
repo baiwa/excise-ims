@@ -20,13 +20,11 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STAT
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.ta.service.AuditStepService;
-import th.go.excise.ims.ta.service.RecordMessageService;
 import th.go.excise.ims.ta.service.TaxAuditService;
 import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
 import th.go.excise.ims.ta.vo.AuditStepFormVo;
 import th.go.excise.ims.ta.vo.AuditStepVo;
-import th.go.excise.ims.ta.vo.FormDocTypeVo;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
@@ -42,8 +40,6 @@ public class TaxAuditController {
 
 	@Autowired
 	private TaxAuditService taxAuditService;
-	@Autowired
-	private RecordMessageService recordMessageService;
 	@Autowired
 	private AuditStepService auditStepService;
 
@@ -121,21 +117,6 @@ public class TaxAuditController {
 		return res;
 	}
 
-	@GetMapping("/get-doc-type")
-	@ResponseBody
-	public ResponseData<List<FormDocTypeVo>> getTypeDoc() {
-		ResponseData<List<FormDocTypeVo>> responseData = new ResponseData<List<FormDocTypeVo>>();
-		try {
-			responseData.setData(recordMessageService.getTypeDoc());
-			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
-		} catch (Exception e) {
-			logger.error("TaxAuditController::getFactoryByNewRegId ", e);
-			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
-			responseData.setStatus(RESPONSE_STATUS.FAILED);
-		}
-		return responseData;
-	}
-	
 	@PostMapping("/update-plan-ws-dtl")
 	@ResponseBody
 	public ResponseData<List<PlanWorksheetDtlVo>> savePlanWsDtl(@RequestBody AuditStepFormVo formVo) {

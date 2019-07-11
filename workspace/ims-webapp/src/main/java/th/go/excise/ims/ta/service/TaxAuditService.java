@@ -26,6 +26,7 @@ import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
 import th.go.excise.ims.ta.vo.AuditStepFormVo;
+import th.go.excise.ims.ta.vo.FormDocTypeVo;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
@@ -184,4 +185,21 @@ public class TaxAuditService {
 		List<ParamInfo> regStatusList = ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.TA_REG_STATUS);
 		return regStatusList;
 	}
+	
+	public List<FormDocTypeVo> getFormTsDocTypeList() {
+		FormDocTypeVo vo = null;
+		List<FormDocTypeVo> voList = new ArrayList<>();
+		List<ParamInfo> paramInfoList = ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.TA_FORM_TS);
+		for (ParamInfo paramInfo : paramInfoList) {
+			vo = new FormDocTypeVo();
+			vo.setCode(paramInfo.getParamCode());
+			vo.setGroupCode(paramInfo.getParamGroupCode());
+			vo.setValue(paramInfo.getValue1());
+			vo.setDesc(paramInfo.getValue2());
+			voList.add(vo);
+		}
+		
+		return voList;
+	}
+	
 }
