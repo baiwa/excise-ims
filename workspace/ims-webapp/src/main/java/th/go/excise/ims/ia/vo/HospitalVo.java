@@ -2,7 +2,7 @@ package th.go.excise.ims.ia.vo;
 
 public class HospitalVo {
 	private String hospName;
-	private String hostCode;
+	private String hospCode;
 
 	public String getHospName() {
 		return hospName;
@@ -12,11 +12,12 @@ public class HospitalVo {
 		this.hospName = hospName;
 	}
 
-	public String getHostCode() {
-		return hostCode;
+	public String getHospCode() {
+		return hospCode;
 	}
 
-	public void setHostCode(String hostCode) {
-		this.hostCode = hostCode;
+	public void setHospCode(String hospCode) {
+		this.hospCode = hospCode;
 	}
+
 }

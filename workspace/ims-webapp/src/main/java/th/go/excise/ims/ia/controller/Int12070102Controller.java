@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
-import th.go.excise.ims.ia.persistence.entity.IaRentHouse;
 import th.go.excise.ims.ia.service.Int12070102Service;
 import th.go.excise.ims.ia.vo.HospitalVo;
 
@@ -26,12 +26,12 @@ public class Int12070102Controller {
 	private Int12070102Service int12070102Service;
 	
 	@GetMapping("/hospital")
+	@ResponseBody
 	public ResponseData<List<HospitalVo>> getHospital() {
 
 		ResponseData<List<HospitalVo>> response = new ResponseData<>();
-		IaRentHouse data = new IaRentHouse();
 		try {
-//			response.setData(int12070102Service.getHospital());
+			response.setData(int12070102Service.getHospital());
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
