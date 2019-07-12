@@ -40,14 +40,16 @@ public class Ed04Controller {
 	
 	@PostMapping("/listPersonThTitle")
 	@ResponseBody
-	public DataTableAjax<ExciseTitle> listPersonThTitle() {
-		DataTableAjax<ExciseTitle> response = new DataTableAjax<ExciseTitle>();
+	public ResponseData<List<ExciseTitle>> listPersonThTitle() {
+		ResponseData<List<ExciseTitle>> response = new ResponseData<List<ExciseTitle>>();
 		List<ExciseTitle> dataList = new ArrayList<ExciseTitle>();
 		try {
 			dataList = ed04Service.listPersonThTitle();
 			response.setData(dataList);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			logger.error("Ed04Controller : ", e);
+			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
 	}
