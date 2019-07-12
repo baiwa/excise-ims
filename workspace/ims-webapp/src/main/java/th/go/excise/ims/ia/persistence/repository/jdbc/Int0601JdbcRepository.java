@@ -42,7 +42,7 @@ public class Int0601JdbcRepository {
 
 		if (StringUtils.isNoneBlank(criteria.getOfficeReceive())) {
 			sql.append(" AND WS.OFFICE_RECEIVE like ? ");
-			paramList.add(ExciseUtils.whereInLocalOfficeCode(criteria.getOfficeReceive()));
+			paramList.add(criteria.getOfficeReceive());
 		}
 
 		if (StringUtils.isNotEmpty(criteria.getReceiptDateFrom())) {
@@ -131,6 +131,8 @@ public class Int0601JdbcRepository {
 		
 		sql.append(" AND WS.RECEIPT_NO IS NOT NULL ");
 		sql.append(" GROUP BY WS.RECEIPT_DATE ");
+		sql.append(" ORDER BY WS.RECEIPT_DATE ");
+		
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), tab2RowMapper);
 	}
 
