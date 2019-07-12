@@ -319,7 +319,7 @@ public class TaxAuditService {
 		List<PlanWorksheetDatatableVo>  listPlan = taPlanWorksheetDtlRepository.countPlanDtlStatusByOfficeCode(offCode,budgetYear);
 		for (ParamInfo param : listParam) {
 			ParameterInfoVo info = new ParameterInfoVo();
-			List<PlanWorksheetDatatableVo> compareList = listPlan.stream().filter(item -> param.getParamCode().equals(item.getPlanType())).collect(Collectors.toList());
+			List<PlanWorksheetDatatableVo> compareList = listPlan.stream().filter(item -> param.getParamCode().equals(item.getAuditStatus())).collect(Collectors.toList());
 			info.setParamCode(param.getParamCode());
 			info.setValue1(param.getValue1());
 			info.setValue6(Integer.toString(compareList.size()));
