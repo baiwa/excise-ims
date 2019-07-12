@@ -56,6 +56,8 @@ public class IaAuditIncD1 extends BaseEntity {
 	private Integer seqNo;
 	@Column(name = "WASTE_RECEIPT_NO_FLAG")
 	private String wasteReceiptNoFlag;
+	@Column(name = "ACTION_FLAG")
+	private String actionFlag;
 
 	public Long getIaAuditIncDId() {
 		return iaAuditIncDId;
@@ -191,6 +193,14 @@ public class IaAuditIncD1 extends BaseEntity {
 
 	public void setWasteReceiptNoFlag(String wasteReceiptNoFlag) {
 		this.wasteReceiptNoFlag = wasteReceiptNoFlag;
+	}
+
+	public String getActionFlag() {
+		return actionFlag;
+	}
+
+	public void setActionFlag(String actionFlag) {
+		this.actionFlag = actionFlag;
 	}
 
 }

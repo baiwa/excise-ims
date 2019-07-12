@@ -205,6 +205,7 @@ public class Int0601Service {
 					val1.setCheckTax0704(data1.getCheckTax0704());
 					val1.setRemarkTax(data1.getRemarkTax());
 					val1.setWasteReceiptNoFlag(data1.getWasteReceiptFlag());
+					val1.setActionFlag(data1.getActionFlag());
 					val1 = iaAuditIncD1Repository.save(val1);
 				} else {
 					val1.setSeqNo(data1.getSeqNo());
@@ -223,6 +224,7 @@ public class Int0601Service {
 					val1.setCheckTax0704(data1.getCheckTax0704());
 					val1.setRemarkTax(data1.getRemarkTax());
 					val1.setWasteReceiptNoFlag(data1.getWasteReceiptFlag());
+					val1.setActionFlag(data1.getActionFlag());
 					iaAuditIncD1List.add(val1);
 				}
 			}
@@ -340,6 +342,7 @@ public class Int0601Service {
 			iaAuditIncD1Vo.setCheckTax0704(iaAuditIncD1.getCheckTax0704());
 			iaAuditIncD1Vo.setRemarkTax(iaAuditIncD1.getRemarkTax());
 			iaAuditIncD1Vo.setWasteReceiptFlag(iaAuditIncD1.getWasteReceiptNoFlag());
+			iaAuditIncD1Vo.setActionFlag(iaAuditIncD1.getActionFlag());
 			iaAuditIncD1VoList.add(iaAuditIncD1Vo);
 		}
 		

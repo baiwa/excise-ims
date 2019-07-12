@@ -21,6 +21,7 @@ public class IaAuditIncD1Vo {
 	private String checkTax0704;
 	private String remarkTax;
 	private String wasteReceiptFlag;
+	private String actionFlag;
 
 	public Long getIaAuditIncDId() {
 		return iaAuditIncDId;
@@ -156,6 +157,14 @@ public class IaAuditIncD1Vo {
 
 	public void setWasteReceiptFlag(String wasteReceiptFlag) {
 		this.wasteReceiptFlag = wasteReceiptFlag;
+	}
+
+	public String getActionFlag() {
+		return actionFlag;
+	}
+
+	public void setActionFlag(String actionFlag) {
+		this.actionFlag = actionFlag;
 	}
 
 }
