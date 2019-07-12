@@ -3,6 +3,7 @@ package th.go.excise.ims.ia.persistence.repository.jdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
 import th.go.excise.ims.ia.vo.IaAuditIncD1WasteReceiptVo;
@@ -205,24 +207,19 @@ public class Int0601JdbcRepository {
 		sql.append(" SELECT * ");
 		sql.append(" FROM WS_INCR0004 ");
 		sql.append(" WHERE OFFCODE = ? ");
-		sql.append("   AND TRUNC(TRN_DATE) >= TO_DATE(?, 'YYYYMMDD') ");
-		sql.append("   AND TRUNC(TRN_DATE) <= TO_DATE(?, 'YYYYMMDD') ");
-		sql.append(" ORDER BY TRN_DATE, INCCTL_NO, INCCTL_SEQ ");
-		
 		paramList.add(criteria.getOfficeReceive());
 		
 		if (StringUtils.isNotEmpty(criteria.getReceiptDateFrom())) {
-			sql.append(" AND TRUNC(WS.RECEIPT_DATE) >= TO_DATE(?, 'YYYYMMDD') ");
+			sql.append("   AND TRUNC(TRN_DATE) >= TO_DATE(?, 'YYYYMMDD') ");
 			LocalDate localDate = LocalDateUtils.thaiDateSlash2LocalDate(criteria.getReceiptDateFrom());
 			paramList.add(localDate.format(DateTimeFormatter.BASIC_ISO_DATE));
 		}
 
 		if (StringUtils.isNotEmpty(criteria.getReceiptDateTo())) {
-			sql.append(" AND TRUNC(WS.RECEIPT_DATE) <= TO_DATE(?, 'YYYYMMDD') ");
+			sql.append("   AND TRUNC(TRN_DATE) <= TO_DATE(?, 'YYYYMMDD') ");
 			LocalDate localDate = LocalDateUtils.thaiDateSlash2LocalDate(criteria.getReceiptDateTo());
 			paramList.add(localDate.format(DateTimeFormatter.BASIC_ISO_DATE));
 		}
-		
 	}
 	
 	public List<IaAuditIncD1WasteReceiptVo> findWasteReceipt(Int0601RequestVo criteria) {
@@ -231,7 +228,9 @@ public class Int0601JdbcRepository {
 		
 		StringBuilder sql = new StringBuilder();
 		List<Object> paramList = new ArrayList<>();
+		
 		buildQueryFindWasteReceipt(sql, paramList, criteria);
+		sql.append(" ORDER BY TRN_DATE, INCCTL_NO, INCCTL_SEQ ");
 		
 		List<IaAuditIncD1WasteReceiptVo> voList = commonJdbcTemplate.query(
 			sql.toString(),
@@ -240,11 +239,11 @@ public class Int0601JdbcRepository {
 				@Override
 				public IaAuditIncD1WasteReceiptVo mapRow(ResultSet rs, int rowNum) throws SQLException {
 					IaAuditIncD1WasteReceiptVo vo = new IaAuditIncD1WasteReceiptVo();
-					vo.setTrnDate(rs.getString("TRN_DATE"));
+					vo.setTrnDate(ThaiBuddhistDate.from(LocalDateConverter.convertToEntityAttribute(rs.getDate("TRN_DATE"))).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 					vo.setIncctlNo(rs.getString("INCCTL_NO"));
 					vo.setReceiptNo(rs.getString("RECEIPT_NO"));
 					vo.setReceiptNoNew(rs.getString("RECEIPT_NO_NEW"));
-					vo.setPaidAmt(rs.getBigDecimal("PAID_AMT"));
+					vo.setPaidAmt( rs.getBigDecimal("PAID_AMT"));
 					vo.setReasonCode(rs.getString("REASON_CODE"));
 					vo.setReasonDesc(rs.getString("REASON_DESC"));
 					return vo;
