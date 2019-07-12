@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
@@ -203,7 +204,7 @@ public class Int0601JdbcRepository {
 		}
 	};
 	
-	private void buildQueryFindWasteReceipt(StringBuilder sql, List<Object> paramList, Int0601RequestVo criteria) {
+	private void buildFindWasteReceiptQuery(StringBuilder sql, List<Object> paramList, Int0601RequestVo criteria) {
 		sql.append(" SELECT * ");
 		sql.append(" FROM WS_INCR0004 ");
 		sql.append(" WHERE OFFCODE = ? ");
@@ -214,7 +215,7 @@ public class Int0601JdbcRepository {
 			LocalDate localDate = LocalDateUtils.thaiDateSlash2LocalDate(criteria.getReceiptDateFrom());
 			paramList.add(localDate.format(DateTimeFormatter.BASIC_ISO_DATE));
 		}
-
+		
 		if (StringUtils.isNotEmpty(criteria.getReceiptDateTo())) {
 			sql.append("   AND TRUNC(TRN_DATE) <= TO_DATE(?, 'YYYYMMDD') ");
 			LocalDate localDate = LocalDateUtils.thaiDateSlash2LocalDate(criteria.getReceiptDateTo());
@@ -229,11 +230,11 @@ public class Int0601JdbcRepository {
 		StringBuilder sql = new StringBuilder();
 		List<Object> paramList = new ArrayList<>();
 		
-		buildQueryFindWasteReceipt(sql, paramList, criteria);
+		buildFindWasteReceiptQuery(sql, paramList, criteria);
 		sql.append(" ORDER BY TRN_DATE, INCCTL_NO, INCCTL_SEQ ");
 		
 		List<IaAuditIncD1WasteReceiptVo> voList = commonJdbcTemplate.query(
-			sql.toString(),
+			OracleUtils.limitForDatable(sql.toString(), criteria.getStart(), criteria.getLength()),
 			paramList.toArray(),
 			new RowMapper<IaAuditIncD1WasteReceiptVo>() {
 				@Override
@@ -252,6 +253,14 @@ public class Int0601JdbcRepository {
 		);
 		
 		return voList;
+	}
+	
+	public Long countWasteReceipt(Int0601RequestVo criteria) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		buildFindWasteReceiptQuery(sql, params, criteria);
+		
+		return this.commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), params.toArray(), Long.class);
 	}
 
 }

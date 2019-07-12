@@ -412,12 +412,13 @@ public class Int0601Service {
 		logger.info("findWasteReceipt");
 		
 		List<IaAuditIncD1WasteReceiptVo> voList = int0601JdbcRepository.findWasteReceipt(criteria);
+		Long count = int0601JdbcRepository.countWasteReceipt(criteria);
 		
 		DataTableAjax<IaAuditIncD1WasteReceiptVo> dataTableAjax = new DataTableAjax<>();
 		dataTableAjax.setDraw(criteria.getDraw() + 1);
 		dataTableAjax.setData(voList);
-		dataTableAjax.setRecordsTotal(voList.size());
-		dataTableAjax.setRecordsFiltered(voList.size());
+		dataTableAjax.setRecordsTotal(count.intValue());
+		dataTableAjax.setRecordsFiltered(count.intValue());
 		
 		return dataTableAjax;
 	}
