@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.ia.service.Int0601Service;
 import th.go.excise.ims.ia.vo.IaAuditIncD1Vo;
+import th.go.excise.ims.ia.vo.IaAuditIncD1WasteReceiptVo;
 import th.go.excise.ims.ia.vo.IaAuditIncD2Vo;
 import th.go.excise.ims.ia.vo.IaAuditIncD3DatatableDtlVo;
 import th.go.excise.ims.ia.vo.IaAuditIncD3Vo;
@@ -214,4 +216,18 @@ public class Int0601Controller {
 		outStream.close();
 	}
 
+	@PostMapping("/find-waste-receipt")
+	@ResponseBody
+	public DataTableAjax<IaAuditIncD1WasteReceiptVo> findWasteReceipt(@RequestBody Int0601RequestVo request) {
+		DataTableAjax<IaAuditIncD1WasteReceiptVo> dataTableAjax = null;
+		
+		try {
+			dataTableAjax = int0601Service.findWasteReceipt(request);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+		
+		return dataTableAjax;
+	}
+	
 }

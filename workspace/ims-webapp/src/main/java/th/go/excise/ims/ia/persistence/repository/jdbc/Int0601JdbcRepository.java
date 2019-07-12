@@ -19,6 +19,7 @@ import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.ia.vo.IaAuditIncD1WasteReceiptVo;
 import th.go.excise.ims.ia.vo.IaAuditIncD2Vo;
 import th.go.excise.ims.ia.vo.IaAuditIncD3Vo;
 import th.go.excise.ims.ia.vo.Int0601RequestVo;
@@ -199,5 +200,43 @@ public class Int0601JdbcRepository {
 			return vo;
 		}
 	};
+	
+	public List<IaAuditIncD1WasteReceiptVo> findWasteReceipt(Int0601RequestVo criteria) {
+		logger.info("findWasteReceipt officeReceive={}, dateFrom={}, dateTo={}",
+			criteria.getOfficeReceive(), criteria.getReceiptDateFrom(), criteria.getReceiptDateTo());
+		
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT * ");
+		sql.append(" FROM WS_INCR0004 ");
+		sql.append(" WHERE OFFCODE = ? ");
+		sql.append("   AND TRUNC(TRN_DATE) >= TO_DATE(?, 'YYYYMMDD') ");
+		sql.append("   AND TRUNC(TRN_DATE) <= TO_DATE(?, 'YYYYMMDD') ");
+		sql.append(" ORDER BY TRN_DATE, INCCTL_NO, INCCTL_SEQ ");
+		
+		List<IaAuditIncD1WasteReceiptVo> voList = commonJdbcTemplate.query(
+			sql.toString(),
+			new Object[] {
+				criteria.getOfficeReceive(),
+				criteria.getReceiptDateFrom(),
+				criteria.getReceiptDateTo()
+			},
+			new RowMapper<IaAuditIncD1WasteReceiptVo>() {
+				@Override
+				public IaAuditIncD1WasteReceiptVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+					IaAuditIncD1WasteReceiptVo vo = new IaAuditIncD1WasteReceiptVo();
+					vo.setTrnDate(rs.getString("TRN_DATE"));
+					vo.setIncctlNo(rs.getString("INCCTL_NO"));
+					vo.setReceiptNo(rs.getString("RECEIPT_NO"));
+					vo.setReceiptNoNew(rs.getString("RECEIPT_NO_NEW"));
+					vo.setPaidAmt(rs.getBigDecimal("PAID_AMT"));
+					vo.setReasonCode(rs.getString("REASON_CODE"));
+					vo.setReasonDesc(rs.getString("REASON_DESC"));
+					return vo;
+				}
+			}
+		);
+		
+		return voList;
+	}
 
 }

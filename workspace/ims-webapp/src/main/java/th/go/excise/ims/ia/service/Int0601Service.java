@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
@@ -36,6 +37,7 @@ import th.go.excise.ims.ia.persistence.repository.jdbc.Int0601JdbcRepository;
 import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
 import th.go.excise.ims.ia.vo.ExciseDepartmentVo;
 import th.go.excise.ims.ia.vo.IaAuditIncD1Vo;
+import th.go.excise.ims.ia.vo.IaAuditIncD1WasteReceiptVo;
 import th.go.excise.ims.ia.vo.IaAuditIncD2Vo;
 import th.go.excise.ims.ia.vo.IaAuditIncD3DatatableDtlVo;
 import th.go.excise.ims.ia.vo.IaAuditIncD3Vo;
@@ -404,6 +406,20 @@ public class Int0601Service {
 		iaAuditIncD3DatatableDtlVo.setSumAmt(sumAmt);
 		
 		return iaAuditIncD3DatatableDtlVo;
+	}
+	
+	public DataTableAjax<IaAuditIncD1WasteReceiptVo> findWasteReceipt(Int0601RequestVo criteria) {
+		logger.info("findWasteReceipt");
+		
+		List<IaAuditIncD1WasteReceiptVo> voList = int0601JdbcRepository.findWasteReceipt(criteria);
+		
+		DataTableAjax<IaAuditIncD1WasteReceiptVo> dataTableAjax = new DataTableAjax<>();
+		dataTableAjax.setDraw(criteria.getDraw() + 1);
+		dataTableAjax.setData(voList);
+		dataTableAjax.setRecordsTotal(voList.size());
+		dataTableAjax.setRecordsFiltered(voList.size());
+		
+		return dataTableAjax;
 	}
 
 	public byte[] export(String auditIncNo) {
