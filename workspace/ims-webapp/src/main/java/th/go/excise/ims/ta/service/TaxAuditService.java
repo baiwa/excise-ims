@@ -4,6 +4,7 @@ import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -16,10 +17,12 @@ import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
+import th.co.baiwa.buckwaframework.preferences.vo.ParameterInfoVo;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
@@ -29,7 +32,9 @@ import th.go.excise.ims.ta.vo.AuditStepFormVo;
 import th.go.excise.ims.ta.vo.FormDocTypeVo;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
 import th.go.excise.ims.ta.vo.OutsidePlanVo;
+import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
+import th.go.excise.ims.ta.vo.TaPlanMasVo;
 import th.go.excise.ims.ta.vo.TaxAuditDetailFormVo;
 import th.go.excise.ims.ta.vo.TaxAuditDetailVo;
 import th.go.excise.ims.ta.vo.WsRegfri4000FormVo;
@@ -200,6 +205,128 @@ public class TaxAuditService {
 		}
 		
 		return voList;
+	}
+	
+	public List<PlanWorksheetDtlVo> getPlanWsDtlByPerson(AuditCalendarCriteriaFormVo formVo) {
+		List<PlanWorksheetDtlVo> planWsDtl = new ArrayList<>();
+		planWsDtl = taPlanWorksheetDtlRepository.findByPlanDtlByAssingPerson(formVo);
+		return planWsDtl;
+	}
+
+
+	public List<ParamInfo> getCountPlanDtlByPlanStatus(String budgetYear) {
+		logger.info("getRegStatus");
+		String username = UserLoginUtils.getCurrentUserBean().getUsername();
+		List<ParamInfo> regStatusList = ApplicationCache.getParamInfoListByGroupCode(ParameterConstants.PARAM_GROUP.TA_AUDIT_TYPE);
+		List<TaPlanWorksheetDtl> listPlan = taPlanWorksheetDtlRepository.findByAuJobRespAndBudgetYear(username,budgetYear);
+		List<ParamInfo> resplist = new ArrayList<>();
+		for (ParamInfo param : regStatusList) {
+			ParameterInfoVo info = new ParameterInfoVo();
+			List<TaPlanWorksheetDtl> compareList = listPlan.stream().filter(item -> param.getParamCode().equals(item.getPlanType())).collect(Collectors.toList());
+			info.setParamCode(param.getParamCode());
+			info.setValue1(param.getValue1());
+			info.setValue6(Integer.toString(compareList.size()));
+			resplist.add(info);
+		}
+
+		return resplist;
+	}
+	
+	public List<PlanWorksheetDtlVo> getCountPlanDtlAreaByOfficeCode(String budgetYear){
+		
+		String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		if (ExciseUtils.isCentral(offCode)) {
+			offCode ="%";
+		}else if (ExciseUtils.isSector(offCode)) {
+			offCode = offCode.substring(0, 2) +"%";
+		}
+		List<PlanWorksheetDtlVo> listAreaCount = taPlanWorksheetDtlRepository.countPlanDtlAndAreaByOfficeCode(offCode,budgetYear);
+		
+		List<ExciseDepartment> sectorList =  ApplicationCache.getExciseSectorList();
+		List<ExciseDepartment> areaList = null;
+		PlanWorksheetDtlVo planVo = null;
+		List<PlanWorksheetDtlVo> listResp = new ArrayList<>();
+		
+		if (ExciseUtils.isCentral(UserLoginUtils.getCurrentUserBean().getOfficeCode())) {
+			for (ExciseDepartment sector : sectorList) {
+				areaList = new ArrayList<>();
+				areaList = ApplicationCache.getExciseAreaList(sector.getOfficeCode());
+				for (ExciseDepartment area : areaList) {
+					planVo = new PlanWorksheetDtlVo();
+					String preCode = area.getOfficeCode().substring(0, 4);
+					List<PlanWorksheetDtlVo> compareList = listAreaCount.stream().filter(item -> preCode.equals(item.getAreaCode().substring(0, 4))).collect(Collectors.toList());
+					
+					int sumArea = 0;
+					for (PlanWorksheetDtlVo compare : compareList) {
+						sumArea += Integer.parseInt(compare.getTitle());
+					}
+					planVo.setAreaCode(area.getOfficeCode());
+					planVo.setAreaDesc(area.getDeptShortName());
+					planVo.setTitle(String.valueOf(sumArea));
+					listResp.add(planVo);
+				}
+			}
+		}else if (ExciseUtils.isSector(UserLoginUtils.getCurrentUserBean().getOfficeCode())) { 
+			areaList = ApplicationCache.getExciseAreaList(UserLoginUtils.getCurrentUserBean().getOfficeCode());
+			for (ExciseDepartment area : areaList) {
+				planVo = new PlanWorksheetDtlVo();
+				String preCode = area.getOfficeCode().substring(0, 4);
+				List<PlanWorksheetDtlVo> compareList = listAreaCount.stream().filter(item -> preCode.equals(item.getAreaCode().substring(0, 4))).collect(Collectors.toList());
+				
+				int sumArea = 0;
+				for (PlanWorksheetDtlVo compare : compareList) {
+					sumArea += Integer.parseInt(compare.getTitle());
+				}
+				planVo.setAreaCode(area.getOfficeCode());
+				planVo.setAreaDesc(area.getDeptShortName());
+				planVo.setTitle(String.valueOf(sumArea));
+				listResp.add(planVo);
+			}
+
+		}else {
+			planVo = new PlanWorksheetDtlVo();
+			planVo.setAreaCode(listAreaCount.get(0).getAreaCode());
+			planVo.setAreaDesc(listAreaCount.get(0).getAreaDesc());
+			planVo.setTitle(listAreaCount.get(0).getTitle());
+			listResp.add(planVo);
+		}
+
+		
+		return listResp;
+		
+	}
+	public List<TaPlanMasVo> countAuditMonth(String budgetYear){
+		String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		if (ExciseUtils.isCentral(offCode)) {
+			offCode ="%";
+		}else if (ExciseUtils.isSector(offCode)) {
+			offCode = offCode.substring(0, 2) +"%";
+		}
+		
+		return taPlanWorksheetDtlRepository.countPlanDtlMonthByOfficeCode(offCode, budgetYear);
+	}
+	
+	public List<ParamInfo> countAuditStatus(String budgetYear){
+		String offCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		if (ExciseUtils.isCentral(offCode)) {
+			offCode ="%";
+		}else if (ExciseUtils.isSector(offCode)) {
+			offCode = offCode.substring(0, 2) +"%";
+		}
+		
+		List<ParamInfo> listParam = ApplicationCache.getParamInfoListByGroupCode(PARAM_GROUP.TA_AUDIT_STATUS);
+		List<ParamInfo> resplist = new ArrayList<>();
+		List<PlanWorksheetDatatableVo>  listPlan = taPlanWorksheetDtlRepository.countPlanDtlStatusByOfficeCode(offCode,budgetYear);
+		for (ParamInfo param : listParam) {
+			ParameterInfoVo info = new ParameterInfoVo();
+			List<PlanWorksheetDatatableVo> compareList = listPlan.stream().filter(item -> param.getParamCode().equals(item.getPlanType())).collect(Collectors.toList());
+			info.setParamCode(param.getParamCode());
+			info.setValue1(param.getValue1());
+			info.setValue6(Integer.toString(compareList.size()));
+			resplist.add(info);
+		}
+		
+		return resplist;
 	}
 	
 }

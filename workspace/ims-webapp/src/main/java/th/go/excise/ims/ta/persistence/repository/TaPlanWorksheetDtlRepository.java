@@ -48,4 +48,6 @@ public interface TaPlanWorksheetDtlRepository extends CommonJpaCrudRepository<Ta
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.auditPlanCode = :auditPlanCode")
 	public TaPlanWorksheetDtl findByAuditPlanCode(@Param("auditPlanCode") String auditPlanCode);
 	
+	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' and e.auJobResp = :auJobResp and e.budgetYear = :budgetYear ")
+	public List<TaPlanWorksheetDtl> findByAuJobRespAndBudgetYear(@Param("auJobResp") String auJobResp,@Param("budgetYear") String budgetYear);
 }

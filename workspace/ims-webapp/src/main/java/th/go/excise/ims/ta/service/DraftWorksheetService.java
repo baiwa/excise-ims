@@ -172,7 +172,7 @@ public class DraftWorksheetService {
 		}
 		
 		formVo.setYearMonthList(monthList);
-		List<TaxOperatorDetailVo> detailVoList = taWsReg4000Repository.findByCriteriaPivot(formVo, auditPlanMap, maxYearMap, incomeTaxType);
+		List<TaxOperatorDetailVo> detailVoList = taWsReg4000Repository.findByCriteriaPivotDatatable(formVo, auditPlanMap, maxYearMap, incomeTaxType);
 		long end = System.currentTimeMillis();
 		logger.info("Process prepareTaxOperatorDetailVoList Success, using {} seconds", (((float) (end - start) / 1000F)));
 		

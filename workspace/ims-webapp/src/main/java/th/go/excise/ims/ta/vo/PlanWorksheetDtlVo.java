@@ -1,5 +1,7 @@
 package th.go.excise.ims.ta.vo;
 
+import java.util.Date;
+
 public class PlanWorksheetDtlVo {
 
 	private Long planWorksheetDtlId;
@@ -24,6 +26,8 @@ public class PlanWorksheetDtlVo {
 	private String areaCode;
 	private String areaDesc;
 	private String title;
+	private Date start;
+	private Date end;
 
 	public Long getPlanWorksheetDtlId() {
 		return planWorksheetDtlId;
@@ -200,5 +204,22 @@ public class PlanWorksheetDtlVo {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
+	public Date getStart() {
+		return start;
+	}
+
+	public void setStart(Date start) {
+		this.start = start;
+	}
+
+	public Date getEnd() {
+		return end;
+	}
+
+	public void setEnd(Date end) {
+		this.end = end;
+	}
+	
 
 }

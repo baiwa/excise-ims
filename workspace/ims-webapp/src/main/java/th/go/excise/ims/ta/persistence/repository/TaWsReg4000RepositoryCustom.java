@@ -29,4 +29,6 @@ public interface TaWsReg4000RepositoryCustom {
 	
 	public List<TaxOperatorDetailVo> findByCriteriaPivot(TaxOperatorFormVo formVo, Map<String, String> auditPlanMap, Map<String, String> maxYearMap, String incomeTaxType);
 	
+	public List<TaxOperatorDetailVo> findByCriteriaPivotDatatable(TaxOperatorFormVo formVo, Map<String, String> auditPlanMap, Map<String, String> maxYearMap, String incomeTaxType);
+	
 }

@@ -10,6 +10,7 @@ import th.go.excise.ims.ta.vo.PlanWorksheetDatatableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetDtlVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetSendTableVo;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
+import th.go.excise.ims.ta.vo.TaPlanMasVo;
 
 public interface TaPlanWorksheetDtlRepositoryCustom {
 
@@ -35,5 +36,12 @@ public interface TaPlanWorksheetDtlRepositoryCustom {
 	
 	public int countPlanTypeByOfficeCodeAndPlanType(PlanWorksheetVo formVo);
 	
+	public List<PlanWorksheetDtlVo> findByPlanDtlByAssingPerson(AuditCalendarCriteriaFormVo formVo);
+	
+	public List<PlanWorksheetDtlVo> countPlanDtlAndAreaByOfficeCode(String officeCode,String budgerYear);
+	
+	public List<TaPlanMasVo> countPlanDtlMonthByOfficeCode(String officeCode,String budgerYear);
+	
+	public List<PlanWorksheetDatatableVo> countPlanDtlStatusByOfficeCode(String officeCode,String budgetYear);
 	
 }

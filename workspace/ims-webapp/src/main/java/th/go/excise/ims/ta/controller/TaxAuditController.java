@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -176,6 +177,87 @@ public class TaxAuditController {
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return responseData;
+	}
+	
+	@PostMapping("/get-plan-ws-dtl-person")
+	@ResponseBody
+	public ResponseData<List<PlanWorksheetDtlVo>> getPlanWsDtlByPerson(
+			@RequestBody AuditCalendarCriteriaFormVo formVo) {
+		ResponseData<List<PlanWorksheetDtlVo>> res = new ResponseData<>();
+		try {
+			res.setData(taxAuditService.getPlanWsDtlByPerson(formVo));
+			res.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			res.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			res.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			res.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
+		}
+		return res;
+	}
+
+	@PostMapping("/get-audit-type/{budgetyear}")
+	@ResponseBody
+	public ResponseData<List<?>> getAuditType(@PathVariable("budgetyear") String budgetyear) {
+		ResponseData<List<?>> res = new ResponseData<>();
+		try {
+			res.setData(taxAuditService.getCountPlanDtlByPlanStatus(budgetyear));
+			res.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			res.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			res.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			res.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
+		}
+		return res;
+	}
+	
+	@PostMapping("/get-audit-area/{budgetyear}")
+	@ResponseBody
+	public ResponseData<List<?>> getAuditArea(@PathVariable("budgetyear") String budgetyear) {
+		ResponseData<List<?>> res = new ResponseData<>();
+		try {
+			res.setData(taxAuditService.getCountPlanDtlAreaByOfficeCode(budgetyear));
+			res.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			res.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			res.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			res.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
+		}
+		return res;
+	}
+	
+	@PostMapping("/get-audit-count-month/{budgetyear}")
+	@ResponseBody
+	public ResponseData<List<?>> countAuditMonth(@PathVariable("budgetyear") String budgetyear) {
+		ResponseData<List<?>> res = new ResponseData<>();
+		try {
+			res.setData(taxAuditService.countAuditMonth(budgetyear));
+			res.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			res.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			res.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			res.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
+		}
+		return res;
+	}
+
+	@PostMapping("/get-audit-count-status/{budgetyear}")
+	@ResponseBody
+	public ResponseData<List<?>> countAuditStatus(@PathVariable("budgetyear") String budgetyear) {
+		ResponseData<List<?>> res = new ResponseData<>();
+		try {
+			res.setData(taxAuditService.countAuditStatus(budgetyear));
+			res.setMessage(ProjectConstant.RESPONSE_MESSAGE.SUCCESS);
+			res.setStatus(ProjectConstant.RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			res.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			res.setStatus(ProjectConstant.RESPONSE_STATUS.FAILED);
+		}
+		return res;
 	}
 
 }
