@@ -1,10 +1,9 @@
 package th.go.excise.ims.ia.service;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ public class Int0601ServiceTest {
 	@Autowired
 	private Int0601Service int0601Service;
 	
-	@Test
+//	@Test
 	public void test_findTab1ByCriteria() {
 		Int0601RequestVo formVo = new Int0601RequestVo();
 		formVo.setOfficeReceive("010100");
@@ -42,24 +41,13 @@ public class Int0601ServiceTest {
 		});
 	}
 
-//	@Test
-	public void test_PriceServiceVo() throws IOException {
-
+	@Test
+	public void test_export() throws Exception {
+		String auditIncNo = "INC-010100/00000081";
 		String fileName = "int0601";
-		String auditIncNo = "010201/00000128";
-		try {
-			byte[] outArray = int0601Service.export(auditIncNo);
-			FileOutputStream Output = new FileOutputStream(PATH.TEST_PATH + fileName + "." + FILE_EXTENSION.XLSX);
-			Output.write(outArray);
-			Output.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		System.out.println("Done");
-
+		
+		byte[] bytes = int0601Service.export(auditIncNo);
+		IOUtils.write(bytes, new FileOutputStream(PATH.TEST_PATH + fileName + "." + FILE_EXTENSION.XLSX));
 	}
 
 }

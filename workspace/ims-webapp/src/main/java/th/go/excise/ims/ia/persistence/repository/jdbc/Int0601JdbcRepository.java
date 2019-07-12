@@ -207,7 +207,8 @@ public class Int0601JdbcRepository {
 	private void buildFindWasteReceiptQuery(StringBuilder sql, List<Object> paramList, Int0601RequestVo criteria) {
 		sql.append(" SELECT * ");
 		sql.append(" FROM WS_INCR0004 ");
-		sql.append(" WHERE OFFCODE = ? ");
+		sql.append(" WHERE IS_DELETED = 'N' ");
+		sql.append("   AND OFFCODE = ? ");
 		paramList.add(criteria.getOfficeReceive());
 		
 		if (StringUtils.isNotEmpty(criteria.getReceiptDateFrom())) {
