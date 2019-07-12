@@ -77,11 +77,11 @@ public class Ed04Service {
 			  excisePersonInfo.setEmailAddress(vo.getExcisePersonInfoVo().getEmailAddress());
 			  excisePersonInfo.setDeptPhoneNo(vo.getExcisePersonInfoVo().getDeptPhoneNo());
 			  excisePersonInfo.setPersonStatus(vo.getExcisePersonInfoVo().getPersonStatus());
-			  excisePersonInfo.setCoupleFullName(vo.getExcisePersonInfoVo().getCoupleFullName());
+//			  excisePersonInfo.setCoupleFullName(vo.getExcisePersonInfoVo().getCoupleFullName());
 			  excisePersonInfo.setCouplePid(vo.getExcisePersonInfoVo().getCouplePid());
-			  excisePersonInfo.setFatherFullName(vo.getExcisePersonInfoVo().getFatherFullName());
+//			  excisePersonInfo.setFatherFullName(vo.getExcisePersonInfoVo().getFatherFullName());
 			  excisePersonInfo.setFatherPid(vo.getExcisePersonInfoVo().getFatherPid());
-			  excisePersonInfo.setMotherFullName(vo.getExcisePersonInfoVo().getMotherFullName());
+//			  excisePersonInfo.setMotherFullName(vo.getExcisePersonInfoVo().getMotherFullName());
 			  excisePersonInfo.setMotherPid(vo.getExcisePersonInfoVo().getMotherPid());
 			  excisePersonInfo.setPersonAddrno(vo.getExcisePersonInfoVo().getPersonAddrno());
 			  excisePersonInfo.setPersonMoono(vo.getExcisePersonInfoVo().getPersonMoono());
@@ -104,7 +104,7 @@ public class Ed04Service {
 					try {
 						val1.setPersonLogin(data1.getPersonLogin());
 						val1.setChildNo(data1.getChildNo());
-						val1.setChildFullName(data1.getChildFullName());
+//						val1.setChildFullName(data1.getChildFullName());
 						val1.setChildPid(data1.getChildPid());
 						val1.setChildBirthDate(ConvertDateUtils.parseStringToDate(data1.getChildBirthDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH) );
 						val1.setInstituteDesc(data1.getInstituteDesc());

@@ -29,8 +29,6 @@ public class ExcisePersonInfo1 extends BaseEntity {
 	private String personLogin;
 	@Column(name = "CHILD_NO")
 	private BigDecimal childNo;
-	@Column(name = "CHILD_FULL_NAME")
-	private String childFullName;
 	@Column(name = "CHILD_PID")
 	private String childPid;
 	@Column(name = "CHILD_BIRTH_DATE")
@@ -41,6 +39,12 @@ public class ExcisePersonInfo1 extends BaseEntity {
 	private String instituteAmphurCode;
 	@Column(name = "INSTITUTE_PROVINCE_CODE")
 	private String instituteProvinceCode;
+	@Column(name = "CHILD_TH_TITLE")
+	private String childThTitle;
+	@Column(name = "CHILD_NAME")
+	private String childName;
+	@Column(name = "CHILD_SURNAME_NAME")
+	private String childSurnameName;
 
 	public Long getId() {
 		return id;
@@ -64,14 +68,6 @@ public class ExcisePersonInfo1 extends BaseEntity {
 
 	public void setChildNo(BigDecimal childNo) {
 		this.childNo = childNo;
-	}
-
-	public String getChildFullName() {
-		return childFullName;
-	}
-
-	public void setChildFullName(String childFullName) {
-		this.childFullName = childFullName;
 	}
 
 	public String getChildPid() {
@@ -112,6 +108,30 @@ public class ExcisePersonInfo1 extends BaseEntity {
 
 	public void setInstituteProvinceCode(String instituteProvinceCode) {
 		this.instituteProvinceCode = instituteProvinceCode;
+	}
+
+	public String getChildThTitle() {
+		return childThTitle;
+	}
+
+	public void setChildThTitle(String childThTitle) {
+		this.childThTitle = childThTitle;
+	}
+
+	public String getChildName() {
+		return childName;
+	}
+
+	public void setChildName(String childName) {
+		this.childName = childName;
+	}
+
+	public String getChildSurnameName() {
+		return childSurnameName;
+	}
+
+	public void setChildSurnameName(String childSurnameName) {
+		this.childSurnameName = childSurnameName;
 	}
 
 }
