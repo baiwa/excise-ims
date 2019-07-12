@@ -201,11 +201,7 @@ public class Int0601JdbcRepository {
 		}
 	};
 	
-	public List<IaAuditIncD1WasteReceiptVo> findWasteReceipt(Int0601RequestVo criteria) {
-		logger.info("findWasteReceipt officeReceive={}, dateFrom={}, dateTo={}",
-			criteria.getOfficeReceive(), criteria.getReceiptDateFrom(), criteria.getReceiptDateTo());
-		
-		StringBuilder sql = new StringBuilder();
+	private void buildQueryFindWasteReceipt(StringBuilder sql, List<Object> paramList, Int0601RequestVo criteria) {
 		sql.append(" SELECT * ");
 		sql.append(" FROM WS_INCR0004 ");
 		sql.append(" WHERE OFFCODE = ? ");
@@ -213,13 +209,33 @@ public class Int0601JdbcRepository {
 		sql.append("   AND TRUNC(TRN_DATE) <= TO_DATE(?, 'YYYYMMDD') ");
 		sql.append(" ORDER BY TRN_DATE, INCCTL_NO, INCCTL_SEQ ");
 		
+		paramList.add(criteria.getOfficeReceive());
+		
+		if (StringUtils.isNotEmpty(criteria.getReceiptDateFrom())) {
+			sql.append(" AND TRUNC(WS.RECEIPT_DATE) >= TO_DATE(?, 'YYYYMMDD') ");
+			LocalDate localDate = LocalDateUtils.thaiDateSlash2LocalDate(criteria.getReceiptDateFrom());
+			paramList.add(localDate.format(DateTimeFormatter.BASIC_ISO_DATE));
+		}
+
+		if (StringUtils.isNotEmpty(criteria.getReceiptDateTo())) {
+			sql.append(" AND TRUNC(WS.RECEIPT_DATE) <= TO_DATE(?, 'YYYYMMDD') ");
+			LocalDate localDate = LocalDateUtils.thaiDateSlash2LocalDate(criteria.getReceiptDateTo());
+			paramList.add(localDate.format(DateTimeFormatter.BASIC_ISO_DATE));
+		}
+		
+	}
+	
+	public List<IaAuditIncD1WasteReceiptVo> findWasteReceipt(Int0601RequestVo criteria) {
+		logger.info("findWasteReceipt officeReceive={}, dateFrom={}, dateTo={}",
+			criteria.getOfficeReceive(), criteria.getReceiptDateFrom(), criteria.getReceiptDateTo());
+		
+		StringBuilder sql = new StringBuilder();
+		List<Object> paramList = new ArrayList<>();
+		buildQueryFindWasteReceipt(sql, paramList, criteria);
+		
 		List<IaAuditIncD1WasteReceiptVo> voList = commonJdbcTemplate.query(
 			sql.toString(),
-			new Object[] {
-				criteria.getOfficeReceive(),
-				criteria.getReceiptDateFrom(),
-				criteria.getReceiptDateTo()
-			},
+			paramList.toArray(),
 			new RowMapper<IaAuditIncD1WasteReceiptVo>() {
 				@Override
 				public IaAuditIncD1WasteReceiptVo mapRow(ResultSet rs, int rowNum) throws SQLException {
