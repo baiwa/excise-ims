@@ -29,11 +29,8 @@ public class ExcisePersonInfoVo {
 	private String emailAddress;
 	private String deptPhoneNo;
 	private String personStatus;
-	private String coupleFullName;
 	private String couplePid;
-	private String fatherFullName;
 	private String fatherPid;
-	private String motherFullName;
 	private String motherPid;
 	private String personAddrno;
 	private String personMoono;
@@ -43,6 +40,16 @@ public class ExcisePersonInfoVo {
 	private String personTabbolCode;
 	private String personAmphurCode;
 	private String personProvinceCode;
+	private String coupleThTitle;
+	private String coupleName;
+	private String coupleSurnameName;
+	private String fatherThTitle;
+	private String fatherName;
+	private String fatherSurnameName;
+	private String motherThTitle;
+	private String motherName;
+	private String motherSurnameName;
+	private String zipCode;
 
 	public Long getId() {
 		return id;
@@ -260,14 +267,6 @@ public class ExcisePersonInfoVo {
 		this.personStatus = personStatus;
 	}
 
-	public String getCoupleFullName() {
-		return coupleFullName;
-	}
-
-	public void setCoupleFullName(String coupleFullName) {
-		this.coupleFullName = coupleFullName;
-	}
-
 	public String getCouplePid() {
 		return couplePid;
 	}
@@ -276,28 +275,12 @@ public class ExcisePersonInfoVo {
 		this.couplePid = couplePid;
 	}
 
-	public String getFatherFullName() {
-		return fatherFullName;
-	}
-
-	public void setFatherFullName(String fatherFullName) {
-		this.fatherFullName = fatherFullName;
-	}
-
 	public String getFatherPid() {
 		return fatherPid;
 	}
 
 	public void setFatherPid(String fatherPid) {
 		this.fatherPid = fatherPid;
-	}
-
-	public String getMotherFullName() {
-		return motherFullName;
-	}
-
-	public void setMotherFullName(String motherFullName) {
-		this.motherFullName = motherFullName;
 	}
 
 	public String getMotherPid() {
@@ -370,6 +353,86 @@ public class ExcisePersonInfoVo {
 
 	public void setPersonProvinceCode(String personProvinceCode) {
 		this.personProvinceCode = personProvinceCode;
+	}
+
+	public String getCoupleThTitle() {
+		return coupleThTitle;
+	}
+
+	public void setCoupleThTitle(String coupleThTitle) {
+		this.coupleThTitle = coupleThTitle;
+	}
+
+	public String getCoupleName() {
+		return coupleName;
+	}
+
+	public void setCoupleName(String coupleName) {
+		this.coupleName = coupleName;
+	}
+
+	public String getCoupleSurnameName() {
+		return coupleSurnameName;
+	}
+
+	public void setCoupleSurnameName(String coupleSurnameName) {
+		this.coupleSurnameName = coupleSurnameName;
+	}
+
+	public String getFatherThTitle() {
+		return fatherThTitle;
+	}
+
+	public void setFatherThTitle(String fatherThTitle) {
+		this.fatherThTitle = fatherThTitle;
+	}
+
+	public String getFatherName() {
+		return fatherName;
+	}
+
+	public void setFatherName(String fatherName) {
+		this.fatherName = fatherName;
+	}
+
+	public String getFatherSurnameName() {
+		return fatherSurnameName;
+	}
+
+	public void setFatherSurnameName(String fatherSurnameName) {
+		this.fatherSurnameName = fatherSurnameName;
+	}
+
+	public String getMotherThTitle() {
+		return motherThTitle;
+	}
+
+	public void setMotherThTitle(String motherThTitle) {
+		this.motherThTitle = motherThTitle;
+	}
+
+	public String getMotherName() {
+		return motherName;
+	}
+
+	public void setMotherName(String motherName) {
+		this.motherName = motherName;
+	}
+
+	public String getMotherSurnameName() {
+		return motherSurnameName;
+	}
+
+	public void setMotherSurnameName(String motherSurnameName) {
+		this.motherSurnameName = motherSurnameName;
+	}
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
 	}
 
 }

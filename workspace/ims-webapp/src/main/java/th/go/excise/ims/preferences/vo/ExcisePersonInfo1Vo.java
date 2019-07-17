@@ -8,12 +8,14 @@ public class ExcisePersonInfo1Vo {
 	private Long id;
 	private String personLogin;
 	private BigDecimal childNo;
-	private String childFullName;
 	private String childPid;
 	private String childBirthDate;
 	private String instituteDesc;
 	private String instituteAmphurCode;
 	private String instituteProvinceCode;
+	private String childThTitle;
+	private String childName;
+	private String childSurnameName;
 
 	public Long getId() {
 		return id;
@@ -37,14 +39,6 @@ public class ExcisePersonInfo1Vo {
 
 	public void setChildNo(BigDecimal childNo) {
 		this.childNo = childNo;
-	}
-
-	public String getChildFullName() {
-		return childFullName;
-	}
-
-	public void setChildFullName(String childFullName) {
-		this.childFullName = childFullName;
 	}
 
 	public String getChildPid() {
@@ -85,6 +79,30 @@ public class ExcisePersonInfo1Vo {
 
 	public void setInstituteProvinceCode(String instituteProvinceCode) {
 		this.instituteProvinceCode = instituteProvinceCode;
+	}
+
+	public String getChildThTitle() {
+		return childThTitle;
+	}
+
+	public void setChildThTitle(String childThTitle) {
+		this.childThTitle = childThTitle;
+	}
+
+	public String getChildName() {
+		return childName;
+	}
+
+	public void setChildName(String childName) {
+		this.childName = childName;
+	}
+
+	public String getChildSurnameName() {
+		return childSurnameName;
+	}
+
+	public void setChildSurnameName(String childSurnameName) {
+		this.childSurnameName = childSurnameName;
 	}
 
 }
