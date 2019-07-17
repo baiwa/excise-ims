@@ -1,15 +1,19 @@
 package th.go.excise.ims.ia.service;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncSendD;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncSendH;
@@ -55,9 +59,18 @@ public class Int0609Service {
 		/* __________ loop for map object __________ */
 		for (Int0609TableVo wsGfr01051 : resWsGfr01051) {
 			/* __________ calculate difference day__________ */
-			long diffInMillies = Math.abs(wsGfr01051.getGfDate().getTime() - wsGfr01051.getTrnDate().getTime());
-			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-			wsGfr01051.setDateDiff(diff);
+//			long diffInMillies = Math.abs(wsGfr01051.getGfDate().getTime() - wsGfr01051.getTrnDate().getTime());
+//			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+
+			/*total date wihtout holiday and weekend*/
+			LocalDate startDate = ConvertDateUtils.parseStringToLocalDate(ConvertDateUtils.formatDateToString(wsGfr01051.getTrnDate(),ConvertDateUtils.DD_MM_YYYY),
+					ProjectConstant.SHORT_DATE_FORMAT);
+			LocalDate endDate = ConvertDateUtils.parseStringToLocalDate(ConvertDateUtils.formatDateToString(wsGfr01051.getGfDate(),ConvertDateUtils.DD_MM_YYYY),
+					ProjectConstant.SHORT_DATE_FORMAT);
+			
+			List<LocalDate> listDate = LocalDateUtils.getLocalDateListWithoutHolodays(startDate, endDate);
+			Long dateSize = (long) listDate.size() - 1;
+			wsGfr01051.setDateDiff(dateSize);
 
 			String dateStrHeader = ConvertDateUtils.formatDateToString(wsGfr01051.getTrnDate(), ConvertDateUtils.DD_MM_YY);
 			wsGfr01051.setTrnDateStr(dateStrHeader);
