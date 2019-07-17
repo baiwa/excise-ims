@@ -24,6 +24,7 @@ import th.go.excise.ims.ta.service.AuditStepService;
 import th.go.excise.ims.ta.service.TaxAuditService;
 import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
+import th.go.excise.ims.ta.vo.AuditCalendarFormVo;
 import th.go.excise.ims.ta.vo.AuditStepFormVo;
 import th.go.excise.ims.ta.vo.AuditStepVo;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
@@ -259,5 +260,21 @@ public class TaxAuditController {
 		}
 		return res;
 	}
+	
+	@PostMapping("/get-plan-calendar-holiday")
+	@ResponseBody
+	public ResponseData<List<AuditCalendarFormVo>> getPlanHoliday(@RequestBody AuditCalendarFormVo from) {
+		ResponseData<List<AuditCalendarFormVo>> responseData = new ResponseData<List<AuditCalendarFormVo>>();
+		try {
+			responseData.setData(taxAuditService.getPlanHoliday(from));
+			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			responseData.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.ERROR500_CODE).getMessageTh());
+			responseData.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return responseData;
+	}
+	
 
 }
