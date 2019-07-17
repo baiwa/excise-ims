@@ -1,5 +1,7 @@
 package th.go.excise.ims.ta.service;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -13,8 +15,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ibm.icu.util.Calendar;
+
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants;
 import th.co.baiwa.buckwaframework.preferences.constant.ParameterConstants.PARAM_GROUP;
 import th.co.baiwa.buckwaframework.preferences.vo.ParameterInfoVo;
@@ -22,12 +28,15 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.co.baiwa.buckwaframework.support.domain.ParamInfo;
 import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.preferences.persistence.entity.ExciseHoliday;
+import th.go.excise.ims.preferences.persistence.repository.ExciseHolidayRepository;
 import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetDtl;
 import th.go.excise.ims.ta.persistence.repository.TaPlanWorksheetDtlRepository;
 import th.go.excise.ims.ta.persistence.repository.TaWsReg4000Repository;
 import th.go.excise.ims.ta.vo.AuditCalendarCheckboxVo;
 import th.go.excise.ims.ta.vo.AuditCalendarCriteriaFormVo;
+import th.go.excise.ims.ta.vo.AuditCalendarFormVo;
 import th.go.excise.ims.ta.vo.AuditStepFormVo;
 import th.go.excise.ims.ta.vo.FormDocTypeVo;
 import th.go.excise.ims.ta.vo.OutsidePlanFormVo;
@@ -56,6 +65,9 @@ public class TaxAuditService {
 	
 	@Autowired
 	private RegFri4000Service regFri4000Service;
+	
+	@Autowired
+	private ExciseHolidayRepository exciseHolidayRepository;
 
 	public DataTableAjax<OutsidePlanVo> outsidePlan(OutsidePlanFormVo formVo) {
 
@@ -327,6 +339,32 @@ public class TaxAuditService {
 		}
 		
 		return resplist;
+	}
+	
+	public List<AuditCalendarFormVo> getPlanHoliday(AuditCalendarFormVo form){
+		List<AuditCalendarFormVo> resp = new ArrayList<>();
+		AuditCalendarFormVo calendar = null;
+		
+		
+//		LocalDate start = LocalDate.of(2016, 1, 1);
+//		LocalDate end =  LocalDate.of(2018, 1, 1);
+		
+		LocalDate startDate = ConvertDateUtils.parseStringToLocalDate(ConvertDateUtils.formatDateToString(form.getStart(),ConvertDateUtils.DD_MM_YYYY),
+				ProjectConstant.SHORT_DATE_FORMAT);
+		LocalDate endDate = ConvertDateUtils.parseStringToLocalDate(ConvertDateUtils.formatDateToString(form.getEnd(),ConvertDateUtils.DD_MM_YYYY),
+				ProjectConstant.SHORT_DATE_FORMAT);
+		List<ExciseHoliday> holiday = exciseHolidayRepository.findByDateRange(startDate, endDate);
+		
+		for (ExciseHoliday exciseHoliday : holiday) {
+			calendar = new AuditCalendarFormVo();
+			calendar.setStart(Date.valueOf(exciseHoliday.getHolidayDate()));
+			calendar.setEnd(Date.valueOf(exciseHoliday.getHolidayDate()));
+			calendar.setRendering("background");
+			calendar.setAllDay(true);
+			resp.add(calendar);
+		}
+		
+		return resp;
 	}
 	
 }

@@ -131,14 +131,14 @@ public class BasicAnalysisIncomeCompareLastYearService extends AbstractBasicAnal
 			vo.setTaxMonth(entity.getTaxMonth());
 			vo.setIncomeCurrentYearAmt(entity.getIncomeCurrentYearAmt() != null ? entity.getIncomeCurrentYearAmt().toString() : NO_VALUE);
 			vo.setIncomeLastYear1Amt(entity.getIncomeLastYear1Amt() != null ? entity.getIncomeLastYear1Amt().toString() : NO_VALUE);
-			vo.setDiffIncomeLastYear1Amt(entity.getDiffIncomeLastYear1Amt().toString());
-			vo.setDiffIncomeLastYear1Pnt(entity.getDiffIncomeLastYear1Pnt().toString());
+			vo.setDiffIncomeLastYear1Amt(entity.getDiffIncomeLastYear1Amt() != null ? entity.getDiffIncomeLastYear1Amt().toString() : NO_VALUE);
+			vo.setDiffIncomeLastYear1Pnt(entity.getDiffIncomeLastYear1Pnt() != null ? entity.getDiffIncomeLastYear1Pnt().toString() : NO_VALUE);
 			vo.setIncomeLastYear2Amt(entity.getIncomeLastYear2Amt() != null ? entity.getIncomeLastYear2Amt().toString() : NO_VALUE);
-			vo.setDiffIncomeLastYear2Amt(entity.getDiffIncomeLastYear2Amt().toString());
-			vo.setDiffIncomeLastYear2Pnt(entity.getDiffIncomeLastYear2Pnt().toString());
+			vo.setDiffIncomeLastYear2Amt(entity.getDiffIncomeLastYear2Amt() != null ? entity.getDiffIncomeLastYear2Amt().toString() : NO_VALUE);
+			vo.setDiffIncomeLastYear2Pnt(entity.getDiffIncomeLastYear2Pnt() != null ? entity.getDiffIncomeLastYear2Pnt().toString() : NO_VALUE);
 			vo.setIncomeLastYear3Amt(entity.getIncomeLastYear3Amt() != null ? entity.getIncomeLastYear3Amt().toString() : NO_VALUE);
-			vo.setDiffIncomeLastYear3Amt(entity.getDiffIncomeLastYear3Amt().toString());
-			vo.setDiffIncomeLastYear3Pnt(entity.getDiffIncomeLastYear3Pnt().toString());
+			vo.setDiffIncomeLastYear3Amt(entity.getDiffIncomeLastYear3Amt() != null ? entity.getDiffIncomeLastYear3Amt().toString() : NO_VALUE);
+			vo.setDiffIncomeLastYear3Pnt(entity.getDiffIncomeLastYear3Pnt() != null ? entity.getDiffIncomeLastYear3Pnt().toString() : NO_VALUE);
 			voList.add(vo);
 		}
 		return voList;
@@ -160,14 +160,14 @@ public class BasicAnalysisIncomeCompareLastYearService extends AbstractBasicAnal
 			entity.setTaxMonth(vo.getTaxMonth());
 			entity.setIncomeCurrentYearAmt(!NO_VALUE.equals(vo.getIncomeCurrentYearAmt()) ? new BigDecimal((vo.getIncomeCurrentYearAmt()).replaceAll(",", "")) : null);
 			entity.setIncomeLastYear1Amt(!NO_VALUE.equals(vo.getIncomeLastYear1Amt()) ? new BigDecimal((vo.getIncomeLastYear1Amt()).replaceAll(",", "")) : null);
-			entity.setDiffIncomeLastYear1Amt(new BigDecimal((vo.getDiffIncomeLastYear1Amt()).replaceAll(",", "")));
-			entity.setDiffIncomeLastYear1Pnt(new BigDecimal((vo.getDiffIncomeLastYear1Pnt()).replaceAll(",", "")));
+			entity.setDiffIncomeLastYear1Amt(!NO_VALUE.equals(vo.getDiffIncomeLastYear1Amt()) ? new BigDecimal((vo.getDiffIncomeLastYear1Amt()).replaceAll(",", "")) : null);
+			entity.setDiffIncomeLastYear1Pnt(!NO_VALUE.equals(vo.getDiffIncomeLastYear1Pnt()) ? new BigDecimal((vo.getDiffIncomeLastYear1Pnt()).replaceAll(",", "")) : null);
 			entity.setIncomeLastYear2Amt(!NO_VALUE.equals(vo.getIncomeLastYear2Amt()) && vo.getIncomeLastYear2Amt() != null ? new BigDecimal((vo.getIncomeLastYear2Amt()).replaceAll(",", "")) : null);
-			entity.setDiffIncomeLastYear2Amt(new BigDecimal((vo.getDiffIncomeLastYear2Amt()).replaceAll(",", "")));
-			entity.setDiffIncomeLastYear2Pnt(new BigDecimal((vo.getDiffIncomeLastYear2Pnt()).replaceAll(",", "")));
+			entity.setDiffIncomeLastYear2Amt(!NO_VALUE.equals(vo.getDiffIncomeLastYear2Amt()) && vo.getDiffIncomeLastYear2Amt() != null ? new BigDecimal((vo.getDiffIncomeLastYear2Amt()).replaceAll(",", "")) : null);
+			entity.setDiffIncomeLastYear2Pnt(!NO_VALUE.equals(vo.getDiffIncomeLastYear2Pnt()) && vo.getDiffIncomeLastYear2Pnt() != null ? new BigDecimal((vo.getDiffIncomeLastYear2Pnt()).replaceAll(",", "")) : null);
 			entity.setIncomeLastYear3Amt(!NO_VALUE.equals(vo.getIncomeLastYear3Amt()) && vo.getIncomeLastYear3Amt() != null ? new BigDecimal((vo.getIncomeLastYear3Amt()).replaceAll(",", "")) : null);
-			entity.setDiffIncomeLastYear3Amt(new BigDecimal((vo.getDiffIncomeLastYear3Amt()).replaceAll(",", "")));
-			entity.setDiffIncomeLastYear3Pnt(new BigDecimal((vo.getDiffIncomeLastYear3Pnt()).replaceAll(",", "")));
+			entity.setDiffIncomeLastYear3Amt(!NO_VALUE.equals(vo.getDiffIncomeLastYear3Amt()) && vo.getDiffIncomeLastYear3Amt() != null ? new BigDecimal((vo.getDiffIncomeLastYear3Amt()).replaceAll(",", "")) : null);
+			entity.setDiffIncomeLastYear3Pnt(!NO_VALUE.equals(vo.getDiffIncomeLastYear3Pnt()) && vo.getDiffIncomeLastYear3Pnt() != null ? new BigDecimal((vo.getDiffIncomeLastYear3Pnt()).replaceAll(",", "")) : null);
 			entityList.add(entity);
 			i++;
 		}
