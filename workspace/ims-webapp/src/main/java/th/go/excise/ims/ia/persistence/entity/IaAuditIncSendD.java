@@ -67,7 +67,9 @@ public class IaAuditIncSendD extends BaseEntity {
 	private BigDecimal incsendInc116010;
 	@Column(name = "INCSEND_NOTE")
 	private String incsendNote;
-
+	@Column(name = "INC_TRANSFER_115010_116010")
+	private String incTransfer115010_116010;
+	
 	public BigDecimal getAuditIncSendDSeq() {
 		return auditIncSendDSeq;
 	}
@@ -234,6 +236,14 @@ public class IaAuditIncSendD extends BaseEntity {
 
 	public void setIncsendNote(String incsendNote) {
 		this.incsendNote = incsendNote;
+	}
+
+	public String getIncTransfer115010_116010() {
+		return incTransfer115010_116010;
+	}
+
+	public void setIncTransfer115010_116010(String incTransfer115010_116010) {
+		this.incTransfer115010_116010 = incTransfer115010_116010;
 	}
 
 }

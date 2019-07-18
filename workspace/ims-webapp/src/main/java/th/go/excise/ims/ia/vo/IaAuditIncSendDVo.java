@@ -26,6 +26,7 @@ public class IaAuditIncSendDVo {
 	private BigDecimal incsendInc115010;
 	private BigDecimal incsendInc116010;
 	private String incsendNote;
+	private String incTransfer115010_116010;
 
 	/* custom */
 	private String incsendTrnDateStr;
@@ -213,6 +214,14 @@ public class IaAuditIncSendDVo {
 
 	public void setIncsendGfDateStr(String incsendGfDateStr) {
 		this.incsendGfDateStr = incsendGfDateStr;
+	}
+
+	public String getIncTransfer115010_116010() {
+		return incTransfer115010_116010;
+	}
+
+	public void setIncTransfer115010_116010(String incTransfer115010_116010) {
+		this.incTransfer115010_116010 = incTransfer115010_116010;
 	}
 
 }

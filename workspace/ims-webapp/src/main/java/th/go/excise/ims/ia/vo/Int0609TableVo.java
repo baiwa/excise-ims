@@ -28,6 +28,7 @@ public class Int0609TableVo {
 	private String incsendNote;
 	private String incsendAccCash;
 	private String incsendAccPayIn;
+	private String incTransfer115010_116010;
 
 	public String getOffname() {
 		return offname;
@@ -203,6 +204,14 @@ public class Int0609TableVo {
 
 	public void setIncsendAccPayIn(String incsendAccPayIn) {
 		this.incsendAccPayIn = incsendAccPayIn;
+	}
+
+	public String getIncTransfer115010_116010() {
+		return incTransfer115010_116010;
+	}
+
+	public void setIncTransfer115010_116010(String incTransfer115010_116010) {
+		this.incTransfer115010_116010 = incTransfer115010_116010;
 	}
 
 }
