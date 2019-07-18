@@ -24,7 +24,8 @@ public class WsIncr0003JdbcRepository {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 
-		sql.append(" SELECT TRN_DATE, SUM(SUM1 + SUM2) SUM1_2, SUM(SUM4 + SUM5) SUM4_5, SUM(SUM7) SUM7, SUM(SUM4) SUM4 ");
+		sql.append(" SELECT TRN_DATE, SUM(SUM1 + SUM2) SUM1_2, SUM(SUM4 + SUM5) SUM4_5, SUM(SUM7) SUM7, ");
+		sql.append(" SUM(SUM1 + SUM2 + SUM3 + SUM4 + SUM5 + SUM6 + SUM7) SUMALL ");
 		sql.append(" FROM WS_INCR0003 ");
 		sql.append(" WHERE 1 = 1 ");
 
@@ -54,7 +55,7 @@ public class WsIncr0003JdbcRepository {
 				vo.setSum1Sum2(rs.getBigDecimal("SUM1_2"));
 				vo.setSum4Sum5(rs.getBigDecimal("SUM4_5"));
 				vo.setSum7(rs.getBigDecimal("SUM7"));
-				vo.setSum4(rs.getBigDecimal("SUM4"));
+				vo.setSum4(rs.getBigDecimal("SUMALL"));
 				return vo;
 			}
 		});
@@ -64,10 +65,11 @@ public class WsIncr0003JdbcRepository {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<Object>();
 
-		sql.append(" SELECT SUM(SUM1_2) SUM1_2, SUM(SUM4_5) SUM4_5, SUM(SUM7) SUM7, SUM(SUM4) SUM4 ");
+		sql.append(" SELECT SUM(SUM1_2) SUM1_2, SUM(SUM4_5) SUM4_5, SUM(SUM7) SUM7, SUM(SUMALL) SUMALL ");
 		sql.append(" FROM ");
 		sql.append(" 	( ");
-		sql.append(" 	SELECT TRN_DATE, SUM(SUM1 + SUM2) SUM1_2, SUM(SUM4 + SUM5) SUM4_5, SUM(SUM7) SUM7, SUM(SUM4) SUM4 ");
+		sql.append(" 	SELECT TRN_DATE, SUM(SUM1 + SUM2) SUM1_2, SUM(SUM4 + SUM5) SUM4_5, SUM(SUM7) SUM7, ");
+		sql.append(" 		SUM(SUM1 + SUM2 + SUM3 + SUM4 + SUM5 + SUM6 + SUM7) SUMALL ");
 		sql.append(" 	FROM WS_INCR0003 ");
 		sql.append(" 	WHERE 1 = 1 ");
 
@@ -97,7 +99,7 @@ public class WsIncr0003JdbcRepository {
 				vo.setSum1Sum2(rs.getBigDecimal("SUM1_2"));
 				vo.setSum4Sum5(rs.getBigDecimal("SUM4_5"));
 				vo.setSum7(rs.getBigDecimal("SUM7"));
-				vo.setSum4(rs.getBigDecimal("SUM4"));
+				vo.setSum4(rs.getBigDecimal("SUMALL"));
 				return vo;
 			}
 		});
