@@ -66,7 +66,7 @@ public class IaGfmovementAccountRepositoryImpl implements IaGfmovementAccountRep
 				"                          -TO_DATE(?, 'YYYYMMDD'))" + 
 				"    ) H" + 
 				" LEFT JOIN IA_GFMOVEMENT_ACCOUNT G  " + 
-				"    ON TO_DATE(H.DATE_DEFAULT, 'YYYYMMDD') =  G.GF_DOC_DATE  " +
+				"    ON H.DATE_DEFAULT =  TO_CHAR(G.GF_DOC_DATE, 'YYYYMMDD') " +
 				"    AND G.IS_DELETED = 'N' " +
 				"	 AND G.ACC_NO = ? " +
 				" LEFT JOIN EXCISE_ORG_GFMIS O  " +
