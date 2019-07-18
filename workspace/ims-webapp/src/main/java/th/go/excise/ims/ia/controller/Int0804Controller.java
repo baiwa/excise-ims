@@ -30,6 +30,7 @@ public class Int0804Controller {
 	public ResponseData<List<ExciseDepaccMas>> getDepaccMasDropdown() {
 
 		ResponseData<List<ExciseDepaccMas>> response = new ResponseData<List<ExciseDepaccMas>>();
+		
 		try {
 			response.setData(int0804Service.getDepaccMasDropdown());
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
