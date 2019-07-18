@@ -70,6 +70,24 @@ public class Ed04Controller {
 		return response;
 	}
 	
+	@PostMapping("/edit")
+	@ResponseBody
+	public ResponseData<ExcisePersonInfoVo> edit(@RequestBody Ed04FormSave request) {
+		ResponseData<ExcisePersonInfoVo> response = new ResponseData<ExcisePersonInfoVo>();
+		try {
+			response.setData(ed04Service.editPerson(request));
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	
+	
 	@PostMapping("/data-head")
 	@ResponseBody
 	public ResponseData<ExcisePersonInfo> dataHead(@RequestBody Ed04FormHeadVo form) {
