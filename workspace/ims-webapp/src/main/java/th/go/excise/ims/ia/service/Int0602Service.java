@@ -19,9 +19,11 @@ import th.go.excise.ims.ia.persistence.repository.IaAuditLicD1Repository;
 import th.go.excise.ims.ia.persistence.repository.IaAuditLicD2Repository;
 import th.go.excise.ims.ia.persistence.repository.IaAuditLicHRepository;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int0602JdbcRepository;
+import th.go.excise.ims.ia.util.ExciseDepartmentUtil;
 import th.go.excise.ims.ia.vo.AuditLicD1Vo;
 import th.go.excise.ims.ia.vo.AuditLicD2Vo;
 import th.go.excise.ims.ia.vo.AuditLicHVo;
+import th.go.excise.ims.ia.vo.ExciseDepartmentVo;
 import th.go.excise.ims.ia.vo.Int0602FormVo;
 import th.go.excise.ims.ia.vo.Int0602ResultTab1Vo;
 import th.go.excise.ims.ia.vo.Int0602ResultTab2Vo;
@@ -43,7 +45,7 @@ public class Int0602Service {
 
 	@Autowired
 	private IaAuditLicD2Repository iaAuditLicD2Repository;
-	
+
 	@Autowired
 	private IaCommonService iaCommonService;
 
@@ -90,16 +92,19 @@ public class Int0602Service {
 				licH.setLicDateFrom(ConvertDateUtils.parseStringToDate(vo.getAuditLicH().getLicDateFromStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 				licH = iaAuditLicHRepository.save(licH);
 				vo.getAuditLicH().setAuditLicSeq(licH.getAuditLicSeq());
+				vo.getAuditLicH().setAuditLicNo(licH.getAuditLicNo());
 			} else {
 
 				licH = new IaAuditLicH();
 				BeanUtils.copyProperties(licH, vo.getAuditLicH());
-				
+
 				licH.setAuditLicNo(iaCommonService.autoGetRunAuditNoBySeqName("AL", vo.getAuditLicH().getOfficeCode(), "AUDIT_LIC_NO_SEQ", 8));
 				licH.setLicDateTo(ConvertDateUtils.parseStringToDate(vo.getAuditLicH().getLicDateToStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 				licH.setLicDateFrom(ConvertDateUtils.parseStringToDate(vo.getAuditLicH().getLicDateFromStr(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 				licH = iaAuditLicHRepository.save(licH);
 				vo.getAuditLicH().setAuditLicSeq(licH.getAuditLicSeq());
+				vo.getAuditLicH().setAuditLicNo(licH.getAuditLicNo());
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -210,6 +215,38 @@ public class Int0602Service {
 			auditLicD2VoList.add(auditLicD2Vo);
 		}
 		return auditLicD2VoList;
+	}
+
+	public AuditLicHVo findIaAuditLicHByAuditLicNo(String auditLicNo) {
+		logger.info("findIaAuditLicHByAuditLicNo auditLicNo={}", auditLicNo);
+
+		AuditLicHVo LicHVo = null;
+		IaAuditLicH data = null;
+		ExciseDepartmentVo excise = null;
+		data = iaAuditLicHRepository.findByAuditLicNo(auditLicNo);
+		try {
+			LicHVo = new AuditLicHVo();
+			LicHVo.setOfficeCode(data.getOfficeCode());
+			LicHVo.setLicDateFromStr(data.getLicDateFrom() != null ? ConvertDateUtils.formatDateToString(data.getLicDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH) : "");
+			LicHVo.setLicDateToStr(data.getLicDateTo() != null ? ConvertDateUtils.formatDateToString(data.getLicDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH) : "");
+			LicHVo.setAuditLicNo(data.getAuditLicNo());
+			LicHVo.setD1AuditFlag(data.getD1AuditFlag());
+			LicHVo.setD1ConditionText(data.getD1ConditionText());
+			LicHVo.setD1CriteriaText(data.getD1CriteriaText());
+			LicHVo.setD2AuditFlag(data.getD2AuditFlag());
+			LicHVo.setD2ConditionText(data.getD2ConditionText());
+			LicHVo.setD2CriteriaText(data.getD2CriteriaText());
+
+			excise = ExciseDepartmentUtil.getExciseDepartmentFull(data.getOfficeCode());
+			LicHVo.setArea(excise.getArea());
+			LicHVo.setSector(excise.getSector());
+			LicHVo.setBranch(excise.getBranch());
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+
+		return LicHVo;
 	}
 
 }

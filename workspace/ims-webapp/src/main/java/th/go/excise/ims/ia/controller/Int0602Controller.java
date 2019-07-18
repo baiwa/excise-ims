@@ -2,6 +2,8 @@ package th.go.excise.ims.ia.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,25 +27,12 @@ import th.go.excise.ims.ia.vo.Int0602SaveVo;
 @Controller
 @RequestMapping("/api/ia/int06/02")
 public class Int0602Controller {
+
+	private static final Logger logger = LoggerFactory.getLogger(Int0602Controller.class);
+
 	@Autowired
 	private Int0602Service int0602Service;
 
-	@PostMapping("/find-tab1")
-	@ResponseBody
-	public ResponseData<List<Int0602ResultTab1Vo>> findByCriteria(@RequestBody Int0602FormVo request) {
-		ResponseData<List<Int0602ResultTab1Vo>> response = new ResponseData<List<Int0602ResultTab1Vo>>();
-		try {
-			response.setData(int0602Service.findByCriteria(request));
-			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
-			response.setStatus(RESPONSE_STATUS.SUCCESS);
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.setMessage(RESPONSE_MESSAGE.ERROR500);
-			response.setStatus(RESPONSE_STATUS.FAILED);
-		}
-		return response;
-	}
-	
 	@PostMapping("/find-all-head")
 	@ResponseBody
 	public ResponseData<List<AuditLicHVo>> findAuditLicHVoAll(@RequestBody Int0602FormVo request) {
@@ -53,7 +42,7 @@ public class Int0602Controller {
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 			response.setMessage(RESPONSE_MESSAGE.ERROR500);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
@@ -69,14 +58,61 @@ public class Int0602Controller {
 			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.FAILED_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
 	}
-	
-	
+
+	@PostMapping("/find-tab1")
+	@ResponseBody
+	public ResponseData<List<Int0602ResultTab1Vo>> findByCriteria(@RequestBody Int0602FormVo request) {
+		ResponseData<List<Int0602ResultTab1Vo>> response = new ResponseData<List<Int0602ResultTab1Vo>>();
+		try {
+			response.setData(int0602Service.findByCriteria(request));
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+
+	@PostMapping("/find-tab2")
+	@ResponseBody
+	public ResponseData<List<Int0602ResultTab2Vo>> findTab2ByCriteria(@RequestBody Int0602FormVo request) {
+		ResponseData<List<Int0602ResultTab2Vo>> response = new ResponseData<List<Int0602ResultTab2Vo>>();
+		try {
+			response.setData(int0602Service.findTab2Criteria(request));
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+
+	@PostMapping("/find-header-by-audit-no")
+	@ResponseBody
+	public ResponseData<AuditLicHVo> findAuditHByAuditLicNo(@RequestBody String auditLicNo) {
+		ResponseData<AuditLicHVo> response = new ResponseData<AuditLicHVo>();
+		try {
+			response.setData(int0602Service.findIaAuditLicHByAuditLicNo(auditLicNo));
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			response.setMessage(e.getMessage());
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+
 	@PostMapping("/find-tab1-bylicno")
 	@ResponseBody
 	public ResponseData<List<AuditLicD1Vo>> findTab1ByauditLicNo(@RequestBody String auditLicNo) {
@@ -92,24 +128,7 @@ public class Int0602Controller {
 		}
 		return response;
 	}
-	
 
-	@PostMapping("/find-tab2")
-	@ResponseBody
-	public ResponseData<List<Int0602ResultTab2Vo>> findTab2ByCriteria(@RequestBody Int0602FormVo request) {
-		ResponseData<List<Int0602ResultTab2Vo>> response = new ResponseData<List<Int0602ResultTab2Vo>>();
-		try {
-			response.setData(int0602Service.findTab2Criteria(request));
-			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
-			response.setStatus(RESPONSE_STATUS.SUCCESS);
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.setMessage(RESPONSE_MESSAGE.ERROR500);
-			response.setStatus(RESPONSE_STATUS.FAILED);
-		}
-		return response;
-	} 
-	
 	@PostMapping("/find-tab2-bylicno")
 	@ResponseBody
 	public ResponseData<List<AuditLicD2Vo>> findTab2ByauditLicNo(@RequestBody String auditLicNo) {

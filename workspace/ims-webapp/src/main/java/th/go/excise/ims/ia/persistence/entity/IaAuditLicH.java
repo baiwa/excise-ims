@@ -3,6 +3,7 @@ package th.go.excise.ims.ia.persistence.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
@@ -19,7 +19,7 @@ import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 public class IaAuditLicH extends BaseEntity {
 
 	private static final long serialVersionUID = 4218105301058730469L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_AUDIT_LIC_H_GEN")
 	@SequenceGenerator(name = "IA_AUDIT_LIC_H_GEN", sequenceName = "IA_AUDIT_LIC_H_SEQ", allocationSize = 1)
@@ -39,6 +39,8 @@ public class IaAuditLicH extends BaseEntity {
 	private String d1ConditionText;
 	@Column(name = "D1_CRITERIA_TEXT")
 	private String d1CriteriaText;
+	@Column(name = "D2_AUDIT_FLAG")
+	private String d2AuditFlag;
 	@Column(name = "D2_CONDITION_TEXT")
 	private String d2ConditionText;
 	@Column(name = "D2_CRITERIA_TEXT")
@@ -116,6 +118,14 @@ public class IaAuditLicH extends BaseEntity {
 		this.d1CriteriaText = d1CriteriaText;
 	}
 
+	public String getD2AuditFlag() {
+		return d2AuditFlag;
+	}
+
+	public void setD2AuditFlag(String d2AuditFlag) {
+		this.d2AuditFlag = d2AuditFlag;
+	}
+
 	public String getD2ConditionText() {
 		return d2ConditionText;
 	}
@@ -162,10 +172,6 @@ public class IaAuditLicH extends BaseEntity {
 
 	public void setD4CriteriaText(String d4CriteriaText) {
 		this.d4CriteriaText = d4CriteriaText;
-	}
-
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
 }

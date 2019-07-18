@@ -3,6 +3,7 @@ package th.go.excise.ims.ia.persistence.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
@@ -22,7 +25,7 @@ public class IaAuditLicD1 extends BaseEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = -4955096941724105831L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_AUDIT_LIC_D1_GEN")
 	@SequenceGenerator(name = "IA_AUDIT_LIC_D1_GEN", sequenceName = "IA_AUDIT_LIC_D1_SEQ", allocationSize = 1)
@@ -52,6 +55,12 @@ public class IaAuditLicD1 extends BaseEntity {
 	private BigDecimal licInterior;
 	@Column(name = "LIC_REMARK")
 	private String licRemark;
+
+	@Column(name = "SEQ_NO")
+	private Integer seqNo;
+
+	@Column(name = "ACTION_FLAG")
+	private String actionFlag;
 
 	public Long getAuditLicD1Seq() {
 		return auditLicD1Seq;
@@ -84,8 +93,6 @@ public class IaAuditLicD1 extends BaseEntity {
 	public void setLicNo(String licNo) {
 		this.licNo = licNo;
 	}
-
-	
 
 	public Date getLicDate() {
 		return licDate;
@@ -163,6 +170,20 @@ public class IaAuditLicD1 extends BaseEntity {
 		this.runCheck = runCheck;
 	}
 
-	
+	public Integer getSeqNo() {
+		return seqNo;
+	}
+
+	public void setSeqNo(Integer seqNo) {
+		this.seqNo = seqNo;
+	}
+
+	public String getActionFlag() {
+		return actionFlag;
+	}
+
+	public void setActionFlag(String actionFlag) {
+		this.actionFlag = actionFlag;
+	}
 
 }
