@@ -155,7 +155,7 @@ public class IaGfmovementAccountService {
 				iaGfmovementAccount.setAccTypeName(vo.getAccTypeName());
 				iaGfmovementAccount.setAccNo(vo.getAccNo());
 				iaGfmovementAccount.setGfAccNo(vo.getGfAccNo());
-				iaGfmovementAccount.setGfDocDate(ConvertDateUtils.parseStringToDate(vo.getGfDocDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+				iaGfmovementAccount.setGfDocDate(ConvertDateUtils.parseStringToDate(vo.getGfDocDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 				iaGfmovementAccount.setGfDocNo(vo.getGfDocNo());
 				iaGfmovementAccount.setGfDocTyep(vo.getGfDocTyep());
 				iaGfmovementAccount.setGfRefDoc(vo.getGfRefDoc());
