@@ -148,7 +148,7 @@ public class Int0609Service {
 		return response;
 	}
 
-	public void save(Int0609SaveVo request) throws Exception {
+	public String save(Int0609SaveVo request) throws Exception {
 		String incsendNo = iaCommonService.autoGetRunAuditNoBySeqName("AIS", request.getHeader().getIncsendOfficeCode(), "INCSEND_NO_SEQ", 8);
 
 		/* __________ header __________ */
@@ -167,6 +167,7 @@ public class Int0609Service {
 			detail.setIncsendGfDate(ConvertDateUtils.parseStringToDate(d.getIncsendGfDateStr(), ConvertDateUtils.DD_MM_YY));
 			iaAuditIncSendDRepository.save(detail);
 		}
+		return incsendNo;
 	}
 
 	public List<IaAuditIncSendH> getIncSendNoDropdown() {
@@ -204,6 +205,7 @@ public class Int0609Service {
 			table.setIncsendAccPayIn(d.getIncsendAccPayIn());
 			table.setIncsendAccCash(d.getIncsendAccCash());
 			table.setIncsendNote(d.getIncsendNote());
+			table.setIncTransfer115010_116010(d.getIncTransfer115010_116010());
 			tableList.add(table);
 		}
 

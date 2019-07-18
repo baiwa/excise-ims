@@ -2,7 +2,6 @@ package th.go.excise.ims.ia.controller;
 
 import java.util.List;
 
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,10 +45,10 @@ public class Int0609Controller {
 
 	@PostMapping("/save")
 	@ResponseBody
-	public ResponseData<T> save(@RequestBody Int0609SaveVo request) {
-		ResponseData<T> response = new ResponseData<T>();
+	public ResponseData<String> save(@RequestBody Int0609SaveVo request) {
+		ResponseData<String> response = new ResponseData<String>();
 		try {
-			int0609Service.save(request);
+			response.setData(int0609Service.save(request));
 			response.setMessage(ApplicationCache.getMessage(RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
