@@ -3,7 +3,6 @@ package th.go.excise.ims.ia.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,30 +49,29 @@ public class Int0602Service {
 
 	public List<Int0602ResultTab1Vo> findByCriteria(Int0602FormVo int0602FormVo) {
 		logger.info("findByCriterai");
+
 		List<WsLicfri6010> wsLicfri6010List = int0602JdbcRepository.findByCriteria(int0602FormVo, "LIC_NO");
+
 		List<Int0602ResultTab1Vo> int0602ResultTab1Vo = new ArrayList<>();
 		Int0602ResultTab1Vo intiData = null;
 		if (wsLicfri6010List != null && wsLicfri6010List.size() > 0) {
 			for (WsLicfri6010 wsLicfri6010 : wsLicfri6010List) {
 				intiData = new Int0602ResultTab1Vo();
-				try {
-					BeanUtils.copyProperties(intiData, wsLicfri6010);
-					if (wsLicfri6010.getSendDate() != null) {
-						intiData.setSendDate(ConvertDateUtils.formatLocalDateToString(wsLicfri6010.getSendDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-					}
-					if (wsLicfri6010.getExpDate() != null) {
-						intiData.setExpDate(ConvertDateUtils.formatLocalDateToString(wsLicfri6010.getExpDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-					}
-					if (wsLicfri6010.getStartDate() != null) {
-						intiData.setStartDate(ConvertDateUtils.formatLocalDateToString(wsLicfri6010.getStartDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-					}
-					if (wsLicfri6010.getLicDate() != null) {
-						intiData.setLicDate(ConvertDateUtils.formatLocalDateToString(wsLicfri6010.getLicDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-					}
-					int0602ResultTab1Vo.add(intiData);
-				} catch (Exception e) {
-					logger.error(e.getMessage());
+				intiData.setLicType(wsLicfri6010.getLicType());
+				intiData.setLicNo(wsLicfri6010.getLicNo());
+				intiData.setLicName(wsLicfri6010.getLicName());
+				intiData.setIncCode(wsLicfri6010.getIncCode());
+				intiData.setLicPrice(wsLicfri6010.getLicPrice());
+				intiData.setLicFee(wsLicfri6010.getLicFee());
+				intiData.setLicInterior(wsLicfri6010.getLicInterior());
+
+				if (wsLicfri6010.getLicDate() != null) {
+					intiData.setLicDate(ConvertDateUtils.formatLocalDateToString(wsLicfri6010.getLicDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 				}
+				if (wsLicfri6010.getSendDate() != null) {
+					intiData.setSendDate(ConvertDateUtils.formatLocalDateToString(wsLicfri6010.getSendDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+				}
+				int0602ResultTab1Vo.add(intiData);
 			}
 		}
 		return int0602ResultTab1Vo;
