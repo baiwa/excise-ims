@@ -17,7 +17,11 @@ public class IaRentHouse
     extends BaseEntity
 {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4251996054248048452L;
+	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_RENT_HOUSE_GEN")
     @SequenceGenerator(name = "IA_RENT_HOUSE_GEN", sequenceName = "IA_RENT_HOUSE_SEQ", allocationSize = 1)
     @Column(name = "RENT_HOUSE_ID")
@@ -58,7 +62,9 @@ public class IaRentHouse
     private String periodWithdrawTo;
     @Column(name = "IA_DIS_REQ_ID")
     private Long iaDisReqId;
-
+    @Column(name ="FORM_6005_NO")
+    private String form6005No;
+    
     public Long getRentHouseId() {
         return rentHouseId;
     }
@@ -210,5 +216,13 @@ public class IaRentHouse
     public void setIaDisReqId(Long iaDisReqId) {
         this.iaDisReqId = iaDisReqId;
     }
+
+	public String getForm6005No() {
+		return form6005No;
+	}
+
+	public void setForm6005No(String form6005No) {
+		this.form6005No = form6005No;
+	}
 
 }

@@ -46,6 +46,7 @@ public class Int12070101Service {
 		data.setTotalWithdraw(en.getTotalWithdraw());
 		data.setStatus(IaConstants.STATUS.PROCESS);
 		data.setPeriodWithdrawTo(en.getPeriodWithdrawTo());
+		data.setForm6005No(en.getForm6005No());
 		IaRentHouse dataSave = iaRentHouseRepository.save(data);
 
 		IaRentHouse1 detialSave = null;
@@ -87,7 +88,7 @@ public class Int12070101Service {
 		dataRes.setTotalWithdraw(headerData.getTotalWithdraw());
 		dataRes.setStatus(headerData.getStatus());
 		dataRes.setPeriodWithdrawTo(headerData.getPeriodWithdrawTo());
-		
+		dataRes.setForm6005No(headerData.getForm6005No());
 		List<Int12070101D1Vo> detailsSet = new ArrayList<Int12070101D1Vo>();
 		Int12070101D1Vo detailSet = null;
 		for (IaRentHouse1 detail : detailData) {

@@ -23,6 +23,7 @@ public class Int12070101SaveFormVo {
 	private String status;
 	private String periodWithdrawTo;
 	private Long iaDisReqId;
+	private String form6005No;
 	private List<Int12070101D1Vo> receiptsRH;
 	
 	public Long getRentHouseId() {
@@ -183,6 +184,14 @@ public class Int12070101SaveFormVo {
 
 	public void setReceiptsRH(List<Int12070101D1Vo> receiptsRH) {
 		this.receiptsRH = receiptsRH;
+	}
+
+	public String getForm6005No() {
+		return form6005No;
+	}
+
+	public void setForm6005No(String form6005No) {
+		this.form6005No = form6005No;
 	}
 
 }
