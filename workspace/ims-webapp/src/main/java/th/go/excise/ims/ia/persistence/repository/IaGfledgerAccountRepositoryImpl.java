@@ -22,7 +22,8 @@ public class IaGfledgerAccountRepositoryImpl implements IaGfledgerAccountReposit
 	@Override
 	public void insertBatch(List<IaGfledgerAccount> iaGfledgerAccountList) {
 
-		String sql = SqlGeneratorUtils.genSqlInsert("IA_GFLEDGER_ACCOUNT", Arrays.asList("IA_GFLEDGER_ACCOUNT_SEQ"
+		String sql = SqlGeneratorUtils.genSqlInsert("IA_GFLEDGER_ACCOUNT", Arrays.asList("IA_GFLEDGER_ACCOUNT_ID"
+				,"GFUPLOAD_H_ID"
 				,"GL_ACC_NO"
 				,"DEP_CODE"
 				,"TYPE"
@@ -45,6 +46,7 @@ public class IaGfledgerAccountRepositoryImpl implements IaGfledgerAccountReposit
 				,"COST_CENTER"
 				,"DEPT_DISB"
 				,"CLRNG_DOC"
+				,"PERIOD_YEAR"
 				,"CREATED_BY"), "IA_GFLEDGER_ACCOUNT_SEQ");
 
 		String username = UserLoginUtils.getCurrentUsername();
@@ -52,6 +54,7 @@ public class IaGfledgerAccountRepositoryImpl implements IaGfledgerAccountReposit
 		commonJdbcTemplate.batchUpdate(sql, iaGfledgerAccountList, 1000, new ParameterizedPreparedStatementSetter<IaGfledgerAccount>() {
 			public void setValues(PreparedStatement ps, IaGfledgerAccount entity) throws SQLException {
 				List<Object> paramList = new ArrayList<Object>();
+				paramList.add(entity.getGfuploadHId());
 				paramList.add(entity.getGlAccNo());
 				paramList.add(entity.getDepCode());
 				paramList.add(entity.getType());
@@ -74,6 +77,7 @@ public class IaGfledgerAccountRepositoryImpl implements IaGfledgerAccountReposit
 				paramList.add(entity.getCostCenter());
 				paramList.add(entity.getDeptDisb());
 				paramList.add(entity.getClrngDoc());
+				paramList.add(entity.getPeriodYear());
 				paramList.add(username);
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
 			}

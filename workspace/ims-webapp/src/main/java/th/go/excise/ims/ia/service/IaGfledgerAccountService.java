@@ -210,7 +210,8 @@ public class IaGfledgerAccountService {
 				iaGfledgerAccount.setPeriodYear(form.getYear());
 				iaGfledgerAccountList.add(iaGfledgerAccount);
 			}
-			iaGfledgerAccountRepository.saveAll(iaGfledgerAccountList);
+			iaGfledgerAccountRepository.insertBatch(iaGfledgerAccountList);
+//			iaGfledgerAccountRepository.saveAll(iaGfledgerAccountList);
 		}
 	}
 }
