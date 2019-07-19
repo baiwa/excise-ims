@@ -646,6 +646,21 @@ public class TaxOperatorController {
 		// }
 		return planWorksheetService.planDtlDatatable(formVo);
 	}
+	
+	@PostMapping("/search-plan-selected-by-offcode-assign")
+	@ResponseBody
+	public DataTableAjax<PlanWorksheetDatatableVo> searchPlanDtlByOffCodeAssign(@RequestBody PlanWorksheetVo formVo) {
+		if (!StringUtils.isNotBlank(formVo.getOfficeCode())) {
+			formVo.setOfficeCode(null);
+		} else {
+			if (ProjectConstants.EXCISE_OFFICE_CODE.TA_CENTRAL.equals(formVo.getOfficeCode())) {
+				formVo.setOfficeCode("0014__");
+			} else if (ExciseUtils.isSector(formVo.getOfficeCode())) {
+				formVo.setOfficeCode(formVo.getOfficeCode());
+			}
+		}
+		return planWorksheetService.planDtlDatatable(formVo);
+	}
 
 	@PostMapping("/get-plan-status")
 	@ResponseBody
