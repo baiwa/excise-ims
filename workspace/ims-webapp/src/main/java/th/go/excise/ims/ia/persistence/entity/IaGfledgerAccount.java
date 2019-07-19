@@ -66,7 +66,7 @@ public class IaGfledgerAccount extends BaseEntity {
 	@Column(name = "DEPOSIT_ACC")
 	private String depositAcc;
 	@Column(name = "ACC_TYPE")
-	private BigDecimal accType;
+	private String accType;
 	@Column(name = "COST_CENTER")
 	private String costCenter;
 	@Column(name = "DEPT_DISB")
@@ -82,6 +82,14 @@ public class IaGfledgerAccount extends BaseEntity {
 
 	public void setIaGfledgerAccountId(Long iaGfledgerAccountId) {
 		this.iaGfledgerAccountId = iaGfledgerAccountId;
+	}
+
+	public Long getGfuploadHId() {
+		return gfuploadHId;
+	}
+
+	public void setGfuploadHId(Long gfuploadHId) {
+		this.gfuploadHId = gfuploadHId;
 	}
 
 	public String getGlAccNo() {
@@ -228,11 +236,11 @@ public class IaGfledgerAccount extends BaseEntity {
 		this.depositAcc = depositAcc;
 	}
 
-	public BigDecimal getAccType() {
+	public String getAccType() {
 		return accType;
 	}
 
-	public void setAccType(BigDecimal accType) {
+	public void setAccType(String accType) {
 		this.accType = accType;
 	}
 
@@ -258,18 +266,6 @@ public class IaGfledgerAccount extends BaseEntity {
 
 	public void setClrngDoc(String clrngDoc) {
 		this.clrngDoc = clrngDoc;
-	}
-
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-	}
-
-	public Long getGfuploadHId() {
-		return gfuploadHId;
-	}
-
-	public void setGfuploadHId(Long gfuploadHId) {
-		this.gfuploadHId = gfuploadHId;
 	}
 
 	public String getPeriodYear() {

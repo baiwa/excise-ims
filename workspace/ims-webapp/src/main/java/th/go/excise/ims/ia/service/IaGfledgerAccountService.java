@@ -119,7 +119,7 @@ public class IaGfledgerAccountService {
 								iaGfledgerAccount.setDepositAcc(val);
 								break;
 							case 20:
-								iaGfledgerAccount.setAccType(NumberUtils.toBigDecimal(val));
+								iaGfledgerAccount.setAccType(val);
 								break;
 							case 21:
 								iaGfledgerAccount.setCostCenter(val);
