@@ -34,20 +34,19 @@ import th.go.excise.ims.ta.service.TaxAuditService;
 
 @Service
 public class IaGfledgerAccountService {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(TaxAuditService.class);
-	
+
 	@Autowired
 	private IaGfuploadHRepository iaGfuploadHRepository;
 	@Autowired
 	private IaGfledgerAccountRepository iaGfledgerAccountRepository;
 
-
 	private final String KEY_FILTER[] = { "เลขที่บัญชี G/L", "รหัสหน่วยงาน", "ประเภท", "*" };
 
 	public ResponseData<Int15ResponseUploadVo> addDataByExcel(MultipartFile file) throws Exception {
 		logger.info("addDataByExcel filename={}", file.getOriginalFilename());
-		
+
 		ResponseData<Int15ResponseUploadVo> responseData = new ResponseData<Int15ResponseUploadVo>();
 		List<IaGfledgerAccountVo> iaGfledgerAccountList = new ArrayList<>();
 		IaGfledgerAccountVo iaGfledgerAccount = new IaGfledgerAccountVo();
@@ -56,95 +55,91 @@ public class IaGfledgerAccountService {
 		String glAccNo = "";
 		String depCode = "";
 		for (Row r : sheet) {
-			
-			try {
+			String val;
+			for (Cell c : r) {
+				val = ExcelUtils.getCellValueAsString(c);
+				if (StringUtils.isNoneBlank(val)) {
+					if (StringUtils.trim(val).equals(KEY_FILTER[0]) && c.getColumnIndex() == 0) {
+						glAccNo = ExcelUtils.getCellValueAsString(r.getCell(5));
+					} else if (StringUtils.trim(val).equals(KEY_FILTER[1]) && c.getColumnIndex() == 0) {
+						depCode = ExcelUtils.getCellValueAsString(r.getCell(5));
+					} else if (ExcelUtils.getCellValueAsString(r.getCell(1)) == null && ExcelUtils.getCellValueAsString(r.getCell(2)) != null
+							&& !StringUtils.trim(ExcelUtils.getCellValueAsString(r.getCell(2))).equals(KEY_FILTER[2])) {
+						switch (c.getColumnIndex()) {
+						case 2:
+							iaGfledgerAccount.setType(val);
+							break;
+						case 3:
+							iaGfledgerAccount.setPeriod(NumberUtils.toBigDecimal(val));
+							break;
+						case 4:
+							iaGfledgerAccount.setDocDate(
+									ConvertDateUtils.changPaettleStringDate(val, ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN, ConvertDateUtils.LOCAL_TH));
+							break;
+						case 6:
+							iaGfledgerAccount.setPostingDate(
+									ConvertDateUtils.changPaettleStringDate(val, ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN, ConvertDateUtils.LOCAL_TH));
+							break;
+						case 8:
+							iaGfledgerAccount.setDocNo(val);
+							break;
+						case 9:
+							iaGfledgerAccount.setRefCode(val);
+							break;
+						case 10:
+							iaGfledgerAccount.setCurrAmt(NumberUtils.toBigDecimal(val));
+							break;
+						case 11:
+							iaGfledgerAccount.setPkCode(val);
+							break;
+						case 12:
+							iaGfledgerAccount.setRorKor(val);
+							break;
+						case 13:
+							iaGfledgerAccount.setDeterminaton(val);
+							break;
+						case 14:
+							iaGfledgerAccount.setMsg(val);
+							break;
+						case 15:
+							iaGfledgerAccount.setKeyRef3(val);
+							break;
+						case 16:
+							iaGfledgerAccount.setKeyRef1(val);
+							break;
+						case 17:
+							iaGfledgerAccount.setKeyRef2(val);
+							break;
+						case 18:
+							iaGfledgerAccount.setHlodingTaxes(NumberUtils.toBigDecimal(val));
+							break;
+						case 19:
+							iaGfledgerAccount.setDepositAcc(val);
+							break;
+						case 20:
+							iaGfledgerAccount.setAccType(val);
+							break;
+						case 21:
+							iaGfledgerAccount.setCostCenter(val);
+							break;
+						case 22:
+							iaGfledgerAccount.setDeptDisb(val);
+							break;
+						case 23:
+							iaGfledgerAccount.setClrngDoc(val);
+							break;
 
-				String val;
-				for (Cell c : r) {
-					val = ExcelUtils.getCellValueAsString(c);
-					if (StringUtils.isNoneBlank(val)) {
-						if (StringUtils.trim(val).equals(KEY_FILTER[0]) && c.getColumnIndex() == 0) {
-							glAccNo = ExcelUtils.getCellValueAsString(r.getCell(5));
-						} else if (StringUtils.trim(val).equals(KEY_FILTER[1]) && c.getColumnIndex() == 0) {
-							depCode = ExcelUtils.getCellValueAsString(r.getCell(5));
-						} else if (ExcelUtils.getCellValueAsString(r.getCell(1)) == null && ExcelUtils.getCellValueAsString(r.getCell(2)) != null
-								&& !StringUtils.trim(ExcelUtils.getCellValueAsString(r.getCell(2))).equals(KEY_FILTER[2])) {
-							switch (c.getColumnIndex()) {
-							case 2:
-								iaGfledgerAccount.setType(val);
-								break;
-							case 3:
-								iaGfledgerAccount.setPeriod(NumberUtils.toBigDecimal(val));
-								break;
-							case 4:
-								iaGfledgerAccount.setDocDate(ConvertDateUtils.changPaettleStringDate(val, ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN, ConvertDateUtils.LOCAL_TH));
-								break;
-							case 6:
-								iaGfledgerAccount.setPostingDate(ConvertDateUtils.changPaettleStringDate(val, ConvertDateUtils.DD_MM_YYYY_DOT, ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN, ConvertDateUtils.LOCAL_TH));
-								break;
-							case 8:
-								iaGfledgerAccount.setDocNo(val);
-								break;
-							case 9:
-								iaGfledgerAccount.setRefCode(val);
-								break;
-							case 10:
-								iaGfledgerAccount.setCurrAmt(NumberUtils.toBigDecimal(val));
-								break;
-							case 11:
-								iaGfledgerAccount.setPkCode(val);
-								break;
-							case 12:
-								iaGfledgerAccount.setRorKor(val);
-								break;
-							case 13:
-								iaGfledgerAccount.setDeterminaton(val);
-								break;
-							case 14:
-								iaGfledgerAccount.setMsg(val);
-								break;
-							case 15:
-								iaGfledgerAccount.setKeyRef3(val);
-								break;
-							case 16:
-								iaGfledgerAccount.setKeyRef1(val);
-								break;
-							case 17:
-								iaGfledgerAccount.setKeyRef2(val);
-								break;
-							case 18:
-								iaGfledgerAccount.setHlodingTaxes(NumberUtils.toBigDecimal(val));
-								break;
-							case 19:
-								iaGfledgerAccount.setDepositAcc(val);
-								break;
-							case 20:
-								iaGfledgerAccount.setAccType(val);
-								break;
-							case 21:
-								iaGfledgerAccount.setCostCenter(val);
-								break;
-							case 22:
-								iaGfledgerAccount.setDeptDisb(val);
-								break;
-							case 23:
-								iaGfledgerAccount.setClrngDoc(val);
-								break;
-
-							default:
-								break;
-							}
+						default:
+							break;
 						}
 					}
 				}
-				if (StringUtils.isNoneBlank(iaGfledgerAccount.getDocNo())) {
-					iaGfledgerAccount.setGlAccNo(glAccNo);
-					iaGfledgerAccount.setDepCode(depCode);
-					iaGfledgerAccountList.add(iaGfledgerAccount);
-					iaGfledgerAccount = new IaGfledgerAccountVo();
-				}
-			} catch (Exception e) {
-				logger.error(e.getMessage(), e);
+			}
+			if (StringUtils.isNoneBlank(iaGfledgerAccount.getDocNo())) {
+				iaGfledgerAccount.setGlAccNo(glAccNo);
+				iaGfledgerAccount.setDepCode(depCode);
+				iaGfledgerAccountList.add(iaGfledgerAccount);
+				iaGfledgerAccount = new IaGfledgerAccountVo();
 			}
 		}
 
@@ -164,9 +159,8 @@ public class IaGfledgerAccountService {
 	}
 
 	public void saveData(Int15SaveVo form) {
-		if(StringUtils.isNotBlank(form.getYear())) {
-			form.setYear(ConvertDateUtils.changPaettleStringDate("01/01/" + form.getYear(), ConvertDateUtils.DD_MM_YYYY,
-					ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_TH, ConvertDateUtils.LOCAL_EN));
+		if (StringUtils.isNotBlank(form.getYear())) {
+			form.setYear(ConvertDateUtils.changPaettleStringDate("01/01/" + form.getYear(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.YYYY, ConvertDateUtils.LOCAL_TH, ConvertDateUtils.LOCAL_EN));
 		}
 		List<IaGfledgerAccount> iaGfledgerAccountList = new ArrayList<>();
 		IaGfuploadH ia = new IaGfuploadH();
@@ -179,7 +173,7 @@ public class IaGfledgerAccountService {
 		ia.setFileName(form.getFileName());
 		iaGfuploadHRepository.save(ia);
 		if (form.getFormData3() != null && form.getFormData3().size() > 0) {
-			
+
 			IaGfledgerAccount iaGfledgerAccount = new IaGfledgerAccount();
 			for (IaGfledgerAccountVo vo : form.getFormData3()) {
 				iaGfledgerAccount = new IaGfledgerAccount();
@@ -211,7 +205,7 @@ public class IaGfledgerAccountService {
 				iaGfledgerAccountList.add(iaGfledgerAccount);
 			}
 			iaGfledgerAccountRepository.insertBatch(iaGfledgerAccountList);
-//			iaGfledgerAccountRepository.saveAll(iaGfledgerAccountList);
+			// iaGfledgerAccountRepository.saveAll(iaGfledgerAccountList);
 		}
 	}
 }
