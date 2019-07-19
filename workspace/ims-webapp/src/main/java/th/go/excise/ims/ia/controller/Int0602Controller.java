@@ -1,11 +1,17 @@
 package th.go.excise.ims.ia.controller;
 
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -143,5 +149,20 @@ public class Int0602Controller {
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
+	}
+
+	@GetMapping("/export/{auditIncNo}")
+	public void export(@PathVariable("auditIncNo") String auditIncNo, HttpServletResponse response) throws Exception {
+		String fileName = URLEncoder.encode("ตรวจสอบการใช้ใบอนุญาต ", "UTF-8");
+		String replaceString = auditIncNo.replace('_', '/');
+
+		// write it as an excel attachment
+		byte[] outByteStream = int0602Service.export(replaceString);
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+		OutputStream outStream = response.getOutputStream();
+		outStream.write(outByteStream);
+		outStream.flush();
+		outStream.close();
 	}
 }

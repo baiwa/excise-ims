@@ -22,6 +22,11 @@ public class AuditLicHVo {
 	private String area;
 	private String branch;
 
+	// For Export
+	private String titleName;
+	private String officeName;
+	private String receiptDateRangeText;
+
 	public Long getAuditLicSeq() {
 		return auditLicSeq;
 	}
@@ -164,6 +169,30 @@ public class AuditLicHVo {
 
 	public void setBranch(String branch) {
 		this.branch = branch;
+	}
+
+	public String getTitleName() {
+		return titleName;
+	}
+
+	public void setTitleName(String titleName) {
+		this.titleName = titleName;
+	}
+
+	public String getOfficeName() {
+		return officeName;
+	}
+
+	public void setOfficeName(String officeName) {
+		this.officeName = officeName;
+	}
+
+	public String getReceiptDateRangeText() {
+		return receiptDateRangeText;
+	}
+
+	public void setReceiptDateRangeText(String receiptDateRangeText) {
+		this.receiptDateRangeText = receiptDateRangeText;
 	}
 
 }

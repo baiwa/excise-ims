@@ -1,15 +1,30 @@
 package th.go.excise.ims.ia.service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ia.persistence.entity.IaAuditLicD1;
 import th.go.excise.ims.ia.persistence.entity.IaAuditLicD2;
 import th.go.excise.ims.ia.persistence.entity.IaAuditLicH;
@@ -272,6 +287,473 @@ public class Int0602Service {
 		}
 
 		return LicHVo;
+	}
+
+	public byte[] export(String auditLicNo) throws Exception {
+		logger.info("export auditIncNo={}", auditLicNo);
+
+		AuditLicHVo auditLicHVo = findIaAuditLicHByAuditLicNo(auditLicNo);
+		auditLicHVo.setTitleName("ตรวจสอบการใช้ใบอนุญาต");
+		auditLicHVo.setOfficeName("สำนักงาน " + ApplicationCache.getExciseDepartment(auditLicHVo.getOfficeCode()).getDeptName());
+		auditLicHVo.setReceiptDateRangeText("ช่วงในเวลา " + auditLicHVo.getLicDateFrom() + " - " + auditLicHVo.getLicDateTo());
+
+		// Create SpreadSheet
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		WorkbookCellStyle workbookCellStyle = new WorkbookCellStyle(workbook);
+
+		// Sheet 1
+		generateSheetD1(auditLicNo, auditLicHVo, workbook, workbookCellStyle);
+
+		// Sheet 2
+		generateSheetD2(auditLicNo, auditLicHVo, workbook, workbookCellStyle);
+
+		// set output
+		byte[] content = null;
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			workbook.write(outputStream);
+			content = outputStream.toByteArray();
+		} catch (IOException e) {
+			throw e;
+		}
+
+		return content;
+	}
+
+	private class WorkbookCellStyle {
+
+		private CellStyle cellTitle;
+		private CellStyle thStyle;
+		private CellStyle cellCenter;
+		private CellStyle cellLeft;
+		private CellStyle cellRight;
+		private CellStyle wrapText;
+		private CellStyle cellLeftBold;
+
+		public WorkbookCellStyle(Workbook workbook) {
+			// Font
+			Font headerFont = workbook.createFont();
+			headerFont.setFontHeightInPoints((short) 14);
+			headerFont.setFontName(ExcelUtils.FONT_NAME.TH_SARABUN_PSK);
+			headerFont.setBold(true);
+
+			Font detailFont = workbook.createFont();
+			detailFont.setFontHeightInPoints((short) 14);
+			detailFont.setFontName(ExcelUtils.FONT_NAME.TH_SARABUN_PSK);
+
+			// Cell Style
+			cellTitle = (XSSFCellStyle) workbook.createCellStyle();
+			cellTitle.setAlignment(HorizontalAlignment.CENTER);
+			cellTitle.setFont(headerFont);
+
+			this.thStyle = ExcelUtils.createThCellStyle((XSSFWorkbook) workbook);
+			this.thStyle.setFont(headerFont);
+			this.cellCenter = ExcelUtils.createCenterCellStyle(workbook);
+			this.cellCenter.setFont(detailFont);
+			this.cellLeft = ExcelUtils.createLeftCellStyle(workbook);
+			this.cellLeft.setFont(detailFont);
+			this.cellRight = ExcelUtils.createRightCellStyle(workbook);
+			this.cellRight.setFont(detailFont);
+			this.wrapText = ExcelUtils.createWrapTextStyle((XSSFWorkbook) workbook);
+			this.wrapText.setFont(detailFont);
+			this.cellLeftBold = workbook.createCellStyle();
+			this.cellLeftBold.setAlignment(HorizontalAlignment.LEFT);
+			this.cellLeftBold.setFont(headerFont);
+		}
+
+		public CellStyle getCellTitle() {
+			return cellTitle;
+		}
+
+		public CellStyle getThStyle() {
+			return thStyle;
+		}
+
+		public CellStyle getCellCenter() {
+			return cellCenter;
+		}
+
+		public CellStyle getCellLeft() {
+			return cellLeft;
+		}
+
+		public CellStyle getCellRight() {
+			return cellRight;
+		}
+
+		public CellStyle getWrapText() {
+			return wrapText;
+		}
+
+		public CellStyle getCellLeftBold() {
+			return cellLeftBold;
+		}
+
+	}
+
+	private void generateSheetD1(String auditLicNo, AuditLicHVo auditLicHVo, Workbook workbook, WorkbookCellStyle workbookCellStyle) throws Exception {
+		List<AuditLicD1Vo> dataList = findAuditLicD1ByAuditLicNo(auditLicNo);
+		DecimalFormat decimalFormatTwoDigits = new DecimalFormat("#,##0.00");
+
+		// Prepare Data for Export
+		Sheet sheet = workbook.createSheet("ตรวจสอบการใช้ใบอนุญาต");
+		Row row = null;
+		Cell cell = null;
+		int rowNum = 0;
+		int cellNum = 0;
+
+		// Title
+		// Report Name
+		row = sheet.createRow(rowNum);
+		row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+		cellNum = 0;
+		cell = row.createCell(cellNum);
+		cell.setCellValue(auditLicHVo.getTitleName());
+		cell.setCellStyle(workbookCellStyle.getCellTitle());
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 11));
+		rowNum++;
+		// Office Name
+		row = sheet.createRow(rowNum);
+		row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+		cellNum = 0;
+		cell = row.createCell(cellNum);
+		cell.setCellValue(auditLicHVo.getOfficeName());
+		cell.setCellStyle(workbookCellStyle.getCellTitle());
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 11));
+		rowNum++;
+		// Receipt Date
+		row = sheet.createRow(rowNum);
+		row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+		cellNum = 0;
+		cell = row.createCell(cellNum);
+		cell.setCellValue(auditLicHVo.getReceiptDateRangeText());
+		cell.setCellStyle(workbookCellStyle.getCellTitle());
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 11));
+		rowNum++;
+
+		// Column Header
+		String[] tbTH = { "ลำดับ", "ประเภทใบอนุญาต", "เลขที่ใบอนุญาต", "ตรวจสอบเลขที่พิมพ์", "วันที่ออกใบอนุญาต", "วันที่นำส่งเงิน( ระบบรายได้ ) ", "ใบอนุญาต ป.1-ป.2", "รหัสภาษี", "จำนวนเงิน", "ค่าธรรมเนียมใบอนุญาต", "ค่าธรรมเนียมมหาดไทย", "หมายเหตุผลการตรวจ" };
+		row = sheet.createRow(rowNum);
+		for (int i = 0; i < tbTH.length; i++) {
+			cell = row.createCell(i);
+			cell.setCellValue(tbTH[i]);
+			cell.setCellStyle(workbookCellStyle.getThStyle());
+		}
+		rowNum++;
+
+		// Column Details
+		int no = 1;
+		for (AuditLicD1Vo data : dataList) {
+			row = sheet.createRow(rowNum);
+			cellNum = 0;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(workbookCellStyle.getCellCenter());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getLicType());
+			cell.setCellStyle(workbookCellStyle.getCellCenter());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getLicNo());
+			cell.setCellStyle(workbookCellStyle.getCellCenter());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			if (data.getRunCheck() == null) {
+				cell.setCellValue("");
+			} else {
+				cell.setCellValue(data.getRunCheck().toString());
+			}
+			cell.setCellStyle(workbookCellStyle.getCellRight());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			if (StringUtils.isEmpty(data.getLicDate())) {
+				cell.setCellValue("");
+			} else {
+				cell.setCellValue(data.getLicDate());
+			}
+			cell.setCellStyle(workbookCellStyle.getCellCenter());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			if (StringUtils.isEmpty(data.getSendDate())) {
+				cell.setCellValue("");
+			} else {
+				cell.setCellValue(data.getSendDate());
+			}
+			cell.setCellStyle(workbookCellStyle.getCellCenter());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getLicName());
+			cell.setCellStyle(workbookCellStyle.getCellLeft());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getIncCode());
+			cell.setCellStyle(workbookCellStyle.getCellCenter());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			if (data.getLicPrice() == null) {
+				cell.setCellValue("");
+			} else {
+				cell.setCellValue(decimalFormatTwoDigits.format(data.getLicPrice()));
+			}
+			cell.setCellStyle(workbookCellStyle.getCellRight());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			if (data.getLicFee() == null) {
+				cell.setCellValue("");
+			} else {
+				cell.setCellValue(decimalFormatTwoDigits.format(data.getLicFee()));
+			}
+			cell.setCellStyle(workbookCellStyle.getCellRight());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			if (data.getLicInterior() == null) {
+				cell.setCellValue("");
+			} else {
+				cell.setCellValue(decimalFormatTwoDigits.format(data.getLicInterior()));
+			}
+			cell.setCellStyle(workbookCellStyle.getCellRight());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getLicRemark());
+			cell.setCellStyle(workbookCellStyle.getCellLeft());
+			cellNum++;
+
+			no++;
+			rowNum++;
+		}
+
+		// Summary
+		rowNum++;
+		row = sheet.createRow(rowNum);
+		cell = row.createCell(0);
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 5));
+		if ("1".equals(StringUtils.defaultString(auditLicHVo.getD1AuditFlag()))) {
+			cell.setCellValue("สรุปผลการตรวจกับทะเบียนคุมใบอนุญาต :  ถูกต้อง");
+		} else if ("2".equals(StringUtils.defaultString(auditLicHVo.getD1AuditFlag()))) {
+			cell.setCellValue("สรุปผลการตรวจกับทะเบียนคุมใบอนุญาต :  ไม่ถูกต้อง");
+		} else {
+			cell.setCellValue("สรุปผลการตรวจกับทะเบียนคุมใบอนุญาต :  -");
+		}
+		cell.setCellStyle(workbookCellStyle.getCellLeftBold());
+
+		rowNum += 2;
+		row = sheet.createRow(rowNum);
+		cell = row.createCell(0);
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 5));
+		cell.setCellValue("ข้อตรวจพบ/ข้อสังเกต(ข้อเท็จจริง/Condition) :");
+		cell.setCellStyle(workbookCellStyle.getCellLeftBold());
+
+		rowNum += 1;
+		row = sheet.createRow(rowNum);
+		cell = row.createCell(0);
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum + 3, 0, 5));
+		cell.setCellValue(StringUtils.defaultString(auditLicHVo.getD1ConditionText()));
+		cell.setCellStyle(workbookCellStyle.getWrapText());
+
+		rowNum += 5;
+		row = sheet.createRow(rowNum);
+		cell = row.createCell(0);
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 5));
+		cell.setCellValue("สิ่งที่ควรจะเป็น(หลักเกณฑ์/Criteria) :");
+		cell.setCellStyle(workbookCellStyle.getCellLeftBold());
+
+		rowNum += 1;
+		row = sheet.createRow(rowNum);
+		cell = row.createCell(0);
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum + 3, 0, 5));
+		cell.setCellValue(StringUtils.defaultString(auditLicHVo.getD1CriteriaText()));
+		cell.setCellStyle(workbookCellStyle.getWrapText());
+
+		// Column Width
+		int colIndex = 0;
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 5); // ลำดับ
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 20); // ประเภทใบอนุญาต
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 20); // เลขที่ใบอนุญาต
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 20); // ตรวจสอบเลขที่พิมพ์
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // วันที่ออกใบอนุญาต
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 20); // วันที่นำส่งเงิน( ระบบรายได้ )
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 40); // ใบอนุญาต ป.1-ป.2
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // รหัสภาษี
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 20); // จำนวนเงิน
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 20); // ค่าธรรมเนียมใบอนุญาต
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 20); // ค่าธรรมเนียมมหาดไทย
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 40); // หมายเหตุผลการตรวจ
+	}
+
+	private void generateSheetD2(String auditLicNo, AuditLicHVo auditLicHVo, Workbook workbook, WorkbookCellStyle workbookCellStyle) throws Exception {
+		List<AuditLicD2Vo> dataList = findAuditLicD2ByAuditLicNo(auditLicNo);
+		DecimalFormat decimalFormatTwoDigits = new DecimalFormat("#,##0.00");
+		DecimalFormat decimalFormat = new DecimalFormat("#,##0");
+
+		// Prepare Data for Export
+		Sheet sheet = workbook.createSheet("ใบอนุญาตที่ใช้จริง");
+		Row row = null;
+		Cell cell = null;
+		int rowNum = 0;
+		int cellNum = 0;
+
+		// Title
+		// Report Name
+		row = sheet.createRow(rowNum);
+		row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+		cellNum = 0;
+		cell = row.createCell(cellNum);
+		cell.setCellValue(auditLicHVo.getTitleName());
+		cell.setCellStyle(workbookCellStyle.getCellTitle());
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 6));
+		rowNum++;
+		// Office Name
+		row = sheet.createRow(rowNum);
+		row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+		cellNum = 0;
+		cell = row.createCell(cellNum);
+		cell.setCellValue(auditLicHVo.getOfficeName());
+		cell.setCellStyle(workbookCellStyle.getCellTitle());
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 6));
+		rowNum++;
+		// Receipt Date
+		row = sheet.createRow(rowNum);
+		row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+		cellNum = 0;
+		cell = row.createCell(cellNum);
+		cell.setCellValue(auditLicHVo.getReceiptDateRangeText());
+		cell.setCellStyle(workbookCellStyle.getCellTitle());
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 6));
+		rowNum++;
+
+		// Column Header
+		String[] tbTH = { "ลำดับ", "รหัสภาษี", "ใบอนุญาต ป.1-ป.2", "จำนวนเงิน", "จำนวนราย", "ผลการตรวจกับงบสรุปยอดที่นำส่ง", "หมายเหตุ" };
+		row = sheet.createRow(rowNum);
+		for (int i = 0; i < tbTH.length; i++) {
+			cell = row.createCell(i);
+			cell.setCellValue(tbTH[i]);
+			cell.setCellStyle(workbookCellStyle.getThStyle());
+		}
+		rowNum++;
+
+		// Column Details
+		int no = 1;
+		for (AuditLicD2Vo data : dataList) {
+			row = sheet.createRow(rowNum);
+			cellNum = 0;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(no);
+			cell.setCellStyle(workbookCellStyle.getCellCenter());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getTaxCode());
+			cell.setCellStyle(workbookCellStyle.getCellCenter());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getLicName());
+			cell.setCellStyle(workbookCellStyle.getCellLeft());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			if (data.getLicPrice() == null) {
+				cell.setCellValue("");
+			} else {
+				cell.setCellValue(decimalFormatTwoDigits.format(data.getLicPrice()));
+			}
+			cell.setCellStyle(workbookCellStyle.getCellRight());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			if (data.getLicCount() == null) {
+				cell.setCellValue("");
+			} else {
+				cell.setCellValue(decimalFormat.format(data.getLicCount()));
+			}
+			cell.setCellStyle(workbookCellStyle.getCellRight());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			if ("1".equals(data.getAuditCheck())) {
+				cell.setCellValue("ถูกต้อง");
+			} else if ("2".equals(data.getAuditCheck())) {
+				cell.setCellValue("ไม่ถูกต้อง");
+			} else {
+				cell.setCellValue("");
+			}
+			cell.setCellStyle(workbookCellStyle.getCellCenter());
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue(data.getLicT2Remark());
+			cell.setCellStyle(workbookCellStyle.getCellLeft());
+			cellNum++;
+
+			no++;
+			rowNum++;
+		}
+
+		// Summary
+		rowNum++;
+		row = sheet.createRow(rowNum);
+		cell = row.createCell(0);
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 5));
+		if ("1".equals(StringUtils.defaultString(auditLicHVo.getD1AuditFlag()))) {
+			cell.setCellValue("สรุปผลการตรวจกับทะเบียนคุมใบอนุญาต :  ถูกต้อง");
+		} else if ("2".equals(StringUtils.defaultString(auditLicHVo.getD1AuditFlag()))) {
+			cell.setCellValue("สรุปผลการตรวจกับทะเบียนคุมใบอนุญาต :  ไม่ถูกต้อง");
+		} else {
+			cell.setCellValue("สรุปผลการตรวจกับทะเบียนคุมใบอนุญาต :  -");
+		}
+		cell.setCellStyle(workbookCellStyle.getCellLeftBold());
+
+		rowNum += 2;
+		row = sheet.createRow(rowNum);
+		cell = row.createCell(0);
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 5));
+		cell.setCellValue("ข้อตรวจพบ/ข้อสังเกต(ข้อเท็จจริง/Condition) :");
+		cell.setCellStyle(workbookCellStyle.getCellLeftBold());
+
+		rowNum += 1;
+		row = sheet.createRow(rowNum);
+		cell = row.createCell(0);
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum + 3, 0, 5));
+		cell.setCellValue(StringUtils.defaultString(auditLicHVo.getD1ConditionText()));
+		cell.setCellStyle(workbookCellStyle.getWrapText());
+
+		rowNum += 5;
+		row = sheet.createRow(rowNum);
+		cell = row.createCell(0);
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 5));
+		cell.setCellValue("สิ่งที่ควรจะเป็น(หลักเกณฑ์/Criteria) :");
+		cell.setCellStyle(workbookCellStyle.getCellLeftBold());
+
+		rowNum += 1;
+		row = sheet.createRow(rowNum);
+		cell = row.createCell(0);
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum + 3, 0, 5));
+		cell.setCellValue(StringUtils.defaultString(auditLicHVo.getD1CriteriaText()));
+		cell.setCellStyle(workbookCellStyle.getWrapText());
+
+		// Column Width
+		int colIndex = 0;
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 5); // ลำดับ
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // รหัสภาษี
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 40); // ใบอนุญาต ป.1-ป.2
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 20); // จำนวนเงิน
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 20); // จำนวนราย
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 40); // ผลการตรวจกับงบสรุปยอดที่นำส่ง
+		sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 40); // หมายเหตุผลการตรวจ
+
 	}
 
 }
