@@ -151,10 +151,10 @@ public class Int0602Controller {
 		return response;
 	}
 
-	@GetMapping("/export/{auditIncNo}")
-	public void export(@PathVariable("auditIncNo") String auditIncNo, HttpServletResponse response) throws Exception {
+	@GetMapping("/export/{auditLicNo}")
+	public void export(@PathVariable("auditLicNo") String auditLicNo, HttpServletResponse response) throws Exception {
 		String fileName = URLEncoder.encode("ตรวจสอบการใช้ใบอนุญาต ", "UTF-8");
-		String replaceString = auditIncNo.replace('_', '/');
+		String replaceString = auditLicNo.replace('_', '/');
 
 		// write it as an excel attachment
 		byte[] outByteStream = int0602Service.export(replaceString);
