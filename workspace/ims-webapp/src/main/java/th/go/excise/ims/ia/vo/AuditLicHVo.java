@@ -1,13 +1,11 @@
 package th.go.excise.ims.ia.vo;
 
-import java.math.BigDecimal;
-
 public class AuditLicHVo {
 
-	private BigDecimal auditLicSeq;
+	private Long auditLicSeq;
 	private String officeCode;
-	private String licDateFromStr;
-	private String licDateToStr;
+	private String licDateFrom;
+	private String licDateTo;
 	private String auditLicNo;
 	private String d1AuditFlag;
 	private String d1ConditionText;
@@ -24,11 +22,11 @@ public class AuditLicHVo {
 	private String area;
 	private String branch;
 
-	public BigDecimal getAuditLicSeq() {
+	public Long getAuditLicSeq() {
 		return auditLicSeq;
 	}
 
-	public void setAuditLicSeq(BigDecimal auditLicSeq) {
+	public void setAuditLicSeq(Long auditLicSeq) {
 		this.auditLicSeq = auditLicSeq;
 	}
 
@@ -40,20 +38,20 @@ public class AuditLicHVo {
 		this.officeCode = officeCode;
 	}
 
-	public String getLicDateFromStr() {
-		return licDateFromStr;
+	public String getLicDateFrom() {
+		return licDateFrom;
 	}
 
-	public void setLicDateFromStr(String licDateFromStr) {
-		this.licDateFromStr = licDateFromStr;
+	public void setLicDateFrom(String licDateFrom) {
+		this.licDateFrom = licDateFrom;
 	}
 
-	public String getLicDateToStr() {
-		return licDateToStr;
+	public String getLicDateTo() {
+		return licDateTo;
 	}
 
-	public void setLicDateToStr(String licDateToStr) {
-		this.licDateToStr = licDateToStr;
+	public void setLicDateTo(String licDateTo) {
+		this.licDateTo = licDateTo;
 	}
 
 	public String getAuditLicNo() {

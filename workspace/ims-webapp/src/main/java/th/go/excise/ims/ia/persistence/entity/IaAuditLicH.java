@@ -1,7 +1,6 @@
 
 package th.go.excise.ims.ia.persistence.entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -24,7 +23,7 @@ public class IaAuditLicH extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IA_AUDIT_LIC_H_GEN")
 	@SequenceGenerator(name = "IA_AUDIT_LIC_H_GEN", sequenceName = "IA_AUDIT_LIC_H_SEQ", allocationSize = 1)
 	@Column(name = "AUDIT_LIC_SEQ")
-	private BigDecimal auditLicSeq;
+	private Long auditLicSeq;
 	@Column(name = "OFFICE_CODE")
 	private String officeCode;
 	@Column(name = "LIC_DATE_FROM")
@@ -54,11 +53,11 @@ public class IaAuditLicH extends BaseEntity {
 	@Column(name = "D4_CRITERIA_TEXT")
 	private String d4CriteriaText;
 
-	public BigDecimal getAuditLicSeq() {
+	public Long getAuditLicSeq() {
 		return auditLicSeq;
 	}
 
-	public void setAuditLicSeq(BigDecimal auditLicSeq) {
+	public void setAuditLicSeq(Long auditLicSeq) {
 		this.auditLicSeq = auditLicSeq;
 	}
 

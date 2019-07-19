@@ -12,9 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import th.co.baiwa.buckwaframework.common.persistence.entity.BaseEntity;
 
 @Entity
@@ -38,7 +35,7 @@ public class IaAuditLicD1 extends BaseEntity {
 	@Column(name = "LIC_NO")
 	private String licNo;
 	@Column(name = "RUN_CHECK")
-	private Long runCheck;
+	private BigDecimal runCheck;
 	@Column(name = "LIC_DATE")
 	private Date licDate;
 	@Column(name = "SEND_DATE")
@@ -92,6 +89,14 @@ public class IaAuditLicD1 extends BaseEntity {
 
 	public void setLicNo(String licNo) {
 		this.licNo = licNo;
+	}
+
+	public BigDecimal getRunCheck() {
+		return runCheck;
+	}
+
+	public void setRunCheck(BigDecimal runCheck) {
+		this.runCheck = runCheck;
 	}
 
 	public Date getLicDate() {
@@ -156,18 +161,6 @@ public class IaAuditLicD1 extends BaseEntity {
 
 	public void setLicRemark(String licRemark) {
 		this.licRemark = licRemark;
-	}
-
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-	}
-
-	public Long getRunCheck() {
-		return runCheck;
-	}
-
-	public void setRunCheck(Long runCheck) {
-		this.runCheck = runCheck;
 	}
 
 	public Integer getSeqNo() {

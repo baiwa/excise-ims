@@ -10,9 +10,9 @@ public class AuditLicD1Vo {
 	private String licType;
 	private String licNo;
 	private String printCount;
-	private String runCheck;
-	private String licDateStr;
-	private String sendDateStr;
+	private BigDecimal runCheck;
+	private String licDate;
+	private String sendDate;
 	private String licName;
 	private String incCode;
 	private BigDecimal licPrice;
@@ -69,28 +69,28 @@ public class AuditLicD1Vo {
 		this.printCount = printCount;
 	}
 
-	public String getRunCheck() {
+	public BigDecimal getRunCheck() {
 		return runCheck;
 	}
 
-	public void setRunCheck(String runCheck) {
+	public void setRunCheck(BigDecimal runCheck) {
 		this.runCheck = runCheck;
 	}
 
-	public String getLicDateStr() {
-		return licDateStr;
+	public String getLicDate() {
+		return licDate;
 	}
 
-	public void setLicDateStr(String licDateStr) {
-		this.licDateStr = licDateStr;
+	public void setLicDate(String licDate) {
+		this.licDate = licDate;
 	}
 
-	public String getSendDateStr() {
-		return sendDateStr;
+	public String getSendDate() {
+		return sendDate;
 	}
 
-	public void setSendDateStr(String sendDateStr) {
-		this.sendDateStr = sendDateStr;
+	public void setSendDate(String sendDate) {
+		this.sendDate = sendDate;
 	}
 
 	public String getLicName() {
