@@ -18,6 +18,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.bean.DataTableAjax;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD1;
 import th.go.excise.ims.ia.persistence.entity.IaAuditIncD2;
@@ -425,6 +427,9 @@ public class Int0601Service {
 		logger.info("export auditIncNo={}", auditIncNo);
 		
 		IaAuditIncHVo iaAuditIncH = findIaAuditIncHByAuditIncNo(auditIncNo);
+		iaAuditIncH.setTitleName("กระดาษทำการ การใช้ใบเสร็จรับเงิน การงบหลังใบเส็จรับเงินรายวัน กับทะเบียนควบคุมรายรับ-จ่ายใบเสร็จรายรับ");
+		iaAuditIncH.setOfficeName("สำนักงาน " + ApplicationCache.getExciseDepartment(iaAuditIncH.getOfficeCode()).getDeptName());
+		iaAuditIncH.setReceiptDateRangeText("ช่วงในเวลา " + iaAuditIncH.getReceiptDateFrom() + " - " + iaAuditIncH.getReceiptDateTo());
 
 		// Create SpreadSheet
 		XSSFWorkbook workbook = new XSSFWorkbook();
@@ -456,6 +461,7 @@ public class Int0601Service {
 	
 	private class WorkbookCellStyle {
 
+		private CellStyle cellTitle;
 		private CellStyle thStyle;
 		private CellStyle cellCenter;
 		private CellStyle cellLeft;
@@ -469,12 +475,16 @@ public class Int0601Service {
 			headerFont.setFontHeightInPoints((short) 14);
 			headerFont.setFontName(ExcelUtils.FONT_NAME.TH_SARABUN_PSK);
 			headerFont.setBold(true);
-			
+
 			Font detailFont = workbook.createFont();
 			detailFont.setFontHeightInPoints((short) 14);
 			detailFont.setFontName(ExcelUtils.FONT_NAME.TH_SARABUN_PSK);
-			
+
 			// Cell Style
+			cellTitle = (XSSFCellStyle) workbook.createCellStyle();
+			cellTitle.setAlignment(HorizontalAlignment.CENTER);
+			cellTitle.setFont(headerFont);
+
 			this.thStyle = ExcelUtils.createThCellStyle((XSSFWorkbook) workbook);
 			this.thStyle.setFont(headerFont);
 			this.cellCenter = ExcelUtils.createCenterCellStyle(workbook);
@@ -488,6 +498,10 @@ public class Int0601Service {
 			this.cellLeftBold = workbook.createCellStyle();
 			this.cellLeftBold.setAlignment(HorizontalAlignment.LEFT);
 			this.cellLeftBold.setFont(headerFont);
+		}
+
+		public CellStyle getCellTitle() {
+			return cellTitle;
 		}
 
 		public CellStyle getThStyle() {
@@ -526,6 +540,35 @@ public class Int0601Service {
 		Cell cell = null;
 		int rowNum = 0;
 		int cellNum = 0;
+		
+		// Title
+		// Report Name
+		row = sheet.createRow(rowNum);
+		row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+		cellNum = 0;
+		cell = row.createCell(cellNum);
+		cell.setCellValue(iaAuditIncH.getTitleName());
+		cell.setCellStyle(workbookCellStyle.getCellTitle());
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 8));
+		rowNum++;
+		// Office Name
+		row = sheet.createRow(rowNum);
+		row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+		cellNum = 0;
+		cell = row.createCell(cellNum);
+		cell.setCellValue(iaAuditIncH.getOfficeName());
+		cell.setCellStyle(workbookCellStyle.getCellTitle());
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 8));
+		rowNum++;
+		// Receipt Date
+		row = sheet.createRow(rowNum);
+		row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+		cellNum = 0;
+		cell = row.createCell(cellNum);
+		cell.setCellValue(iaAuditIncH.getReceiptDateRangeText());
+		cell.setCellStyle(workbookCellStyle.getCellTitle());
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 8));
+		rowNum++;
 		
 		// Column Header
 		String[] tbTH = { "ลำดับ", "เลขที่ควบคุมเอกสาร", "เลขที่ใบเสร็จ", "ตรวจสอบเลขที่แบบพิมพ์", "วันเดือนปี", "รายการภาษี ", "รหัสภาษี", "จำนวนเงิน", "หมายเหตุผลการตรวจ" };
@@ -671,6 +714,35 @@ public class Int0601Service {
 		int rowNum = 0;
 		int cellNum = 0;
 		
+		// Title
+		// Report Name
+		row = sheet.createRow(rowNum);
+		row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+		cellNum = 0;
+		cell = row.createCell(cellNum);
+		cell.setCellValue(iaAuditIncH.getTitleName());
+		cell.setCellStyle(workbookCellStyle.getCellTitle());
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 5));
+		rowNum++;
+		// Office Name
+		row = sheet.createRow(rowNum);
+		row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+		cellNum = 0;
+		cell = row.createCell(cellNum);
+		cell.setCellValue(iaAuditIncH.getOfficeName());
+		cell.setCellStyle(workbookCellStyle.getCellTitle());
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 5));
+		rowNum++;
+		// Receipt Date
+		row = sheet.createRow(rowNum);
+		row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+		cellNum = 0;
+		cell = row.createCell(cellNum);
+		cell.setCellValue(iaAuditIncH.getReceiptDateRangeText());
+		cell.setCellStyle(workbookCellStyle.getCellTitle());
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 5));
+		rowNum++;
+		
 		// Column Header
 		String[] tbTH = { "ลำดับ", "วันที่", "จำนวนเงิน", "จำนวนแบบพิมพ์/วัน", "ผลการตรวจกับงบหลังสำเนาใบเสร็จ", "หมายเหตุ" };
 		row = sheet.createRow(rowNum);
@@ -791,6 +863,35 @@ public class Int0601Service {
 		int rowNum = 0;
 		int cellNum = 0;
 		
+		// Title
+		// Report Name
+		row = sheet.createRow(rowNum);
+		row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+		cellNum = 0;
+		cell = row.createCell(cellNum);
+		cell.setCellValue(iaAuditIncH.getTitleName());
+		cell.setCellStyle(workbookCellStyle.getCellTitle());
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 6));
+		rowNum++;
+		// Office Name
+		row = sheet.createRow(rowNum);
+		row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+		cellNum = 0;
+		cell = row.createCell(cellNum);
+		cell.setCellValue(iaAuditIncH.getOfficeName());
+		cell.setCellStyle(workbookCellStyle.getCellTitle());
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 6));
+		rowNum++;
+		// Receipt Date
+		row = sheet.createRow(rowNum);
+		row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+		cellNum = 0;
+		cell = row.createCell(cellNum);
+		cell.setCellValue(iaAuditIncH.getReceiptDateRangeText());
+		cell.setCellStyle(workbookCellStyle.getCellTitle());
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 6));
+		rowNum++;
+		
 		// Column Header
 		String[] tbTH = { "ลำดับ", "รหัสภาษี", "รายการภาษี", "จำนวนเงิน", "จำนวนราย", "ผลการตรวจกับสรุปเงินค่าภาษี", "หมายเหตุ" };
 		row = sheet.createRow(rowNum);
@@ -909,6 +1010,35 @@ public class Int0601Service {
 		Cell cell = null;
 		int rowNum = 0;
 		int cellNum = 0;
+		
+		// Title
+		// Report Name
+		row = sheet.createRow(rowNum);
+		row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+		cellNum = 0;
+		cell = row.createCell(cellNum);
+		cell.setCellValue(iaAuditIncH.getTitleName());
+		cell.setCellStyle(workbookCellStyle.getCellTitle());
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 10));
+		rowNum++;
+		// Office Name
+		row = sheet.createRow(rowNum);
+		row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+		cellNum = 0;
+		cell = row.createCell(cellNum);
+		cell.setCellValue(iaAuditIncH.getOfficeName());
+		cell.setCellStyle(workbookCellStyle.getCellTitle());
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 10));
+		rowNum++;
+		// Receipt Date
+		row = sheet.createRow(rowNum);
+		row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+		cellNum = 0;
+		cell = row.createCell(cellNum);
+		cell.setCellValue(iaAuditIncH.getReceiptDateRangeText());
+		cell.setCellStyle(workbookCellStyle.getCellTitle());
+		sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, 0, 10));
+		rowNum++;
 		
 		// Column Header
 		String[] tbTH = { "ลำดับ", "เลขที่ควบคุมเอกสาร", "เลขที่ใบเสร็จ", "วันเดือนปี", "รายการภาษี", "รหัสภาษี", "จำนวนเงิน", "กรอกเลขที่ใบเสร็จในแบบ (ภส. 03-07)", "มีแบบคำขอร้องแสตมป์ สุรา ยา เครื่องดื่ม", "งบเดือน", "หมายเหตุ / ผลการตรวจ" };
