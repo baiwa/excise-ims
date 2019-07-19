@@ -76,15 +76,16 @@ public class ExcisePersonService {
 
 	@Transactional
 	public ExcisePerson checkAccountByLdapLogin(UserDetails userDetails) {
+		logger.info("checkAccountByLdapLogin username={}", userDetails.getUsername());
+		
 		List<ExcisePerson> excisePersonList = excisePersonRepository.findExcisePersonOrderbySeq(userDetails.getUsername());
 		if (excisePersonList != null && excisePersonList.size() > 0) {
 			ExcisePerson excisePerson = excisePersonList.get(0);
-			if(!userDetails.getUsername().equals(excisePerson.getEdLogin()) ||
-					!(userDetails.getUserThaiName() + (userDetails.getUserThaiSurname() != null ? " "+userDetails.getUserThaiSurname() : "")).equals(excisePerson.getEdPersonName())||
-					!userDetails.getOfficeCode().equals(excisePerson.getEdOffcode())
-					) {
+			if (!userDetails.getUsername().equals(excisePerson.getEdLogin()) ||
+					!(userDetails.getUserThaiName() + (userDetails.getUserThaiSurname() != null ? " " + userDetails.getUserThaiSurname() : "")).equals(excisePerson.getEdPersonName()) ||
+			        !userDetails.getOfficeCode().equals(excisePerson.getEdOffcode())) {
 				excisePersonRepository.updateExcisePersonFromLdapData(excisePerson.getEdLogin());
-			}else {
+			} else {
 				return excisePerson;
 			}
 		}
@@ -93,20 +94,27 @@ public class ExcisePersonService {
 		try {
 			response = exciseUserInformationService.webServiceGetExciseUserInformationByUserId(userDetails.getUsername());
 		} catch (PccRestfulException e) {
-			logger.error(e.getMessage() , e);
+			logger.error(e.getMessage(), e);
 		}
 		ExcisePerson excisePerson = new ExcisePerson();
-		if(response != null && response.size() > 0) {
+		if (response != null && response.size() > 0) {
 			excisePerson.setEdPersonId(response.get(0).getNid());
 		}
 		excisePerson.setEdLogin(userDetails.getUsername());
-		excisePerson.setEdPersonName(userDetails.getUserThaiName() + (userDetails.getUserThaiSurname() != null ? " "+userDetails.getUserThaiSurname() : ""));
+		excisePerson.setEdPersonName(userDetails.getUserThaiName() + (userDetails.getUserThaiSurname() != null ? " " + userDetails.getUserThaiSurname() : ""));
 		excisePerson.setEdOffcode(userDetails.getOfficeCode());
 		excisePerson.setEdPositionName(userDetails.getTitle());
 		excisePerson.setSeq(0);
 		
-		
 		return excisePersonRepository.save(excisePerson);
+	}
+	
+	public void addAdditionalInfo(UserDetails userDetails) {
+		ExcisePerson excisePerson = excisePersonRepository.findByEdLogin(userDetails.getUsername());
+		if (excisePerson != null) {
+			userDetails.setSubdeptCode(excisePerson.getAuSubdeptCode());
+			userDetails.setSubdeptLevel(excisePerson.getAuSubdeptLevel());
+		}
 	}
 
 }

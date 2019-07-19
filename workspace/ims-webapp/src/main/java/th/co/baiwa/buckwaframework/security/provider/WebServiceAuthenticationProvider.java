@@ -20,8 +20,7 @@ import th.go.excise.dexsrvint.schema.authenandgetuserrole.AuthenAndGetUserRoleRe
 import th.go.excise.dexsrvint.schema.authenandgetuserrole.AuthenAndGetUserRoleResponse;
 import th.go.excise.dexsrvint.schema.ldapuserbase.RoleBase;
 import th.go.excise.dexsrvint.wsdl.ldapgateway.ldpagauthenandgetuserrole.LDPAGAuthenAndGetUserRolePortType;
-import th.go.excise.ims.preferences.persistence.entity.ExcisePerson;
-import th.go.excise.ims.preferences.persistence.repository.ExcisePersonRepository;
+import th.go.excise.ims.preferences.service.ExcisePersonService;
 
 @Component("wsAuthenticationProvider")
 public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
@@ -31,14 +30,13 @@ public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthent
 	@Autowired
 	private LDPAGAuthenAndGetUserRolePortType loginLdapProxy;
 	@Autowired
-	private ExcisePersonRepository excisePersonRepository;
+	private ExcisePersonService excisePersonService;
 
 	@Override
 	protected void additionalAuthenticationChecks(org.springframework.security.core.userdetails.UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
 
 	}
 	
-
 	@Override
 	protected org.springframework.security.core.userdetails.UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
 		logger.info("WebServiceAuthenticationProvider : {}", username);
@@ -66,19 +64,15 @@ public class WebServiceAuthenticationProvider extends AbstractUserDetailsAuthent
 			userDetails.setUserThaiSurname(response.getUserThaiSurname());
 			userDetails.setTitle(response.getTitle());
 			userDetails.setOfficeCode(response.getOfficeId());
-			addAdditionalInfo(userDetails);
+			
+			excisePersonService.checkAccountByLdapLogin(userDetails);
 		} else {
 			throw new BadCredentialsException(response.getMessage().getDescription());
 		}
+		
+		excisePersonService.addAdditionalInfo(userDetails);
+		
 		return userDetails;
-	}
-
-	private void addAdditionalInfo(UserDetails userDetails) {
-		ExcisePerson excisePerson = excisePersonRepository.findByEdLogin(userDetails.getUsername());
-		if (excisePerson != null) {
-			userDetails.setSubdeptCode(excisePerson.getAuSubdeptCode());
-			userDetails.setSubdeptLevel(excisePerson.getAuSubdeptLevel());
-		}
 	}
 
 }

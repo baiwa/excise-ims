@@ -28,8 +28,7 @@ import th.go.excise.dexsrvint.schema.ldapuserbase.MessageBase;
 import th.go.excise.dexsrvint.schema.ldapuserbase.RoleBase;
 import th.go.excise.dexsrvint.schema.ldapuserbase.RolesBase;
 import th.go.excise.dexsrvint.wsdl.ldapgateway.ldpagauthenandgetuserrole.LDPAGAuthenAndGetUserRolePortType;
-import th.go.excise.ims.preferences.persistence.entity.ExcisePerson;
-import th.go.excise.ims.preferences.persistence.repository.ExcisePersonRepository;
+import th.go.excise.ims.preferences.service.ExcisePersonService;
 
 @Component("customAuthenticationProvider")
 public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
@@ -43,7 +42,7 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
 	@Autowired
 	private LDPAGAuthenAndGetUserRolePortType loginLdapProxy;
 	@Autowired
-	private ExcisePersonRepository excisePersonRepository;
+	private ExcisePersonService excisePersonService;
 
 	@Value("${spring.profiles.active}")
 	private String profileActive;
@@ -104,12 +103,14 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
 				userDetails.setUserThaiSurname(response.getUserThaiSurname());
 				userDetails.setTitle(response.getTitle());
 				userDetails.setOfficeCode(response.getOfficeId());
+				
+				excisePersonService.checkAccountByLdapLogin(userDetails);
 			} else {
 				throw new BadCredentialsException(response.getMessage().getDescription());
 			}
 		}
 		
-		addAdditionalInfo(userDetails);
+		excisePersonService.addAdditionalInfo(userDetails);
 		
 		return userDetails;
 	}
@@ -160,12 +161,6 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
 		return roles;
 	}
 
-	private void addAdditionalInfo(UserDetails userDetails) {
-		ExcisePerson excisePerson = excisePersonRepository.findByEdLogin(userDetails.getUsername());
-		if (excisePerson != null) {
-			userDetails.setSubdeptCode(excisePerson.getAuSubdeptCode());
-			userDetails.setSubdeptLevel(excisePerson.getAuSubdeptLevel());
-		}
-	}
+	
 
 }
