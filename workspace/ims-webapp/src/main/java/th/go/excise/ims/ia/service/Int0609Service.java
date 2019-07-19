@@ -1,11 +1,10 @@
 package th.go.excise.ims.ia.service;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,7 @@ import th.go.excise.ims.ia.vo.Int0609TableVo;
 import th.go.excise.ims.ia.vo.Int0609Vo;
 import th.go.excise.ims.ia.vo.SearchVo;
 import th.go.excise.ims.ia.vo.WsIncr0003Vo;
+import th.go.excise.ims.preferences.persistence.repository.ExciseHolidayRepository;
 import th.go.excise.ims.ws.persistence.repository.WsGfr01051JdbcRepository;
 import th.go.excise.ims.ws.persistence.repository.WsIncr0003JdbcRepository;
 
@@ -46,6 +46,9 @@ public class Int0609Service {
 
 	@Autowired
 	private IaAuditIncSendDRepository iaAuditIncSendDRepository;
+	
+	@Autowired
+	private ExciseHolidayRepository exciseHolidayRepository;
 
 	public Int0609Vo search(SearchVo request) {
 		/* __________ set year TH to EN __________ */
@@ -84,6 +87,15 @@ public class Int0609Service {
 					wsGfr01051.setSum7(wsIncr0003Vo.getSum7());
 				}
 			}
+			
+			List<LocalDate> holidayList = exciseHolidayRepository.findByDateRange(startDate, endDate).stream().map(holiday -> holiday.getHolidayDate()).collect(Collectors.toList());
+			ArrayList<String> holidayStrList = new ArrayList<String>();
+			for (LocalDate localDate : holidayList) {
+				holidayStrList.add(ConvertDateUtils.formatLocalDateToString(localDate, ProjectConstant.SHORT_DATE_FORMAT, ConvertDateUtils.LOCAL_TH));
+			}
+//			Arrays.stream(holidayStr).collect(Collectors.joining(","));
+			//			String.join(", ", holidayList);
+			wsGfr01051.setTootip(holidayStrList.stream().map(Object::toString).collect(Collectors.joining(", ")));
 		}
 
 		/* __________ set footer __________ */

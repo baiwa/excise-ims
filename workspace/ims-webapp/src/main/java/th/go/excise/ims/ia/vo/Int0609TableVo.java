@@ -30,6 +30,9 @@ public class Int0609TableVo {
 	private String incsendAccPayIn;
 	private String incTransfer115010_116010;
 
+	/* tootip */
+	private String tootip;
+
 	public String getOffname() {
 		return offname;
 	}
@@ -212,6 +215,14 @@ public class Int0609TableVo {
 
 	public void setIncTransfer115010_116010(String incTransfer115010_116010) {
 		this.incTransfer115010_116010 = incTransfer115010_116010;
+	}
+
+	public String getTootip() {
+		return tootip;
+	}
+
+	public void setTootip(String tootip) {
+		this.tootip = tootip;
 	}
 
 }
