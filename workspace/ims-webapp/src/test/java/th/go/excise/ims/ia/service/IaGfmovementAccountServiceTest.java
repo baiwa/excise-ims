@@ -16,7 +16,7 @@ public class IaGfmovementAccountServiceTest {
 //	private IaGfledgerAccountService iaGfledgerAccountService;
 	
 	@Test 
-	public void addDataByExcel() throws IOException {
+	public void addDataByExcel() throws Exception {
 		
 		IaGfmovementAccountService iaGfledgerAccountService = new IaGfmovementAccountService();
 		MockMultipartFile file = new MockMultipartFile("import_hardware_test_20181106", new FileInputStream(new File("F:\\เอกสารพี่นก\\excel\\02-05-2562\\รายงานเคลื่อนไหวเงินฝากคลัง.xlsx")));
