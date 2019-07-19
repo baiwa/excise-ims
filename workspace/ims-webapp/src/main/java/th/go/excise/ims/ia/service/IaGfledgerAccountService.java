@@ -10,6 +10,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,19 +30,24 @@ import th.go.excise.ims.ia.persistence.repository.IaGfuploadHRepository;
 import th.go.excise.ims.ia.vo.IaGfledgerAccountVo;
 import th.go.excise.ims.ia.vo.Int15ResponseUploadVo;
 import th.go.excise.ims.ia.vo.Int15SaveVo;
+import th.go.excise.ims.ta.service.TaxAuditService;
 
 @Service
 public class IaGfledgerAccountService {
-
+	
+	private static final Logger logger = LoggerFactory.getLogger(TaxAuditService.class);
+	
+	@Autowired
+	private IaGfuploadHRepository iaGfuploadHRepository;
 	@Autowired
 	private IaGfledgerAccountRepository iaGfledgerAccountRepository;
 
-	@Autowired
-	private IaGfuploadHRepository iaGfuploadHRepository;
 
 	private final String KEY_FILTER[] = { "เลขที่บัญชี G/L", "รหัสหน่วยงาน", "ประเภท", "*" };
 
 	public ResponseData<Int15ResponseUploadVo> addDataByExcel(MultipartFile file) throws Exception {
+		logger.info("addDataByExcel filename={}", file.getOriginalFilename());
+		
 		ResponseData<Int15ResponseUploadVo> responseData = new ResponseData<Int15ResponseUploadVo>();
 		List<IaGfledgerAccountVo> iaGfledgerAccountList = new ArrayList<>();
 		IaGfledgerAccountVo iaGfledgerAccount = new IaGfledgerAccountVo();
@@ -137,7 +144,7 @@ public class IaGfledgerAccountService {
 					iaGfledgerAccount = new IaGfledgerAccountVo();
 				}
 			} catch (Exception e) {
-
+				logger.error(e.getMessage(), e);
 			}
 		}
 
@@ -149,7 +156,7 @@ public class IaGfledgerAccountService {
 			responseData.setMessage(ApplicationCache.getMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.SUCCESS_CODE).getMessageTh());
 			responseData.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 			responseData.setMessage(ProjectConstant.RESPONSE_MESSAGE.SAVE.FAILED);
 			responseData.setStatus(RESPONSE_STATUS.FAILED);
 		}
