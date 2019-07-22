@@ -84,6 +84,7 @@ public class MenuRepositoryImpl implements MenuRepositoryCustom {
 		sql.append("     ,AM.SUBDEPT_LEVEL ");
 		sql.append("   FROM ADM_MENU AM ");
 		sql.append("   WHERE AM.PARENT_ID IS NULL ");
+		sql.append("     AND AM.IS_DELETED = 'N' ");
 		sql.append("    ");
 		sql.append("   UNION ALL ");
 		sql.append("    ");
@@ -98,6 +99,7 @@ public class MenuRepositoryImpl implements MenuRepositoryCustom {
 		sql.append("     ,T2.SUBDEPT_LEVEL ");
 		sql.append("   FROM ADM_MENU T2, T1 ");
 		sql.append("   WHERE T2.PARENT_ID = T1.MENU_ID ");
+		sql.append("     AND T2.IS_DELETED = 'N' ");
 		sql.append(" ) ");
 		sql.append(" SELECT T1.MENU_ID ");
 		sql.append("   ,T1.PARENT_ID ");
