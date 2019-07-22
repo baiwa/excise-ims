@@ -5,6 +5,7 @@ import java.util.List;
 public class Int1200702HdrVo {
 	private String fullName;
 	private String gender;
+	private String phoneNumber;
 	private String birthdate;
 	private String siblingsOrder;
 	private String position;
@@ -59,6 +60,14 @@ public class Int1200702HdrVo {
 	private boolean child3;
 
 	private List<Int120702DtlVo> receipts;
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 
 	public String getFullName() {
 		return fullName;

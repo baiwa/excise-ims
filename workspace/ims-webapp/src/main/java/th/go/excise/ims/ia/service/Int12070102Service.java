@@ -96,7 +96,7 @@ public class Int12070102Service {
 
 		dataHdrSave.setFullName(form.getFullName());
 		dataHdrSave.setGender(form.getGender());
-
+		dataHdrSave.setPhoneNo(form.getPhoneNumber());
 //		dataHdrSave.setSiblingsOrder(new BigDecimal(form.getSiblingsOrder()));
 		dataHdrSave.setPosition(form.getPosition());
 		dataHdrSave.setAffiliation(form.getAffiliation());
@@ -108,10 +108,10 @@ public class Int12070102Service {
 				ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		dataHdrSave.setTreatedDateTo(ConvertDateUtils.parseStringToDate(form.getTreatedDateTo(),
 				ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
-//		dataHdrSave.setTotalMoney(new BigDecimal(form.getTotalMoney()));
+		dataHdrSave.setTotalMoney(new BigDecimal(form.getTotalMoney()));
 		dataHdrSave.setReceiptQt(new BigDecimal(form.getReceiptQt()));
 		dataHdrSave.setClaimStatus(form.getClaimStatus());
-//		dataHdrSave.setClaimMoney(new BigDecimal(form.getClaimMoney()));
+		dataHdrSave.setClaimMoney(new BigDecimal(form.getClaimMoney()));
 
 //		dataHdrSave.setFileId(new BigDecimal(form.getFileId()));
 		dataHdrSave.setStatusCheck(form.getStatusCheck());
@@ -135,11 +135,66 @@ public class Int12070102Service {
 			dataDtlSave = new IaMedicalReceipt();
 			dataDtlSave.setId(dataHdrSave.getId());
 			dataDtlSave.setReceiptNo(dataDtl.getReceiptNo());
-//			dataDtlSave.setReceiptAmount(new BigDecimal(dataDtl.getReceiptAmount()));
+			dataDtlSave.setReceiptAmount(new BigDecimal(dataDtl.getReceiptAmount()));
 			dataDtlSave.setReceiptDate(ConvertDateUtils.parseStringToDate(dataDtl.getReceiptDate(),
 					ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 			dataDtlSave.setReceiptType(dataDtl.getReceiptType());
 			iaMedicalReceiptRepository.save(dataDtlSave);
 		}
+	}
+	
+	public Int1200702HdrVo findById(Long id) {
+		Int1200702HdrVo dataRes = new Int1200702HdrVo();
+		IaMedicalWelfare dataHdr = iaMedicalWelfareRepository.findById(id).get();
+		dataRes.setFullName(dataHdr.getFullName());
+		dataRes.setGender(dataHdr.getGender());
+		dataRes.setPhoneNumber(dataHdr.getPhoneNo());
+//		dataRes.setBirthdate(dataHdr.getBirthdate().toString());
+//		dataRes.setSiblingsOrder(dataHdr.getSiblingsOrder().toString());
+//		dataRes.setPosition(dataHdr.getPosition());
+//		dataRes.setAffiliation(dataHdr.getAffiliation());
+//		dataRes.setPhoneNo(dataHdr.getPhoneNo());
+//		dataRes.setStatus(dataHdr.getStatus());
+//		dataRes.setDisease(dataHdr.getDisease());
+//		dataRes.setHospitalName(dataHdr.getHospitalName());
+//		dataRes.setHospitalOwner(dataHdr.getHospitalOwner());
+//		dataRes.setTreatedDateFrom(dataHdr.getTreatedDateFrom().toString());
+//		dataRes.setTreatedDateTo(dataHdr.getTreatedDateTo().toString());
+//		dataRes.setTotalMoney(dataHdr.getTotalMoney().toString());
+//		dataRes.setReceiptQt(dataHdr.getReceiptQt().toString());
+//		dataRes.setClaimStatus(dataHdr.getClaimStatus());
+//		dataRes.setClaimMoney(dataHdr.getClaimMoney().toString());
+//		dataRes.setOwnerClaim1(dataHdr.getOwnerClaim1());
+//		dataRes.setOwnerClaim2(dataHdr.getOwnerClaim2());
+//		dataRes.setOwnerClaim3(dataHdr.getOwnerClaim3());
+//		dataRes.setOwnerClaim4(dataHdr.getOwnerClaim4());
+//		dataRes.setOtherClaim1(dataHdr.getOtherClaim1());
+//		dataRes.setOtherClaim2(dataHdr.getOtherClaim2());
+//		dataRes.setOtherClaim3(dataHdr.getOtherClaim3());
+//		dataRes.setOtherClaim4(dataHdr.getOtherClaim4());
+//		dataRes.setMateName(dataHdr.getMateName());
+//		dataRes.setMateCitizenId(dataHdr.getMateCitizenId());
+//		dataRes.setFatherName(dataHdr.getFatherName());
+//		dataRes.setFatherCitizenId(dataHdr.getFatherCitizenId());
+//		dataRes.setMotherName(dataHdr.getMotherName());
+//		dataRes.setMotherCitizenId(dataHdr.getMotherCitizenId());
+//		dataRes.setChildName(dataHdr.getChildName());
+//		dataRes.setChildCitizenId(dataHdr.getChildCitizenId());
+//		dataRes.setStatusCheck(dataHdr.getStatusCheck());
+//		dataRes.setChildName2(dataHdr.getChildName2());
+//		dataRes.setChildName3(dataHdr.getChildName3());
+//		dataRes.setChildCitizenId2(dataHdr.getChildCitizenId2());
+//		dataRes.setChildCitizenId3(dataHdr.getChildCitizenId3());
+//		dataRes.setStatus2(dataHdr.getStatus2());
+//		dataRes.setStatus3(dataHdr.getStatus3());
+
+//		dataRes.setFather(dataHdr.getFather());
+//		dataRes.setSelf(dataHdr.getSelf());
+//		dataRes.setCouple(dataHdr.getCouple());
+//		dataRes.setMother(dataHdr.getMother());
+//		dataRes.setChild1(dataHdr.getChild1());
+//		dataRes.setChild2(dataHdr.getChild2());
+//		dataRes.setChild3(dataHdr.getChild3());
+		return dataRes;
 	}
 }

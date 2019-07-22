@@ -17,6 +17,7 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STAT
 import th.go.excise.ims.ia.service.Int120701Service;
 import th.go.excise.ims.ia.vo.Int120701FilterVo;
 import th.go.excise.ims.ia.vo.Int120701Type6006Vo;
+import th.go.excise.ims.ia.vo.int120701Type7131Vo;
 
 @Controller
 @RequestMapping("/api/ia/int12/07/01/01")
@@ -37,6 +38,23 @@ public class Int120701Controller {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("filterByDate => ", e.getMessage());
+			response.setMessage(RESPONSE_MESSAGE.ERROR500);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+		return response;
+	}
+	
+	@PostMapping("/filterByDate7131")
+	@ResponseBody
+	public ResponseData<List<int120701Type7131Vo>> filterByDate7131(@RequestBody Int120701FilterVo dataReq) {
+		ResponseData<List<int120701Type7131Vo>> response = new ResponseData<>();
+		try {
+			response.setData(int120701Service.filterByDate7131(dataReq));
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("filterByDate7131 => ", e.getMessage());
 			response.setMessage(RESPONSE_MESSAGE.ERROR500);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}

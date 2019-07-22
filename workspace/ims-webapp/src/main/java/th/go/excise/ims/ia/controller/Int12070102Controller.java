@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,11 +56,30 @@ public class Int12070102Controller {
 		ResponseData<T> response = new ResponseData<>();
 		try {
 			int12070102Service.save(form);
-			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setMessage(RESPONSE_MESSAGE.SAVE.SUCCESS);
 			response.setStatus(RESPONSE_STATUS.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Int12070102Controller : save ->", e.getMessage());
+			response.setMessage(RESPONSE_MESSAGE.SAVE.FAILED);
+			response.setStatus(RESPONSE_STATUS.FAILED);
+		}
+
+		return response;
+	}
+	
+	@GetMapping("/findById/{id}")
+	@ResponseBody
+	public ResponseData<Int1200702HdrVo> findById(@PathVariable("id") Long id) {
+
+		ResponseData<Int1200702HdrVo> response = new ResponseData<>();
+		try {
+			response.setData(int12070102Service.findById(id));
+			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
+			response.setStatus(RESPONSE_STATUS.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Int12070102Controller : findById ->", e.getMessage());
 			response.setMessage(RESPONSE_MESSAGE.ERROR500);
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
