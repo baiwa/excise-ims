@@ -5,6 +5,7 @@ import th.go.excise.ims.ws.client.pcc.regfri4000.model.RegMaster60;
 public class WsRegfri4000FormVo extends RegMaster60 {
 
 	private String newRegId;
+	private String cusFullname;	
 	private String customerAddress;
 	private String facAddress;
 	private String factoryType;
@@ -18,6 +19,14 @@ public class WsRegfri4000FormVo extends RegMaster60 {
 
 	public void setNewRegId(String newRegId) {
 		this.newRegId = newRegId;
+	}
+	
+	public String getCusFullname() {
+		return cusFullname;
+	}
+
+	public void setCusFullname(String cusFullname) {
+		this.cusFullname = cusFullname;
 	}
 
 	public String getCustomerAddress() {

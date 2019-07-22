@@ -131,6 +131,7 @@ public class TaxAuditService {
 				regMaster60 = regMaster60List.get(0);
 				BeanUtils.copyProperties(formVo, regMaster60);
 				formVo.setNewRegId(regMaster60.getNewregId());
+				formVo.setCusFullname(regMaster60.getCusFullname());
 				formVo.setCustomerAddress(ExciseUtils.buildCusAddress(regMaster60));
 				formVo.setFacAddress(ExciseUtils.buildFacAddress(regMaster60));
 				formVo.setFactoryType(ExciseUtils.getFactoryType(formVo.getNewRegId()));
