@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
@@ -16,10 +17,12 @@ import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.SqlGeneratorUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.go.excise.ims.ia.persistence.entity.IaGftrialBalance;
+import th.go.excise.ims.ia.vo.Int0801Vo;
 import th.go.excise.ims.ia.vo.Int0802SearchVo;
 import th.go.excise.ims.ia.vo.Int0802Vo;
 import th.go.excise.ims.ia.vo.Int0803Search;
 import th.go.excise.ims.ia.vo.Int0803TableVo;
+import th.go.excise.ims.ia.vo.SearchVo;
 
 public class IaGftrialBalanceRepositoryImpl implements IaGftrialBalanceRepositorCustom {
 
@@ -230,6 +233,38 @@ public class IaGftrialBalanceRepositoryImpl implements IaGftrialBalanceRepositor
 				return vo;
 			}
 		});
+	}
+	
+	@Override
+	public List<Int0801Vo> findDataAccByRequest(SearchVo request) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<Object>();
+		
+		sql.append(" SELECT B.ACC_NO, B.ACC_NAME, B.BRING_FORWARD, B.CREDIT, B.DEBIT, B.CARRY_FORWARD ");
+		sql.append(" , C.BALANCE_ACC_TYPE, C.VALUE_TRUE_TYPE ");
+		sql.append(" FROM IA_GFTRIAL_BALANCE B ");
+		sql.append(" INNER JOIN IA_CHART_OF_ACC C ON B.ACC_NO = C.COA_CODE ");
+		sql.append(" WHERE 1=1 ");
+		
+		if(StringUtils.isNotBlank(request.getGfDisburseUnit())) {
+			sql.append(" AND B.DEPT_DISB = ? ");
+			params.add("00000".concat(request.getGfDisburseUnit()));
+		}
+		
+		if(StringUtils.isNotBlank(request.getPeriod()) && StringUtils.isNotBlank(request.getPeriodYear())) {
+			sql.append(" AND B.PERIOD_YEAR||B.PERIOD_FROM = ? ");
+			params.add(request.getPeriodYear().concat(request.getPeriod()));
+		}
+		
+		if(StringUtils.isNotBlank(request.getFlag())) {
+			sql.append(" AND B.ACC_NO LIKE ? ");
+			params.add(request.getFlag().concat("%"));
+		}
+		sql.append(" ORDER BY B.ACC_NO ");
+		
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		List<Int0801Vo> response = commonJdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper(Int0801Vo.class));
+		return response;
 	}
 
 }
