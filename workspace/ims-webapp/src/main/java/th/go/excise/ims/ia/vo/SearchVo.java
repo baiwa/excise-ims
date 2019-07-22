@@ -7,6 +7,10 @@ public class SearchVo {
 	private String periodTo;
 	private String incomeCode;
 	private String paperNumber;
+	private String gfDisburseUnit;
+	private String period;
+	private String periodYear;
+	private String flag;
 
 	public String getOfficeCode() {
 		return officeCode;
@@ -54,6 +58,38 @@ public class SearchVo {
 
 	public void setPaperNumber(String paperNumber) {
 		this.paperNumber = paperNumber;
+	}
+
+	public String getGfDisburseUnit() {
+		return gfDisburseUnit;
+	}
+
+	public void setGfDisburseUnit(String gfDisburseUnit) {
+		this.gfDisburseUnit = gfDisburseUnit;
+	}
+
+	public String getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(String period) {
+		this.period = period;
+	}
+
+	public String getPeriodYear() {
+		return periodYear;
+	}
+
+	public void setPeriodYear(String periodYear) {
+		this.periodYear = periodYear;
+	}
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
 	}
 
 }
