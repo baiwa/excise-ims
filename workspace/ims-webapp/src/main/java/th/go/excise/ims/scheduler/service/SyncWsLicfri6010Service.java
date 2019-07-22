@@ -3,6 +3,7 @@ package th.go.excise.ims.scheduler.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,12 +50,13 @@ public class SyncWsLicfri6010Service {
 
 	@Transactional(rollbackOn = { Exception.class })
 	public void syncData(RequestData requestData) throws PccRestfulException {
-		logger.info("syncData Licfri6010 Start");
+		logger.info("syncData Licfri6010 officeCode={}, ymFrom={}, ymTo={} - Start",
+			requestData.getOffcode(), requestData.getYearMonthFrom(), requestData.getYearMonthTo());
 		long start = System.currentTimeMillis();
-
+		
 		requestData.setDataPerPage(String.valueOf(WS_DATA_SIZE));
 		int indexPage = 0;
-
+		
 		List<License> licenseList = null;
 		WsLicfri6010 licfri6010 = null;
 		List<WsLicfri6010> licfri6010List = new ArrayList<>();
@@ -63,61 +65,57 @@ public class SyncWsLicfri6010Service {
 			requestData.setPageNo(String.valueOf(indexPage));
 			licenseList = licFri6010Service.execute(requestData).getLicenseList();
 			if (licenseList != null && licenseList.size() > 0) {
-				try {
-					licfri6010List = new ArrayList<>();
-					for (License license : licenseList) {
-						licfri6010 = new WsLicfri6010();
-						licfri6010.setOffcode(license.getOffcode());
-						licfri6010.setLicType(license.getLicType());
-						licfri6010.setLicNo(license.getLicNo());
-						licfri6010.setLicName(license.getLicName());
-						licfri6010.setLicFee(NumberUtils.toBigDecimal(license.getLicFee()));
-						licfri6010.setLicInterior(NumberUtils.toBigDecimal(license.getLicInterior()));
-						licfri6010.setLicPrice(NumberUtils.toBigDecimal(license.getLicPrice()));
-						licfri6010.setLicDate(StringUtils.isNotEmpty(license.getLicDate()) ? ConvertDateUtils.parseStringToLocalDate(license.getLicDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_EN) : null);
-						licfri6010.setStartDate(StringUtils.isNotEmpty(license.getLicDate()) ? ConvertDateUtils.parseStringToLocalDate(license.getStartDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_EN) : null);
-						licfri6010.setExpDate(StringUtils.isNotEmpty(license.getLicDate()) ? ConvertDateUtils.parseStringToLocalDate(license.getExpDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_EN) : null);
-						licfri6010.setSendDate(StringUtils.isNotEmpty(license.getLicDate()) ? ConvertDateUtils.parseStringToLocalDate(license.getSendDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_EN) : null);
-						licfri6010.setPrintCount(NumberUtils.toBigDecimal(license.getPrintCount()));
-						licfri6010.setNid(license.getNid());
-						licfri6010.setNewRegId(license.getNewregId());
-						licfri6010.setCusId(license.getCusId());
-						licfri6010.setCusAddrseq(license.getCusAddrseq());
-						licfri6010.setCusFullname(license.getCusFullName());
-						licfri6010.setFacId(license.getFacId());
-						licfri6010.setFacAddrseq(license.getFacAddrseq());
-						licfri6010.setFacFullname(license.getFacFullName());
-						licfri6010.setIncCode(license.getIncCode());
-						licfri6010.setCreatedBy(SYSTEM_USER.BATCH);
-						licfri6010.setCreatedDate(LocalDateTime.now());
-						licfri6010List.add(licfri6010);
-					}
-
-					wsLicfri6010Repository.batchInsert(licfri6010List);
-					System.gc();
-				} catch (Exception e) {
-					logger.error(e.getMessage(), e);
+				for (License license : licenseList) {
+					licfri6010 = new WsLicfri6010();
+					licfri6010.setOffcode(license.getOffcode());
+					licfri6010.setLicType(license.getLicType());
+					licfri6010.setLicNo(license.getLicNo());
+					licfri6010.setLicName(license.getLicName());
+					licfri6010.setLicFee(NumberUtils.toBigDecimal(license.getLicFee()));
+					licfri6010.setLicInterior(NumberUtils.toBigDecimal(license.getLicInterior()));
+					licfri6010.setLicPrice(NumberUtils.toBigDecimal(license.getLicPrice()));
+					licfri6010.setLicDate(StringUtils.isNotEmpty(license.getLicDate()) ? ConvertDateUtils.parseStringToLocalDate(license.getLicDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_EN) : null);
+					licfri6010.setStartDate(StringUtils.isNotEmpty(license.getLicDate()) ? ConvertDateUtils.parseStringToLocalDate(license.getStartDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_EN) : null);
+					licfri6010.setExpDate(StringUtils.isNotEmpty(license.getLicDate()) ? ConvertDateUtils.parseStringToLocalDate(license.getExpDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_EN) : null);
+					licfri6010.setSendDate(StringUtils.isNotEmpty(license.getLicDate()) ? ConvertDateUtils.parseStringToLocalDate(license.getSendDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_EN) : null);
+					licfri6010.setPrintCount(NumberUtils.toBigDecimal(license.getPrintCount()));
+					licfri6010.setNid(license.getNid());
+					licfri6010.setNewRegId(license.getNewregId());
+					licfri6010.setCusId(license.getCusId());
+					licfri6010.setCusAddrseq(license.getCusAddrseq());
+					licfri6010.setCusFullname(license.getCusFullName());
+					licfri6010.setFacId(license.getFacId());
+					licfri6010.setFacAddrseq(license.getFacAddrseq());
+					licfri6010.setFacFullname(license.getFacFullName());
+					licfri6010.setIncCode(license.getIncCode());
+					licfri6010.setCreatedBy(SYSTEM_USER.BATCH);
+					licfri6010.setCreatedDate(LocalDateTime.now());
+					licfri6010List.add(licfri6010);
 				}
 			}
 		} while (licenseList.size() == WS_DATA_SIZE);
-
+		
 		// Set dateStart and dateEnd
-//		LocalDate localDateStart = LocalDate.parse(requestData.getYearMonthFrom() + "01", DateTimeFormatter.BASIC_ISO_DATE);
-//		LocalDate localDateEnd = LocalDate.parse(requestData.getYearMonthTo() + "01", DateTimeFormatter.BASIC_ISO_DATE);
-//		String dateStart = localDateStart.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
-//		String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
-
-//		wsLicfri6010Repository.forceDeleteByOfficeCodeAndLicDate(requestData.getOffcode(), dateStart, dateEnd);
-
-		logger.info("Batch Insert Licfri6010 Success");
-
+		LocalDate localDateStart = LocalDate.parse(requestData.getYearMonthFrom() + "01", DateTimeFormatter.BASIC_ISO_DATE);
+		LocalDate localDateEnd = LocalDate.parse(requestData.getYearMonthTo() + "01", DateTimeFormatter.BASIC_ISO_DATE);
+		String dateStart = localDateStart.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
+		String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
+		
+		wsLicfri6010Repository.forceDeleteByOfficeCodeAndLicDate(requestData.getOffcode(), dateStart, dateEnd);
+		wsLicfri6010Repository.batchInsert(licfri6010List);
+		
+		logger.info("Batch Insert Licfri6010 officeCode={}, ymFrom={}, ymTo={} - Success",
+			requestData.getOffcode(), requestData.getYearMonthFrom(), requestData.getYearMonthTo());
+		
 		long end = System.currentTimeMillis();
-		logger.info("syncData Licfri6010 Success, using {} seconds", (float) (end - start) / 1000F);
+		logger.info("syncData Licfri6010 officeCode={}, ymFrom={}, ymTo={} - Success, using {} seconds",
+			requestData.getOffcode(), requestData.getYearMonthFrom(), requestData.getYearMonthTo(), (float) (end - start) / 1000F);
 	}
 
 	@Transactional
 	public void syncWs6010ToIaWs6010(RequestData requestData) {
-		logger.info("syncWs6010ToIaWs6010 - Start");
+		logger.info("syncWs6010ToIaWs6010 ymFrom={}, ymTo={} - Start",
+			requestData.getYearMonthFrom(), requestData.getYearMonthTo());
 		long start = System.currentTimeMillis();
 		
 		LocalDate startLocalDate = LocalDate.of(
@@ -144,7 +142,8 @@ public class SyncWsLicfri6010Service {
 		}
 		
 		long end = System.currentTimeMillis();
-		logger.info("syncWs6010ToIaWs6010 - Success, using {} seconds", (float) (end - start) / 1000F);
+		logger.info("syncWs6010ToIaWs6010 ymFrom={}, ymTo={} - Success, using {} seconds",
+			requestData.getYearMonthFrom(), requestData.getYearMonthTo(), (float) (end - start) / 1000F);
 	}
 	
 	// Old logic

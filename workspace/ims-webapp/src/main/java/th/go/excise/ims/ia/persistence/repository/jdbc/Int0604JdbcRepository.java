@@ -3,8 +3,8 @@ package th.go.excise.ims.ia.persistence.repository.jdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -110,10 +110,10 @@ public class Int0604JdbcRepository {
 		sql.append("     AND W.LIC_DATE <= TO_DATE(?, 'YYYYMMDD') ");
 		paramList.add(dateEnd);
 		sql.append("     AND NOT EXISTS ( ");
-		sql.append("   	  SELECT 1 ");
-		sql.append("   	  FROM IA_WS_LIC6010 I ");
-		sql.append("   	  WHERE I.CURRENT_LIC_ID = W.WS_LICFRI6010_ID ");
-		sql.append("   	) ");
+		sql.append("   	   SELECT 1 ");
+		sql.append("   	   FROM IA_WS_LIC6010 I ");
+		sql.append("   	   WHERE I.CURRENT_LIC_ID = W.WS_LICFRI6010_ID ");
+		sql.append("   	 ) ");
 		sql.append(" ) SL ON L.FAC_ID = SL.FAC_ID ");
 		sql.append("   AND L.LIC_TYPE = SL.LIC_TYPE ");
 		sql.append(" WHERE L.IS_DELETED = 'N' ");
@@ -127,7 +127,7 @@ public class Int0604JdbcRepository {
 				entity.setCurrentLicId(rs.getLong("OLD_ID"));
 				entity.setNewLicId(rs.getLong("NEW_ID"));
 				entity.setNewLicDate(LocalDateConverter.convertToEntityAttribute(rs.getDate("LIC_DATE")));
-				entity.setNewLicNo(rs.getString("LIC_NO"));
+				entity.setNewLicNo(StringUtils.trim(rs.getString("LIC_NO")));
 				return entity;
 			}
 		});
@@ -147,16 +147,17 @@ public class Int0604JdbcRepository {
 			paramList.add(vo.getOfficeCode());
 		}
 		if (StringUtils.isNotBlank(vo.getLicDateFrom())) {
-			sql.append(" AND WS.LIC_DATE >= ? ");
-			Date date = ConvertDateUtils.parseStringToDate(vo.getLicDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH);
-			paramList.add(date);
+			sql.append(" AND WS.LIC_DATE >= TO_DATE(?, 'YYYYMMDD') ");
+			LocalDate localDate = ConvertDateUtils.parseStringToLocalDate(vo.getLicDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH);
+			paramList.add(localDate.format(DateTimeFormatter.BASIC_ISO_DATE));
 		}
 		if (StringUtils.isNotBlank(vo.getLicDateTo())) {
-			sql.append(" AND WS.LIC_DATE <= ? ");
-			Date date = ConvertDateUtils.parseStringToDate(vo.getLicDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH);
-			paramList.add(date);
+			sql.append(" AND WS.LIC_DATE <= TO_DATE(?, 'YYYYMMDD') ");
+			LocalDate localDate = ConvertDateUtils.parseStringToLocalDate(vo.getLicDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH);
+			paramList.add(localDate.format(DateTimeFormatter.BASIC_ISO_DATE));
 		}
 		sql.append(" ORDER BY ").append(strOrder);
+		
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), tab1RowMapper);
 
 	}
@@ -207,16 +208,17 @@ public class Int0604JdbcRepository {
 			paramList.add(vo.getOfficeCode());
 		}
 		if (StringUtils.isNotBlank(vo.getLicDateFrom())) {
-			sql.append(" AND WS.LIC_DATE >= ? ");
-			Date date = ConvertDateUtils.parseStringToDate(vo.getLicDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH);
-			paramList.add(date);
+			sql.append(" AND WS.LIC_DATE >= TO_DATE(?, 'YYYYMMDD') ");
+			LocalDate localDate = ConvertDateUtils.parseStringToLocalDate(vo.getLicDateFrom(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH);
+			paramList.add(localDate.format(DateTimeFormatter.BASIC_ISO_DATE));
 		}
 		if (StringUtils.isNotBlank(vo.getLicDateTo())) {
-			sql.append(" AND WS.LIC_DATE <= ? ");
-			Date date = ConvertDateUtils.parseStringToDate(vo.getLicDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH);
-			paramList.add(date);
+			sql.append(" AND WS.LIC_DATE <= TO_DATE(?, 'YYYYMMDD') ");
+			LocalDate localDate = ConvertDateUtils.parseStringToLocalDate(vo.getLicDateTo(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH);
+			paramList.add(localDate.format(DateTimeFormatter.BASIC_ISO_DATE));
 		}
 		sql.append(" ORDER BY EXP_DATE");
+		
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), int0604RowMapper);
 
 	}

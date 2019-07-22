@@ -49,14 +49,10 @@ public class Int0604Service {
 	private IaAuditLicexpDRepository auditLicexpDRepository;
 
 	public List<AuditLicexpDVo> findByCriteria(Int0602FormVo int0602FormVo) {
-		logger.info("findByCriterai");
-		List<AuditLicexpDVo> data = null;
-		try {
-			data = int0604JdbcRepository.findByCriteria(int0602FormVo);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-		}
-
+		logger.info("findByCriteria");
+		
+		List<AuditLicexpDVo> data = int0604JdbcRepository.findByCriteria(int0602FormVo);
+		
 		return data;
 	}
 
