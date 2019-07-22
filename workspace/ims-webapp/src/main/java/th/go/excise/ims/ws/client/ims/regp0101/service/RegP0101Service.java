@@ -40,4 +40,12 @@ public class RegP0101Service {
 		return responseData;
 	}
 	
+	public byte[] executeDocLink(String docLink) throws IOException {
+		HttpUrl.Builder urlBuilder = HttpUrl.parse(docLink).newBuilder();
+		
+		byte[] contents = restfulClientService.getBytes(urlBuilder.build().toString());
+		
+		return contents;
+	}
+	
 }

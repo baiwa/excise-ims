@@ -17,10 +17,10 @@ import th.co.baiwa.buckwaframework.common.rest.interceptor.LoggingInterceptor;
 @Service
 public class RestfulClientService {
 	
-//	private static final Logger logger = LoggerFactory.getLogger(RestfulClientService.class);
+	private static final Logger logger = LoggerFactory.getLogger(RestfulClientService.class);
 	
 	public final OkHttpClient client = new OkHttpClient.Builder()
-//		.addInterceptor(new LoggingInterceptor(logger))
+		//.addInterceptor(new LoggingInterceptor(logger))
 		.readTimeout(20, TimeUnit.SECONDS)
 		.build();
 	
@@ -45,6 +45,16 @@ public class RestfulClientService {
 		
 		try (Response response = client.newCall(request).execute()) {
 			return response.body().string();
+		}
+	}
+	
+	public byte[] getBytes(String url) throws IOException {
+		Request request = new Request.Builder()
+				.url(url)
+				.build();
+		
+		try (Response response = client.newCall(request).execute()) {
+			return response.body().bytes();
 		}
 	}
 
