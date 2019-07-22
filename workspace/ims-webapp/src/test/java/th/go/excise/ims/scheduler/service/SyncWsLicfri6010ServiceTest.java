@@ -127,10 +127,13 @@ public class SyncWsLicfri6010ServiceTest {
 			}
 	}
 	
-	
 	@Test 
 	public void syncWs6010ToIaWs6010() {
-		syncWsLicfri6010Service.syncWs6010ToIaWs6010();
+		RequestData requestData = new RequestData();
+		requestData.setYearMonthFrom("201803");
+		requestData.setYearMonthTo("201907");
+		
+		syncWsLicfri6010Service.syncWs6010ToIaWs6010(requestData);
 	}
 	
 }

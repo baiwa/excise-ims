@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -18,23 +20,28 @@ import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.LocalDateConverter;
 import th.co.baiwa.buckwaframework.common.util.LocalDateTimeConverter;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
+import th.go.excise.ims.ia.persistence.entity.IaWsLic6010;
 import th.go.excise.ims.ia.vo.AuditLicexpDVo;
 import th.go.excise.ims.ia.vo.Int0602FormVo;
 import th.go.excise.ims.ws.persistence.entity.WsLicfri6010;
 
 @Repository
 public class Int0604JdbcRepository {
-
+	
+	private static final Logger logger = LoggerFactory.getLogger(Int0604JdbcRepository.class);
+	
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
 
 	public List<WsLicfri6010> findWsLicfri6010Formapping() {
 		StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT * FROM WS_LICFRI6010 W ");
-		sql.append(" WHERE 1=1 ");
-		sql.append(" AND NOT EXISTS( SELECT 1 FROM IA_WS_LIC6010 I WHERE I.CURRENT_LIC_ID = W.WS_LICFRI6010_ID ) ");
-		sql.append(" ORDER BY LIC_DATE ");
 		List<Object> paramList = new ArrayList<>();
+		
+		sql.append(" SELECT W.* FROM WS_LICFRI6010 W ");
+		sql.append(" WHERE 1=1 ");
+		sql.append("   AND NOT EXISTS( SELECT 1 FROM IA_WS_LIC6010 I WHERE I.CURRENT_LIC_ID = W.WS_LICFRI6010_ID ) ");
+		sql.append(" ORDER BY W.LIC_DATE ");
+		
 		return commonJdbcTemplate.query(sql.toString(), paramList.toArray(), rowMapper);
 	}
 
@@ -85,6 +92,48 @@ public class Int0604JdbcRepository {
 			return vo;
 		}
 	};
+	
+	public List<IaWsLic6010> findNextLicense(String dateStart, String dateEnd) {
+		logger.info("findNextLicense dateStart={}, dateEnd={}", dateStart, dateEnd);
+		
+		StringBuilder sql = new StringBuilder();
+		List<Object> paramList = new ArrayList<>();
+		
+		sql.append(" SELECT SL.WS_LICFRI6010_ID AS OLD_ID, L.WS_LICFRI6010_ID AS NEW_ID, L.LIC_DATE, L.LIC_NO ");
+		sql.append(" FROM WS_LICFRI6010 L ");
+		sql.append(" INNER JOIN ( ");
+		sql.append("   SELECT W.* ");
+		sql.append("   FROM WS_LICFRI6010 W ");
+		sql.append("   WHERE W.IS_DELETED = 'N' ");
+		sql.append("     AND W.LIC_DATE >= TO_DATE(?, 'YYYYMMDD') ");
+		paramList.add(dateStart);
+		sql.append("     AND W.LIC_DATE <= TO_DATE(?, 'YYYYMMDD') ");
+		paramList.add(dateEnd);
+		sql.append("     AND NOT EXISTS ( ");
+		sql.append("   	  SELECT 1 ");
+		sql.append("   	  FROM IA_WS_LIC6010 I ");
+		sql.append("   	  WHERE I.CURRENT_LIC_ID = W.WS_LICFRI6010_ID ");
+		sql.append("   	) ");
+		sql.append(" ) SL ON L.FAC_ID = SL.FAC_ID ");
+		sql.append("   AND L.LIC_TYPE = SL.LIC_TYPE ");
+		sql.append(" WHERE L.IS_DELETED = 'N' ");
+		sql.append("   AND L.START_DATE > NVL(SL.EXP_DATE, TRUNC(SYSDATE)) ");
+		sql.append(" ORDER BY L.LIC_DATE ");
+		
+		List<IaWsLic6010> iaWsLic6010List = commonJdbcTemplate.query(sql.toString(), paramList.toArray(), new RowMapper<IaWsLic6010>() {
+			@Override
+			public IaWsLic6010 mapRow(ResultSet rs, int rowNum) throws SQLException {
+				IaWsLic6010 entity = new IaWsLic6010();
+				entity.setCurrentLicId(rs.getLong("OLD_ID"));
+				entity.setNewLicId(rs.getLong("NEW_ID"));
+				entity.setNewLicDate(LocalDateConverter.convertToEntityAttribute(rs.getDate("LIC_DATE")));
+				entity.setNewLicNo(rs.getString("LIC_NO"));
+				return entity;
+			}
+		});
+		
+		return iaWsLic6010List;
+	}
 
 	public List<WsLicfri6010> findByCriteria(Int0602FormVo vo, String strOrder) {
 		List<Object> paramList = new ArrayList<>();

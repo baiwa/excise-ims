@@ -1,6 +1,8 @@
 package th.go.excise.ims.scheduler.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
 import th.go.excise.ims.ia.persistence.entity.IaWsLic6010;
@@ -28,7 +31,7 @@ import th.go.excise.ims.ws.persistence.repository.WsLicfri6010Repository;
 @Service
 public class SyncWsLicfri6010Service {
 
-	private static final Logger logger = LoggerFactory.getLogger(SyncWsRegfri4000Service.class);
+	private static final Logger logger = LoggerFactory.getLogger(SyncWsLicfri6010Service.class);
 
 	private final int WS_DATA_SIZE = 5000;
 
@@ -93,7 +96,7 @@ public class SyncWsLicfri6010Service {
 					wsLicfri6010Repository.batchInsert(licfri6010List);
 					System.gc();
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e.getMessage(), e);
 				}
 			}
 		} while (licenseList.size() == WS_DATA_SIZE);
@@ -112,30 +115,63 @@ public class SyncWsLicfri6010Service {
 		logger.info("syncData Licfri6010 Success, using {} seconds", (float) (end - start) / 1000F);
 	}
 
-	public void syncWs6010ToIaWs6010() {
-		try {
-			List<WsLicfri6010> wsLicfri6010List = int0604JdbcRepository.findWsLicfri6010Formapping();
-			List<WsLicfri6010> nextLic = null;
-			IaWsLic6010 iaWsLic6010;
-			for (WsLicfri6010 wsLicfri6010 : wsLicfri6010List) {
-				if (StringUtils.isNotBlank(wsLicfri6010.getFacId())) {
-					nextLic = new ArrayList<>();
-					nextLic = int0604JdbcRepository.nextLic(wsLicfri6010);
-					if (nextLic != null && nextLic.size() > 0) {
-
-						iaWsLic6010 = new IaWsLic6010();
-						iaWsLic6010.setCurrentLicId(wsLicfri6010.getWsLicfri6010Id());
-						iaWsLic6010.setNewLicId(nextLic.get(0).getWsLicfri6010Id());
-						iaWsLic6010.setNewLicDate(nextLic.get(0).getLicDate());
-						iaWsLic6010.setNewLicNo(nextLic.get(0).getLicNo());
-						iaWsLic6010Repository.save(iaWsLic6010);
-					}
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+	@Transactional
+	public void syncWs6010ToIaWs6010(RequestData requestData) {
+		logger.info("syncWs6010ToIaWs6010 - Start");
+		long start = System.currentTimeMillis();
+		
+		LocalDate startLocalDate = LocalDate.of(
+			Integer.parseInt(requestData.getYearMonthFrom().substring(0, 4)),
+			Integer.parseInt(requestData.getYearMonthFrom().substring(4, 6)),
+			1
+		);
+		
+		LocalDate endLocalDate = LocalDate.of(
+			Integer.parseInt(requestData.getYearMonthTo().substring(0, 4)),
+			Integer.parseInt(requestData.getYearMonthTo().substring(4, 6)),
+			1
+		);
+		
+		List<LocalDate> localDateList = LocalDateUtils.getLocalDateRange(startLocalDate, endLocalDate);
+		String dateStart = null;
+		String dateEnd = null;
+		for (LocalDate localDate : localDateList) {
+			dateStart = localDate.format(DateTimeFormatter.BASIC_ISO_DATE);
+			dateEnd = localDate.plusMonths(1).minusDays(1).format(DateTimeFormatter.BASIC_ISO_DATE);
+			
+			List<IaWsLic6010> iaWsLic6010List = int0604JdbcRepository.findNextLicense(dateStart, dateEnd);
+			iaWsLic6010Repository.batchInsert(iaWsLic6010List);
 		}
-
+		
+		long end = System.currentTimeMillis();
+		logger.info("syncWs6010ToIaWs6010 - Success, using {} seconds", (float) (end - start) / 1000F);
 	}
+	
+	// Old logic
+//	public void syncWs6010ToIaWs6010() {
+//		try {
+//			List<WsLicfri6010> wsLicfri6010List = int0604JdbcRepository.findWsLicfri6010Formapping();
+//			List<WsLicfri6010> nextLic = null;
+//			IaWsLic6010 iaWsLic6010;
+//			for (WsLicfri6010 wsLicfri6010 : wsLicfri6010List) {
+//				if (StringUtils.isNotBlank(wsLicfri6010.getFacId())) {
+//					nextLic = new ArrayList<>();
+//					nextLic = int0604JdbcRepository.nextLic(wsLicfri6010);
+//					if (nextLic != null && nextLic.size() > 0) {
+//
+//						iaWsLic6010 = new IaWsLic6010();
+//						iaWsLic6010.setCurrentLicId(wsLicfri6010.getWsLicfri6010Id());
+//						iaWsLic6010.setNewLicId(nextLic.get(0).getWsLicfri6010Id());
+//						iaWsLic6010.setNewLicDate(nextLic.get(0).getLicDate());
+//						iaWsLic6010.setNewLicNo(nextLic.get(0).getLicNo());
+//						iaWsLic6010Repository.save(iaWsLic6010);
+//					}
+//				}
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//	}
 
 }

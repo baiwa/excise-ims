@@ -1,4 +1,3 @@
-
 package th.go.excise.ims.ia.persistence.entity;
 
 import java.io.Serializable;
@@ -18,8 +17,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 @Entity
 @Table(name = "IA_WS_LIC6010")
 public class IaWsLic6010 implements Serializable {
-
-
+	
 	private static final long serialVersionUID = 4068483685132688744L;
 	
 	@Id
