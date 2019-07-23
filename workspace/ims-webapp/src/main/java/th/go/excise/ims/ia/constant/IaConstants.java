@@ -222,4 +222,17 @@ public class IaConstants {
     	public static final String NOT_PASS = "2056";
     	public static final String SUCCESS = "2057";	    				    			   
     }
+	
+//	************************* IA_CHART_OF_ACC *************************
+	
+	public class CHART_OF_ACC_SYMBOLS {
+		public static final String ZERO = "0";
+		public static final String POSITIVE = "1";
+		public static final String NEGATIVE = "2";
+	}
+	
+	public class CHART_OF_ACC_TYPE {
+		public static final String DEBIT = "D";
+		public static final String CREDIT = "C";
+	}
 }
