@@ -246,9 +246,9 @@ public class IaGftrialBalanceRepositoryImpl implements IaGftrialBalanceRepositor
 		sql.append(" INNER JOIN IA_CHART_OF_ACC C ON B.ACC_NO = C.COA_CODE ");
 		sql.append(" WHERE 1=1 ");
 		
-		if(StringUtils.isNotBlank(request.getGfDisburseUnit())) {
+		if(StringUtils.isNotBlank(request.getDeptDisb())) {
 			sql.append(" AND B.DEPT_DISB = ? ");
-			params.add("00000".concat(request.getGfDisburseUnit()));
+			params.add("00000".concat(request.getDeptDisb()));
 		}
 		
 		if(StringUtils.isNotBlank(request.getPeriod()) && StringUtils.isNotBlank(request.getPeriodYear())) {

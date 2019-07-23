@@ -10,11 +10,10 @@ public class Int0801Vo {
 	private BigDecimal bringForward;
 	private BigDecimal debit;
 	private BigDecimal credit;
-	private String gfDisburseUnit;
-	private String period;
-	private String periodYear;
 	private String balanceAccType;
 	private String valueTrueType;
+	private String gftbTestResult;
+	private String checkFlag;
 
 	public String getDeptDisb() {
 		return deptDisb;
@@ -72,30 +71,6 @@ public class Int0801Vo {
 		this.credit = credit;
 	}
 
-	public String getGfDisburseUnit() {
-		return gfDisburseUnit;
-	}
-
-	public void setGfDisburseUnit(String gfDisburseUnit) {
-		this.gfDisburseUnit = gfDisburseUnit;
-	}
-
-	public String getPeriod() {
-		return period;
-	}
-
-	public void setPeriod(String period) {
-		this.period = period;
-	}
-
-	public String getPeriodYear() {
-		return periodYear;
-	}
-
-	public void setPeriodYear(String periodYear) {
-		this.periodYear = periodYear;
-	}
-
 	public String getBalanceAccType() {
 		return balanceAccType;
 	}
@@ -110,6 +85,22 @@ public class Int0801Vo {
 
 	public void setValueTrueType(String valueTrueType) {
 		this.valueTrueType = valueTrueType;
+	}
+
+	public String getGftbTestResult() {
+		return gftbTestResult;
+	}
+
+	public void setGftbTestResult(String gftbTestResult) {
+		this.gftbTestResult = gftbTestResult;
+	}
+
+	public String getCheckFlag() {
+		return checkFlag;
+	}
+
+	public void setCheckFlag(String checkFlag) {
+		this.checkFlag = checkFlag;
 	}
 
 }
