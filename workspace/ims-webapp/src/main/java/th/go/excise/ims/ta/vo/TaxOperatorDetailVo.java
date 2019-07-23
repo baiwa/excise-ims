@@ -103,6 +103,7 @@ public class TaxOperatorDetailVo {
 	private String notPayTaxMonthNo;
 	private String multiDutyFlag;
 	private String incMultiDutyFlag;
+	private String syncDate;
 
 	public String getSelectByOfCode() {
 		return selectByOfCode;
@@ -910,6 +911,14 @@ public class TaxOperatorDetailVo {
 
 	public void setIncMultiDutyFlag(String incMultiDutyFlag) {
 		this.incMultiDutyFlag = incMultiDutyFlag;
+	}
+
+	public String getSyncDate() {
+		return syncDate;
+	}
+
+	public void setSyncDate(String syncDate) {
+		this.syncDate = syncDate;
 	}
 
 }

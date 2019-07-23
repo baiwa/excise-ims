@@ -181,6 +181,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		sql.append("   TA_PW_SEL.AREA_SEL_FLAG, ");
 		sql.append("   TA_PW_SEL.AREA_SEL_OFFICE_CODE, ");
 		sql.append("   TA_PW_SEL.AREA_SEL_DATE, ");
+		sql.append("   R4000.REG_ID AS REG_ID_R4000, ");
 		sql.append("   R4000.REG_STATUS_DESC, ");
 		sql.append("   R4000.REG_DATE, ");
 		sql.append("   R4000.REG_CAPITAL, ");
@@ -189,7 +190,8 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		sql.append("   T_W_COND_DTL.RISK_LEVEL, ");
 		sql.append("   (TO_NUMBER(NVL(SUM_TAX_AMT_G1,0)) + TO_NUMBER(NVL(SUM_TAX_AMT_G2,0))) AS SUM_TOTAL_TAX_AMT, ");
 		sql.append("   R4000.MULTI_DUTY_FLAG, ");
-		sql.append("   ECDG.DUTY_GROUP_TYPE ");
+		sql.append("   ECDG.DUTY_GROUP_TYPE, ");
+		sql.append("   R4000.SYNC_DATE ");
 		sql.append(" FROM TA_WORKSHEET_DTL TA_W_DTL ");
 		sql.append(" INNER JOIN TA_WORKSHEET_HDR TA_W_HDR ON TA_W_DTL.ANALYSIS_NUMBER = TA_W_HDR.ANALYSIS_NUMBER ");
 		sql.append("   AND TA_W_HDR.IS_DELETED = 'N' ");
@@ -472,6 +474,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 				vo.setCondSubNoAuditDesc("");
 			}
 
+			vo.setOldRegId(rs.getString("REG_ID_R4000"));
 			vo.setRegCapital(rs.getString("REG_CAPITAL"));
 			vo.setRegStatus((StringUtils.isNotBlank(rs.getString("REG_STATUS_DESC")) ? rs.getString("REG_STATUS_DESC") : " ") + " " + ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_TH));
 			vo.setRegDate(ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_TH));
@@ -502,6 +505,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 					vo.setSelectBy(ApplicationCache.getExciseDepartment(vo.getAreaSelOfficeCode()).getDeptShortName());
 				}
 			}
+			vo.setSyncDate(ConvertDateUtils.formatDateToString(rs.getDate("SYNC_DATE"), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_TH));
 
 			return vo;
 		}

@@ -88,6 +88,7 @@ public class TaxAuditUtils {
 			taxOperatorDatatableVo.setNotPayTaxMonthNo(taxOperatorDetailVo.getNotPayTaxMonthNo());
 			taxOperatorDatatableVo.setMultiDutyFlag(taxOperatorDetailVo.getMultiDutyFlag());
 			taxOperatorDatatableVo.setIncMultiDutyFlag(taxOperatorDetailVo.getIncMultiDutyFlag());
+			taxOperatorDatatableVo.setSyncDate(taxOperatorDetailVo.getSyncDate());
 			
 			taxAmtList = new ArrayList<>();
 			for (int i = 0; i < formVo.getDateRange(); i++) {

@@ -2,9 +2,6 @@ package th.go.excise.ims.ta.vo;
 
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 public class TaxOperatorDatatableVo {
 
 	private String cusFullname;
@@ -67,15 +64,7 @@ public class TaxOperatorDatatableVo {
 	private String taxAuditLast2MultiDesc;
 	private String taxAuditLast1MultiFlag;
 	private String taxAuditLast1MultiDesc;
-
-	
-	public String getSelectByOfCode() {
-		return selectByOfCode;
-	}
-
-	public void setSelectByOfCode(String selectByOfCode) {
-		this.selectByOfCode = selectByOfCode;
-	}
+	private String syncDate;
 
 	public String getCusFullname() {
 		return cusFullname;
@@ -317,6 +306,14 @@ public class TaxOperatorDatatableVo {
 		this.selectBy = selectBy;
 	}
 
+	public String getSelectByOfCode() {
+		return selectByOfCode;
+	}
+
+	public void setSelectByOfCode(String selectByOfCode) {
+		this.selectByOfCode = selectByOfCode;
+	}
+
 	public String getCondTaxGrp() {
 		return condTaxGrp;
 	}
@@ -549,9 +546,12 @@ public class TaxOperatorDatatableVo {
 		this.taxAuditLast1MultiDesc = taxAuditLast1MultiDesc;
 	}
 
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	public String getSyncDate() {
+		return syncDate;
+	}
+
+	public void setSyncDate(String syncDate) {
+		this.syncDate = syncDate;
 	}
 
 }
