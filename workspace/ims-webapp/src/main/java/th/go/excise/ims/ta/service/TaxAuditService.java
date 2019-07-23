@@ -110,42 +110,43 @@ public class TaxAuditService {
 		return planWsDtl;
 	}
 
+	// FIXME getOperatorDetails
 	public WsRegfri4000FormVo getOperatorDetails(String newRegId) throws Exception {
 		logger.info("getOperatorDetails newRegId={}", newRegId);
 		
-		RequestData requestData = new RequestData();
-		requestData.setType("2");
-		requestData.setNid("");
-		requestData.setNewregId(newRegId);
-		requestData.setHomeOfficeId("");
-		requestData.setActive("1");
-		requestData.setPageNo("1");
-		requestData.setDataPerPage("1");
+//		RequestData requestData = new RequestData();
+//		requestData.setType("2");
+//		requestData.setNid("");
+//		requestData.setNewregId(newRegId);
+//		requestData.setHomeOfficeId("");
+//		requestData.setActive("1");
+//		requestData.setPageNo("1");
+//		requestData.setDataPerPage("1");
 		
 		WsRegfri4000FormVo formVo = null;
-		try {
-			List<RegMaster60> regMaster60List = regFri4000Service.execute(requestData).getRegMaster60List();
-			formVo = new WsRegfri4000FormVo();
-			RegMaster60 regMaster60 = null;
-			if (regMaster60List != null && regMaster60List.size() > 0) {
-				regMaster60 = regMaster60List.get(0);
-				BeanUtils.copyProperties(formVo, regMaster60);
-				formVo.setNewRegId(regMaster60.getNewregId());
-				formVo.setCusFullname(regMaster60.getCusFullname());
-				formVo.setCustomerAddress(ExciseUtils.buildCusAddress(regMaster60));
-				formVo.setFacAddress(ExciseUtils.buildFacAddress(regMaster60));
-				formVo.setFactoryType(ExciseUtils.getFactoryType(formVo.getNewRegId()));
-				if (StringUtils.isNotEmpty(formVo.getFactoryType())) {
-					formVo.setFactoryTypeText(ApplicationCache.getParamInfoByCode(PARAM_GROUP.EXCISE_FACTORY_TYPE, formVo.getFactoryType()).getValue2());
-				}
-			}
-		} catch (PccRestfulException e) {
-			logger.warn("Now Found when call WS Regfri4000");
+//		try {
+//			List<RegMaster60> regMaster60List = regFri4000Service.execute(requestData).getRegMaster60List();
+//			formVo = new WsRegfri4000FormVo();
+//			RegMaster60 regMaster60 = null;
+//			if (regMaster60List != null && regMaster60List.size() > 0) {
+//				regMaster60 = regMaster60List.get(0);
+//				BeanUtils.copyProperties(formVo, regMaster60);
+//				formVo.setNewRegId(regMaster60.getNewregId());
+//				formVo.setCusFullname(regMaster60.getCusFullname());
+//				formVo.setCustomerAddress(ExciseUtils.buildCusAddress(regMaster60));
+//				formVo.setFacAddress(ExciseUtils.buildFacAddress(regMaster60));
+//				formVo.setFactoryType(ExciseUtils.getFactoryType(formVo.getNewRegId()));
+//				if (StringUtils.isNotEmpty(formVo.getFactoryType())) {
+//					formVo.setFactoryTypeText(ApplicationCache.getParamInfoByCode(PARAM_GROUP.EXCISE_FACTORY_TYPE, formVo.getFactoryType()).getValue2());
+//				}
+//			}
+//		} catch (PccRestfulException e) {
+//			logger.warn("Now Found when call WS Regfri4000");
 			formVo = taWsReg4000Repository.findByNewRegId(newRegId);
 			if (formVo == null) {
 				throw new PccRestfulException("NewRegId=" + newRegId + " Not Found");
 			}
-		}
+//		}
 		String secDesc = ApplicationCache.getExciseDepartment(formVo.getOffcode().substring(0, 2) + "0000").getDeptShortName();
 		String areaDesc = ApplicationCache.getExciseDepartment(formVo.getOffcode().substring(0, 4) + "00").getDeptShortName();
 		formVo.setSecDesc(secDesc);
