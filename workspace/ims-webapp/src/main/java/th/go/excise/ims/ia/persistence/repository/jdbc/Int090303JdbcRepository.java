@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.persistence.entity.IaCheckControlRegis;
-import th.go.excise.ims.ia.vo.Int030102FormVo;
 import th.go.excise.ims.ia.vo.Int0900303FormVo;
 
 @Repository
@@ -22,8 +21,7 @@ public class Int090303JdbcRepository {
 
 	@Autowired
 	private CommonJdbcTemplate commonJdbcTemplate;
-	
-	
+
 	private final String SQL_IA_CHECK_CONTROL_REGIS = "SELECT * FROM IA_CHECK_CONTROL_REGIS A WHERE A.OFFCODE = ? ";
 
 	public List<IaCheckControlRegis> list(Int0900303FormVo form) {
@@ -33,32 +31,32 @@ public class Int090303JdbcRepository {
 		List<Object> params = new ArrayList<Object>();
 
 		params.add(form.getOffcode());
-		
+
 		if (StringUtils.isNotBlank(form.getStartDate())) {
 			sql.append("AND A.PAYMENT_DATE >=  ?  ");
 			Date dateForm = ConvertDateUtils.parseStringToDate(form.getStartDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH);
 			params.add(dateForm);
-		} 
-		
+		}
+
 		if (StringUtils.isNotBlank(form.getEndDate())) {
 			sql.append("AND A.PAYMENT_DATE <=  ?  ");
 			Date dateTo = ConvertDateUtils.parseStringToDate(form.getEndDate(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH);
 			params.add(dateTo);
 		}
-		
+
 		if (StringUtils.isNotBlank(form.getBudgetType())) {
 			sql.append("AND A.BUDGET_TYPE = ?  ");
 			params.add(form.getBudgetType());
 		}
-		
+
 		iaCheckControlRegis = commonJdbcTemplate.query(sql.toString(), params.toArray(), listRowmapper);
 		return iaCheckControlRegis;
 	}
-	
+
 	private RowMapper<IaCheckControlRegis> listRowmapper = new RowMapper<IaCheckControlRegis>() {
 		@Override
 		public IaCheckControlRegis mapRow(ResultSet rs, int arg1) throws SQLException {
-			IaCheckControlRegis vo = new IaCheckControlRegis();	
+			IaCheckControlRegis vo = new IaCheckControlRegis();
 			vo.setPaymentDate(rs.getDate("PAYMENT_DATE"));
 			vo.setRefPayment(rs.getString("REF_PAYMENT"));
 			vo.setBankName(rs.getString("BANK_NAME"));
@@ -70,13 +68,10 @@ public class Int090303JdbcRepository {
 			return vo;
 		}
 	};
-	
+
 	public List<Int0900303FormVo> budgetTypeDropdown() {
 		List<Int0900303FormVo> response = new ArrayList<Int0900303FormVo>();
-		StringBuilder sql = new StringBuilder("SELECT DISTINCT(A.BUDGET_TYPE) AS BUDGET_TYPE " + 
-											  "FROM IA_CHECK_CONTROL_REGIS A  " + 
-											  "WHERE A.IS_DELETED = 'N' " + 
-										      "ORDER BY A.BUDGET_TYPE DESC ");
+		StringBuilder sql = new StringBuilder("SELECT DISTINCT(A.BUDGET_TYPE) AS BUDGET_TYPE " + "FROM IA_CHECK_CONTROL_REGIS A  " + "WHERE A.IS_DELETED = 'N' " + "ORDER BY A.BUDGET_TYPE DESC ");
 		response = commonJdbcTemplate.query(sql.toString(), budgetYearDropdownRowmapper);
 		return response;
 	}
@@ -89,6 +84,5 @@ public class Int090303JdbcRepository {
 			return vo;
 		}
 	};
-	
-	
+
 }
