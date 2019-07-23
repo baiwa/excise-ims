@@ -40,6 +40,7 @@ public class MenuService {
 			vo.setMenuName(e.getMenuName());
 			vo.setUrl(e.getUrl());
 			vo.setSortingOrder(e.getSortingOrder());
+			vo.setMenuCode(e.getMenuCode());
 			if (1 == e.getLvl()) {
 				List<MenuVo> list = recursiveFunc(e.getMenuId(), e.getUrl(), menuList);
 				vo.setMenuVoList(list);
