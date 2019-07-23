@@ -1,6 +1,10 @@
 package th.co.baiwa.buckwaframework.common.util;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -54,6 +58,30 @@ public class NumberUtils {
 			percent = (baseBigDecimal.subtract(compareBigDecimal)).multiply(new BigDecimal("100")).divide(NumberUtils.ZeroToOne(compareBigDecimal), 2, BigDecimal.ROUND_HALF_UP);
 		}
 		return percent;
+	}
+	
+	public static BigDecimal min(BigDecimal... bigDecimals) {
+		return min(Arrays.asList(bigDecimals));
+	}
+	
+	public static BigDecimal min(List<BigDecimal> bigDecimalList) {
+		Optional<BigDecimal> min = bigDecimalList
+			.stream()
+			.min(Comparator.naturalOrder());
+		
+		return min.get();
+	}
+	
+	public static BigDecimal max(BigDecimal... bigDecimals) {
+		return max(Arrays.asList(bigDecimals));
+	}
+	
+	public static BigDecimal max(List<BigDecimal> bigDecimalList) {
+		Optional<BigDecimal> max = bigDecimalList
+			.stream()
+			.max(Comparator.naturalOrder());
+		
+		return max.get();
 	}
 	
 }

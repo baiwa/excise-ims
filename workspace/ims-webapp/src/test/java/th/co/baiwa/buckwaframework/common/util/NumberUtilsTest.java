@@ -38,4 +38,26 @@ public class NumberUtilsTest {
 		System.out.println(percent);
 	}
 	
+	@Test
+	public void test_min() {
+		BigDecimal[] bigDecimals = new BigDecimal[] {
+			new BigDecimal("-10"),
+			new BigDecimal("12"),
+			new BigDecimal("9"),
+		};
+		
+		System.out.println("min=" + NumberUtils.min(bigDecimals));
+	}
+	
+	@Test
+	public void test_max() {
+		BigDecimal[] bigDecimals = new BigDecimal[] {
+			new BigDecimal("-10"),
+			new BigDecimal("12"),
+			new BigDecimal("9"),
+		};
+		
+		System.out.println("max=" + NumberUtils.max(bigDecimals));
+	}
+	
 }

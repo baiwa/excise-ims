@@ -6,7 +6,6 @@ import java.time.chrono.ThaiBuddhistDate;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
@@ -175,7 +174,10 @@ public class ExciseUtils {
 				}
 				// Provincename
 				if (StringUtils.isNotEmpty(getProvincenameValue(regMaster60, addressType))) {
-					fullAddress.append(" จ." + getProvincenameValue(regMaster60, addressType));
+					if (isBangkok(getProvincecodeValue(regMaster60, addressType))) {
+						fullAddress.append(" จ.");
+					}
+					fullAddress.append(getProvincenameValue(regMaster60, addressType));
 				}
 				// Zipcode
 				if (StringUtils.isNotEmpty(getZipcodeValue(regMaster60, addressType))) {
