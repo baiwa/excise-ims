@@ -9,11 +9,10 @@ import org.springframework.data.jpa.repository.Query;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRepository;
 import th.go.excise.ims.ia.persistence.entity.IaAuditGftbH;
-import th.go.excise.ims.ia.persistence.entity.IaAuditIncSendH;
 
 public interface IaAuditGftbHRepository extends CommonJpaCrudRepository<IaAuditGftbH, BigDecimal> {
 	@Query("select e from #{#entityName} e where e.isDeleted = '" + FLAG.N_FLAG + "' order by e.auditGftbNo")
 	public List<IaAuditGftbH> findAllOrderByAuditGftbNo();
 	
-	public List<IaAuditGftbH> findByAuditGftbNoAndIsDeletedOrderByAuditGftbNo(String auditGftbNo, String isDeleted);
+	public IaAuditGftbH findByAuditGftbNoAndIsDeletedOrderByAuditGftbNo(String auditGftbNo, String isDeleted);
 }

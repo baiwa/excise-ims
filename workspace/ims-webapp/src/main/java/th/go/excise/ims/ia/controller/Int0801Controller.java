@@ -80,10 +80,10 @@ public class Int0801Controller {
 		return response;
 	}
 	
-	@PostMapping("/find/auditGftbNo")
+	@PostMapping("/find/dropdown/audit-gftb-no")
 	@ResponseBody
-	public ResponseData<List<Int0801Tabs>> findByAuditGftbNo(@RequestBody String auditGftbNo) {
-		ResponseData<List<Int0801Tabs>> response = new ResponseData<List<Int0801Tabs>>();
+	public ResponseData<Int0801SaveVo> findByAuditGftbNo(@RequestBody String auditGftbNo) {
+		ResponseData<Int0801SaveVo> response = new ResponseData<Int0801SaveVo>();
 		try {
 			response.setData(int0801Service.findByAuditGftbNo(auditGftbNo));
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);

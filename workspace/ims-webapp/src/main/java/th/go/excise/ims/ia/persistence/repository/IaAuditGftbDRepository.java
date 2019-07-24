@@ -8,5 +8,5 @@ import th.co.baiwa.buckwaframework.common.persistence.repository.CommonJpaCrudRe
 import th.go.excise.ims.ia.persistence.entity.IaAuditGftbD;
 
 public interface IaAuditGftbDRepository extends CommonJpaCrudRepository<IaAuditGftbD, BigDecimal> {
-	public List<IaAuditGftbD> findByAuditGftbNoAndIsDeletedOrderByAuditGftbNoAscGftbSeqAsc(String auditGftbNo, String isDeleted);
+	public List<IaAuditGftbD> findByAuditGftbNoAndIsDeletedOrderByAccNoAscGftbSeqAsc(String auditGftbNo, String isDeleted);
 }
