@@ -129,4 +129,30 @@ public class Int090304JdbcRepository {
 			return vo;
 		}
 	};
+
+	public List<Int090304Vo> getDataExport(Int0903FormVo request) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		buildSearchQuery(sql, params, request);
+
+		sql.append(" ORDER BY ps.withdrawal_persons_id ");
+
+		List<Int090304Vo> datas = this.commonJdbcTemplate.query(sql.toString(), params.toArray(), new RowMapper<Int090304Vo>() {
+			@Override
+			public Int090304Vo mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Int090304Vo vo = new Int090304Vo();
+				vo.setPayee(rs.getString("payee"));
+				vo.setRefPayment(rs.getString("ref_payment"));
+				vo.setBudgetType(rs.getString("budget_type"));
+				vo.setItemDesc(rs.getString("item_desc"));
+				vo.setAmount(rs.getBigDecimal("amount"));
+				vo.setPaymentDate(rs.getDate("payment_date") != null ? ConvertDateUtils.formatDateToString(rs.getDate("payment_date"), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH) : "");
+				return vo;
+			}
+		});
+
+		logger.info("datas.size()={}", datas.size());
+
+		return datas;
+	}
 }

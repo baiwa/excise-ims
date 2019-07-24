@@ -1,11 +1,17 @@
 package th.go.excise.ims.ia.controller;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,5 +61,19 @@ public class Int090304Controller {
 			response.setStatus(RESPONSE_STATUS.FAILED);
 		}
 		return response;
+	}
+	
+	@PostMapping("/export")
+	@ResponseBody
+	public void exportData(@ModelAttribute Int0903FormVo formVo, HttpServletResponse response) throws IOException {
+		byte[] bytes = int090304Service.exportData(formVo);
+		String fileName = URLEncoder.encode("ทะเบียนคุม KTB-Corporate", "UTF-8");
+
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+		OutputStream outStream = response.getOutputStream();
+		outStream.write(bytes);
+		outStream.flush();
+		outStream.close();
 	}
 }
