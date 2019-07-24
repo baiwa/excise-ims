@@ -22,7 +22,7 @@ import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESS
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
 import th.go.excise.ims.ia.persistence.entity.IaCheckControlRegis;
 import th.go.excise.ims.ia.service.Int090303Service;
-import th.go.excise.ims.ia.vo.Int0900303FormVo;
+import th.go.excise.ims.ia.vo.Int0903FormVo;
 
 @Controller
 @RequestMapping("/api/ia/int09/03/03")
@@ -35,7 +35,7 @@ public class Int090303Controller {
 
 	@PostMapping("/list")
 	@ResponseBody
-	public ResponseData<List<IaCheckControlRegis>> list(@RequestBody Int0900303FormVo form) {
+	public ResponseData<List<IaCheckControlRegis>> list(@RequestBody Int0903FormVo form) {
 		ResponseData<List<IaCheckControlRegis>> response = new ResponseData<List<IaCheckControlRegis>>();
 		try {
 			response.setData(int090303Service.list(form));
@@ -52,8 +52,8 @@ public class Int090303Controller {
 
 	@PostMapping("/budgetTypeDropdown")
 	@ResponseBody
-	public ResponseData<List<Int0900303FormVo>> budgetYearDropdown() {
-		ResponseData<List<Int0900303FormVo>> response = new ResponseData<List<Int0900303FormVo>>();
+	public ResponseData<List<Int0903FormVo>> budgetYearDropdown() {
+		ResponseData<List<Int0903FormVo>> response = new ResponseData<List<Int0903FormVo>>();
 		try {
 			response.setData(int090303Service.budgetTypeDropdown());
 			response.setMessage(RESPONSE_MESSAGE.SUCCESS);
@@ -68,7 +68,7 @@ public class Int090303Controller {
 
 	@PostMapping("/export")
 	@ResponseBody
-	public void exportData(@ModelAttribute Int0900303FormVo formVo, HttpServletResponse response) throws IOException {
+	public void exportData(@ModelAttribute Int0903FormVo formVo, HttpServletResponse response) throws IOException {
 		byte[] bytes = int090303Service.exportData(formVo);
 		String fileName = URLEncoder.encode("รายการคุมเช็ค", "UTF-8");
 

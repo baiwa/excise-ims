@@ -1,7 +1,13 @@
 package th.go.excise.ims.ia.vo;
 
-public class Int0900303FormVo {
+import th.co.baiwa.buckwaframework.common.bean.DataTableRequest;
 
+public class Int0903FormVo extends DataTableRequest {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8616942994981862758L;
 	private String budgetType;
 	private String endDate;
 	private String offcode;
@@ -22,8 +28,6 @@ public class Int0900303FormVo {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-
-	
 
 	public String getOffcode() {
 		return offcode;

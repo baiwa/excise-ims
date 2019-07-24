@@ -26,7 +26,7 @@ import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ia.persistence.entity.IaCheckControlRegis;
 import th.go.excise.ims.ia.persistence.repository.jdbc.Int090303JdbcRepository;
-import th.go.excise.ims.ia.vo.Int0900303FormVo;
+import th.go.excise.ims.ia.vo.Int0903FormVo;
 
 @Service
 public class Int090303Service {
@@ -36,18 +36,18 @@ public class Int090303Service {
 	@Autowired
 	Int090303JdbcRepository int090303JdbcRepository;
 
-	public List<IaCheckControlRegis> list(Int0900303FormVo form) {
+	public List<IaCheckControlRegis> list(Int0903FormVo form) {
 		List<IaCheckControlRegis> iaCheckControlRegis = new ArrayList<IaCheckControlRegis>();
 		iaCheckControlRegis = int090303JdbcRepository.list(form);
 		return iaCheckControlRegis;
 	}
 
-	public List<Int0900303FormVo> budgetTypeDropdown() {
-		List<Int0900303FormVo> response = int090303JdbcRepository.budgetTypeDropdown();
+	public List<Int0903FormVo> budgetTypeDropdown() {
+		List<Int0903FormVo> response = int090303JdbcRepository.budgetTypeDropdown();
 		return response;
 	}
 
-	public byte[] exportData(Int0900303FormVo formVo) {
+	public byte[] exportData(Int0903FormVo formVo) {
 		logger.info("exportData");
 
 		DecimalFormat formatter = new DecimalFormat("#,##0.00");

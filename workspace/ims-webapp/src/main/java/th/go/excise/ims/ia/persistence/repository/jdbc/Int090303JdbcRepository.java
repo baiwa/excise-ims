@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.ia.persistence.entity.IaCheckControlRegis;
-import th.go.excise.ims.ia.vo.Int0900303FormVo;
+import th.go.excise.ims.ia.vo.Int0903FormVo;
 
 @Repository
 public class Int090303JdbcRepository {
@@ -24,7 +24,7 @@ public class Int090303JdbcRepository {
 
 	private final String SQL_IA_CHECK_CONTROL_REGIS = "SELECT * FROM IA_CHECK_CONTROL_REGIS A WHERE A.OFFCODE = ? ";
 
-	public List<IaCheckControlRegis> list(Int0900303FormVo form) {
+	public List<IaCheckControlRegis> list(Int0903FormVo form) {
 		List<IaCheckControlRegis> iaCheckControlRegis = new ArrayList<IaCheckControlRegis>();
 
 		StringBuilder sql = new StringBuilder(SQL_IA_CHECK_CONTROL_REGIS);
@@ -69,17 +69,17 @@ public class Int090303JdbcRepository {
 		}
 	};
 
-	public List<Int0900303FormVo> budgetTypeDropdown() {
-		List<Int0900303FormVo> response = new ArrayList<Int0900303FormVo>();
+	public List<Int0903FormVo> budgetTypeDropdown() {
+		List<Int0903FormVo> response = new ArrayList<Int0903FormVo>();
 		StringBuilder sql = new StringBuilder("SELECT DISTINCT(A.BUDGET_TYPE) AS BUDGET_TYPE " + "FROM IA_CHECK_CONTROL_REGIS A  " + "WHERE A.IS_DELETED = 'N' " + "ORDER BY A.BUDGET_TYPE DESC ");
 		response = commonJdbcTemplate.query(sql.toString(), budgetYearDropdownRowmapper);
 		return response;
 	}
 
-	private RowMapper<Int0900303FormVo> budgetYearDropdownRowmapper = new RowMapper<Int0900303FormVo>() {
+	private RowMapper<Int0903FormVo> budgetYearDropdownRowmapper = new RowMapper<Int0903FormVo>() {
 		@Override
-		public Int0900303FormVo mapRow(ResultSet rs, int arg1) throws SQLException {
-			Int0900303FormVo vo = new Int0900303FormVo();
+		public Int0903FormVo mapRow(ResultSet rs, int arg1) throws SQLException {
+			Int0903FormVo vo = new Int0903FormVo();
 			vo.setBudgetType(rs.getString("BUDGET_TYPE"));
 			return vo;
 		}
