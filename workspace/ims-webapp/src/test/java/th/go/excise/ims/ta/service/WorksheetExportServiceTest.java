@@ -55,6 +55,7 @@ public class WorksheetExportServiceTest {
 	public void test_exportDraftWorksheet() {
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
 		formVo.setDraftNumber("001401-2563-000001");
+		formVo.setOfficeCode("001401");
 		
 		String fileName = "draftWorksheet" + LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE) + ".xlsx";
 		

@@ -110,9 +110,9 @@ public class WorksheetExportService {
 	}
 	
 	public byte[] exportDraftWorksheet(TaxOperatorFormVo formVo) {
-		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		String officeCode = StringUtils.isNotEmpty(formVo.getOfficeCode()) ? formVo.getOfficeCode() : UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		formVo.setAnalysisNumber(formVo.getDraftNumber());
-		logger.info("exportDraftWorksheet officeCode={}, analysisNumber={}", officeCode, formVo.getAnalysisNumber());
+		logger.info("exportDraftWorksheet officeCode={}, analysisNumber={}", officeCode, formVo.getDraftNumber());
 		
 		// Prepare Data for Export
 		TaWorksheetHdr worksheetHdr = taWorksheetHdrRepository.findByAnalysisNumber(formVo.getDraftNumber());
@@ -122,7 +122,6 @@ public class WorksheetExportService {
 		formVo.setDateStart(convertToThaiDate(worksheetCondMainHdr.getYearMonthStart()));
 		formVo.setDateEnd(convertToThaiDate(worksheetCondMainHdr.getYearMonthEnd()));
 		formVo.setDateRange(worksheetCondMainHdr.getMonthNum());
-		formVo.setOfficeCode(officeCode);
 		formVo.setWorksheetStatus(TA_WORKSHEET_STATUS.DRAFT);
 		formVo.setStart(0);
 		formVo.setLength(taWorksheetDtlRepository.countByCriteria(formVo).intValue());
