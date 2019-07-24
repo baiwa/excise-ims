@@ -14,6 +14,7 @@ public class Int0801Vo {
 	private String valueTrueType;
 	private String gftbTestResult;
 	private String checkFlag;
+	private Integer gftbSeq;
 
 	public String getDeptDisb() {
 		return deptDisb;
@@ -101,6 +102,14 @@ public class Int0801Vo {
 
 	public void setCheckFlag(String checkFlag) {
 		this.checkFlag = checkFlag;
+	}
+
+	public Integer getGftbSeq() {
+		return gftbSeq;
+	}
+
+	public void setGftbSeq(Integer gftbSeq) {
+		this.gftbSeq = gftbSeq;
 	}
 
 }

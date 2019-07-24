@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Int0801SaveVo {
 	private String deptDisb;
+	private String gfExciseName;
+	private String officeCode;
 	private String period;
 	private String periodYear;
 	private String gftbFlag;
@@ -65,6 +67,22 @@ public class Int0801SaveVo {
 
 	public void setTabs(List<Int0801Tabs> tabs) {
 		this.tabs = tabs;
+	}
+
+	public String getGfExciseName() {
+		return gfExciseName;
+	}
+
+	public void setGfExciseName(String gfExciseName) {
+		this.gfExciseName = gfExciseName;
+	}
+
+	public String getOfficeCode() {
+		return officeCode;
+	}
+
+	public void setOfficeCode(String officeCode) {
+		this.officeCode = officeCode;
 	}
 
 }
