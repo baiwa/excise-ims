@@ -10,6 +10,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.swagger.annotations.ApiOperation;
@@ -33,7 +34,7 @@ public class ParameterController {
 		this.parameterInfoService = parameterInfoService;
 	}
 	
-	@PostMapping("/{groupCode}/{infoCode}")
+	@RequestMapping(value = "/{groupCode}/{infoCode}", method = { RequestMethod.GET, RequestMethod.POST })
 	@ApiOperation(
 		tags = MODULE_NAME.PREFERENCES,
 		value = "Get ParameterInfo by Code"
