@@ -33,7 +33,7 @@ public class Int12070101Controller {
 
 	@Autowired
 	private Int12070101Service int12070101Service;
-	
+
 	@PostMapping("/save")
 	@ResponseBody
 	public ResponseData<IaRentHouse> save(@RequestBody Int12070101SaveFormVo en) {
@@ -54,7 +54,7 @@ public class Int12070101Controller {
 
 		return response;
 	}
-	
+
 	@GetMapping("/find-by-renhouse/{id}")
 	@ResponseBody
 	public ResponseData<Int12070101SaveFormVo> findById(@PathVariable("id") long id) {
@@ -72,12 +72,18 @@ public class Int12070101Controller {
 
 		return response;
 	}
-	
+
 	@GetMapping("/export/{id}")
-	public void exportByYear(@PathVariable("id") String id, HttpServletResponse response) throws Exception {
+	public void exportReport(@PathVariable("id") long id, HttpServletResponse response) throws Exception {
 		// set fileName
 		String fileName = URLEncoder.encode("test", "UTF-8");
-		byte[] outArray = int12070101Service.exportReport(id);
+		byte[] outArray = null;
+		try {
+			outArray = int12070101Service.exportReport(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("exportReport => ", e.getMessage());
+		}
 //		response.setContentType("application/octet-stream");
 //		response.setContentLength(outArray.length);
 //		response.setHeader("Expires:", "0"); // eliminates browser caching
@@ -86,8 +92,9 @@ public class Int12070101Controller {
 //		outStream.write(outArray);
 //		outStream.flush();
 //		outStream.close();
-		
-		String filename = String.format("test" + "_%s." + FILE_EXTENSION.PDF, DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now()));
+//		
+		String filename = String.format("test" + "_%s." + FILE_EXTENSION.PDF,
+				DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now()));
 		response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", filename));
 		response.setContentType("application/octet-stream");
 

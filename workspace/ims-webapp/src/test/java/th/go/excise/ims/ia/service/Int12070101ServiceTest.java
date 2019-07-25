@@ -20,7 +20,7 @@ public class Int12070101ServiceTest {
 		
 		// set data
 		
-		byte[] reportFile = int12070101Service.exportReport("");
+		byte[] reportFile = int12070101Service.exportReport(0l);
 		IOUtils.write(reportFile, new FileOutputStream(new File(String.format(REPORT_FILE, REPORT_NAME.IA_FORM_6006_NO + "_blank"))));
 	}
 

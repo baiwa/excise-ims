@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
@@ -111,8 +113,14 @@ public class Int12070101Service {
 		return dataRes;
 	}
 	
-	public byte[] exportReport(String id) throws Exception {
-		Map<String, Object> params = new HashMap<>();
+	public byte[] exportReport(long id) throws Exception {
+		Int12070101SaveFormVo dataFind = findById(id);
+		
+		ObjectMapper oMapper = new ObjectMapper();
+		@SuppressWarnings("unchecked")
+		Map<String, Object> params =  oMapper.convertValue(dataFind, Map.class);
+		System.out.println("dataFind--------->"+ params);
+		
 		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.IA_FORM_6006_NO + "." + FILE_EXTENSION.JASPER, params);
 		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
 		ReportUtils.closeResourceFileInputStream(params);
