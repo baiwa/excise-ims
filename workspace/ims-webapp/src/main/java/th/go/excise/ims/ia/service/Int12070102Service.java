@@ -2,7 +2,9 @@ package th.go.excise.ims.ia.service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.go.excise.ims.ia.persistence.entity.IaMedicalReceipt;
 import th.go.excise.ims.ia.persistence.entity.IaMedicalWelfare;
 import th.go.excise.ims.ia.persistence.repository.IaMedicalReceiptRepository;
@@ -76,6 +83,7 @@ public class Int12070102Service {
 			dataHdrSave.setChildCitizenId(form.getChildCitizenId());
 			dataHdrSave.setStatus(form.getStatus());
 			dataHdrSave.setChildCheck("Y");
+			dataHdrSave.setSiblingsOrder(new BigDecimal(form.getSiblingsOrder()));
 		}
 		if (form.isChild2()) {
 			dataHdrSave.setBirthdate2(ConvertDateUtils.parseStringToDate(form.getBirthdate2(),
@@ -84,6 +92,7 @@ public class Int12070102Service {
 			dataHdrSave.setChildCitizenId2(form.getChildCitizenId2());
 			dataHdrSave.setStatus2(form.getStatus2());
 			dataHdrSave.setChild2Check("Y");
+			dataHdrSave.setSiblingsOrder2(new BigDecimal(form.getSiblingsOrder2()));
 		}
 		if (form.isChild3()) {
 			dataHdrSave.setBirthdate3(ConvertDateUtils.parseStringToDate(form.getBirthdate3(),
@@ -92,12 +101,13 @@ public class Int12070102Service {
 			dataHdrSave.setChildCitizenId3(form.getChildCitizenId3());
 			dataHdrSave.setStatus3(form.getStatus3());
 			dataHdrSave.setChild3Check("Y");
+			dataHdrSave.setSiblingsOrder3(new BigDecimal(form.getSiblingsOrder3()));
 		}
 
 		dataHdrSave.setFullName(form.getFullName());
 		dataHdrSave.setGender(form.getGender());
 		dataHdrSave.setPhoneNo(form.getPhoneNumber());
-//		dataHdrSave.setSiblingsOrder(new BigDecimal(form.getSiblingsOrder()));
+
 		dataHdrSave.setPosition(form.getPosition());
 		dataHdrSave.setAffiliation(form.getAffiliation());
 		dataHdrSave.setPhoneNo(form.getPhoneNo());
@@ -117,8 +127,6 @@ public class Int12070102Service {
 		dataHdrSave.setStatusCheck(form.getStatusCheck());
 //		dataHdrSave.setIaDisReqId(new BigDecimal(form.getIaDisReqId()));
 
-//		dataHdrSave.setSiblingsOrder2(new BigDecimal(form.getSiblingsOrder2()));
-//		dataHdrSave.setSiblingsOrder3(new BigDecimal(form.getSiblingsOrder3()));
 
 		dataHdrSave.setOwnerClaim1(form.getOwnerClaim1());
 		dataHdrSave.setOwnerClaim2(form.getOwnerClaim2());
@@ -217,4 +225,6 @@ public class Int12070102Service {
 
 		return dataRes;
 	}
+	
+
 }

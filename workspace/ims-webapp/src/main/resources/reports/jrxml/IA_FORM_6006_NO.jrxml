@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="IA_FORM_6006_NO" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="460" leftMargin="80" rightMargin="55" topMargin="55" bottomMargin="25" uuid="31fa36c1-11f3-488f-bd27-17afb51e274a">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="Topic" hTextAlign="Center" vTextAlign="Middle" fontName="TH Sarabun New" fontSize="16" isBold="true"/>
+	<style name="TextDetail" hTextAlign="Left" pattern="" fontName="TH Sarabun New" fontSize="14"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="60" splitType="Stretch">
+			<textField>
+				<reportElement style="Topic" x="160" y="10" width="190" height="30" uuid="dd744a44-d600-4fe5-bc36-df9f394bdd75"/>
+				<textFieldExpression><![CDATA["แบบขอเบิกเงินค่าเช่าบ้าน (๖๐๐๖)"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="316" splitType="Prevent">
+			<textField>
+				<reportElement style="TextDetail" x="20" y="0" width="143" height="30" uuid="d7effebc-8dcf-4a25-a4d5-d36731d79586"/>
+				<textFieldExpression><![CDATA["๑. การขอเบิกและการรับรอง"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+</jasperReport>

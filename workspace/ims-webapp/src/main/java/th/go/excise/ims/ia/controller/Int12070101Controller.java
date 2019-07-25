@@ -1,9 +1,16 @@
 package th.go.excise.ims.ia.controller;
 
+import java.net.URLEncoder;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import th.co.baiwa.buckwaframework.common.bean.ResponseData;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_MESSAGE;
 import th.co.baiwa.buckwaframework.common.constant.ProjectConstant.RESPONSE_STATUS;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.go.excise.ims.ia.persistence.entity.IaRentHouse;
 import th.go.excise.ims.ia.service.Int12070101Service;
 import th.go.excise.ims.ia.vo.Int12070101SaveFormVo;
@@ -63,5 +71,26 @@ public class Int12070101Controller {
 		}
 
 		return response;
+	}
+	
+	@GetMapping("/export/{id}")
+	public void exportByYear(@PathVariable("id") String id, HttpServletResponse response) throws Exception {
+		// set fileName
+		String fileName = URLEncoder.encode("test", "UTF-8");
+		byte[] outArray = int12070101Service.exportReport(id);
+//		response.setContentType("application/octet-stream");
+//		response.setContentLength(outArray.length);
+//		response.setHeader("Expires:", "0"); // eliminates browser caching
+//		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".pdf");
+//		OutputStream outStream = response.getOutputStream();
+//		outStream.write(outArray);
+//		outStream.flush();
+//		outStream.close();
+		
+		String filename = String.format("test" + "_%s." + FILE_EXTENSION.PDF, DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now()));
+		response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", filename));
+		response.setContentType("application/octet-stream");
+
+		FileCopyUtils.copy(outArray, response.getOutputStream());
 	}
 }

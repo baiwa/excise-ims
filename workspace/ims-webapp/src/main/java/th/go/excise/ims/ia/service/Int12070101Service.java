@@ -2,13 +2,20 @@ package th.go.excise.ims.ia.service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
+import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.co.baiwa.buckwaframework.common.util.ReportUtils;
 import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaRentHouse;
 import th.go.excise.ims.ia.persistence.entity.IaRentHouse1;
@@ -103,4 +110,13 @@ public class Int12070101Service {
 		dataRes.setReceiptsRH(detailsSet);
 		return dataRes;
 	}
+	
+	public byte[] exportReport(String id) throws Exception {
+		Map<String, Object> params = new HashMap<>();
+		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.IA_FORM_6006_NO + "." + FILE_EXTENSION.JASPER, params);
+		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
+		ReportUtils.closeResourceFileInputStream(params);
+		return content;
+	}
+	
 }
