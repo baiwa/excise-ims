@@ -70,16 +70,16 @@ public class Int12070102Service {
 			dataHdrSave.setFatherCheck("Y");
 		}
 		if (form.isChild1()) {
-			dataHdrSave.setBirthdate(ConvertDateUtils.parseStringToDate(form.getBirthdate(), ConvertDateUtils.DD_MM_YYYY,
-				ConvertDateUtils.LOCAL_TH));
+			dataHdrSave.setBirthdate(ConvertDateUtils.parseStringToDate(form.getBirthdate(),
+					ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 			dataHdrSave.setChildName(form.getChildName());
 			dataHdrSave.setChildCitizenId(form.getChildCitizenId());
 			dataHdrSave.setStatus(form.getStatus());
 			dataHdrSave.setChildCheck("Y");
 		}
 		if (form.isChild2()) {
-			dataHdrSave.setBirthdate2(ConvertDateUtils.parseStringToDate(form.getBirthdate2(), ConvertDateUtils.DD_MM_YYYY,
-					ConvertDateUtils.LOCAL_TH));
+			dataHdrSave.setBirthdate2(ConvertDateUtils.parseStringToDate(form.getBirthdate2(),
+					ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 			dataHdrSave.setChildName2(form.getChildName2());
 			dataHdrSave.setChildCitizenId2(form.getChildCitizenId2());
 			dataHdrSave.setStatus2(form.getStatus2());
@@ -119,7 +119,7 @@ public class Int12070102Service {
 
 //		dataHdrSave.setSiblingsOrder2(new BigDecimal(form.getSiblingsOrder2()));
 //		dataHdrSave.setSiblingsOrder3(new BigDecimal(form.getSiblingsOrder3()));
-		
+
 		dataHdrSave.setOwnerClaim1(form.getOwnerClaim1());
 		dataHdrSave.setOwnerClaim2(form.getOwnerClaim2());
 		dataHdrSave.setOwnerClaim3(form.getOwnerClaim3());
@@ -128,7 +128,7 @@ public class Int12070102Service {
 		dataHdrSave.setOtherClaim2(form.getOtherClaim2());
 		dataHdrSave.setOtherClaim3(form.getOtherClaim3());
 		dataHdrSave.setOtherClaim4(form.getOtherClaim4());
-		
+
 		iaMedicalWelfareRepository.save(dataHdrSave);
 		IaMedicalReceipt dataDtlSave = null;
 		for (Int120702DtlVo dataDtl : form.getReceipts()) {
@@ -142,36 +142,63 @@ public class Int12070102Service {
 			iaMedicalReceiptRepository.save(dataDtlSave);
 		}
 	}
-	
+
 	public Int1200702HdrVo findById(Long id) {
 		Int1200702HdrVo dataRes = new Int1200702HdrVo();
 		IaMedicalWelfare dataHdr = iaMedicalWelfareRepository.findById(id).get();
 		dataRes.setFullName(dataHdr.getFullName());
 		dataRes.setGender(dataHdr.getGender());
 		dataRes.setPhoneNumber(dataHdr.getPhoneNo());
+
+		if ("Y".equals(dataHdr.getSelfCheck())) {
+			dataRes.setFather(true);
+		}
+		if ("Y".equals(dataHdr.getCoupleCheck())) {
+			dataRes.setCouple(true);
+		}
+		if ("Y".equals(dataHdr.getFatherCheck())) {
+			dataRes.setFather(true);
+		}
+		if ("Y".equals(dataHdr.getMotherCheck())) {
+			dataRes.setMother(true);
+		}
+		if ("Y".equals(dataHdr.getChildCheck())) {
+			dataRes.setChild1(true);
+		}
+		if ("Y".equals(dataHdr.getChild2Check())) {
+			dataRes.setChild2(true);
+		}
+		if ("Y".equals(dataHdr.getChild3Check())) {
+			dataRes.setChild3(true);
+		}
+
 //		dataRes.setBirthdate(dataHdr.getBirthdate().toString());
 //		dataRes.setSiblingsOrder(dataHdr.getSiblingsOrder().toString());
 //		dataRes.setPosition(dataHdr.getPosition());
 //		dataRes.setAffiliation(dataHdr.getAffiliation());
 //		dataRes.setPhoneNo(dataHdr.getPhoneNo());
 //		dataRes.setStatus(dataHdr.getStatus());
-//		dataRes.setDisease(dataHdr.getDisease());
+		dataRes.setDisease(dataHdr.getDisease());
 //		dataRes.setHospitalName(dataHdr.getHospitalName());
 //		dataRes.setHospitalOwner(dataHdr.getHospitalOwner());
-//		dataRes.setTreatedDateFrom(dataHdr.getTreatedDateFrom().toString());
-//		dataRes.setTreatedDateTo(dataHdr.getTreatedDateTo().toString());
-//		dataRes.setTotalMoney(dataHdr.getTotalMoney().toString());
+		dataRes.setTreatedDateFrom(ConvertDateUtils.formatDateToString(dataHdr.getTreatedDateFrom(),
+				ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+		dataRes.setTreatedDateTo(ConvertDateUtils.formatDateToString(dataHdr.getTreatedDateTo(),
+				ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
+		dataRes.setTotalMoney(dataHdr.getTotalMoney().toString());
 //		dataRes.setReceiptQt(dataHdr.getReceiptQt().toString());
-//		dataRes.setClaimStatus(dataHdr.getClaimStatus());
-//		dataRes.setClaimMoney(dataHdr.getClaimMoney().toString());
-//		dataRes.setOwnerClaim1(dataHdr.getOwnerClaim1());
-//		dataRes.setOwnerClaim2(dataHdr.getOwnerClaim2());
-//		dataRes.setOwnerClaim3(dataHdr.getOwnerClaim3());
-//		dataRes.setOwnerClaim4(dataHdr.getOwnerClaim4());
-//		dataRes.setOtherClaim1(dataHdr.getOtherClaim1());
-//		dataRes.setOtherClaim2(dataHdr.getOtherClaim2());
-//		dataRes.setOtherClaim3(dataHdr.getOtherClaim3());
-//		dataRes.setOtherClaim4(dataHdr.getOtherClaim4());
+		dataRes.setClaimStatus(dataHdr.getClaimStatus());
+		dataRes.setClaimMoney(dataHdr.getClaimMoney().toString());
+
+		dataRes.setOwnerClaim1(dataHdr.getOwnerClaim1());
+		dataRes.setOwnerClaim2(dataHdr.getOwnerClaim2());
+		dataRes.setOwnerClaim3(dataHdr.getOwnerClaim3());
+		dataRes.setOwnerClaim4(dataHdr.getOwnerClaim4());
+		dataRes.setOtherClaim1(dataHdr.getOtherClaim1());
+		dataRes.setOtherClaim2(dataHdr.getOtherClaim2());
+		dataRes.setOtherClaim3(dataHdr.getOtherClaim3());
+		dataRes.setOtherClaim4(dataHdr.getOtherClaim4());
+
 //		dataRes.setMateName(dataHdr.getMateName());
 //		dataRes.setMateCitizenId(dataHdr.getMateCitizenId());
 //		dataRes.setFatherName(dataHdr.getFatherName());
@@ -188,13 +215,6 @@ public class Int12070102Service {
 //		dataRes.setStatus2(dataHdr.getStatus2());
 //		dataRes.setStatus3(dataHdr.getStatus3());
 
-//		dataRes.setFather(dataHdr.getFather());
-//		dataRes.setSelf(dataHdr.getSelf());
-//		dataRes.setCouple(dataHdr.getCouple());
-//		dataRes.setMother(dataHdr.getMother());
-//		dataRes.setChild1(dataHdr.getChild1());
-//		dataRes.setChild2(dataHdr.getChild2());
-//		dataRes.setChild3(dataHdr.getChild3());
 		return dataRes;
 	}
 }
