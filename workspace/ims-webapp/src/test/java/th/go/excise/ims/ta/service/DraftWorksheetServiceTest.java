@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
-import th.go.excise.ims.ta.vo.TaxOperatorDatatableVo;
+import th.go.excise.ims.ta.vo.TaxOperatorDetailVo;
 import th.go.excise.ims.ta.vo.TaxOperatorFormVo;
 import th.go.excise.ims.ta.vo.TaxOperatorVo;
 
@@ -30,8 +30,6 @@ public class DraftWorksheetServiceTest {
 	
 	@Test
 	public void test_getPreviewData() {
-		long start = System.currentTimeMillis();
-		
 		// 2019 - 2562
 		// 2018 - 2561
 		// 2017 - 2560
@@ -39,25 +37,22 @@ public class DraftWorksheetServiceTest {
 		// 2015 - 2558
 		
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
-		formVo.setDateStart("05/2558");
-		formVo.setDateEnd("05/2558");
-		formVo.setDateRange(2);
+		formVo.setDateStart("07/2561");
+		formVo.setDateEnd("12/2561");
+		formVo.setDateRange(12);
 		formVo.setBudgetYear("2562");
-		formVo.setCondNumber("001401-2562-01");
 		formVo.setStart(0);
-		formVo.setLength(10);
+		formVo.setLength(0);
 		
-		formVo.setNewRegId("01005150424621001");
+//		formVo.setNewRegId("01055330122132001");
+//		formVo.setFlagPage("client");
 		
-		TaxOperatorVo taxOperatorVo = draftWorksheetService.getPreviewData(formVo);
-		System.out.println("count=" + taxOperatorVo.getCount());
-		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = taxOperatorVo.getDatas();
-		taxOperatorDatatableVoList.forEach(e -> {
-			System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.MULTI_LINE_STYLE));
+		List<TaxOperatorDetailVo> taxOperatorDetailVoList = draftWorksheetService.prepareTaxOperatorDetailVoList(formVo);
+		System.out.println("size=" + taxOperatorDetailVoList.size());
+		taxOperatorDetailVoList.forEach(e -> {
+//			System.out.println(ToStringBuilder.reflectionToString(e, ToStringStyle.SHORT_PREFIX_STYLE));
+			System.out.println("dutyCode=" + e.getDutyCode() + ", dutyName=" + e.getDutyName());
 		});
-		
-		long end = System.currentTimeMillis();
-		System.out.println("Process Success, using " + ((float) (end - start) / 1000F) + " seconds");
 	}
 	
 //	@Test
@@ -66,13 +61,13 @@ public class DraftWorksheetServiceTest {
 		
 		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
 		formVo.setBudgetYear("2562");
-		formVo.setOfficeCode("001401");
-		formVo.setDateStart("01/2561");
-		formVo.setDateEnd("12/2561");
+		formVo.setOfficeCode("001402");
+		formVo.setDateStart("01/2559");
+		formVo.setDateEnd("06/2559");
 		formVo.setDateRange(12);
 		formVo.setStart(0);
 		formVo.setLength(0);
-		formVo.setCondNumber("001401-2562-03");
+		formVo.setCondNumber("001402-2562-01");
 		formVo.setCondSub1(FLAG.N_FLAG);
 		formVo.setCondSub2(FLAG.N_FLAG);
 		formVo.setCondSub3(FLAG.N_FLAG);

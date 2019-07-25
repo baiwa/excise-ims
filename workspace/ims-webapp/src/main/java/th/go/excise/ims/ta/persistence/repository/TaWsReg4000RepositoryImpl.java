@@ -539,8 +539,8 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		logger.info("buildByCriteriaPivotQuery dutyType={}", dutyType);
 		
 		sql.append(" SELECT R.NEW_REG_ID AS R4000_NEW_REG_ID ");
-		sql.append("   ,D.GROUP_ID ");
-		sql.append("   ,D.GROUP_NAME ");
+		sql.append("   ,CASE WHEN DG.DUTY_GROUP_CODE IS NOT NULL THEN DG.DUTY_GROUP_CODE ELSE D.GROUP_ID END AS GROUP_ID ");
+		sql.append("   ,CASE WHEN DG.DUTY_GROUP_CODE IS NOT NULL THEN DG.DUTY_GROUP_NAME ELSE D.GROUP_NAME END AS GROUP_NAME ");
 		sql.append("   ,R.CUS_FULLNAME ");
 		sql.append("   ,R.FAC_FULLNAME ");
 		sql.append("   ,R.FAC_ADDRESS ");
@@ -573,6 +573,8 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		} else if (TA_DUTY_TYPE.GROUP.equals(dutyType)) {
 			sql.append("   AND D.GROUP_ID LIKE SUBSTR(M.DUTY_CODE, 0, 2) || '__' ");
 		}
+		sql.append(" LEFT JOIN EXCISE_DUTY_GROUP DG ON DG.DUTY_GROUP_CODE = M.DUTY_CODE ");
+		sql.append("   AND DG.IS_DELETED = 'N' ");
 		sql.append(" WHERE R.IS_DELETED = 'N' ");
 		sql.append("   AND GROUP_ID IN (SELECT DUTY_CODE FROM TA_DUTY_CONFIG WHERE DUTY_TYPE = ?) ");
 		params.add(dutyType);
@@ -637,146 +639,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 			sql.append(" AND R.REG_STATUS IN ('1','2','3','41','51') ");
 		}
 	}
-	
-	@Override
-	public List<TaxOperatorDetailVo> findByCriteriaPivot(TaxOperatorFormVo formVo, Map<String, String> auditPlanMap, Map<String, String> maxYearMap, String incomeTaxType) {
-		logger.info("findByCriteriaPivot");
-		
-		StringBuilder sql = new StringBuilder();
-		List<Object> params = new ArrayList<>();
-		
-		sql.append(" SELECT * FROM ( ");
-		buildByCriteriaPivotQuery(sql, params, formVo, incomeTaxType, TA_DUTY_TYPE.SEPARATE);
-		sql.append(" UNION ");
-		buildByCriteriaPivotQuery(sql, params, formVo, incomeTaxType, TA_DUTY_TYPE.GROUP);
-		sql.append(" ) X ");
-		sql.append(" ORDER BY X.GROUP_ID, X.R4000_NEW_REG_ID ");
-		
-		List<TaxOperatorDetailVo> taxOperatorDetailVoList = commonJdbcTemplate.query(sql.toString(), params.toArray(), new ResultSetExtractor<List<TaxOperatorDetailVo>>() {
-			public List<TaxOperatorDetailVo> extractData(ResultSet rs) throws SQLException, DataAccessException {
-				int budgetYear = Integer.parseInt(formVo.getBudgetYear());
-				List<TaxOperatorDetailVo> voList = new ArrayList<>();
-				TaxOperatorDetailVo vo = null;
-				ResultSetMetaData rsmd = rs.getMetaData();
-				ExciseDepartment exciseDeptSector;
-				ExciseDepartment exciseDeptArea;
-				Map<String, Integer> incMultiDutyMap = new HashMap<>();
-				while (rs.next()) {
-					vo = new TaxOperatorDetailVo();
-					vo.setNewRegId(rs.getString("R4000_NEW_REG_ID"));
-					if (StringUtils.isNotEmpty(rs.getString("DUTY_CODE"))) {
-						vo.setDutyCode(rs.getString("DUTY_CODE"));
-					} else {
-						vo.setDutyCode(rs.getString("GROUP_ID"));
-					}
-					vo.setDutyName(rs.getString("GROUP_NAME"));
-					vo.setCusFullname(rs.getString("CUS_FULLNAME"));
-					vo.setFacFullname(rs.getString("FAC_FULLNAME"));
-					vo.setFacAddress(rs.getString("FAC_ADDRESS"));
-					vo.setOfficeCode(rs.getString("OFFICE_CODE"));
-					vo.setMultiDutyFlag(rs.getString("MULTI_DUTY_FLAG"));
-					vo.setRegDate(ConvertDateUtils.formatDateToString(rs.getDate("REG_DATE"), "dd/MM/yy", ConvertDateUtils.LOCAL_TH));
-					vo.setRegStatus(rs.getString("REG_STATUS_DESC") + " " + vo.getRegDate());
-					vo.setRegCapital(rs.getString("REG_CAPITAL"));
-					vo.setTaxAuditLast1(auditPlanMap.get(String.valueOf(budgetYear - 1) + vo.getNewRegId()));
-					vo.setTaxAuditLast2(auditPlanMap.get(String.valueOf(budgetYear - 2) + vo.getNewRegId()));
-					vo.setTaxAuditLast3(auditPlanMap.get(String.valueOf(budgetYear - 3) + vo.getNewRegId()));
-					vo.setLastAuditYear(maxYearMap.get(vo.getNewRegId()));
-					BigDecimal sumTaxAmtG1 = BigDecimal.ZERO;
-					BigDecimal sumTaxAmtG2 = BigDecimal.ZERO;
-					int indKey1 = 1;
-					int indKey2 = 1;
-					int taxMonthNo = 0;
-					String columnName = "";
-					
-					for (int i = 15; i <= rsmd.getColumnCount(); i++) {
-						columnName = rsmd.getColumnName(i);
-						if (columnName.indexOf("G1") >= 2) {
-							if (rs.getString(columnName) != null) {
-								taxMonthNo++;
-								setTaxAmount(vo, "G1M" + indKey1, rs.getString(columnName));
-								sumTaxAmtG1 = sumTaxAmtG1.add(NumberUtils.nullToZero(NumberUtils.toBigDecimal(rs.getString(columnName))));
-							} else {
-								setTaxAmount(vo, "G1M" + indKey1, "-");
-							}
-						} else {
-							if (rs.getString(columnName) != null) {
-								taxMonthNo++;
-								setTaxAmount(vo, "G2M" + indKey2, rs.getString(columnName));
-								sumTaxAmtG2 = sumTaxAmtG2.add(NumberUtils.nullToZero(NumberUtils.toBigDecimal(rs.getString(columnName))));
-							} else {
-								setTaxAmount(vo, "G2M" + indKey2, "-");
-							}
-							indKey2++;
-						}
-						indKey1++;
-					}
-					vo.setTaxMonthNo(String.valueOf(taxMonthNo));
-					
-					int monthNum = formVo.getDateRange();
-					String notPayTaxMonthNo = null;
-					if (monthNum == taxMonthNo) {
-						notPayTaxMonthNo = "-";
-					} else {
-						notPayTaxMonthNo = String.valueOf(monthNum - taxMonthNo);
-					}
-					vo.setNotPayTaxMonthNo(notPayTaxMonthNo);
-					
-					exciseDeptSector = ApplicationCache.getExciseDepartment(vo.getOfficeCode().substring(0, 2) + "0000");
-					if (exciseDeptSector != null) {
-						vo.setSecCode(exciseDeptSector.getOfficeCode());
-						vo.setSecDesc(exciseDeptSector.getDeptShortName());
-					}
-					
-					exciseDeptArea = ApplicationCache.getExciseDepartment(vo.getOfficeCode().substring(0, 4) + "00");
-					if (exciseDeptArea != null) {
-						vo.setAreaCode(exciseDeptArea.getOfficeCode());
-						vo.setAreaDesc(exciseDeptArea.getDeptShortName());
-					}
-					
-					vo.setSumTaxAmtG1(BigDecimal.ZERO.equals(sumTaxAmtG1) ? "-" : (sumTaxAmtG1.setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
-					vo.setSumTaxAmtG2(BigDecimal.ZERO.equals(sumTaxAmtG2) ? "-" : (sumTaxAmtG2.setScale(2, BigDecimal.ROUND_HALF_UP)).toString());
-					BigDecimal percentTax = NumberUtils.calculatePercent(sumTaxAmtG1, sumTaxAmtG2);
-					vo.setTaxAmtChnPnt(BigDecimal.ZERO.equals(percentTax) ? "-" : percentTax.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
-					Integer incMultiDutyCount = 0;
-					incMultiDutyCount = incMultiDutyMap.get(vo.getNewRegId());
-					if (incMultiDutyCount == null) {
-						incMultiDutyCount = 0;
-					}
-					if (taxMonthNo > 0) {
-						incMultiDutyCount++;
-					}
-					incMultiDutyMap.put(vo.getNewRegId(), incMultiDutyCount);
-					voList.add(vo);
-				}
-				calculateIncMultiDuty(voList, incMultiDutyMap);
-				logger.info("End : {}", voList.size());
-				
-				return voList;
-			}
-		});
-		
-		return taxOperatorDetailVoList;
-	}
 
-	private void calculateIncMultiDuty(List<TaxOperatorDetailVo> detailVoList, Map<String, Integer> incMultiDutyMap) {
-		for (TaxOperatorDetailVo detailVo : detailVoList) {
-			int incMultiDutyCount = incMultiDutyMap.get(detailVo.getNewRegId());
-			if (incMultiDutyCount > 1) {
-				detailVo.setIncMultiDutyFlag(FLAG.Y_FLAG);
-			}
-		}
-	}
-
-	private void setTaxAmount(TaxOperatorDetailVo detailVo, String groupMonthNo, String taxAmount) {
-		try {
-			Method method = TaxOperatorDetailVo.class.getDeclaredMethod("setTaxAmt" + groupMonthNo, String.class);
-			method.invoke(detailVo, taxAmount);
-		} catch (Exception e) {
-			logger.warn(e.getMessage(), e);
-		}
-	}
-	
 	public List<TaxOperatorDetailVo> findByCriteriaPivotDatatable(TaxOperatorFormVo formVo, Map<String, String> auditPlanMap, Map<String, String> maxYearMap, String incomeTaxType) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> params = new ArrayList<>();
@@ -800,11 +663,7 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 				while (rs.next()) {
 					vo = new TaxOperatorDetailVo();
 					vo.setNewRegId(rs.getString("R4000_NEW_REG_ID"));
-					if (StringUtils.isNotEmpty(rs.getString("DUTY_CODE"))) {
-						vo.setDutyCode(rs.getString("DUTY_CODE"));
-					} else {
-						vo.setDutyCode(rs.getString("GROUP_ID"));
-					}
+					vo.setDutyCode(rs.getString("GROUP_ID"));
 					vo.setDutyName(rs.getString("GROUP_NAME"));
 					vo.setCusFullname(rs.getString("CUS_FULLNAME"));
 					vo.setFacFullname(rs.getString("FAC_FULLNAME"));
@@ -893,7 +752,24 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		});
 		
 		return taxOperatorDetailVoList;
-		
+	}
+	
+	private void calculateIncMultiDuty(List<TaxOperatorDetailVo> detailVoList, Map<String, Integer> incMultiDutyMap) {
+		for (TaxOperatorDetailVo detailVo : detailVoList) {
+			int incMultiDutyCount = incMultiDutyMap.get(detailVo.getNewRegId());
+			if (incMultiDutyCount > 1) {
+				detailVo.setIncMultiDutyFlag(FLAG.Y_FLAG);
+			}
+		}
+	}
+
+	private void setTaxAmount(TaxOperatorDetailVo detailVo, String groupMonthNo, String taxAmount) {
+		try {
+			Method method = TaxOperatorDetailVo.class.getDeclaredMethod("setTaxAmt" + groupMonthNo, String.class);
+			method.invoke(detailVo, taxAmount);
+		} catch (Exception e) {
+			logger.warn(e.getMessage(), e);
+		}
 	}
 
 }
