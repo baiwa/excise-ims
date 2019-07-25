@@ -65,6 +65,7 @@ import th.go.excise.ims.ta.service.TaFormTS0303Service;
 import th.go.excise.ims.ta.service.TaFormTS0423Service;
 import th.go.excise.ims.ta.service.TaFormTS0424Service;
 import th.go.excise.ims.ta.service.TaxAuditService;
+import th.go.excise.ims.ta.vo.AbstractTaFormTsVo;
 import th.go.excise.ims.ta.vo.FormDocTypeVo;
 import th.go.excise.ims.ta.vo.TaFormTsFormVo;
 
@@ -162,10 +163,11 @@ public class TaFormTSController {
 	@SuppressWarnings("unchecked")
 	@PostMapping("/form-ts/pdf/{tsNumber}")
 	public void generatePdfReportFormTS(@PathVariable("tsNumber") String tsNumber, @ModelAttribute ReportJsonBean reportJsonBean, HttpServletResponse response) throws Exception {
-		logger.info("generatePdfReportFormTS tsNumber={}", tsNumber);
+		logger.info("generatePdfReportFormTS tsNumber={} - Start", tsNumber);
 
 		AbstractTaFormTSService taFormTSService = taFormTSServiceMap.get(tsNumber);
-		Object formVo = gson.fromJson(reportJsonBean.getJson(), taFormTSService.getVoClass());
+		AbstractTaFormTsVo abstractFormVo = gson.fromJson(reportJsonBean.getJson(), AbstractTaFormTsVo.class);
+		Object formVo = taFormTSService.getFormTS(abstractFormVo.getFormTsNumber());
 		byte[] reportFile = taFormTSService.generateReport(formVo);
 
 		String filename = String.format(taFormTSService.getReportName() + "_%s." + FILE_EXTENSION.PDF, DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now()));
@@ -173,6 +175,7 @@ public class TaFormTSController {
 		response.setContentType("application/octet-stream");
 
 		FileCopyUtils.copy(reportFile, response.getOutputStream());
+		logger.info("generatePdfReportFormTS tsNumber={} - End", tsNumber);
 	}
 
 	@PostMapping("/form-ts-number/{tsNumber}")
