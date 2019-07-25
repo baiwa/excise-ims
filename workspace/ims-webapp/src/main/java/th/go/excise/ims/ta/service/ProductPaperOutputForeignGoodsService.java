@@ -3,6 +3,7 @@ package th.go.excise.ims.ta.service;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -283,16 +284,15 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 
 	@Override
 	public List<ProductPaperOutputForeignGoodsVo> uploadData(ProductPaperFormVo formVo) {
-		logger.info("uploadData readVo filename={}", formVo.getFile().getOriginalFilename());
+		logger.info("uploadData filename={}", formVo.getFile().getOriginalFilename());
 
-		List<ProductPaperOutputForeignGoodsVo> dataList = new ArrayList<>();
-		ProductPaperOutputForeignGoodsVo data = null;
-
+		List<ProductPaperOutputForeignGoodsVo> voList = new ArrayList<>();
+		ProductPaperOutputForeignGoodsVo vo = null;
 		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(formVo.getFile().getBytes()));) {
 			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
 
 			for (Row row : sheet) {
-				data = new ProductPaperOutputForeignGoodsVo();
+				vo = new ProductPaperOutputForeignGoodsVo();
 				// Skip on first row
 				if (row.getRowNum() == 0) {
 					continue;
@@ -303,38 +303,76 @@ public class ProductPaperOutputForeignGoodsService extends AbstractProductPaperS
 						continue;
 					} else if (cell.getColumnIndex() == 1) {
 						// GoodsDesc
-						data.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
+						vo.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 2) {
 						// CargoDocNo
-						data.setCargoDocNo(ExcelUtils.getCellValueAsString(cell));
+						vo.setCargoDocNo(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 3) {
 						// InvoiceNo
-						data.setInvoiceNo(ExcelUtils.getCellValueAsString(cell));
+						vo.setInvoiceNo(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 4) {
 						// OutputDailyAccountQty
-						data.setOutputDailyAccountQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setOutputDailyAccountQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 5) {
 						// OutputMonthStatementQty
-						data.setOutputMonthStatementQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setOutputMonthStatementQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 6) {
 						// OutputAuditQty
-						data.setOutputAuditQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setOutputAuditQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 7) {
 						// TaxReduceQty
-						data.setTaxReduceQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setTaxReduceQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 8) {
 						// DiffOutputQty
-						data.setDiffOutputQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setDiffOutputQty(ExcelUtils.getCellValueAsString(cell));
 					}
-
 				}
-				dataList.add(data);
+				calculate(vo);
+				voList.add(vo);
 			}
-
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
-		return dataList;
+		
+		return voList;
+	}
+	
+	private void calculate(ProductPaperOutputForeignGoodsVo vo) {
+		List<BigDecimal> bigDecimalList = new ArrayList<>();
+		
+		if (StringUtils.isNotBlank(vo.getCargoDocNo()) && !NO_VALUE.equals(vo.getCargoDocNo())) {
+			BigDecimal cargoQty = NumberUtils.toBigDecimal(vo.getCargoDocNo());
+			bigDecimalList.add(cargoQty);
+		}
+		
+		if (StringUtils.isNotBlank(vo.getOutputDailyAccountQty()) && !NO_VALUE.equals(vo.getOutputDailyAccountQty())) {
+			BigDecimal inventoryQty = NumberUtils.toBigDecimal(vo.getOutputDailyAccountQty());
+			bigDecimalList.add(inventoryQty);
+		}
+		
+		if (StringUtils.isNotBlank(vo.getOutputDailyAccountQty()) && !NO_VALUE.equals(vo.getOutputDailyAccountQty())) {
+			BigDecimal outputDailyAccountQty = NumberUtils.toBigDecimal(vo.getOutputDailyAccountQty());
+			bigDecimalList.add(outputDailyAccountQty);
+		}
+		
+		if (StringUtils.isNotBlank(vo.getOutputMonthStatementQty()) && !NO_VALUE.equals(vo.getOutputMonthStatementQty())) {
+			BigDecimal outputMonthStatementQty = NumberUtils.toBigDecimal(vo.getOutputMonthStatementQty());
+			bigDecimalList.add(outputMonthStatementQty);
+		}
+		
+		BigDecimal outputAuditQty = null;
+		if (!bigDecimalList.isEmpty()) {
+			outputAuditQty = NumberUtils.max(bigDecimalList);
+			vo.setOutputAuditQty(outputAuditQty.toString());
+		} else {
+			vo.setOutputAuditQty(NO_VALUE);
+		}
+		
+		BigDecimal taxReduceQty = NumberUtils.toBigDecimal(vo.getTaxReduceQty());
+		if (outputAuditQty != null && taxReduceQty != null) {
+			BigDecimal diffOutputQty = outputAuditQty.subtract(taxReduceQty);
+			vo.setDiffOutputQty(diffOutputQty.toString());
+		}
 	}
 
 	@Transactional(rollbackOn = {Exception.class})

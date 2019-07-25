@@ -2,6 +2,7 @@ package th.go.excise.ims.ta.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
@@ -210,13 +211,15 @@ public class ServicePaperPricePerUnitService extends AbstractServicePaperService
 
 	@Override
 	public List<ServicePaperPricePerUnitVo> uploadData(ServicePaperFormVo formVo) {
-		List<ServicePaperPricePerUnitVo> dataList = new ArrayList<>();
+		logger.info("uploadData filename={}", formVo.getFile().getOriginalFilename());
 
+		List<ServicePaperPricePerUnitVo> voList = new ArrayList<>();
+		ServicePaperPricePerUnitVo vo = null;
 		try (Workbook workbook = WorkbookFactory.create(formVo.getFile().getInputStream())) {
 			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
 
 			for (Row row : sheet) {
-				ServicePaperPricePerUnitVo pushdata = new ServicePaperPricePerUnitVo();
+				vo = new ServicePaperPricePerUnitVo();
 				// Skip on first row
 				if (row.getRowNum() == 0) {
 					continue;
@@ -226,27 +229,55 @@ public class ServicePaperPricePerUnitService extends AbstractServicePaperService
 						// Column No.
 						continue;
 					} else if (cell.getColumnIndex() == 1) {
-						pushdata.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
+						vo.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 2) {
-						pushdata.setInvoicePrice(ExcelUtils.getCellValueAsString(cell));
+						vo.setInvoicePrice(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 3) {
-						pushdata.setInformPrice(ExcelUtils.getCellValueAsString(cell));
+						vo.setInformPrice(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 4) {
-						pushdata.setAuditPrice(ExcelUtils.getCellValueAsString(cell));
+						vo.setAuditPrice(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 5) {
-						pushdata.setGoodsPrice(ExcelUtils.getCellValueAsString(cell));
+						vo.setGoodsPrice(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 6) {
-						pushdata.setDiffPrice(ExcelUtils.getCellValueAsString(cell));
+						vo.setDiffPrice(ExcelUtils.getCellValueAsString(cell));
 					}
-
 				}
-				dataList.add(pushdata);
+				calculate(vo);
+				voList.add(vo);
 			}
-
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
-		return dataList;
+		
+		return voList;
+	}
+	
+	private void calculate(ServicePaperPricePerUnitVo vo) {
+		List<BigDecimal> bigDecimalList = new ArrayList<>();
+		
+		if (StringUtils.isNotBlank(vo.getInvoicePrice()) && !NO_VALUE.equals(vo.getInvoicePrice())) {
+			BigDecimal invoicePrice = NumberUtils.toBigDecimal(vo.getInvoicePrice());
+			bigDecimalList.add(invoicePrice);
+		}
+		
+		if (StringUtils.isNotBlank(vo.getInformPrice()) && !NO_VALUE.equals(vo.getInformPrice())) {
+			BigDecimal informPrice = NumberUtils.toBigDecimal(vo.getInformPrice());
+			bigDecimalList.add(informPrice);
+		}
+		
+		BigDecimal auditPrice = null;
+		if (!bigDecimalList.isEmpty()) {
+			auditPrice = NumberUtils.max(bigDecimalList);
+			vo.setAuditPrice(auditPrice.toString());
+		} else {
+			vo.setAuditPrice(NO_VALUE);
+		}
+		
+		BigDecimal goodsPrice = NumberUtils.toBigDecimal(vo.getGoodsPrice());
+		if (goodsPrice != null && auditPrice != null) {
+			BigDecimal diffPrice = goodsPrice.subtract(auditPrice);
+			vo.setDiffPrice(diffPrice.toString());
+		}
 	}
 
 	@Transactional(rollbackOn = {Exception.class})

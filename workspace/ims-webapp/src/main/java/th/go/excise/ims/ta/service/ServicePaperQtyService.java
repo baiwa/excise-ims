@@ -2,6 +2,7 @@ package th.go.excise.ims.ta.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
@@ -13,7 +14,6 @@ import javax.transaction.Transactional;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -26,8 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.ibm.icu.math.BigDecimal;
 
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
@@ -220,10 +218,13 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 
 	@Override
 	public List<ServicePaperQtyVo> uploadData(ServicePaperFormVo formVo) {
-		List<ServicePaperQtyVo> dataList = new ArrayList<>();
-
+		logger.info("uploadData filename={}", formVo.getFile().getOriginalFilename());
+		
+		List<ServicePaperQtyVo> voList = new ArrayList<>();
+		ServicePaperQtyVo vo = new ServicePaperQtyVo();
 		try (Workbook workbook = WorkbookFactory.create(formVo.getFile().getInputStream())) {
 			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
+			
 			// ###### find data for calcualte in excel
 			LocalDate localDateStart = toLocalDate(formVo.getStartDate());
 			LocalDate localDateEnd = toLocalDate(formVo.getEndDate());
@@ -231,52 +232,71 @@ public class ServicePaperQtyService extends AbstractServicePaperService<ServiceP
 			String dateEnd = localDateEnd.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.BASIC_ISO_DATE);
 			
 			List<WsAnafri0001Vo> anafri0001VoList = wsAnafri0001DRepository.findProductList(formVo.getNewRegId(), formVo.getDutyGroupId(), dateStart, dateEnd);
-			DataFormatter formatter = new DataFormatter();
-			BigDecimal max, diff;
 			for (Row row : sheet) {
-				ServicePaperQtyVo pushdata = new ServicePaperQtyVo();
+				vo = new ServicePaperQtyVo();
 				// Skip on first row
 				if (row.getRowNum() == 0) {
 					continue;
 				}
-				max = new BigDecimal(formatter.formatCellValue(row.getCell(2))).max(new BigDecimal(formatter.formatCellValue(row.getCell(3))));
-				max = max.max(new BigDecimal(formatter.formatCellValue(row.getCell(4))));
-				if (anafri0001VoList.size() > 0) {
-					diff = max.subtract(new BigDecimal(anafri0001VoList.get(row.getRowNum()-1).getProductQty())).abs();
-				} else {
-					diff = max;
-				}
-				
 				for (Cell cell : row) {
 					if (cell.getColumnIndex() == 0) {
 						// Column No.
 						continue;
 					} else if (cell.getColumnIndex() == 1) {
-						pushdata.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
+						vo.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 2) {
-						pushdata.setServiceDocNoQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setServiceDocNoQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 3) {
-						pushdata.setIncomeDailyAccountQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setIncomeDailyAccountQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 4) {
-						pushdata.setPaymentDocNoQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setPaymentDocNoQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 5) {
-						pushdata.setAuditQty(String.valueOf(max));
-						// pushdata.setAuditQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 6) {
-						pushdata.setGoodsQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setGoodsQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 7) {
-						pushdata.setDiffQty(String.valueOf(diff));
-						// pushdata.setDiffQty(ExcelUtils.getCellValueAsString(cell));
 					}
-
 				}
-				dataList.add(pushdata);
+				calculate(vo);
+				voList.add(vo);
 			}
-
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
-		return dataList;
+		
+		return voList;
+	}
+	
+	private void calculate(ServicePaperQtyVo vo) {
+		List<BigDecimal> bigDecimalList = new ArrayList<>();
+		
+		if (StringUtils.isNotBlank(vo.getServiceDocNoQty()) && !NO_VALUE.equals(vo.getServiceDocNoQty())) {
+			BigDecimal serviceDocNoQty = NumberUtils.toBigDecimal(vo.getServiceDocNoQty());
+			bigDecimalList.add(serviceDocNoQty);
+		}
+		
+		if (StringUtils.isNotBlank(vo.getIncomeDailyAccountQty()) && !NO_VALUE.equals(vo.getIncomeDailyAccountQty())) {
+			BigDecimal incomeDailyAccountQty = NumberUtils.toBigDecimal(vo.getIncomeDailyAccountQty());
+			bigDecimalList.add(incomeDailyAccountQty);
+		}
+		
+		if (StringUtils.isNotBlank(vo.getPaymentDocNoQty()) && !NO_VALUE.equals(vo.getPaymentDocNoQty())) {
+			BigDecimal paymentDocNoQty = NumberUtils.toBigDecimal(vo.getPaymentDocNoQty());
+			bigDecimalList.add(paymentDocNoQty);
+		}
+		
+		BigDecimal auditQty = null;
+		if (!bigDecimalList.isEmpty()) {
+			auditQty = NumberUtils.max(bigDecimalList);
+			vo.setAuditQty(auditQty.toString());
+		} else {
+			vo.setAuditQty(NO_VALUE);
+		}
+		
+		BigDecimal goodsQty = NumberUtils.toBigDecimal(vo.getGoodsQty());
+		if (goodsQty != null && auditQty != null) {
+			BigDecimal diffQty = goodsQty.subtract(auditQty);
+			vo.setDiffQty(diffQty.toString());
+		}
 	}
 
 	@Transactional(rollbackOn = {Exception.class})

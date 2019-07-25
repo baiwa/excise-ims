@@ -328,16 +328,15 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 
 	@Override
 	public List<ProductPaperReduceTaxVo> uploadData(ProductPaperFormVo formVo) {
-		logger.info("uploadData readVo filename={}", formVo.getFile().getOriginalFilename());
+		logger.info("uploadData filename={}", formVo.getFile().getOriginalFilename());
 
-		List<ProductPaperReduceTaxVo> dataList = new ArrayList<>();
-		ProductPaperReduceTaxVo data = null;
-		
+		List<ProductPaperReduceTaxVo> voList = new ArrayList<>();
+		ProductPaperReduceTaxVo vo = null;
 		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(formVo.getFile().getBytes()));) {
 			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
 
 			for (Row row : sheet) {
-				 data = new ProductPaperReduceTaxVo();
+				 vo = new ProductPaperReduceTaxVo();
 				// Skip on first row
 				if (row.getRowNum() < 2) {
 					continue;
@@ -348,41 +347,45 @@ public class ProductPaperReduceTaxService extends AbstractProductPaperService<Pr
 						continue;
 					} else if (cell.getColumnIndex() == 1) {
 						// MaterialDesc
-						data.setMaterialDesc(ExcelUtils.getCellValueAsString(cell));
+						vo.setMaterialDesc(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 2) {
 						// TaxReduceAmt
-						data.setTaxReduceAmt(ExcelUtils.getCellValueAsString(cell));
+						vo.setTaxReduceAmt(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 3) {
 						// TaxReduceQty
-						data.setTaxReduceQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setTaxReduceQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 4) {
 						// TaxReducePerUnitAmt
-						data.setTaxReducePerUnitAmt(ExcelUtils.getCellValueAsString(cell));
+						vo.setTaxReducePerUnitAmt(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 5) {
 						// BillNo
-						data.setBillNo(ExcelUtils.getCellValueAsString(cell));
+						vo.setBillNo(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 6) {
 						// BillTaxAmt
-						data.setBillTaxAmt(ExcelUtils.getCellValueAsString(cell));
+						vo.setBillTaxAmt(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 7) {
 						// BillTaxQty
-						data.setBillTaxQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setBillTaxQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 8) {
 						// BillTaxQty
-						data.setBillTaxPerUnit(ExcelUtils.getCellValueAsString(cell));
+						vo.setBillTaxPerUnit(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 9) {
 						// DiffTaxReduceAmt
-						data.setDiffTaxReduceAmt(ExcelUtils.getCellValueAsString(cell));
+						vo.setDiffTaxReduceAmt(ExcelUtils.getCellValueAsString(cell));
 					}
-
 				}
-				dataList.add(data);
+				calculate(vo);
+				voList.add(vo);
 			}
-
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
-		return dataList;
+		
+		return voList;
+	}
+	
+	private void calculate(ProductPaperReduceTaxVo vo) {
+		
 	}
 
 	@Transactional(rollbackOn = {Exception.class})

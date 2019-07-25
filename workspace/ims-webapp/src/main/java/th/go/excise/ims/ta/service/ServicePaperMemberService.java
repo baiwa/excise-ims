@@ -190,13 +190,15 @@ public class ServicePaperMemberService extends AbstractServicePaperService<Servi
 
 	@Override
 	public List<ServicePaperMemberVo> uploadData(ServicePaperFormVo formVo) {
-		List<ServicePaperMemberVo> dataList = new ArrayList<>();
-
+		logger.info("uploadData filename={}", formVo.getFile().getOriginalFilename());
+		
+		List<ServicePaperMemberVo> voList = new ArrayList<>();
+		ServicePaperMemberVo vo = null;
 		try (Workbook workbook = WorkbookFactory.create(formVo.getFile().getInputStream())) {
 			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
 
 			for (Row row : sheet) {
-				ServicePaperMemberVo pushdata = new ServicePaperMemberVo();
+				vo = new ServicePaperMemberVo();
 				// Skip on first row
 				if (row.getRowNum() == 0) {
 					continue;
@@ -206,29 +208,33 @@ public class ServicePaperMemberService extends AbstractServicePaperService<Servi
 						// Column No.
 						continue;
 					} else if (cell.getColumnIndex() == 1) {
-						pushdata.setMemberCode(ExcelUtils.getCellValueAsString(cell));
+						vo.setMemberCode(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 2) {
-						pushdata.setMemberFullName(ExcelUtils.getCellValueAsString(cell));
+						vo.setMemberFullName(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 3) {
-						pushdata.setMemberStartDate(ConvertDateUtils.formatDateToString(cell.getDateCellValue(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+						vo.setMemberStartDate(ConvertDateUtils.formatDateToString(cell.getDateCellValue(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
 					} else if (cell.getColumnIndex() == 4) {
-						pushdata.setMemberEndDate(ConvertDateUtils.formatDateToString(cell.getDateCellValue(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+						vo.setMemberEndDate(ConvertDateUtils.formatDateToString(cell.getDateCellValue(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
 					} else if (cell.getColumnIndex() == 5) {
-						pushdata.setMemberCoupon(ExcelUtils.getCellValueAsString(cell));
+						vo.setMemberCoupon(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 6) {
-						pushdata.setMemberUsedDate(ConvertDateUtils.formatDateToString(cell.getDateCellValue(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
+						vo.setMemberUsedDate(ConvertDateUtils.formatDateToString(cell.getDateCellValue(), ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_EN));
 					} else if (cell.getColumnIndex() == 6) {
-						pushdata.setMemberStatus(ExcelUtils.getCellValueAsString(cell));
+						vo.setMemberStatus(ExcelUtils.getCellValueAsString(cell));
 					}
-
 				}
-				dataList.add(pushdata);
+				calculate(vo);
+				voList.add(vo);
 			}
-
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
-		return dataList;
+		
+		return voList;
+	}
+	
+	private void calculate(ServicePaperMemberVo vo) {
+		
 	}
 
 	@Transactional(rollbackOn = {Exception.class})

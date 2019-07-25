@@ -3,13 +3,13 @@ package th.go.excise.ims.ta.service;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -21,8 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.ibm.icu.math.BigDecimal;
 
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
@@ -45,7 +43,6 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 	private TaPaperPr04HRepository taPaperPr04HRepository;
 	@Autowired
 	private TaPaperPr04DRepository taPaperPr04DRepository;
-
 	@Autowired
 	private WsOasfri0100DRepository wsOasfri0100DRepository;
 
@@ -390,77 +387,90 @@ public class ProductPaperRelationProducedGoodsService extends AbstractProductPap
 
 	@Override
 	public List<ProductPaperRelationProducedGoodsVo> uploadData(ProductPaperFormVo formVo) {
-		logger.info("uploadData readVo filename={}", formVo.getFile().getOriginalFilename());
-
-		List<ProductPaperRelationProducedGoodsVo> dataList = new ArrayList<>();
-		ProductPaperRelationProducedGoodsVo data = null;
-		DataFormatter formatter = new DataFormatter();
-		BigDecimal diff;
+		logger.info("uploadData filename={}", formVo.getFile().getOriginalFilename());
+		
+		List<ProductPaperRelationProducedGoodsVo> voList = new ArrayList<>();
+		ProductPaperRelationProducedGoodsVo vo = null;
 		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(formVo.getFile().getBytes()))) {
 			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
-
+			
 			for (Row row : sheet) {
-				data = new ProductPaperRelationProducedGoodsVo();
+				vo = new ProductPaperRelationProducedGoodsVo();
 				// Skip on Second row
 				if (row.getRowNum() < 2) {
 					continue;
 				}
-				diff = new BigDecimal(formatter.formatCellValue(row.getCell(6))).subtract(new BigDecimal(formatter.formatCellValue(row.getCell(3)))).abs();
-				data.setDiffMaterialQty(String.valueOf(diff));
 				for (Cell cell : row) {
-
 					if (cell.getColumnIndex() == 0) {
 						// Column No.
 						continue;
 					} else if (cell.getColumnIndex() == 1) {
 						// DocNo
-						data.setDocNo(ExcelUtils.getCellValueAsString(cell));
+						vo.setDocNo(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 2) {
 						// MaterialDesc
-						data.setMaterialDesc(ExcelUtils.getCellValueAsString(cell));
+						vo.setMaterialDesc(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 3) {
 						// InputMaterialQty
-						data.setInputMaterialQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setInputMaterialQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 4) {
 						// FormulaMaterialQty
-						data.setFormulaMaterialQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setFormulaMaterialQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 5) {
 						// UsedMaterialQty
-						data.setUsedMaterialQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 6) {
 						// RealUsedMaterialQty
-						data.setRealUsedMaterialQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setRealUsedMaterialQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 7) {
 						// DiffMaterialQty
-						data.setDiffMaterialQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 8) {
 						// MaterialQty
-						data.setMaterialQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setMaterialQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 9) {
 						// GoodsQty
-						data.setGoodsQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setGoodsQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 9) {
 						// DiffGoodsQty
-						data.setDiffGoodsQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setDiffGoodsQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 10) {
 						// WasteGoodsPnt
-						data.setWasteGoodsPnt(ExcelUtils.getCellValueAsString(cell));
+						vo.setWasteGoodsPnt(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 11) {
 						// WasteGoodsQty
-						data.setWasteGoodsQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setWasteGoodsQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 12) {
 						// BalanceGoodsQty
-						data.setBalanceGoodsQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setBalanceGoodsQty(ExcelUtils.getCellValueAsString(cell));
 					}
 				}
-				dataList.add(data);
+				calculate(vo);
+				voList.add(vo);
 			}
-
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
-
-		return dataList;
+		
+		return voList;
+	}
+	
+	private void calculate(ProductPaperRelationProducedGoodsVo vo) {
+		BigDecimal inputMaterialQty = NumberUtils.toBigDecimal(vo.getInputMaterialQty());
+		BigDecimal formulaMaterialQty = NumberUtils.toBigDecimal(vo.getFormulaMaterialQty());
+		BigDecimal realUsedMaterialQty = NumberUtils.toBigDecimal(vo.getRealUsedMaterialQty());
+		
+		if (inputMaterialQty != null && formulaMaterialQty != null) {
+			BigDecimal usedMaterialQty = inputMaterialQty.subtract(formulaMaterialQty);
+			vo.setUsedMaterialQty(usedMaterialQty.toString());
+		} else {
+			vo.setUsedMaterialQty(NO_VALUE);
+		}
+		
+		if (realUsedMaterialQty != null && inputMaterialQty != null) {
+			BigDecimal diffMaterialQty = realUsedMaterialQty.subtract(inputMaterialQty);
+			vo.setDiffMaterialQty(diffMaterialQty.toString());
+		} else {
+			vo.setDiffMaterialQty(NO_VALUE);
+		}
 	}
 
 	@Override

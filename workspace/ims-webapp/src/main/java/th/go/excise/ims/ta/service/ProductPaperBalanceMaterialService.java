@@ -2,6 +2,7 @@ package th.go.excise.ims.ta.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -21,8 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.ibm.icu.math.BigDecimal;
 
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.constant.ProjectConstants.WEB_SERVICE;
@@ -273,58 +271,65 @@ public class ProductPaperBalanceMaterialService extends AbstractProductPaperServ
 
 	@Override
 	public List<ProductPaperBalanceMaterialVo> uploadData(ProductPaperFormVo formVo) {
-		logger.info("uploadData readVo filename={}", formVo.getFile().getOriginalFilename());
+		logger.info("uploadData filename={}", formVo.getFile().getOriginalFilename());
 
-		List<ProductPaperBalanceMaterialVo> dataList = new ArrayList<>();
-		ProductPaperBalanceMaterialVo data = null;
-		DataFormatter formatter = new DataFormatter();
-		BigDecimal diff1, diff2;
+		List<ProductPaperBalanceMaterialVo> voList = new ArrayList<>();
+		ProductPaperBalanceMaterialVo vo = null;
 		try (Workbook workbook = WorkbookFactory.create(formVo.getFile().getInputStream())) {
 			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
 
 			for (Row row : sheet) {
-				data = new ProductPaperBalanceMaterialVo();
+				vo = new ProductPaperBalanceMaterialVo();
 				// Skip on first row
 				if (row.getRowNum() == 0) {
 					continue;
 				}
-				diff1 = new BigDecimal(formatter.formatCellValue(row.getCell(4))).subtract(new BigDecimal(formatter.formatCellValue(row.getCell(3)))).abs();
-				diff2 = new BigDecimal(formatter.formatCellValue(row.getCell(4))).subtract(new BigDecimal(formatter.formatCellValue(row.getCell(2)))).abs();
-				data.setMaxDiffQty1(String.valueOf(diff1));
-				data.setMaxDiffQty2(String.valueOf(diff2));
 				for (Cell cell : row) {
-
 					if (cell.getColumnIndex() == 0) {
 						// Column No.
 						continue;
 					} else if (cell.getColumnIndex() == 1) {
 						// MaterialDesc
-						data.setMaterialDesc(ExcelUtils.getCellValueAsString(cell));
+						vo.setMaterialDesc(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 2) {
 						// BalanceByAccountQty
-						data.setBalanceByAccountQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setBalanceByAccountQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 3) {
-						// BalanceByCountQty
-						data.setBalanceByStockQty(ExcelUtils.getCellValueAsString(cell));
+						// BalanceByStockQty
+						vo.setBalanceByStockQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 4) {
 						// BalanceByCountQty
-						data.setBalanceByCountQty(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 5) {
-						// MaxDiffQty
-						data.setMaxDiffQty1(ExcelUtils.getCellValueAsString(cell));
-					} else if (cell.getColumnIndex() == 5) {
-						// MaxDiffQty
-						data.setMaxDiffQty2(ExcelUtils.getCellValueAsString(cell));
+						vo.setBalanceByCountQty(ExcelUtils.getCellValueAsString(cell));
 					}
 				}
-				dataList.add(data);
+				calculate(vo);
+				voList.add(vo);
 			}
-
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
 
-		return dataList;
+		return voList;
+	}
+	
+	private void calculate(ProductPaperBalanceMaterialVo vo) {
+		BigDecimal balanceByAccountQty = NumberUtils.toBigDecimal(vo.getBalanceByAccountQty());
+		BigDecimal balanceByStockQty = NumberUtils.toBigDecimal(vo.getBalanceByStockQty());
+		BigDecimal balanceByCountQty = NumberUtils.toBigDecimal(vo.getBalanceByCountQty());
+		
+		if (balanceByCountQty != null && balanceByStockQty != null) {
+			BigDecimal maxDiffQty1 = balanceByCountQty.subtract(balanceByStockQty);
+			vo.setMaxDiffQty1(maxDiffQty1.toString());
+		} else {
+			vo.setMaxDiffQty1(NO_VALUE);
+		}
+		
+		if (balanceByCountQty != null && balanceByAccountQty != null) {
+			BigDecimal maxDiffQty2 = balanceByCountQty.subtract(balanceByAccountQty);
+			vo.setMaxDiffQty2(maxDiffQty2.toString());
+		} else {
+			vo.setMaxDiffQty2(NO_VALUE);
+		}
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package th.go.excise.ims.ta.service;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -288,56 +289,86 @@ public class ProductPaperOutputGoodsService extends AbstractProductPaperService<
 
 	@Override
 	public List<ProductPaperOutputGoodsVo> uploadData(ProductPaperFormVo formVo) {
-		logger.info("uploadData readVo filename={}", formVo.getFile().getOriginalFilename());
+		logger.info("uploadData filename={}", formVo.getFile().getOriginalFilename());
 
-		List<ProductPaperOutputGoodsVo> dataList = new ArrayList<>();
-		ProductPaperOutputGoodsVo data = null;
-
+		List<ProductPaperOutputGoodsVo> voList = new ArrayList<>();
+		ProductPaperOutputGoodsVo vo = null;
 		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(formVo.getFile().getBytes()))) {
 			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
 
 			for (Row row : sheet) {
-				data = new ProductPaperOutputGoodsVo();
+				vo = new ProductPaperOutputGoodsVo();
 				// Skip on first row
 				if (row.getRowNum() == 0) {
 					continue;
 				}
 				for (Cell cell : row) {
-
 					if (cell.getColumnIndex() == 0) {
 						// Column No.
 						continue;
 					} else if (cell.getColumnIndex() == 1) {
 						// GoodsDesc
-						data.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
+						vo.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 2) {
 						// OutputGoodsQty
-						data.setOutputGoodsQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setOutputGoodsQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 3) {
 						// OutputDailyAccountQty
-						data.setOutputDailyAccountQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setOutputDailyAccountQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 4) {
 						// OutputMonthStatementQty
-						data.setOutputMonthStatementQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setOutputMonthStatementQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 5) {
 						// AuditQty
-						data.setAuditQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setAuditQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 6) {
 						// TaxGoodsQty
-						data.setTaxGoodsQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setTaxGoodsQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 7) {
 						// DiffQty
-						data.setDiffQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setDiffQty(ExcelUtils.getCellValueAsString(cell));
 					}
 				}
-				dataList.add(data);
+				calculate(vo);
+				voList.add(vo);
 			}
-
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
 
-		return dataList;
+		return voList;
+	}
+	
+	private void calculate(ProductPaperOutputGoodsVo vo) {
+		List<BigDecimal> bigDecimalList = new ArrayList<>();
+		BigDecimal outputGoodsQty = NumberUtils.toBigDecimal(vo.getOutputGoodsQty());
+		BigDecimal outputDailyAccountQty = NumberUtils.toBigDecimal(vo.getOutputDailyAccountQty());
+		BigDecimal outputMonthStatementQty = NumberUtils.toBigDecimal(vo.getOutputMonthStatementQty());
+		BigDecimal auditQty = null;
+		BigDecimal taxGoodsQty = NumberUtils.toBigDecimal(vo.getTaxGoodsQty());
+		
+		if (outputGoodsQty != null) {
+			bigDecimalList.add(outputGoodsQty);
+		}
+		if (outputDailyAccountQty != null) {
+			bigDecimalList.add(outputDailyAccountQty);
+		}
+		if (outputMonthStatementQty != null) {
+			bigDecimalList.add(outputMonthStatementQty);
+		}
+		if (!bigDecimalList.isEmpty()) {
+			auditQty = NumberUtils.max(bigDecimalList);
+			vo.setAuditQty(auditQty.toString());
+		} else {
+			vo.setAuditQty(NO_VALUE);
+		}
+		
+		if (auditQty != null && taxGoodsQty != null) {
+			BigDecimal diffQty = auditQty.subtract(taxGoodsQty);
+			vo.setDiffQty(diffQty.toString());
+		} else {
+			vo.setDiffQty(NO_VALUE);
+		}
 	}
 
 	@Transactional(rollbackOn = {Exception.class})

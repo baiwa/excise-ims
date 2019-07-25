@@ -3,6 +3,7 @@ package th.go.excise.ims.ta.service;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,6 @@ import javax.transaction.Transactional;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -22,8 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.ibm.icu.math.BigDecimal;
 
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.common.util.ExcelUtils;
@@ -173,45 +171,50 @@ public class ServicePaperBalanceGoodsService extends AbstractServicePaperService
 
 	@Override
 	public List<ServicePaperBalanceGoodsVo> uploadData(ServicePaperFormVo formVo) {
-		logger.info("readFileServicePaperMemberVo");
-		logger.info("fileName " + formVo.getFile().getOriginalFilename());
-		logger.info("type " + formVo.getFile().getContentType());
-		List<ServicePaperBalanceGoodsVo> dataList = new ArrayList<>();
+		logger.info("uploadData filename={}", formVo.getFile().getOriginalFilename());
 
+		List<ServicePaperBalanceGoodsVo> voList = new ArrayList<>();
+		ServicePaperBalanceGoodsVo vo = new ServicePaperBalanceGoodsVo();
 		try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(formVo.getFile().getBytes()));) {
 			Sheet sheet = workbook.getSheetAt(SHEET_DATA_INDEX);
-			BigDecimal diff;
-			DataFormatter formatter = new DataFormatter();
+			
 			for (Row row : sheet) {
-				ServicePaperBalanceGoodsVo pushdata = new ServicePaperBalanceGoodsVo();
+				vo = new ServicePaperBalanceGoodsVo();
 				// Skip on first row
 				if (row.getRowNum() == 0) {
 					continue;
 				}
-				diff = new BigDecimal(formatter.formatCellValue(row.getCell(3))).subtract(new BigDecimal(formatter.formatCellValue(row.getCell(2)))).abs();
-				pushdata.setDiffBalanceGoodsQty(String.valueOf(diff));
 				for (Cell cell : row) {
 					if (cell.getColumnIndex() == 0) {
 						// Column No.
 						continue;
 					} else if (cell.getColumnIndex() == 1) {
-						pushdata.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
+						vo.setGoodsDesc(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 2) {
-						pushdata.setBalanceGoodsQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setBalanceGoodsQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 3) {
-						pushdata.setAuditBalanceGoodsQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setAuditBalanceGoodsQty(ExcelUtils.getCellValueAsString(cell));
 					} else if (cell.getColumnIndex() == 4) {
-						pushdata.setDiffBalanceGoodsQty(ExcelUtils.getCellValueAsString(cell));
+						vo.setDiffBalanceGoodsQty(ExcelUtils.getCellValueAsString(cell));
 					}
-
 				}
-				dataList.add(pushdata);
+				calculate(vo);
+				voList.add(vo);
 			}
-
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
-		return dataList;
+		
+		return voList;
+	}
+	
+	private void calculate(ServicePaperBalanceGoodsVo vo) {
+		BigDecimal auditBalanceGoodsQty = NumberUtils.toBigDecimal(vo.getAuditBalanceGoodsQty());
+		BigDecimal balanceGoodsQty = NumberUtils.toBigDecimal(vo.getBalanceGoodsQty());
+		if (auditBalanceGoodsQty != null && balanceGoodsQty != null) {
+			BigDecimal diffBalanceGoodsQty = auditBalanceGoodsQty.subtract(balanceGoodsQty);
+			vo.setDiffBalanceGoodsQty(diffBalanceGoodsQty.toString());
+		}
 	}
 
 	@Transactional(rollbackOn = {Exception.class})
