@@ -28,6 +28,7 @@ public class PlanWorksheetDtlVo {
 	private String title;
 	private Date start;
 	private Date end;
+	private boolean allDay;
 
 	public Long getPlanWorksheetDtlId() {
 		return planWorksheetDtlId;
@@ -219,6 +220,14 @@ public class PlanWorksheetDtlVo {
 
 	public void setEnd(Date end) {
 		this.end = end;
+	}
+
+	public boolean isAllDay() {
+		return allDay;
+	}
+
+	public void setAllDay(boolean allDay) {
+		this.allDay = allDay;
 	}
 	
 

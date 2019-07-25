@@ -2,6 +2,8 @@ package th.go.excise.ims.ta.persistence.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +18,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.lowagie.text.pdf.PRAcroForm;
 
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
@@ -340,7 +343,11 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
             vo.setAuditStartDate(ConvertDateUtils.formatDateToString(rs.getDate("AUDIT_START_DATE"), "yyyy-MM-dd", ConvertDateUtils.LOCAL_EN));
             vo.setAuditEndDate(ConvertDateUtils.formatDateToString(rs.getDate("AUDIT_END_DATE"), "yyyy-MM-dd", ConvertDateUtils.LOCAL_EN));
             vo.setStart(rs.getDate("AUDIT_START_DATE"));
-            vo.setEnd(rs.getDate("AUDIT_END_DATE"));
+            
+            LocalDate localEnd = ConvertDateUtils.parseStringToLocalDate(ConvertDateUtils.formatDateToString(rs.getDate("AUDIT_END_DATE"),ConvertDateUtils.DD_MM_YYYY),
+    				ProjectConstant.SHORT_DATE_FORMAT);
+            localEnd = localEnd.plusDays(1);
+            vo.setEnd(Date.from(localEnd.atStartOfDay(ZoneId.systemDefault()).toInstant()));
             vo.setCusFullName(rs.getString("CUS_FULLNAME"));
             vo.setFacFullName(rs.getString("FAC_FULLNAME"));
             vo.setOfficeCodeR4000(rs.getString("OFFICE_CODE_R4000"));
@@ -350,6 +357,7 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
             vo.setAreaCode(rs.getString("AREA_CODE"));
             vo.setAreaDesc(rs.getString("AREA_DESC"));
             vo.setTitle(rs.getString("FAC_FULLNAME"));
+            vo.setAllDay(true);
 //            vo.setDeptShortName(rs.getString("DEPTSHORTNAME"));
 //            vo.setSubdeptShortName(rs.getString("SUBDEPTSHORTNAME"));
             return vo;
