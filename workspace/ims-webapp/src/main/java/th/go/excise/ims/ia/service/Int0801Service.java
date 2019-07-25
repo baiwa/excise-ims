@@ -1,13 +1,24 @@
 package th.go.excise.ims.ia.service;
 
+import java.awt.Color;
+import java.io.ByteArrayOutputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
+import th.go.excise.ims.common.util.ExcelUtils;
 import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaAuditGftbD;
 import th.go.excise.ims.ia.persistence.entity.IaAuditGftbH;
@@ -150,5 +161,173 @@ public class Int0801Service {
 		}
 		response.setTabs(details);
 		return response;
+	}
+
+	public ByteArrayOutputStream exportExcel(String auditGftbNo) throws Exception {
+		String[] sheetName = {"หมวดทรัพย์สิน", "หมวดหนี้สิน", "หมวดส่วนทุน", "หมวดรายได้", "หมวดค่าใช้จ่าย"};
+		
+		/* __________ style __________ */
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		CellStyle thStyle = ExcelUtils.createThColorStyle(workbook, new XSSFColor(Color.LIGHT_GRAY));
+		CellStyle tdStyle = ExcelUtils.createTdCellStyle(workbook);
+		CellStyle tdRight = ExcelUtils.createRightCellStyle(workbook);
+		CellStyle tdCenter = ExcelUtils.createCenterCellStyle(workbook);
+		
+		/* __________ find data to write excel __________ */
+		Int0801SaveVo initData = findByAuditGftbNo(auditGftbNo);
+		
+		/* __________ start row tabs __________ */
+		DecimalFormat DF = new DecimalFormat("#,##0.00");
+		for (int i = 0; i < initData.getTabs().size(); i++) {
+			Int0801Tabs tabs = initData.getTabs().get(i);
+			
+			/* __________ create sheet __________ */
+			Sheet sheet = workbook.createSheet(sheetName[i]);
+			
+			/* __________ start row header __________ */
+			int rowNum = 0;
+			int cellNum = 2;
+			Row row = sheet.createRow(rowNum);
+			Cell cell = row.createCell(cellNum);
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue("หน่วยเบิกจ่าย:   ".concat(initData.getDeptDisb().concat(" - ").concat(initData.getGfExciseName())));
+			sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum, cellNum, 5));
+			cellNum++;
+			
+			rowNum++;
+			row = sheet.createRow(rowNum);
+			cellNum = 2;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue("ประจำงวด:   ".concat(initData.getPeriod()));
+			cellNum++;
+			cellNum++;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue("ประจำปี:   ".concat(initData.getPeriodYear()));
+			
+			/* __________ start row th table __________ */
+			String[] th = { "รหัส", "ชื่อบัญชีแยกประเภท", "ยอดยกมา", "เดบิต", "เครดิต", "ยอดยกไป", "", "ผลการตรวจสอบ" };
+			rowNum++;
+			rowNum++;
+			cellNum = 0;
+			row = sheet.createRow(rowNum);
+			row.setHeight((short) 500);
+			for (int countH = 0; countH < th.length; countH++) {
+				cell = row.createCell(cellNum);
+				cell.setCellValue(th[countH]);
+//				cell.setCellStyle(TopicCenter);
+				cell.setCellStyle(thStyle);
+				cellNum++;
+			}
+			
+			/* __________ start line td table __________ */
+			for (int j = 0; j < tabs.getTable().size(); j++) {
+				Int0801Vo table = tabs.getTable().get(j);
+				
+				rowNum++;
+				cellNum = 0;
+				row = sheet.createRow(rowNum);
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(table.getAccNo());
+				cell.setCellStyle(tdStyle);
+				cell.setCellStyle(tdCenter);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(table.getAccName());
+				cell.setCellStyle(tdStyle);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(DF.format(table.getBringForward()));
+				cell.setCellStyle(tdStyle);
+				cell.setCellStyle(tdRight);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(DF.format(table.getDebit()));
+				cell.setCellStyle(tdStyle);
+				cell.setCellStyle(tdRight);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(DF.format(table.getCredit()));
+				cell.setCellStyle(tdStyle);
+				cell.setCellStyle(tdRight);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(DF.format(table.getCarryForward()));
+				cell.setCellStyle(tdStyle);
+				cell.setCellStyle(tdRight);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue("Y".equals(table.getCheckFlag())? "X": "!");
+				cell.setCellStyle(tdStyle);
+				cell.setCellStyle(tdCenter);
+				cellNum++;
+				
+				cell = row.createCell(cellNum);
+				cell.setCellValue(table.getGftbTestResult());
+				cell.setCellStyle(tdStyle);
+				cellNum++;
+			}
+			
+			/* __________ start row conclude __________ */
+			rowNum++;
+			rowNum++;
+			row = sheet.createRow(rowNum);
+			cellNum = 0;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue("สรุปผลการตรวจสอบข้อมูลทางบัญชีที่ถูกต้องตามดุลบัญชีปกติ");
+			
+			rowNum++;
+			rowNum++;
+			row = sheet.createRow(rowNum);
+			cellNum = 2;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue("ถูกต้อง:   ".concat("Y".equals(initData.getGftbFlag())? "X": ""));
+			cellNum++;
+
+			cell = row.createCell(cellNum);
+			cell.setCellValue("ไม่ถูกต้อง:   ".concat("N".equals(initData.getGftbFlag())? "X": ""));
+			
+			rowNum++;
+			rowNum++;
+			row = sheet.createRow(rowNum);
+			cellNum = 1;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue("ข้อตรวจพบ/ข้อสังเกต(ข้อเท็จจริง/Condition):   ".concat(initData.getGftbConditionText()));
+//			sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum+1, cellNum, 8));
+			
+			rowNum++;
+			rowNum++;
+			row = sheet.createRow(rowNum);
+			cellNum = 1;
+			
+			cell = row.createCell(cellNum);
+			cell.setCellValue("สิ่งที่ควรจะเป็น(หลักเกณฑ์/Criteria):   ".concat(initData.getGftbCreteriaText()));
+//			sheet.addMergedRegion(new CellRangeAddress(rowNum, rowNum+1, cellNum, 8));
+
+			/* __________  set width __________ */
+			int width = 100;
+			sheet.setColumnWidth(0, width * 60);
+			sheet.setColumnWidth(1, width * 60);
+			sheet.setColumnWidth(7, width * 70);
+			for (int k = 2; k <= 5; k++) {
+				sheet.setColumnWidth(k, width * 40);
+			}
+		}
+
+		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+		workbook.write(outByteStream);
+		return outByteStream;
 	}
 }
