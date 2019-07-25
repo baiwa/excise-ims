@@ -1,10 +1,13 @@
 package th.co.baiwa.buckwaframework.common.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants;
@@ -56,16 +59,15 @@ public class WebSecurityFormAuthenConfigurerAdapter extends WebSecurityConfigure
 			.and()
 			.sessionManagement()
 				.invalidSessionUrl(SecurityConstants.URL.LOGIN_WEB)
-//				.maximumSessions(10)
-//				.sessionRegistry(sessionRegistry())
-				;
+				.maximumSessions(1)
+				.sessionRegistry(sessionRegistry());
 		
 		http.csrf().disable();
 	}
 	
-//	@Bean
-//	public SessionRegistry sessionRegistry() {
-//		return new SessionRegistryImpl();
-//	}
+	@Bean
+	public SessionRegistry sessionRegistry() {
+		return new SessionRegistryImpl();
+	}
 	
 }

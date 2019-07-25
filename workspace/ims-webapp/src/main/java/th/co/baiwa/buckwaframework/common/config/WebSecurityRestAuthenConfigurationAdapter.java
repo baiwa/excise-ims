@@ -59,9 +59,8 @@ public class WebSecurityRestAuthenConfigurationAdapter extends WebSecurityConfig
 			.requestCache().requestCache(new NullRequestCache())
 			.and()
 			.sessionManagement()
-//				.maximumSessions(100)
-//				.sessionRegistry(sessionRegistry())
-				;
+				.maximumSessions(1)
+				.sessionRegistry(sessionRegistry());
 		
 		http.headers().frameOptions().sameOrigin();
 		
