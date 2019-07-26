@@ -191,7 +191,8 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		sql.append("   (TO_NUMBER(NVL(SUM_TAX_AMT_G1,0)) + TO_NUMBER(NVL(SUM_TAX_AMT_G2,0))) AS SUM_TOTAL_TAX_AMT, ");
 		sql.append("   R4000.MULTI_DUTY_FLAG, ");
 		sql.append("   ECDG.DUTY_GROUP_TYPE, ");
-		sql.append("   R4000.SYNC_DATE ");
+		sql.append("   R4000.SYNC_DATE, ");
+		sql.append("   (T_W_COND_HDR.MONTH_NUM - TO_NUMBER(NVL(TA_W_DTL.TAX_MONTH_NO, 0))) AS NOT_PAY_TAX_MONTH_NO ");
 		sql.append(" FROM TA_WORKSHEET_DTL TA_W_DTL ");
 		sql.append(" INNER JOIN TA_WORKSHEET_HDR TA_W_HDR ON TA_W_DTL.ANALYSIS_NUMBER = TA_W_HDR.ANALYSIS_NUMBER ");
 		sql.append("   AND TA_W_HDR.IS_DELETED = 'N' ");
@@ -408,7 +409,9 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		buildByCriteriaQuery(sql, params, formVo);
 
 		if (TA_WORKSHEET_STATUS.DRAFT.equals(formVo.getWorksheetStatus())) {
-			sql.append(" ORDER BY TO_NUMBER(TA_W_DTL.TAX_AMT_CHN_PNT) ASC, SUM_TOTAL_TAX_AMT DESC, R4000.OFFICE_CODE ASC, TA_W_DTL.NEW_REG_ID ASC ");
+			//sql.append(" ORDER BY TO_NUMBER(TA_W_DTL.TAX_AMT_CHN_PNT) ASC, SUM_TOTAL_TAX_AMT DESC, R4000.OFFICE_CODE ASC, TA_W_DTL.NEW_REG_ID ASC ");
+			// Update 20190716
+			sql.append(" ORDER BY TO_NUMBER(NVL(TA_W_DTL.SUM_TAX_AMT_G1, 0)) DESC, TO_NUMBER(NVL(TA_W_DTL.SUM_TAX_AMT_G2, 0)) DESC, TO_NUMBER(NVL(TA_W_DTL.TAX_AMT_CHN_PNT, 0)) DESC, NOT_PAY_TAX_MONTH_NO ASC ");
 		} else {
 			if (FLAG.Y_FLAG.equals(formVo.getNewRegFlag())) {
 				sql.append(" ORDER BY SUM_TOTAL_TAX_AMT DESC ");

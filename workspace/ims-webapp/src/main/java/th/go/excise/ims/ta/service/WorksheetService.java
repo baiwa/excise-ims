@@ -530,7 +530,13 @@ public class WorksheetService {
 		
 		// Condition 1
 		TaWorksheetCondSubNoAudit condSubNoAudit = taWorksheetCondSubNoAuditRepository.findByAnalysisNumber(analysisNumber);
-		String condDesc1 = String.format(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "NO_AUDIT").getValue1(), condSubNoAudit.getNoTaxAuditYearNum());
+		String noTaxAuditYearNum = null;
+		if (condSubNoAudit != null) {
+			noTaxAuditYearNum = String.valueOf(condSubNoAudit.getNoTaxAuditYearNum());
+		} else {
+			noTaxAuditYearNum = "3";
+		}
+		String condDesc1 = String.format(ApplicationCache.getParamInfoByCode(PARAM_GROUP.TA_MAS_COND_MAIN_DESC, "NO_AUDIT").getValue1(), noTaxAuditYearNum);
 		WorksheetCondDetailVo condVo1 = new WorksheetCondDetailVo();
 		condVo1.setCondGroup("1");
 		condVo1.setCondDtlDesc(condDesc1);
