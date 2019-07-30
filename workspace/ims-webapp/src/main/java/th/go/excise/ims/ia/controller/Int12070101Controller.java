@@ -76,7 +76,7 @@ public class Int12070101Controller {
 	@GetMapping("/export/{id}")
 	public void exportReport(@PathVariable("id") long id, HttpServletResponse response) throws Exception {
 		// set fileName
-		String fileName = URLEncoder.encode("test", "UTF-8");
+		String fileName = URLEncoder.encode("บันทึกคำขอเบิกเงินค่าเช่าบ้าน(แบบ6006)", "UTF-8");
 		byte[] outArray = null;
 		try {
 			outArray = int12070101Service.exportReport(id);

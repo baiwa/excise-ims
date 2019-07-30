@@ -1,6 +1,7 @@
 package th.go.excise.ims.ia.service;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSIO
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.co.baiwa.buckwaframework.common.util.ReportUtils;
+import th.co.baiwa.buckwaframework.common.util.ThaiNumberUtils;
 import th.go.excise.ims.ia.constant.IaConstants;
 import th.go.excise.ims.ia.persistence.entity.IaRentHouse;
 import th.go.excise.ims.ia.persistence.entity.IaRentHouse1;
@@ -116,11 +118,40 @@ public class Int12070101Service {
 	public byte[] exportReport(long id) throws Exception {
 		Int12070101SaveFormVo dataFind = findById(id);
 		
-		ObjectMapper oMapper = new ObjectMapper();
-		@SuppressWarnings("unchecked")
-		Map<String, Object> params =  oMapper.convertValue(dataFind, Map.class);
-		System.out.println("dataFind--------->"+ params);
+		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+		Map<String, Object> params = new HashMap<>();
+		params.put("name", dataFind.getName());
+		params.put("position", dataFind.getPosition());
+		params.put("affiliation", dataFind.getAffiliation());
+		params.put("paymentCost", dataFind.getPaymentCost());
+		params.put("paymentFor", dataFind.getPaymentFor());
+		params.put("period", dataFind.getPeriod());
+		params.put("requestNo", dataFind.getRequestNo());
+		params.put("periodWithdraw", dataFind.getPeriodWithdraw());
+		params.put("receipts", dataFind.getReceipts());
+		params.put("status", dataFind.getStatus());
+		params.put("periodWithdrawTo", dataFind.getPeriodWithdrawTo());
+		params.put("form6005No", dataFind.getForm6005No());
+		params.put("refReceipts", dataFind.getRefReceipts());
 		
+		params.put("billAmount", decimalFormat.format(dataFind.getBillAmount()));
+		params.put("salary",  decimalFormat.format(dataFind.getSalary()));
+		params.put("notOver",  decimalFormat.format(dataFind.getNotOver()));
+		params.put("totalMonth", dataFind.getTotalMonth());
+		params.put("totalWithdraw", dataFind.getTotalWithdraw());
+		
+//		ObjectMapper oMapper = new ObjectMapper();
+//		@SuppressWarnings("unchecked")
+//		Map<String, Object> params =  oMapper.convertValue(dataFind, Map.class);
+		params.put("billAmountText", ThaiNumberUtils.toThaiBaht(dataFind.getBillAmount().toString()));
+		params.put("salaryText",ThaiNumberUtils.toThaiBaht(dataFind.getSalary().toString()));
+		params.put("notOverText", ThaiNumberUtils.toThaiBaht(dataFind.getNotOver().toString()));
+		params.put("totalWithdrawText", ThaiNumberUtils.toThaiBaht(dataFind.getTotalWithdraw().toString()));
+		params.put("totalMonthThaiNumber", ThaiNumberUtils.toThaiNumber(dataFind.getTotalMonth().toString()));
+		params.put("receiptsNumber", ThaiNumberUtils.toThaiNumber(dataFind.getReceipts().toString()));
+		
+		
+		System.out.println("dataFind--------->"+ params);
 		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.IA_FORM_6006_NO + "." + FILE_EXTENSION.JASPER, params);
 		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
 		ReportUtils.closeResourceFileInputStream(params);

@@ -35,6 +35,7 @@ public class ReportConstants {
 		public static final String IA_EMP_WORKING = "IA_EMP_WORKING";
 		public static final String IA_EMP_WORKING_2 = "IA_EMP_WORKING_2";
 		public static final String IA_FORM_6006_NO = "IA_FORM_6006_NO";
+		public static final String IA_FORM_7131_NO = "IA_FORM_7131_NO";
 		// basic analysis
 		public static final String TA_PAPER_BA_D1 = "TA_PAPER_BA_D1";
 		public static final String TA_PAPER_BA_D2 = "TA_PAPER_BA_D2";
