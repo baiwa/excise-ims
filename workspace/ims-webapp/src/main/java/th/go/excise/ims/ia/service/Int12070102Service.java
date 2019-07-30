@@ -294,8 +294,8 @@ public class Int12070102Service {
 		params.put("child3Status", dataFind.getStatus3());
 		// set hospital data
 		params.put("disease", dataFind.getDisease());
-		params.put("hostpitalName", dataFind.getHospitalName());
-		params.put("hostpitalOwner", dataFind.getHospitalOwner());
+		params.put("hospitalName", dataFind.getHospitalName());
+		params.put("hospitalOwner", dataFind.getHospitalOwner());
 		params.put("treatedDateFrom", dataFind.getTreatedDateFrom());
 		params.put("treatedDateTo", dataFind.getTreatedDateTo());
 		params.put("totalMoney", decimalFormat.format(new BigDecimal(dataFind.getTotalMoney())));

@@ -70,7 +70,7 @@
 			</textField>
 			<textField>
 				<reportElement style="Topic" x="122" y="8" width="230" height="30" uuid="d48d2b57-83d4-4743-a920-072aff53e159"/>
-				<textFieldExpression><![CDATA["ใบเบิกสวัสดิการเกี่ญวกับการรักษาพยาบาล"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ใบเบิกสวัสดิการเกี่ยวกับการรักษาพยาบาล"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="0" y="39" width="42" height="20" uuid="f83fc2d6-99ca-4f69-aceb-9167206835b8"/>
@@ -80,7 +80,7 @@
 				<reportElement style="TextDetail" x="249" y="39" width="40" height="20" uuid="ef0ad869-8353-49e9-91ff-70c9053eef9f"/>
 				<textFieldExpression><![CDATA["ตำแหน่ง"]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="44" y="39" width="194" height="20" uuid="87daef39-d4ab-4f6f-80fc-1c8f1949ecac"/>
 				<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
 			</textField>
@@ -96,7 +96,7 @@
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="297" y="39" width="163" height="20" uuid="4399763c-e887-41a4-aea8-337320b4d30e"/>
 				<textFieldExpression><![CDATA[$P{position}]]></textFieldExpression>
 			</textField>
@@ -110,7 +110,7 @@
 				<reportElement style="TextDetail" x="0" y="65" width="40" height="20" uuid="d9230b3f-e37d-4f26-929f-075cacb5c4d6"/>
 				<textFieldExpression><![CDATA["สังกัด"]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="42" y="65" width="196" height="20" uuid="d91a2e88-9a68-4b21-9c45-b70bf76e70c6"/>
 				<textFieldExpression><![CDATA[$P{affiliation}]]></textFieldExpression>
 			</textField>
@@ -439,7 +439,7 @@
 				<textFieldExpression><![CDATA["ซึ่งเป็นสถานพยาบาลของ"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="" style="Checkbox" x="95" y="314" width="30" height="14" uuid="95dad6cc-94a0-4151-a00b-6c2f5c388181"/>
+				<reportElement key="" style="Checkbox" x="95" y="315" width="30" height="14" uuid="95dad6cc-94a0-4151-a00b-6c2f5c388181"/>
 				<textFieldExpression><![CDATA["GOVERNMENT".equals( $P{hospitalOwner} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -447,7 +447,7 @@
 				<textFieldExpression><![CDATA["ทางราชการ"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="" style="Checkbox" x="170" y="314" width="30" height="14" uuid="1569eac4-c2fe-4246-b533-2f0db9c5c053"/>
+				<reportElement key="" style="Checkbox" x="170" y="315" width="30" height="14" uuid="1569eac4-c2fe-4246-b533-2f0db9c5c053"/>
 				<textFieldExpression><![CDATA["INDIVIDUAL".equals( $P{hospitalOwner} )?"\u2611" : "\u2610"]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -672,11 +672,11 @@
 				<reportElement style="TextDetail" x="80" y="101" width="196" height="20" uuid="740eee13-d842-4f10-8410-2a9ee2c576e5"/>
 				<textFieldExpression><![CDATA[$P{child1Name}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="80" y="158" width="196" height="20" uuid="903dc08c-a1ef-4fdc-9ebb-2ebea5abeec7"/>
 				<textFieldExpression><![CDATA[$P{child2Name}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="80" y="215" width="196" height="20" uuid="351b9313-78d1-4fd6-a41c-fe8a49048922"/>
 				<textFieldExpression><![CDATA[$P{child3Name}]]></textFieldExpression>
 			</textField>
