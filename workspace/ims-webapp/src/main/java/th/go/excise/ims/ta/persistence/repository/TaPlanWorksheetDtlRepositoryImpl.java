@@ -16,10 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.lowagie.text.pdf.PRAcroForm;
-
-import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
+import th.co.baiwa.buckwaframework.common.constant.ProjectConstant;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
 import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
@@ -131,6 +129,16 @@ public class TaPlanWorksheetDtlRepositoryImpl implements TaPlanWorksheetDtlRepos
 		if (StringUtils.isNotEmpty(formVo.getNewRegId())) {
 			sql.append("   AND PLAN_DTL.NEW_REG_ID = ? ");
 			params.add(formVo.getNewRegId());
+		}
+		
+		if (StringUtils.isNotEmpty(formVo.getSectorCode()) && !"0".equals(formVo.getSectorCode())) {
+			sql.append("   AND ED_SECTOR.OFF_CODE = ? ");
+			params.add(formVo.getSectorCode());
+		}
+		
+		if (StringUtils.isNotEmpty(formVo.getAreaCode()) && !"0".equals(formVo.getAreaCode())) {
+			sql.append("   AND ED_AREA.OFF_CODE = ? ");
+			params.add(formVo.getAreaCode());
 		}
 	}
 	

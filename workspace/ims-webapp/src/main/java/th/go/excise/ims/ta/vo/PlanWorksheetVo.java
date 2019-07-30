@@ -24,6 +24,8 @@ public class PlanWorksheetVo extends DataTableRequest {
 	private String newRegId;
 	private String worksheetStatus;
 	private List<String> budgetYearList;
+	private String sectorCode;
+	private String areaCode;
 	
 	
 	public List<String> getIds() {
@@ -121,6 +123,18 @@ public class PlanWorksheetVo extends DataTableRequest {
 	}
 	public void setBudgetYearList(List<String> budgetYearList) {
 		this.budgetYearList = budgetYearList;
+	}
+	public String getSectorCode() {
+		return sectorCode;
+	}
+	public void setSectorCode(String sectorCode) {
+		this.sectorCode = sectorCode;
+	}
+	public String getAreaCode() {
+		return areaCode;
+	}
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
 	}
 
 }
