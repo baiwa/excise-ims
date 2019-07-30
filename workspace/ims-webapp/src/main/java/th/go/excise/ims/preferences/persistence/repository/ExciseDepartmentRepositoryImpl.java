@@ -1,20 +1,26 @@
 package th.go.excise.ims.preferences.persistence.repository;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
+import org.springframework.jdbc.core.RowMapper;
 
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.persistence.jdbc.CommonJdbcTemplate;
+import th.co.baiwa.buckwaframework.common.persistence.util.OracleUtils;
 import th.co.baiwa.buckwaframework.security.constant.SecurityConstants.SYSTEM_USER;
+import th.go.excise.ims.preferences.vo.ExciseDepartmentVoReq;
+import th.go.excise.ims.preferences.vo.ExciseDepartmentVoRes;
 import th.go.excise.ims.ws.client.pcc.inquiryedoffice.model.EdOffice;
 
 public class ExciseDepartmentRepositoryImpl implements ExciseDepartmentRepositoryCustom {
@@ -94,6 +100,68 @@ public class ExciseDepartmentRepositoryImpl implements ExciseDepartmentRepositor
 				commonJdbcTemplate.preparePs(ps, paramList.toArray());
 			}
 		});
+	}
+
+	
+	
+	
+	private void buildSearchQuery(StringBuilder sql, List<Object> params, ExciseDepartmentVoReq request) {
+		sql.append(" SELECT off_code,off_name,off_short_name ");
+		sql.append(" FROM excise_department ");
+		sql.append(" WHERE is_deleted = ? ");
+
+		params.add(FLAG.N_FLAG);
+
+		if (StringUtils.isNotBlank(request.getFlag()) && "Y".equals(request.getFlag())) {
+			sql.append(" AND off_code LIKE '00____' ");
+		}else if(StringUtils.isNotBlank(request.getFlag()) && "N".equals(request.getFlag())) {
+			sql.append(" AND off_code NOT LIKE '00____' ");
+		}
+
+
+	}
+	
+	@Override
+	public Integer countByDepartmentFlag(ExciseDepartmentVoReq request) {
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		buildSearchQuery(sql, params, request);
+
+		Integer count = this.commonJdbcTemplate.queryForObject(OracleUtils.countForDataTable(sql.toString()), params.toArray(), Integer.class);
+
+		logger.info("count={}", count);
+
+		return count;
+	}
+
+	@Override
+	public List<ExciseDepartmentVoRes> findDepartmentFlag(ExciseDepartmentVoReq request) {
+		logger.debug("findDepartmentFlag  request.getFlag={}", request.getFlag());
+
+		StringBuilder sql = new StringBuilder();
+		List<Object> params = new ArrayList<>();
+		buildSearchQuery(sql, params, request);
+
+		sql.append(" ORDER BY off_code ");
+
+		List<ExciseDepartmentVoRes> datas = this.commonJdbcTemplate.query(
+			OracleUtils.limitForDatable(sql.toString(), request.getStart(), request.getLength()), 
+			params.toArray(), 
+			new RowMapper<ExciseDepartmentVoRes>() {
+			@Override
+			public ExciseDepartmentVoRes mapRow(ResultSet rs, int rowNum) throws SQLException {
+				ExciseDepartmentVoRes data = new ExciseDepartmentVoRes();
+				data.setOffCode(rs.getString("off_code"));
+				data.setOffName(rs.getString("off_name"));
+				data.setOffShortName(rs.getString("off_short_name"));
+				return data;
+			}
+
+		});
+
+		logger.info("datas.size()={}", datas.size());
+
+		return datas;
 	}
 
 }
