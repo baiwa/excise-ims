@@ -1,5 +1,6 @@
 package th.go.excise.ims.ia.service;
 
+import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
@@ -23,6 +24,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.export.ExporterInputItem;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleExporterInputItem;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.FILE_EXTENSION;
 import th.co.baiwa.buckwaframework.common.constant.ReportConstants.REPORT_NAME;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
@@ -138,7 +144,6 @@ public class Int12070102Service {
 		dataHdrSave.setStatusCheck(form.getStatusCheck());
 //		dataHdrSave.setIaDisReqId(new BigDecimal(form.getIaDisReqId()));
 
-
 		dataHdrSave.setOwnerClaim1(form.getOwnerClaim1());
 		dataHdrSave.setOwnerClaim2(form.getOwnerClaim2());
 		dataHdrSave.setOwnerClaim3(form.getOwnerClaim3());
@@ -170,7 +175,7 @@ public class Int12070102Service {
 		dataRes.setPhoneNumber(dataHdr.getPhoneNo());
 
 		if ("Y".equals(dataHdr.getSelfCheck())) {
-			dataRes.setFather(true);
+			dataRes.setSelf(true);
 		}
 		if ("Y".equals(dataHdr.getCoupleCheck())) {
 			dataRes.setCouple(true);
@@ -193,7 +198,8 @@ public class Int12070102Service {
 			dataRes.setChildCitizenId(dataHdr.getChildCitizenId());
 			dataRes.setStatusCheck(dataHdr.getStatusCheck());
 			dataRes.setSiblingsOrder(dataHdr.getSiblingsOrder().toString());
-			dataRes.setBirthdate(ConvertDateUtils.formatDateToString(dataHdr.getBirthdate(), ConvertDateUtils.DD_MM_YYYY,ConvertDateUtils.LOCAL_TH));
+			dataRes.setBirthdate(ConvertDateUtils.formatDateToString(dataHdr.getBirthdate(),
+					ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		}
 		if ("Y".equals(dataHdr.getChild2Check())) {
 			dataRes.setChild2(true);
@@ -201,7 +207,8 @@ public class Int12070102Service {
 			dataRes.setChildCitizenId2(dataHdr.getChildCitizenId2());
 			dataRes.setStatus2(dataHdr.getStatus2());
 			dataRes.setSiblingsOrder2(dataHdr.getSiblingsOrder2().toString());
-			dataRes.setBirthdate2(ConvertDateUtils.formatDateToString(dataHdr.getBirthdate2(), ConvertDateUtils.DD_MM_YYYY,ConvertDateUtils.LOCAL_TH));
+			dataRes.setBirthdate2(ConvertDateUtils.formatDateToString(dataHdr.getBirthdate2(),
+					ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		}
 		if ("Y".equals(dataHdr.getChild3Check())) {
 			dataRes.setChild3(true);
@@ -209,13 +216,14 @@ public class Int12070102Service {
 			dataRes.setChildCitizenId3(dataHdr.getChildCitizenId3());
 			dataRes.setStatus3(dataHdr.getStatus3());
 			dataRes.setSiblingsOrder3(dataHdr.getSiblingsOrder3().toString());
-			dataRes.setBirthdate3(ConvertDateUtils.formatDateToString(dataHdr.getBirthdate3(), ConvertDateUtils.DD_MM_YYYY,ConvertDateUtils.LOCAL_TH));
+			dataRes.setBirthdate3(ConvertDateUtils.formatDateToString(dataHdr.getBirthdate3(),
+					ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		}
 
 //		dataRes.setBirthdate(dataHdr.getBirthdate().toString());
 //		dataRes.setSiblingsOrder(dataHdr.getSiblingsOrder().toString());
-//		dataRes.setPosition(dataHdr.getPosition());
-//		dataRes.setAffiliation(dataHdr.getAffiliation());
+		dataRes.setPosition(dataHdr.getPosition());
+		dataRes.setAffiliation(dataHdr.getAffiliation());
 //		dataRes.setPhoneNo(dataHdr.getPhoneNo());
 //		dataRes.setStatus(dataHdr.getStatus());
 		dataRes.setDisease(dataHdr.getDisease());
@@ -226,7 +234,7 @@ public class Int12070102Service {
 		dataRes.setTreatedDateTo(ConvertDateUtils.formatDateToString(dataHdr.getTreatedDateTo(),
 				ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
 		dataRes.setTotalMoney(dataHdr.getTotalMoney().toString());
-//		dataRes.setReceiptQt(dataHdr.getReceiptQt().toString());
+		dataRes.setReceiptQt(dataHdr.getReceiptQt().toString());
 		dataRes.setClaimStatus(dataHdr.getClaimStatus());
 		dataRes.setClaimMoney(dataHdr.getClaimMoney().toString());
 
@@ -241,45 +249,99 @@ public class Int12070102Service {
 
 		return dataRes;
 	}
-	
+
 	public byte[] exportReport(long id) throws Exception {
 		Int1200702HdrVo dataFind = findById(id);
-		
+
 		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
 		Map<String, Object> params = new HashMap<>();
-//		params.put("name", dataFind.getName());
-//		params.put("position", dataFind.getPosition());
-//		params.put("affiliation", dataFind.getAffiliation());
-//		params.put("paymentCost", dataFind.getPaymentCost());
-//		params.put("paymentFor", dataFind.getPaymentFor());
-//		params.put("period", dataFind.getPeriod());
-//		params.put("requestNo", dataFind.getRequestNo());
-//		params.put("periodWithdraw", dataFind.getPeriodWithdraw());
-//		params.put("receipts", dataFind.getReceipts());
-//		params.put("status", dataFind.getStatus());
-//		params.put("periodWithdrawTo", dataFind.getPeriodWithdrawTo());
-//		params.put("form6005No", dataFind.getForm6005No());
-//		params.put("refReceipts", dataFind.getRefReceipts());
-//		
-//		params.put("billAmount", decimalFormat.format(dataFind.getBillAmount()));
-//		params.put("salary",  decimalFormat.format(dataFind.getSalary()));
-//		params.put("notOver",  decimalFormat.format(dataFind.getNotOver()));
-//		params.put("totalMonth", dataFind.getTotalMonth());
-//		params.put("totalWithdraw", dataFind.getTotalWithdraw());
-//		
+		params.put("name", dataFind.getFullName());
+		params.put("position", dataFind.getPosition());
+		params.put("affiliation", dataFind.getAffiliation());
+		params.put("self", dataFind.isSelf());
+		// set couple data
+		params.put("couple", dataFind.isCouple());
+		params.put("coupleName", dataFind.getMateName());
+		params.put("coupleCitizenId", dataFind.getMateCitizenId());
+		// set father data
+		params.put("father", dataFind.isFather());
+		params.put("fatherName", dataFind.getFatherName());
+		params.put("fatherCitizenId", dataFind.getFatherCitizenId());
+		// set mother data
+		params.put("mother", dataFind.isMother());
+		params.put("motherName", dataFind.getMotherName());
+		params.put("motherCitizenId", dataFind.getMotherCitizenId());
+		// set child1 data
+		params.put("child1", dataFind.isChild1());
+		params.put("child1Name", dataFind.getChildName());
+		params.put("child1CitizenId", dataFind.getChildCitizenId());
+		params.put("birthdate1", dataFind.getBirthdate());
+		params.put("child1Order", dataFind.getSiblingsOrder());
+		params.put("child1Status", dataFind.getStatus());
+		// set child2 data
+		params.put("child2", dataFind.isChild2());
+		params.put("child2Name", dataFind.getChildName2());
+		params.put("child2CitizenId", dataFind.getChildCitizenId2());
+		params.put("birthdate2", dataFind.getBirthdate2());
+		params.put("child2Order", dataFind.getSiblingsOrder2());
+		params.put("child2Status", dataFind.getStatus2());
+		// set child3 data
+		params.put("child3", dataFind.isChild3());
+		params.put("child3Name", dataFind.getChildName3());
+		params.put("child3CitizenId", dataFind.getChildCitizenId3());
+		params.put("birthdate3", dataFind.getBirthdate3());
+		params.put("child3Order", dataFind.getSiblingsOrder3());
+		params.put("child3Status", dataFind.getStatus3());
+		// set hospital data
+		params.put("disease", dataFind.getDisease());
+		params.put("hostpitalName", dataFind.getHospitalName());
+		params.put("hostpitalOwner", dataFind.getHospitalOwner());
+		params.put("treatedDateFrom", dataFind.getTreatedDateFrom());
+		params.put("treatedDateTo", dataFind.getTreatedDateTo());
+		params.put("totalMoney", decimalFormat.format(new BigDecimal(dataFind.getTotalMoney())));
+		params.put("totalMoneyText", ThaiNumberUtils.toThaiBaht(dataFind.getTotalMoney()));
+		params.put("ReceiptQt", dataFind.getReceiptQt());
+		params.put("claimStatus", dataFind.getClaimStatus());
+		params.put("claimMoney", decimalFormat.format(new BigDecimal(dataFind.getClaimMoney())));
+		params.put("claimMoneyText", ThaiNumberUtils.toThaiBaht(dataFind.getClaimMoney()));
+		
+		params.put("ownerClaim1", dataFind.getOwnerClaim1());
+		params.put("ownerClaim2", dataFind.getOwnerClaim2());
+		params.put("ownerClaim3", dataFind.getOwnerClaim3());
+		params.put("ownerClaim4", dataFind.getOwnerClaim4());
+		params.put("getOtherClaim1", dataFind.getOtherClaim1());
+		params.put("getOtherClaim2", dataFind.getOtherClaim2());
+		params.put("getOtherClaim3", dataFind.getOtherClaim3());
+		params.put("getOtherClaim4", dataFind.getOtherClaim4());
+		
+		
 //		params.put("billAmountText", ThaiNumberUtils.toThaiBaht(dataFind.getBillAmount().toString()));
 //		params.put("salaryText",ThaiNumberUtils.toThaiBaht(dataFind.getSalary().toString()));
 //		params.put("notOverText", ThaiNumberUtils.toThaiBaht(dataFind.getNotOver().toString()));
 //		params.put("totalWithdrawText", ThaiNumberUtils.toThaiBaht(dataFind.getTotalWithdraw().toString()));
 //		params.put("totalMonthThaiNumber", ThaiNumberUtils.toThaiNumber(dataFind.getTotalMonth().toString()));
 //		params.put("receiptsNumber", ThaiNumberUtils.toThaiNumber(dataFind.getReceipts().toString()));
-		
-		
-		System.out.println("dataFind--------->"+ params);
-		JasperPrint jasperPrint = ReportUtils.getJasperPrint(REPORT_NAME.IA_FORM_7131_NO + "." + FILE_EXTENSION.JASPER, params);
-		byte[] content = JasperExportManager.exportReportToPdf(jasperPrint);
+
+		// set output
+		JasperPrint jasperPrint1 = ReportUtils.getJasperPrint(REPORT_NAME.IA_FORM_7131_NO + "." + FILE_EXTENSION.JASPER,
+				params);
+		JasperPrint jasperPrint2 = ReportUtils
+				.getJasperPrint(REPORT_NAME.IA_FORM_7131_NO_2 + "." + FILE_EXTENSION.JASPER, params);
+
+		List<ExporterInputItem> items = new ArrayList<ExporterInputItem>();
+		items.add(new SimpleExporterInputItem(jasperPrint1));
+		items.add(new SimpleExporterInputItem(jasperPrint2));
+
+		JRPdfExporter exporter = new JRPdfExporter();
+		exporter.setExporterInput(new SimpleExporterInput(items));
+
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
+		exporter.exportReport();
+		byte[] content = outputStream.toByteArray();
 		ReportUtils.closeResourceFileInputStream(params);
+
 		return content;
 	}
-	
+
 }
