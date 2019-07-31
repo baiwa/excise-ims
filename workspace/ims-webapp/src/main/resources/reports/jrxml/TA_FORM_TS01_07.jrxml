@@ -677,7 +677,7 @@
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="246" y="292" width="135" height="22" uuid="ff860283-938a-4c74-a049-f3cec74fdc69"/>
+				<reportElement style="TextDetail" x="246" y="292" width="166" height="22" uuid="ff860283-938a-4c74-a049-f3cec74fdc69"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -691,7 +691,7 @@
 				<textFieldExpression><![CDATA[$P{signOfficerFullName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="381" y="292" width="8" height="22" uuid="f9723178-d4e7-47e1-9329-329205cd0b07"/>
+				<reportElement style="TextDetail" x="412" y="292" width="8" height="22" uuid="f9723178-d4e7-47e1-9329-329205cd0b07"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[")"]]></textFieldExpression>
 			</textField>
@@ -701,7 +701,7 @@
 				<textFieldExpression><![CDATA["ตำแหน่ง"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="241" y="314" width="140" height="22" uuid="b615fd90-141f-4c49-83db-ddfd94c50bce"/>
+				<reportElement style="TextDetail" x="241" y="314" width="171" height="22" uuid="b615fd90-141f-4c49-83db-ddfd94c50bce"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -714,7 +714,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{signOfficerPosition}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="0" y="342" width="155" height="22" uuid="b12d7fcf-c097-4a77-b468-13159042d683"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
@@ -729,12 +729,12 @@
 				<textFieldExpression><![CDATA[$P{otherText}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="0" y="364" width="20" height="22" uuid="7357f102-89d9-4a3a-ae88-b3b46ecdf76d"/>
+				<reportElement style="TextDetail" x="0" y="382" width="20" height="22" uuid="7357f102-89d9-4a3a-ae88-b3b46ecdf76d"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["โทร"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="20" y="364" width="135" height="22" uuid="c1330a3b-738d-4de7-9969-13cc75057c67"/>
+				<reportElement style="TextDetail" x="20" y="382" width="135" height="22" uuid="c1330a3b-738d-4de7-9969-13cc75057c67"/>
 				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
 					<pen lineWidth="1.5" lineStyle="Dotted"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -832,31 +832,31 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="241" y="283" width="149" height="1" uuid="976f181a-475b-4686-b058-4325422ed5cf"/>
+				<reportElement x="245" y="283" width="170" height="1" uuid="976f181a-475b-4686-b058-4325422ed5cf"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="246" y="307" width="134" height="1" uuid="c3931b3c-457d-4f81-861b-a2f98536e2c7"/>
+				<reportElement x="246" y="307" width="165" height="1" uuid="c3931b3c-457d-4f81-861b-a2f98536e2c7"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="241" y="329" width="140" height="1" uuid="643e9882-6534-4b8b-9d9b-f65c4ea7c616"/>
+				<reportElement x="241" y="329" width="170" height="1" uuid="643e9882-6534-4b8b-9d9b-f65c4ea7c616"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="0" y="357" width="155" height="1" uuid="fe535a70-2f5c-447e-9571-b6465fc829b1"/>
+				<reportElement x="0" y="357" width="185" height="1" uuid="fe535a70-2f5c-447e-9571-b6465fc829b1"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="20" y="379" width="135" height="1" uuid="d9ba6e6e-02d8-4a9d-a229-191de83339e4"/>
+				<reportElement x="20" y="397" width="135" height="1" uuid="d9ba6e6e-02d8-4a9d-a229-191de83339e4"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
@@ -870,6 +870,12 @@
 				</textElement>
 				<textFieldExpression><![CDATA["เลขที่เอกสารจากระบบ  "+$P{formTsNumber}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="378" width="185" height="1" uuid="6472afbf-60a4-4f07-bb79-3266f47cc1f4"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
 		</band>
 	</pageFooter>
 </jasperReport>
