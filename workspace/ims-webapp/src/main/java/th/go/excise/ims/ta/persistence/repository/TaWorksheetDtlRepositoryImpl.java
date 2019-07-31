@@ -243,7 +243,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 			params.add(formVo.getDutyCode());
 		}
 
-		if (!formVo.getCond().isEmpty()) {
+		if (formVo.getCond() != null && formVo.getCond().size() > 0) {
 			if (formVo.getCond().contains("0")) {
 				sql.append(" AND ( TA_W_DTL.COND_SORTING = 0 ");
 				if (formVo.getCond().contains("1")
