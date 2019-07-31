@@ -1,0 +1,23 @@
+package th.co.baiwa.buckwaframework.common.config;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
+
+@Configuration
+@ComponentScan(
+	basePackages = {
+		"th.co.baiwa.buckwaframework",
+		"th.go.excise.ims"
+	},
+	excludeFilters = @ComponentScan.Filter(
+		type = FilterType.ASSIGNABLE_TYPE,
+		value = CommandLineRunner.class
+	)
+)
+@EnableAutoConfiguration
+public class AppConfigTest {
+
+}
