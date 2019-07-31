@@ -278,7 +278,8 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("d MMM yyyy",new Locale("th", "TH")).format($F{auditDate})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{auditDate} != null ? new SimpleDateFormat("dd MMM yyyy",new Locale("th", "TH")).format($F{auditDate}) : ""
+]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" stretchType="ContainerHeight" x="120" y="0" width="90" height="22" uuid="2c228c65-2a95-41bf-9136-22dce7fa0f75"/>
@@ -373,8 +374,8 @@
 					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{auditResultDate}]]></textFieldExpression>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{auditResultDate} != null ? new SimpleDateFormat("dd MMM yyyy",new Locale("th", "TH")).format($F{auditResultDate}) : ""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="data" stretchType="ContainerHeight" x="730" y="0" width="70" height="22" uuid="a85f7769-a9f7-4dcf-96f9-2510f4bee09b"/>
