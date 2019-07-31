@@ -13,6 +13,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.math3.analysis.function.Add;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +92,7 @@ public class Int12070102Service {
 		if (form.isMother()) {
 			dataHdrSave.setMotherName(form.getMotherName());
 			dataHdrSave.setMotherCitizenId(form.getMotherCitizenId());
-			dataHdrSave.setFatherCheck("Y");
+			dataHdrSave.setMotherCheck("Y");
 		}
 		if (form.isChild1()) {
 			dataHdrSave.setBirthdate(ConvertDateUtils.parseStringToDate(form.getBirthdate(),
@@ -127,7 +128,7 @@ public class Int12070102Service {
 
 		dataHdrSave.setPosition(form.getPosition());
 		dataHdrSave.setAffiliation(form.getAffiliation());
-		dataHdrSave.setPhoneNo(form.getPhoneNo());
+		dataHdrSave.setPhoneNo(form.getPhoneNumber());
 		dataHdrSave.setDisease(form.getDisease());
 		dataHdrSave.setHospitalName(form.getHospitalName());
 		dataHdrSave.setHospitalOwner(form.getHospitalOwner());
@@ -196,7 +197,7 @@ public class Int12070102Service {
 			dataRes.setChild1(true);
 			dataRes.setChildName(dataHdr.getChildName());
 			dataRes.setChildCitizenId(dataHdr.getChildCitizenId());
-			dataRes.setStatusCheck(dataHdr.getStatusCheck());
+			dataRes.setStatus(dataHdr.getStatus());
 			dataRes.setSiblingsOrder(dataHdr.getSiblingsOrder().toString());
 			dataRes.setBirthdate(ConvertDateUtils.formatDateToString(dataHdr.getBirthdate(),
 					ConvertDateUtils.DD_MM_YYYY, ConvertDateUtils.LOCAL_TH));
@@ -246,7 +247,18 @@ public class Int12070102Service {
 		dataRes.setOtherClaim2(dataHdr.getOtherClaim2());
 		dataRes.setOtherClaim3(dataHdr.getOtherClaim3());
 		dataRes.setOtherClaim4(dataHdr.getOtherClaim4());
-
+		
+		List<IaMedicalReceipt> dataDtl = iaMedicalReceiptRepository.findByIdKey(id.toString());
+		Int120702DtlVo dtlSet = new Int120702DtlVo();
+		List<Int120702DtlVo> dtlListSet = new ArrayList<Int120702DtlVo>();
+		for (IaMedicalReceipt iaMedicalReceipt : dataDtl) {
+			dtlSet.setReceiptNo(iaMedicalReceipt.getReceiptNo());
+			dtlSet.setReceiptType(iaMedicalReceipt.getReceiptType() ); 
+			dtlSet.setReceiptAmount(iaMedicalReceipt.getReceiptAmount().toString() ); 
+			dtlSet.setReceiptDate(ConvertDateUtils.formatDateToString(iaMedicalReceipt.getReceiptDate(), ConvertDateUtils.DD_MM_YYYY,ConvertDateUtils.LOCAL_TH)); 
+			dtlListSet.add(dtlSet);
+		}
+		dataRes.setReceipts(dtlListSet);
 		return dataRes;
 	}
 
@@ -309,10 +321,10 @@ public class Int12070102Service {
 		params.put("ownerClaim2", dataFind.getOwnerClaim2());
 		params.put("ownerClaim3", dataFind.getOwnerClaim3());
 		params.put("ownerClaim4", dataFind.getOwnerClaim4());
-		params.put("getOtherClaim1", dataFind.getOtherClaim1());
-		params.put("getOtherClaim2", dataFind.getOtherClaim2());
-		params.put("getOtherClaim3", dataFind.getOtherClaim3());
-		params.put("getOtherClaim4", dataFind.getOtherClaim4());
+		params.put("otherClaim1", dataFind.getOtherClaim1());
+		params.put("otherClaim2", dataFind.getOtherClaim2());
+		params.put("otherClaim3", dataFind.getOtherClaim3());
+		params.put("otherClaim4", dataFind.getOtherClaim4());
 		
 		
 //		params.put("billAmountText", ThaiNumberUtils.toThaiBaht(dataFind.getBillAmount().toString()));

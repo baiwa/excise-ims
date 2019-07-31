@@ -6,7 +6,7 @@ public class Int1200702HdrVo {
 	private String fullName;
 	private String gender;
 	private String phoneNumber;
-	private String birthdate;
+	private String birthDate;
 	private String siblingsOrder;
 	private String position;
 	private String affiliation;
@@ -40,8 +40,8 @@ public class Int1200702HdrVo {
 	private String fileId;
 	private String statusCheck;
 	private String iaDisReqId;
-	private String birthdate2;
-	private String birthdate3;
+	private String birthDate2;
+	private String birthDate3;
 	private String childName2;
 	private String childName3;
 	private String childCitizenId2;
@@ -86,11 +86,11 @@ public class Int1200702HdrVo {
 	}
 
 	public String getBirthdate() {
-		return birthdate;
+		return birthDate;
 	}
 
 	public void setBirthdate(String birthdate) {
-		this.birthdate = birthdate;
+		this.birthDate = birthdate;
 	}
 
 	public String getSiblingsOrder() {
@@ -414,19 +414,19 @@ public class Int1200702HdrVo {
 	}
 
 	public String getBirthdate2() {
-		return birthdate2;
+		return birthDate2;
 	}
 
 	public void setBirthdate2(String birthdate2) {
-		this.birthdate2 = birthdate2;
+		this.birthDate2 = birthdate2;
 	}
 
 	public String getBirthdate3() {
-		return birthdate3;
+		return birthDate3;
 	}
 
 	public void setBirthdate3(String birthdate3) {
-		this.birthdate3 = birthdate3;
+		this.birthDate3 = birthdate3;
 	}
 
 	public String getChildName2() {
