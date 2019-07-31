@@ -63,7 +63,7 @@
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" stretchType="RelativeToBandHeight" x="72" y="100" width="8" height="22" uuid="d6107aa6-af7a-4410-a14b-cf8ffa2e2911"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA["/"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -71,15 +71,10 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{bookNumber2}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="TextDetail" x="260" y="100" width="200" height="22" uuid="9aa5b506-a988-47a6-8171-5a15ecc4f551"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{subject1}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="260" y="122" width="200" height="22" uuid="862fa61c-8e87-43f3-80b9-e9d1b20051fd"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$P{subject2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="TextDetail" x="260" y="144" width="26" height="22" uuid="a5874348-f755-4a83-98fd-4e26d7efe2e4"/>
@@ -222,7 +217,7 @@
 				<textFieldExpression><![CDATA["และขอได้โปรดนำหนังสือนี้ และ"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="300" y="470" width="120" height="22" uuid="4b214652-f132-41ee-942c-e0475f810919"/>
+				<reportElement style="TextDetail" x="300" y="470" width="153" height="22" uuid="4b214652-f132-41ee-942c-e0475f810919"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["ขอแสดงความนับถือ"]]></textFieldExpression>
 			</textField>
@@ -232,12 +227,12 @@
 				<textFieldExpression><![CDATA["("]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="300" y="527" width="120" height="22" uuid="e58c1a1f-afc7-4e87-a9f3-b3679a72c01c"/>
+				<reportElement style="TextDetail" x="300" y="527" width="153" height="22" uuid="e58c1a1f-afc7-4e87-a9f3-b3679a72c01c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{signOfficerFullName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="TextDetail" x="420" y="527" width="7" height="22" uuid="9e03bedd-a3ed-4b5e-8c95-17a21e73c8b6"/>
+				<reportElement style="TextDetail" x="453" y="527" width="7" height="22" uuid="9e03bedd-a3ed-4b5e-8c95-17a21e73c8b6"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[")"]]></textFieldExpression>
 			</textField>
@@ -247,7 +242,7 @@
 				<textFieldExpression><![CDATA["ตำแหน่ง"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TextDetail" x="300" y="549" width="120" height="22" uuid="83b2b8dc-5142-4d85-82ff-3bf99e6cbca6"/>
+				<reportElement style="TextDetail" x="300" y="549" width="153" height="22" uuid="83b2b8dc-5142-4d85-82ff-3bf99e6cbca6"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{signOfficerPosition}]]></textFieldExpression>
 			</textField>
@@ -404,13 +399,13 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="300" y="564" width="120" height="1" uuid="80802877-4ffb-4fcb-958c-fce0a294258e"/>
+				<reportElement x="300" y="564" width="155" height="1" uuid="80802877-4ffb-4fcb-958c-fce0a294258e"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="300" y="542" width="120" height="1" uuid="5d532ee6-678e-43ad-ac46-bdbe86df8b7d"/>
+				<reportElement x="300" y="542" width="155" height="1" uuid="5d532ee6-678e-43ad-ac46-bdbe86df8b7d"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dotted"/>
 				</graphicElement>
@@ -434,7 +429,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Bottom">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA["เลขที่เอกสารจากระบบ  "+$P{formTsNumber}  ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["เลขที่เอกสารจากระบบ  "+$P{formTsNumber}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
