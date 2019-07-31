@@ -35,6 +35,8 @@ public class ExcisePosition extends BaseEntity {
 	private BigDecimal accomFeeDouble;
 	@Column(name = "ACCOM_FEE_PACKAGES")
 	private BigDecimal accomFeePackages;
+	@Column(name = "ED_POSITION_CODE")
+	private String edPositionCode;
 
 	public String getEdPositionName() {
 		return edPositionName;
@@ -91,5 +93,15 @@ public class ExcisePosition extends BaseEntity {
 	public void setEdPositionSeq(Long edPositionSeq) {
 		this.edPositionSeq = edPositionSeq;
 	}
+
+	public String getEdPositionCode() {
+		return edPositionCode;
+	}
+
+	public void setEdPositionCode(String edPositionCode) {
+		this.edPositionCode = edPositionCode;
+	}
+	
+	
 
 }

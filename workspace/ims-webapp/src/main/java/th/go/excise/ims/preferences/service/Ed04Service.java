@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 import th.co.baiwa.buckwaframework.common.util.ConvertDateUtils;
 import th.go.excise.ims.preferences.persistence.entity.ExcisePersonInfo;
 import th.go.excise.ims.preferences.persistence.entity.ExcisePersonInfo1;
+import th.go.excise.ims.preferences.persistence.entity.ExcisePosition;
 import th.go.excise.ims.preferences.persistence.entity.ExciseTitle;
 import th.go.excise.ims.preferences.persistence.repository.ExcisePersonInfo1Repository;
 import th.go.excise.ims.preferences.persistence.repository.ExcisePersonInfoRepository;
+import th.go.excise.ims.preferences.persistence.repository.ExcisePositionRepository;
 import th.go.excise.ims.preferences.persistence.repository.ExciseTitleRepository;
 import th.go.excise.ims.preferences.vo.Ed04FormHeadVo;
 import th.go.excise.ims.preferences.vo.Ed04FormSave;
@@ -29,6 +31,10 @@ public class Ed04Service {
 
 	@Autowired
 	private ExcisePersonInfo1Repository excisePersonInfo1Repository;
+	
+	@Autowired
+	private ExcisePositionRepository excisePositionRepository ;
+	
 
 	public List<ExciseTitle> listPersonThTitle() {
 		List<ExciseTitle> dataList = new ArrayList<ExciseTitle>();
@@ -50,6 +56,8 @@ public class Ed04Service {
 			excisePersonInfo.setWorkOffcode(vo.getExcisePersonInfoVo().getWorkOffcode());
 			excisePersonInfo.setWorkOffname(vo.getExcisePersonInfoVo().getWorkOffname());
 			excisePersonInfo.setLinePosition(vo.getExcisePersonInfoVo().getLinePosition());
+			ExcisePosition excisePosition = excisePositionRepository.dataPositionCode(vo.getExcisePersonInfoVo().getLinePosition());
+			excisePersonInfo.setExcPositionCode(excisePosition.getEdPositionCode());
 			excisePersonInfo.setCoupleThTitle(vo.getExcisePersonInfoVo().getCoupleThTitle());
 			excisePersonInfo.setCoupleName(vo.getExcisePersonInfoVo().getCoupleName());
 			excisePersonInfo.setCoupleSurnameName(vo.getExcisePersonInfoVo().getCoupleSurnameName());
@@ -120,6 +128,8 @@ public class Ed04Service {
 		excisePersonInfo.setWorkOffcode(vo.getExcisePersonInfoVo().getWorkOffcode());
 		excisePersonInfo.setWorkOffname(vo.getExcisePersonInfoVo().getWorkOffname());
 		excisePersonInfo.setLinePosition(vo.getExcisePersonInfoVo().getLinePosition());
+		ExcisePosition excisePosition = excisePositionRepository.dataPositionCode(vo.getExcisePersonInfoVo().getLinePosition());
+		excisePersonInfo.setExcPositionCode(excisePosition.getEdPositionCode());
 		excisePersonInfo.setCoupleThTitle(vo.getExcisePersonInfoVo().getCoupleThTitle());
 		excisePersonInfo.setCoupleName(vo.getExcisePersonInfoVo().getCoupleName());
 		excisePersonInfo.setCoupleSurnameName(vo.getExcisePersonInfoVo().getCoupleSurnameName());
