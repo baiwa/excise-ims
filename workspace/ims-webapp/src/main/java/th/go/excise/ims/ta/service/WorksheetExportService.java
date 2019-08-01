@@ -38,7 +38,6 @@ import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
 import th.go.excise.ims.common.util.ExcelUtils;
-import th.go.excise.ims.ta.persistence.entity.TaPlanWorksheetHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondSubNoAudit;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
@@ -913,10 +912,6 @@ public class WorksheetExportService {
 	public byte[] exportPlanWorksheetSelected(PlanWorksheetVo formVo) {
 		String officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
 		logger.info("exportWorksheet officeCode={}, planNumber={}", officeCode, formVo.getPlanNumber());
-		
-		// Prepare Data
-		TaPlanWorksheetHdr planHdr = planWorksheetService.getPlanWorksheetHdr(formVo);
-		formVo.setBudgetYear(planHdr.getBudgetYear());
 		
 		// PlanWorksheet Data for Export
 		List<PlanWorksheetDatatableVo> planVoList = planWorksheetService.planDtlDatatableAll(formVo);
