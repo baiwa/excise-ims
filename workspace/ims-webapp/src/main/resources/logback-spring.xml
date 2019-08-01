@@ -63,4 +63,28 @@
 		</logger>
 	</springProfile>
 	
+	<!-- UAT Profile Log Level -->
+	<springProfile name="uat">
+		<logger name="th.co.baiwa.buckwaframework" level="INFO" additivity="false">
+			<appender-ref ref="STDOUT" />
+			<appender-ref ref="ROLLINGFILE" />
+		</logger>
+		<logger name="th.go.excise.ims" level="INFO" additivity="false">
+			<appender-ref ref="STDOUT" />
+			<appender-ref ref="ROLLINGFILE" />
+		</logger>
+	</springProfile>
+	
+	<!-- PROD Profile Log Level -->
+	<springProfile name="prod">
+		<logger name="th.co.baiwa.buckwaframework" level="INFO" additivity="false">
+			<appender-ref ref="STDOUT" />
+			<appender-ref ref="ROLLINGFILE" />
+		</logger>
+		<logger name="th.go.excise.ims" level="INFO" additivity="false">
+			<appender-ref ref="STDOUT" />
+			<appender-ref ref="ROLLINGFILE" />
+		</logger>
+	</springProfile>
+	
 </configuration>
