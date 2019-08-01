@@ -31,11 +31,12 @@ public class WebSecurityConfig {
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		if (PROFILE.PROD.equals(profileActive)) {
-			auth.authenticationProvider(wsAuthenticationProvider);
-		} else {
+		// Comment for Production
+//		if (PROFILE.PROD.equals(profileActive)) {
+//			auth.authenticationProvider(wsAuthenticationProvider);
+//		} else {
 			auth.authenticationProvider(customAuthenticationProvider);
-		}
+//		}
 	}
 	
 	@Bean(name = "passwordEncoder")
