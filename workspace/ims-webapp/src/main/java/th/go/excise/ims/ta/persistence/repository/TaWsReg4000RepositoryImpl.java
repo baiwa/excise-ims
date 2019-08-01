@@ -556,16 +556,17 @@ public class TaWsReg4000RepositoryImpl implements TaWsReg4000RepositoryCustom {
 		sql.append(" LEFT JOIN ( ");
 		sql.append("   SELECT * ");
 		sql.append("   FROM ( ");
-		sql.append("     SELECT NEW_REG_ID ");
-		sql.append("       ,DUTY_CODE ");
-		sql.append("       ,TAX_YEAR || TAX_MONTH AS YEAR_MONTH ");
+		sql.append("     SELECT I8000M.NEW_REG_ID ");
+		sql.append("       ,I8000DM.REG4000D_GROUP_ID AS DUTY_CODE ");
+		sql.append("       ,I8000M.TAX_YEAR || I8000M.TAX_MONTH AS YEAR_MONTH ");
 		if (TA_CONFIG.INCOME_TYPE_TAX.equals(incomeTaxType)) {
-			sql.append("       ,SUM(TAX_AMOUNT) AS TAX_AMOUNT ");
+			sql.append("       ,SUM(I8000M.TAX_AMOUNT) AS TAX_AMOUNT ");
 		} else {
-			sql.append("       ,SUM(NET_TAX_AMOUNT) AS TAX_AMOUNT ");
+			sql.append("       ,SUM(I8000M.NET_TAX_AMOUNT) AS TAX_AMOUNT ");
 		}
-		sql.append("     FROM TA_WS_INC8000_M ");
-		sql.append("     GROUP BY NEW_REG_ID, TAX_YEAR, TAX_MONTH, DUTY_CODE ");
+		sql.append("     FROM TA_WS_INC8000_M I8000M ");
+		sql.append("     INNER JOIN TA_WS_INC8000_DUTY_MAP I8000DM ON I8000DM.INC8000M_DUTY_CODE = I8000M.DUTY_CODE ");
+		sql.append("     GROUP BY I8000M.NEW_REG_ID, I8000M.TAX_YEAR, I8000M.TAX_MONTH, I8000DM.REG4000D_GROUP_ID ");
 		sql.append("   ) PIVOT (SUM(TAX_AMOUNT) FOR YEAR_MONTH IN (").append(org.springframework.util.StringUtils.collectionToDelimitedString(formVo.getYearMonthList(), ",")).append(")) ");
 		sql.append(" ) M ON M.NEW_REG_ID = R.NEW_REG_ID ");
 		if (TA_DUTY_TYPE.SEPARATE.equals(dutyType)) {
