@@ -235,7 +235,6 @@ public class WorksheetExportService {
 			headerText1List.add("ที่อยู่โรงอุตสาหกรรม/สถานบริการ");
 			headerText1List.add("ภาค");
 			headerText1List.add("พื้นที่");
-			headerText1List.add("ทุนจดทะเบียน");
 			headerText1List.add("วันที่จดทะเบียน");
 			headerText1List.add("พิกัด");
 			int monthNum = formVo.getDateRange() / 2;
@@ -272,7 +271,6 @@ public class WorksheetExportService {
 			headerText2List.add("ปีก่อน\n" + generateDateRangeString(subLocalDateG2List));
 			headerText2List.add("เปลี่ยนแปลง\n(ร้อยละ)");
 			headerText2List.add("จำนวนเดือน\nไม่ชำระภาษี");
-			headerText2List.add("");
 			headerText2List.add("");
 			headerText2List.add("");
 			headerText2List.add("");
@@ -355,10 +353,6 @@ public class WorksheetExportService {
 				cell = row.createCell(cellNum++);
 				cell.setCellValue(taxVo.getAreaDesc());
 				cell.setCellStyle(cellLeft);
-				// ทุนจดทะเบียน
-				cell = row.createCell(cellNum++);
-				cell.setCellValue(taxAmtFormat(taxVo.getRegCapital(), decimalFormatTwoDigits));
-				cell.setCellStyle(cellRight);
 				// วันที่จดทะเบียน
 				cell = row.createCell(cellNum++);
 				cell.setCellValue(taxVo.getRegDate());
@@ -399,7 +393,6 @@ public class WorksheetExportService {
 			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 50); // ที่อยู่โรงอุตสาหกรรม/สถานบริการ
 			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 10); // ภาค
 			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // พื้นที่
-			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 18); // ทุนจดทะเบียน
 			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // วันที่จดทะเบียน
 			sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 40); // พิกัด
 			for (int i = 0; i < formVo.getDateRange(); i++) {
@@ -599,7 +592,6 @@ public class WorksheetExportService {
 				headerText1List.add("ที่อยู่โรงอุตสาหกรรม/สถานบริการ");
 				headerText1List.add("ภาค");
 				headerText1List.add("พื้นที่");
-				headerText1List.add("ทุนจดทะเบียน");
 				headerText1List.add("วันที่จดทะเบียน");
 				headerText1List.add("พิกัด");
 				int monthNum = formVo.getDateRange() / 2;
@@ -640,7 +632,6 @@ public class WorksheetExportService {
 				headerText2List.add("ปีก่อน\n" + generateDateRangeString(subLocalDateG2List));
 				headerText2List.add("เปลี่ยนแปลง\n(ร้อยละ)");
 				headerText2List.add("จำนวนเดือน\nไม่ชำระภาษี");
-				headerText2List.add("");
 				headerText2List.add("");
 				headerText2List.add("");
 				headerText2List.add("");
@@ -749,10 +740,6 @@ public class WorksheetExportService {
 					cell = row.createCell(cellNum++);
 					cell.setCellValue(taxVo.getAreaDesc());
 					cell.setCellStyle(cellLeft);
-					// ทุนจดทะเบียน
-					cell = row.createCell(cellNum++);
-					cell.setCellValue(taxAmtFormat(taxVo.getRegCapital(), decimalFormatTwoDigits));
-					cell.setCellStyle(cellRight);
 					// วันที่จดทะเบียน
 					cell = row.createCell(cellNum++);
 					cell.setCellValue(taxVo.getRegDate());
@@ -796,7 +783,6 @@ public class WorksheetExportService {
 				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 50); // ที่อยู่โรงอุตสาหกรรม/สถานบริการ
 				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 10); // ภาค
 				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // พื้นที่
-				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 18); // ทุนจดทะเบียน
 				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // วันที่จดทะเบียน
 				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 40); // พิกัด
 				for (int i = 0; i < formVo.getDateRange(); i++) {
