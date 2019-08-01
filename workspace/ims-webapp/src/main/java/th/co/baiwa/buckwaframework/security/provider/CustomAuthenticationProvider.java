@@ -81,7 +81,7 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
 			userDetails.setUserThaiSurname(response.getUserThaiSurname());
 			userDetails.setTitle(response.getTitle());
 			userDetails.setOfficeCode(response.getOfficeId());
-		} else if (PROFILE.UAT.equals(profileActive)) {
+		} else if (PROFILE.UAT.equals(profileActive) || PROFILE.PROD.equals(profileActive)) {
 			AuthenAndGetUserRoleRequest ldap = new AuthenAndGetUserRoleRequest();
 			ldap.setUserId(username);
 			ldap.setPassword(password);
