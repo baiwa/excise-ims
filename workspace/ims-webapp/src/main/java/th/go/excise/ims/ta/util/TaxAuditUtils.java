@@ -89,6 +89,7 @@ public class TaxAuditUtils {
 			taxOperatorDatatableVo.setMultiDutyFlag(taxOperatorDetailVo.getMultiDutyFlag());
 			taxOperatorDatatableVo.setIncMultiDutyFlag(taxOperatorDetailVo.getIncMultiDutyFlag());
 			taxOperatorDatatableVo.setSyncDate(taxOperatorDetailVo.getSyncDate());
+			taxOperatorDatatableVo.setPlanType(taxOperatorDetailVo.getPlanType());
 			
 			taxAmtList = new ArrayList<>();
 			for (int i = 0; i < formVo.getDateRange(); i++) {

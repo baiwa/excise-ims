@@ -65,6 +65,7 @@ public class TaxOperatorDatatableVo {
 	private String taxAuditLast1MultiFlag;
 	private String taxAuditLast1MultiDesc;
 	private String syncDate;
+	private String planType;
 
 	public String getCusFullname() {
 		return cusFullname;
@@ -552,6 +553,14 @@ public class TaxOperatorDatatableVo {
 
 	public void setSyncDate(String syncDate) {
 		this.syncDate = syncDate;
+	}
+
+	public String getPlanType() {
+		return planType;
+	}
+
+	public void setPlanType(String planType) {
+		this.planType = planType;
 	}
 
 }

@@ -192,7 +192,8 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		sql.append("   R4000.MULTI_DUTY_FLAG, ");
 		sql.append("   ECDG.DUTY_GROUP_TYPE, ");
 		sql.append("   R4000.SYNC_DATE, ");
-		sql.append("   (T_W_COND_HDR.MONTH_NUM - TO_NUMBER(NVL(TA_W_DTL.TAX_MONTH_NO, 0))) AS NOT_PAY_TAX_MONTH_NO ");
+		sql.append("   (T_W_COND_HDR.MONTH_NUM - TO_NUMBER(NVL(TA_W_DTL.TAX_MONTH_NO, 0))) AS NOT_PAY_TAX_MONTH_NO, ");
+		sql.append("   PDTL.PLAN_TYPE ");
 		sql.append(" FROM TA_WORKSHEET_DTL TA_W_DTL ");
 		sql.append(" INNER JOIN TA_WORKSHEET_HDR TA_W_HDR ON TA_W_DTL.ANALYSIS_NUMBER = TA_W_HDR.ANALYSIS_NUMBER ");
 		sql.append("   AND TA_W_HDR.IS_DELETED = 'N' ");
@@ -527,7 +528,8 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 				}
 			}
 			vo.setSyncDate(ConvertDateUtils.formatDateToString(rs.getDate("SYNC_DATE"), ConvertDateUtils.DD_MM_YY, ConvertDateUtils.LOCAL_TH));
-
+			vo.setPlanType(rs.getString("PLAN_TYPE"));
+			
 			return vo;
 		}
 	};

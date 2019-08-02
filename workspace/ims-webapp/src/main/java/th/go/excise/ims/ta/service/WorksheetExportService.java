@@ -978,6 +978,8 @@ public class WorksheetExportService {
 				row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 2));
 				List<String> headerText1List = new ArrayList<>();
 				headerText1List.add("ลำดับ");
+				headerText1List.add("หน่วยงานที่คัดเลือก");
+				headerText1List.add("ประเภทแผน");
 				headerText1List.add("เลขทะเบียนสรรพสามิต");
 				headerText1List.add("ชื่อผู้ประกอบการ");
 				for (int i = 1; i <= condGroupCount; i++) {
@@ -1032,6 +1034,8 @@ public class WorksheetExportService {
 				headerText2List.add("");
 				headerText2List.add("");
 				headerText2List.add("");
+				headerText2List.add("");
+				headerText2List.add("");
 				for (int i = 1; i <= condGroupCount; i++) {
 					headerText2List.add("เงื่อนไขที่ " + i);
 				}
@@ -1068,12 +1072,31 @@ public class WorksheetExportService {
 				Method method = null;
 				String condGroupFlag = null;
 				taxVoList = dataMap.get(dept.getOfficeCode());
+				taxVoList.sort((p1, p2) -> p1.getOfficeCode().compareTo(p2.getOfficeCode()));
 				for (TaxOperatorDatatableVo taxVo : taxVoList) {
 					row = sheet.createRow(rowNum);
 					cellNum = 0;
 					// ลำดับ
 					cell = row.createCell(cellNum++);
 					cell.setCellValue(no);
+					cell.setCellStyle(cellLeft);
+					// หน่วยงานที่คัดเลือก
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(ApplicationCache.getExciseDepartment(taxVo.getSelectByOfCode()).getDeptName());
+					cell.setCellStyle(cellLeft);
+					// ประเภทแผน
+					cell = row.createCell(cellNum++);
+					if (StringUtils.isNotEmpty(taxVo.getPlanType())) {
+						if ("I".equals(taxVo.getPlanType())) {
+							cell.setCellValue("ในแผน");
+						} else if ("R".equals(taxVo.getPlanType())) {
+							cell.setCellValue("สำรอง");
+						} else if ("E".equals(taxVo.getPlanType())) {
+							cell.setCellValue("เพิ่มราย");
+						}
+					} else {
+						cell.setCellValue("");
+					}
 					cell.setCellStyle(cellLeft);
 					// เลขทะเบียนสรรพสามิต
 					cell = row.createCell(cellNum++);
@@ -1178,6 +1201,8 @@ public class WorksheetExportService {
 				// Column Width
 				int colIndex = 0;
 				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 7);  // ลำดับ
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 30); // หน่วยงานที่คัดเลือก
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 20); // ประเภทแผน
 				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 28); // เลขทะเบียนสรรพสามิต
 				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 50); // ชื่อผู้ประกอบการ
 				for (int i = 1; i <= condGroupCount; i++) {
@@ -1202,9 +1227,9 @@ public class WorksheetExportService {
 				
 				// Merge Column
 				int titleRow = 0;
-				sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 19));
-				sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 19));
-				sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 19));
+				sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 21));
+				sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 21));
+				sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 21));
 				int mergeCellIndex = 0;
 				for (String headerText : headerText2List) {
 					if (StringUtils.isEmpty(headerText)) {
@@ -1212,9 +1237,9 @@ public class WorksheetExportService {
 					}
 					mergeCellIndex++;
 				}
-				int afterCondGroupIndex = 3;
+				int afterCondGroupIndex = 5; // TODO AfterCondGroupIndex
 				afterCondGroupIndex += condGroupCount - 1;
-				sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, 3, afterCondGroupIndex)); // กลุ่มเงื่อนไข
+				sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, 5, afterCondGroupIndex)); // กลุ่มเงื่อนไข
 				sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, afterCondGroupIndex + 1, afterCondGroupIndex + 3)); // การตรวจสอบภาษีย้อนหลัง 3 ปี
 				sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, afterCondGroupIndex + 4, afterCondGroupIndex + 6)); // การชำระภาษีในสภาวะปกติ
 				int halfDataRange = formVo.getDateRange() / 2;

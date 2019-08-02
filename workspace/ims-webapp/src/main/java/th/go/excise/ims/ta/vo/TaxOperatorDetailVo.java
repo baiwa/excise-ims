@@ -104,6 +104,7 @@ public class TaxOperatorDetailVo {
 	private String multiDutyFlag;
 	private String incMultiDutyFlag;
 	private String syncDate;
+	private String planType;
 
 	public String getSelectByOfCode() {
 		return selectByOfCode;
@@ -919,6 +920,14 @@ public class TaxOperatorDetailVo {
 
 	public void setSyncDate(String syncDate) {
 		this.syncDate = syncDate;
+	}
+
+	public String getPlanType() {
+		return planType;
+	}
+
+	public void setPlanType(String planType) {
+		this.planType = planType;
 	}
 
 }
