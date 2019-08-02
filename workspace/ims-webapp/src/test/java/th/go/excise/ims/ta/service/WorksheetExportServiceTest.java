@@ -13,6 +13,7 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.PROFILE;
 import th.go.excise.ims.Application;
 import th.go.excise.ims.ta.vo.PlanWorksheetVo;
@@ -100,7 +101,7 @@ public class WorksheetExportServiceTest {
 		}
 	}*/
 	
-	@Test
+//	@Test
 	public void test_exportPlanWorksheetSelected() {
 		PlanWorksheetVo formVo = new PlanWorksheetVo();
 		formVo.setPlanNumber("001401-2563-000001");
@@ -110,6 +111,40 @@ public class WorksheetExportServiceTest {
 		try (FileOutputStream fos = new FileOutputStream(OUTPUT_PATH + "/" + fileName)) {
 			byte[] outArray = worksheetExportService.exportPlanWorksheetSelected(formVo);
 			fos.write(outArray);
+			System.out.println("Creating excel " + fileName + " Done");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void test_exportTaRpt0005() {
+		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
+		formVo.setAnalysisNumber("001401-2563-000001");
+		formVo.setExportSelFlag(FLAG.Y_FLAG);
+		
+		String fileName = "ta-rpt0005" + LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE) + ".xlsx";
+		
+		try (FileOutputStream fos = new FileOutputStream(OUTPUT_PATH + "/" + fileName)) {
+			byte[] bytes = worksheetExportService.exportTaRpt0005(formVo);
+			fos.write(bytes);
+			System.out.println("Creating excel " + fileName + " Done");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void test_exportTaRpt0006() {
+		TaxOperatorFormVo formVo = new TaxOperatorFormVo();
+		formVo.setAnalysisNumber("001401-2563-000001");
+		formVo.setExportSelFlag(FLAG.N_FLAG);
+		
+		String fileName = "ta-rpt0006" + LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE) + ".xlsx";
+		
+		try (FileOutputStream fos = new FileOutputStream(OUTPUT_PATH + "/" + fileName)) {
+			byte[] bytes = worksheetExportService.exportTaRpt0006(formVo);
+			fos.write(bytes);
 			System.out.println("Creating excel " + fileName + " Done");
 		} catch (IOException e) {
 			e.printStackTrace();

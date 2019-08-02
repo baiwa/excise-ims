@@ -10,7 +10,9 @@ import java.time.chrono.ThaiBuddhistDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -36,8 +38,11 @@ import th.co.baiwa.buckwaframework.common.util.LocalDateUtils;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.co.baiwa.buckwaframework.security.util.UserLoginUtils;
 import th.co.baiwa.buckwaframework.support.ApplicationCache;
+import th.go.excise.ims.common.constant.ProjectConstants.EXCISE_OFFICE_CODE;
 import th.go.excise.ims.common.constant.ProjectConstants.TA_WORKSHEET_STATUS;
 import th.go.excise.ims.common.util.ExcelUtils;
+import th.go.excise.ims.common.util.ExciseUtils;
+import th.go.excise.ims.preferences.vo.ExciseDepartment;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondMainHdr;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetCondSubNoAudit;
 import th.go.excise.ims.ta.persistence.entity.TaWorksheetHdr;
@@ -817,6 +822,806 @@ public class WorksheetExportService {
 				}
 				
 				sheetNameCount++;
+			}
+			
+			workbook.write(out);
+			content = out.toByteArray();
+			
+			// dispose of temporary files backing this workbook on disk
+			workbook.dispose();
+			//logger.debug("Writed {} row(s)", rowNum);
+			
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+		
+		return content;
+	}
+	
+	public byte[] exportTaRpt0005(TaxOperatorFormVo formVo) {
+		String officeCode = null;
+		if (StringUtils.isNotBlank(formVo.getArea()) && !CommonConstants.JsonStatus.SUCCESS.equals(formVo.getArea())) {
+			officeCode = formVo.getArea();
+		} else if (StringUtils.isNotBlank(formVo.getSector()) && !CommonConstants.JsonStatus.SUCCESS.equals(formVo.getSector())) {
+			officeCode = formVo.getSector();
+		} else {
+			officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		}
+		
+		logger.info("exportTaRpt0005 analysisNumber={}", formVo.getAnalysisNumber());
+		
+		// Prepare for Export
+		int DEFAULT_NO_TAX_AUDIT_YEAR = 3;
+		int condGroupCount = 1 + taWorksheetCondMainDtlRepository.countByAnalysisNumber(formVo.getAnalysisNumber());
+		TaWorksheetCondSubNoAudit worksheetCondSubNoAudit = taWorksheetCondSubNoAuditRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
+		int noTaxAuditYearNum = worksheetCondSubNoAudit.getNoTaxAuditYearNum() != null ? worksheetCondSubNoAudit.getNoTaxAuditYearNum() : DEFAULT_NO_TAX_AUDIT_YEAR;
+		
+		TaWorksheetHdr worksheetHdr = taWorksheetHdrRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
+		formVo.setBudgetYear(worksheetHdr.getBudgetYear());
+		
+		TaWorksheetCondMainHdr worksheetCondMainHdr = taWorksheetCondMainHdrRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
+		formVo.setDateStart(convertToThaiDate(worksheetCondMainHdr.getYearMonthStart()));
+		formVo.setDateEnd(convertToThaiDate(worksheetCondMainHdr.getYearMonthEnd()));
+		formVo.setDateRange(worksheetCondMainHdr.getMonthNum());
+		formVo.setOfficeCode(officeCode);
+		formVo.setStart(0);
+		formVo.setLength(taWorksheetDtlRepository.countByCriteria(formVo).intValue());
+		//formVo.setLength(10);
+		
+		List<TaxOperatorDetailVo> worksheetVoList = null;
+		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = null;
+		WorksheetDateRangeVo worksheetDateRangeVo = TaxAuditUtils.getWorksheetDateRangeVo(formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange(), worksheetCondMainHdr.getCompType());
+		List<LocalDate> subLocalDateG1List = new ArrayList<>(worksheetDateRangeVo.getSubLocalDateG1List());
+		List<LocalDate> subLocalDateG2List = new ArrayList<>(worksheetDateRangeVo.getSubLocalDateG2List());
+		Collections.reverse(subLocalDateG1List);
+		Collections.reverse(subLocalDateG2List);
+		
+		// Prepare Data for Export
+		String titleName = "รายการข้อมูลผู้ประกอบการที่เสียภาษีสรรพสามิตตามเงื่อนไข (รายที่ถูกเลือก)";
+		worksheetVoList = taWorksheetDtlRepository.findByCriteria(formVo);
+		taxOperatorDatatableVoList = TaxAuditUtils.prepareTaxOperatorDatatable(worksheetVoList, formVo);
+		List<TaxOperatorDatatableVo> taxVoList = null;
+		
+		// Grouping by OfficeCode
+		List<ExciseDepartment> deptList = TaxAuditUtils.getExciseSectorList();
+		Map<String, List<TaxOperatorDatatableVo>> dataMap = new LinkedHashMap<>();
+		for (ExciseDepartment dept : deptList) {
+			dataMap.put(dept.getOfficeCode(), new ArrayList<TaxOperatorDatatableVo>());
+		}
+		
+		String tmpOfficeCode = null;
+		for (TaxOperatorDatatableVo taxVo : taxOperatorDatatableVoList) {
+			if (ExciseUtils.isCentral(taxVo.getSelectByOfCode())) {
+				tmpOfficeCode = taxVo.getSelectByOfCode().substring(0, 4) + "00";
+			} else {
+				tmpOfficeCode = taxVo.getSelectByOfCode().substring(0, 2) + "0000";
+			}
+			dataMap.get(tmpOfficeCode).add(taxVo);
+		}
+		
+		
+		// Create Workbook
+		byte[] content = null;
+		try (SXSSFWorkbook workbook = new SXSSFWorkbook(-1); // turn off auto-flushing and accumulate all rows in memory
+			ByteArrayOutputStream out = new ByteArrayOutputStream();) {
+			
+			// Font
+		    Font headerFont = workbook.createFont();
+		    headerFont.setFontHeightInPoints((short) 14);
+		    headerFont.setFontName(ExcelUtils.FONT_NAME.TH_SARABUN_PSK);
+		    headerFont.setBold(true);
+		    
+		    Font detailFont = workbook.createFont();
+		    detailFont.setFontHeightInPoints((short) 14);
+		    detailFont.setFontName(ExcelUtils.FONT_NAME.TH_SARABUN_PSK);
+			
+			// Cell Style
+		    CellStyle cellTitleStyle = (XSSFCellStyle) workbook.createCellStyle();
+			cellTitleStyle.setAlignment(HorizontalAlignment.CENTER);
+			cellTitleStyle.setFont(headerFont);
+			CellStyle cellHeaderStyle = ExcelUtils.createThColorStyle(workbook, new XSSFColor(Color.LIGHT_GRAY));
+			cellHeaderStyle.setFont(headerFont);
+			CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
+			cellCenter.setFont(detailFont);
+			CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
+			cellLeft.setFont(detailFont);
+			CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
+			cellRight.setFont(detailFont);
+			DecimalFormat decimalFormatTwoDigits = new DecimalFormat("#,##0.00");
+			
+			// Prepare Data for Export
+			Sheet sheet = null;
+			Row row = null;
+			Cell cell = null;
+			
+			for (ExciseDepartment dept : deptList) {
+				// Initial Data
+				int rowNum = 0;
+				int cellNum = 0;
+				
+				// Sheet Name
+				if (EXCISE_OFFICE_CODE.TA_CENTRAL.equals(dept.getOfficeCode())) {
+					sheet = workbook.createSheet("กองกำกับและตรวจสอบภาษี");
+				} else {
+					sheet = workbook.createSheet(dept.getDeptShortName());
+				}
+				
+				// Title
+				// Report Name
+				row = sheet.createRow(rowNum);
+				row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+				cellNum = 0;
+				cell = row.createCell(cellNum);
+				cell.setCellValue(titleName);
+				cell.setCellStyle(cellTitleStyle);
+				rowNum++;
+				// Office Name
+				row = sheet.createRow(rowNum);
+				row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+				cellNum = 0;
+				cell = row.createCell(cellNum);
+				cell.setCellValue("สำนักงาน " + dept.getDeptName());
+				cell.setCellStyle(cellTitleStyle);
+				rowNum++;
+				// Budget Year
+				row = sheet.createRow(rowNum);
+				row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+				cellNum = 0;
+				cell = row.createCell(cellNum);
+				cell.setCellValue("ประจำปีงบประมาณ " + formVo.getBudgetYear());
+				cell.setCellStyle(cellTitleStyle);
+				rowNum++;
+				
+				// Column Header
+				// Header Line 1
+				row = sheet.createRow(rowNum);
+				row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 2));
+				List<String> headerText1List = new ArrayList<>();
+				headerText1List.add("ลำดับ");
+				headerText1List.add("เลขทะเบียนสรรพสามิต");
+				headerText1List.add("ชื่อผู้ประกอบการ");
+				for (int i = 1; i <= condGroupCount; i++) {
+					if (i == 1) {
+						headerText1List.add("เงื่อนไขคัดเลือก");
+					} else {
+						headerText1List.add("");
+					}
+				}
+				for (int i = 1; i <= noTaxAuditYearNum; i++) {
+					if (i == 1) {
+						headerText1List.add("เงื่อนไขที่ 1\nข้อมูลตรวจสอบภาษี");
+					} else {
+						headerText1List.add("");
+					}
+				}
+				headerText1List.add("เงื่อนไขที่ 2\nข้อมูลการชำระภาษี");
+				headerText1List.add("");
+				headerText1List.add("");
+				headerText1List.add("เงื่อนไขที่ 3");
+				headerText1List.add("ชื่อโรงอุตสาหกรรม/สถานบริการ");
+				headerText1List.add("ที่อยู่โรงอุตสาหกรรม/สถานบริการ");
+				headerText1List.add("ภาค");
+				headerText1List.add("พื้นที่");
+				headerText1List.add("วันที่จดทะเบียน");
+				headerText1List.add("พิกัด");
+				int monthNum = formVo.getDateRange() / 2;
+				for (int i = 0; i < formVo.getDateRange(); i++) {
+					if (i == 0) {
+						headerText1List.add("การชำระภาษี " + String.valueOf(monthNum) + " เดือนแรก");
+					} else if (i == (monthNum)) {
+						headerText1List.add("การชำระภาษี " + String.valueOf(monthNum) + " เดือนหลัง");
+					} else {
+						headerText1List.add("");
+					}
+				}
+				
+				cellNum = 0;
+				for (String headerText : headerText1List) {
+					cell = row.createCell(cellNum);
+					cell.setCellValue(headerText);
+					cell.setCellStyle(cellHeaderStyle);
+					cellNum++;
+				}
+				rowNum++;
+				
+				// Header Line 2
+				row = sheet.createRow(rowNum);
+				row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 2));
+				
+				List<String> headerText2List = new ArrayList<>();
+				headerText2List.add("");
+				headerText2List.add("");
+				headerText2List.add("");
+				for (int i = 1; i <= condGroupCount; i++) {
+					headerText2List.add("เงื่อนไขที่ " + i);
+				}
+				for (int i = noTaxAuditYearNum; i >= 1; i--) {
+					headerText2List.add(String.valueOf(Integer.parseInt(formVo.getBudgetYear()) - i));
+				}
+				headerText2List.add("ปีนี้\n" + generateDateRangeString(subLocalDateG1List));
+				headerText2List.add("ปีก่อน\n" + generateDateRangeString(subLocalDateG2List));
+				headerText2List.add("เปลี่ยนแปลง\n(ร้อยละ)");
+				headerText2List.add("จำนวนเดือน\nไม่ชำระภาษี");
+				headerText2List.add("");
+				headerText2List.add("");
+				headerText2List.add("");
+				headerText2List.add("");
+				headerText2List.add("");
+				headerText2List.add("");
+				int startTaxAmtIndex = headerText2List.size();
+				// Date G1
+				headerText2List.addAll(generateDateString(worksheetDateRangeVo.getSubLocalDateG1List()));
+				// Date G2
+				headerText2List.addAll(generateDateString(worksheetDateRangeVo.getSubLocalDateG2List()));
+				
+				cellNum = 0;
+				for (String headerText : headerText2List) {
+					cell = row.createCell(cellNum);
+					cell.setCellValue(headerText);
+					cell.setCellStyle(cellHeaderStyle);
+					cellNum++;
+				}
+				rowNum++;
+				
+				// Details
+				int no = 1;
+				Method method = null;
+				String condGroupFlag = null;
+				taxVoList = dataMap.get(dept.getOfficeCode());
+				for (TaxOperatorDatatableVo taxVo : taxVoList) {
+					row = sheet.createRow(rowNum);
+					cellNum = 0;
+					// ลำดับ
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(no);
+					cell.setCellStyle(cellLeft);
+					// เลขทะเบียนสรรพสามิต
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getNewRegId());
+					cell.setCellStyle(cellLeft);
+					// ชื่อผู้ประกอบการ
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getCusFullname());
+					cell.setCellStyle(cellLeft);
+					// กลุ่มเงื่อนไข
+					for (int i = 0; i < condGroupCount; i++) {
+						cell = row.createCell(cellNum++);
+						if (i == 0) {
+							if (FLAG.Y_FLAG.equals(taxVo.getCondSubNoAudit())) {
+								cell.setCellValue("X");
+							} else {
+								cell.setCellValue("");
+							}
+						} else {
+							try {
+								method = TaxOperatorDatatableVo.class.getDeclaredMethod("getCondG" + i);
+								condGroupFlag = (String) method.invoke(taxVo);
+								if (FLAG.Y_FLAG.equals(condGroupFlag)) {
+									cell.setCellValue("X");
+								} else {
+									cell.setCellValue("");
+								}
+							} catch (Exception e) {
+								logger.error(e.getMessage(), e);
+							}
+						}
+						cell.setCellStyle(cellCenter);
+					}
+					// การตรวจสอบภาษีย้อนหลัง 3 ปี
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getTaxAuditLast3());
+					cell.setCellStyle(cellLeft);
+					// การตรวจสอบภาษีย้อนหลัง 2 ปี
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getTaxAuditLast2());
+					cell.setCellStyle(cellLeft);
+					// การตรวจสอบภาษีย้อนหลัง 1 ปี
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getTaxAuditLast1());
+					cell.setCellStyle(cellLeft);
+					// ยอดชำระภาษี วิเคราะห์
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxAmtFormat(taxVo.getSumTaxAmtG1(), decimalFormatTwoDigits));
+					cell.setCellStyle(cellRight);
+					// ยอดชำระภาษี เปรียบเทียบ
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxAmtFormat(taxVo.getSumTaxAmtG2(), decimalFormatTwoDigits));
+					cell.setCellStyle(cellRight);
+					// เปลี่ยนแปลง (ร้อยละ)
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxAmtFormat(taxVo.getTaxAmtChnPnt(), decimalFormatTwoDigits));
+					cell.setCellStyle(cellRight);
+					// จำนวนเดือนไม่ชำระภาษี
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getNotPayTaxMonthNo());
+					cell.setCellStyle(cellRight);
+					// ชื่อโรงอุตสาหกรรม/สถานบริการ
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getFacFullname());
+					cell.setCellStyle(cellLeft);
+					// ที่อยู่โรงอุตสาหกรรม/สถานบริการ
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getFacAddress());
+					cell.setCellStyle(cellLeft);
+					// ภาค
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getSecDesc());
+					cell.setCellStyle(cellLeft);
+					// พื้นที่
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getAreaDesc());
+					cell.setCellStyle(cellLeft);
+					// วันที่จดทะเบียน
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getRegDate());
+					cell.setCellStyle(cellLeft);
+					// พิกัด
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getDutyName());
+					cell.setCellStyle(cellLeft);
+					// การชำระภาษี X เดือนแรก และ X เดือนหลัง
+					for (String taxAmt : taxVo.getTaxAmtList()) {
+						cell = row.createCell(cellNum++);
+						cell.setCellValue(taxAmtFormat(taxAmt, decimalFormatTwoDigits));
+						cell.setCellStyle(cellRight);
+					}
+					
+					if (rowNum % FLUSH_ROWS == 0) {
+						((SXSSFSheet) sheet).flushRows(FLUSH_ROWS); // retain ${flushRows} last rows and flush all others
+						logger.debug("Writed {} row(s)", rowNum);
+					}
+					
+					no++;
+					rowNum++;
+				}
+				
+				// Column Width
+				int colIndex = 0;
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 7);  // ลำดับ
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 28); // เลขทะเบียนสรรพสามิต
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 50); // ชื่อผู้ประกอบการ
+				for (int i = 1; i <= condGroupCount; i++) {
+					sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // กลุ่มเงื่อนไข
+				}
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // การตรวจสอบภาษีย้อนหลัง 3 ปี
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // การตรวจสอบภาษีย้อนหลัง 2 ปี
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // การตรวจสอบภาษีย้อนหลัง 1 ปี
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 18); // ยอดชำระภาษี วิเคราะห์
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 18); // ยอดชำระภาษี เปรียบเทียบ
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // เปลี่ยนแปลง (ร้อยละ)
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // จำนวนเดือนไม่ชำระภาษี
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 50); // ชื่อโรงอุตสาหกรรม/สถานบริการ
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 50); // ที่อยู่โรงอุตสาหกรรม/สถานบริการ
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 10); // ภาค
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // พื้นที่
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // วันที่จดทะเบียน
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 40); // พิกัด
+				for (int i = 0; i < formVo.getDateRange(); i++) {
+					sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // การชำระภาษี X เดือนแรก และ X เดือนหลัง
+				}
+				
+				// Merge Column
+				int titleRow = 0;
+				sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 19));
+				sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 19));
+				sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 19));
+				int mergeCellIndex = 0;
+				for (String headerText : headerText2List) {
+					if (StringUtils.isEmpty(headerText)) {
+						sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 1, mergeCellIndex, mergeCellIndex));
+					}
+					mergeCellIndex++;
+				}
+				int afterCondGroupIndex = 3;
+				afterCondGroupIndex += condGroupCount - 1;
+				sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, 3, afterCondGroupIndex)); // กลุ่มเงื่อนไข
+				sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, afterCondGroupIndex + 1, afterCondGroupIndex + 3)); // การตรวจสอบภาษีย้อนหลัง 3 ปี
+				sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, afterCondGroupIndex + 4, afterCondGroupIndex + 6)); // การชำระภาษีในสภาวะปกติ
+				int halfDataRange = formVo.getDateRange() / 2;
+				if (halfDataRange > 1) {
+					sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, startTaxAmtIndex, startTaxAmtIndex + halfDataRange - 1));
+					sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, startTaxAmtIndex + halfDataRange, startTaxAmtIndex + formVo.getDateRange() - 1));
+				}
+			}
+			
+			workbook.write(out);
+			content = out.toByteArray();
+			
+			// dispose of temporary files backing this workbook on disk
+			workbook.dispose();
+			//logger.debug("Writed {} row(s)", rowNum);
+			
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+		
+		return content;
+	}
+
+	public byte[] exportTaRpt0006(TaxOperatorFormVo formVo) {
+		String officeCode = null;
+		if (StringUtils.isNotBlank(formVo.getArea()) && !CommonConstants.JsonStatus.SUCCESS.equals(formVo.getArea())) {
+			officeCode = formVo.getArea();
+		} else if (StringUtils.isNotBlank(formVo.getSector()) && !CommonConstants.JsonStatus.SUCCESS.equals(formVo.getSector())) {
+			officeCode = formVo.getSector();
+		} else {
+			officeCode = UserLoginUtils.getCurrentUserBean().getOfficeCode();
+		}
+		
+		logger.info("exportTaRpt0006 analysisNumber={}", formVo.getAnalysisNumber());
+		
+		// Prepare for Export
+		int DEFAULT_NO_TAX_AUDIT_YEAR = 3;
+		int condGroupCount = 1 + taWorksheetCondMainDtlRepository.countByAnalysisNumber(formVo.getAnalysisNumber());
+		TaWorksheetCondSubNoAudit worksheetCondSubNoAudit = taWorksheetCondSubNoAuditRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
+		int noTaxAuditYearNum = worksheetCondSubNoAudit.getNoTaxAuditYearNum() != null ? worksheetCondSubNoAudit.getNoTaxAuditYearNum() : DEFAULT_NO_TAX_AUDIT_YEAR;
+		
+		TaWorksheetHdr worksheetHdr = taWorksheetHdrRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
+		formVo.setBudgetYear(worksheetHdr.getBudgetYear());
+		
+		TaWorksheetCondMainHdr worksheetCondMainHdr = taWorksheetCondMainHdrRepository.findByAnalysisNumber(formVo.getAnalysisNumber());
+		formVo.setDateStart(convertToThaiDate(worksheetCondMainHdr.getYearMonthStart()));
+		formVo.setDateEnd(convertToThaiDate(worksheetCondMainHdr.getYearMonthEnd()));
+		formVo.setDateRange(worksheetCondMainHdr.getMonthNum());
+		formVo.setOfficeCode(officeCode);
+		formVo.setStart(0);
+		formVo.setLength(taWorksheetDtlRepository.countByCriteria(formVo).intValue());
+		//formVo.setLength(10);
+		
+		List<TaxOperatorDetailVo> worksheetVoList = null;
+		List<TaxOperatorDatatableVo> taxOperatorDatatableVoList = null;
+		WorksheetDateRangeVo worksheetDateRangeVo = TaxAuditUtils.getWorksheetDateRangeVo(formVo.getDateStart(), formVo.getDateEnd(), formVo.getDateRange(), worksheetCondMainHdr.getCompType());
+		List<LocalDate> subLocalDateG1List = new ArrayList<>(worksheetDateRangeVo.getSubLocalDateG1List());
+		List<LocalDate> subLocalDateG2List = new ArrayList<>(worksheetDateRangeVo.getSubLocalDateG2List());
+		Collections.reverse(subLocalDateG1List);
+		Collections.reverse(subLocalDateG2List);
+		
+		// Prepare Data for Export
+		String titleName = "รายการข้อมูลผู้ประกอบการที่เสียภาษีสรรพสามิตตามเงื่อนไข (รายที่ไม่ถูกเลือก)";
+		worksheetVoList = taWorksheetDtlRepository.findByCriteria(formVo);
+		taxOperatorDatatableVoList = TaxAuditUtils.prepareTaxOperatorDatatable(worksheetVoList, formVo);
+		List<TaxOperatorDatatableVo> taxVoList = null;
+		
+		// Grouping by OfficeCode
+		List<ExciseDepartment> deptList = ApplicationCache.getExciseSectorList();
+		Map<String, List<TaxOperatorDatatableVo>> dataMap = new LinkedHashMap<>();
+		for (ExciseDepartment dept : deptList) {
+			dataMap.put(dept.getOfficeCode(), new ArrayList<TaxOperatorDatatableVo>());
+		}
+		
+		String tmpOfficeCode = null;
+		for (TaxOperatorDatatableVo taxVo : taxOperatorDatatableVoList) {
+			if (ExciseUtils.isCentral(taxVo.getOfficeCode())) {
+				tmpOfficeCode = taxVo.getOfficeCode().substring(0, 4) + "00";
+			} else {
+				tmpOfficeCode = taxVo.getOfficeCode().substring(0, 2) + "0000";
+			}
+			dataMap.get(tmpOfficeCode).add(taxVo);
+		}
+		
+		
+		// Create Workbook
+		byte[] content = null;
+		try (SXSSFWorkbook workbook = new SXSSFWorkbook(-1); // turn off auto-flushing and accumulate all rows in memory
+			ByteArrayOutputStream out = new ByteArrayOutputStream();) {
+			
+			// Font
+		    Font headerFont = workbook.createFont();
+		    headerFont.setFontHeightInPoints((short) 14);
+		    headerFont.setFontName(ExcelUtils.FONT_NAME.TH_SARABUN_PSK);
+		    headerFont.setBold(true);
+		    
+		    Font detailFont = workbook.createFont();
+		    detailFont.setFontHeightInPoints((short) 14);
+		    detailFont.setFontName(ExcelUtils.FONT_NAME.TH_SARABUN_PSK);
+			
+			// Cell Style
+		    CellStyle cellTitleStyle = (XSSFCellStyle) workbook.createCellStyle();
+			cellTitleStyle.setAlignment(HorizontalAlignment.CENTER);
+			cellTitleStyle.setFont(headerFont);
+			CellStyle cellHeaderStyle = ExcelUtils.createThColorStyle(workbook, new XSSFColor(Color.LIGHT_GRAY));
+			cellHeaderStyle.setFont(headerFont);
+			CellStyle cellCenter = ExcelUtils.createCenterCellStyle(workbook);
+			cellCenter.setFont(detailFont);
+			CellStyle cellLeft = ExcelUtils.createLeftCellStyle(workbook);
+			cellLeft.setFont(detailFont);
+			CellStyle cellRight = ExcelUtils.createRightCellStyle(workbook);
+			cellRight.setFont(detailFont);
+			DecimalFormat decimalFormatTwoDigits = new DecimalFormat("#,##0.00");
+			
+			// Prepare Data for Export
+			Sheet sheet = null;
+			Row row = null;
+			Cell cell = null;
+			
+			for (ExciseDepartment dept : deptList) {
+				// Initial Data
+				int rowNum = 0;
+				int cellNum = 0;
+				
+				// Sheet Name
+				if (EXCISE_OFFICE_CODE.TA_CENTRAL.equals(dept.getOfficeCode())) {
+					sheet = workbook.createSheet("กองกำกับและตรวจสอบภาษี");
+				} else {
+					sheet = workbook.createSheet(dept.getDeptShortName());
+				}
+				
+				// Title
+				// Report Name
+				row = sheet.createRow(rowNum);
+				row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+				cellNum = 0;
+				cell = row.createCell(cellNum);
+				cell.setCellValue(titleName);
+				cell.setCellStyle(cellTitleStyle);
+				rowNum++;
+				// Office Name
+				row = sheet.createRow(rowNum);
+				row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+				cellNum = 0;
+				cell = row.createCell(cellNum);
+				cell.setCellValue("สำนักงาน " + dept.getDeptName());
+				cell.setCellStyle(cellTitleStyle);
+				rowNum++;
+				// Budget Year
+				row = sheet.createRow(rowNum);
+				row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 1));
+				cellNum = 0;
+				cell = row.createCell(cellNum);
+				cell.setCellValue("ประจำปีงบประมาณ " + formVo.getBudgetYear());
+				cell.setCellStyle(cellTitleStyle);
+				rowNum++;
+				
+				// Column Header
+				// Header Line 1
+				row = sheet.createRow(rowNum);
+				row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 2));
+				List<String> headerText1List = new ArrayList<>();
+				headerText1List.add("ลำดับ");
+				headerText1List.add("เลขทะเบียนสรรพสามิต");
+				headerText1List.add("ชื่อผู้ประกอบการ");
+				for (int i = 1; i <= condGroupCount; i++) {
+					if (i == 1) {
+						headerText1List.add("เงื่อนไขคัดเลือก");
+					} else {
+						headerText1List.add("");
+					}
+				}
+				for (int i = 1; i <= noTaxAuditYearNum; i++) {
+					if (i == 1) {
+						headerText1List.add("เงื่อนไขที่ 1\nข้อมูลตรวจสอบภาษี");
+					} else {
+						headerText1List.add("");
+					}
+				}
+				headerText1List.add("เงื่อนไขที่ 2\nข้อมูลการชำระภาษี");
+				headerText1List.add("");
+				headerText1List.add("");
+				headerText1List.add("เงื่อนไขที่ 3");
+				headerText1List.add("ชื่อโรงอุตสาหกรรม/สถานบริการ");
+				headerText1List.add("ที่อยู่โรงอุตสาหกรรม/สถานบริการ");
+				headerText1List.add("ภาค");
+				headerText1List.add("พื้นที่");
+				headerText1List.add("วันที่จดทะเบียน");
+				headerText1List.add("พิกัด");
+				int monthNum = formVo.getDateRange() / 2;
+				for (int i = 0; i < formVo.getDateRange(); i++) {
+					if (i == 0) {
+						headerText1List.add("การชำระภาษี " + String.valueOf(monthNum) + " เดือนแรก");
+					} else if (i == (monthNum)) {
+						headerText1List.add("การชำระภาษี " + String.valueOf(monthNum) + " เดือนหลัง");
+					} else {
+						headerText1List.add("");
+					}
+				}
+				
+				cellNum = 0;
+				for (String headerText : headerText1List) {
+					cell = row.createCell(cellNum);
+					cell.setCellValue(headerText);
+					cell.setCellStyle(cellHeaderStyle);
+					cellNum++;
+				}
+				rowNum++;
+				
+				// Header Line 2
+				row = sheet.createRow(rowNum);
+				row.setHeight((short) (ExcelUtils.COLUMN_HEIGHT_UNIT * 22 * 2));
+				
+				List<String> headerText2List = new ArrayList<>();
+				headerText2List.add("");
+				headerText2List.add("");
+				headerText2List.add("");
+				for (int i = 1; i <= condGroupCount; i++) {
+					headerText2List.add("เงื่อนไขที่ " + i);
+				}
+				for (int i = noTaxAuditYearNum; i >= 1; i--) {
+					headerText2List.add(String.valueOf(Integer.parseInt(formVo.getBudgetYear()) - i));
+				}
+				headerText2List.add("ปีนี้\n" + generateDateRangeString(subLocalDateG1List));
+				headerText2List.add("ปีก่อน\n" + generateDateRangeString(subLocalDateG2List));
+				headerText2List.add("เปลี่ยนแปลง\n(ร้อยละ)");
+				headerText2List.add("จำนวนเดือน\nไม่ชำระภาษี");
+				headerText2List.add("");
+				headerText2List.add("");
+				headerText2List.add("");
+				headerText2List.add("");
+				headerText2List.add("");
+				headerText2List.add("");
+				int startTaxAmtIndex = headerText2List.size();
+				// Date G1
+				headerText2List.addAll(generateDateString(worksheetDateRangeVo.getSubLocalDateG1List()));
+				// Date G2
+				headerText2List.addAll(generateDateString(worksheetDateRangeVo.getSubLocalDateG2List()));
+				
+				cellNum = 0;
+				for (String headerText : headerText2List) {
+					cell = row.createCell(cellNum);
+					cell.setCellValue(headerText);
+					cell.setCellStyle(cellHeaderStyle);
+					cellNum++;
+				}
+				rowNum++;
+				
+				// Details
+				int no = 1;
+				Method method = null;
+				String condGroupFlag = null;
+				taxVoList = dataMap.get(dept.getOfficeCode());
+				for (TaxOperatorDatatableVo taxVo : taxVoList) {
+					row = sheet.createRow(rowNum);
+					cellNum = 0;
+					// ลำดับ
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(no);
+					cell.setCellStyle(cellLeft);
+					// เลขทะเบียนสรรพสามิต
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getNewRegId());
+					cell.setCellStyle(cellLeft);
+					// ชื่อผู้ประกอบการ
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getCusFullname());
+					cell.setCellStyle(cellLeft);
+					// กลุ่มเงื่อนไข
+					for (int i = 0; i < condGroupCount; i++) {
+						cell = row.createCell(cellNum++);
+						if (i == 0) {
+							if (FLAG.Y_FLAG.equals(taxVo.getCondSubNoAudit())) {
+								cell.setCellValue("X");
+							} else {
+								cell.setCellValue("");
+							}
+						} else {
+							try {
+								method = TaxOperatorDatatableVo.class.getDeclaredMethod("getCondG" + i);
+								condGroupFlag = (String) method.invoke(taxVo);
+								if (FLAG.Y_FLAG.equals(condGroupFlag)) {
+									cell.setCellValue("X");
+								} else {
+									cell.setCellValue("");
+								}
+							} catch (Exception e) {
+								logger.error(e.getMessage(), e);
+							}
+						}
+						cell.setCellStyle(cellCenter);
+					}
+					// การตรวจสอบภาษีย้อนหลัง 3 ปี
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getTaxAuditLast3());
+					cell.setCellStyle(cellLeft);
+					// การตรวจสอบภาษีย้อนหลัง 2 ปี
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getTaxAuditLast2());
+					cell.setCellStyle(cellLeft);
+					// การตรวจสอบภาษีย้อนหลัง 1 ปี
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getTaxAuditLast1());
+					cell.setCellStyle(cellLeft);
+					// ยอดชำระภาษี วิเคราะห์
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxAmtFormat(taxVo.getSumTaxAmtG1(), decimalFormatTwoDigits));
+					cell.setCellStyle(cellRight);
+					// ยอดชำระภาษี เปรียบเทียบ
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxAmtFormat(taxVo.getSumTaxAmtG2(), decimalFormatTwoDigits));
+					cell.setCellStyle(cellRight);
+					// เปลี่ยนแปลง (ร้อยละ)
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxAmtFormat(taxVo.getTaxAmtChnPnt(), decimalFormatTwoDigits));
+					cell.setCellStyle(cellRight);
+					// จำนวนเดือนไม่ชำระภาษี
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getNotPayTaxMonthNo());
+					cell.setCellStyle(cellRight);
+					// ชื่อโรงอุตสาหกรรม/สถานบริการ
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getFacFullname());
+					cell.setCellStyle(cellLeft);
+					// ที่อยู่โรงอุตสาหกรรม/สถานบริการ
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getFacAddress());
+					cell.setCellStyle(cellLeft);
+					// ภาค
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getSecDesc());
+					cell.setCellStyle(cellLeft);
+					// พื้นที่
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getAreaDesc());
+					cell.setCellStyle(cellLeft);
+					// วันที่จดทะเบียน
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getRegDate());
+					cell.setCellStyle(cellLeft);
+					// พิกัด
+					cell = row.createCell(cellNum++);
+					cell.setCellValue(taxVo.getDutyName());
+					cell.setCellStyle(cellLeft);
+					// การชำระภาษี X เดือนแรก และ X เดือนหลัง
+					for (String taxAmt : taxVo.getTaxAmtList()) {
+						cell = row.createCell(cellNum++);
+						cell.setCellValue(taxAmtFormat(taxAmt, decimalFormatTwoDigits));
+						cell.setCellStyle(cellRight);
+					}
+					
+					if (rowNum % FLUSH_ROWS == 0) {
+						((SXSSFSheet) sheet).flushRows(FLUSH_ROWS); // retain ${flushRows} last rows and flush all others
+						logger.debug("Writed {} row(s)", rowNum);
+					}
+					
+					no++;
+					rowNum++;
+				}
+				
+				// Column Width
+				int colIndex = 0;
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 7);  // ลำดับ
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 28); // เลขทะเบียนสรรพสามิต
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 50); // ชื่อผู้ประกอบการ
+				for (int i = 1; i <= condGroupCount; i++) {
+					sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // กลุ่มเงื่อนไข
+				}
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // การตรวจสอบภาษีย้อนหลัง 3 ปี
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // การตรวจสอบภาษีย้อนหลัง 2 ปี
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // การตรวจสอบภาษีย้อนหลัง 1 ปี
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 18); // ยอดชำระภาษี วิเคราะห์
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 18); // ยอดชำระภาษี เปรียบเทียบ
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // เปลี่ยนแปลง (ร้อยละ)
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // จำนวนเดือนไม่ชำระภาษี
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 50); // ชื่อโรงอุตสาหกรรม/สถานบริการ
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 50); // ที่อยู่โรงอุตสาหกรรม/สถานบริการ
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 10); // ภาค
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // พื้นที่
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // วันที่จดทะเบียน
+				sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 40); // พิกัด
+				for (int i = 0; i < formVo.getDateRange(); i++) {
+					sheet.setColumnWidth(colIndex++, ExcelUtils.COLUMN_WIDTH_UNIT * 15); // การชำระภาษี X เดือนแรก และ X เดือนหลัง
+				}
+				
+				// Merge Column
+				int titleRow = 0;
+				sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 19));
+				sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 19));
+				sheet.addMergedRegion(new CellRangeAddress(titleRow, titleRow++, 0, 19));
+				int mergeCellIndex = 0;
+				for (String headerText : headerText2List) {
+					if (StringUtils.isEmpty(headerText)) {
+						sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 1, mergeCellIndex, mergeCellIndex));
+					}
+					mergeCellIndex++;
+				}
+				int afterCondGroupIndex = 3;
+				afterCondGroupIndex += condGroupCount - 1;
+				sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, 3, afterCondGroupIndex)); // กลุ่มเงื่อนไข
+				sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, afterCondGroupIndex + 1, afterCondGroupIndex + 3)); // การตรวจสอบภาษีย้อนหลัง 3 ปี
+				sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, afterCondGroupIndex + 4, afterCondGroupIndex + 6)); // การชำระภาษีในสภาวะปกติ
+				int halfDataRange = formVo.getDateRange() / 2;
+				if (halfDataRange > 1) {
+					sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, startTaxAmtIndex, startTaxAmtIndex + halfDataRange - 1));
+					sheet.addMergedRegion(new CellRangeAddress(titleRow + 0, titleRow + 0, startTaxAmtIndex + halfDataRange, startTaxAmtIndex + formVo.getDateRange() - 1));
+				}
 			}
 			
 			workbook.write(out);

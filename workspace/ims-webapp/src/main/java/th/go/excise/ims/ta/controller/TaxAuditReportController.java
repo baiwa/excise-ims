@@ -106,5 +106,36 @@ public class TaxAuditReportController {
 		OutputStream os = response.getOutputStream();
 		os.write(bytes);
 	}
+	
+	// TODO Admin
+	@GetMapping("/ta-rpt0005")
+	@ResponseBody
+	public void tarpt0005(@ModelAttribute TaxOperatorFormVo formVo, HttpServletResponse response) throws Exception {
+		logger.info("ta-rpt0005");
+		
+		String fileName = URLEncoder.encode("ta-rpt0005", "UTF-8");
+		
+		byte[] bytes = worksheetExportService.exportTaRpt0005(formVo);
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+		
+		OutputStream os = response.getOutputStream();
+		os.write(bytes);
+	}
+	
+	@GetMapping("/ta-rpt0006")
+	@ResponseBody
+	public void tarpt0006(@ModelAttribute TaxOperatorFormVo formVo, HttpServletResponse response) throws Exception {
+		logger.info("ta-rpt0006");
+		
+		String fileName = URLEncoder.encode("ta-rpt0006", "UTF-8");
+		
+		byte[] bytes = worksheetExportService.exportTaRpt0006(formVo);
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+		
+		OutputStream os = response.getOutputStream();
+		os.write(bytes);
+	}
 
 }

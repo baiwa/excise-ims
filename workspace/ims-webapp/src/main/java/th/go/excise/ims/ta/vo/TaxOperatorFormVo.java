@@ -48,30 +48,12 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	private Date regDateStart;
 	private Date regDateEnd;
 	private String incomeType;
-	
 	// new Entity
 	private String cuscatId;
 	private String pinnitId;
-	
 	private List<String> yearMonthList;
-	
-	
-
-	public BigDecimal getSumTaxAmStart() {
-		return sumTaxAmStart;
-	}
-
-	public void setSumTaxAmStart(BigDecimal sumTaxAmStart) {
-		this.sumTaxAmStart = sumTaxAmStart;
-	}
-
-	public BigDecimal getSumTaxAmEnd() {
-		return sumTaxAmEnd;
-	}
-
-	public void setSumTaxAmEnd(BigDecimal sumTaxAmEnd) {
-		this.sumTaxAmEnd = sumTaxAmEnd;
-	}
+	// For Export
+	private String exportSelFlag;
 
 	public String getDateStart() {
 		return dateStart;
@@ -313,28 +295,20 @@ public class TaxOperatorFormVo extends DataTableRequest {
 		this.newRegFlag = newRegFlag;
 	}
 
-	public String getCuscatId() {
-		return cuscatId;
+	public BigDecimal getSumTaxAmStart() {
+		return sumTaxAmStart;
 	}
 
-	public void setCuscatId(String cuscatId) {
-		this.cuscatId = cuscatId;
+	public void setSumTaxAmStart(BigDecimal sumTaxAmStart) {
+		this.sumTaxAmStart = sumTaxAmStart;
 	}
 
-	public String getPinnitId() {
-		return pinnitId;
+	public BigDecimal getSumTaxAmEnd() {
+		return sumTaxAmEnd;
 	}
 
-	public void setPinnitId(String pinnitId) {
-		this.pinnitId = pinnitId;
-	}
-
-	public List<String> getYearMonthList() {
-		return yearMonthList;
-	}
-
-	public void setYearMonthList(List<String> yearMonthList) {
-		this.yearMonthList = yearMonthList;
+	public void setSumTaxAmEnd(BigDecimal sumTaxAmEnd) {
+		this.sumTaxAmEnd = sumTaxAmEnd;
 	}
 
 	public String getSkipCond() {
@@ -376,6 +350,37 @@ public class TaxOperatorFormVo extends DataTableRequest {
 	public void setIncomeType(String incomeType) {
 		this.incomeType = incomeType;
 	}
-	
+
+	public String getCuscatId() {
+		return cuscatId;
+	}
+
+	public void setCuscatId(String cuscatId) {
+		this.cuscatId = cuscatId;
+	}
+
+	public String getPinnitId() {
+		return pinnitId;
+	}
+
+	public void setPinnitId(String pinnitId) {
+		this.pinnitId = pinnitId;
+	}
+
+	public List<String> getYearMonthList() {
+		return yearMonthList;
+	}
+
+	public void setYearMonthList(List<String> yearMonthList) {
+		this.yearMonthList = yearMonthList;
+	}
+
+	public String getExportSelFlag() {
+		return exportSelFlag;
+	}
+
+	public void setExportSelFlag(String exportSelFlag) {
+		this.exportSelFlag = exportSelFlag;
+	}
 
 }

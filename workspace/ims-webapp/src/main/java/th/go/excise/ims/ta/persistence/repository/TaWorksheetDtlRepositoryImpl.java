@@ -339,7 +339,7 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		}
 
 		if (formVo.getSumTaxAmEnd() != null) {
-			sql.append(" AND (TA_W_DTL.SUM_TAX_AMT_G1 + TA_W_DTL.SUM_TAX_AMT_G2) <= ?");
+			sql.append(" AND (TA_W_DTL.SUM_TAX_AMT_G1 + TA_W_DTL.SUM_TAX_AMT_G2) <= ? ");
 			params.add(formVo.getSumTaxAmEnd());
 		}
 
@@ -392,13 +392,31 @@ public class TaWorksheetDtlRepositoryImpl implements TaWorksheetDtlRepositoryCus
 		}
 		
 		if (StringUtils.isNotBlank(formVo.getCuscatId())) {
-			params.add(formVo.getCuscatId());
 			sql.append(" AND R4000.CUSCAT_ID = ? ");
+			params.add(formVo.getCuscatId());
 		}
 		
 		if (StringUtils.isNotBlank(formVo.getPinnitId())) {
-			params.add(formVo.getPinnitId());
 			sql.append(" AND R4000.PINNIT_ID = ? ");
+			params.add(formVo.getPinnitId());
+		}
+		
+		if (FLAG.Y_FLAG.equals(formVo.getExportSelFlag()) || FLAG.N_FLAG.equals(formVo.getExportSelFlag())) {
+			String condition = null;
+			if (FLAG.Y_FLAG.equals(formVo.getExportSelFlag())) {
+				condition = "";
+			} else {
+				condition = "NOT";
+			}
+			sql.append("  AND " + condition + " EXISTS ( ");
+			sql.append("    SELECT 1 ");
+			sql.append("    FROM TA_PLAN_WORKSHEET_SELECT TA_PW_SEL ");
+			sql.append("    WHERE TA_PW_SEL.BUDGET_YEAR = TA_W_DTL.BUDGET_YEAR ");
+			sql.append("      AND TA_PW_SEL.NEW_REG_ID = TA_W_DTL.NEW_REG_ID ");
+			sql.append("      AND TA_PW_SEL.DUTY_GROUP_ID = TA_W_DTL.DUTY_GROUP_ID ");
+			sql.append("      AND TA_PW_SEL.IS_DELETED = 'N' ");
+			sql.append("      AND (TA_PW_SEL.CENTRAL_SEL_FLAG IS NOT NULL OR TA_PW_SEL.SECTOR_SEL_FLAG IS NOT NULL OR TA_PW_SEL.AREA_SEL_FLAG IS NOT NULL) ");
+			sql.append("  ) ");
 		}
 
 	}
