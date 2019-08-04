@@ -2,6 +2,7 @@ package th.go.excise.ims.scheduler.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
@@ -108,6 +109,7 @@ public class SyncWsIncfri8000Service {
 					incfri8000.setReceiptNo(income.getReceiptNo());
 					incfri8000.setReceiptDate(StringUtils.isNotBlank(income.getReceiptDate()) ? ConvertDateUtils.parseStringToLocalDate(income.getReceiptDate(), ConvertDateUtils.YYYYMMDD, ConvertDateUtils.LOCAL_TH) : null);
 					incfri8000.setTaxAmount(StringUtils.isNotEmpty(income.getTaxAmount()) ? new BigDecimal(income.getTaxAmount()) : BigDecimal.ZERO);
+					incfri8000.setNetTaxAmount(StringUtils.isNotEmpty(income.getNetTaxAmount()) ? new BigDecimal(income.getNetTaxAmount()) : BigDecimal.ZERO);
 					incfri8000.setPenAmount(StringUtils.isNotEmpty(income.getPenAmount()) ? new BigDecimal(income.getPenAmount()) : BigDecimal.ZERO);
 					incfri8000.setAddAmount(StringUtils.isNotEmpty(income.getAddAmount()) ? new BigDecimal(income.getAddAmount()) : BigDecimal.ZERO);
 					incfri8000.setReduceAmount(StringUtils.isNotEmpty(income.getReduceAmount()) ? new BigDecimal(income.getReduceAmount()) : BigDecimal.ZERO);
@@ -122,6 +124,7 @@ public class SyncWsIncfri8000Service {
 					incfri8000.setOfflineStatus(income.getOfflineStatus());
 					incfri8000.setGroupId(income.getGroupId());
 					incfri8000.setGroupName(income.getGroupName());
+					incfri8000.setSyncDate(LocalDateTime.now());
 					
 					if (income.getCreditList() != null && income.getCreditList().size() > 0) {
 						for (Credit credit : income.getCreditList()) {

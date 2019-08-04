@@ -70,6 +70,7 @@ public class WsIncfri8000RepositoryImpl implements WsIncfri8000RepositoryCustom 
 		insertColumnNames.add("RECEIPT_NO");
 		insertColumnNames.add("RECEIPT_DATE");
 		insertColumnNames.add("TAX_AMOUNT");
+		insertColumnNames.add("NET_TAX_AMOUNT");
 		insertColumnNames.add("PEN_AMOUNT");
 		insertColumnNames.add("ADD_AMOUNT");
 		insertColumnNames.add("REDUCE_AMOUNT");
@@ -100,6 +101,7 @@ public class WsIncfri8000RepositoryImpl implements WsIncfri8000RepositoryCustom 
 				paramList.add(incfri8000.getReceiptNo());
 				paramList.add(incfri8000.getReceiptDate());
 				paramList.add(incfri8000.getTaxAmount());
+				paramList.add(incfri8000.getNetTaxAmount());
 				paramList.add(incfri8000.getPenAmount());
 				paramList.add(incfri8000.getAddAmount());
 				paramList.add(incfri8000.getReduceAmount());
@@ -148,7 +150,7 @@ public class WsIncfri8000RepositoryImpl implements WsIncfri8000RepositoryCustom 
 		sql.append("   ,TO_CHAR(TRN_DATE, 'MM') AS TAX_MONTH ");
 		sql.append("   ,TAX_AMOUNT AS TAX_AMOUNT ");
 		sql.append("   ,GROUP_ID AS DUTY_CODE ");
-		sql.append("   ,NULL AS NET_TAX_AMOUNT ");
+		sql.append("   ,NET_TAX_AMOUNT AS NET_TAX_AMOUNT ");
 		sql.append("   ,ADD_AMOUNT AS TAX_ADD_AMT ");
 		sql.append("   ,PEN_AMOUNT AS TAX_PEN_AMT ");
 		sql.append("   ,REDUCE_AMOUNT AS TAX_REDUCE_AMT ");

@@ -134,6 +134,14 @@ public class WsRegfri4000 extends BaseEntity {
 	private String activeFlag;
 	@Column(name = "SYNC_DATE")
 	private LocalDateTime syncDate;
+	@Column(name = "FAC_TYPE")
+	private String facType;
+	@Column(name = "REG_DATE")
+	private LocalDate regDate;
+	@Column(name = "PINNIT_ID")
+	private String pinnitId;
+	@Column(name = "MULTI_DUTY_FLAG")
+	private String multiDutyFlag;
 
 	public Long getWsRegfri4000Id() {
 		return wsRegfri4000Id;
@@ -581,6 +589,38 @@ public class WsRegfri4000 extends BaseEntity {
 
 	public void setSyncDate(LocalDateTime syncDate) {
 		this.syncDate = syncDate;
+	}
+
+	public String getFacType() {
+		return facType;
+	}
+
+	public void setFacType(String facType) {
+		this.facType = facType;
+	}
+
+	public LocalDate getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(LocalDate regDate) {
+		this.regDate = regDate;
+	}
+
+	public String getPinnitId() {
+		return pinnitId;
+	}
+
+	public void setPinnitId(String pinnitId) {
+		this.pinnitId = pinnitId;
+	}
+
+	public String getMultiDutyFlag() {
+		return multiDutyFlag;
+	}
+
+	public void setMultiDutyFlag(String multiDutyFlag) {
+		this.multiDutyFlag = multiDutyFlag;
 	}
 
 }

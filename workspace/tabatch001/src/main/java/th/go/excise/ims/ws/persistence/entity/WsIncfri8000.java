@@ -2,6 +2,8 @@ package th.go.excise.ims.ws.persistence.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,6 +36,8 @@ public class WsIncfri8000 extends BaseEntity {
 	private LocalDate receiptDate;
 	@Column(name = "TAX_AMOUNT")
 	private BigDecimal taxAmount;
+	@Column(name = "NET_TAX_AMOUNT")
+	private BigDecimal netTaxAmount;
 	@Column(name = "PEN_AMOUNT")
 	private BigDecimal penAmount;
 	@Column(name = "ADD_AMOUNT")
@@ -62,6 +66,8 @@ public class WsIncfri8000 extends BaseEntity {
 	private String groupId;
 	@Column(name = "GROUP_NAME")
 	private String groupName;
+	@Column(name = "SYNC_DATE")
+	private LocalDateTime syncDate;
 
 	public Long getIncfri8000Id() {
 		return incfri8000Id;
@@ -117,6 +123,14 @@ public class WsIncfri8000 extends BaseEntity {
 
 	public void setTaxAmount(BigDecimal taxAmount) {
 		this.taxAmount = taxAmount;
+	}
+
+	public BigDecimal getNetTaxAmount() {
+		return netTaxAmount;
+	}
+
+	public void setNetTaxAmount(BigDecimal netTaxAmount) {
+		this.netTaxAmount = netTaxAmount;
 	}
 
 	public BigDecimal getPenAmount() {
@@ -229,6 +243,14 @@ public class WsIncfri8000 extends BaseEntity {
 
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
+	}
+
+	public LocalDateTime getSyncDate() {
+		return syncDate;
+	}
+
+	public void setSyncDate(LocalDateTime syncDate) {
+		this.syncDate = syncDate;
 	}
 
 }

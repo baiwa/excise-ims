@@ -35,6 +35,10 @@ public class Income {
 	@Expose
 	private String taxAmount;
 
+	@SerializedName("NetTaxAmount")
+	@Expose
+	private String netTaxAmount;
+
 	@SerializedName("PenAmount")
 	@Expose
 	private String penAmount;
@@ -141,6 +145,14 @@ public class Income {
 
 	public void setTaxAmount(String taxAmount) {
 		this.taxAmount = taxAmount;
+	}
+
+	public String getNetTaxAmount() {
+		return netTaxAmount;
+	}
+
+	public void setNetTaxAmount(String netTaxAmount) {
+		this.netTaxAmount = netTaxAmount;
 	}
 
 	public String getPenAmount() {

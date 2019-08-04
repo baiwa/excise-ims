@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import th.co.baiwa.buckwaframework.common.constant.CommonConstants.FLAG;
 import th.co.baiwa.buckwaframework.common.constant.CommonConstants.SYSTEM_USER;
 import th.co.baiwa.buckwaframework.common.util.NumberUtils;
 import th.go.excise.ims.ws.client.pcc.common.exception.PccRestfulException;
@@ -160,6 +162,14 @@ public class SyncWsRegfri4000Service {
 							regfri4000DutyList.add(regfri4000Duty);
 						}
 					}
+					if (regMaster60.getRegDutyList() != null && regMaster60.getRegDutyList().size() > 1) {
+						regfri4000.setMultiDutyFlag(FLAG.Y_FLAG);
+					} else {
+						regfri4000.setMultiDutyFlag(FLAG.N_FLAG);
+					}
+					regfri4000.setPinnitId(regfri4000.getNewRegId().substring(0, 13));
+					regfri4000.setFacType(regfri4000.getNewRegId().substring(13, 14));
+					regfri4000.setRegDate(tmpRegDateList.stream().min(Comparator.comparing(LocalDate::toEpochDay)).get());
 					regfri4000List.add(regfri4000);
 				}
 			} else {

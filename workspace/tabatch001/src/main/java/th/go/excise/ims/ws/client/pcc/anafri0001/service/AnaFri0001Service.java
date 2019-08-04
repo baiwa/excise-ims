@@ -22,7 +22,7 @@ public class AnaFri0001Service extends AbstractPccRestfulService<RequestData, Re
 	
 	@Autowired
 	public AnaFri0001Service(
-			@Value("${ws.excise.endpoint.ana.anafri0001}") String url,
+			@Value("${ws.excise.ana.anafri0001.endpoint}") String url,
 			PccServiceProperties pccServicePrpperties,
 			RestfulClientService restfulClientService,
 			Gson gson) {

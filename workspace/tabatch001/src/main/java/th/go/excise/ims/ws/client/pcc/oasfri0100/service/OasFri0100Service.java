@@ -31,7 +31,7 @@ public class OasFri0100Service {
 	
 	@Autowired
 	public OasFri0100Service(
-			@Value("${ws.excise.endpoint.oas.oasfri0100}") String url,
+			@Value("${ws.excise.oas.oasfri0100.endpoint}") String url,
 			PccServiceProperties pccServicePrpperties,
 			RestfulClientService restfulClientService,
 			Gson gson) {
