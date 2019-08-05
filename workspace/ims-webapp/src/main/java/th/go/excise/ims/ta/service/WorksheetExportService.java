@@ -1072,7 +1072,8 @@ public class WorksheetExportService {
 				Method method = null;
 				String condGroupFlag = null;
 				taxVoList = dataMap.get(dept.getOfficeCode());
-				taxVoList.sort((p1, p2) -> p1.getOfficeCode().compareTo(p2.getOfficeCode()));
+				taxVoList.sort((p1, p2) -> (p1.getSelectByOfCode() + convertPlanType2Code(p1.getPlanType())).compareTo((p2.getSelectByOfCode() + convertPlanType2Code(p2.getPlanType()))));
+				
 				for (TaxOperatorDatatableVo taxVo : taxVoList) {
 					row = sheet.createRow(rowNum);
 					cellNum = 0;
@@ -1261,6 +1262,18 @@ public class WorksheetExportService {
 		}
 		
 		return content;
+	}
+	
+	private String convertPlanType2Code(String planType) {
+		if ("I".equals(planType)) {
+			return "01";
+		} else if ("R".equals(planType)) {
+			return "02";
+		} else if ("E".equals(planType)) {
+			return "03";
+		} else {
+			return "00";
+		}
 	}
 
 	public byte[] exportTaRpt0006(TaxOperatorFormVo formVo) {
